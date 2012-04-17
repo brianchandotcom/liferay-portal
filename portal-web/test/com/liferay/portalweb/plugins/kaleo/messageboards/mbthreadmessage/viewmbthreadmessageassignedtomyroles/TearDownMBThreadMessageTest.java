@@ -56,7 +56,7 @@ public class TearDownMBThreadMessageTest extends BaseTestCase {
 				loadRequiredJavaScriptModules();
 
 				boolean mbMessage1Present = selenium.isElementPresent(
-						"//td[7]/span/ul/li/strong/a");
+						"//span[@title='Actions']/ul/li/strong/a/span");
 
 				if (!mbMessage1Present) {
 					label = 2;
@@ -64,9 +64,28 @@ public class TearDownMBThreadMessageTest extends BaseTestCase {
 					continue;
 				}
 
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isElementPresent(
+									"//script[contains(@src,'/liferay/navigation_interaction.js')]")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				Thread.sleep(5000);
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[7]/span/ul/li/strong/a"));
-				selenium.clickAt("//td[7]/span/ul/li/strong/a",
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -76,7 +95,7 @@ public class TearDownMBThreadMessageTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a")) {
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a")) {
 							break;
 						}
 					}
@@ -88,9 +107,9 @@ public class TearDownMBThreadMessageTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
@@ -99,7 +118,7 @@ public class TearDownMBThreadMessageTest extends BaseTestCase {
 			case 2:
 
 				boolean mbMessage2Present = selenium.isElementPresent(
-						"//td[7]/span/ul/li/strong/a");
+						"//span[@title='Actions']/ul/li/strong/a/span");
 
 				if (!mbMessage2Present) {
 					label = 3;
@@ -107,7 +126,28 @@ public class TearDownMBThreadMessageTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//td[7]/span/ul/li/strong/a",
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isElementPresent(
+									"//script[contains(@src,'/liferay/navigation_interaction.js')]")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				Thread.sleep(5000);
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -117,7 +157,7 @@ public class TearDownMBThreadMessageTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a")) {
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a")) {
 							break;
 						}
 					}
@@ -129,9 +169,9 @@ public class TearDownMBThreadMessageTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
@@ -140,7 +180,7 @@ public class TearDownMBThreadMessageTest extends BaseTestCase {
 			case 3:
 
 				boolean mbMessage3Present = selenium.isElementPresent(
-						"//td[7]/span/ul/li/strong/a");
+						"//span[@title='Actions']/ul/li/strong/a/span");
 
 				if (!mbMessage3Present) {
 					label = 4;
@@ -148,7 +188,28 @@ public class TearDownMBThreadMessageTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//td[7]/span/ul/li/strong/a",
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isElementPresent(
+									"//script[contains(@src,'/liferay/navigation_interaction.js')]")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				Thread.sleep(5000);
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -158,7 +219,7 @@ public class TearDownMBThreadMessageTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a")) {
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a")) {
 							break;
 						}
 					}
@@ -170,9 +231,9 @@ public class TearDownMBThreadMessageTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
@@ -181,7 +242,7 @@ public class TearDownMBThreadMessageTest extends BaseTestCase {
 			case 4:
 
 				boolean mbMessage4Present = selenium.isElementPresent(
-						"//td[7]/span/ul/li/strong/a");
+						"//span[@title='Actions']/ul/li/strong/a/span");
 
 				if (!mbMessage4Present) {
 					label = 5;
@@ -189,7 +250,28 @@ public class TearDownMBThreadMessageTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//td[7]/span/ul/li/strong/a",
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isElementPresent(
+									"//script[contains(@src,'/liferay/navigation_interaction.js')]")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				Thread.sleep(5000);
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -199,7 +281,7 @@ public class TearDownMBThreadMessageTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a")) {
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a")) {
 							break;
 						}
 					}
@@ -211,9 +293,9 @@ public class TearDownMBThreadMessageTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
@@ -222,7 +304,7 @@ public class TearDownMBThreadMessageTest extends BaseTestCase {
 			case 5:
 
 				boolean mbMessage5Present = selenium.isElementPresent(
-						"//td[7]/span/ul/li/strong/a");
+						"//span[@title='Actions']/ul/li/strong/a/span");
 
 				if (!mbMessage5Present) {
 					label = 6;
@@ -230,7 +312,28 @@ public class TearDownMBThreadMessageTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//td[7]/span/ul/li/strong/a",
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isElementPresent(
+									"//script[contains(@src,'/liferay/navigation_interaction.js')]")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				Thread.sleep(5000);
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -240,7 +343,7 @@ public class TearDownMBThreadMessageTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a")) {
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a")) {
 							break;
 						}
 					}
@@ -252,9 +355,9 @@ public class TearDownMBThreadMessageTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()

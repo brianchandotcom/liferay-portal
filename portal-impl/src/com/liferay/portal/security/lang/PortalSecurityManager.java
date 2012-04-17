@@ -33,6 +33,7 @@ import java.lang.reflect.ReflectPermission;
 import java.net.NetPermission;
 import java.net.SocketPermission;
 
+import java.security.AccessController;
 import java.security.AllPermission;
 import java.security.Permission;
 import java.security.SecurityPermission;
@@ -47,9 +48,7 @@ import javax.management.MBeanPermission;
 import javax.management.MBeanServerPermission;
 import javax.management.MBeanTrustPermission;
 import javax.management.remote.SubjectDelegationPermission;
-
 import javax.net.ssl.SSLPermission;
-
 import javax.security.auth.AuthPermission;
 import javax.security.auth.PrivateCredentialPermission;
 import javax.security.auth.kerberos.DelegationPermission;
@@ -81,7 +80,7 @@ public class PortalSecurityManager extends SecurityManager {
 
 	@Override
 	public void checkPermission(Permission permission) {
-		doCheckPermission(permission, null);
+		doCheckPermission(permission, AccessController.getContext());
 	}
 
 	@Override
@@ -311,7 +310,32 @@ public class PortalSecurityManager extends SecurityManager {
 	}
 
 	protected void doCheckPermission(Permission permission, Object context) {
-		if (!PortalSecurityManagerThreadLocal.isEnabled()) {
+		boolean enabled = PortalSecurityManagerThreadLocal.isEnabled();
+
+		if (!enabled) {
+			if (_parentSecurityManager != null) {
+				_parentSecurityManager.checkPermission(permission, context);
+			}
+
+			return;
+		}
+
+		PACLPolicy paclPolicy = null;
+
+		try {
+			PortalSecurityManagerThreadLocal.setEnabled(false);
+
+			paclPolicy = getPACLPolicy(_log.isDebugEnabled());
+		}
+		finally {
+			PortalSecurityManagerThreadLocal.setEnabled(enabled);
+		}
+
+		if ((paclPolicy != null) && paclPolicy.isActive()) {
+			if (_parentSecurityManager != null) {
+				_parentSecurityManager.checkPermission(permission, context);
+			}
+
 			return;
 		}
 

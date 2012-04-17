@@ -25,6 +25,9 @@ public class AssignMembersCommunityOrganizationActionsTest extends BaseTestCase 
 		throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -58,8 +61,8 @@ public class AssignMembersCommunityOrganizationActionsTest extends BaseTestCase 
 		assertEquals(RuntimeVariables.replace("Community Groups Orgs"),
 			selenium.getText("//tr[3]/td[1]"));
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//td[6]/span/ul/li/strong/a/span"));
-		selenium.clickAt("//td[6]/span/ul/li/strong/a/span",
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
@@ -146,8 +149,8 @@ public class AssignMembersCommunityOrganizationActionsTest extends BaseTestCase 
 		selenium.clickAt("//input[@name='_174_rowIds']",
 			RuntimeVariables.replace("Checkbox"));
 		assertTrue(selenium.isChecked("//input[@name='_174_rowIds']"));
-		selenium.clickAt("//input[@value='Update Associations']",
-			RuntimeVariables.replace("Update Associations"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 
@@ -175,7 +178,8 @@ public class AssignMembersCommunityOrganizationActionsTest extends BaseTestCase 
 		selenium.clickAt("link=Summary", RuntimeVariables.replace("Summary"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Organization Groups Orgs"),
-			selenium.getText("//div[4]/div[2]/div/div/table/tbody/tr[3]/td[1]"));
+		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
+			selenium.getText(
+				"//div[@id='iqocSearchContainer']/table/tbody/tr[3]/td"));
 	}
 }

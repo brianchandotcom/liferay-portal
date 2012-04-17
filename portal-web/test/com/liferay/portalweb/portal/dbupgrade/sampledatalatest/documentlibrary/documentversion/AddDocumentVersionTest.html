@@ -14,19 +14,39 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Document Library Page</td>
-	<td>Document Library Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Document Library Page</td>
 	<td>Document Library Page</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//div/a/span[2]</td>
+	<td>Test1 Folder1</td>
+</tr>
+<tr>
 	<td>clickAt</td>
 	<td>//div/a/span[2]</td>
 	<td>Test1 Folder1</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//li[@class='folder selected']/a/span[contains(.,'Test1 Folder1')]</td>
+	<td>Test1 Folder1</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@class='folder selected']/a/span[contains(.,'Test1 Folder1')]</td>
+	<td>Test1 Folder1</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//h1[@class='portlet-title']</td>
+	<td>Documents and Media</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//div[@id='column-1_shim']</td>
+	<td>Column 1 Shim</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -51,7 +71,7 @@
 <tr>
 	<td>type</td>
 	<td>//input[@id='_20_file']</td>
-	<td>L:\portal\build\portal-web\test\com\liferay\portalweb\portal\dbupgrade\sampledata606\documentlibrary\documentversion\dependencies\test_document2.txt</td>
+	<td>L:\portal\build\portal-web\test\com\liferay\portalweb\portal\dbupgrade\sampledata610\documentlibrary\documentversion\dependencies\test_document2.txt</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -98,7 +118,6 @@
 	<td>//tr[4]/td[2]</td>
 	<td>1.0</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

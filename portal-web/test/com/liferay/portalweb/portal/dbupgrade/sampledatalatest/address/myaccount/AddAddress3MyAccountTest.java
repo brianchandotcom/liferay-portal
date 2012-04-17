@@ -24,6 +24,9 @@ public class AddAddress3MyAccountTest extends BaseTestCase {
 	public void testAddAddress3MyAccount() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -93,7 +96,7 @@ public class AddAddress3MyAccountTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[2]/div/span/span/button[1]")) {
+				if (selenium.isVisible("//button[contains(@class,'add-row')]")) {
 					break;
 				}
 			}
@@ -103,7 +106,7 @@ public class AddAddress3MyAccountTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("//div[2]/div/span/span/button[1]",
+		selenium.clickAt("//button[contains(@class,'add-row')]",
 			RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {
@@ -125,7 +128,7 @@ public class AddAddress3MyAccountTest extends BaseTestCase {
 		selenium.type("//input[@id='_2_addressStreet1_3']",
 			RuntimeVariables.replace("1220 Brea Canyon Rd"));
 		selenium.select("//select[@id='_2_addressTypeId3']",
-			RuntimeVariables.replace("label=Business"));
+			RuntimeVariables.replace("Business"));
 		selenium.type("//input[@id='_2_addressStreet2_3']",
 			RuntimeVariables.replace("Ste 12"));
 		selenium.type("//input[@id='_2_addressZip3']",
@@ -154,7 +157,7 @@ public class AddAddress3MyAccountTest extends BaseTestCase {
 		}
 
 		selenium.select("//select[@id='_2_addressCountryId3']",
-			RuntimeVariables.replace("label=United States"));
+			RuntimeVariables.replace("United States"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -174,7 +177,7 @@ public class AddAddress3MyAccountTest extends BaseTestCase {
 		}
 
 		selenium.select("//select[@id='_2_addressRegionId3']",
-			RuntimeVariables.replace("label=California"));
+			RuntimeVariables.replace("California"));
 		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));

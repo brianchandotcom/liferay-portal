@@ -45,7 +45,8 @@ public class ViewBlogsPortletNullTest extends BaseTestCase {
 			RuntimeVariables.replace("Blogs Portlet Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertTrue(selenium.isTextPresent(
-				"You do not have the roles required to access this portlet."));
+		assertEquals(RuntimeVariables.replace(
+				"You do not have the roles required to access this portlet."),
+			selenium.getText("//div[@class='portlet-msg-error']"));
 	}
 }

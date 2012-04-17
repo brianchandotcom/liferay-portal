@@ -24,27 +24,12 @@ public class AddDocumentTest extends BaseTestCase {
 	public void testAddDocument() throws Exception {
 		selenium.open("/web/document-library-document-community/");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Document Library Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.clickAt("link=Document Library Page",
 			RuntimeVariables.replace("Document Library Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Test1 Folder1"),
+			selenium.getText("//div/a/span[2]"));
 		selenium.clickAt("//div/a/span[2]",
 			RuntimeVariables.replace("Test1 Folder1"));
 
@@ -55,7 +40,7 @@ public class AddDocumentTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//span[3]/span/span/ul/li/strong/a/span")) {
+							"//li[@class='folder selected']/a/span[contains(.,'Test1 Folder1')]")) {
 					break;
 				}
 			}
@@ -65,7 +50,31 @@ public class AddDocumentTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("//span[3]/span/span/ul/li/strong/a/span",
+		assertEquals(RuntimeVariables.replace("Test1 Folder1"),
+			selenium.getText(
+				"//li[@class='folder selected']/a/span[contains(.,'Test1 Folder1')]"));
+		selenium.clickAt("//h1[@class='portlet-title']",
+			RuntimeVariables.replace("Documents and Media"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent("//div[@id='column-1_shim']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {
@@ -75,7 +84,7 @@ public class AddDocumentTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Basic Document')]/a")) {
 					break;
 				}
 			}
@@ -85,11 +94,11 @@ public class AddDocumentTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Document"),
+		assertEquals(RuntimeVariables.replace("Basic Document"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Basic Document')]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Basic Document')]/a"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 
@@ -111,7 +120,7 @@ public class AddDocumentTest extends BaseTestCase {
 
 		selenium.type("//input[@id='_20_file']",
 			RuntimeVariables.replace(
-				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portal\\dbupgrade\\sampledata606\\documentlibrary\\document\\dependencies\\test_document.txt"));
+				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portal\\dbupgrade\\sampledata610\\documentlibrary\\document\\dependencies\\test_document.txt"));
 		selenium.type("//input[@id='_20_title']",
 			RuntimeVariables.replace("Test1 Document1.txt"));
 		selenium.type("//textarea[@id='_20_description']",

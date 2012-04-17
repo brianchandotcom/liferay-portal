@@ -14,44 +14,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
+	<td>clickAtAndWait</td>
 	<td>link=Page Staging Organization Web Content Display</td>
-	<td></td>
+	<td>Page Staging Organization Web Content Display</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Page Staging Organization Web Content Display</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertElementPresent</td>
-	<td>//body[@class='blue live-view controls-visible signed-in public-page']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertElementNotPresent</td>
-	<td>//body[@class='blue staging controls-visible signed-in public-page']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>link=View Staged Page</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertElementNotPresent</td>
-	<td>//body[@class='blue live-view controls-visible signed-in public-page']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertElementPresent</td>
-	<td>//body[@class='blue staging controls-visible signed-in public-page']</td>
-	<td></td>
+	<td>link=Staging</td>
+	<td>Staging</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//img[@alt='Select Web Content']</td>
-	<td></td>
+	<td>Select Web Content</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -59,7 +34,7 @@
 	<td>WC Web Content ID</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
+	<td>assertVisible</td>
 	<td>//td[1]/a</td>
 	<td>WC Web Content ID</td>
 </tr>
@@ -69,23 +44,18 @@
 	<td>WC Web Content Name</td>
 </tr>
 <tr>
-	<td>assertText</td>
+	<td>assertVisible</td>
 	<td>//td[3]/a</td>
-	<td>1.0</td>
-</tr>
-<tr>
-	<td>assertElementPresent</td>
-	<td>//td[4]/a</td>
 	<td>Modified Date</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>//td[5]/a</td>
+	<td>assertVisible</td>
+	<td>//td[4]/a</td>
 	<td>Display Date</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[6]/a</td>
+	<td>//td[5]/a</td>
 	<td>Joe Bloggs</td>
 </tr>
 <tr>
@@ -106,14 +76,13 @@
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='p_p_id_86_']/div/div[1]</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>You have successfully updated the setup.</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

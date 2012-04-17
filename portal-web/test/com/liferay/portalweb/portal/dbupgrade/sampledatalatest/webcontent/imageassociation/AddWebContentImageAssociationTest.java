@@ -24,6 +24,9 @@ public class AddWebContentImageAssociationTest extends BaseTestCase {
 	public void testAddWebContentImageAssociation() throws Exception {
 		selenium.open("/web/web-content-image-association-community/");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -49,7 +52,9 @@ public class AddWebContentImageAssociationTest extends BaseTestCase {
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.clickAt("//div/span/ul/li/strong/a",
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {
@@ -59,7 +64,7 @@ public class AddWebContentImageAssociationTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Basic Web Content')]/a")) {
 					break;
 				}
 			}
@@ -71,9 +76,9 @@ public class AddWebContentImageAssociationTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Basic Web Content"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Basic Web Content')]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Basic Web Content')]/a"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_15_title_en_US']",
@@ -97,9 +102,12 @@ public class AddWebContentImageAssociationTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace(
-				"Image Structure Test\nThis is an image structure test."),
+		assertEquals(RuntimeVariables.replace("Image Structure Test"),
 			selenium.getText("//td[2]/a"));
+		selenium.clickAt("//td[2]/a",
+			RuntimeVariables.replace("Image Structure Test"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -107,7 +115,8 @@ public class AddWebContentImageAssociationTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//span[@id='_15_structureNameLabel']")) {
+				if ("Selecting a new structure will change the available input fields and available templates? Do you want to proceed?".equals(
+							selenium.getConfirmation())) {
 					break;
 				}
 			}
@@ -119,14 +128,12 @@ public class AddWebContentImageAssociationTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Image Structure Test"),
 			selenium.getText("//span[@id='_15_structureNameLabel']"));
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Selecting a new structure will change the available input fields and available templates[\\s\\S] Do you want to proceed[\\s\\S]$"));
 		selenium.type("//input[@id='text-test']",
 			RuntimeVariables.replace("Text Test"));
 		selenium.type("//input[@id='image-test']",
 			RuntimeVariables.replace(
-				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portal\\dbupgrade\\sampledata606\\webcontent\\imageassociation\\dependencies\\Image.jpg"));
-		selenium.clickAt("//input[@value='Select']",
+				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portal\\dbupgrade\\sampledata610\\webcontent\\imageassociation\\dependencies\\Image.jpg"));
+		selenium.clickAt("xPath=(//input[@value='Select'])[2]",
 			RuntimeVariables.replace("Select"));
 
 		for (int second = 0;; second++) {
@@ -135,7 +142,7 @@ public class AddWebContentImageAssociationTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Folder Test")) {
+				if (selenium.isVisible("//tr[3]/td[1]/a")) {
 					break;
 				}
 			}
@@ -145,48 +152,31 @@ public class AddWebContentImageAssociationTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Folder Test",
+		assertEquals(RuntimeVariables.replace("Folder Test"),
+			selenium.getText("//tr[3]/td[1]/a"));
+		selenium.clickAt("//tr[3]/td[1]/a",
 			RuntimeVariables.replace("Folder Test"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("ImageGallery.jpg"),
+			selenium.getText("//tr[3]/td[1]/a"));
 		selenium.click("//input[@value='Choose']");
-		selenium.selectWindow("null");
 		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.selectWindow("null");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertTrue(selenium.isElementPresent("//td[2]/a"));
+		assertTrue(selenium.isVisible("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Image Web Content Test"),
 			selenium.getText("//td[3]/a"));
-		assertEquals(RuntimeVariables.replace("1.0"),
-			selenium.getText("//td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Approved"),
-			selenium.getText("//td[5]/a"));
-		assertTrue(selenium.isElementPresent("//td[6]/a"));
-		assertTrue(selenium.isElementPresent("//td[7]/a"));
+			selenium.getText("//td[4]/a"));
+		assertTrue(selenium.isVisible("//td[5]/a"));
+		assertTrue(selenium.isVisible("//td[6]/a"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("//td[8]/a"));
+			selenium.getText("//td[7]/a"));
 	}
 }

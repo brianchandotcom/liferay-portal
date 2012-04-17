@@ -25,6 +25,9 @@ public class AssignMembersCommunityUserGroupActionsTest extends BaseTestCase {
 		throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -58,8 +61,8 @@ public class AssignMembersCommunityUserGroupActionsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Community Groups User Groups"),
 			selenium.getText("//tr[3]/td[1]"));
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//td[6]/span/ul/li/strong/a/span"));
-		selenium.clickAt("//td[6]/span/ul/li/strong/a/span",
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
@@ -129,8 +132,8 @@ public class AssignMembersCommunityUserGroupActionsTest extends BaseTestCase {
 		selenium.clickAt("//input[@name='_174_rowIds']",
 			RuntimeVariables.replace("Checkbox"));
 		assertTrue(selenium.isChecked("//input[@name='_174_rowIds']"));
-		selenium.clickAt("//input[@value='Update Associations']",
-			RuntimeVariables.replace("Update Associations"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 
@@ -154,9 +157,9 @@ public class AssignMembersCommunityUserGroupActionsTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("User Group Groups User Groups"),
-			selenium.getText("//tr[3]/td[2]"));
+			selenium.getText("//tr[3]/td[1]"));
 		assertEquals(RuntimeVariables.replace(
 				"This is a User Group Groups User Groups user group."),
-			selenium.getText("//tr[3]/td[3]"));
+			selenium.getText("//tr[3]/td[2]"));
 	}
 }

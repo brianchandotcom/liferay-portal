@@ -24,6 +24,12 @@ public class AddPortletShoppingCategoryTest extends BaseTestCase {
 	public void testAddPortletShoppingCategory() throws Exception {
 		selenium.open("/web/shopping-category-community/");
 		loadRequiredJavaScriptModules();
+		selenium.clickAt("link=Shopping Category Page",
+			RuntimeVariables.replace("Shopping Category Page"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -31,7 +37,8 @@ public class AddPortletShoppingCategoryTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Shopping Category Page")) {
+				if (selenium.isElementPresent(
+							"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]")) {
 					break;
 				}
 			}
@@ -41,10 +48,26 @@ public class AddPortletShoppingCategoryTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Shopping Category Page",
-			RuntimeVariables.replace("Shopping Category Page"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText("//li[@id='_145_addContent']/a/span"));
+		selenium.mouseOver("//li[@id='_145_addContent']/a/span");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//a[@id='_145_addApplication']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
 				"More"));
 		selenium.clickAt("//a[@id='_145_addApplication']",
@@ -56,7 +79,27 @@ public class AddPortletShoppingCategoryTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("//div[@title='Shopping']/p/a")) {
+				if (selenium.isVisible(
+							"//input[@id='layout_configuration_content']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.typeKeys("//input[@id='layout_configuration_content']",
+			RuntimeVariables.replace("s"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//div[@title='Shopping']/p/a")) {
 					break;
 				}
 			}

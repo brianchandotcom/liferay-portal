@@ -29,6 +29,9 @@ public class ActivateStagingCommunityTest extends BaseTestCase {
 			case 1:
 				selenium.open("/web/guest/home/");
 				loadRequiredJavaScriptModules();
+				assertEquals(RuntimeVariables.replace("Go to"),
+					selenium.getText("//li[@id='_145_mySites']/a/span"));
+				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -36,7 +39,7 @@ public class ActivateStagingCommunityTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent("link=Control Panel")) {
+						if (selenium.isVisible("link=Control Panel")) {
 							break;
 						}
 					}
@@ -64,8 +67,9 @@ public class ActivateStagingCommunityTest extends BaseTestCase {
 						"Community Staging Community Web Content Display"),
 					selenium.getText("//tr[3]/td[1]"));
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[6]/span/ul/li/strong/a/span"));
-				selenium.clickAt("//td[6]/span/ul/li/strong/a/span",
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -103,8 +107,7 @@ public class ActivateStagingCommunityTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible(
-									"//select[@name='_165_stagingType']")) {
+						if (selenium.isVisible("//input[@id='_165_local']")) {
 							break;
 						}
 					}
@@ -114,8 +117,9 @@ public class ActivateStagingCommunityTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.select("//select[@name='_165_stagingType']",
-					RuntimeVariables.replace("label=Local Live"));
+				selenium.clickAt("//input[@id='_165_local']",
+					RuntimeVariables.replace("Local Live"));
+				assertTrue(selenium.isChecked("//input[@id='_165_local']"));
 				assertFalse(selenium.isChecked(
 						"//input[@id='_165_branchingPublicCheckbox']"));
 				selenium.clickAt("//input[@id='_165_branchingPublicCheckbox']",
@@ -129,151 +133,11 @@ public class ActivateStagingCommunityTest extends BaseTestCase {
 				assertTrue(selenium.isChecked(
 						"//input[@id='_165_branchingPrivateCheckbox']"));
 
-				boolean blogsChecked = selenium.isChecked(
-						"_165_staged-portlet_161Checkbox");
-
-				if (blogsChecked) {
-					label = 2;
-
-					continue;
-				}
-
-				selenium.clickAt("//input[@id='_165_staged-portlet_161Checkbox']",
-					RuntimeVariables.replace("Blogs"));
-
-			case 2:
-
-				boolean bookmarksChecked = selenium.isChecked(
-						"_165_staged-portlet_28Checkbox");
-
-				if (bookmarksChecked) {
-					label = 3;
-
-					continue;
-				}
-
-				selenium.clickAt("//input[@id='_165_staged-portlet_28Checkbox']",
-					RuntimeVariables.replace("Bookmarks"));
-
-			case 3:
-
-				boolean calendarChecked = selenium.isChecked(
-						"_165_staged-portlet_8Checkbox");
-
-				if (calendarChecked) {
-					label = 4;
-
-					continue;
-				}
-
-				selenium.clickAt("//input[@id='_165_staged-portlet_8Checkbox']",
-					RuntimeVariables.replace("Calendar"));
-
-			case 4:
-
-				boolean documentLibraryDisplayChecked = selenium.isChecked(
-						"_165_staged-portlet_110Checkbox");
-
-				if (documentLibraryDisplayChecked) {
-					label = 5;
-
-					continue;
-				}
-
-				selenium.clickAt("//input[@id='_165_staged-portlet_110Checkbox']",
-					RuntimeVariables.replace("DocumentLibraryDisplay"));
-
-			case 5:
-
-				boolean dynamicDataMappingChecked = selenium.isChecked(
-						"_165_staged-portlet_166Checkbox");
-
-				if (dynamicDataMappingChecked) {
-					label = 6;
-
-					continue;
-				}
-
-				selenium.clickAt("//input[@id='_165_staged-portlet_166Checkbox']",
-					RuntimeVariables.replace("Dynamic Data Mapping"));
-
-			case 6:
-
-				boolean messageBoardsChecked = selenium.isChecked(
-						"_165_staged-portlet_162Checkbox");
-
-				if (messageBoardsChecked) {
-					label = 7;
-
-					continue;
-				}
-
-				selenium.clickAt("//input[@id='_165_staged-portlet_162Checkbox']",
-					RuntimeVariables.replace("Message Boards"));
-
-			case 7:
-
-				boolean pageCommentsChecked = selenium.isChecked(
-						"_165_staged-portlet_107Checkbox");
-
-				if (pageCommentsChecked) {
-					label = 8;
-
-					continue;
-				}
-
-				selenium.clickAt("//input[@id='_165_staged-portlet_107Checkbox']",
-					RuntimeVariables.replace("Page Comments"));
-
-			case 8:
-
-				boolean pageRatingsChecked = selenium.isChecked(
-						"_165_staged-portlet_108Checkbox");
-
-				if (pageRatingsChecked) {
-					label = 9;
-
-					continue;
-				}
-
-				selenium.clickAt("//input[@id='_165_staged-portlet_108Checkbox']",
-					RuntimeVariables.replace("Page Ratings"));
-
-			case 9:
-
-				boolean pollsChecked = selenium.isChecked(
-						"_165_staged-portlet_25Checkbox");
-
-				if (pollsChecked) {
-					label = 10;
-
-					continue;
-				}
-
-				selenium.clickAt("//input[@id='_165_staged-portlet_25Checkbox']",
-					RuntimeVariables.replace("Polls"));
-
-			case 10:
-
-				boolean pollsDisplayChecked = selenium.isChecked(
-						"_165_staged-portlet_59Checkbox");
-
-				if (pollsDisplayChecked) {
-					label = 11;
-
-					continue;
-				}
-
-				selenium.clickAt("//input[@id='_165_staged-portlet_59Checkbox']",
-					RuntimeVariables.replace("Polls Display"));
-
-			case 11:
-
 				boolean webContentChecked = selenium.isChecked(
 						"_165_staged-portlet_15Checkbox");
 
 				if (webContentChecked) {
-					label = 12;
+					label = 2;
 
 					continue;
 				}
@@ -281,55 +145,11 @@ public class ActivateStagingCommunityTest extends BaseTestCase {
 				selenium.clickAt("//input[@id='_165_staged-portlet_15Checkbox']",
 					RuntimeVariables.replace("Web Content"));
 
-			case 12:
-
-				boolean webContentDisplayChecked = selenium.isChecked(
-						"_165_staged-portlet_56Checkbox");
-
-				if (webContentDisplayChecked) {
-					label = 13;
-
-					continue;
-				}
-
-				selenium.clickAt("//input[@id='_165_staged-portlet_56Checkbox']",
-					RuntimeVariables.replace("Web Content Display"));
-
-			case 13:
-
-				boolean wikiChecked = selenium.isChecked(
-						"_165_staged-portlet_36Checkbox");
-
-				if (wikiChecked) {
-					label = 14;
-
-					continue;
-				}
-
-				selenium.clickAt("//input[@id='_165_staged-portlet_36Checkbox']",
-					RuntimeVariables.replace("Wiki"));
-
-			case 14:
-
-				boolean wikiDisplayChecked = selenium.isChecked(
-						"_165_staged-portlet_54Checkbox");
-
-				if (wikiDisplayChecked) {
-					label = 15;
-
-					continue;
-				}
-
-				selenium.clickAt("//input[@id='_165_staged-portlet_54Checkbox']",
-					RuntimeVariables.replace("Wiki Display Checked"));
-
-			case 15:
+			case 2:
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Save']"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to activate local staging for Community Staging Community Web Content Display[\\s\\S]$"));
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));

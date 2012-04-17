@@ -50,7 +50,7 @@ public class AddCategoryTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.clickAt("//input[@value='Add Category']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Add Category"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_34_name']",

@@ -35,6 +35,31 @@
 </tr>
 <tr>
 	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_manageContent']</td>
+	<td>Manage</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_manageContent']</td>
+	<td>Manage</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>link=Page Layout</td>
+	<td>Page Layout</td>
+</tr>
+<tr>
+	<td>clickAt</td>
 	<td>link=Page Layout</td>
 	<td>Page Layout</td>
 </tr>
@@ -71,12 +96,12 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
+	<td>Your request completed successfully. The page will be refreshed when you close this dialog. Alternatively you can hide this dialog.</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
+	<td>Your request completed successfully. The page will be refreshed when you close this dialog. Alternatively you can hide this dialog.</td>
 </tr>
 <tr>
 	<td>open</td>
@@ -116,12 +141,12 @@
 <tr>
 	<td>assertElementNotPresent</td>
 	<td>//div[@id='column-1' and @class='aui-w30 portlet-column portlet-column-first']</td>
-	<td></td>
+	<td>Original Layout</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
 	<td>//div[@id='column-2' and @class='aui-w70 portlet-column portlet-column-last']</td>
-	<td></td>
+	<td>Original Layout</td>
 </tr>
 </tbody></table>
 </body>

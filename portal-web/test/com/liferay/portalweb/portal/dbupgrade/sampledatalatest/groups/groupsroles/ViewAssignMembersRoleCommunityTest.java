@@ -24,6 +24,9 @@ public class ViewAssignMembersRoleCommunityTest extends BaseTestCase {
 	public void testViewAssignMembersRoleCommunity() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -31,7 +34,7 @@ public class ViewAssignMembersRoleCommunityTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -57,8 +60,9 @@ public class ViewAssignMembersRoleCommunityTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("RolesGroupsRolesName"),
 			selenium.getText("//tr[3]/td[1]"));
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//strong/a"));
-		selenium.clickAt("//strong/a", RuntimeVariables.replace("Actions"));
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -84,10 +88,10 @@ public class ViewAssignMembersRoleCommunityTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Communities"),
-			selenium.getText("//form/ul[1]/li[2]/span/span/a"));
-		selenium.clickAt("//form/ul[1]/li[2]/span/span/a",
-			RuntimeVariables.replace("Communities"));
+		assertEquals(RuntimeVariables.replace("Sites"),
+			selenium.getText("//form/ul/li[2]/span/a"));
+		selenium.clickAt("//form/ul/li[2]/span/a",
+			RuntimeVariables.replace("Sites"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Current", RuntimeVariables.replace("Current"));

@@ -25,6 +25,9 @@ public class ViewAssignMembersCommunityOrganizationTest extends BaseTestCase {
 		throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -58,8 +61,8 @@ public class ViewAssignMembersCommunityOrganizationTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Community Groups Orgs"),
 			selenium.getText("//tr[3]/td[1]"));
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//td[6]/span/ul/li/strong/a/span"));
-		selenium.clickAt("//td[6]/span/ul/li/strong/a/span",
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
@@ -86,15 +89,12 @@ public class ViewAssignMembersCommunityOrganizationTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Organizations"),
-			selenium.getText("link=Organizations"));
-		selenium.clickAt("link=Organizations",
-			RuntimeVariables.replace("Organizations"));
+		assertEquals(RuntimeVariables.replace("Users"),
+			selenium.getText("//ul/li[2]/span/a"));
+		selenium.clickAt("//ul/li[2]/span/a", RuntimeVariables.replace("Users"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Organization Groups Orgs"),
+		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText("//tr[3]/td[1]"));
-		assertEquals(RuntimeVariables.replace("Regular Organization"),
-			selenium.getText("//tr[3]/td[3]"));
 	}
 }

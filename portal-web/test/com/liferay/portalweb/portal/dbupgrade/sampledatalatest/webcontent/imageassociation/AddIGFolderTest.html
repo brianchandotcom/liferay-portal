@@ -14,23 +14,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Image Gallery Page</td>
-	<td>Image Gallery Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Image Gallery Page</td>
 	<td>Image Gallery Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[2]/a</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[contains(.,'Add Folder')]/a</td>
 	<td>Add Folder</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[2]/a</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[contains(.,'Add Folder')]/a</td>
 	<td>Add Folder</td>
 </tr>
 <tr>
@@ -44,21 +39,15 @@
 	<td>Save</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
-</tr>
-<tr>
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//a/strong</td>
+	<td>//span[@class='image-title']</td>
 	<td>Folder Test</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

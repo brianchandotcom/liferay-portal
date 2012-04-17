@@ -49,6 +49,25 @@ public class LockDLDocumentTest extends BaseTestCase {
 			selenium.getText("//div/a/span[2]"));
 		selenium.clickAt("//div/a/span[2]",
 			RuntimeVariables.replace("Test1 Folder1"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Test1 Document1.txt")
+										.equals(selenium.getText(
+								"//div/a/span[2]"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace("Test1 Document1.txt"),
 			selenium.getText("//div/a/span[2]"));
 		selenium.click(RuntimeVariables.replace("//div/a/span[2]"));
@@ -61,7 +80,7 @@ public class LockDLDocumentTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//button[3]")) {
+				if (selenium.isVisible("//button[4]")) {
 					break;
 				}
 			}
@@ -71,7 +90,7 @@ public class LockDLDocumentTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("//button[3]", RuntimeVariables.replace("Checkout"));
+		selenium.clickAt("//button[4]", RuntimeVariables.replace("Checkout"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 
@@ -95,7 +114,7 @@ public class LockDLDocumentTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace(
-				"You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 0 week."),
+				"You now have an indefinite lock on this document. No one else can edit this document until you unlock it. This lock will never expire."),
 			selenium.getText(
 				"//div[@class='portlet-msg-lock portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("This is Test1 Document1"),

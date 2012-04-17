@@ -14,86 +14,90 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Image Gallery Page</td>
-	<td>Image Gallery Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Image Gallery Page</td>
 	<td>Image Gallery Page</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//a/strong</td>
-	<td>Folder Test</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[5]/a</td>
-	<td>Add Image</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[5]/a</td>
-	<td>Add Image</td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>selectWindow</td>
-	<td>null</td>
-	<td></td>
-</tr>
-<tr>
-	<td>windowFocus</td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>link=Use the classic uploader.</td>
-	<td>Use the classic uploader.</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>link=Use the classic uploader.</td>
-	<td>Use the classic uploader.</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>_31_file</td>
-	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>_31_file</td>
-	<td>L:\portal\build\portal-web\test\com\liferay\portalweb\portal\dbupgrade\sampledata606\webcontent\imageassociation\dependencies\ImageGallery.jpg</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//input[@value='Save']</td>
-	<td>Save</td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertElementPresent</td>
-	<td>//img[@alt='ImageGallery - ']</td>
-	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//span[@class='image-title']</td>
-	<td>ImageGallery</td>
+	<td>Folder Test</td>
 </tr>
-
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//span[@class='image-title']</td>
+	<td>Folder Test</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[contains(.,'Add Media')]/a</td>
+	<td>Add Media</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[contains(.,'Add Media')]/a</td>
+	<td>Add Media</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//tr[3]/td/a</td>
+	<td>Basic Document</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[3]/td/a</td>
+	<td>Basic Document</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//tr[3]/td/a</td>
+	<td>Basic Document</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@id='_31_file']</td>
+	<td>File</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@id='_31_file']</td>
+	<td>L:\portal\build\portal-web\test\com\liferay\portalweb\portal\dbupgrade\sampledata610\webcontent\imageassociation\dependencies\ImageGallery.jpg</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Publish']</td>
+	<td>Publish</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='image-title']</td>
+	<td>Folder Test</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//span[@class='image-title']</td>
+	<td>Folder Test</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//a[contains(@class,'image-thumbnail')]/img</td>
+	<td>ImageGallery.jpg</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='image-title']</td>
+	<td>ImageGallery.jpg</td>
+</tr>
 </tbody></table>
 </body>
 </html>

@@ -24,6 +24,9 @@ public class ActivateStagingOrganizationTest extends BaseTestCase {
 	public void testActivateStagingOrganization() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -31,7 +34,7 @@ public class ActivateStagingOrganizationTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,19 +44,27 @@ public class ActivateStagingOrganizationTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.clickAt("link=Organizations", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Users and Organizations",
+			RuntimeVariables.replace("Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.type("_126_keywords",
+		selenium.type("//input[@id='_125_keywords']",
 			RuntimeVariables.replace("Web Content Display"));
 		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.clickAt("//strong/a", RuntimeVariables.replace("Actions"));
+		assertEquals(RuntimeVariables.replace(
+				"Organization Staging Organization Web Content Display"),
+			selenium.getText("//td/a/strong"));
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -62,7 +73,7 @@ public class ActivateStagingOrganizationTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Site')]/a")) {
 					break;
 				}
 			}
@@ -72,22 +83,17 @@ public class ActivateStagingOrganizationTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Manage Pages"),
+		assertEquals(RuntimeVariables.replace("Manage Site"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Site')]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Site')]/a"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.clickAt("//li[@id='_126_tabs1settingsTabsId']/span/span/a",
-			RuntimeVariables.replace("Settings"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		selenium.clickAt("link=Staging", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		selenium.select("_126_stagingType",
-			RuntimeVariables.replace("label=Local Live"));
+		assertTrue(selenium.isPartialText("//a[@id='_165_stagingLink']",
+				"Staging"));
+		selenium.clickAt("//a[@id='_165_stagingLink']",
+			RuntimeVariables.replace("Staging"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -95,10 +101,26 @@ public class ActivateStagingOrganizationTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace(
-							"When a portlet is checked, its data will be copied to staging and it may not be possible to edit them directly in live. When unchecking a portlet make sure that any changes done in staging are published first, because otherwise they might be lost.")
-										.equals(selenium.getText(
-								"//div[4]/fieldset/div/div[1]"))) {
+				if (selenium.isVisible("//input[@id='_165_local']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.clickAt("//input[@id='_165_local']",
+			RuntimeVariables.replace("Local Live"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//div[@class='portlet-msg-alert']")) {
 					break;
 				}
 			}
@@ -110,15 +132,13 @@ public class ActivateStagingOrganizationTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace(
 				"When a portlet is checked, its data will be copied to staging and it may not be possible to edit them directly in live. When unchecking a portlet make sure that any changes done in staging are published first, because otherwise they might be lost."),
-			selenium.getText("//div[4]/fieldset/div/div[1]"));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+			selenium.getText("//div[@class='portlet-msg-alert']"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to activate local staging for Organization Staging Organization Web Content Display[\\s\\S]$"));
 		assertEquals(RuntimeVariables.replace(
-				"Your request processed successfully."),
-			selenium.getText("//section/div/div/div/div"));
-		assertEquals("Local Live", selenium.getSelectedLabel("_126_stagingType"));
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
 	}
 }

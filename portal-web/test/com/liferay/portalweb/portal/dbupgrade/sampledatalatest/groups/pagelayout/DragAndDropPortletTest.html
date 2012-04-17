@@ -14,29 +14,29 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Page Layout Page</td>
-	<td>Page Layout Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Page Layout Page</td>
 	<td>Page Layout Page</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>main-content</td>
-	<td></td>
+	<td>//div[@id='main-content']</td>
+	<td>Main Content</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/layout_column.js')]</td>
+	<td>Layout Column</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>dockbar</td>
-	<td></td>
+	<td>//nav[@id='navigation']</td>
+	<td>Navigation</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>navigation</td>
-	<td></td>
+	<td>waitForElementPresent</td>
+	<td>//div[@id='navigation_shim']</td>
+	<td>Navigation Shim</td>
 </tr>
 <tr>
 	<td>dragAndDropToObject</td>
@@ -53,7 +53,6 @@
 	<td>//div[@id='layout-column_column-2' and @class='portlet-dropzone portlet-column-content portlet-column-content-last']/div[1]/div[1]/section/header/h1/span[2]</td>
 	<td>Navigation</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

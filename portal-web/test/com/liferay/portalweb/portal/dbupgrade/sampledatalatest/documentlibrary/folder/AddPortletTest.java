@@ -24,6 +24,12 @@ public class AddPortletTest extends BaseTestCase {
 	public void testAddPortlet() throws Exception {
 		selenium.open("/web/document-library-folder-community/");
 		loadRequiredJavaScriptModules();
+		selenium.clickAt("link=Document Library Page",
+			RuntimeVariables.replace("Document Library Page"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -31,7 +37,8 @@ public class AddPortletTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Document Library Page")) {
+				if (selenium.isElementPresent(
+							"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]")) {
 					break;
 				}
 			}
@@ -41,10 +48,26 @@ public class AddPortletTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Document Library Page",
-			RuntimeVariables.replace("Document Library Page"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText("//li[@id='_145_addContent']/a/span"));
+		selenium.mouseOver("//li[@id='_145_addContent']/a/span");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//a[@id='_145_addApplication']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
 				"More"));
 		selenium.clickAt("//a[@id='_145_addApplication']",
@@ -56,7 +79,27 @@ public class AddPortletTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent(
+				if (selenium.isVisible(
+							"//input[@id='layout_configuration_content']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.typeKeys("//input[@id='layout_configuration_content']",
+			RuntimeVariables.replace("d"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
 							"//div[@title='Documents and Media']/p/a")) {
 					break;
 				}

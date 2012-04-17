@@ -24,6 +24,12 @@ public class AddPortletCalendarEventTest extends BaseTestCase {
 	public void testAddPortletCalendarEvent() throws Exception {
 		selenium.open("/web/calendar-event-community/");
 		loadRequiredJavaScriptModules();
+		selenium.clickAt("link=Calendar Event Page",
+			RuntimeVariables.replace("Calendar Event Page"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -31,7 +37,8 @@ public class AddPortletCalendarEventTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Calendar Event Page")) {
+				if (selenium.isElementPresent(
+							"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]")) {
 					break;
 				}
 			}
@@ -41,10 +48,26 @@ public class AddPortletCalendarEventTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Calendar Event Page",
-			RuntimeVariables.replace("Calendar Event Page"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText("//li[@id='_145_addContent']/a/span"));
+		selenium.mouseOver("//li[@id='_145_addContent']/a/span");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//a[@id='_145_addApplication']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
 				"More"));
 		selenium.clickAt("//a[@id='_145_addApplication']",
@@ -56,7 +79,27 @@ public class AddPortletCalendarEventTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("//div[@title='Calendar']/p/a")) {
+				if (selenium.isVisible(
+							"//input[@id='layout_configuration_content']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.typeKeys("//input[@id='layout_configuration_content']",
+			RuntimeVariables.replace("c"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//div[@title='Calendar']/p/a")) {
 					break;
 				}
 			}

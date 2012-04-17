@@ -14,54 +14,44 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
+	<td>clickAtAndWait</td>
 	<td>link=Page Staging Organization Web Content Display</td>
-	<td></td>
+	<td>Page Staging Organization Web Content Display</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Page Staging Organization Web Content Display</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertElementPresent</td>
-	<td>//body[@class='blue live-view controls-visible signed-in public-page']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertElementNotPresent</td>
-	<td>//body[@class='blue staging controls-visible signed-in public-page']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>link=View Staged Page</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertElementNotPresent</td>
-	<td>//body[@class='blue live-view controls-visible signed-in public-page']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertElementPresent</td>
-	<td>//body[@class='blue staging controls-visible signed-in public-page']</td>
-	<td></td>
+	<td>link=Staging</td>
+	<td>Staging</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//p</td>
+	<td>//div[@class='journal-content-article']/p</td>
 	<td>WC Web Content Content</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>link=Control Panel</td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Web Content</td>
-	<td></td>
+	<td>Web Content</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -69,7 +59,7 @@
 	<td>Organization Staging Organization Web Content Display</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
+	<td>assertVisible</td>
 	<td>//td[2]/a</td>
 	<td>WC Web Content ID</td>
 </tr>
@@ -81,26 +71,21 @@
 <tr>
 	<td>assertText</td>
 	<td>//td[4]/a</td>
-	<td>1.0</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[5]/a</td>
 	<td>Approved</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>//td[6]/a</td>
+	<td>assertVisible</td>
+	<td>//td[5]/a</td>
 	<td>Modified Date</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>//td[7]/a</td>
+	<td>assertVisible</td>
+	<td>//td[6]/a</td>
 	<td>Display Date</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[8]/a</td>
+	<td>//td[7]/a</td>
 	<td>Joe Bloggs</td>
 </tr>
 <tr>
@@ -109,19 +94,9 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Page Staging Organization Web Content Display</td>
-	<td></td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Page Staging Organization Web Content Display</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertElementNotPresent</td>
-	<td>//body[@class='blue staging controls-visible signed-in public-page']</td>
-	<td></td>
+	<td>Page Staging Organization Web Content Display</td>
 </tr>
 <tr>
 	<td>assertTextNotPresent</td>
@@ -129,14 +104,29 @@
 	<td></td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>link=Control Panel</td>
+	<td>Control Panel</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Web Content</td>
-	<td></td>
+	<td>Web Content</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -144,7 +134,7 @@
 	<td>Organization Staging Organization Web Content Display</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
+	<td>assertVisible</td>
 	<td>//td[2]/a</td>
 	<td>WC Web Content ID</td>
 </tr>
@@ -156,29 +146,23 @@
 <tr>
 	<td>assertText</td>
 	<td>//td[4]/a</td>
-	<td>1.0</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[5]/a</td>
 	<td>Approved</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>//td[6]/a</td>
+	<td>assertVisible</td>
+	<td>//td[5]/a</td>
 	<td>Modified Date</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>//td[7]/a</td>
+	<td>assertVisible</td>
+	<td>//td[6]/a</td>
 	<td>Display Date</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[8]/a</td>
+	<td>//td[7]/a</td>
 	<td>Joe Bloggs</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

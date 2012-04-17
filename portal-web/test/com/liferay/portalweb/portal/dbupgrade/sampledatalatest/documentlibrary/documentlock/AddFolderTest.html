@@ -14,33 +14,43 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Document Lock Page</td>
-	<td>Document Lock Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Document Lock Page</td>
 	<td>Document Lock Page</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[3]/span/ul/li/strong/a</td>
+	<td>//h1[@class='portlet-title']</td>
+	<td>Documents and Media</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//div[@id='column-1_shim']</td>
+	<td>Column 1 Shim</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@title='Add']/ul/li/strong/a</td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[@title='Add']/ul/li/strong/a</td>
 	<td>Add</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Folder')]/a</td>
 	<td>Folder</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Folder')]/a</td>
 	<td>Folder</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Folder')]/a</td>
 	<td>Folder</td>
 </tr>
 <tr>
@@ -73,7 +83,6 @@
 	<td>//div/a/span[2]</td>
 	<td>Test1 Folder1</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

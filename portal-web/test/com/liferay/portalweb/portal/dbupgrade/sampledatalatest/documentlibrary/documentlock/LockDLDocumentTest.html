@@ -34,6 +34,11 @@
 	<td>Test1 Folder1</td>
 </tr>
 <tr>
+	<td>waitForText</td>
+	<td>//div/a/span[2]</td>
+	<td>Test1 Document1.txt</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//div/a/span[2]</td>
 	<td>Test1 Document1.txt</td>
@@ -45,12 +50,12 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//button[3]</td>
+	<td>//button[4]</td>
 	<td>Checkout</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//button[3]</td>
+	<td>//button[4]</td>
 	<td>Checkout</td>
 </tr>
 <tr>
@@ -66,14 +71,13 @@
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-lock portlet-msg-success']</td>
-	<td>You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 0 week.</td>
+	<td>You now have an indefinite lock on this document. No one else can edit this document until you unlock it. This lock will never expire.</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//div[3]/div[1]/span[4]</td>
 	<td>This is Test1 Document1</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

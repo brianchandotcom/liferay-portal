@@ -56,7 +56,9 @@ public class ViewLockDLDocumentTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div/a/span[2]")) {
+				if (RuntimeVariables.replace("Test1 Document1.txt (Draft)")
+										.equals(selenium.getText(
+								"//div/a/span[2]"))) {
 					break;
 				}
 			}
@@ -66,7 +68,7 @@ public class ViewLockDLDocumentTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Test1 Document1.txt"),
+		assertEquals(RuntimeVariables.replace("Test1 Document1.txt (Draft)"),
 			selenium.getText("//div/a/span[2]"));
 	}
 }

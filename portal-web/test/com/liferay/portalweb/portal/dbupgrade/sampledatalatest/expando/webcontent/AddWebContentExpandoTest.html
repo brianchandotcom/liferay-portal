@@ -34,23 +34,28 @@
 	<td>Web Content</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//span[@title='Add']/ul/li/strong/a/span</td>
+	<td>Add</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>//div/span/ul/li/strong/a/span</td>
+	<td>//span[@title='Add']/ul/li/strong/a/span</td>
 	<td>Add</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Basic Web Content')]/a</td>
 	<td>Basic Web Content</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Basic Web Content')]/a</td>
 	<td>Basic Web Content</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Basic Web Content')]/a</td>
 	<td>Basic Web Content</td>
 </tr>
 <tr>
@@ -138,7 +143,6 @@
 	<td>//td[7]/a</td>
 	<td>Joe Bloggs</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

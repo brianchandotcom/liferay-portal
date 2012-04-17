@@ -24,6 +24,9 @@ public class AddStructureImageAssociationTest extends BaseTestCase {
 	public void testAddStructureImageAssociation() throws Exception {
 		selenium.open("/web/web-content-image-association-community/");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -57,9 +60,9 @@ public class AddStructureImageAssociationTest extends BaseTestCase {
 			RuntimeVariables.replace("Add Structure"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.type("//input[@id='_15_name']",
+		selenium.type("//input[@id='_15_name_en_US']",
 			RuntimeVariables.replace("Image Structure Test"));
-		selenium.type("//textarea[@id='_15_description']",
+		selenium.type("//textarea[@id='_15_description_en_US']",
 			RuntimeVariables.replace("This is an image structure test."));
 		selenium.clickAt("//input[@value='Add Row']",
 			RuntimeVariables.replace("Add Row"));
@@ -68,7 +71,7 @@ public class AddStructureImageAssociationTest extends BaseTestCase {
 		selenium.type("//input[@id='_15_structure_el0_name']",
 			RuntimeVariables.replace("image-gallery-test"));
 		selenium.select("//select[@id='_15_structure_el0_type']",
-			RuntimeVariables.replace("label=Image Gallery"));
+			RuntimeVariables.replace("Documents and Media"));
 		selenium.clickAt("//input[@value='Add Row']",
 			RuntimeVariables.replace("Add Row"));
 		selenium.waitForPageToLoad("30000");
@@ -76,42 +79,23 @@ public class AddStructureImageAssociationTest extends BaseTestCase {
 		selenium.type("//input[@id='_15_structure_el0_name']",
 			RuntimeVariables.replace("image-test"));
 		selenium.select("//select[@id='_15_structure_el0_type']",
-			RuntimeVariables.replace("label=Image"));
+			RuntimeVariables.replace("Image"));
 		selenium.clickAt("//input[@value='Add Row']",
 			RuntimeVariables.replace("Add Row"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.select("//select[@id='_15_structure_el0_type']",
-			RuntimeVariables.replace("label=Text"));
 		selenium.type("//input[@id='_15_structure_el0_name']",
 			RuntimeVariables.replace("text-test"));
+		selenium.select("//select[@id='_15_structure_el0_type']",
+			RuntimeVariables.replace("Text"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace(
-				"Image Structure Test\nThis is an image structure test."),
-			selenium.getText(
-				"//tr[@class='portlet-section-body results-row last']/td[3]"));
+		assertEquals(RuntimeVariables.replace("Image Structure Test"),
+			selenium.getText("//tr[3]/td[3]"));
 	}
 }

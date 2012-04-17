@@ -65,12 +65,12 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//textarea[@id='_15_xsdContent']</td>
-	<td></td>
+	<td>//textarea[@id='_15_plainEditorField']</td>
+	<td>Editor</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//textarea[@id='_15_xsdContent']</td>
+	<td>//textarea[@id='_15_plainEditorField']</td>
 	<td><root><br />	<dynamic-element name='content' type='text'></dynamic-element><br /></root></td>
 </tr>
 <tr>
@@ -86,11 +86,16 @@
 <tr>
 	<td>waitForElementPresent</td>
 	<td>//input[@id='_15_structure_el0_name']</td>
-	<td></td>
+	<td>content</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
 	<td>//input[@id='_15_structure_el0_name']</td>
+	<td>content</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
 	<td></td>
 </tr>
 <tr>
@@ -113,7 +118,6 @@
 	<td>//td[3]/a</td>
 	<td>Expando Structure Test</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

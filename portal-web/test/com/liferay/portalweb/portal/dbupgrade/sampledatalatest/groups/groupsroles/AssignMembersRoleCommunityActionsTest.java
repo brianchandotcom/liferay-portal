@@ -25,6 +25,9 @@ public class AssignMembersRoleCommunityActionsTest extends BaseTestCase {
 		throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -58,8 +61,8 @@ public class AssignMembersRoleCommunityActionsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("RolesGroupsRolesName"),
 			selenium.getText("//tr[3]/td[1]"));
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//td[4]/span/ul/li/strong/a/span"));
-		selenium.clickAt("//td[4]/span/ul/li/strong/a/span",
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
@@ -131,7 +134,5 @@ public class AssignMembersRoleCommunityActionsTest extends BaseTestCase {
 		assertTrue(selenium.isChecked("//input[@name='_128_rowIds']"));
 		assertEquals(RuntimeVariables.replace("Community Groups Roles"),
 			selenium.getText("//tr[3]/td[2]"));
-		assertEquals(RuntimeVariables.replace("Communities"),
-			selenium.getText("//form/ul[1]/li[2]/span/span/a"));
 	}
 }

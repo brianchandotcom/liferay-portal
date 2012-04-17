@@ -24,26 +24,9 @@ public class SelectWebContentTest extends BaseTestCase {
 	public void testSelectWebContent() throws Exception {
 		selenium.open("/web/community-staging-community-web-content-display/");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"link=Page Staging Community Web Content Display")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.clickAt("link=Page Staging Community Web Content Display",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace(
+				"Page Staging Community Web Content Display"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Staging", RuntimeVariables.replace("Staging"));

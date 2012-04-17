@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Wiki Page Test</td>
-	<td>Wiki Page Test</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Wiki Page Test</td>
 	<td>Wiki Page Test</td>
@@ -29,24 +24,74 @@
 	<td>This page is empty. Edit it to add some text.</td>
 </tr>
 <tr>
+	<td>waitForElementPresent</td>
+	<td>//textarea[@id='_36_editor' and @style='display: none;']</td>
+	<td>Text Area</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[.='Source']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[.='Source']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//a[@class='cke_button_source cke_on']</td>
+	<td>Source Button On</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//td[@id='cke_contents__36_editor']/textarea</td>
+	<td>CK Editor</td>
+</tr>
+<tr>
 	<td>type</td>
-	<td>//input[@id='_36_content']</td>
+	<td>//td[@id='cke_contents__36_editor']/textarea</td>
 	<td>Front Page Text</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//input[@id='_36_content']</td>
-	<td></td>
+	<td>//span[.='Source']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[.='Source']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//textarea[@id='_36_editor' and @style='display: none;']</td>
+	<td>Text Area</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//td[@id='cke_contents__36_editor']/iframe</td>
+	<td>CK Editor</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//td[@id='cke_contents__36_editor']/iframe</td>
+	<td>CK Editor</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//body</td>
+	<td>Front Page Text</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Publish']</td>
 	<td>Publish</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -63,7 +108,6 @@
 	<td>//div[@class='wiki-body']</td>
 	<td>Front Page Text</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

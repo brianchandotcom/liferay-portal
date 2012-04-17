@@ -25,6 +25,9 @@ public class AssignMembersCommunityUserActionTest extends BaseTestCase {
 		throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -32,7 +35,7 @@ public class AssignMembersCommunityUserActionTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -58,8 +61,8 @@ public class AssignMembersCommunityUserActionTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("MB Ban Community"),
 			selenium.getText("//tr[3]/td[1]"));
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//td[6]/span/ul/li/strong/a/span"));
-		selenium.clickAt("//td[6]/span/ul/li/strong/a/span",
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
@@ -125,8 +128,8 @@ public class AssignMembersCommunityUserActionTest extends BaseTestCase {
 		selenium.clickAt("//input[@name='_174_rowIds']",
 			RuntimeVariables.replace("Checkbox"));
 		assertTrue(selenium.isChecked("//input[@name='_174_rowIds']"));
-		selenium.clickAt("//input[@value='Update Associations']",
-			RuntimeVariables.replace("Update Associations"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(

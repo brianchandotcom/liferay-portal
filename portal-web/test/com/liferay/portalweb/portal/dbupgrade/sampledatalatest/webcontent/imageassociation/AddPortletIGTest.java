@@ -24,6 +24,12 @@ public class AddPortletIGTest extends BaseTestCase {
 	public void testAddPortletIG() throws Exception {
 		selenium.open("/web/web-content-image-association-community/");
 		loadRequiredJavaScriptModules();
+		selenium.clickAt("link=Image Gallery Page",
+			RuntimeVariables.replace("Image Gallery Page"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -31,7 +37,8 @@ public class AddPortletIGTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Image Gallery Page")) {
+				if (selenium.isElementPresent(
+							"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]")) {
 					break;
 				}
 			}
@@ -41,10 +48,26 @@ public class AddPortletIGTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Image Gallery Page",
-			RuntimeVariables.replace("Image Gallery Page"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText("//li[@id='_145_addContent']/a/span"));
+		selenium.mouseOver("//li[@id='_145_addContent']/a/span");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//a[@id='_145_addApplication']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
 				"More"));
 		selenium.clickAt("//a[@id='_145_addApplication']",
@@ -56,8 +79,8 @@ public class AddPortletIGTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent(
-							"//div[@title='Image Gallery']/p/a")) {
+				if (selenium.isVisible(
+							"//input[@id='layout_configuration_content']")) {
 					break;
 				}
 			}
@@ -67,7 +90,26 @@ public class AddPortletIGTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("//div[@title='Image Gallery']/p/a",
+		selenium.typeKeys("//input[@id='layout_configuration_content']",
+			RuntimeVariables.replace("m"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//div[@title='Media Gallery']/p/a")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.clickAt("//div[@title='Media Gallery']/p/a",
 			RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {

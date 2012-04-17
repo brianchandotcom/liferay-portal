@@ -75,7 +75,7 @@ public class AddStructureExpandoTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//textarea[@id='_15_xsdContent']")) {
+				if (selenium.isVisible("//textarea[@id='_15_plainEditorField']")) {
 					break;
 				}
 			}
@@ -85,7 +85,7 @@ public class AddStructureExpandoTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.type("//textarea[@id='_15_xsdContent']",
+		selenium.type("//textarea[@id='_15_plainEditorField']",
 			RuntimeVariables.replace(
 				"<root>\n	<dynamic-element name='content' type='text'></dynamic-element>\n</root>"));
 		Thread.sleep(5000);
@@ -110,6 +110,7 @@ public class AddStructureExpandoTest extends BaseTestCase {
 
 		assertTrue(selenium.isElementPresent(
 				"//input[@id='_15_structure_el0_name']"));
+		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

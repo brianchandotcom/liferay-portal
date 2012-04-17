@@ -24,33 +24,58 @@
 	<td>Document Library Page</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//div[3]/a/span[2]</td>
+	<td>Test2 Folder2</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>//div[2]/a/span[2]</td>
+	<td>//div[3]/a/span[2]</td>
 	<td>Test2 Folder2</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//span[3]/span/span/ul/li/strong/a/span</td>
+	<td>//li[@class='folder selected']/a/span[contains(.,'Test2 Folder2')]</td>
+	<td>Test2 Folder2</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@class='folder selected']/a/span[contains(.,'Test2 Folder2')]</td>
+	<td>Test2 Folder2</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//h1[@class='portlet-title']</td>
+	<td>Documents and Media</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//div[@id='column-1_shim']</td>
+	<td>Column 1 Shim</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@title='Add']/ul/li/strong/a</td>
 	<td>Add</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[3]/span/span/ul/li/strong/a/span</td>
+	<td>//span[@title='Add']/ul/li/strong/a</td>
 	<td>Add</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Shortcut')]/a</td>
 	<td>Shortcut</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Shortcut')]/a</td>
 	<td>Shortcut</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Shortcut')]/a</td>
 	<td>Shortcut</td>
 </tr>
 <tr>
@@ -74,7 +99,7 @@
 	<td>Document Library Shortcut Community</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
+	<td>clickAt</td>
 	<td>link=Document Library Shortcut Community</td>
 	<td>Document Library Shortcut Community</td>
 </tr>
@@ -119,9 +144,14 @@
 	<td>Test1 Folder1</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//td[1]/a</td>
+	<td>Test1 Document1.txt<br />This is test1 document1.</td>
+</tr>
+<tr>
 	<td>click</td>
 	<td>//td[1]/a</td>
-	<td>Test1 Document1.txt</td>
+	<td>Test1 Document1.txt<br />This is test1 document1.</td>
 </tr>
 <tr>
 	<td>selectWindow</td>
@@ -155,10 +185,9 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div/a/span[2]</td>
+	<td>//div[2]/a/span[2]</td>
 	<td>Test1 Document1.txt</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

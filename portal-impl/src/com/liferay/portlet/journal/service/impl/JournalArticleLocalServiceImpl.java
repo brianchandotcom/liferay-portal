@@ -117,6 +117,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.portlet.PortletPreferences;
 
@@ -216,6 +218,34 @@ public class JournalArticleLocalServiceImpl
 			user, groupId, articleId, version, false, content, structureId,
 			images);
 
+		String urlTitleFromContext = GetterUtil.getString(
+				serviceContext.getAttribute("urlTitle"));
+
+		String urlTitle = null;
+		if (isContextUrlTitleRegexpMatch(urlTitleFromContext)) {
+			urlTitle = JournalUtil.getUrlTitle(id, urlTitleFromContext);
+
+			urlTitle = ModelHintsUtil.trimString(
+				JournalArticle.class.getName(), "urlTitle", urlTitle);
+
+			JournalArticle articleWithUrlTitle = null;
+			try {
+				articleWithUrlTitle = getArticleByUrlTitle(groupId, urlTitle);
+			}
+			catch (NoSuchArticleException nsae) {
+			}
+
+			if ((articleWithUrlTitle != null) &&
+				!articleWithUrlTitle.getArticleId().equals(articleId)) {
+
+				urlTitle = getUniqueUrlTitle(
+					article.getId(), groupId, articleId, urlTitle);
+			}
+		}
+		else {
+			urlTitle = getUniqueUrlTitle(id, groupId, articleId, title);
+		}
+
 		article.setResourcePrimKey(resourcePrimKey);
 		article.setGroupId(groupId);
 		article.setCompanyId(user.getCompanyId());
@@ -228,7 +258,7 @@ public class JournalArticleLocalServiceImpl
 		article.setArticleId(articleId);
 		article.setVersion(version);
 		article.setTitleMap(titleMap, locale);
-		article.setUrlTitle(getUniqueUrlTitle(id, groupId, articleId, title));
+		article.setUrlTitle(urlTitle);
 		article.setDescriptionMap(descriptionMap, locale);
 		article.setContent(content);
 		article.setType(type);
@@ -2033,10 +2063,42 @@ public class JournalArticleLocalServiceImpl
 			user, groupId, articleId, article.getVersion(), incrementVersion,
 			content, structureId, images);
 
+		String urlTitleFromContext = GetterUtil.getString(
+				serviceContext.getAttribute("urlTitle"));
+
+		String urlTitle = null;
+		if (isContextUrlTitleRegexpMatch(urlTitleFromContext)) {
+			urlTitle = JournalUtil.getUrlTitle(
+				article.getId(), urlTitleFromContext);
+
+			urlTitle = ModelHintsUtil.trimString(
+				JournalArticle.class.getName(), "urlTitle", urlTitle);
+
+			JournalArticle articleWithUrlTitle = null;
+			try {
+				articleWithUrlTitle = getArticleByUrlTitle(groupId, urlTitle);
+			}
+			catch (NoSuchArticleException nsae) {
+			}
+
+			if ((articleWithUrlTitle != null) &&
+				!articleWithUrlTitle.getArticleId().equals(articleId)) {
+
+				urlTitle = getUniqueUrlTitle(
+						article.getId(), groupId, articleId, urlTitle);
+			}
+		}
+		else if (isContextUrlTitleRegexpMatch(oldArticle.getUrlTitle())) {
+			urlTitle = oldArticle.getUrlTitle();
+		}
+		else {
+			urlTitle = getUniqueUrlTitle(
+					article.getId(), groupId, articleId, title);
+		}
+
 		article.setModifiedDate(serviceContext.getModifiedDate(now));
 		article.setTitleMap(titleMap, locale);
-		article.setUrlTitle(
-			getUniqueUrlTitle(article.getId(), groupId, articleId, title));
+		article.setUrlTitle(urlTitle);
 		article.setDescriptionMap(descriptionMap, locale);
 		article.setContent(content);
 		article.setType(type);
@@ -2180,6 +2242,40 @@ public class JournalArticleLocalServiceImpl
 
 			article = journalArticlePersistence.create(id);
 
+			String urlTitleFromContext = GetterUtil.getString(
+					serviceContext.getAttribute("urlTitle"));
+
+			String urlTitle = null;
+			if (isContextUrlTitleRegexpMatch(urlTitleFromContext)) {
+				urlTitle = JournalUtil.getUrlTitle(
+					article.getId(), urlTitleFromContext);
+
+				urlTitle = ModelHintsUtil.trimString(
+					JournalArticle.class.getName(), "urlTitle", urlTitle);
+
+				JournalArticle articleWithUrlTitle = null;
+				try {
+					articleWithUrlTitle = getArticleByUrlTitle(
+						groupId, urlTitle);
+				}
+				catch (NoSuchArticleException nsae) {
+				}
+
+				if ((articleWithUrlTitle != null) &&
+					!articleWithUrlTitle.getArticleId().equals(articleId)) {
+
+					urlTitle = getUniqueUrlTitle(
+						article.getId(), groupId, articleId, urlTitle);
+				}
+			}
+			else if (isContextUrlTitleRegexpMatch(oldArticle.getUrlTitle())) {
+				urlTitle = oldArticle.getUrlTitle();
+			}
+			else {
+				urlTitle = getUniqueUrlTitle(
+						article.getId(), groupId, articleId, title);
+			}
+
 			article.setResourcePrimKey(oldArticle.getResourcePrimKey());
 			article.setGroupId(oldArticle.getGroupId());
 			article.setCompanyId(oldArticle.getCompanyId());
@@ -2192,8 +2288,7 @@ public class JournalArticleLocalServiceImpl
 			article.setArticleId(articleId);
 			article.setVersion(newVersion);
 			article.setTitleMap(oldArticle.getTitleMap());
-			article.setUrlTitle(
-				getUniqueUrlTitle(article.getId(), groupId, articleId, title));
+			article.setUrlTitle(urlTitle);
 			article.setDescriptionMap(oldArticle.getDescriptionMap());
 			article.setType(oldArticle.getType());
 			article.setStructureId(oldArticle.getStructureId());
@@ -3063,6 +3158,23 @@ public class JournalArticleLocalServiceImpl
 		catch (NoSuchArticleException nsae) {
 			return true;
 		}
+	}
+
+	protected boolean isContextUrlTitleRegexpMatch(String urlTitle)
+			throws PortalException {
+		if (Validator.isNotNull(urlTitle) &&
+			Validator.isNotNull(
+				PropsValues.JOURNAL_ARTICLE_CONTEXT_URL_TITLE_REGEXP)) {
+
+			Pattern pattern = Pattern.compile(
+				PropsValues.JOURNAL_ARTICLE_CONTEXT_URL_TITLE_REGEXP);
+
+			Matcher matcher = pattern.matcher(urlTitle);
+
+			return matcher.matches();
+		}
+
+		return false;
 	}
 
 	protected void notifySubscribers(

@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
@@ -143,7 +143,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		int[] subscriptionIndexes = StringUtil.split(
 			ParamUtil.getString(actionRequest, "subscriptionIndexes"), 0);
 
-		Map<String, String> subscriptions = new HashMap<String, String>();
+		Map<String, String> subscriptions = new LinkedHashMap<String, String>();
 
 		for (int subscriptionIndex : subscriptionIndexes) {
 			String url = ParamUtil.getString(

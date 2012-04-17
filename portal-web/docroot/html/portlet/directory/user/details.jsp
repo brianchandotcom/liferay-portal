@@ -32,7 +32,7 @@ for (int i = 1; i<organizations.size(); i++) {
 }
 %>
 
-<h2><%= HtmlUtil.escape(selUser.getFullName()) %></h2>
+<h2><%= selUser.getFullName() %></h2>
 
 <div class="details">
 	<img alt="<liferay-ui:message key="avatar" />" class="avatar" id="<portlet:namespace />avatar" src="<%= selUser.getPortraitURL(themeDisplay) %>" />

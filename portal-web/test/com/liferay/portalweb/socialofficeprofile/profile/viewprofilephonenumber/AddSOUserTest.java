@@ -220,8 +220,8 @@ public class AddSOUserTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isElementPresent(
-						"//li[@id='_145_userMenu']/a"));
-				selenium.mouseOver("//li[@id='_145_userMenu']/a");
+						"//li[@id='_145_userMenu']"));
+				selenium.mouseOver("//li[@id='_145_userMenu']");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -328,8 +328,8 @@ public class AddSOUserTest extends BaseTestCase {
 				selenium.open("/web/guest/home/");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isElementPresent(
-						"//li[@id='_145_userMenu']/a"));
-				selenium.mouseOver("//li[@id='_145_userMenu']/a");
+						"//li[@id='_145_userMenu']"));
+				selenium.mouseOver("//li[@id='_145_userMenu']");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {

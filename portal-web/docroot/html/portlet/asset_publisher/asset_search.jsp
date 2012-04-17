@@ -34,7 +34,7 @@ AssetDisplayTerms displayTerms = (AssetDisplayTerms)searchContainer.getDisplayTe
 
 		<aui:input name="<%= displayTerms.USER_NAME %>" size="20" type="text" value="<%= displayTerms.getUserName() %>" />
 
-		<aui:select label="my-sites" name="<%= displayTerms.GROUP_ID %>" showEmptyOption="<%= true %>">
+		<aui:select label="my-sites" name="<%= displayTerms.GROUP_ID %>">
 
 			<%
 			for (long groupId : groupIds) {

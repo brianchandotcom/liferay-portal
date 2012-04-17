@@ -515,6 +515,15 @@ AUI.add(
 						popup.entriesNode.html(TPL_LOADING);
 
 						popup.show();
+
+						if (popup.get('stack')) {
+							setTimeout(
+								function() {
+									A.DialogManager.bringToTop(popup);
+								},
+								0
+							);
+						}
 					},
 
 					_showSelectPopup: function(event) {

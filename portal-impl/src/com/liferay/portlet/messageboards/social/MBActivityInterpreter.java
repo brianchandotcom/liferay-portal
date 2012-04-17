@@ -85,20 +85,31 @@ public class MBActivityInterpreter extends BaseSocialActivityInterpreter {
 
 		if (activityType == MBActivityKeys.ADD_MESSAGE) {
 			if (activity.getReceiverUserId() == 0) {
-				titlePattern = "activity-message-boards-add-message";
+				if (Validator.isNull(groupName)) {
+					titlePattern = "activity-message-boards-add-message";
+				}
+				else {
+					titlePattern = "activity-message-boards-add-message-in";
+				}
 			}
 			else {
-				titlePattern = "activity-message-boards-reply-message";
+				if (Validator.isNull(groupName)) {
+					titlePattern = "activity-message-boards-reply-message";
+				}
+				else {
+					titlePattern = "activity-message-boards-reply-message-in";
+				}
 			}
 		}
 		else if ((activityType == MBActivityKeys.REPLY_MESSAGE) &&
 				 (activity.getReceiverUserId() > 0)) {
 
-			titlePattern = "activity-message-boards-reply-message";
-		}
-
-		if (Validator.isNotNull(groupName)) {
-			titlePattern += "-in";
+			if (Validator.isNull(groupName)) {
+				titlePattern = "activity-message-boards-reply-message";
+			}
+			else {
+				titlePattern = "activity-message-boards-reply-message-in";
+			}
 		}
 
 		String messageSubject = wrapLink(

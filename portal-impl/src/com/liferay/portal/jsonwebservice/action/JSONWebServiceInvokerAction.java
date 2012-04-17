@@ -63,9 +63,7 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 	}
 
 	public Object invoke() throws Exception {
-		_command = _removeTypeInfoFromJson(_command);
-
-		Object command = JSONFactoryUtil.looseDeserialize(_command);
+		Object command = JSONFactoryUtil.looseDeserializeSafe(_command);
 
 		List<Object> list = null;
 
@@ -299,20 +297,6 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 				flag.setValue(null);
 			}
 		}
-	}
-	
-	/**
-	 * Removes type information from JSON string, so flexjson will not
-	 * create any objects.
-	 */
-	private String _removeTypeInfoFromJson(String jsonString) {
-		jsonString = StringUtil.replace(
-			jsonString, "\"class\"", "\"$class\"");
-
-		jsonString = StringUtil.replace(
-			jsonString, "'class'", "\"$class\"");
-
-		return jsonString;
 	}
 
 	private class Flag extends KeyValue<String, String> {

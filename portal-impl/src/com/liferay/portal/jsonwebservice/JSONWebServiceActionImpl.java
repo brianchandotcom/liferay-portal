@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MethodParameter;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.service.ServiceContext;
 
 import java.lang.reflect.Method;
@@ -247,12 +246,10 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 
 					String jsonString = value.toString();
 
-					jsonString = _removeTypeInfoFromJson(jsonString);
-
 					// deserialize json string in list of strings,
 					// as the type conversion will happens in the
 					// next step (_generifyList)
-					List<?> list = JSONFactoryUtil.looseDeserialize(
+					List<?> list = JSONFactoryUtil.looseDeserializeSafe(
 						jsonString, ArrayList.class);
 
 					list = _generifyList(
@@ -268,13 +265,10 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 
 					String jsonString = value.toString();
 
-					jsonString = _removeTypeInfoFromJson(jsonString);
-
 					// deserialize json string in list of strings,
 					// as the type conversion will happens in the
 					// next step ( (_generifyMap)
-
-					Map<?, ?> map = JSONFactoryUtil.looseDeserialize(
+					Map<?, ?> map = JSONFactoryUtil.looseDeserializeSafe(
 						jsonString, HashMap.class);
 
 					map = _generifyMap(
@@ -293,20 +287,6 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 		}
 
 		return parameters;
-	}
-
-	/**
-	 * Removes type information from JSON string, so flexjson will not
-	 * create any objects.
-	 */
-	private String _removeTypeInfoFromJson(String jsonString) {
-		jsonString = StringUtil.replace(
-			jsonString, "\"class\"", "\"$class\"");
-
-		jsonString = StringUtil.replace(
-			jsonString, "'class'", "\"$class\"");
-
-		return jsonString;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

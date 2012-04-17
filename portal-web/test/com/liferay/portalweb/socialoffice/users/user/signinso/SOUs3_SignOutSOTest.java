@@ -31,7 +31,7 @@ public class SOUs3_SignOutSOTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//li[@id='_145_userMenu']/a")) {
+				if (selenium.isVisible("//li[@id='_145_userMenu']")) {
 					break;
 				}
 			}
@@ -41,7 +41,7 @@ public class SOUs3_SignOutSOTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.mouseOver("//li[@id='_145_userMenu']/a");
+		selenium.mouseOver("//li[@id='_145_userMenu']");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

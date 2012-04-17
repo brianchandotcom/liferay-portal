@@ -156,8 +156,8 @@ public class EditSOUser1PasswordTest extends BaseTestCase {
 					selenium.getText("//div[@class='portlet-msg-success']"));
 				selenium.open("/web/guest/home/");
 				loadRequiredJavaScriptModules();
-				assertTrue(selenium.isVisible("//li[@id='_145_userMenu']/a"));
-				selenium.mouseOver("//li[@id='_145_userMenu']/a");
+				assertTrue(selenium.isVisible("//li[@id='_145_userMenu']"));
+				selenium.mouseOver("//li[@id='_145_userMenu']");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -232,8 +232,8 @@ public class EditSOUser1PasswordTest extends BaseTestCase {
 				loadRequiredJavaScriptModules();
 				selenium.open("/web/guest/home/");
 				loadRequiredJavaScriptModules();
-				assertTrue(selenium.isVisible("//li[@id='_145_userMenu']/a"));
-				selenium.mouseOver("//li[@id='_145_userMenu']/a");
+				assertTrue(selenium.isVisible("//li[@id='_145_userMenu']"));
+				selenium.mouseOver("//li[@id='_145_userMenu']");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {

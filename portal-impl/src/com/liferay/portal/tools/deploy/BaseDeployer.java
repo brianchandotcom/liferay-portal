@@ -1844,11 +1844,7 @@ public class BaseDeployer implements Deployer {
 		String extraContent = getExtraContent(
 			webXmlVersion, srcFile, displayName);
 
-		int pos = content.indexOf("<listener>");
-
-		if (pos == -1) {
-			pos = content.indexOf("</web-app>");
-		}
+		int pos = content.indexOf("</web-app>");
 
 		String newContent =
 			content.substring(0, pos) + extraContent +

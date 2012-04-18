@@ -1,6 +1,7 @@
 AUI.add(
 	'liferay-util-window',
 	function(A) {
+		var Lang = A.Lang;
 		var Util = Liferay.Util;
 		var Window = Util.Window;
 
@@ -31,7 +32,7 @@ AUI.add(
 			}
 		};
 
-		Util._openWindow = function(config) {
+		Util._openWindow = function(config, callback) {
 			var openingWindow = config.openingWindow;
 
 			var refreshWindow = config.refreshWindow;
@@ -41,7 +42,7 @@ AUI.add(
 			var id = config.id || A.guid();
 
 			if (config.cache === false) {
-				uri = Liferay.Util.addParams(A.guid() + '=' + A.Lang.now(), uri);
+				uri = Liferay.Util.addParams(A.guid() + '=' + Lang.now(), uri);
 			}
 
 			var dialog = Window._map[id];
@@ -168,6 +169,10 @@ AUI.add(
 			}
 
 			dialog.set('title', title);
+
+			if (Lang.isFunction(callback)) {
+				callback(dialog);
+			}
 
 			return dialog;
 		};

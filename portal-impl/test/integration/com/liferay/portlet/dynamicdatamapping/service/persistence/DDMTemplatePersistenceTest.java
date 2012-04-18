@@ -283,13 +283,6 @@ public class DDMTemplatePersistenceTest {
 				existingDDMTemplateModelImpl.getOriginalUuid()));
 		Assert.assertEquals(existingDDMTemplateModelImpl.getGroupId(),
 			existingDDMTemplateModelImpl.getOriginalGroupId());
-
-		Assert.assertEquals(existingDDMTemplateModelImpl.getGroupId(),
-			existingDDMTemplateModelImpl.getOriginalGroupId());
-		Assert.assertEquals(existingDDMTemplateModelImpl.getClassNameId(),
-			existingDDMTemplateModelImpl.getOriginalClassNameId());
-		Assert.assertEquals(existingDDMTemplateModelImpl.getClassPK(),
-			existingDDMTemplateModelImpl.getOriginalClassPK());
 	}
 
 	protected DDMTemplate addDDMTemplate() throws Exception {

@@ -14,9 +14,10 @@
 
 package com.liferay.portal.security.pacl;
 
-import java.lang.reflect.Method;
+import com.liferay.portal.security.pacl.checker.BaseChecker;
 
-import java.util.Locale;
+import java.security.Permission;
+
 import java.util.Properties;
 import java.util.Set;
 
@@ -24,6 +25,10 @@ import java.util.Set;
  * @author Brian Wing Shun Chan
  */
 public interface PACLPolicy {
+
+	public void checkPermission(Permission permission);
+
+	public BaseChecker getChecker(String permissionClassName);
 
 	public ClassLoader getClassLoader();
 
@@ -38,36 +43,6 @@ public interface PACLPolicy {
 	public Set<String> getPropertySet(String key);
 
 	public String getServletContextName();
-
-	public boolean hasDynamicQuery(Class<?> clazz);
-
-	public boolean hasFileDelete(String fileName);
-
-	public boolean hasFileExecute(String fileName);
-
-	public boolean hasFileRead(String fileName);
-
-	public boolean hasFileWrite(String fileName);
-
-	public boolean hasHookCustomJspDir();
-
-	public boolean hasHookIndexer(String className);
-
-	public boolean hasHookLanguagePropertiesLocale(Locale locale);
-
-	public boolean hasHookPortalPropertiesKey(String key);
-
-	public boolean hasHookService(String className);
-
-	public boolean hasHookServletFilters();
-
-	public boolean hasHookStrutsActionPath(String path);
-
-	public boolean hasService(Object object, Method method);
-
-	public boolean hasSocketConnect(String host, int port);
-
-	public boolean hasSocketListen(int port);
 
 	public boolean hasSQL(String sql);
 

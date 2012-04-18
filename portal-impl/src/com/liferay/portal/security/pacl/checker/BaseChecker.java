@@ -16,6 +16,8 @@ package com.liferay.portal.security.pacl.checker;
 
 import com.liferay.portal.security.pacl.PACLPolicy;
 
+import java.security.Permission;
+
 import java.util.Properties;
 import java.util.Set;
 
@@ -27,6 +29,8 @@ public abstract class BaseChecker {
 	public BaseChecker(PACLPolicy paclPolicy) {
 		_paclPolicy = paclPolicy;
 	}
+
+	public abstract void checkPermission(Permission permission);
 
 	public ClassLoader getClassLoader() {
 		return _paclPolicy.getClassLoader();

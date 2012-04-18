@@ -17,6 +17,7 @@ package com.liferay.portal.security.pacl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
+import com.liferay.portal.security.pacl.permission.PortalServicePermission;
 import com.liferay.portal.service.impl.PortalServiceImpl;
 import com.liferay.portal.spring.aop.ChainableMethodAdvice;
 import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
@@ -45,8 +46,6 @@ public class PACLAdvice extends ChainableMethodAdvice {
 
 		Method method = methodInvocation.getMethod();
 
-		boolean debug = false;
-
 		if (_log.isDebugEnabled()) {
 			Object thisObject = methodInvocation.getThis();
 
@@ -58,57 +57,25 @@ public class PACLAdvice extends ChainableMethodAdvice {
 				className.equals(_ENTRY_LOCAL_SERVICE_IMPL_CLASS_NAME) ||
 				className.equals(_STATUS_LOCAL_SERVICE_IMPL_CLASS_NAME)) {
 
-				debug = true;
-
 				_log.debug(
 					"Intercepting " + className + "#" + method.getName());
 			}
 		}
 
-		PACLPolicy paclPolicy = PACLClassUtil.getPACLPolicyByReflection(debug);
+		SecurityManager sm = System.getSecurityManager();
 
-		if (debug) {
-			if (paclPolicy != null) {
-				_log.debug(
-					"Retrieved PACL policy for " +
-						paclPolicy.getServletContextName());
-			}
-		}
-
-		if (paclPolicy == null) {
-			try {
-				return methodInvocation.proceed();
-			}
-			catch (Throwable throwable) {
-				throw throwable;
-			}
-		}
-
-		if (!paclPolicy.hasService(methodInvocation.getThis(), method)) {
-			throw new SecurityException("Attempted to invoke " + method);
+		if (sm != null) {
+			sm.checkPermission(
+				new PortalServicePermission(
+					"hasService", null, methodInvocation.getThis(), method));
 		}
 
 		boolean enabled = PortalSecurityManagerThreadLocal.isEnabled();
 
 		try {
-			Object thisObject = methodInvocation.getThis();
-
-			Class<?> thisObjectClass = thisObject.getClass();
-
-			if (paclPolicy.getClassLoader() !=
-					thisObjectClass.getClassLoader()) {
-
-				// Disable the portal security manager so that PACLDataSource
-				// does not try to check access to tables that can be accessed
-				// since the service is already approved
-
-				PortalSecurityManagerThreadLocal.setEnabled(false);
-			}
+			PortalSecurityManagerThreadLocal.setEnabled(false);
 
 			return methodInvocation.proceed();
-		}
-		catch (Throwable throwable) {
-			throw throwable;
 		}
 		finally {
 			PortalSecurityManagerThreadLocal.setEnabled(enabled);

@@ -16,11 +16,10 @@ package com.liferay.portal.security.pacl;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
+import com.liferay.portal.security.pacl.permission.PortalServicePermission;
 import com.liferay.portal.service.persistence.GroupPersistenceImpl;
 import com.liferay.portal.service.persistence.UserPersistenceImpl;
 
-import java.lang.Object;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -73,8 +72,6 @@ public class PACLBeanHandler implements InvocationHandler {
 			return method.invoke(_bean, arguments);
 		}
 
-		boolean debug = false;
-
 		if (_log.isDebugEnabled()) {
 			Class<?> clazz = _bean.getClass();
 
@@ -83,50 +80,19 @@ public class PACLBeanHandler implements InvocationHandler {
 			if (className.equals(GroupPersistenceImpl.class.getName()) ||
 				className.equals(UserPersistenceImpl.class.getName())) {
 
-				debug = true;
-
 				_log.debug(
 					"Intercepting " + className + "#" + method.getName());
 			}
 		}
 
-		PACLPolicy paclPolicy = PACLClassUtil.getPACLPolicyByReflection(debug);
+		SecurityManager sm = System.getSecurityManager();
 
-		if (debug) {
-			if (paclPolicy != null) {
-				_log.debug(
-					"Retrieved PACL policy for " +
-						paclPolicy.getServletContextName());
-			}
+		if (sm != null) {
+			sm.checkPermission(
+				new PortalServicePermission("hasService", null, _bean, method));
 		}
 
-		if (paclPolicy == null) {
-			return method.invoke(_bean, arguments);
-		}
-
-		if (!paclPolicy.hasService(_bean, method)) {
-			throw new SecurityException("Attempted to invoke " + method);
-		}
-
-		boolean enabled = PortalSecurityManagerThreadLocal.isEnabled();
-
-		try {
-			Class<?> beanClass = _bean.getClass();
-
-			if (paclPolicy.getClassLoader() != beanClass.getClassLoader()) {
-
-				// Disable the portal security manager so that PACLDataSource
-				// does not try to check access to tables that can be accessed
-				// since the service is already approved
-
-				PortalSecurityManagerThreadLocal.setEnabled(false);
-			}
-
-			return method.invoke(_bean, arguments);
-		}
-		finally {
-			PortalSecurityManagerThreadLocal.setEnabled(enabled);
-		}
+		return method.invoke(_bean, arguments);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(PACLBeanHandler.class);

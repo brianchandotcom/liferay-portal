@@ -17,6 +17,9 @@ package com.liferay.portal.security.pacl.checker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.security.pacl.PACLPolicy;
+import com.liferay.portal.security.pacl.permission.PortalHookPermission;
+
+import java.security.Permission;
 
 import java.util.Locale;
 import java.util.Set;
@@ -37,6 +40,66 @@ public class HookChecker extends BaseChecker {
 		initServletFilters();
 		initServices();
 		initStrutsActionPaths();
+	}
+
+	@Override
+	public void checkPermission(Permission permission) {
+		PortalHookPermission hookPermission =(PortalHookPermission)permission;
+
+		String name = hookPermission.getName();
+		Object subject = hookPermission.getSubject();
+
+		if (name.equals("hasCustomJspDir")) {
+			if (!hasCustomJspDir()) {
+				throw new SecurityException("Attempted to set custom jsp dir ");
+			}
+		}
+		else if (name.equals("hasIndexer")) {
+			String indexerClassName = (String)subject;
+
+			if (!hasIndexer(indexerClassName)) {
+				throw new SecurityException(
+					"Attempted to add indexer " + indexerClassName);
+			}
+		}
+		else if (name.equals("hasPortalPropertiesKey")) {
+			String key = (String)subject;
+
+			if (!hasPortalPropertiesKey(key)) {
+				throw new SecurityException(
+					"Attempted to set portal property " + key);
+			}
+		}
+		else if (name.equals("hasLanguagePropertiesLocale")) {
+			Locale locale = (Locale)subject;
+
+			if (!hasLanguagePropertiesLocale(locale)) {
+				throw new SecurityException(
+					"Attempted to override locale " + locale);
+			}
+		}
+		else if (name.equals("hasService")) {
+			String serviceType = (String)subject;
+
+			if (!hasService(serviceType)) {
+				throw new SecurityException(
+					"Attempted to override service " + serviceType);
+			}
+		}
+		else if (name.equals("hasServletFilters")) {
+			if (!hasServletFilters()) {
+				throw new SecurityException(
+					"Attempted to override serlvet filters");
+			}
+		}
+		else if (name.equals("hasStrutsActionPath")) {
+			String strutsActionPath = (String)subject;
+
+			if (!hasStrutsActionPath(strutsActionPath)) {
+				throw new SecurityException(
+					"Attempted to use struts action path " + strutsActionPath);
+			}
+		}
 	}
 
 	public boolean hasCustomJspDir() {

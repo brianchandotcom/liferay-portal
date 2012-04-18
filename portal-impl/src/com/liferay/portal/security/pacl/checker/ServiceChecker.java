@@ -17,11 +17,15 @@ package com.liferay.portal.security.pacl.checker;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 import com.liferay.portal.security.pacl.PACLPolicy;
 import com.liferay.portal.security.pacl.PACLPolicyManager;
+import com.liferay.portal.security.pacl.permission.PortalServicePermission;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+
+import java.security.Permission;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,6 +41,31 @@ public class ServiceChecker extends BaseChecker {
 		super(paclPolicy);
 
 		initServices();
+	}
+
+	@Override
+	public void checkPermission(Permission permission) {
+		PortalServicePermission portalServicePermission =
+			(PortalServicePermission)permission;
+
+		String name = portalServicePermission.getName();
+		Object object = portalServicePermission.getObject();
+
+		if (name.equals("hasService")) {
+			Method method = portalServicePermission.getMethod();
+
+			if (!hasService(object, method)) {
+				throw new SecurityException("Attempted to invoke " + method);
+			}
+		}
+		else if (name.equals("hasDynamicQuery")) {
+			Class<?> implClass = (Class<?>)object;
+
+			if (!hasDynamicQuery(implClass)) {
+				throw new SecurityException(
+					"Attempted to create a dynamic query for " + implClass);
+			}
+		}
 	}
 
 	public boolean hasDynamicQuery(Class<?> clazz) {
@@ -60,43 +89,52 @@ public class ServiceChecker extends BaseChecker {
 	}
 
 	public boolean hasService(Object object, Method method) {
-		Class<?> clazz = object.getClass();
+		boolean enabled = PortalSecurityManagerThreadLocal.isEnabled();
 
-		if (Proxy.isProxyClass(clazz)) {
-			Class<?>[] interfaces = clazz.getInterfaces();
+		try {
+			PortalSecurityManagerThreadLocal.setEnabled(false);
 
-			if (interfaces.length == 0) {
-				return false;
+			Class<?> clazz = object.getClass();
+
+			if (Proxy.isProxyClass(clazz)) {
+				Class<?>[] interfaces = clazz.getInterfaces();
+
+				if (interfaces.length == 0) {
+					return false;
+				}
+
+				clazz = interfaces[0];
 			}
 
-			clazz = interfaces[0];
+			ClassLoader classLoader = clazz.getClassLoader();
+
+			PACLPolicy paclPolicy = PACLPolicyManager.getPACLPolicy(classLoader);
+
+			if (paclPolicy == getPACLPolicy()) {
+				return true;
+			}
+
+			Set<String> services = getServices(paclPolicy);
+
+			String className = getInterfaceName(clazz.getName());
+
+			if (services.contains(className)) {
+				return true;
+			}
+
+			String methodName = method.getName();
+
+			if (services.contains(
+					className.concat(StringPool.POUND).concat(methodName))) {
+
+				return true;
+			}
+
+			return false;
 		}
-
-		ClassLoader classLoader = clazz.getClassLoader();
-
-		PACLPolicy paclPolicy = PACLPolicyManager.getPACLPolicy(classLoader);
-
-		if (paclPolicy == getPACLPolicy()) {
-			return true;
+		finally {
+			PortalSecurityManagerThreadLocal.setEnabled(enabled);
 		}
-
-		Set<String> services = getServices(paclPolicy);
-
-		String className = getInterfaceName(clazz.getName());
-
-		if (services.contains(className)) {
-			return true;
-		}
-
-		String methodName = method.getName();
-
-		if (services.contains(
-				className.concat(StringPool.POUND).concat(methodName))) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	protected String getInterfaceName(String className) {

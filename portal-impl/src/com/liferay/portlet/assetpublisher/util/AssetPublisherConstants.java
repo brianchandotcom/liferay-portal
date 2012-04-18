@@ -12,27 +12,20 @@
  * details.
  */
 
-package com.liferay.portal.kernel.templateparser;
-
-import com.liferay.portal.theme.ThemeDisplay;
-
-import java.util.Map;
+package com.liferay.portlet.assetpublisher.util;
 
 /**
- * @author Marcellus Tavares
- * @author Brian Wing Shun Chan
+ * @author Juan Fernández
  */
-public interface Transformer {
+public class AssetPublisherConstants {
 
-	public String transform(
-			ThemeDisplay themeDisplay, Map<String, Object> contextObjects,
-			String script, String langType)
-		throws Exception;
-
-	public String transform(
-			ThemeDisplay themeDisplay, Map<String, String> tokens,
-			String viewMode, String languageId, String xml, String script,
-			String langType)
-		throws Exception;
+	public static final String ASSET_ENTRIES = "asset_entries";
+	public static final String ASSET_ENTRY = "asset_entry";
+	public static final String LOCALE = "locale";
+	public static final String RENDER_REQUEST ="render_request";
+	public static final String RENDER_RESPONSE ="render_response";
+	public static final String TEMPLATE_HELPER = "template_helper";
+	public static final String TEMPLATE_ID = "template_id";
+	public static final String THEME_DISPLAY = "theme_display";
 
 }

@@ -41,12 +41,20 @@ portletURL.setParameter("classNameId", String.valueOf(classNameId));
 portletURL.setParameter("classPK", String.valueOf(classPK));
 %>
 
-<c:if test="<%= (structure != null) %>">
-	<liferay-ui:header
-		backURL="<%= backURL %>"
-		title='<%= LanguageUtil.format(pageContext, (Validator.isNull(templateHeaderTitle) ? "templates-for-structure-x" : templateHeaderTitle), structure.getName(locale), false) %>'
-	/>
-</c:if>
+<c:choose>
+	<c:when test="<%= (structure != null) %>">
+		<liferay-ui:header
+			backURL="<%= backURL %>"
+			title='<%= LanguageUtil.format(pageContext, (Validator.isNull(templateHeaderTitle) ? "templates-for-structure-x" : templateHeaderTitle), structure.getName(locale), false) %>'
+		/>
+	</c:when>
+	<c:otherwise>
+		<liferay-ui:header
+			backURL="<%= backURL %>"
+			title='display-styles'
+		/>
+	</c:otherwise>
+</c:choose>
 
 <liferay-util:include page="/html/portlet/dynamic_data_mapping/template_toolbar.jsp">
 	<liferay-util:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
@@ -90,6 +98,20 @@ portletURL.setParameter("classPK", String.valueOf(classPK));
 			sb.append("', Liferay.Util.getWindow());");
 
 			rowHREF = sb.toString();
+		}
+		else {
+			PortletURL rowURL = renderResponse.createRenderURL();
+
+			rowURL.setParameter("struts_action", "/dynamic_data_mapping/edit_template");
+			rowURL.setParameter("redirect", currentURL);
+			rowURL.setParameter("backURL", currentURL);
+			rowURL.setParameter("groupId", String.valueOf(template.getGroupId()));
+			rowURL.setParameter("templateId", String.valueOf(template.getTemplateId()));
+			rowURL.setParameter("classNameId", String.valueOf(classNameId));
+			rowURL.setParameter("classPK", String.valueOf(classPK));
+			rowURL.setParameter("type", template.getType());
+
+			rowHREF = rowURL.toString();
 		}
 		%>
 

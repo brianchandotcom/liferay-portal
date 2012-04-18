@@ -17,6 +17,7 @@ package com.liferay.portlet.assetpublisher.util;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.templateparser.Transformer;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -46,6 +47,9 @@ import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
+import com.liferay.portlet.dynamicdatalists.util.DDLTransformer;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 
 import java.io.IOException;
@@ -58,6 +62,8 @@ import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -509,6 +515,43 @@ public class AssetPublisherUtil {
 		}
 	}
 
+	public static String renderTemplate(
+			long templateId, List<AssetEntry> assetEntries,
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		DDMTemplate template = DDMTemplateLocalServiceUtil.getTemplate(
+			templateId);
+
+		Map<String, Object> contextObjects = new HashMap<String, Object>();
+
+		contextObjects.put(AssetPublisherConstants.ASSET_ENTRIES, assetEntries);
+
+		if (assetEntries.size() == 1) {
+			contextObjects.put(
+				AssetPublisherConstants.ASSET_ENTRY, assetEntries.get(0));
+		}
+
+		contextObjects.put(
+			AssetPublisherConstants.LOCALE, renderRequest.getLocale());
+		contextObjects.put(
+			AssetPublisherConstants.RENDER_REQUEST, renderRequest);
+		contextObjects.put(
+			AssetPublisherConstants.RENDER_RESPONSE, renderResponse);
+		contextObjects.put(
+			AssetPublisherConstants.TEMPLATE_HELPER,
+			TemplateHelperUtil.getTemplateHelper());
+		contextObjects.put(AssetPublisherConstants.TEMPLATE_ID, templateId);
+		contextObjects.put(AssetPublisherConstants.THEME_DISPLAY, themeDisplay);
+
+		return _transformer.transform(
+			themeDisplay, contextObjects, template.getScript(),
+			template.getLanguage());
+	}
+
 	private static String _getAssetEntryXml(
 		String assetEntryType, String assetEntryUuid) {
 
@@ -591,5 +634,6 @@ public class AssetPublisherUtil {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(AssetPublisherUtil.class);
+	private static Transformer _transformer = new DDLTransformer();
 
 }

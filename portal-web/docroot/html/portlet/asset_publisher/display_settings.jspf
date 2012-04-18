@@ -15,19 +15,38 @@
 --%>
 
 <aui:fieldset cssClass="general-display-settings">
-	<aui:select name="preferences--displayStyle--">
+	<div class="display-style">
+		<aui:select id="displayStyle" name="preferences--displayStyle--">
 
-		<%
-		for (String curDisplayStyle : PropsValues.ASSET_PUBLISHER_DISPLAY_STYLES) {
-		%>
+			<%
+			for (String curDisplayStyle : PropsValues.ASSET_PUBLISHER_DISPLAY_STYLES) {
+			%>
 
-			<aui:option label="<%= curDisplayStyle %>" selected="<%= displayStyle.equals(curDisplayStyle) %>" />
+				<aui:option label="<%= curDisplayStyle %>" selected="<%= displayStyle.equals(curDisplayStyle) %>" />
 
-		<%
-		}
-		%>
+			<%
+			}
 
-	</aui:select>
+			List<DDMTemplate> assetPublisherTemplates = DDMTemplateLocalServiceUtil.getTemplates(scopeGroupId, displayStyleClassNameId, scopeGroupId);
+
+			for (DDMTemplate curAssetPublisherTemplate : assetPublisherTemplates) {
+				if (!DDMTemplatePermission.contains(permissionChecker, curAssetPublisherTemplate, ActionKeys.VIEW)) {
+					continue;
+				}
+
+				String value = "ddmTemplate_" + String.valueOf(curAssetPublisherTemplate.getTemplateId());
+			%>
+
+				<aui:option label="<%= curAssetPublisherTemplate.getName(locale) %>" selected="<%= (assetPublisherTemplate != null) && (curAssetPublisherTemplate.getTemplateId() == assetPublisherTemplate.getTemplateId()) %>" value="<%= value %>" />
+
+			<%
+			}
+			%>
+
+		</aui:select>
+
+		<liferay-ui:icon cssClass="manage-display-styles" id="selectDDMTemplate" image="configuration" label="<%= true %>" message="manage-display-styles" url="javascript:;" />
+	</div>
 
 	<aui:select cssClass="hidden-field abstract-length" helpMessage="abstract-length-key-help" name="preferences--abstractLength--">
 		<aui:option label="100" selected="<%= abstractLength == 100 %>" />
@@ -186,6 +205,7 @@
 
 <aui:script use="aui-base">
 	var selectDisplayStyle = A.one('#<portlet:namespace />displayStyle');
+	var selectDDMTemplate = A.one('#<portlet:namespace />selectDDMTemplate');
 
 	function showHiddenFields () {
 		var assetLinkBehavior = A.one('.asset-link-behavior');
@@ -234,4 +254,47 @@
 	}
 
 	Liferay.Util.toggleBoxes('<portlet:namespace />enableSocialBookmarksCheckbox','<portlet:namespace />socialBookmarksOptions');
+
+	if (selectDDMTemplate) {
+		var windowId = A.guid();
+
+		selectDDMTemplate.on(
+			'click',
+			function (event) {
+				Liferay.Util.openDDMPortlet(
+					{
+						classNameId: '<%= String.valueOf(displayStyleClassNameId) %>',
+						classPK:'<%= String.valueOf(scopeGroupId) %>',
+						ddmResource: '<%= ddmResource %>',
+						ddmResourceAction: '<%= ActionKeys.ADD_DISPLAY_STYLE %>',
+						dialog: {
+							width:680
+						},
+						id: windowId,
+						showGlobalScope: true,
+						showToolbar: true,
+						struts_action: '/dynamic_data_mapping/view_template',
+						title: '<%= UnicodeLanguageUtil.get(pageContext, "display-styles") %>'
+					}
+				);
+
+				var intervalChecker = setInterval(function() {
+					var window = Liferay.Util.getWindow(windowId);
+
+					if (window) {
+						clearInterval(intervalChecker);
+
+						window.once(
+							'visibleChange',
+							function(event) {
+								if (!event.newVal) {
+									submitForm(document.<portlet:namespace />fm, '<%= configurationRenderURL.toString() %>');
+								}
+							}
+						);
+					}
+				}, 100);
+			}
+		);
+	}
 </aui:script>

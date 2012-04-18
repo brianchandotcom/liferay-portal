@@ -201,8 +201,8 @@ public class BlogsPortletDataHandlerImpl extends BasePortletDataHandler {
 			return;
 		}
 
-		if (entry.getStatus() != WorkflowConstants.STATUS_APPROVED &&
-			entry.getStatus() != WorkflowConstants.STATUS_IN_TRASH) {
+		if ((entry.getStatus() != WorkflowConstants.STATUS_APPROVED) &&
+			(entry.getStatus() != WorkflowConstants.STATUS_IN_TRASH)) {
 
 			return;
 		}

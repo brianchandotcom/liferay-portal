@@ -31,7 +31,7 @@ import com.liferay.portlet.asset.model.AssetRendererFactory;
  * </li>
  * <li>
  * Restore of entries
-  * </li>
+* </li>
  * </ul>
  *
  * @author Alexander Chow

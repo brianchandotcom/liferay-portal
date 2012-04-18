@@ -15,14 +15,16 @@
 package com.liferay.portlet.journal.util;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
+import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.template.TemplateContextType;
+import com.liferay.portal.kernel.template.TemplateManager;
+import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.templateparser.BaseTemplateParser;
 import com.liferay.portal.kernel.templateparser.TemplateContext;
 import com.liferay.portal.kernel.templateparser.TemplateNode;
 import com.liferay.portal.kernel.templateparser.TransformException;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.velocity.VelocityContext;
-import com.liferay.portal.kernel.velocity.VelocityEngineUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.velocity.VelocityResourceListener;
@@ -33,9 +35,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.velocity.exception.ParseErrorException;
-import org.apache.velocity.exception.VelocityException;
 
 /**
  * @author Alexander Chow
@@ -66,7 +65,10 @@ public class VelocityTemplateParser extends BaseTemplateParser {
 
 	@Override
 	protected TemplateContext getTemplateContext() throws Exception {
-		return VelocityEngineUtil.getWrappedRestrictedToolsContext();
+		return TemplateManagerUtil.getTemplate(
+			TemplateManager.VELOCITY, getTemplateId(), getScript(),
+			getErrorTemplateId(), getErrorTemplateContent(),
+			TemplateContextType.RESTRICTED);
 	}
 
 	@Override
@@ -142,33 +144,9 @@ public class VelocityTemplateParser extends BaseTemplateParser {
 			UnsyncStringWriter unsyncStringWriter)
 		throws Exception {
 
-		VelocityContext velocityContext = (VelocityContext)templateContext;
+		Template velocityContext = (Template)templateContext;
 
-		try {
-			return VelocityEngineUtil.mergeTemplate(
-				getTemplateId(), getScript(), velocityContext,
-				unsyncStringWriter);
-		}
-		catch (VelocityException ve) {
-			String errorTemplateId = getErrorTemplateId();
-			String errorTemplateContent = getErrorTemplateContent();
-
-			velocityContext.put("exception", ve.getMessage());
-			velocityContext.put("script", getScript());
-
-			if (ve instanceof ParseErrorException) {
-				ParseErrorException pee = (ParseErrorException)ve;
-
-				velocityContext.put("column", pee.getColumnNumber());
-				velocityContext.put("line", pee.getLineNumber());
-			}
-
-			unsyncStringWriter.reset();
-
-			return VelocityEngineUtil.mergeTemplate(
-				errorTemplateId, errorTemplateContent, velocityContext,
-				unsyncStringWriter);
-		}
+		return velocityContext.processTemplate(unsyncStringWriter);
 	}
 
 	@Override

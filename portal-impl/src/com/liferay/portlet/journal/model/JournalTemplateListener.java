@@ -14,8 +14,9 @@
 
 package com.liferay.portlet.journal.model;
 
-import com.liferay.portal.kernel.freemarker.FreeMarkerEngineUtil;
-import com.liferay.portal.kernel.velocity.VelocityEngineUtil;
+import com.liferay.portal.ModelListenerException;
+import com.liferay.portal.kernel.template.TemplateManager;
+import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.model.BaseModelListener;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
 import com.liferay.portal.velocity.LiferayResourceCacheUtil;
@@ -33,16 +34,30 @@ public class JournalTemplateListener
 	extends BaseModelListener<JournalTemplate> {
 
 	@Override
-	public void onAfterRemove(JournalTemplate template) {
-		clearCache(template);
+	public void onAfterRemove(JournalTemplate template)
+		throws ModelListenerException {
+
+		try {
+			clearCache(template);
+		}
+		catch (Exception e) {
+			throw new ModelListenerException(e);
+		}
 	}
 
 	@Override
-	public void onAfterUpdate(JournalTemplate template) {
-		clearCache(template);
+	public void onAfterUpdate(JournalTemplate template)
+		throws ModelListenerException {
+
+		try {
+			clearCache(template);
+		}
+		catch (Exception e) {
+			throw new ModelListenerException(e);
+		}
 	}
 
-	protected void clearCache(JournalTemplate template) {
+	protected void clearCache(JournalTemplate template) throws Exception {
 
 		// Freemarker cache
 
@@ -50,7 +65,8 @@ public class JournalTemplateListener
 			template.getCompanyId() + template.getGroupId() +
 				template.getTemplateId();
 
-		FreeMarkerEngineUtil.flushTemplate(freeMarkerTemplateId);
+		TemplateManagerUtil.clearCache(
+			TemplateManager.FREE_MARKER, freeMarkerTemplateId);
 
 		// Journal content
 
@@ -66,8 +82,8 @@ public class JournalTemplateListener
 			_RESOURCE_TEMPLATE_NAME_SPACE.concat(freeMarkerTemplateId));
 
 		// Velocity cache
-
-		VelocityEngineUtil.flushTemplate(freeMarkerTemplateId);
+		TemplateManagerUtil.clearCache(
+			TemplateManager.VELOCITY, freeMarkerTemplateId);
 	}
 
 	private static final String _RESOURCE_TEMPLATE_NAME_SPACE = String.valueOf(

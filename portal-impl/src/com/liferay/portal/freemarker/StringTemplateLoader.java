@@ -65,6 +65,10 @@ public class StringTemplateLoader implements TemplateLoader {
 		_templates.remove(name);
 	}
 
+	public void removeTemplates() {
+		_templates.clear();
+	}
+
 	private Map<String, StringTemplateSource> _templates =
 		new ConcurrentHashMap<String, StringTemplateSource>();
 

@@ -146,14 +146,6 @@
 			<bean class="com.liferay.portal.format.PhoneNumberFormatImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.kernel.freemarker.FreeMarkerEngine" class="com.liferay.portal.freemarker.FreeMarkerEngineImpl" />
-	<bean id="com.liferay.portal.kernel.freemarker.FreeMarkerEngineUtil" class="com.liferay.portal.kernel.freemarker.FreeMarkerEngineUtil">
-		<property name="freeMarkerEngine" ref="com.liferay.portal.kernel.freemarker.FreeMarkerEngine" />
-	</bean>
-	<bean id="com.liferay.portal.kernel.freemarker.FreeMarkerVariables" class="com.liferay.portal.freemarker.FreeMarkerVariablesImpl" />
-	<bean id="com.liferay.portal.kernel.freemarker.FreeMarkerVariablesUtil" class="com.liferay.portal.kernel.freemarker.FreeMarkerVariablesUtil">
-		<property name="freeMarkerVariables" ref="com.liferay.portal.kernel.freemarker.FreeMarkerVariables" />
-	</bean>
 	<bean id="com.liferay.portal.kernel.googleapps.GoogleAppsFactoryUtil" class="com.liferay.portal.kernel.googleapps.GoogleAppsFactoryUtil">
 		<property name="googleAppsFactory">
 			<bean class="com.liferay.portal.googleapps.GoogleAppsFactoryImpl" />
@@ -265,6 +257,22 @@
 			<bean class="com.liferay.portal.staging.permission.StagingPermissionImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.template.TemplateManagerUtil" class="com.liferay.portal.kernel.template.TemplateManagerUtil">
+		<property name="templateManagers">
+			<list>
+				<bean class="com.liferay.portal.freemarker.FreeMarkerManager" >
+					<property name="templateContextHelper">
+						<bean class="com.liferay.portal.freemarker.FreeMarkerTemplateContextHelper" />
+					</property>
+				</bean>
+				<bean class="com.liferay.portal.velocity.VelocityManager" >
+					<property name="templateContextHelper">
+						<bean class="com.liferay.portal.velocity.VelocityTemplateContextHelper" />
+					</property>
+				</bean>
+			</list>
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil" class="com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil">
 		<property name="upgradeTableFactory">
 			<bean class="com.liferay.portal.upgrade.util.DefaultUpgradeTableFactoryImpl" />
@@ -358,14 +366,6 @@
 	<bean id="com.liferay.portal.kernel.uuid.PortalUUID" class="com.liferay.portal.uuid.PortalUUIDImpl" />
 	<bean id="com.liferay.portal.kernel.uuid.PortalUUIDUtil" class="com.liferay.portal.kernel.uuid.PortalUUIDUtil">
 		<property name="portalUUID" ref="com.liferay.portal.kernel.uuid.PortalUUID" />
-	</bean>
-	<bean id="com.liferay.portal.kernel.velocity.VelocityEngine" class="com.liferay.portal.velocity.VelocityEngineImpl" />
-	<bean id="com.liferay.portal.kernel.velocity.VelocityEngineUtil" class="com.liferay.portal.kernel.velocity.VelocityEngineUtil">
-		<property name="velocityEngine" ref="com.liferay.portal.kernel.velocity.VelocityEngine" />
-	</bean>
-	<bean id="com.liferay.portal.kernel.velocity.VelocityVariables" class="com.liferay.portal.velocity.VelocityVariablesImpl" />
-	<bean id="com.liferay.portal.kernel.velocity.VelocityVariablesUtil" class="com.liferay.portal.kernel.velocity.VelocityVariablesUtil">
-		<property name="velocityVariables" ref="com.liferay.portal.kernel.velocity.VelocityVariables" />
 	</bean>
 	<bean id="com.liferay.portal.kernel.webcache.WebCachePoolUtil" class="com.liferay.portal.kernel.webcache.WebCachePoolUtil">
 		<property name="webCachePool">

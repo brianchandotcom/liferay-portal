@@ -15,11 +15,8 @@
 package com.liferay.portal.webserver;
 
 import com.liferay.portal.NoSuchGroupException;
-import com.liferay.portal.freemarker.FreeMarkerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.freemarker.FreeMarkerContext;
-import com.liferay.portal.kernel.freemarker.FreeMarkerEngineUtil;
 import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -32,6 +29,10 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.servlet.Range;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.template.TemplateContextType;
+import com.liferay.portal.kernel.template.TemplateManager;
+import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -1044,29 +1045,28 @@ public class WebServerServlet extends HttpServlet {
 			List<WebServerEntry> webServerEntries)
 		throws Exception {
 
-		FreeMarkerContext freeMarkerContext =
-			FreeMarkerEngineUtil.getWrappedRestrictedToolsContext();
+		Template freeMarkerTemplate = TemplateManagerUtil.getTemplate(
+			TemplateManager.FREE_MARKER, _TEMPLATE_FTL,
+			TemplateContextType.RESTRICTED);
 
-		freeMarkerContext.put("dateFormat", _dateFormat);
-		freeMarkerContext.put("entries", webServerEntries);
-		freeMarkerContext.put("path", HttpUtil.encodePath(path));
+		freeMarkerTemplate.put("dateFormat", _dateFormat);
+		freeMarkerTemplate.put("entries", webServerEntries);
+		freeMarkerTemplate.put("path", HttpUtil.encodePath(path));
 
 		if (_WEB_SERVER_SERVLET_VERSION_VERBOSITY_DEFAULT) {
 		}
 		else if (_WEB_SERVER_SERVLET_VERSION_VERBOSITY_PARTIAL) {
-			freeMarkerContext.put("releaseInfo", ReleaseInfo.getName());
+			freeMarkerTemplate.put("releaseInfo", ReleaseInfo.getName());
 		}
 		else {
-			freeMarkerContext.put("releaseInfo", ReleaseInfo.getReleaseInfo());
+			freeMarkerTemplate.put("releaseInfo", ReleaseInfo.getReleaseInfo());
 		}
 
-		freeMarkerContext.put("validator", Validator_IW.getInstance());
-
-		String html = FreeMarkerUtil.process(_TEMPLATE_FTL, freeMarkerContext);
+		freeMarkerTemplate.put("validator", Validator_IW.getInstance());
 
 		response.setContentType(ContentTypes.TEXT_HTML_UTF8);
 
-		ServletResponseUtil.write(response, html);
+		freeMarkerTemplate.processTemplate(response.getWriter());
 	}
 
 	protected void writeImage(

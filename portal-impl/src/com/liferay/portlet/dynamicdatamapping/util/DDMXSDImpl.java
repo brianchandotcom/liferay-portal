@@ -14,14 +14,15 @@
 
 package com.liferay.portlet.dynamicdatamapping.util;
 
-import com.liferay.portal.kernel.freemarker.FreeMarkerContext;
-import com.liferay.portal.kernel.freemarker.FreeMarkerEngineUtil;
-import com.liferay.portal.kernel.freemarker.FreeMarkerVariablesUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.template.TemplateContextType;
+import com.liferay.portal.kernel.template.TemplateManager;
+import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -121,7 +122,7 @@ public class DDMXSDImpl implements DDMXSD {
 			"dynamic-element");
 
 		for (Element dynamicElementElement : dynamicElementElements) {
-			FreeMarkerContext freeMarkerContext = getFreeMarkerContext(
+			Map<String, Object> freeMarkerContext = getFreeMarkerContext(
 				dynamicElementElement, locale);
 
 			freeMarkerContext.put("portletNamespace", portletNamespace);
@@ -170,10 +171,25 @@ public class DDMXSDImpl implements DDMXSD {
 			resourcePath.append(templateName);
 			resourcePath.append(_TPL_EXT);
 
-			sb.append(
-				processFTL(
-					pageContext, freeMarkerContext, resourcePath.toString(),
-					defaultResourcePath));
+			String resource = resourcePath.toString();
+
+			if (!TemplateManagerUtil.hasTemplate(
+				TemplateManager.FREE_MARKER, resource)) {
+
+				resource = defaultResourcePath;
+			}
+
+			Template freemarkerTemplate = TemplateManagerUtil.getTemplate(
+				TemplateManager.FREE_MARKER, resource,
+				TemplateContextType.STANDARD);
+
+			for (Map.Entry<String, Object> entry :
+				freeMarkerContext.entrySet()) {
+
+				freemarkerTemplate.put(entry.getKey(), entry.getValue());
+			}
+
+			sb.append(processFTL(pageContext, freemarkerTemplate));
 		}
 
 		return sb.toString();
@@ -364,11 +380,10 @@ public class DDMXSDImpl implements DDMXSD {
 		return field;
 	}
 
-	protected FreeMarkerContext getFreeMarkerContext(
+	protected Map<String, Object> getFreeMarkerContext(
 		Element dynamicElementElement, Locale locale) {
 
-		FreeMarkerContext freeMarkerContext =
-			FreeMarkerEngineUtil.getWrappedStandardToolsContext();
+		Map<String, Object> freeMarkerContext = new HashMap<String, Object>();
 
 		Map<String, Object> fieldContext = getFieldContext(
 			dynamicElementElement, locale);
@@ -391,20 +406,15 @@ public class DDMXSDImpl implements DDMXSD {
 	 * @see com.liferay.taglib.util.ThemeUtil#includeFTL
 	 */
 	protected String processFTL(
-			PageContext pageContext, FreeMarkerContext freeMarkerContext,
-			String resourcePath, String defaultResourcePath)
+			PageContext pageContext, Template freeMarkerTemplate)
 		throws Exception {
-
-		if (!FreeMarkerEngineUtil.resourceExists(resourcePath)) {
-			resourcePath = defaultResourcePath;
-		}
 
 		HttpServletRequest request =
 			(HttpServletRequest)pageContext.getRequest();
 
 		// FreeMarker variables
 
-		FreeMarkerVariablesUtil.insertVariables(freeMarkerContext, request);
+		freeMarkerTemplate.prepare(request);
 
 		// Tag libraries
 
@@ -419,7 +429,7 @@ public class DDMXSDImpl implements DDMXSD {
 			FreeMarkerTaglibFactoryUtil.createTaglibFactory(
 				pageContext.getServletContext());
 
-		freeMarkerContext.put("PortalJspTagLibs", portalTaglib);
+		freeMarkerTemplate.put("PortalJspTagLibs", portalTaglib);
 
 		// FreeMarker JSP tag library support
 
@@ -451,17 +461,16 @@ public class DDMXSDImpl implements DDMXSD {
 			new ServletContextHashModel(
 				genericServlet, ObjectWrapper.DEFAULT_WRAPPER);
 
-		freeMarkerContext.put("Application", servletContextHashModel);
+		freeMarkerTemplate.put("Application", servletContextHashModel);
 
 		HttpRequestHashModel httpRequestHashModel = new HttpRequestHashModel(
 			request, response, ObjectWrapper.DEFAULT_WRAPPER);
 
-		freeMarkerContext.put("Request", httpRequestHashModel);
+		freeMarkerTemplate.put("Request", httpRequestHashModel);
 
 		// Merge templates
 
-		FreeMarkerEngineUtil.mergeTemplate(
-			resourcePath, freeMarkerContext, writer);
+		freeMarkerTemplate.processTemplate(writer);
 
 		return writer.toString();
 	}

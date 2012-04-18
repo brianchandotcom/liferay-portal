@@ -54,6 +54,10 @@ public class StringResourceRepositoryImpl implements StringResourceRepository {
 		_portalCache.put(key, new SerializableStringResource(body, encoding));
 	}
 
+	public void removeAll() {
+		_portalCache.removeAll();
+	}
+
 	public void removeStringResource(String key) {
 		_portalCache.remove(key);
 	}

@@ -12,12 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.kernel.freemarker;
-
-import com.liferay.portal.kernel.templateparser.TemplateContext;
+package com.liferay.portal.kernel.template;
 
 /**
- * @author Mika Koivisto
+ * @author Tina Tian
  */
-public interface FreeMarkerContext extends TemplateContext {
+public enum TemplateContextType {
+
+	EMPTY, RESTRICTED, STANDARD,
+
 }

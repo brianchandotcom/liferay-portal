@@ -15,18 +15,16 @@
 package com.liferay.portlet.journal.util;
 
 import com.liferay.portal.freemarker.JournalTemplateLoader;
-import com.liferay.portal.kernel.freemarker.FreeMarkerContext;
-import com.liferay.portal.kernel.freemarker.FreeMarkerEngineUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
+import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.template.TemplateContextType;
+import com.liferay.portal.kernel.template.TemplateManager;
+import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.templateparser.TemplateContext;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.util.ContentUtil;
-
-import freemarker.core.ParseException;
-
-import freemarker.template.TemplateException;
 
 /**
  * @author Mika Koivisto
@@ -57,8 +55,11 @@ public class FreeMarkerTemplateParser extends VelocityTemplateParser {
 	}
 
 	@Override
-	protected TemplateContext getTemplateContext() {
-		return FreeMarkerEngineUtil.getWrappedRestrictedToolsContext();
+	protected TemplateContext getTemplateContext() throws Exception {
+		return TemplateManagerUtil.getTemplate(
+			TemplateManager.FREE_MARKER, getTemplateId(), getScript(),
+			getErrorTemplateId(), getErrorTemplateContent(),
+			TemplateContextType.RESTRICTED);
 	}
 
 	@Override
@@ -67,39 +68,9 @@ public class FreeMarkerTemplateParser extends VelocityTemplateParser {
 			UnsyncStringWriter unsyncStringWriter)
 		throws Exception {
 
-		FreeMarkerContext freeMarkerContext =
-			(FreeMarkerContext)templateContext;
+		Template freemarkerTemplate = (Template)templateContext;
 
-		try {
-			return FreeMarkerEngineUtil.mergeTemplate(
-				getTemplateId(), getScript(), freeMarkerContext,
-				unsyncStringWriter);
-		}
-		catch (Exception e) {
-			if (e instanceof ParseException || e instanceof TemplateException) {
-				String errorTemplateId = getErrorTemplateId();
-				String errorTemplateContent = getErrorTemplateContent();
-
-				freeMarkerContext.put("exception", e.getMessage());
-				freeMarkerContext.put("script", getScript());
-
-				if (e instanceof ParseException) {
-					ParseException pe = (ParseException)e;
-
-					freeMarkerContext.put("column", pe.getColumnNumber());
-					freeMarkerContext.put("line", pe.getLineNumber());
-				}
-
-				unsyncStringWriter.reset();
-
-				return FreeMarkerEngineUtil.mergeTemplate(
-					errorTemplateId, errorTemplateContent, freeMarkerContext,
-					unsyncStringWriter);
-			}
-			else {
-				throw e;
-			}
-		}
+		return freemarkerTemplate.processTemplate(unsyncStringWriter);
 	}
 
 }

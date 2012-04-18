@@ -14,7 +14,9 @@
 
 package com.liferay.portlet.dynamicdatalists.util;
 
-import com.liferay.portal.kernel.freemarker.FreeMarkerEngineUtil;
+import com.liferay.portal.kernel.template.TemplateContextType;
+import com.liferay.portal.kernel.template.TemplateManager;
+import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.templateparser.TemplateContext;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.util.ContentUtil;
@@ -37,8 +39,11 @@ public class FreeMarkerTemplateParser extends
 	}
 
 	@Override
-	protected TemplateContext getTemplateContext() {
-		return FreeMarkerEngineUtil.getWrappedStandardToolsContext();
+	protected TemplateContext getTemplateContext() throws Exception {
+		return TemplateManagerUtil.getTemplate(
+			TemplateManager.FREE_MARKER, getTemplateId(), getScript(),
+			getErrorTemplateId(), getErrorTemplateContent(),
+			TemplateContextType.STANDARD);
 	}
 
 }

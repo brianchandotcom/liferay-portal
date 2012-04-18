@@ -47,6 +47,10 @@ public class LiferayResourceCacheUtil {
 		_portalCache.remove(key);
 	}
 
+	public static void removeAll() {
+		_portalCache.removeAll();
+	}
+
 	private static PortalCache _portalCache = MultiVMKeyPoolUtil.getCache(
 		LiferayResourceCacheUtil.class.getName());
 

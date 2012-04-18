@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.log.Jdk14LogFactoryImpl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineUtil;
+import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.util.CentralizedThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -193,6 +194,14 @@ public class GlobalShutdownAction extends SimpleAction {
 		}
 		catch (Exception e) {
 			e.printStackTrace();
+		}
+
+		// Template Manager
+
+		try {
+			TemplateManagerUtil.destroy();
+		}
+		catch (Exception e) {
 		}
 
 		// Portal executors

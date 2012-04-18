@@ -14,8 +14,8 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.portal.kernel.freemarker.FreeMarkerEngineUtil;
-import com.liferay.portal.kernel.velocity.VelocityEngineUtil;
+import com.liferay.portal.kernel.template.TemplateManager;
+import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.Theme;
 import com.liferay.portal.util.PortalUtil;
@@ -163,10 +163,12 @@ public class ThemeHelper {
 		String extension = theme.getTemplateExtension();
 
 		if (extension.equals(TEMPLATE_EXTENSION_FTL)) {
-			return FreeMarkerEngineUtil.resourceExists(resourcePath);
+			return TemplateManagerUtil.hasTemplate(
+				TemplateManager.FREE_MARKER, resourcePath);
 		}
 		else if (extension.equals(TEMPLATE_EXTENSION_VM)) {
-			return VelocityEngineUtil.resourceExists(resourcePath);
+			return TemplateManagerUtil.hasTemplate(
+				TemplateManager.VELOCITY, resourcePath);
 		}
 		else {
 			URL url = null;

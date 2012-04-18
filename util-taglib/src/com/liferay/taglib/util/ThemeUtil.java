@@ -14,23 +14,21 @@
 
 package com.liferay.taglib.util;
 
-import com.liferay.portal.kernel.freemarker.FreeMarkerContext;
-import com.liferay.portal.kernel.freemarker.FreeMarkerEngineUtil;
-import com.liferay.portal.kernel.freemarker.FreeMarkerVariablesUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
+import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.template.TemplateContextType;
+import com.liferay.portal.kernel.template.TemplateManager;
+import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.ThemeHelper;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.velocity.VelocityContext;
-import com.liferay.portal.kernel.velocity.VelocityEngineUtil;
-import com.liferay.portal.kernel.velocity.VelocityVariablesUtil;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.Theme;
 import com.liferay.portal.theme.PortletDisplay;
@@ -133,7 +131,8 @@ public class ThemeUtil {
 			servletContext, portletId, path);
 
 		if (Validator.isNotNull(portletId) &&
-			!FreeMarkerEngineUtil.resourceExists(resourcePath) &&
+			!TemplateManagerUtil.hasTemplate(
+				TemplateManager.FREE_MARKER, resourcePath) &&
 			portletId.contains(PortletConstants.INSTANCE_SEPARATOR)) {
 
 			String rootPortletId = PortletConstants.getRootPortletId(portletId);
@@ -143,30 +142,34 @@ public class ThemeUtil {
 		}
 
 		if (Validator.isNotNull(portletId) &&
-			!FreeMarkerEngineUtil.resourceExists(resourcePath)) {
+			!TemplateManagerUtil.hasTemplate(
+				TemplateManager.FREE_MARKER, resourcePath)) {
 
 			resourcePath = theme.getResourcePath(servletContext, null, path);
 		}
 
-		if (!FreeMarkerEngineUtil.resourceExists(resourcePath)) {
+		if (!TemplateManagerUtil.hasTemplate(
+				TemplateManager.FREE_MARKER, resourcePath)) {
+
 			_log.error(resourcePath + " does not exist");
 
 			return null;
 		}
 
-		FreeMarkerContext freeMarkerContext =
-			FreeMarkerEngineUtil.getWrappedStandardToolsContext();
+		Template freemarkerTemplate = TemplateManagerUtil.getTemplate(
+			TemplateManager.FREE_MARKER, resourcePath,
+			TemplateContextType.STANDARD);
 
 		// FreeMarker variables
 
-		FreeMarkerVariablesUtil.insertVariables(freeMarkerContext, request);
+		freemarkerTemplate.prepare(request);
 
 		// Theme servlet context
 
 		ServletContext themeServletContext = ServletContextPool.get(
 			servletContextName);
 
-		freeMarkerContext.put("themeServletContext", themeServletContext);
+		freemarkerTemplate.put("themeServletContext", themeServletContext);
 
 		// Tag libraries
 
@@ -191,16 +194,16 @@ public class ThemeUtil {
 
 		request.setAttribute(WebKeys.VELOCITY_TAGLIB, velocityTaglib);
 
-		freeMarkerContext.put("taglibLiferay", velocityTaglib);
-		freeMarkerContext.put("theme", velocityTaglib);
-		freeMarkerContext.put("writer", writer);
+		freemarkerTemplate.put("taglibLiferay", velocityTaglib);
+		freemarkerTemplate.put("theme", velocityTaglib);
+		freemarkerTemplate.put("writer", writer);
 
 		// Portal JSP tag library factory
 
 		TemplateHashModel portalTaglib =
 			FreeMarkerTaglibFactoryUtil.createTaglibFactory(servletContext);
 
-		freeMarkerContext.put("PortalJspTagLibs", portalTaglib);
+		freemarkerTemplate.put("PortalJspTagLibs", portalTaglib);
 
 		// Theme JSP tag library factory
 
@@ -208,7 +211,7 @@ public class ThemeUtil {
 			FreeMarkerTaglibFactoryUtil.createTaglibFactory(
 				themeServletContext);
 
-		freeMarkerContext.put("ThemeJspTaglibs", themeTaglib);
+		freemarkerTemplate.put("ThemeJspTaglibs", themeTaglib);
 
 		// FreeMarker JSP tag library support
 
@@ -240,17 +243,16 @@ public class ThemeUtil {
 			new ServletContextHashModel(
 				genericServlet, ObjectWrapper.DEFAULT_WRAPPER);
 
-		freeMarkerContext.put("Application", servletContextHashModel);
+		freemarkerTemplate.put("Application", servletContextHashModel);
 
 		HttpRequestHashModel httpRequestHashModel = new HttpRequestHashModel(
 			request, response, ObjectWrapper.DEFAULT_WRAPPER);
 
-		freeMarkerContext.put("Request", httpRequestHashModel);
+		freemarkerTemplate.put("Request", httpRequestHashModel);
 
 		// Merge templates
 
-		FreeMarkerEngineUtil.mergeTemplate(
-			resourcePath, freeMarkerContext, writer);
+		freemarkerTemplate.processTemplate(writer);
 
 		if (write) {
 			return null;
@@ -335,8 +337,8 @@ public class ThemeUtil {
 
 		if (Validator.isNotNull(portletId)) {
 			if (portletId.contains(PortletConstants.INSTANCE_SEPARATOR) &&
-				(checkResourceExists = !VelocityEngineUtil.resourceExists(
-					resourcePath))) {
+				(checkResourceExists = !TemplateManagerUtil.hasTemplate(
+					TemplateManager.VELOCITY, resourcePath))) {
 
 				String rootPortletId = PortletConstants.getRootPortletId(
 					portletId);
@@ -346,8 +348,8 @@ public class ThemeUtil {
 			}
 
 			if (checkResourceExists &&
-				(checkResourceExists = !VelocityEngineUtil.resourceExists(
-					resourcePath))) {
+				(checkResourceExists = !TemplateManagerUtil.hasTemplate(
+					TemplateManager.VELOCITY, resourcePath))) {
 
 				resourcePath = theme.getResourcePath(
 					servletContext, null, page);
@@ -355,30 +357,32 @@ public class ThemeUtil {
 		}
 
 		if (checkResourceExists &&
-			!VelocityEngineUtil.resourceExists(resourcePath)) {
+			!TemplateManagerUtil.hasTemplate(
+				TemplateManager.VELOCITY, resourcePath)) {
 
 			_log.error(resourcePath + " does not exist");
 
 			return null;
 		}
 
-		VelocityContext velocityContext =
-			VelocityEngineUtil.getWrappedStandardToolsContext();
+		Template velocityTemplate = TemplateManagerUtil.getTemplate(
+			TemplateManager.VELOCITY, resourcePath,
+			TemplateContextType.STANDARD);
 
 		// Velocity variables
 
-		VelocityVariablesUtil.insertVariables(velocityContext, request);
+		velocityTemplate.prepare(request);
 
 		// Page context
 
-		velocityContext.put("pageContext", pageContext);
+		velocityTemplate.put("pageContext", pageContext);
 
 		// Theme servlet context
 
 		ServletContext themeServletContext = ServletContextPool.get(
 			servletContextName);
 
-		velocityContext.put("themeServletContext", themeServletContext);
+		velocityTemplate.put("themeServletContext", themeServletContext);
 
 		// Tag libraries
 
@@ -400,13 +404,13 @@ public class ThemeUtil {
 
 		request.setAttribute(WebKeys.VELOCITY_TAGLIB, velocityTaglib);
 
-		velocityContext.put("taglibLiferay", velocityTaglib);
-		velocityContext.put("theme", velocityTaglib);
-		velocityContext.put("writer", writer);
+		velocityTemplate.put("taglibLiferay", velocityTaglib);
+		velocityTemplate.put("theme", velocityTaglib);
+		velocityTemplate.put("writer", writer);
 
 		// Merge templates
 
-		VelocityEngineUtil.mergeTemplate(resourcePath, velocityContext, writer);
+		velocityTemplate.processTemplate(writer);
 
 		if (write) {
 			return null;

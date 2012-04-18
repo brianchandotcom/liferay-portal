@@ -19,6 +19,10 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.template.TemplateContextType;
+import com.liferay.portal.kernel.template.TemplateManager;
+import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.util.Diff;
 import com.liferay.portal.kernel.util.DiffResult;
 import com.liferay.portal.kernel.util.DiffUtil;
@@ -28,8 +32,6 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.velocity.VelocityContext;
-import com.liferay.portal.kernel.velocity.VelocityEngineUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -488,23 +490,22 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 			"com/liferay/portlet/wiki/dependencies/rss.vm";
 		String velocityTemplateContent = ContentUtil.get(velocityTemplateId);
 
-		VelocityContext velocityContext =
-			VelocityEngineUtil.getWrappedStandardToolsContext();
-
-		velocityContext.put("companyId", companyId);
-		velocityContext.put("contextLine", Diff.CONTEXT_LINE);
-		velocityContext.put("diffUtil", new DiffUtil());
-		velocityContext.put("languageUtil", LanguageUtil.getLanguage());
-		velocityContext.put("locale", locale);
-		velocityContext.put("sourceResults", diffResults[0]);
-		velocityContext.put("targetResults", diffResults[1]);
-
 		try {
+			Template velocityTemplate = TemplateManagerUtil.getTemplate(
+				TemplateManager.VELOCITY, velocityTemplateId,
+				velocityTemplateContent, TemplateContextType.STANDARD);
+
+			velocityTemplate.put("companyId", companyId);
+			velocityTemplate.put("contextLine", Diff.CONTEXT_LINE);
+			velocityTemplate.put("diffUtil", new DiffUtil());
+			velocityTemplate.put("languageUtil", LanguageUtil.getLanguage());
+			velocityTemplate.put("locale", locale);
+			velocityTemplate.put("sourceResults", diffResults[0]);
+			velocityTemplate.put("targetResults", diffResults[1]);
+
 			UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
-			VelocityEngineUtil.mergeTemplate(
-				velocityTemplateId, velocityTemplateContent, velocityContext,
-				unsyncStringWriter);
+			velocityTemplate.processTemplate(unsyncStringWriter);
 
 			return unsyncStringWriter.toString();
 		}

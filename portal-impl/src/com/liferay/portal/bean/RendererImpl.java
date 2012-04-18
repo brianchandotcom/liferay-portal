@@ -25,14 +25,15 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.template.TemplateContextType;
+import com.liferay.portal.kernel.template.TemplateManager;
+import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.velocity.VelocityContext;
-import com.liferay.portal.kernel.velocity.VelocityEngineUtil;
-import com.liferay.portal.kernel.velocity.VelocityVariablesUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
@@ -136,26 +137,18 @@ public class RendererImpl implements Renderer {
 			return null;
 		}
 
-		VelocityContext velocityContext =
-			VelocityEngineUtil.getWrappedStandardToolsContext();
-
-		// Velocity variables
-
 		try {
-			VelocityVariablesUtil.insertVariables(velocityContext, request);
-		}
-		catch (Exception e) {
-			throw new RendererException(e);
-		}
+			Template velocityTemplate = TemplateManagerUtil.getTemplate(
+				TemplateManager.VELOCITY, className, velocityTemplateContent,
+				TemplateContextType.STANDARD);
 
-		velocityContext.put(_BEAN, bean);
+			velocityTemplate.prepare(request);
 
-		try {
+			velocityTemplate.put(_BEAN, bean);
+
 			UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
-			VelocityEngineUtil.mergeTemplate(
-				className, velocityTemplateContent, velocityContext,
-				unsyncStringWriter);
+			velocityTemplate.processTemplate(unsyncStringWriter);
 
 			return unsyncStringWriter.toString();
 		}

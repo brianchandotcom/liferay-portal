@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.velocity;
+package com.liferay.portal.template;
 
 import com.liferay.portal.bean.BeanLocatorImpl;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
@@ -21,19 +21,19 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Raymond Augé
  */
-public class ServiceLocator {
+public class UtilLocator {
 
-	public static ServiceLocator getInstance() {
+	public static UtilLocator getInstance() {
 		return _instance;
 	}
 
-	public Object findService(String serviceName) {
+	public Object findUtil(String utilName) {
 		Object bean = null;
 
 		try {
-			bean = PortalBeanLocatorUtil.locate(_getServiceName(serviceName));
+			bean = PortalBeanLocatorUtil.locate(_getUtilName(utilName));
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -42,12 +42,12 @@ public class ServiceLocator {
 		return bean;
 	}
 
-	public Object findService(String servletContextName, String serviceName) {
+	public Object findUtil(String servletContextName, String utilName) {
 		Object bean = null;
 
 		try {
 			bean = PortletBeanLocatorUtil.locate(
-				servletContextName, _getServiceName(serviceName));
+				servletContextName, _getUtilName(utilName));
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -56,19 +56,19 @@ public class ServiceLocator {
 		return bean;
 	}
 
-	private ServiceLocator() {
+	private UtilLocator() {
 	}
 
-	private String _getServiceName(String serviceName) {
-		if (!serviceName.endsWith(BeanLocatorImpl.VELOCITY_SUFFIX)) {
-			serviceName += BeanLocatorImpl.VELOCITY_SUFFIX;
+	private String _getUtilName(String utilName) {
+		if (!utilName.endsWith(BeanLocatorImpl.VELOCITY_SUFFIX)) {
+			utilName += BeanLocatorImpl.VELOCITY_SUFFIX;
 		}
 
-		return serviceName;
+		return utilName;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ServiceLocator.class);
+	private static Log _log = LogFactoryUtil.getLog(UtilLocator.class);
 
-	private static ServiceLocator _instance = new ServiceLocator();
+	private static UtilLocator _instance = new UtilLocator();
 
 }

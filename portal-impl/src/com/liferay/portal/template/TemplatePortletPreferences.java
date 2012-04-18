@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.velocity;
+package com.liferay.portal.template;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -25,9 +25,9 @@ import javax.portlet.ReadOnlyException;
 /**
  * @author Brian Wing Shun Chan
  */
-public class VelocityPortletPreferences {
+public class TemplatePortletPreferences {
 
-	public VelocityPortletPreferences() {
+	public TemplatePortletPreferences() {
 		_portletPreferencesImpl = new PortletPreferencesImpl();
 	}
 
@@ -58,7 +58,7 @@ public class VelocityPortletPreferences {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
-		VelocityPortletPreferences.class);
+		TemplatePortletPreferences.class);
 
 	private PortletPreferencesImpl _portletPreferencesImpl;
 

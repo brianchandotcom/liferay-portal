@@ -12,12 +12,21 @@
  * details.
  */
 
-package com.liferay.portal.kernel.velocity;
+package com.liferay.portal.kernel.template;
 
 import com.liferay.portal.kernel.templateparser.TemplateContext;
 
+import java.io.Writer;
+
+import javax.servlet.http.HttpServletRequest;
+
 /**
- * @author Raymond Augé
+ * @author Tina Tian
  */
-public interface VelocityContext extends TemplateContext {
+public interface Template extends TemplateContext {
+
+	public void prepare(HttpServletRequest request) throws TemplateException;
+
+	public boolean processTemplate(Writer writer) throws TemplateException;
+
 }

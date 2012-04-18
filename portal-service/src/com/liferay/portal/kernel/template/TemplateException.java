@@ -12,20 +12,29 @@
  * details.
  */
 
-package com.liferay.portal.kernel.freemarker;
+package com.liferay.portal.kernel.template;
 
-import javax.servlet.http.HttpServletRequest;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Raymond Augé
+ * @author Tina Tian
  */
-public interface FreeMarkerVariables {
+public class TemplateException extends PortalException {
 
-	public void insertHelperUtilities(
-		FreeMarkerContext freeMarkerContext, String[] restrictedVariables);
+	public TemplateException() {
+		super();
+	}
 
-	public void insertVariables(
-			FreeMarkerContext freeMarkerContext, HttpServletRequest request)
-		throws Exception;
+	public TemplateException(String msg) {
+		super(msg);
+	}
+
+	public TemplateException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public TemplateException(Throwable cause) {
+		super(cause);
+	}
 
 }

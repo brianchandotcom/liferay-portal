@@ -75,7 +75,9 @@ public class RejectTaskWebContentDetailsTest extends BaseTestCase {
 			selenium.getText("//tr[3]/td[3]"));
 		assertFalse(selenium.isTextPresent(
 				"Joe Bloggs completed the task Review."));
-		selenium.clickAt("//td[4]/span/ul/li/strong/a/span",
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {

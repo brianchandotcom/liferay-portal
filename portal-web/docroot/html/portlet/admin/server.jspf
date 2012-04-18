@@ -548,14 +548,14 @@ numberFormat.setMinimumIntegerDigits(2);
 				<aui:fieldset>
 					<liferay-ui:panel-container extended="<%= true %>" id="adminExternalServicesPanelContainer" persistState="<%= true %>">
 						<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="adminImageMagickConversionPanel" persistState="<%= true %>" title="enabling-imagemagick-provides-document-preview-functionality">
-							<aui:input label="enabled" name="imageMagickEnabled" type="checkbox" value="<%= PrefsPropsUtil.getBoolean(PropsKeys.IMAGEMAGICK_ENABLED) %>" />
+							<aui:input label="enabled" name="imageMagickEnabled" type="checkbox" value="<%= ImageMagickUtil.isEnabled() %>" />
 
-							<aui:input cssClass="lfr-input-text-container" label="path" name="imageMagickPath" type="text" value="<%= PDFProcessorUtil.getGlobalSearchPath() %>" />
+							<aui:input cssClass="lfr-input-text-container" label="path" name="imageMagickPath" type="text" value="<%= ImageMagickUtil.getGlobalSearchPath() %>" />
 
 							<aui:fieldset label="resource-limits">
 
 								<%
-								Properties resourceLimitsProperties = PDFProcessorUtil.getResourceLimitsProperties();
+								Properties resourceLimitsProperties = ImageMagickUtil.getResourceLimitsProperties();
 
 								for (String label : _IMAGEMAGICK_RESOURCE_LIMIT_LABELS) {
 									String name = "imageMagickLimit" + StringUtil.upperCaseFirstLetter(label);

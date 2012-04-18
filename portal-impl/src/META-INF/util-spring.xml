@@ -156,6 +156,11 @@
 			<bean class="com.liferay.portal.googleapps.GoogleAppsFactoryImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.image.ImageMagickUtil" class="com.liferay.portal.kernel.image.ImageMagickUtil">
+		<property name="imageMagick">
+			<bean class="com.liferay.portal.image.ImageMagickImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.kernel.image.ImageToolUtil" class="com.liferay.portal.kernel.image.ImageToolUtil">
 		<property name="imageTool">
 			<bean class="com.liferay.portal.image.ImageToolImpl" />

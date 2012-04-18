@@ -18,8 +18,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.security.pacl.PACLClassUtil;
-import com.liferay.portal.security.pacl.PACLPolicy;
+import com.liferay.portal.security.pacl.permission.PortalServicePermission;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -94,22 +93,12 @@ public class DynamicQueryFactoryImpl implements DynamicQueryFactory {
 			}
 		}
 
-		PACLPolicy paclPolicy = PACLClassUtil.getPACLPolicyByReflection(
-			_log.isDebugEnabled());
+		SecurityManager sm = System.getSecurityManager();
 
-		if (_log.isDebugEnabled()) {
-			if (paclPolicy != null) {
-				_log.debug(
-					"Retrieved PACL policy for " +
-						paclPolicy.getServletContextName());
-			}
-		}
-
-		if (paclPolicy != null) {
-			if (!paclPolicy.hasDynamicQuery(implClass)) {
-				throw new SecurityException(
-					"Attempted to create a dynamic query for " + implClass);
-			}
+		if (sm != null) {
+			sm.checkPermission(
+				new PortalServicePermission(
+					"hasDynamicQuery", classLoader, implClass));
 		}
 
 		return implClass;

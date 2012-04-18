@@ -836,7 +836,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 		InvokerPortlet invokerPortlet, String portletNamespace, String name) {
 
 		if (name.startsWith(portletNamespace) &&
-			!invokerPortlet.isFacesPortlet()) {
+			((invokerPortlet == null) || !invokerPortlet.isFacesPortlet())) {
 
 			name = name.substring(portletNamespace.length());
 		}

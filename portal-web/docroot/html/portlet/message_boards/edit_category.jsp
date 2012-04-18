@@ -204,9 +204,9 @@ catch (NoSuchMailingListException nsmle) {
 	<br />
 
 	<c:if test="<%= (category == null) && PropsValues.CAPTCHA_CHECK_PORTLET_MESSAGE_BOARDS_EDIT_CATEGORY %>">
-		<portlet:actionURL var="captchaURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+		<portlet:resourceURL var="captchaURL">
 			<portlet:param name="struts_action" value="/message_boards/captcha" />
-		</portlet:actionURL>
+		</portlet:resourceURL>
 
 		<liferay-ui:captcha url="<%= captchaURL %>" />
 	</c:if>

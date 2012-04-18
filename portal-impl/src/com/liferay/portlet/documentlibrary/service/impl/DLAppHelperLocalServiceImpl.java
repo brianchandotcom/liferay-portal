@@ -648,17 +648,15 @@ public class DLAppHelperLocalServiceImpl
 
 			// Asset
 
-			if (Validator.isNull(fileEntry.getVersion())) {
-				if (newStatus == WorkflowConstants.STATUS_IN_TRASH) {
-					assetEntryLocalService.moveEntryToTrash(
-						DLFileEntryConstants.getClassName(),
-						fileEntry.getFileEntryId());
-				}
-				else {
-					assetEntryLocalService.updateVisible(
-						DLFileEntryConstants.getClassName(),
-						fileEntry.getFileEntryId(), false);
-				}
+			if (newStatus == WorkflowConstants.STATUS_IN_TRASH) {
+				assetEntryLocalService.moveEntryToTrash(
+					DLFileEntryConstants.getClassName(),
+					fileEntry.getFileEntryId());
+			}
+			else if (Validator.isNull(fileEntry.getVersion())) {
+				assetEntryLocalService.updateVisible(
+					DLFileEntryConstants.getClassName(),
+					fileEntry.getFileEntryId(), false);
 			}
 		}
 	}

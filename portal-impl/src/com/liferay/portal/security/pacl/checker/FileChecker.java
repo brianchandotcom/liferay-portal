@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.WebDirDetector;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 import com.liferay.portal.security.pacl.PACLPolicy;
 import com.liferay.portal.util.PortalUtil;
 
@@ -48,10 +49,34 @@ public class FileChecker extends BaseChecker {
 		_commonClassLoader = portalClassLoader.getParent();
 	}
 
-	public boolean hasDelete(String fileName) {
-		Permission permission = new FilePermission(
-			fileName, _PERMISSION_DELETE);
+	@Override
+	public void checkPermission(Permission permission) {
+		String name = permission.getName();
+		String actions = permission.getActions();
 
+		if (actions.equals(_PERMISSION_DELETE) &&
+			!hasDelete(permission, name)) {
+
+			throw new SecurityException("Attempted to delete file " + name);
+		}
+		else if (actions.equals(_PERMISSION_EXECUTE) &&
+				 !hasExecute(permission, name)) {
+
+			throw new SecurityException("Attempted to execute file " + name);
+		}
+		else if (actions.equals(_PERMISSION_READ) &&
+				 !hasRead(permission, name)) {
+
+			throw new SecurityException("Attempted to read file " + name);
+		}
+		else if (actions.equals(_PERMISSION_WRITE) &&
+				 !hasWrite(permission, name)) {
+
+			throw new SecurityException("Attempted to write file " + name);
+		}
+	}
+
+	public boolean hasDelete(Permission permission, String fileName) {
 		for (Permission deleteFilePermission : _deletePermissions) {
 			if (deleteFilePermission.implies(permission)) {
 				return true;
@@ -65,10 +90,7 @@ public class FileChecker extends BaseChecker {
 		return false;
 	}
 
-	public boolean hasExecute(String fileName) {
-		Permission permission = new FilePermission(
-			fileName, _PERMISSION_EXECUTE);
-
+	public boolean hasExecute(Permission permission, String fileName) {
 		for (Permission executeFilePermission : _executePermissions) {
 			if (executeFilePermission.implies(permission)) {
 				return true;
@@ -78,9 +100,7 @@ public class FileChecker extends BaseChecker {
 		return false;
 	}
 
-	public boolean hasRead(String fileName) {
-		Permission permission = new FilePermission(fileName, _PERMISSION_READ);
-
+	public boolean hasRead(Permission permission, String fileName) {
 		for (Permission readFilePermission : _readPermissions) {
 			if (readFilePermission.implies(permission)) {
 				return true;
@@ -94,9 +114,7 @@ public class FileChecker extends BaseChecker {
 		return false;
 	}
 
-	public boolean hasWrite(String fileName) {
-		Permission permission = new FilePermission(fileName, _PERMISSION_WRITE);
-
+	public boolean hasWrite(Permission permission, String fileName) {
 		for (Permission writeFilePermission : _writePermissions) {
 			if (writeFilePermission.implies(permission)) {
 				return true;
@@ -199,42 +217,51 @@ public class FileChecker extends BaseChecker {
 	}
 
 	protected boolean isJSPCompiler(String fileName, String action) {
-		for (int i = 1;; i++) {
-			Class<?> callerClass = Reflection.getCallerClass(i);
+		boolean enabled = PortalSecurityManagerThreadLocal.isEnabled();
 
-			if (callerClass == null) {
-				break;
-			}
+		try {
+			PortalSecurityManagerThreadLocal.setEnabled(false);
 
-			String callerClassName = callerClass.getName();
+			for (int i = 1;; i++) {
+				Class<?> callerClass = Reflection.getCallerClass(i);
 
-			if (callerClassName.startsWith(
-					_PACKAGE_ORG_APACHE_JASPER_COMPILER) ||
-				callerClassName.startsWith(
-					_PACKAGE_ORG_APACHE_JASPER_XMLPARSER) ||
-				callerClassName.startsWith(
-					_PACKAGE_ORG_APACHE_NAMING_RESOURCES) ||
-				callerClassName.equals(_ClASS_NAME_JASPER_LOADER)) {
-
-				if (callerClass.getClassLoader() != _commonClassLoader) {
-					_log.error(
-						"A plugin is hijacking the JSP compiler via " +
-							callerClassName + " to " + action + " " + fileName);
-
-					return false;
+				if (callerClass == null) {
+					break;
 				}
 
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Allowing the JSP compiler via " + callerClassName +
-							" to " + action + " " + fileName);
-				}
+				String callerClassName = callerClass.getName();
 
-				return true;
+				if (callerClassName.startsWith(
+						_PACKAGE_ORG_APACHE_JASPER_COMPILER) ||
+					callerClassName.startsWith(
+						_PACKAGE_ORG_APACHE_JASPER_XMLPARSER) ||
+					callerClassName.startsWith(
+						_PACKAGE_ORG_APACHE_NAMING_RESOURCES) ||
+					callerClassName.equals(_ClASS_NAME_JASPER_LOADER)) {
+
+					if (callerClass.getClassLoader() != _commonClassLoader) {
+						_log.error(
+							"A plugin is hijacking the JSP compiler via " +
+								callerClassName + " to " + action + " " + fileName);
+
+						return false;
+					}
+
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Allowing the JSP compiler via " + callerClassName +
+								" to " + action + " " + fileName);
+					}
+
+					return true;
+				}
 			}
+
+			return false;
 		}
-
-		return false;
+		finally {
+			PortalSecurityManagerThreadLocal.setEnabled(enabled);
+		}
 	}
 
 	private static final String _ClASS_NAME_JASPER_LOADER =

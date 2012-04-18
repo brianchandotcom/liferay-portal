@@ -20,6 +20,8 @@ import com.liferay.portal.security.pacl.PACLPolicy;
 
 import java.io.StringReader;
 
+import java.security.Permission;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -65,6 +67,11 @@ public class SQLChecker extends BaseChecker {
 			"security-manager-sql-tables-truncate");
 		_updateTableNames = getPropertySet(
 			"security-manager-sql-tables-update");
+	}
+
+	@Override
+	public void checkPermission(Permission permission) {
+		// TODO
 	}
 
 	public boolean hasSQL(String sql) {

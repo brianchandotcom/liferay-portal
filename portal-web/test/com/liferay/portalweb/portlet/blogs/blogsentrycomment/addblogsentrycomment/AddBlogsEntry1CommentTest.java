@@ -20,18 +20,24 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddBlogsEntryCommentTest extends BaseTestCase {
-	public void testAddBlogsEntryComment() throws Exception {
+public class AddBlogsEntry1CommentTest extends BaseTestCase {
+	public void testAddBlogsEntry1Comment() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
-			selenium.getText("//div[@class='entry-title']/h2/a"));
-		selenium.clickAt("//div[@class='entry-title']/h2/a",
-			RuntimeVariables.replace("Blogs Entry Title"));
+		selenium.type("//input[@id='_33_keywords']",
+			RuntimeVariables.replace("Entry1"));
+		selenium.clickAt("//input[@value='Search']",
+			RuntimeVariables.replace("Search"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Blogs Entry1 Title"),
+			selenium.getText("//td[2]/a"));
+		selenium.clickAt("//td[2]/a",
+			RuntimeVariables.replace("Blogs Entry1 Title"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Be the first."),
@@ -56,7 +62,7 @@ public class AddBlogsEntryCommentTest extends BaseTestCase {
 		}
 
 		selenium.type("//textarea[@name='_33_postReplyBody0']",
-			RuntimeVariables.replace("Blogs Entry Comment Body"));
+			RuntimeVariables.replace("Blogs Entry1 Comment Body"));
 		selenium.clickAt("//input[@value='Reply']",
 			RuntimeVariables.replace("Reply"));
 
@@ -83,7 +89,7 @@ public class AddBlogsEntryCommentTest extends BaseTestCase {
 				"Your request processed successfully."),
 			selenium.getText(
 				"//div[@class='lfr-message-response portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("Blogs Entry Comment Body"),
+		assertEquals(RuntimeVariables.replace("Blogs Entry1 Comment Body"),
 			selenium.getText("//div[@class='lfr-discussion-message']"));
 	}
 }

@@ -1,12 +1,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>AddBlogsEntryCommentTest</title>
+<title>AddBlogsEntryComment3Test</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">AddBlogsEntryCommentTest</td></tr>
+<tr><td rowspan="1" colspan="3">AddBlogsEntryComment3Test</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -30,13 +30,13 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//fieldset[contains(@class,'add-comment')]/div/a</td>
-	<td>Be the first.</td>
+	<td>//fieldset[contains(@class,'add-comment')]/div/span/a</td>
+	<td>Add Comment</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//fieldset[contains(@class,'add-comment')]/div/a</td>
-	<td>Be the first.</td>
+	<td>//fieldset[contains(@class,'add-comment')]/div/span/a</td>
+	<td>Add Comment</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -46,7 +46,7 @@
 <tr>
 	<td>type</td>
 	<td>//textarea[@name='_33_postReplyBody0']</td>
-	<td>Blogs Entry Comment Body</td>
+	<td>Blogs Entry Comment3 Body</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -65,8 +65,8 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-discussion-message']</td>
-	<td>Blogs Entry Comment Body</td>
+	<td>xPath=(//div[@class='lfr-discussion-message'])[3]</td>
+	<td>Blogs Entry Comment3 Body</td>
 </tr>
 </tbody></table>
 </body>

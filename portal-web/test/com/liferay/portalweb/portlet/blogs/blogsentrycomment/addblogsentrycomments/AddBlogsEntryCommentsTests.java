@@ -12,13 +12,15 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.blogs.blogsentrycomment.editblogsentrycomment;
+package com.liferay.portalweb.portlet.blogs.blogsentrycomment.addblogsentrycomments;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentry.AddBlogsEntryTest;
 import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentry.TearDownBlogsEntryTest;
-import com.liferay.portalweb.portlet.blogs.blogsentrycomment.addblogsentrycomment.AddBlogsEntryCommentTest;
+import com.liferay.portalweb.portlet.blogs.blogsentrycomment.addblogsentrycomment.AddBlogsEntryComment1Test;
+import com.liferay.portalweb.portlet.blogs.blogsentrycomment.addblogsentrycomment.AddBlogsEntryComment2Test;
+import com.liferay.portalweb.portlet.blogs.blogsentrycomment.addblogsentrycomment.AddBlogsEntryComment3Test;
 import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPageBlogsTest;
 import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPortletBlogsTest;
 
@@ -28,14 +30,15 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class EditBlogsEntryCommentTests extends BaseTestSuite {
+public class AddBlogsEntryCommentsTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddPageBlogsTest.class);
 		testSuite.addTestSuite(AddPortletBlogsTest.class);
 		testSuite.addTestSuite(AddBlogsEntryTest.class);
-		testSuite.addTestSuite(AddBlogsEntryCommentTest.class);
-		testSuite.addTestSuite(EditBlogsEntryCommentTest.class);
+		testSuite.addTestSuite(AddBlogsEntryComment1Test.class);
+		testSuite.addTestSuite(AddBlogsEntryComment2Test.class);
+		testSuite.addTestSuite(AddBlogsEntryComment3Test.class);
 		testSuite.addTestSuite(TearDownBlogsEntryTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

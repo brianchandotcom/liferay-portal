@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.blogs.blogsentrycomment.editblogsentrycomment;
+package com.liferay.portalweb.portlet.blogs.blogsentrycomment.addblogsentrycomment;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,27 +20,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddBlogsEntryCommentTest extends BaseTestCase {
-	public void testAddBlogsEntryComment() throws Exception {
+public class AddBlogsEntryComment3Test extends BaseTestCase {
+	public void testAddBlogsEntryComment3() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Blogs Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -51,10 +34,11 @@ public class AddBlogsEntryCommentTest extends BaseTestCase {
 			RuntimeVariables.replace("Blogs Entry Title"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Be the first."),
-			selenium.getText("//fieldset/div/a"));
-		selenium.clickAt("//fieldset/div/a",
-			RuntimeVariables.replace("Be the first."));
+		assertEquals(RuntimeVariables.replace("Add Comment"),
+			selenium.getText(
+				"//fieldset[contains(@class,'add-comment')]/div/span/a"));
+		selenium.clickAt("//fieldset[contains(@class,'add-comment')]/div/span/a",
+			RuntimeVariables.replace("Add Comment"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -73,7 +57,7 @@ public class AddBlogsEntryCommentTest extends BaseTestCase {
 		}
 
 		selenium.type("//textarea[@name='_33_postReplyBody0']",
-			RuntimeVariables.replace("Blogs Entry Comment Body"));
+			RuntimeVariables.replace("Blogs Entry Comment3 Body"));
 		selenium.clickAt("//input[@value='Reply']",
 			RuntimeVariables.replace("Reply"));
 
@@ -100,7 +84,8 @@ public class AddBlogsEntryCommentTest extends BaseTestCase {
 				"Your request processed successfully."),
 			selenium.getText(
 				"//div[@class='lfr-message-response portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("Blogs Entry Comment Body"),
-			selenium.getText("//div[@class='lfr-discussion-message']"));
+		assertEquals(RuntimeVariables.replace("Blogs Entry Comment3 Body"),
+			selenium.getText(
+				"xPath=(//div[@class='lfr-discussion-message'])[3]"));
 	}
 }

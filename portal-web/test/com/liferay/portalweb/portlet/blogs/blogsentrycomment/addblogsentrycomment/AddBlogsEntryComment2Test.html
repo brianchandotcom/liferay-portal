@@ -1,12 +1,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>AddBlogsEntryCommentTest</title>
+<title>AddBlogsEntryComment2Test</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">AddBlogsEntryCommentTest</td></tr>
+<tr><td rowspan="1" colspan="3">AddBlogsEntryComment2Test</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Blogs Test Page</td>
-	<td>Blogs Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Blogs Test Page</td>
 	<td>Blogs Test Page</td>
@@ -35,13 +30,13 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//fieldset/div/a</td>
-	<td>Be the first.</td>
+	<td>//fieldset[contains(@class,'add-comment')]/div/span/a</td>
+	<td>Add Comment</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//fieldset/div/a</td>
-	<td>Be the first.</td>
+	<td>//fieldset[contains(@class,'add-comment')]/div/span/a</td>
+	<td>Add Comment</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -51,7 +46,7 @@
 <tr>
 	<td>type</td>
 	<td>//textarea[@name='_33_postReplyBody0']</td>
-	<td>Blogs Entry Comment Body</td>
+	<td>Blogs Entry Comment2 Body</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -70,10 +65,9 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-discussion-message']</td>
-	<td>Blogs Entry Comment Body</td>
+	<td>xPath=(//div[@class='lfr-discussion-message'])[2]</td>
+	<td>Blogs Entry Comment2 Body</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

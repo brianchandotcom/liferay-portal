@@ -46,6 +46,9 @@ public interface JavaConstants {
 
 	public static final String JAVAX_PORTLET_TITLE = "javax.portlet.title";
 
+	public static final String JAVAX_SERVLET_CONTEXT_TEMPDIR =
+		"javax.servlet.context.tempdir";
+
 	public static final String JAVAX_SERVLET_ERROR_EXCEPTION =
 		"javax.servlet.error.exception";
 

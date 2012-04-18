@@ -14,9 +14,10 @@
 
 package com.liferay.portal.security.pacl;
 
-import java.lang.reflect.Method;
+import com.liferay.portal.security.pacl.checker.BaseChecker;
 
-import java.util.Locale;
+import java.security.Permission;
+
 import java.util.Properties;
 
 /**
@@ -31,64 +32,12 @@ public class InactivePACLPolicy extends BasePACLPolicy {
 		super(servletContextName, classLoader, properties);
 	}
 
-	public boolean hasDynamicQuery(Class<?> clazz) {
-		return true;
+	public void checkPermission(Permission permission) {
+		// This never results in error.
 	}
 
-	public boolean hasFileDelete(String fileName) {
-		return true;
-	}
-
-	public boolean hasFileExecute(String fileName) {
-		return true;
-	}
-
-	public boolean hasFileRead(String fileName) {
-		return true;
-	}
-
-	public boolean hasFileWrite(String fileName) {
-		return true;
-	}
-
-	public boolean hasHookCustomJspDir() {
-		return true;
-	}
-
-	public boolean hasHookIndexer(String className) {
-		return true;
-	}
-
-	public boolean hasHookLanguagePropertiesLocale(Locale locale) {
-		return true;
-	}
-
-	public boolean hasHookPortalPropertiesKey(String key) {
-		return true;
-	}
-
-	public boolean hasHookService(String className) {
-		return true;
-	}
-
-	public boolean hasHookServletFilters() {
-		return true;
-	}
-
-	public boolean hasHookStrutsActionPath(String actionPath) {
-		return true;
-	}
-
-	public boolean hasService(Object object, Method method) {
-		return true;
-	}
-
-	public boolean hasSocketConnect(String host, int port) {
-		return true;
-	}
-
-	public boolean hasSocketListen(int port) {
-		return true;
+	public BaseChecker getChecker(String permissionClassName) {
+		return null;
 	}
 
 	public boolean hasSQL(String sql) {

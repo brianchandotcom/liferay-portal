@@ -105,6 +105,8 @@ public class SocialActivityCounterPersistenceTest {
 
 		newSocialActivityCounter.setEndPeriod(ServiceTestUtil.nextInt());
 
+		newSocialActivityCounter.setActive(ServiceTestUtil.randomBoolean());
+
 		_persistence.update(newSocialActivityCounter, false);
 
 		SocialActivityCounter existingSocialActivityCounter = _persistence.findByPrimaryKey(newSocialActivityCounter.getPrimaryKey());
@@ -133,6 +135,8 @@ public class SocialActivityCounterPersistenceTest {
 			newSocialActivityCounter.getStartPeriod());
 		Assert.assertEquals(existingSocialActivityCounter.getEndPeriod(),
 			newSocialActivityCounter.getEndPeriod());
+		Assert.assertEquals(existingSocialActivityCounter.getActive(),
+			newSocialActivityCounter.getActive());
 	}
 
 	@Test
@@ -321,6 +325,8 @@ public class SocialActivityCounterPersistenceTest {
 		socialActivityCounter.setStartPeriod(ServiceTestUtil.nextInt());
 
 		socialActivityCounter.setEndPeriod(ServiceTestUtil.nextInt());
+
+		socialActivityCounter.setActive(ServiceTestUtil.randomBoolean());
 
 		_persistence.update(socialActivityCounter, false);
 

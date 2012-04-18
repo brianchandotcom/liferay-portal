@@ -287,6 +287,33 @@ public class SocialActivityCounterWrapper implements SocialActivityCounter,
 		_socialActivityCounter.setEndPeriod(endPeriod);
 	}
 
+	/**
+	* Returns the active of this social activity counter.
+	*
+	* @return the active of this social activity counter
+	*/
+	public boolean getActive() {
+		return _socialActivityCounter.getActive();
+	}
+
+	/**
+	* Returns <code>true</code> if this social activity counter is active.
+	*
+	* @return <code>true</code> if this social activity counter is active; <code>false</code> otherwise
+	*/
+	public boolean isActive() {
+		return _socialActivityCounter.isActive();
+	}
+
+	/**
+	* Sets whether this social activity counter is active.
+	*
+	* @param active the active of this social activity counter
+	*/
+	public void setActive(boolean active) {
+		_socialActivityCounter.setActive(active);
+	}
+
 	public boolean isNew() {
 		return _socialActivityCounter.isNew();
 	}

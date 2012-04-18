@@ -460,7 +460,8 @@ public class SocialActivityLocalServiceWrapper
 	* @throws SystemException if a system exception occurred
 	*/
 	public void deleteUserActivities(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		_socialActivityLocalService.deleteUserActivities(userId);
 	}
 

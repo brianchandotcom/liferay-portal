@@ -21,20 +21,23 @@ public interface DLFileEntryFinder {
 	public int countByExtraSettings()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public int countByG_F_S(long groupId,
-		java.util.List<java.lang.Long> folderIds, int status)
+	public int countByG_F(long groupId,
+		java.util.List<java.lang.Long> folderIds,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public int countByG_U_F_M_S(long groupId, long userId,
+	public int countByG_U_F_M(long groupId, long userId,
 		java.util.List<java.lang.Long> folderIds, java.lang.String[] mimeTypes,
-		int status) throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry fetchByAnyImageId(
 		long imageId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public int filterCountByG_F_S(long groupId,
-		java.util.List<java.lang.Long> folderIds, int status)
+	public int filterCountByG_F(long groupId,
+		java.util.List<java.lang.Long> folderIds,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry findByAnyImageId(
@@ -55,9 +58,9 @@ public interface DLFileEntryFinder {
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> findByOrphanedFileEntries()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> findByG_U_F_M_S(
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> findByG_U_F_M(
 		long groupId, long userId, java.util.List<java.lang.Long> folderIds,
-		java.lang.String[] mimeTypes, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
+		java.lang.String[] mimeTypes,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
 		throws com.liferay.portal.kernel.exception.SystemException;
 }

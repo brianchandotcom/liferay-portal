@@ -606,6 +606,8 @@ Liferay.Service.registerClass(
 		getGroupEntriesCount: true,
 		getGroupsEntries: true,
 		getOrganizationEntries: true,
+		moveEntryToTrash: true,
+		restoreEntryFromTrash: true,
 		subscribe: true,
 		unsubscribe: true
 	}
@@ -693,9 +695,11 @@ Liferay.Service.registerClass(
 		lockFileEntry: true,
 		lockFolder: true,
 		moveFileEntry: true,
+		moveFileEntryToTrash: true,
 		moveFolder: true,
 		refreshFileEntryLock: true,
 		refreshFolderLock: true,
+		restoreFileEntryFromTrash: true,
 		revertFileEntry: true,
 		search: true,
 		unlockFileEntry: true,
@@ -1237,5 +1241,15 @@ Liferay.Service.registerClass(
 		subscribePage: true,
 		unsubscribePage: true,
 		updatePage: true
+	}
+);
+
+Liferay.Service.register("Liferay.Service.Trash", "com.liferay.portlet.trash.service");
+
+Liferay.Service.registerClass(
+	Liferay.Service.Trash, "TrashEntry",
+	{
+		deleteEntries: true,
+		getEntries: true
 	}
 );

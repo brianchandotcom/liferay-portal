@@ -3166,6 +3166,9 @@
 			<basic name="graceValue" />
 			<basic name="startPeriod" />
 			<basic name="endPeriod" />
+			<basic name="active">
+				<column name="ACTIVE_" />
+			</basic>
 			<transient name="className" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
@@ -3421,6 +3424,23 @@
 			</basic>
 			<basic name="nodeId" />
 			<basic name="title" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.liferay.portlet.trash.model.impl.TrashEntryModelImpl">
+		<attributes>
+			<id name="entryId" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="classNameId" />
+			<basic name="classPK" />
+			<basic name="status" />
+			<basic name="trashedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="typeSettings" />
+			<transient name="className" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
 		</attributes>
@@ -4180,5 +4200,11 @@
 	<entity class="com.liferay.portlet.wiki.model.impl.WikiPageResourceImpl" name="WikiPageResource">
 		<table name="WikiPageResource" />
 		<attributes />
+	</entity>
+	<entity class="com.liferay.portlet.trash.model.impl.TrashEntryImpl" name="TrashEntry">
+		<table name="TrashEntry" />
+		<attributes>
+			<transient name="typeSettingsProperties" />
+		</attributes>
 	</entity>
 </entity-mappings>

@@ -22,46 +22,50 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  */
 public class BlogsEntryFinderUtil {
 	public static int countByOrganizationId(long organizationId,
-		java.util.Date displayDate, int status)
+		java.util.Date displayDate,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder()
-				   .countByOrganizationId(organizationId, displayDate, status);
+				   .countByOrganizationId(organizationId, displayDate,
+			queryDefinition);
 	}
 
 	public static int countByOrganizationIds(
 		java.util.List<java.lang.Long> organizationIds,
-		java.util.Date displayDate, int status)
+		java.util.Date displayDate,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder()
-				   .countByOrganizationIds(organizationIds, displayDate, status);
+				   .countByOrganizationIds(organizationIds, displayDate,
+			queryDefinition);
 	}
 
 	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByGroupIds(
-		long companyId, long groupId, java.util.Date displayDate, int status,
-		int start, int end)
+		long companyId, long groupId, java.util.Date displayDate,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder()
-				   .findByGroupIds(companyId, groupId, displayDate, status,
-			start, end);
+				   .findByGroupIds(companyId, groupId, displayDate,
+			queryDefinition);
 	}
 
 	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByOrganizationId(
-		long organizationId, java.util.Date displayDate, int status, int start,
-		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		long organizationId, java.util.Date displayDate,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder()
-				   .findByOrganizationId(organizationId, displayDate, status,
-			start, end, obc);
+				   .findByOrganizationId(organizationId, displayDate,
+			queryDefinition);
 	}
 
 	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByOrganizationIds(
 		java.util.List<java.lang.Long> organizationIds,
-		java.util.Date displayDate, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
+		java.util.Date displayDate,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder()
-				   .findByOrganizationIds(organizationIds, displayDate, status,
-			start, end, obc);
+				   .findByOrganizationIds(organizationIds, displayDate,
+			queryDefinition);
 	}
 
 	public static java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByNoAssets()

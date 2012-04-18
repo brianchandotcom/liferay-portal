@@ -1117,4 +1117,16 @@
 		<property name="service" ref="com.liferay.portlet.wiki.service.WikiPageService" />
 		<property name="serviceInterface" value="com.liferay.portlet.wiki.service.WikiPageService" />
 	</bean>
+	<bean name="/com_liferay_portlet_trash_service_spring_TrashEntryService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
+		<property name="service" ref="com.liferay.portlet.trash.service.TrashEntryService" />
+		<property name="serviceInterface" value="com.liferay.portlet.trash.service.TrashEntryService" />
+	</bean>
+	<bean name="/com_liferay_portlet_trash_service_spring_TrashEntryService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
+		<property name="service" ref="com.liferay.portlet.trash.service.TrashEntryService" />
+		<property name="serviceInterface" value="com.liferay.portlet.trash.service.TrashEntryService" />
+	</bean>
+	<bean name="/com_liferay_portlet_trash_service_spring_TrashEntryService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service" ref="com.liferay.portlet.trash.service.TrashEntryService" />
+		<property name="serviceInterface" value="com.liferay.portlet.trash.service.TrashEntryService" />
+	</bean>
 </beans>

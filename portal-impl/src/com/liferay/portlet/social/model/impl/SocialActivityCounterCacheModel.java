@@ -33,7 +33,7 @@ public class SocialActivityCounterCacheModel implements CacheModel<SocialActivit
 	Serializable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{activityCounterId=");
 		sb.append(activityCounterId);
@@ -59,6 +59,8 @@ public class SocialActivityCounterCacheModel implements CacheModel<SocialActivit
 		sb.append(startPeriod);
 		sb.append(", endPeriod=");
 		sb.append(endPeriod);
+		sb.append(", active=");
+		sb.append(active);
 		sb.append("}");
 
 		return sb.toString();
@@ -86,6 +88,7 @@ public class SocialActivityCounterCacheModel implements CacheModel<SocialActivit
 		socialActivityCounterImpl.setGraceValue(graceValue);
 		socialActivityCounterImpl.setStartPeriod(startPeriod);
 		socialActivityCounterImpl.setEndPeriod(endPeriod);
+		socialActivityCounterImpl.setActive(active);
 
 		socialActivityCounterImpl.resetOriginalValues();
 
@@ -104,4 +107,5 @@ public class SocialActivityCounterCacheModel implements CacheModel<SocialActivit
 	public int graceValue;
 	public int startPeriod;
 	public int endPeriod;
+	public boolean active;
 }

@@ -726,8 +726,10 @@ create index IX_926CDD04 on SocialActivityCounter (groupId, classNameId, classPK
 
 create index IX_B15863FA on SocialActivityLimit (classNameId, classPK);
 create unique index IX_F1C1A617 on SocialActivityLimit (groupId, userId, classNameId, classPK, activityType, activityCounterName);
+create index IX_6F9EDE9F on SocialActivityLimit (userId);
 
 create index IX_384788CD on SocialActivitySetting (groupId, activityType);
+create index IX_9D22151E on SocialActivitySetting (groupId, classNameId);
 create index IX_1E9CF33B on SocialActivitySetting (groupId, classNameId, activityType);
 create index IX_D984AABA on SocialActivitySetting (groupId, classNameId, activityType, name);
 
@@ -764,6 +766,10 @@ create index IX_AE6E9907 on Team (groupId);
 create unique index IX_143DC786 on Team (groupId, name);
 
 create index IX_B2468446 on Ticket (key_);
+
+create unique index IX_B35F73D5 on TrashEntry (classNameId, classPK);
+create index IX_2674F2A8 on TrashEntry (companyId);
+create index IX_526A032A on TrashEntry (groupId);
 
 create index IX_524FEFCE on UserGroup (companyId);
 create unique index IX_23EAD0D on UserGroup (companyId, name);

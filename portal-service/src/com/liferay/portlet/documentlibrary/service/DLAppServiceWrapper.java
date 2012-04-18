@@ -1662,6 +1662,20 @@ public class DLAppServiceWrapper implements DLAppService,
 	}
 
 	/**
+	* Moves the file entry with the primary key to the trash portlet.
+	*
+	* @param fileEntryId the primary key of the file entry
+	* @throws PortalException if the file entry could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryToTrash(
+		long fileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlAppService.moveFileEntryToTrash(fileEntryId);
+	}
+
+	/**
 	* Moves the folder to the new parent folder with the primary key.
 	*
 	* @param folderId the primary key of the folder
@@ -1719,6 +1733,19 @@ public class DLAppServiceWrapper implements DLAppService,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _dlAppService.refreshFolderLock(lockUuid, companyId,
 			expirationTime);
+	}
+
+	/**
+	* Moves the file entry with the primary key to the trash portlet.
+	*
+	* @param fileEntryId the primary key of the file entry
+	* @throws PortalException if the file entry could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public void restoreFileEntryFromTrash(long fileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_dlAppService.restoreFileEntryFromTrash(fileEntryId);
 	}
 
 	/**

@@ -42,6 +42,7 @@ public class SocialActivityCounterSoap implements Serializable {
 		soapModel.setGraceValue(model.getGraceValue());
 		soapModel.setStartPeriod(model.getStartPeriod());
 		soapModel.setEndPeriod(model.getEndPeriod());
+		soapModel.setActive(model.getActive());
 
 		return soapModel;
 	}
@@ -193,6 +194,18 @@ public class SocialActivityCounterSoap implements Serializable {
 		_endPeriod = endPeriod;
 	}
 
+	public boolean getActive() {
+		return _active;
+	}
+
+	public boolean isActive() {
+		return _active;
+	}
+
+	public void setActive(boolean active) {
+		_active = active;
+	}
+
 	private long _activityCounterId;
 	private long _groupId;
 	private long _companyId;
@@ -205,4 +218,5 @@ public class SocialActivityCounterSoap implements Serializable {
 	private int _graceValue;
 	private int _startPeriod;
 	private int _endPeriod;
+	private boolean _active;
 }

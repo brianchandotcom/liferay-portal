@@ -325,8 +325,44 @@ public class SocialActivityCounterLocalServiceWrapper
 	}
 
 	public void deleteActivityCounters(long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		_socialActivityCounterLocalService.deleteActivityCounters(classNameId,
+			classPK);
+	}
+
+	public void deleteActivityCounters(java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_socialActivityCounterLocalService.deleteActivityCounters(className,
+			classPK);
+	}
+
+	public void disableActivityCounters(long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_socialActivityCounterLocalService.disableActivityCounters(classNameId,
+			classPK);
+	}
+
+	public void disableActivityCounters(java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_socialActivityCounterLocalService.disableActivityCounters(className,
+			classPK);
+	}
+
+	public void enableActivityCounters(long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_socialActivityCounterLocalService.enableActivityCounters(classNameId,
+			classPK);
+	}
+
+	public void enableActivityCounters(java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_socialActivityCounterLocalService.enableActivityCounters(className,
 			classPK);
 	}
 

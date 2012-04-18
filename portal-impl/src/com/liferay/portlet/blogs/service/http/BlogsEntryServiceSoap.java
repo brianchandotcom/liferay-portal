@@ -251,6 +251,29 @@ public class BlogsEntryServiceSoap {
 		}
 	}
 
+	public static void moveEntryToTrash(long entryId) throws RemoteException {
+		try {
+			BlogsEntryServiceUtil.moveEntryToTrash(entryId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void restoreEntryFromTrash(long entryId)
+		throws RemoteException {
+		try {
+			BlogsEntryServiceUtil.restoreEntryFromTrash(entryId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static void subscribe(long groupId) throws RemoteException {
 		try {
 			BlogsEntryServiceUtil.subscribe(groupId);

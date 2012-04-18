@@ -344,6 +344,9 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 		_blogsEntryLocalService.deleteEntry(entryId);
 	}
 
+	/**
+	* @deprecated {@link #getCompanyEntries(long, Date, QueryDefinition)}
+	*/
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getCompanyEntries(
 		long companyId, java.util.Date displayDate, int status, int start,
 		int end) throws com.liferay.portal.kernel.exception.SystemException {
@@ -351,6 +354,9 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 			displayDate, status, start, end);
 	}
 
+	/**
+	* @deprecated {@link #getCompanyEntries(long, Date, QueryDefinition)}
+	*/
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getCompanyEntries(
 		long companyId, java.util.Date displayDate, int status, int start,
 		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
@@ -359,11 +365,30 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 			displayDate, status, start, end, obc);
 	}
 
+	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getCompanyEntries(
+		long companyId, java.util.Date displayDate,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _blogsEntryLocalService.getCompanyEntries(companyId,
+			displayDate, queryDefinition);
+	}
+
+	/**
+	* @deprecated {@link #getCompanyEntriesCount(long, Date, QueryDefinition)}
+	*/
 	public int getCompanyEntriesCount(long companyId,
 		java.util.Date displayDate, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _blogsEntryLocalService.getCompanyEntriesCount(companyId,
 			displayDate, status);
+	}
+
+	public int getCompanyEntriesCount(long companyId,
+		java.util.Date displayDate,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _blogsEntryLocalService.getCompanyEntriesCount(companyId,
+			displayDate, queryDefinition);
 	}
 
 	public com.liferay.portlet.blogs.model.BlogsEntry[] getEntriesPrevAndNext(
@@ -386,6 +411,9 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 		return _blogsEntryLocalService.getEntry(groupId, urlTitle);
 	}
 
+	/**
+	* @deprecated {@link #getGroupEntries(long, Date, QueryDefinition)}
+	*/
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupEntries(
 		long groupId, java.util.Date displayDate, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -393,6 +421,9 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 			status, start, end);
 	}
 
+	/**
+	* @deprecated {@link #getGroupEntries(long, Date, QueryDefinition)}
+	*/
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupEntries(
 		long groupId, java.util.Date displayDate, int status, int start,
 		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
@@ -402,12 +433,26 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 	}
 
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupEntries(
+		long groupId, java.util.Date displayDate,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _blogsEntryLocalService.getGroupEntries(groupId, displayDate,
+			queryDefinition);
+	}
+
+	/**
+	* @deprecated {@link #getGroupEntries(long, QueryDefinition)}
+	*/
+	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupEntries(
 		long groupId, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _blogsEntryLocalService.getGroupEntries(groupId, status, start,
 			end);
 	}
 
+	/**
+	* @deprecated {@link #getGroupEntries(long, QueryDefinition)}
+	*/
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupEntries(
 		long groupId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
@@ -416,17 +461,47 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 			end, obc);
 	}
 
+	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupEntries(
+		long groupId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _blogsEntryLocalService.getGroupEntries(groupId, queryDefinition);
+	}
+
+	/**
+	* @deprecated {@link #getGroupEntriesCount(long, Date, QueryDefinition)}
+	*/
 	public int getGroupEntriesCount(long groupId, java.util.Date displayDate,
 		int status) throws com.liferay.portal.kernel.exception.SystemException {
 		return _blogsEntryLocalService.getGroupEntriesCount(groupId,
 			displayDate, status);
 	}
 
+	public int getGroupEntriesCount(long groupId, java.util.Date displayDate,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _blogsEntryLocalService.getGroupEntriesCount(groupId,
+			displayDate, queryDefinition);
+	}
+
+	/**
+	* @deprecated {@link #getGroupEntriesCount(long, QueryDefinition)}
+	*/
 	public int getGroupEntriesCount(long groupId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _blogsEntryLocalService.getGroupEntriesCount(groupId, status);
 	}
 
+	public int getGroupEntriesCount(long groupId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _blogsEntryLocalService.getGroupEntriesCount(groupId,
+			queryDefinition);
+	}
+
+	/**
+	* @deprecated {@link #getGroupsEntries(long, long, Date, QueryDefinition)}
+	*/
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupsEntries(
 		long companyId, long groupId, java.util.Date displayDate, int status,
 		int start, int end)
@@ -435,6 +510,17 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 			displayDate, status, start, end);
 	}
 
+	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupsEntries(
+		long companyId, long groupId, java.util.Date displayDate,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _blogsEntryLocalService.getGroupsEntries(companyId, groupId,
+			displayDate, queryDefinition);
+	}
+
+	/**
+	* @deprecated {@link #getGroupUserEntries(long, long, Date, QueryDefinition)}
+	*/
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupUserEntries(
 		long groupId, long userId, java.util.Date displayDate, int status,
 		int start, int end)
@@ -443,6 +529,9 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 			displayDate, status, start, end);
 	}
 
+	/**
+	* @deprecated {@link #getGroupUserEntries(long, long, Date, QueryDefinition)}
+	*/
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupUserEntries(
 		long groupId, long userId, java.util.Date displayDate, int status,
 		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
@@ -451,6 +540,17 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 			displayDate, status, start, end, obc);
 	}
 
+	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupUserEntries(
+		long groupId, long userId, java.util.Date displayDate,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _blogsEntryLocalService.getGroupUserEntries(groupId, userId,
+			displayDate, queryDefinition);
+	}
+
+	/**
+	* @deprecated {@link #getGroupUserEntriesCount(long, long, Date, QueryDefinition)}
+	*/
 	public int getGroupUserEntriesCount(long groupId, long userId,
 		java.util.Date displayDate, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -458,11 +558,22 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 			userId, displayDate, status);
 	}
 
+	public int getGroupUserEntriesCount(long groupId, long userId,
+		java.util.Date displayDate,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _blogsEntryLocalService.getGroupUserEntriesCount(groupId,
+			userId, displayDate, queryDefinition);
+	}
+
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getNoAssetEntries()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _blogsEntryLocalService.getNoAssetEntries();
 	}
 
+	/**
+	* @deprecated {@link #getOrganizationEntries(long, Date, QueryDefinition)}
+	*/
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getOrganizationEntries(
 		long organizationId, java.util.Date displayDate, int status, int start,
 		int end) throws com.liferay.portal.kernel.exception.SystemException {
@@ -470,6 +581,9 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 			displayDate, status, start, end);
 	}
 
+	/**
+	* @deprecated {@link #getOrganizationEntries(long, Date, QueryDefinition)}
+	*/
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getOrganizationEntries(
 		long organizationId, java.util.Date displayDate, int status, int start,
 		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
@@ -478,11 +592,56 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 			displayDate, status, start, end, obc);
 	}
 
+	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getOrganizationEntries(
+		long organizationId, java.util.Date displayDate,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _blogsEntryLocalService.getOrganizationEntries(organizationId,
+			displayDate, queryDefinition);
+	}
+
+	/**
+	* @deprecated {@link #getOrganizationEntriesCount(long, Date, QueryDefinition)}
+	*/
 	public int getOrganizationEntriesCount(long organizationId,
 		java.util.Date displayDate, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _blogsEntryLocalService.getOrganizationEntriesCount(organizationId,
 			displayDate, status);
+	}
+
+	public int getOrganizationEntriesCount(long organizationId,
+		java.util.Date displayDate,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _blogsEntryLocalService.getOrganizationEntriesCount(organizationId,
+			displayDate, queryDefinition);
+	}
+
+	public void moveEntriesToTrash(long groupId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_blogsEntryLocalService.moveEntriesToTrash(groupId, userId);
+	}
+
+	public com.liferay.portlet.blogs.model.BlogsEntry moveEntryToTrash(
+		long userId, com.liferay.portlet.blogs.model.BlogsEntry entry)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _blogsEntryLocalService.moveEntryToTrash(userId, entry);
+	}
+
+	public com.liferay.portlet.blogs.model.BlogsEntry moveEntryToTrash(
+		long userId, long entryId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _blogsEntryLocalService.moveEntryToTrash(userId, entryId);
+	}
+
+	public void restoreEntryFromTrash(long userId, long entryId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_blogsEntryLocalService.restoreEntryFromTrash(userId, entryId);
 	}
 
 	public void subscribe(long userId, long groupId)

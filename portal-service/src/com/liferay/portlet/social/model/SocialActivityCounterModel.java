@@ -237,6 +237,27 @@ public interface SocialActivityCounterModel extends AttachedModel,
 	 */
 	public void setEndPeriod(int endPeriod);
 
+	/**
+	 * Returns the active of this social activity counter.
+	 *
+	 * @return the active of this social activity counter
+	 */
+	public boolean getActive();
+
+	/**
+	 * Returns <code>true</code> if this social activity counter is active.
+	 *
+	 * @return <code>true</code> if this social activity counter is active; <code>false</code> otherwise
+	 */
+	public boolean isActive();
+
+	/**
+	 * Sets whether this social activity counter is active.
+	 *
+	 * @param active the active of this social activity counter
+	 */
+	public void setActive(boolean active);
+
 	public boolean isNew();
 
 	public void setNew(boolean n);

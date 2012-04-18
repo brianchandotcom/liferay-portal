@@ -605,6 +605,7 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 		socialActivityCounterImpl.setGraceValue(socialActivityCounter.getGraceValue());
 		socialActivityCounterImpl.setStartPeriod(socialActivityCounter.getStartPeriod());
 		socialActivityCounterImpl.setEndPeriod(socialActivityCounter.getEndPeriod());
+		socialActivityCounterImpl.setActive(socialActivityCounter.isActive());
 
 		return socialActivityCounterImpl;
 	}

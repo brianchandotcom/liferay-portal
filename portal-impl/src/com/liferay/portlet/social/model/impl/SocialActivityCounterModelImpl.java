@@ -67,9 +67,10 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 			{ "totalValue", Types.INTEGER },
 			{ "graceValue", Types.INTEGER },
 			{ "startPeriod", Types.INTEGER },
-			{ "endPeriod", Types.INTEGER }
+			{ "endPeriod", Types.INTEGER },
+			{ "active_", Types.BOOLEAN }
 		};
-	public static final String TABLE_SQL_CREATE = "create table SocialActivityCounter (activityCounterId LONG not null primary key,groupId LONG,companyId LONG,classNameId LONG,classPK LONG,name VARCHAR(75) null,ownerType INTEGER,currentValue INTEGER,totalValue INTEGER,graceValue INTEGER,startPeriod INTEGER,endPeriod INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table SocialActivityCounter (activityCounterId LONG not null primary key,groupId LONG,companyId LONG,classNameId LONG,classPK LONG,name VARCHAR(75) null,ownerType INTEGER,currentValue INTEGER,totalValue INTEGER,graceValue INTEGER,startPeriod INTEGER,endPeriod INTEGER,active_ BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table SocialActivityCounter";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -321,6 +322,18 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 		return _originalEndPeriod;
 	}
 
+	public boolean getActive() {
+		return _active;
+	}
+
+	public boolean isActive() {
+		return _active;
+	}
+
+	public void setActive(boolean active) {
+		_active = active;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -367,6 +380,7 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 		socialActivityCounterImpl.setGraceValue(getGraceValue());
 		socialActivityCounterImpl.setStartPeriod(getStartPeriod());
 		socialActivityCounterImpl.setEndPeriod(getEndPeriod());
+		socialActivityCounterImpl.setActive(getActive());
 
 		socialActivityCounterImpl.resetOriginalValues();
 
@@ -484,12 +498,14 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 
 		socialActivityCounterCacheModel.endPeriod = getEndPeriod();
 
+		socialActivityCounterCacheModel.active = getActive();
+
 		return socialActivityCounterCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{activityCounterId=");
 		sb.append(getActivityCounterId());
@@ -515,13 +531,15 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 		sb.append(getStartPeriod());
 		sb.append(", endPeriod=");
 		sb.append(getEndPeriod());
+		sb.append(", active=");
+		sb.append(getActive());
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(40);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.social.model.SocialActivityCounter");
@@ -575,6 +593,10 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 			"<column><column-name>endPeriod</column-name><column-value><![CDATA[");
 		sb.append(getEndPeriod());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>active</column-name><column-value><![CDATA[");
+		sb.append(getActive());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -610,6 +632,7 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 	private int _endPeriod;
 	private int _originalEndPeriod;
 	private boolean _setOriginalEndPeriod;
+	private boolean _active;
 	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private SocialActivityCounter _escapedModelProxy;

@@ -66,13 +66,11 @@ import com.liferay.portlet.blogs.util.LinkbackProducerUtil;
 import com.liferay.portlet.blogs.util.comparator.EntryDisplayDateComparator;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
-import net.htmlparser.jericho.Source;
-import net.htmlparser.jericho.StartTag;
 
-import javax.portlet.PortletPreferences;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -80,6 +78,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+
+import javax.portlet.PortletPreferences;
+
+import net.htmlparser.jericho.Source;
+import net.htmlparser.jericho.StartTag;
 
 /**
  * @author Brian Wing Shun Chan

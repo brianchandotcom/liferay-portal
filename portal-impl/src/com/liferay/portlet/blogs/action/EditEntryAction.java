@@ -48,10 +48,9 @@ import com.liferay.portlet.blogs.NoSuchEntryException;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.service.BlogsEntryServiceUtil;
-
-import java.io.InputStream;
-
-import java.util.Calendar;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -60,12 +59,9 @@ import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.WindowState;
-
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
+import java.io.InputStream;
+import java.util.Calendar;
 
 /**
  * @author Brian Wing Shun Chan
@@ -95,7 +91,10 @@ public class EditEntryAction extends PortletAction {
 				oldUrlTitle = ((String)returnValue[1]);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteEntries(actionRequest);
+				deleteEntries(actionRequest, false);
+			}
+			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
+				deleteEntries(actionRequest, true);
 			}
 			else if (cmd.equals(Constants.SUBSCRIBE)) {
 				subscribe(actionRequest);
@@ -248,18 +247,27 @@ public class EditEntryAction extends PortletAction {
 			getForward(renderRequest, "portlet.blogs.edit_entry"));
 	}
 
-	protected void deleteEntries(ActionRequest actionRequest) throws Exception {
+	protected void deleteEntries(
+			ActionRequest actionRequest, boolean moveToTrash)
+		throws Exception {
+
 		long entryId = ParamUtil.getLong(actionRequest, "entryId");
+		long[] deleteEntryIds = null;
 
 		if (entryId > 0) {
-			BlogsEntryServiceUtil.moveEntryToTrash(entryId);
+			deleteEntryIds = new long[] { entryId };
 		}
 		else {
-			long[] deleteEntryIds = StringUtil.split(
+			deleteEntryIds = StringUtil.split(
 				ParamUtil.getString(actionRequest, "deleteEntryIds"), 0L);
+		}
 
-			for (int i = 0; i < deleteEntryIds.length; i++) {
-				BlogsEntryServiceUtil.moveEntryToTrash(deleteEntryIds[i]);
+		for (long deleteEntryId : deleteEntryIds) {
+			if (moveToTrash) {
+				BlogsEntryServiceUtil.moveEntryToTrash(deleteEntryId);
+			}
+			else {
+				BlogsEntryServiceUtil.deleteEntry(deleteEntryId);
 			}
 		}
 	}

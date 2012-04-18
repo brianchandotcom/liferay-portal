@@ -52,6 +52,12 @@ if (!themeDisplay.isStatePopUp()) {
 					instance._createFocusManager();
 
 					instance._createLiveSearch();
+
+					Liferay.Store('control-panel-sidebar-minimized', function(event) {
+						if (event === 1) {
+							instance._uiSetHidden(event, true);
+						}
+					});
 				},
 
 				_afterHiddenChange: function(event) {
@@ -316,12 +322,7 @@ if (!themeDisplay.isStatePopUp()) {
 						},
 						function() {
 							if (persist) {
-								instance._saveData.set(
-									'data',
-									{
-										'control-panel-sidebar-minimized': newVal
-									}
-								).start();
+								Liferay.Store('control-panel-sidebar-minimized', newVal);
 							}
 
 							body.addClass(CSS_DISPLAY_PANEL_COLUMNS);

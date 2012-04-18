@@ -18,8 +18,6 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 
 import java.io.InputStream;
 
-import java.util.Properties;
-
 /**
  * @author Sergio González
  */
@@ -29,10 +27,6 @@ public class PDFProcessorUtil {
 		throws Exception {
 
 		getPDFProcessor().generateImages(fileVersion);
-	}
-
-	public static String getGlobalSearchPath() throws Exception {
-		return getPDFProcessor().getGlobalSearchPath();
 	}
 
 	public static PDFProcessor getPDFProcessor() {
@@ -54,10 +48,6 @@ public class PDFProcessorUtil {
 		throws Exception {
 
 		return getPDFProcessor().getPreviewFileSize(fileVersion, index);
-	}
-
-	public static Properties getResourceLimitsProperties() throws Exception {
-		return getPDFProcessor().getResourceLimitsProperties();
 	}
 
 	public static InputStream getThumbnailAsStream(
@@ -85,16 +75,8 @@ public class PDFProcessorUtil {
 		return getPDFProcessor().isDocumentSupported(mimeType);
 	}
 
-	public static boolean isImageMagickEnabled() throws Exception {
-		return getPDFProcessor().isImageMagickEnabled();
-	}
-
 	public static boolean isSupported(String mimeType) {
 		return getPDFProcessor().isSupported(mimeType);
-	}
-
-	public static void reset() throws Exception {
-		getPDFProcessor().reset();
 	}
 
 	public static void trigger(FileVersion fileVersion) {

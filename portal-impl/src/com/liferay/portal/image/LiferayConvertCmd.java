@@ -12,16 +12,14 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.util;
+package com.liferay.portal.image;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Properties;
 
 import jodd.util.StringPool;
 
@@ -33,7 +31,7 @@ import org.im4java.core.ConvertCmd;
 public class LiferayConvertCmd extends ConvertCmd {
 
 	public static void run(
-			String globalSearchPath, Properties resourceLimitsProperties,
+			String globalSearchPath, List<String> resourceLimits,
 			List<String> commandArguments)
 		throws Exception {
 
@@ -42,19 +40,7 @@ public class LiferayConvertCmd extends ConvertCmd {
 		LinkedList<String> arguments = new LinkedList<String>();
 
 		arguments.addAll(_instance.getCommand());
-
-		for (Object key : resourceLimitsProperties.keySet()) {
-			String value = (String)resourceLimitsProperties.get(key);
-
-			if (Validator.isNull(value)) {
-				continue;
-			}
-
-			arguments.add("-limit");
-			arguments.add((String)key);
-			arguments.add(value);
-		}
-
+		arguments.addAll(resourceLimits);
 		arguments.addAll(commandArguments);
 
 		if (_log.isInfoEnabled()) {

@@ -258,6 +258,17 @@ public class ImageProcessorImpl
 				return;
 			}
 
+			if (renderedImage.getColorModel().getNumComponents() == 4) {
+				RenderedImage convertedRenderedImage =
+					ImageToolUtil.convertCMYKtoRGB(
+						bytes, imageBag.getType(),
+						PropsValues.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED);
+
+				if (convertedRenderedImage != null) {
+					renderedImage = convertedRenderedImage;
+				}
+			}
+
 			if (!_hasPreview(fileVersion)) {
 				_storePreviewImage(fileVersion, renderedImage);
 			}

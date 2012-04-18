@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterLinkUtil;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.dao.shard.ShardUtil;
+import com.liferay.portal.kernel.image.ImageMagickUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncPrintWriter;
 import com.liferay.portal.kernel.log.Log;
@@ -75,7 +76,6 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.ActionResponseImpl;
 import com.liferay.portlet.admin.util.CleanUpPermissionsUtil;
 import com.liferay.portlet.documentlibrary.util.DLPreviewableProcessor;
-import com.liferay.portlet.documentlibrary.util.PDFProcessorUtil;
 import com.liferay.util.log4j.Log4JUtil;
 
 import java.io.File;
@@ -499,7 +499,7 @@ public class EditServerAction extends PortletAction {
 
 		preferences.store();
 
-		PDFProcessorUtil.reset();
+		ImageMagickUtil.reset();
 	}
 
 	protected void updateFileUploads(

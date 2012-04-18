@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.xml.Element;
 
 import java.io.InputStream;
 
-import java.util.Properties;
-
 /**
  * @author Sergio González
  */
@@ -41,8 +39,6 @@ public interface PDFProcessor {
 	public void generateImages(FileVersion fileVersion)
 		throws Exception;
 
-	public String getGlobalSearchPath() throws Exception;
-
 	public InputStream getPreviewAsStream(FileVersion fileVersion, int index)
 		throws Exception;
 
@@ -50,8 +46,6 @@ public interface PDFProcessor {
 
 	public long getPreviewFileSize(FileVersion fileVersion, int index)
 		throws Exception;
-
-	public Properties getResourceLimitsProperties() throws Exception;
 
 	public InputStream getThumbnailAsStream(FileVersion fileVersion, int index)
 		throws Exception;
@@ -70,11 +64,7 @@ public interface PDFProcessor {
 
 	public boolean isDocumentSupported(String mimeType);
 
-	public boolean isImageMagickEnabled() throws Exception;
-
 	public boolean isSupported(String mimeType);
-
-	public void reset() throws Exception;
 
 	public void trigger(FileVersion fileVersion);
 

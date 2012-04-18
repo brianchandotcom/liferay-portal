@@ -424,11 +424,11 @@ public class SitesUtil {
 
 		LayoutSet layoutSet = layout.getLayoutSet();
 
-		if (group.getName().equals(GroupConstants.GUEST)) {
-			if (layoutSet.getPageCount() == 1) {
-				throw new RequiredLayoutException(
-					RequiredLayoutException.AT_LEAST_ONE);
-			}
+		if (group.getName().equals(GroupConstants.GUEST) &&
+			(layoutSet.getPageCount() == 1)) {
+
+			throw new RequiredLayoutException(
+				RequiredLayoutException.AT_LEAST_ONE);
 		}
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(

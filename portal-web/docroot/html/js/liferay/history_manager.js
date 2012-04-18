@@ -14,6 +14,9 @@ AUI.add(
 
 		HistoryManager.HTML5 = HistoryBase.html5;
 
+		HistoryManager.PAIR_SEPARATOR = Liferay.History.PAIR_SEPARATOR;
+		HistoryManager.VALUE_SEPARATOR = Liferay.History.VALUE_SEPARATOR;
+
 		HistoryManager.publish(
 			EVENT_STATE_CHANGE,
 			{

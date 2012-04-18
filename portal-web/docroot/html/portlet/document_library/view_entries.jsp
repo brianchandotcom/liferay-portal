@@ -200,32 +200,14 @@ else {
 searchContainer.setResults(results);
 searchContainer.setTotal(total);
 
-request.setAttribute("view_entries.jsp-total", String.valueOf(total));
+request.setAttribute("view.jsp-total", String.valueOf(total));
 %>
 
 <c:if test="<%= results.isEmpty() %>">
-	<div class="portlet-msg-info">
+	<div class="entries-empty portlet-msg-info">
 		<liferay-ui:message key="there-are-no-documents-or-media-files-in-this-folder" />
 	</div>
 </c:if>
-
-<%
-boolean showSyncMessage = GetterUtil.getBoolean(SessionClicks.get(request, liferayPortletResponse.getNamespace() + "show-sync-message", "true"));
-
-String cssClass = StringPool.BLANK;
-
-if (results.isEmpty() || !showSyncMessage || !PropsValues.DL_SHOW_LIFERAY_SYNC_MESSAGE) {
-	cssClass = "aui-helper-hidden";
-}
-%>
-
-<div class="<%= cssClass %>" id="<portlet:namespace />syncNotification">
-	<div class="lfr-message-info sync-notification" id="<portlet:namespace />syncNotificationContent">
-		<a href="http://www.liferay.com/products/liferay-sync" target="_blank">
-			<liferay-ui:message key="access-these-files-offline-using-liferay-sync" />
-		</a>
-	</div>
-</div>
 
 <%
 for (int i = 0; i < results.size(); i++) {
@@ -245,7 +227,7 @@ for (int i = 0; i < results.size(); i++) {
 							PortletURL tempRowURL = liferayPortletResponse.createRenderURL();
 
 							tempRowURL.setParameter("struts_action", "/document_library/view_file_entry");
-							tempRowURL.setParameter("redirect", currentURL);
+							tempRowURL.setParameter("redirect", HttpUtil.removeParameter(currentURL, liferayPortletResponse.getNamespace() + "ajax"));
 							tempRowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 
 							request.setAttribute("view_entries.jsp-fileEntry", fileEntry);
@@ -283,7 +265,7 @@ for (int i = 0; i < results.size(); i++) {
 						PortletURL rowURL = liferayPortletResponse.createRenderURL();
 
 						rowURL.setParameter("struts_action", "/document_library/view_file_entry");
-						rowURL.setParameter("redirect", currentURL);
+						rowURL.setParameter("redirect", HttpUtil.removeParameter(currentURL, liferayPortletResponse.getNamespace() + "ajax"));
 						rowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 						%>
 

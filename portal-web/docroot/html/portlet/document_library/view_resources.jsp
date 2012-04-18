@@ -67,10 +67,6 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 			<liferay-util:include page="/html/portlet/document_library/display_style_buttons.jsp" />
 		</span>
 
-		<span id="<portlet:namespace />fileEntrySearch">
-			<liferay-util:include page="/html/portlet/document_library/file_entry_search.jsp" />
-		</span>
-
 		<span id="<portlet:namespace />sortButton">
 			<liferay-util:include page="/html/portlet/document_library/sort_button.jsp" />
 		</span>

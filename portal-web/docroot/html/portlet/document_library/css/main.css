@@ -602,8 +602,19 @@
 		}
 	}
 
+	.show-sync-message-icon-container {
+		position: relative;
+	}
+
 	.show-sync-message {
-		float: right;
+		position: absolute;
+		right: 5px;
+		top: 5px;
+		z-index: 1;
+	}
+
+	.sync-message-hidden {
+		display: none;
 	}
 
 	.lfr-list-view-content {
@@ -851,6 +862,15 @@
 	.portlet-document-library, .portlet-document-library-display {
 		.document-display-style.display-descriptive, .document-info {
 			zoom: 1;
+		}
+
+		.show-sync-message-icon-container {
+			background-image: url(@theme_image_path@/application/button_bg_selected.png);
+			height: 21px;
+			position: absolute;
+			right: 0px;
+			width: 21px;
+			z-index: 1;
 		}
 	}
 }

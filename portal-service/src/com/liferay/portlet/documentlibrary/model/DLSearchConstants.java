@@ -19,10 +19,10 @@ package com.liferay.portlet.documentlibrary.model;
  */
 public class DLSearchConstants {
 
-	public static final long FRAGMENT = 2;
+	public static final int FRAGMENT = 2;
 
 	public static final int MULTIPLE = 0;
 
-	public static final long SINGLE = 1;
+	public static final int SINGLE = 1;
 
 }

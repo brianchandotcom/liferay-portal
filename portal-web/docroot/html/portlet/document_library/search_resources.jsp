@@ -73,12 +73,43 @@ int entryStart = ParamUtil.getInteger(request, "entryStart");
 int entryEnd = ParamUtil.getInteger(request, "entryEnd", entriesPerPage);
 
 int total = 0;
+
+boolean ajaxRequest = ParamUtil.getBoolean(request, "ajax");
+
+boolean showRepositoryTabs = ParamUtil.getBoolean(request, "showRepositoryTabs");
+
+boolean showSearchInfo = ParamUtil.getBoolean(request, "showSearchInfo");
+
+if (searchType == DLSearchConstants.FRAGMENT) {
+	if (ajaxRequest) {
+		showRepositoryTabs = false;
+
+		showSearchInfo = false;
+	}
+	else {
+		searchType = DLSearchConstants.SINGLE;
+
+		showSearchInfo = true;
+
+		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			showRepositoryTabs = true;
+		}
+	}
+}
+else if ((searchType == DLSearchConstants.SINGLE) && !ajaxRequest) {
+	showSearchInfo = true;
+
+	if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+		showRepositoryTabs = true;
+	}
+}
 %>
 
 <aui:input name="repositoryId" type="hidden" value="<%= repositoryId %>" />
+<aui:input name="searchRepositoryId" type="hidden" value="<%= searchRepositoryId %>" />
 
-<liferay-util:buffer var="searchInfo">
-	<c:if test="<%= (searchType != DLSearchConstants.FRAGMENT) %>">
+<c:if test="<%= showSearchInfo %>">
+	<liferay-util:buffer var="searchInfo">
 		<div class="search-info">
 			<span class="keywords">
 				<%= (folder != null) ? LanguageUtil.format(pageContext, "searched-for-x-in-x", new Object[] {HtmlUtil.escape(keywords), folder.getName()}) : LanguageUtil.format(pageContext, "searched-for-x-everywhere", HtmlUtil.escape(keywords)) %>
@@ -86,7 +117,13 @@ int total = 0;
 
 			<c:if test="<%= folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID %>">
 				<span class="change-search-folder">
-					<aui:button onClick='<%= "javascript:" + liferayPortletResponse.getNamespace() + "changeSearchFolder();" %>' value='<%= (folder != null) ? LanguageUtil.get(pageContext, "search-everywhere") : LanguageUtil.get(pageContext, "search-in-the-current-folder") %>' />
+
+					<%
+					String onClick = "Liferay.fire('" + liferayPortletResponse.getNamespace() + "changeSearchFolder', {searchEverywhere: " + (folder != null) + "});";
+					%>
+
+					<aui:button onClick='<%= onClick %>' value='<%= (folder != null) ? LanguageUtil.get(pageContext, "search-everywhere") : LanguageUtil.get(pageContext, "search-in-the-current-folder") %>' />
+					<aui:button onClick='<%= onClick %>' value='<%= (folder != null) ? LanguageUtil.get(pageContext, "search-everywhere") : LanguageUtil.get(pageContext, "search-in-the-current-folder") %>' />
 				</span>
 			</c:if>
 
@@ -95,57 +132,9 @@ int total = 0;
 
 		<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
 			<aui:script>
-				Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />keywords);
+				Liferay.Util.focusFormField(document.<portlet:namespace />fm1.<portlet:namespace />keywords);
 			</aui:script>
 		</c:if>
-
-		<aui:script>
-			function <portlet:namespace />changeSearchFolder() {
-				Liferay.fire(
-					'<portlet:namespace />dataRequest',
-					{
-						requestParams: {
-							'<portlet:namespace />struts_action': '/document_library/search',
-							'<portlet:namespace />repositoryId': '<%= repositoryId %>',
-							'<portlet:namespace />searchRepositoryId': '<%= ((folder == null) || folder.isDefaultRepository()) ? repositoryId : scopeGroupId %>',
-							'<portlet:namespace />folderId': '<%= folderId %>',
-							'<portlet:namespace />searchFolderId': '<%= (folder != null) ? DLFolderConstants.DEFAULT_PARENT_FOLDER_ID : folderId %>',
-							'<portlet:namespace />keywords': document.<portlet:namespace />fm1.<portlet:namespace />keywords.value,
-							'<portlet:namespace />searchType': <%= (folder != null) ? DLSearchConstants.MULTIPLE : DLSearchConstants.SINGLE %>
-						},
-						src: Liferay.DL_SEARCH
-					}
-				);
-
-				<%
-				if (folder != null) {
-					for (Folder mountFolder : mountFolders) {
-					%>
-
-						Liferay.fire(
-							'<portlet:namespace />dataRequest',
-							{
-								requestParams: {
-									'<portlet:namespace />struts_action': '/document_library/search',
-									'<portlet:namespace />repositoryId': '<%= mountFolder.getRepositoryId() %>',
-									'<portlet:namespace />searchRepositoryId': '<%= mountFolder.getRepositoryId() %>',
-									'<portlet:namespace />folderId': '<%= mountFolder.getFolderId() %>',
-									'<portlet:namespace />searchFolderId': '<%= mountFolder.getFolderId() %>',
-									'<portlet:namespace />keywords': document.<portlet:namespace />fm1.<portlet:namespace />keywords.value,
-									'<portlet:namespace />searchType': <%= DLSearchConstants.MULTIPLE %>
-								},
-								src: Liferay.DL_SEARCH
-							}
-
-						);
-
-					<%
-					}
-				}
-				%>
-
-			}
-		</aui:script>
 
 		<c:if test="<%= (searchRepositoryId == scopeGroupId) %>">
 			<aui:script use="aui-base">
@@ -167,10 +156,8 @@ int total = 0;
 				);
 			</aui:script>
 		</c:if>
-	</c:if>
-</liferay-util:buffer>
+	</liferay-util:buffer>
 
-<c:if test="<%= ((searchRepositoryId == scopeGroupId) && (searchType == DLSearchConstants.MULTIPLE)) || (searchType == DLSearchConstants.SINGLE) %>">
 	<div id="<portlet:namespace />searchInfo">
 		<%= searchInfo %>
 	</div>
@@ -284,6 +271,8 @@ int total = 0;
 				searchContainer.setResults(results);
 				searchContainer.setTotal(total);
 
+				request.setAttribute("view.jsp-total", String.valueOf(total));
+
 				for (int i = 0; i < results.size(); i++) {
 					Object result = results.get(i);
 				%>
@@ -299,7 +288,7 @@ int total = 0;
 									PortletURL tempRowURL = liferayPortletResponse.createRenderURL();
 
 									tempRowURL.setParameter("struts_action", "/document_library/view_file_entry");
-									tempRowURL.setParameter("redirect", currentURL);
+									tempRowURL.setParameter("redirect", HttpUtil.removeParameter(currentURL, liferayPortletResponse.getNamespace() + "ajax"));
 									tempRowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 
 									request.setAttribute("view_entries.jsp-fileEntry", fileEntry);
@@ -337,7 +326,7 @@ int total = 0;
 							PortletURL rowURL = liferayPortletResponse.createRenderURL();
 
 							rowURL.setParameter("struts_action", "/document_library/view_file_entry");
-							rowURL.setParameter("redirect", currentURL);
+							rowURL.setParameter("redirect", HttpUtil.removeParameter(currentURL, liferayPortletResponse.getNamespace() + "ajax"));
 							rowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 
 							for (String columnName : entryColumns) {
@@ -405,12 +394,12 @@ int total = 0;
 				paginator: {
 					name: 'entryPaginator',
 					state: {
-						page: <%= entryEnd / (entryEnd - entryStart) %>,
+						page: <%= total == 0 ? 0 : entryEnd / (entryEnd - entryStart) %>,
 						rowsPerPage: <%= (entryEnd - entryStart) %>,
 						total: <%= total %>
 					}
 				},
-				repositoryId: '<%= repositoryId %>',
+				repositoryId: '<%= searchRepositoryId %>',
 				src: Liferay.DL_SEARCH
 			}
 		);
@@ -418,17 +407,40 @@ int total = 0;
 </liferay-util:buffer>
 
 <c:choose>
-	<c:when test="<%= searchType == DLSearchConstants.MULTIPLE %>">
+	<c:when test="<%= searchType == DLSearchConstants.SINGLE %>">
 		<c:choose>
-			<c:when test="<%= (searchRepositoryId == scopeGroupId) %>">
+			<c:when test="<%= showRepositoryTabs %>">
+
+			<%
+				String selectedTab = LanguageUtil.get(pageContext, "local");
+
+				for (Folder mountFolder : mountFolders) {
+					if (mountFolder.getRepositoryId() == searchRepositoryId) {
+						selectedTab = mountFolder.getName();
+					}
+				}
+			%>
+
+
 				<div class="search-results-container" id="<portlet:namespace />searchResultsContainer">
 					<liferay-ui:tabs
-						names='<%= "local," + ListUtil.toString(mountFolders, "name") %>'
+						names='<%= LanguageUtil.get(pageContext, "local") + "," + ListUtil.toString(mountFolders, "name") %>'
 						refresh="<%= false %>"
+						value="<%= selectedTab %>"
 					>
 						<liferay-ui:section>
-							<div class="local-search-results" id='<%= liferayPortletResponse.getNamespace() + "searchResults" + searchRepositoryId %>'>
-								<%= searchResults %>
+							<div class="local-search-results" data-repositoryId="<%= scopeGroupId %>" <%= scopeGroupId == searchRepositoryId ? "data-searchProcessed" : "" %> id="<portlet:namespace />searchResultsContainer<%= scopeGroupId %>">
+								<c:choose>
+									<c:when test="<%= scopeGroupId == searchRepositoryId %>">
+											<%= searchResults %>
+									</c:when>
+									<c:otherwise>
+										<div class="portlet-msg-info">
+											<%= LanguageUtil.get(pageContext, "searching,-please-wait") %>
+										</div>
+										<div class="loading-animation"></div>
+									</c:otherwise>
+								</c:choose>
 							</div>
 						</liferay-ui:section>
 
@@ -437,10 +449,18 @@ int total = 0;
 						%>
 
 							<liferay-ui:section>
-								<div id="<portlet:namespace />repositorySearchResultsContainer<%= mountFolder.getRepositoryId() %>">
-									<div class="portlet-msg-info">
-										<%= LanguageUtil.get(pageContext, "searching,-please-wait") %>
-									</div>
+								<div data-repositoryId="<%= mountFolder.getRepositoryId() %>" <%= mountFolder.getRepositoryId() == searchRepositoryId ? "data-searchProcessed" : "" %> id="<portlet:namespace />searchResultsContainer<%= mountFolder.getRepositoryId() %>">
+									<c:choose>
+										<c:when test="<%= mountFolder.getRepositoryId() == searchRepositoryId %>">
+											<%= searchResults %>
+										</c:when>
+										<c:otherwise>
+											<div class="portlet-msg-info">
+												<%= LanguageUtil.get(pageContext, "searching,-please-wait") %>
+											</div>
+											<div class="loading-animation"></div>
+										</c:otherwise>
+									</c:choose>
 								</div>
 							</liferay-ui:section>
 
@@ -455,20 +475,15 @@ int total = 0;
 					<liferay-util:include page="/html/portlet/document_library/display_style_buttons.jsp" />
 				</span>
 			</c:when>
-			<c:when test="<%= (searchRepositoryId != scopeGroupId) %>">
-				<div class="repository-search-results" id='<%= liferayPortletResponse.getNamespace() + "searchResults" + searchRepositoryId %>'>
+			<c:otherwise>
+				<div class="repository-search-results" data-repositoryId="<%= searchRepositoryId %>" id='<%= liferayPortletResponse.getNamespace() + "searchResults" + searchRepositoryId %>'>
 					<%= searchResults %>
 				</div>
-			</c:when>
+			</c:otherwise>
 		</c:choose>
 	</c:when>
-	<c:when test="<%= searchType == DLSearchConstants.SINGLE %>">
-		<div id="<portlet:namespace />singleSearchResults">
-			<%= searchResults %>
-		</div>
-	</c:when>
 	<c:when test="<%= searchType == DLSearchConstants.FRAGMENT %>">
-		<div id="<portlet:namespace />fragmentSearchResults">
+		<div data-repositoryId="<%= searchRepositoryId %>" id="<portlet:namespace />fragmentSearchResults">
 			<%= searchResults %>
 		</div>
 	</c:when>

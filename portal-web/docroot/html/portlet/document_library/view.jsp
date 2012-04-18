@@ -69,6 +69,8 @@ request.setAttribute("view.jsp-folder", folder);
 request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 
 request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
+
+String strutsAction = ParamUtil.getString(request, "struts_action");
 %>
 
 <div id="<portlet:namespace />documentLibraryContainer">
@@ -96,8 +98,30 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 				</div>
 			</div>
 
+			<%
+			boolean showSyncMessage = GetterUtil.getBoolean(SessionClicks.get(request, liferayPortletResponse.getNamespace() + "show-sync-message", "true"));
+
+			String cssClass = "show-sync-message-icon-container";
+
+			if (showSyncMessage || !PropsValues.DL_SHOW_LIFERAY_SYNC_MESSAGE) {
+				cssClass += " aui-helper-hidden";
+			}
+			%>
+
+			<div class="<%= cssClass %>" id="<portlet:namespace />showSyncMessageIconContainer">
+				<img alt="<%= LanguageUtil.get(pageContext, "show-liferay-sync-tip") %>" class="show-sync-message" id="<portlet:namespace />showSyncMessageIcon" src="<%= themeDisplay.getPathThemeImages() + "/common/liferay_sync.png" %>" title="<%= LanguageUtil.get(pageContext, "liferay-sync") %>" />
+			</div>
+
 			<div class="document-library-breadcrumb" id="<portlet:namespace />breadcrumbContainer">
 				<liferay-util:include page="/html/portlet/document_library/breadcrumb.jsp" />
+			</div>
+
+			<div class="aui-helper-hidden" id="<portlet:namespace />syncNotification">
+				<div class="lfr-message-info sync-notification" id="<portlet:namespace />syncNotificationContent">
+					<a href="http://www.liferay.com/products/liferay-sync" target="_blank">
+						<liferay-ui:message key="access-these-files-offline-using-liferay-sync" />
+					</a>
+				</div>
 			</div>
 
 			<liferay-portlet:renderURL varImpl="editFileEntryURL">
@@ -114,7 +138,14 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 				<aui:input name="fileShortcutIds" type="hidden" />
 
 				<div class="document-container" id="<portlet:namespace />documentContainer">
-					<liferay-util:include page="/html/portlet/document_library/view_entries.jsp" />
+					<c:choose>
+						<c:when test='<%= strutsAction.equals("/document_library/search") %>'>
+							<liferay-util:include page="/html/portlet/document_library/search_resources.jsp" />
+						</c:when>
+						<c:otherwise>
+							<liferay-util:include page="/html/portlet/document_library/view_entries.jsp" />
+						</c:otherwise>
+					</c:choose>
 				</div>
 
 				<div class="document-entries-paginator"></div>
@@ -124,7 +155,7 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 </div>
 
 <%
-int entriesTotal = GetterUtil.getInteger((String)request.getAttribute("view_entries.jsp-total"));
+int entriesTotal = GetterUtil.getInteger((String)request.getAttribute("view.jsp-total"));
 int foldersTotal = GetterUtil.getInteger((String)request.getAttribute("view_folders.jsp-total"));
 
 if (folder != null) {
@@ -156,9 +187,11 @@ if (folder != null) {
 	<portlet:namespace />toggleActionsButton();
 </aui:script>
 
-<span id="<portlet:namespace />displayStyleButtonsContainer">
-	<liferay-util:include page="/html/portlet/document_library/display_style_buttons.jsp" />
-</span>
+<c:if test='<%= !strutsAction.equals("/document_library/search") %>'>
+	<span id="<portlet:namespace />displayStyleButtonsContainer">
+		<liferay-util:include page="/html/portlet/document_library/display_style_buttons.jsp" />
+	</span>
+</c:if>
 
 <aui:script use="liferay-document-library">
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" varImpl="mainURL" />
@@ -199,8 +232,31 @@ if (folder != null) {
 			moveEntryRenderUrl: '<portlet:renderURL><portlet:param name="struts_action" value="/document_library/move_entry" /></portlet:renderURL>',
 			namespace: '<portlet:namespace />',
 			portletId: '<%= portletId %>',
+			repositories: [
+				{
+					id: '<%= scopeGroupId %>',
+					name: '<%= LanguageUtil.get(pageContext, "local") %>'
+				}
+
+				<%
+				List<Folder> mountFolders = DLAppServiceUtil.getMountFolders(repositoryId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+				for (Folder mountFolder : mountFolders) {
+				%>
+
+					,{
+						id: '<%= mountFolder.getRepositoryId() %>',
+						name: '<%= mountFolder.getName() %>'
+					}
+
+				<%
+				}
+				%>
+			],
 			rowIds: '<%= RowChecker.ROW_IDS %>',
-			strutsAction: '/document_library/view'
+			strutsAction: '/document_library/view',
+			syncMessageDisabled: <%= !PropsValues.DL_SHOW_LIFERAY_SYNC_MESSAGE %>,
+			syncMessageSuppressed: <%= !GetterUtil.getBoolean(SessionClicks.get(request, liferayPortletResponse.getNamespace() + "show-sync-message", "true")) %>
 		}
 	);
 </aui:script>

@@ -28,65 +28,76 @@ results = results.subList(searchContainer.getStart(), end);
 searchContainer.setResults(results);
 
 request.setAttribute("view.jsp-results", results);
-
-for (int assetEntryIndex = 0; assetEntryIndex < results.size(); assetEntryIndex++) {
-	String assetEntryXml = (String)results.get(assetEntryIndex);
-
-	Document document = SAXReaderUtil.read(assetEntryXml);
-
-	Element rootElement = document.getRootElement();
-
-	String assetEntryUuid = rootElement.elementText("asset-entry-uuid");
-
-	AssetEntry assetEntry = null;
-
-	for (long groupId : groupIds) {
-		try {
-			assetEntry = AssetEntryLocalServiceUtil.getEntry(groupId, assetEntryUuid);
-
-			break;
-		}
-		catch (NoSuchEntryException nsee) {
-		}
-	}
-
-	if ((assetEntry == null) || !assetEntry.isVisible()) {
-		continue;
-	}
-
-	AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(assetEntry.getClassName());
-
-	AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(assetEntry.getClassPK());
-
-	if (!assetRenderer.isDisplayable() || (enablePermissions && !assetRenderer.hasViewPermission(permissionChecker))) {
-		continue;
-	}
-
-	String title = assetRenderer.getTitle(locale);
-
-	boolean show = true;
-	boolean print = false;
-
-	request.setAttribute("view.jsp-assetEntryIndex", new Integer(assetEntryIndex));
-
-	request.setAttribute("view.jsp-assetEntry", assetEntry);
-	request.setAttribute("view.jsp-assetRendererFactory", assetRendererFactory);
-	request.setAttribute("view.jsp-assetRenderer", assetRenderer);
-
-	request.setAttribute("view.jsp-title", title);
-
-	request.setAttribute("view.jsp-show", new Boolean(show));
-	request.setAttribute("view.jsp-print", new Boolean(print));
-
-	try {
 %>
 
-		<%@ include file="/html/portlet/asset_publisher/view_display.jspf" %>
+<c:choose>
+	<c:when test="<%= assetPublisherTemplateId > 0 %>">
+		<%= AssetPublisherUtil.renderTemplate(assetPublisherTemplateId, results, renderRequest, renderResponse) %>
+	</c:when>
+	<c:otherwise>
 
-<%
-	}
-	catch (Exception e) {
-		_log.error(e.getMessage());
-	}
-}
-%>
+		<%
+		for (int assetEntryIndex = 0; assetEntryIndex < results.size(); assetEntryIndex++) {
+			String assetEntryXml = (String)results.get(assetEntryIndex);
+
+			Document document = SAXReaderUtil.read(assetEntryXml);
+
+			Element rootElement = document.getRootElement();
+
+			String assetEntryUuid = rootElement.elementText("asset-entry-uuid");
+
+			AssetEntry assetEntry = null;
+
+			for (long groupId : groupIds) {
+				try {
+					assetEntry = AssetEntryLocalServiceUtil.getEntry(groupId, assetEntryUuid);
+
+					break;
+				}
+				catch (NoSuchEntryException nsee) {
+				}
+			}
+
+			if ((assetEntry == null) || !assetEntry.isVisible()) {
+				continue;
+			}
+
+			AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(assetEntry.getClassName());
+
+			AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(assetEntry.getClassPK());
+
+			if (!assetRenderer.isDisplayable() || (enablePermissions && !assetRenderer.hasViewPermission(permissionChecker))) {
+				continue;
+			}
+
+			String title = assetRenderer.getTitle(locale);
+
+			boolean show = true;
+			boolean print = false;
+
+			request.setAttribute("view.jsp-assetEntryIndex", new Integer(assetEntryIndex));
+
+			request.setAttribute("view.jsp-assetEntry", assetEntry);
+			request.setAttribute("view.jsp-assetRendererFactory", assetRendererFactory);
+			request.setAttribute("view.jsp-assetRenderer", assetRenderer);
+
+			request.setAttribute("view.jsp-title", title);
+
+			request.setAttribute("view.jsp-show", new Boolean(show));
+			request.setAttribute("view.jsp-print", new Boolean(print));
+
+			try {
+		%>
+
+				<%@ include file="/html/portlet/asset_publisher/view_display.jspf" %>
+
+		<%
+			}
+			catch (Exception e) {
+				_log.error(e.getMessage());
+			}
+		}
+		%>
+
+	</c:otherwise>
+</c:choose>

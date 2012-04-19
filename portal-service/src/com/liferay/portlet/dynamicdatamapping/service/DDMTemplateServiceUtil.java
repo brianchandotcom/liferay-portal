@@ -81,6 +81,12 @@ public class DDMTemplateServiceUtil {
 		return getService().getTemplates(classNameId, classPK, type, mode);
 	}
 
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplates(
+		long groupId, long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getTemplates(groupId, classNameId, classPK);
+	}
+
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> search(
 		long companyId, long groupId, long classNameId, long classPK,
 		java.lang.String keywords, java.lang.String type,

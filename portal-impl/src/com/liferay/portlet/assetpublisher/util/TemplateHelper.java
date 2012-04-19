@@ -12,27 +12,22 @@
  * details.
  */
 
-package com.liferay.portal.kernel.templateparser;
+package com.liferay.portlet.assetpublisher.util;
 
-import com.liferay.portal.theme.ThemeDisplay;
-
-import java.util.Map;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portlet.asset.model.AssetEntry;
 
 /**
- * @author Marcellus Tavares
- * @author Brian Wing Shun Chan
+ * @author Juan Fernández
  */
-public interface Transformer {
+public interface TemplateHelper {
 
-	public String transform(
-			ThemeDisplay themeDisplay, Map<String, Object> contextObjects,
-			String script, String langType)
-		throws Exception;
-
-	public String transform(
-			ThemeDisplay themeDisplay, Map<String, String> tokens,
-			String viewMode, String languageId, String xml, String script,
-			String langType)
-		throws Exception;
+	public String getAssetViewURL(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			AssetEntry assetEntry)
+		throws SystemException;
 
 }

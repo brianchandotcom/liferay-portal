@@ -121,6 +121,12 @@ AUI.add(
 						var value = item[selectDesc];
 
 						if (selectLocalizeDesc) {
+							var selectLocalizeDescPrefix = options.selectLocalizeDescPrefix;
+
+							if (selectLocalizeDescPrefix != null) {
+								value = selectLocalizeDescPrefix + value;
+							}
+
 							value = Liferay.Language.get(value);
 						}
 

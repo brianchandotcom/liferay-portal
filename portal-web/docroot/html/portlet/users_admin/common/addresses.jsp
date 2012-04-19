@@ -127,6 +127,7 @@ else {
 						selectData: Liferay.Address.getCountries,
 						selectDesc: 'name',
 						selectLocalizeDesc: '<%= true %>',
+						selectLocalizeDescPrefix: '<%= "country." %>',
 						selectSort: '<%= true %>',
 						selectId: 'countryId',
 						selectVal: '<%= countryId %>'
@@ -175,6 +176,7 @@ else {
 										selectData: Liferay.Address.getCountries,
 										selectDesc: 'name',
 										selectLocalizeDesc: '<%= true %>',
+										selectLocalizeDescPrefix: '<%= "country." %>',
 										selectSort: '<%= true %>',
 										selectId: 'countryId',
 										selectVal: ''

@@ -77,6 +77,9 @@ public class DefaultLicenseManagerImpl
 			byte[] serverIdBytes = LicenseUtil.getServerIdBytes();
 
 			jsonObject.put("cmd", "GET_LICENSE_STATE");
+			jsonObject.put("hostName", getHostName());
+			jsonObject.put("ipAddresses", StringUtil.merge(getIpAddresses()));
+			jsonObject.put("macAddresses", StringUtil.merge(getMacAddresses()));
 			jsonObject.put("productId", productId);
 
 			String productVersion = licenseProperties.get("productVersion");
@@ -116,7 +119,7 @@ public class DefaultLicenseManagerImpl
 			}
 		}
 		catch (Exception e) {
-			_log.error(e, e);
+			_log.error(e.getMessage());
 		}
 
 		return 0;

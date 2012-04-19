@@ -16,14 +16,15 @@ package com.liferay.portal.security.pacl;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.security.pacl.checker.Checker;
 import com.liferay.portal.security.pacl.checker.SQLChecker;
+import com.liferay.portal.security.pacl.checker.ServiceChecker;
+import com.liferay.portal.security.pacl.permission.PortalServicePermission;
+
+import java.lang.reflect.Method;
 
 import java.security.Permission;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -38,7 +39,8 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 		super(servletContextName, classLoader, properties);
 
 		try {
-			initCheckers();
+			initServiceChecker();
+			initSQLChecker();
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -46,15 +48,13 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 	}
 
 	public void checkPermission(Permission permission) {
-		Checker checker = getChecker(permission.getClass().getName());
+		Checker checker = getChecker(permission.getClass());
 
-		if (checker != null) {
-			checker.checkPermission(permission);
-		}
+		checker.checkPermission(permission);
 	}
 
-	public Checker getChecker(String permissionClassName) {
-		return _checkers.get(permissionClassName);
+	public boolean hasService(Object object, Method method) {
+		return _serviceChecker.hasService(object, method);
 	}
 
 	public boolean hasSQL(String sql) {
@@ -65,45 +65,26 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 		return true;
 	}
 
-	protected void initCheckers() throws Exception {
-		Class<?> clazz = getClass();
+	protected void initServiceChecker() {
+		_serviceChecker = (ServiceChecker)getChecker(
+			PortalServicePermission.class);
 
-		ClassLoader classLoader = clazz.getClassLoader();
+		if (_serviceChecker == null) {
+			_serviceChecker = new ServiceChecker();
 
-		Properties portalProperties = PropsUtil.getProperties(
-			"portal.security.manager.pacl.policy.checker", false);
-
-		for (Map.Entry<Object, Object> entry : portalProperties.entrySet()) {
-			String key = (String)entry.getKey();
-
-			int x = key.indexOf("[");
-			int y = key.indexOf("]");
-
-			String permissionClassName = key.substring(x + 1, y);
-
-			String checkerClassName = (String)entry.getValue();
-
-			Class<?> checkerClass = classLoader.loadClass(checkerClassName);
-
-			Checker checker = (Checker)checkerClass.newInstance();
-
-			checker.setPACLPolicy(this);
-
-			checker.afterPropertiesSet();
-
-			_checkers.put(permissionClassName, checker);
+			initChecker(_serviceChecker);
 		}
+	}
 
+	protected void initSQLChecker() {
 		_sqlChecker = new SQLChecker();
 
-		_sqlChecker.setPACLPolicy(this);
-
-		_sqlChecker.afterPropertiesSet();
+		initChecker(_sqlChecker);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(ActivePACLPolicy.class);
 
-	private Map<String, Checker> _checkers = new HashMap<String, Checker>();
+	private ServiceChecker _serviceChecker;
 	private SQLChecker _sqlChecker;
 
 }

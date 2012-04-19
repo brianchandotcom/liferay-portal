@@ -14,7 +14,7 @@
 
 package com.liferay.portal.security.pacl;
 
-import com.liferay.portal.security.pacl.checker.BaseChecker;
+import java.lang.reflect.Method;
 
 import java.security.Permission;
 
@@ -33,11 +33,10 @@ public class InactivePACLPolicy extends BasePACLPolicy {
 	}
 
 	public void checkPermission(Permission permission) {
-		// This never results in error.
 	}
 
-	public BaseChecker getChecker(String permissionClassName) {
-		return null;
+	public boolean hasService(Object object, Method method) {
+		return true;
 	}
 
 	public boolean hasSQL(String sql) {

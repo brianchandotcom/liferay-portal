@@ -16,13 +16,14 @@ package com.liferay.portal.security.pacl;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 import com.liferay.portal.security.pacl.permission.PortalServicePermission;
 import com.liferay.portal.service.impl.PortalServiceImpl;
 import com.liferay.portal.spring.aop.ChainableMethodAdvice;
 import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
 
 import java.lang.reflect.Method;
+
+import java.security.Permission;
 
 import org.aopalliance.intercept.MethodInvocation;
 
@@ -62,24 +63,17 @@ public class PACLAdvice extends ChainableMethodAdvice {
 			}
 		}
 
-		SecurityManager sm = System.getSecurityManager();
+		SecurityManager securityManager = System.getSecurityManager();
 
-		if (sm != null) {
-			sm.checkPermission(
-				new PortalServicePermission(
-					"hasService", null, methodInvocation.getThis(), method));
+		if (securityManager != null) {
+			Permission permission = new PortalServicePermission(
+				PACLConstants.PORTAL_PERMISSION_SERVICE, null,
+				methodInvocation.getThis(), method);
+
+			securityManager.checkPermission(permission);
 		}
 
-		boolean enabled = PortalSecurityManagerThreadLocal.isEnabled();
-
-		try {
-			PortalSecurityManagerThreadLocal.setEnabled(false);
-
-			return methodInvocation.proceed();
-		}
-		finally {
-			PortalSecurityManagerThreadLocal.setEnabled(enabled);
-		}
+		return methodInvocation.proceed();
 	}
 
 	private static final String _ENTRY_LOCAL_SERVICE_IMPL_CLASS_NAME =

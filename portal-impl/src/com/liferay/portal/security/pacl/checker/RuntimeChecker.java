@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
-import com.liferay.portal.security.pacl.PACLPolicy;
-import com.liferay.portal.security.permission.pacl.PACLConstants;
 
 import java.security.Permission;
 
@@ -30,19 +28,16 @@ import java.util.TreeSet;
 /**
  * @author Raymond Augé
  */
-public class RuntimeChecker extends FileChecker {
+public class RuntimeChecker extends BaseChecker {
 
-	public RuntimeChecker(PACLPolicy paclPolicy) {
-		super(paclPolicy);
-
+	public void afterPropertiesSet() {
 		initClassLoaderPortletIds();
 	}
 
-	@Override
 	public void checkPermission(Permission permission) {
 		String name = permission.getName();
 
-		if (name.startsWith(PACLConstants.ACCESS_CLASS_IN_PACKAGE)) {
+		if (name.startsWith(RUNTIME_PERMISSION_ACCESS_CLASS_IN_PACKAGE)) {
 			int pos = name.indexOf(StringPool.PERIOD);
 
 			String pkg = name.substring(pos + 1);
@@ -52,8 +47,9 @@ public class RuntimeChecker extends FileChecker {
 					"Attempted to access package " + pkg);
 			}
 		}
-		else if (name.equals(PACLConstants.GET_CLASSLOADER) &&
-				 PortalSecurityManagerThreadLocal.isClassLoaderCheckingEnabled()) {
+		else if (name.equals(RUNTIME_PERMISSION_GET_CLASSLOADER) &&
+				 PortalSecurityManagerThreadLocal.
+				 	isClassLoaderCheckingEnabled()) {
 
 			String portletId = null;
 
@@ -74,19 +70,19 @@ public class RuntimeChecker extends FileChecker {
 					"Attempted to get an external class loader " + portletId);
 			}
 		}
-		else if (name.equals(PACLConstants.SET_SECURITY_MANAGER)) {
+		else if (name.equals(RUNTIME_PERMISSION_SET_SECURITY_MANAGER)) {
 			throw new SecurityException(
 				"Attempted to set another security manager");
 		}
-		else if (name.equals(PACLConstants.EXIT_VM)) {
+		else if (name.equals(RUNTIME_PERMISSION_EXIT_VM)) {
 			Thread.dumpStack();
 
-			throw new SecurityException("Attempted to shutdown the VM!");
+			throw new SecurityException("Attempted to shutdown the VM");
 		}
 	}
 
 	public boolean hasGetClassLoader(String portletId) {
-		if (isJSPCompiler(portletId, "compile JSP")) {
+		if (isJSPCompiler(portletId, RUNTIME_PERMISSION_GET_CLASSLOADER)) {
 			return true;
 		}
 
@@ -94,9 +90,8 @@ public class RuntimeChecker extends FileChecker {
 	}
 
 	public boolean hasPackageAccess(String pkg) {
-		// TODO
 
-		System.out.println("hasPackageAccess: " + pkg);
+		// TODO
 
 		if (pkg.startsWith("sun.reflect")) {
 		}

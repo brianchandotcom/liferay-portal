@@ -19,6 +19,8 @@ String modelResourceName = ResourceActionsUtil.getModelResource(locale, typeSele
 
 int assetEntryOrder = ParamUtil.getInteger(request, "assetEntryOrder", -1);
 
+long groupId = ParamUtil.getLong(request, "groupId");
+
 String keywords = ParamUtil.getString(request, "keywords");
 
 PortletURL portletURL = renderResponse.createRenderURL();
@@ -28,6 +30,10 @@ portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("backURL", redirect);
 portletURL.setParameter("portletResource", portletResource);
 portletURL.setParameter("typeSelection", typeSelection);
+
+if (groupId > 0) {
+	portletURL.setParameter("groupId", String.valueOf(groupId));
+}
 %>
 
 <liferay-ui:header

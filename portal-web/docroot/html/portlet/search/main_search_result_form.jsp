@@ -23,6 +23,7 @@ Document document = (Document)row.getObject();
 
 String className = document.get(Field.ENTRY_CLASS_NAME);
 
+String downloadURL = null;
 String entryTitle = null;
 String entrySummary = null;
 PortletURL viewFullContentURL = null;
@@ -68,6 +69,7 @@ if (assetRendererFactory != null) {
 		viewURL = viewFullContentURL.toString();
 	}
 
+	downloadURL = assetRenderer.getURLDownload(themeDisplay);
 	entryTitle = assetRenderer.getTitle(locale);
 	entrySummary = assetRenderer.getSummary(locale);
 }
@@ -99,6 +101,7 @@ viewURL = _checkViewURL(themeDisplay, viewURL, currentURL);
 String[] queryTerms = (String[])request.getAttribute("search.jsp-queryTerms");
 
 PortletURL portletURL = (PortletURL)request.getAttribute("search.jsp-portletURL");
+
 %>
 
 <span class="asset-entry">
@@ -114,6 +117,10 @@ PortletURL portletURL = (PortletURL)request.getAttribute("search.jsp-portletURL"
 
 			<%= StringUtil.highlight(HtmlUtil.escape(entryTitle), queryTerms) %>
 		</a>
+
+		<c:if test="<%= Validator.isNotNull(downloadURL) %>">
+			<liferay-ui:icon image='<%= \"../arrows/01_down\" %>' label="<%= false %>" message='<%= LanguageUtil.format(pageContext, "download-x", HtmlUtil.escape(entryTitle)) %>' url="<%= downloadURL %>"></liferay-ui:icon>
+		</c:if>
 	</span>
 
 	<%

@@ -100,6 +100,13 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		}
 
 		try {
+			HotDeployUtil.reset();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		try {
 			OSGiServiceUtil.stopRuntime();
 		}
 		catch (Exception e) {
@@ -123,7 +130,6 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 	@Override
 	public void contextInitialized(ServletContextEvent servletContextEvent) {
-		HotDeployUtil.reset();
 		InstancePool.reset();
 		MethodCache.reset();
 		PortletBagPool.reset();

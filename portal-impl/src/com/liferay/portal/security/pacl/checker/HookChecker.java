@@ -17,6 +17,10 @@ package com.liferay.portal.security.pacl.checker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.security.pacl.PACLPolicy;
+import com.liferay.portal.security.pacl.permission.PortalHookPermission;
+import com.liferay.portal.security.permission.pacl.PACLConstants;
+
+import java.security.Permission;
 
 import java.util.Locale;
 import java.util.Set;
@@ -37,6 +41,66 @@ public class HookChecker extends BaseChecker {
 		initServletFilters();
 		initServices();
 		initStrutsActionPaths();
+	}
+
+	@Override
+	public void checkPermission(Permission permission) {
+		PortalHookPermission hookPermission =(PortalHookPermission)permission;
+
+		String name = hookPermission.getName();
+		Object subject = hookPermission.getSubject();
+
+		if (name.equals(PACLConstants.HAS_CUSTOM_JSP_DIR)) {
+			if (!hasCustomJspDir()) {
+				throw new SecurityException("Attempted to set custom jsp dir ");
+			}
+		}
+		else if (name.equals(PACLConstants.HAS_INDEXER)) {
+			String indexerClassName = (String)subject;
+
+			if (!hasIndexer(indexerClassName)) {
+				throw new SecurityException(
+					"Attempted to add indexer " + indexerClassName);
+			}
+		}
+		else if (name.equals(PACLConstants.HAS_LANGUAGE_PROPERTIES_LOCALE)) {
+			Locale locale = (Locale)subject;
+
+			if (!hasLanguagePropertiesLocale(locale)) {
+				throw new SecurityException(
+					"Attempted to override locale " + locale);
+			}
+		}
+		else if (name.equals(PACLConstants.HAS_PORTAL_PROPERTIES_KEY)) {
+			String key = (String)subject;
+
+			if (!hasPortalPropertiesKey(key)) {
+				throw new SecurityException(
+					"Attempted to set portal property " + key);
+			}
+		}
+		else if (name.equals(PACLConstants.HAS_SERVICE)) {
+			String serviceType = (String)subject;
+
+			if (!hasService(serviceType)) {
+				throw new SecurityException(
+					"Attempted to override service " + serviceType);
+			}
+		}
+		else if (name.equals(PACLConstants.HAS_SERVLET_FILTERS)) {
+			if (!hasServletFilters()) {
+				throw new SecurityException(
+					"Attempted to override serlvet filters");
+			}
+		}
+		else if (name.equals(PACLConstants.HAS_STRUTS_ACTION_PATH)) {
+			String strutsActionPath = (String)subject;
+
+			if (!hasStrutsActionPath(strutsActionPath)) {
+				throw new SecurityException(
+					"Attempted to use struts action path " + strutsActionPath);
+			}
+		}
 	}
 
 	public boolean hasCustomJspDir() {

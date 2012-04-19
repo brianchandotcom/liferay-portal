@@ -136,6 +136,11 @@
 			<bean class="com.liferay.portal.deploy.DeployManagerImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.deploy.hot.HotDeployUtil" class="com.liferay.portal.kernel.deploy.hot.HotDeployUtil">
+		<property name="hotDeploy">
+			<bean class="com.liferay.portal.deploy.hot.HotDeployImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.kernel.facebook.FacebookConnectUtil" class="com.liferay.portal.kernel.facebook.FacebookConnectUtil">
 		<property name="facebookConnect">
 			<bean class="com.liferay.portal.facebook.FacebookConnectImpl" />

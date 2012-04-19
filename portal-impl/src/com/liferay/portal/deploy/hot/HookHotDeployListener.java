@@ -110,8 +110,7 @@ import com.liferay.portal.security.auth.ScreenNameValidator;
 import com.liferay.portal.security.auth.ScreenNameValidatorFactory;
 import com.liferay.portal.security.ldap.AttributesTransformer;
 import com.liferay.portal.security.ldap.AttributesTransformerFactory;
-import com.liferay.portal.security.pacl.PACLPolicy;
-import com.liferay.portal.security.pacl.PACLPolicyManager;
+import com.liferay.portal.security.pacl.permission.PortalHookPermission;
 import com.liferay.portal.service.ReleaseLocalServiceUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.servlet.filters.autologin.AutoLoginFilter;
@@ -522,13 +521,6 @@ public class HookHotDeployListener
 
 		ClassLoader portletClassLoader = hotDeployEvent.getContextClassLoader();
 
-		PACLPolicy paclPolicy = PACLPolicyManager.getPACLPolicy(
-			portletClassLoader);
-
-		if (paclPolicy == null) {
-			paclPolicy = PACLPolicyManager.getDefaultPACLPolicy();
-		}
-
 		initLogger(portletClassLoader);
 
 		Document document = SAXReaderUtil.read(xml, true);
@@ -536,17 +528,17 @@ public class HookHotDeployListener
 		Element rootElement = document.getRootElement();
 
 		initPortalProperties(
-			paclPolicy, servletContextName, portletClassLoader, rootElement);
+			servletContextName, portletClassLoader, rootElement);
 
 		initLanguageProperties(
-			paclPolicy, servletContextName, portletClassLoader, rootElement);
+			servletContextName, portletClassLoader, rootElement);
 
 		initCustomJspDir(
-			paclPolicy, servletContext, servletContextName,
+			servletContext, servletContextName, portletClassLoader,
 			hotDeployEvent.getPluginPackage(), rootElement);
 
 		initIndexerPostProcessors(
-			paclPolicy, servletContextName, portletClassLoader, rootElement);
+			servletContextName, portletClassLoader, rootElement);
 
 		List<Element> serviceElements = rootElement.elements("service");
 
@@ -554,12 +546,21 @@ public class HookHotDeployListener
 			String serviceType = serviceElement.elementText("service-type");
 			String serviceImpl = serviceElement.elementText("service-impl");
 
-			if (!paclPolicy.hasHookService(serviceType)) {
-				if (_log.isInfoEnabled()) {
-					_log.info("Rejecting service " + serviceImpl);
-				}
+			SecurityManager sm = System.getSecurityManager();
 
-				continue;
+			if (sm != null) {
+				try {
+					sm.checkPermission(
+						new PortalHookPermission(
+							"hasService", portletClassLoader, serviceType));
+				}
+				catch (SecurityException se) {
+					if (_log.isInfoEnabled()) {
+						_log.info("Rejecting service " + serviceImpl);
+					}
+
+					continue;
+				}
 			}
 
 			Class<?> serviceTypeClass = portletClassLoader.loadClass(
@@ -586,11 +587,11 @@ public class HookHotDeployListener
 		}
 
 		initServletFilters(
-			paclPolicy, servletContext, servletContextName, portletClassLoader,
+			servletContext, servletContextName, portletClassLoader,
 			rootElement);
 
 		initStrutsActions(
-			paclPolicy, servletContextName, portletClassLoader, rootElement);
+			servletContextName, portletClassLoader, rootElement);
 
 		// Begin backwards compatibility for 5.1.0
 
@@ -1047,13 +1048,26 @@ public class HookHotDeployListener
 	}
 
 	protected void initCustomJspDir(
-			PACLPolicy paclPolicy, ServletContext servletContext,
-			String servletContextName, PluginPackage pluginPackage,
+			ServletContext servletContext, String servletContextName,
+			ClassLoader portletClassLoader, PluginPackage pluginPackage,
 			Element rootElement)
 		throws Exception {
 
-		if (!paclPolicy.hasHookCustomJspDir()) {
-			return;
+		SecurityManager sm = System.getSecurityManager();
+
+		if (sm != null) {
+			try {
+				sm.checkPermission(
+					new PortalHookPermission(
+						"hasCustomJspDir", portletClassLoader, null));
+			}
+			catch (SecurityException se) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Rejecting service custom jsp dir");
+				}
+
+				return;
+			}
 		}
 
 		String customJspDir = rootElement.elementText("custom-jsp-dir");
@@ -1228,8 +1242,8 @@ public class HookHotDeployListener
 	}
 
 	protected void initIndexerPostProcessors(
-			PACLPolicy paclPolicy, String servletContextName,
-			ClassLoader portletClassLoader, Element parentElement)
+			String servletContextName, ClassLoader portletClassLoader,
+			Element parentElement)
 		throws Exception {
 
 		IndexerPostProcessorContainer indexerPostProcessorContainer =
@@ -1251,8 +1265,22 @@ public class HookHotDeployListener
 			String indexerClassName = indexerPostProcessorElement.elementText(
 				"indexer-class-name");
 
-			if (!paclPolicy.hasHookIndexer(indexerClassName)) {
-				continue;
+			SecurityManager sm = System.getSecurityManager();
+
+			if (sm != null) {
+				try {
+					sm.checkPermission(
+						new PortalHookPermission(
+							"hasHookIndexer", portletClassLoader,
+							indexerClassName));
+				}
+				catch (SecurityException se) {
+					if (_log.isInfoEnabled()) {
+						_log.info("Rejecting indexer " + indexerClassName);
+					}
+
+					continue;
+				}
 			}
 
 			String indexerPostProcessorImpl =
@@ -1279,8 +1307,8 @@ public class HookHotDeployListener
 	}
 
 	protected void initLanguageProperties(
-			PACLPolicy paclPolicy, String servletContextName,
-			ClassLoader portletClassLoader, Element parentElement)
+			String servletContextName, ClassLoader portletClassLoader,
+			Element parentElement)
 		throws Exception {
 
 		LanguagesContainer languagesContainer = new LanguagesContainer();
@@ -1301,12 +1329,22 @@ public class HookHotDeployListener
 			Locale locale = getLocale(languagePropertiesLocation);
 
 			if (locale != null) {
-				if (!paclPolicy.hasHookLanguagePropertiesLocale(locale)) {
-					if (_log.isInfoEnabled()) {
-						_log.info("Rejecting locale " + locale);
-					}
+				SecurityManager sm = System.getSecurityManager();
 
-					continue;
+				if (sm != null) {
+					try {
+						sm.checkPermission(
+							new PortalHookPermission(
+								"hasHookLanguagePropertiesLocale",
+								portletClassLoader, locale));
+					}
+					catch (SecurityException se) {
+						if (_log.isInfoEnabled()) {
+							_log.info("Rejecting locale " + locale);
+						}
+
+						continue;
+					}
 				}
 			}
 
@@ -1419,8 +1457,8 @@ public class HookHotDeployListener
 	}
 
 	protected void initPortalProperties(
-			PACLPolicy paclPolicy, String servletContextName,
-			ClassLoader portletClassLoader, Element parentElement)
+			String servletContextName, ClassLoader portletClassLoader,
+			Element parentElement)
 		throws Exception {
 
 		String portalPropertiesLocation = parentElement.elementText(
@@ -1467,12 +1505,22 @@ public class HookHotDeployListener
 		while (iterator.hasNext()) {
 			String key = (String)iterator.next();
 
-			if (!paclPolicy.hasHookPortalPropertiesKey(key)) {
-				if (_log.isInfoEnabled()) {
-					_log.info("Rejecting portal.properties key " + key);
-				}
+			SecurityManager sm = System.getSecurityManager();
 
-				iterator.remove();
+			if (sm != null) {
+				try {
+					sm.checkPermission(
+						new PortalHookPermission(
+							"hasHookPortalPropertiesKey", portletClassLoader,
+							key));
+				}
+				catch (SecurityException se) {
+					if (_log.isInfoEnabled()) {
+						_log.info("Rejecting portal.properties key " + key);
+					}
+
+					iterator.remove();
+				}
 			}
 		}
 
@@ -1873,13 +1921,26 @@ public class HookHotDeployListener
 	}
 
 	protected void initServletFilters(
-			PACLPolicy paclPolicy, ServletContext servletContext,
+			ServletContext servletContext,
 			String servletContextName, ClassLoader portletClassLoader,
 			Element parentElement)
 		throws Exception {
 
-		if (!paclPolicy.hasHookServletFilters()) {
-			return;
+		SecurityManager sm = System.getSecurityManager();
+
+		if (sm != null) {
+			try {
+				sm.checkPermission(
+					new PortalHookPermission(
+						"hasServletFilters", portletClassLoader, null));
+			}
+			catch (SecurityException se) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Rejecting servlet filters");
+				}
+
+				return;
+			}
 		}
 
 		ServletFiltersContainer servletFiltersContainer =
@@ -1997,8 +2058,8 @@ public class HookHotDeployListener
 	}
 
 	protected void initStrutsActions(
-			PACLPolicy paclPolicy, String servletContextName,
-			ClassLoader portletClassLoader, Element parentElement)
+			String servletContextName, ClassLoader portletClassLoader,
+			Element parentElement)
 		throws Exception {
 
 		StrutsActionsContainer strutsActionContainer =
@@ -2018,8 +2079,23 @@ public class HookHotDeployListener
 			String strutsActionPath = strutsActionElement.elementText(
 				"struts-action-path");
 
-			if (!paclPolicy.hasHookStrutsActionPath(strutsActionPath)) {
-				continue;
+			SecurityManager sm = System.getSecurityManager();
+
+			if (sm != null) {
+				try {
+					sm.checkPermission(
+						new PortalHookPermission(
+							"hasStrutsActionPath", portletClassLoader,
+							strutsActionPath));
+				}
+				catch (SecurityException se) {
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							"Rejecting struts action path " + strutsActionPath);
+					}
+
+					continue;
+				}
 			}
 
 			String strutsActionImpl = strutsActionElement.elementText(

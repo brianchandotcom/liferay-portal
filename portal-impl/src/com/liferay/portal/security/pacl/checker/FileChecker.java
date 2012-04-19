@@ -19,7 +19,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.WebDirDetector;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.security.pacl.PACLPolicy;
+import com.liferay.portal.security.permission.pacl.PACLConstants;
 import com.liferay.portal.util.PortalUtil;
 
 import java.io.FilePermission;
@@ -48,27 +50,49 @@ public class FileChecker extends BaseChecker {
 		_commonClassLoader = portalClassLoader.getParent();
 	}
 
-	public boolean hasDelete(String fileName) {
-		Permission permission = new FilePermission(
-			fileName, _PERMISSION_DELETE);
+	@Override
+	public void checkPermission(Permission permission) {
+		String name = permission.getName();
+		String actions = permission.getActions();
 
+		if (actions.equals(PACLConstants.DELETE)) {
+			if (!hasDelete(permission, name)) {
+				throw new SecurityException("Attempted to delete file " + name);
+			}
+		}
+		else if (actions.equals(PACLConstants.EXECUTE)) {
+			if (!hasExecute(permission, name)) {
+				throw new SecurityException(
+					"Attempted to execute file " + name);
+			}
+		}
+		else if (actions.equals(PACLConstants.READ)) {
+			if (!hasRead(permission, name)) {
+				throw new SecurityException("Attempted to read file " + name);
+			}
+		}
+		else if (actions.equals(PACLConstants.WRITE)) {
+			if (!hasWrite(permission, name)) {
+				throw new SecurityException("Attempted to write file " + name);
+			}
+		}
+	}
+
+	public boolean hasDelete(Permission permission, String fileName) {
 		for (Permission deleteFilePermission : _deletePermissions) {
 			if (deleteFilePermission.implies(permission)) {
 				return true;
 			}
 		}
 
-		if (isJSPCompiler(fileName, _PERMISSION_DELETE)) {
+		if (isJSPCompiler(fileName, PACLConstants.DELETE)) {
 			return true;
 		}
 
 		return false;
 	}
 
-	public boolean hasExecute(String fileName) {
-		Permission permission = new FilePermission(
-			fileName, _PERMISSION_EXECUTE);
-
+	public boolean hasExecute(Permission permission, String fileName) {
 		for (Permission executeFilePermission : _executePermissions) {
 			if (executeFilePermission.implies(permission)) {
 				return true;
@@ -78,32 +102,28 @@ public class FileChecker extends BaseChecker {
 		return false;
 	}
 
-	public boolean hasRead(String fileName) {
-		Permission permission = new FilePermission(fileName, _PERMISSION_READ);
-
+	public boolean hasRead(Permission permission, String fileName) {
 		for (Permission readFilePermission : _readPermissions) {
 			if (readFilePermission.implies(permission)) {
 				return true;
 			}
 		}
 
-		if (isJSPCompiler(fileName, _PERMISSION_READ)) {
+		if (isJSPCompiler(fileName, PACLConstants.READ)) {
 			return true;
 		}
 
 		return false;
 	}
 
-	public boolean hasWrite(String fileName) {
-		Permission permission = new FilePermission(fileName, _PERMISSION_WRITE);
-
+	public boolean hasWrite(Permission permission, String fileName) {
 		for (Permission writeFilePermission : _writePermissions) {
 			if (writeFilePermission.implies(permission)) {
 				return true;
 			}
 		}
 
-		if (isJSPCompiler(fileName, _PERMISSION_WRITE)) {
+		if (isJSPCompiler(fileName, PACLConstants.WRITE)) {
 			return true;
 		}
 
@@ -140,7 +160,7 @@ public class FileChecker extends BaseChecker {
 			addPermission(permissions, path, action);
 		}
 
-		if (!action.equals(_PERMISSION_READ)) {
+		if (!action.equals(PACLConstants.READ)) {
 			return permissions;
 		}
 
@@ -189,13 +209,13 @@ public class FileChecker extends BaseChecker {
 
 	protected void initPermissions() {
 		_deletePermissions = getPermissions(
-			"security-manager-files-delete", _PERMISSION_DELETE);
+			"security-manager-files-delete", PACLConstants.DELETE);
 		_executePermissions = getPermissions(
-			"security-manager-files-execute", _PERMISSION_EXECUTE);
+			"security-manager-files-execute", PACLConstants.EXECUTE);
 		_readPermissions = getPermissions(
-			"security-manager-files-read", _PERMISSION_READ);
+			"security-manager-files-read", PACLConstants.READ);
 		_writePermissions = getPermissions(
-			"security-manager-files-write", _PERMISSION_WRITE);
+			"security-manager-files-write", PACLConstants.WRITE);
 	}
 
 	protected boolean isJSPCompiler(String fileName, String action) {
@@ -216,10 +236,14 @@ public class FileChecker extends BaseChecker {
 					_PACKAGE_ORG_APACHE_NAMING_RESOURCES) ||
 				callerClassName.equals(_ClASS_NAME_JASPER_LOADER)) {
 
-				if (callerClass.getClassLoader() != _commonClassLoader) {
+				ClassLoader currentClassLoader =
+					PACLClassLoaderUtil.getClassLoader(callerClass);
+
+				if (currentClassLoader != _commonClassLoader) {
 					_log.error(
 						"A plugin is hijacking the JSP compiler via " +
-							callerClassName + " to " + action + " " + fileName);
+							callerClassName + " to " + action + " " +
+								fileName);
 
 					return false;
 				}
@@ -248,14 +272,6 @@ public class FileChecker extends BaseChecker {
 
 	private static final String _PACKAGE_ORG_APACHE_NAMING_RESOURCES =
 		"org.apache.naming.resources";
-
-	private static final String _PERMISSION_DELETE = "delete";
-
-	private static final String _PERMISSION_EXECUTE = "execute";
-
-	private static final String _PERMISSION_READ = "read";
-
-	private static final String _PERMISSION_WRITE = "write";
 
 	private static Log _log = LogFactoryUtil.getLog(FileChecker.class);
 

@@ -17,11 +17,15 @@ package com.liferay.portal.security.pacl.checker;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.security.pacl.PACLPolicy;
 import com.liferay.portal.security.pacl.PACLPolicyManager;
+import com.liferay.portal.security.pacl.permission.PortalServicePermission;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+
+import java.security.Permission;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -39,10 +43,36 @@ public class ServiceChecker extends BaseChecker {
 		initServices();
 	}
 
-	public boolean hasDynamicQuery(Class<?> clazz) {
-		ClassLoader classLoader = clazz.getClassLoader();
+	@Override
+	public void checkPermission(Permission permission) {
+		PortalServicePermission portalServicePermission =
+			(PortalServicePermission)permission;
 
-		PACLPolicy paclPolicy = PACLPolicyManager.getPACLPolicy(classLoader);
+		String name = portalServicePermission.getName();
+		Object object = portalServicePermission.getObject();
+
+		if (name.equals("hasService")) {
+			Method method = portalServicePermission.getMethod();
+
+			if (!hasService(object, method)) {
+				throw new SecurityException("Attempted to invoke " + method);
+			}
+		}
+		else if (name.equals("hasDynamicQuery")) {
+			Class<?> implClass = (Class<?>)object;
+
+			if (!hasDynamicQuery(implClass)) {
+				throw new SecurityException(
+					"Attempted to create a dynamic query for " + implClass);
+			}
+		}
+	}
+
+	public boolean hasDynamicQuery(Class<?> clazz) {
+		ClassLoader classLoader = PACLClassLoaderUtil.getClassLoader(clazz);
+
+		PACLPolicy paclPolicy = PACLPolicyManager.getPACLPolicy(
+			classLoader);
 
 		if (paclPolicy == getPACLPolicy()) {
 			return true;
@@ -72,9 +102,10 @@ public class ServiceChecker extends BaseChecker {
 			clazz = interfaces[0];
 		}
 
-		ClassLoader classLoader = clazz.getClassLoader();
+		ClassLoader classLoader = PACLClassLoaderUtil.getClassLoader(clazz);
 
-		PACLPolicy paclPolicy = PACLPolicyManager.getPACLPolicy(classLoader);
+		PACLPolicy paclPolicy = PACLPolicyManager.getPACLPolicy(
+			classLoader);
 
 		if (paclPolicy == getPACLPolicy()) {
 			return true;

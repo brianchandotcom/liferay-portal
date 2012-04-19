@@ -109,6 +109,8 @@ public class LangBuilder {
 
 		_orderProperties(
 			new File(_langDir + "/" + _langFile + "_en_GB.properties"));
+		_orderProperties(
+			new File(_langDir + "/" + _langFile + "_fr_CA.properties"));
 
 		_createProperties(content, "ar"); // Arabic
 		_createProperties(content, "eu"); // Basque

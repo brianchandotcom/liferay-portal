@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.pacl.PACLPolicy;
+import com.liferay.portal.security.permission.pacl.PACLConstants;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -70,17 +71,23 @@ public class SocketChecker extends BaseChecker {
 			return;
 		}
 
-		if (actions.contains("accept")) {
+		if (actions.contains(PACLConstants.ACCEPT)) {
 
 			// TODO
 
 		}
-		else if (actions.contains("connect") && !hasConnect(host, port)) {
-			throw new SecurityException(
-				"Attempted to connect to host " + host + " on port " + port);
+		else if (actions.contains(PACLConstants.CONNECT)) {
+			if (!hasConnect(host, port)) {
+				throw new SecurityException(
+					"Attempted to connect to host " + host + " on port " +
+						port);
+			}
 		}
-		else if (actions.contains("listen") && !hasListen(port)) {
-			throw new SecurityException("Attempted to listen on port " + port);
+		else if (actions.contains(PACLConstants.LISTEN)) {
+			if (!hasListen(port)) {
+				throw new SecurityException(
+					"Attempted to listen on port " + port);
+			}
 		}
 	}
 

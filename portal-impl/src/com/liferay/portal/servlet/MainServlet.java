@@ -54,11 +54,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
-import com.liferay.portal.model.PortletApp;
-import com.liferay.portal.model.PortletFilter;
-import com.liferay.portal.model.PortletURLListener;
 import com.liferay.portal.model.User;
-import com.liferay.portal.plugin.PluginPackageUtil;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
@@ -73,23 +69,19 @@ import com.liferay.portal.service.ThemeLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.servlet.filters.absoluteredirects.AbsoluteRedirectsResponse;
 import com.liferay.portal.servlet.filters.i18n.I18nFilter;
+import com.liferay.portal.setup.InitPortalUtil;
 import com.liferay.portal.setup.SetupWizardUtil;
 import com.liferay.portal.struts.PortletRequestProcessor;
 import com.liferay.portal.struts.StrutsUtil;
 import com.liferay.portal.util.ExtRegistry;
 import com.liferay.portal.util.MaintenanceUtil;
-import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.ShutdownUtil;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.PortletBagFactory;
-import com.liferay.portlet.PortletConfigFactoryUtil;
-import com.liferay.portlet.PortletFilterFactory;
 import com.liferay.portlet.PortletInstanceFactoryUtil;
-import com.liferay.portlet.PortletURLListenerFactory;
 import com.liferay.portlet.social.util.SocialConfigurationUtil;
 import com.liferay.util.ContentUtil;
 import com.liferay.util.servlet.EncryptedServletRequest;
@@ -98,11 +90,6 @@ import java.io.IOException;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
-
-import javax.portlet.PortletConfig;
-import javax.portlet.PortletContext;
-import javax.portlet.PortletException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -221,7 +208,7 @@ public class MainServlet extends ActionServlet {
 		PluginPackage pluginPackage = null;
 
 		try {
-			pluginPackage = initPluginPackage();
+			pluginPackage = InitPortalUtil.initPluginPackage(servletContext);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -234,7 +221,8 @@ public class MainServlet extends ActionServlet {
 		List<Portlet> portlets = null;
 
 		try {
-			portlets = initPortlets(pluginPackage);
+			portlets = InitPortalUtil.initPortlets(
+				pluginPackage, servletContext);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -793,13 +781,6 @@ public class MainServlet extends ActionServlet {
 			servletContext, xmls, pluginPackage);
 	}
 
-	protected PluginPackage initPluginPackage() throws Exception {
-		ServletContext servletContext = getServletContext();
-
-		return PluginPackageUtil.readPluginPackageServletContext(
-			servletContext);
-	}
-
 	/**
 	 * @see {@link SetupWizardUtil#_initPlugins}
 	 */
@@ -813,74 +794,6 @@ public class MainServlet extends ActionServlet {
 
 			PortalLifecycleUtil.flushInits();
 		}
-	}
-
-	protected void initPortletApp(
-			Portlet portlet, ServletContext servletContext)
-		throws PortletException {
-
-		PortletApp portletApp = portlet.getPortletApp();
-
-		PortletConfig portletConfig = PortletConfigFactoryUtil.create(
-			portlet, servletContext);
-
-		PortletContext portletContext = portletConfig.getPortletContext();
-
-		Set<PortletFilter> portletFilters = portletApp.getPortletFilters();
-
-		for (PortletFilter portletFilter : portletFilters) {
-			PortletFilterFactory.create(portletFilter, portletContext);
-		}
-
-		Set<PortletURLListener> portletURLListeners =
-			portletApp.getPortletURLListeners();
-
-		for (PortletURLListener portletURLListener : portletURLListeners) {
-			PortletURLListenerFactory.create(portletURLListener);
-		}
-	}
-
-	protected List<Portlet> initPortlets(PluginPackage pluginPackage)
-		throws Exception {
-
-		ServletContext servletContext = getServletContext();
-
-		String[] xmls = new String[] {
-			HttpUtil.URLtoString(
-				servletContext.getResource(
-					"/WEB-INF/" + Portal.PORTLET_XML_FILE_NAME_CUSTOM)),
-			HttpUtil.URLtoString(
-				servletContext.getResource("/WEB-INF/portlet-ext.xml")),
-			HttpUtil.URLtoString(
-				servletContext.getResource("/WEB-INF/liferay-portlet.xml")),
-			HttpUtil.URLtoString(
-				servletContext.getResource("/WEB-INF/liferay-portlet-ext.xml")),
-			HttpUtil.URLtoString(
-				servletContext.getResource("/WEB-INF/web.xml"))
-		};
-
-		PortletLocalServiceUtil.initEAR(servletContext, xmls, pluginPackage);
-
-		PortletBagFactory portletBagFactory = new PortletBagFactory();
-
-		portletBagFactory.setClassLoader(
-			PortalClassLoaderUtil.getClassLoader());
-		portletBagFactory.setServletContext(servletContext);
-		portletBagFactory.setWARFile(false);
-
-		List<Portlet> portlets = PortletLocalServiceUtil.getPortlets();
-
-		for (int i = 0; i < portlets.size(); i++) {
-			Portlet portlet = portlets.get(i);
-
-			portletBagFactory.create(portlet);
-
-			if (i == 0) {
-				initPortletApp(portlet, servletContext);
-			}
-		}
-
-		return portlets;
 	}
 
 	protected void initResourceActions(List<Portlet> portlets)

@@ -16,7 +16,6 @@ package com.liferay.portal.atom;
 
 import com.liferay.portal.kernel.atom.AtomCollectionAdapter;
 import com.liferay.portal.kernel.atom.AtomCollectionAdapterRegistry;
-import com.liferay.portal.kernel.atom.AtomException;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.List;
@@ -25,6 +24,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Igor Spasic
+ * @author Manuel de la Peña
  */
 public class AtomCollectionAdapterRegistryImpl
 	implements AtomCollectionAdapterRegistry {
@@ -39,17 +39,7 @@ public class AtomCollectionAdapterRegistryImpl
 		return ListUtil.fromMapValues(_atomCollectionAdapters);
 	}
 
-	public void register(AtomCollectionAdapter<?> atomCollectionAdapter)
-		throws AtomException {
-
-		if (_atomCollectionAdapters.containsKey(
-				atomCollectionAdapter.getCollectionName())) {
-
-			throw new AtomException(
-				"Duplicate collection name " +
-					atomCollectionAdapter.getCollectionName());
-		}
-
+	public void register(AtomCollectionAdapter<?> atomCollectionAdapter) {
 		_atomCollectionAdapters.put(
 			atomCollectionAdapter.getCollectionName(), atomCollectionAdapter);
 	}

@@ -14,10 +14,18 @@
 
 package com.liferay.portal.security.pacl.checker;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 import com.liferay.portal.security.pacl.PACLPolicy;
+import com.liferay.portal.security.permission.pacl.PACLConstants;
 
 import java.security.Permission;
+
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * @author Raymond Augé
@@ -27,52 +35,68 @@ public class RuntimeChecker extends FileChecker {
 	public RuntimeChecker(PACLPolicy paclPolicy) {
 		super(paclPolicy);
 
-		_getClassLoader = getPropertyBoolean(
-			"security-manager-get-class-loader");
+		initClassLoaderPortletIds();
 	}
 
 	@Override
 	public void checkPermission(Permission permission) {
 		String name = permission.getName();
 
-		if (name.startsWith(_RUNTIME_PERMISSION_ACCESS_CLASS_IN_PACKAGE)) {
+		if (name.startsWith(PACLConstants.ACCESS_CLASS_IN_PACKAGE)) {
 			int pos = name.indexOf(StringPool.PERIOD);
 
-			String pkg = name.substring(pos);
+			String pkg = name.substring(pos + 1);
 
 			if (!hasPackageAccess(pkg)) {
 				throw new SecurityException(
 					"Attempted to access package " + pkg);
 			}
 		}
-		else if (name.equals(_RUNTIME_PERMISSION_GET_CLASSLOADER) &&
-				 !hasGetClassLoader()) {
+		else if (name.equals(PACLConstants.GET_CLASSLOADER) &&
+				 PortalSecurityManagerThreadLocal.isClassLoaderCheckingEnabled()) {
 
-			throw new SecurityException(
-				"Attempted to get external class loader");
+			String portletId = null;
+
+			int pos = name.indexOf(StringPool.PERIOD);
+
+			if (pos != -1) {
+				portletId = name.substring(pos + 1);
+			}
+
+			if (Validator.isNull(portletId)) {
+				portletId = "foreign";
+			}
+
+			if (!hasGetClassLoader(portletId)) {
+				Thread.dumpStack();
+
+				throw new SecurityException(
+					"Attempted to get an external class loader " + portletId);
+			}
 		}
-		else if (name.equals(_RUNTIME_PERMISSION_SET_SECURITY_MANAGER)) {
+		else if (name.equals(PACLConstants.SET_SECURITY_MANAGER)) {
 			throw new SecurityException(
 				"Attempted to set another security manager");
 		}
-		else if (name.equals(_RUNTIME_PERMISSION_EXIT_VM)) {
+		else if (name.equals(PACLConstants.EXIT_VM)) {
 			Thread.dumpStack();
 
 			throw new SecurityException("Attempted to shutdown the VM!");
 		}
 	}
 
-	public boolean hasGetClassLoader() {
-
-		if (isJSPCompiler(null, null)) {
+	public boolean hasGetClassLoader(String portletId) {
+		if (isJSPCompiler(portletId, "compile JSP")) {
 			return true;
 		}
 
-		return _getClassLoader;
+		return _classLoaderPortletIds.contains(portletId);
 	}
 
 	public boolean hasPackageAccess(String pkg) {
 		// TODO
+
+		System.out.println("hasPackageAccess: " + pkg);
 
 		if (pkg.startsWith("sun.reflect")) {
 		}
@@ -80,17 +104,21 @@ public class RuntimeChecker extends FileChecker {
 		return true;
 	}
 
-	private static final String _RUNTIME_PERMISSION_ACCESS_CLASS_IN_PACKAGE =
-		"accessClassInPackage.";
+	protected void initClassLoaderPortletIds() {
+		_classLoaderPortletIds = getPropertySet(
+			"security-manager-get-class-loader");
 
-	private static final String _RUNTIME_PERMISSION_EXIT_VM = "exitVM";
+		if (_log.isDebugEnabled()) {
+			Set<String> indexers = new TreeSet<String>(_classLoaderPortletIds);
 
-	private static final String _RUNTIME_PERMISSION_GET_CLASSLOADER =
-		"getClassLoader";
+			for (String indexer : indexers) {
+				_log.debug("Allowing access to class loaders from " + indexer);
+			}
+		}
+	}
 
-	private static final String _RUNTIME_PERMISSION_SET_SECURITY_MANAGER =
-		"setSecurityManager";
+	private static Log _log = LogFactoryUtil.getLog(RuntimeChecker.class);
 
-	private boolean _getClassLoader;
+	private Set<String> _classLoaderPortletIds;
 
 }

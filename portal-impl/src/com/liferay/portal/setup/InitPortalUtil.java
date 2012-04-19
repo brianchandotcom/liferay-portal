@@ -14,9 +14,11 @@
 
 package com.liferay.portal.setup;
 
+import com.liferay.portal.kernel.deploy.hot.HotDeployUtil;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.model.PortletFilter;
@@ -48,6 +50,12 @@ public class InitPortalUtil {
 
 		return PluginPackageUtil.readPluginPackageServletContext(
 			servletContext);
+	}
+
+	public static void initPlugins() {
+		HotDeployUtil.setCapturePrematureEvents(false);
+
+		PortalLifecycleUtil.flushInits();
 	}
 
 	public static List<Portlet> initPortlets(

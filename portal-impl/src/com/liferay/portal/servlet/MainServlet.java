@@ -20,7 +20,6 @@ import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.events.StartupAction;
 import com.liferay.portal.kernel.cache.Lifecycle;
 import com.liferay.portal.kernel.cache.ThreadLocalCacheManager;
-import com.liferay.portal.kernel.deploy.hot.HotDeployUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -321,7 +320,12 @@ public class MainServlet extends ActionServlet {
 		}
 
 		try {
-			initPlugins();
+			// See LEP-2885. Don't flush hot deploy events until after the
+			// portal has initialized.;
+
+			if (SetupWizardUtil.isSetupFinished()) {
+				InitPortalUtil.initPlugins();
+			}
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -779,21 +783,6 @@ public class MainServlet extends ActionServlet {
 
 		LayoutTemplateLocalServiceUtil.init(
 			servletContext, xmls, pluginPackage);
-	}
-
-	/**
-	 * @see {@link SetupWizardUtil#_initPlugins}
-	 */
-	protected void initPlugins() throws Exception {
-
-		// See LEP-2885. Don't flush hot deploy events until after the portal
-		// has initialized.
-
-		if (SetupWizardUtil.isSetupFinished()) {
-			HotDeployUtil.setCapturePrematureEvents(false);
-
-			PortalLifecycleUtil.flushInits();
-		}
 	}
 
 	protected void initResourceActions(List<Portlet> portlets)

@@ -151,29 +151,26 @@ public class PACLClassUtil {
 	private PACLPolicy _getPACLPolicyBySecurityManagerClassContext(
 		Class<?>[] classes, boolean debug) {
 
-		ClassLoader foreignClassLoader = getForeignClassLoader(
-			Thread.currentThread().getContextClassLoader());
+		ClassLoader foreignClassLoader = null;
 
 		// Walk through the classes backwards
 
-		if (foreignClassLoader == null) {
-			for (int i = (classes.length - 1); i >= 0; i--) {
-				Class<?> clazz = classes[i];
+		for (int i = (classes.length - 1); i >= 0; i--) {
+			Class<?> clazz = classes[i];
 
-				ClassLoader classLoader = clazz.getClassLoader();
+			ClassLoader classLoader = clazz.getClassLoader();
 
-				// Locate the first foreign class loader
+			// Locate the first foreign class loader
 
-				foreignClassLoader = getForeignClassLoader(classLoader);
+			foreignClassLoader = getForeignClassLoader(classLoader);
 
-				if (foreignClassLoader != null) {
-					break;
-				}
+			if (foreignClassLoader != null) {
+				break;
 			}
 		}
 
 		if (foreignClassLoader == null) {
-			return null;
+			return PACLPolicyManager.getDefaultPACLPolicy();
 		}
 
 		PACLPolicy paclPolicy = PACLPolicyManager.getPACLPolicy(
@@ -183,7 +180,7 @@ public class PACLClassUtil {
 			return paclPolicy;
 		}
 
-		return null;
+		return PACLPolicyManager.getDefaultPACLPolicy();
 	}
 
 	private ClassLoader getForeignClassLoader(ClassLoader classLoader) {

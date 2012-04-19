@@ -17,7 +17,7 @@ package com.liferay.portal.security.pacl.checker;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
+import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.security.pacl.PACLPolicy;
 import com.liferay.portal.security.pacl.PACLPolicyManager;
 import com.liferay.portal.security.pacl.permission.PortalServicePermission;
@@ -69,9 +69,10 @@ public class ServiceChecker extends BaseChecker {
 	}
 
 	public boolean hasDynamicQuery(Class<?> clazz) {
-		ClassLoader classLoader = clazz.getClassLoader();
+		ClassLoader classLoader = PACLClassLoaderUtil.getClassLoader(clazz);
 
-		PACLPolicy paclPolicy = PACLPolicyManager.getPACLPolicy(classLoader);
+		PACLPolicy paclPolicy = PACLPolicyManager.getPACLPolicy(
+			classLoader);
 
 		if (paclPolicy == getPACLPolicy()) {
 			return true;
@@ -89,52 +90,44 @@ public class ServiceChecker extends BaseChecker {
 	}
 
 	public boolean hasService(Object object, Method method) {
-		boolean enabled = PortalSecurityManagerThreadLocal.isEnabled();
+		Class<?> clazz = object.getClass();
 
-		try {
-			PortalSecurityManagerThreadLocal.setEnabled(false);
+		if (Proxy.isProxyClass(clazz)) {
+			Class<?>[] interfaces = clazz.getInterfaces();
 
-			Class<?> clazz = object.getClass();
-
-			if (Proxy.isProxyClass(clazz)) {
-				Class<?>[] interfaces = clazz.getInterfaces();
-
-				if (interfaces.length == 0) {
-					return false;
-				}
-
-				clazz = interfaces[0];
+			if (interfaces.length == 0) {
+				return false;
 			}
 
-			ClassLoader classLoader = clazz.getClassLoader();
-
-			PACLPolicy paclPolicy = PACLPolicyManager.getPACLPolicy(classLoader);
-
-			if (paclPolicy == getPACLPolicy()) {
-				return true;
-			}
-
-			Set<String> services = getServices(paclPolicy);
-
-			String className = getInterfaceName(clazz.getName());
-
-			if (services.contains(className)) {
-				return true;
-			}
-
-			String methodName = method.getName();
-
-			if (services.contains(
-					className.concat(StringPool.POUND).concat(methodName))) {
-
-				return true;
-			}
-
-			return false;
+			clazz = interfaces[0];
 		}
-		finally {
-			PortalSecurityManagerThreadLocal.setEnabled(enabled);
+
+		ClassLoader classLoader = PACLClassLoaderUtil.getClassLoader(clazz);
+
+		PACLPolicy paclPolicy = PACLPolicyManager.getPACLPolicy(
+			classLoader);
+
+		if (paclPolicy == getPACLPolicy()) {
+			return true;
 		}
+
+		Set<String> services = getServices(paclPolicy);
+
+		String className = getInterfaceName(clazz.getName());
+
+		if (services.contains(className)) {
+			return true;
+		}
+
+		String methodName = method.getName();
+
+		if (services.contains(
+				className.concat(StringPool.POUND).concat(methodName))) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	protected String getInterfaceName(String className) {

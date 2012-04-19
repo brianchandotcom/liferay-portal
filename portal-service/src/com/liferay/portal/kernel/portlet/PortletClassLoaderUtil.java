@@ -15,6 +15,8 @@
 package com.liferay.portal.kernel.portlet;
 
 import com.liferay.portal.kernel.servlet.PluginContextListener;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.security.permission.pacl.PACLConstants;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,6 +35,15 @@ public class PortletClassLoaderUtil {
 	}
 
 	public static ClassLoader getClassLoader(String portletId) {
+		SecurityManager sm = System.getSecurityManager();
+
+		if (sm != null) {
+			sm.checkPermission(
+				new RuntimePermission(
+					PACLConstants.GET_CLASSLOADER.concat(
+						StringPool.PERIOD).concat(portletId)));
+		}
+
 		PortletBag portletBag = PortletBagPool.get(portletId);
 
 		if (portletBag == null) {

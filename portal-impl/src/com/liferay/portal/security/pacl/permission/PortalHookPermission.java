@@ -14,23 +14,31 @@
 
 package com.liferay.portal.security.pacl.permission;
 
+import java.security.BasicPermission;
 
 /**
  * @author Raymond Augé
  */
-public class PortalHookPermission extends PortalPermission {
+public class PortalHookPermission extends BasicPermission {
 
 	public PortalHookPermission(
-		String name, ClassLoader policyClassLoader, Object subject) {
-		super(name, policyClassLoader);
+		String name, ClassLoader classLoader, Object subject) {
 
+		super(name);
+
+		_classLoader = classLoader;
 		_subject = subject;
+	}
+
+	public ClassLoader getClassLoader() {
+		return _classLoader;
 	}
 
 	public Object getSubject() {
 		return _subject;
 	}
 
+	private ClassLoader _classLoader;
 	private Object _subject;
 
 }

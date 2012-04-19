@@ -16,9 +16,7 @@ package com.liferay.portal.security.pacl.checker;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.security.pacl.PACLPolicy;
 import com.liferay.portal.security.pacl.permission.PortalHookPermission;
-import com.liferay.portal.security.permission.pacl.PACLConstants;
 
 import java.security.Permission;
 
@@ -31,9 +29,7 @@ import java.util.TreeSet;
  */
 public class HookChecker extends BaseChecker {
 
-	public HookChecker(PACLPolicy paclPolicy) {
-		super(paclPolicy);
-
+	public void afterPropertiesSet() {
 		initCustomJspDir();
 		initIndexers();
 		initLanguagePropertiesLocales();
@@ -43,102 +39,69 @@ public class HookChecker extends BaseChecker {
 		initStrutsActionPaths();
 	}
 
-	@Override
 	public void checkPermission(Permission permission) {
-		PortalHookPermission hookPermission =(PortalHookPermission)permission;
+		PortalHookPermission hookPermission = (PortalHookPermission)permission;
 
 		String name = hookPermission.getName();
 		Object subject = hookPermission.getSubject();
 
-		if (name.equals(PACLConstants.HAS_CUSTOM_JSP_DIR)) {
-			if (!hasCustomJspDir()) {
+		if (name.equals(PORTAL_HOOK_PERMISSION_CUSTOM_JSP_DIR)) {
+			if (!_customJspDir) {
 				throw new SecurityException("Attempted to set custom jsp dir ");
 			}
 		}
-		else if (name.equals(PACLConstants.HAS_INDEXER)) {
+		else if (name.equals(PORTAL_HOOK_PERMISSION_INDEXER)) {
 			String indexerClassName = (String)subject;
 
-			if (!hasIndexer(indexerClassName)) {
+			if (!_indexers.contains(indexerClassName)) {
 				throw new SecurityException(
 					"Attempted to add indexer " + indexerClassName);
 			}
 		}
-		else if (name.equals(PACLConstants.HAS_LANGUAGE_PROPERTIES_LOCALE)) {
+		else if (name.equals(
+					PORTAL_HOOK_PERMISSION_LANGUAGE_PROPERTIES_LOCALE)) {
+
 			Locale locale = (Locale)subject;
 
-			if (!hasLanguagePropertiesLocale(locale)) {
+			if (!_languagePropertiesLanguageIds.contains(
+					locale.getLanguage()) &&
+				!_languagePropertiesLanguageIds.contains(
+					locale.getLanguage() + "_" + locale.getCountry())) {
+
 				throw new SecurityException(
 					"Attempted to override locale " + locale);
 			}
 		}
-		else if (name.equals(PACLConstants.HAS_PORTAL_PROPERTIES_KEY)) {
+		else if (name.equals(PORTAL_HOOK_PERMISSION_PORTAL_PROPERTIES_KEY)) {
 			String key = (String)subject;
 
-			if (!hasPortalPropertiesKey(key)) {
+			if (!_portalPropertiesKeys.contains(key)) {
 				throw new SecurityException(
 					"Attempted to set portal property " + key);
 			}
 		}
-		else if (name.equals(PACLConstants.HAS_SERVICE)) {
+		else if (name.equals(PORTAL_HOOK_PERMISSION_SERVICE)) {
 			String serviceType = (String)subject;
 
-			if (!hasService(serviceType)) {
+			if (!_services.contains(serviceType)) {
 				throw new SecurityException(
 					"Attempted to override service " + serviceType);
 			}
 		}
-		else if (name.equals(PACLConstants.HAS_SERVLET_FILTERS)) {
-			if (!hasServletFilters()) {
+		else if (name.equals(PORTAL_HOOK_PERMISSION_SERVLET_FILTERS)) {
+			if (!_servletFilters) {
 				throw new SecurityException(
 					"Attempted to override serlvet filters");
 			}
 		}
-		else if (name.equals(PACLConstants.HAS_STRUTS_ACTION_PATH)) {
+		else if (name.equals(PORTAL_HOOK_PERMISSION_STRUTS_ACTION_PATH)) {
 			String strutsActionPath = (String)subject;
 
-			if (!hasStrutsActionPath(strutsActionPath)) {
+			if (!_strutsActionPaths.contains(strutsActionPath)) {
 				throw new SecurityException(
 					"Attempted to use struts action path " + strutsActionPath);
 			}
 		}
-	}
-
-	public boolean hasCustomJspDir() {
-		return _customJspDir;
-	}
-
-	public boolean hasIndexer(String className) {
-		return _indexers.contains(className);
-	}
-
-	public boolean hasLanguagePropertiesLocale(Locale locale) {
-		if (_languagePropertiesLanguageIds.contains(locale.getLanguage())) {
-			return true;
-		}
-
-		if (_languagePropertiesLanguageIds.contains(
-				locale.getLanguage() + "_" + locale.getCountry())) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean hasPortalPropertiesKey(String key) {
-		return _portalPropertiesKeys.contains(key);
-	}
-
-	public boolean hasService(String className) {
-		return _services.contains(className);
-	}
-
-	public boolean hasServletFilters() {
-		return _servletFilters;
-	}
-
-	public boolean hasStrutsActionPath(String path) {
-		return _strutsActionPaths.contains(path);
 	}
 
 	protected void initCustomJspDir() {

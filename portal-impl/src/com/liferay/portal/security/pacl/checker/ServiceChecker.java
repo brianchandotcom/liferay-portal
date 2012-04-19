@@ -37,13 +37,10 @@ import java.util.Set;
  */
 public class ServiceChecker extends BaseChecker {
 
-	public ServiceChecker(PACLPolicy paclPolicy) {
-		super(paclPolicy);
-
+	public void afterPropertiesSet() {
 		initServices();
 	}
 
-	@Override
 	public void checkPermission(Permission permission) {
 		PortalServicePermission portalServicePermission =
 			(PortalServicePermission)permission;
@@ -51,14 +48,7 @@ public class ServiceChecker extends BaseChecker {
 		String name = portalServicePermission.getName();
 		Object object = portalServicePermission.getObject();
 
-		if (name.equals("hasService")) {
-			Method method = portalServicePermission.getMethod();
-
-			if (!hasService(object, method)) {
-				throw new SecurityException("Attempted to invoke " + method);
-			}
-		}
-		else if (name.equals("hasDynamicQuery")) {
+		if (name.equals(PORTAL_PERMISSION_DYNAMIC_QUERY)) {
 			Class<?> implClass = (Class<?>)object;
 
 			if (!hasDynamicQuery(implClass)) {
@@ -66,13 +56,19 @@ public class ServiceChecker extends BaseChecker {
 					"Attempted to create a dynamic query for " + implClass);
 			}
 		}
+		else if (name.equals(PORTAL_PERMISSION_SERVICE)) {
+			Method method = portalServicePermission.getMethod();
+
+			if (!hasService(object, method)) {
+				throw new SecurityException("Attempted to invoke " + method);
+			}
+		}
 	}
 
 	public boolean hasDynamicQuery(Class<?> clazz) {
 		ClassLoader classLoader = PACLClassLoaderUtil.getClassLoader(clazz);
 
-		PACLPolicy paclPolicy = PACLPolicyManager.getPACLPolicy(
-			classLoader);
+		PACLPolicy paclPolicy = PACLPolicyManager.getPACLPolicy(classLoader);
 
 		if (paclPolicy == getPACLPolicy()) {
 			return true;
@@ -104,8 +100,7 @@ public class ServiceChecker extends BaseChecker {
 
 		ClassLoader classLoader = PACLClassLoaderUtil.getClassLoader(clazz);
 
-		PACLPolicy paclPolicy = PACLPolicyManager.getPACLPolicy(
-			classLoader);
+		PACLPolicy paclPolicy = PACLPolicyManager.getPACLPolicy(classLoader);
 
 		if (paclPolicy == getPACLPolicy()) {
 			return true;

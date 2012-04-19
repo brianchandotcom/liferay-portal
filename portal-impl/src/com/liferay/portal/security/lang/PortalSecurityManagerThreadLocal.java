@@ -49,7 +49,8 @@ public class PortalSecurityManagerThreadLocal {
 	private static ThreadLocal<Boolean> _classLoaderCheckingEnabled =
 		new AutoResetThreadLocal<Boolean>(
 			PortalSecurityManagerThreadLocal.class +
-				"._classLoaderCheckingEnabled", true);
+				"._classLoaderCheckingEnabled",
+			true);
 	private static ThreadLocal<Boolean> _enabled =
 		new AutoResetThreadLocal<Boolean>(
 			PortalSecurityManagerThreadLocal.class + "._enabled", true);

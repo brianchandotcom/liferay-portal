@@ -117,6 +117,12 @@ public class PACLPolicyManager {
 	}
 
 	private static void _overridePortalSecurityManager() {
+		_originalSecurityManager = System.getSecurityManager();
+
+		if (_originalSecurityManager instanceof PortalSecurityManager) {
+			return;
+		}
+
 		String portalSecurityManagerStrategy =
 			PropsValues.PORTAL_SECURITY_MANAGER_STRATEGY;
 
@@ -132,12 +138,6 @@ public class PACLPolicyManager {
 				_log.info(sb.toString());
 			}
 
-			return;
-		}
-
-		_originalSecurityManager = System.getSecurityManager();
-
-		if (_originalSecurityManager instanceof PortalSecurityManager) {
 			return;
 		}
 
@@ -160,14 +160,14 @@ public class PACLPolicyManager {
 	}
 
 	private static void _resetPortalSecurityManager() {
+		if (_originalSecurityManager instanceof PortalSecurityManager) {
+			return;
+		}
+
 		String portalSecurityManagerStrategy =
 			PropsValues.PORTAL_SECURITY_MANAGER_STRATEGY;
 
 		if (!portalSecurityManagerStrategy.equals("smart")) {
-			return;
-		}
-
-		if (_originalSecurityManager instanceof PortalSecurityManager) {
 			return;
 		}
 

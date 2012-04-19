@@ -96,6 +96,8 @@ if (displayTerms.getParentOrganizationId() > 0) {
 				selectData: Liferay.Address.getCountries,
 				selectDesc: 'name',
 				selectId: 'countryId',
+				selectLocalizeDesc: '<%= true %>',
+				selectSort: '<%= true %>',
 				selectVal: '<%= displayTerms.getCountryId() %>'
 			},
 			{

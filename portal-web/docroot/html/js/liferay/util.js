@@ -430,15 +430,14 @@
 			return Liferay.EDITORS && Liferay.EDITORS[editorImpl];
 		},
 
-		openWindow: function(config) {
+		openWindow: function(config, callback) {
 			config.openingWindow = window;
 
 			var top = Util.getTop();
 
 			var topUtil = top.Liferay.Util;
-			var topAUI = top.AUI;
 
-			topUtil._openWindowProvider(config);
+			topUtil._openWindowProvider(config, callback);
 		},
 
 		processTab: function(id) {
@@ -1015,7 +1014,7 @@
 	Liferay.provide(
 		Util,
 		'inlineEditor',
-		function(options) {
+		function(options, callback) {
 			if (options.uri && options.button) {
 				var button = options.button;
 				var height = options.height || 640;
@@ -1031,7 +1030,7 @@
 					editorButton.on(
 						'click',
 						function(event) {
-							Util.openWindow(options);
+							Util.openWindow(options, callback);
 						}
 					);
 				}
@@ -1075,7 +1074,7 @@
 	Liferay.provide(
 		Util,
 		'openDDMPortlet',
-		function(config) {
+		function(config, callback) {
 			var instance = this;
 
 			var defaultValues = {
@@ -1142,7 +1141,7 @@
 				dialogConfig.align = Util.Window.ALIGN_CENTER;
 			}
 
-			Util.openWindow(config);
+			Util.openWindow(config, callback);
 		},
 		['liferay-portlet-url']
 	);
@@ -1681,8 +1680,8 @@
 	Liferay.provide(
 		Util,
 		'_openWindowProvider',
-		function(config) {
-			Util._openWindow(config);
+		function(config, callback) {
+			Util._openWindow(config, callback);
 		},
 		['liferay-util-window']
 	);

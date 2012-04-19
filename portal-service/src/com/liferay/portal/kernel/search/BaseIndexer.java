@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.facet.AssetEntriesFacet;
@@ -1047,6 +1048,25 @@ public abstract class BaseIndexer implements Indexer {
 		return classNames[0];
 	}
 
+	protected List<String> getLocalizedCountryNames(Country country) {
+		List<String> countryNames = new ArrayList<String>();
+
+		Locale[] locales = LanguageUtil.getAvailableLocales();
+
+		for (Locale locale : locales) {
+			String countryName = LanguageUtil.get(
+				locale, "country." + country.getName());
+
+			countryName = countryName.toLowerCase();
+
+			if (!countryNames.contains(countryName)) {
+				countryNames.add(countryName);
+			}
+		}
+
+		return countryNames;
+	}
+
 	protected long getParentGroupId(long groupId) {
 		long parentGroupId = groupId;
 
@@ -1078,7 +1098,7 @@ public abstract class BaseIndexer implements Indexer {
 			try {
 				Country country = CountryServiceUtil.getCountry(countryId);
 
-				countries.add(country.getName().toLowerCase());
+				countries.addAll(getLocalizedCountryNames(country));
 			}
 			catch (NoSuchCountryException nsce) {
 				if (_log.isWarnEnabled()) {
@@ -1107,7 +1127,7 @@ public abstract class BaseIndexer implements Indexer {
 
 		for (Address address : addresses) {
 			cities.add(address.getCity().toLowerCase());
-			countries.add(address.getCountry().getName().toLowerCase());
+			countries.addAll(getLocalizedCountryNames(address.getCountry()));
 			regions.add(address.getRegion().getName().toLowerCase());
 			streets.add(address.getStreet1().toLowerCase());
 			streets.add(address.getStreet2().toLowerCase());

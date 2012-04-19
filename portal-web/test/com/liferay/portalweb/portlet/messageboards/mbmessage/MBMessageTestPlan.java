@@ -25,6 +25,10 @@ import com.liferay.portalweb.portlet.messageboards.mbmessage.replymbcategorythre
 import com.liferay.portalweb.portlet.messageboards.mbmessage.replymbcategorythreadmessagereplyreply.ReplyMBCategoryThreadMessageReplyReplyTests;
 import com.liferay.portalweb.portlet.messageboards.mbmessage.replymbthreadmessagereplies.ReplyMBThreadMessageRepliesTests;
 import com.liferay.portalweb.portlet.messageboards.mbmessage.replymbthreadmessagereply.ReplyMBThreadMessageReplyTests;
+import com.liferay.portalweb.portlet.messageboards.mbmessage.splitthreadcategorymessagereply.SplitThreadCategoryMessageReplyTests;
+import com.liferay.portalweb.portlet.messageboards.mbmessage.splitthreadcategorymessagereplybackbutton.SplitThreadCategoryMessageReplyBackButtonTests;
+import com.liferay.portalweb.portlet.messageboards.mbmessage.splitthreadcategorymessagereplyexplanation.SplitThreadCategoryMessageReplyExplanationTests;
+import com.liferay.portalweb.portlet.messageboards.mbmessage.splitthreadcategorymessagereplyreply.SplitThreadCategoryMessageReplyReplyTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -47,6 +51,12 @@ public class MBMessageTestPlan extends BaseTestSuite {
 		testSuite.addTest(ReplyMBCategoryThreadMessageReplyReplyTests.suite());
 		testSuite.addTest(ReplyMBThreadMessageRepliesTests.suite());
 		testSuite.addTest(ReplyMBThreadMessageReplyTests.suite());
+		testSuite.addTest(SplitThreadCategoryMessageReplyTests.suite());
+		testSuite.addTest(
+			SplitThreadCategoryMessageReplyBackButtonTests.suite());
+		testSuite.addTest(
+			SplitThreadCategoryMessageReplyExplanationTests.suite());
+		testSuite.addTest(SplitThreadCategoryMessageReplyReplyTests.suite());
 
 		return testSuite;
 	}

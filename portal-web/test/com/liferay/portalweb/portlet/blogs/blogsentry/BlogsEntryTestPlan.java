@@ -23,6 +23,7 @@ import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentrytitle150chara
 import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentrytitle151characters.AddBlogsEntryTitle151CharactersTests;
 import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentrytitleescapecharacters.AddBlogsEntryTitleEscapeCharactersTests;
 import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentrytitlenull.AddBlogsEntryTitleNullTests;
+import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentrytrackback.AddBlogsEntryTrackbackTests;
 import com.liferay.portalweb.portlet.blogs.blogsentry.addportletscopelayoutblogsentry.AddPortletScopeLayoutBlogsEntryTests;
 import com.liferay.portalweb.portlet.blogs.blogsentry.deleteblogsentry.DeleteBlogsEntryTests;
 import com.liferay.portalweb.portlet.blogs.blogsentry.deleteblogsentrytitle150characters.DeleteBlogsEntryTitle150CharactersTests;
@@ -67,6 +68,7 @@ public class BlogsEntryTestPlan extends BaseTestSuite {
 		testSuite.addTest(AddBlogsEntryTitle151CharactersTests.suite());
 		testSuite.addTest(AddBlogsEntryTitleEscapeCharactersTests.suite());
 		testSuite.addTest(AddBlogsEntryTitleNullTests.suite());
+		testSuite.addTest(AddBlogsEntryTrackbackTests.suite());
 		testSuite.addTest(AddPortletScopeLayoutBlogsEntryTests.suite());
 		testSuite.addTest(DeleteBlogsEntryTests.suite());
 		testSuite.addTest(DeleteBlogsEntryTitle150CharactersTests.suite());

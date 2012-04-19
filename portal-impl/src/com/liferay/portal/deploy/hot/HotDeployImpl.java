@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.PortalLifecycle;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -211,9 +212,7 @@ public class HotDeployImpl implements HotDeploy {
 	}
 
 	protected ClassLoader getContextClassLoader() {
-		Thread thread = Thread.currentThread();
-
-		return thread.getContextClassLoader();
+		return PACLClassLoaderUtil.getContextClassLoader();
 	}
 
 	protected String getRequiredServletContextNames(
@@ -237,9 +236,7 @@ public class HotDeployImpl implements HotDeploy {
 	}
 
 	protected void setContextClassLoader(ClassLoader contextClassLoader) {
-		Thread thread = Thread.currentThread();
-
-		thread.setContextClassLoader(contextClassLoader);
+		PACLClassLoaderUtil.setContextClassLoader(contextClassLoader);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(HotDeployImpl.class);

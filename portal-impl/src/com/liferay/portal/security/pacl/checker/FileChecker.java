@@ -19,8 +19,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.WebDirDetector;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
+import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.security.pacl.PACLPolicy;
+import com.liferay.portal.security.permission.pacl.PACLConstants;
 import com.liferay.portal.util.PortalUtil;
 
 import java.io.FilePermission;
@@ -54,25 +55,26 @@ public class FileChecker extends BaseChecker {
 		String name = permission.getName();
 		String actions = permission.getActions();
 
-		if (actions.equals(_PERMISSION_DELETE) &&
-			!hasDelete(permission, name)) {
-
-			throw new SecurityException("Attempted to delete file " + name);
+		if (actions.equals(PACLConstants.DELETE)) {
+			if (!hasDelete(permission, name)) {
+				throw new SecurityException("Attempted to delete file " + name);
+			}
 		}
-		else if (actions.equals(_PERMISSION_EXECUTE) &&
-				 !hasExecute(permission, name)) {
-
-			throw new SecurityException("Attempted to execute file " + name);
+		else if (actions.equals(PACLConstants.EXECUTE)) {
+			if (!hasExecute(permission, name)) {
+				throw new SecurityException(
+					"Attempted to execute file " + name);
+			}
 		}
-		else if (actions.equals(_PERMISSION_READ) &&
-				 !hasRead(permission, name)) {
-
-			throw new SecurityException("Attempted to read file " + name);
+		else if (actions.equals(PACLConstants.READ)) {
+			if (!hasRead(permission, name)) {
+				throw new SecurityException("Attempted to read file " + name);
+			}
 		}
-		else if (actions.equals(_PERMISSION_WRITE) &&
-				 !hasWrite(permission, name)) {
-
-			throw new SecurityException("Attempted to write file " + name);
+		else if (actions.equals(PACLConstants.WRITE)) {
+			if (!hasWrite(permission, name)) {
+				throw new SecurityException("Attempted to write file " + name);
+			}
 		}
 	}
 
@@ -83,7 +85,7 @@ public class FileChecker extends BaseChecker {
 			}
 		}
 
-		if (isJSPCompiler(fileName, _PERMISSION_DELETE)) {
+		if (isJSPCompiler(fileName, PACLConstants.DELETE)) {
 			return true;
 		}
 
@@ -107,7 +109,7 @@ public class FileChecker extends BaseChecker {
 			}
 		}
 
-		if (isJSPCompiler(fileName, _PERMISSION_READ)) {
+		if (isJSPCompiler(fileName, PACLConstants.READ)) {
 			return true;
 		}
 
@@ -121,7 +123,7 @@ public class FileChecker extends BaseChecker {
 			}
 		}
 
-		if (isJSPCompiler(fileName, _PERMISSION_WRITE)) {
+		if (isJSPCompiler(fileName, PACLConstants.WRITE)) {
 			return true;
 		}
 
@@ -158,7 +160,7 @@ public class FileChecker extends BaseChecker {
 			addPermission(permissions, path, action);
 		}
 
-		if (!action.equals(_PERMISSION_READ)) {
+		if (!action.equals(PACLConstants.READ)) {
 			return permissions;
 		}
 
@@ -207,61 +209,56 @@ public class FileChecker extends BaseChecker {
 
 	protected void initPermissions() {
 		_deletePermissions = getPermissions(
-			"security-manager-files-delete", _PERMISSION_DELETE);
+			"security-manager-files-delete", PACLConstants.DELETE);
 		_executePermissions = getPermissions(
-			"security-manager-files-execute", _PERMISSION_EXECUTE);
+			"security-manager-files-execute", PACLConstants.EXECUTE);
 		_readPermissions = getPermissions(
-			"security-manager-files-read", _PERMISSION_READ);
+			"security-manager-files-read", PACLConstants.READ);
 		_writePermissions = getPermissions(
-			"security-manager-files-write", _PERMISSION_WRITE);
+			"security-manager-files-write", PACLConstants.WRITE);
 	}
 
 	protected boolean isJSPCompiler(String fileName, String action) {
-		boolean enabled = PortalSecurityManagerThreadLocal.isEnabled();
+		for (int i = 1;; i++) {
+			Class<?> callerClass = Reflection.getCallerClass(i);
 
-		try {
-			PortalSecurityManagerThreadLocal.setEnabled(false);
-
-			for (int i = 1;; i++) {
-				Class<?> callerClass = Reflection.getCallerClass(i);
-
-				if (callerClass == null) {
-					break;
-				}
-
-				String callerClassName = callerClass.getName();
-
-				if (callerClassName.startsWith(
-						_PACKAGE_ORG_APACHE_JASPER_COMPILER) ||
-					callerClassName.startsWith(
-						_PACKAGE_ORG_APACHE_JASPER_XMLPARSER) ||
-					callerClassName.startsWith(
-						_PACKAGE_ORG_APACHE_NAMING_RESOURCES) ||
-					callerClassName.equals(_ClASS_NAME_JASPER_LOADER)) {
-
-					if (callerClass.getClassLoader() != _commonClassLoader) {
-						_log.error(
-							"A plugin is hijacking the JSP compiler via " +
-								callerClassName + " to " + action + " " + fileName);
-
-						return false;
-					}
-
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							"Allowing the JSP compiler via " + callerClassName +
-								" to " + action + " " + fileName);
-					}
-
-					return true;
-				}
+			if (callerClass == null) {
+				break;
 			}
 
-			return false;
+			String callerClassName = callerClass.getName();
+
+			if (callerClassName.startsWith(
+					_PACKAGE_ORG_APACHE_JASPER_COMPILER) ||
+				callerClassName.startsWith(
+					_PACKAGE_ORG_APACHE_JASPER_XMLPARSER) ||
+				callerClassName.startsWith(
+					_PACKAGE_ORG_APACHE_NAMING_RESOURCES) ||
+				callerClassName.equals(_ClASS_NAME_JASPER_LOADER)) {
+
+				ClassLoader currentClassLoader =
+					PACLClassLoaderUtil.getClassLoader(callerClass);
+
+				if (currentClassLoader != _commonClassLoader) {
+					_log.error(
+						"A plugin is hijacking the JSP compiler via " +
+							callerClassName + " to " + action + " " +
+								fileName);
+
+					return false;
+				}
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Allowing the JSP compiler via " + callerClassName +
+							" to " + action + " " + fileName);
+				}
+
+				return true;
+			}
 		}
-		finally {
-			PortalSecurityManagerThreadLocal.setEnabled(enabled);
-		}
+
+		return false;
 	}
 
 	private static final String _ClASS_NAME_JASPER_LOADER =
@@ -275,14 +272,6 @@ public class FileChecker extends BaseChecker {
 
 	private static final String _PACKAGE_ORG_APACHE_NAMING_RESOURCES =
 		"org.apache.naming.resources";
-
-	private static final String _PERMISSION_DELETE = "delete";
-
-	private static final String _PERMISSION_EXECUTE = "execute";
-
-	private static final String _PERMISSION_READ = "read";
-
-	private static final String _PERMISSION_WRITE = "write";
 
 	private static Log _log = LogFactoryUtil.getLog(FileChecker.class);
 

@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.pacl.PACLPolicy;
-import com.liferay.portal.security.permission.pacl.PACLConstants;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -37,14 +35,11 @@ import java.util.Set;
  */
 public class SocketChecker extends BaseChecker {
 
-	public SocketChecker(PACLPolicy paclPolicy) {
-		super(paclPolicy);
-
+	public void afterPropertiesSet() {
 		initConnectHostsAndPorts();
 		initListenPorts();
 	}
 
-	@Override
 	public void checkPermission(Permission permission) {
 		String actions = permission.getActions();
 
@@ -64,26 +59,25 @@ public class SocketChecker extends BaseChecker {
 
 		if (port == -1) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Always allow resolving of host " + host);
+				_log.debug("Always allow resolving of host " + host);
 			}
 
 			return;
 		}
 
-		if (actions.contains(PACLConstants.ACCEPT)) {
+		if (actions.contains(SOCKET_PERMISSION_ACCEPT)) {
 
 			// TODO
 
 		}
-		else if (actions.contains(PACLConstants.CONNECT)) {
+		else if (actions.contains(SOCKET_PERMISSION_CONNECT)) {
 			if (!hasConnect(host, port)) {
 				throw new SecurityException(
 					"Attempted to connect to host " + host + " on port " +
 						port);
 			}
 		}
-		else if (actions.contains(PACLConstants.LISTEN)) {
+		else if (actions.contains(SOCKET_PERMISSION_LISTEN)) {
 			if (!hasListen(port)) {
 				throw new SecurityException(
 					"Attempted to listen on port " + port);

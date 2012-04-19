@@ -19,10 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.WebDirDetector;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
-import com.liferay.portal.security.pacl.PACLPolicy;
-import com.liferay.portal.security.permission.pacl.PACLConstants;
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.FilePermission;
 
@@ -31,68 +28,61 @@ import java.security.Permission;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import sun.reflect.Reflection;
-
 /**
  * @author Brian Wing Shun Chan
  */
 public class FileChecker extends BaseChecker {
 
-	public FileChecker(PACLPolicy paclPolicy) {
-		super(paclPolicy);
-
+	public void afterPropertiesSet() {
 		_rootDir = WebDirDetector.getRootDir(getClassLoader());
 
 		initPermissions();
-
-		ClassLoader portalClassLoader = FileChecker.class.getClassLoader();
-
-		_commonClassLoader = portalClassLoader.getParent();
 	}
 
-	@Override
 	public void checkPermission(Permission permission) {
 		String name = permission.getName();
 		String actions = permission.getActions();
 
-		if (actions.equals(PACLConstants.DELETE)) {
-			if (!hasDelete(permission, name)) {
+		if (actions.equals(FILE_PERMISSION_ACTION_DELETE)) {
+			if (!hasDelete(permission)) {
 				throw new SecurityException("Attempted to delete file " + name);
 			}
 		}
-		else if (actions.equals(PACLConstants.EXECUTE)) {
-			if (!hasExecute(permission, name)) {
+		else if (actions.equals(FILE_PERMISSION_ACTION_EXECUTE)) {
+			if (!hasExecute(permission)) {
 				throw new SecurityException(
 					"Attempted to execute file " + name);
 			}
 		}
-		else if (actions.equals(PACLConstants.READ)) {
-			if (!hasRead(permission, name)) {
+		else if (actions.equals(FILE_PERMISSION_ACTION_READ)) {
+			if (!hasRead(permission)) {
 				throw new SecurityException("Attempted to read file " + name);
 			}
 		}
-		else if (actions.equals(PACLConstants.WRITE)) {
-			if (!hasWrite(permission, name)) {
+		else if (actions.equals(FILE_PERMISSION_ACTION_WRITE)) {
+			if (!hasWrite(permission)) {
 				throw new SecurityException("Attempted to write file " + name);
 			}
 		}
 	}
 
-	public boolean hasDelete(Permission permission, String fileName) {
+	public boolean hasDelete(Permission permission) {
 		for (Permission deleteFilePermission : _deletePermissions) {
 			if (deleteFilePermission.implies(permission)) {
 				return true;
 			}
 		}
 
-		if (isJSPCompiler(fileName, PACLConstants.DELETE)) {
+		if (isJSPCompiler(
+				permission.getName(), FILE_PERMISSION_ACTION_DELETE)) {
+
 			return true;
 		}
 
 		return false;
 	}
 
-	public boolean hasExecute(Permission permission, String fileName) {
+	public boolean hasExecute(Permission permission) {
 		for (Permission executeFilePermission : _executePermissions) {
 			if (executeFilePermission.implies(permission)) {
 				return true;
@@ -102,28 +92,28 @@ public class FileChecker extends BaseChecker {
 		return false;
 	}
 
-	public boolean hasRead(Permission permission, String fileName) {
+	public boolean hasRead(Permission permission) {
 		for (Permission readFilePermission : _readPermissions) {
 			if (readFilePermission.implies(permission)) {
 				return true;
 			}
 		}
 
-		if (isJSPCompiler(fileName, PACLConstants.READ)) {
+		if (isJSPCompiler(permission.getName(), FILE_PERMISSION_ACTION_READ)) {
 			return true;
 		}
 
 		return false;
 	}
 
-	public boolean hasWrite(Permission permission, String fileName) {
+	public boolean hasWrite(Permission permission) {
 		for (Permission writeFilePermission : _writePermissions) {
 			if (writeFilePermission.implies(permission)) {
 				return true;
 			}
 		}
 
-		if (isJSPCompiler(fileName, PACLConstants.WRITE)) {
+		if (isJSPCompiler(permission.getName(), FILE_PERMISSION_ACTION_WRITE)) {
 			return true;
 		}
 
@@ -147,27 +137,29 @@ public class FileChecker extends BaseChecker {
 
 		String value = getProperty(key);
 
-		String[] paths = StringUtil.split(value);
+		if (value != null) {
+			String[] paths = StringUtil.split(value);
 
-		if (value.contains("${comma}")) {
-			for (int i = 0; i < paths.length; i++) {
-				paths[i] = StringUtil.replace(
-					paths[i], "${comma}", StringPool.COMMA);
+			if (value.contains("${comma}")) {
+				for (int i = 0; i < paths.length; i++) {
+					paths[i] = StringUtil.replace(
+						paths[i], "${comma}", StringPool.COMMA);
+				}
+			}
+
+			for (String path : paths) {
+				addPermission(permissions, path, action);
 			}
 		}
 
-		for (String path : paths) {
-			addPermission(permissions, path, action);
-		}
-
-		if (!action.equals(PACLConstants.READ)) {
+		if (!action.equals(FILE_PERMISSION_ACTION_READ)) {
 			return permissions;
 		}
 
 		String catalinaHome = System.getProperty("catalina.home") + "/";
 		String javaHome = System.getProperty("java.home") + "/";
 
-		String portalWebDir = PortalUtil.getPortalWebDir();
+		String portalWebDir = PropsValues.LIFERAY_WEB_PORTAL_DIR;
 
 		String[] defaultPaths = {
 
@@ -209,73 +201,17 @@ public class FileChecker extends BaseChecker {
 
 	protected void initPermissions() {
 		_deletePermissions = getPermissions(
-			"security-manager-files-delete", PACLConstants.DELETE);
+			"security-manager-files-delete", FILE_PERMISSION_ACTION_DELETE);
 		_executePermissions = getPermissions(
-			"security-manager-files-execute", PACLConstants.EXECUTE);
+			"security-manager-files-execute", FILE_PERMISSION_ACTION_EXECUTE);
 		_readPermissions = getPermissions(
-			"security-manager-files-read", PACLConstants.READ);
+			"security-manager-files-read", FILE_PERMISSION_ACTION_READ);
 		_writePermissions = getPermissions(
-			"security-manager-files-write", PACLConstants.WRITE);
+			"security-manager-files-write", FILE_PERMISSION_ACTION_WRITE);
 	}
-
-	protected boolean isJSPCompiler(String fileName, String action) {
-		for (int i = 1;; i++) {
-			Class<?> callerClass = Reflection.getCallerClass(i);
-
-			if (callerClass == null) {
-				break;
-			}
-
-			String callerClassName = callerClass.getName();
-
-			if (callerClassName.startsWith(
-					_PACKAGE_ORG_APACHE_JASPER_COMPILER) ||
-				callerClassName.startsWith(
-					_PACKAGE_ORG_APACHE_JASPER_XMLPARSER) ||
-				callerClassName.startsWith(
-					_PACKAGE_ORG_APACHE_NAMING_RESOURCES) ||
-				callerClassName.equals(_ClASS_NAME_JASPER_LOADER)) {
-
-				ClassLoader currentClassLoader =
-					PACLClassLoaderUtil.getClassLoader(callerClass);
-
-				if (currentClassLoader != _commonClassLoader) {
-					_log.error(
-						"A plugin is hijacking the JSP compiler via " +
-							callerClassName + " to " + action + " " +
-								fileName);
-
-					return false;
-				}
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Allowing the JSP compiler via " + callerClassName +
-							" to " + action + " " + fileName);
-				}
-
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	private static final String _ClASS_NAME_JASPER_LOADER =
-		"org.apache.jasper.servlet.JasperLoader";
-
-	private static final String _PACKAGE_ORG_APACHE_JASPER_COMPILER =
-		"org.apache.jasper.compiler.";
-
-	private static final String _PACKAGE_ORG_APACHE_JASPER_XMLPARSER =
-		"org.apache.jasper.xmlparser.";
-
-	private static final String _PACKAGE_ORG_APACHE_NAMING_RESOURCES =
-		"org.apache.naming.resources";
 
 	private static Log _log = LogFactoryUtil.getLog(FileChecker.class);
 
-	private ClassLoader _commonClassLoader;
 	private List<Permission> _deletePermissions;
 	private List<Permission> _executePermissions;
 	private List<Permission> _readPermissions;

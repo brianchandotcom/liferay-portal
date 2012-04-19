@@ -23,6 +23,7 @@ Document document = (Document)row.getObject();
 
 String className = document.get(Field.ENTRY_CLASS_NAME);
 
+String downloadURL = null;
 String entryTitle = null;
 String entrySummary = null;
 PortletURL viewFullContentURL = null;
@@ -68,6 +69,7 @@ if (assetRendererFactory != null) {
 		viewURL = viewFullContentURL.toString();
 	}
 
+	downloadURL = assetRenderer.getURLDownload(themeDisplay);
 	entryTitle = assetRenderer.getTitle(locale);
 	entrySummary = assetRenderer.getSummary(locale);
 }
@@ -100,7 +102,6 @@ String[] queryTerms = (String[])request.getAttribute("search.jsp-queryTerms");
 
 PortletURL portletURL = (PortletURL)request.getAttribute("search.jsp-portletURL");
 
-String downloadURL = "";
 %>
 
 <span class="asset-entry">

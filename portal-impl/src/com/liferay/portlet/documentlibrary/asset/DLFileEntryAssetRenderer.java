@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -30,6 +31,7 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.model.BaseAssetRenderer;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
+import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 import java.util.Locale;
 
@@ -84,6 +86,11 @@ public class DLFileEntryAssetRenderer extends BaseAssetRenderer {
 
 	public String getTitle(Locale locale) {
 		return _fileVersion.getTitle();
+	}
+
+	public String getURLDownload(ThemeDisplay themeDisplay) {
+		return DLUtil.getPreviewURL(
+			_fileEntry, _fileVersion, themeDisplay, StringPool.BLANK);
 	}
 
 	@Override

@@ -2036,7 +2036,8 @@ public class JournalArticleLocalServiceImpl
 
 		article.setModifiedDate(serviceContext.getModifiedDate(now));
 		article.setTitleMap(titleMap, locale);
-		article.setUrlTitle(getUniqueUrlTitle(article, title, serviceContext));
+		article.setUrlTitle(getUniqueUrlTitle(
+			article, title, serviceContext, oldArticle.getUrlTitle()));
 		article.setDescriptionMap(descriptionMap, locale);
 		article.setContent(content);
 		article.setType(type);
@@ -2192,8 +2193,8 @@ public class JournalArticleLocalServiceImpl
 			article.setArticleId(articleId);
 			article.setVersion(newVersion);
 			article.setTitleMap(oldArticle.getTitleMap());
-			article.setUrlTitle(
-				getUniqueUrlTitle(article, title, serviceContext));
+			article.setUrlTitle(getUniqueUrlTitle(
+				article, title, serviceContext, oldArticle.getUrlTitle()));
 			article.setDescriptionMap(oldArticle.getDescriptionMap());
 			article.setType(oldArticle.getType());
 			article.setStructureId(oldArticle.getStructureId());
@@ -3009,6 +3010,13 @@ public class JournalArticleLocalServiceImpl
 			JournalArticle article, String title, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
+		return getUniqueUrlTitle(article, title, serviceContext, null);
+	}
+
+	protected String getUniqueUrlTitle(
+		JournalArticle article, String title, ServiceContext serviceContext,
+		String oldUrlTitle) throws PortalException, SystemException {
+
 		String serviceContextUrlTitle = GetterUtil.getString(
 			serviceContext.getAttribute("urlTitle"));
 
@@ -3037,10 +3045,9 @@ public class JournalArticleLocalServiceImpl
 			}
 		}
 		else {
-			if (!article.isNew() &&
-				isMatchesServiceContextUrlTitle(article.getUrlTitle())) {
+			if (isMatchesServiceContextUrlTitle(oldUrlTitle)) {
 
-				urlTitle = article.getUrlTitle();
+				urlTitle = oldUrlTitle;
 			}
 			else {
 				urlTitle = getUniqueUrlTitle(

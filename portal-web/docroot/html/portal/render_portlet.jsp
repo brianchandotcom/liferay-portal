@@ -853,10 +853,10 @@ if ((layout.isTypePanel() || layout.isTypeControlPanel()) && !portletDisplay.get
 			useDefaultTemplate = useDefaultTemplateObj.booleanValue();
 		}
 
-		if ((invokerPortlet == null) || (invokerPortlet.isStrutsPortlet() || invokerPortlet.isStrutsBridgePortlet())) {
-			if (!access || portletException) {
-				PortletRequestProcessor portletReqProcessor = (PortletRequestProcessor)portletCtx.getAttribute(WebKeys.PORTLET_STRUTS_PROCESSOR);
+		PortletRequestProcessor portletReqProcessor = (PortletRequestProcessor)portletCtx.getAttribute(WebKeys.PORTLET_STRUTS_PROCESSOR);
 
+		if (portletReqProcessor != null) {
+			if (!access || portletException) {
 				ActionMapping actionMapping = portletReqProcessor.processMapping(request, response, (String)portlet.getInitParams().get("view-action"));
 
 				ComponentDefinition definition = null;
@@ -931,6 +931,10 @@ if ((layout.isTypePanel() || layout.isTypeControlPanel()) && !portletDisplay.get
 
 			if (!portlet.isReady()) {
 				portletContent = "/portal/portlet_not_ready.jsp";
+			}
+
+			if (!access) {
+				portletContent = "/portal/portlet_access_denied.jsp";
 			}
 
 			if (portletException) {

@@ -919,7 +919,8 @@ public class SeleneseToJavaBuilder {
 
 				sb.append("loadRequiredJavaScriptModules();");
 			}
-			else if (param1.equals("close") || param1.equals("refresh") ||
+			else if (param1.equals("close") || param1.equals("goBack") ||
+					 param1.equals("refresh") ||
 					 param1.equals("setBrowserOption") ||
 					 param1.equals("windowFocus") ||
 					 param1.equals("windowMaximize")) {
@@ -967,6 +968,7 @@ public class SeleneseToJavaBuilder {
 				sb.append(");");
 			}
 			else if (param1.equals("refreshAndWait") ||
+					 param1.equals("goBackAndWait") ||
 					 param1.equals("windowMaximizeAndWait")) {
 
 				String text = param1.substring(0, param1.length() - 7);

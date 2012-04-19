@@ -97,6 +97,7 @@ if (displayTerms.getParentOrganizationId() > 0) {
 				selectDesc: 'name',
 				selectId: 'countryId',
 				selectLocalizeDesc: '<%= true %>',
+				selectLocalizeDescPrefix: '<%= "country." %>',
 				selectSort: '<%= true %>',
 				selectVal: '<%= displayTerms.getCountryId() %>'
 			},

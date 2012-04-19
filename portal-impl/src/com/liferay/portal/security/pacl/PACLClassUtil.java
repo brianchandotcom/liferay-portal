@@ -17,6 +17,7 @@ package com.liferay.portal.security.pacl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
+import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 import com.liferay.portal.spring.util.FilterClassLoader;
 
 import sun.reflect.Reflection;
@@ -27,14 +28,32 @@ import sun.reflect.Reflection;
 public class PACLClassUtil {
 
 	public static PACLPolicy getPACLPolicyByReflection(boolean debug) {
-		return _instance._getPACLPolicyByReflection(debug);
+		boolean enabled = PortalSecurityManagerThreadLocal.isEnabled();
+
+		try {
+			PortalSecurityManagerThreadLocal.setEnabled(false);
+
+			return _instance._getPACLPolicyByReflection(debug);
+		}
+		finally {
+			PortalSecurityManagerThreadLocal.setEnabled(enabled);
+		}
 	}
 
 	public static PACLPolicy getPACLPolicyBySecurityManagerClassContext(
 		Class<?>[] classes, boolean debug) {
 
-		return _instance._getPACLPolicyBySecurityManagerClassContext(
-			classes, debug);
+		boolean enabled = PortalSecurityManagerThreadLocal.isEnabled();
+
+		try {
+			PortalSecurityManagerThreadLocal.setEnabled(false);
+
+			return _instance._getPACLPolicyBySecurityManagerClassContext(
+				classes, debug);
+		}
+		finally {
+			PortalSecurityManagerThreadLocal.setEnabled(enabled);
+		}
 	}
 
 	private PACLClassUtil() {

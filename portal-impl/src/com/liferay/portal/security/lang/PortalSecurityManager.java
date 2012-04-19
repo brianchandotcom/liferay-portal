@@ -19,8 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.security.pacl.PACLClassUtil;
 import com.liferay.portal.security.pacl.PACLPolicy;
 import com.liferay.portal.security.pacl.PACLPolicyManager;
-import com.liferay.portal.security.pacl.permission.PortalPermission;
-import com.liferay.portal.spring.util.FilterClassLoader;
+import com.liferay.portal.security.pacl.permission.PortalHookPermission;
 
 import java.security.Permission;
 
@@ -40,75 +39,77 @@ public class PortalSecurityManager extends SecurityManager {
 	public PortalSecurityManager() {
 		_parentSecurityManager = System.getSecurityManager();
 
-		// Preload dependent classes to prevent ClassCircularityError
+		// Load dependent classes to prevent ClassCircularityError
 
-		_log.info("Loading " + FilterClassLoader.class.getName());
-		_log.info("Loading " + PACLClassUtil.class.getName());
-		_log.info(
-			"Loading " + PortalSecurityManagerThreadLocal.class.getName());
+		_log.info("Loading " + PortalHookPermission.class.getName());
+
+		// Touch dependent classes to prevent NoClassDefError
+
+		PACLClassUtil.getPACLPolicyBySecurityManagerClassContext(
+			getClassContext(), false);
 	}
 
 	@Override
 	public void checkPermission(Permission permission) {
-		doCheckPermission(permission, getSecurityContext());
+		checkPermission(permission, getSecurityContext());
 	}
 
 	@Override
 	public void checkPermission(Permission permission, Object context) {
-		doCheckPermission(permission, context);
-	}
-
-	protected void doCheckPermission(Permission permission, Object context) {
 		boolean enabled = PortalSecurityManagerThreadLocal.isEnabled();
 
 		if (!enabled) {
-			if (_parentSecurityManager != null) {
-				_parentSecurityManager.checkPermission(permission, context);
-			}
+			parentCheckPermission(permission, context);
 
 			return;
 		}
 
-		PACLPolicy paclPolicy = getPACLPolicy(permission, _log.isDebugEnabled());
+		PACLPolicy paclPolicy = PACLPolicyManager.getDefaultPACLPolicy();
+
+		if (!paclPolicy.isCheckablePermission(permission)) {
+			parentCheckPermission(permission, context);
+
+			return;
+		}
+
+		paclPolicy = getPACLPolicy(permission);
 
 		if ((paclPolicy == null) || !paclPolicy.isActive()) {
-			if (_parentSecurityManager != null) {
-				_parentSecurityManager.checkPermission(permission, context);
-			}
+			parentCheckPermission(permission, context);
 
 			return;
 		}
 
 		paclPolicy.checkPermission(permission);
 
-		if (_parentSecurityManager != null) {
-			_parentSecurityManager.checkPermission(permission, context);
-		}
+		parentCheckPermission(permission, context);
 	}
 
-	protected PACLPolicy getPACLPolicy(Permission permission, boolean debug) {
-		boolean enabled = PortalSecurityManagerThreadLocal.isEnabled();
+	protected PACLPolicy getPACLPolicy(Permission permission) {
+		if (permission instanceof PortalHookPermission) {
+			PortalHookPermission portalHookPermission =
+				(PortalHookPermission)permission;
 
-		try {
-			PortalSecurityManagerThreadLocal.setEnabled(false);
+			ClassLoader classLoader = portalHookPermission.getClassLoader();
 
-			if (permission instanceof PortalPermission) {
-				PortalPermission portalPermission =
-					(PortalPermission)permission;
+			PACLPolicy paclPolicy = PACLPolicyManager.getPACLPolicy(
+				classLoader);
 
-				ClassLoader policyClassLoader =
-					portalPermission.getPolicyClassLoader();
-
-				if (policyClassLoader != null) {
-					return PACLPolicyManager.getPACLPolicy(policyClassLoader);
-				}
+			if (paclPolicy == null) {
+				paclPolicy = PACLPolicyManager.getDefaultPACLPolicy();
 			}
 
-			return PACLClassUtil.getPACLPolicyBySecurityManagerClassContext(
-				getClassContext(), debug);
+			return paclPolicy;
 		}
-		finally {
-			PortalSecurityManagerThreadLocal.setEnabled(enabled);
+
+		return PACLClassUtil.getPACLPolicyByReflection(_log.isDebugEnabled());
+	}
+
+	protected void parentCheckPermission(
+		Permission permission, Object context) {
+
+		if (_parentSecurityManager != null) {
+			_parentSecurityManager.checkPermission(permission, context);
 		}
 	}
 

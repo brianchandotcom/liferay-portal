@@ -12,25 +12,27 @@
  * details.
  */
 
-package com.liferay.portal.security.pacl.permission;
+package com.liferay.portal.security.pacl.checker;
 
-import java.security.BasicPermission;
+import com.liferay.portal.security.pacl.PACLPolicy;
+
+import java.security.Permission;
 
 /**
- * @author Raymond Augé
+ * @author Brian Wing Shun Chan
  */
-public abstract class PortalPermission extends BasicPermission {
+public interface Checker {
 
-	public PortalPermission(String name, ClassLoader policyClassLoader) {
-		super(name);
+	public void afterPropertiesSet();
 
-		_policyClassLoader = policyClassLoader;
-	}
+	public void checkPermission(Permission permission);
 
-	public ClassLoader getPolicyClassLoader() {
-		return _policyClassLoader;
-	}
+	public ClassLoader getClassLoader();
 
-	private ClassLoader _policyClassLoader;
+	public PACLPolicy getPACLPolicy();
+
+	public String getServletContextName();
+
+	public void setPACLPolicy(PACLPolicy paclPolicy);
 
 }

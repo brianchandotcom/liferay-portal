@@ -14,7 +14,7 @@
 
 package com.liferay.portal.security.pacl;
 
-import com.liferay.portal.security.pacl.checker.BaseChecker;
+import java.lang.reflect.Method;
 
 import java.security.Permission;
 
@@ -27,8 +27,6 @@ import java.util.Set;
 public interface PACLPolicy {
 
 	public void checkPermission(Permission permission);
-
-	public BaseChecker getChecker(String permissionClassName);
 
 	public ClassLoader getClassLoader();
 
@@ -44,8 +42,12 @@ public interface PACLPolicy {
 
 	public String getServletContextName();
 
+	public boolean hasService(Object object, Method method);
+
 	public boolean hasSQL(String sql);
 
 	public boolean isActive();
+
+	public boolean isCheckablePermission(Permission permission);
 
 }

@@ -24,6 +24,8 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import java.security.Permission;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -85,11 +87,13 @@ public class PACLBeanHandler implements InvocationHandler {
 			}
 		}
 
-		SecurityManager sm = System.getSecurityManager();
+		SecurityManager securityManager = System.getSecurityManager();
 
-		if (sm != null) {
-			sm.checkPermission(
-				new PortalServicePermission("hasService", null, _bean, method));
+		if (securityManager != null) {
+			Permission permission = new PortalServicePermission(
+				PACLConstants.PORTAL_PERMISSION_SERVICE, null, _bean, method);
+
+			securityManager.checkPermission(permission);
 		}
 
 		return method.invoke(_bean, arguments);

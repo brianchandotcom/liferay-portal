@@ -38,6 +38,7 @@ import com.liferay.portal.test.AssertUtils;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.ExecutionTestListeners;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
@@ -336,7 +337,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 		AssertUtils.assertEqualsSorted(assetTagNames, assetEntry.getTagNames());
 
-		Thread.sleep(1000);
+		Thread.sleep(1000 * _FACTOR_DELAY);
 
 		_fileEntry = fileEntry;
 
@@ -357,7 +358,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 		AssertUtils.assertEqualsSorted(assetTagNames, assetEntry.getTagNames());
 
-		Thread.sleep(1000);
+		Thread.sleep(1000 * _FACTOR_DELAY);
 
 		_fileEntry = fileEntry;
 
@@ -469,7 +470,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 	protected void testSearchFile(boolean rootFolder) throws Exception {
 		addFileEntry(rootFolder);
 
-		Thread.sleep(1000);
+		Thread.sleep(1000 * _FACTOR_DELAY);
 
 		search(rootFolder, "title", true);
 		search(rootFolder, "content", true);
@@ -566,4 +567,6 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 	}
 
+	private static final long _FACTOR_DELAY = GetterUtil.getLong(
+		PropsUtil.get("junit.factor.delay"));
 }

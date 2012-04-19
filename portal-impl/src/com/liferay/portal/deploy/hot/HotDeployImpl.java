@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -94,8 +95,22 @@ public class HotDeployImpl implements HotDeploy {
 			List<HotDeployEvent> dependentEvents =
 				new ArrayList<HotDeployEvent>(_dependentHotDeployEvents);
 
-			for (HotDeployEvent dependentEvent : dependentEvents) {
-				fireDeployEvent(dependentEvent);
+			ClassLoader contextClassLoader =
+				PACLClassLoaderUtil.getContextClassLoader();
+
+			try {
+				for (HotDeployEvent dependentEvent : dependentEvents) {
+					ClassLoader currentClassLoader =
+						dependentEvent.getContextClassLoader();
+
+					PACLClassLoaderUtil.setContextClassLoader(
+						currentClassLoader);
+
+					fireDeployEvent(dependentEvent);
+				}
+			}
+			finally {
+				PACLClassLoaderUtil.setContextClassLoader(contextClassLoader);
 			}
 		}
 		else {
@@ -205,7 +220,7 @@ public class HotDeployImpl implements HotDeploy {
 	}
 
 	protected void initDependentServletContextListener(
-		Thread currentThread, DependentServletContext dependentServletContext) {
+		DependentServletContext dependentServletContext) {
 
 		ClassLoader portletClassLoader =
 			PortletClassLoaderUtil.getClassLoader();
@@ -217,9 +232,6 @@ public class HotDeployImpl implements HotDeploy {
 				dependentServletContext.getClassLoader());
 			PortletClassLoaderUtil.setServletContextName(
 				dependentServletContext.getServletContextName());
-
-			currentThread.setContextClassLoader(
-				PortalClassLoaderUtil.getClassLoader());
 
 			ServletContextListener servletContextListener =
 				dependentServletContext.getServletContextListener();
@@ -240,45 +252,47 @@ public class HotDeployImpl implements HotDeploy {
 		Iterator<String> servletContextNamesIterator =
 			servletContextNames.iterator();
 
-		while (servletContextNamesIterator.hasNext()) {
-			String servletContextName = servletContextNamesIterator.next();
+		ClassLoader contextClassLoader =
+			PACLClassLoaderUtil.getContextClassLoader();
 
-			Set<DependentServletContext> dependentServletContexts =
-				_dependentServletContexts.get(servletContextName);
+		try {
+			PACLClassLoaderUtil.setContextClassLoader(
+				PortalClassLoaderUtil.getClassLoader());
 
-			Iterator<DependentServletContext> dependentServletContextIterator =
-				dependentServletContexts.iterator();
+			while (servletContextNamesIterator.hasNext()) {
+				String servletContextName = servletContextNamesIterator.next();
 
-			while (dependentServletContextIterator.hasNext()) {
-				DependentServletContext dependentServletContext =
-					dependentServletContextIterator.next();
+				Set<DependentServletContext> dependentServletContexts =
+					_dependentServletContexts.get(servletContextName);
 
-				HotDeployEvent hotDeployEvent =
-					dependentServletContext.getHotDeployEvent();
+				Iterator<DependentServletContext>
+					dependentServletContextIterator =
+						dependentServletContexts.iterator();
 
-				if (isMissingDependentServletContext(hotDeployEvent)) {
-					continue;
-				}
+				while (dependentServletContextIterator.hasNext()) {
+					DependentServletContext dependentServletContext =
+						dependentServletContextIterator.next();
 
-				Thread currentThread = Thread.currentThread();
+					HotDeployEvent hotDeployEvent =
+						dependentServletContext.getHotDeployEvent();
 
-				ClassLoader contextClassLoader =
-					currentThread.getContextClassLoader();
+					if (isMissingDependentServletContext(hotDeployEvent)) {
+						continue;
+					}
 
-				try {
 					initDependentServletContextListener(
-						currentThread, dependentServletContext);
-				}
-				finally {
-					currentThread.setContextClassLoader(contextClassLoader);
+						dependentServletContext);
+
+					dependentServletContextIterator.remove();
 				}
 
-				dependentServletContextIterator.remove();
+				if (dependentServletContexts.isEmpty()) {
+					servletContextNamesIterator.remove();
+				}
 			}
-
-			if (dependentServletContexts.isEmpty()) {
-				servletContextNamesIterator.remove();
-			}
+		}
+		finally {
+			PACLClassLoaderUtil.setContextClassLoader(contextClassLoader);
 		}
 	}
 

@@ -15,10 +15,16 @@
 package com.liferay.portalweb.portlet.messageboards.mbmessage;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portlet.messageboards.mbmessage.postnewmbcategoriesthreadmessage.PostNewMBCategoriesThreadMessageTests;
 import com.liferay.portalweb.portlet.messageboards.mbmessage.postnewmbcategorythreadmessage.PostNewMBCategoryThreadMessageTests;
-import com.liferay.portalweb.portlet.messageboards.mbmessage.postnewmbcategorythreadmultiplemessage.PostNewMBCategoryThreadMultipleMessageTests;
+import com.liferay.portalweb.portlet.messageboards.mbmessage.postnewmbcategorythreadsmessage.PostNewMBCategoryThreadsMessageTests;
 import com.liferay.portalweb.portlet.messageboards.mbmessage.postnewmbthreadmessage.PostNewMBThreadMessageTests;
-import com.liferay.portalweb.portlet.messageboards.mbmessage.postnewmbthreadmultiplemessage.PostNewMBThreadMultipleMessageTests;
+import com.liferay.portalweb.portlet.messageboards.mbmessage.postnewmbthreadsmessage.PostNewMBThreadsMessageTests;
+import com.liferay.portalweb.portlet.messageboards.mbmessage.replymbcategorythreadmessagereplies.ReplyMBCategoryThreadMessageRepliesTests;
+import com.liferay.portalweb.portlet.messageboards.mbmessage.replymbcategorythreadmessagereply.ReplyMBCategoryThreadMessageReplyTests;
+import com.liferay.portalweb.portlet.messageboards.mbmessage.replymbcategorythreadmessagereplyreply.ReplyMBCategoryThreadMessageReplyReplyTests;
+import com.liferay.portalweb.portlet.messageboards.mbmessage.replymbthreadmessagereplies.ReplyMBThreadMessageRepliesTests;
+import com.liferay.portalweb.portlet.messageboards.mbmessage.replymbthreadmessagereply.ReplyMBThreadMessageReplyTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -31,10 +37,16 @@ public class MBMessageTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
+		testSuite.addTest(PostNewMBCategoriesThreadMessageTests.suite());
 		testSuite.addTest(PostNewMBCategoryThreadMessageTests.suite());
-		testSuite.addTest(PostNewMBCategoryThreadMultipleMessageTests.suite());
+		testSuite.addTest(PostNewMBCategoryThreadsMessageTests.suite());
 		testSuite.addTest(PostNewMBThreadMessageTests.suite());
-		testSuite.addTest(PostNewMBThreadMultipleMessageTests.suite());
+		testSuite.addTest(PostNewMBThreadsMessageTests.suite());
+		testSuite.addTest(ReplyMBCategoryThreadMessageRepliesTests.suite());
+		testSuite.addTest(ReplyMBCategoryThreadMessageReplyTests.suite());
+		testSuite.addTest(ReplyMBCategoryThreadMessageReplyReplyTests.suite());
+		testSuite.addTest(ReplyMBThreadMessageRepliesTests.suite());
+		testSuite.addTest(ReplyMBThreadMessageReplyTests.suite());
 
 		return testSuite;
 	}

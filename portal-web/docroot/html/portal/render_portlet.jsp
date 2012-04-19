@@ -832,8 +832,6 @@ if ((layout.isTypePanel() || layout.isTypeControlPanel()) && !portletDisplay.get
 
 	<div class="<%= cssClasses %>" id="p_p_id<%= HtmlUtil.escapeAttribute(renderResponseImpl.getNamespace()) %>" <%= freeformStyles %>>
 		<span id="p_<%= HtmlUtil.escapeAttribute(portletId) %>"></span>
-
-		<div class="portlet-body">
 </c:if>
 
 <c:choose>
@@ -991,19 +989,18 @@ else {
 %>
 
 <c:if test="<%= !themeDisplay.isFacebook() && !themeDisplay.isStateExclusive() && !themeDisplay.isWapTheme() %>">
-			<aui:script position='<%= themeDisplay.isIsolated() ? "inline" : "auto" %>'>
-				Liferay.Portlet.onLoad(
-					{
-						canEditTitle: <%= showConfigurationIcon && portletDecorate %>,
-						columnPos: <%= columnPos %>,
-						isStatic: '<%= staticVar %>',
-						namespacedId: 'p_p_id<%= HtmlUtil.escapeJS(renderResponseImpl.getNamespace()) %>',
-						portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>',
-						refreshURL: '<%= HtmlUtil.escapeJS(PortletURLUtil.getRefreshURL(request, themeDisplay)) %>'
-					}
-				);
-			</aui:script>
-		</div>
+		<aui:script position='<%= themeDisplay.isIsolated() ? "inline" : "auto" %>'>
+			Liferay.Portlet.onLoad(
+				{
+					canEditTitle: <%= showConfigurationIcon && portletDecorate %>,
+					columnPos: <%= columnPos %>,
+					isStatic: '<%= staticVar %>',
+					namespacedId: 'p_p_id<%= HtmlUtil.escapeJS(renderResponseImpl.getNamespace()) %>',
+					portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>',
+					refreshURL: '<%= HtmlUtil.escapeJS(PortletURLUtil.getRefreshURL(request, themeDisplay)) %>'
+				}
+			);
+		</aui:script>
 	</div>
 </c:if>
 

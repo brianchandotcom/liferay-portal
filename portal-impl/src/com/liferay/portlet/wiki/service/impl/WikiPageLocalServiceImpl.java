@@ -1563,7 +1563,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		String portletId = serviceContext.getPortletId();
 
-		if (!portletId.startsWith(PortletKeys.WIKI_DISPLAY)) {
+		if (Validator.isNull(portletId) ||
+			!portletId.startsWith(PortletKeys.WIKI_DISPLAY)) {
+
 			preferences = ServiceContextUtil.getPortletPreferences(
 				serviceContext);
 		}

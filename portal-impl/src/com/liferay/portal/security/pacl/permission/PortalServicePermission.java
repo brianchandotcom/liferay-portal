@@ -16,36 +16,29 @@ package com.liferay.portal.security.pacl.permission;
 
 import java.lang.reflect.Method;
 
+import java.security.BasicPermission;
+
 /**
  * @author Raymond Augé
  */
-public class PortalServicePermission extends PortalPermission {
+public class PortalServicePermission extends BasicPermission {
 
-	public PortalServicePermission(
-		String name, ClassLoader policyClassLoader, Object object) {
-
-		this(name, policyClassLoader, object, null);
-	}
-
-	public PortalServicePermission(
-		String name, ClassLoader policyClassLoader, Object object,
-		Method method) {
-
-		super(name, policyClassLoader);
+	public PortalServicePermission(String name, Object object, Method method) {
+		super(name);
 
 		_object = object;
 		_method = method;
-	}
-
-	public Object getObject() {
-		return _object;
 	}
 
 	public Method getMethod() {
 		return _method;
 	}
 
-	private Object _object;
+	public Object getObject() {
+		return _object;
+	}
+
 	private Method _method;
+	private Object _object;
 
 }

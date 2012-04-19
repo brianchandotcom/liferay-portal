@@ -43,9 +43,9 @@ public class PACLDataSource extends DataSourceWrapper {
 	public Connection getConnection() throws SQLException {
 		Connection connection = _dataSource.getConnection();
 
-		boolean enabled = PortalSecurityManagerThreadLocal.isEnabled();
+		if (!PACLPolicyManager.isActive() ||
+			!PortalSecurityManagerThreadLocal.isEnabled()) {
 
-		if (!PACLPolicyManager.isActive() || !enabled) {
 			return connection;
 		}
 
@@ -53,15 +53,8 @@ public class PACLDataSource extends DataSourceWrapper {
 			PortalSecurityManagerThreadLocal.getPACLPolicy();
 
 		if (paclPolicy == null) {
-			try {
-				PortalSecurityManagerThreadLocal.setEnabled(false);
-
-				paclPolicy = PACLClassUtil.getPACLPolicyByReflection(
-					_log.isDebugEnabled());
-			}
-			finally {
-				PortalSecurityManagerThreadLocal.setEnabled(enabled);
-			}
+			paclPolicy = PACLClassUtil.getPACLPolicyByReflection(
+				_log.isDebugEnabled());
 		}
 
 		if ((paclPolicy == null) || !paclPolicy.isActive()) {

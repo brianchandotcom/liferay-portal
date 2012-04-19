@@ -16,7 +16,6 @@ package com.liferay.portal.security.pacl.checker;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.security.pacl.PACLPolicy;
 
 import java.io.StringReader;
 
@@ -48,9 +47,7 @@ import net.sf.jsqlparser.test.tablesfinder.TablesNamesFinder;
  */
 public class SQLChecker extends BaseChecker {
 
-	public SQLChecker(PACLPolicy paclPolicy) {
-		super(paclPolicy);
-
+	public void afterPropertiesSet() {
 		_allTableNames = getPropertySet("security-manager-sql-tables-all");
 		_createTableNames = getPropertySet(
 			"security-manager-sql-tables-create");
@@ -69,9 +66,10 @@ public class SQLChecker extends BaseChecker {
 			"security-manager-sql-tables-update");
 	}
 
-	@Override
 	public void checkPermission(Permission permission) {
+
 		// TODO
+
 	}
 
 	public boolean hasSQL(String sql) {

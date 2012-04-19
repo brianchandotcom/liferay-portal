@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.model.Address;
 import com.liferay.portal.model.Company;
+import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.EmailAddress;
 import com.liferay.portal.model.Group;
@@ -36,6 +37,7 @@ import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Phone;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
+import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.model.Website;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -447,14 +449,14 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		long creatorUserId = 0;
 
 		try {
-			creatorUserId = getUserId();
+			creatorUserId = getGuestOrUserId();
 		}
 		catch (PrincipalException pe) {
 		}
 
 		checkAddUserPermission(
-			creatorUserId, companyId, emailAddress, organizationIds,
-			serviceContext);
+			creatorUserId, companyId, emailAddress, groupIds, organizationIds,
+			roleIds, userGroupIds, serviceContext);
 
 		return userLocalService.addUserWithWorkflow(
 			creatorUserId, companyId, autoPassword, password1, password2,
@@ -1133,13 +1135,14 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		long creatorUserId = 0;
 
 		try {
-			creatorUserId = getUserId();
+			creatorUserId = getGuestOrUserId();
 		}
 		catch (PrincipalException pe) {
 		}
 
 		checkAddUserPermission(
-			creatorUserId, companyId, emailAddress, null, serviceContext);
+			creatorUserId, companyId, emailAddress, null, null, null, null,
+			serviceContext);
 
 		return userLocalService.updateIncompleteUser(
 			creatorUserId, companyId, autoPassword, password1, password2,
@@ -1542,6 +1545,10 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			roleIds = checkRoles(userId, roleIds);
 		}
 
+		if (userGroupIds != null) {
+			userGroupIds = checkUserGroupIds(userId, userGroupIds);
+		}
+
 		if (userGroupRoles != null) {
 			userGroupRoles = checkUserGroupRoles(userId, userGroupRoles);
 		}
@@ -1559,10 +1566,27 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 	protected void checkAddUserPermission(
 			long creatorUserId, long companyId, String emailAddress,
-			long[] organizationIds, ServiceContext serviceContext)
+			long[] groupIds, long[] organizationIds, long[] roleIds,
+			long[] userGroupIds, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		Company company = companyPersistence.findByPrimaryKey(companyId);
+
+		if (groupIds != null) {
+			checkGroups(CompanyConstants.SYSTEM, groupIds);
+		}
+
+		if (organizationIds != null) {
+			checkOrganizations(CompanyConstants.SYSTEM, organizationIds);
+		}
+
+		if (roleIds != null) {
+			checkRoles(CompanyConstants.SYSTEM, roleIds);
+		}
+
+		if (userGroupIds != null) {
+			checkUserGroupIds(CompanyConstants.SYSTEM, userGroupIds);
+		}
 
 		boolean anonymousUser = GetterUtil.getBoolean(
 			serviceContext.getAttribute("anonymousUser"));
@@ -1580,7 +1604,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			}
 		}
 
-		if (creatorUserId == 0) {
+		if ((creatorUserId == 0) ||
+			(creatorUserId == getDefaultUserId(companyId))) {
 			if (!company.isStrangersWithMx() &&
 				company.hasCompanyMx(emailAddress)) {
 
@@ -1592,30 +1617,39 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	protected long[] checkGroups(long userId, long[] groupIds)
 		throws PortalException, SystemException {
 
-		// Add back any groups that the administrator does not have the rights
-		// to remove and check that he has the permission to add any new group
+		long[] oldGroupIds = null;
 
-		List<Group> oldGroups = groupLocalService.getUserGroups(userId);
-		long[] oldGroupIds = new long[oldGroups.size()];
+		PermissionChecker permissionChecker = getPermissionChecker();
 
-		for (int i = 0; i < oldGroups.size(); i++) {
-			Group group = oldGroups.get(i);
+		if (userId != CompanyConstants.SYSTEM) {
+			// Add back any groups that the administrator does not have the
+			// rights to remove and check that he has the permission to add
+			// any new group
 
-			if (!ArrayUtil.contains(groupIds, group.getGroupId()) &&
-				!GroupPermissionUtil.contains(
-					getPermissionChecker(), group.getGroupId(),
-					ActionKeys.ASSIGN_MEMBERS)) {
+			List<Group> oldGroups = groupLocalService.getUserGroups(userId);
+			oldGroupIds = new long[oldGroups.size()];
 
-				groupIds = ArrayUtil.append(groupIds, group.getGroupId());
+			for (int i = 0; i < oldGroups.size(); i++) {
+				Group group = oldGroups.get(i);
+
+				if (!ArrayUtil.contains(groupIds, group.getGroupId()) &&
+					!GroupPermissionUtil.contains(
+						permissionChecker, group.getGroupId(),
+						ActionKeys.ASSIGN_MEMBERS)) {
+
+					groupIds = ArrayUtil.append(groupIds, group.getGroupId());
+				}
+
+				oldGroupIds[i] = group.getGroupId();
 			}
-
-			oldGroupIds[i] = group.getGroupId();
 		}
 
 		for (long groupId : groupIds) {
-			if (!ArrayUtil.contains(oldGroupIds, groupId)) {
+			if ((oldGroupIds == null) ||
+				!ArrayUtil.contains(oldGroupIds, groupId)) {
+
 				GroupPermissionUtil.check(
-					getPermissionChecker(), groupId, ActionKeys.ASSIGN_MEMBERS);
+					permissionChecker, groupId, ActionKeys.ASSIGN_MEMBERS);
 			}
 		}
 
@@ -1625,34 +1659,42 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	protected long[] checkOrganizations(long userId, long[] organizationIds)
 		throws PortalException, SystemException {
 
-		// Add back any organizations that the administrator does not have the
-		// rights to remove and check that he has the permission to add any new
-		// organization
+		long[] oldOrganizationIds = null;
 
-		List<Organization> oldOrganizations =
-			organizationLocalService.getUserOrganizations(userId);
-		long[] oldOrganizationIds = new long[oldOrganizations.size()];
+		PermissionChecker permissionChecker = getPermissionChecker();
 
-		for (int i = 0; i < oldOrganizations.size(); i++) {
-			Organization organization = oldOrganizations.get(i);
+		if (userId != CompanyConstants.SYSTEM) {
+			// Add back any organizations that the administrator does not have
+			// the rights to remove and check that he has the permission to add
+			// any new organization
 
-			if (!ArrayUtil.contains(
-					organizationIds, organization.getOrganizationId()) &&
-				!OrganizationPermissionUtil.contains(
-					getPermissionChecker(), organization.getOrganizationId(),
-					ActionKeys.ASSIGN_MEMBERS)) {
+			List<Organization> oldOrganizations =
+				organizationLocalService.getUserOrganizations(userId);
+			oldOrganizationIds = new long[oldOrganizations.size()];
 
-				organizationIds = ArrayUtil.append(
-					organizationIds, organization.getOrganizationId());
+			for (int i = 0; i < oldOrganizations.size(); i++) {
+				Organization organization = oldOrganizations.get(i);
+
+				if (!ArrayUtil.contains(
+						organizationIds, organization.getOrganizationId()) &&
+					!OrganizationPermissionUtil.contains(
+						permissionChecker, organization.getOrganizationId(),
+						ActionKeys.ASSIGN_MEMBERS)) {
+
+					organizationIds = ArrayUtil.append(
+						organizationIds, organization.getOrganizationId());
+				}
+
+				oldOrganizationIds[i] = organization.getOrganizationId();
 			}
-
-			oldOrganizationIds[i] = organization.getOrganizationId();
 		}
 
 		for (long organizationId : organizationIds) {
-			if (!ArrayUtil.contains(oldOrganizationIds, organizationId)) {
+			if ((oldOrganizationIds == null) ||
+				!ArrayUtil.contains(oldOrganizationIds, organizationId)) {
+
 				OrganizationPermissionUtil.check(
-					getPermissionChecker(), organizationId,
+					permissionChecker, organizationId,
 					ActionKeys.ASSIGN_MEMBERS);
 			}
 		}
@@ -1663,60 +1705,122 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	protected long[] checkRoles(long userId, long[] roleIds)
 		throws PrincipalException, SystemException {
 
-		// Add back any roles that the administrator does not have the rights to
-		// remove and check that he has the permission to add any new role
+		long[] oldRoleIds = null;
 
-		List<Role> oldRoles = roleLocalService.getUserRoles(userId);
-		long[] oldRoleIds = new long[oldRoles.size()];
+		PermissionChecker permissionChecker = getPermissionChecker();
 
-		for (int i = 0; i < oldRoles.size(); i++) {
-			Role role = oldRoles.get(i);
+		if (userId != CompanyConstants.SYSTEM) {
+			// Add back any roles that the administrator does not have the
+			// rights to remove and check that he has the permission to add
+			// any new role
 
-			if (!ArrayUtil.contains(roleIds, role.getRoleId()) &&
-				!RolePermissionUtil.contains(
-					getPermissionChecker(), role.getRoleId(),
-					ActionKeys.ASSIGN_MEMBERS)) {
+			List<Role> oldRoles = roleLocalService.getUserRoles(userId);
+			oldRoleIds = new long[oldRoles.size()];
 
-				roleIds = ArrayUtil.append(roleIds, role.getRoleId());
+			for (int i = 0; i < oldRoles.size(); i++) {
+				Role role = oldRoles.get(i);
+
+				if (!ArrayUtil.contains(roleIds, role.getRoleId()) &&
+					!RolePermissionUtil.contains(
+						permissionChecker, role.getRoleId(),
+						ActionKeys.ASSIGN_MEMBERS)) {
+
+					roleIds = ArrayUtil.append(roleIds, role.getRoleId());
+				}
+
+				oldRoleIds[i] = role.getRoleId();
 			}
-
-			oldRoleIds[i] = role.getRoleId();
 		}
 
 		for (long roleId : roleIds) {
-			if (!ArrayUtil.contains(oldRoleIds, roleId)) {
+			if ((oldRoleIds == null) ||
+				!ArrayUtil.contains(oldRoleIds, roleId)) {
+
 				RolePermissionUtil.check(
-					getPermissionChecker(), roleId, ActionKeys.ASSIGN_MEMBERS);
+					permissionChecker, roleId, ActionKeys.ASSIGN_MEMBERS);
 			}
 		}
 
 		return roleIds;
 	}
 
+	protected long[] checkUserGroupIds(long userId, long[] userGroupIds)
+		throws PortalException, SystemException {
+
+		long[] oldUserGroupIds = null;
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (userId != CompanyConstants.SYSTEM) {
+			// Add back any user groups that the administrator does not have the
+			// rights to remove and check that he has the permission to add any
+			// new user group
+
+			List<UserGroup> oldUserGroups =
+				userGroupLocalService.getUserUserGroups(userId);
+			oldUserGroupIds = new long[oldUserGroups.size()];
+
+			for (int i = 0; i < oldUserGroups.size(); i++) {
+				UserGroup userGroup = oldUserGroups.get(i);
+
+				if (!ArrayUtil.contains(
+						userGroupIds, userGroup.getUserGroupId()) &&
+					!UserGroupPermissionUtil.contains(
+						permissionChecker, userGroup.getUserGroupId(),
+						ActionKeys.ASSIGN_MEMBERS)) {
+
+					userGroupIds = ArrayUtil.append(
+						userGroupIds, userGroup.getUserGroupId());
+				}
+
+				oldUserGroupIds[i] = userGroup.getUserGroupId();
+			}
+		}
+
+		for (long userGroupId : userGroupIds) {
+			if ((oldUserGroupIds == null) ||
+				!ArrayUtil.contains(oldUserGroupIds, userGroupId)) {
+
+				UserGroupPermissionUtil.check(
+					permissionChecker, userGroupId, ActionKeys.ASSIGN_MEMBERS);
+			}
+		}
+
+		return userGroupIds;
+	}
+
 	protected List<UserGroupRole> checkUserGroupRoles(
 			long userId, List<UserGroupRole> userGroupRoles)
 		throws PortalException, SystemException {
 
-		// Add back any group roles that the administrator does not have the
-		// rights to remove
+		List<UserGroupRole> oldUserGroupRoles = null;
 
-		List<UserGroupRole> oldUserGroupRoles =
-			userGroupRoleLocalService.getUserGroupRoles(userId);
+		PermissionChecker permissionChecker = getPermissionChecker();
 
-		for (UserGroupRole oldUserGroupRole : oldUserGroupRoles) {
-			if (!userGroupRoles.contains(oldUserGroupRole) &&
-				!UserGroupRolePermissionUtil.contains(
-					getPermissionChecker(), oldUserGroupRole.getGroupId(),
-					oldUserGroupRole.getRoleId())) {
+		if (userId != CompanyConstants.SYSTEM) {
+			// Add back any group roles that the administrator does not have the
+			// rights to remove
 
-				userGroupRoles.add(oldUserGroupRole);
+			oldUserGroupRoles =
+				userGroupRoleLocalService.getUserGroupRoles(userId);
+
+			for (UserGroupRole oldUserGroupRole : oldUserGroupRoles) {
+				if (!userGroupRoles.contains(oldUserGroupRole) &&
+					!UserGroupRolePermissionUtil.contains(
+						permissionChecker, oldUserGroupRole.getGroupId(),
+						oldUserGroupRole.getRoleId())) {
+
+					userGroupRoles.add(oldUserGroupRole);
+				}
 			}
 		}
 
 		for (UserGroupRole userGroupRole : userGroupRoles) {
-			if (!oldUserGroupRoles.contains(userGroupRole)) {
+			if ((oldUserGroupRoles == null) ||
+				!oldUserGroupRoles.contains(userGroupRole)) {
+
 				UserGroupRolePermissionUtil.check(
-					getPermissionChecker(), userGroupRole.getGroupId(),
+					permissionChecker, userGroupRole.getGroupId(),
 					userGroupRole.getRoleId());
 			}
 		}

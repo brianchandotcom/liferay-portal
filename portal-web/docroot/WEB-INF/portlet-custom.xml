@@ -1366,6 +1366,7 @@
 		<supported-public-render-parameter>categoryId</supported-public-render-parameter>
 		<supported-public-render-parameter>resetCur</supported-public-render-parameter>
 		<supported-public-render-parameter>tag</supported-public-render-parameter>
+		<supported-public-render-parameter>tags</supported-public-render-parameter>
 	</portlet>
 	<portlet>
 		<portlet-name>102</portlet-name>
@@ -1393,16 +1394,17 @@
 		<security-role-ref>
 			<role-name>user</role-name>
 		</security-role-ref>
+		<supported-public-render-parameter>tags</supported-public-render-parameter>
 	</portlet>
 	<portlet>
 		<portlet-name>103</portlet-name>
 		<display-name>Tags Compiler</display-name>
-		<portlet-class>com.liferay.portlet.tagscompiler.TagsCompilerPortlet</portlet-class>
+		<portlet-class>com.liferay.portal.kernel.portlet.LiferayPortlet</portlet-class>
 		<expiration-cache>0</expiration-cache>
 		<supports>
 			<mime-type>text/html</mime-type>
 		</supports>
-		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
+		<supported-public-render-parameter>tags</supported-public-render-parameter>
 	</portlet>
 	<portlet>
 		<portlet-name>104</portlet-name>
@@ -3036,6 +3038,10 @@
 	<public-render-parameter>
 		<identifier>tag</identifier>
 		<qname xmlns:x="http://www.liferay.com/public-render-parameters">x:tag</qname>
+	</public-render-parameter>
+	<public-render-parameter>
+		<identifier>tags</identifier>
+		<qname xmlns:x="http://www.liferay.com/public-render-parameters">x:tags</qname>
 	</public-render-parameter>
 	<public-render-parameter>
 		<identifier>nodeId</identifier>

@@ -930,7 +930,7 @@
 		<show-portlet-inactive>false</show-portlet-inactive>
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
-		<render-weight>100</render-weight>
+		<render-weight>1</render-weight>
 		<add-default-resource>true</add-default-resource>
 		<system>true</system>
 	</portlet>

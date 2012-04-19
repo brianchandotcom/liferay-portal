@@ -16,19 +16,8 @@ package com.liferay.portal.security.pacl;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
-import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.spring.util.FilterClassLoader;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PropsValues;
-
-import java.io.File;
-
-import java.net.URL;
-import java.net.URLClassLoader;
-
-import javax.servlet.ServletContext;
 
 import sun.reflect.Reflection;
 
@@ -54,14 +43,6 @@ public class PACLClassUtil {
 		_portalClassLoader = PACLAdvice.class.getClassLoader();
 
 		_commonClassLoader = _portalClassLoader.getParent();
-
-		ServletContext servletContext = ServletContextPool.get(
-			PortalUtil.getPathContext());
-
-		File tempDir = (File)servletContext.getAttribute(
-			JavaConstants.JAVAX_SERVLET_CONTEXT_TEMPDIR);
-
-		_tempDirPath = tempDir.getAbsolutePath();
 	}
 
 	private ClassLoader _getCallerClassLoader(Class<?> callerClass) {
@@ -83,7 +64,7 @@ public class PACLClassUtil {
 			}
 		}
 
-		if (callerClassLoaderClassName.equals(_JASPER_LOADER_CLASS_NAME)) {
+		if (callerClassLoaderClassName.equals(_ClASS_NAME_JASPER_LOADER)) {
 			callerClassLoader = callerClassLoader.getParent();
 		}
 
@@ -151,73 +132,69 @@ public class PACLClassUtil {
 	private PACLPolicy _getPACLPolicyBySecurityManagerClassContext(
 		Class<?>[] classes, boolean debug) {
 
-		ClassLoader foreignClassLoader = null;
+		boolean initialPortalClassLoaderPhase = true;
 
-		// Walk through the classes backwards
+		// int i = 0 always returns
+		// com.liferay.portal.security.lang.PortalSecurityManager
 
-		for (int i = (classes.length - 1); i >= 0; i--) {
-			Class<?> clazz = classes[i];
+		for (int i = 1; i < classes.length; i++) {
+			Class<?> callerClass = classes[i];
 
-			ClassLoader classLoader = clazz.getClassLoader();
-
-			// Locate the first foreign class loader
-
-			foreignClassLoader = getForeignClassLoader(classLoader);
-
-			if (foreignClassLoader != null) {
+			if (callerClass == null) {
 				break;
 			}
-		}
 
-		if (foreignClassLoader == null) {
-			return PACLPolicyManager.getDefaultPACLPolicy();
-		}
-
-		PACLPolicy paclPolicy = PACLPolicyManager.getPACLPolicy(
-			foreignClassLoader);
-
-		if (paclPolicy != null) {
-			return paclPolicy;
-		}
-
-		return PACLPolicyManager.getDefaultPACLPolicy();
-	}
-
-	private ClassLoader getForeignClassLoader(ClassLoader classLoader) {
-		if ((classLoader == null) ||
-			(classLoader == _portalClassLoader) ||
-			(classLoader.getParent() == _portalClassLoader) ||
-			(classLoader == _commonClassLoader) ||
-			(classLoader == _systemClassLoader)) {
-
-			return null;
-		}
-
-		if (classLoader instanceof URLClassLoader) {
-			URLClassLoader urlClassLoader = (URLClassLoader)classLoader;
-
-			URL[] urLs = urlClassLoader.getURLs();
-
-			if (urLs != null) {
-				for (URL url : urLs) {
-					String path = url.getPath();
-
-					if (!path.contains(_globalLibPath) &&
-						!path.contains(_tempDirPath) &&
-						!path.contains(_webAppPath)) {
-
-						return classLoader;
-					}
-				}
+			if (debug) {
+				_log.debug(
+					"Frame " + i + " has caller class " +
+						callerClass.getName());
 			}
 
-			return null;
+			ClassLoader callerClassLoader = _getCallerClassLoader(callerClass);
+
+			if (callerClassLoader == null) {
+				continue;
+			}
+
+			if (!initialPortalClassLoaderPhase &&
+				(callerClassLoader == _portalClassLoader)) {
+
+				if (debug) {
+					_log.debug("Located the default PACL policy");
+				}
+
+				return PACLPolicyManager.getDefaultPACLPolicy();
+			}
+
+			if (initialPortalClassLoaderPhase &&
+				(callerClassLoader != _portalClassLoader)) {
+
+				initialPortalClassLoaderPhase = false;
+			}
+
+			if ((callerClassLoader == _commonClassLoader) ||
+				(callerClassLoader == _portalClassLoader) ||
+				(callerClassLoader == _systemClassLoader)) {
+
+				continue;
+			}
+
+			PACLPolicy paclPolicy = PACLPolicyManager.getPACLPolicy(
+				callerClassLoader);
+
+			if (paclPolicy != null) {
+				return paclPolicy;
+			}
+
+			/*_log.error(
+				"Unable to locate PACL policy for caller class loader " +
+					callerClassLoader);*/
 		}
 
-		return classLoader;
+		return null;
 	}
 
-	private static final String _JASPER_LOADER_CLASS_NAME =
+	private static final String _ClASS_NAME_JASPER_LOADER =
 		"org.apache.jasper.servlet.JasperLoader";
 
 	private static Log _log = LogFactoryUtil.getLog(PACLClassUtil.class);
@@ -225,10 +202,7 @@ public class PACLClassUtil {
 	private static PACLClassUtil _instance = new PACLClassUtil();
 
 	private ClassLoader _commonClassLoader;
-	private String _globalLibPath = PropsValues.LIFERAY_LIB_GLOBAL_DIR;
 	private ClassLoader _portalClassLoader;
 	private ClassLoader _systemClassLoader;
-	private String _tempDirPath;
-	private String _webAppPath = PropsValues.LIFERAY_WEB_PORTAL_DIR;
 
 }

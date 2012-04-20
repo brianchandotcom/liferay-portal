@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.util;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 
 import com.xuggle.xuggler.IAudioResampler;
 import com.xuggle.xuggler.IAudioSamples;
@@ -25,16 +26,26 @@ import com.xuggle.xuggler.IPacket;
 import com.xuggle.xuggler.IStream;
 import com.xuggle.xuggler.IStreamCoder;
 
+import java.util.Properties;
+
 /**
  * @author Juan González
  * @author Sergio González
  * @author Brian Wing Shun Chan
+ * @author Alexander Chow
  */
 public class LiferayAudioConverter extends LiferayConverter {
 
-	public LiferayAudioConverter(String inputURL, String outputURL) {
+	public LiferayAudioConverter(
+		String inputURL, String outputURL, String audioContainer,
+		Properties audioProperties) {
+
 		_inputURL = inputURL;
 		_outputURL = outputURL;
+		_audioContainer = audioContainer;
+
+		initAudioBitRate(audioProperties);
+		initAudioSampleRate(audioProperties);
 	}
 
 	@Override
@@ -158,13 +169,40 @@ public class LiferayAudioConverter extends LiferayConverter {
 	}
 
 	@Override
+	protected int getAudioBitRate(int originalBitRate) {
+		return getProperty(originalBitRate, _audioBitRate, AUDIO_BIT_RATE_MAX);
+	}
+
+	@Override
+	protected int getAudioSampleRate() {
+		return _audioSampleRate;
+	}
+
+	@Override
 	protected IContainer getInputIContainer() {
 		return _inputIContainer;
+	}
+
+	protected void initAudioBitRate(Properties audioProperties) {
+		_audioBitRate = getProperty(
+			audioProperties, PropsKeys.DL_FILE_ENTRY_PREVIEW_AUDIO_BIT_RATE,
+			"audio bit rate", _audioContainer, AUDIO_BIT_RATE_DEFAULT,
+			AUDIO_BIT_RATE_MAX);
+	}
+
+	protected void initAudioSampleRate(Properties audioProperties) {
+		_audioSampleRate = getProperty(
+			audioProperties, PropsKeys.DL_FILE_ENTRY_PREVIEW_AUDIO_SAMPLE_RATE,
+			"audio sample rate", _audioContainer, AUDIO_SAMPLE_RATE_DEFAULT,
+			AUDIO_SAMPLE_RATE_MAX);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
 		LiferayAudioConverter.class);
 
+	private int _audioBitRate;
+	private String _audioContainer;
+	private int _audioSampleRate;
 	private IContainer _inputIContainer;
 	private String _inputURL;
 	private IContainer _outputIContainer;

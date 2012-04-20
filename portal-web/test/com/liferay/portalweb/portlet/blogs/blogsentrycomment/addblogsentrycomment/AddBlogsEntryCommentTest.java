@@ -24,23 +24,6 @@ public class AddBlogsEntryCommentTest extends BaseTestCase {
 	public void testAddBlogsEntryComment() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Blogs Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -52,8 +35,8 @@ public class AddBlogsEntryCommentTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Be the first."),
-			selenium.getText("//fieldset/div/a"));
-		selenium.clickAt("//fieldset/div/a",
+			selenium.getText("//fieldset[contains(@class,'add-comment')]/div/a"));
+		selenium.clickAt("//fieldset[contains(@class,'add-comment')]/div/a",
 			RuntimeVariables.replace("Be the first."));
 
 		for (int second = 0;; second++) {

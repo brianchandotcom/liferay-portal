@@ -16,8 +16,11 @@ package com.liferay.portalweb.portlet.blogs.blogsentrycomment;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portlet.blogs.blogsentrycomment.addblogsentrycomment.AddBlogsEntryCommentTests;
+import com.liferay.portalweb.portlet.blogs.blogsentrycomment.addblogsentrycomments.AddBlogsEntryCommentsTests;
+import com.liferay.portalweb.portlet.blogs.blogsentrycomment.addblogsentryscomment.AddBlogsEntrysCommentTests;
 import com.liferay.portalweb.portlet.blogs.blogsentrycomment.deleteblogsentrycomment.DeleteBlogsEntryCommentTests;
 import com.liferay.portalweb.portlet.blogs.blogsentrycomment.editblogsentrycomment.EditBlogsEntryCommentTests;
+import com.liferay.portalweb.portlet.blogs.blogsentrycomment.subscribetocommentsblogsentry.SubscribeToCommentsBlogsEntryTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -31,8 +34,11 @@ public class BlogsEntryCommentTestPlan extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(AddBlogsEntryCommentTests.suite());
+		testSuite.addTest(AddBlogsEntryCommentsTests.suite());
+		testSuite.addTest(AddBlogsEntrysCommentTests.suite());
 		testSuite.addTest(DeleteBlogsEntryCommentTests.suite());
 		testSuite.addTest(EditBlogsEntryCommentTests.suite());
+		testSuite.addTest(SubscribeToCommentsBlogsEntryTests.suite());
 
 		return testSuite;
 	}

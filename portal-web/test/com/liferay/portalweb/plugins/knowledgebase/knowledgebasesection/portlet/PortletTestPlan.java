@@ -14,9 +14,9 @@
 
 package com.liferay.portalweb.plugins.knowledgebase.knowledgebasesection.portlet;
 
-import com.liferay.portalweb.plugins.knowledgebase.knowledgebasesection.portlet.addportletkbs.AddPortletKBSTests;
-import com.liferay.portalweb.plugins.knowledgebase.knowledgebasesection.portlet.addportletkbsmultiple.AddPortletKBSMultipleTests;
-import com.liferay.portalweb.plugins.knowledgebase.knowledgebasesection.portlet.removeportletkbs.RemovePortletKBSTests;
+import com.liferay.portalweb.plugins.knowledgebase.knowledgebasesection.portlet.addportletkbsc.AddPortletKBScTests;
+import com.liferay.portalweb.plugins.knowledgebase.knowledgebasesection.portlet.addportletkbscmultiple.AddPortletKBScMultipleTests;
+import com.liferay.portalweb.plugins.knowledgebase.knowledgebasesection.portlet.removeportletkbsc.RemovePortletKBScTests;
 import com.liferay.portalweb.portal.BaseTestSuite;
 
 import junit.framework.Test;
@@ -30,9 +30,9 @@ public class PortletTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(AddPortletKBSTests.suite());
-		testSuite.addTest(AddPortletKBSMultipleTests.suite());
-		testSuite.addTest(RemovePortletKBSTests.suite());
+		testSuite.addTest(AddPortletKBScTests.suite());
+		testSuite.addTest(AddPortletKBScMultipleTests.suite());
+		testSuite.addTest(RemovePortletKBScTests.suite());
 
 		return testSuite;
 	}

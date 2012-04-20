@@ -35,8 +35,49 @@ import java.util.Map;
  * @author Angelo Jefferson
  * @author Hugo Huijser
  * @author Marcellus Tavares
+ * @author Juan Fernández
  */
 public abstract class BaseTransformer implements Transformer {
+
+	public String transform(
+			ThemeDisplay themeDisplay, Map<String, Object> contextObjects,
+			String script, String langType)
+		throws Exception {
+
+		String output = null;
+
+		if (Validator.isNotNull(langType)) {
+			String templateParserClassName = getTemplateParserClassName(
+				langType);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Template parser class name " + templateParserClassName);
+			}
+
+			if (Validator.isNotNull(templateParserClassName)) {
+				TemplateParser templateParser = null;
+
+				try {
+					templateParser =
+						(TemplateParser)InstanceFactory.newInstance(
+							PortalClassLoaderUtil.getClassLoader(),
+							templateParserClassName);
+				}
+				catch (Exception e) {
+					throw new TransformException(e);
+				}
+
+				templateParser.setContextObjects(contextObjects);
+				templateParser.setScript(script);
+				templateParser.setThemeDisplay(themeDisplay);
+
+				output = templateParser.transform();
+			}
+		}
+
+		return output;
+	}
 
 	public String transform(
 			ThemeDisplay themeDisplay, Map<String, String> tokens,

@@ -35,6 +35,8 @@ public interface TemplateParser {
 
 	public String getXML();
 
+	public void setContextObjects(Map<String, Object> contextObjects);
+
 	public void setLanguageId(String languageId);
 
 	public void setScript(String script);

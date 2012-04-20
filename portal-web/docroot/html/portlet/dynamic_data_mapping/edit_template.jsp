@@ -86,6 +86,12 @@ if (Validator.isNotNull(structureAvailableFields)) {
 			title = LanguageUtil.format(pageContext, "new-template-for-structure-x", structure.getName(locale), false);
 		}
 	}
+	else if (template != null) {
+		title = template.getName(locale);
+	}
+	else {
+		title = LanguageUtil.get(pageContext, "new-display-style");
+	}
 	%>
 
 	<liferay-ui:header

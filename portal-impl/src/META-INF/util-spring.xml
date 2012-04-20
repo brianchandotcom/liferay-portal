@@ -590,6 +590,10 @@
 			<bean class="com.liferay.portal.asset.AssetRendererFactoryRegistryImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portlet.assetpublisher.util.TemplateHelper" class="com.liferay.portlet.assetpublisher.util.TemplateHelperImpl" />
+	<bean id="com.liferay.portlet.assetpublisher.util.TemplateHelperUtil" class="com.liferay.portlet.assetpublisher.util.TemplateHelperUtil">
+		<property name="templateHelper" ref="com.liferay.portlet.assetpublisher.util.TemplateHelper" />
+	</bean>
 	<bean id="com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerUtil" class="com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerUtil">
 		<property name="antivirusScanner">
 			<bean class="com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerImpl" />

@@ -41,47 +41,74 @@ long classPK = ParamUtil.getLong(request, "classPK");
 	String message = "add";
 	%>
 
-	<c:if test="<%= DDMPermission.contains(permissionChecker, scopeGroupId, ddmResource, ActionKeys.ADD_TEMPLATE) && (Validator.isNull(templateTypeValue) || templateTypeValue.equals(DDMTemplateConstants.TEMPLATE_TYPE_DETAIL)) %>">
-		<portlet:renderURL var="addTemplateURL">
-			<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
-			<portlet:param name="redirect" value="<%= viewTemplatesURL %>" />
-			<portlet:param name="backURL" value="<%= viewTemplatesURL %>" />
-			<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
-			<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
-			<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
-			<portlet:param name="structureAvailableFields" value='<%= renderResponse.getNamespace() + "structureAvailableFields" %>' />
-		</portlet:renderURL>
+	<c:choose>
+		<c:when test="<%= classNameId == PortalUtil.getClassNameId(DDMStructure.class) %>">
+			<c:if test="<%= DDMPermission.contains(permissionChecker, scopeGroupId, ddmResource, ActionKeys.ADD_TEMPLATE) && (Validator.isNull(templateTypeValue) || templateTypeValue.equals(DDMTemplateConstants.TEMPLATE_TYPE_DETAIL)) %>">
+				<portlet:renderURL var="addTemplateURL">
+					<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
+					<portlet:param name="redirect" value="<%= viewTemplatesURL %>" />
+					<portlet:param name="backURL" value="<%= viewTemplatesURL %>" />
+					<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
+					<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
+					<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
+					<portlet:param name="structureAvailableFields" value='<%= renderResponse.getNamespace() + "structureAvailableFields" %>' />
+				</portlet:renderURL>
 
-		<%
-		if (Validator.isNull(templateTypeValue)) {
-			message = "add-detail-template";
-		}
-		%>
+				<%
+				if (Validator.isNull(templateTypeValue)) {
+					message = "add-detail-template";
+				}
+				%>
 
-		<span class="lfr-toolbar-button add-template <%= toolbarItem.equals("add-detail-template") ? "current" : StringPool.BLANK %>">
-			<a href="<%= addTemplateURL %>"><liferay-ui:message key="<%= message %>" /></a>
-		</span>
-	</c:if>
+				<span class="lfr-toolbar-button add-template <%= toolbarItem.equals("add-detail-template") ? "current" : StringPool.BLANK %>">
+					<a href="<%= addTemplateURL %>"><liferay-ui:message key="<%= message %>" /></a>
+				</span>
+			</c:if>
 
-	<c:if test="<%= DDMPermission.contains(permissionChecker, scopeGroupId, ddmResource, ActionKeys.ADD_TEMPLATE) && (Validator.isNull(templateTypeValue) || templateTypeValue.equals(DDMTemplateConstants.TEMPLATE_TYPE_LIST)) %>">
-		<portlet:renderURL var="addTemplateURL">
-			<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
-			<portlet:param name="redirect" value="<%= viewTemplatesURL %>" />
-			<portlet:param name="backURL" value="<%= viewTemplatesURL %>" />
-			<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
-			<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
-			<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
-			<portlet:param name="type" value="list" />
-		</portlet:renderURL>
+			<c:if test="<%= DDMPermission.contains(permissionChecker, scopeGroupId, ddmResource, ActionKeys.ADD_TEMPLATE) && (Validator.isNull(templateTypeValue) || templateTypeValue.equals(DDMTemplateConstants.TEMPLATE_TYPE_LIST)) %>">
+				<portlet:renderURL var="addTemplateURL">
+					<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
+					<portlet:param name="redirect" value="<%= viewTemplatesURL %>" />
+					<portlet:param name="backURL" value="<%= viewTemplatesURL %>" />
+					<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
+					<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
+					<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
+					<portlet:param name="type" value="list" />
+				</portlet:renderURL>
 
-		<%
-		if (Validator.isNull(templateTypeValue)) {
-			message = "add-list-template";
-		}
-		%>
+				<%
+				if (Validator.isNull(templateTypeValue)) {
+					message = "add-list-template";
+				}
+				%>
 
-		<span class="lfr-toolbar-button view-templates <%= toolbarItem.equals("add-list-template") ? "current" : StringPool.BLANK %>">
-			<a href="<%= addTemplateURL %>"><liferay-ui:message key="<%= message %>" /></a>
-		</span>
-	</c:if>
+				<span class="lfr-toolbar-button view-templates <%= toolbarItem.equals("add-list-template") ? "current" : StringPool.BLANK %>">
+					<a href="<%= addTemplateURL %>"><liferay-ui:message key="<%= message %>" /></a>
+				</span>
+			</c:if>
+		</c:when>
+		<c:otherwise>
+			<c:if test="<%= DDMPermission.contains(permissionChecker, scopeGroupId, ddmResource, ddmResourceAction) %>">
+				<portlet:renderURL var="addTemplateURL">
+					<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
+					<portlet:param name="redirect" value="<%= viewTemplatesURL %>" />
+					<portlet:param name="backURL" value="<%= viewTemplatesURL %>" />
+					<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
+					<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
+					<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
+					<portlet:param name="type" value="list" />
+				</portlet:renderURL>
+
+				<%
+				if (Validator.isNull(templateTypeValue)) {
+					message = "add-display-style";
+				}
+				%>
+
+				<span class="lfr-toolbar-button view-templates <%= toolbarItem.equals("add-display-style") ? "current" : StringPool.BLANK %>">
+					<a href="<%= addTemplateURL %>"><liferay-ui:message key="<%= message %>" /></a>
+				</span>
+			</c:if>
+		</c:otherwise>
+	</c:choose>
 </div>

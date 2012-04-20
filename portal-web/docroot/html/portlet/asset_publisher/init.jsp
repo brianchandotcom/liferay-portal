@@ -53,6 +53,10 @@ page import="com.liferay.portlet.documentlibrary.model.DLFileEntryConstants" %><
 page import="com.liferay.portlet.documentlibrary.model.DLFolderConstants" %><%@
 page import="com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.DocumentConversionUtil" %><%@
+page import="com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException" %><%@
+page import="com.liferay.portlet.dynamicdatamapping.model.DDMTemplate" %><%@
+page import="com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil" %><%@
+page import="com.liferay.portlet.dynamicdatamapping.service.permission.DDMTemplatePermission" %><%@
 page import="com.liferay.portlet.journal.model.JournalArticle" %><%@
 page import="com.liferay.portlet.journal.model.JournalStructure" %><%@
 page import="com.liferay.portlet.journal.service.JournalStructureLocalServiceUtil" %><%@
@@ -173,7 +177,12 @@ boolean mergeLayoutTags = GetterUtil.getBoolean(preferences.getValue("mergeLayou
 
 String displayStyle = GetterUtil.getString(preferences.getValue("displayStyle", "abstracts"));
 
-if (Validator.isNull(displayStyle)) {
+long assetPublisherTemplateId = 0;
+
+if (displayStyle.startsWith("ddmTemplate_")) {
+	assetPublisherTemplateId = Long.valueOf(displayStyle.substring("ddmTemplate_".length()));
+}
+else if (Validator.isNull(displayStyle)) {
 	displayStyle = "abstracts";
 }
 
@@ -192,6 +201,18 @@ boolean showAvailableLocales = GetterUtil.getBoolean(preferences.getValue("showA
 boolean showMetadataDescriptions = GetterUtil.getBoolean(preferences.getValue("showMetadataDescriptions", null), true);
 
 boolean defaultAssetPublisher = false;
+
+DDMTemplate assetPublisherTemplate = null;
+
+if (assetPublisherTemplateId > 0) {
+	try {
+		assetPublisherTemplate = DDMTemplateLocalServiceUtil.getDDMTemplate(assetPublisherTemplateId);
+	}
+	catch (NoSuchTemplateException nste) {
+		assetPublisherTemplateId = 0;
+		displayStyle = "abstracts";
+	}
+}
 
 UnicodeProperties typeSettingsProperties = layout.getTypeSettingsProperties();
 
@@ -241,6 +262,9 @@ boolean groupByClass = (assetVocabularyId == -1);
 boolean allowEmptyResults = false;
 
 Map<String, PortletURL> addPortletURLs = null;
+
+String ddmResource = "com.liferay.portlet.assetpublisher";
+long displayStyleClassNameId = PortalUtil.getClassNameId("com.liferay.portlet.assetpublisher.DisplayStyle");
 
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 %>

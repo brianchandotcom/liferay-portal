@@ -41,6 +41,8 @@ public class ActionKeys {
 
 	public static final String ADD_DISCUSSION = "ADD_DISCUSSION";
 
+	public static final String ADD_DISPLAY_STYLE = "ADD_DISPLAY_STYLE";
+
 	public static final String ADD_DOCUMENT = "ADD_DOCUMENT";
 
 	public static final String ADD_DOCUMENT_TYPE = "ADD_DOCUMENT_TYPE";

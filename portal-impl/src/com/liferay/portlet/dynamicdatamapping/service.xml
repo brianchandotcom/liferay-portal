@@ -174,7 +174,7 @@
 		<finder name="Language" return-type="Collection">
 			<finder-column name="language" />
 		</finder>
-		<finder name="G_C_C" return-type="JournalArticle">
+		<finder name="G_C_C" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />

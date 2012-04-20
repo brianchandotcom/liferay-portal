@@ -62,7 +62,14 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 
 				<h3 class="asset-entries-group-label"><%= assetCategory.getTitle(locale) %></h3>
 
-				<%@ include file="/html/portlet/asset_publisher/view_dynamic_list_asset.jspf" %>
+				<c:choose>
+					<c:when test="<%= assetPublisherTemplateId > 0 %>">
+						<%= AssetPublisherUtil.renderTemplate(assetPublisherTemplateId, results, renderRequest, renderResponse) %>
+					</c:when>
+					<c:otherwise>
+						<%@ include file="/html/portlet/asset_publisher/view_dynamic_list_asset.jspf" %>
+					</c:otherwise>
+				</c:choose>
 
 	<%
 			}
@@ -107,7 +114,14 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 		request.setAttribute("view.jsp-results", results);
 	%>
 
-		<%@ include file="/html/portlet/asset_publisher/view_dynamic_list_asset.jspf" %>
+		<c:choose>
+			<c:when test="<%= assetPublisherTemplateId > 0 %>">
+				<%= AssetPublisherUtil.renderTemplate(assetPublisherTemplateId, results, renderRequest, renderResponse) %>
+			</c:when>
+			<c:otherwise>
+				<%@ include file="/html/portlet/asset_publisher/view_dynamic_list_asset.jspf" %>
+			</c:otherwise>
+		</c:choose>
 
 	<%
 	}
@@ -141,7 +155,14 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 
 				<h3 class="asset-entries-group-label"><liferay-ui:message key="<%= groupAssetRendererFactory.getType() %>" /></h3>
 
-				<%@ include file="/html/portlet/asset_publisher/view_dynamic_list_asset.jspf" %>
+				<c:choose>
+					<c:when test="<%= assetPublisherTemplateId > 0 %>">
+						<%= AssetPublisherUtil.renderTemplate(assetPublisherTemplateId, results, renderRequest, renderResponse) %>
+					</c:when>
+					<c:otherwise>
+						<%@ include file="/html/portlet/asset_publisher/view_dynamic_list_asset.jspf" %>
+					</c:otherwise>
+				</c:choose>
 
 	<%
 			}

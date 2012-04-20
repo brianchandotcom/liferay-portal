@@ -1086,6 +1086,7 @@
 			ddmURL.setParameter('classNameId', config.classNameId);
 			ddmURL.setParameter('classPK', config.classPK);
 			ddmURL.setParameter('ddmResource', config.ddmResource);
+			ddmURL.setParameter('ddmResourceAction', config.ddmResourceAction);
 			ddmURL.setParameter('saveCallback', config.saveCallback);
 			ddmURL.setParameter('scopeAvailableFields', config.availableFields);
 			ddmURL.setParameter('scopeStorageType', config.storageType);

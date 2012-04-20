@@ -88,9 +88,6 @@ public class JCRSessionInvocationHandler implements InvocationHandler {
 		catch (InvocationTargetException ite) {
 			throw ite.getCause();
 		}
-		catch (Exception e) {
-			throw e;
-		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

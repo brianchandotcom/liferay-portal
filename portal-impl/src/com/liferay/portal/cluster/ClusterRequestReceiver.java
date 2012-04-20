@@ -229,9 +229,6 @@ public class ClusterRequestReceiver extends BaseReceiver {
 				return methodHandler.invoke(bean);
 			}
 		}
-		catch (Exception e) {
-			throw e;
-		}
 		finally {
 			currentThread.setContextClassLoader(contextClassLoader);
 		}

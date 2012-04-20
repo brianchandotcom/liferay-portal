@@ -23,6 +23,7 @@ import com.liferay.portalweb.socialoffice.users.user.signinso.SOUs_SignInSOTest;
 import com.liferay.portalweb.socialoffice.users.user.signinso.SignInSOTest;
 import com.liferay.portalweb.socialoffice.users.user.signinso.SignOutSOTest;
 import com.liferay.portalweb.socialofficehome.contactscenter.contacts.sousaddasconnectionccuser.ConfirmNotificationsAddConnectionTest;
+import com.liferay.portalweb.socialofficehome.contactscenter.contacts.sousaddasconnectionccuser.SOUs_AddAsConnectionCCUserTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

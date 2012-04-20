@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.staging.LayoutStagingUtil;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutBranch;
@@ -96,9 +97,22 @@ public class LayoutsTreeUtil {
 			if ((layoutAncestors != null) && layoutAncestors.contains(layout) ||
 				ArrayUtil.contains(expandedLayoutIds, layout.getLayoutId())) {
 
-				String childrenJSON = getLayoutsJSON(
-					request, groupId, layout.getPrivateLayout(),
-					layout.getLayoutId(), expandedLayoutIds);
+				String childrenJSON = StringPool.BLANK;
+
+				if (layout instanceof VirtualLayout) {
+					VirtualLayout virtualLayout = (VirtualLayout)layout;
+
+					childrenJSON = getLayoutsJSON(
+						request, virtualLayout.getSourceGroupId(),
+						virtualLayout.getPrivateLayout(),
+						virtualLayout.getLayoutId(), expandedLayoutIds);
+
+				}
+				else {
+					childrenJSON = getLayoutsJSON(
+						request, groupId, layout.getPrivateLayout(),
+						layout.getLayoutId(), expandedLayoutIds);
+				}
 
 				jsonObject.put(
 					"children", JSONFactoryUtil.createJSONArray(childrenJSON));

@@ -476,11 +476,11 @@ public abstract class LiferayConverter {
 	}
 
 	protected int getProperty(
-		Properties properties, String popertyName, String prettyPropertyName,
+		Properties properties, String propertyName, String prettyPropertyName,
 		String container, int defaultValue, int maxValue) {
 
 		int property = GetterUtil.getInteger(
-			properties.getProperty(popertyName + "[" + container + "]"),
+			properties.getProperty(propertyName + "[" + container + "]"),
 			defaultValue);
 
 		if (property > maxValue) {

@@ -42,7 +42,7 @@ String property = (String)request.getAttribute("liferay-ui:write:property");
 					try {
 						country = CountryServiceUtil.getCountry(organization.getCountryId());
 
-						countryName = LanguageUtil.get(pageContext, country.getName());
+						countryName = LanguageUtil.get(pageContext, "country." + country.getName());
 					}
 					catch (Exception e) {
 					}

@@ -185,20 +185,55 @@ import org.junit.runner.RunWith;
 public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 
 	@Test
-	public void testAddFileEntryBasic() throws Exception {
+	public void testAddFileEntryBasic01() throws Exception {
 		testAddFileEntryBasic(_FILE_NAME, "Test.pdf", "txt", "Test.pdf.txt");
+	}
+
+	@Test
+	public void testAddFileEntryBasic02() throws Exception {
 		testAddFileEntryBasic(_FILE_NAME, _FILE_NAME, "txt", _FILE_NAME);
+	}
+
+	@Test
+	public void testAddFileEntryBasic03() throws Exception {
 		testAddFileEntryBasic(
 			_FILE_NAME, _STRIPPED_FILE_NAME, "txt", _FILE_NAME);
+	}
+
+	@Test
+	public void testAddFileEntryBasic04() throws Exception {
 		testAddFileEntryBasic(_FILE_NAME, "", "txt", _FILE_NAME);
+	}
+
+	@Test
+	public void testAddFileEntryBasic05() throws Exception {
 		testAddFileEntryBasic(
 			_STRIPPED_FILE_NAME, _FILE_NAME, "txt", _FILE_NAME);
+	}
+
+	@Test
+	public void testAddFileEntryBasic06() throws Exception {
 		testAddFileEntryBasic(
 			_STRIPPED_FILE_NAME, _STRIPPED_FILE_NAME, "", _STRIPPED_FILE_NAME);
-		testAddFileEntryBasic(_STRIPPED_FILE_NAME, "", "", _STRIPPED_FILE_NAME);
-		testAddFileEntryBasic("", _FILE_NAME, "txt", _FILE_NAME);
-		testAddFileEntryBasic("", _STRIPPED_FILE_NAME, "", _STRIPPED_FILE_NAME);
+	}
 
+	@Test
+	public void testAddFileEntryBasic07() throws Exception {
+		testAddFileEntryBasic(_STRIPPED_FILE_NAME, "", "", _STRIPPED_FILE_NAME);
+	}
+
+	@Test
+	public void testAddFileEntryBasic08() throws Exception {
+		testAddFileEntryBasic("", _FILE_NAME, "txt", _FILE_NAME);
+	}
+
+	@Test
+	public void testAddFileEntryBasic09() throws Exception {
+		testAddFileEntryBasic("", _STRIPPED_FILE_NAME, "", _STRIPPED_FILE_NAME);
+	}
+
+	@Test
+	public void testAddFileEntryBasic10() throws Exception {
 		try {
 			addFileEntry(false, "", "");
 

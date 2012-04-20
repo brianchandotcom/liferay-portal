@@ -28,7 +28,7 @@ public class ImageMagickUtil {
 	 * Executes the <code>convert</code> command in ImageMagick.
 	 *
 	 * @param  arguments the command arguments being passed to <code>convert
-	 *         <code>
+	 *         </code>
 	 * @param  fork whether to fork the process
 	 * @throws Exception if an unexpected error occurred while executing command
 	 * @see    <a href="http://www.imagemagick.org/script/convert.php">Convert
@@ -57,7 +57,7 @@ public class ImageMagickUtil {
 	/**
 	 * Returns the cache and resource usage limits configured for ImageMagick.
 	 *
-	 * @return the resource limits
+	 * @return the cache and resource usage limits
 	 * @throws Exception if an unexpected error occurred
 	 */
 	public static Properties getResourceLimitsProperties() throws Exception {

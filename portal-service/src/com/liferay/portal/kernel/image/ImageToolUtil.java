@@ -30,10 +30,10 @@ import java.io.OutputStream;
 public class ImageToolUtil {
 
 	/**
-	 * Converts a CMYK image to RGB using ImageMagick. This must be run against
-	 * the original <code>byte[]</code> and not one extracted from a {@link
-	 * java.awt.image.RenderedImage}. The latter may potentially have been
-	 * already been read incorrectly.
+	 * Returns the CMYK image converted to RGB using ImageMagick. This must be
+	 * run against the original <code>byte[]</code> and not one extracted from a
+	 * {@link java.awt.image.RenderedImage}. The latter may potentially have
+	 * been already been read incorrectly.
 	 *
 	 * @param  bytes the image to convert
 	 * @param  type the image type (e.g., "gif", "jpg", etc.)
@@ -51,11 +51,11 @@ public class ImageToolUtil {
 	}
 
 	/**
-	 * Converts an image from one image type to another.
+	 * Returns the image converted to the type.
 	 *
 	 * @param  sourceImage the image to convert
 	 * @param  type the image type to convert to (e.g., "gif", "jpg", etc.)
-	 * @return converted image
+	 * @return the converted image
 	 */
 	public static BufferedImage convertImageType(
 		BufferedImage sourceImage, int type) {
@@ -64,11 +64,11 @@ public class ImageToolUtil {
 	}
 
 	/**
-	 * Encodes an image using the GIF format.
+	 * Encodes the image using the GIF format.
 	 *
 	 * @param  renderedImage the image to encode
 	 * @param  os the stream to write to
-	 * @throws IOException if an error occurred during writing
+	 * @throws IOException if an IO exception occurred
 	 */
 	public static void encodeGIF(RenderedImage renderedImage, OutputStream os)
 		throws IOException {
@@ -77,11 +77,11 @@ public class ImageToolUtil {
 	}
 
 	/**
-	 * Encodes an image using the WBMP format.
+	 * Encodes the image using the WBMP format.
 	 *
 	 * @param  renderedImage the image to encode
 	 * @param  os the stream to write to
-	 * @throws IOException if an error occurred during writing
+	 * @throws IOException if an IO exception occurred
 	 */
 	public static void encodeWBMP(RenderedImage renderedImage, OutputStream os)
 		throws IOException {
@@ -90,8 +90,7 @@ public class ImageToolUtil {
 	}
 
 	/**
-	 * Returns a {@link java.awt.image.BufferedImage} from a given {@link
-	 * java.awt.image.RenderedImage}.
+	 * Returns the rendered image as a {@link java.awt.image.BufferedImage}.
 	 *
 	 * @param  renderedImage the original image
 	 * @return the converted image
@@ -101,13 +100,13 @@ public class ImageToolUtil {
 	}
 
 	/**
-	 * Returns the <code>byte[]</code> from an image.
+	 * Returns the image as a <code>byte[]</code>.
 	 *
 	 * @param  renderedImage the image to read
 	 * @param  contentType the content type (e.g., "image/jpeg") or image type
 	 *         (e.g., "jpg") to use during encoding
 	 * @return the encoded image
-	 * @throws IOException if an error occurred during writing
+	 * @throws IOException if an IO exception occurred
 	 */
 	public static byte[] getBytes(
 			RenderedImage renderedImage, String contentType)
@@ -127,7 +126,7 @@ public class ImageToolUtil {
 	 *
 	 * @param  bytes the bytes to read
 	 * @return the {@link com.liferay.portal.kernel.image.ImageBag}
-	 * @throws IOException if an error occurred during writing
+	 * @throws IOException if an IO exception occurred
 	 */
 	public static ImageBag read(byte[] bytes) throws IOException {
 		return getImageTool().read(bytes);
@@ -140,15 +139,15 @@ public class ImageToolUtil {
 	 *
 	 * @param  file the file to read
 	 * @return the {@link com.liferay.portal.kernel.image.ImageBag}
-	 * @throws IOException if an error occurred during writing
+	 * @throws IOException if an IO exception occurred
 	 */
 	public static ImageBag read(File file) throws IOException {
 		return getImageTool().read(file);
 	}
 
 	/**
-	 * Scales the image based on the given width with the height calculated to
-	 * preserve aspect ratio.
+	 * Returns the scaled image based on the given width with the height
+	 * calculated to preserve aspect ratio.
 	 *
 	 * @param  renderedImage the image to scale
 	 * @param  width the new width; also used to calculate the new height
@@ -159,8 +158,8 @@ public class ImageToolUtil {
 	}
 
 	/**
-	 * Scales the image based on the maximum height and width given while
-	 * preserving the aspect ratio. If the image is already larger in both
+	 * Returns the scaled image based on the maximum height and width given
+	 * while preserving the aspect ratio. If the image is already larger in both
 	 * dimensions, the image will not be scaled.
 	 *
 	 * @param  renderedImage the image to scale
@@ -175,13 +174,13 @@ public class ImageToolUtil {
 	}
 
 	/**
-	 * Encodes an image using.
+	 * Encodes the image using the content or image type.
 	 *
 	 * @param  renderedImage the image to encode
 	 * @param  contentType the content type (e.g., "image/jpeg") or image type
 	 *         (e.g., "jpg") to use during encoding
 	 * @param  os the stream to write to
-	 * @throws IOException if an error occurred during writing
+	 * @throws IOException if an IO exception occurred
 	 */
 	public static void write(
 			RenderedImage renderedImage, String contentType, OutputStream os)

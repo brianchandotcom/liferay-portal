@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.plugins.knowledgebase.knowledgebasearticle.portlet.addportletkbar;
+package com.liferay.portalweb.plugins.knowledgebase.knowledgebasesection.portlet.addportletkbscmultiple;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,54 +20,31 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddPortletKBArTest extends BaseTestCase {
-	public void testAddPortletKBAr() throws Exception {
+public class AddPortletKBSc2Test extends BaseTestCase {
+	public void testAddPortletKBSc2() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
-		selenium.clickAt("link=Knowledge Base Article Test Page",
-			RuntimeVariables.replace("Knowledge Base Article Test Page"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("link=Knowledge Base Section Test Page")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.clickAt("link=Knowledge Base Section Test Page",
+			RuntimeVariables.replace("Knowledge Base Section Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.clickAt("//div[@id='dockbar']",
-			RuntimeVariables.replace("Dockbar"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		assertEquals(RuntimeVariables.replace("Add"),
-			selenium.getText("//li[@id='_145_addContent']/a/span"));
-		selenium.mouseOver("//li[@id='_145_addContent']/a/span");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//a[@id='_145_addApplication']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
 				"More"));
 		selenium.clickAt("//a[@id='_145_addApplication']",
@@ -80,7 +57,7 @@ public class AddPortletKBArTest extends BaseTestCase {
 
 			try {
 				if (selenium.isElementPresent(
-							"//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]")) {
+							"//div[@title='Knowledge Base Section']/p/a")) {
 					break;
 				}
 			}
@@ -90,44 +67,7 @@ public class AddPortletKBArTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//input[@id='layout_configuration_content']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.typeKeys("//input[@id='layout_configuration_content']",
-			RuntimeVariables.replace("k"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//div[@title='Knowledge Base Article']/p/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.clickAt("//div[@title='Knowledge Base Article']/p/a",
+		selenium.clickAt("//div[@title='Knowledge Base Section']/p/a",
 			RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {
@@ -147,5 +87,23 @@ public class AddPortletKBArTest extends BaseTestCase {
 		}
 
 		assertTrue(selenium.isVisible("//section"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//div[2]/div/section")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertTrue(selenium.isVisible("//div[2]/div/section"));
 	}
 }

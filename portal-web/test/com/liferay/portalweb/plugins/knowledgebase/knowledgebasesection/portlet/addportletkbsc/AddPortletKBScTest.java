@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.plugins.knowledgebase.knowledgebasearticle.portlet.addportletkbar;
+package com.liferay.portalweb.plugins.knowledgebase.knowledgebasesection.portlet.addportletkbsc;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,12 +20,12 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddPortletKBArTest extends BaseTestCase {
-	public void testAddPortletKBAr() throws Exception {
+public class AddPortletKBScTest extends BaseTestCase {
+	public void testAddPortletKBSc() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
-		selenium.clickAt("link=Knowledge Base Article Test Page",
-			RuntimeVariables.replace("Knowledge Base Article Test Page"));
+		selenium.clickAt("link=Knowledge Base Section Test Page",
+			RuntimeVariables.replace("Knowledge Base Section Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div[@id='dockbar']",
@@ -117,7 +117,7 @@ public class AddPortletKBArTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@title='Knowledge Base Article']/p/a")) {
+							"//div[@title='Knowledge Base Section']/p/a")) {
 					break;
 				}
 			}
@@ -127,7 +127,7 @@ public class AddPortletKBArTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("//div[@title='Knowledge Base Article']/p/a",
+		selenium.clickAt("//div[@title='Knowledge Base Section']/p/a",
 			RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {

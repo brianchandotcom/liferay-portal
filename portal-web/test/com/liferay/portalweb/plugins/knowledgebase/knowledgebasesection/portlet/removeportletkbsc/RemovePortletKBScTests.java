@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.portalweb.plugins.knowledgebase.knowledgebasesection.portlet;
+package com.liferay.portalweb.plugins.knowledgebase.knowledgebasesection.portlet.removeportletkbsc;
 
-import com.liferay.portalweb.plugins.knowledgebase.knowledgebasesection.portlet.addportletkbsc.AddPortletKBScTests;
-import com.liferay.portalweb.plugins.knowledgebase.knowledgebasesection.portlet.addportletkbscmultiple.AddPortletKBScMultipleTests;
-import com.liferay.portalweb.plugins.knowledgebase.knowledgebasesection.portlet.removeportletkbsc.RemovePortletKBScTests;
+import com.liferay.portalweb.plugins.knowledgebase.knowledgebasesection.portlet.addportletkbsc.AddPageKBScTest;
+import com.liferay.portalweb.plugins.knowledgebase.knowledgebasesection.portlet.addportletkbsc.AddPortletKBScTest;
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.util.TearDownPageTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -25,16 +25,14 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class PortletTestPlan extends BaseTestSuite {
-
+public class RemovePortletKBScTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-
-		testSuite.addTest(AddPortletKBScTests.suite());
-		testSuite.addTest(AddPortletKBScMultipleTests.suite());
-		testSuite.addTest(RemovePortletKBScTests.suite());
+		testSuite.addTestSuite(AddPageKBScTest.class);
+		testSuite.addTestSuite(AddPortletKBScTest.class);
+		testSuite.addTestSuite(RemovePortletKBScTest.class);
+		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;
 	}
-
 }

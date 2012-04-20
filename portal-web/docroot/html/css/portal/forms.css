@@ -3,15 +3,7 @@
 	overflow: hidden;
 }
 
-.aui-form-button.aui-input-disabled input, .aui-form-button.aui-input-disabled button {
-	background: #F5F5F5 url(../images/forms/button.png) repeat-x 0 0;
-	color: #ccc;
-}
-
 .aui-form-button.aui-input-disabled input:hover, .aui-form-button.aui-input-disabled button:hover {
-	background: #F5F5F5 url(../images/forms/button.png) repeat-x 0 0;
-	border-color: #DEDEDE #BFBFBF #BFBFBF #DEDEDE;
-	color: #ccc;
 	cursor: auto;
 }
 
@@ -19,23 +11,12 @@
 	display: inline-block;
 }
 
-.aui-form-validator-error-container {
-	color: #900;
-}
-
-.aui-form-validator-stack-error {
-	font-size: 0.9em;
-}
-
 .aui-form-validator-error-container .aui-field-element {
-	background: url(@theme_image_path@/messages/error.png) no-repeat scroll 100% 50%;
 	padding-right: 20px;
 }
 
 [class~="aui-form-validator-message"] {
-	background-color: #333;
 	clip: rect(0 0 0 0);
-	color: #fff;
 	display: block;
 	margin-top: 2px;
 	padding: 5px;
@@ -53,9 +34,6 @@
 	position: relative;
 }
 
-.ie6 .aui-form-validator-message {
-	color: #777;
-}
 
 .lfr-dynamic-form .aui-field-radio .aui-field {
 	display: block;
@@ -104,4 +82,38 @@ fieldset:last-child, .aui-form fieldset:last-child {
 .lfr-search-button input {
 	border-width: 0;
 	vertical-align: middle;
+}
+
+/* Skin */
+
+.aui-form-button.aui-input-disabled input, .aui-form-button.aui-input-disabled button {
+	background: #F5F5F5 url(../images/forms/button.png) repeat-x 0 0;
+	color: #ccc;
+}
+
+.aui-form-button.aui-input-disabled input:hover, .aui-form-button.aui-input-disabled button:hover {
+	background: #F5F5F5 url(../images/forms/button.png) repeat-x 0 0;
+	border-color: #DEDEDE #BFBFBF #BFBFBF #DEDEDE;
+	color: #ccc;
+}
+
+.aui-form-validator-error-container {
+	color: #900;
+}
+
+.aui-form-validator-stack-error {
+	font-size: 0.9em;
+}
+
+.aui-form-validator-error-container .aui-field-element {
+	background: url(@theme_image_path@/messages/error.png) no-repeat scroll 100% 50%;
+}
+
+[class~="aui-form-validator-message"] {
+	background-color: #333;
+	color: #fff;
+}
+
+.ie6 .aui-form-validator-message {
+	color: #777;
 }

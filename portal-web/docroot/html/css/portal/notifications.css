@@ -3,10 +3,15 @@
 }
 
 .popup-alert-notice .current-user-language {
-	border: 1px solid #ccc;
-	border-bottom: none;
-	border-top: none;
+	border: solid transparent;
+	border-width: 0 1px;
 	display: inline;
 	margin: 0 10px;
 	padding: 0 15px;
+}
+
+/* Skin */
+
+.popup-alert-notice .current-user-language {
+	border-color: #ccc;
 }

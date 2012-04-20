@@ -4,7 +4,6 @@
 }
 
 .lfr-asset-column-actions-content {
-	background-color: #D7F1FF;
 	overflow: visible;
 }
 
@@ -20,21 +19,11 @@
 }
 
 .lfr-asset-column-actions .lfr-asset-column-actions-content {
-	border: 1px solid #88C5D9;
+	border: 1px solid transparent;
 	padding: 0.7em;
 }
 
-.lfr-asset-column-details .lfr-asset-categories .lfr-asset-category {
-	color: #555;
-}
-
-.lfr-asset-column-details .lfr-asset-categories {
-	color: #7D7D7D;
-}
-
 .lfr-asset-column-details .lfr-asset-description {
-	color: #444;
-	font-style: italic;
 	margin: 0.5em auto 2em;
 }
 
@@ -44,8 +33,7 @@
 }
 
 .lfr-asset-column-details .lfr-asset-icon {
-	border-right: 1px solid #999;
-	color: #999;
+	border-right: 1px solid transparent;
 	float: left;
 	margin-right: 10px;
 	padding-left: 25px;
@@ -56,31 +44,16 @@
 	border-width: 0;
 }
 
-.lfr-asset-column-details .lfr-asset-author {
-	background: url(@theme_image_path@/portlet/edit_guest.png) no-repeat 0 50%;
-}
-
 .lfr-asset-column-details .lfr-asset-date {
-	background: url(@theme_image_path@/common/date.png) no-repeat 0 50%;
 	overflow: hidden;
 }
 
-.lfr-asset-column-details .lfr-asset-subfolders {
-	background: url(@theme_image_path@/common/folder.png) no-repeat 0 50%;
-}
-
-.lfr-asset-column-details .lfr-asset-teams {
-	background: url(@theme_image_path@/common/team_icon.png) no-repeat 0 50%;
-	border-right-width: 0;
-}
-
 .lfr-asset-column-details .lfr-asset-items {
-	background: url(@theme_image_path@/common/page.png) no-repeat 0 50%;
 	overflow: hidden;
 }
 
 .lfr-asset-column-details .lfr-asset-downloads {
-	padding-left: 0px;
+	padding-left: 0;
 	overflow: hidden;
 }
 
@@ -94,12 +67,8 @@
 	margin: 2em 0;
 }
 
-.lfr-asset-column-details .lfr-asset-tags .tag {
-	color: #555;
-}
-
-.lfr-asset-column-details .lfr-asset-tags {
-	color: #7D7D7D;
+.lfr-asset-column-details .lfr-asset-teams {
+	border-right-width: 0;
 }
 
 .lfr-asset-column-details .taglib-custom-attributes-list label, .lfr-asset-column-details .lfr-asset-field label {
@@ -122,10 +91,70 @@
 }
 
 .lfr-asset-panels .lfr-panel.lfr-extended, .lfr-asset-column-details .lfr-panel.lfr-extended {
+	border: 1px solid transparent;
 	margin-bottom: 0;
-	border: 1px solid #CCC;
 }
 
 .lfr-asset-column-details .lfr-panel-container, .lfr-asset-panels .lfr-panel-container {
 	border-width: 0;
+}
+
+/* Skin */
+
+.lfr-asset-column-actions-content {
+	background-color: #D7F1FF;
+}
+
+.lfr-asset-column-actions .lfr-asset-column-actions-content {
+	border-color: #88C5D9;
+}
+
+.lfr-asset-column-details .lfr-asset-categories .lfr-asset-category {
+	color: #555;
+}
+
+.lfr-asset-column-details .lfr-asset-categories {
+	color: #7D7D7D;
+}
+
+.lfr-asset-column-details .lfr-asset-description {
+	color: #444;
+	font-style: italic;
+}
+
+.lfr-asset-column-details .lfr-asset-icon {
+	border-right-color: #999;
+	color: #999;
+}
+
+.lfr-asset-column-details .lfr-asset-author {
+	background: url(@theme_image_path@/portlet/edit_guest.png) no-repeat 0 50%;
+}
+
+.lfr-asset-column-details .lfr-asset-date {
+	background: url(@theme_image_path@/common/date.png) no-repeat 0 50%;
+}
+
+.lfr-asset-column-details .lfr-asset-subfolders {
+	background: url(@theme_image_path@/common/folder.png) no-repeat 0 50%;
+}
+
+.lfr-asset-column-details .lfr-asset-teams {
+	background: url(@theme_image_path@/common/team_icon.png) no-repeat 0 50%;
+}
+
+.lfr-asset-column-details .lfr-asset-items {
+	background: url(@theme_image_path@/common/page.png) no-repeat 0 50%;
+}
+
+.lfr-asset-column-details .lfr-asset-tags .tag {
+	color: #555;
+}
+
+.lfr-asset-column-details .lfr-asset-tags {
+	color: #7D7D7D;
+}
+
+.lfr-asset-panels .lfr-panel.lfr-extended, .lfr-asset-column-details .lfr-panel.lfr-extended {
+	border-color: #CCC;
 }

@@ -16,6 +16,14 @@
 		}
 	}
 
+	.user-details {
+		margin-top: 1em;
+	}
+}
+
+/* Skin */
+
+.taglib-user-display {
 	a .user-name {
 		text-decoration: underline;
 	}
@@ -23,9 +31,5 @@
 	.user-name {
 		font-size: 1.1em;
 		font-weight: bold;
-	}
-
-	.user-details {
-		margin-top: 1em;
 	}
 }

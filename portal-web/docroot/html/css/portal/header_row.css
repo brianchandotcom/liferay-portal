@@ -1,5 +1,5 @@
 .lfr-header-row {
-	border-bottom: 1px solid #7B7B7B;
+	border: 1px solid transparent;
 	min-height: 31px;
 }
 
@@ -27,7 +27,7 @@
 }
 
 .lfr-header-row .lfr-actions.lfr-extended, .lfr-header-row .lfr-search-combobox {
-	border: 1px solid;
+	border: 1px solid transparent;
 	margin-right: 2px;
 }
 
@@ -37,10 +37,6 @@
 
 .lfr-header-row .aui-fieldset .aui-field-content, .lfr-header-row .aui-field-row, .lfr-header-row .aui-button-holder, .lfr-header-row .aui-field-wrapper-content {
 	margin: 0;
-}
-
-.lfr-header-row .aui-buttonitem-content, .lfr-header-row .aui-button-input, .lfr-header-row .lfr-actions.lfr-extended, .lfr-header-row .lfr-search-combobox {
-	border-color: #5F5F5F;
 }
 
 .lfr-header-row .aui-field-choice .aui-field-element {
@@ -54,4 +50,14 @@
 .lfr-header-row .lfr-search-combobox {
 	float: right;
 	margin: -2px 0 0 2px;
+}
+
+/* Skin */
+
+.lfr-header-row {
+	border-bottom-color: #7B7B7B;
+}
+
+.lfr-header-row .aui-buttonitem-content, .lfr-header-row .aui-button-input, .lfr-header-row .lfr-actions.lfr-extended, .lfr-header-row .lfr-search-combobox {
+	border-color: #5F5F5F;
 }

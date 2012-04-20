@@ -31,10 +31,6 @@
 	vertical-align: top;
 }
 
-.taglib-search-iterator-highlighted {
-	font-weight: bold;
-}
-
 .taglib-search-iterator-page-iterator-top {
 	padding-bottom: 5px;
 }
@@ -51,7 +47,6 @@
 }
 
 .taglib-page-iterator .search-results {
-	color: #555;
 	float: left;
 }
 
@@ -60,11 +55,52 @@
 }
 
 .taglib-page-iterator .search-pages .page-links a, .taglib-page-iterator .search-pages .page-links span {
-	background: url() no-repeat 0 0;
-	border-left: 1px solid #ccc;
+	border-left: 1px solid transparent;
 	display: inline-block;
 	line-height: 1;
 	padding: 2px 15px;
+}
+
+.taglib-page-iterator .search-pages .page-links a.first, .taglib-page-iterator .search-pages .page-links span.first {
+	border-left-width: 0;
+}
+
+.taglib-page-iterator .search-pages .page-links a.first, .taglib-page-iterator .search-pages .page-links span.first, .taglib-page-iterator .search-pages .page-links a.previous, .taglib-page-iterator .search-pages .page-links span.previous {
+	padding-right: 5px;
+}
+
+.taglib-page-iterator .search-pages .page-links a.next, .taglib-page-iterator .search-pages .page-links span.next, .taglib-page-iterator .search-pages .page-links a.last, .taglib-page-iterator .search-pages .page-links span.last {
+	padding-left: 5px;
+}
+
+.taglib-page-iterator .search-pages .delta-selector, .taglib-page-iterator .search-pages .page-selector, .taglib-page-iterator .search-pages .page-links {
+	float: left;
+}
+
+.taglib-page-iterator .search-pages .page-selector {
+	margin-left: 10px;
+	margin-right: 10px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.ie6 .taglib-page-iterator .search-pages .page-selector .aui-field-content, .ie6 .taglib-page-iterator .search-pages .delta-selector .aui-field-content {
+	display: inline;
+}
+
+/* Skin */
+
+.taglib-search-iterator-highlighted {
+	font-weight: bold;
+}
+
+.taglib-page-iterator .search-results {
+	color: #555;
+}
+
+.taglib-page-iterator .search-pages .page-links a, .taglib-page-iterator .search-pages .page-links span {
+	background: url() no-repeat 0 0;
+	border-left-color: #ccc;
 }
 
 .taglib-page-iterator .search-pages .page-links span {
@@ -74,7 +110,6 @@
 .taglib-page-iterator .search-pages .page-links a.first, .taglib-page-iterator .search-pages .page-links span.first {
 	background-image: url(@theme_image_path@/arrows/paging_first.png);
 	background-repeat: no-repeat;
-	border-left: none;
 }
 
 .taglib-page-iterator .search-pages .page-links a.previous, .taglib-page-iterator .search-pages .page-links span.previous {
@@ -92,13 +127,8 @@
 	background-repeat: no-repeat;
 }
 
-.taglib-page-iterator .search-pages .page-links a.first, .taglib-page-iterator .search-pages .page-links span.first, .taglib-page-iterator .search-pages .page-links a.previous, .taglib-page-iterator .search-pages .page-links span.previous {
-	padding-right: 5px;
-}
-
 .taglib-page-iterator .search-pages .page-links a.next, .taglib-page-iterator .search-pages .page-links span.next, .taglib-page-iterator .search-pages .page-links a.last, .taglib-page-iterator .search-pages .page-links span.last {
 	background-position: 100% 0;
-	padding-left: 5px;
 }
 
 .taglib-page-iterator .search-pages .page-links span.first, .taglib-page-iterator .search-pages .page-links span.previous {
@@ -107,19 +137,4 @@
 
 .taglib-page-iterator .search-pages .page-links span.next, .taglib-page-iterator .search-pages .page-links span.last {
 	background-position: 100% 100%;
-}
-
-.taglib-page-iterator .search-pages .delta-selector, .taglib-page-iterator .search-pages .page-selector, .taglib-page-iterator .search-pages .page-links {
-	float: left;
-}
-
-.taglib-page-iterator .search-pages .page-selector {
-	margin-left: 10px;
-	margin-right: 10px;
-	padding-left: 10px;
-	padding-right: 10px;
-}
-
-.ie6 .taglib-page-iterator .search-pages .page-selector .aui-field-content, .ie6 .taglib-page-iterator .search-pages .delta-selector .aui-field-content {
-	display: inline;
 }

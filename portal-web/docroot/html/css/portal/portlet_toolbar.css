@@ -1,5 +1,4 @@
 .lfr-portlet-toolbar {
-	background: #F6F8FB;
 	margin-bottom: 5px;
 	overflow: hidden;
 	padding: 2px;
@@ -14,10 +13,35 @@
 }
 
 .lfr-portlet-toolbar .lfr-actions.show-arrow.direction-down.lfr-toolbar-button .lfr-trigger strong a {
-	background-position: 92% 7px;
 	padding-bottom: 3px;
 	padding-top: 4px;
 	padding-right: 25px;
+}
+
+.lfr-portlet-toolbar .lfr-toolbar-button a {
+	border: 1px solid transparent;
+	display: block;
+	float: left;
+	padding: 4px 14px 4px 29px;
+}
+
+.lfr-portlet-toolbar .lfr-toolbar-button a:hover {
+	border: 1px solid transparent;
+	padding: 4px 14px 4px 29px;
+}
+
+.lfr-portlet-toolbar .lfr-toolbar-button.current a {
+	border: 1px solid transparent;
+}
+
+/* Skin */
+
+.lfr-portlet-toolbar {
+	background: #F6F8FB;
+}
+
+.lfr-portlet-toolbar .lfr-actions.show-arrow.direction-down.lfr-toolbar-button .lfr-trigger strong a {
+	background-position: 92% 7px;
 }
 
 .lfr-portlet-toolbar .lfr-toolbar-button a, .lfr-portlet-toolbar .lfr-toolbar-button a span {
@@ -26,12 +50,9 @@
 
 .lfr-portlet-toolbar .lfr-toolbar-button a {
 	background: url() no-repeat 5px 50%;
-	border: 1px solid #F6F8FB;
-	display: block;
-	float: left;
+	border-color: #F6F8FB;
 	font-size: 12px;
 	font-weight: bold;
-	padding: 4px 14px 4px 29px;
 	text-decoration: none;
 }
 
@@ -41,11 +62,7 @@
 
 .lfr-portlet-toolbar .lfr-toolbar-button a:hover {
 	background-color: #DFF4FF;
-	border: 1px solid #A7CEDF;
-	padding: 4px 14px 4px 29px;
-}
-
-.ie6 .lfr-portlet-toolbar .lfr-toolbar-button a {
+	border-color: #A7CEDF;
 }
 
 .lfr-portlet-toolbar .lfr-toolbar-button.current a, .lfr-portlet-toolbar .lfr-toolbar-button.current a span {
@@ -54,7 +71,7 @@
 
 .lfr-portlet-toolbar .lfr-toolbar-button.current a {
 	background-color: #CFD5D7;
-	border: 1px solid #CFD5D7;
+	border-color: #CFD5D7;
 }
 
 .lfr-portlet-toolbar .lfr-toolbar-button.current a:hover {

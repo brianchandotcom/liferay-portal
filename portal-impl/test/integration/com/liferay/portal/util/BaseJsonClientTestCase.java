@@ -161,21 +161,26 @@ public class BaseJsonClientTestCase {
 
 		beginIndex += variable.length() + 1;
 
+		int endIndex = -1;
+
 		if (string) {
 			beginIndex++;
 
-			int endIndex = responseContent.indexOf("\",", beginIndex);
+			endIndex = responseContent.indexOf("\",", beginIndex);
 
 			if (endIndex == -1) {
 				endIndex = responseContent.length() - 2;
 			}
-
-			return responseContent.substring(beginIndex, endIndex);
 		}
 		else {
-			return responseContent.substring(
-				beginIndex, responseContent.indexOf(",", beginIndex));
+			endIndex = responseContent.indexOf(",", beginIndex);
+
+			if (endIndex == -1) {
+				endIndex = responseContent.length() - 1;
+			}
 		}
+
+		return responseContent.substring(beginIndex, endIndex);
 	}
 
 	private class StringHandler implements ResponseHandler<String> {
@@ -191,9 +196,7 @@ public class BaseJsonClientTestCase {
 				return null;
 			}
 
-			String responseContent = EntityUtils.toString(httpEntity);
-
-			return responseContent;
+			return EntityUtils.toString(httpEntity);
 		}
 
 		protected void checkStatusCode(StatusLine statusLine)

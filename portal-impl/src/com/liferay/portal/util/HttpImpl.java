@@ -936,7 +936,7 @@ public class HttpImpl implements Http {
 				for (Map.Entry<String, String> entry : parts.entrySet()) {
 					String value = entry.getValue();
 
-					if (Validator.isNotNull(value)) {
+					if (value != null) {
 						postMethod.addParameter(entry.getKey(), value);
 					}
 				}
@@ -949,7 +949,7 @@ public class HttpImpl implements Http {
 				for (Map.Entry<String, String> entry : parts.entrySet()) {
 					String value = entry.getValue();
 
-					if (Validator.isNotNull(value)) {
+					if (value != null) {
 						StringPart stringPart = new StringPart(
 							entry.getKey(), value);
 

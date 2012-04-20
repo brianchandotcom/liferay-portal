@@ -14,16 +14,9 @@
 
 package com.liferay.portal.security.pacl.checker;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 
 import java.security.Permission;
-
-import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * @author Raymond Augé
@@ -31,7 +24,6 @@ import java.util.TreeSet;
 public class RuntimeChecker extends BaseChecker {
 
 	public void afterPropertiesSet() {
-		initClassLoaderPortletIds();
 	}
 
 	public void checkPermission(Permission permission) {
@@ -47,28 +39,7 @@ public class RuntimeChecker extends BaseChecker {
 					"Attempted to access package " + pkg);
 			}
 		}
-		else if (name.equals(RUNTIME_PERMISSION_GET_CLASSLOADER) &&
-				 PortalSecurityManagerThreadLocal.
-				 	isClassLoaderCheckingEnabled()) {
-
-			String portletId = null;
-
-			int pos = name.indexOf(StringPool.PERIOD);
-
-			if (pos != -1) {
-				portletId = name.substring(pos + 1);
-			}
-
-			if (Validator.isNull(portletId)) {
-				portletId = "foreign";
-			}
-
-			if (!hasGetClassLoader(portletId)) {
-				Thread.dumpStack();
-
-				throw new SecurityException(
-					"Attempted to get an external class loader " + portletId);
-			}
+		else if (name.equals(RUNTIME_PERMISSION_GET_CLASSLOADER)) {
 		}
 		else if (name.equals(RUNTIME_PERMISSION_SET_SECURITY_MANAGER)) {
 			throw new SecurityException(
@@ -81,14 +52,6 @@ public class RuntimeChecker extends BaseChecker {
 		}
 	}
 
-	public boolean hasGetClassLoader(String portletId) {
-		if (isJSPCompiler(portletId, RUNTIME_PERMISSION_GET_CLASSLOADER)) {
-			return true;
-		}
-
-		return _classLoaderPortletIds.contains(portletId);
-	}
-
 	public boolean hasPackageAccess(String pkg) {
 
 		// TODO
@@ -98,22 +61,5 @@ public class RuntimeChecker extends BaseChecker {
 
 		return true;
 	}
-
-	protected void initClassLoaderPortletIds() {
-		_classLoaderPortletIds = getPropertySet(
-			"security-manager-get-class-loader");
-
-		if (_log.isDebugEnabled()) {
-			Set<String> indexers = new TreeSet<String>(_classLoaderPortletIds);
-
-			for (String indexer : indexers) {
-				_log.debug("Allowing access to class loaders from " + indexer);
-			}
-		}
-	}
-
-	private static Log _log = LogFactoryUtil.getLog(RuntimeChecker.class);
-
-	private Set<String> _classLoaderPortletIds;
 
 }

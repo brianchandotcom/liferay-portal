@@ -3,17 +3,30 @@
 }
 
 .taglib-calendar table {
+	border: 1px solid transparent;
 	width: 100%;
 }
 
 .taglib-calendar tr th, .taglib-calendar tr td {
+	border-bottom: 1px solid transparent;
 	height: 25px;
 	text-align: center;
 }
 
 .taglib-calendar tr.portlet-section-header th, .taglib-calendar tr td {
+	border: 1px solid transparent;
+	border-bottom-width: 0;
+	border-top-width: 0;
 	padding: 0;
 	width: 26px;
+}
+
+.taglib-calendar tr.portlet-section-header th.first, .taglib-calendar tr td.first {
+	border-left-width: 0;
+}
+
+.taglib-calendar tr.portlet-section-header th.last, .taglib-calendar tr td.last {
+	border-right-width: 0;
 }
 
 .taglib-calendar tr td a {
@@ -26,27 +39,18 @@
 	padding-bottom: 5px;
 }
 
-/*Skin*/
+/* Skin */
+
 .taglib-calendar table {
-	border: 1px solid #999;
+	border-color: #999;
 }
 
 .taglib-calendar tr th, .taglib-calendar tr td {
-	border-bottom: 1px solid #999;
+	border-bottom-color: #999;
 }
 
 .taglib-calendar tr.portlet-section-header th, .taglib-calendar tr td {
-	border: 1px solid #999;
-	border-bottom: none;
-	border-top: none;
-}
-
-.taglib-calendar tr.portlet-section-header th.first, .taglib-calendar tr td.first {
-	border-left: none;
-}
-
-.taglib-calendar tr.portlet-section-header th.last, .taglib-calendar tr td.last {
-	border-right: none;
+	border-color: #999;
 }
 
 .taglib-calendar a:hover, .taglib-calendar a:focus {

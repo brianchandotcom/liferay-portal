@@ -7,10 +7,14 @@
 }
 
 .lfr-panel-content .aui-paginator-container {
+	border-bottom: 1px solid transparent;
+	border-top: 1px solid transparent;
+	overflow: hidden;
 	text-align: center;
 }
 
 .lfr-panel-content .aui-paginator-page-container .aui-paginator-page-link {
+	border: 1px solid transparent;
 	display: inline-block;
 	float: none;
 	padding: 5px 10px;
@@ -18,21 +22,17 @@
 	width: auto;
 }
 
-.lfr-panel-content .aui-paginator-container {
-	overflow: hidden;
-}
-
-/*Skin*/
+/* Skin */
 
 .lfr-panel-content .aui-paginator-container {
 	background: #cfd2d5;
-	border-bottom: 1px solid #dcdee0;
-	border-top: 1px solid #dcdee0;
+	border-bottom-color: #dcdee0;
+	border-top-color: #dcdee0;
 }
 
 .lfr-panel-content .aui-paginator-page-container .aui-paginator-page-link {
 	background: none;
-	border: 1px solid #CFD2D5;
+	border-color: #CFD2D5;
 }
 
 .lfr-panel-content .aui-paginator-page-container .aui-paginator-page-link.aui-paginator-current-page:hover {

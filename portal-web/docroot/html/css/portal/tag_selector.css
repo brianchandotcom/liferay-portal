@@ -11,17 +11,21 @@
 }
 
 .lfr-tags-selector-list {
+	border: 0 solid transparent;
+	border-width: 0 1px 1px;
 	height: 265px;
 	margin-bottom: 0.5em;
 	overflow: auto;
 }
 
 .lfr-tag-selector-popup fieldset {
+	border-width: 0;
 	margin: 0;
 	padding: 0;
 }
 
 .lfr-tag-selector-popup label {
+	border-bottom: 1px solid transparent;
 	cursor: pointer;
 	display: block;
 	padding: 2px;
@@ -46,6 +50,7 @@
 }
 
 .lfr-tag-selector-popup .aui-textfield-content {
+	border-bottom: 1px solid transparent;
 	padding: 5px;
 }
 
@@ -61,23 +66,19 @@
 	display: block;
 }
 
-/*Skin*/
-.lfr-tags-selector-list {
-	border: solid #ccc;
-	border-width: 0 1px 1px;
-}
+/* Skin */
 
-.lfr-tag-selector-popup fieldset {
-	border-width: 0;
+.lfr-tags-selector-list {
+	border-color: #ccc;
 }
 
 .lfr-tag-selector-popup label {
-	border-bottom: 1px solid #ccc;
+	border-bottom-color: #ccc;
 }
 
 .lfr-tag-selector-popup .aui-textfield-content {
 	background-color: #D3DADD;
-	border-bottom: 1px solid #AEB8BC;
+	border-bottom-color: #AEB8BC;
 }
 
 .lfr-tag-selector-popup .no-matches {

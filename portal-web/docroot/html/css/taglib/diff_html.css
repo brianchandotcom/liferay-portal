@@ -1,3 +1,15 @@
+.taglib-diff-html span.diff-html-added img {
+	border: 2px solid transparent;
+}
+
+.taglib-diff-html span.diff-html-changed img {
+	border: 2px dotted transparent;
+}
+
+.taglib-diff-html span.diff-html-removed img {
+	border: 2px solid transparent;
+}
+
 .taglib-diff-html div.diff-removed-image, div.diff-added-image {
 	height: 300px;
 	margin: 2px;
@@ -14,7 +26,8 @@
 	filter: alpha(opacity=55);
 }
 
-/*Skin*/
+/* Skin */
+
 .taglib-diff-html div.diff-removed-image {
 	background: #fdc6c6 url(@theme_image_path@/diff/minus.png);
 }
@@ -24,7 +37,7 @@
 }
 
 .taglib-diff-html span.diff-html-added img {
-	border: 2px solid #cfc;
+	border-color: #cfc;
 }
 
 .taglib-diff-html span.diff-html-added {
@@ -33,7 +46,7 @@
 }
 
 .taglib-diff-html span.diff-html-changed img {
-	border: 2px dotted #009;
+	border-color: #009;
 }
 
 .taglib-diff-html span.diff-html-changed {
@@ -41,7 +54,7 @@
 }
 
 .taglib-diff-html span.diff-html-removed img {
-	border: 2px solid #fdc6c6;
+	border-color: #fdc6c6;
 }
 
 .taglib-diff-html span.diff-html-removed {

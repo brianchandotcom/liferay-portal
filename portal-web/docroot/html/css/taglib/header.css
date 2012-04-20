@@ -8,16 +8,18 @@
 }
 
 .taglib-header {
+	border-bottom: 1px solid transparent;
 	margin-bottom: 1em;
 }
 
-/*Skin*/
+/* Skin */
+
 .taglib-header .header-back-to a {
 	font-weight: bold;
 	text-decoration: none;
 }
 
 .taglib-header {
-	border-bottom: 1px solid #C8C9CA;
+	border-bottom-color: #C8C9CA;
 	color: #555;
 }

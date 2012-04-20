@@ -59,6 +59,7 @@ td.lfr-middle {
 }
 
 .popup-alert-notice, .popup-alert-warning {
+	border-bottom: 1px solid transparent;
 	left: 0;
 	padding: 10px;
 	padding-left: 25px;
@@ -86,11 +87,16 @@ td.lfr-middle {
 }
 
 .lfr-token {
+	border: 1px solid transparent;
 	cursor: pointer;
 	display: inline-block;
 	line-height: 1;
 	padding: 0.3em 0.5em 0.3em;
 	margin: 0 0.2em;
+}
+
+.lfr-token-primary {
+	border-width: 0;
 }
 
 .lfr-token-primary, .lfr-token-primary:hover {
@@ -106,7 +112,7 @@ td.lfr-middle {
 	vertical-align: middle;
 }
 
-/*Skin*/
+/* Skin */
 
 .definition-of-terms dt {
 	font-weight: bold;
@@ -114,7 +120,6 @@ td.lfr-middle {
 
 .popup-alert-notice, .popup-alert-warning {
 	background: #ffc url() no-repeat 5px 50%;
-	border-bottom: 1px solid;
 	font-size: 1.1em;
 }
 
@@ -138,13 +143,12 @@ td.lfr-middle {
 
 .lfr-token {
 	background-color: #B3DAEF;
-	border: 1px solid #5FA8FF;
+	border-color: #5FA8FF;
 	color: #444;
 	text-decoration: none;
 }
 
 .lfr-token-primary {
-	border-width: 0;
 	font-weight: bold;
 }
 

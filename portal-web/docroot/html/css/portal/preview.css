@@ -3,6 +3,7 @@
 }
 
 .lfr-preview-file-content {
+	border-bottom: 1px solid transparent;
 	height: 480px;
 	padding: 0 0 0 135px;
 	position: relative;
@@ -78,6 +79,7 @@
 }
 
 .lfr-preview-file-toolbar .aui-toolbar-item {
+	border-width: 0;
 	height: auto;
 	margin: 0;
 	width: auto;
@@ -94,6 +96,10 @@
 	margin-top: 0.5em;
 	opacity: 0.5;
 	padding: 3px 15px;
+}
+
+.lfr-preview-file-index {
+	line-height: 0;
 }
 
 .lfr-preview-file-info:hover {
@@ -147,6 +153,7 @@
 }
 
 .lfr-preview-file-image img {
+	border: 1px solid transparent;
 	display: inline-block;
 	min-height: 40px;
 	padding: 3px;
@@ -172,6 +179,7 @@
 }
 
 .lfr-preview-file-image-overlay-content {
+	border: 2px solid transparent;
 	overflow: auto;
 	text-align: center;
 }
@@ -196,10 +204,10 @@
 	zoom: 1;
 }
 
-/*Skin*/
+/* Skin */
 
 .lfr-preview-file-content {
-	border-bottom: 1px solid #6D6D6E;
+	border-bottom-color: #6D6D6E;
 }
 
 .lfr-preview-file-image-current-column, .lfr-preview-file-video-current-column {
@@ -212,7 +220,6 @@
 
 .lfr-preview-file-toolbar .aui-toolbar-item {
 	background: none;
-	border-width: 0;
 }
 
 .lfr-preview-file-toolbar .aui-icon-arrow-1-l {
@@ -234,7 +241,6 @@
 
 .lfr-preview-file-index {
 	font-weight: bold;
-	line-height: 0;
 }
 
 .lfr-preview-file-image-current {
@@ -243,7 +249,7 @@
 
 .lfr-preview-file-image img {
 	background: url(@theme_image_path@/aui/loading_indicator.gif) no-repeat 50% 50%;
-	border: 1px solid #AEB8BC;
+	border-color: #AEB8BC;
 }
 
 .lfr-preview-file-image-selected img, .lfr-preview-file-image:hover img {
@@ -261,5 +267,5 @@
 
 .lfr-preview-file-image-overlay-content {
 	background: url(@theme_image_path@/common/checkerboard.png);
-	border: 2px solid #555;
+	border-color: #555;
 }

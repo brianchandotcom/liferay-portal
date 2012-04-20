@@ -3,6 +3,9 @@
 }
 
 .js .taglib-webdav table {
+	border: 1px solid transparent;
+	border-left-width: 0;
+	border-right-width: 0;
 	display: none;
 }
 
@@ -22,13 +25,12 @@
 	height: 1%;
 }
 
-/*Skin*/
+/* Skin */
+
 .js .taglib-webdav.visible {
 	background: #F0F5F7;
 }
 
 .js .taglib-webdav table {
-	border: 1px solid #828F95;
-	border-left: none;
-	border-right: none;
+	border-color: #828F95;
 }

@@ -2,8 +2,20 @@
 	clear: both;
 }
 
+.lfr-panel.lfr-extended, .lfr-panel-container, .lfr-floating-container {
+	border: 1px solid transparent;
+}
+
 .lfr-floating-container {
 	position: relative;
+}
+
+.lfr-floating-container .lfr-form-row {
+	border-width: 0;
+}
+
+.lfr-panel-container .lfr-panel {
+	border-width: 0;
 }
 
 .lfr-panel .lfr-panel-titlebar {
@@ -37,7 +49,17 @@
 }
 
 .lfr-panel.lfr-extended .lfr-panel-titlebar {
+	border-bottom: 1px solid transparent;
+	line-height: 1.6;
 	padding: 2px;
+}
+
+.lfr-extended.lfr-collapsed .lfr-panel-titlebar {
+	border-bottom-width: 0;
+}
+
+.lfr-panel-container .lfr-extended.lfr-collapsible .lfr-panel-titlebar {
+	border-top: 1px solid transparent;
 }
 
 .ie6 .lfr-extended.lfr-collapsible .lfr-panel-titlebar {
@@ -69,21 +91,20 @@
 }
 
 .lfr-panel .lfr-panel-content .undo-queue {
+	border-left-width: 0;
+	border-right-width: 0;
+	border-top-width: 0;
 	margin: -0.5em 0 10px;
 }
 
-/*Skin*/
+/* Skin */
+
 .lfr-panel.lfr-extended, .lfr-panel-container, .lfr-floating-container {
-	border: 1px solid;
 	border-color: #DEDEDE #BFBFBF #BFBFBF #DEDEDE;
 }
 
 .lfr-panel-container, .lfr-floating-container {
 	background: #fff;
-}
-
-.lfr-panel-container .lfr-panel {
-	border: none;
 }
 
 .lfr-panel.lfr-collapsible .lfr-panel-titlebar {
@@ -111,18 +132,13 @@
 	background-image: url(@theme_image_path@/arrows/05_right.png);
 }
 
+.lfr-panel-container .lfr-extended.lfr-collapsible .lfr-panel-titlebar {
+	border-top-color: #cecece;
+}
+
 .lfr-panel.lfr-extended .lfr-panel-titlebar {
 	background: #d6d6d6 url(@theme_image_path@/application/panel_header.png) repeat-x 0 0;
-	border-bottom: 1px solid #cdcdcd;
-	line-height: 1.6;
-}
-
-.lfr-extended.lfr-collapsed .lfr-panel-titlebar {
-	border-bottom: none;
-}
-
-.lfr-panel-container .lfr-extended.lfr-collapsible .lfr-panel-titlebar {
-	border-top: 1px solid #cecece;
+	border-bottom-color: #cdcdcd;
 }
 
 .js .lfr-floating-trigger {
@@ -135,14 +151,4 @@
 .js .lfr-trigger-selected {
 	background-color: #069;
 	color: #fff;
-}
-
-.lfr-floating-container .lfr-form-row {
-	border: none;
-}
-
-.lfr-panel .lfr-panel-content .undo-queue {
-	border-left: none;
-	border-right: none;
-	border-top: none;
 }

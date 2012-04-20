@@ -1,4 +1,5 @@
 .lfr-header-row {
+	border: 1px solid transparent;
 	min-height: 31px;
 }
 
@@ -26,6 +27,7 @@
 }
 
 .lfr-header-row .lfr-actions.lfr-extended, .lfr-header-row .lfr-search-combobox {
+	border: 1px solid transparent;
 	margin-right: 2px;
 }
 
@@ -50,13 +52,10 @@
 	margin: -2px 0 0 2px;
 }
 
-/*Skin*/
-.lfr-header-row {
-	border-bottom: 1px solid #7B7B7B;
-}
+/* Skin */
 
-.lfr-header-row .lfr-actions.lfr-extended, .lfr-header-row .lfr-search-combobox {
-	border: 1px solid;
+.lfr-header-row {
+	border-bottom-color: #7B7B7B;
 }
 
 .lfr-header-row .aui-buttonitem-content, .lfr-header-row .aui-button-input, .lfr-header-row .lfr-actions.lfr-extended, .lfr-header-row .lfr-search-combobox {

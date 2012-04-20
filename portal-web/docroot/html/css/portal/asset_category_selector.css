@@ -25,6 +25,7 @@
 }
 
 .lfr-asset-category-search-container {
+	border-bottom: 1px solid transparent; 
 	margin: 3px 0;
 	padding: 5px;
 }
@@ -34,6 +35,9 @@
 }
 
 .lfr-asset-category-container .no-matches {
+	border-bottom-width: 0;
+	border-left-width: 0;
+	border-right-width: 0;
 	margin-bottom: 0;
 	margin-left: 5px;
 	margin-top: 0;
@@ -77,20 +81,18 @@
 	margin-left: 29px;
 }
 
-/*Skin*/
+/* Skin */
+
 .lfr-asset-category-container legend {
 	font-weight: bold;
 }
 
 .lfr-asset-category-search-container {
 	background-color: #D3DADD;
-	border-bottom: 1px solid #AEB8BC;
+	border-bottom-color: #AEB8BC;
 }
 
 .lfr-asset-category-container .no-matches {
-	border-bottom-width: 0;
-	border-left-width: 0;
-	border-right-width: 0;
 	color: #999;
 }
 

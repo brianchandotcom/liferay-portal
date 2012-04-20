@@ -1,4 +1,5 @@
 .lfr-translation-manager {
+	border: 1px solid transparent;
 	display: block;
 	margin: 0 auto;
 	min-height: 1.8em;
@@ -22,6 +23,7 @@
 	}
 
 	.lfr-translation-manager-translation {
+		border: 1px solid transparent;
 		cursor: pointer;
 		display: inline-block;
 		margin: 0.2em;
@@ -47,10 +49,10 @@
 	white-space: nowrap;
 }
 
-/*Skin*/
+/* Skin */
+
 .lfr-translation-manager {
 	background: #EEE;
-	border: 1px solid #979798;
 	border-color: #979798 #FAFAFB #FAFAFB #BDBDBE;
 	color: #34404F;
 
@@ -62,7 +64,7 @@
 
 	.lfr-translation-manager-translation {
 		background-color: #B3DAEF;
-		border: 1px solid #5FA8FF;
+		border-color: #5FA8FF;
 		color: #444;
 		text-decoration: none;
 		text-shadow: 1px 1px #EEE;

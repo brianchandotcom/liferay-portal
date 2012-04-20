@@ -4,19 +4,21 @@
 }
 
 .taglib-language-list-text {
+	border-right: 1px solid transparent;
 	padding: 0 0.2em;
 }
 
-/*Skin*/
+.taglib-language-list-text.last {
+	border-width: 0;
+}
+
+/* Skin */
+
 .taglib-language-option {
 	background-position: 0 50%;
 	background-repeat: no-repeat;
 }
 
 .taglib-language-list-text {
-	border-right: 1px solid #CCC;
-}
-
-.taglib-language-list-text.last {
-	border-width: 0;
+	border-right-color: #CCC;
 }

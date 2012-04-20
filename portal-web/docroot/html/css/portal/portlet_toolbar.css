@@ -19,16 +19,23 @@
 }
 
 .lfr-portlet-toolbar .lfr-toolbar-button a {
+	border: 1px solid transparent;
 	display: block;
 	float: left;
 	padding: 4px 14px 4px 29px;
 }
 
 .lfr-portlet-toolbar .lfr-toolbar-button a:hover {
+	border: 1px solid transparent;
 	padding: 4px 14px 4px 29px;
 }
 
-/*Skin*/
+.lfr-portlet-toolbar .lfr-toolbar-button.current a {
+	border: 1px solid transparent;
+}
+
+/* Skin */
+
 .lfr-portlet-toolbar {
 	background: #F6F8FB;
 }
@@ -43,7 +50,7 @@
 
 .lfr-portlet-toolbar .lfr-toolbar-button a {
 	background: url() no-repeat 5px 50%;
-	border: 1px solid #F6F8FB;
+	border-color: #F6F8FB;
 	font-size: 12px;
 	font-weight: bold;
 	text-decoration: none;
@@ -55,7 +62,7 @@
 
 .lfr-portlet-toolbar .lfr-toolbar-button a:hover {
 	background-color: #DFF4FF;
-	border: 1px solid #A7CEDF;
+	border-color: #A7CEDF;
 }
 
 .lfr-portlet-toolbar .lfr-toolbar-button.current a, .lfr-portlet-toolbar .lfr-toolbar-button.current a span {
@@ -64,7 +71,7 @@
 
 .lfr-portlet-toolbar .lfr-toolbar-button.current a {
 	background-color: #CFD5D7;
-	border: 1px solid #CFD5D7;
+	border-color: #CFD5D7;
 }
 
 .lfr-portlet-toolbar .lfr-toolbar-button.current a:hover {

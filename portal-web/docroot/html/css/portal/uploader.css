@@ -3,6 +3,7 @@
 }
 
 .lfr-upload-container .upload-target {
+	border: 1px solid transparent;
 	margin-right: 1.5em;
 	min-height: 30px;
 	text-align: center;
@@ -27,6 +28,7 @@
 }
 
 .lfr-upload-container .upload-file {
+	border: 1px solid transparent;
 	display: block;
 	margin: 0.3em 1.5em 0.3em 0;
 	overflow: hidden;
@@ -53,7 +55,9 @@
 }
 
 .select-files {
+	border: 1px solid transparent;
 	float: left;
+	line-height: 0;
 	margin-right: 2px;
 	padding: 0;
 
@@ -116,6 +120,7 @@
 }
 
 .lfr-upload-container .progress-bar {
+	border: 1px solid transparent;
 	display: none;
 	height: 15px;
 }
@@ -131,7 +136,7 @@
 }
 
 .lfr-upload-movie {
-	bottom: 0px;
+	bottom: 0;
 	height: 1px;
 	left: 0pt;
 	position: absolute;
@@ -152,10 +157,11 @@
 	position: absolute;
 }
 
-/*Skin*/
+/* Skin */
+
 .lfr-upload-container .upload-target {
 	background-color: #8FBE31;
-	border: 1px solid #729A22;
+	border-color: #729A22;
 	text-shadow: 1px 1px #656565;
 }
 
@@ -180,7 +186,7 @@
 
 .lfr-upload-container .upload-file {
 	background: url(@theme_image_path@/file_system/small/jpg.png) no-repeat 5px 50%;
-	border: 1px solid #CCC;
+	border-color: #CCC;
 	font-weight: bold;
 	text-shadow: 1px 1px #FFF;
 }
@@ -210,9 +216,7 @@
 }
 
 .select-files {
-	border: 1px solid #FFF;
 	border-color: #F0F1F2 #B2B2B2 #949494 #F0F1F1;
-	line-height: 0;
 }
 
 .lfr-upload-container .delete-button {
@@ -253,7 +257,7 @@
 
 .lfr-upload-container .progress-bar {
 	background: #fff;
-	border: 1px solid #83a8d9;
+	border-color: #83a8d9;
 }
 
 .lfr-upload-container .progress {

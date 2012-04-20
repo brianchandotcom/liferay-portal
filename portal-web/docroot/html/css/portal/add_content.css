@@ -29,6 +29,7 @@
 }
 
 .lfr-install-more {
+	border-top: 1px solid transparent;
 	margin: 10px 0 0;
 	padding-top: 10px;
 }
@@ -48,6 +49,8 @@
 }
 
 .lfr-content-category.visible {
+	border-bottom: 1px solid transparent;
+	border-top: 1px solid transparent;
 	display: block;
 }
 
@@ -55,8 +58,8 @@
 	height: 1%;
 }
 
+/* Skin */
 
-/*Skin*/
 .portal-add-content .lfr-portlet-used {
 	color: #ccc;
 }
@@ -84,7 +87,7 @@
 }
 
 .lfr-install-more {
-	border-top: 1px solid #ccc;
+	border-top-color: #ccc;
 }
 
 .lfr-install-more a {
@@ -93,6 +96,6 @@
 }
 
 .lfr-content-category.visible {
-	border-bottom: 1px solid #ddd;
-	border-top: 1px solid #ddd;
+	border-bottom-color: #ddd;
+	border-top-color: #ddd;
 }

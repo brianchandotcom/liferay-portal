@@ -19,6 +19,7 @@
 }
 
 .lfr-asset-column-actions .lfr-asset-column-actions-content {
+	border: 1px solid transparent;
 	padding: 0.7em;
 }
 
@@ -32,10 +33,15 @@
 }
 
 .lfr-asset-column-details .lfr-asset-icon {
+	border-right: 1px solid transparent;
 	float: left;
 	margin-right: 10px;
 	padding-left: 25px;
 	padding-right: 10px;
+}
+
+.lfr-asset-column-details .lfr-asset-icon.last {
+	border-width: 0;
 }
 
 .lfr-asset-column-details .lfr-asset-date {
@@ -61,6 +67,10 @@
 	margin: 2em 0;
 }
 
+.lfr-asset-column-details .lfr-asset-teams {
+	border-right-width: 0;
+}
+
 .lfr-asset-column-details .taglib-custom-attributes-list label, .lfr-asset-column-details .lfr-asset-field label {
 	display: block;
 	font-weight: bold;
@@ -81,16 +91,22 @@
 }
 
 .lfr-asset-panels .lfr-panel.lfr-extended, .lfr-asset-column-details .lfr-panel.lfr-extended {
+	border: 1px solid transparent;
 	margin-bottom: 0;
 }
 
-/*Skin*/
+.lfr-asset-column-details .lfr-panel-container, .lfr-asset-panels .lfr-panel-container {
+	border-width: 0;
+}
+
+/* Skin */
+
 .lfr-asset-column-actions-content {
 	background-color: #D7F1FF;
 }
 
 .lfr-asset-column-actions .lfr-asset-column-actions-content {
-	border: 1px solid #88C5D9;
+	border-color: #88C5D9;
 }
 
 .lfr-asset-column-details .lfr-asset-categories .lfr-asset-category {
@@ -107,12 +123,8 @@
 }
 
 .lfr-asset-column-details .lfr-asset-icon {
-	border-right: 1px solid #999;
+	border-right-color: #999;
 	color: #999;
-}
-
-.lfr-asset-column-details .lfr-asset-icon.last {
-	border-width: 0;
 }
 
 .lfr-asset-column-details .lfr-asset-author {
@@ -129,7 +141,6 @@
 
 .lfr-asset-column-details .lfr-asset-teams {
 	background: url(@theme_image_path@/common/team_icon.png) no-repeat 0 50%;
-	border-right-width: 0;
 }
 
 .lfr-asset-column-details .lfr-asset-items {
@@ -145,9 +156,5 @@
 }
 
 .lfr-asset-panels .lfr-panel.lfr-extended, .lfr-asset-column-details .lfr-panel.lfr-extended {
-	border: 1px solid #CCC;
-}
-
-.lfr-asset-column-details .lfr-panel-container, .lfr-asset-panels .lfr-panel-container {
-	border-width: 0;
+	border-color: #CCC;
 }

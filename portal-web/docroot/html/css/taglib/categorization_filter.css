@@ -1,17 +1,19 @@
 .taglib-categorization-filter .asset-entry {
+	border: 1px solid transparent;
 	margin-right: .5em;
 	padding: 3px 18px 3px 7px;
 	position: relative;
 }
 
-/*Skin*/
+/* Skin */
+
 .taglib-categorization-filter.entry-title {
 	color: #333;
 }
 
 .taglib-categorization-filter .asset-entry {
 	background-color: #DEE7F8;
-	border: 1px solid #CAD8F3;
+	border-color: #CAD8F3;
 	-moz-border-radius: 14px;
 	-webkit-border-radius: 14px;
 	border-radius: 14px;

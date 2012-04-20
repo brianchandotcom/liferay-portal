@@ -16,7 +16,7 @@
 	padding: 2px 0 2px 20px;
 }
 
-/*Skin*/
+/* Skin */
 
 .taglib-workflow-status .workflow-id {
 	background: url(@theme_image_path@/common/history.png) no-repeat 0 50%;

@@ -6,7 +6,8 @@
 	padding-left: 18px;
 }
 
-/*Skin*/
+/* Skin */
+
 .openid-login input[type="text"] {
 	background: url(@theme_image_path@/common/openid.gif) no-repeat;
 	background-color: #fff;

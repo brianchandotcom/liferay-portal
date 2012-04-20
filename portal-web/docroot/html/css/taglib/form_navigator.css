@@ -1,4 +1,5 @@
 .taglib-form-navigator .form-navigator {
+	border: 1px solid transparent;
 	float: right;
 	margin: 0 0 0 15px;
 	padding: 10px;
@@ -86,14 +87,16 @@
 }
 
 .taglib-form-navigator .form-section h3 {
+	border-bottom: 1px solid transparent;
 	clear: both;
 	margin: 10px 0;
 }
 
-/*Skin*/
+/* Skin */
+
 .taglib-form-navigator .form-navigator {
 	background-color: #D7F1FF;
-	border: 1px solid #88C5D9;
+	border-color: #88C5D9;
 }
 
 .taglib-form-navigator .form-navigator h3 {
@@ -148,7 +151,7 @@
 }
 
 .taglib-form-navigator .form-section h3 {
-	border-bottom: 1px solid #000;
+	border-bottom-color: #000;
 	font-size: 14px;
 	font-weight: 700;
 }

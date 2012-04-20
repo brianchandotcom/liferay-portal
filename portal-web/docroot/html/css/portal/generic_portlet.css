@@ -1,6 +1,6 @@
 .breadcrumbs {
 	margin-bottom: 10px;
-	margin-left: 0px;
+	margin-left: 0;
 }
 
 .lfr-button {
@@ -16,6 +16,7 @@
 }
 
 .configuration-frame, .control-panel-frame {
+	border-width: 0;
 	overflow: auto;
 	width: 100%;
 }
@@ -83,14 +84,10 @@
 	margin-bottom: 10px;
 }
 
-/*Skin*/
+/* Skin */
 
 .lfr-button {
 	background: url() no-repeat 0 50%;
-}
-
-.configuration-frame, .control-panel-frame {
-	border-width: 0;
 }
 
 .lfr-table tr th {

@@ -7,6 +7,7 @@
 }
 
 .taglib-discussion .lfr-discussion {
+	border-bottom: 1px solid transparent;
 	margin: 0 0 5px;
 	padding: 5px 0 5px 0;
 	position: relative;
@@ -21,6 +22,10 @@
 	visibility: hidden;
 }
 
+.taglib-discussion .lfr-discussion.last {
+	border-bottom-width: 0;
+}
+
 .taglib-discussion .lfr-discussion-details {
 	width: 15%;
 }
@@ -32,6 +37,10 @@
 .taglib-discussion .lfr-discussion-details .taglib-user-display {
 	padding-bottom: 0;
 	padding-top: 0;
+}
+
+.taglib-discussion .lfr-discussion-details .taglib-user-display .user-details .user-name {
+	line-height: 1em;
 }
 
 .taglib-discussion .lfr-discussion-details .taglib-user-display .user-details .user-name, .taglib-discussion .lfr-discussion-details .taglib-user-display .user-profile-image {
@@ -141,18 +150,15 @@
 	zoom: 1;
 }
 
-/*Skin*/
+/* Skin */
+
 .taglib-discussion table.tree-walker {
 	border-width: 0;
 	border-collapse: collapse;
 }
 
 .taglib-discussion .lfr-discussion {
-	border-bottom: 1px solid #DDD;
-}
-
-.taglib-discussion .lfr-discussion.last {
-	border-bottom-width: 0;
+	border-bottom-color: #DDD;
 }
 
 .taglib-discussion .lfr-discussion-details .taglib-user-display {
@@ -161,7 +167,6 @@
 
 .taglib-discussion .lfr-discussion-details .taglib-user-display .user-details .user-name {
 	font-weight: bold;
-	line-height: 1em;
 	text-decoration: none;
 }
 
@@ -186,4 +191,3 @@
 	background: #DDD;
 	border-radius: 4px;
 }
-

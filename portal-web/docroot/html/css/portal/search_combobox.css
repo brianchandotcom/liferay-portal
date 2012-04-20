@@ -4,6 +4,7 @@
 }
 
 .lfr-search-combobox .aui-field-content, .lfr-search-combobox .aui-button {
+	border-width: 0;
 	display: inline-block;
 	float: left;
 	vertical-align: top;
@@ -32,9 +33,4 @@
 	.lfr-search-combobox {
 		position: relative;
 	}
-}
-
-/*Skin*/
-.lfr-search-combobox .aui-field-content, .lfr-search-combobox .aui-button {
-	border-width: 0;
 }

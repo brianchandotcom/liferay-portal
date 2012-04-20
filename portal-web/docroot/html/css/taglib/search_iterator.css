@@ -1,4 +1,5 @@
 .taglib-search-iterator {
+	border-collapse: collapse;
 	width: 100%;
 }
 
@@ -54,8 +55,14 @@
 }
 
 .taglib-page-iterator .search-pages .page-links a, .taglib-page-iterator .search-pages .page-links span {
+	border-left: 1px solid transparent;
 	display: inline-block;
+	line-height: 1;
 	padding: 2px 15px;
+}
+
+.taglib-page-iterator .search-pages .page-links a.first, .taglib-page-iterator .search-pages .page-links span.first {
+	border-left-width: 0;
 }
 
 .taglib-page-iterator .search-pages .page-links a.first, .taglib-page-iterator .search-pages .page-links span.first, .taglib-page-iterator .search-pages .page-links a.previous, .taglib-page-iterator .search-pages .page-links span.previous {
@@ -81,10 +88,7 @@
 	display: inline;
 }
 
-/*Skin*/
-.taglib-search-iterator {
-	border-collapse: collapse;
-}
+/* Skin */
 
 .taglib-search-iterator-highlighted {
 	font-weight: bold;
@@ -96,8 +100,7 @@
 
 .taglib-page-iterator .search-pages .page-links a, .taglib-page-iterator .search-pages .page-links span {
 	background: url() no-repeat 0 0;
-	border-left: 1px solid #ccc;
-	line-height: 1;
+	border-left-color: #ccc;
 }
 
 .taglib-page-iterator .search-pages .page-links span {
@@ -107,7 +110,6 @@
 .taglib-page-iterator .search-pages .page-links a.first, .taglib-page-iterator .search-pages .page-links span.first {
 	background-image: url(@theme_image_path@/arrows/paging_first.png);
 	background-repeat: no-repeat;
-	border-left: none;
 }
 
 .taglib-page-iterator .search-pages .page-links a.previous, .taglib-page-iterator .search-pages .page-links span.previous {

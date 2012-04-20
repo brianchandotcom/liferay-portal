@@ -71,6 +71,8 @@ public class VerifyProperties extends VerifyProcess {
 
 		StoreFactory.checkProperties();
 
+		// LDAP properties
+
 		verifyLDAPProperties();
 	}
 
@@ -156,6 +158,11 @@ public class VerifyProperties extends VerifyProcess {
 					newKey + "\"");
 		}
 	}
+
+	private static final String[] _LDAP_KEYS = {
+		PropsKeys.LDAP_CONTACT_CUSTOM_MAPPINGS, PropsKeys.LDAP_CONTACT_MAPPINGS,
+		PropsKeys.LDAP_USER_CUSTOM_MAPPINGS
+	};
 
 	private static final String[][] _MIGRATED_SYSTEM_KEYS = new String[][] {
 		new String[] {
@@ -382,11 +389,6 @@ public class VerifyProperties extends VerifyProcess {
 			"tags.asset.increment.view.counter.enabled",
 			"asset.entry.increment.view.counter.enabled"
 		}
-	};
-
-	private static final String[] _LDAP_KEYS = {
-		PropsKeys.LDAP_CONTACT_CUSTOM_MAPPINGS, PropsKeys.LDAP_CONTACT_MAPPINGS,
-		PropsKeys.LDAP_USER_CUSTOM_MAPPINGS
 	};
 
 	private static final String[][] _RENAMED_SYSTEM_KEYS = new String[][] {

@@ -56,7 +56,27 @@ if (assetEntryId > 0) {
 				if (assetRenderer.hasViewPermission(permissionChecker)) {
 					String asseLinktEntryTitle = assetLinkEntry.getTitle(locale);
 
-					String urlViewInContext = assetRenderer.getURLViewInContext((LiferayPortletRequest)portletRequest, (LiferayPortletResponse)portletResponse, "viewFullContentURLString");
+					LiferayPortletURL assetPublisherURL = new PortletURLImpl(request, PortletKeys.ASSET_PUBLISHER, plid, PortletRequest.RENDER_PHASE);
+
+					assetPublisherURL.setWindowState(WindowState.MAXIMIZED);
+
+					assetPublisherURL.setParameter("struts_action", "/asset_publisher/view_content");
+					assetPublisherURL.setParameter("assetEntryId", String.valueOf(assetLinkEntry.getEntryId()));
+					assetPublisherURL.setParameter("type", assetRendererFactory.getType());
+
+					if (Validator.isNotNull(assetRenderer.getUrlTitle())) {
+						if (assetRenderer.getGroupId() != scopeGroupId) {
+							assetPublisherURL.setParameter("groupId", String.valueOf(assetRenderer.getGroupId()));
+						}
+
+						assetPublisherURL.setParameter("urlTitle", assetRenderer.getUrlTitle());
+					}
+
+					String viewFullContentURLString = assetPublisherURL.toString();
+
+					viewFullContentURLString = HttpUtil.setParameter(viewFullContentURLString, "redirect", currentURL);
+
+					String urlViewInContext = assetRenderer.getURLViewInContext((LiferayPortletRequest)portletRequest, (LiferayPortletResponse)portletResponse, viewFullContentURLString);
 			%>
 
 					<li class="asset-links-list-item">

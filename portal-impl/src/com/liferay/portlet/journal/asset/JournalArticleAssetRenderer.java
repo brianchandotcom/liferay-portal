@@ -143,7 +143,7 @@ public class JournalArticleAssetRenderer extends BaseAssetRenderer {
 		throws Exception {
 
 		if (Validator.isNull(_article.getLayoutUuid())) {
-			return null;
+			return noSuchEntryRedirect;
 		}
 
 		ThemeDisplay themeDisplay =

@@ -38,6 +38,7 @@ public class Gmail_ViewMBThreadMessageGmailTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddPortletMBSiteTest.class);
 		testSuite.addTestSuite(ConfigurePortletEmailFromAddressTest.class);
 		testSuite.addTestSuite(AddMBCategorySiteTest.class);
+		testSuite.addTestSuite(GmailServer_TearDownEmailTest.class);
 		testSuite.addTestSuite(GmailServer_TearDownMailingListMessageTest.class);
 		testSuite.addTestSuite(EditMBCategoryMailingListActiveActionsTest.class);
 		testSuite.addTestSuite(PostNewMBCategoryThreadMessageSiteTest.class);

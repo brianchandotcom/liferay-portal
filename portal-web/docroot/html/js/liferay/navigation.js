@@ -765,7 +765,19 @@ AUI.add(
 			function(node) {
 				var instance = this;
 
-				var priority = instance.get('navBlock').all('li').indexOf(node);
+				var navItems = instance.get('navBlock').all('li');
+
+				var priority = -1;
+
+				navItems.some(
+					function(item, index, collection) {
+						if (!item.ancestor().hasClass('child-menu')) {
+							priority++;
+						}
+
+						return item == node;
+					}
+				);
 
 				var data = {
 					cmd: 'priority',

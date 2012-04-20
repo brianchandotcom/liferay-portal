@@ -1076,15 +1076,10 @@ public class PortletImporter {
 		String portletData = portletDataContext.getZipEntryAsString(
 			portletDataElement.attributeValue("path"));
 
-		try {
-			portletPreferencesImpl =
-				(PortletPreferencesImpl)portletDataHandler.importData(
-					portletDataContext, portletId, portletPreferencesImpl,
-					portletData);
-		}
-		catch (Exception e) {
-			throw e;
-		}
+		portletPreferencesImpl =
+			(PortletPreferencesImpl)portletDataHandler.importData(
+				portletDataContext, portletId, portletPreferencesImpl,
+				portletData);
 
 		if (portletPreferencesImpl == null) {
 			return null;

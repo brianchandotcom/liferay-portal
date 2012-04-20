@@ -158,9 +158,6 @@ public class PortalLDAPUtil {
 
 			enu = ldapContext.search(baseDN, filter.toString(), searchControls);
 		}
-		catch (Exception e) {
-			throw e;
-		}
 		finally {
 			if (ldapContext != null) {
 				ldapContext.close();
@@ -474,9 +471,6 @@ public class PortalLDAPUtil {
 				SearchControls.SUBTREE_SCOPE, 1, 0, null, false, false);
 
 			enu = ldapContext.search(baseDN, filter, searchControls);
-		}
-		catch (Exception e) {
-			throw e;
 		}
 		finally {
 			if (ldapContext != null) {

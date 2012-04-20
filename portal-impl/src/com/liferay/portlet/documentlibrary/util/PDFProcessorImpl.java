@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
-import com.liferay.portal.kernel.configuration.Filter;
+import com.liferay.portal.kernel.image.ImageMagickUtil;
 import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.log.Log;
@@ -22,10 +22,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusException;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
-import com.liferay.portal.kernel.process.ClassPathUtil;
-import com.liferay.portal.kernel.process.ProcessCallable;
-import com.liferay.portal.kernel.process.ProcessException;
-import com.liferay.portal.kernel.process.ProcessExecutor;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -33,17 +29,11 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
-import com.liferay.portal.kernel.util.OSDetector;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.SystemEnv;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
-import com.liferay.portal.util.PrefsPropsUtil;
-import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
@@ -57,16 +47,11 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Properties;
 import java.util.Set;
 import java.util.Vector;
-import java.util.concurrent.Future;
 
 import javax.imageio.ImageIO;
-
-import javax.portlet.PortletPreferences;
 
 import org.apache.commons.lang.time.StopWatch;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -90,32 +75,6 @@ public class PDFProcessorImpl
 
 	public void generateImages(FileVersion fileVersion) throws Exception {
 		Initializer._initializedInstance._generateImages(fileVersion);
-	}
-
-	public String getGlobalSearchPath() throws Exception {
-		PortletPreferences preferences = PrefsPropsUtil.getPreferences();
-
-		String globalSearchPath = preferences.getValue(
-			PropsKeys.IMAGEMAGICK_GLOBAL_SEARCH_PATH, null);
-
-		if (Validator.isNotNull(globalSearchPath)) {
-			return globalSearchPath;
-		}
-
-		String filterName = null;
-
-		if (OSDetector.isApple()) {
-			filterName = "apple";
-		}
-		else if (OSDetector.isWindows()) {
-			filterName = "windows";
-		}
-		else {
-			filterName = "unix";
-		}
-
-		return PropsUtil.get(
-			PropsKeys.IMAGEMAGICK_GLOBAL_SEARCH_PATH, new Filter(filterName));
 	}
 
 	public InputStream getPreviewAsStream(FileVersion fileVersion, int index)
@@ -142,18 +101,6 @@ public class PDFProcessorImpl
 
 		return Initializer._initializedInstance.doGetPreviewFileSize(
 			fileVersion, index);
-	}
-
-	public Properties getResourceLimitsProperties() throws Exception {
-		Properties resourceLimitsProperties = PrefsPropsUtil.getProperties(
-			PropsKeys.IMAGEMAGICK_RESOURCE_LIMIT, true);
-
-		if (resourceLimitsProperties.isEmpty()) {
-			resourceLimitsProperties = PropsUtil.getProperties(
-				PropsKeys.IMAGEMAGICK_RESOURCE_LIMIT, true);
-		}
-
-		return resourceLimitsProperties;
 	}
 
 	public InputStream getThumbnailAsStream(FileVersion fileVersion, int index)
@@ -194,7 +141,7 @@ public class PDFProcessorImpl
 	}
 
 	public boolean isImageMagickEnabled() throws Exception {
-		if (PrefsPropsUtil.getBoolean(PropsKeys.IMAGEMAGICK_ENABLED)) {
+		if (ImageMagickUtil.isEnabled()) {
 			return true;
 		}
 
@@ -242,14 +189,6 @@ public class PDFProcessorImpl
 		}
 
 		return false;
-	}
-
-	public void reset() throws Exception {
-		if (isImageMagickEnabled()) {
-			_globalSearchPath = getGlobalSearchPath();
-
-			_resourceLimitsProperties = getResourceLimitsProperties();
-		}
 	}
 
 	public void trigger(FileVersion fileVersion) {
@@ -338,7 +277,7 @@ public class PDFProcessorImpl
 			FileUtil.mkdirs(PREVIEW_TMP_PATH);
 			FileUtil.mkdirs(THUMBNAIL_TMP_PATH);
 
-			reset();
+			ImageMagickUtil.reset();
 		}
 		catch (Exception e) {
 			_log.warn(e, e);
@@ -503,22 +442,9 @@ public class PDFProcessorImpl
 			imOperation.addImage(getPreviewTempFilePath(tempFileId, -1));
 		}
 
-		if (PropsValues.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED) {
-			ProcessCallable<String> processCallable =
-				new ImageMagickProcessCallable(
-					_globalSearchPath, _resourceLimitsProperties,
-					imOperation.getCmdArgs());
-
-			Future<String> future = ProcessExecutor.execute(
-				ClassPathUtil.getPortalClassPath(), processCallable);
-
-			future.get();
-		}
-		else {
-			LiferayConvertCmd.run(
-				_globalSearchPath, _resourceLimitsProperties,
-				imOperation.getCmdArgs());
-		}
+		ImageMagickUtil.convert(
+			imOperation.getCmdArgs(),
+			PropsValues.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED);
 
 		// Store images
 
@@ -791,43 +717,7 @@ public class PDFProcessorImpl
 	}
 
 	private List<Long> _fileVersionIds = new Vector<Long>();
-	private String _globalSearchPath;
-	private Properties _resourceLimitsProperties;
 	private boolean _warned;
-
-	private static class ImageMagickProcessCallable
-		implements ProcessCallable<String> {
-
-		public ImageMagickProcessCallable(
-			String globalSearchPath, Properties resourceLimits,
-			LinkedList<String> commandArguments) {
-
-			_globalSearchPath = globalSearchPath;
-			_commandArguments = commandArguments;
-			_resourceLimits = resourceLimits;
-		}
-
-		public String call() throws ProcessException {
-			Properties systemProperties = System.getProperties();
-
-			SystemEnv.setProperties(systemProperties);
-
-			try {
-				LiferayConvertCmd.run(
-					_globalSearchPath, _resourceLimits, _commandArguments);
-			}
-			catch (Exception e) {
-				throw new ProcessException(e);
-			}
-
-			return StringPool.BLANK;
-		}
-
-		private LinkedList<String> _commandArguments;
-		private String _globalSearchPath;
-		private Properties _resourceLimits;
-
-	}
 
 	private static class Initializer {
 

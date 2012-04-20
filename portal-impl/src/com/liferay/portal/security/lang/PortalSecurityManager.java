@@ -45,8 +45,7 @@ public class PortalSecurityManager extends SecurityManager {
 
 		// Touch dependent classes to prevent NoClassDefError
 
-		PACLClassUtil.getPACLPolicyBySecurityManagerClassContext(
-			getClassContext(), false);
+		PACLClassUtil.getPACLPolicyByReflection(false);
 	}
 
 	@Override
@@ -56,9 +55,9 @@ public class PortalSecurityManager extends SecurityManager {
 
 	@Override
 	public void checkPermission(Permission permission, Object context) {
-		boolean enabled = PortalSecurityManagerThreadLocal.isEnabled();
+		if (!PACLPolicyManager.isActive() ||
+			!PortalSecurityManagerThreadLocal.isEnabled()) {
 
-		if (!enabled) {
 			parentCheckPermission(permission, context);
 
 			return;

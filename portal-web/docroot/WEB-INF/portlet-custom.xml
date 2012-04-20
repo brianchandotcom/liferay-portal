@@ -1404,6 +1404,11 @@
 		<supports>
 			<mime-type>text/html</mime-type>
 		</supports>
+		<portlet-info>
+			<title>Tags Compiler</title>
+			<short-title>Tags Compiler</short-title>
+			<keywords>Tags Compiler</keywords>
+		</portlet-info>
 		<supported-public-render-parameter>tags</supported-public-render-parameter>
 	</portlet>
 	<portlet>

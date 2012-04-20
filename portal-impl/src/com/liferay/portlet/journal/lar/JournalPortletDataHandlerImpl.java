@@ -133,7 +133,8 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 			Element structuresElement, Element templatesElement,
 			Element dlFileEntryTypesElement, Element dlFoldersElement,
 			Element dlFileEntriesElement, Element dlFileRanksElement,
-			JournalArticle article, boolean checkDateRange)
+			JournalArticle article, boolean checkDateRange,
+			String preferenceTemplateId)
 		throws Exception {
 
 		if (checkDateRange &&
@@ -179,10 +180,16 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 			exportStructure(portletDataContext, structuresElement, structure);
 		}
 
-		if (Validator.isNotNull(article.getTemplateId())) {
+		String templateId = article.getTemplateId();
+
+		if (Validator.isNotNull(preferenceTemplateId)) {
+			templateId = preferenceTemplateId;
+		}
+
+		if (Validator.isNotNull(templateId)) {
 			JournalTemplate template =
 				JournalTemplateLocalServiceUtil.getTemplate(
-					article.getGroupId(), article.getTemplateId(), true);
+					article.getGroupId(), templateId, true);
 
 			articleElement.addAttribute("template-uuid", template.getUuid());
 
@@ -1622,7 +1629,7 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 			exportArticle(
 				portletDataContext, articlesElement, structuresElement,
 				templatesElement, dlFileEntryTypesElement, dlFoldersElement,
-				dlFileEntriesElement, dlFileRanksElement, article, true);
+				dlFileEntriesElement, dlFileRanksElement, article, true, null);
 		}
 	}
 
@@ -2374,7 +2381,7 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 				exportArticle(
 					portletDataContext, articlesElement, structuresElement,
 					templatesElement, dlFileEntryTypesElement, dlFoldersElement,
-					dlFilesElement, dlFileRanksElement, article, true);
+					dlFilesElement, dlFileRanksElement, article, true, null);
 			}
 		}
 

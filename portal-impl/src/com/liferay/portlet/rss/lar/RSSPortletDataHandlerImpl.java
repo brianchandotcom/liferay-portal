@@ -231,7 +231,7 @@ public class RSSPortletDataHandlerImpl extends JournalPortletDataHandlerImpl {
 			JournalPortletDataHandlerImpl.exportArticle(
 				portletDataContext, rootElement, rootElement, rootElement,
 				dlFileEntryTypesElement, dlFoldersElement, dlFilesElement,
-				dlFileRanksElement, article, false);
+				dlFileRanksElement, article, false, null);
 		}
 
 		return document.formattedString();

@@ -219,10 +219,13 @@ public class JournalContentPortletDataHandlerImpl
 		Element dlFilesElement = rootElement.addElement("dl-file-entries");
 		Element dlFileRanksElement = rootElement.addElement("dl-file-ranks");
 
+		String preferenceTemplateId = portletPreferences.getValue(
+			"templateId", null);
+
 		JournalPortletDataHandlerImpl.exportArticle(
 			portletDataContext, rootElement, rootElement, rootElement,
 			dlFileEntryTypesElement, dlFoldersElement, dlFilesElement,
-			dlFileRanksElement, article, false);
+			dlFileRanksElement, article, false, preferenceTemplateId);
 
 		portletDataContext.setScopeGroupId(previousScopeGroupId);
 

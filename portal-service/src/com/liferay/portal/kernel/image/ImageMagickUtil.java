@@ -30,7 +30,7 @@ public class ImageMagickUtil {
 	 * @param  arguments the command arguments being passed to <code>convert
 	 *         <code>
 	 * @param  fork whether to fork the process
-	 * @throws Exception an unexpected error occurred while executing command
+	 * @throws Exception if an unexpected error occurred while executing command
 	 * @see    <a href="http://www.imagemagick.org/script/convert.php">Convert
 	 *         documentation</a>
 	 */
@@ -44,7 +44,7 @@ public class ImageMagickUtil {
 	 * Returns the global search path configured for ImageMagick.
 	 *
 	 * @return the global search path
-	 * @throws Exception an unexpected error occurred
+	 * @throws Exception if an unexpected error occurred
 	 */
 	public static String getGlobalSearchPath() throws Exception {
 		return getImageMagick().getGlobalSearchPath();
@@ -58,7 +58,7 @@ public class ImageMagickUtil {
 	 * Returns the cache and resource usage limits configured for ImageMagick.
 	 *
 	 * @return the resource limits
-	 * @throws Exception an unexpected error occurred
+	 * @throws Exception if an unexpected error occurred
 	 */
 	public static Properties getResourceLimitsProperties() throws Exception {
 		return getImageMagick().getResourceLimitsProperties();
@@ -68,10 +68,10 @@ public class ImageMagickUtil {
 	 * Executes the <code>identify</code> command in ImageMagick.
 	 *
 	 * @param  arguments the command arguments being passed to <code>identify
-	 *         <code>
+	 *         </code>
 	 * @param  fork whether to fork the process
 	 * @return the results of the <code>identify</code> call
-	 * @throws Exception an unexpected error occurred while executing command
+	 * @throws Exception if an unexpected error occurred while executing command
 	 * @see    <a href="http://www.imagemagick.org/script/identify.php">Identify
 	 *         documentation</a>
 	 */
@@ -82,9 +82,10 @@ public class ImageMagickUtil {
 	}
 
 	/**
-	 * Checks to see if ImageMagick is enabled.
+	 * Returns <code>true</code> if ImageMagick is enabled.
 	 *
-	 * @return whether ImageMagick is enabled
+	 * @return <code>true</code> if ImageMagick is enabled; <code>false</code>
+	 *         otherwise
 	 */
 	public static boolean isEnabled() {
 		return getImageMagick().isEnabled();

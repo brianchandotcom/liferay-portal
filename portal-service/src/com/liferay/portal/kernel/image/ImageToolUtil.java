@@ -32,16 +32,17 @@ public class ImageToolUtil {
 	/**
 	 * Converts a CMYK image to RGB using ImageMagick. This must be run against
 	 * the original <code>byte[]</code> and not one extracted from a {@link
-	 * RenderedImage}. The latter may potentially have been already been read
-	 * incorrectly.
+	 * java.awt.image.RenderedImage}. The latter may potentially have been
+	 * already been read incorrectly.
 	 *
 	 * @param  bytes the image to convert
-	 * @param  type of image (e.g., "gif", "jpg", etc.)
+	 * @param  type the image type (e.g., "gif", "jpg", etc.)
 	 * @param  fork whether to fork the process
-	 * @return converted image or <code>null</code> if ImageMagick was disabled
-	 *         or if the conversion was not completed. The conversion may not
-	 *         complete if (1) the image was not in the CMYK colorspace to begin
-	 *         with or (2) there was an error in the conversion process.
+	 * @return the converted image or <code>null</code> if ImageMagick was
+	 *         disabled or if the conversion was not completed. The conversion
+	 *         may not complete if (1) the image was not in the CMYK colorspace
+	 *         to begin with or (2) there was an error in the conversion
+	 *         process.
 	 */
 	public static RenderedImage convertCMYKtoRGB(
 		byte[] bytes, String type, boolean fork) {
@@ -53,7 +54,7 @@ public class ImageToolUtil {
 	 * Converts an image from one image type to another.
 	 *
 	 * @param  sourceImage the image to convert
-	 * @param  type of image to convert to (e.g., "gif", "jpg", etc.)
+	 * @param  type the image type to convert to (e.g., "gif", "jpg", etc.)
 	 * @return converted image
 	 */
 	public static BufferedImage convertImageType(
@@ -89,7 +90,8 @@ public class ImageToolUtil {
 	}
 
 	/**
-	 * Returns a {@link BufferedImage} from a given {@link RenderedImage}.
+	 * Returns a {@link java.awt.image.BufferedImage} from a given {@link
+	 * java.awt.image.RenderedImage}.
 	 *
 	 * @param  renderedImage the original image
 	 * @return the converted image
@@ -119,11 +121,12 @@ public class ImageToolUtil {
 	}
 
 	/**
-	 * Detects the image format and creates an {@link ImageBag} containing the
-	 * {@link RenderedImage} and image type.
+	 * Detects the image format and creates an {@link
+	 * com.liferay.portal.kernel.image.ImageBag} containing the {@link
+	 * java.awt.image.RenderedImage} and image type.
 	 *
 	 * @param  bytes the bytes to read
-	 * @return the {@link ImageBag}
+	 * @return the {@link com.liferay.portal.kernel.image.ImageBag}
 	 * @throws IOException if an error occurred during writing
 	 */
 	public static ImageBag read(byte[] bytes) throws IOException {
@@ -131,11 +134,12 @@ public class ImageToolUtil {
 	}
 
 	/**
-	 * Detects the image format and creates an {@link ImageBag} containing the
-	 * {@link RenderedImage} and image type.
+	 * Detects the image format and creates an {@link
+	 * com.liferay.portal.kernel.image.ImageBag} containing the {@link
+	 * java.awt.image.RenderedImage} and image type.
 	 *
 	 * @param  file the file to read
-	 * @return the {@link ImageBag}
+	 * @return the {@link com.liferay.portal.kernel.image.ImageBag}
 	 * @throws IOException if an error occurred during writing
 	 */
 	public static ImageBag read(File file) throws IOException {
@@ -146,9 +150,9 @@ public class ImageToolUtil {
 	 * Scales the image based on the given width with the height calculated to
 	 * preserve aspect ratio.
 	 *
-	 * @param  renderedImage image to scale
-	 * @param  width used as new width and to calculate for new height
-	 * @return scaled image
+	 * @param  renderedImage the image to scale
+	 * @param  width the new width; also used to calculate the new height
+	 * @return the scaled image
 	 */
 	public static RenderedImage scale(RenderedImage renderedImage, int width) {
 		return getImageTool().scale(renderedImage, width);
@@ -159,10 +163,10 @@ public class ImageToolUtil {
 	 * preserving the aspect ratio. If the image is already larger in both
 	 * dimensions, the image will not be scaled.
 	 *
-	 * @param  renderedImage image to scale
-	 * @param  maxHeight maximum height allowed for image
-	 * @param  maxWidth maximum width allowed for image
-	 * @return scaled image
+	 * @param  renderedImage the image to scale
+	 * @param  maxHeight the maximum height allowed for image
+	 * @param  maxWidth the maximum width allowed for image
+	 * @return the scaled image
 	 */
 	public static RenderedImage scale(
 		RenderedImage renderedImage, int maxHeight, int maxWidth) {

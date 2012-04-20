@@ -140,7 +140,7 @@ public class ViewPMMessageReplyAttachmentTest extends BaseTestCase {
 			selenium.getText("xPath=(//span[@class='name'])[3]"));
 		assertTrue(selenium.isPartialText("xPath=(//div[@class='body'])[2]",
 				"Message Subject Reply"));
-		assertTrue(selenium.isVisible("//div[@class='body']/div/img"));
+		assertTrue(selenium.isVisible("//div[@class='image-thumbnail']/a/img"));
 		assertEquals(RuntimeVariables.replace("PM_Attachment.jpg"),
 			selenium.getText("//td[2]/a"));
 	}

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.socialofficehome.privatemessaging.message.deletepmmessageall;
+package com.liferay.portalweb.socialofficehome.privatemessaging.message.sousaddpmmessagereply;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.socialoffice.users.user.addsouser.AddSOUserTest;
@@ -31,7 +31,7 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class DeletePMMessageAllTests extends BaseTestSuite {
+public class SOUs_AddPMMessageReplyTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddSOUserTest.class);
@@ -43,10 +43,18 @@ public class DeletePMMessageAllTests extends BaseTestSuite {
 		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SignInSOTest.class);
 		testSuite.addTestSuite(ConfirmNotificationsAddConnectionTest.class);
-		testSuite.addTestSuite(AddPMMessage1Test.class);
-		testSuite.addTestSuite(AddPMMessage2Test.class);
-		testSuite.addTestSuite(AddPMMessage3Test.class);
-		testSuite.addTestSuite(DeletePMMessageAllTest.class);
+		testSuite.addTestSuite(AddPMMessageTest.class);
+		testSuite.addTestSuite(SignOutSOTest.class);
+		testSuite.addTestSuite(SOUs_SignInSOTest.class);
+		testSuite.addTestSuite(SOUs_AddPMMessageReplyTest.class);
+		testSuite.addTestSuite(SignOutSOTest.class);
+		testSuite.addTestSuite(SignInSOTest.class);
+		testSuite.addTestSuite(ViewPMMessageReplyTest.class);
+		testSuite.addTestSuite(SignOutSOTest.class);
+		testSuite.addTestSuite(SOUs_SignInSOTest.class);
+		testSuite.addTestSuite(SOUs_ViewPMMessageReplyTest.class);
+		testSuite.addTestSuite(SignOutSOTest.class);
+		testSuite.addTestSuite(SignInSOTest.class);
 		testSuite.addTestSuite(TearDownPMMessageTest.class);
 		testSuite.addTestSuite(TearDownSOUserTest.class);
 

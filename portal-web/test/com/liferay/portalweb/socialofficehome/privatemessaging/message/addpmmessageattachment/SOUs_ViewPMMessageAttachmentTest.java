@@ -68,7 +68,7 @@ public class SOUs_ViewPMMessageAttachmentTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText("xPath=(//span[@class='name'])[2]"));
 		assertTrue(selenium.isPartialText("//div[@class='body']", "Message Body"));
-		assertTrue(selenium.isVisible("//div/img"));
+		assertTrue(selenium.isVisible("//div[@class='image-thumbnail']/a/img"));
 		assertEquals(RuntimeVariables.replace("PM_Attachment.jpg"),
 			selenium.getText("//td[2]/a"));
 	}

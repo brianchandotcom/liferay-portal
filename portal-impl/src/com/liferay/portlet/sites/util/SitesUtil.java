@@ -866,7 +866,7 @@ public class SitesUtil {
 			LayoutSetPrototypeLocalServiceUtil.
 				getLayoutSetPrototypeByUuidAndCompanyId(
 					layoutSet.getLayoutSetPrototypeUuid(),
-					layoutSet.getGroupId());
+					layoutSet.getCompanyId());
 
 		Date modifiedDate = layoutSetPrototype.getModifiedDate();
 

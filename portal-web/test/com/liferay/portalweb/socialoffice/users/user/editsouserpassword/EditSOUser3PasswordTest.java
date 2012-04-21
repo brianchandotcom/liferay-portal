@@ -156,8 +156,20 @@ public class EditSOUser3PasswordTest extends BaseTestCase {
 					selenium.getText("//div[@class='portlet-msg-success']"));
 				selenium.open("/web/guest/home/");
 				loadRequiredJavaScriptModules();
+
+				boolean socialOfficeSignOut1Present = selenium.isElementPresent(
+						"//li[@id='_145_userMenu']");
+
+				if (!socialOfficeSignOut1Present) {
+					label = 3;
+
+					continue;
+				}
+
 				assertTrue(selenium.isVisible("//li[@id='_145_userMenu']"));
 				selenium.mouseOver("//li[@id='_145_userMenu']");
+
+			case 3:
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -232,8 +244,20 @@ public class EditSOUser3PasswordTest extends BaseTestCase {
 				loadRequiredJavaScriptModules();
 				selenium.open("/web/guest/home/");
 				loadRequiredJavaScriptModules();
+
+				boolean socialOfficeSignOut2Present = selenium.isElementPresent(
+						"//li[@id='_145_userMenu']");
+
+				if (!socialOfficeSignOut2Present) {
+					label = 4;
+
+					continue;
+				}
+
 				assertTrue(selenium.isVisible("//li[@id='_145_userMenu']"));
 				selenium.mouseOver("//li[@id='_145_userMenu']");
+
+			case 4:
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {

@@ -22,63 +22,70 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class SOUs3_SignOutSOTest extends BaseTestCase {
 	public void testSOUs3_SignOutSO() throws Exception {
-		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
+		int label = 1;
 
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
+		while (label >= 1) {
+			switch (label) {
+			case 1:
+				selenium.open("/web/guest/home/");
+				loadRequiredJavaScriptModules();
 
-			try {
-				if (selenium.isVisible("//li[@id='_145_userMenu']")) {
-					break;
+				boolean socialOfficeSignOutPresent = selenium.isElementPresent(
+						"//li[@id='_145_userMenu']");
+
+				if (!socialOfficeSignOutPresent) {
+					label = 2;
+
+					continue;
 				}
-			}
-			catch (Exception e) {
-			}
 
-			Thread.sleep(1000);
-		}
+				assertTrue(selenium.isVisible("//li[@id='_145_userMenu']"));
+				selenium.mouseOver("//li[@id='_145_userMenu']");
 
-		selenium.mouseOver("//li[@id='_145_userMenu']");
+			case 2:
 
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
 
-			try {
-				if (selenium.isVisible("link=Sign Out")) {
-					break;
+					try {
+						if (selenium.isVisible("link=Sign Out")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
 				}
-			}
-			catch (Exception e) {
-			}
 
-			Thread.sleep(1000);
-		}
+				selenium.clickAt("link=Sign Out",
+					RuntimeVariables.replace("Sign Out"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
 
-		selenium.clickAt("link=Sign Out", RuntimeVariables.replace("Sign Out"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
 
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
+					try {
+						if (selenium.isVisible("//input[@value='Sign In']")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
 
-			try {
-				if (selenium.isVisible("//input[@value='Sign In']")) {
-					break;
+					Thread.sleep(1000);
 				}
-			}
-			catch (Exception e) {
-			}
 
-			Thread.sleep(1000);
+				assertTrue(selenium.isVisible("//input[@value='Sign In']"));
+
+			case 100:
+				label = -1;
+			}
 		}
-
-		assertTrue(selenium.isVisible("//input[@value='Sign In']"));
 	}
 }

@@ -219,9 +219,20 @@ public class AddSOUserTest extends BaseTestCase {
 					selenium.getText("//div[@class='portlet-msg-success']"));
 				selenium.open("/web/guest/home/");
 				loadRequiredJavaScriptModules();
-				assertTrue(selenium.isElementPresent(
-						"//li[@id='_145_userMenu']"));
+
+				boolean socialOfficeSignOut1Present = selenium.isElementPresent(
+						"//li[@id='_145_userMenu']");
+
+				if (!socialOfficeSignOut1Present) {
+					label = 2;
+
+					continue;
+				}
+
+				assertTrue(selenium.isVisible("//li[@id='_145_userMenu']"));
 				selenium.mouseOver("//li[@id='_145_userMenu']");
+
+			case 2:
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -272,7 +283,7 @@ public class AddSOUserTest extends BaseTestCase {
 						"_58_rememberMeCheckbox");
 
 				if (rememberMeCheckboxChecked1) {
-					label = 2;
+					label = 3;
 
 					continue;
 				}
@@ -280,7 +291,7 @@ public class AddSOUserTest extends BaseTestCase {
 				selenium.clickAt("//input[@id='_58_rememberMeCheckbox']",
 					RuntimeVariables.replace("Remember Me Checkbox"));
 
-			case 2:
+			case 3:
 				selenium.clickAt("//input[@value='Sign In']",
 					RuntimeVariables.replace("Sign In"));
 				selenium.waitForPageToLoad("30000");
@@ -291,7 +302,7 @@ public class AddSOUserTest extends BaseTestCase {
 						"//span/input");
 
 				if (!newPasswordVisible1) {
-					label = 3;
+					label = 4;
 
 					continue;
 				}
@@ -303,13 +314,13 @@ public class AddSOUserTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 
-			case 3:
+			case 4:
 
 				boolean passwordReminderVisible1 = selenium.isElementPresent(
 						"reminderQueryAnswer");
 
 				if (!passwordReminderVisible1) {
-					label = 4;
+					label = 5;
 
 					continue;
 				}
@@ -324,12 +335,23 @@ public class AddSOUserTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 
-			case 4:
+			case 5:
 				selenium.open("/web/guest/home/");
 				loadRequiredJavaScriptModules();
-				assertTrue(selenium.isElementPresent(
-						"//li[@id='_145_userMenu']"));
+
+				boolean socialOfficeSignOut2Present = selenium.isElementPresent(
+						"//li[@id='_145_userMenu']");
+
+				if (!socialOfficeSignOut2Present) {
+					label = 6;
+
+					continue;
+				}
+
+				assertTrue(selenium.isVisible("//li[@id='_145_userMenu']"));
 				selenium.mouseOver("//li[@id='_145_userMenu']");
+
+			case 6:
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -380,7 +402,7 @@ public class AddSOUserTest extends BaseTestCase {
 						"_58_rememberMeCheckbox");
 
 				if (rememberMeCheckboxChecked2) {
-					label = 5;
+					label = 7;
 
 					continue;
 				}
@@ -388,7 +410,7 @@ public class AddSOUserTest extends BaseTestCase {
 				selenium.clickAt("//input[@id='_58_rememberMeCheckbox']",
 					RuntimeVariables.replace("Remember Me Checkbox"));
 
-			case 5:
+			case 7:
 				selenium.clickAt("//input[@value='Sign In']",
 					RuntimeVariables.replace("Sign In"));
 				selenium.waitForPageToLoad("30000");

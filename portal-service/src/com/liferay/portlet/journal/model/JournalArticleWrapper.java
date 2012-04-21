@@ -244,6 +244,24 @@ public class JournalArticleWrapper implements JournalArticle,
 	}
 
 	/**
+	* Returns the folder ID of this journal article.
+	*
+	* @return the folder ID of this journal article
+	*/
+	public long getFolderId() {
+		return _journalArticle.getFolderId();
+	}
+
+	/**
+	* Sets the folder ID of this journal article.
+	*
+	* @param folderId the folder ID of this journal article
+	*/
+	public void setFolderId(long folderId) {
+		_journalArticle.setFolderId(folderId);
+	}
+
+	/**
 	* Returns the fully qualified class name of this journal article.
 	*
 	* @return the fully qualified class name of this journal article
@@ -1065,6 +1083,10 @@ public class JournalArticleWrapper implements JournalArticle,
 
 	public java.lang.String getDefaultLocale() {
 		return _journalArticle.getDefaultLocale();
+	}
+
+	public com.liferay.portlet.journal.model.JournalFolder getFolder() {
+		return _journalArticle.getFolder();
 	}
 
 	public java.lang.String getSmallImageType()

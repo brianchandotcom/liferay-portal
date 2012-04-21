@@ -45,6 +45,8 @@ public interface JournalArticle extends JournalArticleModel, PersistedModel {
 
 	public java.lang.String getDefaultLocale();
 
+	public com.liferay.portlet.journal.model.JournalFolder getFolder();
+
 	public java.lang.String getSmallImageType()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

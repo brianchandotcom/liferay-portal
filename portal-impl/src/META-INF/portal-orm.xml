@@ -2256,6 +2256,7 @@
 			<basic name="modifiedDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
+			<basic name="folderId" />
 			<basic name="classNameId" />
 			<basic name="classPK" />
 			<basic name="articleId" />
@@ -2374,6 +2375,30 @@
 			<basic name="contentField" />
 			<basic name="feedType" />
 			<basic name="feedVersion" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.liferay.portlet.journal.model.impl.JournalFolderModelImpl">
+		<attributes>
+			<id name="folderId" />
+			<basic name="uuid">
+				<column name="UUID_" />
+			</basic>
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="parentFolderId" />
+			<basic name="name" />
+			<basic name="description" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
 			<transient name="userUuid" />
@@ -4013,6 +4038,10 @@
 	</entity>
 	<entity class="com.liferay.portlet.journal.model.impl.JournalFeedImpl" name="JournalFeed">
 		<table name="JournalFeed" />
+		<attributes />
+	</entity>
+	<entity class="com.liferay.portlet.journal.model.impl.JournalFolderImpl" name="JournalFolder">
+		<table name="JournalFolder" />
 		<attributes />
 	</entity>
 	<entity class="com.liferay.portlet.journal.model.impl.JournalStructureImpl" name="JournalStructure">

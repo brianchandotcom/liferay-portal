@@ -816,6 +816,11 @@
 			<forward name="portlet.journal.error" path="portlet.journal.error" />
 		</action>
 
+		<action path="/journal/edit_folder" type="com.liferay.portlet.journal.action.EditFolderAction">
+			<forward name="portlet.journal.edit_folder" path="portlet.journal.edit_folder" />
+			<forward name="portlet.journal.error" path="portlet.journal.error" />
+		</action>
+
 		<action path="/journal/edit_structure" type="com.liferay.portlet.journal.action.EditStructureAction">
 			<forward name="portlet.journal.edit_structure" path="portlet.journal.edit_structure" />
 			<forward name="portlet.journal.error" path="portlet.journal.error" />
@@ -844,6 +849,11 @@
 
 		<action path="/journal/get_template_content" type="com.liferay.portlet.journal.action.GetTemplateContentAction" />
 
+		<action path="/journal/move_folder" type="com.liferay.portlet.journal.action.EditFolderAction">
+			<forward name="portlet.journal.edit_folder" path="portlet.journal.move_folder" />
+			<forward name="portlet.journal.error" path="portlet.journal.error" />
+		</action>
+
 		<action path="/journal/rss" type="com.liferay.portlet.journal.action.RSSAction" />
 
 		<action path="/journal/select_display_page" type="com.liferay.portlet.layoutsadmin.action.EditLayoutsAction" />
@@ -852,6 +862,8 @@
 			<forward name="portlet.document_library.error" path="portlet.document_library.error" />
 			<forward name="portlet.document_library.view" path="portlet.journal.select_document_library" />
 		</action>
+
+		<action path="/journal/select_folder" forward="portlet.journal.select_folder" />
 
 		<action path="/journal/select_structure" forward="portlet.journal.select_structure" />
 
@@ -873,6 +885,14 @@
 			<forward name="portlet.journal.error" path="portlet.journal.error" />
 			<forward name="portlet.journal.edit_article" path="portlet.journal.view_article_history" />
 		</action>
+
+		<action path="/journal/view_feeds" forward="portlet.journal.view_feeds" />
+
+		<action path="/journal/view_recent" forward="portlet.journal.view_recent" />
+
+		<action path="/journal/view_structures" forward="portlet.journal.view_structures" />
+
+		<action path="/journal/view_templates" forward="portlet.journal.view_templates" />
 
 		<!-- Journal Articles -->
 

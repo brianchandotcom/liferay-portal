@@ -656,6 +656,10 @@
 		<put name="portlet_content" value="/portlet/journal/edit_feed.jsp" />
 	</definition>
 
+	<definition name="portlet.journal.edit_folder" extends="portlet.journal">
+		<put name="portlet_content" value="/portlet/journal/edit_folder.jsp" />
+	</definition>
+
 	<definition name="portlet.journal.edit_structure" extends="portlet.journal">
 		<put name="portlet_content" value="/portlet/journal/edit_structure.jsp" />
 	</definition>
@@ -672,12 +676,20 @@
 		<put name="portlet_content" value="/portlet/journal/error.jsp" />
 	</definition>
 
+	<definition name="portlet.journal.move_folder" extends="portlet.journal">
+		<put name="portlet_content" value="/portlet/journal/move_folder.jsp" />
+	</definition>
+
 	<definition name="portlet.journal.raw_article_content" extends="portlet.journal">
 		<put name="portlet_content" value="/portlet/journal/raw_article_content.jsp" />
 	</definition>
 
 	<definition name="portlet.journal.select_document_library" extends="portlet.journal">
 		<put name="portlet_content" value="/portlet/journal/select_document_library.jsp" />
+	</definition>
+
+	<definition name="portlet.journal.select_folder" extends="portlet.journal">
+		<put name="portlet_content" value="/portlet/journal/select_folder.jsp" />
 	</definition>
 
 	<definition name="portlet.journal.select_structure" extends="portlet.journal">
@@ -706,6 +718,22 @@
 
 	<definition name="portlet.journal.view_article_history" extends="portlet.journal">
 		<put name="portlet_content" value="/portlet/journal/view_article_history.jsp" />
+	</definition>
+
+	<definition name="portlet.journal.view_feeds" extends="portlet.journal">
+		<put name="portlet_content" value="/portlet/journal/view_feeds.jsp" />
+	</definition>
+
+	<definition name="portlet.journal.view_recent" extends="portlet.journal">
+		<put name="portlet_content" value="/portlet/journal/view_recent.jsp" />
+	</definition>
+
+	<definition name="portlet.journal.view_structures" extends="portlet.journal">
+		<put name="portlet_content" value="/portlet/journal/view_structures.jsp" />
+	</definition>
+
+	<definition name="portlet.journal.view_templates" extends="portlet.journal">
+		<put name="portlet_content" value="/portlet/journal/view_templates.jsp" />
 	</definition>
 
 	<!-- Journal Articles -->

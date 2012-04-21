@@ -101,6 +101,8 @@ public class JournalArticlePersistenceTest {
 
 		newJournalArticle.setModifiedDate(ServiceTestUtil.nextDate());
 
+		newJournalArticle.setFolderId(ServiceTestUtil.nextLong());
+
 		newJournalArticle.setClassNameId(ServiceTestUtil.nextLong());
 
 		newJournalArticle.setClassPK(ServiceTestUtil.nextLong());
@@ -171,6 +173,8 @@ public class JournalArticlePersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingJournalArticle.getModifiedDate()),
 			Time.getShortTimestamp(newJournalArticle.getModifiedDate()));
+		Assert.assertEquals(existingJournalArticle.getFolderId(),
+			newJournalArticle.getFolderId());
 		Assert.assertEquals(existingJournalArticle.getClassNameId(),
 			newJournalArticle.getClassNameId());
 		Assert.assertEquals(existingJournalArticle.getClassPK(),
@@ -389,6 +393,8 @@ public class JournalArticlePersistenceTest {
 		journalArticle.setCreateDate(ServiceTestUtil.nextDate());
 
 		journalArticle.setModifiedDate(ServiceTestUtil.nextDate());
+
+		journalArticle.setFolderId(ServiceTestUtil.nextLong());
 
 		journalArticle.setClassNameId(ServiceTestUtil.nextLong());
 

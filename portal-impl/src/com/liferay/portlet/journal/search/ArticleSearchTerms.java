@@ -33,6 +33,7 @@ public class ArticleSearchTerms extends ArticleDisplayTerms {
 		articleId = DAOParamUtil.getString(portletRequest, ARTICLE_ID);
 		content = DAOParamUtil.getString(portletRequest, CONTENT);
 		description = DAOParamUtil.getString(portletRequest, DESCRIPTION);
+		folderId = DAOParamUtil.getLong(portletRequest, FOLDER_ID);
 		status = ParamUtil.getString(portletRequest, STATUS);
 		structureId = DAOParamUtil.getString(portletRequest, STRUCTURE_ID);
 		templateId = DAOParamUtil.getString(portletRequest, TEMPLATE_ID);
@@ -81,6 +82,10 @@ public class ArticleSearchTerms extends ArticleDisplayTerms {
 
 	public void setArticleId(String articleId) {
 		this.articleId = articleId;
+	}
+
+	public void setFolderId(long folderId) {
+		this.folderId = folderId;
 	}
 
 	public void setGroupId(long groupId) {

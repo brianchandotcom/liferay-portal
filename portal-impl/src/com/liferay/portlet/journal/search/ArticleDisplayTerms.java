@@ -40,6 +40,8 @@ public class ArticleDisplayTerms extends DisplayTerms {
 
 	public static final String DISPLAY_DATE_LT = "displayDateLT";
 
+	public static final String FOLDER_ID = "folderId";
+
 	public static final String GROUP_ID = "groupId";
 
 	public static final String STATUS = "status";
@@ -60,6 +62,7 @@ public class ArticleDisplayTerms extends DisplayTerms {
 		articleId = ParamUtil.getString(portletRequest, ARTICLE_ID);
 		content = ParamUtil.getString(portletRequest, CONTENT);
 		description = ParamUtil.getString(portletRequest, DESCRIPTION);
+		folderId = ParamUtil.getLong(portletRequest, FOLDER_ID);
 		status = ParamUtil.getString(portletRequest, STATUS);
 		structureId = ParamUtil.getString(portletRequest, STRUCTURE_ID);
 		templateId = ParamUtil.getString(portletRequest, TEMPLATE_ID);
@@ -88,6 +91,10 @@ public class ArticleDisplayTerms extends DisplayTerms {
 
 	public Date getDisplayDateLT() {
 		return displayDateLT;
+	}
+
+	public long getFolderId() {
+		return folderId;
 	}
 
 	public long getGroupId() {
@@ -160,6 +167,7 @@ public class ArticleDisplayTerms extends DisplayTerms {
 	protected String description;
 	protected Date displayDateGT;
 	protected Date displayDateLT;
+	protected long folderId;
 	protected long groupId;
 	protected String status;
 	protected String structureId;

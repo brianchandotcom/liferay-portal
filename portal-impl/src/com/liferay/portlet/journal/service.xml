@@ -27,6 +27,7 @@
 
 		<!-- Other fields -->
 
+		<column name="folderId" type="long" />
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
 		<column name="articleId" type="String" />
@@ -86,6 +87,10 @@
 			<finder-column name="groupId" />
 			<finder-column name="articleId" />
 		</finder>
+		<finder name="G_F" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="folderId" arrayable-operator="OR" />
+		</finder>
 		<finder name="G_UT" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="urlTitle" />
@@ -144,6 +149,11 @@
 			<finder-column name="articleId" />
 			<finder-column name="status" arrayable-operator="OR" />
 		</finder>
+		<finder name="G_F_ST" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="folderId" />
+			<finder-column name="status" arrayable-operator="OR" />
+		</finder>
 		<finder name="G_UT_ST" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="urlTitle" />
@@ -171,6 +181,60 @@
 		<reference package-path="com.liferay.portlet.expando" entity="ExpandoValue" />
 		<reference package-path="com.liferay.portlet.messageboards" entity="MBMessage" />
 		<reference package-path="com.liferay.portlet.ratings" entity="RatingsStats" />
+	</entity>
+	<entity name="JournalFolder" uuid="true" local-service="true" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="folderId" type="long" primary="true" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="parentFolderId" type="long" />
+		<column name="name" type="String" />
+		<column name="description" type="String" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="parentFolderId" />
+			<order-column name="name" case-sensitive="false" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
+		<finder name="G_P" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="parentFolderId" />
+		</finder>
+		<finder name="G_P_N" return-type="JournalFolder" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="parentFolderId" />
+			<finder-column name="name" />
+		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.portal" entity="Group" />
+		<reference package-path="com.liferay.portlet.expando" entity="ExpandoValue" />
 	</entity>
 	<entity name="JournalArticleImage" local-service="true" remote-service="false">
 
@@ -497,6 +561,7 @@
 		<exception>DuplicateArticleId</exception>
 		<exception>DuplicateArticleImageId</exception>
 		<exception>DuplicateFeedId</exception>
+		<exception>DuplicateFolderName</exception>
 		<exception>DuplicateStructureElement</exception>
 		<exception>DuplicateStructureId</exception>
 		<exception>DuplicateTemplateId</exception>
@@ -505,6 +570,7 @@
 		<exception>FeedName</exception>
 		<exception>FeedTargetLayoutFriendlyUrl</exception>
 		<exception>FeedTargetPortletId</exception>
+		<exception>FolderName</exception>
 		<exception>RequiredStructure</exception>
 		<exception>RequiredTemplate</exception>
 		<exception>StructureId</exception>

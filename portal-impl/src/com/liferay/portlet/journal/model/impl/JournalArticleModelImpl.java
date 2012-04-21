@@ -78,6 +78,7 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
+			{ "folderId", Types.BIGINT },
 			{ "classNameId", Types.BIGINT },
 			{ "classPK", Types.BIGINT },
 			{ "articleId", Types.VARCHAR },
@@ -102,7 +103,7 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 			{ "statusByUserName", Types.VARCHAR },
 			{ "statusDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table JournalArticle (uuid_ VARCHAR(75) null,id_ LONG not null primary key,resourcePrimKey LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,articleId VARCHAR(75) null,version DOUBLE,title STRING null,urlTitle VARCHAR(150) null,description STRING null,content TEXT null,type_ VARCHAR(75) null,structureId VARCHAR(75) null,templateId VARCHAR(75) null,layoutUuid VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,reviewDate DATE null,indexable BOOLEAN,smallImage BOOLEAN,smallImageId LONG,smallImageURL STRING null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table JournalArticle (uuid_ VARCHAR(75) null,id_ LONG not null primary key,resourcePrimKey LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,folderId LONG,classNameId LONG,classPK LONG,articleId VARCHAR(75) null,version DOUBLE,title STRING null,urlTitle VARCHAR(150) null,description STRING null,content TEXT null,type_ VARCHAR(75) null,structureId VARCHAR(75) null,templateId VARCHAR(75) null,layoutUuid VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,reviewDate DATE null,indexable BOOLEAN,smallImage BOOLEAN,smallImageId LONG,smallImageURL STRING null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table JournalArticle";
 	public static final String ORDER_BY_JPQL = " ORDER BY journalArticle.articleId ASC, journalArticle.version DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY JournalArticle.articleId ASC, JournalArticle.version DESC";
@@ -122,16 +123,17 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 	public static long CLASSNAMEID_COLUMN_BITMASK = 2L;
 	public static long CLASSPK_COLUMN_BITMASK = 4L;
 	public static long COMPANYID_COLUMN_BITMASK = 8L;
-	public static long GROUPID_COLUMN_BITMASK = 16L;
-	public static long LAYOUTUUID_COLUMN_BITMASK = 32L;
-	public static long RESOURCEPRIMKEY_COLUMN_BITMASK = 64L;
-	public static long SMALLIMAGEID_COLUMN_BITMASK = 128L;
-	public static long STATUS_COLUMN_BITMASK = 256L;
-	public static long STRUCTUREID_COLUMN_BITMASK = 512L;
-	public static long TEMPLATEID_COLUMN_BITMASK = 1024L;
-	public static long URLTITLE_COLUMN_BITMASK = 2048L;
-	public static long UUID_COLUMN_BITMASK = 4096L;
-	public static long VERSION_COLUMN_BITMASK = 8192L;
+	public static long FOLDERID_COLUMN_BITMASK = 16L;
+	public static long GROUPID_COLUMN_BITMASK = 32L;
+	public static long LAYOUTUUID_COLUMN_BITMASK = 64L;
+	public static long RESOURCEPRIMKEY_COLUMN_BITMASK = 128L;
+	public static long SMALLIMAGEID_COLUMN_BITMASK = 256L;
+	public static long STATUS_COLUMN_BITMASK = 512L;
+	public static long STRUCTUREID_COLUMN_BITMASK = 1024L;
+	public static long TEMPLATEID_COLUMN_BITMASK = 2048L;
+	public static long URLTITLE_COLUMN_BITMASK = 4096L;
+	public static long UUID_COLUMN_BITMASK = 8192L;
+	public static long VERSION_COLUMN_BITMASK = 16384L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -151,6 +153,7 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setFolderId(soapModel.getFolderId());
 		model.setClassNameId(soapModel.getClassNameId());
 		model.setClassPK(soapModel.getClassPK());
 		model.setArticleId(soapModel.getArticleId());
@@ -369,6 +372,27 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
+	}
+
+	@JSON
+	public long getFolderId() {
+		return _folderId;
+	}
+
+	public void setFolderId(long folderId) {
+		_columnBitmask |= FOLDERID_COLUMN_BITMASK;
+
+		if (!_setOriginalFolderId) {
+			_setOriginalFolderId = true;
+
+			_originalFolderId = _folderId;
+		}
+
+		_folderId = folderId;
+	}
+
+	public long getOriginalFolderId() {
+		return _originalFolderId;
 	}
 
 	public String getClassName() {
@@ -1011,6 +1035,7 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		journalArticleImpl.setUserName(getUserName());
 		journalArticleImpl.setCreateDate(getCreateDate());
 		journalArticleImpl.setModifiedDate(getModifiedDate());
+		journalArticleImpl.setFolderId(getFolderId());
 		journalArticleImpl.setClassNameId(getClassNameId());
 		journalArticleImpl.setClassPK(getClassPK());
 		journalArticleImpl.setArticleId(getArticleId());
@@ -1116,6 +1141,10 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 		journalArticleModelImpl._setOriginalCompanyId = false;
 
+		journalArticleModelImpl._originalFolderId = journalArticleModelImpl._folderId;
+
+		journalArticleModelImpl._setOriginalFolderId = false;
+
 		journalArticleModelImpl._originalClassNameId = journalArticleModelImpl._classNameId;
 
 		journalArticleModelImpl._setOriginalClassNameId = false;
@@ -1196,6 +1225,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		else {
 			journalArticleCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
+
+		journalArticleCacheModel.folderId = getFolderId();
 
 		journalArticleCacheModel.classNameId = getClassNameId();
 
@@ -1342,7 +1373,7 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(65);
+		StringBundler sb = new StringBundler(67);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1362,6 +1393,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
+		sb.append(", folderId=");
+		sb.append(getFolderId());
 		sb.append(", classNameId=");
 		sb.append(getClassNameId());
 		sb.append(", classPK=");
@@ -1414,7 +1447,7 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(100);
+		StringBundler sb = new StringBundler(103);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.journal.model.JournalArticle");
@@ -1455,6 +1488,10 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		sb.append(
 			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
 		sb.append(getModifiedDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>folderId</column-name><column-value><![CDATA[");
+		sb.append(getFolderId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
@@ -1575,6 +1612,9 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private long _folderId;
+	private long _originalFolderId;
+	private boolean _setOriginalFolderId;
 	private long _classNameId;
 	private long _originalClassNameId;
 	private boolean _setOriginalClassNameId;

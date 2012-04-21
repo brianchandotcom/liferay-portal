@@ -154,6 +154,7 @@ type = ParamUtil.getString(request, "type", type);
 	searchTerms.setVersion(-1);
 
 	List<JournalArticle> results = null;
+	int total = 0;
 	%>
 
 	<%@ include file="/html/portlet/journal/article_search_results.jspf" %>

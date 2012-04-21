@@ -89,6 +89,7 @@ public class GetArticlesAction extends Action {
 
 		long companyId = PortalUtil.getCompanyId(request);
 		long groupId = ParamUtil.getLong(request, "groupId");
+		long folderId = ParamUtil.getLong(request, "folderId");
 		String articleId = null;
 		Double version = null;
 		String title = null;
@@ -155,9 +156,10 @@ public class GetArticlesAction extends Action {
 		}
 
 		return JournalArticleServiceUtil.search(
-			companyId, groupId, 0, articleId, version, title, description,
-			content, type, structureIds, templateIds, displayDateGT,
-			displayDateLT, status, reviewDate, andOperator, start, end, obc);
+			companyId, groupId, folderId, 0, articleId, version, title,
+			description, content, type, structureIds, templateIds,
+			displayDateGT, displayDateLT, status, reviewDate, andOperator,
+			start, end, obc);
 	}
 
 	protected byte[] getContent(

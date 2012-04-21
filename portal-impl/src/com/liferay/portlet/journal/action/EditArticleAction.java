@@ -59,10 +59,12 @@ import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.NoSuchStructureException;
 import com.liferay.portlet.journal.NoSuchTemplateException;
 import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.model.JournalStructure;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
 import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
+import com.liferay.portlet.journal.service.JournalFolderServiceUtil;
 import com.liferay.portlet.journal.service.JournalStructureLocalServiceUtil;
 import com.liferay.portlet.journal.util.JournalUtil;
 
@@ -70,6 +72,7 @@ import java.io.File;
 
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -327,21 +330,33 @@ public class EditArticleAction extends PortletAction {
 
 			double version = 0;
 
-			if (pos == -1) {
-				JournalArticleServiceUtil.deleteArticle(
-					groupId, articleId, articleURL, serviceContext);
-			}
-			else {
-				articleId = articleId.substring(0, pos);
-				version = GetterUtil.getDouble(
-					deleteArticleId.substring(
-						pos + VERSION_SEPARATOR.length()));
+			try {
+				if (pos == -1) {
+					JournalArticleServiceUtil.deleteArticle(
+						groupId, articleId, articleURL, serviceContext);
+				}
+				else {
+					articleId = articleId.substring(0, pos);
+					version = GetterUtil.getDouble(
+						deleteArticleId.substring(
+							pos + VERSION_SEPARATOR.length()));
 
-				JournalArticleServiceUtil.deleteArticle(
-					groupId, articleId, version, articleURL, serviceContext);
-			}
+					JournalArticleServiceUtil.deleteArticle(
+						groupId, articleId, version, articleURL,
+						serviceContext);
+				}
 
-			JournalUtil.removeRecentArticle(actionRequest, articleId, version);
+				JournalUtil.removeRecentArticle(
+					actionRequest, articleId, version);
+			}
+			catch (NoSuchArticleException nsae) {
+				long deleteFolderId = GetterUtil.getLong(deleteArticleId);
+
+				JournalFolder deleteFolder = JournalFolderServiceUtil.getFolder(
+					deleteFolderId);
+
+				JournalFolderServiceUtil.deleteFolder(deleteFolderId);
+			}
 		}
 	}
 
@@ -366,20 +381,53 @@ public class EditArticleAction extends PortletAction {
 
 			double version = 0;
 
-			if (pos == -1) {
-				JournalArticleServiceUtil.expireArticle(
-					groupId, articleId, articleURL, serviceContext);
-			}
-			else {
-				articleId = articleId.substring(0, pos);
-				version = GetterUtil.getDouble(
-					expireArticleId.substring(
-						pos + VERSION_SEPARATOR.length()));
+			try {
+				if (pos == -1) {
+					JournalArticleServiceUtil.expireArticle(
+						groupId, articleId, articleURL, serviceContext);
+				}
+				else {
+					articleId = articleId.substring(0, pos);
+					version = GetterUtil.getDouble(
+						expireArticleId.substring(
+							pos + VERSION_SEPARATOR.length()));
 
-				JournalArticleServiceUtil.expireArticle(
-					groupId, articleId, version, articleURL, serviceContext);
+					JournalArticleServiceUtil.expireArticle(
+						groupId, articleId, version, articleURL,
+						serviceContext);
+				}
+			}
+			catch (NoSuchArticleException nsae) {
+				long expireFolderId = GetterUtil.getLong(expireArticleId);
+
+				JournalFolder expireFolder = JournalFolderServiceUtil.getFolder(
+					expireFolderId);
+
+				expireFolder(groupId, expireFolderId, serviceContext);
 			}
 		}
+	}
+
+	protected void expireFolder(
+			long groupId, long parentFolderId, ServiceContext serviceContext)
+		throws Exception {
+
+		List<JournalFolder> folders = JournalFolderServiceUtil.getFolders(
+			groupId, parentFolderId);
+
+		for (JournalFolder folder : folders) {
+			expireFolder(groupId, folder.getFolderId(), serviceContext);
+		}
+
+		List<JournalArticle> articles =
+			JournalArticleServiceUtil.getArticlesByFolderId(
+				groupId, parentFolderId);
+
+		for (JournalArticle article : articles) {
+			JournalArticleServiceUtil.expireArticle(
+				groupId, article.getArticleId(), null, serviceContext);
+		}
+
 	}
 
 	protected Map<String, byte[]> getImages(
@@ -507,6 +555,7 @@ public class EditArticleAction extends PortletAction {
 
 		long groupId = ParamUtil.getLong(uploadPortletRequest, "groupId");
 
+		long folderId = ParamUtil.getLong(uploadPortletRequest, "folderId");
 		long classNameId = ParamUtil.getLong(
 			uploadPortletRequest, "classNameId");
 		long classPK = ParamUtil.getLong(uploadPortletRequest, "classPK");
@@ -674,15 +723,16 @@ public class EditArticleAction extends PortletAction {
 			// Add article
 
 			article = JournalArticleServiceUtil.addArticle(
-				groupId, classNameId, classPK, articleId, autoArticleId,
-				titleMap, descriptionMap, content, type, structureId,
-				templateId, layoutUuid, displayDateMonth, displayDateDay,
-				displayDateYear, displayDateHour, displayDateMinute,
-				expirationDateMonth, expirationDateDay, expirationDateYear,
-				expirationDateHour, expirationDateMinute, neverExpire,
-				reviewDateMonth, reviewDateDay, reviewDateYear, reviewDateHour,
-				reviewDateMinute, neverReview, indexable, smallImage,
-				smallImageURL, smallFile, images, articleURL, serviceContext);
+				groupId, folderId, classNameId, classPK, articleId,
+				autoArticleId, titleMap, descriptionMap, content, type,
+				structureId, templateId, layoutUuid, displayDateMonth,
+				displayDateDay, displayDateYear, displayDateHour,
+				displayDateMinute, expirationDateMonth, expirationDateDay,
+				expirationDateYear, expirationDateHour, expirationDateMinute,
+				neverExpire, reviewDateMonth, reviewDateDay, reviewDateYear,
+				reviewDateHour, reviewDateMinute, neverReview, indexable,
+				smallImage, smallImageURL, smallFile, images, articleURL,
+				serviceContext);
 
 			AssetPublisherUtil.addAndStoreSelection(
 				actionRequest, JournalArticle.class.getName(),
@@ -742,15 +792,15 @@ public class EditArticleAction extends PortletAction {
 				descriptionMap.put(defaultLocale, description);
 
 				article = JournalArticleServiceUtil.updateArticle(
-					groupId, articleId, version, titleMap, descriptionMap,
-					content, type, structureId, templateId, layoutUuid,
-					displayDateMonth, displayDateDay, displayDateYear,
-					displayDateHour, displayDateMinute, expirationDateMonth,
-					expirationDateDay, expirationDateYear, expirationDateHour,
-					expirationDateMinute, neverExpire, reviewDateMonth,
-					reviewDateDay, reviewDateYear, reviewDateHour,
-					reviewDateMinute, neverReview, indexable, smallImage,
-					smallImageURL, smallFile, images, articleURL,
+					groupId, folderId, articleId, version, titleMap,
+					descriptionMap, content, type, structureId, templateId,
+					layoutUuid, displayDateMonth, displayDateDay,
+					displayDateYear, displayDateHour, displayDateMinute,
+					expirationDateMonth, expirationDateDay, expirationDateYear,
+					expirationDateHour, expirationDateMinute, neverExpire,
+					reviewDateMonth, reviewDateDay, reviewDateYear,
+					reviewDateHour, reviewDateMinute, neverReview, indexable,
+					smallImage, smallImageURL, smallFile, images, articleURL,
 					serviceContext);
 			}
 			else if (cmd.equals(Constants.TRANSLATE)) {

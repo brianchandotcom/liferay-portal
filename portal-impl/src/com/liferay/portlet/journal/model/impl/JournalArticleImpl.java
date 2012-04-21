@@ -16,6 +16,8 @@ package com.liferay.portlet.journal.model.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -23,7 +25,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portlet.journal.model.JournalArticleResource;
+import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.service.JournalArticleResourceLocalServiceUtil;
+import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.portlet.journal.util.LocaleTransformerListener;
 
 import java.util.Locale;
@@ -128,6 +132,26 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		return defaultLanguageId;
 	}
 
+	public JournalFolder getFolder() {
+		JournalFolder folder = null;
+
+		if (getFolderId() > 0) {
+			try {
+				folder = JournalFolderLocalServiceUtil.getFolder(getFolderId());
+			}
+			catch (Exception e) {
+				folder = new JournalFolderImpl();
+
+				_log.error(e);
+			}
+		}
+		else {
+			folder = new JournalFolderImpl();
+		}
+
+		return folder;
+	}
+
 	public String getSmallImageType() throws PortalException, SystemException {
 		if ((_smallImageType == null) && isSmallImage()) {
 			Image smallImage = ImageLocalServiceUtil.getImage(
@@ -151,6 +175,8 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	public void setSmallImageType(String smallImageType) {
 		_smallImageType = smallImageType;
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(JournalArticleImpl.class);
 
 	private String _smallImageType;
 

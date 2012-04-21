@@ -166,7 +166,7 @@
 }
 
 .lfr-upload-container a.browse-button {
-	background-image: url(@theme_image_path@/dock/add_content.png);
+	background-image: url(@theme_image_path@/common/add.png);
 	background-repeat: no-repeat;
 	color: white;
 	font-size: 1.2em;
@@ -227,7 +227,7 @@
 
 .lfr-upload-container .upload-file.upload-complete.file-saved {
 	background-color: #B4DDAD;
-	background-image: url(@theme_image_path@/dock/my_place_current.png);
+	background-image: url(@theme_image_path@/common/check.png);
 	font-weight: bold;
 }
 

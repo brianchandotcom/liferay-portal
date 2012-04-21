@@ -119,8 +119,6 @@
 /* Skin */
 
 .lfr-actions .lfr-trigger, .lfr-actions .lfr-trigger strong {
-	background-image: url(@theme_image_path@/common/button_bg.png);
-	background-repeat: no-repeat;
 	font-weight: normal;
 }
 

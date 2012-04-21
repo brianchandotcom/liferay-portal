@@ -148,7 +148,7 @@ SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, re
 
 						<c:choose>
 							<c:when test="<%= layoutSetBranches.size() > 1 %>">
-								<liferay-ui:icon-menu align="left" cssClass="layoutset-branches-menu" direction="down" extended="<%= true %>" icon='<%= themeDisplay.getPathThemeImages() + "/dock/staging.png" %>' message="<%= layoutSetBranch.getName() %>">
+								<liferay-ui:icon-menu align="left" cssClass="layoutset-branches-menu" direction="down" extended="<%= true %>" icon='<%= themeDisplay.getPathThemeImages() + "/common/staging.png" %>' message="<%= layoutSetBranch.getName() %>">
 
 									<%
 									for (int i = 0; i < layoutSetBranches.size(); i++) {
@@ -182,7 +182,7 @@ SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, re
 							<c:otherwise>
 								<liferay-ui:icon
 									cssClass="layoutset-branch"
-									image="../dock/staging"
+									image="../common/staging"
 									label="<%= true %>"
 									message='<%= (layoutSetBranch == null || (layoutSetBranches.size() == 1)) ? "staging" : layoutSetBranch.getName() %>'
 								/>

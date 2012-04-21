@@ -139,7 +139,7 @@
 		}
 
 		h3 {
-			background-image: url(@theme_image_path@/dock/home.png);
+			background-image: url(@theme_image_path@/common/home.png);
 		}
 	}
 
@@ -148,7 +148,7 @@
 	}
 
 	.entity-comments h3 {
-		background-image: url(@theme_image_path@/dock/welcome_message.png);
+		background-image: url(@theme_image_path@/common/welcome_message.png);
 	}
 
 	.entity-email-addresses h3 {

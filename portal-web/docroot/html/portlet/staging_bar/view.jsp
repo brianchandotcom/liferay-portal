@@ -185,7 +185,7 @@ if (layout != null) {
 				<c:if test="<%= layoutSetBranches.size() > _MAX_INLINE_BRANCHES %>">
 					<li class="aui-state-default aui-tab go-to-layout-set-branches-tab">
 						<span class="aui-tab-content">
-							<liferay-ui:icon-menu align="left" cssClass="aui-tab-label layoutset-branches-menu" direction="down" extended="<%= false %>" icon='<%= themeDisplay.getPathThemeImages() + "/dock/staging.png" %>' message='<%= LanguageUtil.format(pageContext, "site-pages-variations-x", layoutSetBranches.size()) %>'>
+							<liferay-ui:icon-menu align="left" cssClass="aui-tab-label layoutset-branches-menu" direction="down" extended="<%= false %>" icon='<%= themeDisplay.getPathThemeImages() + "/common/staging.png" %>' message='<%= LanguageUtil.format(pageContext, "site-pages-variations-x", layoutSetBranches.size()) %>'>
 
 								<%
 								for (int i = 0; i < layoutSetBranches.size(); i++) {

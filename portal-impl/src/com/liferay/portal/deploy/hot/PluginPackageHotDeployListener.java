@@ -165,8 +165,6 @@ public class PluginPackageHotDeployListener extends BaseHotDeployListener {
 
 		unregisterClpMessageListeners(servletContext);
 
-		unregisterPACL(hotDeployEvent.getContextClassLoader());
-
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				"Plugin package " + pluginPackage.getModuleId() +
@@ -358,10 +356,6 @@ public class PluginPackageHotDeployListener extends BaseHotDeployListener {
 			servletContext.getServletContextName(), classLoader, properties);
 
 		PACLPolicyManager.register(classLoader, paclPolicy);
-	}
-
-	protected void unregisterPACL(ClassLoader classLoader) {
-		PACLPolicyManager.unregister(classLoader);
 	}
 
 	private static final String _MULTI_VM_PORTAL_CACHE_MANAGER_BEAN_NAME =

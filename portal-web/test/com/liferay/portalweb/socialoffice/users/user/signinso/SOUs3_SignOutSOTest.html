@@ -14,14 +14,29 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//li[@id='_145_userMenu']/a</td>
+	<td>storeElementPresent</td>
+	<td>//li[@id='_145_userMenu']</td>
+	<td>socialOfficeSignOutPresent</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${socialOfficeSignOutPresent}</td>
+	<td>SocialOfficeSignOutPresent</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//li[@id='_145_userMenu']</td>
 	<td>User Name</td>
 </tr>
 <tr>
 	<td>mouseOver</td>
-	<td>//li[@id='_145_userMenu']/a</td>
+	<td>//li[@id='_145_userMenu']</td>
 	<td>User Name</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>SocialOfficeSignOutPresent</td>
+	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>

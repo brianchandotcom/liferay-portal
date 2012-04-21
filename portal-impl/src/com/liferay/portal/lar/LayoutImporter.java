@@ -955,16 +955,16 @@ public class LayoutImporter {
 
 			existingLayout = LayoutUtil.fetchByUUID_G(
 				layout.getUuid(), groupId);
+		}
 
-			if (existingLayout == null) {
-				existingLayout = LayoutUtil.fetchByG_P_F(
-					groupId, privateLayout, friendlyURL);
-			}
+		if (existingLayout == null) {
+			existingLayout = LayoutUtil.fetchByG_P_F(
+				groupId, privateLayout, friendlyURL);
+		}
 
-			if (existingLayout == null) {
-				layoutId = LayoutLocalServiceUtil.getNextLayoutId(
-					groupId, privateLayout);
-			}
+		if (existingLayout == null) {
+			layoutId = LayoutLocalServiceUtil.getNextLayoutId(
+				groupId, privateLayout);
 		}
 
 		if (_log.isDebugEnabled()) {

@@ -53,11 +53,14 @@ if (!themeDisplay.isStatePopUp()) {
 
 					instance._createLiveSearch();
 
-					Liferay.Store('control-panel-sidebar-minimized', function(event) {
-						if (event === 1) {
-							instance._uiSetHidden(event, true);
+					Liferay.Store(
+						'control-panel-sidebar-minimized',
+						function(event) {
+							if (event === 1) {
+								instance._uiSetHidden(event, true);
+							}
 						}
-					});
+					);
 				},
 
 				_afterHiddenChange: function(event) {

@@ -15,8 +15,6 @@
 package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.cluster.messaging.ClusterBridgeMessageListener;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.InvokerMessageListener;
 import com.liferay.portal.kernel.messaging.MessageBus;
@@ -29,7 +27,6 @@ import com.liferay.portal.kernel.search.messaging.SearchWriterMessageListener;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Map;
@@ -72,22 +69,6 @@ public abstract class AbstractSearchEngineConfigurator {
 			SearchEngineUtil.setDefaultSearchEngineId(_originalSearchEngineId);
 
 			_originalSearchEngineId = null;
-		}
-	}
-
-	/**
-	 * @deprecated {@link #setSearchEngines(Map)}
-	 */
-	public void setSearchEngines(List<SearchEngine> searchEngines) {
-		_searchEngines = new HashMap<String, SearchEngine>();
-
-		if (searchEngines.size() == 1) {
-			SearchEngine searchEngine = searchEngines.get(0);
-
-			_searchEngines.put(SearchEngineUtil.SYSTEM_ENGINE_ID, searchEngine);
-		}
-		else {
-			_log.error("Unable to determine search engine IDs");
 		}
 	}
 
@@ -347,9 +328,6 @@ public abstract class AbstractSearchEngineConfigurator {
 				invokerMessageListener);
 		}
 	}
-
-	private static Log _log = LogFactoryUtil.getLog(
-		AbstractSearchEngineConfigurator.class);
 
 	private String _originalSearchEngineId;
 	private List<SearchEngineRegistration> _searchEngineRegistrations =

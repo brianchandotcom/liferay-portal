@@ -1,8 +1,5 @@
 .lfr-translation-manager {
-	background: #EEE;
-	border: 1px solid #979798;
-	border-color: #979798 #FAFAFB #FAFAFB #BDBDBE;
-	color: #34404F;
+	border: 1px solid transparent;
 	display: block;
 	margin: 0 auto;
 	min-height: 1.8em;
@@ -23,7 +20,43 @@
 
 	.lfr-translation-manager-available-translations {
 		margin-top: 1em;
+	}
 
+	.lfr-translation-manager-translation {
+		border: 1px solid transparent;
+		cursor: pointer;
+		display: inline-block;
+		margin: 0.2em;
+		padding: 0.4em 0.3em 0.4em 0.5em;
+
+		* {
+			vertical-align: middle;
+		}
+
+		img {
+			margin-right: 0.3em;
+		}
+	}
+
+	.lfr-translation-manager-delete-translation {
+		display: inline-block;
+	}
+}
+
+.lfr-translation-manager-selector, .lfr-translation-manager-add-menu {
+	display: inline-block;
+	margin: 0.5em 0;
+	white-space: nowrap;
+}
+
+/* Skin */
+
+.lfr-translation-manager {
+	background: #EEE;
+	border-color: #979798 #FAFAFB #FAFAFB #BDBDBE;
+	color: #34404F;
+
+	.lfr-translation-manager-available-translations {
 		.lfr-translation-manager-available-translations-links {
 			line-height: 1;
 		}
@@ -31,12 +64,8 @@
 
 	.lfr-translation-manager-translation {
 		background-color: #B3DAEF;
-		border: 1px solid #5FA8FF;
+		border-color: #5FA8FF;
 		color: #444;
-		cursor: pointer;
-		display: inline-block;
-		margin: 0.2em;
-		padding: 0.4em 0.3em 0.4em 0.5em;
 		text-decoration: none;
 		text-shadow: 1px 1px #EEE;
 
@@ -55,27 +84,9 @@
 				background-color: #FFF;
 			}
 		}
-
-		* {
-			vertical-align: middle;
-		}
-
-		img {
-			margin-right: 0.3em;
-		}
-	}
-
-	.lfr-translation-manager-delete-translation {
-		display: inline-block;
 	}
 
 	label {
 		font-weight: bold;
 	}
-}
-
-.lfr-translation-manager-selector, .lfr-translation-manager-add-menu {
-	display: inline-block;
-	margin: 0.5em 0;
-	white-space: nowrap;
 }

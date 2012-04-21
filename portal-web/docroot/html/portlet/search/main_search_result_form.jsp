@@ -25,6 +25,7 @@ String className = document.get(Field.ENTRY_CLASS_NAME);
 
 String entryTitle = null;
 String entrySummary = null;
+String downloadURL = null;
 PortletURL viewFullContentURL = null;
 String viewURL = null;
 
@@ -42,6 +43,8 @@ if (assetRendererFactory != null) {
 	AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(className, classPK);
 
 	AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(classPK);
+
+	downloadURL = assetRenderer.getURLDownload(themeDisplay);
 
 	viewFullContentURL = _getViewFullContentURL(request, themeDisplay, PortletKeys.ASSET_PUBLISHER, document);
 
@@ -114,6 +117,10 @@ PortletURL portletURL = (PortletURL)request.getAttribute("search.jsp-portletURL"
 
 			<%= StringUtil.highlight(HtmlUtil.escape(entryTitle), queryTerms) %>
 		</a>
+
+		<c:if test="<%= Validator.isNotNull(downloadURL) %>">
+			<liferay-ui:icon image="../arrows/01_down" label="<%= false %>" message='<%= LanguageUtil.format(pageContext, "download-x", HtmlUtil.escape(entryTitle)) %>' url="<%= downloadURL %>" />
+		</c:if>
 	</span>
 
 	<%

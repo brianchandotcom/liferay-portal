@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
@@ -46,9 +47,16 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 		String ddmResource = GetterUtil.getString(
 			serviceContext.getAttribute("ddmResource"));
 
+		String ddmResourceActionId = GetterUtil.getString(
+			serviceContext.getAttribute("ddmResourceActionId"));
+
+		if (Validator.isNull(ddmResourceActionId)) {
+			ddmResourceActionId = ActionKeys.ADD_TEMPLATE;
+		}
+
 		DDMPermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			ddmResource, ActionKeys.ADD_TEMPLATE);
+			ddmResource, ddmResourceActionId);
 
 		return ddmTemplateLocalService.addTemplate(
 			getUserId(), groupId, classNameId, classPK, nameMap, descriptionMap,
@@ -87,7 +95,15 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 		DDMTemplatePermission.check(
 			getPermissionChecker(), templateId, ActionKeys.VIEW);
 
-		return ddmTemplateLocalService.getTemplate(templateId);
+		return ddmTemplatePersistence.findByPrimaryKey(templateId);
+	}
+
+	public List<DDMTemplate> getTemplates(
+			long groupId, long classNameId, long classPK)
+		throws SystemException {
+
+		return ddmTemplatePersistence.findByG_C_C(
+			groupId, classNameId, classPK);
 	}
 
 	public List<DDMTemplate> getTemplates(

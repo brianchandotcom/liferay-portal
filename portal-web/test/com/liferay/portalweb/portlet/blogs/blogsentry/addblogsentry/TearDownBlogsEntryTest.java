@@ -35,7 +35,7 @@ public class TearDownBlogsEntryTest extends BaseTestCase {
 				loadRequiredJavaScriptModules();
 
 				boolean blogsEntry1Present = selenium.isElementPresent(
-						"link=Delete");
+						"link=Move to the Recycle Bin");
 
 				if (!blogsEntry1Present) {
 					label = 2;
@@ -43,14 +43,15 @@ public class TearDownBlogsEntryTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.click(RuntimeVariables.replace("link=Delete"));
+				selenium.click(RuntimeVariables.replace(
+						"link=Move to the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to move this to the Recycle Bin[\\s\\S]$"));
 
 				boolean blogsEntry2Present = selenium.isElementPresent(
-						"link=Delete");
+						"link=Move to the Recycle Bin");
 
 				if (!blogsEntry2Present) {
 					label = 3;
@@ -58,14 +59,15 @@ public class TearDownBlogsEntryTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.click(RuntimeVariables.replace("link=Delete"));
+				selenium.click(RuntimeVariables.replace(
+						"link=Move to the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to move this to the Recycle Bin[\\s\\S]$"));
 
 				boolean blogsEntry3Present = selenium.isElementPresent(
-						"link=Delete");
+						"link=Move to the Recycle Bin");
 
 				if (!blogsEntry3Present) {
 					label = 4;
@@ -73,14 +75,15 @@ public class TearDownBlogsEntryTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.click(RuntimeVariables.replace("link=Delete"));
+				selenium.click(RuntimeVariables.replace(
+						"link=Move to the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to move this to the Recycle Bin[\\s\\S]$"));
 
 				boolean blogsEntry4Present = selenium.isElementPresent(
-						"link=Delete");
+						"link=Move to the Recycle Bin");
 
 				if (!blogsEntry4Present) {
 					label = 5;
@@ -88,14 +91,15 @@ public class TearDownBlogsEntryTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.click(RuntimeVariables.replace("link=Delete"));
+				selenium.click(RuntimeVariables.replace(
+						"link=Move to the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to move this to the Recycle Bin[\\s\\S]$"));
 
 				boolean blogsEntry5Present = selenium.isElementPresent(
-						"link=Delete");
+						"link=Move to the Recycle Bin");
 
 				if (!blogsEntry5Present) {
 					label = 6;
@@ -103,11 +107,12 @@ public class TearDownBlogsEntryTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.click(RuntimeVariables.replace("link=Delete"));
+				selenium.click(RuntimeVariables.replace(
+						"link=Move to the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to move this to the Recycle Bin[\\s\\S]$"));
 
 			case 2:
 			case 3:

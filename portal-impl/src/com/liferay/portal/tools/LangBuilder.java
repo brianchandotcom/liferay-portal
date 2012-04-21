@@ -109,6 +109,8 @@ public class LangBuilder {
 
 		_orderProperties(
 			new File(_langDir + "/" + _langFile + "_en_GB.properties"));
+		_orderProperties(
+			new File(_langDir + "/" + _langFile + "_fr_CA.properties"));
 
 		_createProperties(content, "ar"); // Arabic
 		_createProperties(content, "eu"); // Basque
@@ -231,8 +233,9 @@ public class LangBuilder {
 					((state == 3) && !key.startsWith("category.")) ||
 					((state == 4) && !key.startsWith("model.resource.")) ||
 					((state == 5) && !key.startsWith("action.")) ||
-					((state == 7) && !key.startsWith("currency.")) ||
-					((state != 7) && key.startsWith("currency."))) {
+					((state == 7) && !key.startsWith("country.")) ||
+					((state == 8) && !key.startsWith("currency.")) ||
+					((state != 8) && key.startsWith("currency."))) {
 
 					throw new RuntimeException(
 						"File " + languageId + " with state " + state +
@@ -326,7 +329,7 @@ public class LangBuilder {
 						if (Validator.isNull(translatedText)) {
 							translatedText = value + AUTOMATIC_COPY;
 						}
-						else {
+						else if (!key.startsWith("country.")) {
 							translatedText =
 								translatedText + AUTOMATIC_TRANSLATION;
 						}
@@ -401,12 +404,19 @@ public class LangBuilder {
 
 					state = 6;
 				}
-				else if (line.startsWith("## Currency")) {
+				else if (line.startsWith("## Country")) {
 					if (state == 7) {
 						throw new RuntimeException(languageId);
 					}
 
 					state = 7;
+				}
+				else if (line.startsWith("## Currency")) {
+					if (state == 8) {
+						throw new RuntimeException(languageId);
+					}
+
+					state = 8;
 				}
 
 				if (firstLine) {

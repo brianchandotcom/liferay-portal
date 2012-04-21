@@ -15,11 +15,9 @@
 --%>
 
 <%
-String modelResourceName = ResourceActionsUtil.getModelResource(locale, typeSelection);
+long groupId = ParamUtil.getLong(request, "groupId");
 
 int assetEntryOrder = ParamUtil.getInteger(request, "assetEntryOrder", -1);
-
-String keywords = ParamUtil.getString(request, "keywords");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -27,6 +25,11 @@ portletURL.setParameter("struts_action", "/portlet_configuration/edit_configurat
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("backURL", redirect);
 portletURL.setParameter("portletResource", portletResource);
+
+if (groupId > 0) {
+	portletURL.setParameter("groupId", String.valueOf(groupId));
+}
+
 portletURL.setParameter("typeSelection", typeSelection);
 %>
 

@@ -1,5 +1,4 @@
 .taglib-social-bookmarks {
-	background: #F0F5F7;
 	clear: both;
 	margin-top: 1.5em;
 }
@@ -27,6 +26,15 @@
 }
 
 .taglib-social-bookmarks li .social-bookmark-link {
-	background: url() no-repeat 0 50%;
 	padding: 3px 2px 3px 20px;
+}
+
+/* Skin */
+
+.taglib-social-bookmarks {
+	background: #F0F5F7;
+}
+
+.taglib-social-bookmarks li .social-bookmark-link {
+	background: url() no-repeat 0 50%;
 }

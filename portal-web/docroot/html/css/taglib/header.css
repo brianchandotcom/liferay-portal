@@ -4,13 +4,22 @@
 
 .taglib-header .header-back-to a {
 	float: right;
-	font-weight: bold;
 	padding: 1em 0.2em;
+}
+
+.taglib-header {
+	border-bottom: 1px solid transparent;
+	margin-bottom: 1em;
+}
+
+/* Skin */
+
+.taglib-header .header-back-to a {
+	font-weight: bold;
 	text-decoration: none;
 }
 
 .taglib-header {
-	border-bottom: 1px solid #C8C9CA;
+	border-bottom-color: #C8C9CA;
 	color: #555;
-	margin-bottom: 1em;
 }

@@ -29,23 +29,6 @@ public class TearDownAnnouncementsEntryTest extends BaseTestCase {
 			case 1:
 				selenium.open("/web/guest/home/");
 				loadRequiredJavaScriptModules();
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("link=Announcements Test Page")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
 				selenium.clickAt("link=Announcements Test Page",
 					RuntimeVariables.replace("Announcements Test Page"));
 				selenium.waitForPageToLoad("30000");
@@ -67,7 +50,7 @@ public class TearDownAnnouncementsEntryTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
 			case 2:
 
@@ -83,7 +66,7 @@ public class TearDownAnnouncementsEntryTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
 			case 3:
 
@@ -99,7 +82,7 @@ public class TearDownAnnouncementsEntryTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
 			case 4:
 
@@ -115,7 +98,7 @@ public class TearDownAnnouncementsEntryTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
 			case 5:
 
@@ -131,7 +114,7 @@ public class TearDownAnnouncementsEntryTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
 			case 6:
 			case 100:

@@ -284,6 +284,10 @@ public class CountryWrapper implements Country, ModelWrapper<Country> {
 		return _country.toXmlString();
 	}
 
+	public java.lang.String getName(java.util.Locale locale) {
+		return _country.getName(locale);
+	}
+
 	/**
 	 * @deprecated Renamed to {@link #getWrappedModel}
 	 */

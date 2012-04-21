@@ -246,6 +246,15 @@
 
 		.general-display-settings {
 			margin-bottom: 1em;
+
+			.display-style .aui-field-content {
+				display: inline-block;
+			}
+
+			.display-style .manage-display-styles {
+				position: relative;
+				top: -5px;
+			}
 		}
 	}
 

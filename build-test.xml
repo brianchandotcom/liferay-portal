@@ -276,7 +276,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="1" />
+		<property name="build-test-ant-scripts.version" value="2" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -692,45 +692,35 @@
 		</antcall>
 
 		<antcall target="build-test-ant-script">
-			<param name="test.ant.script.command" value="demo-components-blogs" />
-			<param name="test.ant.script.suite" value="DemoComponentsBlogsTestSuite" />
-		</antcall>
-
-		<antcall target="build-test-ant-script">
-			<param name="test.ant.script.command" value="demo-components-message-boards" />
-			<param name="test.ant.script.suite" value="DemoComponentsMessageBoardsTestSuite" />
-		</antcall>
-
-		<antcall target="build-test-ant-script">
-			<param name="test.ant.script.command" value="demo-devcon-6100-dynamic-data" />
+			<param name="test.ant.script.command" value="demo-dynamic-data" />
 			<param name="test.ant.script.plugin.portlets" value="kaleo-designer-portlet,kaleo-forms-portlet" />
 			<param name="test.ant.script.plugin.webs" value="kaleo-web" />
-			<param name="test.ant.script.suite" value="DemoDevcon6100DynamicDataTestSuite" />
+			<param name="test.ant.script.suite" value="DemoDynamicDataTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
-			<param name="test.ant.script.command" value="demo-devcon-6100-fundamentals" />
+			<param name="test.ant.script.command" value="demo-fundamentals" />
 			<param name="test.ant.script.plugin.portlets" value="knowledge-base-portlet,test-misc-portlet,wsrp-portlet" />
 			<param name="test.ant.script.plugin.portlets.properties" value="admin.kb.article.sections=Application Server,Authentication,Content Management,Database,Development,Plugins,Portlets,Security,Server Configuration,User Interface$${line.separator}admin.kb.article.default.sections=" />
 			<param name="test.ant.script.properties" value="mime.types.content.disposition.inline=pdf" />
-			<param name="test.ant.script.suite" value="DemoDevcon6100FundamentalsTestSuite" />
+			<param name="test.ant.script.suite" value="DemoFundamentalsTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
-			<param name="test.ant.script.command" value="demo-devcon-6100-media" />
+			<param name="test.ant.script.command" value="demo-media" />
 			<param name="test.ant.script.plugin.webs" value="kaleo-web" />
-			<param name="test.ant.script.suite" value="DemoDevcon6100MediaTestSuite" />
+			<param name="test.ant.script.suite" value="DemoMediaTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
-			<param name="test.ant.script.command" value="demo-devcon-6100-site-management" />
+			<param name="test.ant.script.command" value="demo-site-management" />
 			<param name="test.ant.script.plugin.webs" value="kaleo-web" />
-			<param name="test.ant.script.suite" value="DemoDevcon6100SiteManagementTestSuite" />
+			<param name="test.ant.script.suite" value="DemoSiteManagementTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
-			<param name="test.ant.script.command" value="demo-devcon-6100-user-admin" />
-			<param name="test.ant.script.suite" value="DemoDevcon6100UserAdminTestSuite" />
+			<param name="test.ant.script.command" value="demo-user-admin" />
+			<param name="test.ant.script.suite" value="DemoUserAdminTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">

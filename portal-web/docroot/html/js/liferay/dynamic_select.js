@@ -1,6 +1,25 @@
 AUI.add(
 	'liferay-dynamic-select',
 	function(A) {
+		var sortByValue = function(a, b) {
+			var pos = a.indexOf('">');
+
+			var nameA = a.substring(pos);
+
+			pos = b.indexOf('">');
+
+			var nameB = b.substring(pos);
+
+			if (nameA < nameB) {
+				return -1;
+			}
+			else if (nameA > nameB) {
+				return 1;
+			}
+			else {
+				return 0;
+			}
+		};
 
 		/**
 		 * OPTIONS
@@ -84,6 +103,8 @@ AUI.add(
 				var select = A.one('#' + options.select);
 				var selectId = options.selectId;
 				var selectDesc = options.selectDesc;
+				var selectLocalizeDesc = options.selectLocalizeDesc || false;
+				var selectSort = options.selectSort || false;
 				var selectVal = options.selectVal;
 				var selectNullable = options.selectNullable || true;
 
@@ -99,9 +120,23 @@ AUI.add(
 						var key = item[selectId];
 						var value = item[selectDesc];
 
+						if (selectLocalizeDesc) {
+							var selectLocalizeDescPrefix = options.selectLocalizeDescPrefix;
+
+							if (selectLocalizeDescPrefix != null) {
+								value = selectLocalizeDescPrefix + value;
+							}
+
+							value = Liferay.Language.get(value);
+						}
+
 						selectOptions.push('<option value="' + key + '">' + value + '</option>');
 					}
 				);
+
+				if (selectSort) {
+					selectOptions = selectOptions.sort(sortByValue);
+				}
 
 				selectOptions = selectOptions.join('');
 

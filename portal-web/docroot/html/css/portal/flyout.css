@@ -8,12 +8,7 @@
 }
 
 .js .lfr-flyout-has-children {
-	background: url(@theme_image_path@/arrows/04_left.png) no-repeat 5px 50%;
 	padding-left: 12px;
-}
-
-.js .lfr-flyout-has-children.send-right {
-	background-image: url(@theme_image_path@/arrows/04_right.png);
 }
 
 .js .lfr-flyout-has-children ul {
@@ -23,7 +18,12 @@
 	top: -1px;
 }
 
-.js .lfr-flyout-has-children.send-right ul {
-	left: 100%;
-	right: auto;
+/* Skin */
+
+.js .lfr-flyout-has-children {
+	background: url(@theme_image_path@/arrows/04_left.png) no-repeat 5px 50%;
+}
+
+.js .lfr-flyout-has-children.send-right {
+	background-image: url(@theme_image_path@/arrows/04_right.png);
 }

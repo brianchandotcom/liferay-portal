@@ -3,36 +3,54 @@
 }
 
 .taglib-calendar table {
-	border: 1px solid #999;
+	border: 1px solid transparent;
 	width: 100%;
 }
 
 .taglib-calendar tr th, .taglib-calendar tr td {
+	border-bottom: 1px solid transparent;
 	height: 25px;
 	text-align: center;
-	border-bottom: 1px solid #999;
 }
 
 .taglib-calendar tr.portlet-section-header th, .taglib-calendar tr td {
-	border: 1px solid #999;
-	border-bottom: none;
-	border-top: none;
+	border: 1px solid transparent;
+	border-bottom-width: 0;
+	border-top-width: 0;
 	padding: 0;
 	width: 26px;
 }
 
 .taglib-calendar tr.portlet-section-header th.first, .taglib-calendar tr td.first {
-	border-left: none;
+	border-left-width: 0;
 }
 
 .taglib-calendar tr.portlet-section-header th.last, .taglib-calendar tr td.last {
-	border-right: none;
+	border-right-width: 0;
 }
 
 .taglib-calendar tr td a {
 	display: block;
 	height: 15px;
 	padding: 5px 0;
+}
+
+.taglib-calendar .has-events a span {
+	padding-bottom: 5px;
+}
+
+/* Skin */
+
+.taglib-calendar table {
+	border-color: #999;
+}
+
+.taglib-calendar tr th, .taglib-calendar tr td {
+	border-bottom-color: #999;
+}
+
+.taglib-calendar tr.portlet-section-header th, .taglib-calendar tr td {
+	border-color: #999;
 }
 
 .taglib-calendar a:hover, .taglib-calendar a:focus {
@@ -43,15 +61,8 @@
 	color: #999;
 }
 
-.taglib-calendar .calendar-current-day {
-}
-
-.taglib-calendar .calendar-current-day a {
-}
-
 .taglib-calendar .has-events a span {
 	background: url(@theme_image_path@/calendar/event_indicator.png) no-repeat 50% 95%;
-	padding-bottom: 5px;
 }
 
 .taglib-calendar .has-events.calendar-current-day a span {

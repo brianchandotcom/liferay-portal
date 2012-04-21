@@ -53,6 +53,10 @@ page import="com.liferay.portlet.documentlibrary.model.DLFileEntryConstants" %><
 page import="com.liferay.portlet.documentlibrary.model.DLFolderConstants" %><%@
 page import="com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.DocumentConversionUtil" %><%@
+page import="com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException" %><%@
+page import="com.liferay.portlet.dynamicdatamapping.model.DDMTemplate" %><%@
+page import="com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil" %><%@
+page import="com.liferay.portlet.dynamicdatamapping.service.permission.DDMTemplatePermission" %><%@
 page import="com.liferay.portlet.journal.model.JournalArticle" %><%@
 page import="com.liferay.portlet.journal.model.JournalStructure" %><%@
 page import="com.liferay.portlet.journal.service.JournalStructureLocalServiceUtil" %><%@
@@ -171,10 +175,28 @@ if (portletName.equals(PortletKeys.RELATED_ASSETS)) {
 boolean mergeUrlTags = GetterUtil.getBoolean(preferences.getValue("mergeUrlTags", null), true);
 boolean mergeLayoutTags = GetterUtil.getBoolean(preferences.getValue("mergeLayoutTags", null), false);
 
+long assetPublisherDDMTemplateId = 0;
+
 String displayStyle = GetterUtil.getString(preferences.getValue("displayStyle", "abstracts"));
 
-if (Validator.isNull(displayStyle)) {
+if (displayStyle.startsWith("ddmTemplate_")) {
+	assetPublisherDDMTemplateId = GetterUtil.getLong(displayStyle.substring("ddmTemplate_".length()));
+}
+else if (Validator.isNull(displayStyle)) {
 	displayStyle = "abstracts";
+}
+
+DDMTemplate assetPublisherDDMTemplate = null;
+
+if (assetPublisherDDMTemplateId > 0) {
+	try {
+		assetPublisherDDMTemplate = DDMTemplateLocalServiceUtil.getDDMTemplate(assetPublisherDDMTemplateId);
+	}
+	catch (NoSuchTemplateException nste) {
+		assetPublisherDDMTemplateId = 0;
+
+		displayStyle = "abstracts";
+	}
 }
 
 boolean showAssetTitle = GetterUtil.getBoolean(preferences.getValue("showAssetTitle", null), true);

@@ -475,7 +475,7 @@ public class UserAttributes {
 			if (_personalAddress != null) {
 				Region region = _personalAddress.getRegion();
 
-				return String.valueOf(region.getRegionCode());
+				return region.getRegionCode();
 			}
 
 			return StringPool.BLANK;
@@ -491,7 +491,7 @@ public class UserAttributes {
 			if (_personalAddress != null) {
 				Country country = _personalAddress.getCountry();
 
-				return String.valueOf(country.getName());
+				return country.getName(_user.getLocale());
 			}
 
 			return StringPool.BLANK;
@@ -618,7 +618,7 @@ public class UserAttributes {
 			if (_businessAddress != null) {
 				Region region = _businessAddress.getRegion();
 
-				return String.valueOf(region.getRegionCode());
+				return region.getRegionCode();
 			}
 
 			return StringPool.BLANK;
@@ -634,7 +634,7 @@ public class UserAttributes {
 			if (_businessAddress != null) {
 				Country country = _businessAddress.getCountry();
 
-				return String.valueOf(country.getName());
+				return country.getName(_user.getLocale());
 			}
 
 			return StringPool.BLANK;

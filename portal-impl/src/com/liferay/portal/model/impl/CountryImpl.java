@@ -14,12 +14,22 @@
 
 package com.liferay.portal.model.impl;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.model.CountryConstants;
+
+import java.util.Locale;
+
 /**
  * @author Brian Wing Shun Chan
  */
 public class CountryImpl extends CountryBaseImpl {
 
 	public CountryImpl() {
+	}
+
+	public String getName(Locale locale) {
+		return LanguageUtil.get(
+			locale, CountryConstants.NAME_PREFIX + getName());
 	}
 
 }

@@ -1015,25 +1015,17 @@
 		Util,
 		'inlineEditor',
 		function(options, callback) {
-			if (options.uri && options.button) {
-				var button = options.button;
-				var height = options.height || 640;
-				var textarea = options.textarea;
-				var uri = options.uri;
-				var width = options.width || 680;
+			var editorButton = A.one(options.button);
 
-				var editorButton = A.one(button);
+			if (options.uri && editorButton) {
+				delete options.button;
 
-				if (editorButton) {
-					delete options.button;
-
-					editorButton.on(
-						'click',
-						function(event) {
-							Util.openWindow(options, callback);
-						}
-					);
-				}
+				editorButton.on(
+					'click',
+					function(event) {
+						Util.openWindow(options, callback);
+					}
+				);
 			}
 		},
 		['aui-dialog', 'aui-io']
@@ -1094,6 +1086,7 @@
 			ddmURL.setParameter('classNameId', config.classNameId);
 			ddmURL.setParameter('classPK', config.classPK);
 			ddmURL.setParameter('ddmResource', config.ddmResource);
+			ddmURL.setParameter('ddmResourceActionId', config.ddmResourceActionId);
 			ddmURL.setParameter('saveCallback', config.saveCallback);
 			ddmURL.setParameter('scopeAvailableFields', config.availableFields);
 			ddmURL.setParameter('scopeStorageType', config.storageType);

@@ -70,6 +70,16 @@ portletURL.setParameter("tabs1", tabs1);
 
 			rowHREF = sb.toString();
 		}
+		else {
+			PortletURL rowURL = renderResponse.createRenderURL();
+
+			rowURL.setParameter("struts_action", "/dynamic_data_mapping/edit_structure");
+			rowURL.setParameter("redirect", currentURL);
+			rowURL.setParameter("classNameId", String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)));
+			rowURL.setParameter("classPK", String.valueOf(structure.getStructureId()));
+
+			rowHREF = rowURL.toString();
+		}
 		%>
 
 		<liferay-ui:search-container-column-text

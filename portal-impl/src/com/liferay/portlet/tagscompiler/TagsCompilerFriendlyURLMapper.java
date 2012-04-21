@@ -17,9 +17,9 @@ package com.liferay.portlet.tagscompiler;
 import com.liferay.portal.kernel.portlet.BaseFriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.Map;
 
@@ -28,6 +28,7 @@ import javax.portlet.WindowState;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
 public class TagsCompilerFriendlyURLMapper extends BaseFriendlyURLMapper {
 
@@ -44,32 +45,24 @@ public class TagsCompilerFriendlyURLMapper extends BaseFriendlyURLMapper {
 		String friendlyURLPath, Map<String, String[]> parameterMap,
 		Map<String, Object> requestContext) {
 
-		addParameter(parameterMap, "p_p_id", getPortletId());
-		addParameter(parameterMap, "p_p_lifecycle", "0");
-		addParameter(parameterMap, "p_p_state", WindowState.NORMAL);
-		addParameter(parameterMap, "p_p_mode", PortletMode.VIEW);
+		if (PropsValues.TAGS_COMPILER_ENABLED) {
+			addParameter(parameterMap, "p_p_id", getPortletId());
+			addParameter(parameterMap, "p_p_lifecycle", "0");
+			addParameter(parameterMap, "p_p_state", WindowState.NORMAL);
+			addParameter(parameterMap, "p_p_mode", PortletMode.VIEW);
 
-		int x = friendlyURLPath.indexOf(CharPool.SLASH, 1);
-		int y = friendlyURLPath.length();
+			int x = friendlyURLPath.indexOf(CharPool.SLASH, 1);
+			int y = friendlyURLPath.length();
 
-		String[] entries = StringUtil.split(
-			friendlyURLPath.substring(x + 1, y), CharPool.SLASH);
+			String[] entries = StringUtil.split(
+				friendlyURLPath.substring(x + 1, y), CharPool.SLASH);
 
-		if (entries.length > 0) {
-			StringBundler sb = new StringBundler(entries.length * 2 - 1);
-
-			for (int i = 0; i < entries.length; i++) {
-				String entry = StringUtil.replace(
-					entries[i], CharPool.PLUS, CharPool.SPACE);
-
-				if (i != 0) {
-					sb.append(StringPool.COMMA);
-				}
-
-				sb.append(entry);
+			if (entries.length > 0) {
+				addParameter(parameterMap, "tags", entries);
 			}
-
-			addParameter(parameterMap, "entries", sb.toString());
+			else {
+				addParameter(parameterMap, "tags", StringPool.BLANK);
+			}
 		}
 	}
 

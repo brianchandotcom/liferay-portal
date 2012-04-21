@@ -336,7 +336,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 		AssertUtils.assertEqualsSorted(assetTagNames, assetEntry.getTagNames());
 
-		Thread.sleep(1000);
+		Thread.sleep(1000 * TestPropsValues.JUNIT_DELAY_FACTOR);
 
 		_fileEntry = fileEntry;
 
@@ -357,7 +357,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 		AssertUtils.assertEqualsSorted(assetTagNames, assetEntry.getTagNames());
 
-		Thread.sleep(1000);
+		Thread.sleep(1000 * TestPropsValues.JUNIT_DELAY_FACTOR);
 
 		_fileEntry = fileEntry;
 
@@ -469,7 +469,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 	protected void testSearchFile(boolean rootFolder) throws Exception {
 		addFileEntry(rootFolder);
 
-		Thread.sleep(1000);
+		Thread.sleep(1000 * TestPropsValues.JUNIT_DELAY_FACTOR);
 
 		search(rootFolder, "title", true);
 		search(rootFolder, "content", true);

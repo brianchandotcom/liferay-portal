@@ -16,7 +16,15 @@ package com.liferay.portal.verify;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.security.ldap.LDAPSettingsUtil;
+import com.liferay.portal.service.CompanyLocalServiceUtil;
+import com.liferay.portal.util.PortalInstances;
+import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portlet.documentlibrary.store.StoreFactory;
 
@@ -61,7 +69,43 @@ public class VerifyProperties extends VerifyProcess {
 			verifyObsoletePortalProperty(key);
 		}
 
+		// Document library
+
 		StoreFactory.checkProperties();
+
+		// LDAP
+
+		verifyLDAPProperties();
+	}
+
+	protected void verifyLDAPProperties() throws Exception {
+		long[] companyIds = PortalInstances.getCompanyIdsBySQL();
+
+		for (long companyId : companyIds) {
+			UnicodeProperties properties = new UnicodeProperties();
+
+			long[] ldapServerIds = StringUtil.split(
+				PrefsPropsUtil.getString(companyId, "ldap.server.ids"), 0L);
+
+			for (long ldapServerId : ldapServerIds) {
+				String postfix = LDAPSettingsUtil.getPropertyPostfix(
+					ldapServerId);
+
+				for (String key : _LDAP_KEYS) {
+					String value = PrefsPropsUtil.getString(
+						companyId, key + postfix, null);
+
+					if (value == null) {
+						properties.put(key + postfix, StringPool.BLANK);
+					}
+				}
+			}
+
+			if (!properties.isEmpty()) {
+				CompanyLocalServiceUtil.updatePreferences(
+					companyId, properties);
+			}
+		}
 	}
 
 	protected void verifyMigratedSystemProperty(String oldKey, String newKey)
@@ -116,6 +160,11 @@ public class VerifyProperties extends VerifyProcess {
 					newKey + "\"");
 		}
 	}
+
+	private static final String[] _LDAP_KEYS = {
+		PropsKeys.LDAP_CONTACT_CUSTOM_MAPPINGS, PropsKeys.LDAP_CONTACT_MAPPINGS,
+		PropsKeys.LDAP_USER_CUSTOM_MAPPINGS
+	};
 
 	private static final String[][] _MIGRATED_SYSTEM_KEYS = new String[][] {
 		new String[] {

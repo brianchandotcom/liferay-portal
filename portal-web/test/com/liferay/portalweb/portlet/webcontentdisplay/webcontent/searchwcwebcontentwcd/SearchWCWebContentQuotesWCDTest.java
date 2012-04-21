@@ -54,13 +54,16 @@ public class SearchWCWebContentQuotesWCDTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText("//td[contains(.,'WC WebContent Title')]/a"));
 		selenium.type("//input[@name='_86_keywords']",
 			RuntimeVariables.replace("\"WC1 WebContent1 Title1\""));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isTextPresent("WC WebContent Content"));
+		assertEquals(RuntimeVariables.replace("No Web Content was found."),
+			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[2]"));
+		assertFalse(selenium.isElementPresent(
+				"//td[contains(.,'WC WebContent Title')]/a"));
 	}
 }

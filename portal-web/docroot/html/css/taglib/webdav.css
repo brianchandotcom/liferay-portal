@@ -1,18 +1,11 @@
-.js .taglib-webdav.visible {
-	background: #F0F5F7;
-}
-
 .js .taglib-webdav .show-webdav {
 	display: block;
 }
 
-.js .taglib-webdav.visible .show-webdav {
-}
-
 .js .taglib-webdav table {
-	border: 1px solid #828F95;
-	border-left: none;
-	border-right: none;
+	border: 1px solid transparent;
+	border-left-width: 0;
+	border-right-width: 0;
 	display: none;
 }
 
@@ -30,4 +23,14 @@
 
 .ie .taglib-webdav table {
 	height: 1%;
+}
+
+/* Skin */
+
+.js .taglib-webdav.visible {
+	background: #F0F5F7;
+}
+
+.js .taglib-webdav table {
+	border-color: #828F95;
 }

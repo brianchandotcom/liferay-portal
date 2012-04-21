@@ -29,4 +29,5 @@ public interface Country extends CountryModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.model.impl.CountryImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public java.lang.String getName(java.util.Locale locale);
 }

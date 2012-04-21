@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/a</td>
+	<td>//td[contains(.,'WC WebContent Title')]/a</td>
 	<td>WC WebContent Title</td>
 </tr>
 <tr>
@@ -54,9 +54,14 @@
 	<td>Search</td>
 </tr>
 <tr>
-	<td>assertTextNotPresent</td>
-	<td>WC WebContent Content</td>
-	<td></td>
+	<td>assertText</td>
+	<td>xPath=(//div[@class='portlet-msg-info'])[2]</td>
+	<td>No Web Content was found.</td>
+</tr>
+<tr>
+	<td>assertElementNotPresent</td>
+	<td>//td[contains(.,'WC WebContent Title')]/a</td>
+	<td>WC WebContent Title</td>
 </tr>
 </tbody></table>
 </body>

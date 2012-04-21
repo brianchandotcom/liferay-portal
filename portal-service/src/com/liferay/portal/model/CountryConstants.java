@@ -27,4 +27,6 @@ public class CountryConstants {
 		PropsUtil.get(
 			PropsKeys.SQL_DATA_COM_LIFERAY_PORTAL_MODEL_COUNTRY_COUNTRY_ID));
 
+	public static final String NAME_PREFIX = "country.";
+
 }

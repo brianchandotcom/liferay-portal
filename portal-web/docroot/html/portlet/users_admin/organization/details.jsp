@@ -291,6 +291,9 @@ if (parentOrganization != null) {
 				select: '<portlet:namespace />countryId',
 				selectData: Liferay.Address.getCountries,
 				selectDesc: 'name',
+				selectLocalizeDesc: '<%= true %>',
+				selectLocalizeDescPrefix: '<%= CountryConstants.NAME_PREFIX %>',
+				selectSort: '<%= true %>',
 				selectId: 'countryId',
 				selectVal: '<%= countryId %>'
 			},

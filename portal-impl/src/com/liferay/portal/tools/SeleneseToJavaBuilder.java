@@ -919,7 +919,8 @@ public class SeleneseToJavaBuilder {
 
 				sb.append("loadRequiredJavaScriptModules();");
 			}
-			else if (param1.equals("close") || param1.equals("refresh") ||
+			else if (param1.equals("close") || param1.equals("goBack") ||
+					 param1.equals("refresh") ||
 					 param1.equals("setBrowserOption") ||
 					 param1.equals("windowFocus") ||
 					 param1.equals("windowMaximize")) {
@@ -940,6 +941,19 @@ public class SeleneseToJavaBuilder {
 				sb.append("System.out.println(\"");
 				sb.append(param2);
 				sb.append("\");");
+			}
+			else if (param1.equals("goBackAndWait") ||
+					 param1.equals("refreshAndWait") ||
+					 param1.equals("windowMaximizeAndWait")) {
+
+				String text = param1.substring(0, param1.length() - 7);
+
+				sb.append("selenium.");
+				sb.append(text);
+				sb.append("();");
+				sb.append("selenium.waitForPageToLoad(\"30000\");");
+
+				sb.append("loadRequiredJavaScriptModules();");
 			}
 			else if (param1.equals("gotoIf")) {
 				String conditional = StringUtil.replace(
@@ -965,18 +979,6 @@ public class SeleneseToJavaBuilder {
 				sb.append("Thread.sleep(");
 				sb.append(param2);
 				sb.append(");");
-			}
-			else if (param1.equals("refreshAndWait") ||
-					 param1.equals("windowMaximizeAndWait")) {
-
-				String text = param1.substring(0, param1.length() - 7);
-
-				sb.append("selenium.");
-				sb.append(text);
-				sb.append("();");
-				sb.append("selenium.waitForPageToLoad(\"30000\");");
-
-				sb.append("loadRequiredJavaScriptModules();");
 			}
 			else if (param1.equals("store")) {
 				sb.append("boolean ");

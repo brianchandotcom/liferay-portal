@@ -9,7 +9,6 @@
 }
 
 .lfr-asset-category-container legend {
-	font-weight: bold;
 	margin-left: 5px;
 }
 
@@ -26,8 +25,7 @@
 }
 
 .lfr-asset-category-search-container {
-	background-color: #D3DADD;
-	border-bottom: 1px solid #AEB8BC;
+	border-bottom: 1px solid transparent; 
 	margin: 3px 0;
 	padding: 5px;
 }
@@ -37,10 +35,9 @@
 }
 
 .lfr-asset-category-container .no-matches {
-	border-bottom: none;
-	border-left: none;
-	border-right: none;
-	color: #999;
+	border-bottom-width: 0;
+	border-left-width: 0;
+	border-right-width: 0;
 	margin-bottom: 0;
 	margin-left: 5px;
 	margin-top: 0;
@@ -76,14 +73,29 @@
 	padding: 0 0 3px 16px;
 }
 
-.lfr-asset-category-list a.selected {
-	background-color: #EEE;
-}
-
 .lfr-asset-category-list span {
 	padding-left: 3px;
 }
 
 .lfr-categories-selector-list .aui-tree-node-paginator {
 	margin-left: 29px;
+}
+
+/* Skin */
+
+.lfr-asset-category-container legend {
+	font-weight: bold;
+}
+
+.lfr-asset-category-search-container {
+	background-color: #D3DADD;
+	border-bottom-color: #AEB8BC;
+}
+
+.lfr-asset-category-container .no-matches {
+	color: #999;
+}
+
+.lfr-asset-category-list a.selected {
+	background-color: #EEE;
 }

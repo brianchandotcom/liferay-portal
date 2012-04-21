@@ -49,7 +49,7 @@
 	}
 
 	.primary {
-		background: #EEE url(@theme_image_path@/dock/my_place_current.png) no-repeat 3px 50%;
+		background: #EEE url(@theme_image_path@/common/check.png) no-repeat 3px 50%;
 		color: #020509;
 		font-weight: bold;
 		margin-bottom: 10px;
@@ -118,7 +118,7 @@
 		}
 
 		h3 {
-			background-image: url(@theme_image_path@/dock/home.png);
+			background-image: url(@theme_image_path@/common/home.png);
 		}
 
 		.primary {
@@ -127,7 +127,7 @@
 	}
 
 	.entity-comments h3 {
-		background-image: url(@theme_image_path@/dock/welcome_message.png);
+		background-image: url(@theme_image_path@/common/welcome_message.png);
 	}
 
 	.entity-details {

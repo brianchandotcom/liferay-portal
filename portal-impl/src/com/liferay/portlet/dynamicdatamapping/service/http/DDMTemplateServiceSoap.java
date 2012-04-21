@@ -161,6 +161,22 @@ public class DDMTemplateServiceSoap {
 		}
 	}
 
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplateSoap[] getTemplates(
+		long groupId, long classNameId, long classPK) throws RemoteException {
+		try {
+			java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> returnValue =
+				DDMTemplateServiceUtil.getTemplates(groupId, classNameId,
+					classPK);
+
+			return com.liferay.portlet.dynamicdatamapping.model.DDMTemplateSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplateSoap[] search(
 		long companyId, long groupId, long classNameId, long classPK,
 		java.lang.String keywords, java.lang.String type,

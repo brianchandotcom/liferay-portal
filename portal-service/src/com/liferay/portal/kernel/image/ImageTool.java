@@ -23,6 +23,7 @@ import java.io.OutputStream;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Alexander Chow
  */
 public interface ImageTool {
 
@@ -38,13 +39,16 @@ public interface ImageTool {
 
 	public static final String TYPE_TIFF = "tiff";
 
+	public RenderedImage convertCMYKtoRGB(
+		byte[] bytes, String type, boolean fork);
+
 	public BufferedImage convertImageType(BufferedImage sourceImage, int type);
 
 	public void encodeGIF(RenderedImage renderedImage, OutputStream os)
 		throws IOException;
 
 	public void encodeWBMP(RenderedImage renderedImage, OutputStream os)
-		throws InterruptedException, IOException;
+		throws IOException;
 
 	public BufferedImage getBufferedImage(RenderedImage renderedImage);
 
@@ -55,26 +59,8 @@ public interface ImageTool {
 
 	public ImageBag read(File file) throws IOException;
 
-	/**
-	 * Scales the image based on the given width with the height calculated to
-	 * preserve aspect ratio.
-	 *
-	 * @param  renderedImage image to scale
-	 * @param  width used as new width and to calculate for new height
-	 * @return scaled image
-	 */
 	public RenderedImage scale(RenderedImage renderedImage, int width);
 
-	/**
-	 * Scales the image based on the maximum height and width given while
-	 * preserving the aspect ratio. If the image is already larger in both
-	 * dimensions, the image will not be scaled.
-	 *
-	 * @param  renderedImage image to scale
-	 * @param  maxHeight maximum height allowed for image
-	 * @param  maxWidth maximum width allowed for image
-	 * @return scaled image
-	 */
 	public RenderedImage scale(
 		RenderedImage renderedImage, int maxHeight, int maxWidth);
 

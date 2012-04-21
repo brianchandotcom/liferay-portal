@@ -25,6 +25,11 @@ import java.util.Map;
 public interface Transformer {
 
 	public String transform(
+			ThemeDisplay themeDisplay, Map<String, Object> contextObjects,
+			String script, String langType)
+		throws Exception;
+
+	public String transform(
 			ThemeDisplay themeDisplay, Map<String, String> tokens,
 			String viewMode, String languageId, String xml, String script,
 			String langType)

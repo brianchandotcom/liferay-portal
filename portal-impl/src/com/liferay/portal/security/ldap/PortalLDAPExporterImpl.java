@@ -112,9 +112,6 @@ public class PortalLDAPExporterImpl implements PortalLDAPExporter {
 
 			ldapContext.modifyAttributes(name, modificationItems);
 		}
-		catch (Exception e) {
-			throw e;
-		}
 		finally {
 			if (ldapContext != null) {
 				ldapContext.close();
@@ -197,9 +194,6 @@ public class PortalLDAPExporterImpl implements PortalLDAPExporter {
 			if (groupMembers.size() == 1) {
 				ldapContext.unbind(fullGroupDN);
 			}
-		}
-		catch (Exception e) {
-			throw e;
 		}
 		finally {
 			if (ldapContext != null) {
@@ -297,9 +291,6 @@ public class PortalLDAPExporterImpl implements PortalLDAPExporter {
 			}
 
 			_log.error(nnfe, nnfe);
-		}
-		catch (Exception e) {
-			throw e;
 		}
 		finally {
 			if (ldapContext != null) {

@@ -85,7 +85,7 @@ public class BookmarksFolderServiceTest extends BaseBookmarksServiceTestCase {
 
 		BookmarksEntry entry = addEntry();
 
-		Thread.sleep(1000);
+		Thread.sleep(1000 * TestPropsValues.JUNIT_DELAY_FACTOR);
 
 		long companyId = entry.getCompanyId();
 		long groupId = entry.getFolder().getGroupId();
@@ -136,7 +136,7 @@ public class BookmarksFolderServiceTest extends BaseBookmarksServiceTestCase {
 
 		BookmarksFolderLocalServiceUtil.deleteFolder(folderId);
 
-		Thread.sleep(1000);
+		Thread.sleep(1000 * TestPropsValues.JUNIT_DELAY_FACTOR);
 
 		hits = indexer.search(searchContext);
 
@@ -149,7 +149,7 @@ public class BookmarksFolderServiceTest extends BaseBookmarksServiceTestCase {
 		addEntry();
 		addEntry();
 
-		Thread.sleep(1000);
+		Thread.sleep(1000 * TestPropsValues.JUNIT_DELAY_FACTOR);
 
 		searchContext.setEnd(3);
 		searchContext.setFolderIds(null);

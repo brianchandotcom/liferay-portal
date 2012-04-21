@@ -77,7 +77,7 @@
 
 				<liferay-ui:icon
 					cssClass='<%= portletDisplay.getNamespace() + "expose-as-widget" %>'
-					image="../dock/add_content"
+					image="../common/add"
 					label="<%= true %>"
 					message="add-to-any-website"
 					url="<%= widgetHREF %>"
@@ -102,7 +102,7 @@
 
 				<liferay-ui:icon
 					cssClass='<%= portletDisplay.getNamespace() + "expose-as-widget" %>'
-					image="../dock/add_content"
+					image="../common/add"
 					label="<%= true %>"
 					message="add-to-igoogle"
 					url="<%= googleGadgetHREF %>"
@@ -116,7 +116,7 @@
 				%>
 
 				<liferay-ui:icon
-					image="../dock/add_content"
+					image="../common/add"
 					label="<%= true %>"
 					message="add-to-netvibes"
 					method="get"

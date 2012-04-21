@@ -129,12 +129,6 @@ public class DateUtil {
 	public static int getDaysBetween(
 		Date date1, Date date2, TimeZone timeZone) {
 
-		int offset = 0;
-
-		if (timeZone != null) {
-			offset = timeZone.getRawOffset();
-		}
-
 		if (date1.after(date2)) {
 			Date tempDate = date1;
 
@@ -142,13 +136,25 @@ public class DateUtil {
 			date2 = tempDate;
 		}
 
-		Calendar startCal = new GregorianCalendar(timeZone);
+		Calendar startCal = null;
+		Calendar endCal = null;
+
+		int offset = 0;
+
+		if (timeZone == null) {
+			startCal = new GregorianCalendar();
+			endCal = new GregorianCalendar();
+		}
+		else {
+			startCal = new GregorianCalendar(timeZone);
+			endCal = new GregorianCalendar(timeZone);
+
+			offset = timeZone.getRawOffset();
+		}
 
 		startCal.setTime(date1);
 
 		startCal.add(Calendar.MILLISECOND, offset);
-
-		Calendar endCal = new GregorianCalendar(timeZone);
 
 		endCal.setTime(date2);
 

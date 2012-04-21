@@ -275,7 +275,7 @@ html > .lfr-dockbar-pinned {
 }
 
 .my-sites-menu .control-panel a {
-	background: url(../images/dock/control_panel.png) no-repeat 3px 50%;
+	background: url(../images/common/control_panel.png) no-repeat 3px 50%;
 	padding-left: 25px;
 }
 
@@ -423,7 +423,7 @@ html > .lfr-dockbar-pinned {
 }
 
 .manage-content-menu .manage-page a {
-	background-image: url(../images/dock/page_settings.png);
+	background-image: url(../images/common/edit.png);
 }
 
 .manage-content-menu .manage-site-content a {
@@ -435,11 +435,11 @@ html > .lfr-dockbar-pinned {
 }
 
 .manage-content-menu .manage-page-customization a, .manage-content-menu .manage-page-customization .disabled {
-	background-image: url(../images/dock/customizations.png);
+	background-image: url(../images/dockbar/customizations.png);
 }
 
 .manage-content-menu .page-layout a {
-	background-image: url(../images/dock/layout.png);
+	background-image: url(../images/common/layout.png);
 }
 
 .manage-content-menu .sitemap a {

@@ -20,6 +20,8 @@
 AssetSearch searchContainer = (AssetSearch)request.getAttribute("liferay-ui:search:searchContainer");
 
 AssetDisplayTerms displayTerms = (AssetDisplayTerms)searchContainer.getDisplayTerms();
+
+long groupId = ParamUtil.getLong(request, "groupId");
 %>
 
 <liferay-ui:search-toggle
@@ -34,16 +36,26 @@ AssetDisplayTerms displayTerms = (AssetDisplayTerms)searchContainer.getDisplayTe
 
 		<aui:input name="<%= displayTerms.USER_NAME %>" size="20" type="text" value="<%= displayTerms.getUserName() %>" />
 
-		<aui:select label="my-sites" name="<%= displayTerms.GROUP_ID %>">
+		<aui:select label="my-sites" name="<%= displayTerms.GROUP_ID %>" showEmptyOption="<%= false %>">
 
 			<%
-			for (long groupId : groupIds) {
+			if (groupId > 0) {
 				Group group = GroupLocalServiceUtil.getGroup(groupId);
 			%>
 
-				<aui:option label='<%= group.getDescriptiveName(locale) %>' selected="<%= displayTerms.getGroupId() == groupId %>" value="<%= groupId %>" />
+				<aui:option label="<%= group.getDescriptiveName(locale) %>" selected="true" value="<%= groupId %>" />
 
 			<%
+			}
+			else {
+				for (long curGroupId : groupIds) {
+					Group group = GroupLocalServiceUtil.getGroup(curGroupId);
+				%>
+
+					<aui:option label="<%= group.getDescriptiveName(locale) %>" selected="<%= displayTerms.getGroupId() == curGroupId %>" value="<%= curGroupId %>" />
+
+				<%
+				}
 			}
 			%>
 

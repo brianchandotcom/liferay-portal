@@ -2730,11 +2730,11 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	}
 
 	/**
-	* Sets the name of the classes that represent trash handlers associated
-	* to the portlet.
+	* Sets the name of the classes that represent trash handlers associated to
+	* the portlet.
 	*
-	* @param trashHandlerClasses the names of the classes that represent
-	trash handlers associated with the portlet
+	* @param trashHandlerClasses the names of the classes that represent trash
+	handlers associated with the portlet
 	*/
 	public void setTrashHandlerClasses(
 		java.util.List<java.lang.String> trashHandlerClasses) {

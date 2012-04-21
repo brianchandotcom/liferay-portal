@@ -16,6 +16,7 @@ package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
@@ -45,6 +46,9 @@ import java.util.List;
 public class TestPropsValues {
 
 	public static final String COMPANY_WEB_ID;
+
+	public static final int JUNIT_DELAY_FACTOR = GetterUtil.getInteger(
+		TestPropsUtil.get("junit.delay.factor"));
 
 	public static final String PORTAL_URL = TestPropsUtil.get("portal.url");
 

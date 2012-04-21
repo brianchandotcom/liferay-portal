@@ -136,6 +136,11 @@
 			<bean class="com.liferay.portal.deploy.DeployManagerImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.deploy.hot.HotDeployUtil" class="com.liferay.portal.kernel.deploy.hot.HotDeployUtil">
+		<property name="hotDeploy">
+			<bean class="com.liferay.portal.deploy.hot.HotDeployImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.kernel.facebook.FacebookConnectUtil" class="com.liferay.portal.kernel.facebook.FacebookConnectUtil">
 		<property name="facebookConnect">
 			<bean class="com.liferay.portal.facebook.FacebookConnectImpl" />
@@ -149,6 +154,11 @@
 	<bean id="com.liferay.portal.kernel.googleapps.GoogleAppsFactoryUtil" class="com.liferay.portal.kernel.googleapps.GoogleAppsFactoryUtil">
 		<property name="googleAppsFactory">
 			<bean class="com.liferay.portal.googleapps.GoogleAppsFactoryImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.portal.kernel.image.ImageMagickUtil" class="com.liferay.portal.kernel.image.ImageMagickUtil">
+		<property name="imageMagick">
+			<bean class="com.liferay.portal.image.ImageMagickImpl" />
 		</property>
 	</bean>
 	<bean id="com.liferay.portal.kernel.image.ImageToolUtil" class="com.liferay.portal.kernel.image.ImageToolUtil">
@@ -579,6 +589,10 @@
 		<property name="assetRendererFactoryRegistry">
 			<bean class="com.liferay.portal.asset.AssetRendererFactoryRegistryImpl" />
 		</property>
+	</bean>
+	<bean id="com.liferay.portlet.assetpublisher.util.AssetPublisherHelper" class="com.liferay.portlet.assetpublisher.util.AssetPublisherHelperImpl" />
+	<bean id="com.liferay.portlet.assetpublisher.util.AssetPublisherHelperUtil" class="com.liferay.portlet.assetpublisher.util.AssetPublisherHelperUtil">
+		<property name="assetPublisherHelper" ref="com.liferay.portlet.assetpublisher.util.AssetPublisherHelper" />
 	</bean>
 	<bean id="com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerUtil" class="com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerUtil">
 		<property name="antivirusScanner">

@@ -154,6 +154,10 @@
 		<priority value="INFO" />
 	</category>
 
+	<category name="com.liferay.portal.deploy.hot.PACLHotDeployListener">
+		<priority value="ERROR" />
+	</category>
+
 	<category name="com.liferay.portal.deploy.hot.PluginPackageHotDeployListener">
 		<priority value="ERROR" />
 	</category>
@@ -423,7 +427,7 @@
 	</category>
 
 	<category name="com.liferay.portal.security.lang.PortalSecurityManager">
-		<priority value="ERROR" />
+		<priority value="FALSE" />
 	</category>
 
 	<category name="com.liferay.portal.security.ldap">

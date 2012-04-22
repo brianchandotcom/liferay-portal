@@ -67,9 +67,7 @@ public class SQLChecker extends BaseChecker {
 	}
 
 	public void checkPermission(Permission permission) {
-
-		// TODO
-
+		throw new UnsupportedOperationException();
 	}
 
 	public boolean hasSQL(String sql) {

@@ -382,7 +382,7 @@ AUI.add(
 
 				var descriptionMap = {};
 
-				descriptionMap[defaultLocale] = description == '' ? null : description;
+				descriptionMap[defaultLocale] = (Lang.isString(description) && description) ? description : null;
 
 				Liferay.Service.Journal.JournalStructure.addStructure(
 					{
@@ -1674,7 +1674,7 @@ AUI.add(
 
 				var descriptionMap = {};
 
-				descriptionMap[defaultLocale] = description == '' ? null : description;
+				descriptionMap[defaultLocale] = (Lang.isString(description) && description) ? description : null;
 
 				Liferay.Service.Journal.JournalStructure.updateStructure(
 					{

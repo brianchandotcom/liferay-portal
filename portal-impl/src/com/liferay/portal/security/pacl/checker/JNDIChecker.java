@@ -12,43 +12,52 @@
  * details.
  */
 
-package com.liferay.portal.security.pacl;
-
-import java.lang.reflect.Method;
+package com.liferay.portal.security.pacl.checker;
 
 import java.security.Permission;
 
-import java.util.Properties;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class InactivePACLPolicy extends BasePACLPolicy {
+public class JNDIChecker extends BaseChecker {
 
-	public InactivePACLPolicy(
-		String servletContextName, ClassLoader classLoader,
-		Properties properties) {
+	public void afterPropertiesSet() {
+		Set<String> names = getPropertySet("security-manager-jndi-names");
 
-		super(servletContextName, classLoader, properties);
+		_patterns = new ArrayList<Pattern>(names.size());
+
+		for (String name : names) {
+			Pattern pattern = Pattern.compile(name);
+
+			_patterns.add(pattern);
+		}
 	}
 
 	public void checkPermission(Permission permission) {
+		throw new UnsupportedOperationException();
 	}
 
 	public boolean hasJNDI(String name) {
-		return true;
-	}
+		for (Pattern pattern : _patterns) {
+			Matcher matcher = pattern.matcher(name);
 
-	public boolean hasService(Object object, Method method) {
-		return true;
-	}
+			if (matcher.matches()) {
+				return true;
+			}
+		}
 
-	public boolean hasSQL(String sql) {
-		return true;
-	}
-
-	public boolean isActive() {
 		return false;
 	}
+
+	protected void initNames() {
+	}
+
+	private List<Pattern> _patterns;
 
 }

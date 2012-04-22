@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.lang;
 
+import com.liferay.portal.jndi.pacl.PACLInitialContextFactoryBuilder;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.security.pacl.PACLClassUtil;
@@ -22,6 +23,8 @@ import com.liferay.portal.security.pacl.PACLPolicyManager;
 import com.liferay.portal.security.pacl.permission.PortalHookPermission;
 
 import java.security.Permission;
+
+import javax.naming.spi.NamingManager;
 
 /**
  * This is the portal's implementation of a security manager. The goal is to
@@ -39,13 +42,14 @@ public class PortalSecurityManager extends SecurityManager {
 	public PortalSecurityManager() {
 		_parentSecurityManager = System.getSecurityManager();
 
-		// Load dependent classes to prevent ClassCircularityError
+		initClasses();
 
-		_log.info("Loading " + PortalHookPermission.class.getName());
-
-		// Touch dependent classes to prevent NoClassDefError
-
-		PACLClassUtil.getPACLPolicyByReflection(false);
+		try {
+			initInitialContextFactoryBuilder();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
 	}
 
 	@Override
@@ -102,6 +106,33 @@ public class PortalSecurityManager extends SecurityManager {
 		}
 
 		return PACLClassUtil.getPACLPolicyByReflection(_log.isDebugEnabled());
+	}
+
+	protected void initClasses() {
+
+		// Load dependent classes to prevent ClassCircularityError
+
+		_log.debug("Loading " + PortalHookPermission.class.getName());
+
+		// Touch dependent classes to prevent NoClassDefError
+
+		PACLClassUtil.getPACLPolicyByReflection(false);
+	}
+
+	protected void initInitialContextFactoryBuilder() throws Exception {
+		if (NamingManager.hasInitialContextFactoryBuilder()) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Unable to override the initial context factory builder " +
+						"because one already exists. JNDI security is not " +
+							"enabled.");
+			}
+
+			return;
+		}
+
+		NamingManager.setInitialContextFactoryBuilder(
+			new PACLInitialContextFactoryBuilder());
 	}
 
 	protected void parentCheckPermission(

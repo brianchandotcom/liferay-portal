@@ -17,6 +17,7 @@ package com.liferay.portal.security.pacl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.security.pacl.checker.Checker;
+import com.liferay.portal.security.pacl.checker.JNDIChecker;
 import com.liferay.portal.security.pacl.checker.SQLChecker;
 import com.liferay.portal.security.pacl.checker.ServiceChecker;
 import com.liferay.portal.security.pacl.permission.PortalServicePermission;
@@ -39,6 +40,7 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 		super(servletContextName, classLoader, properties);
 
 		try {
+			initJNDIChecker();
 			initServiceChecker();
 			initSQLChecker();
 		}
@@ -53,6 +55,10 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 		checker.checkPermission(permission);
 	}
 
+	public boolean hasJNDI(String name) {
+		return _jndiChecker.hasJNDI(name);
+	}
+
 	public boolean hasService(Object object, Method method) {
 		return _serviceChecker.hasService(object, method);
 	}
@@ -63,6 +69,12 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 
 	public boolean isActive() {
 		return true;
+	}
+
+	protected void initJNDIChecker() {
+		_jndiChecker = new JNDIChecker();
+
+		initChecker(_jndiChecker);
 	}
 
 	protected void initServiceChecker() {
@@ -84,6 +96,7 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 
 	private static Log _log = LogFactoryUtil.getLog(ActivePACLPolicy.class);
 
+	private JNDIChecker _jndiChecker;
 	private ServiceChecker _serviceChecker;
 	private SQLChecker _sqlChecker;
 

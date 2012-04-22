@@ -42,6 +42,8 @@ public interface PACLPolicy {
 
 	public String getServletContextName();
 
+	public boolean hasJNDI(String name);
+
 	public boolean hasService(Object object, Method method);
 
 	public boolean hasSQL(String sql);

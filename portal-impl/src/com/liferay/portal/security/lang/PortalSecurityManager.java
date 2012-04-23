@@ -18,6 +18,7 @@ import com.liferay.portal.jndi.pacl.PACLInitialContextFactoryBuilder;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.security.pacl.PACLClassUtil;
+import com.liferay.portal.security.pacl.PACLConstants;
 import com.liferay.portal.security.pacl.PACLPolicy;
 import com.liferay.portal.security.pacl.PACLPolicyManager;
 import com.liferay.portal.security.pacl.permission.PortalHookPermission;
@@ -103,6 +104,13 @@ public class PortalSecurityManager extends SecurityManager {
 			}
 
 			return paclPolicy;
+		}
+		else if ((permission instanceof RuntimePermission) &&
+				 (permission.getName().startsWith(
+					 PACLConstants.RUNTIME_PERMISSION_GET_CLASSLOADER)) &&
+				 !PortalSecurityManagerThreadLocal.isGetClassLoaderCheckEnabled()) {
+
+			return PACLPolicyManager.getDefaultPACLPolicy();
 		}
 
 		return PACLClassUtil.getPACLPolicyByReflection(_log.isDebugEnabled());

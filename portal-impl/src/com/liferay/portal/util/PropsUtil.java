@@ -37,6 +37,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import javax.servlet.Servlet;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -100,13 +102,36 @@ public class PropsUtil {
 			SystemProperties.set(
 				PropsKeys.DEFAULT_LIFERAY_HOME, _getDefaultLiferayHome());
 
+			// Global shared lib directory
+
+			String globalSharedLibDir = ClassUtil.getParentPath(
+				Servlet.class.getClassLoader(),
+				Servlet.class.getName());
+
+			int pos = globalSharedLibDir.lastIndexOf(".jar!");
+
+			if (pos == -1) {
+				pos = globalSharedLibDir.lastIndexOf(".jar/");
+			}
+
+			pos = globalSharedLibDir.lastIndexOf(CharPool.SLASH, pos);
+
+			globalSharedLibDir = globalSharedLibDir.substring(0, pos + 1);
+
+			if (_log.isInfoEnabled()) {
+				_log.info("Global shared lib directory " + globalSharedLibDir);
+			}
+
+			SystemProperties.set(
+				PropsKeys.LIFERAY_LIB_GLOBAL_SHARED_DIR, globalSharedLibDir);
+
 			// Global lib directory
 
 			String globalLibDir = ClassUtil.getParentPath(
 				ReleaseInfo.class.getClassLoader(),
 				ReleaseInfo.class.getName());
 
-			int pos = globalLibDir.lastIndexOf(".jar!");
+			pos = globalLibDir.lastIndexOf(".jar!");
 
 			if (pos == -1) {
 				pos = globalLibDir.lastIndexOf(".jar/");

@@ -296,7 +296,7 @@ if (!selectableTree) {
 			updateSessionTreeOpenedState: function(treeId, nodeId, state) {
 				var data = {
 					nodeId: nodeId,
-					openNode: state,
+					openNode: state
 				};
 
 				TreeUtil.updateSessionTreeClick(treeId, data);

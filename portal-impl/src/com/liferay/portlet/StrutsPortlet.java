@@ -28,6 +28,8 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.EventRequest;
+import javax.portlet.EventResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
@@ -196,6 +198,24 @@ public class StrutsPortlet extends LiferayPortlet {
 
 		if (copyRequestParameters) {
 			PortalUtil.copyRequestParameters(actionRequest, actionResponse);
+		}
+	}
+
+	@Override
+	public void processEvent(EventRequest request, EventResponse response)
+		throws PortletException, IOException {
+
+		request.setAttribute(WebKeys.PORTLET_STRUTS_ACTION, viewAction);
+
+		// Call processEvent of com.liferay.portal.struts.PortletAction
+
+		try {
+			PortletRequestProcessor processor = _getPortletRequestProcessor();
+
+			processor.process(request, response);
+		}
+		catch (ServletException se) {
+			throw new PortletException(se);
 		}
 	}
 

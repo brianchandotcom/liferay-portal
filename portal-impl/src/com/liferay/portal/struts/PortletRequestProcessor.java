@@ -42,6 +42,8 @@ import java.lang.reflect.Constructor;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.EventRequest;
+import javax.portlet.EventResponse;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
@@ -210,6 +212,17 @@ public class PortletRequestProcessor extends TilesRequestProcessor {
 				actionResponse.sendRedirect(forwardPath);
 			}
 		}
+	}
+
+	public void process(EventRequest eventRequest, EventResponse eventResponse)
+		throws IOException, ServletException {
+
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			eventRequest);
+		HttpServletResponse response = PortalUtil.getHttpServletResponse(
+			eventResponse);
+
+		process(request, response);
 	}
 
 	public void process(

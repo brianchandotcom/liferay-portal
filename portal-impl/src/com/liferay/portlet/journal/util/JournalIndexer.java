@@ -199,9 +199,11 @@ public class JournalIndexer extends BaseIndexer {
 		String[] languageIds = getLanguageIds(
 			defaultLanguageId, article.getContent());
 
+		boolean dynamicContent = Validator.isNotNull(article.getStructureId());
+
 		for (String languageId : languageIds) {
 			String content = extractContent(
-				article.getContentByLocale(languageId));
+				article.getContentByLocale(languageId), dynamicContent);
 
 			if (languageId.equals(defaultLanguageId)) {
 				document.addText(Field.CONTENT, content);
@@ -328,33 +330,62 @@ public class JournalIndexer extends BaseIndexer {
 		return _FIELD_NAMESPACE.concat(StringPool.FORWARD_SLASH).concat(name);
 	}
 
-	protected String extractContent(String content) {
-		try {
-			com.liferay.portal.kernel.xml.Document contentDocument =
-				SAXReaderUtil.read(content);
+	protected String extractContent(String content, boolean dynamicContent) {
+		if (dynamicContent) {
+			try {
+				com.liferay.portal.kernel.xml.Document document =
+					SAXReaderUtil.read(content);
 
-			String path = "//dynamic-element" +
-				"[@type='text' or @type='text_area' or @type='text_box']" +
-				"/dynamic-content";
+				Element rootElement = document.getRootElement();
 
-			List<Node> nodes = contentDocument.selectNodes(path);
-
-			if (!nodes.isEmpty()) {
-				StringBundler sb = new StringBundler();
-
-				for (Node node : nodes) {
-					sb.append(node.getText());
-					sb.append(StringPool.SPACE);
-				}
-
-				content = sb.toString();
+				content = extractDynamicContent(rootElement).toString();
+			}
+			catch (DocumentException e) {
+				_log.error(e);
 			}
 		}
-		catch (DocumentException e) {
-			_log.error(e);
+		else {
+			content = extractStaticContent(content);
 		}
 
 		content = HtmlUtil.extractText(content);
+
+		return content;
+	}
+
+	protected StringBundler extractDynamicContent(Element rootElement)
+		throws DocumentException {
+
+		StringBundler sb = new StringBundler();
+
+		for (Element element : rootElement.elements("dynamic-element")) {
+			String elType = element.attributeValue("type", StringPool.BLANK);
+
+			if (!elType.equals("image") && !elType.equals("multi-list") &&
+				!elType.equals("list") && !elType.equals("document_library") &&
+				!elType.equals("boolean") && !elType.equals("link_to_layout") &&
+				!elType.equals("selection_break")) {
+
+				Element contentEl = element.element("dynamic-content");
+
+				if (contentEl != null) {
+					String dynamicContent = contentEl.getText();
+					sb = sb.append(dynamicContent).append(StringPool.SPACE);
+				}
+			}
+
+			sb = sb.append(extractDynamicContent(element));
+		}
+
+		return sb;
+	}
+
+	protected String extractStaticContent(String content) {
+		content = StringUtil.replace(content, "<![CDATA[", StringPool.BLANK);
+		content = StringUtil.replace(content, "]]>", StringPool.BLANK);
+		content = StringUtil.replace(content, "&amp;", "&");
+		content = StringUtil.replace(content, "&lt;", "<");
+		content = StringUtil.replace(content, "&gt;", ">");
 
 		return content;
 	}

@@ -16,6 +16,7 @@ package com.liferay.portalweb.portal;
 
 import com.liferay.portalweb.portal.dbupgrade.sampledata528.announcementsdelivery.AnnouncementsDeliveryTestPlan;
 import com.liferay.portalweb.portal.dbupgrade.sampledata528.login.LoginTests;
+import com.liferay.portalweb.portal.dbupgrade.sampledata528.serveradministration.executegeneratecustomroles.ExecuteGenerateCustomRolesTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -30,6 +31,7 @@ public class DBUpgradeAnnouncementsDelivery528TestSuite extends BaseTestSuite {
 
 		testSuite.addTest(LoginTests.suite());
 		testSuite.addTest(AnnouncementsDeliveryTestPlan.suite());
+		testSuite.addTest(ExecuteGenerateCustomRolesTests.suite());
 
 		testSuite.addTestSuite(StopSeleniumTest.class);
 

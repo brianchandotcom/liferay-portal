@@ -28,172 +28,72 @@ public class LoginTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.setTimeout("180000");
-				selenium.open("/web/guest/home");
+				selenium.open("/web/guest/home/");
 				loadRequiredJavaScriptModules();
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("link=Sign In")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.clickAt("link=Sign In", RuntimeVariables.replace(""));
-				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("_58_login")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.type("_58_login",
+				selenium.type("//input[@id='_58_login']",
 					RuntimeVariables.replace("test@liferay.com"));
-				selenium.type("_58_password", RuntimeVariables.replace("test"));
+				selenium.type("//input[@id='_58_password']",
+					RuntimeVariables.replace("test"));
 
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
+				boolean rememberMeNotChecked = selenium.isChecked(
+						"//input[@id='_58_rememberMeCheckbox']");
 
-					try {
-						if (selenium.isVisible("_58_rememberMeCheckbox")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.click("_58_rememberMeCheckbox");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//input[@value='Sign In']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.clickAt("//input[@value='Sign In']",
-					RuntimeVariables.replace(""));
-				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
-
-				boolean agreementAvailable = selenium.isTextPresent(
-						"Terms of Use");
-
-				if (!agreementAvailable) {
+				if (rememberMeNotChecked) {
 					label = 2;
 
 					continue;
 				}
 
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
+				selenium.clickAt("//input[@id='_58_rememberMeCheckbox']",
+					RuntimeVariables.replace("Remember Me"));
+				assertTrue(selenium.isChecked(
+						"//input[@id='_58_rememberMeCheckbox']"));
 
-					try {
-						if (selenium.isVisible("//input[@value='I Agree']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.clickAt("//input[@value='I Agree']",
-					RuntimeVariables.replace(""));
+			case 2:
+				selenium.clickAt("//input[@value='Sign In']",
+					RuntimeVariables.replace("Sign In"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 
-			case 2:
+				boolean agreementAvailable = selenium.isElementPresent(
+						"//h1/span[contains(.,'Terms of Use')]");
 
-				boolean reminderQueryPresent = selenium.isElementPresent(
-						"reminderQueryAnswer");
-
-				if (!reminderQueryPresent) {
+				if (!agreementAvailable) {
 					label = 3;
 
 					continue;
 				}
 
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("reminderQueryAnswer")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.type("reminderQueryAnswer",
-					RuntimeVariables.replace("Test"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//input[@value='Save']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.clickAt("//input[@value='Save']",
-					RuntimeVariables.replace(""));
+				selenium.clickAt("//input[@value='I Agree']",
+					RuntimeVariables.replace("I Agree"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 
 			case 3:
-				assertEquals(RuntimeVariables.replace(""),
-					selenium.getText("//header/h1/span"));
+
+				boolean reminderQueryPresent = selenium.isElementPresent(
+						"//input[@id='reminderQueryAnswer']");
+
+				if (!reminderQueryPresent) {
+					label = 4;
+
+					continue;
+				}
+
+				assertEquals(RuntimeVariables.replace(
+						"Please choose a reminder query."),
+					selenium.getText("//div[@class='portlet-msg-info']"));
+				selenium.type("//input[@id='reminderQueryAnswer']",
+					RuntimeVariables.replace("test"));
+				selenium.clickAt("//input[@value='Save']",
+					RuntimeVariables.replace("Save"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
+
+			case 4:
+				assertTrue(selenium.isPartialText(
+						"//div[@class='portlet-content']/div/div",
+						"You are signed in"));
 
 			case 100:
 				label = -1;

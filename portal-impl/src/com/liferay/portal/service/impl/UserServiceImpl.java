@@ -58,6 +58,8 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.announcements.model.AnnouncementsDelivery;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
+import java.awt.image.RenderedImage;
+
 import java.util.List;
 import java.util.Locale;
 
@@ -1279,6 +1281,48 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			getPermissionChecker(), userId, ActionKeys.UPDATE);
 
 		return userLocalService.updatePortrait(userId, bytes);
+	}
+
+	/**
+	 * Updates the user's portrait image.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  renderedImage the new portrait image
+	 * @return the user
+	 * @throws PortalException if a user with the primary key could not be found
+	 *         or if the new portrait was invalid
+	 * @throws SystemException if a system exception occurred
+	 */
+	public User updatePortrait(long userId, RenderedImage renderedImage)
+		throws PortalException, SystemException {
+
+		UserPermissionUtil.check(
+			getPermissionChecker(), userId, ActionKeys.UPDATE);
+
+		return userLocalService.updatePortrait(userId, renderedImage);
+	}
+
+	/**
+	 * Updates the user's portrait image.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  renderedImage the new portrait image
+	 * @param  compressionFormat the image format to use when compressing
+	 *         the renderedImage
+	 * @return the user
+	 * @throws PortalException if a user with the primary key could not be found
+	 *         or if the new portrait was invalid
+	 * @throws SystemException if a system exception occurred
+	 */
+	public User updatePortrait(
+			long userId, RenderedImage renderedImage, String compressionFormat)
+		throws PortalException, SystemException {
+
+		UserPermissionUtil.check(
+			getPermissionChecker(), userId, ActionKeys.UPDATE);
+
+		return userLocalService.updatePortrait(
+			userId, renderedImage, compressionFormat);
 	}
 
 	/**

@@ -52,6 +52,7 @@ public class RemovePortletPermissionsGuestViewTest extends BaseTestCase {
 					RuntimeVariables.replace("Blogs Portlet Permissions Page"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
+				Thread.sleep(5000);
 				selenium.clickAt("//strong/a",
 					RuntimeVariables.replace("Options"));
 
@@ -108,7 +109,7 @@ public class RemovePortletPermissionsGuestViewTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("//input[@name='16_ACTION_VIEW']",
-					RuntimeVariables.replace("Guest View Checkbox"));
+					RuntimeVariables.replace("Guest View"));
 
 			case 2:
 				selenium.clickAt("//input[@value='Save']",

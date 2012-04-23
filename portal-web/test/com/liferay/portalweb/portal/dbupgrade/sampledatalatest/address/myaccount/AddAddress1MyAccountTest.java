@@ -24,6 +24,9 @@ public class AddAddress1MyAccountTest extends BaseTestCase {
 	public void testAddAddress1MyAccount() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -92,7 +95,7 @@ public class AddAddress1MyAccountTest extends BaseTestCase {
 		selenium.type("//input[@id='_2_addressStreet2_0']",
 			RuntimeVariables.replace("Ste 12"));
 		selenium.select("//select[@id='_2_addressTypeId0']",
-			RuntimeVariables.replace("label=Business"));
+			RuntimeVariables.replace("Business"));
 		selenium.type("//input[@id='_2_addressZip0']",
 			RuntimeVariables.replace("91789"));
 		selenium.type("//input[@id='_2_addressStreet3_0']",
@@ -119,7 +122,7 @@ public class AddAddress1MyAccountTest extends BaseTestCase {
 		}
 
 		selenium.select("//select[@id='_2_addressCountryId0']",
-			RuntimeVariables.replace("label=United States"));
+			RuntimeVariables.replace("United States"));
 		selenium.clickAt("//input[@id='_2_addressPrimary0']",
 			RuntimeVariables.replace("Primary Button"));
 		selenium.clickAt("//input[@id='_2_addressMailing0Checkbox']",
@@ -143,7 +146,7 @@ public class AddAddress1MyAccountTest extends BaseTestCase {
 		}
 
 		selenium.select("//select[@id='_2_addressRegionId0']",
-			RuntimeVariables.replace("label=California"));
+			RuntimeVariables.replace("California"));
 		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));

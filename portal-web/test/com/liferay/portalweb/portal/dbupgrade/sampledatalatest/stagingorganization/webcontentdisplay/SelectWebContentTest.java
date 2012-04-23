@@ -24,41 +24,16 @@ public class SelectWebContentTest extends BaseTestCase {
 	public void testSelectWebContent() throws Exception {
 		selenium.open("/web/staging-organization-wcd/");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"link=Page Staging Organization Web Content Display")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.clickAt("link=Page Staging Organization Web Content Display",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace(
+				"Page Staging Organization Web Content Display"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertTrue(selenium.isElementPresent(
-				"//body[@class='blue live-view controls-visible signed-in public-page']"));
-		assertFalse(selenium.isElementPresent(
-				"//body[@class='blue staging controls-visible signed-in public-page']"));
-		selenium.clickAt("link=View Staged Page", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Staging", RuntimeVariables.replace("Staging"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent(
-				"//body[@class='blue live-view controls-visible signed-in public-page']"));
-		assertTrue(selenium.isElementPresent(
-				"//body[@class='blue staging controls-visible signed-in public-page']"));
 		selenium.clickAt("//img[@alt='Select Web Content']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Select Web Content"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -76,15 +51,13 @@ public class SelectWebContentTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertTrue(selenium.isElementPresent("//td[1]/a"));
+		assertTrue(selenium.isVisible("//td[1]/a"));
 		assertEquals(RuntimeVariables.replace("WC Web Content Name"),
 			selenium.getText("//td[2]/a"));
-		assertEquals(RuntimeVariables.replace("1.0"),
-			selenium.getText("//td[3]/a"));
-		assertTrue(selenium.isElementPresent("//td[4]/a"));
-		assertTrue(selenium.isElementPresent("//td[5]/a"));
+		assertTrue(selenium.isVisible("//td[3]/a"));
+		assertTrue(selenium.isVisible("//td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("//td[6]/a"));
+			selenium.getText("//td[5]/a"));
 		selenium.clickAt("//td[2]/a",
 			RuntimeVariables.replace("WC Web Content Name"));
 
@@ -107,11 +80,12 @@ public class SelectWebContentTest extends BaseTestCase {
 
 		assertTrue(selenium.isPartialText("//form[@id='_86_fm1']/div",
 				"Displaying Content:"));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
-			selenium.getText("//div[@id='p_p_id_86_']/div/div[1]"));
+			selenium.getText("//div[@class='portlet-msg-success']"));
 	}
 }

@@ -25,6 +25,9 @@ public class ViewAssignMembersCommunityUserGroupTest extends BaseTestCase {
 		throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -92,7 +95,7 @@ public class ViewAssignMembersCommunityUserGroupTest extends BaseTestCase {
 			RuntimeVariables.replace("User Groups"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.type("//input[@id='_174_keywords']",
+		selenium.type("//input[@id='_174_name']",
 			RuntimeVariables.replace("User Group Groups User Groups"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));

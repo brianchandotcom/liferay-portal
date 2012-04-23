@@ -56,10 +56,10 @@ public class BanThisUserTest extends BaseTestCase {
 		selenium.clickAt("//td[1]/a", RuntimeVariables.replace("MB Ban Thread"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Ban this User"),
-			selenium.getText("//td[1]/div/div/span[2]/a/span"));
-		selenium.clickAt("//td[1]/div/div/span[2]/a/span",
-			RuntimeVariables.replace("Ban this User"));
+		assertEquals(RuntimeVariables.replace("Ban This User"),
+			selenium.getText("//div[@class='user-details']/span[2]/a/span"));
+		selenium.clickAt("//div[@class='user-details']/span[2]/a/span",
+			RuntimeVariables.replace("Ban This User"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(

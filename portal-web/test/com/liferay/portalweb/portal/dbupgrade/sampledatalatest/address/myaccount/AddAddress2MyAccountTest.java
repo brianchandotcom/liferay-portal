@@ -24,6 +24,9 @@ public class AddAddress2MyAccountTest extends BaseTestCase {
 	public void testAddAddress2MyAccount() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -77,7 +80,7 @@ public class AddAddress2MyAccountTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[2]/div/span/span/button[1]")) {
+				if (selenium.isVisible("//button[contains(@class,'add-row')]")) {
 					break;
 				}
 			}
@@ -87,7 +90,7 @@ public class AddAddress2MyAccountTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("//div[2]/div/span/span/button[1]",
+		selenium.clickAt("//button[contains(@class,'add-row')]",
 			RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {
@@ -109,7 +112,7 @@ public class AddAddress2MyAccountTest extends BaseTestCase {
 		selenium.type("//input[@id='_2_addressStreet1_2']",
 			RuntimeVariables.replace("123 Lets"));
 		selenium.select("//select[@id='_2_addressTypeId2']",
-			RuntimeVariables.replace("label=Other"));
+			RuntimeVariables.replace("Other"));
 		selenium.type("//input[@id='_2_addressStreet2_2']",
 			RuntimeVariables.replace("897 Hope"));
 		selenium.type("//input[@id='_2_addressZip2']",
@@ -137,7 +140,7 @@ public class AddAddress2MyAccountTest extends BaseTestCase {
 		}
 
 		selenium.select("//select[@id='_2_addressCountryId2']",
-			RuntimeVariables.replace("label=Canada"));
+			RuntimeVariables.replace("Canada"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -157,7 +160,7 @@ public class AddAddress2MyAccountTest extends BaseTestCase {
 		}
 
 		selenium.select("//select[@id='_2_addressRegionId2']",
-			RuntimeVariables.replace("label=Ontario"));
+			RuntimeVariables.replace("Ontario"));
 		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));

@@ -49,9 +49,9 @@ public class ViewWebContentImageAssociationTest extends BaseTestCase {
 			selenium.getText("//h1[@id='web-content-title']"));
 		assertEquals(RuntimeVariables.replace("Image Test:"),
 			selenium.getText("//h2[@id='image-title']"));
-		assertTrue(selenium.isElementPresent("//a[@id='image']/img"));
+		assertTrue(selenium.isVisible("//a[@id='image']/img"));
 		assertEquals(RuntimeVariables.replace("Image Gallery Image Test:"),
 			selenium.getText("//h2[@id='image-gallery-title']"));
-		assertTrue(selenium.isElementPresent("//a[@id='image-gallery']/img"));
+		assertTrue(selenium.isVisible("//a[@id='image-gallery']/img"));
 	}
 }

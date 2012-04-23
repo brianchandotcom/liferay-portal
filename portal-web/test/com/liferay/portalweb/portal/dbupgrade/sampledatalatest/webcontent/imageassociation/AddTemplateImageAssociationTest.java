@@ -24,6 +24,9 @@ public class AddTemplateImageAssociationTest extends BaseTestCase {
 	public void testAddTemplateImageAssociation() throws Exception {
 		selenium.open("/web/web-content-image-association-community/");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -56,9 +59,9 @@ public class AddTemplateImageAssociationTest extends BaseTestCase {
 			RuntimeVariables.replace("Add Template"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.type("//input[@id='_15_name']",
+		selenium.type("//input[@id='_15_name_en_US']",
 			RuntimeVariables.replace("Image Template Test"));
-		selenium.type("//textarea[@id='_15_description']",
+		selenium.type("//textarea[@id='_15_description_en_US']",
 			RuntimeVariables.replace("This is an image template test."));
 		selenium.click("//input[@value='Select']");
 
@@ -78,9 +81,10 @@ public class AddTemplateImageAssociationTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		assertEquals(RuntimeVariables.replace("Image Structure Test"),
+			selenium.getText("//td[2]/a"));
 		selenium.clickAt("//td[2]/a",
-			RuntimeVariables.replace(
-				"Image Structure Test\nThis is an image structure test."));
+			RuntimeVariables.replace("Image Structure Test"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -103,8 +107,7 @@ public class AddTemplateImageAssociationTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Image Structure Test"),
 			selenium.getText("//a[@id='_15_structureName']"));
 		selenium.clickAt("//input[@id='_15_editorButton']",
-			RuntimeVariables.replace(""));
-		Thread.sleep(5000);
+			RuntimeVariables.replace("Launch Editor"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -112,7 +115,7 @@ public class AddTemplateImageAssociationTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//textarea[@id='_15_xslContent']")) {
+				if (selenium.isVisible("//textarea[@id='_15_plainEditorField']")) {
 					break;
 				}
 			}
@@ -122,38 +125,36 @@ public class AddTemplateImageAssociationTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.type("//textarea[@id='_15_xslContent']",
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//div[@class='ace_layer ace_gutter-layer']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.type("//textarea[@id='_15_plainEditorField']",
 			RuntimeVariables.replace(
 				"<h1 id=\"web-content-title\">$text-test.getData()</h1>\n\n<h2 id=\"image-title\">Image Test:</h2>\n<a id=\"image\"><img src=\"$image-test.data\"></img></a>\n\n<h2 id=\"image-gallery-title\">Image Gallery Image Test:</h2>\n<a id=\"image-gallery\"><img src=\"$image-gallery-test.data\"></img></a>"));
-		Thread.sleep(5000);
-		selenium.click("//input[@value='Update']");
+		selenium.clickAt("//input[@value='Update']",
+			RuntimeVariables.replace("Update"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace(
-				"Image Template Test\n This is an image template test."),
-			selenium.getText(
-				"//tr[@class='portlet-section-body results-row last']/td[3]"));
+		assertEquals(RuntimeVariables.replace("Image Template Test"),
+			selenium.getText("//tr[3]/td[3]"));
 	}
 }

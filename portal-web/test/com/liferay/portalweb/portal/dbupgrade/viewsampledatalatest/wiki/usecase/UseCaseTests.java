@@ -16,6 +16,17 @@ package com.liferay.portalweb.portal.dbupgrade.viewsampledatalatest.wiki.usecase
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.wiki.usecase.Guest_ViewPortletGuestViewOffTest;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.wiki.usecase.SignInTest;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.wiki.usecase.ViewRateWikiFrontPageChildPageComment1Test;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.wiki.usecase.ViewRateWikiFrontPageChildPageTest;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.wiki.usecase.ViewWikiFrontPageAttachmentTest;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.wiki.usecase.ViewWikiFrontPageChildPageComment1Test;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.wiki.usecase.ViewWikiFrontPageChildPageComment2Test;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.wiki.usecase.ViewWikiFrontPageChildPageTag1Test;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.wiki.usecase.ViewWikiFrontPageChildPageTag2Test;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.wiki.usecase.ViewWikiFrontPageChildPageTest;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.wiki.usecase.ViewWikiFrontPageTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

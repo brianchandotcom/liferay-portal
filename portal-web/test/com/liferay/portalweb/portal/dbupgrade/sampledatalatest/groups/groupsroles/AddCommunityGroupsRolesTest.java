@@ -24,6 +24,9 @@ public class AddCommunityGroupsRolesTest extends BaseTestCase {
 	public void testAddCommunityGroupsRoles() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -101,6 +104,6 @@ public class AddCommunityGroupsRolesTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Community Groups Roles"),
-			selenium.getText("//tr[3]/td[1]"));
+			selenium.getText("//h1[@class='header-title']/span"));
 	}
 }

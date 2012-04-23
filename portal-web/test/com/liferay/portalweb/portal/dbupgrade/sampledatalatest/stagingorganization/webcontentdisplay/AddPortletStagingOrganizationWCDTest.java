@@ -25,6 +25,55 @@ public class AddPortletStagingOrganizationWCDTest extends BaseTestCase {
 		throws Exception {
 		selenium.open("/web/staging-organization-wcd/");
 		loadRequiredJavaScriptModules();
+		selenium.clickAt("link=Page Staging Organization Web Content Display",
+			RuntimeVariables.replace(
+				"Page Staging Organization Web Content Display"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText("//li[@id='_145_addContent']/a/span"));
+		selenium.mouseOver("//li[@id='_145_addContent']/a/span");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//a[@id='_145_addApplication']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
+				"More"));
+		selenium.clickAt("//a[@id='_145_addApplication']",
+			RuntimeVariables.replace("More"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -33,7 +82,7 @@ public class AddPortletStagingOrganizationWCDTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"link=Page Staging Organization Web Content Display")) {
+							"//input[@id='layout_configuration_content']")) {
 					break;
 				}
 			}
@@ -43,30 +92,7 @@ public class AddPortletStagingOrganizationWCDTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Page Staging Organization Web Content Display",
-			RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		selenium.clickAt("_145_addApplication", RuntimeVariables.replace(""));
-		Thread.sleep(5000);
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("layout_configuration_content")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.typeKeys("layout_configuration_content",
+		selenium.typeKeys("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("w"));
 
 		for (int second = 0;; second++) {
@@ -87,7 +113,7 @@ public class AddPortletStagingOrganizationWCDTest extends BaseTestCase {
 		}
 
 		selenium.clickAt("//div[@title='Web Content Display']/p/a",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Web Content Display"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

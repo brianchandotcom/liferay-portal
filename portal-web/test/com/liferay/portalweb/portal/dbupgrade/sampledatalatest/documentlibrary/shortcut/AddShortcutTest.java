@@ -45,7 +45,9 @@ public class AddShortcutTest extends BaseTestCase {
 			RuntimeVariables.replace("Document Library Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.clickAt("//div[2]/a/span[2]",
+		assertEquals(RuntimeVariables.replace("Test2 Folder2"),
+			selenium.getText("//div[3]/a/span[2]"));
+		selenium.clickAt("//div[3]/a/span[2]",
 			RuntimeVariables.replace("Test2 Folder2"));
 
 		for (int second = 0;; second++) {
@@ -55,7 +57,7 @@ public class AddShortcutTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//span[3]/span/span/ul/li/strong/a/span")) {
+							"//li[@class='folder selected']/a/span[contains(.,'Test2 Folder2')]")) {
 					break;
 				}
 			}
@@ -65,7 +67,31 @@ public class AddShortcutTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("//span[3]/span/span/ul/li/strong/a/span",
+		assertEquals(RuntimeVariables.replace("Test2 Folder2"),
+			selenium.getText(
+				"//li[@class='folder selected']/a/span[contains(.,'Test2 Folder2')]"));
+		selenium.clickAt("//h1[@class='portlet-title']",
+			RuntimeVariables.replace("Documents and Media"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent("//div[@id='column-1_shim']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText("//span[@title='Add']/ul/li/strong/a"));
+		selenium.clickAt("//span[@title='Add']/ul/li/strong/a",
 			RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {
@@ -75,7 +101,7 @@ public class AddShortcutTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Shortcut')]/a")) {
 					break;
 				}
 			}
@@ -87,9 +113,9 @@ public class AddShortcutTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Shortcut"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Shortcut')]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Shortcut')]/a"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div/span[2]/span/input",
@@ -117,8 +143,6 @@ public class AddShortcutTest extends BaseTestCase {
 
 		selenium.clickAt("link=Document Library Shortcut Community",
 			RuntimeVariables.replace("Document Library Shortcut Community"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.selectWindow("null");
 
 		for (int second = 0;; second++) {
@@ -165,6 +189,9 @@ public class AddShortcutTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace("link=Test1 Folder1"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace(
+				"Test1 Document1.txt\nThis is test1 document1."),
+			selenium.getText("//td[1]/a"));
 		selenium.click("//td[1]/a");
 		selenium.selectWindow("null");
 
@@ -211,6 +238,6 @@ public class AddShortcutTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Test1 Document1.txt"),
-			selenium.getText("//div/a/span[2]"));
+			selenium.getText("//div[2]/a/span[2]"));
 	}
 }

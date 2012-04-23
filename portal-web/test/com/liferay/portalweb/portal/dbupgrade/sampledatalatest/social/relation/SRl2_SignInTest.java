@@ -22,180 +22,22 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class SRl2_SignInTest extends BaseTestCase {
 	public void testSRl2_SignIn() throws Exception {
-		int label = 1;
-
-		while (label >= 1) {
-			switch (label) {
-			case 1:
-				selenium.setTimeout("180000");
-				selenium.open("/web/guest/home");
-				loadRequiredJavaScriptModules();
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("link=Sign In")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.clickAt("link=Sign In",
-					RuntimeVariables.replace("Sign In"));
-				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//input[@id='_58_login']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.type("//input[@id='_58_login']",
-					RuntimeVariables.replace("socialrelationea2@liferay.com"));
-				selenium.type("//input[@id='_58_password']",
-					RuntimeVariables.replace("test"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//input[@id='_58_rememberMeCheckbox']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.click("//input[@id='_58_rememberMeCheckbox']");
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//input[@value='Sign In']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.clickAt("//input[@value='Sign In']",
-					RuntimeVariables.replace("Sign In"));
-				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
-
-				boolean iAgreePresent = selenium.isElementPresent(
-						"//span/input");
-
-				if (!iAgreePresent) {
-					label = 2;
-
-					continue;
-				}
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isElementPresent(
-									"//input[@value='I Agree']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.click(RuntimeVariables.replace(
-						"//input[@value='I Agree']"));
-				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
-				selenium.type("//input[@id='password1']",
-					RuntimeVariables.replace("asdf"));
-				selenium.type("//input[@id='password2']",
-					RuntimeVariables.replace("asdf"));
-				selenium.click(RuntimeVariables.replace(
-						"//input[@value='Save']"));
-				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("reminderQueryAnswer")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.type("reminderQueryAnswer",
-					RuntimeVariables.replace("Test"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//input[@value='Save']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.click(RuntimeVariables.replace(
-						"//input[@value='Save']"));
-				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
-
-			case 2:
-			case 100:
-				label = -1;
-			}
-		}
+		selenium.open("/web/guest/home");
+		loadRequiredJavaScriptModules();
+		selenium.clickAt("link=Welcome", RuntimeVariables.replace("Welcome"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		selenium.type("//input[@id='_58_login']",
+			RuntimeVariables.replace("socialrelationea2@liferay.com"));
+		selenium.type("//input[@id='_58_password']",
+			RuntimeVariables.replace("test"));
+		assertFalse(selenium.isChecked("//input[@id='_58_rememberMeCheckbox']"));
+		selenium.clickAt("//input[@id='_58_rememberMeCheckbox']",
+			RuntimeVariables.replace("Checkbox"));
+		assertTrue(selenium.isChecked("//input[@id='_58_rememberMeCheckbox']"));
+		selenium.clickAt("//input[@value='Sign In']",
+			RuntimeVariables.replace("Sign In"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
 	}
 }

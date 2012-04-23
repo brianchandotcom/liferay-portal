@@ -49,6 +49,46 @@ public class EditPageLayoutTest extends BaseTestCase {
 				"//div[@id='layout-column_column-1' and @class='portlet-dropzone portlet-column-content portlet-column-content-first']/div[1]/div[1]/section/header/h1/span[2]"));
 		assertTrue(selenium.isElementPresent(
 				"//div[@id='layout-column_column-2' and @class='portlet-dropzone portlet-column-content portlet-column-content-last']/div[1]/div[1]/section/header/h1/span[2]"));
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("Manage"),
+			selenium.getText("//li[@id='_145_manageContent']"));
+		selenium.mouseOver("//li[@id='_145_manageContent']");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("link=Page Layout")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.clickAt("link=Page Layout",
 			RuntimeVariables.replace("Page Layout"));
 		Thread.sleep(5000);
@@ -114,7 +154,7 @@ public class EditPageLayoutTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace(
-				"Your request completed successfully."),
+				"Your request completed successfully. The page will be refreshed when you close this dialog. Alternatively you can hide this dialog."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.open("/web/group-page-layout-community/");
 		loadRequiredJavaScriptModules();

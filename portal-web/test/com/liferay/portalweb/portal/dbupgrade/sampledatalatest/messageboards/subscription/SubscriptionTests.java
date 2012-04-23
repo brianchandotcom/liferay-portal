@@ -30,7 +30,6 @@ public class SubscriptionTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddPortletMBTest.class);
 		testSuite.addTestSuite(AddMBCategoryTest.class);
 		testSuite.addTestSuite(AddMBCategoryThreadTest.class);
-		testSuite.addTestSuite(SubscribeMBCategoryThreadActionsTest.class);
 		testSuite.addTestSuite(ViewSubscribeMBCategoryThreadTest.class);
 
 		return testSuite;

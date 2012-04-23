@@ -24,6 +24,12 @@ public class AddFolderTest extends BaseTestCase {
 	public void testAddFolder() throws Exception {
 		selenium.open("/web/document-library-document-community/");
 		loadRequiredJavaScriptModules();
+		selenium.clickAt("link=Document Library Page",
+			RuntimeVariables.replace("Document Library Page"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		selenium.clickAt("//h1[@class='portlet-title']",
+			RuntimeVariables.replace("Documents and Media"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -31,7 +37,7 @@ public class AddFolderTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Document Library Page")) {
+				if (selenium.isElementPresent("//div[@id='column-1_shim']")) {
 					break;
 				}
 			}
@@ -41,11 +47,9 @@ public class AddFolderTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Document Library Page",
-			RuntimeVariables.replace("Document Library Page"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		selenium.clickAt("//span[3]/span/ul/li/strong/a",
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {

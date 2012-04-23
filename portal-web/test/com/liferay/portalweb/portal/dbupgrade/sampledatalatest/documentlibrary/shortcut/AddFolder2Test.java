@@ -24,6 +24,12 @@ public class AddFolder2Test extends BaseTestCase {
 	public void testAddFolder2() throws Exception {
 		selenium.open("/web/document-library-shortcut-community/");
 		loadRequiredJavaScriptModules();
+		selenium.clickAt("link=Document Library Page",
+			RuntimeVariables.replace("Document Library Page"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		selenium.clickAt("//h1[@class='portlet-title']",
+			RuntimeVariables.replace("Documents and Media"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -31,7 +37,7 @@ public class AddFolder2Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Document Library Page")) {
+				if (selenium.isElementPresent("//div[@id='column-1_shim']")) {
 					break;
 				}
 			}
@@ -41,11 +47,9 @@ public class AddFolder2Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Document Library Page",
-			RuntimeVariables.replace("Document Library Page"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		selenium.clickAt("//span[3]/span/ul/li/strong/a",
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText("//span[@title='Add']/ul/li/strong/a"));
+		selenium.clickAt("//span[@title='Add']/ul/li/strong/a",
 			RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {
@@ -55,7 +59,7 @@ public class AddFolder2Test extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Folder')]/a")) {
 					break;
 				}
 			}
@@ -67,9 +71,9 @@ public class AddFolder2Test extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Folder"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Folder')]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Folder')]/a"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_20_name']",
@@ -101,6 +105,6 @@ public class AddFolder2Test extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Test2 Folder2"),
-			selenium.getText("//div[2]/a/span[2]"));
+			selenium.getText("//div[3]/a/span[2]"));
 	}
 }

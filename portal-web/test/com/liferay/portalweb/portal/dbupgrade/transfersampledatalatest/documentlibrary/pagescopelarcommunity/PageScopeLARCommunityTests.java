@@ -15,6 +15,7 @@
 package com.liferay.portalweb.portal.dbupgrade.transfersampledatalatest.documentlibrary.pagescopelarcommunity;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.documentlibrary.pagescope.AddCustomSiteDLPageScopeTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

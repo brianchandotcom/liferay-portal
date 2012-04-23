@@ -30,6 +30,8 @@ public class ImageAssociationTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddPortletIGTest.class);
 		testSuite.addTestSuite(AddPageWCDTest.class);
 		testSuite.addTestSuite(AddPortletWCDTest.class);
+		testSuite.addTestSuite(ConfigurePortletShowActionsTest.class);
+		testSuite.addTestSuite(ConfigurePortletShowFolderMenuTest.class);
 		testSuite.addTestSuite(AddIGFolderTest.class);
 		testSuite.addTestSuite(AddIGFolderImageTest.class);
 		testSuite.addTestSuite(AddStructureImageAssociationTest.class);

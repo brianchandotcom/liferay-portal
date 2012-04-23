@@ -16,6 +16,31 @@ package com.liferay.portalweb.portal.dbupgrade.viewsampledatalatest.documentlibr
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.documentlibrary.pagescope.Guest_ViewPage1Folder1Test;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.documentlibrary.pagescope.Guest_ViewPage2Folder2Test;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.documentlibrary.pagescope.Guest_ViewPage2Folder3Test;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.documentlibrary.pagescope.Guest_ViewPage2Folder4Test;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.documentlibrary.pagescope.Guest_ViewPage2Folder5Test;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.documentlibrary.pagescope.Guest_ViewPage2Folder6Test;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.documentlibrary.pagescope.Guest_ViewPage2Folder7Test;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.documentlibrary.pagescope.SignInTest;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.documentlibrary.pagescope.ViewConfigurePage2PortletEntriesPerPage5Test;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.documentlibrary.pagescope.ViewPage1DLFolder1Document1Comment1Test;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.documentlibrary.pagescope.ViewPage1DLFolder1Document1Comment2Test;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.documentlibrary.pagescope.ViewPage1DLFolder1Document1Test;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.documentlibrary.pagescope.ViewPage1DLFolder1Test;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.documentlibrary.pagescope.ViewPage2DLFolder2Document2Comment1Test;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.documentlibrary.pagescope.ViewPage2DLFolder2Document2Comment2Test;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.documentlibrary.pagescope.ViewPage2DLFolder2Document2Test;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.documentlibrary.pagescope.ViewPage2DLFolder2Document3Test;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.documentlibrary.pagescope.ViewPage2DLFolder2Test;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.documentlibrary.pagescope.ViewPage2DLFolder3Test;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.documentlibrary.pagescope.ViewPage2DLFolder4Test;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.documentlibrary.pagescope.ViewPage2DLFolder5Test;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.documentlibrary.pagescope.ViewPage2DLFolder6Test;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.documentlibrary.pagescope.ViewPage2DLFolder7Test;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.documentlibrary.pagescope.ViewRatePage1DLFolder1Document1Test;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.documentlibrary.pagescope.ViewRatePage2DLFolder2Document2Test;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

@@ -25,6 +25,19 @@ public class ViewOrganizationStagingOrganizationWCDTest extends BaseTestCase {
 		throws Exception {
 		selenium.open("/web/staging-organization-wcd/");
 		loadRequiredJavaScriptModules();
+		selenium.clickAt("link=Page Staging Organization Web Content Display",
+			RuntimeVariables.replace(
+				"Page Staging Organization Web Content Display"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		selenium.clickAt("link=Staging", RuntimeVariables.replace("Staging"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("WC Web Content Content"),
+			selenium.getText("//div[@class='journal-content-article']/p"));
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -32,8 +45,7 @@ public class ViewOrganizationStagingOrganizationWCDTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible(
-							"link=Page Staging Organization Web Content Display")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -43,45 +55,37 @@ public class ViewOrganizationStagingOrganizationWCDTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Page Staging Organization Web Content Display",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertTrue(selenium.isElementPresent(
-				"//body[@class='blue live-view controls-visible signed-in public-page']"));
-		assertFalse(selenium.isElementPresent(
-				"//body[@class='blue staging controls-visible signed-in public-page']"));
-		selenium.clickAt("link=View Staged Page", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent(
-				"//body[@class='blue live-view controls-visible signed-in public-page']"));
-		assertTrue(selenium.isElementPresent(
-				"//body[@class='blue staging controls-visible signed-in public-page']"));
-		assertEquals(RuntimeVariables.replace("WC Web Content Content"),
-			selenium.getText("//p"));
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		selenium.clickAt("link=Web Content", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Web Content",
+			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Organization Staging Organization Web Content Display"),
 			selenium.getText("//nav/ul/li[2]/span"));
-		assertTrue(selenium.isElementPresent("//td[2]/a"));
+		assertTrue(selenium.isVisible("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("WC Web Content Name"),
 			selenium.getText("//td[3]/a"));
-		assertEquals(RuntimeVariables.replace("1.0"),
-			selenium.getText("//td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Approved"),
-			selenium.getText("//td[5]/a"));
-		assertTrue(selenium.isElementPresent("//td[6]/a"));
-		assertTrue(selenium.isElementPresent("//td[7]/a"));
+			selenium.getText("//td[4]/a"));
+		assertTrue(selenium.isVisible("//td[5]/a"));
+		assertTrue(selenium.isVisible("//td[6]/a"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("//td[8]/a"));
+			selenium.getText("//td[7]/a"));
 		selenium.open("/web/staging-organization-wcd/");
 		loadRequiredJavaScriptModules();
+		selenium.clickAt("link=Page Staging Organization Web Content Display",
+			RuntimeVariables.replace(
+				"Page Staging Organization Web Content Display"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		assertFalse(selenium.isTextPresent("WC Web Content Content"));
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -89,8 +93,7 @@ public class ViewOrganizationStagingOrganizationWCDTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible(
-							"link=Page Staging Organization Web Content Display")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -100,32 +103,25 @@ public class ViewOrganizationStagingOrganizationWCDTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Page Staging Organization Web Content Display",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent(
-				"//body[@class='blue staging controls-visible signed-in public-page']"));
-		assertFalse(selenium.isTextPresent("WC Web Content Content"));
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		selenium.clickAt("link=Web Content", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Web Content",
+			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Organization Staging Organization Web Content Display"),
 			selenium.getText("//nav/ul/li[2]/span"));
-		assertTrue(selenium.isElementPresent("//td[2]/a"));
+		assertTrue(selenium.isVisible("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("WC Web Content Name"),
 			selenium.getText("//td[3]/a"));
-		assertEquals(RuntimeVariables.replace("1.0"),
-			selenium.getText("//td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Approved"),
-			selenium.getText("//td[5]/a"));
-		assertTrue(selenium.isElementPresent("//td[6]/a"));
-		assertTrue(selenium.isElementPresent("//td[7]/a"));
+			selenium.getText("//td[4]/a"));
+		assertTrue(selenium.isVisible("//td[5]/a"));
+		assertTrue(selenium.isVisible("//td[6]/a"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("//td[8]/a"));
+			selenium.getText("//td[7]/a"));
 	}
 }

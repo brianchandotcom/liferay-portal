@@ -24,6 +24,12 @@ public class DragAndDropPortletTest extends BaseTestCase {
 	public void testDragAndDropPortlet() throws Exception {
 		selenium.open("/web/group-page-layout-community/");
 		loadRequiredJavaScriptModules();
+		selenium.clickAt("link=Page Layout Page",
+			RuntimeVariables.replace("Page Layout Page"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		selenium.clickAt("//div[@id='main-content']",
+			RuntimeVariables.replace("Main Content"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -31,7 +37,8 @@ public class DragAndDropPortletTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Page Layout Page")) {
+				if (selenium.isElementPresent(
+							"//script[contains(@src,'/liferay/layout_column.js')]")) {
 					break;
 				}
 			}
@@ -41,13 +48,25 @@ public class DragAndDropPortletTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Page Layout Page",
-			RuntimeVariables.replace("Page Layout Page"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		selenium.clickAt("main-content", RuntimeVariables.replace(""));
-		selenium.clickAt("dockbar", RuntimeVariables.replace(""));
-		selenium.clickAt("navigation", RuntimeVariables.replace(""));
+		selenium.clickAt("//nav[@id='navigation']",
+			RuntimeVariables.replace("Navigation"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent("//div[@id='navigation_shim']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.dragAndDropToObject("xPath=(//h1/span[2])[2]",
 			"//div[@id='column-2']");
 		assertEquals(RuntimeVariables.replace("Breadcrumb"),

@@ -45,6 +45,8 @@ public class ViewDocumentTest extends BaseTestCase {
 			RuntimeVariables.replace("Document Library Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Test1 Folder1"),
+			selenium.getText("//div/a/span[2]"));
 		selenium.clickAt("//div/a/span[2]",
 			RuntimeVariables.replace("Test1 Folder1"));
 
@@ -54,7 +56,9 @@ public class ViewDocumentTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div/a/span[2]")) {
+				if (RuntimeVariables.replace("Test1 Document1.txt")
+										.equals(selenium.getText(
+								"//div/a/span[2]"))) {
 					break;
 				}
 			}

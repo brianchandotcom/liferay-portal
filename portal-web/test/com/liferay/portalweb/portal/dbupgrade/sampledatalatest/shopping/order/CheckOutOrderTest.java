@@ -80,7 +80,7 @@ public class CheckOutOrderTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("//input[@id='_34_shipToBillingCheckbox']",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Same as Billing"));
 
 			case 2:
 				assertTrue(selenium.isChecked(

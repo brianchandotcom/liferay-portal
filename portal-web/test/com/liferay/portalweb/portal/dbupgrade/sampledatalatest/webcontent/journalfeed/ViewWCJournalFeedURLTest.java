@@ -24,6 +24,9 @@ public class ViewWCJournalFeedURLTest extends BaseTestCase {
 	public void testViewWCJournalFeedURL() throws Exception {
 		selenium.open("/web/wc-journal-feed-community/");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -61,7 +64,8 @@ public class ViewWCJournalFeedURLTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//td[4]/span/ul/li/strong/a/span")) {
+				if (selenium.isVisible(
+							"//span[@title='Actions']/ul/li/strong/a/span")) {
 					break;
 				}
 			}
@@ -71,7 +75,7 @@ public class ViewWCJournalFeedURLTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("//td[4]/span/ul/li/strong/a/span",
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
@@ -81,7 +85,7 @@ public class ViewWCJournalFeedURLTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a")) {
 					break;
 				}
 			}
@@ -93,9 +97,9 @@ public class ViewWCJournalFeedURLTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Feed Name"),

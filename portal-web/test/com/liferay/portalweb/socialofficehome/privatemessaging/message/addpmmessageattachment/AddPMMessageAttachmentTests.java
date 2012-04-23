@@ -20,6 +20,7 @@ import com.liferay.portalweb.socialoffice.users.user.addsouser.TearDownSOUserTes
 import com.liferay.portalweb.socialoffice.users.user.editsouserpassword.EditSOUserPasswordTest;
 import com.liferay.portalweb.socialoffice.users.user.selectregularrolessouser.SelectRegularRolesSOUserTest;
 import com.liferay.portalweb.socialoffice.users.user.signinso.SOUs_SignInSOTest;
+import com.liferay.portalweb.socialoffice.users.user.signinso.SOUs_SignOutSOTest;
 import com.liferay.portalweb.socialoffice.users.user.signinso.SignInSOTest;
 import com.liferay.portalweb.socialoffice.users.user.signinso.SignOutSOTest;
 import com.liferay.portalweb.socialofficehome.contactscenter.contacts.sousaddasconnectionccuser.ConfirmNotificationsAddConnectionTest;
@@ -40,15 +41,15 @@ public class AddPMMessageAttachmentTests extends BaseTestSuite {
 		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SOUs_SignInSOTest.class);
 		testSuite.addTestSuite(SOUs_AddAsConnectionCCUserTest.class);
-		testSuite.addTestSuite(SignOutSOTest.class);
+		testSuite.addTestSuite(SOUs_SignOutSOTest.class);
 		testSuite.addTestSuite(SignInSOTest.class);
 		testSuite.addTestSuite(ConfirmNotificationsAddConnectionTest.class);
 		testSuite.addTestSuite(AddPMMessageAttachmentTest.class);
-		testSuite.addTestSuite(SignOutTest.class);
-		testSuite.addTestSuite(SOUs_SignInTest.class);
+		testSuite.addTestSuite(SignOutSOTest.class);
+		testSuite.addTestSuite(SOUs_SignInSOTest.class);
 		testSuite.addTestSuite(SOUs_ViewPMMessageAttachmentTest.class);
-		testSuite.addTestSuite(SignOutTest.class);
-		testSuite.addTestSuite(SOSignInTest.class);
+		testSuite.addTestSuite(SOUs_SignOutSOTest.class);
+		testSuite.addTestSuite(SignInSOTest.class);
 		testSuite.addTestSuite(ViewPMMessageAttachmentTest.class);
 		testSuite.addTestSuite(TearDownPMMessageTest.class);
 		testSuite.addTestSuite(TearDownSOUserTest.class);

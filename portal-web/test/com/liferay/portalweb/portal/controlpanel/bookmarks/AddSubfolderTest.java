@@ -51,7 +51,7 @@ public class AddSubfolderTest extends BaseTestCase {
 		selenium.clickAt("link=Bookmarks", RuntimeVariables.replace("Bookmarks"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.clickAt("//a/strong\n", RuntimeVariables.replace("Test Folder"));
+		selenium.clickAt("//a/strong", RuntimeVariables.replace("Test Folder"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -111,6 +112,8 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 
 			SQLQuery q = session.createSQLQuery(sql);
 
+			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(groupId);
@@ -180,6 +183,11 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 
 			SQLQuery q = session.createSQLQuery(sql);
 
+			q.addScalar("modelFolderId", Type.LONG);
+			q.addScalar("modelFolder", Type.LONG);
+			q.addScalar("articleId", Type.STRING);
+			q.addScalar("version", Type.DOUBLE);
+
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(groupId);
@@ -196,14 +204,14 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 
 			List<Object> models = new ArrayList<Object>();
 
-			Iterator<Object[]> itr = (Iterator<Object[]>) QueryUtil.iterate(
+			Iterator<Object[]> itr = (Iterator<Object[]>)QueryUtil.iterate(
 				q, getDialect(), start, end);
 
 			while (itr.hasNext()) {
 				Object[] array = itr.next();
 
 				long curFolderId = (Long)array[0];
-				long modelFolder = (Long)array[4];
+				long modelFolder = (Long)array[1];
 
 				Object obj = null;
 
@@ -211,8 +219,8 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 					obj = JournalFolderUtil.findByPrimaryKey(curFolderId);
 				}
 				else {
-					String articleId = (String)array[5];
-					double version = (Double)array[6];
+					String articleId = (String)array[2];
+					double version = (Double)array[3];
 
 					obj = JournalArticleUtil.findByG_A_V(
 						groupId, articleId, version);

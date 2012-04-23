@@ -217,6 +217,15 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 							parameterTypeName);
 					}
 
+					if (!ReflectUtil.isSubclass(
+						parameterType, methodParameters[i].getType())) {
+
+						throw new IllegalArgumentException(
+							"Unmatched argument type: " +
+							parameterType.getName() + " for method argument #"
+							+ i);
+					}
+
 					parameterValue = _createDefaultParameterValue(
 						parameterName, parameterType);
 				}
@@ -229,8 +238,11 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 					parameterValue = calendar;
 				}
 				else if (parameterType.equals(List.class)) {
-					List<?> list = JSONFactoryUtil.looseDeserialize(
-						value.toString(), ArrayList.class);
+
+					String jsonString = value.toString();
+
+					List<?> list = JSONFactoryUtil.looseDeserializeSafe(
+						jsonString, ArrayList.class);
 
 					list = _generifyList(
 						list, methodParameters[i].getGenericTypes());
@@ -242,8 +254,11 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 						value.toString());
 				}
 				else if (parameterType.equals(Map.class)) {
-					Map<?, ?> map = JSONFactoryUtil.looseDeserialize(
-						value.toString(), HashMap.class);
+
+					String jsonString = value.toString();
+
+					Map<?, ?> map = JSONFactoryUtil.looseDeserializeSafe(
+						jsonString, HashMap.class);
 
 					map = _generifyMap(
 						map, methodParameters[i].getGenericTypes());

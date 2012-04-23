@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.json.JSONTransformer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -176,6 +177,18 @@ public class JSONFactoryImpl implements JSONFactory {
 		return (T) createJSONDeserializer().use(null, clazz).deserialize(json);
 	}
 
+	public Object looseDeserializeSafe(String json) {
+		json = _removeTypeInfoFromJsonString(json);
+
+		return looseDeserialize(json);
+	}
+
+	public <T> T looseDeserializeSafe(String json, Class<T> clazz) {
+		json = _removeTypeInfoFromJsonString(json);
+
+		return looseDeserialize(json, clazz);
+	}
+
 	public String looseSerialize(Object object) {
 		JSONSerializer jsonSerializer = createJSONSerializer();
 
@@ -248,6 +261,20 @@ public class JSONFactoryImpl implements JSONFactory {
 		jsonObject.put("exception", message);
 
 		return jsonObject.toString();
+	}
+
+	/**
+	 * Removes type information from JSON string, so flexjson will not
+	 * create any objects.
+	 */
+	private String _removeTypeInfoFromJsonString(String jsonString) {
+		jsonString = StringUtil.replace(
+			jsonString, "\"class\"", "\"~class\"");
+
+		jsonString = StringUtil.replace(
+			jsonString, "'class'", "\"~class\"");
+
+		return jsonString;
 	}
 
 	private static final String _NULL_JSON = "{}";

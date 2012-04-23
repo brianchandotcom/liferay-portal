@@ -94,6 +94,14 @@ public class JSONFactoryUtil {
 		return getJSONFactory().looseDeserialize(json, clazz);
 	}
 
+	public static Object looseDeserializeSafe(String json) {
+		return getJSONFactory().looseDeserializeSafe(json);
+	}
+
+	public static <T> T looseDeserializeSafe(String json, Class<T> clazz) {
+		return getJSONFactory().looseDeserializeSafe(json, clazz);
+	}
+
 	public static String looseSerialize(Object object) {
 		return getJSONFactory().looseSerialize(object);
 	}

@@ -105,12 +105,17 @@ public class PortalSecurityManager extends SecurityManager {
 
 			return paclPolicy;
 		}
-		else if ((permission instanceof RuntimePermission) &&
-				 (permission.getName().startsWith(
-					 PACLConstants.RUNTIME_PERMISSION_GET_CLASSLOADER)) &&
-				 !PortalSecurityManagerThreadLocal.isGetClassLoaderCheckEnabled()) {
 
-			return PACLPolicyManager.getDefaultPACLPolicy();
+		if (!PortalSecurityManagerThreadLocal.isCheckGetClassLoaderEnabled() &&
+			(permission instanceof RuntimePermission)) {
+
+			String name = permission.getName();
+
+			if (name.startsWith(
+					PACLConstants.RUNTIME_PERMISSION_GET_CLASSLOADER)) {
+
+				return PACLPolicyManager.getDefaultPACLPolicy();
+			}
 		}
 
 		return PACLClassUtil.getPACLPolicyByReflection(_log.isDebugEnabled());

@@ -27,16 +27,18 @@ public class PortalSecurityManagerThreadLocal {
 		return _paclPolicy.get();
 	}
 
-	public static boolean isGetClassLoaderCheckEnabled() {
-		return _getClassLoaderCheckEnabled.get();
+	public static boolean isCheckGetClassLoaderEnabled() {
+		return _checkGetClassLoaderEnabled.get();
 	}
 
 	public static boolean isEnabled() {
 		return _enabled.get();
 	}
 
-	public static void setGetClassLoaderCheckEnabled(boolean enabled) {
-		_getClassLoaderCheckEnabled.set(enabled);
+	public static void setCheckGetClassLoaderEnabled(
+		boolean checkGetClassLoaderEnabled) {
+
+		_checkGetClassLoaderEnabled.set(checkGetClassLoaderEnabled);
 	}
 
 	public static void setEnabled(boolean enabled) {
@@ -47,10 +49,11 @@ public class PortalSecurityManagerThreadLocal {
 		_paclPolicy.set(paclPolicy);
 	}
 
-	private static ThreadLocal<Boolean> _getClassLoaderCheckEnabled =
+	private static ThreadLocal<Boolean> _checkGetClassLoaderEnabled =
 		new AutoResetThreadLocal<Boolean>(
 			PortalSecurityManagerThreadLocal.class +
-				"._getClassLoaderCheckEnabled", true);
+				"._checkGetClassLoaderEnabled",
+			true);
 	private static ThreadLocal<Boolean> _enabled =
 		new AutoResetThreadLocal<Boolean>(
 			PortalSecurityManagerThreadLocal.class + "._enabled", true);

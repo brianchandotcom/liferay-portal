@@ -83,8 +83,8 @@ public abstract class BaseChecker implements Checker, PACLConstants {
 	}
 
 	private ClassLoader _commonClassLoader;
-	private ClassLoader _portalClassLoader;
 	private PACLPolicy _paclPolicy;
+	private ClassLoader _portalClassLoader;
 	private ClassLoader _systemClassLoader;
 
 }

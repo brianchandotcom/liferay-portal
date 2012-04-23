@@ -244,11 +244,12 @@ public class ClassLoaderAggregateProperties extends AggregatedProperties {
 		String sourceName, URL url,
 		CompositeConfiguration loadedCompositeConfiguration) {
 
-		boolean enabled =
-			PortalSecurityManagerThreadLocal.isGetClassLoaderCheckEnabled();
+		boolean checkGetClassLoaderEnabled =
+			PortalSecurityManagerThreadLocal.isCheckGetClassLoaderEnabled();
 
 		try {
-			PortalSecurityManagerThreadLocal.setGetClassLoaderCheckEnabled(false);
+			PortalSecurityManagerThreadLocal.setCheckGetClassLoaderEnabled(
+				false);
 
 			Configuration newConfiguration = null;
 
@@ -300,7 +301,8 @@ public class ClassLoaderAggregateProperties extends AggregatedProperties {
 			return null;
 		}
 		finally {
-			PortalSecurityManagerThreadLocal.setGetClassLoaderCheckEnabled(enabled);
+			PortalSecurityManagerThreadLocal.setCheckGetClassLoaderEnabled(
+				checkGetClassLoaderEnabled);
 		}
 	}
 

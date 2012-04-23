@@ -48,22 +48,7 @@ import net.sf.jsqlparser.test.tablesfinder.TablesNamesFinder;
 public class SQLChecker extends BaseChecker {
 
 	public void afterPropertiesSet() {
-		_allTableNames = getPropertySet("security-manager-sql-tables-all");
-		_createTableNames = getPropertySet(
-			"security-manager-sql-tables-create");
-		_deleteTableNames = getPropertySet(
-			"security-manager-sql-tables-delete");
-		_dropTableNames = getPropertySet("security-manager-sql-tables-drop");
-		_insertTableNames = getPropertySet(
-			"security-manager-sql-tables-insert");
-		_replaceTableNames = getPropertySet(
-			"security-manager-sql-tables-replace");
-		_selectTableNames = getPropertySet(
-			"security-manager-sql-tables-select");
-		_truncateTableNames = getPropertySet(
-			"security-manager-sql-tables-truncate");
-		_updateTableNames = getPropertySet(
-			"security-manager-sql-tables-update");
+		initTableNames();
 	}
 
 	public void checkPermission(Permission permission) {
@@ -181,6 +166,25 @@ public class SQLChecker extends BaseChecker {
 		List<String> tableNames = tableNamesFinder.getTableNames(update);
 
 		return isAllowedTables(tableNames, _updateTableNames);
+	}
+
+	protected void initTableNames() {
+		_allTableNames = getPropertySet("security-manager-sql-tables-all");
+		_createTableNames = getPropertySet(
+			"security-manager-sql-tables-create");
+		_deleteTableNames = getPropertySet(
+			"security-manager-sql-tables-delete");
+		_dropTableNames = getPropertySet("security-manager-sql-tables-drop");
+		_insertTableNames = getPropertySet(
+			"security-manager-sql-tables-insert");
+		_replaceTableNames = getPropertySet(
+			"security-manager-sql-tables-replace");
+		_selectTableNames = getPropertySet(
+			"security-manager-sql-tables-select");
+		_truncateTableNames = getPropertySet(
+			"security-manager-sql-tables-truncate");
+		_updateTableNames = getPropertySet(
+			"security-manager-sql-tables-update");
 	}
 
 	protected boolean isAllowedTable(

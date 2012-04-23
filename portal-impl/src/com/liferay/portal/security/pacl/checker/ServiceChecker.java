@@ -65,26 +65,6 @@ public class ServiceChecker extends BaseChecker {
 		}
 	}
 
-	public boolean hasDynamicQuery(Class<?> clazz) {
-		ClassLoader classLoader = PACLClassLoaderUtil.getClassLoader(clazz);
-
-		PACLPolicy paclPolicy = PACLPolicyManager.getPACLPolicy(classLoader);
-
-		if (paclPolicy == getPACLPolicy()) {
-			return true;
-		}
-
-		Set<String> services = getServices(paclPolicy);
-
-		String className = getInterfaceName(clazz.getName());
-
-		if (services.contains(className)) {
-			return true;
-		}
-
-		return false;
-	}
-
 	public boolean hasService(Object object, Method method) {
 		Class<?> clazz = object.getClass();
 
@@ -151,6 +131,26 @@ public class ServiceChecker extends BaseChecker {
 		}
 
 		return services;
+	}
+
+	protected boolean hasDynamicQuery(Class<?> clazz) {
+		ClassLoader classLoader = PACLClassLoaderUtil.getClassLoader(clazz);
+
+		PACLPolicy paclPolicy = PACLPolicyManager.getPACLPolicy(classLoader);
+
+		if (paclPolicy == getPACLPolicy()) {
+			return true;
+		}
+
+		Set<String> services = getServices(paclPolicy);
+
+		String className = getInterfaceName(clazz.getName());
+
+		if (services.contains(className)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	protected void initServices() {

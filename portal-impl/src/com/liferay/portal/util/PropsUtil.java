@@ -104,19 +104,7 @@ public class PropsUtil {
 
 			// Global shared lib directory
 
-			String globalSharedLibDir = ClassUtil.getParentPath(
-				Servlet.class.getClassLoader(),
-				Servlet.class.getName());
-
-			int pos = globalSharedLibDir.lastIndexOf(".jar!");
-
-			if (pos == -1) {
-				pos = globalSharedLibDir.lastIndexOf(".jar/");
-			}
-
-			pos = globalSharedLibDir.lastIndexOf(CharPool.SLASH, pos);
-
-			globalSharedLibDir = globalSharedLibDir.substring(0, pos + 1);
+			String globalSharedLibDir = _getLibDir(Servlet.class);
 
 			if (_log.isInfoEnabled()) {
 				_log.info("Global shared lib directory " + globalSharedLibDir);
@@ -127,22 +115,10 @@ public class PropsUtil {
 
 			// Global lib directory
 
-			String globalLibDir = ClassUtil.getParentPath(
-				ReleaseInfo.class.getClassLoader(),
-				ReleaseInfo.class.getName());
-
-			pos = globalLibDir.lastIndexOf(".jar!");
-
-			if (pos == -1) {
-				pos = globalLibDir.lastIndexOf(".jar/");
-			}
-
-			pos = globalLibDir.lastIndexOf(CharPool.SLASH, pos);
-
-			globalLibDir = globalLibDir.substring(0, pos + 1);
+			String globalLibDir = _getLibDir(ReleaseInfo.class);
 
 			if (_log.isInfoEnabled()) {
-				_log.info("Global lib directory " + globalLibDir);
+				_log.info("Global lib directory " + globalSharedLibDir);
 			}
 
 			SystemProperties.set(
@@ -150,7 +126,9 @@ public class PropsUtil {
 
 			// Portal lib directory
 
-			ClassLoader classLoader = getClass().getClassLoader();
+			Class<?> clazz = getClass();
+
+			ClassLoader classLoader = clazz.getClassLoader();
 
 			String portalLibDir = WebDirDetector.getLibDir(classLoader);
 
@@ -325,6 +303,23 @@ public class PropsUtil {
 		}
 
 		return defaultLiferayHome;
+	}
+
+	private String _getLibDir(Class<?> clazz) {
+		String path = ClassUtil.getParentPath(
+			clazz.getClassLoader(), clazz.getName());
+
+		int pos = path.lastIndexOf(".jar!");
+
+		if (pos == -1) {
+			pos = path.lastIndexOf(".jar/");
+		}
+
+		pos = path.lastIndexOf(CharPool.SLASH, pos);
+
+		path = path.substring(0, pos + 1);
+
+		return path;
 	}
 
 	private Properties _getProperties() {

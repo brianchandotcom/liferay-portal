@@ -85,7 +85,7 @@ public class SocketChecker extends BaseChecker {
 		}
 	}
 
-	public boolean hasConnect(String host, int port) {
+	protected boolean hasConnect(String host, int port) {
 		Set<Integer> ports = _connectHostsAndPorts.get(host);
 
 		if (ports == null) {
@@ -95,7 +95,7 @@ public class SocketChecker extends BaseChecker {
 		return ports.contains(port);
 	}
 
-	public boolean hasListen(int port) {
+	protected boolean hasListen(int port) {
 		return _listenPorts.contains(port);
 	}
 

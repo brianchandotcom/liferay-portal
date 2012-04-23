@@ -622,29 +622,6 @@ public class UserServiceSoap {
 	}
 
 	/**
-	* Returns the primary key of the default user for the company.
-	*
-	* @param companyId the primary key of the company
-	* @return the primary key of the default user for the company
-	* @throws PortalException if a default user for the company could not be
-	found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static long getDefaultUserId(long companyId)
-		throws RemoteException {
-		try {
-			long returnValue = UserServiceUtil.getDefaultUserId(companyId);
-
-			return returnValue;
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	/**
 	* Returns the primary keys of all the users belonging to the group.
 	*
 	* @param groupId the primary key of the group

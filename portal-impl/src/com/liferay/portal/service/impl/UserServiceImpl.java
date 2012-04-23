@@ -634,23 +634,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the primary key of the default user for the company.
-	 *
-	 * @param  companyId the primary key of the company
-	 * @return the primary key of the default user for the company
-	 * @throws PortalException if a default user for the company could not be
-	 *         found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public long getDefaultUserId(long companyId)
-		throws PortalException, SystemException {
-
-		//TBD Need to secure.
-
-		return userLocalService.getDefaultUserId(companyId);
-	}
-
-	/**
 	 * Returns the primary keys of all the users belonging to the group.
 	 *
 	 * @param  groupId the primary key of the group
@@ -1638,8 +1621,9 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		boolean anonymousUser = GetterUtil.getBoolean(
 			serviceContext.getAttribute("anonymousUser"));
 
-		if (((creatorUserId != 0) &&
-			 (creatorUserId != getDefaultUserId(companyId))) ||
+		long defaultUserId = userLocalService.getDefaultUserId(companyId);
+
+		if (((creatorUserId != 0) && (creatorUserId != defaultUserId)) ||
 			(!company.isStrangers() && !anonymousUser)) {
 
 			if (!PortalPermissionUtil.contains(
@@ -1652,8 +1636,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			}
 		}
 
-		if ((creatorUserId == 0) ||
-			(creatorUserId == getDefaultUserId(companyId))) {
+		if ((creatorUserId == 0) || (creatorUserId == defaultUserId)) {
 
 			if (!company.isStrangersWithMx() &&
 				company.hasCompanyMx(emailAddress)) {

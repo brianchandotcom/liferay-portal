@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.security.pacl.PACLConstants;
 import com.liferay.portal.security.pacl.permission.PortalServicePermission;
 
@@ -69,9 +70,7 @@ public class DynamicQueryFactoryImpl implements DynamicQueryFactory {
 		}
 
 		if (classLoader == null) {
-			Thread currentThread = Thread.currentThread();
-
-			classLoader = currentThread.getContextClassLoader();
+			classLoader = PACLClassLoaderUtil.getContextClassLoader();
 		}
 
 		Package pkg = clazz.getPackage();

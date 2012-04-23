@@ -22,45 +22,54 @@ import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 public class PACLClassLoaderUtil {
 
 	public static ClassLoader getClassLoader(Class<?> clazz) {
-		boolean enabled = PortalSecurityManagerThreadLocal.isEnabled();
+		boolean enabled =
+			PortalSecurityManagerThreadLocal.isGetClassLoaderCheckEnabled();
 
 		try {
-			PortalSecurityManagerThreadLocal.setEnabled(false);
+			PortalSecurityManagerThreadLocal.setGetClassLoaderCheckEnabled(
+				false);
 
 			return clazz.getClassLoader();
 		}
 		finally {
-			PortalSecurityManagerThreadLocal.setEnabled(enabled);
+			PortalSecurityManagerThreadLocal.setGetClassLoaderCheckEnabled(
+				enabled);
 		}
 	}
 
 	public static ClassLoader getContextClassLoader() {
-		boolean enabled = PortalSecurityManagerThreadLocal.isEnabled();
+		boolean enabled =
+			PortalSecurityManagerThreadLocal.isGetClassLoaderCheckEnabled();
 
 		try {
-			PortalSecurityManagerThreadLocal.setEnabled(false);
+			PortalSecurityManagerThreadLocal.setGetClassLoaderCheckEnabled(
+				false);
 
 			Thread thread = Thread.currentThread();
 
 			return thread.getContextClassLoader();
 		}
 		finally {
-			PortalSecurityManagerThreadLocal.setEnabled(enabled);
+			PortalSecurityManagerThreadLocal.setGetClassLoaderCheckEnabled(
+				enabled);
 		}
 	}
 
 	public static void setContextClassLoader(ClassLoader classLoader) {
-		boolean enabled = PortalSecurityManagerThreadLocal.isEnabled();
+		boolean enabled =
+			PortalSecurityManagerThreadLocal.isGetClassLoaderCheckEnabled();
 
 		try {
-			PortalSecurityManagerThreadLocal.setEnabled(false);
+			PortalSecurityManagerThreadLocal.setGetClassLoaderCheckEnabled(
+				false);
 
 			Thread thread = Thread.currentThread();
 
 			thread.setContextClassLoader(classLoader);
 		}
 		finally {
-			PortalSecurityManagerThreadLocal.setEnabled(enabled);
+			PortalSecurityManagerThreadLocal.setGetClassLoaderCheckEnabled(
+				enabled);
 		}
 	}
 

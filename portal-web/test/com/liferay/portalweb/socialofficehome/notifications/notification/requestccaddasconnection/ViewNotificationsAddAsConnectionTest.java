@@ -42,9 +42,8 @@ public class ViewNotificationsAddAsConnectionTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("1"),
-			selenium.getText("//span[@class='notification-count']"));
-		selenium.mouseOver("//span[@class='notification-count']");
+		selenium.clickAt("//span[@class='notification-count']",
+			RuntimeVariables.replace("Notification Count"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -52,8 +51,7 @@ public class ViewNotificationsAddAsConnectionTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent(
-							"//div[contains(@class, 'user-notification-events-container')]")) {
+				if (selenium.isVisible("//div[@class='title']")) {
 					break;
 				}
 			}
@@ -63,16 +61,36 @@ public class ViewNotificationsAddAsConnectionTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertTrue(selenium.isVisible(
-				"//div[contains(@class, 'user-notification-events-container')]"));
 		assertEquals(RuntimeVariables.replace(
 				"Social01 would like to add you as a connection."),
-			selenium.getText(
-				"//div[contains(@class, 'user-notification-event-content')]/div[2]/div/span"));
+			selenium.getText("//div[@class='title']"));
 		assertEquals(RuntimeVariables.replace("Confirm"),
-			selenium.getText("//div[@class='notification-entry']/div[2]/span/a"));
-		assertEquals(RuntimeVariables.replace("Ignore"),
 			selenium.getText(
-				"//div[@class='notification-entry']/div[2]/span[2]/a"));
+				"//span[@class='lfr-user-action-item lfr-user-action-confirm']/a"));
+		selenium.clickAt("//span[@class='lfr-user-action-item lfr-user-action-confirm']/a",
+			RuntimeVariables.replace("Confirm"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//span[@class='notification-count']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.clickAt("//span[@class='notification-count']",
+			RuntimeVariables.replace("Notification Count"));
+		assertFalse(selenium.isTextPresent(
+				"Social01 would like to add you as a connection."));
 	}
 }

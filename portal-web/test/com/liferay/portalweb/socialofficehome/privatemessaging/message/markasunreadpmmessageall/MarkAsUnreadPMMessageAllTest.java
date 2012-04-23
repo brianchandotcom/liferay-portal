@@ -36,7 +36,8 @@ public class MarkAsUnreadPMMessageAllTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("//nav/ul/li[1]/a/span")) {
+						if (selenium.isVisible(
+									"//nav/ul/li[contains(.,'Messages')]/a/span")) {
 							break;
 						}
 					}
@@ -46,45 +47,44 @@ public class MarkAsUnreadPMMessageAllTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible("//div[2]/div[1]/ul/li[4]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.clickAt("//div[2]/div[1]/ul/li[4]/a",
-					RuntimeVariables.replace("Private Messaging"));
+				selenium.clickAt("//nav/ul/li[contains(.,'Messages')]/a/span",
+					RuntimeVariables.replace("Messages"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("Private Messaging"),
-					selenium.getText("//h1/span[2]"));
-				assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-					selenium.getText("//td[3]/div[1]/div/a"));
+					selenium.getText("//span[@class='portlet-title-default']"));
+				assertEquals("Mark as Unread",
+					selenium.getValue("//input[@value='Mark as Unread']"));
+				assertEquals("Delete",
+					selenium.getValue("//input[@value='Delete']"));
+				assertEquals("New Message",
+					selenium.getValue("//input[@value='New Message']"));
 				assertEquals(RuntimeVariables.replace(
-						"Message3 Subject\n Message3 Body"),
-					selenium.getText("//td[4]/a"));
-				assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-					selenium.getText("//tr[4]/td[3]/div[1]/div/a"));
+						"Social01 Office01 User01"),
+					selenium.getText(
+						"xPath=(//span[@class='author-sender'])[1]"));
+				assertEquals(RuntimeVariables.replace("Message3 Subject"),
+					selenium.getText("xPath=(//div[@class='subject'])[1]"));
+				assertEquals(RuntimeVariables.replace("Message3 Body"),
+					selenium.getText("xPath=(//div[@class='body'])[1]"));
 				assertEquals(RuntimeVariables.replace(
-						"Message2 Subject\n Message2 Body"),
-					selenium.getText("//tr[4]/td[4]/a"));
-				assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-					selenium.getText("//tr[5]/td[3]/div[1]/div/a"));
+						"Social01 Office01 User01"),
+					selenium.getText(
+						"xPath=(//span[@class='author-sender'])[2]"));
+				assertEquals(RuntimeVariables.replace("Message2 Subject"),
+					selenium.getText("xPath=(//div[@class='subject'])[2]"));
+				assertEquals(RuntimeVariables.replace("Message2 Body"),
+					selenium.getText("xPath=(//div[@class='body'])[2]"));
 				assertEquals(RuntimeVariables.replace(
-						"Message Subject\n Message Body"),
-					selenium.getText("//tr[5]/td[4]/a"));
+						"Social01 Office01 User01"),
+					selenium.getText(
+						"xPath=(//span[@class='author-sender'])[3]"));
+				assertEquals(RuntimeVariables.replace("Message1 Subject"),
+					selenium.getText("xPath=(//div[@class='subject'])[3]"));
+				assertEquals(RuntimeVariables.replace("Message1 Body"),
+					selenium.getText("xPath=(//div[@class='body'])[3]"));
 				assertEquals(RuntimeVariables.replace("Showing 3 results."),
-					selenium.getText("//div[2]/div[2]/div/div"));
+					selenium.getText("//div[@class='search-results']"));
 				assertTrue(selenium.isElementPresent(
 						"//td[1]/span/span/span/input[2]"));
 
@@ -140,9 +140,14 @@ public class MarkAsUnreadPMMessageAllTest extends BaseTestCase {
 				assertFalse(selenium.isChecked(
 						"//tr[5]/td[1]/span/span/span/input[2]"));
 				assertEquals(RuntimeVariables.replace("All"),
-					selenium.getText("//div/span[1]/a"));
-				selenium.clickAt("//div/span[1]/a",
+					selenium.getText("//span[@class='select-all']"));
+				selenium.clickAt("//span[@class='select-all']",
 					RuntimeVariables.replace("All"));
+				assertTrue(selenium.isChecked("//td[1]/span/span/span/input[2]"));
+				assertTrue(selenium.isChecked(
+						"//tr[4]/td[1]/span/span/span/input[2]"));
+				assertTrue(selenium.isChecked(
+						"//tr[5]/td[1]/span/span/span/input[2]"));
 				assertEquals("Mark as Unread",
 					selenium.getValue("//input[@value='Mark as Unread']"));
 				selenium.clickAt("//input[@value='Mark as Unread']",

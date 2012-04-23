@@ -31,7 +31,8 @@ public class AddPMMessage1Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//nav/ul/li[1]/a/span")) {
+				if (selenium.isVisible(
+							"//nav/ul/li[contains(.,'Messages')]/a/span")) {
 					break;
 				}
 			}
@@ -41,28 +42,12 @@ public class AddPMMessage1Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[2]/div[1]/ul/li[4]/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.clickAt("//div[2]/div[1]/ul/li[4]/a",
-			RuntimeVariables.replace("Private Messaging"));
+		selenium.clickAt("//nav/ul/li[contains(.,'Messages')]/a/span",
+			RuntimeVariables.replace("Messages"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Private Messaging"),
-			selenium.getText("//h1/span[2]"));
+			selenium.getText("//span[@class='portlet-title-default']"));
 		assertEquals("Mark as Unread",
 			selenium.getValue("//input[@value='Mark as Unread']"));
 		assertEquals("Delete", selenium.getValue("//input[@value='Delete']"));
@@ -89,19 +74,42 @@ public class AddPMMessage1Test extends BaseTestCase {
 
 		selenium.clickAt("//span[2]/span/button",
 			RuntimeVariables.replace("Dropdown"));
-		assertEquals(RuntimeVariables.replace(
-				"socialofficefriendfn socialofficefriendmn socialofficefriendln"),
-			selenium.getText("//div[8]/div/div/ul/li[1]"));
-		selenium.clickAt("//div[8]/div/div/ul/li[1]",
-			RuntimeVariables.replace(
-				"socialofficefriendfn socialofficefriendmn socialofficefriendln"));
-		assertEquals("socialofficefriendfn socialofficefriendmn socialofficefriendln <socialofficefriendsn>,",
-			selenium.getValue("//span/input"));
-		assertTrue(selenium.isVisible("//span[1]/span/span/input"));
-		selenium.type("//span[1]/span/span/input",
-			RuntimeVariables.replace("Message Subject"));
-		assertTrue(selenium.isVisible("//textarea"));
-		selenium.type("//textarea", RuntimeVariables.replace("Message Body"));
+		selenium.typeKeys("//input[@id='_1_WAR_privatemessagingportlet_to']",
+			RuntimeVariables.replace("Social01"));
+		Thread.sleep(5000);
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Social01 Office01 User01")
+										.equals(selenium.getText("//li"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("Social01 Office01 User01"),
+			selenium.getText("//li"));
+		selenium.clickAt("//li",
+			RuntimeVariables.replace("Social01 Office01 User01"));
+		assertEquals("Social01 Office01 User01 <socialoffice01>,",
+			selenium.getValue(
+				"//input[@id='_1_WAR_privatemessagingportlet_to']"));
+		assertTrue(selenium.isVisible(
+				"//input[@id='_1_WAR_privatemessagingportlet_subject']"));
+		selenium.type("//input[@id='_1_WAR_privatemessagingportlet_subject']",
+			RuntimeVariables.replace("Message1 Subject"));
+		assertTrue(selenium.isVisible(
+				"//textarea[@id='_1_WAR_privatemessagingportlet_body']"));
+		selenium.type("//textarea[@id='_1_WAR_privatemessagingportlet_body']",
+			RuntimeVariables.replace("Message1 Body"));
 		selenium.clickAt("//input[@value='Send']",
 			RuntimeVariables.replace("Send"));
 
@@ -124,11 +132,13 @@ public class AddPMMessage1Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("//td[3]/div[1]/div/a"));
-		assertEquals(RuntimeVariables.replace("Message Subject\n Message Body"),
-			selenium.getText("//td[4]/a"));
+		assertEquals(RuntimeVariables.replace("Social01 Office01 User01"),
+			selenium.getText("//span[@class='author-sender']"));
+		assertEquals(RuntimeVariables.replace("Message1 Subject"),
+			selenium.getText("//div[@class='subject']"));
+		assertEquals(RuntimeVariables.replace("Message1 Body"),
+			selenium.getText("//div[@class='body']"));
 		assertEquals(RuntimeVariables.replace("Showing 1 result."),
-			selenium.getText("//div[2]/div[2]/div/div"));
+			selenium.getText("//div[@class='search-results']"));
 	}
 }

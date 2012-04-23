@@ -34,8 +34,16 @@ public class GmailServer_TearDownEmailTest extends BaseTestCase {
 				Thread.sleep(5000);
 				Thread.sleep(5000);
 
-				boolean signedIn1 = selenium.isElementPresent(
-						"//div[2]/div/nobr/a[2]");
+				boolean usernamePresent = selenium.isElementPresent(
+						"//input[@id='Email']");
+
+				if (usernamePresent) {
+					label = 4;
+
+					continue;
+				}
+
+				boolean signedIn1 = selenium.isPartialText("//td/a", "Sign out");
 
 				if (!signedIn1) {
 					label = 2;
@@ -44,25 +52,50 @@ public class GmailServer_TearDownEmailTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Sign out"),
-					selenium.getText("//div[2]/div/nobr/a[2]"));
-				selenium.clickAt("//div[2]/div/nobr/a[2]",
-					RuntimeVariables.replace("Sign out"));
+					selenium.getText("//td/a"));
+				selenium.clickAt("//td/a", RuntimeVariables.replace("Sign out"));
 
 			case 2:
+				Thread.sleep(5000);
 
-				boolean signedIn2 = selenium.isPartialText("//td/a", "Sign out");
+				boolean signInToGmailPresent = selenium.isTextPresent(
+						"Sign in to Gmail");
 
-				if (!signedIn2) {
+				if (!signInToGmailPresent) {
 					label = 3;
 
 					continue;
 				}
 
-				assertEquals(RuntimeVariables.replace("Sign out"),
-					selenium.getText("//td/a"));
-				selenium.clickAt("//td/a", RuntimeVariables.replace("Sign out"));
+				assertEquals(RuntimeVariables.replace("Sign in to Gmail"),
+					selenium.getText("//a[@id='button']"));
+				selenium.clickAt("//a[@id='button']",
+					RuntimeVariables.replace("Sign in to Gmail"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
 
 			case 3:
+			case 4:
+
+				boolean signInAsADifferentUserPresent = selenium.isElementPresent(
+						"//a[@id='link-force-reauth']");
+
+				if (!signInAsADifferentUserPresent) {
+					label = 5;
+
+					continue;
+				}
+
+				assertEquals(RuntimeVariables.replace(
+						"Sign out and sign in as a different user"),
+					selenium.getText("//a[@id='link-force-reauth']"));
+				selenium.clickAt("//a[@id='link-force-reauth']",
+					RuntimeVariables.replace(
+						"Sign out and sign in as a different user"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
+
+			case 5:
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -89,7 +122,7 @@ public class GmailServer_TearDownEmailTest extends BaseTestCase {
 						"PersistentCookie");
 
 				if (staySignedInChecked) {
-					label = 4;
+					label = 6;
 
 					continue;
 				}
@@ -99,7 +132,7 @@ public class GmailServer_TearDownEmailTest extends BaseTestCase {
 				selenium.clickAt("//input[@id='PersistentCookie']",
 					RuntimeVariables.replace("Stay signed in"));
 
-			case 4:
+			case 6:
 				assertTrue(selenium.isChecked("//input[@id='PersistentCookie']"));
 				selenium.clickAt("//input[@id='signIn']",
 					RuntimeVariables.replace("Sign In"));
@@ -113,7 +146,7 @@ public class GmailServer_TearDownEmailTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("//input[@type='checkbox']")) {
+						if (selenium.isVisible("//span[@role='checkbox']/div")) {
 							break;
 						}
 					}
@@ -123,9 +156,18 @@ public class GmailServer_TearDownEmailTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.clickAt("//input[@type='checkbox']",
+				selenium.clickAt("//span[@role='checkbox']/div",
 					RuntimeVariables.replace("All"));
 				Thread.sleep(5000);
+
+				boolean deleteVisible = selenium.isVisible(
+						"//div/div/div/div[1]/div[1]/div[1]/div/div/div[2]/div[3]");
+
+				if (!deleteVisible) {
+					label = 7;
+
+					continue;
+				}
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -144,34 +186,16 @@ public class GmailServer_TearDownEmailTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				assertEquals(RuntimeVariables.replace("Delete"),
-					selenium.getText(
-						"//div/div/div/div[1]/div[1]/div[1]/div/div/div[2]/div[3]"));
 				selenium.clickAt("//div/div/div/div[1]/div[1]/div[1]/div/div/div[2]/div[3]",
 					RuntimeVariables.replace("Delete"));
-				Thread.sleep(5000);
-				Thread.sleep(5000);
 
-				boolean signedIn3 = selenium.isElementPresent(
-						"//div[2]/div/nobr/a[2]");
+			case 7:
+				Thread.sleep(10000);
 
-				if (!signedIn3) {
-					label = 5;
+				boolean signedIn2 = selenium.isPartialText("//td/a", "Sign out");
 
-					continue;
-				}
-
-				assertEquals(RuntimeVariables.replace("Sign out"),
-					selenium.getText("//div[2]/div/nobr/a[2]"));
-				selenium.clickAt("//div[2]/div/nobr/a[2]",
-					RuntimeVariables.replace("Sign out"));
-
-			case 5:
-
-				boolean signedIn4 = selenium.isPartialText("//td/a", "Sign out");
-
-				if (!signedIn4) {
-					label = 6;
+				if (!signedIn2) {
+					label = 8;
 
 					continue;
 				}
@@ -180,7 +204,7 @@ public class GmailServer_TearDownEmailTest extends BaseTestCase {
 					selenium.getText("//td/a"));
 				selenium.clickAt("//td/a", RuntimeVariables.replace("Sign out"));
 
-			case 6:
+			case 8:
 				Thread.sleep(5000);
 				Thread.sleep(5000);
 				selenium.close();

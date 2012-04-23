@@ -109,9 +109,8 @@ public class SOUs_SearchSitesSiteTypeRestrictedTest extends BaseTestCase {
 			RuntimeVariables.replace("Restricted Site Name"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Restricted Site Name"),
-			selenium.getText("//div[@class='community-title']"));
-		selenium.open("/user/socialoffice01/so/dashboard");
-		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace(
+				"Not Found The requested resource was not found. \n\n http://localhost:8080/group/restricted-site-name/home \n \u00ab Back"),
+			selenium.getText("//section[@id='portlet_status']/div"));
 	}
 }

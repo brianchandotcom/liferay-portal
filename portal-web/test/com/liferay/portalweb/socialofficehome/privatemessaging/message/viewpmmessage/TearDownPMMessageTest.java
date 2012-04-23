@@ -36,7 +36,8 @@ public class TearDownPMMessageTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("//div/div/div[1]/ul/li[4]/a")) {
+						if (selenium.isVisible(
+									"//nav/ul/li[contains(.,'Messages')]/a/span")) {
 							break;
 						}
 					}
@@ -46,13 +47,12 @@ public class TearDownPMMessageTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.clickAt("//div/div/div[1]/ul/li[4]/a",
-					RuntimeVariables.replace("Private Messaging"));
+				selenium.clickAt("//nav/ul/li[contains(.,'Messages')]/a/span",
+					RuntimeVariables.replace("Messages"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("Private Messaging"),
-					selenium.getText(
-						"//div[2]/div/div/div/section/header/h1/span[2]"));
+					selenium.getText("//span[@class='portlet-title-default']"));
 
 				boolean message1Present = selenium.isElementPresent(
 						"//td[1]/span/span/span/input[2]");

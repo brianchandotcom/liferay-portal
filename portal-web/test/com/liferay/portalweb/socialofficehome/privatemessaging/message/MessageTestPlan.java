@@ -26,11 +26,11 @@ import com.liferay.portalweb.socialofficehome.privatemessaging.message.gmailview
 import com.liferay.portalweb.socialofficehome.privatemessaging.message.markasunreadpmmessageall.MarkAsUnreadPMMessageAllTests;
 import com.liferay.portalweb.socialofficehome.privatemessaging.message.selectallpmmessage.SelectAllPMMessageTests;
 import com.liferay.portalweb.socialofficehome.privatemessaging.message.selectnonepmmessage.SelectNonePMMessageTests;
-import com.liferay.portalweb.socialofficehome.privatemessaging.message.sofraddpmmessagereply.SOFr_AddPMMessageReplyTests;
-import com.liferay.portalweb.socialofficehome.privatemessaging.message.sofraddpmmessagereplyattachment.SOFr_AddPMMessageReplyAttachmentTests;
-import com.liferay.portalweb.socialofficehome.privatemessaging.message.sofrdeletepmmessage.SOFr_DeletePMMessageTests;
-import com.liferay.portalweb.socialofficehome.privatemessaging.message.sofrmarkasunreadpmmessage.SOFr_MarkAsUnreadPMMessageTests;
-import com.liferay.portalweb.socialofficehome.privatemessaging.message.sofrmarkasunreadpmmessagedetails.SOFr_MarkAsUnreadPMMessageDetailsTests;
+import com.liferay.portalweb.socialofficehome.privatemessaging.message.sousaddpmmessagereply.SOUs_AddPMMessageReplyTests;
+import com.liferay.portalweb.socialofficehome.privatemessaging.message.sousaddpmmessagereplyattachment.SOUs_AddPMMessageReplyAttachmentTests;
+import com.liferay.portalweb.socialofficehome.privatemessaging.message.sousdeletepmmessage.SOUs_DeletePMMessageTests;
+import com.liferay.portalweb.socialofficehome.privatemessaging.message.sousmarkasunreadpmmessage.SOUs_MarkAsUnreadPMMessageTests;
+import com.liferay.portalweb.socialofficehome.privatemessaging.message.sousmarkasunreadpmmessagedetails.SOUs_MarkAsUnreadPMMessageDetailsTests;
 import com.liferay.portalweb.socialofficehome.privatemessaging.message.viewpmmessage.ViewPMMessageTests;
 
 import junit.framework.Test;
@@ -55,11 +55,11 @@ public class MessageTestPlan extends BaseTestSuite {
 		testSuite.addTest(MarkAsUnreadPMMessageAllTests.suite());
 		testSuite.addTest(SelectAllPMMessageTests.suite());
 		testSuite.addTest(SelectNonePMMessageTests.suite());
-		testSuite.addTest(SOFr_AddPMMessageReplyTests.suite());
-		testSuite.addTest(SOFr_AddPMMessageReplyAttachmentTests.suite());
-		testSuite.addTest(SOFr_DeletePMMessageTests.suite());
-		testSuite.addTest(SOFr_MarkAsUnreadPMMessageTests.suite());
-		testSuite.addTest(SOFr_MarkAsUnreadPMMessageDetailsTests.suite());
+		testSuite.addTest(SOUs_AddPMMessageReplyTests.suite());
+		testSuite.addTest(SOUs_AddPMMessageReplyAttachmentTests.suite());
+		testSuite.addTest(SOUs_DeletePMMessageTests.suite());
+		testSuite.addTest(SOUs_MarkAsUnreadPMMessageTests.suite());
+		testSuite.addTest(SOUs_MarkAsUnreadPMMessageDetailsTests.suite());
 		testSuite.addTest(ViewPMMessageTests.suite());
 
 		return testSuite;

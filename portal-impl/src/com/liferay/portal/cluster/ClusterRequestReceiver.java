@@ -36,7 +36,6 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 import org.jgroups.Channel;
-import org.jgroups.ChannelException;
 import org.jgroups.Message;
 import org.jgroups.View;
 
@@ -83,7 +82,7 @@ public class ClusterRequestReceiver extends BaseReceiver {
 		org.jgroups.Address sourceAddress = message.getSrc();
 
 		if (localAddress.equals(sourceAddress)) {
-			boolean isProcessed = processLocalMessage(obj, sourceAddress);
+			boolean isProcessed = processLocalMessage(obj);
 
 			if (isProcessed) {
 				return;
@@ -98,8 +97,7 @@ public class ClusterRequestReceiver extends BaseReceiver {
 		else if (obj instanceof ClusterNodeResponse) {
 			ClusterNodeResponse clusterNodeResponse = (ClusterNodeResponse)obj;
 
-			processClusterResponse(
-				clusterNodeResponse, sourceAddress, localAddress);
+			processClusterResponse(clusterNodeResponse, sourceAddress);
 		}
 		else if (_log.isWarnEnabled()) {
 			_log.warn(
@@ -319,10 +317,9 @@ public class ClusterRequestReceiver extends BaseReceiver {
 		Channel controlChannel = _clusterExecutorImpl.getControlChannel();
 
 		try {
-			controlChannel.send(
-				sourceAddress, localAddress, clusterNodeResponse);
+			controlChannel.send(sourceAddress, clusterNodeResponse);
 		}
-		catch (ChannelException ce) {
+		catch (Exception ce) {
 			_log.error(
 				"Unable to send response message " + clusterNodeResponse, ce);
 		}
@@ -333,7 +330,7 @@ public class ClusterRequestReceiver extends BaseReceiver {
 
 	protected void processClusterResponse(
 		ClusterNodeResponse clusterNodeResponse,
-		org.jgroups.Address sourceAddress, org.jgroups.Address localAddress) {
+		org.jgroups.Address sourceAddress) {
 
 		ClusterMessageType clusterMessageType =
 			clusterNodeResponse.getClusterMessageType();
@@ -384,9 +381,7 @@ public class ClusterRequestReceiver extends BaseReceiver {
 		}
 	}
 
-	protected boolean processLocalMessage(
-		Object message, org.jgroups.Address sourceAddress) {
-
+	protected boolean processLocalMessage(Object message) {
 		if (message instanceof ClusterRequest) {
 			ClusterRequest clusterRequest = (ClusterRequest)message;
 

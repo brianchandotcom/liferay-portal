@@ -57,7 +57,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-import org.jgroups.ChannelException;
 import org.jgroups.JChannel;
 
 /**
@@ -225,7 +224,7 @@ public class ClusterExecutorImpl
 
 		PortalUtil.addPortalPortEventListener(this);
 
-		_localAddress = new AddressImpl(_controlJChannel.getLocalAddress());
+		_localAddress = new AddressImpl(_controlJChannel.getAddress());
 
 		try {
 			initLocalClusterNode();
@@ -283,7 +282,7 @@ public class ClusterExecutorImpl
 			ClusterRequest clusterRequest = ClusterRequest.createClusterRequest(
 				ClusterMessageType.UPDATE, _localClusterNode);
 
-			_controlJChannel.send(null, null, clusterRequest);
+			_controlJChannel.send(null, clusterRequest);
 		}
 		catch (Exception e) {
 			_log.error("Unable to determine configure node port", e);
@@ -346,9 +345,6 @@ public class ClusterExecutorImpl
 		try {
 			_controlJChannel = createJChannel(
 				controlProperty, clusterRequestReceiver, _DEFAULT_CLUSTER_NAME);
-		}
-		catch (ChannelException ce) {
-			_log.error(ce, ce);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -496,9 +492,9 @@ public class ClusterExecutorImpl
 		throws SystemException {
 
 		try {
-			_controlJChannel.send(null, null, clusterRequest);
+			_controlJChannel.send(null, clusterRequest);
 		}
-		catch (ChannelException ce) {
+		catch (Exception ce) {
 			_log.error(
 				"Unable to send multicast message " + clusterRequest, ce);
 
@@ -511,9 +507,9 @@ public class ClusterExecutorImpl
 			ClusterMessageType.NOTIFY, _localClusterNode);
 
 		try {
-			_controlJChannel.send(null, null, clusterRequest);
+			_controlJChannel.send(null, clusterRequest);
 		}
-		catch (ChannelException ce) {
+		catch (Exception ce) {
 			_log.error("Unable to send multicast message", ce);
 		}
 	}
@@ -527,9 +523,9 @@ public class ClusterExecutorImpl
 				(org.jgroups.Address)address.getRealAddress();
 
 			try {
-				_controlJChannel.send(jGroupsAddress, null, clusterRequest);
+				_controlJChannel.send(jGroupsAddress, clusterRequest);
 			}
-			catch (ChannelException ce) {
+			catch (Exception ce) {
 				_log.error(
 					"Unable to send unicast message " + clusterRequest, ce);
 

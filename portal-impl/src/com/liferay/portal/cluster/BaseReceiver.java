@@ -17,6 +17,9 @@ package com.liferay.portal.cluster;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
+import java.io.InputStream;
+import java.io.OutputStream;
+
 import org.jgroups.Address;
 import org.jgroups.Message;
 import org.jgroups.Receiver;
@@ -30,21 +33,23 @@ public class BaseReceiver implements Receiver {
 	public void block() {
 	}
 
-	public byte[] getState() {
-		return null;
+	public void getState(OutputStream out) throws Exception {
 	}
 
 	public View getView() {
 		return view;
 	}
 
-	public void receive(Message message) {
+	public void receive(Message msg) {
 	}
 
-	public void setState(byte[] state) {
+	public void setState(InputStream in) throws Exception {
 	}
 
-	public void suspect(Address address) {
+	public void suspect(Address adrs) {
+	}
+
+	public void unblock() {
 	}
 
 	public void viewAccepted(View view) {

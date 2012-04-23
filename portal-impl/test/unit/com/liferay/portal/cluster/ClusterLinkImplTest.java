@@ -27,7 +27,9 @@ import com.liferay.portal.util.PropsFiles;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.util.PwdGenerator;
 
+import java.io.DataInput;
 import java.io.DataInputStream;
+import java.io.DataOutput;
 import java.io.DataOutputStream;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
@@ -46,8 +48,6 @@ import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
-import org.jgroups.ChannelClosedException;
-import org.jgroups.ChannelNotConnectedException;
 import org.jgroups.JChannel;
 import org.jgroups.View;
 
@@ -426,7 +426,7 @@ public class ClusterLinkImplTest extends NewClassLoaderTestCase {
 				_assertLogger(
 					captureHandler,
 					"Unable to send multicast message " + message,
-					ChannelClosedException.class);
+					Exception.class);
 
 				clusterLinkImpl.destroy();
 
@@ -461,7 +461,7 @@ public class ClusterLinkImplTest extends NewClassLoaderTestCase {
 				_assertLogger(
 					captureHandler,
 					"Unable to send multicast message " + message,
-					ChannelNotConnectedException.class);
+					Exception.class);
 
 				clusterLinkImpl.destroy();
 
@@ -563,7 +563,7 @@ public class ClusterLinkImplTest extends NewClassLoaderTestCase {
 
 				_assertLogger(
 					captureHandler, "Unable to send unicast message " + message,
-					ChannelClosedException.class);
+					Exception.class);
 
 				clusterLinkImpl.destroy();
 
@@ -599,7 +599,7 @@ public class ClusterLinkImplTest extends NewClassLoaderTestCase {
 
 				_assertLogger(
 					captureHandler, "Unable to send unicast message " + message,
-					ChannelNotConnectedException.class);
+					Exception.class);
 
 				clusterLinkImpl.destroy();
 
@@ -634,7 +634,7 @@ public class ClusterLinkImplTest extends NewClassLoaderTestCase {
 			assertNull(logRecord.getThrown());
 		}
 		else {
-			assertEquals(exceptionClass, logRecord.getThrown().getClass());
+			assertNotNull(logRecord.getThrown());
 		}
 
 		captureHandler.flush();
@@ -801,6 +801,9 @@ public class ClusterLinkImplTest extends NewClassLoaderTestCase {
 		public void readExternal(ObjectInput objectInput) {
 		}
 
+		public void readFrom(DataInput dataInput) throws Exception {
+		}
+
 		public void readFrom(DataInputStream dataInputStream) {
 		}
 
@@ -809,6 +812,9 @@ public class ClusterLinkImplTest extends NewClassLoaderTestCase {
 		}
 
 		public void writeExternal(ObjectOutput objectOutput) {
+		}
+
+		public void writeTo(DataOutput dataOutput) throws Exception {
 		}
 
 		public void writeTo(DataOutputStream dataOutputStream) {

@@ -462,20 +462,24 @@
 		<priority value="INFO" />
 	</category>
 
-	<category name="com.liferay.portal.security.checker.FileChecker">
+	<category name="com.liferay.portal.security.pacl.checker.FileChecker">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="com.liferay.portal.security.pacl.checker.HookChecker">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="com.liferay.portal.security.pacl.checker.RuntimeChecker">
 		<priority value="DEBUG" />
 	</category>
 
-	<category name="com.liferay.portal.security.checker.HookChecker">
-		<priority value="DEBUG" />
+	<category name="com.liferay.portal.security.pacl.checker.SocketChecker">
+		<priority value="ERROR" />
 	</category>
 
-	<category name="com.liferay.portal.security.checker.SocketChecker">
-		<priority value="DEBUG" />
-	</category>
-
-	<category name="com.liferay.portal.security.checker.SQLChecker">
-		<priority value="DEBUG" />
+	<category name="com.liferay.portal.security.pacl.checker.SQLChecker">
+		<priority value="ERROR" />
 	</category>
 
 	<category name="com.liferay.portal.security.permission.AdvancedPermissionChecker">

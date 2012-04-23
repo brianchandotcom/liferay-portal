@@ -86,8 +86,9 @@ public class PACLClassUtil {
 	}
 
 	private PACLPolicy _getPACLPolicyByReflection(boolean debug) {
-		// int i = 0 always returns sun.reflect.Reflection
-		// int i = 1, 2 are this class, so we can skip those
+
+		// Start with int i = 3 because int i = 0 returns sun.reflect.Reflection
+		// and int i = 1 and 2 return this class
 
 		for (int i = 3;; i++) {
 			Class<?> callerClass = Reflection.getCallerClass(i);
@@ -96,27 +97,13 @@ public class PACLClassUtil {
 				break;
 			}
 
-			if ((callerClass == PACLAdvice.class) ||
-				(callerClass == PACLDataSource.class) ||
-				(callerClass == PACLBeanHandler.class) ||
-				(callerClass == PortalSecurityManager.class)) {
-
+			if (_isSkipCallerClass(callerClass, i, debug)) {
 				continue;
-			}
-
-			if (debug) {
-				_log.debug(
-					"Frame " + i + " has caller class " +
-						callerClass.getName());
 			}
 
 			ClassLoader callerClassLoader = _getCallerClassLoader(callerClass);
 
-			if ((callerClassLoader == null) ||
-				(callerClassLoader == _commonClassLoader) ||
-				(callerClassLoader == _systemClassLoader) ||
-				isAncestor(_portalClassLoader, callerClassLoader)) {
-
+			if (_isSkipCallerClassLoader(callerClassLoader)) {
 				continue;
 			}
 
@@ -126,10 +113,6 @@ public class PACLClassUtil {
 			if (paclPolicy != null) {
 				return paclPolicy;
 			}
-
-			/*_log.error(
-				"Unable to locate PACL policy for caller class loader " +
-					callerClassLoader);*/
 		}
 
 		return PACLPolicyManager.getDefaultPACLPolicy();
@@ -138,7 +121,7 @@ public class PACLClassUtil {
 	private PACLPolicy _getPACLPolicyBySecurityManagerClassContext(
 		Class<?>[] classes, boolean debug) {
 
-		// int i = 0 always returns
+		// Start with int i = 1 because int i = 0 returns
 		// com.liferay.portal.security.lang.PortalSecurityManager
 
 		for (int i = 1; i < classes.length; i++) {
@@ -148,27 +131,13 @@ public class PACLClassUtil {
 				break;
 			}
 
-			if ((callerClass == PACLAdvice.class) ||
-				(callerClass == PACLDataSource.class) ||
-				(callerClass == PACLBeanHandler.class) ||
-				(callerClass == PortalSecurityManager.class)) {
-
+			if (_isSkipCallerClass(callerClass, i, debug)) {
 				continue;
-			}
-
-			if (debug) {
-				_log.debug(
-					"Frame " + i + " has caller class " +
-						callerClass.getName());
 			}
 
 			ClassLoader callerClassLoader = _getCallerClassLoader(callerClass);
 
-			if ((callerClassLoader == null) ||
-				(callerClassLoader == _commonClassLoader) ||
-				(callerClassLoader == _systemClassLoader) ||
-				isAncestor(_portalClassLoader, callerClassLoader)) {
-
+			if (_isSkipCallerClassLoader(callerClassLoader)) {
 				continue;
 			}
 
@@ -178,26 +147,53 @@ public class PACLClassUtil {
 			if (paclPolicy != null) {
 				return paclPolicy;
 			}
-
-			/*_log.error(
-				"Unable to locate PACL policy for caller class loader " +
-					callerClassLoader);*/
 		}
 
 		return PACLPolicyManager.getDefaultPACLPolicy();
 	}
 
-	private boolean isAncestor(
-		ClassLoader ancestor, ClassLoader callerClassLoader) {
+	private boolean _isAncestorClassLoader(
+		ClassLoader ancestorClassLoader, ClassLoader callerClassLoader) {
 
-		ClassLoader temp = callerClassLoader;
+		ClassLoader tempClassLoader = callerClassLoader;
 
 		do {
-			if (ancestor == temp) {
+			if (ancestorClassLoader == tempClassLoader) {
 				return true;
 			}
 		}
-		while (((temp = temp.getParent()) != null));
+		while ((tempClassLoader = tempClassLoader.getParent()) != null);
+
+		return false;
+	}
+
+	private boolean _isSkipCallerClass(
+		Class<?> callerClass, int i, boolean debug) {
+
+		if ((callerClass == PACLAdvice.class) ||
+			(callerClass == PACLDataSource.class) ||
+			(callerClass == PACLBeanHandler.class) ||
+			(callerClass == PortalSecurityManager.class)) {
+
+			return true;
+		}
+
+		if (debug) {
+			_log.debug(
+				"Frame " + i + " has caller class " + callerClass.getName());
+		}
+
+		return false;
+	}
+
+	private boolean _isSkipCallerClassLoader(ClassLoader callerClassLoader) {
+		if ((callerClassLoader == null) ||
+			(callerClassLoader == _commonClassLoader) ||
+			(callerClassLoader == _systemClassLoader) ||
+			_isAncestorClassLoader(_portalClassLoader, callerClassLoader)) {
+
+			return true;
+		}
 
 		return false;
 	}

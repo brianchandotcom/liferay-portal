@@ -22,27 +22,27 @@ import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 public class PACLClassLoaderUtil {
 
 	public static ClassLoader getClassLoader(Class<?> clazz) {
-		boolean enabled =
-			PortalSecurityManagerThreadLocal.isGetClassLoaderCheckEnabled();
+		boolean checkGetClassLoaderEnabled =
+			PortalSecurityManagerThreadLocal.isCheckGetClassLoaderEnabled();
 
 		try {
-			PortalSecurityManagerThreadLocal.setGetClassLoaderCheckEnabled(
+			PortalSecurityManagerThreadLocal.setCheckGetClassLoaderEnabled(
 				false);
 
 			return clazz.getClassLoader();
 		}
 		finally {
-			PortalSecurityManagerThreadLocal.setGetClassLoaderCheckEnabled(
-				enabled);
+			PortalSecurityManagerThreadLocal.setCheckGetClassLoaderEnabled(
+				checkGetClassLoaderEnabled);
 		}
 	}
 
 	public static ClassLoader getContextClassLoader() {
-		boolean enabled =
-			PortalSecurityManagerThreadLocal.isGetClassLoaderCheckEnabled();
+		boolean checkGetClassLoaderEnabled =
+			PortalSecurityManagerThreadLocal.isCheckGetClassLoaderEnabled();
 
 		try {
-			PortalSecurityManagerThreadLocal.setGetClassLoaderCheckEnabled(
+			PortalSecurityManagerThreadLocal.setCheckGetClassLoaderEnabled(
 				false);
 
 			Thread thread = Thread.currentThread();
@@ -50,17 +50,17 @@ public class PACLClassLoaderUtil {
 			return thread.getContextClassLoader();
 		}
 		finally {
-			PortalSecurityManagerThreadLocal.setGetClassLoaderCheckEnabled(
-				enabled);
+			PortalSecurityManagerThreadLocal.setCheckGetClassLoaderEnabled(
+				checkGetClassLoaderEnabled);
 		}
 	}
 
 	public static void setContextClassLoader(ClassLoader classLoader) {
-		boolean enabled =
-			PortalSecurityManagerThreadLocal.isGetClassLoaderCheckEnabled();
+		boolean checkGetClassLoaderEnabled =
+			PortalSecurityManagerThreadLocal.isCheckGetClassLoaderEnabled();
 
 		try {
-			PortalSecurityManagerThreadLocal.setGetClassLoaderCheckEnabled(
+			PortalSecurityManagerThreadLocal.setCheckGetClassLoaderEnabled(
 				false);
 
 			Thread thread = Thread.currentThread();
@@ -68,8 +68,8 @@ public class PACLClassLoaderUtil {
 			thread.setContextClassLoader(classLoader);
 		}
 		finally {
-			PortalSecurityManagerThreadLocal.setGetClassLoaderCheckEnabled(
-				enabled);
+			PortalSecurityManagerThreadLocal.setCheckGetClassLoaderEnabled(
+				checkGetClassLoaderEnabled);
 		}
 	}
 

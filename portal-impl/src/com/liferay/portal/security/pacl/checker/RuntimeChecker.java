@@ -31,14 +31,13 @@ import java.util.TreeSet;
 public class RuntimeChecker extends BaseChecker {
 
 	public void afterPropertiesSet() {
-		initClassLoaderPortletIds();
+		initClassLoaderIds();
 	}
 
 	public void checkPermission(Permission permission) {
 		String name = permission.getName();
 
 		if (name.startsWith(RUNTIME_PERMISSION_ACCESS_CLASS_IN_PACKAGE)) {
-
 			int pos = name.indexOf(StringPool.PERIOD);
 
 			String pkg = name.substring(pos + 1);
@@ -49,24 +48,23 @@ public class RuntimeChecker extends BaseChecker {
 			}
 		}
 		else if (name.equals(RUNTIME_PERMISSION_GET_CLASSLOADER)) {
-
-			String portletId = null;
+			String classLoaderId = null;
 
 			int pos = name.indexOf(StringPool.PERIOD);
 
 			if (pos != -1) {
-				portletId = name.substring(pos + 1);
+				classLoaderId = name.substring(pos + 1);
 			}
 
-			if (Validator.isNull(portletId)) {
-				portletId = "foreign";
+			if (Validator.isNull(classLoaderId)) {
+				classLoaderId = "foreign";
 			}
 
 			Class<?> callerClass = sun.reflect.Reflection.getCallerClass(6);
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Class callin for a classloader: " + callerClass.getName());
+					callerClass.getName() + " is requesting a class loader");
 			}
 
 			ClassLoader classLoader = PACLClassLoaderUtil.getClassLoader(
@@ -76,18 +74,17 @@ public class RuntimeChecker extends BaseChecker {
 				(classLoader == getCommonClassLoader()) ||
 				(classLoader == getSystemClassLoader())) {
 
-				// This was invoked by the system.
+				// This was invoked by the system
 
 				return;
 			}
 
-			if (!hasGetClassLoader(portletId)) {
+			if (!_classLoaderIds.contains(classLoaderId)) {
 				throw new SecurityException(
-					"Attempted to get an external class loader " + portletId);
+					"Attempted to get class loader " + classLoaderId);
 			}
 		}
 		else if (name.equals(RUNTIME_PERMISSION_SET_SECURITY_MANAGER)) {
-
 			throw new SecurityException(
 				"Attempted to set another security manager");
 		}
@@ -98,15 +95,9 @@ public class RuntimeChecker extends BaseChecker {
 		}
 	}
 
-	public boolean hasGetClassLoader(String portletId) {
-		return _classLoaderPortletIds.contains(portletId);
-	}
-
 	public boolean hasPackageAccess(String pkg) {
 
 		// TODO
-
-		System.out.println("hasPackageAccess: " + pkg);
 
 		if (pkg.startsWith("sun.reflect")) {
 		}
@@ -114,21 +105,21 @@ public class RuntimeChecker extends BaseChecker {
 		return true;
 	}
 
-	protected void initClassLoaderPortletIds() {
-		_classLoaderPortletIds = getPropertySet(
-			"security-manager-get-class-loader");
+	protected void initClassLoaderIds() {
+		_classLoaderIds = getPropertySet("security-manager-class-loader-ids");
 
 		if (_log.isDebugEnabled()) {
-			Set<String> indexers = new TreeSet<String>(_classLoaderPortletIds);
+			Set<String> portletIds = new TreeSet<String>(_classLoaderIds);
 
-			for (String indexer : indexers) {
-				_log.debug("Allowing access to class loaders from " + indexer);
+			for (String portletId : portletIds) {
+				_log.debug(
+					"Allowing access to class loader for portlet " + portletId);
 			}
 		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(RuntimeChecker.class);
 
-	private Set<String> _classLoaderPortletIds;
+	private Set<String> _classLoaderIds;
 
 }

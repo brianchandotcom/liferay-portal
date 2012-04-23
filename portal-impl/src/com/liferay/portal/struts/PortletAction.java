@@ -41,6 +41,8 @@ import java.io.IOException;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.EventRequest;
+import javax.portlet.EventResponse;
 import javax.portlet.MimeResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
@@ -113,9 +115,17 @@ public class PortletAction extends Action {
 				(RenderResponse)portletResponse);
 		}
 		else {
-			serveResource(
-				mapping, form, portletConfig, (ResourceRequest)portletRequest,
-				(ResourceResponse)portletResponse);
+			if (portletRequest instanceof EventRequest) {
+				processEvent(
+					mapping, form, portletConfig, (EventRequest)portletRequest,
+					(EventResponse)portletResponse);
+			}
+			else {
+				serveResource(
+					mapping, form, portletConfig,
+					(ResourceRequest)portletRequest,
+					(ResourceResponse)portletResponse);
+			}
 
 			return mapping.findForward(ActionConstants.COMMON_NULL);
 		}
@@ -124,6 +134,12 @@ public class PortletAction extends Action {
 	public void processAction(
 			ActionMapping mapping, ActionForm form, PortletConfig portletConfig,
 			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+	}
+
+	public void processEvent(
+			ActionMapping mapping, ActionForm form, PortletConfig portletConfig,
+			EventRequest eventRequest, EventResponse eventResponse)
 		throws Exception {
 	}
 

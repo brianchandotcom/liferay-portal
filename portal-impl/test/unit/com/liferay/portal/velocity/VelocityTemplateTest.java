@@ -299,7 +299,7 @@ public class VelocityTemplateTest extends TestCase {
 	private TemplateContextHelper _templateContextHelper;
 	private VelocityEngine _velocityEngine;
 
-	private class MockResourceLoader extends ResourceLoader {
+	public static class MockResourceLoader extends ResourceLoader {
 
 		@Override
 		public void init(ExtendedProperties extendedProperties) {

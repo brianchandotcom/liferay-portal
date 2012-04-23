@@ -19,6 +19,7 @@ import com.liferay.portal.security.pacl.PACLPolicy;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Raymond Augé
  */
 public class PortalSecurityManagerThreadLocal {
 
@@ -26,8 +27,16 @@ public class PortalSecurityManagerThreadLocal {
 		return _paclPolicy.get();
 	}
 
+	public static boolean isGetClassLoaderCheckEnabled() {
+		return _getClassLoaderCheckEnabled.get();
+	}
+
 	public static boolean isEnabled() {
 		return _enabled.get();
+	}
+
+	public static void setGetClassLoaderCheckEnabled(boolean enabled) {
+		_getClassLoaderCheckEnabled.set(enabled);
 	}
 
 	public static void setEnabled(boolean enabled) {
@@ -38,6 +47,10 @@ public class PortalSecurityManagerThreadLocal {
 		_paclPolicy.set(paclPolicy);
 	}
 
+	private static ThreadLocal<Boolean> _getClassLoaderCheckEnabled =
+		new AutoResetThreadLocal<Boolean>(
+			PortalSecurityManagerThreadLocal.class +
+				"._getClassLoaderCheckEnabled", true);
 	private static ThreadLocal<Boolean> _enabled =
 		new AutoResetThreadLocal<Boolean>(
 			PortalSecurityManagerThreadLocal.class + "._enabled", true);

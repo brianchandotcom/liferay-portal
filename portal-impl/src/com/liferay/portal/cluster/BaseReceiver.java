@@ -33,20 +33,20 @@ public class BaseReceiver implements Receiver {
 	public void block() {
 	}
 
-	public void getState(OutputStream out) throws Exception {
+	public void getState(OutputStream outputStream) throws Exception {
 	}
 
 	public View getView() {
 		return view;
 	}
 
-	public void receive(Message msg) {
+	public void receive(Message message) {
 	}
 
-	public void setState(InputStream in) throws Exception {
+	public void setState(InputStream inputStream) throws Exception {
 	}
 
-	public void suspect(Address adrs) {
+	public void suspect(Address address) {
 	}
 
 	public void unblock() {

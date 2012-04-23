@@ -319,9 +319,9 @@ public class ClusterRequestReceiver extends BaseReceiver {
 		try {
 			controlChannel.send(sourceAddress, clusterNodeResponse);
 		}
-		catch (Exception ce) {
+		catch (Exception e) {
 			_log.error(
-				"Unable to send response message " + clusterNodeResponse, ce);
+				"Unable to send response message " + clusterNodeResponse, e);
 		}
 		catch (Throwable t) {
 			_log.error(t, t);

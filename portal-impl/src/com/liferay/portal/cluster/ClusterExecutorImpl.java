@@ -494,11 +494,10 @@ public class ClusterExecutorImpl
 		try {
 			_controlJChannel.send(null, clusterRequest);
 		}
-		catch (Exception ce) {
-			_log.error(
-				"Unable to send multicast message " + clusterRequest, ce);
+		catch (Exception e) {
+			_log.error("Unable to send multicast message " + clusterRequest, e);
 
-			throw new SystemException("Unable to send multicast request", ce);
+			throw new SystemException("Unable to send multicast request", e);
 		}
 	}
 
@@ -509,8 +508,8 @@ public class ClusterExecutorImpl
 		try {
 			_controlJChannel.send(null, clusterRequest);
 		}
-		catch (Exception ce) {
-			_log.error("Unable to send multicast message", ce);
+		catch (Exception e) {
+			_log.error("Unable to send multicast message", e);
 		}
 	}
 
@@ -525,11 +524,11 @@ public class ClusterExecutorImpl
 			try {
 				_controlJChannel.send(jGroupsAddress, clusterRequest);
 			}
-			catch (Exception ce) {
+			catch (Exception e) {
 				_log.error(
-					"Unable to send unicast message " + clusterRequest, ce);
+					"Unable to send unicast message " + clusterRequest, e);
 
-				throw new SystemException("Unable to send unicast request", ce);
+				throw new SystemException("Unable to send unicast request", e);
 			}
 		}
 	}

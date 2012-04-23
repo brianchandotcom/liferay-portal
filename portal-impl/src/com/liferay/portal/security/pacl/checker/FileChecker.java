@@ -16,24 +16,44 @@ package com.liferay.portal.security.pacl.checker;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.servlet.WebDirDetector;
+import com.liferay.portal.kernel.util.ContextPathUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.util.UniqueList;
 
+import java.io.File;
 import java.io.FilePermission;
+import java.io.IOException;
 
 import java.security.Permission;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import javax.servlet.ServletContext;
+
 /**
  * @author Brian Wing Shun Chan
+ * @author Raymond Augé
  */
 public class FileChecker extends BaseChecker {
 
 	public void afterPropertiesSet() {
+		ServletContext servletContext = ServletContextPool.get(
+			getServletContextName());
+
+		if (servletContext != null) {
+			File tempDir = (File)servletContext.getAttribute(
+				JavaConstants.JAVAX_SERVLET_CONTEXT_TEMPDIR);
+
+			_appWorkDir = tempDir.getAbsolutePath();
+		}
+
 		_rootDir = WebDirDetector.getRootDir(getClassLoader());
 
 		initPermissions();
@@ -73,12 +93,6 @@ public class FileChecker extends BaseChecker {
 			}
 		}
 
-		if (isJSPCompiler(
-				permission.getName(), FILE_PERMISSION_ACTION_DELETE)) {
-
-			return true;
-		}
-
 		return false;
 	}
 
@@ -99,10 +113,6 @@ public class FileChecker extends BaseChecker {
 			}
 		}
 
-		if (isJSPCompiler(permission.getName(), FILE_PERMISSION_ACTION_READ)) {
-			return true;
-		}
-
 		return false;
 	}
 
@@ -113,11 +123,48 @@ public class FileChecker extends BaseChecker {
 			}
 		}
 
-		if (isJSPCompiler(permission.getName(), FILE_PERMISSION_ACTION_WRITE)) {
-			return true;
+		return false;
+	}
+
+	protected void addCanonicalSystemPaths(
+			File directory, List<String> defaultPaths)
+		throws IOException {
+
+		String canonPath = directory.getCanonicalPath() + File.separatorChar;
+
+		addPathIfMissing(canonPath, defaultPaths);
+
+		for (File file : directory.listFiles()) {
+			if (file.isDirectory()) {
+				addCanonicalSystemPaths(file, defaultPaths);
+			}
+			else {
+				File canonicalFile = new File(file.getCanonicalPath());
+
+				canonPath =
+					canonicalFile.getParentFile().getPath() +
+						File.separatorChar;
+
+				addPathIfMissing(canonPath, defaultPaths);
+			}
+		}
+	}
+
+	protected void addPathIfMissing(String path, List<String> defaultPaths) {
+		for (Iterator<String> itr = defaultPaths.iterator(); itr.hasNext();) {
+			String curPath = itr.next();
+
+			if (curPath.startsWith(path) &&
+				(curPath.length() > path.length())) {
+
+				itr.remove();
+			}
+			else if (path.startsWith(curPath)) {
+				return;
+			}
 		}
 
-		return false;
+		defaultPaths.add(path);
 	}
 
 	protected void addPermission(
@@ -152,48 +199,88 @@ public class FileChecker extends BaseChecker {
 			}
 		}
 
+		// Plugin can do anything, except execute, in it's own work folder
+
+		String pathContext = ContextPathUtil.getContextPath(
+			PropsValues.PORTAL_CTX);
+
+		ServletContext servletContext = ServletContextPool.get(pathContext);
+
+		if (!action.equals(FILE_PERMISSION_ACTION_EXECUTE) &&
+			(_appWorkDir != null)) {
+
+			addPermission(permissions, _appWorkDir, action);
+			addPermission(permissions, _appWorkDir + "/-", action);
+
+			if (servletContext != null) {
+				File tempDir = (File)servletContext.getAttribute(
+					JavaConstants.JAVAX_SERVLET_CONTEXT_TEMPDIR);
+
+				String rootTempPath = tempDir.getAbsolutePath();
+
+				if (action.equals(FILE_PERMISSION_ACTION_READ)) {
+					addPermission(permissions, rootTempPath, action);
+				}
+
+				addPermission(permissions, rootTempPath + "/-", action);
+			}
+
+		}
+
 		if (!action.equals(FILE_PERMISSION_ACTION_READ)) {
 			return permissions;
 		}
 
-		String catalinaHome = System.getProperty("catalina.home") + "/";
+		List<String> defaultPaths = new UniqueList<String>();
+
 		String javaHome = System.getProperty("java.home") + "/";
 
-		String portalWebDir = PropsValues.LIFERAY_WEB_PORTAL_DIR;
+		// JDK
 
-		String[] defaultPaths = {
+		// There may be jars in the system library that are symlinked. For these
+		// we must include their cannonical paths otherwise they will fail
+		// permission checks.
 
-			// JDK
+		File file = new File(javaHome + "lib");
 
-			javaHome + "lib/-",
+		try {
+			addCanonicalSystemPaths(file, defaultPaths);
+		}
+		catch (IOException e) {
+			_log.error(e, e);
+		}
 
-			// Plugin
+		// Shared Libs
 
-			_rootDir + "-",
+		defaultPaths.add(_globalSharedLibDir);
 
-			// Portal
 
-			portalWebDir + "html/common/-", portalWebDir + "html/taglib/-",
-			portalWebDir + "localhost/html/taglib/-",
-			portalWebDir + "localhost/WEB-INF/tld/-",
-			portalWebDir + "WEB-INF/classes/java/-",
-			portalWebDir + "WEB-INF/classes/javax/-",
-			portalWebDir + "WEB-INF/classes/org/apache/-",
-			portalWebDir +
-				"WEB-INF/classes/META-INF/services/javax.el.ExpressionFactory",
-			portalWebDir + "WEB-INF/tld/-",
+		// Plugin
 
-			// Tomcat
+		defaultPaths.add(_rootDir);
 
-			catalinaHome + "lib/-",
-			catalinaHome + "work/Catalina/localhost/" +
-				getServletContextName() + "/-",
-			catalinaHome + "work/Catalina/localhost/_",
-			catalinaHome + "work/Catalina/localhost/_/-"
-		};
+		// Portal JSP paths
+
+		if (!_portalDir.equals(_rootDir)) {
+			defaultPaths.add(_portalDir + "html/common/");
+			defaultPaths.add(_portalDir + "html/taglib/");
+			defaultPaths.add(_portalDir + "html/themes/");
+			defaultPaths.add(_portalDir + "localhost/html/common/");
+			defaultPaths.add(_portalDir + "localhost/html/taglib/");
+			defaultPaths.add(_portalDir + "localhost/html/themes/");
+			defaultPaths.add(_portalDir + "localhost/WEB-INF");
+			defaultPaths.add(_portalDir + "localhost/WEB-INF/");
+			defaultPaths.add(_portalDir + "WEB-INF");
+			defaultPaths.add(_portalDir + "WEB-INF/");
+		}
 
 		for (String defaultPath : defaultPaths) {
-			addPermission(permissions, defaultPath, action);
+			if (defaultPath.endsWith(StringPool.SLASH)) {
+				addPermission(permissions, defaultPath + "-", action);
+			}
+			else {
+				addPermission(permissions, defaultPath, action);
+			}
 		}
 
 		return permissions;
@@ -212,8 +299,12 @@ public class FileChecker extends BaseChecker {
 
 	private static Log _log = LogFactoryUtil.getLog(FileChecker.class);
 
+	private String _appWorkDir;
 	private List<Permission> _deletePermissions;
 	private List<Permission> _executePermissions;
+	private String _globalSharedLibDir =
+		PropsValues.LIFERAY_LIB_GLOBAL_SHARED_DIR;
+	private String _portalDir = PropsValues.LIFERAY_WEB_PORTAL_DIR;
 	private List<Permission> _readPermissions;
 	private String _rootDir;
 	private List<Permission> _writePermissions;

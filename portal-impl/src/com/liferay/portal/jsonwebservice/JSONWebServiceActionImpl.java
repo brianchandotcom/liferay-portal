@@ -217,11 +217,6 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 							parameterTypeName);
 					}
 
-					// checks if passed type that is about to be created
-					// is of the same type as current method argument
-					// this prevents creation of types that are not used in the
-					// method and that can be dangerous for application
-
 					if (!ReflectUtil.isSubclass(
 						parameterType, methodParameters[i].getType())) {
 
@@ -246,9 +241,6 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 
 					String jsonString = value.toString();
 
-					// deserialize json string in list of strings,
-					// as the type conversion will happens in the
-					// next step (_generifyList)
 					List<?> list = JSONFactoryUtil.looseDeserializeSafe(
 						jsonString, ArrayList.class);
 
@@ -265,9 +257,6 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 
 					String jsonString = value.toString();
 
-					// deserialize json string in list of strings,
-					// as the type conversion will happens in the
-					// next step ( (_generifyMap)
 					Map<?, ?> map = JSONFactoryUtil.looseDeserializeSafe(
 						jsonString, HashMap.class);
 

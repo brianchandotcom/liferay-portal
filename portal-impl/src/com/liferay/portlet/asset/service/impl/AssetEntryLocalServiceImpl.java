@@ -638,6 +638,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			entry.setViewCount(0);
 		}
 
+		entry.setClassTypeId(classTypeId);
 		entry.setGroupId(groupId);
 		entry.setModifiedDate(now);
 		entry.setVisible(visible);

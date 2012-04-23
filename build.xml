@@ -155,7 +155,7 @@
 			<and>
 				<equals arg1="${app.server.type}" arg2="tomcat" />
 				<not>
-					<available file="${app.server.tomcat.dir}/lib/catalina.jar" />
+					<available file="${app.server.tomcat.classes.global.dir}/catalina.jar" />
 				</not>
 			</and>
 			<then>

@@ -478,21 +478,6 @@ public class UserServiceWrapper implements UserService,
 	}
 
 	/**
-	* Returns the primary key of the default user for the company.
-	*
-	* @param companyId the primary key of the company
-	* @return the primary key of the default user for the company
-	* @throws PortalException if a default user for the company could not be
-	found
-	* @throws SystemException if a system exception occurred
-	*/
-	public long getDefaultUserId(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _userService.getDefaultUserId(companyId);
-	}
-
-	/**
 	* Returns the primary keys of all the users belonging to the group.
 	*
 	* @param groupId the primary key of the group

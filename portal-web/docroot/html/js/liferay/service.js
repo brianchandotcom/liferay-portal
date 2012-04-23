@@ -396,7 +396,6 @@ Liferay.Service.registerClass(
 		deletePortrait: true,
 		deleteRoleUser: true,
 		deleteUser: true,
-		getDefaultUserId: true,
 		getGroupUserIds: true,
 		getOrganizationUserIds: true,
 		getRoleUserIds: true,

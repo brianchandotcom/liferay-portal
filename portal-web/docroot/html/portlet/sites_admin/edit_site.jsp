@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/sites_admin/init.jsp" %>
 
 <%
-String viewOrganizationsRedirect = ParamUtil.getString(request, "viewOrganizationsRedirect");
+String viewOrganizationsRedirect = ParamUtil.getString(request, "viewOrganizationsRedirect", themeDisplay.getURLControlPanel());
 String redirect = ParamUtil.getString(request, "redirect", viewOrganizationsRedirect);
 String closeRedirect = ParamUtil.getString(request, "closeRedirect");
 String backURL = ParamUtil.getString(request, "backURL", redirect);
@@ -135,20 +135,12 @@ else if (layoutSetPrototype != null) {
 	request.setAttribute("site.showPrototypes", String.valueOf(showPrototypes));
 	%>
 
-	<liferay-util:buffer var="htmlBottom">
-		<aui:button-row>
-			<aui:button type="submit" />
-
-			<aui:button href="<%= redirect %>" type="cancel" />
-		</aui:button-row>
-	</liferay-util:buffer>
-
 	<liferay-ui:form-navigator
+		backURL="<%= backURL %>"
 		categoryNames="<%= _CATEGORY_NAMES %>"
 		categorySections="<%= categorySections %>"
-		htmlBottom="<%= htmlBottom %>"
 		jspPath="/html/portlet/sites_admin/site/"
-		showButtons="<%= false %>"
+		showButtons="<%= true %>"
 	/>
 </aui:form>
 

@@ -45,8 +45,6 @@ if (!themeDisplay.isStatePopUp()) {
 
 					instance._bindUI();
 
-					instance._createDataConnection();
-
 					instance._createCancelButton();
 
 					instance._createFocusManager();
@@ -126,12 +124,6 @@ if (!themeDisplay.isStatePopUp()) {
 							instance._searchActive = false;
 						}
 					);
-				},
-
-				_createDataConnection: function() {
-					var instance = this;
-
-					Liferay.Store('autoLoad', false);
 				},
 
 				_createFocusManager: function() {
@@ -316,12 +308,7 @@ if (!themeDisplay.isStatePopUp()) {
 						},
 						function() {
 							if (persist) {
-								instance._saveData.set(
-									'data',
-									{
-										'control-panel-sidebar-minimized': newVal
-									}
-								).start();
+								Liferay.Store('control-panel-sidebar-minimized', newVal);
 							}
 
 							body.addClass(CSS_DISPLAY_PANEL_COLUMNS);

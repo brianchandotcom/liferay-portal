@@ -14,9 +14,12 @@
 
 package com.liferay.portal.service.persistence;
 
+import com.liferay.portal.kernel.template.TemplateException;
+import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.test.AbstractExecutionTestListener;
 import com.liferay.portal.test.TestContext;
 import com.liferay.portal.util.PropsValues;
+import org.junit.Assert;
 
 /**
  * @author Miguel Pastor
@@ -27,11 +30,20 @@ public class PersistenceExecutionTestListener
 	@Override
 	public void runAfterClass(TestContext testContext) {
 		PropsValues.SPRING_HIBERNATE_SESSION_DELEGATED = true;
+
+		TemplateManagerUtil.destroy();
 	}
 
 	@Override
 	public void runBeforeClass(TestContext testContext) {
 		PropsValues.SPRING_HIBERNATE_SESSION_DELEGATED = false;
+
+		try {
+			TemplateManagerUtil.init();
+		}
+		catch (TemplateException e) {
+			Assert.fail("The template manager can not been initialized");
+		}
 	}
 
 }

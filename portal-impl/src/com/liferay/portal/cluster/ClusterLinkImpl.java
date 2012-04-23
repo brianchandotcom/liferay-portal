@@ -30,7 +30,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
-import org.jgroups.ChannelException;
 import org.jgroups.JChannel;
 
 /**
@@ -84,10 +83,10 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 		JChannel jChannel = getChannel(priority);
 
 		try {
-			jChannel.send(null, null, message);
+			jChannel.send(null, message);
 		}
-		catch (ChannelException ce) {
-			_log.error("Unable to send multicast message " + message, ce);
+		catch (Exception e) {
+			_log.error("Unable to send multicast message " + message, e);
 		}
 	}
 
@@ -104,10 +103,10 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 		JChannel jChannel = getChannel(priority);
 
 		try {
-			jChannel.send(jGroupsAddress, null, message);
+			jChannel.send(jGroupsAddress, message);
 		}
-		catch (ChannelException ce) {
-			_log.error("Unable to send unicast message " + message, ce);
+		catch (Exception e) {
+			_log.error("Unable to send unicast message " + message, e);
 		}
 	}
 
@@ -131,7 +130,7 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 	}
 
 	@Override
-	protected void initChannels() throws ChannelException {
+	protected void initChannels() throws Exception {
 		Properties transportProperties = PropsUtil.getProperties(
 			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_TRANSPORT, true);
 
@@ -165,7 +164,7 @@ public class ClusterLinkImpl extends ClusterBase implements ClusterLink {
 					_localTransportAddresses, _clusterForwardMessageListener),
 					_LIFERAY_TRANSPORT_CHANNEL + i);
 
-			_localTransportAddresses.add(jChannel.getLocalAddress());
+			_localTransportAddresses.add(jChannel.getAddress());
 			_transportChannels.add(jChannel);
 		}
 	}

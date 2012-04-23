@@ -34,9 +34,7 @@ import java.net.NetworkInterface;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Vector;
 
-import org.jgroups.ChannelException;
 import org.jgroups.JChannel;
 import org.jgroups.Receiver;
 import org.jgroups.View;
@@ -99,7 +97,7 @@ public abstract class ClusterBase {
 
 	protected JChannel createJChannel(
 			String properties, Receiver receiver, String clusterName)
-		throws ChannelException {
+		throws Exception {
 
 		JChannel jChannel = new JChannel(properties);
 
@@ -121,7 +119,7 @@ public abstract class ClusterBase {
 
 		View view = baseReceiver.getView();
 
-		Vector<org.jgroups.Address> jGroupsAddresses = view.getMembers();
+		List<org.jgroups.Address> jGroupsAddresses = view.getMembers();
 
 		if (jGroupsAddresses == null) {
 			return Collections.emptyList();
@@ -179,7 +177,7 @@ public abstract class ClusterBase {
 		}
 	}
 
-	protected abstract void initChannels() throws ChannelException;
+	protected abstract void initChannels() throws Exception;
 
 	protected void initSystemProperties() {
 		for (String systemProperty :

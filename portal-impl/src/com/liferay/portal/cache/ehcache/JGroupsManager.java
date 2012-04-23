@@ -192,7 +192,7 @@ public class JGroupsManager implements CacheManagerPeerProvider, CachePeer {
 		}
 
 		try {
-			_jChannel.send(address, null, jGroupEventMessages);
+			_jChannel.send(address, jGroupEventMessages);
 		}
 		catch (Throwable t) {
 			throw new RemoteException(t.getMessage());

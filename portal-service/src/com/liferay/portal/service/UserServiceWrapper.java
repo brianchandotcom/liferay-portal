@@ -630,7 +630,8 @@ public class UserServiceWrapper implements UserService,
 	* @throws SystemException if a system exception occurred
 	*/
 	public boolean hasGroupUser(long groupId, long userId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return _userService.hasGroupUser(groupId, userId);
 	}
 
@@ -644,7 +645,8 @@ public class UserServiceWrapper implements UserService,
 	* @throws SystemException if a system exception occurred
 	*/
 	public boolean hasRoleUser(long roleId, long userId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return _userService.hasRoleUser(roleId, userId);
 	}
 

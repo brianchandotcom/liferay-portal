@@ -24,7 +24,9 @@ import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.service.permission.PortalPermissionUtil;
 import com.liferay.portal.service.permission.TeamPermissionUtil;
 import com.liferay.portal.service.permission.UserGroupPermissionUtil;
+import com.liferay.portal.service.permission.UserPermissionUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -169,9 +171,15 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	public List<UserGroup> getUserUserGroups(long userId)
-		throws SystemException {
+		throws PortalException, SystemException {
 
-		return userGroupLocalService.getUserUserGroups(userId);
+		UserPermissionUtil.check(
+			getPermissionChecker(), userId, ActionKeys.VIEW);
+
+		List<UserGroup> userGroups = userGroupLocalService.getUserUserGroups(
+			userId);
+
+		return filterUserGroups(userGroups);
 	}
 
 	/**
@@ -233,6 +241,23 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 
 		return userGroupLocalService.updateUserGroup(
 			user.getCompanyId(), userGroupId, name, description);
+	}
+
+	protected List<UserGroup> filterUserGroups(List<UserGroup> userGroups)
+		throws PortalException, SystemException {
+
+		List<UserGroup> filteredGroups = new ArrayList<UserGroup>();
+
+		for (UserGroup userGroup : userGroups) {
+			if (UserGroupPermissionUtil.contains(
+					getPermissionChecker(), userGroup.getUserGroupId(),
+					ActionKeys.VIEW)) {
+
+				filteredGroups.add(userGroup);
+			}
+		}
+
+		return filteredGroups;
 	}
 
 }

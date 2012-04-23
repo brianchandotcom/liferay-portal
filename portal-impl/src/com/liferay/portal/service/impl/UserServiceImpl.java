@@ -645,6 +645,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	public long getDefaultUserId(long companyId)
 		throws PortalException, SystemException {
 
+		//TBD Need to secure.
+
 		return userLocalService.getDefaultUserId(companyId);
 	}
 
@@ -781,6 +783,9 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 		User user = getUserByEmailAddress(companyId, emailAddress);
 
+		UserPermissionUtil.check(
+			getPermissionChecker(), user.getUserId(), ActionKeys.VIEW);
+
 		return user.getUserId();
 	}
 
@@ -798,6 +803,9 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 		User user = getUserByScreenName(companyId, screenName);
 
+		UserPermissionUtil.check(
+			getPermissionChecker(), user.getUserId(), ActionKeys.VIEW);
+
 		return user.getUserId();
 	}
 
@@ -811,7 +819,16 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	public boolean hasGroupUser(long groupId, long userId)
-		throws SystemException {
+		throws PortalException, SystemException {
+
+		try {
+			UserPermissionUtil.check(
+				getPermissionChecker(), userId, ActionKeys.VIEW);
+		}
+		catch (PrincipalException e) {
+			GroupPermissionUtil.check(
+				getPermissionChecker(), groupId, ActionKeys.VIEW_MEMBERS);
+		}
 
 		return userLocalService.hasGroupUser(groupId, userId);
 	}
@@ -826,7 +843,16 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	public boolean hasRoleUser(long roleId, long userId)
-		throws SystemException {
+		throws PortalException, SystemException {
+
+		try {
+			UserPermissionUtil.check(
+				getPermissionChecker(), userId, ActionKeys.VIEW);
+		}
+		catch (PrincipalException e) {
+			RolePermissionUtil.check(
+				getPermissionChecker(), roleId, ActionKeys.VIEW_MEMBERS);
+		}
 
 		return userLocalService.hasRoleUser(roleId, userId);
 	}
@@ -849,6 +875,18 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	public boolean hasRoleUser(
 			long companyId, String name, long userId, boolean inherited)
 		throws PortalException, SystemException {
+
+		try {
+			UserPermissionUtil.check(
+				getPermissionChecker(), userId, ActionKeys.VIEW);
+		}
+		catch (PrincipalException e) {
+			Role role = roleLocalService.getRole(companyId, name);
+
+			RolePermissionUtil.check(
+				getPermissionChecker(), role.getRoleId(),
+				ActionKeys.VIEW_MEMBERS);
+		}
 
 		return userLocalService.hasRoleUser(companyId, name, userId, inherited);
 	}
@@ -1209,6 +1247,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		UserPermissionUtil.check(
 			getPermissionChecker(), userId, ActionKeys.UPDATE);
 
+		checkOrganizations(userId, organizationIds);
+
 		userLocalService.updateOrganizations(
 			userId, organizationIds, serviceContext);
 	}
@@ -1409,23 +1449,73 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
+		UserPermissionUtil.check(
+			getPermissionChecker(), userId, organizationIds, ActionKeys.UPDATE);
+
 		User user = userPersistence.findByPrimaryKey(userId);
 
-		UsersAdminUtil.updateAddresses(
-			Contact.class.getName(), user.getContactId(), addresses);
+		if (addresses != null) {
+			UsersAdminUtil.updateAddresses(
+				Contact.class.getName(), user.getContactId(), addresses);
+		}
 
-		UsersAdminUtil.updateEmailAddresses(
-			Contact.class.getName(), user.getContactId(), emailAddresses);
+		if (emailAddress != null) {
+			UsersAdminUtil.updateEmailAddresses(
+				Contact.class.getName(), user.getContactId(), emailAddresses);
+		}
 
-		UsersAdminUtil.updatePhones(
-			Contact.class.getName(), user.getContactId(), phones);
+		if (phones != null) {
+			UsersAdminUtil.updatePhones(
+				Contact.class.getName(), user.getContactId(), phones);
+		}
 
-		UsersAdminUtil.updateWebsites(
-			Contact.class.getName(), user.getContactId(), websites);
+		if (websites != null) {
+			UsersAdminUtil.updateWebsites(
+				Contact.class.getName(), user.getContactId(), websites);
+		}
 
-		updateAnnouncementsDeliveries(user.getUserId(), announcementsDelivers);
+		if (announcementsDelivers != null) {
+			updateAnnouncementsDeliveries(
+				user.getUserId(), announcementsDelivers);
+		}
 
-		user = updateUser(
+		long curUserId = getUserId();
+
+		if (curUserId == userId) {
+			screenName = screenName.trim().toLowerCase();
+
+			if (!screenName.equalsIgnoreCase(user.getScreenName())) {
+				validateScreenName(user, screenName);
+			}
+
+			emailAddress = emailAddress.trim().toLowerCase();
+
+			if (!emailAddress.equalsIgnoreCase(user.getEmailAddress())) {
+				validateEmailAddress(user, emailAddress);
+			}
+		}
+
+		if (groupIds != null) {
+			groupIds = checkGroups(userId, groupIds);
+		}
+
+		if (organizationIds != null) {
+			organizationIds = checkOrganizations(userId, organizationIds);
+		}
+
+		if (roleIds != null) {
+			roleIds = checkRoles(userId, roleIds);
+		}
+
+		if (userGroupRoles != null) {
+			userGroupRoles = checkUserGroupRoles(userId, userGroupRoles);
+		}
+
+		if (userGroupIds != null) {
+			userGroupIds = checkUserGroupIds(userId, userGroupIds);
+		}
+
+		return userLocalService.updateUser(
 			userId, oldPassword, newPassword1, newPassword2, passwordReset,
 			reminderQueryQuestion, reminderQueryAnswer, screenName,
 			emailAddress, facebookId, openId, languageId, timeZoneId, greeting,
@@ -1434,8 +1524,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			icqSn, jabberSn, msnSn, mySpaceSn, skypeSn, twitterSn, ymSn,
 			jobTitle, groupIds, organizationIds, roleIds, userGroupRoles,
 			userGroupIds, serviceContext);
-
-		return user;
 	}
 
 	/**
@@ -1512,48 +1600,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		UserPermissionUtil.check(
-			getPermissionChecker(), userId, organizationIds, ActionKeys.UPDATE);
-
-		long curUserId = getUserId();
-
-		if (curUserId == userId) {
-			User user = userPersistence.findByPrimaryKey(userId);
-
-			screenName = screenName.trim().toLowerCase();
-
-			if (!screenName.equalsIgnoreCase(user.getScreenName())) {
-				validateScreenName(user, screenName);
-			}
-
-			emailAddress = emailAddress.trim().toLowerCase();
-
-			if (!emailAddress.equalsIgnoreCase(user.getEmailAddress())) {
-				validateEmailAddress(user, emailAddress);
-			}
-		}
-
-		if (groupIds != null) {
-			groupIds = checkGroups(userId, groupIds);
-		}
-
-		if (organizationIds != null) {
-			organizationIds = checkOrganizations(userId, organizationIds);
-		}
-
-		if (roleIds != null) {
-			roleIds = checkRoles(userId, roleIds);
-		}
-
-		if (userGroupRoles != null) {
-			userGroupRoles = checkUserGroupRoles(userId, userGroupRoles);
-		}
-
-		if (userGroupIds != null) {
-			userGroupIds = checkUserGroupIds(userId, userGroupIds);
-		}
-
-		return userLocalService.updateUser(
+		return updateUser(
 			userId, oldPassword, newPassword1, newPassword2, passwordReset,
 			reminderQueryQuestion, reminderQueryAnswer, screenName,
 			emailAddress, facebookId, openId, languageId, timeZoneId, greeting,
@@ -1561,7 +1608,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			birthdayMonth, birthdayDay, birthdayYear, smsSn, aimSn, facebookSn,
 			icqSn, jabberSn, msnSn, mySpaceSn, skypeSn, twitterSn, ymSn,
 			jobTitle, groupIds, organizationIds, roleIds, userGroupRoles,
-			userGroupIds, serviceContext);
+			userGroupIds, null, null, null, null, null, serviceContext);
 	}
 
 	protected void checkAddUserPermission(

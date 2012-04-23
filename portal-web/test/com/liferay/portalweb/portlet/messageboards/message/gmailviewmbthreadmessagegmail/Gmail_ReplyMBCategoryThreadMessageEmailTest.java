@@ -203,8 +203,9 @@ public class Gmail_ReplyMBCategoryThreadMessageEmailTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Sign out"),
-					selenium.getText("//td/a"));
-				selenium.clickAt("//td/a", RuntimeVariables.replace("Sign out"));
+					selenium.getText("//td[2]/a"));
+				selenium.clickAt("//td[2]/a",
+					RuntimeVariables.replace("Sign out"));
 
 			case 5:
 				Thread.sleep(10000);

@@ -233,7 +233,8 @@ public class OrganizationServiceWrapper implements OrganizationService,
 	* @throws SystemException if a system exception occurred
 	*/
 	public long getOrganizationId(long companyId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return _organizationService.getOrganizationId(companyId, name);
 	}
 

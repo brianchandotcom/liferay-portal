@@ -264,7 +264,8 @@ public class UserGroupServiceHttp {
 
 	public static java.util.List<com.liferay.portal.model.UserGroup> getUserUserGroups(
 		HttpPrincipal httpPrincipal, long userId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(UserGroupServiceUtil.class.getName(),
 					"getUserUserGroups", _getUserUserGroupsParameterTypes6);
@@ -277,6 +278,10 @@ public class UserGroupServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
 				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
 					throw (com.liferay.portal.kernel.exception.SystemException)e;
 				}

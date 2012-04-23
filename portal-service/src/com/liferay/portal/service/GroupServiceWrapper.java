@@ -361,7 +361,8 @@ public class GroupServiceWrapper implements GroupService,
 	* @throws SystemException if a system exception occurred
 	*/
 	public boolean hasUserGroup(long userId, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return _groupService.hasUserGroup(userId, groupId);
 	}
 

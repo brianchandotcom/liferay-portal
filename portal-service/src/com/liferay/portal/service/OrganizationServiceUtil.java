@@ -245,7 +245,8 @@ public class OrganizationServiceUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static long getOrganizationId(long companyId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getOrganizationId(companyId, name);
 	}
 

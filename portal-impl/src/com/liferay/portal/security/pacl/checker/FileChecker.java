@@ -44,6 +44,8 @@ import javax.servlet.ServletContext;
 public class FileChecker extends BaseChecker {
 
 	public void afterPropertiesSet() {
+		_rootDir = WebDirDetector.getRootDir(getClassLoader());
+
 		ServletContext servletContext = ServletContextPool.get(
 			getServletContextName());
 
@@ -51,11 +53,9 @@ public class FileChecker extends BaseChecker {
 			File tempDir = (File)servletContext.getAttribute(
 				JavaConstants.JAVAX_SERVLET_CONTEXT_TEMPDIR);
 
-			_appWorkDir = tempDir.getAbsolutePath();
+			_workDir = tempDir.getAbsolutePath();
 		}
-
-		_rootDir = WebDirDetector.getRootDir(getClassLoader());
-
+		
 		initPermissions();
 	}
 
@@ -126,45 +126,44 @@ public class FileChecker extends BaseChecker {
 		return false;
 	}
 
-	protected void addCanonicalSystemPaths(
-			File directory, List<String> defaultPaths)
-		throws IOException {
-
-		String canonPath = directory.getCanonicalPath() + File.separatorChar;
-
-		addPathIfMissing(canonPath, defaultPaths);
-
-		for (File file : directory.listFiles()) {
-			if (file.isDirectory()) {
-				addCanonicalSystemPaths(file, defaultPaths);
-			}
-			else {
-				File canonicalFile = new File(file.getCanonicalPath());
-
-				canonPath =
-					canonicalFile.getParentFile().getPath() +
-						File.separatorChar;
-
-				addPathIfMissing(canonPath, defaultPaths);
-			}
-		}
-	}
-
-	protected void addPathIfMissing(String path, List<String> defaultPaths) {
-		for (Iterator<String> itr = defaultPaths.iterator(); itr.hasNext();) {
+	protected void addCanonicalPath(List<String> paths, String path) {
+		Iterator<String> itr = paths.iterator();
+	
+		while (itr.hasNext()) {
 			String curPath = itr.next();
-
+	
 			if (curPath.startsWith(path) &&
 				(curPath.length() > path.length())) {
-
+	
 				itr.remove();
 			}
 			else if (path.startsWith(curPath)) {
 				return;
 			}
 		}
+	
+		paths.add(path);
+	}
 
-		defaultPaths.add(path);
+	protected void addCanonicalPaths(List<String> paths, File directory)
+		throws IOException {
+
+		addCanonicalPath(
+			paths, directory.getCanonicalPath() + File.separatorChar);
+
+		for (File file : directory.listFiles()) {
+			if (file.isDirectory()) {
+				addCanonicalPaths(paths, file);
+			}
+			else {
+				File canonicalFile = new File(file.getCanonicalPath());
+
+				File parentFile = canonicalFile.getParentFile();
+
+				addCanonicalPath(
+					paths, parentFile.getPath() + File.separatorChar);
+			}
+		}
 	}
 
 	protected void addPermission(
@@ -199,7 +198,7 @@ public class FileChecker extends BaseChecker {
 			}
 		}
 
-		// Plugin can do anything, except execute, in it's own work folder
+		// Plugin can do anything, except execute, in its own work folder
 
 		String pathContext = ContextPathUtil.getContextPath(
 			PropsValues.PORTAL_CTX);
@@ -207,79 +206,77 @@ public class FileChecker extends BaseChecker {
 		ServletContext servletContext = ServletContextPool.get(pathContext);
 
 		if (!action.equals(FILE_PERMISSION_ACTION_EXECUTE) &&
-			(_appWorkDir != null)) {
+			(_workDir != null)) {
 
-			addPermission(permissions, _appWorkDir, action);
-			addPermission(permissions, _appWorkDir + "/-", action);
+			addPermission(permissions, _workDir, action);
+			addPermission(permissions, _workDir + "/-", action);
 
 			if (servletContext != null) {
 				File tempDir = (File)servletContext.getAttribute(
 					JavaConstants.JAVAX_SERVLET_CONTEXT_TEMPDIR);
 
-				String rootTempPath = tempDir.getAbsolutePath();
+				String tempDirAbsolutePath = tempDir.getAbsolutePath();
 
 				if (action.equals(FILE_PERMISSION_ACTION_READ)) {
-					addPermission(permissions, rootTempPath, action);
+					addPermission(permissions, tempDirAbsolutePath, action);
 				}
 
-				addPermission(permissions, rootTempPath + "/-", action);
+				addPermission(permissions, tempDirAbsolutePath + "/-", action);
 			}
-
 		}
 
 		if (!action.equals(FILE_PERMISSION_ACTION_READ)) {
 			return permissions;
 		}
 
-		List<String> defaultPaths = new UniqueList<String>();
+		List<String> paths = new UniqueList<String>();
 
 		String javaHome = System.getProperty("java.home") + "/";
 
 		// JDK
 
-		// There may be jars in the system library that are symlinked. For these
-		// we must include their cannonical paths otherwise they will fail
-		// permission checks.
-
-		File file = new File(javaHome + "lib");
+		// There may be jars in the system library that are symlinked. We must
+		// include their cannonical paths otherwise they will fail permission
+		// checks.
 
 		try {
-			addCanonicalSystemPaths(file, defaultPaths);
+			File file = new File(javaHome + "lib/");
+
+			addCanonicalPaths(paths, file);
 		}
-		catch (IOException e) {
-			_log.error(e, e);
+		catch (IOException ioe) {
+			_log.error(ioe, ioe);
 		}
 
-		// Shared Libs
+		// Shared libs
 
-		defaultPaths.add(_globalSharedLibDir);
-
+		paths.add(_globalSharedLibDir);
 
 		// Plugin
 
-		defaultPaths.add(_rootDir);
+		paths.add(_rootDir);
 
 		// Portal JSP paths
 
 		if (!_portalDir.equals(_rootDir)) {
-			defaultPaths.add(_portalDir + "html/common/");
-			defaultPaths.add(_portalDir + "html/taglib/");
-			defaultPaths.add(_portalDir + "html/themes/");
-			defaultPaths.add(_portalDir + "localhost/html/common/");
-			defaultPaths.add(_portalDir + "localhost/html/taglib/");
-			defaultPaths.add(_portalDir + "localhost/html/themes/");
-			defaultPaths.add(_portalDir + "localhost/WEB-INF");
-			defaultPaths.add(_portalDir + "localhost/WEB-INF/");
-			defaultPaths.add(_portalDir + "WEB-INF");
-			defaultPaths.add(_portalDir + "WEB-INF/");
+			paths.add(_portalDir + "html/common/");
+			paths.add(_portalDir + "html/taglib/");
+			paths.add(_portalDir + "html/themes/");
+			paths.add(_portalDir + "localhost/html/common/");
+			paths.add(_portalDir + "localhost/html/taglib/");
+			paths.add(_portalDir + "localhost/html/themes/");
+			paths.add(_portalDir + "localhost/WEB-INF");
+			paths.add(_portalDir + "localhost/WEB-INF/");
+			paths.add(_portalDir + "WEB-INF");
+			paths.add(_portalDir + "WEB-INF/");
 		}
 
-		for (String defaultPath : defaultPaths) {
-			if (defaultPath.endsWith(StringPool.SLASH)) {
-				addPermission(permissions, defaultPath + "-", action);
+		for (String path : paths) {
+			if (path.endsWith(StringPool.SLASH)) {
+				addPermission(permissions, path + "-", action);
 			}
 			else {
-				addPermission(permissions, defaultPath, action);
+				addPermission(permissions, path, action);
 			}
 		}
 
@@ -299,7 +296,6 @@ public class FileChecker extends BaseChecker {
 
 	private static Log _log = LogFactoryUtil.getLog(FileChecker.class);
 
-	private String _appWorkDir;
 	private List<Permission> _deletePermissions;
 	private List<Permission> _executePermissions;
 	private String _globalSharedLibDir =
@@ -307,6 +303,7 @@ public class FileChecker extends BaseChecker {
 	private String _portalDir = PropsValues.LIFERAY_WEB_PORTAL_DIR;
 	private List<Permission> _readPermissions;
 	private String _rootDir;
+	private String _workDir;
 	private List<Permission> _writePermissions;
 
 }

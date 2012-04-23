@@ -76,7 +76,9 @@ public class AggregateClassLoader extends ClassLoader {
 	}
 
 	public void addClassLoader(ClassLoader classLoader) {
-		if (getClassLoaders().contains(classLoader)) {
+		List<ClassLoader> classLoaders = getClassLoaders();
+
+		if (classLoaders.contains(classLoader)) {
 			return;
 		}
 
@@ -301,7 +303,7 @@ public class AggregateClassLoader extends ClassLoader {
 		throws ClassNotFoundException {
 
 		try {
-			return (Class<?>) _loadClassMethod.invoke(
+			return (Class<?>)_loadClassMethod.invoke(
 				classLoader, name, resolve);
 		}
 		catch (InvocationTargetException ite) {

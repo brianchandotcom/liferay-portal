@@ -28,15 +28,7 @@ import java.util.regex.Pattern;
 public class JNDIChecker extends BaseChecker {
 
 	public void afterPropertiesSet() {
-		Set<String> names = getPropertySet("security-manager-jndi-names");
-
-		_patterns = new ArrayList<Pattern>(names.size());
-
-		for (String name : names) {
-			Pattern pattern = Pattern.compile(name);
-
-			_patterns.add(pattern);
-		}
+		initNames();
 	}
 
 	public void checkPermission(Permission permission) {
@@ -56,6 +48,15 @@ public class JNDIChecker extends BaseChecker {
 	}
 
 	protected void initNames() {
+		Set<String> names = getPropertySet("security-manager-jndi-names");
+
+		_patterns = new ArrayList<Pattern>(names.size());
+
+		for (String name : names) {
+			Pattern pattern = Pattern.compile(name);
+
+			_patterns.add(pattern);
+		}
 	}
 
 	private List<Pattern> _patterns;

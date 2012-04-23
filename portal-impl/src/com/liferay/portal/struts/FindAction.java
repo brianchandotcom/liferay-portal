@@ -121,7 +121,8 @@ public abstract class FindAction extends Action {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long groupId = themeDisplay.getScopeGroupId();
+		long groupId = ParamUtil.get(
+			request, "groupId", themeDisplay.getScopeGroupId());
 
 		if (primaryKey > 0) {
 			try {

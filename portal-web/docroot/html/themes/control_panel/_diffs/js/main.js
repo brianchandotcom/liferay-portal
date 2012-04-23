@@ -45,22 +45,11 @@ if (!themeDisplay.isStatePopUp()) {
 
 					instance._bindUI();
 
-					instance._createDataConnection();
-
 					instance._createCancelButton();
 
 					instance._createFocusManager();
 
 					instance._createLiveSearch();
-
-					Liferay.Store(
-						'control-panel-sidebar-minimized',
-						function(event) {
-							if (event === 1) {
-								instance._uiSetHidden(event, true);
-							}
-						}
-					);
 				},
 
 				_afterHiddenChange: function(event) {
@@ -135,12 +124,6 @@ if (!themeDisplay.isStatePopUp()) {
 							instance._searchActive = false;
 						}
 					);
-				},
-
-				_createDataConnection: function() {
-					var instance = this;
-
-					Liferay.Store('autoLoad', false);
 				},
 
 				_createFocusManager: function() {

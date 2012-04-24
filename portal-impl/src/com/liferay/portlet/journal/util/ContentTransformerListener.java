@@ -137,6 +137,7 @@ public class ContentTransformerListener extends BaseTransformerListener {
 			if (dynamicContent != null) {
 				String text = dynamicContent.getText();
 
+				text = HtmlUtil.escape(text);
 				text = HtmlUtil.stripComments(text);
 				text = HtmlUtil.stripHtml(text);
 				text = text.trim();
@@ -171,6 +172,9 @@ public class ContentTransformerListener extends BaseTransformerListener {
 						 text.startsWith("/image/journal/article?img_id")) {
 
 					dynamicContent.setText("@cdn_host@@root_path@" + text);
+				}
+				else {
+					dynamicContent.setText(text);
 				}
 			}
 

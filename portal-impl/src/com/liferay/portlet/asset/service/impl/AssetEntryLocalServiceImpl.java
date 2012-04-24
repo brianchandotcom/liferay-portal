@@ -626,7 +626,6 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			entry.setClassNameId(classNameId);
 			entry.setClassPK(classPK);
 			entry.setClassUuid(classUuid);
-			entry.setClassTypeId(classTypeId);
 			entry.setVisible(visible);
 			entry.setPublishDate(publishDate);
 			entry.setExpirationDate(expirationDate);
@@ -640,6 +639,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 		entry.setGroupId(groupId);
 		entry.setModifiedDate(now);
+		entry.setClassTypeId(classTypeId);
 		entry.setVisible(visible);
 		entry.setStartDate(startDate);
 		entry.setEndDate(endDate);

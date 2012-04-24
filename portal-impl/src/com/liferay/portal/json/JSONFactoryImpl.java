@@ -276,8 +276,7 @@ public class JSONFactoryImpl implements JSONFactory {
 		// objects
 
 		jsonString = StringUtil.replace(
-			jsonString,
-			new String[] {"\"class\"", "'class'"},
+			jsonString, new String[] {"\"class\"", "'class'"},
 			new String[] {"\"~class\"", "\"~class\""});
 
 		return jsonString;

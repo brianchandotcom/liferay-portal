@@ -23,21 +23,28 @@ import org.jabsorb.serializer.UnmarshallException;
  * @author Tomas Polesovsky
  */
 public class LiferayJSONSerializer extends JSONSerializer {
+
 	@Override
-	public Object unmarshall(SerializerState state, Class clazz, Object json) throws UnmarshallException {
-		if(!(state instanceof LiferaySerializerState)){
-			state = new LiferaySerializerState();
+	public Object unmarshall(
+			SerializerState serializerState, Class clazz, Object json)
+		throws UnmarshallException {
+
+		if (!(serializerState instanceof LiferaySerializerState)) {
+			serializerState = new LiferaySerializerState();
 		}
 
-		return super.unmarshall(state, clazz, json);
+		return super.unmarshall(serializerState, clazz, json);
 	}
 
 	@Override
-	public ObjectMatch tryUnmarshall(SerializerState state, Class clazz, Object json) throws UnmarshallException {
-		if(!(state instanceof LiferaySerializerState)){
-			state = new LiferaySerializerState();
+	public ObjectMatch tryUnmarshall(
+			SerializerState serializerState, Class clazz, Object json)
+		throws UnmarshallException {
+
+		if (!(serializerState instanceof LiferaySerializerState)) {
+			serializerState = new LiferaySerializerState();
 		}
 
-		return super.tryUnmarshall(state, clazz, json);
+		return super.tryUnmarshall(serializerState, clazz, json);
 	}
 }

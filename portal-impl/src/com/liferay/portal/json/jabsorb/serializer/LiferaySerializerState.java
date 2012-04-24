@@ -16,8 +16,10 @@ package com.liferay.portal.json.jabsorb.serializer;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+
 import org.jabsorb.serializer.ProcessedObject;
 import org.jabsorb.serializer.SerializerState;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -27,26 +29,33 @@ import org.json.JSONObject;
 public class LiferaySerializerState extends SerializerState {
 
 	@Override
-	public ProcessedObject store(Object obj) {
+	public ProcessedObject store(Object object) {
+		if (!(object instanceof JSONObject)) {
+			return super.store(object);
+		}
 
-		if(obj instanceof JSONObject &&
-			((JSONObject) obj).has("javaClass")){
+		JSONObject jsonObject = (JSONObject) object;
+
+		if (jsonObject.has("javaClass")) {
 
 			try {
-				String javaClass = ((JSONObject) obj).getString("javaClass");
+				String javaClass = jsonObject.getString("javaClass");
 
-				if(javaClass.contains("com.liferay") &&
-						javaClass.contains("Util")) {
+				if (javaClass.contains("com.liferay") &&
+					javaClass.contains("Util")) {
 
-					throw new RuntimeException("Not instantiating " + javaClass);
+					throw new RuntimeException(
+						"Not instantiating " + javaClass);
 				}
-			} catch(JSONException ex){
-				_log.error(ex);
+			}
+			catch(JSONException ex) {
+				_log.error("Unable to parse object", ex);
 			}
 		}
 
-		return super.store(obj);
+		return super.store(object);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(LiferaySerializerState.class);
+	private static Log _log = LogFactoryUtil.getLog(
+		LiferaySerializerState.class);
 }

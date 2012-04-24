@@ -2120,13 +2120,6 @@ public class JournalArticleLocalServiceImpl
 
 		journalArticlePersistence.update(article, false);
 
-		// Asset
-
-		updateAsset(
-			userId, article, serviceContext.getAssetCategoryIds(),
-			serviceContext.getAssetTagNames(),
-			serviceContext.getAssetLinkEntryIds());
-
 		// Expando
 
 		ExpandoBridge expandoBridge = article.getExpandoBridge();
@@ -2167,6 +2160,13 @@ public class JournalArticleLocalServiceImpl
 
 			indexer.reindex(article);
 		}
+
+		// Asset
+
+		updateAsset(
+			userId, article, serviceContext.getAssetCategoryIds(),
+			serviceContext.getAssetTagNames(),
+			serviceContext.getAssetLinkEntryIds());
 
 		return article;
 	}
@@ -2336,17 +2336,6 @@ public class JournalArticleLocalServiceImpl
 				null, false);
 		}
 		else {
-
-			// Get the earliest display date and latest expiration date among
-			// all article versions
-
-			Date[] dateInterval = getDateInterval(
-				article.getGroupId(), article.getArticleId(),
-				article.getDisplayDate(), article.getExpirationDate());
-
-			Date displayDate = dateInterval[0];
-			Date expirationDate = dateInterval[1];
-
 			JournalArticleResource journalArticleResource =
 				journalArticleResourceLocalService.getArticleResource(
 					article.getResourcePrimKey());
@@ -2356,10 +2345,10 @@ public class JournalArticleLocalServiceImpl
 				journalArticleResource.getResourcePrimKey(),
 				journalArticleResource.getUuid(), getClassTypeId(article),
 				assetCategoryIds, assetTagNames, visible, null, null,
-				displayDate, expirationDate, ContentTypes.TEXT_HTML,
-				article.getTitle(), article.getDescription(),
-				article.getDescription(), null, article.getLayoutUuid(), 0, 0,
-				null, false);
+				article.getDisplayDate(), article.getExpirationDate(),
+				ContentTypes.TEXT_HTML, article.getTitle(),
+				article.getDescription(), article.getDescription(), null,
+				article.getLayoutUuid(), 0, 0, null, false);
 		}
 
 		assetLinkLocalService.updateLinks(
@@ -3013,51 +3002,6 @@ public class JournalArticleLocalServiceImpl
 		}
 
 		return classTypeId;
-	}
-
-	protected Date[] getDateInterval(
-			long groupId, String articleId, Date earliestDisplayDate,
-			Date latestExpirationDate)
-		throws SystemException {
-
-		Date[] dateInterval = new Date[2];
-
-		List<JournalArticle> articles = journalArticlePersistence.findByG_A_ST(
-			groupId, articleId, WorkflowConstants.STATUS_APPROVED);
-
-		boolean expiringArticle = true;
-
-		if (latestExpirationDate == null) {
-			expiringArticle = false;
-		}
-
-		for (JournalArticle article : articles) {
-			if ((earliestDisplayDate == null) ||
-				((article.getDisplayDate() != null) &&
-				 earliestDisplayDate.after(article.getDisplayDate()))) {
-
-				earliestDisplayDate = article.getDisplayDate();
-			}
-
-			if (expiringArticle &&
-				((latestExpirationDate == null) ||
-				 ((article.getExpirationDate() != null) &&
-				  latestExpirationDate.before(article.getExpirationDate())))) {
-
-				latestExpirationDate = article.getExpirationDate();
-			}
-
-			if (expiringArticle && (article.getExpirationDate() == null) &&
-				(latestExpirationDate != null)) {
-
-				expiringArticle = false;
-			}
-		}
-
-		dateInterval[0] = earliestDisplayDate;
-		dateInterval[1] = latestExpirationDate;
-
-		return dateInterval;
 	}
 
 	protected String getUniqueUrlTitle(

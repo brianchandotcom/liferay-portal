@@ -31,8 +31,6 @@ public class PersistenceExecutionTestListener
 	@Override
 	public void runAfterClass(TestContext testContext) {
 		PropsValues.SPRING_HIBERNATE_SESSION_DELEGATED = true;
-
-		TemplateManagerUtil.destroy();
 	}
 
 	@Override

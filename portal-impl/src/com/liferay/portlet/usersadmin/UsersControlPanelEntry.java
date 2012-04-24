@@ -16,9 +16,13 @@ package com.liferay.portlet.usersadmin;
 
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.model.Role;
+import com.liferay.portal.model.RoleConstants;
+import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
+import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.service.permission.OrganizationPermissionUtil;
 import com.liferay.portlet.BaseControlPanelEntry;
 
@@ -26,12 +30,29 @@ import java.util.List;
 
 /**
  * @author Jorge Ferrer
+ * @author Zsolt Berentey
  */
 public class UsersControlPanelEntry extends BaseControlPanelEntry {
 
 	public boolean isVisible(
 			PermissionChecker permissionChecker, Portlet portlet)
 		throws Exception {
+
+		List<UserGroupRole> userGroupRoles =
+			UserGroupRoleLocalServiceUtil.getUserGroupRoles(
+				permissionChecker.getUserId());
+
+		for (UserGroupRole userGroupRole : userGroupRoles) {
+			Role role = userGroupRole.getRole();
+
+			String roleName = role.getName();
+
+			if (roleName.equals(RoleConstants.ORGANIZATION_OWNER) ||
+				roleName.equals(RoleConstants.ORGANIZATION_ADMINISTRATOR)) {
+
+				return true;
+			}
+		}
 
 		List<Organization> organizations =
 			OrganizationLocalServiceUtil.getUserOrganizations(

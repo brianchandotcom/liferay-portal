@@ -36,7 +36,7 @@ LinkedHashMap organizationParams = new LinkedHashMap();
 List<Organization> organizations = new ArrayList<Organization>();
 
 if (filterManageableOrganizations) {
-	organizations.addAll(user.getOrganizations());
+	organizations = user.getOrganizations(true);
 }
 
 if (organizationId != OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID) {
@@ -54,6 +54,12 @@ if (filterManageableOrganizations) {
 	else {
 		organizationParams.put("organizationsTree", organizations);
 	}
+}
+
+String topLevelOrganizationsMsg = "top-level-organizations";
+
+if (filterManageableOrganizations) {
+	topLevelOrganizationsMsg = "my-organizations";
 }
 %>
 
@@ -329,10 +335,10 @@ if (filterManageableOrganizations) {
 							String organizationsTitle = null;
 
 							if (Validator.isNotNull(keywords)){
-								organizationsTitle = LanguageUtil.get(pageContext,"organizations");
+								organizationsTitle = LanguageUtil.get(pageContext, "organizations");
 							}
 							else if (organization == null) {
-								organizationsTitle = LanguageUtil.get(pageContext,"top-level-organizations");
+								organizationsTitle = LanguageUtil.get(pageContext, topLevelOrganizationsMsg);
 							}
 							else if (organizationsCount == 1) {
 								organizationsTitle = LanguageUtil.format(pageContext, "x-suborganization", String.valueOf(organizationsCount));

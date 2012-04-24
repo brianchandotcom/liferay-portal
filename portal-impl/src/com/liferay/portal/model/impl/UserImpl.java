@@ -325,10 +325,10 @@ public class UserImpl extends UserBaseImpl {
 		return getOrganizationIds(false);
 	}
 
-	public long[] getOrganizationIds(boolean includeNonuser)
+	public long[] getOrganizationIds(boolean includeNonUser)
 		throws PortalException, SystemException {
 
-		List<Organization> organizations = getOrganizations(includeNonuser);
+		List<Organization> organizations = getOrganizations(includeNonUser);
 
 		long[] organizationIds = new long[organizations.size()];
 

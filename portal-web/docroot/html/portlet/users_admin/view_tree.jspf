@@ -55,6 +55,12 @@ if (filterManageableOrganizations) {
 		organizationParams.put("organizationsTree", organizations);
 	}
 }
+
+String topLevelOrganizationsMsg = "top-level-organizations";
+
+if (filterManageableOrganizations) {
+	topLevelOrganizationsMsg = "my-organizations";
+}
 %>
 
 <c:choose>
@@ -329,10 +335,10 @@ if (filterManageableOrganizations) {
 							String organizationsTitle = null;
 
 							if (Validator.isNotNull(keywords)){
-								organizationsTitle = LanguageUtil.get(pageContext,"organizations");
+								organizationsTitle = LanguageUtil.get(pageContext, "organizations");
 							}
 							else if (organization == null) {
-								organizationsTitle = LanguageUtil.get(pageContext,"top-level-organizations");
+								organizationsTitle = LanguageUtil.get(pageContext, topLevelOrganizationsMsg);
 							}
 							else if (organizationsCount == 1) {
 								organizationsTitle = LanguageUtil.format(pageContext, "x-suborganization", String.valueOf(organizationsCount));

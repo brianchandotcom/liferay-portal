@@ -692,24 +692,22 @@ public class OrganizationLocalServiceImpl
 
 		Set<Organization> organizations = new HashSet<Organization>();
 
-		if (includeNonUser) {
-			List<UserGroupRole> userGroupRoles =
-				userGroupRoleLocalService.getUserGroupRoles(userId);
+		List<UserGroupRole> userGroupRoles =
+			userGroupRoleLocalService.getUserGroupRoles(userId);
 
-			for (UserGroupRole userGroupRole : userGroupRoles) {
-				Role role = userGroupRole.getRole();
+		for (UserGroupRole userGroupRole : userGroupRoles) {
+			Role role = userGroupRole.getRole();
 
-				String roleName = role.getName();
+			String roleName = role.getName();
 
-				if (roleName.equals(RoleConstants.ORGANIZATION_OWNER) ||
-					roleName.equals(RoleConstants.ORGANIZATION_ADMINISTRATOR)) {
+			if (roleName.equals(RoleConstants.ORGANIZATION_OWNER) ||
+				roleName.equals(RoleConstants.ORGANIZATION_ADMINISTRATOR)) {
 
-					Group organizationGroup = userGroupRole.getGroup();
+				Group organizationGroup = userGroupRole.getGroup();
 
-					organizations.add(
-						organizationPersistence.findByPrimaryKey(
-							organizationGroup.getOrganizationId()));
-				}
+				organizations.add(
+					organizationPersistence.findByPrimaryKey(
+						organizationGroup.getOrganizationId()));
 			}
 		}
 

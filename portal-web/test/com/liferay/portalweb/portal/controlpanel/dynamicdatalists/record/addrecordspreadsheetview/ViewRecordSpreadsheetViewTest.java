@@ -24,6 +24,9 @@ public class ViewRecordSpreadsheetViewTest extends BaseTestCase {
 	public void testViewRecordSpreadsheetView() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -31,7 +34,7 @@ public class ViewRecordSpreadsheetViewTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -115,7 +118,7 @@ public class ViewRecordSpreadsheetViewTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'View')]/a")) {
 					break;
 				}
 			}
@@ -127,9 +130,9 @@ public class ViewRecordSpreadsheetViewTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("View"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'View')]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'View')]/a"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Boolean true"),
@@ -161,6 +164,9 @@ public class ViewRecordSpreadsheetViewTest extends BaseTestCase {
 			selenium.getText("//div[@class='aui-fieldset-content ']/div[11]"));
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -168,7 +174,7 @@ public class ViewRecordSpreadsheetViewTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -206,7 +212,7 @@ public class ViewRecordSpreadsheetViewTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Spreadsheet View')]/a")) {
 					break;
 				}
 			}
@@ -218,9 +224,9 @@ public class ViewRecordSpreadsheetViewTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Spreadsheet View"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Spreadsheet View')]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Spreadsheet View')]/a"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("True"),

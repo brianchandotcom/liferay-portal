@@ -737,6 +737,7 @@ create index IX_B15863FA on SocialActivityLimit (classNameId, classPK);
 create unique index IX_F1C1A617 on SocialActivityLimit (groupId, userId, classNameId, classPK, activityType, activityCounterName);
 create index IX_6F9EDE9F on SocialActivityLimit (userId);
 
+create index IX_8BE5F230 on SocialActivitySetting (groupId);
 create index IX_384788CD on SocialActivitySetting (groupId, activityType);
 create index IX_9D22151E on SocialActivitySetting (groupId, classNameId);
 create index IX_1E9CF33B on SocialActivitySetting (groupId, classNameId, activityType);

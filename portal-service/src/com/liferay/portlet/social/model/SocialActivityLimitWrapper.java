@@ -326,6 +326,10 @@ public class SocialActivityLimitWrapper implements SocialActivityLimit,
 		_socialActivityLimit.persist();
 	}
 
+	public int getCount() {
+		return _socialActivityLimit.getCount();
+	}
+
 	public int getCount(int limitPeriod) {
 		return _socialActivityLimit.getCount(limitPeriod);
 	}

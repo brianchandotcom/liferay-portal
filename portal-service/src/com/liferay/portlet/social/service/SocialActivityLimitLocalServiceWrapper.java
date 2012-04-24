@@ -272,6 +272,14 @@ public class SocialActivityLimitLocalServiceWrapper
 			limitPeriod);
 	}
 
+	public com.liferay.portlet.social.model.SocialActivityLimit fetchActivityLimit(
+		long groupId, long userId, long classNameId, long classPK,
+		int activityType, java.lang.String activityCounterName)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _socialActivityLimitLocalService.fetchActivityLimit(groupId,
+			userId, classNameId, classPK, activityType, activityCounterName);
+	}
+
 	/**
 	 * @deprecated Renamed to {@link #getWrappedService}
 	 */

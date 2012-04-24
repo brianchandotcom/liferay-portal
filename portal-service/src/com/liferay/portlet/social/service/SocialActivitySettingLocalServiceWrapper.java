@@ -262,6 +262,18 @@ public class SocialActivitySettingLocalServiceWrapper
 		_socialActivitySettingLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
+	public void deleteActivitySetting(long groupId, java.lang.String className,
+		long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_socialActivitySettingLocalService.deleteActivitySetting(groupId,
+			className, classPK);
+	}
+
+	public void deleteActivitySettings(long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_socialActivitySettingLocalService.deleteActivitySettings(groupId);
+	}
+
 	public com.liferay.portlet.social.model.SocialActivityDefinition getActivityDefinition(
 		long groupId, java.lang.String className, int activityType)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -287,6 +299,12 @@ public class SocialActivitySettingLocalServiceWrapper
 		return _socialActivitySettingLocalService.isEnabled(groupId, classNameId);
 	}
 
+	public boolean isEnabled(long groupId, long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _socialActivitySettingLocalService.isEnabled(groupId,
+			classNameId, classPK);
+	}
+
 	public void updateActivitySetting(long groupId, java.lang.String className,
 		boolean enabled)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -302,6 +320,14 @@ public class SocialActivitySettingLocalServiceWrapper
 			com.liferay.portal.kernel.exception.SystemException {
 		_socialActivitySettingLocalService.updateActivitySetting(groupId,
 			className, activityType, activityCounterDefinition);
+	}
+
+	public void updateActivitySetting(long groupId, java.lang.String className,
+		long classPK, boolean enabled)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_socialActivitySettingLocalService.updateActivitySetting(groupId,
+			className, classPK, enabled);
 	}
 
 	public void updateActivitySettings(long groupId,

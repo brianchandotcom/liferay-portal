@@ -1866,7 +1866,8 @@ public class OrganizationLocalServiceImpl
 				if ((organizationId <= 0) ||
 					(organization.getOrganizationId() != organizationId)) {
 
-					throw new DuplicateOrganizationException();
+					throw new DuplicateOrganizationException(
+						"There is another organization named " + name);
 				}
 			}
 		}

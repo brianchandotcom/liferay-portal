@@ -23,17 +23,16 @@ import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.jdbc.DataSourceFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
-import com.liferay.portal.kernel.deploy.hot.HotDeployUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.CentralizedThreadLocal;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -72,6 +71,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -187,11 +187,18 @@ public class SetupWizardUtil {
 		_updateCompany(request);
 		_updateAdminUser(request, unicodeProperties);
 
-		_initPlugins();
+		HttpSession session = request.getSession();
+
+		ServletContext servletContext = session.getServletContext();
+
+		PluginPackage pluginPackage = InitPortalUtil.initPluginPackage(
+			servletContext);
+
+		InitPortalUtil.initPortlets(pluginPackage, servletContext);
+
+		InitPortalUtil.initPlugins();
 
 		boolean propertiesFileCreated = _writePropertiesFile(unicodeProperties);
-
-		HttpSession session = request.getSession();
 
 		session.setAttribute(
 			WebKeys.SETUP_WIZARD_PROPERTIES, unicodeProperties);
@@ -206,15 +213,6 @@ public class SetupWizardUtil {
 		name = _PROPERTIES_PREFIX.concat(name).concat(StringPool.DOUBLE_DASH);
 
 		return ParamUtil.getString(request, name, defaultValue);
-	}
-
-	/**
-	 * @see {@link com.liferay.portal.servlet.MainServlet#initPlugins}
-	 */
-	private static void _initPlugins() {
-		HotDeployUtil.setCapturePrematureEvents(false);
-
-		PortalLifecycleUtil.flushInits();
 	}
 
 	private static boolean _isDatabaseConfigured(

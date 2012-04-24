@@ -61,16 +61,7 @@ public class XmlRpcServlet extends HttpServlet {
 			_methodRegistry.put(token, tokenMethods);
 		}
 
-		Method registeredMethod = tokenMethods.get(methodName);
-
-		if (registeredMethod != null) {
-			_log.error(
-				"There is already an XML-RPC method registered with name " +
-					methodName + " at " + token);
-		}
-		else {
-			tokenMethods.put(methodName, method);
-		}
+		tokenMethods.put(methodName, method);
 	}
 
 	public static void unregisterMethod(Method method) {

@@ -49,6 +49,22 @@ public class SharedSessionWrapper implements HttpSession {
 		_portletSession = portletSession;
 	}
 
+	public boolean equals(Object obj) {
+		if (!(obj instanceof SharedSessionWrapper)) {
+			return false;
+		}
+
+		SharedSessionWrapper sharedSessionWrapper = (SharedSessionWrapper)obj;
+
+		if (_portalSession.equals(sharedSessionWrapper._portalSession) &&
+			_portletSession.equals(sharedSessionWrapper._portletSession)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public Object getAttribute(String name) {
 		HttpSession session = getSessionDelegate(name);
 
@@ -127,6 +143,10 @@ public class SharedSessionWrapper implements HttpSession {
 		List<String> names = ListUtil.fromEnumeration(getAttributeNames());
 
 		return names.toArray(new String[names.size()]);
+	}
+
+	public int hashCode() {
+		return _portalSession.hashCode() ^ _portletSession.hashCode();
 	}
 
 	public void invalidate() {

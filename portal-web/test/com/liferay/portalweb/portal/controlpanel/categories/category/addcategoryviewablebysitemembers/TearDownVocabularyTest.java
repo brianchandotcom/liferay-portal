@@ -29,6 +29,9 @@ public class TearDownVocabularyTest extends BaseTestCase {
 			case 1:
 				selenium.open("/web/guest/home/");
 				loadRequiredJavaScriptModules();
+				assertEquals(RuntimeVariables.replace("Go to"),
+					selenium.getText("//li[@id='_145_mySites']/a/span"));
+				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -36,7 +39,7 @@ public class TearDownVocabularyTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent("link=Control Panel")) {
+						if (selenium.isVisible("link=Control Panel")) {
 							break;
 						}
 					}
@@ -84,7 +87,7 @@ public class TearDownVocabularyTest extends BaseTestCase {
 					try {
 						if (RuntimeVariables.replace("Delete")
 												.equals(selenium.getText(
-										"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"))) {
+										"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"))) {
 							break;
 						}
 					}
@@ -96,8 +99,8 @@ public class TearDownVocabularyTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a",
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a",
 					RuntimeVariables.replace("Delete"));
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected vocabularies[\\s\\S]$"));

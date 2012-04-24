@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.util.TestPropsValues;
 import com.thoughtworks.selenium.Selenium;
 
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.Alert;
@@ -119,7 +120,11 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public void check(String locator) {
-		click(locator);
+		WebElement webElement = getWebElement(locator);
+
+		if (!webElement.isSelected()) {
+			webElement.click();
+		}
 	}
 
 	public void chooseCancelOnNextConfirmation() {
@@ -709,7 +714,35 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public void selectWindow(String windowID) {
-		throw new UnsupportedOperationException();
+		Set<String> windowHandles = getWindowHandles();
+
+        if (!windowHandles.isEmpty()) {
+        	String selectWindowTitle;
+
+			if (windowID.startsWith("title=")) {
+	        	selectWindowTitle = windowID.substring(6);
+	        }
+	        else {
+	        	selectWindowTitle = windowID;
+	        }
+
+	        for (String windowHandle : windowHandles) {
+	        	WebDriver.TargetLocator targetLocator = switchTo();
+
+	        	targetLocator.window(windowHandle);
+
+	        	String currentWindowTitle = getTitle();
+
+	        	if (currentWindowTitle.equals(selectWindowTitle)) {
+	        		break;
+	        	}
+	        }
+	    }
+	    else if (windowID.equals("null")) {
+			WebDriver.TargetLocator targetLocator = switchTo();
+
+			targetLocator.defaultContent();
+		}
 	}
 
 	public void setBrowserLogLevel(String logLevel) {
@@ -786,15 +819,29 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public void type(String locator, String value) {
-		throw new UnsupportedOperationException();
+		WebElement webElement = getWebElement(locator);
+
+		if (webElement.isEnabled()) {
+			webElement.clear();
+
+			webElement.sendKeys(value);
+		}
 	}
 
 	public void typeKeys(String locator, String value) {
-		throw new UnsupportedOperationException();
+		WebElement webElement = getWebElement(locator);
+
+		if (webElement.isEnabled()) {
+			webElement.sendKeys(value);
+		}
 	}
 
 	public void uncheck(String locator) {
-		throw new UnsupportedOperationException();
+		WebElement webElement = getWebElement(locator);
+
+		if (webElement.isSelected()){
+			webElement.click();
+		} 
 	}
 
 	public void useXpathLibrary(String libraryName) {

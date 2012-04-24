@@ -55,7 +55,6 @@ public class ClickTasksProgressBar60PercentCompleteTest extends BaseTestCase {
 			RuntimeVariables.replace("Assigned to Me"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertTrue(selenium.isPartialText("//td[2]/div/div[1]/div[2]", "3/16/16"));
 		selenium.clickAt("//div[3]/a[3]", RuntimeVariables.replace(""));
 
 		for (int second = 0;; second++) {
@@ -106,7 +105,5 @@ public class ClickTasksProgressBar60PercentCompleteTest extends BaseTestCase {
 			selenium.getText("//div[@class='task-data status']"));
 		assertEquals(RuntimeVariables.replace("Normal"),
 			selenium.getText("//div[@class='task-data normal']"));
-		assertTrue(selenium.isPartialText(
-				"//div[@class='task-data due-date']", "3/16/16"));
 	}
 }

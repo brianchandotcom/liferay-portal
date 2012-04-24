@@ -33,7 +33,8 @@ public class JSONFactoryTest extends TestCase {
 
 	public void testLooseDeserializationOfForbiddenTypes() {
 		try {
-			JSONFactoryUtil.looseDeserialize("{\"class\":" +
+			JSONFactoryUtil.looseDeserialize(
+				"{\"class\":" +
 					"\"com.liferay.portal.kernel.dao.orm.EntityCacheUtil\"}}");
 			fail();
 		}
@@ -65,7 +66,8 @@ public class JSONFactoryTest extends TestCase {
 		assertTrue(((Map)object).containsKey("class"));
 
 		try {
-			JSONFactoryUtil.looseDeserializeSafe("{\"class\":" +
+			JSONFactoryUtil.looseDeserializeSafe(
+				"{\"class\":" +
 					"\"com.liferay.portal.kernel.dao.orm.EntityCacheUtil\"}}");
 		}
 		catch (Exception e) {
@@ -75,32 +77,32 @@ public class JSONFactoryTest extends TestCase {
 		Map map = (Map)JSONFactoryUtil.looseDeserializeSafe(
 			"{\"class\":" +
 				"\"com.liferay.portal.kernel.dao.orm.EntityCacheUtil\"," +
-				"\"foo\": \"boo\"}");
+					"\"foo\": \"boo\"}");
 
 		assertNotNull(map);
 		assertEquals(2, map.size());
-		assertEquals("com.liferay.portal.kernel.dao.orm.EntityCacheUtil",
+		assertEquals(
+			"com.liferay.portal.kernel.dao.orm.EntityCacheUtil",
 			map.get("class"));
 		assertEquals("boo", map.get("foo"));
 
 		map = (Map)JSONFactoryUtil.looseDeserializeSafe(
-			"{\"class\":" +
-				"\"com.liferay.portal.kernel.dao.orm.EntityCacheUtil\"," +
-				"\"foo\": \"boo\"," +
-				"\"entityCache\":" +
-				"{\"class\":" +
-				"\"com.liferay.portal.dao.orm.common.EntityCacheImpl\"}}");
+			"{\"class\":\"com.liferay.portal.kernel.dao.orm.EntityCacheUtil\"" +
+				",\"foo\": \"boo\",\"entityCache\":{\"class\":" +
+					"\"com.liferay.portal.dao.orm.common.EntityCacheImpl\"}}");
 
 		assertNotNull(map);
 		assertEquals(3, map.size());
-		assertEquals("com.liferay.portal.kernel.dao.orm.EntityCacheUtil",
+		assertEquals(
+			"com.liferay.portal.kernel.dao.orm.EntityCacheUtil",
 			map.get("class"));
 		assertEquals("boo", map.get("foo"));
 
 		map = (Map)map.get("entityCache");
 		assertNotNull(map);
 		assertEquals(1, map.size());
-		assertEquals("com.liferay.portal.dao.orm.common.EntityCacheImpl",
+		assertEquals(
+			"com.liferay.portal.dao.orm.common.EntityCacheImpl",
 			map.get("class"));
 	}
 

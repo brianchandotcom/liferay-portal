@@ -153,7 +153,7 @@ if (Validator.isNotNull(fieldParam)) {
 						document.<portlet:namespace />fm.<portlet:namespace /><%= facet.getFieldName() %>.value = '[' + fromDate + ' TO ' + toDate + ']';
 
 						var displayFormat = {
-							format: '%Y-%m-%d',
+							format: '%Y-%m-%d'
 						};
 
 						document.<portlet:namespace />fm.<portlet:namespace /><%= facet.getFieldName() %>from.value = A.DataType.Date.format(firstSelected, displayFormat);

@@ -106,13 +106,13 @@ public class SOUs_ViewSitesSiteTest extends BaseTestCase {
 			RuntimeVariables.replace("Members"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("xPath=(//div[@class='lfr-user-data-name']/a)[1]"));
+		assertEquals(RuntimeVariables.replace("Bloggs, Joe"),
+			selenium.getText("xPath=(//div[@class='lfr-contact-name']/a)[1]"));
 		assertEquals(RuntimeVariables.replace("test@liferay.com"),
-			selenium.getText("xPath=(//div[@class='lfr-user-data-extra'])[1]"));
-		assertEquals(RuntimeVariables.replace("Social01 Office01 User01"),
-			selenium.getText("xPath=(//div[@class='lfr-user-data-name']/a)[2]"));
+			selenium.getText("xPath=(//div[@class='lfr-contact-extra'])[1]"));
+		assertEquals(RuntimeVariables.replace("User01, Social01"),
+			selenium.getText("xPath=(//div[@class='lfr-contact-name']/a)[2]"));
 		assertEquals(RuntimeVariables.replace("socialoffice01@liferay.com"),
-			selenium.getText("xPath=(//div[@class='lfr-user-data-extra'])[2]"));
+			selenium.getText("xPath=(//div[@class='lfr-contact-extra'])[2]"));
 	}
 }

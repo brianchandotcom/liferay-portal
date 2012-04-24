@@ -22,200 +22,172 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewSitesSiteTypePrivateTest extends BaseTestCase {
 	public void testViewSitesSiteTypePrivate() throws Exception {
-		int label = 1;
+		selenium.open("/user/joebloggs/so/dashboard/");
+		loadRequiredJavaScriptModules();
 
-		while (label >= 1) {
-			switch (label) {
-			case 1:
-				selenium.open("/user/joebloggs/so/dashboard/");
-				loadRequiredJavaScriptModules();
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//li[contains(@class, 'selected')]/a/span")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				assertEquals(RuntimeVariables.replace("Dashboard"),
-					selenium.getText(
-						"//li[contains(@class, 'selected')]/a/span"));
-				assertEquals(RuntimeVariables.replace("Sites"),
-					selenium.getText("//div[@id='so-sidebar']/h3"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//select[@id='_5_WAR_soportlet_tabs1']")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				assertTrue(selenium.isPartialText(
-						"//select[@id='_5_WAR_soportlet_tabs1']", "All Sites"));
-				selenium.select("//select[@id='_5_WAR_soportlet_tabs1']",
-					RuntimeVariables.replace("All Sites"));
-				assertTrue(selenium.isVisible("//input[@class='search-input']"));
-				selenium.type("//input[@class='search-input']",
-					RuntimeVariables.replace("Private"));
-				Thread.sleep(5000);
-				assertEquals(RuntimeVariables.replace("Private Site Name"),
-					selenium.getText(
-						"//li[contains(@class, 'social-office-enabled')]/span[2]/a"));
-				selenium.clickAt("//li[contains(@class, 'social-office-enabled')]/span[2]/a",
-					RuntimeVariables.replace("Private Site Name"));
-				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
-				assertEquals(RuntimeVariables.replace("Private Site Name"),
-					selenium.getText("//div[@class='community-title']"));
-				assertEquals(RuntimeVariables.replace("Home"),
-					selenium.getText("//nav/ul/li[1]/a/span"));
-				assertEquals(RuntimeVariables.replace("Calendar"),
-					selenium.getText("//nav/ul/li[2]/a/span"));
-				assertEquals(RuntimeVariables.replace("Documents"),
-					selenium.getText("//nav/ul/li[3]/a/span"));
-				assertEquals(RuntimeVariables.replace("Forums"),
-					selenium.getText("//nav/ul/li[4]/a/span"));
-				assertEquals(RuntimeVariables.replace("Blog"),
-					selenium.getText("//nav/ul/li[5]/a/span"));
-				assertEquals(RuntimeVariables.replace("Wiki"),
-					selenium.getText("//nav/ul/li[6]/a/span"));
-				assertEquals(RuntimeVariables.replace("Members"),
-					selenium.getText("//nav/ul/li[7]/a/span"));
-				selenium.open("/user/joebloggs/so/dashboard/");
-				loadRequiredJavaScriptModules();
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//li[contains(@class, 'selected')]/a/span")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				assertEquals(RuntimeVariables.replace("Dashboard"),
-					selenium.getText(
-						"//li[contains(@class, 'selected')]/a/span"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//button[contains(.,'More Sites')]/span[2]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				assertEquals(RuntimeVariables.replace("More Sites"),
-					selenium.getText(
-						"//button[contains(.,'More Sites')]/span[2]"));
-				selenium.clickAt("//button[contains(.,'More Sites')]/span[2]",
-					RuntimeVariables.replace("More Sites"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"xPath=(//h1[@class='header-title']/span)[1]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				assertEquals(RuntimeVariables.replace("Directory"),
-					selenium.getText(
-						"xPath=(//h1[@class='header-title']/span)[1]"));
-
-				boolean mySitesChecked = selenium.isChecked(
-						"//input[@id='_5_WAR_soportlet_userSites']");
-
-				if (mySitesChecked) {
-					label = 2;
-
-					continue;
-				}
-
-				selenium.clickAt("//input[@id='_5_WAR_soportlet_userSites']",
-					RuntimeVariables.replace("My Sites"));
-
-			case 2:
-				assertTrue(selenium.isVisible(
-						"//input[@id='_5_WAR_soportlet_dialogKeywords']"));
-				selenium.type("//input[@id='_5_WAR_soportlet_dialogKeywords']",
-					RuntimeVariables.replace("Private Site Name"));
-				Thread.sleep(5000);
-				assertEquals(RuntimeVariables.replace("Private Site Name"),
-					selenium.getText("//span[@class='name']/a"));
-				assertEquals(RuntimeVariables.replace(
-						"Private Site Description"),
-					selenium.getText("//span[@class='description']"));
-				selenium.clickAt("//span[@class='name']/a",
-					RuntimeVariables.replace("Private Site Name"));
-				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
-				assertEquals(RuntimeVariables.replace("Private Site Name"),
-					selenium.getText("//div[@class='community-title']"));
-				assertEquals(RuntimeVariables.replace("Home"),
-					selenium.getText("//nav/ul/li[1]/a/span"));
-				assertEquals(RuntimeVariables.replace("Calendar"),
-					selenium.getText("//nav/ul/li[2]/a/span"));
-				assertEquals(RuntimeVariables.replace("Documents"),
-					selenium.getText("//nav/ul/li[3]/a/span"));
-				assertEquals(RuntimeVariables.replace("Forums"),
-					selenium.getText("//nav/ul/li[4]/a/span"));
-				assertEquals(RuntimeVariables.replace("Blog"),
-					selenium.getText("//nav/ul/li[5]/a/span"));
-				assertEquals(RuntimeVariables.replace("Wiki"),
-					selenium.getText("//nav/ul/li[6]/a/span"));
-				assertEquals(RuntimeVariables.replace("Members"),
-					selenium.getText("//nav/ul/li[7]/a/span"));
-
-			case 100:
-				label = -1;
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
 			}
+
+			try {
+				if (selenium.isVisible(
+							"//li[contains(@class, 'selected')]/a/span")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
 		}
+
+		assertEquals(RuntimeVariables.replace("Dashboard"),
+			selenium.getText("//li[contains(@class, 'selected')]/a/span"));
+		assertEquals(RuntimeVariables.replace("Sites"),
+			selenium.getText("//div[@id='so-sidebar']/h3"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//select[@id='_5_WAR_soportlet_tabs1']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertTrue(selenium.isPartialText(
+				"//select[@id='_5_WAR_soportlet_tabs1']", "All Sites"));
+		selenium.select("//select[@id='_5_WAR_soportlet_tabs1']",
+			RuntimeVariables.replace("All Sites"));
+		assertTrue(selenium.isVisible("//input[@class='search-input']"));
+		selenium.type("//input[@class='search-input']",
+			RuntimeVariables.replace("Private"));
+		Thread.sleep(5000);
+		assertEquals(RuntimeVariables.replace("Private Site Name"),
+			selenium.getText(
+				"//li[contains(@class, 'social-office-enabled')]/span[2]/a"));
+		selenium.clickAt("//li[contains(@class, 'social-office-enabled')]/span[2]/a",
+			RuntimeVariables.replace("Private Site Name"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Private Site Name"),
+			selenium.getText("//div[@class='community-title']"));
+		assertEquals(RuntimeVariables.replace("Home"),
+			selenium.getText("//nav/ul/li[1]/a/span"));
+		assertEquals(RuntimeVariables.replace("Calendar"),
+			selenium.getText("//nav/ul/li[2]/a/span"));
+		assertEquals(RuntimeVariables.replace("Documents"),
+			selenium.getText("//nav/ul/li[3]/a/span"));
+		assertEquals(RuntimeVariables.replace("Forums"),
+			selenium.getText("//nav/ul/li[4]/a/span"));
+		assertEquals(RuntimeVariables.replace("Blog"),
+			selenium.getText("//nav/ul/li[5]/a/span"));
+		assertEquals(RuntimeVariables.replace("Wiki"),
+			selenium.getText("//nav/ul/li[6]/a/span"));
+		assertEquals(RuntimeVariables.replace("Members"),
+			selenium.getText("//nav/ul/li[7]/a/span"));
+		selenium.open("/user/joebloggs/so/dashboard/");
+		loadRequiredJavaScriptModules();
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//li[contains(@class, 'selected')]/a/span")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("Dashboard"),
+			selenium.getText("//li[contains(@class, 'selected')]/a/span"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//button[contains(.,'More Sites')]/span[2]")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("More Sites"),
+			selenium.getText("//button[contains(.,'More Sites')]/span[2]"));
+		selenium.clickAt("//button[contains(.,'More Sites')]/span[2]",
+			RuntimeVariables.replace("More Sites"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"xPath=(//h1[@class='header-title']/span)[1]")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("Directory"),
+			selenium.getText("xPath=(//h1[@class='header-title']/span)[1]"));
+		selenium.select("//span[@class='sites-tabs']/span/span/span/select",
+			RuntimeVariables.replace("My Sites"));
+		assertTrue(selenium.isVisible(
+				"//input[@id='_5_WAR_soportlet_dialogKeywords']"));
+		selenium.type("//input[@id='_5_WAR_soportlet_dialogKeywords']",
+			RuntimeVariables.replace("Private Site Name"));
+		Thread.sleep(5000);
+		assertEquals(RuntimeVariables.replace("Private Site Name"),
+			selenium.getText("//span[@class='name']/a"));
+		assertEquals(RuntimeVariables.replace("Private Site Description"),
+			selenium.getText("//span[@class='description']"));
+		selenium.clickAt("//span[@class='name']/a",
+			RuntimeVariables.replace("Private Site Name"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Private Site Name"),
+			selenium.getText("//div[@class='community-title']"));
+		assertEquals(RuntimeVariables.replace("Home"),
+			selenium.getText("//nav/ul/li[1]/a/span"));
+		assertEquals(RuntimeVariables.replace("Calendar"),
+			selenium.getText("//nav/ul/li[2]/a/span"));
+		assertEquals(RuntimeVariables.replace("Documents"),
+			selenium.getText("//nav/ul/li[3]/a/span"));
+		assertEquals(RuntimeVariables.replace("Forums"),
+			selenium.getText("//nav/ul/li[4]/a/span"));
+		assertEquals(RuntimeVariables.replace("Blog"),
+			selenium.getText("//nav/ul/li[5]/a/span"));
+		assertEquals(RuntimeVariables.replace("Wiki"),
+			selenium.getText("//nav/ul/li[6]/a/span"));
+		assertEquals(RuntimeVariables.replace("Members"),
+			selenium.getText("//nav/ul/li[7]/a/span"));
 	}
 }

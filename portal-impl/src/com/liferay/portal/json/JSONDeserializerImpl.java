@@ -26,7 +26,9 @@ public class JSONDeserializerImpl<T> implements JSONDeserializer<T> {
 	public JSONDeserializerImpl() {
 		_jsonDeserializer = new flexjson.JSONDeserializer<T>();
 
-		_jsonDeserializer.use(Object.class, new PortalBeanObjectFactory());
+		_portalBeanObjectFactory = new PortalBeanObjectFactory();
+
+		_jsonDeserializer.use(Object.class, _portalBeanObjectFactory);
 	}
 
 	public T deserialize(Reader input) {
@@ -37,6 +39,12 @@ public class JSONDeserializerImpl<T> implements JSONDeserializer<T> {
 		return _jsonDeserializer.deserialize(input);
 	}
 
+	public JSONDeserializer<T> safeMode(boolean safeMode) {
+		_portalBeanObjectFactory.setSafeMode(safeMode);
+
+		return this;
+	}
+
 	public JSONDeserializer<T> use(String path, Class<?> clazz) {
 		_jsonDeserializer.use(path, clazz);
 
@@ -44,5 +52,6 @@ public class JSONDeserializerImpl<T> implements JSONDeserializer<T> {
 	}
 
 	private flexjson.JSONDeserializer<T> _jsonDeserializer;
+	private PortalBeanObjectFactory _portalBeanObjectFactory;
 
 }

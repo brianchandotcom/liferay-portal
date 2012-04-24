@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.json.JSONTransformer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -178,21 +177,34 @@ public class JSONFactoryImpl implements JSONFactory {
 	public <T> T looseDeserialize(String json, Class<T> clazz) {
 		JSONDeserializer<?> jsonDeserializer = createJSONDeserializer();
 
-		jsonDeserializer = jsonDeserializer.use(null, clazz);
+		jsonDeserializer.use(null, clazz);
 
 		return (T)jsonDeserializer.deserialize(json);
 	}
 
 	public Object looseDeserializeSafe(String json) {
-		json = _removeTypeFromJSONString(json);
+		try {
+			JSONDeserializer<?> jsonDeserializer = createJSONDeserializer();
 
-		return looseDeserialize(json);
+			jsonDeserializer.safeMode(true);
+
+			return jsonDeserializer.deserialize(json);
+		}
+		catch (Exception e) {
+			 _log.error(e, e);
+
+			throw new IllegalStateException("Unable to deserialize object", e);
+		}
 	}
 
 	public <T> T looseDeserializeSafe(String json, Class<T> clazz) {
-		json = _removeTypeFromJSONString(json);
+		JSONDeserializer<?> jsonDeserializer = createJSONDeserializer();
 
-		return looseDeserialize(json, clazz);
+		jsonDeserializer.safeMode(true);
+
+		jsonDeserializer.use(null, clazz);
+
+		return (T)jsonDeserializer.deserialize(json);
 	}
 
 	public String looseSerialize(Object object) {
@@ -267,19 +279,6 @@ public class JSONFactoryImpl implements JSONFactory {
 		jsonObject.put("exception", message);
 
 		return jsonObject.toString();
-	}
-
-	private String _removeTypeFromJSONString(String jsonString) {
-
-		// Removes type from JSON string so that Flexjson will not create any
-		// objects
-
-		jsonString = StringUtil.replace(
-			jsonString,
-			new String[] {"\"class\"", "'class'"},
-			new String[] {"\"~class\"", "\"~class\""});
-
-		return jsonString;
 	}
 
 	private static final String _NULL_JSON = "{}";

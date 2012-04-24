@@ -30,6 +30,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Type;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -42,6 +43,16 @@ public class PortalBeanObjectFactory extends BeanObjectFactory {
 	public Object instantiate(
 		ObjectBinder objectBinder, Object value, Type targetType,
 		@SuppressWarnings("rawtypes") Class targetClass) {
+
+		if (_safeMode) {
+			Map<Object, Object> target = new HashMap<Object, Object>();
+
+			target.put("class", targetClass.getName());
+
+			Map<?, ?> values = (Map<?, ?>)value;
+
+			return objectBinder.bindIntoMap(values, target, null, null);
+		}
 
 		String targetClassName = targetClass.getName();
 
@@ -70,6 +81,10 @@ public class PortalBeanObjectFactory extends BeanObjectFactory {
 					objectBinder.getCurrentPath(),
 				e);
 		}
+	}
+
+	public void setSafeMode(boolean safeMode) {
+		_safeMode = safeMode;
 	}
 
 	protected Map<String, Field> getDeclaredFields(
@@ -156,5 +171,7 @@ public class PortalBeanObjectFactory extends BeanObjectFactory {
 
 	private Map<Class<?>, Map<String, Field>> _declaredFields =
 		new ConcurrentHashMap<Class<?>, Map<String, Field>>();
+
+	private boolean _safeMode = false;
 
 }

@@ -25,6 +25,8 @@ public interface JSONDeserializer<T> {
 
 	public T deserialize(String input);
 
+	public JSONDeserializer<T> safeMode(boolean safeMode);
+
 	public JSONDeserializer<T> use(String path, Class<?> clazz);
 
 }

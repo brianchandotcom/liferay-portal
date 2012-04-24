@@ -94,6 +94,8 @@ if (!selectableTree) {
 					rootNode.expand();
 				</c:when>
 			</c:choose>
+
+			treeInstance.eachChildren(TreeUtil.restoreSelectedNode, true);
 		},
 
 		createListItemId: function(groupId, layoutId, plid) {
@@ -223,12 +225,7 @@ if (!selectableTree) {
 		restoreNodeState: function(node) {
 			var instance = this;
 
-			var id = node.get('id');
 			var plid = TreeUtil.extractPlid(node);
-
-			if (plid == '<%= selPlid %>') {
-				node.select();
-			}
 
 			if (A.Array.indexOf(TreeUtil.SELECTED_NODES, plid) > -1) {
 				if (node.check) {
@@ -239,6 +236,17 @@ if (!selectableTree) {
 			}
 
 			A.Array.each(node.get('children'), TreeUtil.restoreNodeState);
+		},
+
+		restoreSelectedNode: function(node) {
+			var plid = TreeUtil.extractPlid(node);
+
+			if (plid == '<%= selPlid %>') {
+				node.select();
+			}
+			else {
+				node.unselect();
+			}
 		},
 
 		updateLayout: function(data) {
@@ -437,13 +445,7 @@ if (!selectableTree) {
 		treeview.on(
 			'append',
 			function(event) {
-				var node = event.tree.node;
-
-				var plid = TreeUtil.extractPlid(node);
-
-				if (plid == '<%= selPlid %>') {
-					node.select();
-				}
+				TreeUtil.restoreSelectedNode(event.tree.node);
 			}
 		);
 	</c:if>

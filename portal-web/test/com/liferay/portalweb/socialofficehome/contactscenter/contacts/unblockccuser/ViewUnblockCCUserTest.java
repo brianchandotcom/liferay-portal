@@ -119,7 +119,7 @@ public class ViewUnblockCCUserTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Add as Connection"),
+		assertEquals(RuntimeVariables.replace("Add Connection"),
 			selenium.getText(
 				"//button[@id='_1_WAR_contactsportlet_addConnectionButton']"));
 		assertEquals(RuntimeVariables.replace("Follow"),

@@ -50,8 +50,8 @@ public class SearchConnectionDropDownConnectionsCCTest extends BaseTestCase {
 		assertTrue(selenium.isVisible(
 				"//input[@id='_1_WAR_contactsportlet_name']"));
 		assertTrue(selenium.isVisible(
-				"//select[@id='_1_WAR_contactsportlet_socialRelationType']"));
-		selenium.select("//select[@id='_1_WAR_contactsportlet_socialRelationType']",
+				"//select[@id='_1_WAR_contactsportlet_filterBy']"));
+		selenium.select("//select[@id='_1_WAR_contactsportlet_filterBy']",
 			RuntimeVariables.replace("Connections"));
 		selenium.type("//input[@id='_1_WAR_contactsportlet_name']",
 			RuntimeVariables.replace("Social01"));

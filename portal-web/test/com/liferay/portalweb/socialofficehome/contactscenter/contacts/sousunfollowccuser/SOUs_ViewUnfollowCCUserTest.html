@@ -24,14 +24,39 @@
 	<td>Contacts Center</td>
 </tr>
 <tr>
+	<td>assertVisible</td>
+	<td>//input[@id='_1_WAR_contactsportlet_name']</td>
+	<td>Search Contacts</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[contains(@class, 'contacts-center-home-content')]</td>
+	<td>Home Content</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@id='_1_WAR_contactsportlet_name']</td>
+	<td>test@liferay.com</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[contains(@class, 'lfr-contact-name')]/a</td>
+	<td>Bloggs, Joe</td>
+</tr>
+<tr>
 	<td>assertText</td>
-	<td>link=You are following 0 people.</td>
-	<td>You are following 0 people.</td>
+	<td>//div[contains(@class, 'lfr-contact-name')]/a</td>
+	<td>Bloggs, Joe</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[contains(@class, 'lfr-contact-extra')]</td>
+	<td>test@liferay.com</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>link=You are following 0 people.</td>
-	<td>You are following 0 people.</td>
+	<td>//div[contains(@class, 'lfr-contact-name')]/a</td>
+	<td>Bloggs, Joe</td>
 </tr>
 <tr>
 	<td>waitForText</td>
@@ -77,6 +102,41 @@
 	<td>assertText</td>
 	<td>//button[@id='_1_WAR_contactsportlet_followButton']</td>
 	<td>Follow</td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/user/socialoffice01/so/dashboard/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//nav/ul/li[contains(.,'Contacts Center')]/a/span</td>
+	<td>Contacts Center</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//nav/ul/li[contains(.,'Contacts Center')]/a/span</td>
+	<td>Contacts Center</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=You are following 0 people.</td>
+	<td>You are following 0 people.</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>link=You are following 0 people.</td>
+	<td>You are following 0 people.</td>
+</tr>
+<tr>
+	<td>waitForTextNotPresent</td>
+	<td>Bloggs, Joe</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertTextNotPresent</td>
+	<td>Bloggs, Joe</td>
+	<td></td>
 </tr>
 </tbody></table>
 </body>

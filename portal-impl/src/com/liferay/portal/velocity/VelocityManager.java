@@ -63,6 +63,8 @@ public class VelocityManager implements TemplateManager {
 	}
 
 	public void destroy() {
+		StringResourceLoader.clearRepositories();
+
 		_restrictedVelocityContext = null;
 		_standardVelocityContext = null;
 		_velocityEngine = null;

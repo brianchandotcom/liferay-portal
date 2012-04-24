@@ -127,6 +127,11 @@ public class VelocityTemplateTest extends TestCase {
 		_velocityEngine.init();
 	}
 
+	@Override
+	public void tearDown() throws Exception {
+		StringResourceLoader.clearRepositories();
+	}
+
 	public void testGet() throws Exception {
 		Template template = new VelocityTemplate(
 			_TEMPLATE_FILE_NAME, null, null, null, null, _velocityEngine,

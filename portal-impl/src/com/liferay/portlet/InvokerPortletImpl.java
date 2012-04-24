@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.servlet.StringServletResponse;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -217,8 +218,14 @@ public class InvokerPortletImpl implements InvokerPortlet {
 	}
 
 	public ClassLoader getPortletClassLoader() {
-		return (ClassLoader)_portletContextImpl.getAttribute(
+		ClassLoader classLoader = (ClassLoader)_portletContextImpl.getAttribute(
 			PortletServlet.PORTLET_CLASS_LOADER);
+
+		if (classLoader == null) {
+			classLoader = PortalClassLoaderUtil.getClassLoader();
+		}
+
+		return classLoader;
 	}
 
 	public PortletConfigImpl getPortletConfig() {

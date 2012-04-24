@@ -47,7 +47,7 @@ public class SOUs_ViewDeleteRepostMicroblogsContentTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("There are no recent activities."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[2]"));
-		assertFalse(selenium.isTextPresent("repost-fromJoe Bloggs"));
+		assertFalse(selenium.isTextPresent("Reposted From Joe Bloggs"));
 		assertFalse(selenium.isTextPresent("Microblogs Post"));
 
 		for (int second = 0;; second++) {

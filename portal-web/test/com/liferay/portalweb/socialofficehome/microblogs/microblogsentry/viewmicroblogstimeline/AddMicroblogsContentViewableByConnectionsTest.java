@@ -51,8 +51,6 @@ public class AddMicroblogsContentViewableByConnectionsTest extends BaseTestCase 
 			selenium.getText("//span[@class='portlet-title-default']"));
 		assertTrue(selenium.isElementPresent(
 				"//div[contains(@id,'_1_WAR_microblogsportlet_autocompleteContent')]"));
-		assertEquals(RuntimeVariables.replace("You have no microblogs entry."),
-			selenium.getText("//div[@class='portlet-msg-info']"));
 		selenium.clickAt("//div[contains(@id,'_1_WAR_microblogsportlet_autocompleteContent')]",
 			RuntimeVariables.replace("Update your status..."));
 

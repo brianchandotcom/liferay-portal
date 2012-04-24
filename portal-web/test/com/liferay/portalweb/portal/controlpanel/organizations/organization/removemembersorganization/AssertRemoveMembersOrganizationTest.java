@@ -24,6 +24,9 @@ public class AssertRemoveMembersOrganizationTest extends BaseTestCase {
 	public void testAssertRemoveMembersOrganization() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -31,7 +34,7 @@ public class AssertRemoveMembersOrganizationTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -76,8 +79,5 @@ public class AssertRemoveMembersOrganizationTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertFalse(selenium.isElementPresent("link=selen01"));
-		assertEquals(RuntimeVariables.replace(
-				"This organization does not have any users."),
-			selenium.getText("//div[@class='portlet-msg-info']"));
 	}
 }

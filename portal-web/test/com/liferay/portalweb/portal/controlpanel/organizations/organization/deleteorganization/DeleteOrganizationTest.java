@@ -24,6 +24,9 @@ public class DeleteOrganizationTest extends BaseTestCase {
 	public void testDeleteOrganization() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -31,7 +34,7 @@ public class DeleteOrganizationTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -55,8 +58,9 @@ public class DeleteOrganizationTest extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertTrue(selenium.isElementPresent("link=Selenium"));
-		selenium.clickAt("//td[4]/span/ul/li/strong/a/img",
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
@@ -66,7 +70,7 @@ public class DeleteOrganizationTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a")) {
 					break;
 				}
 			}
@@ -78,33 +82,18 @@ public class DeleteOrganizationTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Delete"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[7]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+						   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 		assertEquals(RuntimeVariables.replace(
-				"Your request completed successfully."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertFalse(selenium.isElementPresent("link=Selenium"));
+				"Your request failed to complete."),
+			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
+		assertEquals(RuntimeVariables.replace(
+				"You cannot delete organizations that have suborganizations or users."),
+			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
 	}
 }

@@ -24,6 +24,9 @@ public class AssertAssignMembersOrganizationTest extends BaseTestCase {
 	public void testAssertAssignMembersOrganization() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -31,7 +34,7 @@ public class AssertAssignMembersOrganizationTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -55,8 +58,23 @@ public class AssertAssignMembersOrganizationTest extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Selenium"),
-			selenium.getText("//a[2]/strong"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//a[2]/strong")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.clickAt("//a[2]/strong", RuntimeVariables.replace("Selenium"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();

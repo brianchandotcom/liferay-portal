@@ -133,8 +133,8 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 			Element structuresElement, Element templatesElement,
 			Element dlFileEntryTypesElement, Element dlFoldersElement,
 			Element dlFileEntriesElement, Element dlFileRanksElement,
-			JournalArticle article, boolean checkDateRange,
-			String preferenceTemplateId)
+			JournalArticle article, String preferenceTemplateId,
+			boolean checkDateRange)
 		throws Exception {
 
 		if (checkDateRange &&
@@ -1629,7 +1629,7 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 			exportArticle(
 				portletDataContext, articlesElement, structuresElement,
 				templatesElement, dlFileEntryTypesElement, dlFoldersElement,
-				dlFileEntriesElement, dlFileRanksElement, article, true, null);
+				dlFileEntriesElement, dlFileRanksElement, article, null, true);
 		}
 	}
 
@@ -2381,7 +2381,7 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 				exportArticle(
 					portletDataContext, articlesElement, structuresElement,
 					templatesElement, dlFileEntryTypesElement, dlFoldersElement,
-					dlFilesElement, dlFileRanksElement, article, true, null);
+					dlFilesElement, dlFileRanksElement, article, null, true);
 			}
 		}
 

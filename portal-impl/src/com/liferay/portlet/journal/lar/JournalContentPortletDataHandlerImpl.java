@@ -225,7 +225,7 @@ public class JournalContentPortletDataHandlerImpl
 		JournalPortletDataHandlerImpl.exportArticle(
 			portletDataContext, rootElement, rootElement, rootElement,
 			dlFileEntryTypesElement, dlFoldersElement, dlFilesElement,
-			dlFileRanksElement, article, false, preferenceTemplateId);
+			dlFileRanksElement, article, preferenceTemplateId, false);
 
 		portletDataContext.setScopeGroupId(previousScopeGroupId);
 

@@ -614,7 +614,7 @@ public class LayoutExporter {
 		JournalPortletDataHandlerImpl.exportArticle(
 			portletDataContext, layoutElement, layoutElement, layoutElement,
 			dlFileEntryTypesElement, dlFoldersElement, dlFilesElement,
-			dlFileRanksElement, article, false, null);
+			dlFileRanksElement, article, null, false);
 	}
 
 	protected void exportLayout(

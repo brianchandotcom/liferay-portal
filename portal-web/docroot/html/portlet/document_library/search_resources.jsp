@@ -350,7 +350,7 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajaxRequest) {
 								}
 
 								if (columnName.equals("size")) {
-									row.addText(TextFormatter.formatKB(fileEntry.getSize(), locale) + "k");
+									row.addText(TextFormatter.formatMemory(fileEntry.getSize(), locale));
 								}
 							}
 

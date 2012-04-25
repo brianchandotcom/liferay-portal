@@ -346,7 +346,7 @@ for (int i = 0; i < results.size(); i++) {
 						}
 
 						if (columnName.equals("size")) {
-							row.addText(TextFormatter.formatKB(fileEntry.getSize(), locale) + "k");
+							row.addText(TextFormatter.formatMemory(fileEntry.getSize(), locale));
 						}
 					}
 

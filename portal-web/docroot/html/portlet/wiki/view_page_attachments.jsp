@@ -96,7 +96,7 @@ for (int i = 0; i < results.size(); i++) {
 
 	// Size
 
-	row.addText(TextFormatter.formatKB(fileSize, locale) + "k", rowURL);
+	row.addText(TextFormatter.formatMemory(fileSize, locale), rowURL);
 
 	// Action
 

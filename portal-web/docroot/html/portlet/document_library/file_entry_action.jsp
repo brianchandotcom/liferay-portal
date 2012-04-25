@@ -98,7 +98,7 @@ viewFolderURL.setParameter("folderId", String.valueOf(folderId));
 				<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) %>">
 					<liferay-ui:icon
 						image="download"
-						message='<%= LanguageUtil.get(pageContext, "download") + " (" + TextFormatter.formatKB(fileEntry.getSize(), locale) + "k)" %>'
+						message='<%= LanguageUtil.get(pageContext, "download") + " (" + TextFormatter.formatMemory(fileEntry.getSize(), locale) + ")" %>'
 						url="<%= DLUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK, false, true) %>"
 					/>
 				</c:if>
@@ -191,7 +191,7 @@ viewFolderURL.setParameter("folderId", String.valueOf(folderId));
 				<c:if test="<%= DLFileShortcutPermission.contains(permissionChecker, fileShortcut, ActionKeys.VIEW) %>">
 					<liferay-ui:icon
 						image="download"
-						message='<%= LanguageUtil.get(pageContext, "download") + " (" + TextFormatter.formatKB(fileEntry.getSize(), locale) + "k)" %>'
+						message='<%= LanguageUtil.get(pageContext, "download") + " (" + TextFormatter.formatMemory(fileEntry.getSize(), locale) + ")" %>'
 						url='<%= themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/documents/" + fileShortcut.getFileShortcutId() %>'
 					/>
 				</c:if>

@@ -451,7 +451,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 							<liferay-ui:icon
 								image="download"
 								label="<%= true %>"
-								message='<%= LanguageUtil.get(pageContext, "download") + " (" + TextFormatter.formatKB(fileVersion.getSize(), locale) + "k)" %>'
+								message='<%= LanguageUtil.get(pageContext, "download") + " (" + TextFormatter.formatMemory(fileVersion.getSize(), locale) + ")" %>'
 								url="<%= DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK) %>"
 							/>
 						</c:if>
@@ -662,7 +662,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 
 								row.addText(String.valueOf(curFileVersion.getVersion()));
 								row.addText(dateFormatDateTime.format(curFileVersion.getCreateDate()));
-								row.addText(TextFormatter.formatKB(curFileVersion.getSize(), locale) + "k");
+								row.addText(TextFormatter.formatMemory(curFileVersion.getSize(), locale));
 
 								// Status
 

@@ -171,7 +171,7 @@ if (folder != null) {
 
 		// Statistics
 
-		row.addText(TextFormatter.formatKB(fileEntry.getSize(), locale) + "k", rowHREF);
+		row.addText(TextFormatter.formatMemory(fileEntry.getSize(), locale), rowHREF);
 
 		if (PropsValues.DL_FILE_ENTRY_READ_COUNT_ENABLED) {
 			row.addText(String.valueOf(fileEntry.getReadCount()), rowHREF);

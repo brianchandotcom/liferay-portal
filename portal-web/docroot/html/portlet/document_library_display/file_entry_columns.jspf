@@ -97,7 +97,7 @@ for (int j = 0; j < fileEntryColumns.length; j++) {
 				href="<%= rowHREF %>"
 				index="<%= j %>"
 				name="<%= fileEntryColumn %>"
-				value='<%= TextFormatter.formatKB(fileEntry.getSize(), locale) + "k" %>'
+				value='<%= TextFormatter.formatMemory(fileEntry.getSize(), locale) %>'
 			/>
 		</c:when>
 		<c:when test='<%= fileEntryColumn.equals("tags") %>'>

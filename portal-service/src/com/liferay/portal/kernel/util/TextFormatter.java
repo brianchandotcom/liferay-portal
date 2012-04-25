@@ -147,17 +147,58 @@ public class TextFormatter {
 		}
 	}
 
+	/**
+	 * @deprecated {@link #formatMemory(double, Locale)}
+	 */
 	public static String formatKB(double size, Locale locale) {
 		NumberFormat numberFormat = NumberFormat.getInstance(locale);
 
 		numberFormat.setMaximumFractionDigits(1);
 		numberFormat.setMinimumFractionDigits(1);
 
-		return numberFormat.format(size / 1024.0);
+		return numberFormat.format(size / _MEMORY_DENOMINATOR);
 	}
 
+	/**
+	 * @deprecated {@link #formatMemory(int, Locale)}
+	 */
 	public static String formatKB(int size, Locale locale) {
 		return formatKB((double)size, locale);
+	}
+
+	public static String formatMemory(double size, Locale locale) {
+		String unit = _KB;
+
+		size = size / _MEMORY_DENOMINATOR;
+
+		if (size > _MEMORY_DENOMINATOR) {
+			unit = _MB;
+
+			size = size / _MEMORY_DENOMINATOR;
+		}
+
+		if (size > _MEMORY_DENOMINATOR) {
+			unit = _GB;
+
+			size = size / _MEMORY_DENOMINATOR;
+		}
+
+		NumberFormat numberFormat = NumberFormat.getInstance(locale);
+
+		if (unit.equals(_KB)) {
+			numberFormat.setMaximumFractionDigits(0);
+		}
+		else {
+			numberFormat.setMaximumFractionDigits(1);
+		}
+
+		numberFormat.setMinimumFractionDigits(0);
+
+		return numberFormat.format(size) + unit;
+	}
+
+	public static String formatMemory(int size, Locale locale) {
+		return formatMemory((double)size, locale);
 	}
 
 	public static String formatName(String name) {
@@ -373,5 +414,13 @@ public class TextFormatter {
 
 		return sb.toString();
 	}
+
+	private static final String _GB = "GB";
+
+	private static final String _KB = "k";
+
+	private static final String _MB = "MB";
+
+	private static final double _MEMORY_DENOMINATOR = 1024.0;
 
 }

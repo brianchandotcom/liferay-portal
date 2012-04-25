@@ -90,10 +90,8 @@ public class DeleteOrganizationTest extends BaseTestCase {
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 		assertEquals(RuntimeVariables.replace(
-				"Your request failed to complete."),
-			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
-		assertEquals(RuntimeVariables.replace(
-				"You cannot delete organizations that have suborganizations or users."),
-			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[2]"));
+				"Your request completed successfully."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertFalse(selenium.isTextPresent("Selenium"));
 	}
 }

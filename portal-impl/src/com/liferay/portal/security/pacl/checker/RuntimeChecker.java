@@ -17,7 +17,6 @@ package com.liferay.portal.security.pacl.checker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 
 import java.security.Permission;
@@ -25,13 +24,15 @@ import java.security.Permission;
 import java.util.Set;
 import java.util.TreeSet;
 
+import sun.reflect.Reflection;
+
 /**
  * @author Raymond Augé
  */
 public class RuntimeChecker extends BaseChecker {
 
 	public void afterPropertiesSet() {
-		initClassLoaderIds();
+		initClassLoaderReferenceIds();
 	}
 
 	public void checkPermission(Permission permission) {
@@ -47,41 +48,9 @@ public class RuntimeChecker extends BaseChecker {
 					"Attempted to access package " + pkg);
 			}
 		}
-		else if (name.equals(RUNTIME_PERMISSION_GET_CLASSLOADER)) {
-			String classLoaderId = null;
-
-			int pos = name.indexOf(StringPool.PERIOD);
-
-			if (pos != -1) {
-				classLoaderId = name.substring(pos + 1);
-			}
-
-			if (Validator.isNull(classLoaderId)) {
-				classLoaderId = "foreign";
-			}
-
-			Class<?> callerClass = sun.reflect.Reflection.getCallerClass(6);
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					callerClass.getName() + " is requesting a class loader");
-			}
-
-			ClassLoader classLoader = PACLClassLoaderUtil.getClassLoader(
-				callerClass);
-
-			if ((classLoader == null) ||
-				(classLoader == getCommonClassLoader()) ||
-				(classLoader == getSystemClassLoader())) {
-
-				// This was invoked by the system
-
-				return;
-			}
-
-			if (!_classLoaderIds.contains(classLoaderId)) {
-				throw new SecurityException(
-					"Attempted to get class loader " + classLoaderId);
+		else if (name.startsWith(RUNTIME_PERMISSION_GET_CLASSLOADER)) {
+			if (!hasGetClassLoader(name)) {
+				throw new SecurityException("Attempted to get class loader");
 			}
 		}
 		else if (name.equals(RUNTIME_PERMISSION_SET_SECURITY_MANAGER)) {
@@ -95,7 +64,74 @@ public class RuntimeChecker extends BaseChecker {
 		}
 	}
 
-	public boolean hasPackageAccess(String pkg) {
+	protected boolean hasGetClassLoader(String name) {
+		int pos = name.indexOf(StringPool.PERIOD);
+
+		if (pos != -1) {
+			String referenceId = name.substring(pos + 1);
+
+			if (_classLoaderReferenceIds.contains(referenceId)) {
+				return true;
+			}
+
+			return false;
+		}
+
+		Class<?> callerClass6 = Reflection.getCallerClass(6);
+		Class<?> callerClass7 = null;
+
+		if (_log.isDebugEnabled()) {
+			callerClass7 = Reflection.getCallerClass(7);
+
+			_log.debug(
+				callerClass7.getName() +
+					" is attempting to get the class loader via " +
+						callerClass6.getName());
+		}
+
+		if (callerClass6 == Class.class) {
+		}
+		else if (callerClass6 == ClassLoader.class) {
+			Thread currentThread = Thread.currentThread();
+
+			StackTraceElement[] stackTraceElements =
+				currentThread.getStackTrace();
+
+			StackTraceElement stackTraceElement = stackTraceElements[6];
+
+			String methodName = stackTraceElement.getMethodName();
+
+			if (methodName.equals(_METHOD_NAME_GET_SYSTEM_CLASS_LOADER)) {
+				_log.debug(
+					"Allow " + callerClass7.getName() +
+						" to access the system class loader");
+
+				return true;
+			}
+		}
+		else if (callerClass6 == Thread.class) {
+			ClassLoader contextClassLoader =
+				PACLClassLoaderUtil.getContextClassLoader();
+
+			if (isSharedClassLoader(contextClassLoader) ||
+				isLocalClassLoader(contextClassLoader)) {
+
+				if (_log.isDebugEnabled()) {
+					callerClass7 = Reflection.getCallerClass(7);
+
+					_log.debug(
+						"Allow " + callerClass7.getName() +
+							" to access the context class loader");
+				}
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	protected boolean hasPackageAccess(String pkg) {
 
 		// TODO
 
@@ -105,21 +141,45 @@ public class RuntimeChecker extends BaseChecker {
 		return true;
 	}
 
-	protected void initClassLoaderIds() {
-		_classLoaderIds = getPropertySet("security-manager-class-loader-ids");
+	protected void initClassLoaderReferenceIds() {
+		_classLoaderReferenceIds = getPropertySet(
+			"security-manager-class-loader-reference-ids");
 
 		if (_log.isDebugEnabled()) {
-			Set<String> portletIds = new TreeSet<String>(_classLoaderIds);
+			Set<String> referenceIds = new TreeSet<String>(
+				_classLoaderReferenceIds);
 
-			for (String portletId : portletIds) {
+			for (String referenceId : referenceIds) {
 				_log.debug(
-					"Allowing access to class loader for portlet " + portletId);
+					"Allowing access to class loader for reference " +
+						referenceId);
 			}
 		}
 	}
 
+	protected boolean isLocalClassLoader(ClassLoader classLoader) {
+		if (classLoader == getClassLoader()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean isSharedClassLoader(ClassLoader classLoader) {
+		if ((classLoader == null) || (classLoader == getCommonClassLoader()) ||
+			(classLoader == getSystemClassLoader())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private static final String _METHOD_NAME_GET_SYSTEM_CLASS_LOADER =
+		"getSystemClassLoader";
+
 	private static Log _log = LogFactoryUtil.getLog(RuntimeChecker.class);
 
-	private Set<String> _classLoaderIds;
+	private Set<String> _classLoaderReferenceIds;
 
 }

@@ -300,7 +300,7 @@ if (Validator.isNull(redirect)) {
 								<portlet:param name="fileName" value="<%= fileName %>" />
 							</portlet:actionURL>
 
-							<aui:a href="<%= getPageAttachmentURL %>"><%= fileName %></aui:a> (<%= TextFormatter.formatKB(fileSize, locale) %>k)<%= (i < (attachments.length - 1)) ? ", " : "" %>
+							<aui:a href="<%= getPageAttachmentURL %>"><%= fileName %></aui:a> (<%= TextFormatter.formatMemory(fileSize, locale) %>)<%= (i < (attachments.length - 1)) ? ", " : "" %>
 
 						<%
 						}

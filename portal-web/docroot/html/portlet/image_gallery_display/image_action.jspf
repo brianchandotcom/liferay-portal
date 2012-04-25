@@ -26,7 +26,7 @@ boolean view = GetterUtil.getBoolean((String)request.getAttribute("view_image.js
 
 	<liferay-ui:icon
 		image="download"
-		message='<%= LanguageUtil.get(pageContext, "download") + " (" + TextFormatter.formatKB(fileEntry.getSize(), locale) + "k)" %>'
+		message='<%= LanguageUtil.get(pageContext, "download") + " (" + TextFormatter.formatMemory(fileEntry.getSize(), locale) + ")" %>'
 		url="<%= downloadURL %>"
 	/>
 </c:if>

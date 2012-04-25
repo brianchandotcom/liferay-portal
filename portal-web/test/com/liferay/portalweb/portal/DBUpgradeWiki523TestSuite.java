@@ -15,6 +15,7 @@
 package com.liferay.portalweb.portal;
 
 import com.liferay.portalweb.portal.dbupgrade.sampledata523.login.LoginTests;
+import com.liferay.portalweb.portal.dbupgrade.sampledata523.serveradministration.executegeneratecustomroles.ExecuteGenerateCustomRolesTests;
 import com.liferay.portalweb.portal.dbupgrade.sampledata523.wiki.WikiTestPlan;
 
 import junit.framework.Test;
@@ -30,6 +31,7 @@ public class DBUpgradeWiki523TestSuite extends BaseTestSuite {
 
 		testSuite.addTest(LoginTests.suite());
 		testSuite.addTest(WikiTestPlan.suite());
+		testSuite.addTest(ExecuteGenerateCustomRolesTests.suite());
 
 		testSuite.addTestSuite(StopSeleniumTest.class);
 

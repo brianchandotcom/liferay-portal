@@ -56,6 +56,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
+import com.liferay.portal.kernel.xuggler.XugglerUtil;
 import com.liferay.portal.messaging.proxy.MessageValuesThreadLocal;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.search.lucene.LuceneHelperUtil;
@@ -152,6 +153,9 @@ public class EditServerAction extends PortletAction {
 		}
 		else if (cmd.equals("gc")) {
 			gc();
+		}
+		else if (cmd.equals("installXuggler")) {
+			installXuggler(actionRequest);
 		}
 		else if (cmd.equals("reindex")) {
 			reindex(actionRequest);
@@ -276,6 +280,14 @@ public class EditServerAction extends PortletAction {
 		String value = ParamUtil.getString(actionRequest, name);
 
 		return value.replace(", .", ",.");
+	}
+
+	protected void installXuggler(ActionRequest actionRequest)
+		throws Exception {
+
+		String jarName = ParamUtil.getString(actionRequest, "jarName");
+
+		XugglerUtil.installNativeLibraries(jarName);
 	}
 
 	protected void reindex(ActionRequest actionRequest) throws Exception {

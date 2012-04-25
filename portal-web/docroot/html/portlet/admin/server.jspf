@@ -27,6 +27,12 @@ NumberFormat numberFormat = NumberFormat.getInstance();
 
 numberFormat.setMaximumIntegerDigits(2);
 numberFormat.setMinimumIntegerDigits(2);
+
+PortletURL serverURL = renderResponse.createRenderURL();
+
+serverURL.setParameter("struts_action", "/admin/view");
+serverURL.setParameter("tabs1", tabs1);
+serverURL.setParameter("tabs2", tabs2);
 %>
 
 <liferay-ui:message key="uptime" />:
@@ -47,7 +53,7 @@ numberFormat.setMinimumIntegerDigits(2);
 		<liferay-ui:tabs
 			names="resources,log-levels,properties,captcha,data-migration,file-uploads,mail,external-services,script,shutdown"
 			param="tabs2"
-			url="<%= portletURL.toString() %>"
+			portletURL="<%= serverURL %>"
 		/>
 
 		<c:choose>
@@ -55,7 +61,7 @@ numberFormat.setMinimumIntegerDigits(2);
 				<liferay-ui:tabs
 					names="update-categories,add-category"
 					param="tabs3"
-					url="<%= portletURL.toString() %>"
+					portletURL="<%= serverURL %>"
 				/>
 
 				<c:choose>
@@ -107,7 +113,7 @@ numberFormat.setMinimumIntegerDigits(2);
 						headerNames.add("category");
 						headerNames.add("level");
 
-						SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, headerNames, null);
+						SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, serverURL, headerNames, null);
 
 						Map currentLoggerNames = new TreeMap();
 
@@ -213,7 +219,7 @@ numberFormat.setMinimumIntegerDigits(2);
 				<liferay-ui:tabs
 					names="system-properties,portal-properties"
 					param="tabs3"
-					url="<%= portletURL.toString() %>"
+					portletURL="<%= serverURL %>"
 				/>
 
 				<c:choose>
@@ -225,7 +231,7 @@ numberFormat.setMinimumIntegerDigits(2);
 						headerNames.add("property");
 						headerNames.add("value");
 
-						SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, headerNames, null);
+						SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, serverURL, headerNames, null);
 
 						Map portalProps = new TreeMap();
 
@@ -273,7 +279,7 @@ numberFormat.setMinimumIntegerDigits(2);
 						headerNames.add("property");
 						headerNames.add("value");
 
-						SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, headerNames, null);
+						SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, serverURL, headerNames, null);
 
 						Map portalProps = new TreeMap();
 
@@ -577,7 +583,92 @@ numberFormat.setMinimumIntegerDigits(2);
 						</liferay-ui:panel>
 
 						<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="adminXugglerPanel" persistState="<%= true %>" title="enabling-xuggler-provides-video-conversion-functionality">
-							<aui:input label="enabled" name="xugglerEnabled" type="checkbox" value="<%= PrefsPropsUtil.getBoolean(PropsKeys.XUGGLER_ENABLED) %>" />
+							<c:choose>
+								<c:when test="<%= XugglerUtil.isNativeLibraryInstalled() %>">
+									<div class="portlet-msg-info">
+										<liferay-ui:message key="xuggler-installed" />
+									</div>
+
+									<aui:input label="enabled" name="xugglerEnabled" type="checkbox" value="<%= XugglerUtil.isEnabled() %>" />
+								</c:when>
+								<c:otherwise>
+
+									<%
+									String xugglerHelp = LanguageUtil.format(pageContext, "xuggler-help", "http://www.xuggle.com/xuggler/downloads");
+
+									String[] xugglerOptions = PropsUtil.getArray(PropsKeys.XUGGLER_JAR_OPTIONS);
+
+									String bitmode = OSDetector.getBitmode();
+
+									String guess = "";
+
+									if (Validator.isNotNull(bitmode) && (bitmode.equals("32") || bitmode.equals("64"))) {
+										if (OSDetector.isApple()) {
+											guess = bitmode + "-mac";
+										}
+										else if (OSDetector.isLinux()) {
+											guess = bitmode + "-linux";
+										}
+										else if (OSDetector.isWindows()) {
+											guess = bitmode + "-win";
+										}
+
+										if (Validator.isNotNull(guess)) {
+											boolean found = false;
+
+											for (String xugglerOption : xugglerOptions) {
+												if (xugglerOption.equals(guess)) {
+													found = true;
+
+													break;
+												}
+											}
+
+											if (!found) {
+												guess = "";
+											}
+										}
+									}
+									%>
+
+									<div class="portlet-msg-info">
+										<liferay-ui:message key="<%= xugglerHelp %>" />
+									</div>
+
+									<aui:select label="jar-file" name="jarName">
+
+										<%
+										if (Validator.isNull(guess)) {
+										%>
+
+											<aui:option label="unknown" value="" />
+
+										<%
+										}
+
+										for (String xugglerOption : xugglerOptions) {
+											String jarFile = PropsUtil.get(PropsKeys.XUGGLER_JAR_FILE, new Filter(xugglerOption));
+											String jarName = PropsUtil.get(PropsKeys.XUGGLER_JAR_NAME, new Filter(xugglerOption));
+										%>
+
+											<aui:option label='<%= jarName + " (" + jarFile + ")" %>' selected="<%= xugglerOption.equals(guess) %>" value="<%= jarFile %>" />
+
+										<%
+										}
+										%>
+
+									</aui:select>
+
+									<aui:button-row>
+
+										<%
+										String installXuggler = renderResponse.getNamespace() + "installXuggler();";
+										%>
+
+										<aui:button onClick="<%= installXuggler %>" value="install" />
+									</aui:button-row>
+								</c:otherwise>
+							</c:choose>
 						</liferay-ui:panel>
 					</liferay-ui:panel-container>
 				</aui:fieldset>

@@ -445,6 +445,11 @@
 	<bean id="com.liferay.portal.kernel.xmlrpc.XmlRpcUtil" class="com.liferay.portal.kernel.xmlrpc.XmlRpcUtil">
 		<property name="xmlRpc" ref="com.liferay.portal.kernel.xmlrpc.XmlRpc" />
 	</bean>
+	<bean id="com.liferay.portal.kernel.xuggler.XugglerUtil" class="com.liferay.portal.kernel.xuggler.XugglerUtil">
+		<property name="xuggler">
+			<bean class="com.liferay.portal.xuggler.XugglerImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.kernel.zip.ZipReaderFactory" class="com.liferay.portal.zip.ZipReaderFactoryImpl" />
 	<bean id="com.liferay.portal.kernel.zip.ZipReaderFactoryUtil" class="com.liferay.portal.kernel.zip.ZipReaderFactoryUtil">
 		<property name="zipReaderFactory" ref="com.liferay.portal.kernel.zip.ZipReaderFactory" />

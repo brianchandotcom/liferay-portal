@@ -37,9 +37,9 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SystemEnv;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xuggler.XugglerUtil;
 import com.liferay.portal.log.Log4jLogFactoryImpl;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
-import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
@@ -120,9 +120,7 @@ public class AudioProcessorImpl
 		}
 
 		try {
-			if (PrefsPropsUtil.getBoolean(
-					PropsKeys.XUGGLER_ENABLED, PropsValues.XUGGLER_ENABLED)) {
-
+			if (XugglerUtil.isEnabled()) {
 				return _audioMimeTypes.contains(mimeType);
 			}
 		}
@@ -263,10 +261,7 @@ public class AudioProcessorImpl
 		try {
 			audioTempFile = FileUtil.createTempFile(fileVersion.getExtension());
 
-			if (!PrefsPropsUtil.getBoolean(
-					PropsKeys.XUGGLER_ENABLED, PropsValues.XUGGLER_ENABLED) ||
-				_hasAudio(fileVersion)) {
-
+			if (!XugglerUtil.isEnabled() || _hasAudio(fileVersion)) {
 				return;
 			}
 

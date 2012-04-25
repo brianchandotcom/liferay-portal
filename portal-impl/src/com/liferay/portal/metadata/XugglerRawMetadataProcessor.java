@@ -20,13 +20,11 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.util.PrefsPropsUtil;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.kernel.xuggler.XugglerUtil;
 import com.liferay.portlet.documentlibrary.util.AudioProcessorUtil;
 import com.liferay.portlet.documentlibrary.util.VideoProcessorUtil;
 
@@ -161,9 +159,7 @@ public class XugglerRawMetadataProcessor extends BaseRawMetadataProcessor {
 	}
 
 	protected boolean isSupported(String mimeType) throws SystemException {
-		if (PrefsPropsUtil.getBoolean(
-				PropsKeys.XUGGLER_ENABLED, PropsValues.XUGGLER_ENABLED)) {
-
+		if (XugglerUtil.isEnabled()) {
 			if (AudioProcessorUtil.isAudioSupported(mimeType)) {
 				return true;
 			}

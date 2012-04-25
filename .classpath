@@ -298,6 +298,6 @@
 	<classpathentry kind="lib" path="lib/portal/xmlsec.jar"/>
 	<classpathentry kind="lib" path="lib/portal/xpp3.jar"/>
 	<classpathentry kind="lib" path="lib/portal/xstream.jar"/>
-	<classpathentry kind="lib" path="lib/portal/xuggle-xuggler.jar"/>
+	<classpathentry kind="lib" path="lib/portal/xuggle-xuggler-noarch.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

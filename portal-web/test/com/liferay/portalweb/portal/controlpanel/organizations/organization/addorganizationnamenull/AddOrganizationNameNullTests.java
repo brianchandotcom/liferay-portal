@@ -25,7 +25,6 @@ import junit.framework.TestSuite;
 public class AddOrganizationNameNullTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(AddOrganizationTest.class);
 		testSuite.addTestSuite(AddOrganizationNameNullTest.class);
 		testSuite.addTestSuite(TearDownTest.class);
 

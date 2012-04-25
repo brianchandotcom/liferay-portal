@@ -660,10 +660,16 @@ public class DLAppHelperLocalServiceImpl
 					DLFileEntryConstants.getClassName(),
 					fileEntry.getFileEntryId());
 			}
-			else if (Validator.isNull(fileEntry.getVersion())) {
+			else {
+				boolean visible = false;
+
+				if (Validator.isNotNull(fileEntry.getVersion())) {
+					visible = true;
+				}
+
 				assetEntryLocalService.updateVisible(
 					DLFileEntryConstants.getClassName(),
-					fileEntry.getFileEntryId(), false);
+					fileEntry.getFileEntryId(), visible);
 			}
 		}
 	}

@@ -1210,6 +1210,34 @@ public class DLFileEntryLocalServiceImpl
 			}
 		}
 
+		// File versions
+
+		if (oldStatus == WorkflowConstants.STATUS_IN_TRASH) {
+			List<DLFileVersion> trashedFileVersions =
+				dlFileVersionPersistence.findByF_S(
+					dlFileEntry.getFileEntryId(),
+					WorkflowConstants.STATUS_IN_TRASH);
+
+			for (DLFileVersion trashedFileVersion : trashedFileVersions) {
+				trashedFileVersion.setStatus(WorkflowConstants.STATUS_APPROVED);
+
+				dlFileVersionPersistence.update(trashedFileVersion, false);
+			}
+		}
+		else if (status == WorkflowConstants.STATUS_IN_TRASH) {
+			List<DLFileVersion> approvedFileVersions =
+				dlFileVersionPersistence.findByF_S(
+					dlFileEntry.getFileEntryId(),
+					WorkflowConstants.STATUS_APPROVED);
+
+			for (DLFileVersion approvedFileVersion : approvedFileVersions) {
+				approvedFileVersion.setStatus(
+					WorkflowConstants.STATUS_IN_TRASH);
+
+				dlFileVersionPersistence.update(approvedFileVersion, false);
+			}
+		}
+
 		// App helper
 
 		dlAppHelperLocalService.updateStatus(

@@ -202,7 +202,7 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 
 		if (trusted) {
 			return DLFileVersionLocalServiceUtil.getLatestFileVersion(
-				getFileEntryId(), true);
+				getFileEntryId(), false);
 		}
 		else {
 			return DLFileVersionServiceUtil.getLatestFileVersion(

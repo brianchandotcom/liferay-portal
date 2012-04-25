@@ -16,6 +16,7 @@ package com.liferay.portal.jcr;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.memory.FinalizeAction;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
@@ -30,8 +31,10 @@ import javax.jcr.Session;
 
 /**
  * @author Raymond Augé
+ * @author Shuyang Zhou
  */
-public class JCRSessionInvocationHandler implements InvocationHandler {
+public class JCRSessionInvocationHandler
+	implements InvocationHandler, FinalizeAction {
 
 	public JCRSessionInvocationHandler(Session session) {
 		_session = session;
@@ -41,27 +44,22 @@ public class JCRSessionInvocationHandler implements InvocationHandler {
 		}
 	}
 
+	public void doFinalize() {
+		for (Entry<String, Binary> entry : _binaries.entrySet()) {
+			Binary binary = entry.getValue();
+
+			binary.dispose();
+		}
+
+		_session.logout();
+	}
+
 	public Object invoke(Object proxy, Method method, Object[] arguments)
 		throws Throwable {
 
 		String methodName = method.getName();
 
-		if (methodName.equals("close")) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Closing session " + _session);
-			}
-
-			for (Entry<String, Binary> entry : _binaries.entrySet()) {
-				Binary binary = entry.getValue();
-
-				binary.dispose();
-			}
-
-			_session.logout();
-
-			return null;
-		}
-		else if (methodName.equals("logout")) {
+		if (methodName.equals("logout")) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Skipping logout for session " + _session);
 			}

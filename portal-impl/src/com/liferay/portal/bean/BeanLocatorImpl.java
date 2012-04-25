@@ -19,10 +19,14 @@ import com.liferay.portal.kernel.bean.BeanLocatorException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.pacl.PACLBeanHandler;
+import com.liferay.portal.security.pacl.PACLConstants;
 import com.liferay.portal.service.ResourceService;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.ResourcePersistence;
+
+import java.security.Permission;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,6 +85,9 @@ public class BeanLocatorImpl implements BeanLocator {
 		try {
 			return doLocate(name);
 		}
+		catch (SecurityException se) {
+			throw se;
+		}
 		catch (Exception e) {
 			Object bean = _deprecatedBeans.get(name);
 
@@ -107,16 +114,29 @@ public class BeanLocatorImpl implements BeanLocator {
 		}
 	}
 
-	public void setWrapPersistenceWithPACLBeanHandler(
-		boolean wrapPersistenceWithPACLBeanHandler) {
+	public void setPACLServletContextName(String paclServletContextName) {
+		_paclServletContextName = paclServletContextName;
+	}
 
-		_wrapPersistenceWithPACLBeanHandler =
-			wrapPersistenceWithPACLBeanHandler;
+	public void setPACLWrapPersistence(boolean paclWrapPersistence) {
+		_paclWrapPersistence = paclWrapPersistence;
 	}
 
 	protected Object doLocate(String name) throws Exception {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Locating " + name);
+		}
+
+		if (name.equals("portletClassLoader")) {
+			SecurityManager securityManager = System.getSecurityManager();
+
+			if (securityManager != null) {
+				Permission permission = new RuntimePermission(
+					PACLConstants.RUNTIME_PERMISSION_GET_CLASSLOADER.concat(
+						StringPool.PERIOD).concat(_paclServletContextName));
+
+				securityManager.checkPermission(permission);
+			}
 		}
 
 		if (name.endsWith(VELOCITY_SUFFIX)) {
@@ -140,7 +160,7 @@ public class BeanLocatorImpl implements BeanLocator {
 
 		Object bean = _applicationContext.getBean(name);
 
-		if (_wrapPersistenceWithPACLBeanHandler && (bean != null) &&
+		if (_paclWrapPersistence && (bean != null) &&
 			(bean instanceof BasePersistence)) {
 
 			Object paclPersistenceBean = _paclPersistenceBeans.get(name);
@@ -185,8 +205,9 @@ public class BeanLocatorImpl implements BeanLocator {
 		new ConcurrentHashMap<String, Object>();
 	private Map<String, Object> _paclPersistenceBeans =
 		new ConcurrentHashMap<String, Object>();
+	private String _paclServletContextName;
+	private boolean _paclWrapPersistence;
 	private Map<String, Object> _velocityBeans =
 		new ConcurrentHashMap<String, Object>();
-	private boolean _wrapPersistenceWithPACLBeanHandler;
 
 }

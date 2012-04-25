@@ -737,6 +737,12 @@ public class DLFileEntryLocalServiceImpl
 		return dlFileEntryPersistence.findAll(start, end);
 	}
 
+	public List<DLFileEntry> getFileEntries(long groupId, long folderId)
+		throws SystemException {
+
+		return dlFileEntryPersistence.findByG_F(groupId, folderId);
+	}
+
 	public List<DLFileEntry> getFileEntries(
 			long groupId, long folderId, int start, int end,
 			OrderByComparator obc)

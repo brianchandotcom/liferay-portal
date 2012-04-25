@@ -2645,6 +2645,14 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		</if>
 
 		<if>
+			<isset property="set.permission.algorithm.5" />
+			<then>
+				<replace file="portal-impl/src/portal-ext.properties" token="#permissions.user.check.algorithm=5" value="permissions.user.check.algorithm=5"/>
+				<replace file="portal-impl/src/portal-ext.properties" token="#permissions.view.dynamic.inheritance=false" value="permissions.view.dynamic.inheritance=false"/>
+			</then>
+		</if>
+
+		<if>
 			<isset property="set.permission.algorithm.6" />
 			<then>
 				<replace file="portal-impl/src/portal-ext.properties" token="permissions.user.check.algorithm=5" value=""/>

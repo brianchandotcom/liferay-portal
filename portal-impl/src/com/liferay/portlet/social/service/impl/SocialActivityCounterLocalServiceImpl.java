@@ -179,6 +179,13 @@ public class SocialActivityCounterLocalServiceImpl
 			return;
 		}
 
+		if (!socialActivitySettingLocalService.isEnabled(
+				activity.getGroupId(), activity.getClassNameId(),
+				activity.getClassPK())) {
+
+			return;
+		}
+
 		User user = userPersistence.findByPrimaryKey(activity.getUserId());
 
 		SocialActivityDefinition activityDefinition =
@@ -333,8 +340,9 @@ public class SocialActivityCounterLocalServiceImpl
 		socialActivityLimitPersistence.removeByC_C(
 			assetEntry.getClassNameId(), assetEntry.getClassPK());
 
-		socialActivitySettingPersistence.removeByG_C(
-			assetEntry.getGroupId(), assetEntry.getClassNameId());
+		socialActivitySettingLocalService.deleteActivitySetting(
+			assetEntry.getGroupId(), assetEntry.getClassName(),
+			assetEntry.getClassPK());
 
 		clearFinderCache();
 	}
@@ -502,6 +510,10 @@ public class SocialActivityCounterLocalServiceImpl
 			long groupId, String name, int startPeriod, int endPeriod)
 		throws SystemException {
 
+		if (endPeriod == SocialActivityCounterConstants.END_PERIOD_UNDEFINED) {
+			endPeriod = SocialCounterPeriodUtil.getEndPeriod();
+		}
+
 		int offset = SocialCounterPeriodUtil.getOffset(endPeriod);
 
 		int periodLength = SocialCounterPeriodUtil.getPeriodLength(offset);
@@ -537,7 +549,7 @@ public class SocialActivityCounterLocalServiceImpl
 		Tuple[] userActivityCounters = new Tuple[userIds.size()];
 
 		List<SocialActivityCounter> activityCounters =
-			SocialActivityCounterFinderUtil.findAC_By_G_C_C_N_S_E(
+			socialActivityCounterFinder.findAC_By_G_C_C_N_S_E(
 				groupId, userIds, selectedNames, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 

@@ -26,6 +26,22 @@ import com.liferay.portlet.social.util.SocialCounterPeriodUtil;
  */
 public class SocialActivityLimitImpl extends SocialActivityLimitBaseImpl {
 
+	public int getCount() {
+		if (getValue().indexOf(StringPool.SLASH) == -1) {
+			return getCount(
+				SocialActivityCounterDefinition.LIMIT_PERIOD_LIFETIME);
+		}
+
+		String[] valueParts = StringUtil.split(getValue(), StringPool.SLASH);
+
+		if (valueParts[0].indexOf(StringPool.DASH) > -1) {
+			return getCount(
+				SocialActivityCounterDefinition.LIMIT_PERIOD_PERIOD);
+		}
+
+		return getCount(SocialActivityCounterDefinition.LIMIT_PERIOD_DAY);
+	}
+
 	public int getCount(int limitPeriod) {
 		String[] valueParts = StringUtil.split(getValue(), StringPool.SLASH);
 

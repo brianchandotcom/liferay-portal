@@ -420,7 +420,7 @@ public class SocialActivityLocalServiceImpl
 		}
 
 		socialActivityCounterLocalService.deleteActivityCounters(
-			PortalUtil.getClassNameId(User.class.getName()), userId);
+			User.class.getName(), userId);
 	}
 
 	/**

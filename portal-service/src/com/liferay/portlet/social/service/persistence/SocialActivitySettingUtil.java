@@ -195,6 +195,126 @@ public class SocialActivitySettingUtil {
 	}
 
 	/**
+	* Returns all the social activity settings where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @return the matching social activity settings
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivitySetting> findByGroupId(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByGroupId(groupId);
+	}
+
+	/**
+	* Returns a range of all the social activity settings where groupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param start the lower bound of the range of social activity settings
+	* @param end the upper bound of the range of social activity settings (not inclusive)
+	* @return the range of matching social activity settings
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivitySetting> findByGroupId(
+		long groupId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByGroupId(groupId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the social activity settings where groupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param start the lower bound of the range of social activity settings
+	* @param end the upper bound of the range of social activity settings (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching social activity settings
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivitySetting> findByGroupId(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByGroupId(groupId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the first social activity setting in the ordered set where groupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching social activity setting
+	* @throws com.liferay.portlet.social.NoSuchActivitySettingException if a matching social activity setting could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.social.model.SocialActivitySetting findByGroupId_First(
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.social.NoSuchActivitySettingException {
+		return getPersistence().findByGroupId_First(groupId, orderByComparator);
+	}
+
+	/**
+	* Returns the last social activity setting in the ordered set where groupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching social activity setting
+	* @throws com.liferay.portlet.social.NoSuchActivitySettingException if a matching social activity setting could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.social.model.SocialActivitySetting findByGroupId_Last(
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.social.NoSuchActivitySettingException {
+		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
+	}
+
+	/**
+	* Returns the social activity settings before and after the current social activity setting in the ordered set where groupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param activitySettingId the primary key of the current social activity setting
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next social activity setting
+	* @throws com.liferay.portlet.social.NoSuchActivitySettingException if a social activity setting with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.social.model.SocialActivitySetting[] findByGroupId_PrevAndNext(
+		long activitySettingId, long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.social.NoSuchActivitySettingException {
+		return getPersistence()
+				   .findByGroupId_PrevAndNext(activitySettingId, groupId,
+			orderByComparator);
+	}
+
+	/**
 	* Returns all the social activity settings where groupId = &#63; and classNameId = &#63;.
 	*
 	* @param groupId the group ID
@@ -697,6 +817,17 @@ public class SocialActivitySettingUtil {
 	}
 
 	/**
+	* Removes all the social activity settings where groupId = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByGroupId(long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByGroupId(groupId);
+	}
+
+	/**
 	* Removes all the social activity settings where groupId = &#63; and classNameId = &#63; from the database.
 	*
 	* @param groupId the group ID
@@ -760,6 +891,18 @@ public class SocialActivitySettingUtil {
 	public static void removeAll()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getPersistence().removeAll();
+	}
+
+	/**
+	* Returns the number of social activity settings where groupId = &#63;.
+	*
+	* @param groupId the group ID
+	* @return the number of matching social activity settings
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByGroupId(long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByGroupId(groupId);
 	}
 
 	/**

@@ -85,6 +85,9 @@ public interface Repository {
 	public void deleteFileEntry(long folderId, String title)
 		throws PortalException, SystemException;
 
+	public void deleteFileVersion(long fileEntryId, String version)
+		throws PortalException, SystemException;
+
 	public void deleteFolder(long folderId)
 		throws PortalException, SystemException;
 

@@ -56,6 +56,7 @@ import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.ImageSizeException;
 import com.liferay.portlet.documentlibrary.InvalidFileEntryTypeException;
+import com.liferay.portlet.documentlibrary.InvalidFileVersionException;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException;
 import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -653,6 +654,66 @@ public class DLFileEntryLocalServiceImpl
 
 		try {
 			return deleteFileEntry(fileEntryId);
+		}
+		finally {
+			unlockFileEntry(fileEntryId);
+		}
+	}
+
+	@Indexable(type = IndexableType.DELETE)
+	public void deleteFileVersion(long userId, long fileEntryId, String version)
+		throws PortalException, SystemException {
+
+		if (Validator.isNull(version) ||
+			version.equals(DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION)) {
+
+			throw new InvalidFileVersionException();
+		}
+
+		if (!hasFileEntryLock(userId, fileEntryId)) {
+			lockFileEntry(userId, fileEntryId);
+		}
+
+		try {
+			DLFileVersion fileVersion = dlFileVersionPersistence.findByF_V(
+				fileEntryId, version);
+
+			if (!fileVersion.isApproved()) {
+				throw new InvalidFileVersionException(
+					"Cannot delete an unapproved file version");
+			}
+			else {
+				int count = dlFileVersionPersistence.countByF_S(
+					fileEntryId, WorkflowConstants.STATUS_APPROVED);
+
+				if (count <= 1) {
+					throw new InvalidFileVersionException(
+						"Cannot delete the only approved file version");
+				}
+			}
+
+			DLFileEntry fileEntry = dlFileEntryPersistence.findByPrimaryKey(
+				fileEntryId);
+
+			dlFileVersionPersistence.remove(fileVersion);
+
+			expandoValueLocalService.deleteValues(
+				DLFileVersion.class.getName(), fileVersion.getFileVersionId());
+
+			if (version.equals(fileEntry.getVersion())) {
+				try {
+					DLFileVersion latestFileVersion =
+						dlFileVersionLocalService.getLatestFileVersion(
+							fileEntry.getFileEntryId(), true);
+
+					fileEntry.setVersion(latestFileVersion.getVersion());
+					fileEntry.setSize(latestFileVersion.getSize());
+
+					dlFileEntryPersistence.update(fileEntry, false);
+				}
+				catch (NoSuchFileVersionException nsfve) {
+				}
+			}
 		}
 		finally {
 			unlockFileEntry(fileEntryId);

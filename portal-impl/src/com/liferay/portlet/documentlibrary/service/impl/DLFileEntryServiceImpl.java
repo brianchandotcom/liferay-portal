@@ -205,6 +205,16 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		deleteFileEntry(dlFileEntry.getFileEntryId());
 	}
 
+	public void deleteFileVersion(long fileEntryId, String version)
+		throws PortalException, SystemException {
+
+		DLFileEntryPermission.check(
+			getPermissionChecker(), fileEntryId, ActionKeys.DELETE);
+
+		dlFileEntryLocalService.deleteFileVersion(
+			getUserId(), fileEntryId, version);
+	}
+
 	public DLFileEntry fetchFileEntryByImageId(long imageId)
 		throws PortalException, SystemException {
 

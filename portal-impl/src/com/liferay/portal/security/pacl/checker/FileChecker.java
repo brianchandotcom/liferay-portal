@@ -55,7 +55,7 @@ public class FileChecker extends BaseChecker {
 
 			_workDir = tempDir.getAbsolutePath();
 		}
-		
+
 		initPermissions();
 	}
 
@@ -86,62 +86,29 @@ public class FileChecker extends BaseChecker {
 		}
 	}
 
-	public boolean hasDelete(Permission permission) {
-		for (Permission deleteFilePermission : _deletePermissions) {
-			if (deleteFilePermission.implies(permission)) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	public boolean hasExecute(Permission permission) {
-		for (Permission executeFilePermission : _executePermissions) {
-			if (executeFilePermission.implies(permission)) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	public boolean hasRead(Permission permission) {
-		for (Permission readFilePermission : _readPermissions) {
-			if (readFilePermission.implies(permission)) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	public boolean hasWrite(Permission permission) {
-		for (Permission writeFilePermission : _writePermissions) {
-			if (writeFilePermission.implies(permission)) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	protected void addCanonicalPath(List<String> paths, String path) {
 		Iterator<String> itr = paths.iterator();
-	
+
 		while (itr.hasNext()) {
 			String curPath = itr.next();
-	
+
 			if (curPath.startsWith(path) &&
 				(curPath.length() > path.length())) {
-	
+
 				itr.remove();
 			}
 			else if (path.startsWith(curPath)) {
 				return;
 			}
 		}
-	
+
+		path = StringUtil.replace(
+			path, StringPool.BACK_SLASH, StringPool.SLASH);
+
+		if (path.endsWith(StringPool.SLASH)) {
+			path = path + "-";
+		}
+
 		paths.add(path);
 	}
 
@@ -149,7 +116,7 @@ public class FileChecker extends BaseChecker {
 		throws IOException {
 
 		addCanonicalPath(
-			paths, directory.getCanonicalPath() + File.separatorChar);
+			paths, directory.getCanonicalPath() + StringPool.SLASH);
 
 		for (File file : directory.listFiles()) {
 			if (file.isDirectory()) {
@@ -161,7 +128,7 @@ public class FileChecker extends BaseChecker {
 				File parentFile = canonicalFile.getParentFile();
 
 				addCanonicalPath(
-					paths, parentFile.getPath() + File.separatorChar);
+					paths, parentFile.getPath() + StringPool.SLASH);
 			}
 		}
 	}
@@ -231,16 +198,13 @@ public class FileChecker extends BaseChecker {
 
 		List<String> paths = new UniqueList<String>();
 
-		String javaHome = System.getProperty("java.home") + "/";
-
 		// JDK
 
-		// There may be jars in the system library that are symlinked. We must
-		// include their cannonical paths otherwise they will fail permission
-		// checks.
+		// There may be JARs in the system library that are symlinked. We must
+		// include their canonical paths or they will fail permission checks.
 
 		try {
-			File file = new File(javaHome + "lib/");
+			File file = new File(System.getProperty("java.home") + "/lib");
 
 			addCanonicalPaths(paths, file);
 		}
@@ -250,37 +214,88 @@ public class FileChecker extends BaseChecker {
 
 		// Shared libs
 
-		paths.add(_globalSharedLibDir);
+		paths.add(_globalSharedLibDir + "-");
 
 		// Plugin
 
-		paths.add(_rootDir);
+		paths.add(_rootDir + "-");
 
-		// Portal JSP paths
+		// Portal
 
 		if (!_portalDir.equals(_rootDir)) {
-			paths.add(_portalDir + "html/common/");
-			paths.add(_portalDir + "html/taglib/");
-			paths.add(_portalDir + "html/themes/");
-			paths.add(_portalDir + "localhost/html/common/");
-			paths.add(_portalDir + "localhost/html/taglib/");
-			paths.add(_portalDir + "localhost/html/themes/");
-			paths.add(_portalDir + "localhost/WEB-INF");
-			paths.add(_portalDir + "localhost/WEB-INF/");
-			paths.add(_portalDir + "WEB-INF");
-			paths.add(_portalDir + "WEB-INF/");
+			paths.add(_portalDir + "html/common/-");
+			paths.add(_portalDir + "html/taglib/-");
+			paths.add(_portalDir + "localhost/html/common/-");
+			paths.add(_portalDir + "localhost/html/taglib/-");
+			paths.add(_portalDir + "localhost/WEB-INF/tld/-");
+			paths.add(_portalDir + "WEB-INF/classes/java/-");
+			paths.add(_portalDir + "WEB-INF/classes/javax/-");
+			paths.add(_portalDir + "WEB-INF/classes/org/apache/-");
+			paths.add(
+				_portalDir + "WEB-INF/classes/META-INF/services/" +
+					"javax.el.ExpressionFactory");
+			paths.add(_portalDir + "WEB-INF/tld/-");
 		}
 
 		for (String path : paths) {
-			if (path.endsWith(StringPool.SLASH)) {
-				addPermission(permissions, path + "-", action);
-			}
-			else {
-				addPermission(permissions, path, action);
-			}
+			addPermission(permissions, path, action);
 		}
 
 		return permissions;
+	}
+
+	protected boolean hasDelete(Permission permission) {
+		for (Permission deleteFilePermission : _deletePermissions) {
+			if (deleteFilePermission.implies(permission)) {
+				return true;
+			}
+		}
+
+		if (isJSPCompiler(
+				permission.getName(), FILE_PERMISSION_ACTION_DELETE)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean hasExecute(Permission permission) {
+		for (Permission executeFilePermission : _executePermissions) {
+			if (executeFilePermission.implies(permission)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	protected boolean hasRead(Permission permission) {
+		for (Permission readFilePermission : _readPermissions) {
+			if (readFilePermission.implies(permission)) {
+				return true;
+			}
+		}
+
+		if (isJSPCompiler(permission.getName(), FILE_PERMISSION_ACTION_READ)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean hasWrite(Permission permission) {
+		for (Permission writeFilePermission : _writePermissions) {
+			if (writeFilePermission.implies(permission)) {
+				return true;
+			}
+		}
+
+		if (isJSPCompiler(permission.getName(), FILE_PERMISSION_ACTION_WRITE)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	protected void initPermissions() {

@@ -14,11 +14,9 @@
 
 package com.liferay.portal.security.pacl;
 
-import com.liferay.portal.dao.jdbc.pacl.PACLDataSource;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
-import com.liferay.portal.security.lang.PortalSecurityManager;
 import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 import com.liferay.portal.spring.util.FilterClassLoader;
 
@@ -26,9 +24,21 @@ import sun.reflect.Reflection;
 
 /**
  * @author Brian Wing Shun Chan
- * @author Raymond Augé
  */
 public class PACLClassUtil {
+
+	public static ClassLoader getCallerClassLoader(Class<?> callerClass) {
+		boolean enabled = PortalSecurityManagerThreadLocal.isEnabled();
+
+		try {
+			PortalSecurityManagerThreadLocal.setEnabled(false);
+
+			return _instance._getCallerClassLoader(callerClass);
+		}
+		finally {
+			PortalSecurityManagerThreadLocal.setEnabled(enabled);
+		}
+	}
 
 	public static PACLPolicy getPACLPolicyByReflection(boolean debug) {
 		boolean enabled = PortalSecurityManagerThreadLocal.isEnabled();
@@ -74,6 +84,10 @@ public class PACLClassUtil {
 			return null;
 		}
 
+		Class<?> callerClassLoaderClass = callerClassLoader.getClass();
+
+		String callerClassLoaderClassName = callerClassLoaderClass.getName();
+
 		if (callerClassLoader instanceof FilterClassLoader) {
 			callerClassLoader = callerClassLoader.getParent();
 
@@ -82,28 +96,53 @@ public class PACLClassUtil {
 			}
 		}
 
+		if (callerClassLoaderClassName.equals(_ClASS_NAME_JASPER_LOADER)) {
+			callerClassLoader = callerClassLoader.getParent();
+		}
+
 		return callerClassLoader;
 	}
 
 	private PACLPolicy _getPACLPolicyByReflection(boolean debug) {
+		boolean initialPortalClassLoaderPhase = true;
 
-		// Start with int i = 3 because int i = 0 returns sun.reflect.Reflection
-		// and int i = 1 and 2 return this class
+		// int i = 0 always returns sun.reflect.Reflection
 
-		for (int i = 3;; i++) {
+		for (int i = 1;; i++) {
 			Class<?> callerClass = Reflection.getCallerClass(i);
 
 			if (callerClass == null) {
 				break;
 			}
 
-			if (_isSkipCallerClass(callerClass, i, debug)) {
-				continue;
+			if (debug) {
+				_log.debug(
+					"Frame " + i + " has caller class " +
+						callerClass.getName());
 			}
 
 			ClassLoader callerClassLoader = _getCallerClassLoader(callerClass);
 
-			if (_isSkipCallerClassLoader(callerClassLoader)) {
+			if (callerClassLoader == null) {
+				continue;
+			}
+
+			if (!initialPortalClassLoaderPhase &&
+				(callerClassLoader == _portalClassLoader)) {
+
+				return PACLPolicyManager.getDefaultPACLPolicy();
+			}
+
+			if (initialPortalClassLoaderPhase &&
+				(callerClassLoader != _portalClassLoader)) {
+
+				initialPortalClassLoaderPhase = false;
+			}
+
+			if ((callerClassLoader == _commonClassLoader) ||
+				(callerClassLoader == _portalClassLoader) ||
+				(callerClassLoader == _systemClassLoader)) {
+
 				continue;
 			}
 
@@ -113,15 +152,21 @@ public class PACLClassUtil {
 			if (paclPolicy != null) {
 				return paclPolicy;
 			}
+
+			/*_log.error(
+				"Unable to locate PACL policy for caller class loader " +
+					callerClassLoader);*/
 		}
 
-		return PACLPolicyManager.getDefaultPACLPolicy();
+		return null;
 	}
 
 	private PACLPolicy _getPACLPolicyBySecurityManagerClassContext(
 		Class<?>[] classes, boolean debug) {
 
-		// Start with int i = 1 because int i = 0 returns
+		boolean initialPortalClassLoaderPhase = true;
+
+		// int i = 0 always returns
 		// com.liferay.portal.security.lang.PortalSecurityManager
 
 		for (int i = 1; i < classes.length; i++) {
@@ -131,13 +176,38 @@ public class PACLClassUtil {
 				break;
 			}
 
-			if (_isSkipCallerClass(callerClass, i, debug)) {
-				continue;
+			if (debug) {
+				_log.debug(
+					"Frame " + i + " has caller class " +
+						callerClass.getName());
 			}
 
 			ClassLoader callerClassLoader = _getCallerClassLoader(callerClass);
 
-			if (_isSkipCallerClassLoader(callerClassLoader)) {
+			if (callerClassLoader == null) {
+				continue;
+			}
+
+			if (!initialPortalClassLoaderPhase &&
+				(callerClassLoader == _portalClassLoader)) {
+
+				if (debug) {
+					_log.debug("Located the default PACL policy");
+				}
+
+				return PACLPolicyManager.getDefaultPACLPolicy();
+			}
+
+			if (initialPortalClassLoaderPhase &&
+				(callerClassLoader != _portalClassLoader)) {
+
+				initialPortalClassLoaderPhase = false;
+			}
+
+			if ((callerClassLoader == _commonClassLoader) ||
+				(callerClassLoader == _portalClassLoader) ||
+				(callerClassLoader == _systemClassLoader)) {
+
 				continue;
 			}
 
@@ -147,56 +217,17 @@ public class PACLClassUtil {
 			if (paclPolicy != null) {
 				return paclPolicy;
 			}
+
+			/*_log.error(
+				"Unable to locate PACL policy for caller class loader " +
+					callerClassLoader);*/
 		}
 
-		return PACLPolicyManager.getDefaultPACLPolicy();
+		return null;
 	}
 
-	private boolean _isAncestorClassLoader(
-		ClassLoader ancestorClassLoader, ClassLoader callerClassLoader) {
-
-		ClassLoader tempClassLoader = callerClassLoader;
-
-		do {
-			if (ancestorClassLoader == tempClassLoader) {
-				return true;
-			}
-		}
-		while ((tempClassLoader = tempClassLoader.getParent()) != null);
-
-		return false;
-	}
-
-	private boolean _isSkipCallerClass(
-		Class<?> callerClass, int i, boolean debug) {
-
-		if ((callerClass == PACLAdvice.class) ||
-			(callerClass == PACLDataSource.class) ||
-			(callerClass == PACLBeanHandler.class) ||
-			(callerClass == PortalSecurityManager.class)) {
-
-			return true;
-		}
-
-		if (debug) {
-			_log.debug(
-				"Frame " + i + " has caller class " + callerClass.getName());
-		}
-
-		return false;
-	}
-
-	private boolean _isSkipCallerClassLoader(ClassLoader callerClassLoader) {
-		if ((callerClassLoader == null) ||
-			(callerClassLoader == _commonClassLoader) ||
-			(callerClassLoader == _systemClassLoader) ||
-			_isAncestorClassLoader(_portalClassLoader, callerClassLoader)) {
-
-			return true;
-		}
-
-		return false;
-	}
+	private static final String _ClASS_NAME_JASPER_LOADER =
+		"org.apache.jasper.servlet.JasperLoader";
 
 	private static Log _log = LogFactoryUtil.getLog(PACLClassUtil.class);
 

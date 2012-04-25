@@ -90,8 +90,11 @@ public class PortletContextLoaderListener extends ContextLoaderListener {
 		ApplicationContext applicationContext =
 			WebApplicationContextUtils.getWebApplicationContext(servletContext);
 
-		BeanLocator beanLocator = new BeanLocatorImpl(
+		BeanLocatorImpl beanLocatorImpl = new BeanLocatorImpl(
 			classLoader, applicationContext);
+
+		beanLocatorImpl.setPACLServletContextName(
+			servletContext.getServletContextName());
 
 		try {
 			Class<?> beanLocatorUtilClass = Class.forName(
@@ -102,10 +105,10 @@ public class PortletContextLoaderListener extends ContextLoaderListener {
 				"setBeanLocator", new Class[] {BeanLocator.class});
 
 			setBeanLocatorMethod.invoke(
-				beanLocatorUtilClass, new Object[] {beanLocator});
+				beanLocatorUtilClass, new Object[] {beanLocatorImpl});
 
 			PortletBeanLocatorUtil.setBeanLocator(
-				servletContext.getServletContextName(), beanLocator);
+				servletContext.getServletContextName(), beanLocatorImpl);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

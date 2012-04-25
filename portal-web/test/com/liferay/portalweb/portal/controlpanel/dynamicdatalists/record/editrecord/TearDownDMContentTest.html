@@ -39,14 +39,14 @@
 	<td>Documents and Media</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//div/div/a/span/img'))</td>
-	<td>documentPresent</td>
+	<td>storeElementPresent</td>
+	<td>//a[@class='document-link']/span/img</td>
+	<td>documentsNotRecycled</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${documentPresent}</td>
-	<td>DocumentNotPresent</td>
+	<td>!${documentsNotRecycled}</td>
+	<td>DocumentsRecycled</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -90,7 +90,7 @@
 </tr>
 <tr>
 	<td>label</td>
-	<td>DocumentNotPresent</td>
+	<td>DocumentsRecycled</td>
 	<td></td>
 </tr>
 <tr>
@@ -124,14 +124,14 @@
 	<td>Recycle Bin</td>
 </tr>
 <tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//a/span/span'))</td>
-	<td>documentPresent1</td>
+	<td>storeElementPresent</td>
+	<td>//a/span/span</td>
+	<td>documentsNotDeleted</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${documentPresent1}</td>
-	<td>DocumentNotPresent1</td>
+	<td>!${documentsNotDeleted}</td>
+	<td>DocumentsDeleted</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -139,29 +139,14 @@
 	<td>Select All</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//span[@title='Actions']/ul/li/strong/a</td>
-	<td>Actions</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//span[@title='Actions']/ul/li/strong/a</td>
-	<td>Actions</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a</td>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Delete']</td>
 	<td>Delete</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a</td>
-	<td>Delete</td>
+	<td>assertConfirmation</td>
+	<td>Are you sure you want to delete the selected entries? They will be deleted immediately.</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -175,7 +160,7 @@
 </tr>
 <tr>
 	<td>label</td>
-	<td>DocumentNotPresent1</td>
+	<td>DocumentsDeleted</td>
 	<td></td>
 </tr>
 </tbody></table>

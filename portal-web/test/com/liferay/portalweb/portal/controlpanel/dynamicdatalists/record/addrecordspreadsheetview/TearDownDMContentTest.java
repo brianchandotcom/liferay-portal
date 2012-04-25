@@ -58,10 +58,10 @@ public class TearDownDMContentTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 
-				boolean documentPresent = selenium.isElementPresent(
-						"//div/div/a/span/img");
+				boolean documentsNotRecycled = selenium.isElementPresent(
+						"//a[@class='document-link']/span/img");
 
-				if (!documentPresent) {
+				if (!documentsNotRecycled) {
 					label = 2;
 
 					continue;
@@ -136,10 +136,10 @@ public class TearDownDMContentTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 
-				boolean documentPresent1 = selenium.isElementPresent(
+				boolean documentsNotDeleted = selenium.isElementPresent(
 						"//a/span/span");
 
-				if (!documentPresent1) {
+				if (!documentsNotDeleted) {
 					label = 3;
 
 					continue;
@@ -147,35 +147,12 @@ public class TearDownDMContentTest extends BaseTestCase {
 
 				selenium.clickAt("//input[@name='_182_allRowIds']",
 					RuntimeVariables.replace("Select All"));
-				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
-				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
-					RuntimeVariables.replace("Actions"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				assertEquals(RuntimeVariables.replace("Delete"),
-					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
+				selenium.clickAt("//input[@value='Delete']",
+					RuntimeVariables.replace("Delete"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
+				assertTrue(selenium.getConfirmation()
+								   .matches("^Are you sure you want to delete the selected entries[\\s\\S] They will be deleted immediately.$"));
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));

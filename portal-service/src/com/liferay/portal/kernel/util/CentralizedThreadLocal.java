@@ -14,12 +14,6 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-
-import java.io.Closeable;
-import java.io.IOException;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -126,7 +120,9 @@ public class CentralizedThreadLocal<T> extends ThreadLocal<T> {
 				threadLocalMap._table.length);
 
 		for (Entry entry : threadLocalMap._table) {
-			map.put(entry._key, entry._value);
+			if (entry != null) {
+				map.put(entry._key, entry._value);
+			}
 		}
 
 		return map;
@@ -142,9 +138,6 @@ public class CentralizedThreadLocal<T> extends ThreadLocal<T> {
 	}
 
 	private static final int _HASH_INCREMENT = 0x61c88647;
-
-	private static Log _log = LogFactoryUtil.getLog(
-		CentralizedThreadLocal.class);
 
 	private static final AtomicInteger _longLivedNextHasCode =
 		new AtomicInteger();
@@ -240,8 +233,6 @@ public class CentralizedThreadLocal<T> extends ThreadLocal<T> {
 				entry = entry._next) {
 
 				if (entry._key == key) {
-					_closeEntry(entry._value);
-
 					entry._value = value;
 
 					return;
@@ -252,16 +243,6 @@ public class CentralizedThreadLocal<T> extends ThreadLocal<T> {
 
 			if (_size++ >= _threshold) {
 				expand(2 * _table.length);
-			}
-		}
-
-		public void closeEntries() {
-			for (Entry entry : _table) {
-				if (entry == null) {
-					continue;
-				}
-
-				_closeEntry(entry._value);
 			}
 		}
 
@@ -278,8 +259,6 @@ public class CentralizedThreadLocal<T> extends ThreadLocal<T> {
 				if (entry._key == key) {
 					_size--;
 
-					_closeEntry(entry._value);
-
 					if (previousEntry == null) {
 						_table[index] = nextEntry;
 					}
@@ -292,23 +271,6 @@ public class CentralizedThreadLocal<T> extends ThreadLocal<T> {
 
 				previousEntry = entry;
 				entry = nextEntry;
-			}
-		}
-
-		protected void _closeEntry(Object value) {
-			if (value == null) {
-				return;
-			}
-
-			if (value instanceof Closeable) {
-				Closeable closable = (Closeable)value;
-
-				try {
-					closable.close();
-				}
-				catch (IOException ioe) {
-					_log.error(ioe, ioe);
-				}
 			}
 		}
 
@@ -328,15 +290,6 @@ public class CentralizedThreadLocal<T> extends ThreadLocal<T> {
 		@Override
 		protected ThreadLocalMap initialValue() {
 			return new ThreadLocalMap();
-		}
-
-		@Override
-		public void remove() {
-			ThreadLocalMap threadLocalMap = get();
-
-			threadLocalMap.closeEntries();
-
-			super.remove();
 		}
 
 	}

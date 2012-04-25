@@ -15,13 +15,11 @@
 package com.liferay.portal.jcr;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.memory.FinalizeManager;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.util.PropsValues;
-
-import java.io.Closeable;
-import java.io.IOException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -55,20 +53,29 @@ public class JCRFactoryUtil {
 			return getJCRFactory().createSession(workspaceName);
 		}
 
-		CloseableSessionMap closableSessionMap = _closeableSessionMaps.get();
+		Map<String, Session> sessionMap = _sessionMap.get();
 
-		if (!closableSessionMap.containsKey(workspaceName)) {
-			Session session = getJCRFactory().createSession(workspaceName);
+		Session session = sessionMap.get(workspaceName);
+
+		if (session == null) {
+			Session jcrSession = getJCRFactory().createSession(workspaceName);
+
+			JCRSessionInvocationHandler jcrSessionInvocationHandler =
+				new JCRSessionInvocationHandler(jcrSession);
 
 			Object sessionProxy = ProxyUtil.newProxyInstance(
 				PortalClassLoaderUtil.getClassLoader(),
-				new Class<?>[] {Closeable.class, Map.class, Session.class},
-				new JCRSessionInvocationHandler(session));
+				new Class<?>[] {Map.class, Session.class},
+				jcrSessionInvocationHandler);
 
-			closableSessionMap.put(workspaceName, (Closeable)sessionProxy);
+			FinalizeManager.register(sessionProxy, jcrSessionInvocationHandler);
+
+			session = (Session)sessionProxy;
+
+			sessionMap.put(workspaceName, session);
 		}
 
-		return (Session)closableSessionMap.get(workspaceName);
+		return session;
 	}
 
 	public static JCRFactory getJCRFactory() {
@@ -92,20 +99,10 @@ public class JCRFactoryUtil {
 		getJCRFactory().shutdown();
 	}
 
-	private static ThreadLocal<CloseableSessionMap> _closeableSessionMaps =
-		new AutoResetThreadLocal<CloseableSessionMap>(
-			JCRFactoryUtil.class + "._session", new CloseableSessionMap());
 	private static JCRFactory _jcrFactory;
 
-	private static class CloseableSessionMap extends HashMap<String, Closeable>
-		implements Closeable {
-
-		public void close() throws IOException {
-			for (Closeable closeableSession : values()) {
-				closeableSession.close();
-			}
-		}
-
-	}
+	private static ThreadLocal<Map<String, Session>> _sessionMap =
+		new AutoResetThreadLocal<Map<String, Session>>(
+			JCRFactoryUtil.class + "._session", new HashMap<String, Session>());
 
 }

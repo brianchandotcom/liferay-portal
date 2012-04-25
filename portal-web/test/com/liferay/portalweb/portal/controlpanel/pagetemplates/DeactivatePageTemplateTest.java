@@ -24,6 +24,9 @@ public class DeactivatePageTemplateTest extends BaseTestCase {
 	public void testDeactivatePageTemplate() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -31,7 +34,7 @@ public class DeactivatePageTemplateTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -54,8 +57,9 @@ public class DeactivatePageTemplateTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Yes"),
 			selenium.getText("//tr[6]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//tr[6]/td[3]/span/ul/li/strong/a"));
-		selenium.clickAt("//tr[6]/td[3]/span/ul/li/strong/a",
+			selenium.getText(
+				"xPath=(//span[@title='Actions']/ul/li/strong/a/span)[4]"));
+		selenium.clickAt("xPath=(//span[@title='Actions']/ul/li/strong/a/span)[4]",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
@@ -65,7 +69,7 @@ public class DeactivatePageTemplateTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a")) {
 					break;
 				}
 			}
@@ -77,9 +81,9 @@ public class DeactivatePageTemplateTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isChecked("//input[@id='_146_activeCheckbox']"));

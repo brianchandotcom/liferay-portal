@@ -16,6 +16,7 @@ package com.liferay.portal.dao.shard;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.CentralizedThreadLocal;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.Map;
@@ -91,7 +92,7 @@ public class ShardDataSourceTargetSource implements TargetSource {
 	private static String[] _availableShardNames;
 
 	private static ThreadLocal<DataSource> _dataSource =
-		new ThreadLocal<DataSource>() {
+		new CentralizedThreadLocal<DataSource>(false) {
 
 		@Override
 		protected DataSource initialValue() {

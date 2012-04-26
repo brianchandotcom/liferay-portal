@@ -14,12 +14,18 @@
 
 package com.liferay.portal.kernel.memory;
 
+import com.liferay.portal.kernel.util.CentralizedThreadLocal;
+
 import java.lang.ref.SoftReference;
 
 /**
  * @author Shuyang Zhou
  */
-public class SoftReferenceThreadLocal<T> extends ThreadLocal<T> {
+public class SoftReferenceThreadLocal<T> extends CentralizedThreadLocal<T> {
+
+	public SoftReferenceThreadLocal() {
+		super(false);
+	}
 
 	@Override
 	public T get() {
@@ -63,6 +69,6 @@ public class SoftReferenceThreadLocal<T> extends ThreadLocal<T> {
 		new SoftReference<Object>(null);
 
 	private ThreadLocal<SoftReference<T>> _softReferenceThreadLocal =
-		new ThreadLocal<SoftReference<T>>();
+		new CentralizedThreadLocal<SoftReference<T>>(false);
 
 }

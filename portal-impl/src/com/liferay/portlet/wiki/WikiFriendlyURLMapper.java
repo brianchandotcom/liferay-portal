@@ -36,8 +36,10 @@ public class WikiFriendlyURLMapper extends DefaultFriendlyURLMapper {
 		if (routeParameters.containsKey("title")) {
 			String title = routeParameters.get("title");
 
-			title = title.replaceAll(StringPool.SLASH, "%2F");
-
+			title = title.replaceAll(StringPool.SLASH, ".sl.");
+			title = title.replaceAll("\\?", ".qm.");
+			title = title.replaceAll("\\+", ".ps.");
+			
 			routeParameters.put("title", title);
 		}
 
@@ -55,4 +57,22 @@ public class WikiFriendlyURLMapper extends DefaultFriendlyURLMapper {
 		return friendlyURLPath;
 	}
 
+	@Override
+	protected void populateParams(Map<String, String[]> parameterMap,
+			String namespace, Map<String, String> routeParameters) {
+
+		if (routeParameters.containsKey("title")) {
+			String title = routeParameters.get("title");
+
+			title = title.replaceAll(".sl.", StringPool.SLASH);
+			title = title.replaceAll(".qm.", StringPool.QUESTION);
+			title = title.replaceAll(".ps.", StringPool.PLUS);
+			
+			routeParameters.put("title", title);
+		}
+		
+		super.populateParams(parameterMap, namespace, routeParameters);
+
+	}
+	
 }

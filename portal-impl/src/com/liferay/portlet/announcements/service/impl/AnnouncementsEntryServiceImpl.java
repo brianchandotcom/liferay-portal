@@ -52,9 +52,14 @@ public class AnnouncementsEntryServiceImpl
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
+		String portletKey = PortletKeys.ANNOUNCEMENTS;
+
+		if (alert) {
+			portletKey = PortletKeys.ALERTS;
+		}
+
 		PortletPermissionUtil.check(
-			permissionChecker, plid, PortletKeys.ANNOUNCEMENTS,
-			ActionKeys.ADD_ENTRY);
+			permissionChecker, plid, portletKey, ActionKeys.ADD_ENTRY);
 
 		if (classNameId == 0) {
 			if (!permissionChecker.isOmniadmin()) {

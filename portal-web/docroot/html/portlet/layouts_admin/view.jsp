@@ -248,6 +248,10 @@ SitesUtil.addPortletBreadcrumbEntries(group, pagesName, redirectURL, request, re
 
 				layoutsContainer.io.set('uri', requestUri);
 
+				if (layoutsContainer.ParseContent) {
+					layoutsContainer.ParseContent.get('queue').stop();
+				}
+
 				layoutsContainer.io.start();
 			},
 			'.layout-tree'

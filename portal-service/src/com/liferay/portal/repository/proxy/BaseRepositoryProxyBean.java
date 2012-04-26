@@ -154,6 +154,12 @@ public class BaseRepositoryProxyBean
 		_baseRepository.deleteFileEntry(folderId, title);
 	}
 
+	public void deleteFileVersion(long fileEntryId, String version)
+		throws PortalException, SystemException {
+
+		_baseRepository.deleteFileVersion(fileEntryId, version);
+	}
+
 	public void deleteFolder(long folderId)
 		throws PortalException, SystemException {
 

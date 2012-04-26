@@ -234,6 +234,12 @@ public class LiferayRepository
 			getGroupId(), toFolderId(folderId), title);
 	}
 
+	public void deleteFileVersion(long fileEntryId, String version)
+		throws PortalException, SystemException {
+
+		dlFileEntryService.deleteFileVersion(fileEntryId, version);
+	}
+
 	public void deleteFolder(long folderId)
 		throws PortalException, SystemException {
 

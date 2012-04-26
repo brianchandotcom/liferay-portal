@@ -60,6 +60,7 @@ import com.liferay.portlet.documentlibrary.FileMimeTypeException;
 import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.FileSizeException;
 import com.liferay.portlet.documentlibrary.InvalidFileEntryTypeException;
+import com.liferay.portlet.documentlibrary.InvalidFileVersionException;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
@@ -183,6 +184,7 @@ public class EditFileEntryAction extends PortletAction {
 		}
 		catch (Exception e) {
 			if (e instanceof DuplicateLockException ||
+				e instanceof InvalidFileVersionException ||
 				e instanceof NoSuchFileEntryException ||
 				e instanceof PrincipalException) {
 
@@ -488,24 +490,31 @@ public class EditFileEntryAction extends PortletAction {
 			ActionRequest actionRequest, boolean moveToTrash)
 		throws Exception {
 
-		long[] deleteFileEntryIds = null;
-
 		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
+		String version = ParamUtil.getString(actionRequest, "version");
 
-		if (fileEntryId > 0) {
-			deleteFileEntryIds = new long[] {fileEntryId};
+		if ((fileEntryId > 0) && Validator.isNotNull(version)) {
+			DLAppServiceUtil.deleteFileVersion(fileEntryId, version);
 		}
 		else {
-			deleteFileEntryIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "deleteFileEntryIds"), 0L);
-		}
+			long[] deleteFileEntryIds = null;
 
-		for (long deleteFileEntryId : deleteFileEntryIds) {
-			if (moveToTrash) {
-				DLAppServiceUtil.moveFileEntryToTrash(deleteFileEntryId);
+			if (fileEntryId > 0) {
+				deleteFileEntryIds = new long[] {fileEntryId};
 			}
 			else {
-				DLAppServiceUtil.deleteFileEntry(deleteFileEntryId);
+				deleteFileEntryIds = StringUtil.split(
+					ParamUtil.getString(actionRequest, "deleteFileEntryIds"),
+					0L);
+			}
+
+			for (long deleteFileEntryId : deleteFileEntryIds) {
+				if (moveToTrash) {
+					DLAppServiceUtil.moveFileEntryToTrash(deleteFileEntryId);
+				}
+				else {
+					DLAppServiceUtil.deleteFileEntry(deleteFileEntryId);
+				}
 			}
 		}
 	}

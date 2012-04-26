@@ -30,6 +30,7 @@
 	<%= LanguageUtil.format(pageContext, "you-cannot-modify-this-document-because-it-was-locked-by-x-on-x", new Object[] {HtmlUtil.escape(PortalUtil.getUserName(lock.getUserId(), String.valueOf(lock.getUserId()))), dateFormatDateTime.format(lock.getCreateDate())}, false) %>
 </liferay-ui:error>
 
+<liferay-ui:error exception="<%= InvalidFileVersionException.class %>" message="file-version-is-invalid" />
 <liferay-ui:error exception="<%= NoSuchDirectoryException.class %>" message="the-folder-could-not-be-found" />
 <liferay-ui:error exception="<%= NoSuchFileException.class %>" message="the-document-could-not-be-found" />
 <liferay-ui:error exception="<%= NoSuchFileEntryException.class %>" message="the-document-could-not-be-found" />

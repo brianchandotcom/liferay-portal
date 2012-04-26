@@ -217,6 +217,18 @@ public class DLFileEntryServiceSoap {
 		}
 	}
 
+	public static void deleteFileVersion(long fileEntryId,
+		java.lang.String version) throws RemoteException {
+		try {
+			DLFileEntryServiceUtil.deleteFileVersion(fileEntryId, version);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntrySoap fetchFileEntryByImageId(
 		long imageId) throws RemoteException {
 		try {

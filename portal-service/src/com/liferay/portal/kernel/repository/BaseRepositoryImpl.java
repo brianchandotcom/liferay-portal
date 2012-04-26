@@ -90,6 +90,12 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 		deleteFileEntry(fileEntry.getFileEntryId());
 	}
 
+	public void deleteFileVersion(long fileEntryId, String version)
+		throws PortalException, SystemException {
+
+		throw new UnsupportedOperationException();
+	}
+
 	public void deleteFolder(long parentFolderId, String title)
 		throws PortalException, SystemException {
 

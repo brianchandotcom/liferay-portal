@@ -17,7 +17,7 @@
 }
 
 .results-grid {
-	background: #FFF;
+	background: none;
 	border: solid #D7D7D7;
 	border-width: 0 1px;
 }
@@ -81,7 +81,7 @@
 
 .results-row {
 	td {
-		background: none;
+		background: #FFF;
 		border: 1px solid;
 		border-color: #D7D7D7 #E7E7E7;
 		padding: 5px 10px;

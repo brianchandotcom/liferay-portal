@@ -88,14 +88,15 @@ public class GroupServiceSoap {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.GroupSoap addGroup(
-		long liveGroupId, java.lang.String name, java.lang.String description,
-		int type, java.lang.String friendlyURL, boolean site, boolean active,
+		long parentGroupId, long liveGroupId, java.lang.String name,
+		java.lang.String description, int type, java.lang.String friendlyURL,
+		boolean site, boolean active,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			com.liferay.portal.model.Group returnValue = GroupServiceUtil.addGroup(liveGroupId,
-					name, description, type, friendlyURL, site, active,
-					serviceContext);
+			com.liferay.portal.model.Group returnValue = GroupServiceUtil.addGroup(parentGroupId,
+					liveGroupId, name, description, type, friendlyURL, site,
+					active, serviceContext);
 
 			return com.liferay.portal.model.GroupSoap.toSoapModel(returnValue);
 		}
@@ -128,13 +129,15 @@ public class GroupServiceSoap {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.GroupSoap addGroup(
-		java.lang.String name, java.lang.String description, int type,
-		java.lang.String friendlyURL, boolean site, boolean active,
+		long parentGroupId, java.lang.String name,
+		java.lang.String description, int type, java.lang.String friendlyURL,
+		boolean site, boolean active,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			com.liferay.portal.model.Group returnValue = GroupServiceUtil.addGroup(name,
-					description, type, friendlyURL, site, active, serviceContext);
+			com.liferay.portal.model.Group returnValue = GroupServiceUtil.addGroup(parentGroupId,
+					name, description, type, friendlyURL, site, active,
+					serviceContext);
 
 			return com.liferay.portal.model.GroupSoap.toSoapModel(returnValue);
 		}
@@ -730,13 +733,14 @@ public class GroupServiceSoap {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.GroupSoap updateGroup(long groupId,
-		java.lang.String name, java.lang.String description, int type,
-		java.lang.String friendlyURL, boolean active,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		long parentGroupId, java.lang.String name,
+		java.lang.String description, int type, java.lang.String friendlyURL,
+		boolean active, com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.portal.model.Group returnValue = GroupServiceUtil.updateGroup(groupId,
-					name, description, type, friendlyURL, active, serviceContext);
+					parentGroupId, name, description, type, friendlyURL,
+					active, serviceContext);
 
 			return com.liferay.portal.model.GroupSoap.toSoapModel(returnValue);
 		}

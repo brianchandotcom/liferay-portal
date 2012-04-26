@@ -81,9 +81,9 @@ public interface GroupService extends BaseService {
 	valid friendly URL could not be created for the group
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portal.model.Group addGroup(long liveGroupId,
-		java.lang.String name, java.lang.String description, int type,
-		java.lang.String friendlyURL, boolean site, boolean active,
+	public com.liferay.portal.model.Group addGroup(long parentGroupId,
+		long liveGroupId, java.lang.String name, java.lang.String description,
+		int type, java.lang.String friendlyURL, boolean site, boolean active,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -109,9 +109,9 @@ public interface GroupService extends BaseService {
 	valid friendly URL could not be created for the group
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portal.model.Group addGroup(java.lang.String name,
-		java.lang.String description, int type, java.lang.String friendlyURL,
-		boolean site, boolean active,
+	public com.liferay.portal.model.Group addGroup(long parentGroupId,
+		java.lang.String name, java.lang.String description, int type,
+		java.lang.String friendlyURL, boolean site, boolean active,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -517,9 +517,9 @@ public interface GroupService extends BaseService {
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.Group updateGroup(long groupId,
-		java.lang.String name, java.lang.String description, int type,
-		java.lang.String friendlyURL, boolean active,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		long parentGroupId, java.lang.String name,
+		java.lang.String description, int type, java.lang.String friendlyURL,
+		boolean active, com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 }

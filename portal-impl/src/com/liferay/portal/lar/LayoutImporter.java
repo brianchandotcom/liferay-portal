@@ -344,7 +344,8 @@ public class LayoutImporter {
 		String larType = headerElement.attributeValue("type");
 
 		if (!larType.equals("layout-set") &&
-			!larType.equals("layout-set-prototype")) {
+			!larType.equals("layout-set-prototype") &&
+			!larType.equals("layout-prototype")) {
 
 			throw new LARTypeException(
 				"Invalid type of LAR file (" + larType + ")");
@@ -395,6 +396,36 @@ public class LayoutImporter {
 
 				LayoutSetPrototypeLocalServiceUtil.updateLayoutSetPrototype(
 					layoutSetPrototype);
+			}
+		}
+		else if (group.isLayoutPrototype() &&
+				larType.equals("layout-prototype")) {
+
+			LayoutPrototype layoutPrototype =
+				LayoutPrototypeLocalServiceUtil.getLayoutPrototype(
+					group.getClassPK());
+
+			String layoutPrototypeUuid = GetterUtil.getString(
+				headerElement.attributeValue("type-uuid"));
+
+			LayoutPrototype existingLayoutPrototype = null;
+
+			if (Validator.isNotNull(layoutPrototypeUuid)) {
+				try {
+					existingLayoutPrototype =
+						LayoutPrototypeLocalServiceUtil.
+							getLayoutPrototypeByUuidAndCompanyId(
+								layoutPrototypeUuid, companyId);
+				}
+				catch (NoSuchLayoutPrototypeException nslpe) {
+				}
+			}
+
+			if (existingLayoutPrototype == null) {
+				layoutPrototype.setUuid(layoutPrototypeUuid);
+
+				LayoutPrototypeLocalServiceUtil.updateLayoutPrototype(
+					layoutPrototype);
 			}
 		}
 

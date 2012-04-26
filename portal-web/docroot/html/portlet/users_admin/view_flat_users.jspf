@@ -18,9 +18,14 @@
 	<aui:input name="viewUsersRedirect" type="hidden" value="<%= viewUsersRedirect %>" />
 </c:if>
 
+<%
+SearchContainer userSearch = new UserSearch(renderRequest, "cur2", portletURL);
+
+userSearch.setRowChecker(new RowChecker(renderResponse));
+%>
+
 <liferay-ui:search-container
-	rowChecker="<%= new RowChecker(renderResponse) %>"
-	searchContainer="<%= new UserSearch(renderRequest, portletURL) %>"
+	searchContainer="<%= userSearch %>"
 >
 	<aui:input name="deleteUserIds" type="hidden" />
 	<aui:input disabled="<%= true %>" name="usersRedirect" type="hidden" value="<%= portletURL.toString() %>" />

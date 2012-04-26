@@ -60,9 +60,16 @@ public class OrganizationSearch extends SearchContainer<Organization> {
 	public OrganizationSearch(
 		PortletRequest portletRequest, PortletURL iteratorURL) {
 
+		this(portletRequest, DEFAULT_CUR_PARAM, iteratorURL);
+	}
+
+	public OrganizationSearch(
+		PortletRequest portletRequest, String curParam,
+		PortletURL iteratorURL) {
+
 		super(
 			portletRequest, new OrganizationDisplayTerms(portletRequest),
-			new OrganizationSearchTerms(portletRequest), DEFAULT_CUR_PARAM,
+			new OrganizationSearchTerms(portletRequest), curParam,
 			DEFAULT_DELTA, iteratorURL, headerNames, EMPTY_RESULTS_MESSAGE);
 
 		OrganizationDisplayTerms displayTerms =

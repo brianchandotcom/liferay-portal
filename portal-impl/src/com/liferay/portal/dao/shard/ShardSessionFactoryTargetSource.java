@@ -14,6 +14,7 @@
 
 package com.liferay.portal.dao.shard;
 
+import com.liferay.portal.kernel.util.CentralizedThreadLocal;
 import com.liferay.portal.spring.hibernate.PortalHibernateConfiguration;
 import com.liferay.portal.util.PropsValues;
 
@@ -85,7 +86,7 @@ public class ShardSessionFactoryTargetSource implements TargetSource {
 		new HashMap<String, SessionFactory>();
 
 	private static ThreadLocal<SessionFactory> _sessionFactory =
-		new ThreadLocal<SessionFactory>() {
+		new CentralizedThreadLocal<SessionFactory>(false) {
 
 		@Override
 		protected SessionFactory initialValue() {

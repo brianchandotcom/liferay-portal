@@ -82,3 +82,49 @@ portletURL.setParameter("struts_action", "/layout_prototypes/view");
 		<liferay-ui:search-iterator />
 	</liferay-ui:search-container>
 </aui:form>
+
+<aui:script>
+	Liferay.provide(
+		window,
+		'<portlet:namespace />exportLayoutPrototype',
+		function(dialogTargetURL) {
+			Liferay.Util.openWindow(
+				{
+					dialog:
+						{
+							centered: true,
+							constrain: true,
+							modal: true,
+							width: 600
+						},
+					id: '<portlet:namespace />exportDialog',
+					title: '<%= UnicodeLanguageUtil.get(pageContext, "export") %>',
+					uri: dialogTargetURL
+				}
+			);
+		},
+		['aui-dialog']
+	);
+
+	Liferay.provide(
+		window,
+		'<portlet:namespace />importLayoutPrototype',
+		function(dialogTargetURL) {
+			Liferay.Util.openWindow(
+				{
+					dialog:
+						{
+							centered: true,
+							constrain: true,
+							modal: true,
+							width: 600
+						},
+					id: '<portlet:namespace />importDialog',
+					title: '<%= UnicodeLanguageUtil.get(pageContext, "import") %>',
+					uri: dialogTargetURL
+				}
+			);
+		},
+		['aui-dialog']
+	);
+</aui:script>

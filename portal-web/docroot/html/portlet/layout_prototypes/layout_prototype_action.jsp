@@ -68,4 +68,59 @@ long layoutPrototypeId = layoutPrototype.getLayoutPrototypeId();
 			url="<%= deleteURL %>"
 		/>
 	</c:if>
+
+	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, layoutPrototype.getGroupId(), ActionKeys.EXPORT_IMPORT_LAYOUTS) %>">
+		<portlet:renderURL var="exportURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+			<portlet:param name="struts_action" value="/layout_prototypes/export_layouts" />
+			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
+			<portlet:param name="layoutPrototypeId" value="<%= String.valueOf(layoutPrototypeId) %>" />
+			<portlet:param name="layoutPrototypeExportImport" value="<%= Boolean.TRUE.toString() %>" />
+			<portlet:param name="rootNodeName" value="<%= layoutPrototype.getName(locale) %>" />
+			<portlet:param name="groupId" value="<%= String.valueOf(layoutPrototype.getGroupId()) %>" />
+		</portlet:renderURL>
+
+		<%
+		StringBundler sb = new StringBundler(6);
+
+		sb.append("javascript:");
+		sb.append(renderResponse.getNamespace());
+		sb.append("exportLayoutPrototype");
+		sb.append("('");
+		sb.append(exportURL);
+		sb.append("');");
+		%>
+
+		<liferay-ui:icon
+			image="export"
+			url="<%= sb.toString() %>"
+		/>
+	</c:if>
+
+	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, layoutPrototype.getGroupId(), ActionKeys.EXPORT_IMPORT_LAYOUTS) %>">
+		<portlet:renderURL var="importURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+			<portlet:param name="struts_action" value="/layout_prototypes/import_layouts" />
+			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.IMPORT %>" />
+			<portlet:param name="layoutPrototypeId" value="<%= String.valueOf(layoutPrototypeId) %>" />
+			<portlet:param name="layoutPrototypeExportImport" value="<%= Boolean.TRUE.toString() %>" />
+			<portlet:param name="rootNodeName" value="<%= layoutPrototype.getName(locale) %>" />
+			<portlet:param name="groupId" value="<%= String.valueOf(layoutPrototype.getGroupId()) %>" />
+		</portlet:renderURL>
+
+		<%
+			StringBundler sb = new StringBundler(6);
+
+			sb.append("javascript:");
+			sb.append(renderResponse.getNamespace());
+			sb.append("importLayoutPrototype");
+			sb.append("('");
+			sb.append(importURL);
+			sb.append("');");
+		%>
+
+		<liferay-ui:icon
+			image="../aui/arrowthick-1-t"
+			message="import"
+			url="<%= sb.toString() %>"
+		/>
+	</c:if>
 </liferay-ui:icon-menu>

@@ -39,6 +39,9 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 
 String rootNodeName = ParamUtil.getString(request, "rootNodeName");
 
+boolean layoutPrototypeExportImport = ParamUtil.getBoolean(request, "layoutPrototypeExportImport");
+long layoutPrototypeId = ParamUtil.getLong(request, "layoutPrototypeId");
+
 List<Portlet> portletsList = new ArrayList<Portlet>();
 Set<String> portletIdsSet = new HashSet<String>();
 
@@ -166,45 +169,59 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 
 			<c:choose>
 				<c:when test="<%= cmd.equals(Constants.EXPORT) %>">
-					var layoutsExportTreeOutput = A.one('#<portlet:namespace />layoutsExportTreeOutput');
+					var layoutIds = [];
 
-					if (layoutsExportTreeOutput) {
-						var treeView = layoutsExportTreeOutput.getData('treeInstance');
-
-						var layoutIds = [];
-
-						var regexLayoutId = /layoutId_(\d+)/;
-
-						treeView.eachChildren(
-							function(item, index, collection) {
-								if (item.isChecked()) {
-									var match = regexLayoutId.exec(item.get('id'));
-
-									if (match) {
-										layoutIds.push(
-											{
-												includeChildren: !item.hasChildNodes(),
-												layoutId: match[1]
-											}
-										);
-									}
+					<c:choose>
+						<c:when test="<%= layoutPrototypeExportImport %>">
+							layoutIds.push(
+								{
+									includeChildren: false,
+									layoutId: <%= layoutPrototypeId %>
 								}
-							},
-							true
-						);
+							);
+						</c:when>
+						<c:otherwise>
+							var layoutsExportTreeOutput = A.one('#<portlet:namespace />layoutsExportTreeOutput');
 
-						var layoutIdsInput = A.one('#<portlet:namespace />layoutIds');
+							if (layoutsExportTreeOutput) {
+								var treeView = layoutsExportTreeOutput.getData('treeInstance');
 
-						if (layoutIdsInput) {
-							layoutIdsInput.val(A.JSON.stringify(layoutIds));
-						}
+								var regexLayoutId = /layoutId_(\d+)/;
+
+								treeView.eachChildren(
+									function(item, index, collection) {
+										if (item.isChecked()) {
+											var match = regexLayoutId.exec(item.get('id'));
+
+											if (match) {
+												layoutIds.push(
+													{
+														includeChildren: !item.hasChildNodes(),
+														layoutId: match[1]
+													}
+												);
+											}
+										}
+									},
+									true
+								);
+							}
+						</c:otherwise>
+					</c:choose>
+
+					var layoutIdsInput = A.one('#<portlet:namespace />layoutIds');
+
+					if (layoutIdsInput) {
+						layoutIdsInput.val(A.JSON.stringify(layoutIds));
 					}
 
 					<portlet:actionURL var="exportPagesURL">
 						<portlet:param name="struts_action" value="/layouts_admin/export_layouts" />
-						<portlet:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
+						<portlet:param name="groupId" value="<%= (layoutPrototypeExportImport) ? String.valueOf(groupId) : String.valueOf(liveGroupId) %>" />
 						<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 						<portlet:param name="exportLAR" value="<%= Boolean.TRUE.toString() %>" />
+						<portlet:param name="layoutPrototypeId" value="<%= String.valueOf(layoutPrototypeId) %>" />
+						<portlet:param name="layoutPrototypeExportImport" value="<%= String.valueOf(layoutPrototypeExportImport) %>" />
 					</portlet:actionURL>
 
 					submitForm(form, '<%= exportPagesURL + "&etag=0" %>', false);
@@ -214,6 +231,8 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 						<portlet:param name="struts_action" value="/layouts_admin/import_layouts" />
 						<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 						<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+						<portlet:param name="layoutPrototypeId" value="<%= String.valueOf(layoutPrototypeId) %>" />
+						<portlet:param name="layoutPrototypeExportImport" value="<%= String.valueOf(layoutPrototypeExportImport) %>" />
 					</portlet:actionURL>
 
 					form.attr('encoding', 'multipart/form-data');

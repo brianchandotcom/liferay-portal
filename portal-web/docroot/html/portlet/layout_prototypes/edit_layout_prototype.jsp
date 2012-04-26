@@ -65,7 +65,7 @@ Locale[] locales = LanguageUtil.getAvailableLocales();
 			<aui:field-wrapper label="configuration">
 				<liferay-portlet:actionURL portletName="<%= PortletKeys.SITE_REDIRECTOR %>" var="viewURL">
 					<portlet:param name="struts_action" value="/my_sites/view" />
-					<portlet:param name="groupId" value="<%= String.valueOf(layoutPrototype.getGroup().getGroupId()) %>" />
+					<portlet:param name="groupId" value="<%= String.valueOf(layoutPrototype.getGroupId()) %>" />
 					<portlet:param name="privateLayout" value="<%= Boolean.TRUE.toString() %>" />
 				</liferay-portlet:actionURL>
 

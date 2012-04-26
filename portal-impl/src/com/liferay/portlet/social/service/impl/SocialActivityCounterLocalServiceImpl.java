@@ -81,8 +81,7 @@ public class SocialActivityCounterLocalServiceImpl
 	 * <p>
 	 * This method uses the lock service to guard against multiple threads
 	 * trying to insert the same counter because this service is called
-	 * asynchronously from the social activity service, this method must , so it
-	 * is using the lock service for that.
+	 * asynchronously from the social activity service.
 	 * </p>
 	 *
 	 * @param  groupId the primary key of the group
@@ -122,8 +121,7 @@ public class SocialActivityCounterLocalServiceImpl
 	 * <p>
 	 * This method uses the lock service to guard against multiple threads
 	 * trying to insert the same counter because this service is called
-	 * asynchronously from the social activity service, this method must , so it
-	 * is using the lock service for that.
+	 * asynchronously from the social activity service.
 	 * </p>
 	 *
 	 * @param  groupId the primary key of the group
@@ -254,8 +252,7 @@ public class SocialActivityCounterLocalServiceImpl
 	 *
 	 * </p>
 	 * This method is called asynchronously from the social activity service
-	 * when
-	 * the user performs an activity defined in
+	 * when the user performs an activity defined in
 	 * </code>liferay-social.xml</code>.
 	 * </p>
 	 *
@@ -263,7 +260,7 @@ public class SocialActivityCounterLocalServiceImpl
 	 * This method first calls the activity processor class, if there is one
 	 * defined for the activity, checks for limits and increments all the
 	 * counters that belong to the activity. Afterwards, it processes the
-	 * activity with respect to achievement TODO classes, if any. Lastly it
+	 * activity with respect to achievement classes, if any. Lastly it
 	 * increments the built-in <code>user.activities</code> and
 	 * <code>asset.activities</code> counters.
 	 * </p>

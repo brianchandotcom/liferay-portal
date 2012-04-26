@@ -219,7 +219,14 @@
 					return "<%= themeDisplay.getURLHome() %>";
 				},
 				getSessionId: function() {
-					return "<%= session.getId() %>";
+					<c:choose>
+						<c:when test="<%= PropsValues.SESSION_ENABLE_URL_WITH_SESSION_ID %>">
+							return "<%= session.getId() %>";
+						</c:when>
+						<c:otherwise>
+							return "";
+						</c:otherwise>
+					</c:choose>
 				},
 				getPortletSetupShowBordersDefault: function() {
 					return <%= GetterUtil.getString(themeDisplay.getThemeSetting("portlet-setup-show-borders-default"), StringUtil.valueOf(PropsValues.THEME_PORTLET_DECORATE_DEFAULT)) %>;

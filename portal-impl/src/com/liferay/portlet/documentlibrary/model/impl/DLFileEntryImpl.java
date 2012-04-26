@@ -166,6 +166,11 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 			getFileEntryId(), version);
 	}
 
+	public int getFileVersionCount(int status) throws SystemException {
+		return DLFileVersionLocalServiceUtil.getFileVersionCount(
+			getFileEntryId(), status);
+	}
+
 	public List<DLFileVersion> getFileVersions(int status)
 		throws SystemException {
 

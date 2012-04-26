@@ -117,6 +117,10 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 		return new LiferayFileVersion(_dlFileEntry.getFileVersion(version));
 	}
 
+	public int getFileVersionCount(int status) throws SystemException {
+		return _dlFileEntry.getFileVersionCount(status);
+	}
+
 	public List<FileVersion> getFileVersions(int status)
 		throws SystemException {
 

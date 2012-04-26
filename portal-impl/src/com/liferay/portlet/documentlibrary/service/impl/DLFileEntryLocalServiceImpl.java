@@ -692,24 +692,24 @@ public class DLFileEntryLocalServiceImpl
 				}
 			}
 
-			DLFileEntry fileEntry = dlFileEntryPersistence.findByPrimaryKey(
-				fileEntryId);
-
 			dlFileVersionPersistence.remove(fileVersion);
 
 			expandoValueLocalService.deleteValues(
 				DLFileVersion.class.getName(), fileVersion.getFileVersionId());
 
-			if (version.equals(fileEntry.getVersion())) {
+			DLFileEntry dlFileEntry = dlFileEntryPersistence.findByPrimaryKey(
+				fileEntryId);
+
+			if (version.equals(dlFileEntry.getVersion())) {
 				try {
-					DLFileVersion latestFileVersion =
+					DLFileVersion dlLatestFileVersion =
 						dlFileVersionLocalService.getLatestFileVersion(
-							fileEntry.getFileEntryId(), true);
+							dlFileEntry.getFileEntryId(), true);
 
-					fileEntry.setVersion(latestFileVersion.getVersion());
-					fileEntry.setSize(latestFileVersion.getSize());
+					dlFileEntry.setVersion(dlLatestFileVersion.getVersion());
+					dlFileEntry.setSize(dlLatestFileVersion.getSize());
 
-					dlFileEntryPersistence.update(fileEntry, false);
+					dlFileEntryPersistence.update(dlFileEntry, false);
 				}
 				catch (NoSuchFileVersionException nsfve) {
 				}

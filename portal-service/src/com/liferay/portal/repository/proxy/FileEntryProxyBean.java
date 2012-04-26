@@ -108,6 +108,10 @@ public class FileEntryProxyBean
 		return newFileVersionProxyBean(fileVersion);
 	}
 
+	public int getFileVersionCount(int status) throws SystemException {
+		return _fileEntry.getFileVersionCount(status);
+	}
+
 	public List<FileVersion> getFileVersions(int status)
 		throws SystemException {
 

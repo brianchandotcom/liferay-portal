@@ -88,6 +88,8 @@ public interface FileEntry extends RepositoryModel<FileEntry> {
 	public FileVersion getFileVersion(String version)
 		throws PortalException, SystemException;
 
+	public int getFileVersionCount(int status) throws SystemException;
+
 	public List<FileVersion> getFileVersions(int status)
 		throws SystemException;
 

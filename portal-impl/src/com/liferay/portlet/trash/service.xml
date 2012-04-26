@@ -24,6 +24,7 @@
 		<column name="classPK" type="long" />
 		<column name="typeSettings" type="String" />
 		<column name="status" type="int" />
+		<column name="trashVersions" type="Collection" entity="TrashVersion" mapping-key="entryId" />
 
 		<!-- Order -->
 
@@ -42,6 +43,25 @@
 		<finder name="C_C" return-type="TrashEntry" unique="true">
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
+		</finder>
+	</entity>
+	<entity name="TrashVersion" local-service="false" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="versionId" type="long" primary="true" />
+
+		<!-- Other fields  -->
+
+		<column name="entryId" type="long" />
+		<column name="classNameId" type="long" />
+		<column name="classPK" type="long" />
+		<column name="status" type="int" />
+
+		<!-- Finder methods -->
+
+		<finder name="EntryId" return-type="Collection">
+			<finder-column name="entryId" />
 		</finder>
 	</entity>
 </service-builder>

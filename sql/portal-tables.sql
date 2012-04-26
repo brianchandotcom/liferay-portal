@@ -1989,6 +1989,14 @@ create table TrashEntry (
 	status INTEGER
 );
 
+create table TrashVersion (
+	versionId LONG not null primary key,
+	entryId LONG,
+	classNameId LONG,
+	classPK LONG,
+	status INTEGER
+);
+
 create table User_ (
 	uuid_ VARCHAR(75) null,
 	userId LONG not null primary key,

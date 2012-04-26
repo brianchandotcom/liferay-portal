@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -44,11 +45,15 @@ import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
 import com.liferay.portlet.documentlibrary.service.base.DLAppHelperLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
 import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
+import com.liferay.portlet.documentlibrary.util.comparator.FileVersionVersionComparator;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
+import com.liferay.portlet.trash.model.TrashVersion;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -313,10 +318,15 @@ public class DLAppHelperLocalServiceImpl
 
 		// File entry
 
-		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+		List<DLFileVersion> dlFileVersions =
+			dlFileVersionLocalService.getFileVersions(
+				fileEntry.getFileEntryId(), WorkflowConstants.STATUS_ANY);
 
-		FileVersion fileVersion = new LiferayFileVersion(
-			dlFileEntry.getLatestFileVersion(true));
+		dlFileVersions = ListUtil.copy(dlFileVersions);
+
+		Collections.sort(dlFileVersions, new FileVersionVersionComparator());
+
+		FileVersion fileVersion = new LiferayFileVersion(dlFileVersions.get(0));
 
 		int oldStatus = fileVersion.getStatus();
 
@@ -336,10 +346,24 @@ public class DLAppHelperLocalServiceImpl
 
 		// Trash
 
+		List<ObjectValuePair<Long, Integer>> fileVersionStatuses =
+			new ArrayList<ObjectValuePair<Long, Integer>>(
+				dlFileVersions.size());
+
+		for (DLFileVersion dlFileVersion : dlFileVersions) {
+			ObjectValuePair<Long, Integer> fileVersionStatus =
+				new ObjectValuePair<Long, Integer>();
+
+			fileVersionStatus.setKey(dlFileVersion.getFileVersionId());
+			fileVersionStatus.setValue(dlFileVersion.getStatus());
+
+			fileVersionStatuses.add(fileVersionStatus);
+		}
+
 		trashEntryLocalService.addTrashEntry(
 			fileEntry.getCompanyId(), fileEntry.getGroupId(),
 			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId(),
-			oldStatus, null);
+			oldStatus, fileVersionStatuses, null);
 
 		// Workflow
 
@@ -378,9 +402,17 @@ public class DLAppHelperLocalServiceImpl
 
 		// File version
 
+		Map<String, Serializable> workflowContext =
+			new HashMap<String, Serializable>();
+
+		List<TrashVersion> trashVersions = trashEntryLocalService.getVersions(
+			trashEntry.getEntryId());
+
+		workflowContext.put("trashVersions", (Serializable)trashVersions);
+
 		dlFileEntryLocalService.updateStatus(
 			userId, fileVersion.getFileVersionId(), trashEntry.getStatus(),
-			new HashMap<String, Serializable>(), new ServiceContext());
+			workflowContext, new ServiceContext());
 
 		// Social
 

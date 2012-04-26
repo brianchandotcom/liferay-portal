@@ -316,7 +316,8 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated {@link #getFileEntriesAndFileShortcuts(long, long, QueryDefinition)}
+	* @deprecated {@link #getFileEntriesAndFileShortcuts(long, long,
+	QueryDefinition)}
 	*/
 	public static java.util.List<java.lang.Object> getFileEntriesAndFileShortcuts(
 		long groupId, long folderId, int status, int start, int end)
@@ -336,7 +337,8 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated {@link #getFileEntriesAndFileShortcutsCount(long, long, QueryDefinition)}
+	* @deprecated {@link #getFileEntriesAndFileShortcutsCount(long, long,
+	QueryDefinition)}
 	*/
 	public static int getFileEntriesAndFileShortcutsCount(long groupId,
 		long folderId, int status)
@@ -404,7 +406,8 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated {@link #getFoldersAndFileEntriesAndFileShortcuts(long, long, boolean, QueryDefinition)}
+	* @deprecated {@link #getFoldersAndFileEntriesAndFileShortcuts(long, long,
+	boolean, QueryDefinition)}
 	*/
 	public static java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
 		long groupId, long folderId, int status, boolean includeMountFolders,
@@ -416,7 +419,8 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated {@link #getFoldersAndFileEntriesAndFileShortcuts(long, long, boolean, QueryDefinition)}
+	* @deprecated {@link #getFoldersAndFileEntriesAndFileShortcuts(long, long,
+	boolean, QueryDefinition)}
 	*/
 	public static java.util.List<java.lang.Object> getFoldersAndFileEntriesAndFileShortcuts(
 		long groupId, long folderId, int status, java.lang.String[] mimeTypes,
@@ -439,7 +443,8 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated {@link #getFoldersAndFileEntriesAndFileShortcutsCount(long, long, String[], boolean, QueryDefinition)
+	* @deprecated {@link #getFoldersAndFileEntriesAndFileShortcutsCount(long,
+	long, String[], boolean, QueryDefinition)
 	*/
 	public static int getFoldersAndFileEntriesAndFileShortcutsCount(
 		long groupId, long folderId, int status, boolean includeMountFolders)
@@ -450,7 +455,8 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated {@link #getFoldersAndFileEntriesAndFileShortcutsCount(long, long, String[], boolean, QueryDefinition)
+	* @deprecated {@link #getFoldersAndFileEntriesAndFileShortcutsCount(long,
+	long, String[], boolean, QueryDefinition)
 	*/
 	public static int getFoldersAndFileEntriesAndFileShortcutsCount(
 		long groupId, long folderId, int status, java.lang.String[] mimeTypes,

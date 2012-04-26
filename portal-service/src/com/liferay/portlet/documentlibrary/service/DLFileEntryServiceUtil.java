@@ -137,6 +137,13 @@ public class DLFileEntryServiceUtil {
 		getService().deleteFileEntry(groupId, folderId, title);
 	}
 
+	public static void deleteFileVersion(long fileEntryId,
+		java.lang.String version)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteFileVersion(fileEntryId, version);
+	}
+
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntry fetchFileEntryByImageId(
 		long imageId)
 		throws com.liferay.portal.kernel.exception.PortalException,

@@ -455,6 +455,28 @@ public class DLAppServiceSoap {
 	}
 
 	/**
+	* Deletes the file version. File versions can only be deleted if it is
+	* approved and there are other approved file versions available. This
+	* method is only supported by the Liferay repository.
+	*
+	* @param fileEntryId the primary key of the file entry
+	* @param version the version label of the file version
+	* @throws PortalException if the file version could not be found or invalid
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void deleteFileVersion(long fileEntryId,
+		java.lang.String version) throws RemoteException {
+		try {
+			DLAppServiceUtil.deleteFileVersion(fileEntryId, version);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
 	* Deletes the folder with the primary key and all of its subfolders and
 	* file entries.
 	*

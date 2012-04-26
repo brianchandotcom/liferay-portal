@@ -300,6 +300,11 @@ public class DLFileVersionLocalServiceUtil {
 		return getService().getFileVersionByUuidAndGroupId(uuid, groupId);
 	}
 
+	public static int getFileVersionCount(long fileEntryId, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getFileVersionCount(fileEntryId, status);
+	}
+
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> getFileVersions(
 		long fileEntryId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {

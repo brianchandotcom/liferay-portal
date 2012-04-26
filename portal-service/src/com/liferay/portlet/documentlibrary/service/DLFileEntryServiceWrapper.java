@@ -128,6 +128,12 @@ public class DLFileEntryServiceWrapper implements DLFileEntryService,
 		_dlFileEntryService.deleteFileEntry(groupId, folderId, title);
 	}
 
+	public void deleteFileVersion(long fileEntryId, java.lang.String version)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_dlFileEntryService.deleteFileVersion(fileEntryId, version);
+	}
+
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry fetchFileEntryByImageId(
 		long imageId)
 		throws com.liferay.portal.kernel.exception.PortalException,

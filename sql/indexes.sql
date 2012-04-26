@@ -781,6 +781,8 @@ create unique index IX_B35F73D5 on TrashEntry (classNameId, classPK);
 create index IX_2674F2A8 on TrashEntry (companyId);
 create index IX_526A032A on TrashEntry (groupId);
 
+create index IX_55D44577 on TrashVersion (entryId);
+
 create index IX_524FEFCE on UserGroup (companyId);
 create unique index IX_23EAD0D on UserGroup (companyId, name);
 create index IX_69771487 on UserGroup (companyId, parentUserGroupId);

@@ -2535,6 +2535,13 @@
 		</field>
 		<field name="status" type="int" />
 	</model>
+	<model name="com.liferay.portlet.trash.model.TrashVersion">
+		<field name="versionId" type="long" />
+		<field name="entryId" type="long" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="status" type="int" />
+	</model>
 	<model name="com.liferay.portlet.wiki.model.WikiNode">
 		<field name="uuid" type="String" />
 		<field name="nodeId" type="long" />

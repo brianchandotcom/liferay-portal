@@ -253,6 +253,7 @@ public interface TrashEntryLocalService extends PersistedModelLocalService {
 	public com.liferay.portlet.trash.model.TrashEntry addTrashEntry(
 		long companyId, long groupId, java.lang.String className, long classPK,
 		int status,
+		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.Long, java.lang.Integer>> versions,
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -261,7 +262,8 @@ public interface TrashEntryLocalService extends PersistedModelLocalService {
 	*
 	* @param className the class name of entity
 	* @param classPK the primary key of the entry
-	* @throws PortalException if the user did not have permission to delete the entry
+	* @throws PortalException if the user did not have permission to delete the
+	entry
 	* @throws SystemException if a system exception occurred
 	*/
 	public void deleteEntry(java.lang.String className, long classPK)
@@ -358,4 +360,16 @@ public interface TrashEntryLocalService extends PersistedModelLocalService {
 		java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the trash versions associated with the trash entry.
+	*
+	* @param entryId the primary key of the trash entry
+	* @return the trash versions associated with the trash entry
+	* @throws SystemException if a system exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.trash.model.TrashVersion> getVersions(
+		long entryId)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

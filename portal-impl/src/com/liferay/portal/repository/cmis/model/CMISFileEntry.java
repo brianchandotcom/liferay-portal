@@ -165,17 +165,6 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 				", version=" + version + "}");
 	}
 
-	public int getFileVersionCount(int status) throws SystemException {
-		try {
-			List<Document> documents = getAllVersions();
-
-			return documents.size();
-		}
-		catch (PortalException pe) {
-			throw new RepositoryException(pe);
-		}
-	}
-
 	public List<FileVersion> getFileVersions(int status)
 		throws SystemException {
 

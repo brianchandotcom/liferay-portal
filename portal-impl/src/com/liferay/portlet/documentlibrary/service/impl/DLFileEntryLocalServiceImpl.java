@@ -1071,11 +1071,26 @@ public class DLFileEntryLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
+		if (Validator.isNull(version) ||
+			version.equals(DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION)) {
+
+			throw new InvalidFileVersionException();
+		}
+
 		DLFileVersion dlFileVersion = dlFileVersionLocalService.getFileVersion(
 			fileEntryId, version);
 
 		if (!dlFileVersion.isApproved()) {
-			return;
+			throw new InvalidFileVersionException(
+				"Cannot revert from an unapproved file version");
+		}
+
+		DLFileVersion latestDLFileVersion =
+			dlFileVersionLocalService.getLatestFileVersion(fileEntryId, false);
+
+		if (version.equals(latestDLFileVersion.getVersion())) {
+			throw new InvalidFileVersionException(
+				"Cannot revert from the latest file version");
 		}
 
 		String sourceFileName = dlFileVersion.getTitle();

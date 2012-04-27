@@ -215,7 +215,8 @@ public class URLCodec {
 					continue;
 			}
 
-			CharBuffer charBuffer = _getRawCharBuffer(rawURLString, i);
+			CharBuffer charBuffer = _getRawCharBuffer(
+				rawURLString, i, escapeSpaces);
 
 			if (charsetEncoder == null) {
 				charsetEncoder = CharsetEncoderUtil.getCharsetEncoder(
@@ -295,13 +296,17 @@ public class URLCodec {
 		return byteBuffer;
 	}
 
-	private static CharBuffer _getRawCharBuffer(String rawString, int start) {
+	private static CharBuffer _getRawCharBuffer(
+		String rawString, int start, boolean includeSpaces) {
+
 		int count = 0;
 
 		for (int i = start; i < rawString.length(); i++) {
 			char rawChar = rawString.charAt(i);
 
-			if (!_validChars.get(rawChar)) {
+			if (!_validChars.get(rawChar) &&
+				((rawChar != CharPool.SPACE) || includeSpaces)) {
+
 				count++;
 
 				if (Character.isHighSurrogate(rawChar)) {

@@ -61,6 +61,7 @@ import javax.naming.NamingException;
  * @author Alexander Chow
  * @author Ganesh Ram
  * @author Brian Wing Shun Chan
+ * @author Daniel Kocsis
  */
 public abstract class BaseDB implements DB {
 
@@ -669,18 +670,22 @@ public abstract class BaseDB implements DB {
 					continue;
 				}
 			}
-			else {
-				if (!tablesSQLLowerCase.contains(
+			else if (!tablesSQLLowerCase.contains(
 						"create table " + tableNameLowerCase + " (")) {
 
-					continue;
-				}
+				continue;
 			}
 
 			validIndexNames.remove(indexNameUpperCase);
 
-			runSQL(
-				con, "drop index " + indexNameUpperCase + " on " + tableName);
+			String sql =
+				"drop index " + indexNameUpperCase + " on " + tableName;
+
+			if (_log.isInfoEnabled()) {
+				_log.info(sql);
+			}
+
+			runSQL(con, sql);
 		}
 
 		return validIndexNames;

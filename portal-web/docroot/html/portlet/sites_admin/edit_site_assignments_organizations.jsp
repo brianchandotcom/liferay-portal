@@ -151,6 +151,11 @@ organizationSearch.setEmptyResultsMessage(emptyResultsMessage);
 				<aui:button-row>
 					<aui:button href="<%= viewOrganizationsURL.toString() %>" value="assign-organizations" />
 				</aui:button-row>
+
+				<%
+				viewOrganizationsURL.setParameter("tabs2", "current");
+				%>
+
 			</c:when>
 			<c:otherwise>
 

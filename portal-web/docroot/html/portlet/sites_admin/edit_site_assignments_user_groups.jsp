@@ -149,6 +149,11 @@ userGroupSearch.setEmptyResultsMessage(emptyResultsMessage);
 				<aui:button-row>
 					<aui:button href="<%= viewUserGroupsURL.toString() %>" value="assign-user-groups" />
 				</aui:button-row>
+
+				<%
+				viewUserGroupsURL.setParameter("tabs2", "current");
+				%>
+
 			</c:when>
 			<c:otherwise>
 

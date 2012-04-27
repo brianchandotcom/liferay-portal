@@ -112,25 +112,52 @@ Element contentEl = (Element)request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTEN
 
 			<div class="journal-article-component-container">
 				<c:if test='<%= elType.equals("text") %>'>
-					<aui:input cssClass="lfr-input-text-container" ignoreRequestValue="<%= true %>" label="" name="text" size="55" type="text" value="<%= elContent %>" />
+
+					<%
+					String textInputName = "text_" + elName;
+
+					if (Validator.isNull(elContent)) {
+						elContent = ParamUtil.getString(request, textInputName);
+					}
+					%>
+
+					<aui:input cssClass="lfr-input-text-container" ignoreRequestValue="<%= true %>" label="" name="<%= textInputName %>" size="55" type="text" value="<%= elContent %>" />
 				</c:if>
 
 				<c:if test='<%= elType.equals("text_box") %>'>
-					<aui:input cols="60" cssClass="lfr-textarea-container" ignoreRequestValue="<%= true %>" label="" name="textArea" rows="10" type="textarea" value="<%= elContent %>" />
+
+					<%
+					String textBoxInputName = "textBox_" + elName;
+
+					if (Validator.isNull(elContent)) {
+						elContent = ParamUtil.getString(request, textBoxInputName);
+					}
+					%>
+
+					<aui:input cols="60" cssClass="lfr-textarea-container" ignoreRequestValue="<%= true %>" label="" name="<%= textBoxInputName %>" rows="10" type="textarea" value="<%= elContent %>" />
 				</c:if>
 
 				<c:if test='<%= elType.equals("text_area") %>'>
+
+					<%
+					String textAreaInputName = "structure_el_" + elName + "_content";
+
+					if (Validator.isNull(elContent)) {
+						elContent = ParamUtil.getString(request, textAreaInputName);
+					}
+					%>
+
 					<liferay-ui:input-editor
 						editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>"
 						height="460"
-						initMethod='<%= "initEditor" + elInstanceId %>'
-						name='<%= renderResponse.getNamespace() + "structure_el_" + elInstanceId + "_content" %>'
+						initMethod='<%= "initEditor" + elName %>'
+						name='<%= textAreaInputName %>'
 						toolbarSet="liferay-article"
 						width="500"
 					/>
 
 					<aui:script>
-						function <portlet:namespace />initEditor<%= elInstanceId %>() {
+						function <portlet:namespace />initEditor<%= elName %>() {
 							return "<%= UnicodeFormatter.toString(elContent) %>";
 						}
 					</aui:script>
@@ -147,7 +174,12 @@ Element contentEl = (Element)request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTEN
 						</span>
 
 						<div class="journal-image-preview aui-helper-hidden">
-							<aui:input name="journalImageContent" type="hidden" value="<%= elContent %>" />
+
+							<%
+							String journalImageContentInputName = "journalImageContent_" + elName;
+							%>
+
+							<aui:input name="<%= journalImageContentInputName %>" type="hidden" value="<%= elContent %>" />
 
 							<aui:input name="journalImageDelete" type="hidden" value="" />
 
@@ -163,7 +195,16 @@ Element contentEl = (Element)request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTEN
 				</c:if>
 
 				<c:if test='<%= elType.equals("document_library") %>'>
-					<aui:input cssClass="lfr-input-text-container" inlineField="<%= true %>" label="" name="journalDocumentlibrary" size="55" type="text" value="<%= elContent %>" />
+
+					<%
+					String journalDocumentLibraryInputName = "journalDocumentLibrary_" + elName;
+
+					if (Validator.isNull(elContent)) {
+						elContent = ParamUtil.getString(request, journalDocumentLibraryInputName);
+					}
+					%>
+
+					<aui:input cssClass="lfr-input-text-container" inlineField="<%= true %>" label="" name="<%= journalDocumentLibraryInputName %>" size="55" type="text" value="<%= elContent %>" />
 
 					<%
 					long dlScopeGroupId = groupId;
@@ -188,6 +229,13 @@ Element contentEl = (Element)request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTEN
 				</c:if>
 
 				<c:if test='<%= elType.equals("boolean") %>'>
+
+					<%
+					if (Validator.isNull(elContent)) {
+						elContent = ParamUtil.getString(request, elName);
+					}
+					%>
+
 					<div class="journal-subfield">
 						<aui:input cssClass="journal-article-field-label" label="<%= elLabel %>" name="<%= elName %>" type="checkbox" value='<%= elContent.equals("true") %>' />
 					</div>
@@ -199,7 +247,16 @@ Element contentEl = (Element)request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTEN
 
 				<c:if test='<%= elType.equals("list") %>'>
 					<div class="journal-list-subfield">
-						<aui:select label="" name="list">
+
+						<%
+						String listInputName = "listInputName_" + elName;
+
+						if (Validator.isNull(elContent)) {
+							elContent = ParamUtil.getString(request, listInputName);
+						}
+						%>
+
+						<aui:select label="" name="<%= listInputName %>">
 
 							<%
 							List<Element> children = el.elements();
@@ -245,7 +302,18 @@ Element contentEl = (Element)request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTEN
 
 				<c:if test='<%= elType.equals("multi-list") %>'>
 					<div class="journal-list-subfield">
-						<aui:select label="" multiple="true" name="multiList">
+
+						<%
+						String multiListInputName = "multiListInputName_" + elName;
+
+						String [] selectedOptions = null;
+
+						if (Validator.isNull(elContent)) {
+							selectedOptions = ParamUtil.getParameterValues(request, multiListInputName);
+						}
+						%>
+
+						<aui:select ignoreRequestValue="<%= true %>" label="" multiple="true" name="<%= multiListInputName %>">
 
 							<%
 							List<Element> children = el.elements();
@@ -264,6 +332,14 @@ Element contentEl = (Element)request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTEN
 									for (Element option : dynConElements) {
 										if (listElValue.equals(option.getText())) {
 											contains = true;
+										}
+									}
+
+									if (dynConElements.isEmpty() && (selectedOptions != null)) {
+										for (String option : selectedOptions) {
+											if (listElValue.equals(option)) {
+												contains = true;
+											}
 										}
 									}
 								}
@@ -305,7 +381,16 @@ Element contentEl = (Element)request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTEN
 				</c:if>
 
 				<c:if test='<%= elType.equals("link_to_layout") %>'>
-					<aui:select label="" name='<%= "structure_el" + count.getValue() + "_content" %>' showEmptyOption="<%= true %>">
+
+					<%
+					String linkSelectName = "structure_el" + elName + "_content";
+
+					if (Validator.isNull(elContent)) {
+						elContent = ParamUtil.getString(request, linkSelectName);
+					}
+					%>
+
+					<aui:select label="" name='<%= linkSelectName %>' showEmptyOption="<%= true %>">
 
 						<%
 						boolean privateLayout = false;

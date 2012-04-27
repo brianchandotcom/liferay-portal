@@ -74,7 +74,7 @@ public class WikiFriendlyURLMapper extends DefaultFriendlyURLMapper {
 	}
 
 	private static final String[] ESCAPED_CHARS = new String[] {
-		"<SL>", "<QM>", "<PL>"
+		"<PL>", "<QM>", "<SL>"
 	};
 
 	private static final String[] UNESCAPED_CHARS = new String[] {

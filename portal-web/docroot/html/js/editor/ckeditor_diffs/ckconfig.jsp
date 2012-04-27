@@ -14,6 +14,7 @@
  */
 --%>
 
+<%@ page import="com.liferay.portal.kernel.util.ContentTypes" %>
 <%@ page import="com.liferay.portal.kernel.util.HtmlUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.ParamUtil" %>
 
@@ -21,6 +22,8 @@
 String cssPath = ParamUtil.getString(request, "cssPath");
 String cssClasses = ParamUtil.getString(request, "cssClasses");
 String languageId = ParamUtil.getString(request, "languageId");
+
+response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 %>
 
 if (!CKEDITOR.stylesSet.get('liferayStyles')) {

@@ -17,6 +17,7 @@ package com.liferay.portlet.wiki;
 import com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
@@ -24,6 +25,7 @@ import java.util.Map;
 
 /**
  * @author Shinn Lok
+ * @author Levente Hudák
  */
 public class WikiFriendlyURLMapper extends DefaultFriendlyURLMapper {
 
@@ -36,7 +38,7 @@ public class WikiFriendlyURLMapper extends DefaultFriendlyURLMapper {
 		if (routeParameters.containsKey("title")) {
 			String title = routeParameters.get("title");
 
-			title = title.replaceAll(StringPool.SLASH, "%2F");
+			title = StringUtil.replace(title, UNESCAPED_CHARS, ESCAPED_CHARS);
 
 			routeParameters.put("title", title);
 		}
@@ -54,5 +56,29 @@ public class WikiFriendlyURLMapper extends DefaultFriendlyURLMapper {
 
 		return friendlyURLPath;
 	}
+
+	@Override
+	protected void populateParams(
+		Map<String, String[]> parameterMap, String namespace,
+		Map<String, String> routeParameters) {
+
+		if (routeParameters.containsKey("title")) {
+			String title = routeParameters.get("title");
+
+			title = StringUtil.replace(title, ESCAPED_CHARS, UNESCAPED_CHARS);
+
+			routeParameters.put("title", title);
+		}
+
+		super.populateParams(parameterMap, namespace, routeParameters);
+	}
+
+	private static final String[] ESCAPED_CHARS = new String[] {
+		"<PL>", "<QM>", "<SL>"
+	};
+
+	private static final String[] UNESCAPED_CHARS = new String[] {
+		StringPool.PLUS, StringPool.QUESTION, StringPool.SLASH
+	};
 
 }

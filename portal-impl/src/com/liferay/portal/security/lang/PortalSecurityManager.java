@@ -18,7 +18,6 @@ import com.liferay.portal.jndi.pacl.PACLInitialContextFactoryBuilder;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.security.pacl.PACLClassUtil;
-import com.liferay.portal.security.pacl.PACLConstants;
 import com.liferay.portal.security.pacl.PACLPolicy;
 import com.liferay.portal.security.pacl.PACLPolicyManager;
 import com.liferay.portal.security.pacl.permission.PortalHookPermission;
@@ -106,18 +105,6 @@ public class PortalSecurityManager extends SecurityManager {
 			return paclPolicy;
 		}
 
-		if (!PortalSecurityManagerThreadLocal.isCheckGetClassLoaderEnabled() &&
-			(permission instanceof RuntimePermission)) {
-
-			String name = permission.getName();
-
-			if (name.startsWith(
-					PACLConstants.RUNTIME_PERMISSION_GET_CLASSLOADER)) {
-
-				return PACLPolicyManager.getDefaultPACLPolicy();
-			}
-		}
-
 		return PACLClassUtil.getPACLPolicyByReflection(_log.isDebugEnabled());
 	}
 
@@ -133,6 +120,12 @@ public class PortalSecurityManager extends SecurityManager {
 	}
 
 	protected void initInitialContextFactoryBuilder() throws Exception {
+		if (!_initInitialContextFactoryBuilder) {
+			return;
+		}
+
+		_initInitialContextFactoryBuilder = false;
+
 		if (NamingManager.hasInitialContextFactoryBuilder()) {
 			if (_log.isInfoEnabled()) {
 				_log.info(
@@ -158,6 +151,8 @@ public class PortalSecurityManager extends SecurityManager {
 
 	private static Log _log = LogFactoryUtil.getLog(
 		PortalSecurityManager.class.getName());
+
+	private static boolean _initInitialContextFactoryBuilder = true;
 
 	private SecurityManager _parentSecurityManager;
 

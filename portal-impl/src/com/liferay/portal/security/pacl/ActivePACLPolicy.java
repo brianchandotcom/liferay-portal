@@ -59,8 +59,10 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 		return _jndiChecker.hasJNDI(name);
 	}
 
-	public boolean hasService(Object object, Method method) {
-		return _serviceChecker.hasService(object, method);
+	public boolean hasService(
+		Object object, Method method, Object[] arguments) {
+
+		return _serviceChecker.hasService(object, method, arguments);
 	}
 
 	public boolean hasSQL(String sql) {

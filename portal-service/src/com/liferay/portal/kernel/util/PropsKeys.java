@@ -847,6 +847,8 @@ public interface PropsKeys {
 
 	public static final String INVOKER_FILTER_CHAIN_SIZE = "invoker.filter.chain.cache.size";
 
+	public static final String JAVADOCS_ENABLED = "javadocs.enabled";
+
 	public static final String JAVASCRIPT_BAREBONE_ENABLED = "javascript.barebone.enabled";
 
 	public static final String JAVASCRIPT_BAREBONE_FILES = "javascript.barebone.files";

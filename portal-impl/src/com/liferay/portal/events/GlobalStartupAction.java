@@ -267,7 +267,9 @@ public class GlobalStartupAction extends SimpleAction {
 
 		ClassLoader classLoader = thread.getContextClassLoader();
 
-		JavadocManagerUtil.load(StringPool.BLANK, classLoader);
+		if (PropsValues.JAVADOCS_ENABLED) {
+			JavadocManagerUtil.load(StringPool.BLANK, classLoader);
+		}
 
 		// JCR
 

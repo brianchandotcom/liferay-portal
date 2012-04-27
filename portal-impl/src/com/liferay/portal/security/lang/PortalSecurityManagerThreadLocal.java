@@ -31,6 +31,10 @@ public class PortalSecurityManagerThreadLocal {
 		return _checkGetClassLoaderEnabled.get();
 	}
 
+	public static boolean isCheckSQLEnabled() {
+		return _checkSQLEnabled.get();
+	}
+
 	public static boolean isEnabled() {
 		return _enabled.get();
 	}
@@ -39,6 +43,10 @@ public class PortalSecurityManagerThreadLocal {
 		boolean checkGetClassLoaderEnabled) {
 
 		_checkGetClassLoaderEnabled.set(checkGetClassLoaderEnabled);
+	}
+
+	public static void setCheckSQLEnabled(boolean checkSQLEnabled) {
+		_checkSQLEnabled.set(checkSQLEnabled);
 	}
 
 	public static void setEnabled(boolean enabled) {
@@ -54,6 +62,9 @@ public class PortalSecurityManagerThreadLocal {
 			PortalSecurityManagerThreadLocal.class +
 				"._checkGetClassLoaderEnabled",
 			true);
+	private static ThreadLocal<Boolean> _checkSQLEnabled =
+		new AutoResetThreadLocal<Boolean>(
+			PortalSecurityManagerThreadLocal.class + "._checkSQLEnabled", true);
 	private static ThreadLocal<Boolean> _enabled =
 		new AutoResetThreadLocal<Boolean>(
 			PortalSecurityManagerThreadLocal.class + "._enabled", true);

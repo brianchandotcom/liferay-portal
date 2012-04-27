@@ -17,7 +17,6 @@ package com.liferay.portal.jndi.pacl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
-import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 import com.liferay.portal.security.pacl.PACLClassUtil;
 import com.liferay.portal.security.pacl.PACLPolicy;
@@ -99,9 +98,7 @@ public class PACLInitialContextFactory implements InitialContextFactory {
 			return context;
 		}
 
-		return (Context)ProxyUtil.newProxyInstance(
-			paclPolicy.getClassLoader(), new Class<?>[] {Context.class},
-			new PACLContextHandler(context, paclPolicy));
+		return new PACLContext(context, paclPolicy);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

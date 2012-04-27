@@ -44,6 +44,7 @@ public class PACLDataSource extends DataSourceWrapper {
 		Connection connection = _dataSource.getConnection();
 
 		if (!PACLPolicyManager.isActive() ||
+			!PortalSecurityManagerThreadLocal.isCheckSQLEnabled() ||
 			!PortalSecurityManagerThreadLocal.isEnabled()) {
 
 			return connection;

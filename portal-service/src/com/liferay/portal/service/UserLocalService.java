@@ -2426,13 +2426,16 @@ public interface UserLocalService extends BaseLocalService,
 	password the next time they login
 	* @param silentUpdate whether the password should be updated without being
 	tracked, or validated. Primarily used for password imports.
+	* @param skipPasswordPolicyValidation whether the new password should not
+	use password policy validation. Primarily used for setup wizard.
 	* @return the user
 	* @throws PortalException if a user with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.User updatePassword(long userId,
 		java.lang.String password1, java.lang.String password2,
-		boolean passwordReset, boolean silentUpdate)
+		boolean passwordReset, boolean silentUpdate,
+		boolean skipPasswordPolicyValidation)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

@@ -17,6 +17,7 @@ package com.liferay.portal.security.pacl.checker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 
 import java.security.Permission;
@@ -28,8 +29,9 @@ import sun.reflect.Reflection;
 
 /**
  * @author Raymond Augé
+ * @author Brian Wing Shun Chan
  */
-public class RuntimeChecker extends BaseChecker {
+public class RuntimeChecker extends BaseReflectChecker {
 
 	public void afterPropertiesSet() {
 		initClassLoaderReferenceIds();
@@ -48,8 +50,17 @@ public class RuntimeChecker extends BaseChecker {
 					"Attempted to access package " + pkg);
 			}
 		}
+		else if (name.equals(RUNTIME_PERMISSION_ACCESS_DECLARED_MEMBERS)) {
+			if (!hasRelect(permission.getName(), permission.getActions())) {
+				throw new SecurityException(
+					"Attempted to access declared members");
+			}
+		}
 		else if (name.startsWith(RUNTIME_PERMISSION_GET_CLASSLOADER)) {
-			if (!hasGetClassLoader(name)) {
+			if (PortalSecurityManagerThreadLocal.
+					isCheckGetClassLoaderEnabled() &&
+				!hasGetClassLoader(name)) {
+
 				throw new SecurityException("Attempted to get class loader");
 			}
 		}
@@ -102,9 +113,11 @@ public class RuntimeChecker extends BaseChecker {
 			String methodName = stackTraceElement.getMethodName();
 
 			if (methodName.equals(_METHOD_NAME_GET_SYSTEM_CLASS_LOADER)) {
-				_log.debug(
-					"Allow " + callerClass7.getName() +
-						" to access the system class loader");
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Allow " + callerClass7.getName() +
+							" to access the system class loader");
+				}
 
 				return true;
 			}

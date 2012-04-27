@@ -65,33 +65,32 @@ public class DynamicQueryFactoryImpl implements DynamicQueryFactory {
 
 		String className = clazz.getName();
 
-		if (className.endsWith("Impl")) {
-			return implClass;
-		}
-
-		if (classLoader == null) {
-			classLoader = PACLClassLoaderUtil.getContextClassLoader();
-		}
-
-		Package pkg = clazz.getPackage();
-
-		String implClassName =
-			pkg.getName() + ".impl." + clazz.getSimpleName() + "Impl";
-
-		try {
-			implClass = getImplClass(implClassName, classLoader);
-		}
-		catch (Exception e1) {
-			if (classLoader != _portalClassLoader) {
-				try {
-					implClass = getImplClass(implClassName, _portalClassLoader);
-				}
-				catch (Exception e2) {
-					_log.error("Unable find model " + implClassName, e2);
-				}
+		if (!className.endsWith("Impl")) {
+			if (classLoader == null) {
+				classLoader = PACLClassLoaderUtil.getContextClassLoader();
 			}
-			else {
-				_log.error("Unable find model " + implClassName, e1);
+
+			Package pkg = clazz.getPackage();
+
+			String implClassName =
+				pkg.getName() + ".impl." + clazz.getSimpleName() + "Impl";
+
+			try {
+				implClass = getImplClass(implClassName, classLoader);
+			}
+			catch (Exception e1) {
+				if (classLoader != _portalClassLoader) {
+					try {
+						implClass = getImplClass(
+							implClassName, _portalClassLoader);
+					}
+					catch (Exception e2) {
+						_log.error("Unable find model " + implClassName, e2);
+					}
+				}
+				else {
+					_log.error("Unable find model " + implClassName, e1);
+				}
 			}
 		}
 

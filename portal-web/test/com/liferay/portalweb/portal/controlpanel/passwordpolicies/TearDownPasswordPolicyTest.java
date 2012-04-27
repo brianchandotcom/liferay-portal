@@ -29,6 +29,9 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 			case 1:
 				selenium.open("/web/guest/home/");
 				loadRequiredJavaScriptModules();
+				assertEquals(RuntimeVariables.replace("Go to"),
+					selenium.getText("//li[@id='_145_mySites']/a/span"));
+				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -36,7 +39,7 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent("link=Control Panel")) {
+						if (selenium.isVisible("link=Control Panel")) {
 							break;
 						}
 					}
@@ -64,7 +67,10 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//td[3]/span/ul/li/strong/a",
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -73,8 +79,8 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a")) {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a")) {
 							break;
 						}
 					}
@@ -84,8 +90,11 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
@@ -102,7 +111,10 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//td[3]/span/ul/li/strong/a",
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -111,8 +123,8 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a")) {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a")) {
 							break;
 						}
 					}
@@ -122,8 +134,11 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
@@ -140,7 +155,10 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//td[3]/span/ul/li/strong/a",
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -149,8 +167,8 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a")) {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a")) {
 							break;
 						}
 					}
@@ -160,8 +178,11 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
@@ -178,7 +199,10 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//td[3]/span/ul/li/strong/a",
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -187,8 +211,8 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a")) {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a")) {
 							break;
 						}
 					}
@@ -198,8 +222,11 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
@@ -216,7 +243,10 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//td[3]/span/ul/li/strong/a",
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -225,8 +255,8 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a")) {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a")) {
 							break;
 						}
 					}
@@ -236,8 +266,11 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
@@ -254,7 +287,10 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//tr[4]/td[3]/span/ul/li/strong/a",
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]"));
+				selenium.clickAt("xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -263,8 +299,8 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a")) {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a")) {
 							break;
 						}
 					}
@@ -274,12 +310,15 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
 			case 7:
 
@@ -292,7 +331,10 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//tr[4]/td[3]/span/ul/li/strong/a",
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]"));
+				selenium.clickAt("xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -301,8 +343,8 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a")) {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a")) {
 							break;
 						}
 					}
@@ -312,12 +354,15 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
 			case 8:
 
@@ -330,7 +375,10 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//tr[4]/td[3]/span/ul/li/strong/a",
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]"));
+				selenium.clickAt("xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -339,8 +387,8 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a")) {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a")) {
 							break;
 						}
 					}
@@ -350,12 +398,15 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
 			case 9:
 
@@ -368,7 +419,10 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//tr[4]/td[3]/span/ul/li/strong/a",
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]"));
+				selenium.clickAt("xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -377,8 +431,8 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a")) {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a")) {
 							break;
 						}
 					}
@@ -388,12 +442,15 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
 			case 10:
 
@@ -406,7 +463,10 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//tr[4]/td[3]/span/ul/li/strong/a",
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]"));
+				selenium.clickAt("xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -415,8 +475,8 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a")) {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a")) {
 							break;
 						}
 					}
@@ -426,12 +486,15 @@ public class TearDownPasswordPolicyTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
 			case 11:
 			case 100:

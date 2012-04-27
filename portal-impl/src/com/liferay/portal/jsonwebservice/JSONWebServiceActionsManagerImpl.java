@@ -97,15 +97,15 @@ public class JSONWebServiceActionsManagerImpl
 		jsonWebServiceActionParameters.collectAll(
 			request, parameterPath, jsonRPCRequest, null);
 
-		int slashIndex = path.indexOf('/', 1);
+		int slashIndex = path.indexOf(CharPool.FORWARD_SLASH, 1);
 
 		if (slashIndex != -1) {
-			int dotIndex = path.lastIndexOf('.', slashIndex);
+			int dotIndex = path.lastIndexOf(CharPool.PERIOD, slashIndex);
 
 			if (dotIndex != -1) {
 				servletContextPath = path.substring(0, dotIndex);
 
-				path = '/' + path.substring(dotIndex + 1);
+				path = CharPool.FORWARD_SLASH + path.substring(dotIndex + 1);
 			}
 		}
 

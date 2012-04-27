@@ -1136,7 +1136,8 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 
 		if (ldapUser.isUpdatePassword()) {
 			UserLocalServiceUtil.updatePassword(
-				user.getUserId(), password, password, passwordReset, true);
+				user.getUserId(), password, password, passwordReset,
+				true, false);
 		}
 
 		Contact contact = user.getContact();

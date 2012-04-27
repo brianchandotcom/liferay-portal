@@ -12,45 +12,22 @@
  * details.
  */
 
-package com.liferay.portal.security.pacl;
-
-import java.lang.reflect.Method;
+package com.liferay.portal.security.pacl.checker;
 
 import java.security.Permission;
-
-import java.util.Properties;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class InactivePACLPolicy extends BasePACLPolicy {
+public class ReflectChecker extends BaseReflectChecker {
 
-	public InactivePACLPolicy(
-		String servletContextName, ClassLoader classLoader,
-		Properties properties) {
-
-		super(servletContextName, classLoader, properties);
+	public void afterPropertiesSet() {
 	}
 
 	public void checkPermission(Permission permission) {
-	}
-
-	public boolean hasJNDI(String name) {
-		return true;
-	}
-
-	public boolean hasService(
-		Object object, Method method, Object[] arguments) {
-
-		return true;
-	}
-
-	public boolean hasSQL(String sql) {
-		return true;
-	}
-
-	public boolean isActive() {
-		return false;
+		if (!hasRelect(permission.getName(), permission.getActions())) {
+			throw new SecurityException("Attempted to reflect");
+		}
 	}
 
 }

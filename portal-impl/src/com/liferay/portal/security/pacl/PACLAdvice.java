@@ -84,11 +84,15 @@ public class PACLAdvice extends ChainableMethodAdvice {
 			}
 		}
 
-		if (!paclPolicy.hasService(methodInvocation.getThis(), method)) {
+		if (!paclPolicy.hasService(
+				methodInvocation.getThis(), method,
+				methodInvocation.getArguments())) {
+
 			throw new SecurityException("Attempted to invoke " + method);
 		}
 
-		boolean enabled = PortalSecurityManagerThreadLocal.isEnabled();
+		boolean checkSQLEnabled =
+			PortalSecurityManagerThreadLocal.isCheckSQLEnabled();
 
 		try {
 			Object thisObject = methodInvocation.getThis();
@@ -102,7 +106,7 @@ public class PACLAdvice extends ChainableMethodAdvice {
 				// does not try to check access to tables that can be accessed
 				// since the service is already approved
 
-				PortalSecurityManagerThreadLocal.setEnabled(false);
+				PortalSecurityManagerThreadLocal.setCheckSQLEnabled(false);
 			}
 
 			return methodInvocation.proceed();
@@ -111,7 +115,8 @@ public class PACLAdvice extends ChainableMethodAdvice {
 			throw throwable;
 		}
 		finally {
-			PortalSecurityManagerThreadLocal.setEnabled(enabled);
+			PortalSecurityManagerThreadLocal.setCheckSQLEnabled(
+				checkSQLEnabled);
 		}
 	}
 

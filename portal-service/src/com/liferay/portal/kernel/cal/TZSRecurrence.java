@@ -45,7 +45,12 @@ public class TZSRecurrence extends Recurrence {
 	}
 
 	public void setTimeZone(TimeZone timeZone) {
-		_timeZone = TimeZoneUtil.getTimeZone(timeZone.getID());
+		if (timeZone == null) {
+			_timeZone = null;
+		}
+		else {
+			_timeZone = TimeZoneUtil.getTimeZone(timeZone.getID());
+		}
 	}
 
 	protected Calendar getAdjustedCalendar(Calendar candidateCalendar) {

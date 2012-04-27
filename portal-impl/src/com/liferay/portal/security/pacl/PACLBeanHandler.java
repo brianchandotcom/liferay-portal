@@ -104,11 +104,12 @@ public class PACLBeanHandler implements InvocationHandler {
 			return method.invoke(_bean, arguments);
 		}
 
-		if (!paclPolicy.hasService(_bean, method)) {
+		if (!paclPolicy.hasService(_bean, method, arguments)) {
 			throw new SecurityException("Attempted to invoke " + method);
 		}
 
-		boolean enabled = PortalSecurityManagerThreadLocal.isEnabled();
+		boolean checkSQLEnabled =
+			PortalSecurityManagerThreadLocal.isCheckSQLEnabled();
 
 		try {
 			Class<?> beanClass = _bean.getClass();
@@ -119,13 +120,14 @@ public class PACLBeanHandler implements InvocationHandler {
 				// does not try to check access to tables that can be accessed
 				// since the service is already approved
 
-				PortalSecurityManagerThreadLocal.setEnabled(false);
+				PortalSecurityManagerThreadLocal.setCheckSQLEnabled(false);
 			}
 
 			return method.invoke(_bean, arguments);
 		}
 		finally {
-			PortalSecurityManagerThreadLocal.setEnabled(enabled);
+			PortalSecurityManagerThreadLocal.setCheckSQLEnabled(
+				checkSQLEnabled);
 		}
 	}
 

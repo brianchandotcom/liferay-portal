@@ -14,6 +14,8 @@
 
 package com.liferay.portal.security.pacl.checker;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -56,16 +58,11 @@ public class ServiceChecker extends BaseChecker {
 					"Attempted to create a dynamic query for " + implClass);
 			}
 		}
-		else if (name.equals(PORTAL_PERMISSION_SERVICE)) {
-			Method method = portalServicePermission.getMethod();
-
-			if (!hasService(object, method)) {
-				throw new SecurityException("Attempted to invoke " + method);
-			}
-		}
 	}
 
-	public boolean hasService(Object object, Method method) {
+	public boolean hasService(
+		Object object, Method method, Object[] arguments) {
+
 		Class<?> clazz = object.getClass();
 
 		if (Proxy.isProxyClass(clazz)) {
@@ -95,6 +92,10 @@ public class ServiceChecker extends BaseChecker {
 		}
 
 		String methodName = method.getName();
+
+		if (methodName.equals("invokeMethod")) {
+			methodName = (String)arguments[0];
+		}
 
 		if (services.contains(
 				className.concat(StringPool.POUND).concat(methodName))) {
@@ -142,13 +143,13 @@ public class ServiceChecker extends BaseChecker {
 			return true;
 		}
 
-		Set<String> services = getServices(paclPolicy);
+		/*Set<String> services = getServices(paclPolicy);
 
 		String className = getInterfaceName(clazz.getName());
 
 		if (services.contains(className)) {
 			return true;
-		}
+		}*/
 
 		return false;
 	}
@@ -175,6 +176,8 @@ public class ServiceChecker extends BaseChecker {
 					_PORTAL_SERVLET_CONTEXT_NAME)) {
 
 				_portalServices = services;
+
+				touchServices(_portalServices);
 			}
 			else {
 				_pluginServices.put(servicesServletContextName, services);
@@ -182,7 +185,73 @@ public class ServiceChecker extends BaseChecker {
 		}
 	}
 
+	protected void touchService(String service) {
+		String className = service;
+
+		if (!className.contains(".service.")) {
+			return;
+		}
+
+		String methodName = null;
+
+		if (className.contains(".service.persistence.") &&
+			(className.endsWith("Persistence") ||
+			 className.contains("Persistence#"))) {
+
+			methodName = "getPersistence";
+		}
+		else if (className.endsWith("Service") ||
+				 className.contains("Service#")) {
+
+			methodName = "getService";
+		}
+		else {
+			_log.error("Invalid service " + service);
+
+			return;
+		}
+
+		int pos = className.indexOf(StringPool.POUND);
+
+		if (pos != -1) {
+			className = className.substring(0, pos);
+		}
+
+		if (className.endsWith("Persistence")) {
+			className = className.substring(0, className.length() - 11);
+		}
+
+		className += "Util";
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Invoking " + className + "#" + methodName);
+		}
+
+		// Invoke method since it will attempt to access declared members
+
+		ClassLoader commonClassLoader = getCommonClassLoader();
+
+		try {
+			Class<?> clazz = commonClassLoader.loadClass(className);
+
+			Method method = clazz.getMethod(methodName);
+
+			method.invoke(clazz);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+	}
+
+	protected void touchServices(Set<String> services) {
+		for (String service : services) {
+			touchService(service);
+		}
+	}
+
 	private static final String _PORTAL_SERVLET_CONTEXT_NAME = "portal";
+
+	private static Log _log = LogFactoryUtil.getLog(ServiceChecker.class);
 
 	private Map<String, Set<String>> _pluginServices =
 		new HashMap<String, Set<String>>();

@@ -17,12 +17,16 @@ package com.liferay.portlet.trash.service.persistence;
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
+import com.liferay.portal.kernel.dao.jdbc.MappingSqlQuery;
+import com.liferay.portal.kernel.dao.jdbc.MappingSqlQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.jdbc.RowMapper;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -1777,6 +1781,239 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 	}
 
 	/**
+	 * Returns all the trash versions associated with the trash entry.
+	 *
+	 * @param pk the primary key of the trash entry
+	 * @return the trash versions associated with the trash entry
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<com.liferay.portlet.trash.model.TrashVersion> getTrashVersions(
+		long pk) throws SystemException {
+		return getTrashVersions(pk, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	}
+
+	/**
+	 * Returns a range of all the trash versions associated with the trash entry.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param pk the primary key of the trash entry
+	 * @param start the lower bound of the range of trash entries
+	 * @param end the upper bound of the range of trash entries (not inclusive)
+	 * @return the range of trash versions associated with the trash entry
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<com.liferay.portlet.trash.model.TrashVersion> getTrashVersions(
+		long pk, int start, int end) throws SystemException {
+		return getTrashVersions(pk, start, end, null);
+	}
+
+	public static final FinderPath FINDER_PATH_GET_TRASHVERSIONS = new FinderPath(com.liferay.portlet.trash.model.impl.TrashVersionModelImpl.ENTITY_CACHE_ENABLED,
+			com.liferay.portlet.trash.model.impl.TrashVersionModelImpl.FINDER_CACHE_ENABLED,
+			com.liferay.portlet.trash.model.impl.TrashVersionImpl.class,
+			com.liferay.portlet.trash.service.persistence.TrashVersionPersistenceImpl.FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"getTrashVersions",
+			new String[] {
+				Long.class.getName(), "java.lang.Integer", "java.lang.Integer",
+				"com.liferay.portal.kernel.util.OrderByComparator"
+			});
+
+	static {
+		FINDER_PATH_GET_TRASHVERSIONS.setCacheKeyGeneratorCacheName(null);
+	}
+
+	/**
+	 * Returns an ordered range of all the trash versions associated with the trash entry.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param pk the primary key of the trash entry
+	 * @param start the lower bound of the range of trash entries
+	 * @param end the upper bound of the range of trash entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of trash versions associated with the trash entry
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<com.liferay.portlet.trash.model.TrashVersion> getTrashVersions(
+		long pk, int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		Object[] finderArgs = new Object[] { pk, start, end, orderByComparator };
+
+		List<com.liferay.portlet.trash.model.TrashVersion> list = (List<com.liferay.portlet.trash.model.TrashVersion>)FinderCacheUtil.getResult(FINDER_PATH_GET_TRASHVERSIONS,
+				finderArgs, this);
+
+		if (list == null) {
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				String sql = null;
+
+				if (orderByComparator != null) {
+					sql = _SQL_GETTRASHVERSIONS.concat(ORDER_BY_CLAUSE)
+											   .concat(orderByComparator.getOrderBy());
+				}
+				else {
+					sql = _SQL_GETTRASHVERSIONS;
+				}
+
+				SQLQuery q = session.createSQLQuery(sql);
+
+				q.addEntity("TrashVersion",
+					com.liferay.portlet.trash.model.impl.TrashVersionImpl.class);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(pk);
+
+				list = (List<com.liferay.portlet.trash.model.TrashVersion>)QueryUtil.list(q,
+						getDialect(), start, end);
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (list == null) {
+					FinderCacheUtil.removeResult(FINDER_PATH_GET_TRASHVERSIONS,
+						finderArgs);
+				}
+				else {
+					trashVersionPersistence.cacheResult(list);
+
+					FinderCacheUtil.putResult(FINDER_PATH_GET_TRASHVERSIONS,
+						finderArgs, list);
+				}
+
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	public static final FinderPath FINDER_PATH_GET_TRASHVERSIONS_SIZE = new FinderPath(com.liferay.portlet.trash.model.impl.TrashVersionModelImpl.ENTITY_CACHE_ENABLED,
+			com.liferay.portlet.trash.model.impl.TrashVersionModelImpl.FINDER_CACHE_ENABLED,
+			com.liferay.portlet.trash.model.impl.TrashVersionImpl.class,
+			com.liferay.portlet.trash.service.persistence.TrashVersionPersistenceImpl.FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"getTrashVersionsSize", new String[] { Long.class.getName() });
+
+	static {
+		FINDER_PATH_GET_TRASHVERSIONS_SIZE.setCacheKeyGeneratorCacheName(null);
+	}
+
+	/**
+	 * Returns the number of trash versions associated with the trash entry.
+	 *
+	 * @param pk the primary key of the trash entry
+	 * @return the number of trash versions associated with the trash entry
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int getTrashVersionsSize(long pk) throws SystemException {
+		Object[] finderArgs = new Object[] { pk };
+
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_GET_TRASHVERSIONS_SIZE,
+				finderArgs, this);
+
+		if (count == null) {
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				SQLQuery q = session.createSQLQuery(_SQL_GETTRASHVERSIONSSIZE);
+
+				q.addScalar(COUNT_COLUMN_NAME,
+					com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(pk);
+
+				count = (Long)q.uniqueResult();
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (count == null) {
+					count = Long.valueOf(0);
+				}
+
+				FinderCacheUtil.putResult(FINDER_PATH_GET_TRASHVERSIONS_SIZE,
+					finderArgs, count);
+
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	public static final FinderPath FINDER_PATH_CONTAINS_TRASHVERSION = new FinderPath(com.liferay.portlet.trash.model.impl.TrashVersionModelImpl.ENTITY_CACHE_ENABLED,
+			com.liferay.portlet.trash.model.impl.TrashVersionModelImpl.FINDER_CACHE_ENABLED,
+			com.liferay.portlet.trash.model.impl.TrashVersionImpl.class,
+			com.liferay.portlet.trash.service.persistence.TrashVersionPersistenceImpl.FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"containsTrashVersion",
+			new String[] { Long.class.getName(), Long.class.getName() });
+
+	/**
+	 * Returns <code>true</code> if the trash version is associated with the trash entry.
+	 *
+	 * @param pk the primary key of the trash entry
+	 * @param trashVersionPK the primary key of the trash version
+	 * @return <code>true</code> if the trash version is associated with the trash entry; <code>false</code> otherwise
+	 * @throws SystemException if a system exception occurred
+	 */
+	public boolean containsTrashVersion(long pk, long trashVersionPK)
+		throws SystemException {
+		Object[] finderArgs = new Object[] { pk, trashVersionPK };
+
+		Boolean value = (Boolean)FinderCacheUtil.getResult(FINDER_PATH_CONTAINS_TRASHVERSION,
+				finderArgs, this);
+
+		if (value == null) {
+			try {
+				value = Boolean.valueOf(containsTrashVersion.contains(pk,
+							trashVersionPK));
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (value == null) {
+					value = Boolean.FALSE;
+				}
+
+				FinderCacheUtil.putResult(FINDER_PATH_CONTAINS_TRASHVERSION,
+					finderArgs, value);
+			}
+		}
+
+		return value.booleanValue();
+	}
+
+	/**
+	 * Returns <code>true</code> if the trash entry has any trash versions associated with it.
+	 *
+	 * @param pk the primary key of the trash entry to check for associations with trash versions
+	 * @return <code>true</code> if the trash entry has any trash versions associated with it; <code>false</code> otherwise
+	 * @throws SystemException if a system exception occurred
+	 */
+	public boolean containsTrashVersions(long pk) throws SystemException {
+		if (getTrashVersionsSize(pk) > 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	/**
 	 * Initializes the trash entry persistence.
 	 */
 	public void afterPropertiesSet() {
@@ -1799,6 +2036,8 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 				_log.error(e);
 			}
 		}
+
+		containsTrashVersion = new ContainsTrashVersion();
 	}
 
 	public void destroy() {
@@ -1809,12 +2048,46 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 
 	@BeanReference(type = TrashEntryPersistence.class)
 	protected TrashEntryPersistence trashEntryPersistence;
+	@BeanReference(type = TrashVersionPersistence.class)
+	protected TrashVersionPersistence trashVersionPersistence;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
+	protected ContainsTrashVersion containsTrashVersion;
+
+	protected class ContainsTrashVersion {
+		protected ContainsTrashVersion() {
+			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
+					_SQL_CONTAINSTRASHVERSION,
+					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },
+					RowMapper.COUNT);
+		}
+
+		protected boolean contains(long entryId, long versionId) {
+			List<Integer> results = _mappingSqlQuery.execute(new Object[] {
+						new Long(entryId), new Long(versionId)
+					});
+
+			if (results.size() > 0) {
+				Integer count = results.get(0);
+
+				if (count.intValue() > 0) {
+					return true;
+				}
+			}
+
+			return false;
+		}
+
+		private MappingSqlQuery<Integer> _mappingSqlQuery;
+	}
+
 	private static final String _SQL_SELECT_TRASHENTRY = "SELECT trashEntry FROM TrashEntry trashEntry";
 	private static final String _SQL_SELECT_TRASHENTRY_WHERE = "SELECT trashEntry FROM TrashEntry trashEntry WHERE ";
 	private static final String _SQL_COUNT_TRASHENTRY = "SELECT COUNT(trashEntry) FROM TrashEntry trashEntry";
 	private static final String _SQL_COUNT_TRASHENTRY_WHERE = "SELECT COUNT(trashEntry) FROM TrashEntry trashEntry WHERE ";
+	private static final String _SQL_GETTRASHVERSIONS = "SELECT {TrashVersion.*} FROM TrashVersion INNER JOIN TrashEntry ON (TrashEntry.entryId = TrashVersion.entryId) WHERE (TrashEntry.entryId = ?)";
+	private static final String _SQL_GETTRASHVERSIONSSIZE = "SELECT COUNT(*) AS COUNT_VALUE FROM TrashVersion WHERE entryId = ?";
+	private static final String _SQL_CONTAINSTRASHVERSION = "SELECT COUNT(*) AS COUNT_VALUE FROM TrashVersion WHERE entryId = ? AND versionId = ?";
 	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 = "trashEntry.groupId = ?";
 	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 = "trashEntry.companyId = ?";
 	private static final String _FINDER_COLUMN_C_C_CLASSNAMEID_2 = "trashEntry.classNameId = ? AND ";

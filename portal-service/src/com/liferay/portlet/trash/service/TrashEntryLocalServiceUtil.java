@@ -278,11 +278,12 @@ public class TrashEntryLocalServiceUtil {
 	public static com.liferay.portlet.trash.model.TrashEntry addTrashEntry(
 		long companyId, long groupId, java.lang.String className, long classPK,
 		int status,
+		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.Long, java.lang.Integer>> versions,
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .addTrashEntry(companyId, groupId, className, classPK,
-			status, typeSettingsProperties);
+			status, versions, typeSettingsProperties);
 	}
 
 	/**
@@ -290,7 +291,8 @@ public class TrashEntryLocalServiceUtil {
 	*
 	* @param className the class name of entity
 	* @param classPK the primary key of the entry
-	* @throws PortalException if the user did not have permission to delete the entry
+	* @throws PortalException if the user did not have permission to delete the
+	entry
 	* @throws SystemException if a system exception occurred
 	*/
 	public static void deleteEntry(java.lang.String className, long classPK)
@@ -397,6 +399,19 @@ public class TrashEntryLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getEntry(className, classPK);
+	}
+
+	/**
+	* Returns the trash versions associated with the trash entry.
+	*
+	* @param entryId the primary key of the trash entry
+	* @return the trash versions associated with the trash entry
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.trash.model.TrashVersion> getVersions(
+		long entryId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getVersions(entryId);
 	}
 
 	public static TrashEntryLocalService getService() {

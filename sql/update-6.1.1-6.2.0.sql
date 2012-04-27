@@ -261,4 +261,12 @@ create table TrashEntry (
 	status INTEGER
 );
 
+create table TrashVersion (
+	versionId LONG not null primary key,
+	entryId LONG,
+	classNameId LONG,
+	classPK LONG,
+	status INTEGER
+);
+
 drop table Users_Permissions;

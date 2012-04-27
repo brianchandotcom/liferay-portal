@@ -78,6 +78,7 @@ import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
+import com.liferay.portlet.trash.model.TrashVersion;
 
 import java.awt.image.RenderedImage;
 
@@ -1299,29 +1300,29 @@ public class DLFileEntryLocalServiceImpl
 		// File versions
 
 		if (oldStatus == WorkflowConstants.STATUS_IN_TRASH) {
-			List<DLFileVersion> trashedDLFileVersions =
-				dlFileVersionPersistence.findByF_S(
-					dlFileEntry.getFileEntryId(),
-					WorkflowConstants.STATUS_IN_TRASH);
+			List<TrashVersion> trashVersions =
+				(List<TrashVersion>)workflowContext.get("trashVersions");
 
-			for (DLFileVersion trashedDLFileVersion : trashedDLFileVersions) {
-				trashedDLFileVersion.setStatus(
-					WorkflowConstants.STATUS_APPROVED);
+			for (TrashVersion trashVersion : trashVersions) {
+				DLFileVersion trashedDLFileVersion =
+					dlFileVersionPersistence.findByPrimaryKey(
+						trashVersion.getClassPK());
+
+				trashedDLFileVersion.setStatus(trashVersion.getStatus());
 
 				dlFileVersionPersistence.update(trashedDLFileVersion, false);
 			}
 		}
 		else if (status == WorkflowConstants.STATUS_IN_TRASH) {
-			List<DLFileVersion> approvedDLFileVersions =
-				dlFileVersionPersistence.findByF_S(
-					dlFileEntry.getFileEntryId(),
-					WorkflowConstants.STATUS_APPROVED);
+			List<DLFileVersion> trashedDLFileVersions =
+				dlFileVersionPersistence.findByFileEntryId(
+					dlFileEntry.getFileEntryId());
 
-			for (DLFileVersion approvedDLFileVersion : approvedDLFileVersions) {
-				approvedDLFileVersion.setStatus(
+			for (DLFileVersion trashedDLFileVersion : trashedDLFileVersions) {
+				trashedDLFileVersion.setStatus(
 					WorkflowConstants.STATUS_IN_TRASH);
 
-				dlFileVersionPersistence.update(approvedDLFileVersion, false);
+				dlFileVersionPersistence.update(trashedDLFileVersion, false);
 			}
 		}
 

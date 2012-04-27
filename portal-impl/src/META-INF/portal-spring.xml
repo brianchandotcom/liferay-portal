@@ -440,6 +440,7 @@
 	<bean id="com.liferay.portlet.trash.service.TrashEntryLocalService" class="com.liferay.portlet.trash.service.impl.TrashEntryLocalServiceImpl" />
 	<bean id="com.liferay.portlet.trash.service.TrashEntryService" class="com.liferay.portlet.trash.service.impl.TrashEntryServiceImpl" />
 	<bean id="com.liferay.portlet.trash.service.persistence.TrashEntryPersistence" class="com.liferay.portlet.trash.service.persistence.TrashEntryPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.portlet.trash.service.persistence.TrashVersionPersistence" class="com.liferay.portlet.trash.service.persistence.TrashVersionPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.wiki.service.WikiNodeLocalService" class="com.liferay.portlet.wiki.service.impl.WikiNodeLocalServiceImpl" />
 	<bean id="com.liferay.portlet.wiki.service.WikiNodeService" class="com.liferay.portlet.wiki.service.impl.WikiNodeServiceImpl" />
 	<bean id="com.liferay.portlet.wiki.service.persistence.WikiNodePersistence" class="com.liferay.portlet.wiki.service.persistence.WikiNodePersistenceImpl" parent="basePersistence" />

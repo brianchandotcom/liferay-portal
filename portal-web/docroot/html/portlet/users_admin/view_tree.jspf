@@ -189,7 +189,7 @@ if (filterManageableOrganizations) {
 			<liferay-util:buffer var="organizationsTree">
 
 				<%
-				SearchContainer organizationSearch = new OrganizationSearch(renderRequest, currentURLObj);
+				SearchContainer organizationSearch = new OrganizationSearch(renderRequest, "cur1", currentURLObj);
 
 				organizationSearch.setRowChecker(new RowChecker(renderResponse));
 				%>

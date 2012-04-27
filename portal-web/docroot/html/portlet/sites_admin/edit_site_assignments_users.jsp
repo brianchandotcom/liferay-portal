@@ -148,6 +148,11 @@ userSearch.setEmptyResultsMessage(emptyResultsMessage);
 				<aui:button-row>
 					<aui:button href="<%= viewUsersURL.toString() %>" value="assign-users" />
 				</aui:button-row>
+
+				<%
+				viewUsersURL.setParameter("tabs2", "current");
+				%>
+
 			</c:when>
 			<c:otherwise>
 

@@ -77,7 +77,7 @@ if (selUser != null) {
 	%>
 
 	<c:choose>
-		<c:when test="<%= ((selUser == null) || (publicLayoutSetPrototype == null)) && !layoutSetPrototypes.isEmpty() %>">
+		<c:when test="<%= ((selUser == null) || ((publicLayoutSetPrototype == null) && (selUser.getPublicLayoutsPageCount() == 0))) && !layoutSetPrototypes.isEmpty() %>">
 			<aui:select label="public-pages" name="publicLayoutSetPrototypeId">
 				<aui:option label='<%= selUser == null ? "default" : "none" %>' selected="<%= true %>" value="" />
 
@@ -147,7 +147,7 @@ if (selUser != null) {
 	</c:choose>
 
 	<c:choose>
-		<c:when test="<%= ((selUser == null) || (privateLayoutSetPrototype == null)) && !layoutSetPrototypes.isEmpty() %>">
+		<c:when test="<%= ((selUser == null) || ((privateLayoutSetPrototype == null) && (selUser.getPrivateLayoutsPageCount() == 0))) && !layoutSetPrototypes.isEmpty() %>">
 			<aui:select label="private-pages" name="privateLayoutSetPrototypeId">
 				<aui:option label='<%= selUser == null ? "default" : "none" %>' selected="<%= true %>" value="" />
 

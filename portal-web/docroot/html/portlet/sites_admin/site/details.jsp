@@ -117,7 +117,7 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 			<liferay-ui:panel-container extended="<%= false %>">
 				<liferay-ui:panel collapsible="<%= true %>" defaultState='<%= ((group != null) && (group.getPublicLayoutsPageCount() > 0)) ? "open" : "closed" %>' title="public-pages">
 					<c:choose>
-						<c:when test="<%= ((group == null) || (publicLayoutSetPrototype == null)) && !layoutSetPrototypes.isEmpty() %>">
+						<c:when test="<%= ((group == null) || ((publicLayoutSetPrototype == null) && (group.getPublicLayoutsPageCount() == 0))) && !layoutSetPrototypes.isEmpty() %>">
 							<aui:select helpMessage="site-templates-with-an-incompatible-application-adapter-are-disabled" label="site-template" name="publicLayoutSetPrototypeId">
 								<aui:option label="none" selected="<%= true %>" value="" />
 
@@ -189,7 +189,7 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 				</liferay-ui:panel>
 				<liferay-ui:panel collapsible="<%= true %>" defaultState='<%= ((group != null) && (group.getPrivateLayoutsPageCount() > 0)) ? "open" : "closed" %>' title="private-pages">
 					<c:choose>
-						<c:when test="<%= ((group == null) || (privateLayoutSetPrototype == null)) && !layoutSetPrototypes.isEmpty() %>">
+						<c:when test="<%= ((group == null) || ((privateLayoutSetPrototype == null) && (group.getPrivateLayoutsPageCount() == 0))) && !layoutSetPrototypes.isEmpty() %>">
 							<aui:select helpMessage="site-templates-with-an-incompatible-application-adapter-are-disabled" label="site-template" name="privateLayoutSetPrototypeId">
 								<aui:option label="none" selected="<%= true %>" value="" />
 

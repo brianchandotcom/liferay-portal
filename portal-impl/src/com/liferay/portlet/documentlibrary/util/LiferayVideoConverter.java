@@ -339,7 +339,15 @@ public class LiferayVideoConverter extends LiferayConverter {
 			ICodec.Type inputICodecType, String outputURL, int index)
 		throws Exception {
 
-		IStream outputIStream = outputIContainer.addNewStream(index);
+		ICodec iCodec = getVideoEncodingICodec(inputICodecType, outputURL);
+
+		if (iCodec == null) {
+			throw new RuntimeException(
+				"Unable to determine " + inputICodecType + " encoder for " +
+					outputURL);
+		}
+		
+		IStream outputIStream = outputIContainer.addNewStream(iCodec);
 
 		outputIStreams[index] = outputIStream;
 
@@ -361,16 +369,6 @@ public class LiferayVideoConverter extends LiferayConverter {
 
 		outputIStreamCoder.setBitRate(bitRate);
 
-		ICodec iCodec = getVideoEncodingICodec(inputICodecType, outputURL);
-
-		if (iCodec == null) {
-			throw new RuntimeException(
-				"Unable to determine " + inputICodecType + " encoder for " +
-					outputURL);
-		}
-
-		outputIStreamCoder.setCodec(iCodec);
-
 		IRational iRational = inputIStreamCoder.getFrameRate();
 
 		if (_log.isInfoEnabled()) {
@@ -388,7 +386,7 @@ public class LiferayVideoConverter extends LiferayConverter {
 		}
 
 		outputIStreamCoder.setFrameRate(iRational);
-
+		
 		if (inputIStreamCoder.getHeight() <= 0) {
 			throw new RuntimeException(
 				"Unable to determine height for " + _inputURL);

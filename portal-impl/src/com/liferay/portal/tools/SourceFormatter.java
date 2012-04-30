@@ -1607,6 +1607,20 @@ public class SourceFormatter {
 					 (lineToSkipIfEmpty != (lineCount - 1)))) {
 
 					sb.append(previousLine);
+
+					if (previousLine.endsWith(
+							StringPool.TAB + StringPool.CLOSE_CURLY_BRACE) &&
+						Validator.isNotNull(trimmedLine) &&
+						!trimmedLine.equals(");") &&
+						!trimmedLine.startsWith(StringPool.CLOSE_CURLY_BRACE) &&
+						!trimmedLine.startsWith("catch ") &&
+						!trimmedLine.startsWith("else ") &&
+						!trimmedLine.startsWith("finally ") &&
+						!trimmedLine.startsWith("while ")) {
+
+						sb.append("\n");
+					}
+
 					sb.append("\n");
 				}
 

@@ -51,14 +51,14 @@ public class URLCodecTest extends TestCase {
 		}
 	}
 
-	private static final String[] _ENCODED_URLS = new String[8];
+	private static final String[] _ENCODED_URLS = new String[9];
 
-	private static final String[] _ESCAPE_SPACES_ENCODED_URLS = new String[8];
+	private static final String[] _ESCAPE_SPACES_ENCODED_URLS = new String[9];
 
 	private static final String[] _RAW_URLS = {
 		"abcdefghijklmnopqrstuvwxyz", "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
 		"0123456789", ".-*_", " ", "~`!@#$%^&()+={[}]|\\:;\"'<,>?/", "中文测试",
-		"/abc/def"
+		"/abc/def", "abc <def> ghi"
 	};
 
 	static {

@@ -20,11 +20,6 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//a[@id='_145_addApplication']</td>
-	<td>More</td>
-</tr>
-<tr>
-	<td>clickAt</td>
 	<td>//div[@id='dockbar']</td>
 	<td>Dockbar</td>
 </tr>
@@ -69,9 +64,19 @@
 	<td>Search applications (searches as you type).</td>
 </tr>
 <tr>
-	<td>typeKeys</td>
+	<td>type</td>
 	<td>//input[@id='layout_configuration_content']</td>
 	<td>s</td>
+</tr>
+<tr>
+	<td>keyDown</td>
+	<td>//input[@id='layout_configuration_content']</td>
+	<td>\13</td>
+</tr>
+<tr>
+	<td>keyUp</td>
+	<td>//input[@id='layout_configuration_content']</td>
+	<td>\13</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>

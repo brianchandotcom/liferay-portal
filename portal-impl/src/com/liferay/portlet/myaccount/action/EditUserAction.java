@@ -99,12 +99,10 @@ public class EditUserAction
 			if (authType.equals(CompanyConstants.AUTH_TYPE_EA)) {
 				login = user.getEmailAddress();
 			}
-
-			if (authType.equals(CompanyConstants.AUTH_TYPE_ID)) {
+			else if (authType.equals(CompanyConstants.AUTH_TYPE_ID)) {
 				login = String.valueOf(user.getUserId());
 			}
-
-			if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
+			else if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
 				login = user.getScreenName();
 			}
 

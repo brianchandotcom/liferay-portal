@@ -554,8 +554,7 @@ public class ClusterSchedulerEngine
 
 			return object;
 		}
-
-		catch(Exception e) {
+		catch (Exception e) {
 			throw new SchedulerException(
 				"Unable to deserialize object from " + string, e);
 		}
@@ -563,8 +562,7 @@ public class ClusterSchedulerEngine
 			try {
 				objectInputStream.close();
 			}
-
-			catch(Exception e) {
+			catch (Exception e) {
 			}
 		}
 	}

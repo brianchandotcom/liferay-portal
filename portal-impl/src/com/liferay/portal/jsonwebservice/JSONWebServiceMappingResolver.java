@@ -82,7 +82,6 @@ public class JSONWebServiceMappingResolver {
 			}
 
 			path = pathFromClass + path;
-
 		}
 
 		return path;

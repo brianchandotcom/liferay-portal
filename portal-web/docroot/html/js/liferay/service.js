@@ -1,8 +1,18 @@
 Liferay.Service.register("Liferay.Service.Portal", "com.liferay.portal.service");
 
 Liferay.Service.registerClass(
+	Liferay.Service.Portal, "Account",
+	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true
+	}
+);
+
+Liferay.Service.registerClass(
 	Liferay.Service.Portal, "Address",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addAddress: true,
 		deleteAddress: true,
 		getAddress: true,
@@ -14,6 +24,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Portal, "ClassName",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		getClassName: true,
 		getClassNameId: true
 	}
@@ -22,6 +34,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Portal, "Company",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addCompany: true,
 		deleteLogo: true,
 		getCompanyById: true,
@@ -38,8 +52,18 @@ Liferay.Service.registerClass(
 );
 
 Liferay.Service.registerClass(
+	Liferay.Service.Portal, "Contact",
+	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true
+	}
+);
+
+Liferay.Service.registerClass(
 	Liferay.Service.Portal, "Country",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addCountry: true,
 		fetchCountry: true,
 		fetchCountryByA2: true,
@@ -55,6 +79,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Portal, "EmailAddress",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addEmailAddress: true,
 		deleteEmailAddress: true,
 		getEmailAddress: true,
@@ -66,6 +92,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Portal, "Group",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addGroup: true,
 		addRoleGroups: true,
 		deleteGroup: true,
@@ -90,6 +118,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Portal, "Image",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		getImage: true
 	}
 );
@@ -97,6 +127,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Portal, "Layout",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addLayout: true,
 		deleteLayout: true,
 		getDefaultPlid: true,
@@ -117,6 +149,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Portal, "LayoutBranch",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addLayoutBranch: true,
 		deleteLayoutBranch: true,
 		updateLayoutBranch: true
@@ -126,6 +160,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Portal, "LayoutPrototype",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addLayoutPrototype: true,
 		deleteLayoutPrototype: true,
 		getLayoutPrototype: true,
@@ -137,6 +173,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Portal, "LayoutRevision",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addLayoutRevision: true
 	}
 );
@@ -144,6 +182,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Portal, "LayoutSet",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		updateLayoutSetPrototypeLinkEnabled: true,
 		updateLookAndFeel: true,
 		updateSettings: true,
@@ -154,6 +194,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Portal, "LayoutSetBranch",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addLayoutSetBranch: true,
 		deleteLayoutSetBranch: true,
 		getLayoutSetBranches: true,
@@ -165,6 +207,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Portal, "LayoutSetPrototype",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addLayoutSetPrototype: true,
 		deleteLayoutSetPrototype: true,
 		getLayoutSetPrototype: true,
@@ -176,6 +220,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Portal, "ListType",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		getListType: true,
 		getListTypes: true,
 		validate: true
@@ -185,6 +231,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Portal, "MembershipRequest",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addMembershipRequest: true,
 		deleteMembershipRequests: true,
 		getMembershipRequest: true,
@@ -195,6 +243,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Portal, "Organization",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addGroupOrganizations: true,
 		addOrganization: true,
 		addPasswordPolicyOrganizations: true,
@@ -216,6 +266,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Portal, "OrgLabor",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addOrgLabor: true,
 		deleteOrgLabor: true,
 		getOrgLabor: true,
@@ -227,6 +279,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Portal, "PasswordPolicy",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addPasswordPolicy: true,
 		deletePasswordPolicy: true,
 		updatePasswordPolicy: true
@@ -236,6 +290,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Portal, "Permission",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		checkPermission: true
 	}
 );
@@ -243,6 +299,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Portal, "Phone",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addPhone: true,
 		deletePhone: true,
 		getPhone: true,
@@ -254,6 +312,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Portal, "PluginSetting",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		updatePluginSetting: true
 	}
 );
@@ -261,6 +321,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Portal, "Portal",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		getAutoDeployDirectory: true,
 		getBuildNumber: true,
 		testAddClassName_Rollback: true,
@@ -270,6 +332,7 @@ Liferay.Service.registerClass(
 		testAddClassNameAndTestTransactionPortletBar_Success: true,
 		testCounterIncrement_Rollback: true,
 		testDeleteClassName: true,
+		testGetBuildNumber: true,
 		testGetUserId: true,
 		testHasClassName: true
 	}
@@ -278,6 +341,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Portal, "Portlet",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		getWARPortlets: true,
 		updatePortlet: true
 	}
@@ -286,6 +351,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Portal, "PortletPreferences",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		deleteArchivedPreferences: true
 	}
 );
@@ -293,6 +360,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Portal, "Region",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addRegion: true,
 		fetchRegion: true,
 		getRegion: true,
@@ -303,6 +372,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Portal, "Repository",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addRepository: true,
 		checkRepository: true,
 		deleteRepository: true,
@@ -319,6 +390,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Portal, "ResourceBlock",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addCompanyScopePermission: true,
 		addGroupScopePermission: true,
 		addIndividualScopePermission: true,
@@ -335,6 +408,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Portal, "ResourcePermission",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addResourcePermission: true,
 		removeResourcePermission: true,
 		removeResourcePermissions: true,
@@ -345,6 +420,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Portal, "Role",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addRole: true,
 		addUserRoles: true,
 		deleteRole: true,
@@ -364,6 +441,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Portal, "Team",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addTeam: true,
 		deleteTeam: true,
 		getGroupTeams: true,
@@ -377,6 +456,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Portal, "Theme",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		getThemes: true,
 		getWARThemes: true
 	}
@@ -385,6 +466,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Portal, "User",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addGroupUsers: true,
 		addOrganizationUsers: true,
 		addPasswordPolicyUsers: true,
@@ -431,6 +514,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Portal, "UserGroup",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addGroupUserGroups: true,
 		addTeamUserGroups: true,
 		addUserGroup: true,
@@ -446,6 +531,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Portal, "UserGroupGroupRole",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addUserGroupGroupRoles: true,
 		deleteUserGroupGroupRoles: true
 	}
@@ -454,6 +541,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Portal, "UserGroupRole",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addUserGroupRoles: true,
 		deleteUserGroupRoles: true
 	}
@@ -462,6 +551,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Portal, "Website",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addWebsite: true,
 		deleteWebsite: true,
 		getWebsite: true,
@@ -475,6 +566,8 @@ Liferay.Service.register("Liferay.Service.Announcements", "com.liferay.portlet.a
 Liferay.Service.registerClass(
 	Liferay.Service.Announcements, "AnnouncementsDelivery",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		updateDelivery: true
 	}
 );
@@ -482,6 +575,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Announcements, "AnnouncementsEntry",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addEntry: true,
 		deleteEntry: true,
 		updateEntry: true
@@ -491,6 +586,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Announcements, "AnnouncementsFlag",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addFlag: true,
 		deleteFlag: true,
 		getFlag: true
@@ -502,6 +599,8 @@ Liferay.Service.register("Liferay.Service.Asset", "com.liferay.portlet.asset.ser
 Liferay.Service.registerClass(
 	Liferay.Service.Asset, "AssetCategory",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addCategory: true,
 		deleteCategories: true,
 		deleteCategory: true,
@@ -522,6 +621,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Asset, "AssetCategoryProperty",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addCategoryProperty: true,
 		deleteCategoryProperty: true,
 		getCategoryProperties: true,
@@ -533,6 +634,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Asset, "AssetEntry",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		getCompanyEntries: true,
 		getCompanyEntriesCount: true,
 		getCompanyEntryDisplays: true,
@@ -549,6 +652,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Asset, "AssetTag",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addTag: true,
 		deleteTag: true,
 		deleteTags: true,
@@ -568,6 +673,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Asset, "AssetTagProperty",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addTagProperty: true,
 		deleteTagProperty: true,
 		getTagProperties: true,
@@ -579,6 +686,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Asset, "AssetVocabulary",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addVocabulary: true,
 		deleteVocabularies: true,
 		deleteVocabulary: true,
@@ -598,6 +707,8 @@ Liferay.Service.register("Liferay.Service.Blogs", "com.liferay.portlet.blogs.ser
 Liferay.Service.registerClass(
 	Liferay.Service.Blogs, "BlogsEntry",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		deleteEntry: true,
 		getCompanyEntries: true,
 		getEntry: true,
@@ -617,6 +728,8 @@ Liferay.Service.register("Liferay.Service.Bookmarks", "com.liferay.portlet.bookm
 Liferay.Service.registerClass(
 	Liferay.Service.Bookmarks, "BookmarksEntry",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addEntry: true,
 		deleteEntry: true,
 		getEntries: true,
@@ -633,6 +746,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Bookmarks, "BookmarksFolder",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addFolder: true,
 		deleteFolder: true,
 		getFolder: true,
@@ -648,6 +763,8 @@ Liferay.Service.register("Liferay.Service.Cal", "com.liferay.portlet.calendar.se
 Liferay.Service.registerClass(
 	Liferay.Service.Cal, "CalEvent",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addEvent: true,
 		deleteEvent: true,
 		getEvent: true,
@@ -663,6 +780,8 @@ Liferay.Service.register("Liferay.Service.DL", "com.liferay.portlet.documentlibr
 Liferay.Service.registerClass(
 	Liferay.Service.DL, "DLApp",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addFileShortcut: true,
 		addFolder: true,
 		cancelCheckOut: true,
@@ -719,6 +838,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.DL, "DLFileEntry",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		cancelCheckOut: true,
 		checkInFileEntry: true,
 		checkOutFileEntry: true,
@@ -749,6 +870,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.DL, "DLFileEntryType",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addFileEntryType: true,
 		deleteFileEntryType: true,
 		getFileEntryType: true,
@@ -763,6 +886,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.DL, "DLFileShortcut",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addFileShortcut: true,
 		deleteFileShortcut: true,
 		getFileShortcut: true,
@@ -773,6 +898,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.DL, "DLFileVersion",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		getFileVersion: true,
 		getLatestFileVersion: true
 	}
@@ -781,6 +908,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.DL, "DLFolder",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addFolder: true,
 		deleteFolder: true,
 		getFileEntriesAndFileShortcutsCount: true,
@@ -808,6 +937,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.DL, "DLSync",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		getDLSyncUpdate: true
 	}
 );
@@ -817,6 +948,8 @@ Liferay.Service.register("Liferay.Service.DDL", "com.liferay.portlet.dynamicdata
 Liferay.Service.registerClass(
 	Liferay.Service.DDL, "DDLRecord",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addRecord: true,
 		getRecord: true,
 		updateRecord: true
@@ -826,6 +959,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.DDL, "DDLRecordSet",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addRecordSet: true,
 		deleteRecordSet: true,
 		getRecordSet: true,
@@ -839,6 +974,8 @@ Liferay.Service.register("Liferay.Service.DDM", "com.liferay.portlet.dynamicdata
 Liferay.Service.registerClass(
 	Liferay.Service.DDM, "DDMStructure",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addStructure: true,
 		copyStructure: true,
 		deleteStructure: true,
@@ -853,6 +990,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.DDM, "DDMTemplate",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addTemplate: true,
 		copyTemplates: true,
 		deleteTemplate: true,
@@ -870,6 +1009,8 @@ Liferay.Service.register("Liferay.Service.Expando", "com.liferay.portlet.expando
 Liferay.Service.registerClass(
 	Liferay.Service.Expando, "ExpandoColumn",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addColumn: true,
 		deleteColumn: true,
 		updateColumn: true,
@@ -880,6 +1021,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Expando, "ExpandoValue",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addValue: true,
 		addValues: true,
 		getData: true,
@@ -892,6 +1035,8 @@ Liferay.Service.register("Liferay.Service.Flags", "com.liferay.portlet.flags.ser
 Liferay.Service.registerClass(
 	Liferay.Service.Flags, "FlagsEntry",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addEntry: true
 	}
 );
@@ -903,6 +1048,8 @@ Liferay.Service.register("Liferay.Service.Journal", "com.liferay.portlet.journal
 Liferay.Service.registerClass(
 	Liferay.Service.Journal, "JournalArticle",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addArticle: true,
 		copyArticle: true,
 		deleteArticle: true,
@@ -932,6 +1079,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Journal, "JournalFeed",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addFeed: true,
 		deleteFeed: true,
 		getFeed: true,
@@ -942,6 +1091,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Journal, "JournalFolder",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addFolder: true,
 		deleteFolder: true,
 		getFolder: true,
@@ -957,6 +1108,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Journal, "JournalStructure",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addStructure: true,
 		copyStructure: true,
 		deleteStructure: true,
@@ -971,6 +1124,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Journal, "JournalTemplate",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addTemplate: true,
 		copyTemplate: true,
 		deleteTemplate: true,
@@ -987,6 +1142,8 @@ Liferay.Service.register("Liferay.Service.MB", "com.liferay.portlet.messageboard
 Liferay.Service.registerClass(
 	Liferay.Service.MB, "MBBan",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addBan: true,
 		deleteBan: true
 	}
@@ -995,6 +1152,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.MB, "MBCategory",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addCategory: true,
 		deleteCategory: true,
 		getCategories: true,
@@ -1013,6 +1172,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.MB, "MBMessage",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addDiscussionMessage: true,
 		addMessage: true,
 		deleteDiscussionMessage: true,
@@ -1036,6 +1197,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.MB, "MBThread",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		deleteThread: true,
 		getGroupThreads: true,
 		getGroupThreadsCount: true,
@@ -1053,6 +1216,8 @@ Liferay.Service.register("Liferay.Service.MDR", "com.liferay.portlet.mobiledevic
 Liferay.Service.registerClass(
 	Liferay.Service.MDR, "MDRAction",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addAction: true,
 		deleteAction: true,
 		fetchAction: true,
@@ -1064,6 +1229,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.MDR, "MDRRule",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addRule: true,
 		deleteRule: true,
 		fetchRule: true,
@@ -1075,6 +1242,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.MDR, "MDRRuleGroup",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addRuleGroup: true,
 		copyRuleGroup: true,
 		deleteRuleGroup: true,
@@ -1087,6 +1256,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.MDR, "MDRRuleGroupInstance",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addRuleGroupInstance: true,
 		deleteRuleGroupInstance: true,
 		getRuleGroupInstances: true,
@@ -1098,8 +1269,18 @@ Liferay.Service.registerClass(
 Liferay.Service.register("Liferay.Service.Polls", "com.liferay.portlet.polls.service");
 
 Liferay.Service.registerClass(
+	Liferay.Service.Polls, "PollsChoice",
+	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true
+	}
+);
+
+Liferay.Service.registerClass(
 	Liferay.Service.Polls, "PollsQuestion",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addQuestion: true,
 		deleteQuestion: true,
 		getQuestion: true,
@@ -1110,6 +1291,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Polls, "PollsVote",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addVote: true
 	}
 );
@@ -1119,6 +1302,8 @@ Liferay.Service.register("Liferay.Service.Ratings", "com.liferay.portlet.ratings
 Liferay.Service.registerClass(
 	Liferay.Service.Ratings, "RatingsEntry",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		deleteEntry: true,
 		updateEntry: true
 	}
@@ -1129,6 +1314,8 @@ Liferay.Service.register("Liferay.Service.Shopping", "com.liferay.portlet.shoppi
 Liferay.Service.registerClass(
 	Liferay.Service.Shopping, "ShoppingCategory",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addCategory: true,
 		deleteCategory: true,
 		getCategories: true,
@@ -1142,6 +1329,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Shopping, "ShoppingCoupon",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addCoupon: true,
 		deleteCoupon: true,
 		getCoupon: true,
@@ -1153,6 +1342,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Shopping, "ShoppingItem",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addBookItems: true,
 		deleteItem: true,
 		getCategoriesItemsCount: true,
@@ -1166,6 +1357,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Shopping, "ShoppingOrder",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		completeOrder: true,
 		deleteOrder: true,
 		getOrder: true,
@@ -1179,6 +1372,8 @@ Liferay.Service.register("Liferay.Service.Social", "com.liferay.portlet.social.s
 Liferay.Service.registerClass(
 	Liferay.Service.Social, "SocialActivitySetting",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		getActivityDefinition: true,
 		getActivityDefinitions: true,
 		getJSONActivityDefinitions: true,
@@ -1192,6 +1387,8 @@ Liferay.Service.register("Liferay.Service.SC", "com.liferay.portlet.softwarecata
 Liferay.Service.registerClass(
 	Liferay.Service.SC, "SCFrameworkVersion",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addFrameworkVersion: true,
 		deleteFrameworkVersion: true,
 		getFrameworkVersion: true,
@@ -1203,6 +1400,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.SC, "SCLicense",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addLicense: true,
 		deleteLicense: true,
 		getLicense: true,
@@ -1213,6 +1412,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.SC, "SCProductEntry",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addProductEntry: true,
 		deleteProductEntry: true,
 		getProductEntry: true,
@@ -1223,6 +1424,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.SC, "SCProductVersion",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addProductVersion: true,
 		deleteProductVersion: true,
 		getProductVersion: true,
@@ -1237,6 +1440,8 @@ Liferay.Service.register("Liferay.Service.Wiki", "com.liferay.portlet.wiki.servi
 Liferay.Service.registerClass(
 	Liferay.Service.Wiki, "WikiNode",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addNode: true,
 		deleteNode: true,
 		getNode: true,
@@ -1250,6 +1455,8 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.Wiki, "WikiPage",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		addPage: true,
 		addPageAttachments: true,
 		changeParent: true,
@@ -1275,6 +1482,8 @@ Liferay.Service.register("Liferay.Service.Trash", "com.liferay.portlet.trash.ser
 Liferay.Service.registerClass(
 	Liferay.Service.Trash, "TrashEntry",
 	{
+		getBeanIdentifier: true,
+		setBeanIdentifier: true,
 		deleteEntries: true,
 		getEntries: true
 	}

@@ -421,9 +421,9 @@ public abstract class LiferayConverter {
 		if ((originalBitRate == 0) || (originalBitRate > AUDIO_BIT_RATE_MAX)) {
 			originalBitRate = AUDIO_BIT_RATE_DEFAULT;
 		}
-		
-		if (outputICodec.getID().equals(ICodec.ID.CODEC_ID_VORBIS)){
-			if (originalBitRate < 64000){
+
+		if (outputICodec.getID().equals(ICodec.ID.CODEC_ID_VORBIS)) {
+			if (originalBitRate < 64000) {
 				originalBitRate = 64000;
 			}
 		}
@@ -462,24 +462,24 @@ public abstract class LiferayConverter {
 
 		return null;
 	}
-	
-	protected Format getAudioEncodingSampleFormat(ICodec outputCodec,
-			IStreamCoder inputStreamCoder) {
 
-		Format returnFormat = null;
-		Format preferredFormat = inputStreamCoder.getSampleFormat();
-		System.out.println("Preferido:"+preferredFormat);
-		List<Format> formats = outputCodec.getSupportedAudioSampleFormats();
-		for (Format format : formats) {			
-			System.out.println("A comprobar:"+format.toString());
-			returnFormat = format;
-			if (format == preferredFormat) {				
-				System.out.println("Coinciden!!");
+	protected Format getAudioSampleFormat(
+		ICodec outputCodec, Format originalSampleFormat) {
+
+		Format sampleFormat = null;
+
+		List<Format> supportedSampleFormats =
+			outputCodec.getSupportedAudioSampleFormats();
+
+		for (Format supportedSampleFormat : supportedSampleFormats) {
+			sampleFormat = supportedSampleFormat;
+
+			if (supportedSampleFormat == originalSampleFormat) {
 				break;
 			}
 		}
-		
-		return returnFormat;		
+
+		return sampleFormat;
 	}
 
 	protected int getAudioSampleRate() {
@@ -616,7 +616,7 @@ public abstract class LiferayConverter {
 		int value = 0;
 
 		if (writeContainer) {
-			value = iContainer.open(url, IContainer.Type.WRITE,  null);
+			value = iContainer.open(url, IContainer.Type.WRITE, null);
 		}
 		else {
 			value = iContainer.open(url, IContainer.Type.READ, null);
@@ -636,14 +636,16 @@ public abstract class LiferayConverter {
 		if ((iStreamCoder != null) &&
 			(iStreamCoder.getCodecType() != ICodec.Type.CODEC_TYPE_UNKNOWN)) {
 
-			// some codecs require experimental mode to be set, and so we set it
-			// here.
-			if (iStreamCoder
-					.setStandardsCompliance(IStreamCoder.CodecStandardsCompliance.COMPLIANCE_EXPERIMENTAL) < 0) {
+			// Some codecs require experimental mode
+
+			int result = iStreamCoder.setStandardsCompliance(
+				IStreamCoder.CodecStandardsCompliance.COMPLIANCE_EXPERIMENTAL);
+
+			if (result < 0) {
 				throw new RuntimeException(
-						"could not set compliance mode to experimental");
+					"Could not set compliance mode to experimental");
 			}
-	        
+
 			if (iStreamCoder.open(null, null) < 0) {
 				throw new RuntimeException("Unable to open coder");
 			}
@@ -671,7 +673,7 @@ public abstract class LiferayConverter {
 				"Unable to determine " + inputICodecType + " encoder for " +
 					outputURL);
 		}
-		
+
 		IStream outputIStream = outputIContainer.addNewStream(iCodec);
 
 		outputIStreams[index] = outputIStream;
@@ -680,25 +682,22 @@ public abstract class LiferayConverter {
 
 		outputIStreamCoders[index] = outputIStreamCoder;
 
-		Format sampleFormat = getAudioEncodingSampleFormat(iCodec, inputIStreamCoder);
-		
-		System.out.println("Establecemos formato a "+sampleFormat.toString());
-		
+		Format sampleFormat = inputIStreamCoder.getSampleFormat();
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"Original audio sample format " + sampleFormat.toString());
+		}
+
+		sampleFormat = getAudioSampleFormat(iCodec, sampleFormat);
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"Modified audio sample format " + sampleFormat.toString());
+		}
+
 		outputIStreamCoder.setSampleFormat(sampleFormat);
-		
-		/*Format preferredFormat = inputIStreamCoder.getSampleFormat();
-		
-		System.out.println("Formato preferido:"+preferredFormat.toString());
-		List<Format> formats = iCodec.getSupportedAudioSampleFormats();
-		for (Format format : formats) {
-			System.out.println("Formato a comprobar:"+format.toString());
-			outputIStreamCoder.setSampleFormat(format);
-			if (format == preferredFormat) {
-				System.out.println("Formato "+format.toString()+" es igual que el preferido");
-				break;
-			}
-		}*/
-        
+
 		int bitRate = inputIStreamCoder.getBitRate();
 
 		if (_log.isInfoEnabled()) {
@@ -718,19 +717,18 @@ public abstract class LiferayConverter {
 
 		outputIStreamCoder.setChannels(channels);
 
-
 		outputIStreamCoder.setGlobalQuality(0);
 		outputIStreamCoder.setSampleRate(getAudioSampleRate());
 
 		iAudioResamplers[index] = createIAudioResampler(
 			inputIStreamCoder, outputIStreamCoder);
 
-		inputIAudioSamples[index] = IAudioSamples.make(1024,
-				inputIStreamCoder.getChannels(),
-				inputIStreamCoder.getSampleFormat());
-		outputIAudioSamples[index] = IAudioSamples.make(1024,
-				outputIStreamCoder.getChannels(),
-				outputIStreamCoder.getSampleFormat());
+		inputIAudioSamples[index] = IAudioSamples.make(
+			1024, inputIStreamCoder.getChannels(),
+			inputIStreamCoder.getSampleFormat());
+		outputIAudioSamples[index] = IAudioSamples.make(
+			1024, outputIStreamCoder.getChannels(),
+			outputIStreamCoder.getSampleFormat());
 	}
 
 	protected IAudioSamples resampleAudio(

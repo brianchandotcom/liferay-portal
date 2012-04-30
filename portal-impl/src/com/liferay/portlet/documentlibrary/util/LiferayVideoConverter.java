@@ -346,7 +346,7 @@ public class LiferayVideoConverter extends LiferayConverter {
 				"Unable to determine " + inputICodecType + " encoder for " +
 					outputURL);
 		}
-		
+
 		IStream outputIStream = outputIContainer.addNewStream(iCodec);
 
 		outputIStreams[index] = outputIStream;
@@ -386,7 +386,7 @@ public class LiferayVideoConverter extends LiferayConverter {
 		}
 
 		outputIStreamCoder.setFrameRate(iRational);
-		
+
 		if (inputIStreamCoder.getHeight() <= 0) {
 			throw new RuntimeException(
 				"Unable to determine height for " + _inputURL);

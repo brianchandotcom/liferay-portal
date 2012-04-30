@@ -332,17 +332,7 @@ public class JournalIndexer extends BaseIndexer {
 
 	protected String extractContent(String content, boolean dynamicContent) {
 		if (dynamicContent) {
-			try {
-				com.liferay.portal.kernel.xml.Document document =
-					SAXReaderUtil.read(content);
-
-				Element rootElement = document.getRootElement();
-
-				content = extractDynamicContent(rootElement).toString();
-			}
-			catch (DocumentException e) {
-				_log.error(e);
-			}
+			content = extractDynamicContent(content);
 		}
 		else {
 			content = extractStaticContent(content);
@@ -353,8 +343,23 @@ public class JournalIndexer extends BaseIndexer {
 		return content;
 	}
 
-	protected StringBundler extractDynamicContent(Element rootElement)
-		throws DocumentException {
+	protected String extractDynamicContent(String content) {
+		try {
+			com.liferay.portal.kernel.xml.Document document =
+				SAXReaderUtil.read(content);
+
+			Element rootElement = document.getRootElement();
+
+			return extractDynamicContent(rootElement);
+		}
+		catch (DocumentException de) {
+			_log.error(de);
+		}
+
+		return StringPool.BLANK;
+	}
+
+	protected String extractDynamicContent(Element rootElement) {
 
 		StringBundler sb = new StringBundler();
 
@@ -370,6 +375,7 @@ public class JournalIndexer extends BaseIndexer {
 
 				if (contentEl != null) {
 					String dynamicContent = contentEl.getText();
+
 					sb = sb.append(dynamicContent).append(StringPool.SPACE);
 				}
 			}
@@ -377,7 +383,7 @@ public class JournalIndexer extends BaseIndexer {
 			sb = sb.append(extractDynamicContent(element));
 		}
 
-		return sb;
+		return sb.toString();
 	}
 
 	protected String extractStaticContent(String content) {

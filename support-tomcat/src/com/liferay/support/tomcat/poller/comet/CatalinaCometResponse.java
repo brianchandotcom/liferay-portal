@@ -63,6 +63,7 @@ public class CatalinaCometResponse implements CometResponse {
 			}
 		}
 	}
+
 	public void writeData(String data) throws CometException {
 		synchronized (this) {
 			if (!_open) {

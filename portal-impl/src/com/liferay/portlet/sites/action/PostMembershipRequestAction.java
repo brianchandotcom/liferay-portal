@@ -81,6 +81,7 @@ public class PostMembershipRequestAction extends PortletAction {
 			}
 		}
 	}
+
 	@Override
 	public ActionForward render(
 			ActionMapping mapping, ActionForm form, PortletConfig portletConfig,

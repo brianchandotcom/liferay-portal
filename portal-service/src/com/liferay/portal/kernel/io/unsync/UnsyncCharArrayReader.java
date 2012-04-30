@@ -47,6 +47,7 @@ public class UnsyncCharArrayReader extends Reader {
 		if (buffer == null) {
 			throw new IOException("Stream closed");
 		}
+
 		markIndex = index;
 	}
 

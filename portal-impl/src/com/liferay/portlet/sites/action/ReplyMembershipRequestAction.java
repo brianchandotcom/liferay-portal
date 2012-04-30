@@ -103,6 +103,7 @@ public class ReplyMembershipRequestAction extends PortletAction {
 			}
 		}
 	}
+
 	@Override
 	public ActionForward render(
 			ActionMapping mapping, ActionForm form, PortletConfig portletConfig,

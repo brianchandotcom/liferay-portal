@@ -72,6 +72,7 @@ public class RollingChecksum {
 
 		generateWeakChecksum();
 	}
+
 	public void nextByte() throws IOException {
 		int blockLength = currentBlockLength();
 		int x = _byteChannelReader.get();

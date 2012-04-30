@@ -369,6 +369,7 @@ public class TaskQueueTest extends TestCase {
 				catch (InterruptedException ie) {
 					fail();
 				}
+
 				try {
 					taskQueue.take();
 					fail();

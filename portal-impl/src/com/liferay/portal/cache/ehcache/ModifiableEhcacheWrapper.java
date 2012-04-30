@@ -541,6 +541,7 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 	public Element replace(Element element) throws NullPointerException {
 		return _ehcache.replace(element);
 	}
+
 	public boolean replace(Element oldElement, Element newElement)
 		throws IllegalArgumentException, NullPointerException {
 

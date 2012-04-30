@@ -47,6 +47,7 @@ public class NetlogonAuthenticator extends NdrObject {
 			_credential[i] = (byte) ndrBuffer.dec_ndr_small();
 		}
 	}
+
 	@Override
 	public void encode(NdrBuffer ndrBuffer) {
 		ndrBuffer.align(4);

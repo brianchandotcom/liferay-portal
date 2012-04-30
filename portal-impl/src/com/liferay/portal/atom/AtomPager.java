@@ -72,6 +72,7 @@ public class AtomPager {
 		if (end > totalElements) {
 			end = totalElements;
 		}
+
 		_end = end - 1;
 
 		_previousPage = _page - 1;

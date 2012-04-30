@@ -386,6 +386,7 @@ public class LayoutImporter {
 							getLayoutSetPrototypeByUuidAndCompanyId(
 								layoutSetPrototypeUuid, companyId);
 				}
+
 				catch(NoSuchLayoutSetPrototypeException nslspe) {
 				}
 			}

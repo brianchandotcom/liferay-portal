@@ -277,6 +277,7 @@ public class JournalContentImpl implements JournalContent {
 
 		return sb.toString();
 	}
+
 	protected JournalArticleDisplay getArticleDisplay(
 		long groupId, String articleId, String templateId, String viewMode,
 		String languageId, int page, String xmlRequest,

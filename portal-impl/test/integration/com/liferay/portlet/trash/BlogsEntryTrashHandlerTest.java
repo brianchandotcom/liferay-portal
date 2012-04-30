@@ -133,6 +133,7 @@ public class BlogsEntryTrashHandlerTest {
 			Assert.assertEquals(
 				initialTrashEntriesCount + 1, finalTrashEntriesCount);
 		}
+
 		catch(Exception e) {
 			Assert.fail(
 				"Unexpected error moving blogs entry to trash " +
@@ -180,6 +181,7 @@ public class BlogsEntryTrashHandlerTest {
 			Assert.assertEquals(
 				initialBlogsEntriesCount + 1, finalBlogsEntriesCount);
 		}
+
 		catch(Exception e) {
 			Assert.fail(
 				"Unexpected error restoring blogsEntry from Trash: " +

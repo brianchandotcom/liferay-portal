@@ -102,6 +102,7 @@ public class UnsyncPrintWriterTest extends TestCase {
 
 		assertEquals(" 1  a", stringWriter.toString());
 	}
+
 	public void testPrintln() {
 		StringWriter stringWriter = new StringWriter();
 

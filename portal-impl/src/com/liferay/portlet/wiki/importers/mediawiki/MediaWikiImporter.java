@@ -614,6 +614,7 @@ public class MediaWikiImporter implements WikiImporter {
 
 		return redirectTitle;
 	}
+
 	protected String readRedirectTitle(String content) {
 		Matcher matcher = _redirectPattern.matcher(content);
 
@@ -627,6 +628,7 @@ public class MediaWikiImporter implements WikiImporter {
 
 		return redirectTitle;
 	}
+
 	protected List<String> readSpecialNamespaces(Element root)
 		throws ImportFilesException {
 

@@ -79,6 +79,7 @@ public class PortletResourceBundle extends ResourceBundle {
 
 		return value;
 	}
+
 	private String _getJavaxPortletString(String key) {
 		if (key.equals(JavaConstants.JAVAX_PORTLET_TITLE)) {
 			return _portletInfo.getTitle();

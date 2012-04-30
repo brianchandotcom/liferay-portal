@@ -78,9 +78,11 @@ public class CronText {
 	public void setInterval(int interval) {
 		_interval = interval;
 	}
+
 	public void setStartDate(Calendar startDate) {
 		_startDate = startDate;
 	}
+
 	@Override
 	public String toString() {
 		String second = String.valueOf(_startDate.get(Calendar.SECOND));

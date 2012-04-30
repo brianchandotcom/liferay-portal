@@ -56,6 +56,7 @@ public class NodeImpl implements Node {
 		if (node == null) {
 			return null;
 		}
+
 		if (node instanceof org.dom4j.Element) {
 			return new ElementImpl((org.dom4j.Element)node);
 		}
@@ -84,6 +85,7 @@ public class NodeImpl implements Node {
 		if (node == null) {
 			return null;
 		}
+
 		if (node instanceof org.dom4j.Element) {
 			return new ElementImpl((org.dom4j.Element)node);
 		}
@@ -240,6 +242,7 @@ public class NodeImpl implements Node {
 		if (node == null) {
 			return null;
 		}
+
 		if (node instanceof org.dom4j.Element) {
 			return new ElementImpl((org.dom4j.Element)node);
 		}

@@ -175,6 +175,7 @@ public class WeakValueConcurrentHashMap<K, V>
 		if (_values == null) {
 			_values = new UnwrapValues();
 		}
+
 		return _values;
 	}
 

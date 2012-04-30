@@ -195,6 +195,7 @@ public class Log4JUtil {
 
 		return _liferayHome;
 	}
+
 	private static String _getURLContent(URL url) {
 		Map<String, String> variables = new HashMap<String, String>();
 

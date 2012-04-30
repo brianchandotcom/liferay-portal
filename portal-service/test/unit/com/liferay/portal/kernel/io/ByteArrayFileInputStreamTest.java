@@ -298,6 +298,7 @@ public class ByteArrayFileInputStreamTest extends TestCase {
 
 		byteArrayFileInputStream.close();
 	}
+
 	public void testSkip() throws IOException {
 
 		// byte[]

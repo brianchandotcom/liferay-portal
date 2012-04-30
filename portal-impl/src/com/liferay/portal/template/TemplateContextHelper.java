@@ -409,6 +409,7 @@ public class TemplateContextHelper {
 						request, themeDisplay, layout.getAncestorPlid(),
 						layout.getAncestorLayoutId());
 				}
+
 				catch(Exception e) {
 					throw new TemplateException(e);
 				}

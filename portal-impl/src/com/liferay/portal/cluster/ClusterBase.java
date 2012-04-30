@@ -74,6 +74,7 @@ public abstract class ClusterBase {
 					_log.warn("Failed to initialize outgoing IP address", ioe);
 				}
 			}
+
 			_initialized = true;
 		}
 

@@ -28,8 +28,14 @@ public class CountryImpl extends CountryBaseImpl {
 	}
 
 	public String getName(Locale locale) {
-		return LanguageUtil.get(
+		String name = LanguageUtil.get(
 			locale, CountryConstants.NAME_PREFIX + getName());
+
+		if (!name.startsWith(CountryConstants.NAME_PREFIX)) {
+			return name;
+		}
+
+		return getName();
 	}
 
 }

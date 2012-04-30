@@ -21,12 +21,14 @@ import com.liferay.portal.CountryNameException;
 import com.liferay.portal.CountryNumberException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Country;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.base.CountryServiceBaseImpl;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author Brian Wing Shun Chan
@@ -96,6 +98,20 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 
 	public List<Country> getCountries(boolean active) throws SystemException {
 		return countryPersistence.findByActive(active);
+	}
+
+	public List<Country> getCountries(boolean active, String languageId)
+		throws SystemException {
+
+		List<Country> countries = countryPersistence.findByActive(active);
+
+		Locale locale = LocaleUtil.fromLanguageId(languageId);
+
+		for (Country country : countries) {
+			country.setName(country.getName(locale));
+		}
+
+		return countries;
 	}
 
 	public Country getCountry(long countryId)

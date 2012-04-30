@@ -2,7 +2,8 @@ Liferay.Address = {
 	getCountries: function(callback) {
 		Liferay.Service.Portal.Country.getCountries(
 			{
-				active: true
+				active: true,
+				locale: themeDisplay.getLanguageId()
 			},
 			callback
 		);

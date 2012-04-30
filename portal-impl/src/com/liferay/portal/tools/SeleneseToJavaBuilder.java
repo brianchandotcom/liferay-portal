@@ -582,7 +582,8 @@ public class SeleneseToJavaBuilder {
 			String param3 = fixParam(params[2]);
 
 			if (param1.equals("addSelection") || param1.equals("clickAt") ||
-				param1.equals("doubleClickAt") || param1.equals("keyPress") ||
+				param1.equals("doubleClickAt") || param1.equals("keyDown") ||
+				param1.equals("keyPress") || param1.equals("keyUp") ||
 				param1.equals("mouseMoveAt") || param1.equals("openWindow") ||
 				param1.equals("select") || param1.equals("type") ||
 				param1.equals("typeKeys") ||
@@ -902,7 +903,9 @@ public class SeleneseToJavaBuilder {
 				sb.append("loadRequiredJavaScriptModules();");
 			}
 			else if (param1.equals("clickAtAndWait") ||
+					 param1.equals("keyDownAndWait") ||
 					 param1.equals("keyPressAndWait") ||
+					 param1.equals("keyUpAndWait") ||
 					 param1.equals("selectAndWait")) {
 
 				sb.append("selenium.");

@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddMicroblogsContentViewableByConnectionsTest extends BaseTestCase {
-	public void testAddMicroblogsContentViewableByConnections()
+public class AddMicroblogsContent1ViewableByConnectionsTest extends BaseTestCase {
+	public void testAddMicroblogsContent1ViewableByConnections()
 		throws Exception {
 		selenium.open("/user/joebloggs/so/dashboard");
 		loadRequiredJavaScriptModules();

@@ -84,31 +84,6 @@ public class SOUs_ViewUnfollowCCUserTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("Bloggs, Joe")
-										.equals(selenium.getText(
-								"//div[contains(@class, 'lfr-contact-name')]/a"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		assertEquals(RuntimeVariables.replace("Bloggs, Joe"),
-			selenium.getText("//div[contains(@class, 'lfr-contact-name')]/a"));
-		assertEquals(RuntimeVariables.replace("test@liferay.com"),
-			selenium.getText("//div[contains(@class, 'lfr-contact-extra')]"));
-		selenium.clickAt("//div[contains(@class, 'lfr-contact-name')]/a",
-			RuntimeVariables.replace("Bloggs, Joe"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
 				if (selenium.isVisible(
 							"//div[contains(@class, 'contacts-profile')]")) {
 					break;

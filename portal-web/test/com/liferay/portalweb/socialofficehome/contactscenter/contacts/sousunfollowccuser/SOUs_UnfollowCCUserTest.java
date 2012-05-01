@@ -129,5 +129,8 @@ public class SOUs_UnfollowCCUserTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Follow"),
 			selenium.getText(
 				"//button[@id='_1_WAR_contactsportlet_followButton']"));
+		assertEquals(RuntimeVariables.replace(
+				"You are not following this user anymore."),
+			selenium.getText("//span[@class='portlet-msg-success']"));
 	}
 }

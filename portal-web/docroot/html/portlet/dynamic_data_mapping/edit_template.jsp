@@ -1,3 +1,4 @@
+<%@ page import="com.liferay.portlet.asset.model.AssetEntry" %>
 <%--
 /**
  * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
@@ -41,6 +42,15 @@ if ((structure == null) && (template != null)) {
 String mode = BeanParamUtil.getString(template, request, "mode", "create");
 String type = BeanParamUtil.getString(template, request, "type", "detail");
 String script = BeanParamUtil.getString(template, request, "script");
+
+if (Validator.isNull(script)) {
+	if (classNameId == PortalUtil.getClassNameId(AssetEntry.class)) {
+		script = ContentUtil.get(PropsUtil.get(PropsKeys.ASSET_PUBLISHER_DISPLAY_STYLES_TEMPLATE_CONTENT));
+	}
+	else if (!type.equals("detail")) {
+		script = ContentUtil.get(PropsUtil.get(PropsKeys.DYNAMIC_DATA_MAPPING_TEMPLATE_LANGUAGE_CONTENT, new Filter(DDMTemplateConstants.LANG_TYPE_VM)));
+	}
+}
 
 JSONArray scriptJSONArray = null;
 

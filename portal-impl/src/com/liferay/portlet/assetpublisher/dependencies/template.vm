@@ -1,0 +1,36 @@
+##
+## You can use Velocity to define Display Styles for the asset publisher.
+## A set of variables have been made available for the template developers:
+##
+##     $assetEntries: the list of entries that are being shown in the asset publisher
+##     $assetEntry: this is the asset entry when there's only ony asset entry
+##     $assetPublisherHelper: helper class available for developers. You can use
+##			it to get the aset view url by calling getAssetViewURL($renderRequest,
+## 			$renderResponse, $assetEntry)
+##     $ddmTemplateId: the current template id
+##     $locale: the locale of the site
+##     $renderRequest: the render request
+##     $renderResponse: the render response
+##     $themeDisplay: the theme display
+##
+## Using these variables it is possible to create advanced templates to display
+## a list of assets in your asset publisher. Here's a simple template example:
+##
+##	#foreach($asset_entry in $assetEntries)
+##       #set ($assetRenderer = $asset_entry.getAssetRenderer())
+##       #set ($iconPath = $assetRenderer.getIconPath($renderRequest))
+##       #set ($editURL = $assetRenderer.getURLEdit($renderRequest, $renderResponse))
+##       #set ($viewUrl = $assetRenderer.getURLViewInContext($renderRequest, $renderResponse, $viewNoContext))
+##
+##       <div class="lfr-meta-actions asset-actions">
+##           <a class="taglib-icon" href="$editURL">
+##    	        <img class="icon" src="$themeDisplay.getPathThemeImages()/common/edit.png" alt="Edit">
+##           </a>
+##       </div>
+##
+##		 <h3 class="asset-title">
+##		      <a href="$viewUrl"><img alt="" src="$iconPath" >$asset_entry.getTitle($locale)</a>
+##		 </h3>
+##
+##		 $assetRenderer.getSummary($locale)
+##  #end

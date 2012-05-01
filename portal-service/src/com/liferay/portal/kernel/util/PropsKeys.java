@@ -99,6 +99,8 @@ public interface PropsKeys {
 
 	public static final String ASSET_PUBLISHER_DISPLAY_STYLES = "asset.publisher.display.styles";
 
+	public static final String ASSET_PUBLISHER_DISPLAY_STYLES_TEMPLATE_CONTENT = "asset.publisher.display.styles.template.content";
+
 	public static final String ASSET_RENDERER_ENABLED = "asset.renderer.enabled.";
 
 	public static final String ASSET_TAG_PROPERTIES_DEFAULT = "asset.tag.properties.default";

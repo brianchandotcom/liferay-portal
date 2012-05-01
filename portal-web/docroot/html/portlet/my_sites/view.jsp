@@ -161,6 +161,7 @@ request.setAttribute("view.jsp-tabs1", tabs1);
 			<%
 			LinkedHashMap userParams = new LinkedHashMap();
 
+			userParams.put("inherit", true);
 			userParams.put("usersGroups", new Long(group.getGroupId()));
 			%>
 

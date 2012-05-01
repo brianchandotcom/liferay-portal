@@ -100,7 +100,7 @@ public class TearDownRoleTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
 				boolean role2Present = selenium.isElementPresent(
 						"//span[@title='Actions']/ul/li/strong/a/span");
@@ -142,7 +142,7 @@ public class TearDownRoleTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
 				boolean role3Present = selenium.isElementPresent(
 						"//span[@title='Actions']/ul/li/strong/a/span");
@@ -184,7 +184,7 @@ public class TearDownRoleTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
 				boolean role4Present = selenium.isElementPresent(
 						"//span[@title='Actions']/ul/li/strong/a/span");
@@ -226,7 +226,7 @@ public class TearDownRoleTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
 				boolean role5Present = selenium.isElementPresent(
 						"//span[@title='Actions']/ul/li/strong/a/span");
@@ -268,7 +268,7 @@ public class TearDownRoleTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
 			case 2:
 			case 3:

@@ -62,8 +62,7 @@ public class AddMembersSiteGuestUser1Test extends BaseTestCase {
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
-				assertEquals(RuntimeVariables.replace("Liferay"),
-					selenium.getText("//tr[3]/td[1]/a"));
+				assertTrue(selenium.isPartialText("//tr[3]/td[1]/a", "Liferay"));
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText(
 						"//span[@title='Actions']/ul/li/strong/a/span"));

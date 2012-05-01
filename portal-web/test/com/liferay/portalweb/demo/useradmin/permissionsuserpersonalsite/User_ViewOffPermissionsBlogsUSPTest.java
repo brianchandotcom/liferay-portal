@@ -32,7 +32,7 @@ public class User_ViewOffPermissionsBlogsUSPTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"xPath=(//div[@class='portlet-body']/section)[3]")) {
+							"xPath=(//h1[@class='portlet-title'])[3]")) {
 					break;
 				}
 			}
@@ -42,15 +42,36 @@ public class User_ViewOffPermissionsBlogsUSPTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		assertEquals(RuntimeVariables.replace("Blogs"),
+			selenium.getText("xPath=(//h1[@class='portlet-title'])[3]"));
 		assertFalse(selenium.isElementPresent(
 				"//div[@class='subscribe']/span[2]/a/span"));
 		assertFalse(selenium.isElementPresent(
 				"//input[@value='Add Blog Entry']"));
 		assertFalse(selenium.isElementPresent("//input[@value='Permissions']"));
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace("Add"),
-			selenium.getText("//a[@class='menu-button']/span"));
-		selenium.clickAt("//a[@class='menu-button']/span",
-			RuntimeVariables.replace("Add"));
+			selenium.getText("//li[@id='_145_addContent']/a/span"));
+		selenium.mouseOver("//li[@id='_145_addContent']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -79,6 +100,23 @@ public class User_ViewOffPermissionsBlogsUSPTest extends BaseTestCase {
 			}
 
 			try {
+				if (selenium.isElementPresent(
+							"//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
 				if (selenium.isVisible(
 							"//input[@id='layout_configuration_content']")) {
 					break;
@@ -90,6 +128,8 @@ public class User_ViewOffPermissionsBlogsUSPTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		selenium.typeKeys("//input[@id='layout_configuration_content']",
+			RuntimeVariables.replace("b"));
 		assertFalse(selenium.isElementPresent("//div[@title='Blogs']"));
 	}
 }

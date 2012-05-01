@@ -105,8 +105,10 @@ public class Guest_SearchFolderImageTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent(
-							"//img[contains(@src,'forbidden_action')]")) {
+				if (RuntimeVariables.replace(
+							"No documents were found that matched the keywords: fish.")
+										.equals(selenium.getText(
+								"//div[@class='portlet-msg-info']"))) {
 					break;
 				}
 			}
@@ -116,6 +118,9 @@ public class Guest_SearchFolderImageTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		assertEquals(RuntimeVariables.replace(
+				"No documents were found that matched the keywords: fish."),
+			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertFalse(selenium.isElementPresent("//a[@class='document-link']"));
 		assertFalse(selenium.isTextPresent("DL Folder 2 Image 3 Title"));
 		selenium.type("//input[@id='_20_keywords']",
@@ -129,8 +134,10 @@ public class Guest_SearchFolderImageTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent(
-							"//img[contains(@src,'forbidden_action')]")) {
+				if (RuntimeVariables.replace(
+							"No documents were found that matched the keywords: frog.")
+										.equals(selenium.getText(
+								"//div[@class='portlet-msg-info']"))) {
 					break;
 				}
 			}
@@ -140,6 +147,9 @@ public class Guest_SearchFolderImageTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		assertEquals(RuntimeVariables.replace(
+				"No documents were found that matched the keywords: frog."),
+			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertFalse(selenium.isElementPresent("//a[@class='document-link']"));
 		assertFalse(selenium.isTextPresent(
 				"DL Folder 2 SubFolder Image 4 Title"));

@@ -30,18 +30,13 @@
 </tr>
 <tr>
 	<td>store</td>
-	<td>eval(selenium.isPartialText('//td[1]/a','Test Organization 1 Edited'))</td>
+	<td>eval(selenium.isPartialText('//td[1]/a','Test Organization 1'))</td>
 	<td>orgSitePresent</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
 	<td>!${orgSitePresent}</td>
 	<td>OrgSiteNotPresent</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[1]/a</td>
-	<td>Test Organization 1 Edited</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -70,7 +65,7 @@
 </tr>
 <tr>
 	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this?</td>
+	<td>Are you sure you want to delete this? It will be deleted immediately.</td>
 	<td></td>
 </tr>
 <tr>
@@ -78,7 +73,6 @@
 	<td>OrgSiteNotPresent</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

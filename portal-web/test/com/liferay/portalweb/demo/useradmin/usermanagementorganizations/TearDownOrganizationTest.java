@@ -131,7 +131,7 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
 			case 2:
 				selenium.clickAt("link=Users and Organizations",
@@ -151,7 +151,7 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 				selenium.type("//input[@id='_125_keywords']",
 					RuntimeVariables.replace("Test*"));
 				selenium.click(RuntimeVariables.replace(
@@ -229,7 +229,7 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
 			case 3:
 				selenium.clickAt("link=Users and Organizations",
@@ -249,7 +249,7 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 				selenium.type("//input[@id='_125_keywords']",
 					RuntimeVariables.replace("Test*"));
 				selenium.click(RuntimeVariables.replace(
@@ -327,7 +327,7 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
 			case 4:
 				selenium.clickAt("link=Users and Organizations",
@@ -347,7 +347,7 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 				selenium.type("//input[@id='_125_keywords']",
 					RuntimeVariables.replace("Test*"));
 				selenium.click(RuntimeVariables.replace(
@@ -425,7 +425,7 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
 			case 5:
 				selenium.clickAt("link=Users and Organizations",
@@ -445,7 +445,7 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 				selenium.type("//input[@id='_125_keywords']",
 					RuntimeVariables.replace("Test*"));
 				selenium.click(RuntimeVariables.replace(
@@ -523,7 +523,7 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
 			case 6:
 				selenium.clickAt("link=Users and Organizations",
@@ -543,7 +543,7 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
 			case 7:
 			case 8:

@@ -119,6 +119,75 @@ public class TearDownBlogsEntryTest extends BaseTestCase {
 			case 4:
 			case 5:
 			case 6:
+				selenium.open("/web/guest/home/");
+				loadRequiredJavaScriptModules();
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//li[@id='_145_mySites']/a/span")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible("link=Control Panel")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				selenium.clickAt("link=Control Panel",
+					RuntimeVariables.replace("Control Panel"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
+				selenium.clickAt("link=Recycle Bin",
+					RuntimeVariables.replace("Recycle Bin"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
+
+				boolean assetPresent = selenium.isElementPresent(
+						"//input[@name='_182_rowIds']");
+
+				if (!assetPresent) {
+					label = 7;
+
+					continue;
+				}
+
+				assertFalse(selenium.isChecked(
+						"//input[@name='_182_allRowIds']"));
+				selenium.clickAt("//input[@name='_182_allRowIds']",
+					RuntimeVariables.replace("All Rows"));
+				assertTrue(selenium.isChecked("//input[@name='_182_allRowIds']"));
+				selenium.click(RuntimeVariables.replace(
+						"//input[@value='Empty the Recycle Bin']"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
+				assertTrue(selenium.getConfirmation()
+								   .matches("^Are you sure you want to empty the Recycle Bin[\\s\\S]$"));
+
+			case 7:
 			case 100:
 				label = -1;
 			}

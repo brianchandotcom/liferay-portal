@@ -15,6 +15,7 @@
 package com.liferay.portalweb.demo.useradmin.permissionsgroupcompanylevel;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.sites.site.addmemberssiteguestuser.AddMembersSiteGuestUser1Test;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.AddUser1Test;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.AddUser2Test;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.TearDownUserTest;
@@ -23,8 +24,11 @@ import com.liferay.portalweb.portal.controlpanel.users.user.edituserpassword.Edi
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignInTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.User1_SignInTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.signin.User1_SignOutTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.User2_SignInTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.signin.User2_SignOutTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentry.AddBlogsEntry1Test;
 import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentry.TearDownBlogsEntryTest;
 import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPageBlogsTest;
 import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPortletBlogsTest;
@@ -44,7 +48,7 @@ public class PermissionsGroupCompanyLevelTests extends BaseTestSuite {
 		testSuite.addTestSuite(EditUser1PasswordTest.class);
 		testSuite.addTestSuite(AddUser2Test.class);
 		testSuite.addTestSuite(EditUser2PasswordTest.class);
-		testSuite.addTestSuite(AssignMembersUser1DefaultSiteTest.class);
+		testSuite.addTestSuite(AddMembersSiteGuestUser1Test.class);
 		testSuite.addTestSuite(AddRegularRoleBlogsEditorTest.class);
 		testSuite.addTestSuite(DefinePermissionsRoleSiteMemberTest.class);
 		testSuite.addTestSuite(DefinePermissionsRoleBlogsEditorTest.class);
@@ -53,10 +57,10 @@ public class PermissionsGroupCompanyLevelTests extends BaseTestSuite {
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(User1_SignInTest.class);
 		testSuite.addTestSuite(User1_AddBlogsEntry2Test.class);
-		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(User1_SignOutTest.class);
 		testSuite.addTestSuite(User2_SignInTest.class);
 		testSuite.addTestSuite(User2_ViewBlogsPortletTest.class);
-		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(User2_SignOutTest.class);
 		testSuite.addTestSuite(SignInTest.class);
 		testSuite.addTestSuite(TearDownBlogsEntryTest.class);
 		testSuite.addTestSuite(TearDownBlogsEditorRoleTest.class);

@@ -45,12 +45,8 @@ public class ViewActivityBlogsEntryXSSTest extends BaseTestCase {
 			RuntimeVariables.replace("Activities Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isTextPresent("FAIL"));
 		assertEquals(RuntimeVariables.replace("Powered By Liferay"),
-			selenium.getText("//p[@class='powered-by']"));
-		assertEquals(RuntimeVariables.replace(
-				"<script>document.getElementById('footer').innerHTML=\"FAIL\";</script>"),
-			selenium.getText("//td[2]/div[1]/a[1]"));
+			selenium.getText("//footer[@id='footer']"));
 		assertEquals(RuntimeVariables.replace(
 				"Joe wrote a new blog entry, <script>document.getElementById('footer').innerHTML=\"FAIL\";</script>, in Liferay."),
 			selenium.getText("//td[2]/div[1]"));

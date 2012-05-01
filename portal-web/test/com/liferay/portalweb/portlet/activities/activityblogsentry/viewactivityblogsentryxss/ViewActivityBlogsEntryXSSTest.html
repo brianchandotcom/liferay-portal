@@ -25,13 +25,13 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[2]/div[1]</td>
-	<td>Joe wrote a new blog entry, &lt;script&gt;document.getElementById('footer').innerHTML=&quot;FAIL&quot;;&lt;/script&gt;, in Liferay.</td>
+	<td>//footer[@id='footer']</td>
+	<td>Powered By Liferay</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//p[@class='powered-by']</td>
-	<td>Powered By Liferay</td>
+	<td>//td[2]/div[1]</td>
+	<td>Joe wrote a new blog entry, <script>document.getElementById('footer').innerHTML="FAIL";</script>, in Liferay.</td>
 </tr>
 </tbody></table>
 </body>

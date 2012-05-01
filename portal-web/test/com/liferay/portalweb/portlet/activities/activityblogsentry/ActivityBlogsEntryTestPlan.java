@@ -32,7 +32,6 @@ public class ActivityBlogsEntryTestPlan extends BaseTestSuite {
 		testSuite.addTest(ViewActivityBlogsEntryTests.suite());
 		testSuite.addTest(ViewActivityBlogsEntryXSSTests.suite());
 
-
 		return testSuite;
 	}
 

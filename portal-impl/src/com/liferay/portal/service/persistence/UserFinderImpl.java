@@ -267,8 +267,7 @@ public class UserFinderImpl
 				params3.remove("usersGroups");
 				params3.put("usersUserGroups", userGroupIds);
 			}
-
-			if (Validator.isNotNull(organizationId)) {
+			else if (Validator.isNotNull(organizationId)) {
 				params2 = new LinkedHashMap<String, Object>(params1);
 
 				List<Group> groups = OrganizationUtil.getGroups(organizationId);

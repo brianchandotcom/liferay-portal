@@ -32,7 +32,7 @@ public class User_ViewOnPermissionsBlogsUPSTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"xPath=(//div[@class='portlet-body']/section)[3]")) {
+							"xPath=(//h1[@class='portlet-title'])[3]")) {
 					break;
 				}
 			}
@@ -42,14 +42,35 @@ public class User_ViewOnPermissionsBlogsUPSTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		assertEquals(RuntimeVariables.replace("Blogs"),
+			selenium.getText("xPath=(//h1[@class='portlet-title'])[3]"));
 		assertEquals(RuntimeVariables.replace("Subscribe"),
 			selenium.getText("//div[@class='subscribe']/span[2]/a/span"));
 		assertTrue(selenium.isVisible("//input[@value='Add Blog Entry']"));
 		assertTrue(selenium.isVisible("//input[@value='Permissions']"));
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace("Add"),
-			selenium.getText("//a[@class='menu-button']/span"));
-		selenium.clickAt("//a[@class='menu-button']/span",
-			RuntimeVariables.replace("Add"));
+			selenium.getText("//li[@id='_145_addContent']/a/span"));
+		selenium.mouseOver("//li[@id='_145_addContent']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -71,6 +92,23 @@ public class User_ViewOnPermissionsBlogsUPSTest extends BaseTestCase {
 				"More"));
 		selenium.clickAt("//a[@id='_145_addApplication']",
 			RuntimeVariables.replace("More"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

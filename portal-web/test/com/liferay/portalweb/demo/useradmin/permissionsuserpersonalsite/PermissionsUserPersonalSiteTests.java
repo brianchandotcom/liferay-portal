@@ -20,6 +20,8 @@ import com.liferay.portalweb.portal.controlpanel.users.user.adduser.TearDownUser
 import com.liferay.portalweb.portal.controlpanel.users.user.edituserpassword.EditUserPasswordTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignInTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.signin.User_SignInTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.signin.User_SignOutTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPageBlogsTest;
 import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPortletBlogsTest;
@@ -49,7 +51,7 @@ public class PermissionsUserPersonalSiteTests extends BaseTestSuite {
 		testSuite.addTestSuite(User_SignInTest.class);
 		testSuite.addTestSuite(User_ViewOffPermissionsBlogsUSPTest.class);
 		testSuite.addTestSuite(User_ViewOffPermissionsBlogsCPTest.class);
-		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(User_SignOutTest.class);
 		testSuite.addTestSuite(SignInTest.class);
 		testSuite.addTestSuite(AddPermissionsPUBlogsAddToPageUPSTest.class);
 		testSuite.addTestSuite(AddPermissionsPUBlogsViewUPSTest.class);
@@ -63,7 +65,7 @@ public class PermissionsUserPersonalSiteTests extends BaseTestSuite {
 		testSuite.addTestSuite(User_SignInTest.class);
 		testSuite.addTestSuite(User_ViewOffPermissionsBlogsGuestCommunityTest.class);
 		testSuite.addTestSuite(User_ViewOnPermissionsBlogsUPSTest.class);
-		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(User_SignOutTest.class);
 		testSuite.addTestSuite(SignInTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);

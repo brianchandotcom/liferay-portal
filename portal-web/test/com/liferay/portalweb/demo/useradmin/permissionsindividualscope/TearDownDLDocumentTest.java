@@ -102,7 +102,7 @@ public class TearDownDLDocumentTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a")) {
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a")) {
 							break;
 						}
 					}
@@ -112,15 +112,15 @@ public class TearDownDLDocumentTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				assertEquals(RuntimeVariables.replace("Delete"),
+				assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete the selected entries[\\s\\S]$"));
+								   .matches("^Are you sure you want to move the selected entries to the Recycle Bin[\\s\\S]$"));
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
@@ -128,8 +128,77 @@ public class TearDownDLDocumentTest extends BaseTestCase {
 			case 2:
 				assertEquals(RuntimeVariables.replace(
 						"There are no documents or media files in this folder."),
-					selenium.getText("//div[@class='portlet-msg-info']"));
+					selenium.getText(
+						"//div[contains(@class,'portlet-msg-info')]"));
+				selenium.open("/web/guest/home/");
+				loadRequiredJavaScriptModules();
 
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//li[@id='_145_mySites']/a/span")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible("link=Control Panel")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				selenium.clickAt("link=Control Panel",
+					RuntimeVariables.replace("Control Panel"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
+				selenium.clickAt("link=Recycle Bin",
+					RuntimeVariables.replace("Recycle Bin"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
+
+				boolean assetPresent = selenium.isElementPresent(
+						"//input[@name='_182_rowIds']");
+
+				if (!assetPresent) {
+					label = 3;
+
+					continue;
+				}
+
+				assertFalse(selenium.isChecked(
+						"//input[@name='_182_allRowIds']"));
+				selenium.clickAt("//input[@name='_182_allRowIds']",
+					RuntimeVariables.replace("All Rows"));
+				assertTrue(selenium.isChecked("//input[@name='_182_allRowIds']"));
+				selenium.click(RuntimeVariables.replace(
+						"//input[@value='Empty the Recycle Bin']"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
+				assertTrue(selenium.getConfirmation()
+								   .matches("^Are you sure you want to empty the Recycle Bin[\\s\\S]$"));
+
+			case 3:
 			case 100:
 				label = -1;
 			}

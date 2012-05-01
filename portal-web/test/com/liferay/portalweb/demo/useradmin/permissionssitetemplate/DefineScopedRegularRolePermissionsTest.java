@@ -103,15 +103,15 @@ public class DefineScopedRegularRolePermissionsTest extends BaseTestCase {
 		}
 
 		selenium.type("//input[@id='_128_name']",
-			RuntimeVariables.replace("Community"));
+			RuntimeVariables.replace("Site"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Community Name"),
-			selenium.getText("//tr[contains(.,'Community Name')]/td/a"));
-		selenium.clickAt("//tr[contains(.,'Community Name')]/td/a",
-			RuntimeVariables.replace("Community Name"));
+		assertEquals(RuntimeVariables.replace("Site Name"),
+			selenium.getText("//tr[contains(.,'Site Name')]/td/a"));
+		selenium.clickAt("//tr[contains(.,'Site Name')]/td/a",
+			RuntimeVariables.replace("Site Name"));
 		selenium.selectWindow("null");
 
 		for (int second = 0;; second++) {
@@ -131,7 +131,7 @@ public class DefineScopedRegularRolePermissionsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Community Name"),
+		assertEquals(RuntimeVariables.replace("Site Name"),
 			selenium.getText("//span[@class='permission-scopes']/span/span"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));

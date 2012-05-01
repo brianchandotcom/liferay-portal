@@ -131,8 +131,10 @@ public class User2_SearchFolderImageTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent(
-							"//img[contains(@src,'forbidden_action')]")) {
+				if (RuntimeVariables.replace(
+							"No documents were found that matched the keywords: frog.")
+										.equals(selenium.getText(
+								"//div[@class='portlet-msg-info']"))) {
 					break;
 				}
 			}
@@ -142,6 +144,9 @@ public class User2_SearchFolderImageTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		assertEquals(RuntimeVariables.replace(
+				"No documents were found that matched the keywords: frog."),
+			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertFalse(selenium.isElementPresent("//a[@class='document-link']"));
 		assertFalse(selenium.isTextPresent(
 				"DL Folder 2 SubFolder Image 4 Title"));

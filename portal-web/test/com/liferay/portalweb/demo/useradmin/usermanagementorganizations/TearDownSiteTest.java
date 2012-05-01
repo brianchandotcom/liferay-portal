@@ -55,7 +55,7 @@ public class TearDownSiteTest extends BaseTestCase {
 				loadRequiredJavaScriptModules();
 
 				boolean orgSitePresent = selenium.isPartialText("//td[1]/a",
-						"Test Organization 1 Edited");
+						"Test Organization 1");
 
 				if (!orgSitePresent) {
 					label = 2;
@@ -63,9 +63,6 @@ public class TearDownSiteTest extends BaseTestCase {
 					continue;
 				}
 
-				assertEquals(RuntimeVariables.replace(
-						"Test Organization 1 Edited"),
-					selenium.getText("//td[1]/a"));
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText("//td[7]/span/ul/li/strong/a/span"));
 				selenium.clickAt("//td[7]/span/ul/li/strong/a/span",
@@ -96,7 +93,7 @@ public class TearDownSiteTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
 			case 2:
 			case 100:

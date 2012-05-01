@@ -22,29 +22,12 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class User2_AddMBCategoryTest extends BaseTestCase {
 	public void testUser2_AddMBCategory() throws Exception {
-		selenium.open("/web/guest/home/");
+		selenium.open("/web/site-name/");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Site Name")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
+		selenium.clickAt("link=Message Boards Test Page",
+			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertTrue(selenium.isVisible("//input[@value='Add Category']"));
 		selenium.clickAt("//input[@value='Add Category']",
 			RuntimeVariables.replace("Add Category"));
 		selenium.waitForPageToLoad("30000");

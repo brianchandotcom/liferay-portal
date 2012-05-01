@@ -137,9 +137,8 @@ public class AddFolder2SubfolderImage4ViewableBySiteMemberTest
 					RuntimeVariables.replace("Basic Document"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
-				selenium.type("//input[@id='_20_file']",
-					RuntimeVariables.replace(
-						"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\demo\\useradmin\\permissionsindividualscope\\dependencies\\test_image_4.jpg"));
+				selenium.uploadCommonFile("//input[@id='_20_file']",
+					RuntimeVariables.replace("Document_4.jpg"));
 				selenium.type("//input[@id='_20_title']",
 					RuntimeVariables.replace(
 						"DL Folder 2 SubFolder Image 4 Title"));
@@ -254,7 +253,7 @@ public class AddFolder2SubfolderImage4ViewableBySiteMemberTest
 					selenium.getText("//span[@class='document-description']"));
 				assertEquals(RuntimeVariables.replace("Status: Approved"),
 					selenium.getText("//span[@class='workflow-status']"));
-				assertEquals(RuntimeVariables.replace("Download (41.0k)"),
+				assertEquals(RuntimeVariables.replace("Download (21k)"),
 					selenium.getText("//span[@class='download-document']"));
 				assertEquals(RuntimeVariables.replace("Content Type image/jpeg"),
 					selenium.getText(

@@ -24,26 +24,10 @@ public class User1_ConfigureMBPermissionsTeamAddCategoryOnTest
 	extends BaseTestCase {
 	public void testUser1_ConfigureMBPermissionsTeamAddCategoryOn()
 		throws Exception {
-		selenium.open("/web/guest/home/");
+		selenium.open("/web/site-name/");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Site Name")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
+		selenium.clickAt("link=Message Boards Test Page",
+			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.clickAt("//input[@value='Permissions']",

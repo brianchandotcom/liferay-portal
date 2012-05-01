@@ -15,8 +15,13 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>xPath=(//div[@class='portlet-body']/section)[3]</td>
-	<td>Blogs Portlet</td>
+	<td>xPath=(//h1[@class='portlet-title'])[3]</td>
+	<td>Blogs</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//h1[@class='portlet-title'])[3]</td>
+	<td>Blogs</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
@@ -34,13 +39,23 @@
 	<td>Permissions</td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
 	<td>assertText</td>
-	<td>//a[@class='menu-button']/span</td>
+	<td>//li[@id='_145_addContent']/a/span</td>
 	<td>Add</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>//a[@class='menu-button']/span</td>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_addContent']/a/span</td>
 	<td>Add</td>
 </tr>
 <tr>
@@ -59,16 +74,25 @@
 	<td>More</td>
 </tr>
 <tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]</td>
+	<td>AUI Live Search Min</td>
+</tr>
+<tr>
 	<td>waitForVisible</td>
 	<td>//input[@id='layout_configuration_content']</td>
 	<td>Search applications (searches as you type).</td>
+</tr>
+<tr>
+	<td>typeKeys</td>
+	<td>//input[@id='layout_configuration_content']</td>
+	<td>b</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
 	<td>//div[@title='Blogs']</td>
 	<td>Blogs</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

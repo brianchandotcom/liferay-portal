@@ -15,9 +15,17 @@
 package com.liferay.portalweb.demo.useradmin.permissionssitetemplate;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.AddSiteTest;
+import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.TearDownSiteTest;
+import com.liferay.portalweb.portal.controlpanel.sites.siteportlet.addportletsite.AddPageBlogsSiteTest;
+import com.liferay.portalweb.portal.controlpanel.sites.siteportlet.addportletsite.AddPortletBlogsSiteTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.AddUserTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.adduser.TearDownUserTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.edituserpassword.EditUserPasswordTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignInTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.User_SignInTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.signin.User_SignOutTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentry.AddBlogsEntryTest;
 import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentry.TearDownBlogsEntryTest;
@@ -36,7 +44,7 @@ public class PermissionsSiteTemplateTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddPageBlogsTest.class);
 		testSuite.addTestSuite(AddPortletBlogsTest.class);
 		testSuite.addTestSuite(AddBlogsEntryTest.class);
-		testSuite.addTestSuite(AddSitesTest.class);
+		testSuite.addTestSuite(AddSiteTest.class);
 		testSuite.addTestSuite(AddPageBlogsSiteTest.class);
 		testSuite.addTestSuite(AddPortletBlogsSiteTest.class);
 		testSuite.addTestSuite(AddBlogsEntrySiteTest.class);
@@ -49,13 +57,13 @@ public class PermissionsSiteTemplateTests extends BaseTestSuite {
 		testSuite.addTestSuite(User_SignInTest.class);
 		testSuite.addTestSuite(User_ViewCannotDeleteEntryTest.class);
 		testSuite.addTestSuite(User_ViewCanDeleteEntrySiteTest.class);
-		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(User_SignOutTest.class);
 		testSuite.addTestSuite(SignInTest.class);
 		testSuite.addTestSuite(TearDownBlogsEntryTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);
 		testSuite.addTestSuite(TearDownRoleTest.class);
-		testSuite.addTestSuite(TearDownSitesTest.class);
+		testSuite.addTestSuite(TearDownSiteTest.class);
 
 		return testSuite;
 	}

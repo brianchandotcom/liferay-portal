@@ -79,9 +79,14 @@
 	<td>Search</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//img[contains(@src,'forbidden_action')]</td>
-	<td>Image Not Found</td>
+	<td>waitForText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>No documents were found that matched the keywords: fish.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>No documents were found that matched the keywords: fish.</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
@@ -104,9 +109,14 @@
 	<td>Search</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//img[contains(@src,'forbidden_action')]</td>
-	<td>Image Not Found</td>
+	<td>waitForText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>No documents were found that matched the keywords: frog.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>No documents were found that matched the keywords: frog.</td>
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>

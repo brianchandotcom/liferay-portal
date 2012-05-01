@@ -106,9 +106,8 @@ public class AddFolder2Image2Test extends BaseTestCase {
 					RuntimeVariables.replace("Basic Document"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
-				selenium.type("//input[@id='_20_file']",
-					RuntimeVariables.replace(
-						"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\demo\\useradmin\\permissionsindividualscope\\dependencies\\test_image_2.jpg"));
+				selenium.uploadCommonFile("//input[@id='_20_file']",
+					RuntimeVariables.replace("Document_2.jpg"));
 				selenium.type("//input[@id='_20_title']",
 					RuntimeVariables.replace("DL Folder 2 Image 2 Title"));
 				selenium.type("//textarea[@id='_20_description']",
@@ -215,7 +214,7 @@ public class AddFolder2Image2Test extends BaseTestCase {
 					selenium.getText("//span[@class='document-description']"));
 				assertEquals(RuntimeVariables.replace("Status: Approved"),
 					selenium.getText("//span[@class='workflow-status']"));
-				assertEquals(RuntimeVariables.replace("Download (29.9k)"),
+				assertEquals(RuntimeVariables.replace("Download (30k)"),
 					selenium.getText("//span[@class='download-document']"));
 				assertEquals(RuntimeVariables.replace("Content Type image/jpeg"),
 					selenium.getText(

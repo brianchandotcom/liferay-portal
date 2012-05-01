@@ -24,6 +24,24 @@ public class AddPortletBreadcrumbChildPageTest extends BaseTestCase {
 	public void testAddPortletBreadcrumbChildPage() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
+		selenium.mouseOver("link=Breadcrumb Test Page");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("link=Child Test Page")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.clickAt("link=Child Test Page",
 			RuntimeVariables.replace("Child Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -107,8 +125,12 @@ public class AddPortletBreadcrumbChildPageTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.typeKeys("//input[@id='layout_configuration_content']",
+		selenium.type("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("b"));
+		selenium.keyDown("//input[@id='layout_configuration_content']",
+			RuntimeVariables.replace("\\13"));
+		selenium.keyUp("//input[@id='layout_configuration_content']",
+			RuntimeVariables.replace("\\13"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

@@ -86,7 +86,8 @@ public class AddPagePRTest extends BaseTestCase {
 
 		selenium.type("//input[@type='text']",
 			RuntimeVariables.replace("Page Ratings Test Page"));
-		selenium.clickAt("save", RuntimeVariables.replace(""));
+		selenium.clickAt("//button[@id='save']",
+			RuntimeVariables.replace("Save"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -105,7 +106,7 @@ public class AddPagePRTest extends BaseTestCase {
 		}
 
 		selenium.clickAt("link=Page Ratings Test Page",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Page Ratings Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 	}

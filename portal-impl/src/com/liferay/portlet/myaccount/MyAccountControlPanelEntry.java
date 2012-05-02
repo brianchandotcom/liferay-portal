@@ -27,7 +27,7 @@ public class MyAccountControlPanelEntry extends BaseControlPanelEntry {
 			PermissionChecker permissionChecker, Portlet portlet)
 		throws Exception {
 
-		return true;
+		return false;
 	}
 
 }

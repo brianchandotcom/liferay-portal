@@ -35,13 +35,8 @@ public class MyPagesControlPanelEntry extends BaseControlPanelEntry {
 			permissionChecker.getUserId(), permissionChecker.getCompanyId(),
 			RoleConstants.POWER_USER, true);
 
-		if (!PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_POWER_USER_REQUIRED ||
-			hasPowerUserRole) {
-
-			return true;
-		}
-
-		if (!PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_POWER_USER_REQUIRED ||
+		if ((PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_POWER_USER_REQUIRED ||
+			PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_POWER_USER_REQUIRED) &&
 			hasPowerUserRole) {
 
 			return true;

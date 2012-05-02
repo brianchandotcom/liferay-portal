@@ -150,14 +150,14 @@ Element contentEl = (Element)request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTEN
 					<liferay-ui:input-editor
 						editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>"
 						height="460"
-						initMethod='<%= "initEditor" + elName %>'
+						initMethod='<%= "initEditor" + elInstanceId %>'
 						name='<%= textAreaInputName %>'
 						toolbarSet="liferay-article"
 						width="500"
 					/>
 
 					<aui:script>
-						function <portlet:namespace />initEditor<%= elName %>() {
+						function <portlet:namespace />initEditor<%= elInstanceId %>() {
 							return "<%= UnicodeFormatter.toString(elContent) %>";
 						}
 					</aui:script>
@@ -306,14 +306,14 @@ Element contentEl = (Element)request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTEN
 						<%
 						String multiListInputName = "multiListInputName_" + elName;
 
-						String [] selectedOptions = null;
+						String[] selectedOptions = null;
 
 						if (Validator.isNull(elContent)) {
 							selectedOptions = ParamUtil.getParameterValues(request, multiListInputName);
 						}
 						%>
 
-						<aui:select ignoreRequestValue="<%= true %>" label="" multiple="true" name="<%= multiListInputName %>">
+						<aui:select ignoreRequestValue="true" label="" multiple="true" name="<%= multiListInputName %>">
 
 							<%
 							List<Element> children = el.elements();

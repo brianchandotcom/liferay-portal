@@ -27,26 +27,34 @@ public class PortalSecurityManagerThreadLocal {
 		return _paclPolicy.get();
 	}
 
-	public static boolean isCheckGetClassLoaderEnabled() {
-		return _checkGetClassLoaderEnabled.get();
+	public static boolean isCheckCreateClassLoader() {
+		return _checkCreateClassLoader.get();
 	}
 
-	public static boolean isCheckSQLEnabled() {
-		return _checkSQLEnabled.get();
+	public static boolean isCheckGetClassLoader() {
+		return _checkGetClassLoader.get();
+	}
+
+	public static boolean isCheckSQL() {
+		return _checkSQL.get();
 	}
 
 	public static boolean isEnabled() {
 		return _enabled.get();
 	}
 
-	public static void setCheckGetClassLoaderEnabled(
-		boolean checkGetClassLoaderEnabled) {
+	public static void setCheckCreateClassLoader(
+		boolean checkCreateClassLoader) {
 
-		_checkGetClassLoaderEnabled.set(checkGetClassLoaderEnabled);
+		_checkCreateClassLoader.set(checkCreateClassLoader);
 	}
 
-	public static void setCheckSQLEnabled(boolean checkSQLEnabled) {
-		_checkSQLEnabled.set(checkSQLEnabled);
+	public static void setCheckGetClassLoader(boolean checkGetClassLoader) {
+		_checkGetClassLoader.set(checkGetClassLoader);
+	}
+
+	public static void setCheckSQL(boolean checkSQL) {
+		_checkSQL.set(checkSQL);
 	}
 
 	public static void setEnabled(boolean enabled) {
@@ -57,14 +65,17 @@ public class PortalSecurityManagerThreadLocal {
 		_paclPolicy.set(paclPolicy);
 	}
 
-	private static ThreadLocal<Boolean> _checkGetClassLoaderEnabled =
+	private static ThreadLocal<Boolean> _checkCreateClassLoader =
 		new AutoResetThreadLocal<Boolean>(
-			PortalSecurityManagerThreadLocal.class +
-				"._checkGetClassLoaderEnabled",
+			PortalSecurityManagerThreadLocal.class + "._checkCreateClassLoader",
 			true);
-	private static ThreadLocal<Boolean> _checkSQLEnabled =
+	private static ThreadLocal<Boolean> _checkGetClassLoader =
 		new AutoResetThreadLocal<Boolean>(
-			PortalSecurityManagerThreadLocal.class + "._checkSQLEnabled", true);
+			PortalSecurityManagerThreadLocal.class + "._checkGetClassLoader",
+			true);
+	private static ThreadLocal<Boolean> _checkSQL =
+		new AutoResetThreadLocal<Boolean>(
+			PortalSecurityManagerThreadLocal.class + "._checkSQL", true);
 	private static ThreadLocal<Boolean> _enabled =
 		new AutoResetThreadLocal<Boolean>(
 			PortalSecurityManagerThreadLocal.class + "._enabled", true);

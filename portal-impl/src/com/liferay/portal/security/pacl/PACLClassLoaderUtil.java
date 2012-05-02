@@ -22,54 +22,51 @@ import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 public class PACLClassLoaderUtil {
 
 	public static ClassLoader getClassLoader(Class<?> clazz) {
-		boolean checkGetClassLoaderEnabled =
-			PortalSecurityManagerThreadLocal.isCheckGetClassLoaderEnabled();
+		boolean checkGetClassLoader =
+			PortalSecurityManagerThreadLocal.isCheckGetClassLoader();
 
 		try {
-			PortalSecurityManagerThreadLocal.setCheckGetClassLoaderEnabled(
-				false);
+			PortalSecurityManagerThreadLocal.setCheckGetClassLoader(false);
 
 			return clazz.getClassLoader();
 		}
 		finally {
-			PortalSecurityManagerThreadLocal.setCheckGetClassLoaderEnabled(
-				checkGetClassLoaderEnabled);
+			PortalSecurityManagerThreadLocal.setCheckGetClassLoader(
+				checkGetClassLoader);
 		}
 	}
 
 	public static ClassLoader getContextClassLoader() {
-		boolean checkGetClassLoaderEnabled =
-			PortalSecurityManagerThreadLocal.isCheckGetClassLoaderEnabled();
+		boolean checkGetClassLoader =
+			PortalSecurityManagerThreadLocal.isCheckGetClassLoader();
 
 		try {
-			PortalSecurityManagerThreadLocal.setCheckGetClassLoaderEnabled(
-				false);
+			PortalSecurityManagerThreadLocal.setCheckGetClassLoader(false);
 
 			Thread thread = Thread.currentThread();
 
 			return thread.getContextClassLoader();
 		}
 		finally {
-			PortalSecurityManagerThreadLocal.setCheckGetClassLoaderEnabled(
-				checkGetClassLoaderEnabled);
+			PortalSecurityManagerThreadLocal.setCheckGetClassLoader(
+				checkGetClassLoader);
 		}
 	}
 
 	public static void setContextClassLoader(ClassLoader classLoader) {
-		boolean checkGetClassLoaderEnabled =
-			PortalSecurityManagerThreadLocal.isCheckGetClassLoaderEnabled();
+		boolean checkGetClassLoader =
+			PortalSecurityManagerThreadLocal.isCheckGetClassLoader();
 
 		try {
-			PortalSecurityManagerThreadLocal.setCheckGetClassLoaderEnabled(
-				false);
+			PortalSecurityManagerThreadLocal.setCheckGetClassLoader(false);
 
 			Thread thread = Thread.currentThread();
 
 			thread.setContextClassLoader(classLoader);
 		}
 		finally {
-			PortalSecurityManagerThreadLocal.setCheckGetClassLoaderEnabled(
-				checkGetClassLoaderEnabled);
+			PortalSecurityManagerThreadLocal.setCheckGetClassLoader(
+				checkGetClassLoader);
 		}
 	}
 

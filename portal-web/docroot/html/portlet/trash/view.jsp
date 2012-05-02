@@ -119,6 +119,11 @@ portletURL.setParameter("tabs1", tabs1);
 				value="<%= dateFormatDateTime.format(entry.getCreateDate()) %>"
 			/>
 
+			<liferay-ui:search-container-column-text
+				name="removed-by"
+				value="<%= entry.getDeletedByUserName() %>"
+			/>
+
 			<liferay-ui:search-container-column-jsp
 				align="right"
 				path="/html/portlet/trash/trash_entry_actions.jsp"

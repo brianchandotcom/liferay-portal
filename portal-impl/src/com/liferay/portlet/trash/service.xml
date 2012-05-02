@@ -24,6 +24,8 @@
 		<column name="classPK" type="long" />
 		<column name="typeSettings" type="String" />
 		<column name="status" type="int" />
+		<column name="deletedByUserId" type="long" />
+		<column name="deletedByUserName" type="String" />
 		<column name="trashVersions" type="Collection" entity="TrashVersion" mapping-key="entryId" />
 
 		<!-- Order -->

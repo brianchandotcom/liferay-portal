@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.search;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -558,6 +559,8 @@ public class SearchEngineUtil {
 	public void setExcludedEntryClassNames(
 		List<String> excludedEntryClassNames) {
 
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_excludedEntryClassNames.addAll(excludedEntryClassNames);
 	}
 
@@ -565,11 +568,15 @@ public class SearchEngineUtil {
 	 * @deprecated {@link #setSearchEngine(String, SearchEngine)}
 	 */
 	public void setSearchEngine(SearchEngine searchEngine) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_searchEngines.put(getDefaultSearchEngineId(), searchEngine);
 	}
 
 	public void setSearchPermissionChecker(
 		SearchPermissionChecker searchPermissionChecker) {
+
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_searchPermissionChecker = searchPermissionChecker;
 	}

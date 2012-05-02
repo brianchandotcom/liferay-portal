@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.audit;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+
 /**
  * @author Michael C. Han
  */
@@ -28,6 +30,8 @@ public class AuditRouterUtil {
 	}
 
 	public void setAuditRouter(AuditRouter auditRouter) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_auditRouter = auditRouter;
 	}
 

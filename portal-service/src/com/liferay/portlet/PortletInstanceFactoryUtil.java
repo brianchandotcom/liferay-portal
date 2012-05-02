@@ -14,6 +14,7 @@
 
 package com.liferay.portlet;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.model.Portlet;
 
 import javax.portlet.PortletException;
@@ -60,6 +61,8 @@ public class PortletInstanceFactoryUtil {
 
 	public void setPortletInstanceFactory(
 		PortletInstanceFactory portletInstanceFactory) {
+
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_portletInstanceFactory = portletInstanceFactory;
 	}

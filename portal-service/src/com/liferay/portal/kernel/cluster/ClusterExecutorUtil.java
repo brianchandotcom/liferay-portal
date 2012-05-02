@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.cluster;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
 import java.util.Collections;
 import java.util.List;
@@ -212,6 +213,8 @@ public class ClusterExecutorUtil {
 	}
 
 	public void setClusterExecutor(ClusterExecutor clusterExecutor) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_clusterExecutor = clusterExecutor;
 	}
 

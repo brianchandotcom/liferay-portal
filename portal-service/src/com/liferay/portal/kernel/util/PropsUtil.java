@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.configuration.Filter;
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
 import java.util.Properties;
 
@@ -58,6 +59,8 @@ public class PropsUtil {
 	}
 
 	public static void setProps(Props props) {
+		PortalRuntimePermission.checkSetBeanProperty(PropsUtil.class);
+
 		_props = props;
 	}
 

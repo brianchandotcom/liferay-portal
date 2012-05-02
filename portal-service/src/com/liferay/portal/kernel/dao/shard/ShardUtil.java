@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.dao.shard;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.StringPool;
 
 import javax.sql.DataSource;
@@ -90,6 +91,8 @@ public class ShardUtil {
 	}
 
 	public void setShard(Shard shard) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_shard = shard;
 	}
 

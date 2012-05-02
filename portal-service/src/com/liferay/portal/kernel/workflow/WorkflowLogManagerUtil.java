@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.workflow;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -65,6 +66,8 @@ public class WorkflowLogManagerUtil {
 	}
 
 	public void setWorkflowLogManager(WorkflowLogManager workflowLogManager) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_workflowLogManager = workflowLogManager;
 	}
 

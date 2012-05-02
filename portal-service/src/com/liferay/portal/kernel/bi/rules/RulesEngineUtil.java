@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.bi.rules;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+
 import java.util.List;
 import java.util.Map;
 
@@ -123,6 +125,8 @@ public class RulesEngineUtil {
 	}
 
 	public void setRulesEngine(RulesEngine rulesEngine) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_rulesEngine = rulesEngine;
 	}
 

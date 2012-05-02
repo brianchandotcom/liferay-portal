@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.InetAddressUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -362,6 +363,8 @@ public class SchedulerEngineUtil {
 	}
 
 	public void setSchedulerEngine(SchedulerEngine schedulerEngine) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_instance._schedulerEngine = schedulerEngine;
 
 		if (schedulerEngine instanceof SchedulerEngineClusterManager) {

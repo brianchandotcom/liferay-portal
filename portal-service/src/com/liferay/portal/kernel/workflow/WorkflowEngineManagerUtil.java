@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.workflow;
 
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
 import java.util.Map;
 
@@ -57,6 +58,8 @@ public class WorkflowEngineManagerUtil {
 
 	public void setWorkflowEngineManager(
 		WorkflowEngineManager workflowEngineManager) {
+
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_workflowEngineManager = workflowEngineManager;
 	}

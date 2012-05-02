@@ -69,6 +69,9 @@ public interface PACLConstants {
 	public static final String RUNTIME_PERMISSION_GET_CLASSLOADER =
 		"getClassLoader";
 
+	public static final String RUNTIME_PERMISSION_SET_CONTEXT_CLASS_LOADER =
+		"setContextClassLoader";
+
 	public static final String RUNTIME_PERMISSION_SET_SECURITY_MANAGER =
 		"setSecurityManager";
 

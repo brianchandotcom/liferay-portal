@@ -47,6 +47,9 @@ public interface PACLConstants {
 	public static final String PORTAL_HOOK_PERMISSION_STRUTS_ACTION_PATH =
 		"strutsActionPath";
 
+	public static final String PORTAL_RUNTIME_PERMISSION_SET_BEAN_PROPERTY =
+		"setBeanProperty";
+
 	public static final String PORTAL_SERVICE_PERMISSION_DYNAMIC_QUERY =
 		"dynamicQuery";
 

@@ -29,7 +29,7 @@ import sun.reflect.Reflection;
  */
 public abstract class BaseReflectChecker extends BaseChecker {
 
-	protected boolean hasRelect(String name, String action) {
+	protected boolean hasReflect(String name, String action) {
 
 		// JSP compiler
 

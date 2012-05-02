@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.dao.jdbc;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+
 import java.util.Properties;
 
 import javax.sql.DataSource;
@@ -50,6 +52,9 @@ public class DataSourceFactoryUtil {
 
 	public static void setDataSourceFactory(
 		DataSourceFactory dataSourceFactory) {
+
+		PortalRuntimePermission.checkSetBeanProperty(
+			DataSourceFactoryUtil.class);
 
 		_dataSourceFactory = dataSourceFactory;
 	}

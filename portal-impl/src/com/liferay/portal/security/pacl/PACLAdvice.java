@@ -91,8 +91,7 @@ public class PACLAdvice extends ChainableMethodAdvice {
 			throw new SecurityException("Attempted to invoke " + method);
 		}
 
-		boolean checkSQLEnabled =
-			PortalSecurityManagerThreadLocal.isCheckSQLEnabled();
+		boolean checkSQL = PortalSecurityManagerThreadLocal.isCheckSQL();
 
 		try {
 			Object thisObject = methodInvocation.getThis();
@@ -106,7 +105,7 @@ public class PACLAdvice extends ChainableMethodAdvice {
 				// does not try to check access to tables that can be accessed
 				// since the service is already approved
 
-				PortalSecurityManagerThreadLocal.setCheckSQLEnabled(false);
+				PortalSecurityManagerThreadLocal.setCheckSQL(false);
 			}
 
 			return methodInvocation.proceed();
@@ -115,8 +114,7 @@ public class PACLAdvice extends ChainableMethodAdvice {
 			throw throwable;
 		}
 		finally {
-			PortalSecurityManagerThreadLocal.setCheckSQLEnabled(
-				checkSQLEnabled);
+			PortalSecurityManagerThreadLocal.setCheckSQL(checkSQL);
 		}
 	}
 

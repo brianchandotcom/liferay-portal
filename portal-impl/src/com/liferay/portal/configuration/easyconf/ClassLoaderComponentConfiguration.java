@@ -23,6 +23,7 @@ import com.germinus.easyconf.Conventions;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
+import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 
 import java.lang.reflect.Constructor;
 
@@ -125,12 +126,19 @@ public class ClassLoaderComponentConfiguration extends ComponentConfiguration {
 					classLoaderAggregateProperties.loadedSources());
 		}
 
+		boolean enabled = PortalSecurityManagerThreadLocal.isEnabled();
+
 		try {
+			PortalSecurityManagerThreadLocal.setEnabled(false);
+
 			_properties = _constructor.newInstance(
 				new Object[] {classLoaderAggregateProperties});
 		}
 		catch (Exception e) {
 			_log.error(e, e);
+		}
+		finally {
+			PortalSecurityManagerThreadLocal.setEnabled(enabled);
 		}
 
 		return _properties;

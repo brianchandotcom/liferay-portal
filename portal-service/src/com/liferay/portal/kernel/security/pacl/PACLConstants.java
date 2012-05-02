@@ -61,6 +61,9 @@ public interface PACLConstants {
 	public static final String RUNTIME_PERMISSION_ACCESS_DECLARED_MEMBERS =
 		"accessDeclaredMembers";
 
+	public static final String RUNTIME_PERMISSION_CREATE_CLASS_LOADER =
+		"createClassLoader";
+
 	public static final String RUNTIME_PERMISSION_EXIT_VM = "exitVM";
 
 	public static final String RUNTIME_PERMISSION_GET_CLASSLOADER =

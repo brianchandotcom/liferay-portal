@@ -84,7 +84,7 @@ public class PACLAdvice extends ChainableMethodAdvice {
 			}
 		}
 
-		if (!paclPolicy.hasService(
+		if (!paclPolicy.hasPortalService(
 				methodInvocation.getThis(), method,
 				methodInvocation.getArguments())) {
 

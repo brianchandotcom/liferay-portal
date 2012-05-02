@@ -104,7 +104,7 @@ public class PACLBeanHandler implements InvocationHandler {
 			return method.invoke(_bean, arguments);
 		}
 
-		if (!paclPolicy.hasService(_bean, method, arguments)) {
+		if (!paclPolicy.hasPortalService(_bean, method, arguments)) {
 			throw new SecurityException("Attempted to invoke " + method);
 		}
 

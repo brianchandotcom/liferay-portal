@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.dao.jdbc;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+
 import javax.sql.DataSource;
 
 /**
@@ -35,6 +37,8 @@ public class MappingSqlQueryFactoryUtil {
 
 	public void setMappingSqlQueryFactory(
 		MappingSqlQueryFactory mappingSqlUpdateFactory) {
+
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_mappingSqlUpdateFactory = mappingSqlUpdateFactory;
 	}

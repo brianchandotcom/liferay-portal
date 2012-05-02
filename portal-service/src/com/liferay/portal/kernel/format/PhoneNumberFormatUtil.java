@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.format;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Manuel de la Peña
@@ -37,6 +39,8 @@ public class PhoneNumberFormatUtil {
 	}
 
 	public void setPhoneNumberFormat(PhoneNumberFormat phoneNumberFormat) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_phoneNumberFormat = phoneNumberFormat;
 	}
 

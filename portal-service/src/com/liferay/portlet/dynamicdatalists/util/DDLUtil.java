@@ -17,6 +17,7 @@ package com.liferay.portlet.dynamicdatalists.util;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -147,6 +148,8 @@ public class DDLUtil {
 	}
 
 	public void setDDL(DDL ddl) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_ddl = ddl;
 	}
 

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.dao.orm;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -28,6 +30,8 @@ public class PortalCustomSQLUtil {
 	}
 
 	public void setPortalCustomSQL(PortalCustomSQL portalCustomSQL) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_portalCustomSQL = portalCustomSQL;
 	}
 

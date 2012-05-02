@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.poller.comet;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+
 /**
  * @author Edward Han
  */
@@ -33,6 +35,10 @@ public class CometHandlerPoolUtil {
 		return _cometHandlerPool.getCometHandler(sessionId);
 	}
 
+	public static CometHandlerPool getCometHandlerPool() {
+		return _cometHandlerPool;
+	}
+
 	public static void startCometHandler(
 			CometSession cometSession, CometHandler cometHandler)
 		throws CometException {
@@ -40,11 +46,9 @@ public class CometHandlerPoolUtil {
 		_cometHandlerPool.startCometHandler(cometSession, cometHandler);
 	}
 
-	public CometHandlerPool getCometHandlerPool() {
-		return _cometHandlerPool;
-	}
-
 	public void setCometHandlerPool(CometHandlerPool cometHandlerPool) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_cometHandlerPool = cometHandlerPool;
 	}
 

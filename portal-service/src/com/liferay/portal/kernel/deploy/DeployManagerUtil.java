@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.deploy;
 
 import com.liferay.portal.kernel.plugin.PluginPackage;
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
 import java.io.File;
 
@@ -82,6 +83,8 @@ public class DeployManagerUtil {
 	}
 
 	public void setDeployManager(DeployManager deployManager) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_deployManager = deployManager;
 	}
 

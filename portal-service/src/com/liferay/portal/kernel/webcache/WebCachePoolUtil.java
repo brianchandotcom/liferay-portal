@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.webcache;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -36,6 +38,8 @@ public class WebCachePoolUtil {
 	}
 
 	public void setWebCachePool(WebCachePool webCachePool) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_webCachePool = webCachePool;
 	}
 

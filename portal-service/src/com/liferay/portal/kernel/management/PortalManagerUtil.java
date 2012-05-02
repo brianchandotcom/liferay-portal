@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.cluster.ClusterNodeResponses;
 import com.liferay.portal.kernel.cluster.FutureClusterResponses;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.model.ClusterGroup;
 import com.liferay.portal.service.ClusterGroupLocalServiceUtil;
@@ -84,6 +85,8 @@ public class PortalManagerUtil {
 	}
 
 	public void setPortalManager(PortalManager portalManager) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_portalManager = portalManager;
 	}
 

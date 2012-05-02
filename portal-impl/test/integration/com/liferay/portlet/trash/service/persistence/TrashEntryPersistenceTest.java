@@ -97,6 +97,10 @@ public class TrashEntryPersistenceTest {
 
 		newTrashEntry.setStatus(ServiceTestUtil.nextInt());
 
+		newTrashEntry.setDeletedByUserId(ServiceTestUtil.nextLong());
+
+		newTrashEntry.setDeletedByUserName(ServiceTestUtil.randomString());
+
 		_persistence.update(newTrashEntry, false);
 
 		TrashEntry existingTrashEntry = _persistence.findByPrimaryKey(newTrashEntry.getPrimaryKey());
@@ -118,6 +122,10 @@ public class TrashEntryPersistenceTest {
 			newTrashEntry.getTypeSettings());
 		Assert.assertEquals(existingTrashEntry.getStatus(),
 			newTrashEntry.getStatus());
+		Assert.assertEquals(existingTrashEntry.getDeletedByUserId(),
+			newTrashEntry.getDeletedByUserId());
+		Assert.assertEquals(existingTrashEntry.getDeletedByUserName(),
+			newTrashEntry.getDeletedByUserName());
 	}
 
 	@Test
@@ -268,6 +276,10 @@ public class TrashEntryPersistenceTest {
 		trashEntry.setTypeSettings(ServiceTestUtil.randomString());
 
 		trashEntry.setStatus(ServiceTestUtil.nextInt());
+
+		trashEntry.setDeletedByUserId(ServiceTestUtil.nextLong());
+
+		trashEntry.setDeletedByUserName(ServiceTestUtil.randomString());
 
 		_persistence.update(trashEntry, false);
 

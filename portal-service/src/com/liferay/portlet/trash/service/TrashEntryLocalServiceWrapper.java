@@ -277,12 +277,13 @@ public class TrashEntryLocalServiceWrapper implements TrashEntryLocalService,
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.trash.model.TrashEntry addTrashEntry(
-		long companyId, long groupId, java.lang.String className, long classPK,
+		long userId, long groupId, java.lang.String className, long classPK,
 		int status,
 		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.Long, java.lang.Integer>> versions,
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _trashEntryLocalService.addTrashEntry(companyId, groupId,
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _trashEntryLocalService.addTrashEntry(userId, groupId,
 			className, classPK, status, versions, typeSettingsProperties);
 	}
 

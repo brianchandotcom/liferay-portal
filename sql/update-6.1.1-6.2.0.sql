@@ -258,7 +258,9 @@ create table TrashEntry (
 	classNameId LONG,
 	classPK LONG,
 	typeSettings TEXT null,
-	status INTEGER
+	status INTEGER,
+	deletedByUserId LONG,
+	deletedByUserName VARCHAR(75) null
 );
 
 create table TrashVersion (

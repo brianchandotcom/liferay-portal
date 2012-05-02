@@ -39,6 +39,8 @@ public class TrashEntrySoap implements Serializable {
 		soapModel.setClassPK(model.getClassPK());
 		soapModel.setTypeSettings(model.getTypeSettings());
 		soapModel.setStatus(model.getStatus());
+		soapModel.setDeletedByUserId(model.getDeletedByUserId());
+		soapModel.setDeletedByUserName(model.getDeletedByUserName());
 
 		return soapModel;
 	}
@@ -155,6 +157,22 @@ public class TrashEntrySoap implements Serializable {
 		_status = status;
 	}
 
+	public long getDeletedByUserId() {
+		return _deletedByUserId;
+	}
+
+	public void setDeletedByUserId(long deletedByUserId) {
+		_deletedByUserId = deletedByUserId;
+	}
+
+	public String getDeletedByUserName() {
+		return _deletedByUserName;
+	}
+
+	public void setDeletedByUserName(String deletedByUserName) {
+		_deletedByUserName = deletedByUserName;
+	}
+
 	private long _entryId;
 	private long _groupId;
 	private long _companyId;
@@ -163,4 +181,6 @@ public class TrashEntrySoap implements Serializable {
 	private long _classPK;
 	private String _typeSettings;
 	private int _status;
+	private long _deletedByUserId;
+	private String _deletedByUserName;
 }

@@ -15,6 +15,7 @@
 package com.liferay.portlet.trash.model.impl;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -73,9 +74,11 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 			{ "classNameId", Types.BIGINT },
 			{ "classPK", Types.BIGINT },
 			{ "typeSettings", Types.CLOB },
-			{ "status", Types.INTEGER }
+			{ "status", Types.INTEGER },
+			{ "deletedByUserId", Types.BIGINT },
+			{ "deletedByUserName", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table TrashEntry (entryId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,classNameId LONG,classPK LONG,typeSettings TEXT null,status INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table TrashEntry (entryId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,classNameId LONG,classPK LONG,typeSettings TEXT null,status INTEGER,deletedByUserId LONG,deletedByUserName VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table TrashEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY trashEntry.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY TrashEntry.createDate DESC";
@@ -113,6 +116,8 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 		model.setClassPK(soapModel.getClassPK());
 		model.setTypeSettings(soapModel.getTypeSettings());
 		model.setStatus(soapModel.getStatus());
+		model.setDeletedByUserId(soapModel.getDeletedByUserId());
+		model.setDeletedByUserName(soapModel.getDeletedByUserName());
 
 		return model;
 	}
@@ -175,6 +180,8 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 		attributes.put("classPK", getClassPK());
 		attributes.put("typeSettings", getTypeSettings());
 		attributes.put("status", getStatus());
+		attributes.put("deletedByUserId", getDeletedByUserId());
+		attributes.put("deletedByUserName", getDeletedByUserName());
 
 		return attributes;
 	}
@@ -227,6 +234,18 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 
 		if (status != null) {
 			setStatus(status);
+		}
+
+		Long deletedByUserId = (Long)attributes.get("deletedByUserId");
+
+		if (deletedByUserId != null) {
+			setDeletedByUserId(deletedByUserId);
+		}
+
+		String deletedByUserName = (String)attributes.get("deletedByUserName");
+
+		if (deletedByUserName != null) {
+			setDeletedByUserName(deletedByUserName);
 		}
 	}
 
@@ -375,6 +394,38 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 		_status = status;
 	}
 
+	@JSON
+	public long getDeletedByUserId() {
+		return _deletedByUserId;
+	}
+
+	public void setDeletedByUserId(long deletedByUserId) {
+		_deletedByUserId = deletedByUserId;
+	}
+
+	public String getDeletedByUserUuid() throws SystemException {
+		return PortalUtil.getUserValue(getDeletedByUserId(), "uuid",
+			_deletedByUserUuid);
+	}
+
+	public void setDeletedByUserUuid(String deletedByUserUuid) {
+		_deletedByUserUuid = deletedByUserUuid;
+	}
+
+	@JSON
+	public String getDeletedByUserName() {
+		if (_deletedByUserName == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _deletedByUserName;
+		}
+	}
+
+	public void setDeletedByUserName(String deletedByUserName) {
+		_deletedByUserName = deletedByUserName;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -417,6 +468,8 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 		trashEntryImpl.setClassPK(getClassPK());
 		trashEntryImpl.setTypeSettings(getTypeSettings());
 		trashEntryImpl.setStatus(getStatus());
+		trashEntryImpl.setDeletedByUserId(getDeletedByUserId());
+		trashEntryImpl.setDeletedByUserName(getDeletedByUserName());
 
 		trashEntryImpl.resetOriginalValues();
 
@@ -523,12 +576,22 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 
 		trashEntryCacheModel.status = getStatus();
 
+		trashEntryCacheModel.deletedByUserId = getDeletedByUserId();
+
+		trashEntryCacheModel.deletedByUserName = getDeletedByUserName();
+
+		String deletedByUserName = trashEntryCacheModel.deletedByUserName;
+
+		if ((deletedByUserName != null) && (deletedByUserName.length() == 0)) {
+			trashEntryCacheModel.deletedByUserName = null;
+		}
+
 		return trashEntryCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{entryId=");
 		sb.append(getEntryId());
@@ -546,13 +609,17 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 		sb.append(getTypeSettings());
 		sb.append(", status=");
 		sb.append(getStatus());
+		sb.append(", deletedByUserId=");
+		sb.append(getDeletedByUserId());
+		sb.append(", deletedByUserName=");
+		sb.append(getDeletedByUserName());
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(28);
+		StringBundler sb = new StringBundler(34);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.trash.model.TrashEntry");
@@ -590,6 +657,14 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 			"<column><column-name>status</column-name><column-value><![CDATA[");
 		sb.append(getStatus());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>deletedByUserId</column-name><column-value><![CDATA[");
+		sb.append(getDeletedByUserId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>deletedByUserName</column-name><column-value><![CDATA[");
+		sb.append(getDeletedByUserName());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -616,6 +691,9 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 	private boolean _setOriginalClassPK;
 	private String _typeSettings;
 	private int _status;
+	private long _deletedByUserId;
+	private String _deletedByUserUuid;
+	private String _deletedByUserName;
 	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private TrashEntry _escapedModelProxy;

@@ -53,7 +53,7 @@ public class RuntimeChecker extends BaseReflectChecker {
 			}
 		}
 		else if (name.equals(RUNTIME_PERMISSION_ACCESS_DECLARED_MEMBERS)) {
-			if (!hasRelect(permission.getName(), permission.getActions())) {
+			if (!hasReflect(permission.getName(), permission.getActions())) {
 				throw new SecurityException(
 					"Attempted to access declared members");
 			}
@@ -67,6 +67,11 @@ public class RuntimeChecker extends BaseReflectChecker {
 					"Attempted to create a class loader");
 			}
 		}
+		else if (name.equals(RUNTIME_PERMISSION_EXIT_VM)) {
+			Thread.dumpStack();
+
+			throw new SecurityException("Attempted to shutdown the VM");
+		}
 		else if (name.startsWith(RUNTIME_PERMISSION_GET_CLASSLOADER)) {
 			if (PortalSecurityManagerThreadLocal.isCheckGetClassLoader() &&
 				!hasGetClassLoader(name)) {
@@ -74,14 +79,11 @@ public class RuntimeChecker extends BaseReflectChecker {
 				throw new SecurityException("Attempted to get class loader");
 			}
 		}
+		else if (name.equals(RUNTIME_PERMISSION_SET_CONTEXT_CLASS_LOADER)) {
+		}
 		else if (name.equals(RUNTIME_PERMISSION_SET_SECURITY_MANAGER)) {
 			throw new SecurityException(
 				"Attempted to set another security manager");
-		}
-		else if (name.equals(RUNTIME_PERMISSION_EXIT_VM)) {
-			Thread.dumpStack();
-
-			throw new SecurityException("Attempted to shutdown the VM");
 		}
 	}
 

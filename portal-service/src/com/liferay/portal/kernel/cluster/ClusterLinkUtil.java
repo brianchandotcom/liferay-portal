@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.cluster;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
 import java.util.Collections;
 import java.util.List;
@@ -120,6 +121,8 @@ public class ClusterLinkUtil {
 	}
 
 	public void setClusterLink(ClusterLink clusterLink) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_clusterLink = clusterLink;
 	}
 

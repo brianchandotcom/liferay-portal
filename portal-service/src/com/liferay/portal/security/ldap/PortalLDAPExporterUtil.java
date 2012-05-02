@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.ldap;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.User;
 
@@ -51,6 +52,8 @@ public class PortalLDAPExporterUtil {
 	}
 
 	public void setPortalLDAPExporter(PortalLDAPExporter portalLDAPExporter) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_portalLDAPExporter = portalLDAPExporter;
 	}
 

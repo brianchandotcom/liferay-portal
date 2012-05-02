@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.notifications;
 
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
 /**
  * @author Edward Han
@@ -30,6 +31,8 @@ public class NotificationEventFactoryUtil {
 
 	public void setNotificationEventFactory(
 		NotificationEventFactory notificationEventFactory) {
+
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_notificationEventFactory = notificationEventFactory;
 	}

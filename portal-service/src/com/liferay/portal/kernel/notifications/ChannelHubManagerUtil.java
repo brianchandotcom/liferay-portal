@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.notifications;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -238,6 +240,8 @@ public class ChannelHubManagerUtil {
 	}
 
 	public void setChannelHubManager(ChannelHubManager channelHubManager) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_channelHubManager = channelHubManager;
 	}
 

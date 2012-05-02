@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.mobile.device.rulegroup;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.mobile.device.rulegroup.action.ActionHandler;
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portlet.mobiledevicerules.model.MDRAction;
 
 import java.util.Collection;
@@ -64,6 +65,8 @@ public class ActionHandlerManagerUtil {
 
 	public void setActionHandlerManager(
 		ActionHandlerManager actionHandlerManager) {
+
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_actionHandlerManager = actionHandlerManager;
 	}

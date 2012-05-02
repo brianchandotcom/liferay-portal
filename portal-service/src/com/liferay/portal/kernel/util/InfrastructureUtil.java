@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+
 import javax.mail.Session;
 
 import javax.sql.DataSource;
@@ -49,21 +51,29 @@ public class InfrastructureUtil {
 	}
 
 	public void setDataSource(DataSource dataSource) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_dataSource = dataSource;
 	}
 
 	public void setDynamicDataSourceTargetSource(
 		Object dynamicDataSourceTargetSource) {
 
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_dynamicDataSourceTargetSource = dynamicDataSourceTargetSource;
 	}
 
 	public void setMailSession(Session mailSession) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_mailSession = mailSession;
 	}
 
 	public void setShardDataSourceTargetSource(
 		Object shardDataSourceTargetSource) {
+
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_shardDataSourceTargetSource = shardDataSourceTargetSource;
 	}
@@ -71,10 +81,14 @@ public class InfrastructureUtil {
 	public void setShardSessionFactoryTargetSource(
 		Object shardSessionFactoryTargetSource) {
 
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_shardSessionFactoryTargetSource = shardSessionFactoryTargetSource;
 	}
 
 	public void setTransactionManager(Object transactionManager) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_transactionManager = transactionManager;
 	}
 

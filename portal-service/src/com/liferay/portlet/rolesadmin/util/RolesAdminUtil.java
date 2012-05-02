@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.rolesadmin.util;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.model.Role;
 
 /**
@@ -30,6 +31,8 @@ public class RolesAdminUtil {
 	}
 
 	public void setRolesAdmin(RolesAdmin rolesAdmin) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_rolesAdmin = rolesAdmin;
 	}
 

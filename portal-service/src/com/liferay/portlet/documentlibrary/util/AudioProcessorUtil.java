@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary.util;
 
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
 import java.io.InputStream;
 
@@ -77,6 +78,8 @@ public class AudioProcessorUtil {
 	}
 
 	public void setAudioProcessor(AudioProcessor audioProcessor) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_audioProcessor = audioProcessor;
 	}
 

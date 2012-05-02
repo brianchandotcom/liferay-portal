@@ -14,6 +14,7 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTypePortlet;
 
@@ -32,6 +33,8 @@ public class LayoutTypePortletFactoryUtil {
 
 	public void setLayoutTypePortletFactory(
 		LayoutTypePortletFactory layoutTypePortletFactory) {
+
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_layoutTypePortletFactory = layoutTypePortletFactory;
 	}

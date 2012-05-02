@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.workflow.permission;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.security.permission.PermissionChecker;
 
 /**
@@ -34,6 +35,8 @@ public class WorkflowPermissionUtil {
 	}
 
 	public void setWorkflowPermission(WorkflowPermission WorkflowPermission) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_workflowPermission = WorkflowPermission;
 	}
 

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.deploy.hot;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+
 /**
  * @author Ivica Cardic
  * @author Brian Wing Shun Chan
@@ -56,6 +58,8 @@ public class HotDeployUtil {
 	}
 
 	public void setHotDeploy(HotDeploy hotDeploy) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_hotDeploy = hotDeploy;
 	}
 

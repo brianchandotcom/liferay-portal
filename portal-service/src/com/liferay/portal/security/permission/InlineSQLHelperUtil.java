@@ -14,6 +14,8 @@
 
 package com.liferay.portal.security.permission;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+
 /**
  * @author Raymond Augé
  * @see    InlineSQLHelper
@@ -130,6 +132,8 @@ public class InlineSQLHelperUtil {
 	}
 
 	public void setInlineSQLHelper(InlineSQLHelper inlineSQLPermission) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_inlineSQLPermission = inlineSQLPermission;
 	}
 

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.service.permission;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
 
@@ -49,6 +50,8 @@ public class RolePermissionUtil {
 	}
 
 	public void setRolePermission(RolePermission rolePermission) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_rolePermission = rolePermission;
 	}
 

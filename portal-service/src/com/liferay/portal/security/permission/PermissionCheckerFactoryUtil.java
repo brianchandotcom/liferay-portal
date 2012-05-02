@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.permission;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.model.User;
 
 /**
@@ -41,6 +42,8 @@ public class PermissionCheckerFactoryUtil {
 
 	public void setPermissionCheckerFactory(
 		PermissionCheckerFactory permissionCheckerFactory) {
+
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_permissionCheckerFactory = permissionCheckerFactory;
 	}

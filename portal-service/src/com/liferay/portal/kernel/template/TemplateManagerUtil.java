@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.template;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -157,6 +159,8 @@ public class TemplateManagerUtil {
 	}
 
 	public void setTemplateManagers(List<TemplateManager> templateManagers) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		for (TemplateManager templateManager : templateManagers) {
 			_templateManagers.put(
 				templateManager.getTemplateManagerName(), templateManager);

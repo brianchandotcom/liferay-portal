@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary.antivirus;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
 import java.io.File;
 import java.io.InputStream;
@@ -62,6 +63,8 @@ public class AntivirusScannerUtil {
 	}
 
 	public void setAntivirusScanner(AntivirusScanner antiVirusScanner) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_antivirusScanner = antiVirusScanner;
 	}
 

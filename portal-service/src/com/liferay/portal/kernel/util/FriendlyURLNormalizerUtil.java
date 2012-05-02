@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+
 /**
  * @author Julio Camarero
  * @author Samuel Kong
@@ -34,6 +36,8 @@ public class FriendlyURLNormalizerUtil {
 
 	public void setFriendlyURLNormalizer(
 		FriendlyURLNormalizer friendlyURLNormalizer) {
+
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_friendlyURLNormalizer = friendlyURLNormalizer;
 	}

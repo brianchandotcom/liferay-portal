@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.cache;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+
 import java.io.Serializable;
 
 /**
@@ -93,6 +95,8 @@ public class MultiVMPoolUtil {
 	}
 
 	public void setMultiVMPool(MultiVMPool multiVMPool) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_multiVMPool = multiVMPool;
 	}
 

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.workflow;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+
 import java.io.Serializable;
 
 import java.util.Map;
@@ -32,6 +34,8 @@ public class WorkflowStatusManagerUtil {
 
 	public void setWorkflowStatusManager(
 		WorkflowStatusManager workflowStatusManager) {
+
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_workflowStatusManager = workflowStatusManager;
 	}

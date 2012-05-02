@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.mobile.device;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+
 import java.util.Map;
 import java.util.Set;
 
@@ -69,6 +71,8 @@ public class DeviceDetectionUtil {
 
 	public void setDeviceRecognitionProvider(
 		DeviceRecognitionProvider deviceRecognitionProvider) {
+
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_deviceRecognitionProvider = deviceRecognitionProvider;
 	}

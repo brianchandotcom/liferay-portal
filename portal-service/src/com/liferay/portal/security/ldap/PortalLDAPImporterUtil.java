@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.ldap;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.model.User;
 
 import javax.naming.directory.Attributes;
@@ -75,6 +76,8 @@ public class PortalLDAPImporterUtil {
 	}
 
 	public void setPortalLDAPImporter(PortalLDAPImporter portalLDAPImporter) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_portalLDAPImporter = portalLDAPImporter;
 	}
 

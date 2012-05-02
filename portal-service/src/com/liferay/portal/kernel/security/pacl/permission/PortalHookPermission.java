@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.pacl.permission;
+package com.liferay.portal.kernel.security.pacl.permission;
 
 import java.security.BasicPermission;
 

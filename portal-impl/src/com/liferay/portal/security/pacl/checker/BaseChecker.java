@@ -16,9 +16,9 @@ package com.liferay.portal.security.pacl.checker;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.pacl.PACLConstants;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
-import com.liferay.portal.security.pacl.PACLConstants;
 import com.liferay.portal.security.pacl.PACLPolicy;
 
 import java.util.Properties;

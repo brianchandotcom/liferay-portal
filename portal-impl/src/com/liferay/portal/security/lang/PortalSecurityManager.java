@@ -17,10 +17,10 @@ package com.liferay.portal.security.lang;
 import com.liferay.portal.jndi.pacl.PACLInitialContextFactoryBuilder;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.pacl.permission.PortalHookPermission;
 import com.liferay.portal.security.pacl.PACLClassUtil;
 import com.liferay.portal.security.pacl.PACLPolicy;
 import com.liferay.portal.security.pacl.PACLPolicyManager;
-import com.liferay.portal.security.pacl.permission.PortalHookPermission;
 
 import java.security.Permission;
 

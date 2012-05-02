@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.pacl;
+package com.liferay.portal.kernel.security.pacl;
 
 /**
  * @author Raymond Augé
@@ -47,9 +47,10 @@ public interface PACLConstants {
 	public static final String PORTAL_HOOK_PERMISSION_STRUTS_ACTION_PATH =
 		"strutsActionPath";
 
-	public static final String PORTAL_PERMISSION_DYNAMIC_QUERY = "dynamicQuery";
+	public static final String PORTAL_SERVICE_PERMISSION_DYNAMIC_QUERY =
+		"dynamicQuery";
 
-	public static final String PORTAL_PERMISSION_SERVICE = "service";
+	public static final String PORTAL_SERVICE_PERMISSION_SERVICE = "service";
 
 	public static final String RUNTIME_PERMISSION_ACCESS_CLASS_IN_PACKAGE =
 		"accessClassInPackage";

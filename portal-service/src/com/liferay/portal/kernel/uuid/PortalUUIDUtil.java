@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.uuid;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -40,6 +42,8 @@ public class PortalUUIDUtil {
 	}
 
 	public void setPortalUUID(PortalUUID portalUUID) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_portalUUID = portalUUID;
 	}
 

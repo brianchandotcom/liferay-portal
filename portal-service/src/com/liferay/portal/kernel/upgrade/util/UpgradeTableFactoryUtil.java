@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.upgrade.util;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -32,6 +34,8 @@ public class UpgradeTableFactoryUtil {
 
 	public void setUpgradeTableFactory(
 		UpgradeTableFactory upgradeTableFactory) {
+
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_upgradeTableFactory = upgradeTableFactory;
 	}

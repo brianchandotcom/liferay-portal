@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.cache;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+
 import java.io.Serializable;
 
 /**
@@ -112,6 +114,8 @@ public class SingleVMPoolUtil {
 	}
 
 	public void setSingleVMPool(SingleVMPool singleVMPool) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_singleVMPool = singleVMPool;
 	}
 

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.language;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+
 import java.util.Locale;
 
 import javax.portlet.PortletConfig;
@@ -263,6 +265,8 @@ public class LanguageUtil {
 	}
 
 	public void setLanguage(Language language) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_language = language;
 	}
 

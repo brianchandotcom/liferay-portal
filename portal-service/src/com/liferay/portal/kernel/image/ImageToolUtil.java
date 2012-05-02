@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.image;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 
@@ -190,6 +192,8 @@ public class ImageToolUtil {
 	}
 
 	public void setImageTool(ImageTool imageTool) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_imageTool = imageTool;
 	}
 

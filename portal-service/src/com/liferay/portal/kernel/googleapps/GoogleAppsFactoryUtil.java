@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.googleapps;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -42,6 +44,8 @@ public class GoogleAppsFactoryUtil {
 	}
 
 	public void setGoogleAppsFactory(GoogleAppsFactory googleAppsFactory) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_googleAppsFactory = googleAppsFactory;
 	}
 

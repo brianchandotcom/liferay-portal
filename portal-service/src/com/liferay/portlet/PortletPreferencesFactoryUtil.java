@@ -16,6 +16,7 @@ package com.liferay.portlet;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletPreferencesIds;
@@ -221,6 +222,8 @@ public class PortletPreferencesFactoryUtil {
 
 	public void setPortletPreferencesFactory(
 		PortletPreferencesFactory portletPreferencesFactory) {
+
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_portletPreferencesFactory = portletPreferencesFactory;
 	}

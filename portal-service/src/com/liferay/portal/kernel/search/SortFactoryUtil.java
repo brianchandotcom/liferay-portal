@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.search;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+
 import java.util.List;
 
 /**
@@ -49,6 +51,8 @@ public class SortFactoryUtil {
 	}
 
 	public void setSortFactory(SortFactory sortFactory) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_sortFactory = sortFactory;
 	}
 

@@ -245,7 +245,7 @@ public interface TrashEntryLocalService extends BaseLocalService,
 	/**
 	* Moves an entry to trash.
 	*
-	* @param companyId the primary key of the entry's company
+	* @param userId the primary key of the user removing the entity
 	* @param groupId the primary key of the entry's group
 	* @param className the class name of the entity
 	* @param classPK the primary key of the entity
@@ -258,11 +258,12 @@ public interface TrashEntryLocalService extends BaseLocalService,
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.trash.model.TrashEntry addTrashEntry(
-		long companyId, long groupId, java.lang.String className, long classPK,
+		long userId, long groupId, java.lang.String className, long classPK,
 		int status,
 		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.Long, java.lang.Integer>> versions,
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
 	* Deletes the trash entry with the entity class name and primary key.

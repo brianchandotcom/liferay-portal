@@ -443,6 +443,8 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 		trashEntryImpl.setEntryId(trashEntry.getEntryId());
 		trashEntryImpl.setGroupId(trashEntry.getGroupId());
 		trashEntryImpl.setCompanyId(trashEntry.getCompanyId());
+		trashEntryImpl.setUserId(trashEntry.getUserId());
+		trashEntryImpl.setUserName(trashEntry.getUserName());
 		trashEntryImpl.setCreateDate(trashEntry.getCreateDate());
 		trashEntryImpl.setClassNameId(trashEntry.getClassNameId());
 		trashEntryImpl.setClassPK(trashEntry.getClassPK());

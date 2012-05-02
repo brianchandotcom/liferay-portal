@@ -35,7 +35,7 @@ public class TrashEntryCacheModel implements CacheModel<TrashEntry>,
 	Serializable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{entryId=");
 		sb.append(entryId);
@@ -43,6 +43,10 @@ public class TrashEntryCacheModel implements CacheModel<TrashEntry>,
 		sb.append(groupId);
 		sb.append(", companyId=");
 		sb.append(companyId);
+		sb.append(", userId=");
+		sb.append(userId);
+		sb.append(", userName=");
+		sb.append(userName);
 		sb.append(", createDate=");
 		sb.append(createDate);
 		sb.append(", classNameId=");
@@ -64,6 +68,14 @@ public class TrashEntryCacheModel implements CacheModel<TrashEntry>,
 		trashEntryImpl.setEntryId(entryId);
 		trashEntryImpl.setGroupId(groupId);
 		trashEntryImpl.setCompanyId(companyId);
+		trashEntryImpl.setUserId(userId);
+
+		if (userName == null) {
+			trashEntryImpl.setUserName(StringPool.BLANK);
+		}
+		else {
+			trashEntryImpl.setUserName(userName);
+		}
 
 		if (createDate == Long.MIN_VALUE) {
 			trashEntryImpl.setCreateDate(null);
@@ -92,6 +104,8 @@ public class TrashEntryCacheModel implements CacheModel<TrashEntry>,
 	public long entryId;
 	public long groupId;
 	public long companyId;
+	public long userId;
+	public String userName;
 	public long createDate;
 	public long classNameId;
 	public long classPK;

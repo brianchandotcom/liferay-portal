@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.bean;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
@@ -177,6 +179,8 @@ public class RendererUtil {
 	}
 
 	public void setRenderer(Renderer renderer) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_renderer = renderer;
 	}
 

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -62,6 +64,8 @@ public class CalendarFactoryUtil {
 	}
 
 	public void setCalendarFactory(CalendarFactory calendarFactory) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_calendarFactory = calendarFactory;
 	}
 

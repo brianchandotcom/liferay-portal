@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.bean;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -244,6 +246,8 @@ public class BeanPropertiesUtil {
 	}
 
 	public void setBeanProperties(BeanProperties beanProperties) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_beanProperties = beanProperties;
 	}
 

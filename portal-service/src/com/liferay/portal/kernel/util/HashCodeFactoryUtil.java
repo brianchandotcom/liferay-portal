@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -35,6 +37,8 @@ public class HashCodeFactoryUtil {
 	}
 
 	public void setHashCodeFactory(HashCodeFactory hashCodeFactory) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_hashCodeFactory = hashCodeFactory;
 	}
 

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.xuggler;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+
 /**
  * @author Alexander Chow
  */
@@ -43,6 +45,8 @@ public class XugglerUtil {
 	}
 
 	public void setXuggler(Xuggler xuggler) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_xuggler = xuggler;
 	}
 

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.dao.jdbc;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+
 import java.sql.Connection;
 
 import javax.sql.DataSource;
@@ -32,6 +34,8 @@ public class CurrentConnectionUtil {
 	}
 
 	public void setCurrentConnection(CurrentConnection currentConnection) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_currentConnection = currentConnection;
 	}
 

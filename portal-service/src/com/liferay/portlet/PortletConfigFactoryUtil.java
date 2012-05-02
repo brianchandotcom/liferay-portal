@@ -14,6 +14,7 @@
 
 package com.liferay.portlet;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.model.Portlet;
 
 import javax.portlet.PortletConfig;
@@ -45,6 +46,8 @@ public class PortletConfigFactoryUtil {
 
 	public void setPortletConfigFactory(
 		PortletConfigFactory portletConfigFactory) {
+
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_portletConfigFactory = portletConfigFactory;
 	}

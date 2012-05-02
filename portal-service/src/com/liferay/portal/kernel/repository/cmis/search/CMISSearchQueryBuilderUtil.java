@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.repository.cmis.search;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
 /**
  * @author Mika Koivisto
@@ -35,6 +36,8 @@ public class CMISSearchQueryBuilderUtil {
 
 	public void setCmisSearchQueryBuilder(
 		CMISSearchQueryBuilder cmisSearchQueryBuilder) {
+
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_cmisSearchQueryBuilder = cmisSearchQueryBuilder;
 	}

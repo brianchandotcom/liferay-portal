@@ -14,9 +14,9 @@
 
 package com.liferay.portal.kernel.portlet;
 
+import com.liferay.portal.kernel.security.pacl.PACLConstants;
 import com.liferay.portal.kernel.servlet.PluginContextListener;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.security.pacl.PACLConstants;
 
 import java.security.Permission;
 

@@ -18,9 +18,9 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.pacl.PACLConstants;
+import com.liferay.portal.kernel.security.pacl.permission.PortalServicePermission;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
-import com.liferay.portal.security.pacl.PACLConstants;
-import com.liferay.portal.security.pacl.permission.PortalServicePermission;
 
 import java.security.Permission;
 
@@ -98,7 +98,8 @@ public class DynamicQueryFactoryImpl implements DynamicQueryFactory {
 
 		if (securityManager != null) {
 			Permission permission = new PortalServicePermission(
-				PACLConstants.PORTAL_PERMISSION_DYNAMIC_QUERY, implClass, null);
+				PACLConstants.PORTAL_SERVICE_PERMISSION_DYNAMIC_QUERY,
+				implClass, null);
 
 			securityManager.checkPermission(permission);
 		}

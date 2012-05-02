@@ -39,7 +39,7 @@ public class InactivePACLPolicy extends BasePACLPolicy {
 		return true;
 	}
 
-	public boolean hasService(
+	public boolean hasPortalService(
 		Object object, Method method, Object[] arguments) {
 
 		return true;

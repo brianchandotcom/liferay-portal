@@ -16,11 +16,11 @@ package com.liferay.portal.security.pacl;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.pacl.permission.PortalServicePermission;
 import com.liferay.portal.security.pacl.checker.Checker;
 import com.liferay.portal.security.pacl.checker.JNDIChecker;
+import com.liferay.portal.security.pacl.checker.PortalServiceChecker;
 import com.liferay.portal.security.pacl.checker.SQLChecker;
-import com.liferay.portal.security.pacl.checker.ServiceChecker;
-import com.liferay.portal.security.pacl.permission.PortalServicePermission;
 
 import java.lang.reflect.Method;
 
@@ -41,7 +41,7 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 
 		try {
 			initJNDIChecker();
-			initServiceChecker();
+			initPortalServiceChecker();
 			initSQLChecker();
 		}
 		catch (Exception e) {
@@ -59,10 +59,10 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 		return _jndiChecker.hasJNDI(name);
 	}
 
-	public boolean hasService(
+	public boolean hasPortalService(
 		Object object, Method method, Object[] arguments) {
 
-		return _serviceChecker.hasService(object, method, arguments);
+		return _portalServiceChecker.hasService(object, method, arguments);
 	}
 
 	public boolean hasSQL(String sql) {
@@ -79,14 +79,14 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 		initChecker(_jndiChecker);
 	}
 
-	protected void initServiceChecker() {
-		_serviceChecker = (ServiceChecker)getChecker(
+	protected void initPortalServiceChecker() {
+		_portalServiceChecker = (PortalServiceChecker)getChecker(
 			PortalServicePermission.class);
 
-		if (_serviceChecker == null) {
-			_serviceChecker = new ServiceChecker();
+		if (_portalServiceChecker == null) {
+			_portalServiceChecker = new PortalServiceChecker();
 
-			initChecker(_serviceChecker);
+			initChecker(_portalServiceChecker);
 		}
 	}
 
@@ -99,7 +99,7 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 	private static Log _log = LogFactoryUtil.getLog(ActivePACLPolicy.class);
 
 	private JNDIChecker _jndiChecker;
-	private ServiceChecker _serviceChecker;
+	private PortalServiceChecker _portalServiceChecker;
 	private SQLChecker _sqlChecker;
 
 }

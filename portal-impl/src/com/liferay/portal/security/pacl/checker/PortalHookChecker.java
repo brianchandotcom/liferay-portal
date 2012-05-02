@@ -16,7 +16,7 @@ package com.liferay.portal.security.pacl.checker;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.security.pacl.permission.PortalHookPermission;
+import com.liferay.portal.kernel.security.pacl.permission.PortalHookPermission;
 
 import java.security.Permission;
 
@@ -27,7 +27,7 @@ import java.util.TreeSet;
 /**
  * @author Brian Wing Shun Chan
  */
-public class HookChecker extends BaseChecker {
+public class PortalHookChecker extends BaseChecker {
 
 	public void afterPropertiesSet() {
 		initCustomJspDir();
@@ -40,14 +40,15 @@ public class HookChecker extends BaseChecker {
 	}
 
 	public void checkPermission(Permission permission) {
-		PortalHookPermission hookPermission = (PortalHookPermission)permission;
+		PortalHookPermission portalHookPermission =
+			(PortalHookPermission)permission;
 
-		String name = hookPermission.getName();
-		Object subject = hookPermission.getSubject();
+		String name = portalHookPermission.getName();
+		Object subject = portalHookPermission.getSubject();
 
 		if (name.equals(PORTAL_HOOK_PERMISSION_CUSTOM_JSP_DIR)) {
 			if (!_customJspDir) {
-				throw new SecurityException("Attempted to set custom jsp dir ");
+				throw new SecurityException("Attempted to set custom jsp dir");
 			}
 		}
 		else if (name.equals(PORTAL_HOOK_PERMISSION_INDEXER)) {
@@ -187,7 +188,7 @@ public class HookChecker extends BaseChecker {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(HookChecker.class);
+	private static Log _log = LogFactoryUtil.getLog(PortalHookChecker.class);
 
 	private boolean _customJspDir;
 	private Set<String> _indexers;

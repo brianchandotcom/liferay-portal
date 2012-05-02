@@ -478,6 +478,10 @@
 		<priority value="ERROR" />
 	</category>
 
+	<category name="com.liferay.portal.security.pacl.checker.PortalRuntimeChecker">
+		<priority value="ERROR" />
+	</category>
+
 	<category name="com.liferay.portal.security.pacl.checker.PortalServiceChecker">
 		<priority value="ERROR" />
 	</category>

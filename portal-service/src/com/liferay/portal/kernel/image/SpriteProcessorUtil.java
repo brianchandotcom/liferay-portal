@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.image;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -45,6 +47,8 @@ public class SpriteProcessorUtil {
 	}
 
 	public void setSpriteProcessor(SpriteProcessor spriteProcessor) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_spriteProcessor = spriteProcessor;
 	}
 

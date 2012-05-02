@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.xmlrpc;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -39,6 +41,8 @@ public class XmlRpcUtil {
 	}
 
 	public void setXmlRpc(XmlRpc xmlRpc) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_xmlRpc = xmlRpc;
 	}
 

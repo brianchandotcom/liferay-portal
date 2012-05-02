@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+
 import java.io.Reader;
 
 import java.util.List;
@@ -80,6 +82,8 @@ public class DiffUtil {
 	}
 
 	public void setDiff(Diff diff) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_diff = diff;
 	}
 

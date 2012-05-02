@@ -16,6 +16,7 @@ package com.liferay.portlet.dynamicdatamapping.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
@@ -100,6 +101,8 @@ public class DDMUtil {
 	}
 
 	public void setDDM(DDM ddm) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_ddm = ddm;
 	}
 

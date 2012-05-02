@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.dao.orm;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+
 import java.io.Serializable;
 
 /**
@@ -75,6 +77,8 @@ public class EntityCacheUtil {
 	}
 
 	public void setEntityCache(EntityCache entityCache) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_entityCache = entityCache;
 	}
 

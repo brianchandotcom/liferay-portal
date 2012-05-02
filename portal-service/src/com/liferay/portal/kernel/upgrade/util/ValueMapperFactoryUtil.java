@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.upgrade.util;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -28,6 +30,8 @@ public class ValueMapperFactoryUtil {
 	}
 
 	public void setValueMapperFactory(ValueMapperFactory valueMapperFactory) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_valueMapperFactory = valueMapperFactory;
 	}
 

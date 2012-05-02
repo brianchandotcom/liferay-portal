@@ -14,6 +14,8 @@
 
 package com.liferay.portal.security.auth;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+
 /**
  * @author Michael C. Han
  */
@@ -33,6 +35,8 @@ public class AuthenticatedUserUUIDStoreUtil {
 
 	public void setAuthenticatedUserUUIDStore(
 		AuthenticatedUserUUIDStore authenticatedUserUUIDStore) {
+
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_authenticatedUserUUIDStore = authenticatedUserUUIDStore;
 	}

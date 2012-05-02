@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.dao.orm;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
 /**
  * @author Brian Wing Shun Chan
@@ -89,6 +90,8 @@ public class FinderCacheUtil {
 	}
 
 	public void setFinderCache(FinderCache finderCache) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_finderCache = finderCache;
 	}
 

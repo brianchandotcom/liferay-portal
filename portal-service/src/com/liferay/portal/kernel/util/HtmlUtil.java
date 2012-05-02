@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Clarence Shen
@@ -95,6 +97,8 @@ public class HtmlUtil {
 	}
 
 	public void setHtml(Html html) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_html = html;
 	}
 

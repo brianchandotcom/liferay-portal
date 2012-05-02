@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.portal.security.pacl.PACLConstants;
+import com.liferay.portal.kernel.security.pacl.PACLConstants;
 
 import java.net.URL;
 import java.net.URLClassLoader;

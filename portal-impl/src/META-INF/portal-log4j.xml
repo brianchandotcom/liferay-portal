@@ -474,15 +474,15 @@
 		<priority value="ERROR" />
 	</category>
 
-	<category name="com.liferay.portal.security.pacl.checker.HookChecker">
+	<category name="com.liferay.portal.security.pacl.checker.PortalHookChecker">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="com.liferay.portal.security.pacl.checker.PortalServiceChecker">
 		<priority value="ERROR" />
 	</category>
 
 	<category name="com.liferay.portal.security.pacl.checker.RuntimeChecker">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.portal.security.pacl.checker.ServiceChecker">
 		<priority value="ERROR" />
 	</category>
 

@@ -16,13 +16,13 @@ package com.liferay.portal.security.pacl.checker;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.pacl.permission.PortalServicePermission;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.security.pacl.PACLPolicy;
 import com.liferay.portal.security.pacl.PACLPolicyManager;
-import com.liferay.portal.security.pacl.permission.PortalServicePermission;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
@@ -37,7 +37,7 @@ import java.util.Set;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ServiceChecker extends BaseChecker {
+public class PortalServiceChecker extends BaseChecker {
 
 	public void afterPropertiesSet() {
 		initServices();
@@ -50,7 +50,7 @@ public class ServiceChecker extends BaseChecker {
 		String name = portalServicePermission.getName();
 		Object object = portalServicePermission.getObject();
 
-		if (name.equals(PORTAL_PERMISSION_DYNAMIC_QUERY)) {
+		if (name.equals(PORTAL_SERVICE_PERMISSION_DYNAMIC_QUERY)) {
 			Class<?> implClass = (Class<?>)object;
 
 			if (!hasDynamicQuery(implClass)) {
@@ -251,7 +251,7 @@ public class ServiceChecker extends BaseChecker {
 
 	private static final String _PORTAL_SERVLET_CONTEXT_NAME = "portal";
 
-	private static Log _log = LogFactoryUtil.getLog(ServiceChecker.class);
+	private static Log _log = LogFactoryUtil.getLog(PortalServiceChecker.class);
 
 	private Map<String, Set<String>> _pluginServices =
 		new HashMap<String, Set<String>>();

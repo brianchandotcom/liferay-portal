@@ -17,9 +17,11 @@ package com.liferay.portal.security.pacl.checker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 
+import java.security.AccessController;
 import java.security.Permission;
 
 import java.util.Set;
@@ -56,9 +58,17 @@ public class RuntimeChecker extends BaseReflectChecker {
 					"Attempted to access declared members");
 			}
 		}
+		else if (name.equals(RUNTIME_PERMISSION_CREATE_CLASS_LOADER)) {
+			if (PortalSecurityManagerThreadLocal.isCheckCreateClassLoader() &&
+				!isJSPCompiler(permission.getName(), permission.getActions()) &&
+				!hasCreateClassLoader()) {
+
+				throw new SecurityException(
+					"Attempted to create a class loader");
+			}
+		}
 		else if (name.startsWith(RUNTIME_PERMISSION_GET_CLASSLOADER)) {
-			if (PortalSecurityManagerThreadLocal.
-					isCheckGetClassLoaderEnabled() &&
+			if (PortalSecurityManagerThreadLocal.isCheckGetClassLoader() &&
 				!hasGetClassLoader(name)) {
 
 				throw new SecurityException("Attempted to get class loader");
@@ -73,6 +83,33 @@ public class RuntimeChecker extends BaseReflectChecker {
 
 			throw new SecurityException("Attempted to shutdown the VM");
 		}
+	}
+
+	protected boolean hasCreateClassLoader() {
+		Class<?> callerClass10 = Reflection.getCallerClass(10);
+		Class<?> callerClass11 = Reflection.getCallerClass(11);
+
+		if (Validator.equals(
+				callerClass10.getName(), _CLASS_NAME_CLASS_DEFINER_1) &&
+			(callerClass11 == AccessController.class)) {
+
+			Thread currentThread = Thread.currentThread();
+
+			StackTraceElement[] stackTraceElements =
+				currentThread.getStackTrace();
+
+			StackTraceElement stackTraceElement = stackTraceElements[11];
+
+			String methodName = stackTraceElement.getMethodName();
+
+			if (methodName.equals(_METHOD_NAME_DO_PRIVILEGED)) {
+				logCreateClassLoader(callerClass10, 10);
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	protected boolean hasGetClassLoader(String name) {
@@ -187,6 +224,19 @@ public class RuntimeChecker extends BaseReflectChecker {
 
 		return false;
 	}
+
+	protected void logCreateClassLoader(Class<?> callerClass, int frame) {
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"Allow frame " + frame + " with caller " + callerClass +
+					" to create a class loader");
+		}
+	}
+
+	private static final String _CLASS_NAME_CLASS_DEFINER_1 =
+		"sun.reflect.ClassDefiner$1";
+
+	private static final String _METHOD_NAME_DO_PRIVILEGED = "doPrivileged";
 
 	private static final String _METHOD_NAME_GET_SYSTEM_CLASS_LOADER =
 		"getSystemClassLoader";

@@ -12,11 +12,10 @@
  * details.
  */
 
-package com.liferay.portalweb.portal;
+package com.liferay.portalweb.sevencogs.smoke;
 
-import com.liferay.portalweb.portal.logout.LogoutTests;
-import com.liferay.portalweb.sevencogs.smoke.SmokeTests;
-import com.liferay.portalweb.sevencogs.signin.SignInTestPlan;
+import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.util.TearDownPageTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -24,18 +23,16 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SevencogsSmokeTestSuite extends BaseTestSuite {
-
+public class SmokeTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-
-		testSuite.addTest(SignInTestPlan.suite());
-		testSuite.addTest(SmokeTests.suite());
-		testSuite.addTest(LogoutTests.suite());
-
-		testSuite.addTestSuite(StopSeleniumTest.class);
+		testSuite.addTestSuite(AddPage1Test.class);
+		testSuite.addTestSuite(AddPage2Test.class);
+		testSuite.addTestSuite(AddPage3Test.class);
+		testSuite.addTestSuite(AddPortletTest.class);
+		testSuite.addTestSuite(TearDownPageTest.class);
+		testSuite.addTestSuite(ViewTearDownPageTest.class);
 
 		return testSuite;
 	}
-
 }

@@ -12,30 +12,19 @@
  * details.
  */
 
-package com.liferay.portalweb.portal;
+package com.liferay.portalweb.sevencogs.smoke;
 
-import com.liferay.portalweb.portal.logout.LogoutTests;
-import com.liferay.portalweb.sevencogs.smoke.SmokeTests;
-import com.liferay.portalweb.sevencogs.signin.SignInTestPlan;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import com.liferay.portalweb.portal.BaseTestCase;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class SevencogsSmokeTestSuite extends BaseTestSuite {
-
-	public static Test suite() {
-		TestSuite testSuite = new TestSuite();
-
-		testSuite.addTest(SignInTestPlan.suite());
-		testSuite.addTest(SmokeTests.suite());
-		testSuite.addTest(LogoutTests.suite());
-
-		testSuite.addTestSuite(StopSeleniumTest.class);
-
-		return testSuite;
+public class ViewTearDownPageTest extends BaseTestCase {
+	public void testViewTearDownPage() throws Exception {
+		selenium.open("/web/guest/home/");
+		loadRequiredJavaScriptModules();
+		assertFalse(selenium.isElementPresent("link=Test Page1"));
+		assertFalse(selenium.isElementPresent("link=Test Page2"));
+		assertFalse(selenium.isElementPresent("link=Test Page3"));
 	}
-
 }

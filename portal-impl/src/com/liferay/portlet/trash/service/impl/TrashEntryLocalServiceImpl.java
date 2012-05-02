@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.model.User;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashVersion;
@@ -37,7 +38,7 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 	/**
 	 * Moves an entry to trash.
 	 *
-	 * @param  companyId the primary key of the entry's company
+	 * @param  userId the primary key of the user removing the entity
 	 * @param  groupId the primary key of the entry's group
 	 * @param  className the class name of the entity
 	 * @param  classPK the primary key of the entity
@@ -50,11 +51,12 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	public TrashEntry addTrashEntry(
-			long companyId, long groupId, String className, long classPK,
+			long userId, long groupId, String className, long classPK,
 			int status, List<ObjectValuePair<Long, Integer>> versions,
 			UnicodeProperties typeSettingsProperties)
-		throws SystemException {
+		throws PortalException, SystemException {
 
+		User user = userPersistence.findByPrimaryKey(userId);
 		long classNameId = PortalUtil.getClassNameId(className);
 
 		long entryId = counterLocalService.increment();
@@ -62,7 +64,9 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 		TrashEntry trashEntry = trashEntryPersistence.create(entryId);
 
 		trashEntry.setGroupId(groupId);
-		trashEntry.setCompanyId(companyId);
+		trashEntry.setCompanyId(user.getCompanyId());
+		trashEntry.setUserId(user.getUserId());
+		trashEntry.setUserName(user.getFullName());
 		trashEntry.setCreateDate(new Date());
 		trashEntry.setClassNameId(classNameId);
 		trashEntry.setClassPK(classPK);

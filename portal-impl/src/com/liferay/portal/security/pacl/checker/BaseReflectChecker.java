@@ -59,7 +59,7 @@ public abstract class BaseReflectChecker extends BaseChecker {
 			String methodName = stackTraceElement.getMethodName();
 
 			if (methodName.equals(_METHOD_NAME_DO_PRIVILEGED)) {
-				logReflect(callerClass8, 8);
+				logReflect(callerClass7, 7);
 
 				return true;
 			}
@@ -80,7 +80,7 @@ public abstract class BaseReflectChecker extends BaseChecker {
 			String methodName = stackTraceElement.getMethodName();
 
 			if (methodName.equals(_METHOD_NAME_DO_PRIVILEGED)) {
-				logReflect(callerClass10, 10);
+				logReflect(callerClass9, 9);
 
 				return true;
 			}

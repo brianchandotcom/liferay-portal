@@ -85,26 +85,6 @@ public class PipingServletResponse extends HttpServletResponseWrapper {
 			pageContext.getOut());
 	}
 
-	public PipingServletResponse(
-		PageContext pageContext, boolean trimNewLines) {
-
-		super((HttpServletResponse)pageContext.getResponse());
-
-		if (trimNewLines && (pageContext instanceof PageContextWrapper)) {
-			PageContextWrapper pageContextWrapper =
-				(PageContextWrapper)pageContext;
-
-			PageContext wrappedPageContext =
-				pageContextWrapper.getWrappedPageContext();
-
-			_printWriter = UnsyncPrintWriterPool.borrow(
-				new TrimNewLinesJspWriter(wrappedPageContext.getOut()));
-		}
-		else {
-			_printWriter = UnsyncPrintWriterPool.borrow(pageContext.getOut());
-		}
-	}
-
 	@Override
 	public ServletOutputStream getOutputStream() {
 		if (_servletOutputStream == null) {

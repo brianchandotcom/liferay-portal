@@ -281,8 +281,7 @@ public class IncludeTag extends AttributesTagSupport {
 		request.setAttribute(
 			WebKeys.SERVLET_CONTEXT_INCLUDE_FILTER_STRICT, _strict);
 
-		HttpServletResponse response = new PipingServletResponse(
-			pageContext, isTrimNewLines());
+		HttpServletResponse response = new PipingServletResponse(pageContext);
 
 		requestDispatcher.include(request, response);
 
@@ -291,10 +290,6 @@ public class IncludeTag extends AttributesTagSupport {
 
 	protected boolean isCleanUpSetAttributes() {
 		return _CLEAN_UP_SET_ATTRIBUTES;
-	}
-
-	protected boolean isTrimNewLines() {
-		return _TRIM_NEW_LINES;
 	}
 
 	protected int processEndTag() throws Exception {
@@ -374,8 +369,6 @@ public class IncludeTag extends AttributesTagSupport {
 	private static final boolean _THEME_JSP_OVERRIDE_ENABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.THEME_JSP_OVERRIDE_ENABLED));
-
-	private static final boolean _TRIM_NEW_LINES = false;
 
 	private static Log _log = LogFactoryUtil.getLog(IncludeTag.class);
 

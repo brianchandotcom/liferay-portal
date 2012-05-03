@@ -43,6 +43,11 @@ public class AddDefaultDataAction extends SimpleAction {
 			new AddDefaultDDMStructuresAction();
 
 		addDefaultDDMStructuresAction.run(ids);
+
+		SimpleAction addDefaultDDMTemplatesAction =
+			new AddDefaultDDMTemplatesAction();
+
+		addDefaultDDMTemplatesAction.run(ids);
 	}
 
 }

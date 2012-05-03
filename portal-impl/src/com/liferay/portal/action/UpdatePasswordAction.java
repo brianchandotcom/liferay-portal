@@ -160,12 +160,23 @@ public class UpdatePasswordAction extends Action {
 			userId = themeDisplay.getUserId();
 		}
 
+		HttpSession session = request.getSession();
+
 		String password1 = request.getParameter("password1");
 		String password2 = request.getParameter("password2");
 		boolean passwordReset = false;
+		boolean skipPasswordPolicyValidation = false;
+
+		if (Validator.isNotNull(
+			session.getAttribute(WebKeys.SETUP_WIZARD_PASSWORD_UPDATED))) {
+
+			skipPasswordPolicyValidation = (Boolean)session.getAttribute(
+				WebKeys.SETUP_WIZARD_PASSWORD_UPDATED);
+		}
 
 		UserLocalServiceUtil.updatePassword(
-			userId, password1, password2, passwordReset);
+			userId, password1, password2, passwordReset, false,
+			skipPasswordPolicyValidation);
 
 		if (ticket != null) {
 			TicketLocalServiceUtil.deleteTicket(ticket);
@@ -192,8 +203,6 @@ public class UpdatePasswordAction extends Action {
 			LoginUtil.login(request, response, login, password1, false, null);
 		}
 		else if (PropsValues.SESSION_STORE_PASSWORD) {
-			HttpSession session = request.getSession();
-
 			session.setAttribute(WebKeys.USER_PASSWORD, password1);
 		}
 	}

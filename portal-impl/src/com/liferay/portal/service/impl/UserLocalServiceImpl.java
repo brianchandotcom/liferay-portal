@@ -4298,7 +4298,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		return updatePassword(
-			userId, password1, password2, passwordReset, false);
+			userId, password1, password2, passwordReset, false, false);
 	}
 
 	/**
@@ -4312,19 +4312,24 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *         password the next time they login
 	 * @param  silentUpdate whether the password should be updated without being
 	 *         tracked, or validated. Primarily used for password imports.
+	 * @param  skipPasswordPolicyValidation whether the new password should not
+	 *         use password policy validation. Primarily used for setup wizard.
 	 * @return the user
 	 * @throws PortalException if a user with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public User updatePassword(
-			long userId, String password1, String password2,
-			boolean passwordReset, boolean silentUpdate)
+			long userId, String password1,
+			String password2, boolean passwordReset, boolean silentUpdate,
+			boolean skipPasswordPolicyValidation)
 		throws PortalException, SystemException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
 		if (!silentUpdate) {
-			validatePassword(user.getCompanyId(), userId, password1, password2);
+			validatePassword(
+				user.getCompanyId(), userId, password1, password2,
+				skipPasswordPolicyValidation);
 		}
 
 		String oldEncPwd = user.getPassword();
@@ -5728,7 +5733,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	}
 
 	protected void validatePassword(
-			long companyId, long userId, String password1, String password2)
+			long companyId, long userId, String password1, String password2,
+			boolean skipPasswordPolicyValidation)
 		throws PortalException, SystemException {
 
 		if (Validator.isNull(password1) || Validator.isNull(password2)) {
@@ -5741,11 +5747,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				UserPasswordException.PASSWORDS_DO_NOT_MATCH);
 		}
 
-		PasswordPolicy passwordPolicy =
-			passwordPolicyLocalService.getPasswordPolicyByUserId(userId);
+		if (!skipPasswordPolicyValidation) {
+			PasswordPolicy passwordPolicy =
+				passwordPolicyLocalService.getPasswordPolicyByUserId(userId);
 
-		PwdToolkitUtil.validate(
-			companyId, userId, password1, password2, passwordPolicy);
+			PwdToolkitUtil.validate(
+				companyId, userId, password1, password2, passwordPolicy);
+		}
 	}
 
 	protected void validateReminderQuery(String question, String answer)

@@ -15,8 +15,13 @@
 package com.liferay.portlet.trash;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.ExecutionTestListeners;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
@@ -25,6 +30,7 @@ import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.service.BaseDLAppTestCase;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
+import com.liferay.portlet.documentlibrary.util.DLIndexer;
 import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
 
 import org.junit.Assert;
@@ -92,12 +98,23 @@ public class DLFileEntryTrashHandlerTest extends BaseDLAppTestCase {
 		return assetEntry.isVisible();
 	}
 
+	protected int searchFileEntriesCount() throws Exception {
+		Indexer indexer = IndexerRegistryUtil.getIndexer(DLIndexer.class);
+
+		SearchContext searchContext = ServiceTestUtil.getSearchContext();
+
+		Hits results = indexer.search(searchContext);
+
+		return results.getLength();
+	}
+
 	protected void testTrash(
 			boolean delete, boolean versioned, boolean leaveCheckedOut)
 		throws Exception {
 
 		int initialFileEntriesCount = getFileEntriesNotInTrashCount();
 		int initialTrashEntriesCount = getTrashEntriesCount();
+		int initialSearchFileEntriesCount = searchFileEntriesCount();
 
 		FileEntry fileEntry = addFileEntry(false, "Test Basic.txt");
 
@@ -116,6 +133,8 @@ public class DLFileEntryTrashHandlerTest extends BaseDLAppTestCase {
 			initialFileEntriesCount + 1, getFileEntriesNotInTrashCount());
 		Assert.assertEquals(initialTrashEntriesCount, getTrashEntriesCount());
 		Assert.assertTrue(isAssetEntryVisible(fileEntryId));
+		Assert.assertEquals(
+			initialSearchFileEntriesCount + 1, searchFileEntriesCount());
 
 		DLAppServiceUtil.moveFileEntryToTrash(fileEntryId);
 
@@ -124,6 +143,8 @@ public class DLFileEntryTrashHandlerTest extends BaseDLAppTestCase {
 		Assert.assertEquals(
 			initialTrashEntriesCount + 1, getTrashEntriesCount());
 		Assert.assertFalse(isAssetEntryVisible(fileEntryId));
+		Assert.assertEquals(
+			initialSearchFileEntriesCount, searchFileEntriesCount());
 
 		if (delete) {
 			TrashEntryServiceUtil.deleteEntries(folder.getGroupId());
@@ -131,6 +152,8 @@ public class DLFileEntryTrashHandlerTest extends BaseDLAppTestCase {
 			Assert.assertEquals(
 				initialFileEntriesCount, getFileEntriesNotInTrashCount());
 			Assert.assertNull(fetchAssetEntry(fileEntryId));
+			Assert.assertEquals(
+				initialSearchFileEntriesCount, searchFileEntriesCount());
 		}
 		else {
 			DLAppServiceUtil.restoreFileEntryFromTrash(fileEntryId);
@@ -138,6 +161,8 @@ public class DLFileEntryTrashHandlerTest extends BaseDLAppTestCase {
 			Assert.assertEquals(
 				initialFileEntriesCount + 1, getFileEntriesNotInTrashCount());
 			Assert.assertTrue(isAssetEntryVisible(fileEntryId));
+			Assert.assertEquals(
+				initialSearchFileEntriesCount + 1, searchFileEntriesCount());
 		}
 
 		Assert.assertEquals(initialTrashEntriesCount, getTrashEntriesCount());

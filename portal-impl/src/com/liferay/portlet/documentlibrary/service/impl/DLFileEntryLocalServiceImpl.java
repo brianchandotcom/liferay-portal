@@ -1324,6 +1324,11 @@ public class DLFileEntryLocalServiceImpl
 
 				dlFileVersionPersistence.update(trashedDLFileVersion, false);
 			}
+
+			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+					DLFileEntry.class);
+
+			indexer.delete(dlFileEntry);
 		}
 
 		// App helper

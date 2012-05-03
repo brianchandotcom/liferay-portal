@@ -80,7 +80,7 @@ if (organization != null) {
 
 	<div id="<portlet:namespace />siteTemplates">
 		<c:choose>
-			<c:when test="<%= ((organization == null) || (publicLayoutSetPrototype == null)) && !layoutSetPrototypes.isEmpty() %>">
+			<c:when test="<%= ((organization == null) || ((publicLayoutSetPrototype == null) && (organization.getPublicLayoutsPageCount() == 0))) && !layoutSetPrototypes.isEmpty() %>">
 				<aui:select label="public-pages" name="publicLayoutSetPrototypeId">
 					<aui:option label='<%= organization == null ? "default" : "none" %>' selected="<%= true %>" value="" />
 
@@ -125,7 +125,7 @@ if (organization != null) {
 		</c:choose>
 
 		<c:choose>
-			<c:when test="<%= ((organization == null) || (privateLayoutSetPrototype == null)) && !layoutSetPrototypes.isEmpty() %>">
+			<c:when test="<%= ((organization == null) || ((privateLayoutSetPrototype == null) && (organization.getPrivateLayoutsPageCount() == 0))) && !layoutSetPrototypes.isEmpty() %>">
 				<aui:select label="private-pages" name="privateLayoutSetPrototypeId">
 					<aui:option label='<%= organization == null ? "default" : "none" %>' selected="<%= true %>" value="" />
 

@@ -163,12 +163,12 @@ public class UsersAdminImpl implements UsersAdmin {
 			PermissionChecker permissionChecker, long groupId, List<Role> roles)
 		throws PortalException, SystemException {
 
-		boolean companyAdmin = permissionChecker.isCompanyAdmin();
-		boolean groupOwner = permissionChecker.isGroupOwner(groupId);
+		boolean isCompanyAdmin = permissionChecker.isCompanyAdmin();
+		boolean isGroupOwner = permissionChecker.isGroupOwner(groupId);
 
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-		if (!companyAdmin && !groupOwner &&
+		if (!isCompanyAdmin && !isGroupOwner &&
 			!GroupPermissionUtil.contains(
 				permissionChecker, groupId, ActionKeys.ASSIGN_USER_ROLES) &&
 			!OrganizationPermissionUtil.contains(
@@ -194,7 +194,7 @@ public class UsersAdminImpl implements UsersAdmin {
 			}
 		}
 
-		if (companyAdmin || groupOwner) {
+		if (isCompanyAdmin || isGroupOwner) {
 			return filteredGroupRoles;
 		}
 

@@ -144,14 +144,14 @@ boolean showFolderMenu = PrefsParamUtil.getBoolean(preferences, request, "showFo
 boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 boolean showTabs = PrefsParamUtil.getBoolean(preferences, request, "showTabs");
 
-if (portletId.equals(PortletKeys.DOCUMENT_LIBRARY)) {
+if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY)) {
 	showActions = true;
 	showAssetMetadata = true;
 	showAddFolderButton = true;
 	showFolderMenu = true;
 	showTabs = true;
 }
-else if (portletId.equals(PortletKeys.MEDIA_GALLERY_DISPLAY)) {
+else if (portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) || portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY)) {
 	showAssetMetadata = true;
 }
 

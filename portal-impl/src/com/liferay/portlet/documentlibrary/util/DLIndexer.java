@@ -481,7 +481,7 @@ public class DLIndexer extends BaseIndexer {
 	protected void doReindex(Object obj) throws Exception {
 		DLFileEntry dlFileEntry = (DLFileEntry)obj;
 
-		DLFileVersion dlFileVersion = dlFileEntry.getLatestFileVersion(true);
+		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
 
 		if (!dlFileVersion.isApproved()) {
 			return;

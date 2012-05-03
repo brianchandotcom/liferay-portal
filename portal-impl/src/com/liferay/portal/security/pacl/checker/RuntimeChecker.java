@@ -17,11 +17,9 @@ package com.liferay.portal.security.pacl.checker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 
-import java.security.AccessController;
 import java.security.Permission;
 
 import java.util.Set;
@@ -75,7 +73,9 @@ public class RuntimeChecker extends BaseReflectChecker {
 			}
 		}
 		else if (name.equals(RUNTIME_PERMISSION_READ_FILE_DESCRIPTOR)) {
-			if (PortalSecurityManagerThreadLocal.isCheckReadFileDescriptor()) {
+			if (PortalSecurityManagerThreadLocal.isCheckReadFileDescriptor() &&
+				!hasReadFileDescriptor()) {
+
 				throw new SecurityException(
 					"Attempted to read file descriptor");
 			}
@@ -87,9 +87,11 @@ public class RuntimeChecker extends BaseReflectChecker {
 				"Attempted to set another security manager");
 		}
 		else if (name.equals(RUNTIME_PERMISSION_WRITE_FILE_DESCRIPTOR)) {
-			if (PortalSecurityManagerThreadLocal.isCheckWriteFileDescriptor()) {
+			if (PortalSecurityManagerThreadLocal.isCheckWriteFileDescriptor() &&
+				!hasWriteFileDescriptor()) {
+
 				throw new SecurityException(
-					"Attempted to read file descriptor");
+					"Attempted to write file descriptor");
 			}
 		}
 		else {
@@ -105,26 +107,15 @@ public class RuntimeChecker extends BaseReflectChecker {
 
 	protected boolean hasCreateClassLoader() {
 		Class<?> callerClass10 = Reflection.getCallerClass(10);
-		Class<?> callerClass11 = Reflection.getCallerClass(11);
 
-		if (Validator.equals(
-				callerClass10.getName(), _CLASS_NAME_CLASS_DEFINER_1) &&
-			(callerClass11 == AccessController.class)) {
+		String className10 = callerClass10.getName();
 
-			Thread currentThread = Thread.currentThread();
+		if (className10.startsWith(_CLASS_NAME_CLASS_DEFINER) &&
+			CheckerUtil.isAccessControllerDoPrivileged(11)) {
 
-			StackTraceElement[] stackTraceElements =
-				currentThread.getStackTrace();
+			logCreateClassLoader(callerClass10, 10);
 
-			StackTraceElement stackTraceElement = stackTraceElements[11];
-
-			String methodName = stackTraceElement.getMethodName();
-
-			if (methodName.equals(_METHOD_NAME_DO_PRIVILEGED)) {
-				logCreateClassLoader(callerClass10, 10);
-
-				return true;
-			}
+			return true;
 		}
 
 		return false;
@@ -205,6 +196,38 @@ public class RuntimeChecker extends BaseReflectChecker {
 		return true;
 	}
 
+	protected boolean hasReadFileDescriptor() {
+		Class<?> callerClass8 = Reflection.getCallerClass(8);
+
+		String className8 = callerClass8.getName();
+
+		if (className8.startsWith(_CLASS_NAME_PROCESS_IMPL) &&
+			CheckerUtil.isAccessControllerDoPrivileged(9)) {
+
+			logWriteFileDescriptor(callerClass8, 8);
+
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean hasWriteFileDescriptor() {
+		Class<?> callerClass8 = Reflection.getCallerClass(8);
+
+		String className8 = callerClass8.getName();
+
+		if (className8.startsWith(_CLASS_NAME_PROCESS_IMPL) &&
+			CheckerUtil.isAccessControllerDoPrivileged(9)) {
+
+			logWriteFileDescriptor(callerClass8, 8);
+
+			return true;
+		}
+
+		return false;
+	}
+
 	protected void initClassLoaderReferenceIds() {
 		_classLoaderReferenceIds = getPropertySet(
 			"security-manager-class-loader-reference-ids");
@@ -247,10 +270,27 @@ public class RuntimeChecker extends BaseReflectChecker {
 		}
 	}
 
-	private static final String _CLASS_NAME_CLASS_DEFINER_1 =
-		"sun.reflect.ClassDefiner$1";
+	protected void logReadFileDescriptor(Class<?> callerClass, int frame) {
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"Allowing frame " + frame + " with caller " + callerClass +
+					" to read a file descriptor");
+		}
+	}
 
-	private static final String _METHOD_NAME_DO_PRIVILEGED = "doPrivileged";
+	protected void logWriteFileDescriptor(Class<?> callerClass, int frame) {
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"Allowing frame " + frame + " with caller " + callerClass +
+					" to write a file descriptor");
+		}
+	}
+
+	private static final String _CLASS_NAME_CLASS_DEFINER =
+		"sun.reflect.ClassDefiner$";
+
+	private static final String _CLASS_NAME_PROCESS_IMPL =
+		"java.lang.ProcessImpl$";
 
 	private static final String _METHOD_NAME_GET_SYSTEM_CLASS_LOADER =
 		"getSystemClassLoader";

@@ -53,6 +53,7 @@ public class VerifySQLServer extends VerifyProcess {
 			sb.append("sysobjects.id = syscolumns.id inner join systypes on ");
 			sb.append("syscolumns.xtype = systypes.xtype where ");
 			sb.append("(sysobjects.xtype = 'U') and ");
+			sb.append("(sysobjects.category != 2) and ");
 			sb.append(_FILTER_NONUNICODE_DATA_TYPES);
 			sb.append(" and ");
 			sb.append(_FILTER_EXCLUDED_TABLES);
@@ -188,7 +189,8 @@ public class VerifySQLServer extends VerifyProcess {
 			sb.append("(syscolumns.colid = sysindexkeys.colid) and ");
 			sb.append("(sysindexes.indid = sysindexkeys.indid)) inner join ");
 			sb.append("systypes on syscolumns.xtype = systypes.xtype where ");
-			sb.append("sysobjects.type = 'U' and ");
+			sb.append("(sysobjects.type = 'U') and ");
+			sb.append("(sysobjects.category != 2) and ");
 			sb.append(_FILTER_NONUNICODE_DATA_TYPES);
 			sb.append(" and ");
 			sb.append(_FILTER_EXCLUDED_TABLES);

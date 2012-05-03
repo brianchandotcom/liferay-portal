@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.cache.cluster.PortalCacheClusterEvent;
 import com.liferay.portal.kernel.cache.cluster.PortalCacheClusterEventType;
 import com.liferay.portal.kernel.cache.cluster.PortalCacheClusterLinkUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Properties;
 
@@ -133,8 +132,7 @@ public class EhcachePortalCacheClusterReplicator implements CacheReplicator {
 
 		PortalCacheClusterEvent portalCacheClusterEvent =
 			new PortalCacheClusterEvent(
-				ehcache.getName(), StringPool.BLANK,
-				PortalCacheClusterEventType.REMOVEALL);
+				ehcache.getName(), null, PortalCacheClusterEventType.REMOVEALL);
 
 		PortalCacheClusterLinkUtil.sendEvent(portalCacheClusterEvent);
 	}

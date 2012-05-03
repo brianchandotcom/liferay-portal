@@ -101,7 +101,7 @@ public class PortalCacheClusterEvent implements Serializable {
 
 		sb.append(_cacheName);
 		sb.append(StringPool.COLON);
-		sb.append(_elementKey.toString());
+		sb.append(_elementKey);
 		sb.append(StringPool.COLON);
 
 		if (_elementValue != null) {

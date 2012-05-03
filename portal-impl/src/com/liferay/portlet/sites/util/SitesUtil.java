@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -51,6 +53,7 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.GroupServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutPrototypeLocalServiceUtil;
@@ -346,6 +349,16 @@ public class SitesUtil {
 					targetPreferencesImpl.getPlid(), sourcePortletId,
 					sourcePreferences);
 			}
+
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
+
+			updateLayoutScopes(
+				serviceContext.getUserId(), sourceLayout, targetLayout,
+				sourcePreferences, targetPreferences, sourcePortletId,
+				LocaleUtil.toLanguageId(locale));
 		}
 	}
 
@@ -1158,6 +1171,49 @@ public class SitesUtil {
 						cacheFile.getAbsolutePath(),
 					e);
 			}
+		}
+	}
+
+	public static void updateLayoutScopes(
+			long userId, Layout sourceLayout, Layout targetLayout,
+			PortletPreferences sourcePreferences,
+			PortletPreferences targetPreferences, String sourcePortletId,
+			String languageId)
+		throws Exception {
+
+		String scopeType = GetterUtil.getString(
+			sourcePreferences.getValue("lfrScopeType", null));
+
+		if (Validator.isNotNull(scopeType) && scopeType.equals("layout")) {
+			Layout targetScopeLayout =
+				LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
+					targetLayout.getUuid(), targetLayout.getGroupId());
+
+			if (!targetScopeLayout.hasScopeGroup()) {
+				GroupLocalServiceUtil.addGroup(
+					userId, Layout.class.getName(), targetLayout.getPlid(),
+					targetLayout.getName(languageId), null, 0, null, false,
+					true, null);
+			}
+
+			String portletTitle = PortalUtil.getPortletTitle(
+				sourcePortletId, languageId);
+
+			String newPortletTitle = PortalUtil.getNewPortletTitle(
+				portletTitle, String.valueOf(sourceLayout.getLayoutId()),
+				targetLayout.getName(languageId));
+
+			targetPreferences.setValue(
+				"groupId", String.valueOf(targetLayout.getGroupId()));
+			targetPreferences.setValue("lfrScopeType", "layout");
+			targetPreferences.setValue(
+				"lfrScopeLayoutUuid", targetLayout.getUuid());
+			targetPreferences.setValue(
+				"portletSetupTitle_" + languageId, newPortletTitle);
+			targetPreferences.setValue(
+				"portletSetupUseCustomTitle", Boolean.TRUE.toString());
+
+			targetPreferences.store();
 		}
 	}
 

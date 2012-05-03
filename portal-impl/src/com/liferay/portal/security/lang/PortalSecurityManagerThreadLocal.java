@@ -35,8 +35,16 @@ public class PortalSecurityManagerThreadLocal {
 		return _checkGetClassLoader.get();
 	}
 
+	public static boolean isCheckReadFileDescriptor() {
+		return _checkReadFileDescriptor.get();
+	}
+
 	public static boolean isCheckSQL() {
 		return _checkSQL.get();
+	}
+
+	public static boolean isCheckWriteFileDescriptor() {
+		return _checkWriteFileDescriptor.get();
 	}
 
 	public static boolean isEnabled() {
@@ -53,8 +61,20 @@ public class PortalSecurityManagerThreadLocal {
 		_checkGetClassLoader.set(checkGetClassLoader);
 	}
 
+	public static void setCheckReadFileDescriptor(
+		boolean checkReadFileDescriptor) {
+
+		_checkReadFileDescriptor.set(checkReadFileDescriptor);
+	}
+
 	public static void setCheckSQL(boolean checkSQL) {
 		_checkSQL.set(checkSQL);
+	}
+
+	public static void setCheckWriteFileDescriptor(
+		boolean checkWriteFileDescriptor) {
+
+		_checkWriteFileDescriptor.set(checkWriteFileDescriptor);
 	}
 
 	public static void setEnabled(boolean enabled) {
@@ -73,9 +93,19 @@ public class PortalSecurityManagerThreadLocal {
 		new AutoResetThreadLocal<Boolean>(
 			PortalSecurityManagerThreadLocal.class + "._checkGetClassLoader",
 			true);
+	private static ThreadLocal<Boolean> _checkReadFileDescriptor =
+		new AutoResetThreadLocal<Boolean>(
+			PortalSecurityManagerThreadLocal.class +
+				"._checkReadFileDescriptor",
+			true);
 	private static ThreadLocal<Boolean> _checkSQL =
 		new AutoResetThreadLocal<Boolean>(
 			PortalSecurityManagerThreadLocal.class + "._checkSQL", true);
+	private static ThreadLocal<Boolean> _checkWriteFileDescriptor =
+		new AutoResetThreadLocal<Boolean>(
+			PortalSecurityManagerThreadLocal.class +
+				"._checkWriteFileDescriptor",
+			true);
 	private static ThreadLocal<Boolean> _enabled =
 		new AutoResetThreadLocal<Boolean>(
 			PortalSecurityManagerThreadLocal.class + "._enabled", true);

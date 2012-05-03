@@ -49,6 +49,7 @@ import com.liferay.portal.service.AddressLocalServiceUtil;
 import com.liferay.portal.service.AddressServiceUtil;
 import com.liferay.portal.service.EmailAddressLocalServiceUtil;
 import com.liferay.portal.service.EmailAddressServiceUtil;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.OrgLaborLocalServiceUtil;
 import com.liferay.portal.service.OrgLaborServiceUtil;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
@@ -162,6 +163,21 @@ public class UsersAdminImpl implements UsersAdmin {
 			PermissionChecker permissionChecker, long groupId, List<Role> roles)
 		throws PortalException, SystemException {
 
+		boolean companyAdmin = permissionChecker.isCompanyAdmin();
+		boolean groupOwner = permissionChecker.isGroupOwner(groupId);
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		if (!companyAdmin && !groupOwner &&
+			!GroupPermissionUtil.contains(
+				permissionChecker, groupId, ActionKeys.ASSIGN_USER_ROLES) &&
+			!OrganizationPermissionUtil.contains(
+				permissionChecker, group.getOrganizationId(),
+				ActionKeys.ASSIGN_USER_ROLES)) {
+
+			return Collections.emptyList();
+		}
+
 		List<Role> filteredGroupRoles = ListUtil.copy(roles);
 
 		Iterator<Role> itr = filteredGroupRoles.iterator();
@@ -178,9 +194,7 @@ public class UsersAdminImpl implements UsersAdmin {
 			}
 		}
 
-		if (permissionChecker.isCompanyAdmin() ||
-			permissionChecker.isGroupOwner(groupId)) {
-
+		if (companyAdmin || groupOwner) {
 			return filteredGroupRoles;
 		}
 
@@ -195,9 +209,7 @@ public class UsersAdminImpl implements UsersAdmin {
 					RoleConstants.ORGANIZATION_ADMINISTRATOR) ||
 				groupRoleName.equals(RoleConstants.ORGANIZATION_OWNER) ||
 				groupRoleName.equals(RoleConstants.SITE_ADMINISTRATOR) ||
-				groupRoleName.equals(RoleConstants.SITE_OWNER) ||
-				!GroupPermissionUtil.contains(
-					permissionChecker, groupId, ActionKeys.ASSIGN_USER_ROLES)) {
+				groupRoleName.equals(RoleConstants.SITE_OWNER)) {
 
 				itr.remove();
 			}

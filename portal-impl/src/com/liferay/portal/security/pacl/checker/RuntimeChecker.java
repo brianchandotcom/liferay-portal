@@ -67,11 +67,6 @@ public class RuntimeChecker extends BaseReflectChecker {
 					"Attempted to create a class loader");
 			}
 		}
-		else if (name.equals(RUNTIME_PERMISSION_EXIT_VM)) {
-			Thread.dumpStack();
-
-			throw new SecurityException("Attempted to shutdown the VM");
-		}
 		else if (name.startsWith(RUNTIME_PERMISSION_GET_CLASSLOADER)) {
 			if (PortalSecurityManagerThreadLocal.isCheckGetClassLoader() &&
 				!hasGetClassLoader(name)) {
@@ -79,11 +74,32 @@ public class RuntimeChecker extends BaseReflectChecker {
 				throw new SecurityException("Attempted to get class loader");
 			}
 		}
+		else if (name.equals(RUNTIME_PERMISSION_READ_FILE_DESCRIPTOR)) {
+			if (PortalSecurityManagerThreadLocal.isCheckReadFileDescriptor()) {
+				throw new SecurityException(
+					"Attempted to read file descriptor");
+			}
+		}
 		else if (name.equals(RUNTIME_PERMISSION_SET_CONTEXT_CLASS_LOADER)) {
 		}
 		else if (name.equals(RUNTIME_PERMISSION_SET_SECURITY_MANAGER)) {
 			throw new SecurityException(
 				"Attempted to set another security manager");
+		}
+		else if (name.equals(RUNTIME_PERMISSION_WRITE_FILE_DESCRIPTOR)) {
+			if (PortalSecurityManagerThreadLocal.isCheckWriteFileDescriptor()) {
+				throw new SecurityException(
+					"Attempted to read file descriptor");
+			}
+		}
+		else {
+			if (_log.isDebugEnabled()) {
+				Thread.dumpStack();
+			}
+
+			throw new SecurityException(
+				"Attempted to " + permission.getName() + " on " +
+					permission.getActions());
 		}
 	}
 
@@ -203,7 +219,7 @@ public class RuntimeChecker extends BaseReflectChecker {
 
 			for (String referenceId : referenceIds) {
 				_log.debug(
-					"Allowing access to class loader for reference " +
+					"Allow access to class loader for reference " +
 						referenceId);
 			}
 		}

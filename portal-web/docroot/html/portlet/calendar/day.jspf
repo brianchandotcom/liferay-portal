@@ -302,7 +302,7 @@ if (!partDayResults.isEmpty()) {
 
 					<c:if test="<%= eventBoxLength >= 100 %>">
 						<div class="event-description">
-							<%= StringUtil.shorten(event.getDescription(), 100) %>
+							<%= StringUtil.shorten(HtmlUtil.extractText(event.getDescription()), 100) %>
 						</div>
 					</c:if>
 				</div>

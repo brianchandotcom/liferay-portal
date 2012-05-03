@@ -55,7 +55,7 @@ public class AddPortletTest extends BaseTestCase {
 
 			try {
 				if (selenium.isElementPresent(
-							"//script[contains(@src,'/aui/aui-button-item/aui-button-item-min.js')]")) {
+							"//script[contains(@src,'/liferay/dockbar_underlay.js')]")) {
 					break;
 				}
 			}
@@ -124,8 +124,12 @@ public class AddPortletTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.typeKeys("//input[@id='layout_configuration_content']",
+		selenium.type("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("b"));
+		selenium.keyDown("//input[@id='layout_configuration_content']",
+			RuntimeVariables.replace("\\13"));
+		selenium.keyUp("//input[@id='layout_configuration_content']",
+			RuntimeVariables.replace("\\13"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

@@ -34,7 +34,7 @@ public class AddPage3Test extends BaseTestCase {
 
 			try {
 				if (selenium.isElementPresent(
-							"//script[contains(@src,'/aui/aui-button-item/aui-button-item-min.js')]")) {
+							"//script[contains(@src,'/liferay/dockbar_underlay.js')]")) {
 					break;
 				}
 			}

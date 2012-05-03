@@ -15,8 +15,8 @@
 package com.liferay.portalweb.portal;
 
 import com.liferay.portalweb.portal.logout.LogoutTests;
-import com.liferay.portalweb.sevencogs.smoke.SmokeTests;
 import com.liferay.portalweb.sevencogs.signin.SignInTestPlan;
+import com.liferay.portalweb.sevencogs.smoke.SmokeTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

@@ -91,7 +91,7 @@ public class PollerServlet extends HttpServlet {
 
 		JSONObject pollerResponseHeaderJSONObject =
 			PollerRequestHandlerUtil.processRequest(
-				request.getPathInfo(), pollerRequestString);
+				request, pollerRequestString);
 
 		if (pollerResponseHeaderJSONObject == null) {
 			return StringPool.BLANK;

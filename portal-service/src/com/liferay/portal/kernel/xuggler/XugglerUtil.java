@@ -23,8 +23,11 @@ public class XugglerUtil {
 		return _xuggler;
 	}
 
-	public static void installNativeLibraries(String name) {
-		getXuggler().installNativeLibraries(name);
+	public static void installNativeLibraries(
+			String name, XugglerInstallStatus xugglerInstallStatus)
+		throws Exception {
+
+		getXuggler().installNativeLibraries(name, xugglerInstallStatus);
 	}
 
 	public static boolean isEnabled() {

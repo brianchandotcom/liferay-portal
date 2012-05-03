@@ -17,6 +17,8 @@ package com.liferay.portal.poller;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.poller.PollerHeader;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Edward Han
  */
@@ -24,7 +26,8 @@ public interface PollerRequestHandler {
 
 	public PollerHeader getPollerHeader(String pollerRequestString);
 
-	public JSONObject processRequest(String path, String pollerRequestString)
+	public JSONObject processRequest(
+			HttpServletRequest request, String pollerRequestString)
 		throws Exception;
 
 }

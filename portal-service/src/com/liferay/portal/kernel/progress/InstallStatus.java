@@ -12,21 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.kernel.xuggler;
+package com.liferay.portal.kernel.progress;
 
 /**
- * @author Alexander Chow
+ * @author Sergio González
  */
-public interface Xuggler {
+public interface InstallStatus {
 
-	public void installNativeLibraries(
-			String name, XugglerInstallStatus xugglerInstallStatus)
-		throws Exception;
+	public static final int UNKNOWN = -1;
 
-	public boolean isEnabled();
+	public String getCurrentStatus();
 
-	public boolean isEnabled(boolean checkNativeLibraries);
-
-	public boolean isNativeLibraryInstalled();
+	public void setStatus(int status);
 
 }

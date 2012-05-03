@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.xuggler.Xuggler;
+import com.liferay.portal.kernel.xuggler.XugglerInstallStatus;
 import com.liferay.portal.util.JarUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -32,14 +33,20 @@ import com.xuggle.xuggler.IContainer;
  */
 public class XugglerImpl implements Xuggler {
 
-	public void installNativeLibraries(String name) {
+	public void installNativeLibraries(
+			String name, XugglerInstallStatus xugglerInstallStatus)
+		throws Exception {
+
 		try {
 			String url = PropsValues.XUGGLER_JAR_URL + name;
 
-			JarUtil.downloadAndInstallJar(false, url, name);
+			JarUtil.downloadAndInstallJar(
+				false, url, name, xugglerInstallStatus);
 		}
 		catch (Exception e) {
 			_log.error("Installation of jar " + name + " failed", e);
+
+			throw e;
 		}
 	}
 

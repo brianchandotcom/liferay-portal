@@ -213,6 +213,11 @@ body.portlet {
 	background-image: url(../images/portlet/help.png);
 }
 
+.portlet-msg-progress, .lfr-message-progress {
+	@extend .portlet-msg-info;
+	background-image: url(../images/aui/loading_indicator.gif);
+}
+
 /* ---------- Error messages ---------- */
 
 .portlet-msg-error, .lfr-message-error {

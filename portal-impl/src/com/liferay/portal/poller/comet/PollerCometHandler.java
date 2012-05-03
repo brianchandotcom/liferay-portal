@@ -63,7 +63,7 @@ public class PollerCometHandler extends BaseCometHandler {
 
 		JSONObject pollerResponseHeaderJSONObject =
 			PollerRequestHandlerUtil.processRequest(
-				cometRequest.getPathInfo(), pollerRequestString);
+				cometRequest.getRequest(), pollerRequestString);
 
 		if (pollerResponseHeaderJSONObject != null) {
 			 _channelListener = new PollerCometChannelListener(

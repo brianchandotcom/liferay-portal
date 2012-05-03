@@ -31,6 +31,8 @@ import com.liferay.portal.kernel.dao.shard.ShardUtil;
 import com.liferay.portal.kernel.image.ImageMagickUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncPrintWriter;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mail.Account;
@@ -56,6 +58,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
+import com.liferay.portal.kernel.xuggler.XugglerInstallStatus;
 import com.liferay.portal.kernel.xuggler.XugglerUtil;
 import com.liferay.portal.messaging.proxy.MessageValuesThreadLocal;
 import com.liferay.portal.model.Portlet;
@@ -66,11 +69,13 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ServiceComponentLocalServiceUtil;
+import com.liferay.portal.struts.ActionConstants;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.upload.UploadServletRequestImpl;
 import com.liferay.portal.util.MaintenanceUtil;
 import com.liferay.portal.util.PortalInstances;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.ShutdownUtil;
 import com.liferay.portal.util.WebKeys;
@@ -93,6 +98,9 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.PortletSession;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Level;
 import org.apache.struts.action.ActionForm;
@@ -155,7 +163,7 @@ public class EditServerAction extends PortletAction {
 			gc();
 		}
 		else if (cmd.equals("installXuggler")) {
-			installXuggler(actionRequest);
+			installXuggler(actionRequest, actionResponse);
 		}
 		else if (cmd.equals("reindex")) {
 			reindex(actionRequest);
@@ -188,7 +196,12 @@ public class EditServerAction extends PortletAction {
 			verifyPluginTables();
 		}
 
-		sendRedirect(actionRequest, actionResponse, redirect);
+		if (cmd.equals("installXuggler")) {
+			setForward(actionRequest, ActionConstants.COMMON_NULL);
+		}
+		else {
+			sendRedirect(actionRequest, actionResponse, redirect);
+		}
 	}
 
 	protected void addLogLevel(ActionRequest actionRequest) throws Exception {
@@ -282,12 +295,40 @@ public class EditServerAction extends PortletAction {
 		return value.replace(", .", ",.");
 	}
 
-	protected void installXuggler(ActionRequest actionRequest)
+	protected void installXuggler(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
+
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			actionRequest);
+		HttpSession session = request.getSession();
+
+		XugglerInstallStatus xugglerInstallStatus = new XugglerInstallStatus();
+
+		session.setAttribute("xugglerInstallStatus", xugglerInstallStatus);
 
 		String jarName = ParamUtil.getString(actionRequest, "jarName");
 
-		XugglerUtil.installNativeLibraries(jarName);
+		try {
+			XugglerUtil.installNativeLibraries(jarName, xugglerInstallStatus);
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			jsonObject.put("success", Boolean.TRUE);
+
+			writeJSON(actionRequest, actionResponse, jsonObject);
+		}
+		catch (Exception e) {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			jsonObject.put("success", Boolean.FALSE);
+			jsonObject.put("exception", e.getMessage());
+
+			writeJSON(actionRequest, actionResponse, jsonObject);
+		}
+		finally {
+			session.removeAttribute("xugglerInstallStatus");
+		}
 	}
 
 	protected void reindex(ActionRequest actionRequest) throws Exception {

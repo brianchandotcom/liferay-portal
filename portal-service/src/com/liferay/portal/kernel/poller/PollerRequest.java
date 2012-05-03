@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.Collections;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -35,6 +37,16 @@ public class PollerRequest {
 		_parameterMap = parameterMap;
 		_chunkId = chunkId;
 		_receiveRequest = receiveRequest;
+	}
+
+	public PollerRequest(
+		PollerHeader pollerHeader, String portletId,
+		Map<String, String> parameterMap, String chunkId,
+		boolean receiveRequest, HttpServletRequest originalRequest) {
+
+		this(pollerHeader, portletId, parameterMap, chunkId, receiveRequest);
+
+		_originalRequest = originalRequest;
 	}
 
 	@Override
@@ -66,6 +78,10 @@ public class PollerRequest {
 
 	public long getCompanyId() {
 		return _pollerHeader.getCompanyId();
+	}
+
+	public HttpServletRequest getOriginalRequest() {
+		return _originalRequest;
 	}
 
 	public Map<String, String> getParameterMap() {
@@ -134,6 +150,7 @@ public class PollerRequest {
 	}
 
 	private String _chunkId;
+	private HttpServletRequest _originalRequest;
 	private Map<String, String> _parameterMap = Collections.emptyMap();
 	private PollerHeader _pollerHeader;
 	private String _portletId;

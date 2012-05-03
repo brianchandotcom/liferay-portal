@@ -102,6 +102,8 @@ public class DDMTemplatePersistenceTest {
 
 		newDDMTemplate.setClassPK(ServiceTestUtil.nextLong());
 
+		newDDMTemplate.setTemplateKey(ServiceTestUtil.randomString());
+
 		newDDMTemplate.setName(ServiceTestUtil.randomString());
 
 		newDDMTemplate.setDescription(ServiceTestUtil.randomString());
@@ -140,6 +142,8 @@ public class DDMTemplatePersistenceTest {
 			newDDMTemplate.getClassNameId());
 		Assert.assertEquals(existingDDMTemplate.getClassPK(),
 			newDDMTemplate.getClassPK());
+		Assert.assertEquals(existingDDMTemplate.getTemplateKey(),
+			newDDMTemplate.getTemplateKey());
 		Assert.assertEquals(existingDDMTemplate.getName(),
 			newDDMTemplate.getName());
 		Assert.assertEquals(existingDDMTemplate.getDescription(),
@@ -283,6 +287,12 @@ public class DDMTemplatePersistenceTest {
 				existingDDMTemplateModelImpl.getOriginalUuid()));
 		Assert.assertEquals(existingDDMTemplateModelImpl.getGroupId(),
 			existingDDMTemplateModelImpl.getOriginalGroupId());
+
+		Assert.assertEquals(existingDDMTemplateModelImpl.getGroupId(),
+			existingDDMTemplateModelImpl.getOriginalGroupId());
+		Assert.assertTrue(Validator.equals(
+				existingDDMTemplateModelImpl.getTemplateKey(),
+				existingDDMTemplateModelImpl.getOriginalTemplateKey()));
 	}
 
 	protected DDMTemplate addDDMTemplate() throws Exception {
@@ -307,6 +317,8 @@ public class DDMTemplatePersistenceTest {
 		ddmTemplate.setClassNameId(ServiceTestUtil.nextLong());
 
 		ddmTemplate.setClassPK(ServiceTestUtil.nextLong());
+
+		ddmTemplate.setTemplateKey(ServiceTestUtil.randomString());
 
 		ddmTemplate.setName(ServiceTestUtil.randomString());
 

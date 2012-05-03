@@ -843,6 +843,45 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 
 	/**
+	* Returns the d d m template where groupId = &#63; and templateKey = &#63; or throws a {@link com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException} if it could not be found.
+	*
+	* @param groupId the group ID
+	* @param templateKey the template key
+	* @return the matching d d m template
+	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByG_T(
+		long groupId, java.lang.String templateKey)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
+
+	/**
+	* Returns the d d m template where groupId = &#63; and templateKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param groupId the group ID
+	* @param templateKey the template key
+	* @return the matching d d m template, or <code>null</code> if a matching d d m template could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByG_T(
+		long groupId, java.lang.String templateKey)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the d d m template where groupId = &#63; and templateKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param groupId the group ID
+	* @param templateKey the template key
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching d d m template, or <code>null</code> if a matching d d m template could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByG_T(
+		long groupId, java.lang.String templateKey, boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the d d m templates where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
 	* @param groupId the group ID
@@ -1389,6 +1428,19 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Removes the d d m template where groupId = &#63; and templateKey = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param templateKey the template key
+	* @return the d d m template that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate removeByG_T(
+		long groupId, java.lang.String templateKey)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
+
+	/**
 	* Removes all the d d m templates where groupId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
 	*
 	* @param groupId the group ID
@@ -1512,6 +1564,17 @@ public interface DDMTemplatePersistence extends BasePersistence<DDMTemplate> {
 	* @throws SystemException if a system exception occurred
 	*/
 	public int countByLanguage(java.lang.String language)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of d d m templates where groupId = &#63; and templateKey = &#63;.
+	*
+	* @param groupId the group ID
+	* @param templateKey the template key
+	* @return the number of matching d d m templates
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByG_T(long groupId, java.lang.String templateKey)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

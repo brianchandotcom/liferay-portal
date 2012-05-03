@@ -505,6 +505,7 @@ create table DDMTemplate (
 	modifiedDate DATE null,
 	classNameId LONG,
 	classPK LONG,
+	templateKey VARCHAR(75) null,
 	name STRING null,
 	description STRING null,
 	type_ VARCHAR(75) null,

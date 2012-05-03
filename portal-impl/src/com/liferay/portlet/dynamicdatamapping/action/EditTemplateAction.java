@@ -226,8 +226,8 @@ public class EditTemplateAction extends PortletAction {
 
 		if (templateId <= 0) {
 			template = DDMTemplateServiceUtil.addTemplate(
-				groupId, classNameId, classPK, nameMap, descriptionMap, type,
-				mode, language, script, serviceContext);
+				groupId, classNameId, classPK, null, nameMap, descriptionMap,
+				type, mode, language, script, serviceContext);
 		}
 		else {
 			template = DDMTemplateServiceUtil.updateTemplate(

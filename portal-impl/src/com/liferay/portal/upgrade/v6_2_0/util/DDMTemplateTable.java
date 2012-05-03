@@ -35,6 +35,7 @@ public class DDMTemplateTable {
 		{"modifiedDate", Types.TIMESTAMP},
 		{"classNameId", Types.BIGINT},
 		{"classPK", Types.BIGINT},
+		{"templateKey", Types.VARCHAR},
 		{"name", Types.VARCHAR},
 		{"description", Types.VARCHAR},
 		{"type_", Types.VARCHAR},
@@ -43,7 +44,7 @@ public class DDMTemplateTable {
 		{"script", Types.CLOB}
 	};
 
-	public static final String TABLE_SQL_CREATE = "create table DDMTemplate (uuid_ VARCHAR(75) null,templateId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,name STRING null,description STRING null,type_ VARCHAR(75) null,mode_ VARCHAR(75) null,language VARCHAR(75) null,script TEXT null)";
+	public static final String TABLE_SQL_CREATE = "create table DDMTemplate (uuid_ VARCHAR(75) null,templateId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,templateKey VARCHAR(75) null,name STRING null,description STRING null,type_ VARCHAR(75) null,mode_ VARCHAR(75) null,language VARCHAR(75) null,script TEXT null)";
 
 	public static final String TABLE_SQL_DROP = "drop table DDMTemplate";
 
@@ -53,9 +54,11 @@ public class DDMTemplateTable {
 		"create index IX_32F83D16 on DDMTemplate (classPK)",
 		"create index IX_DB24DDDD on DDMTemplate (groupId)",
 		"create index IX_824ADC72 on DDMTemplate (groupId, classNameId, classPK)",
+		"create unique index IX_233D3B8 on DDMTemplate (groupId, templateKey)",
 		"create index IX_33BEF579 on DDMTemplate (language)",
 		"create index IX_C4F283C8 on DDMTemplate (type_)",
 		"create index IX_F2A243A7 on DDMTemplate (uuid_)",
+		"create index IX_D4C2C221 on DDMTemplate (uuid_, companyId)",
 		"create unique index IX_1AA75CE3 on DDMTemplate (uuid_, groupId)"
 	};
 

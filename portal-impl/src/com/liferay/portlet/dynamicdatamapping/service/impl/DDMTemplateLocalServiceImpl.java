@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.dynamicdatamapping.TemplateDuplicateTemplateKeyException;
 import com.liferay.portlet.dynamicdatamapping.TemplateNameException;
 import com.liferay.portlet.dynamicdatamapping.TemplateScriptException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
@@ -42,9 +43,9 @@ public class DDMTemplateLocalServiceImpl
 
 	public DDMTemplate addTemplate(
 			long userId, long groupId, long classNameId, long classPK,
-			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			String type, String mode, String language, String script,
-			ServiceContext serviceContext)
+			String templateKey, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, String type, String mode,
+			String language, String script, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		// Template
@@ -52,7 +53,11 @@ public class DDMTemplateLocalServiceImpl
 		User user = userPersistence.findByPrimaryKey(userId);
 		Date now = new Date();
 
-		validate(nameMap, script);
+		if (Validator.isNull(templateKey)) {
+			templateKey = String.valueOf(counterLocalService.increment());
+		}
+
+		validate(groupId, templateKey, nameMap, script);
 
 		long templateId = counterLocalService.increment();
 
@@ -67,6 +72,7 @@ public class DDMTemplateLocalServiceImpl
 		template.setModifiedDate(serviceContext.getModifiedDate(now));
 		template.setClassNameId(classNameId);
 		template.setClassPK(classPK);
+		template.setTemplateKey(templateKey);
 		template.setNameMap(nameMap);
 		template.setDescriptionMap(descriptionMap);
 		template.setType(type);
@@ -130,10 +136,11 @@ public class DDMTemplateLocalServiceImpl
 		for (DDMTemplate oldTemplate : oldTemplates) {
 			DDMTemplate newTemplate = addTemplate(
 				userId, oldTemplate.getGroupId(), oldTemplate.getClassNameId(),
-				newClassPK, oldTemplate.getNameMap(),
-				oldTemplate.getDescriptionMap(), oldTemplate.getType(),
-				oldTemplate.getMode(), oldTemplate.getLanguage(),
-				oldTemplate.getScript(), serviceContext);
+				newClassPK, oldTemplate.getTemplateKey(),
+				oldTemplate.getNameMap(), oldTemplate.getDescriptionMap(),
+				oldTemplate.getType(), oldTemplate.getMode(),
+				oldTemplate.getLanguage(), oldTemplate.getScript(),
+				serviceContext);
 
 			newTemplates.add(newTemplate);
 		}
@@ -175,10 +182,22 @@ public class DDMTemplateLocalServiceImpl
 		}
 	}
 
+	public DDMTemplate fetchTemplate(long groupId, String templateKey)
+		throws SystemException {
+
+		return ddmTemplatePersistence.fetchByG_T(groupId, templateKey);
+	}
+
 	public DDMTemplate getTemplate(long templateId)
 		throws PortalException, SystemException {
 
 		return ddmTemplatePersistence.findByPrimaryKey(templateId);
+	}
+
+	public DDMTemplate getTemplate(long groupId, String templateKey)
+		throws PortalException, SystemException {
+
+		return ddmTemplatePersistence.findByG_T(groupId, templateKey);
 	}
 
 	public List<DDMTemplate> getTemplates(long classPK) throws SystemException {
@@ -273,6 +292,21 @@ public class DDMTemplateLocalServiceImpl
 		ddmTemplatePersistence.update(template, false);
 
 		return template;
+	}
+
+	protected void validate(
+			long groupId, String templateKey, Map<Locale, String> nameMap,
+			String script)
+		throws PortalException, SystemException {
+
+		DDMTemplate template = ddmTemplatePersistence.fetchByG_T(
+			groupId, templateKey);
+
+		if (template != null) {
+			throw new TemplateDuplicateTemplateKeyException();
+		}
+
+		validate(nameMap, script);
 	}
 
 	protected void validate(Map<Locale, String> nameMap, String script)

@@ -31,6 +31,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		try {
 			runSQL("alter table DDMTemplate add classNameId LONG");
 
+			runSQL("alter table DDMTemplate add templateKey STRING");
+
 			runSQL("alter_column_name DDMTemplate structureId classPK LONG");
 		}
 		catch (SQLException sqle) {

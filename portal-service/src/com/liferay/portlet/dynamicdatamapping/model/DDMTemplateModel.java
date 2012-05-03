@@ -232,6 +232,21 @@ public interface DDMTemplateModel extends AttachedModel, BaseModel<DDMTemplate>,
 	public void setClassPK(long classPK);
 
 	/**
+	 * Returns the template key of this d d m template.
+	 *
+	 * @return the template key of this d d m template
+	 */
+	@AutoEscape
+	public String getTemplateKey();
+
+	/**
+	 * Sets the template key of this d d m template.
+	 *
+	 * @param templateKey the template key of this d d m template
+	 */
+	public void setTemplateKey(String templateKey);
+
+	/**
 	 * Returns the name of this d d m template.
 	 *
 	 * @return the name of this d d m template

@@ -852,6 +852,7 @@ Liferay.Service.registerClass(
 		addTemplate: true,
 		copyTemplates: true,
 		deleteTemplate: true,
+		fetchTemplate: true,
 		getTemplate: true,
 		getTemplates: true,
 		search: true,

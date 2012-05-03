@@ -38,7 +38,7 @@ import java.util.Map;
 public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 
 	public DDMTemplate addTemplate(
-			long groupId, long classNameId, long classPK,
+			long groupId, long classNameId, long classPK, String templateKey,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 			String type, String mode, String language, String script,
 			ServiceContext serviceContext)
@@ -59,8 +59,8 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			ddmResource, ddmResourceActionId);
 
 		return ddmTemplateLocalService.addTemplate(
-			getUserId(), groupId, classNameId, classPK, nameMap, descriptionMap,
-			type, mode, language, script, serviceContext);
+			getUserId(), groupId, classNameId, classPK, templateKey, nameMap,
+			descriptionMap, type, mode, language, script, serviceContext);
 	}
 
 	public List<DDMTemplate> copyTemplates(
@@ -89,6 +89,12 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 		ddmTemplateLocalService.deleteTemplate(templateId);
 	}
 
+	public DDMTemplate fetchTemplate(long groupId, String templateKey)
+		throws SystemException {
+
+		return ddmTemplateLocalService.fetchTemplate(groupId, templateKey);
+	}
+
 	public DDMTemplate getTemplate(long templateId)
 		throws PortalException, SystemException {
 
@@ -96,6 +102,12 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			getPermissionChecker(), templateId, ActionKeys.VIEW);
 
 		return ddmTemplatePersistence.findByPrimaryKey(templateId);
+	}
+
+	public DDMTemplate getTemplate(long groupId, String templateKey)
+		throws PortalException, SystemException {
+
+		return ddmTemplateLocalService.getTemplate(groupId, templateKey);
 	}
 
 	public List<DDMTemplate> getTemplates(

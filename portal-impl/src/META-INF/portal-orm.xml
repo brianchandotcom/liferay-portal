@@ -2254,6 +2254,7 @@
 			</basic>
 			<basic name="classNameId" />
 			<basic name="classPK" />
+			<basic name="templateKey" />
 			<basic name="name" />
 			<basic name="description" />
 			<basic name="type">

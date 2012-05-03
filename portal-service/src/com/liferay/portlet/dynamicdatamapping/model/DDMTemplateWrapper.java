@@ -56,6 +56,7 @@ public class DDMTemplateWrapper implements DDMTemplate,
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
+		attributes.put("templateKey", getTemplateKey());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("type", getType());
@@ -125,6 +126,12 @@ public class DDMTemplateWrapper implements DDMTemplate,
 
 		if (classPK != null) {
 			setClassPK(classPK);
+		}
+
+		String templateKey = (String)attributes.get("templateKey");
+
+		if (templateKey != null) {
+			setTemplateKey(templateKey);
 		}
 
 		String name = (String)attributes.get("name");
@@ -393,6 +400,24 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	*/
 	public void setClassPK(long classPK) {
 		_ddmTemplate.setClassPK(classPK);
+	}
+
+	/**
+	* Returns the template key of this d d m template.
+	*
+	* @return the template key of this d d m template
+	*/
+	public java.lang.String getTemplateKey() {
+		return _ddmTemplate.getTemplateKey();
+	}
+
+	/**
+	* Sets the template key of this d d m template.
+	*
+	* @param templateKey the template key of this d d m template
+	*/
+	public void setTemplateKey(java.lang.String templateKey) {
+		_ddmTemplate.setTemplateKey(templateKey);
 	}
 
 	/**

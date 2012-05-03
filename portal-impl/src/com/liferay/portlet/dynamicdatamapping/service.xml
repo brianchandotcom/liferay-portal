@@ -153,6 +153,7 @@
 
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
+		<column name="templateKey" type="String" />
 		<column name="name" type="String" localized="true" />
 		<column name="description" type="String" localized="true" />
 		<column name="type" type="String" />
@@ -173,6 +174,10 @@
 		</finder>
 		<finder name="Language" return-type="Collection">
 			<finder-column name="language" />
+		</finder>
+		<finder name="G_T" return-type="DDMStructure" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="templateKey" />
 		</finder>
 		<finder name="G_C_C" return-type="Collection">
 			<finder-column name="groupId" />
@@ -204,6 +209,7 @@
 		<exception>StructureField</exception>
 		<exception>StructureName</exception>
 		<exception>StructureXsd</exception>
+		<exception>TemplateDuplicateTemplateKey</exception>
 		<exception>TemplateName</exception>
 		<exception>TemplateScript</exception>
 	</exceptions>

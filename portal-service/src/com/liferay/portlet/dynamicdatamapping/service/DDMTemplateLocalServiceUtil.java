@@ -286,6 +286,7 @@ public class DDMTemplateLocalServiceUtil {
 
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate addTemplate(
 		long userId, long groupId, long classNameId, long classPK,
+		java.lang.String templateKey,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String type, java.lang.String mode,
@@ -294,8 +295,9 @@ public class DDMTemplateLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .addTemplate(userId, groupId, classNameId, classPK, nameMap,
-			descriptionMap, type, mode, language, script, serviceContext);
+				   .addTemplate(userId, groupId, classNameId, classPK,
+			templateKey, nameMap, descriptionMap, type, mode, language, script,
+			serviceContext);
 	}
 
 	public static void addTemplateResources(
@@ -347,11 +349,24 @@ public class DDMTemplateLocalServiceUtil {
 		getService().deleteTemplates(groupId);
 	}
 
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchTemplate(
+		long groupId, java.lang.String templateKey)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchTemplate(groupId, templateKey);
+	}
+
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate getTemplate(
 		long templateId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getTemplate(templateId);
+	}
+
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate getTemplate(
+		long groupId, java.lang.String templateKey)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getTemplate(groupId, templateKey);
 	}
 
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> getTemplates(

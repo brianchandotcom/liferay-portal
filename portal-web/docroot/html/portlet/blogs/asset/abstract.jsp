@@ -31,7 +31,7 @@ BlogsEntry entry = (BlogsEntry)request.getAttribute(WebKeys.BLOGS_ENTRY);
 		src = entry.getSmallImageURL();
 	}
 	else {
-		src = themeDisplay.getPathImage() + "/blogs/article?img_id=" + entry.getSmallImageId() + "&t=" + WebServerServletTokenUtil.getToken(entry.getSmallImageId()) ;
+		src = themeDisplay.getPathImage() + "/blogs/article?img_id=" + entry.getSmallImageId() + "&t=" + WebServerServletTokenUtil.getToken(entry.getSmallImageId());
 	}
 	%>
 

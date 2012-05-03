@@ -145,6 +145,9 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 							if (Validator.isNotNull(entry.getSmallImageURL())) {
 								src = entry.getSmallImageURL();
 							}
+							else {
+								src = themeDisplay.getPathImage() + "/blogs/article?img_id=" + entry.getSmallImageId() + "&t=" + WebServerServletTokenUtil.getToken(entry.getSmallImageId());
+							}
 							%>
 
 							<div class="asset-small-image">

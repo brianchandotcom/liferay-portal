@@ -88,7 +88,7 @@ public abstract class BaseChecker implements Checker, PACLConstants {
 		return _paclPolicy.getPropertySet(key);
 	}
 
-	protected boolean isJSPCompiler(String subject, String action) {
+	protected boolean isJSPCompiler(String subject, String actions) {
 		for (int i = 1;; i++) {
 			Class<?> callerClass = Reflection.getCallerClass(i);
 
@@ -115,10 +115,10 @@ public abstract class BaseChecker implements Checker, PACLConstants {
 				callerClass);
 
 			if (callerClassLoader != _commonClassLoader) {
-				if (Validator.isNotNull(action)) {
+				if (Validator.isNotNull(actions)) {
 					_log.error(
 						"A plugin is hijacking the JSP compiler via " +
-							callerClassName + " to " + action + " " + subject);
+							callerClassName + " to " + actions + " " + subject);
 				}
 				else {
 					_log.error(
@@ -130,10 +130,10 @@ public abstract class BaseChecker implements Checker, PACLConstants {
 			}
 
 			if (_log.isDebugEnabled()) {
-				if (Validator.isNotNull(action)) {
+				if (Validator.isNotNull(actions)) {
 					_log.debug(
 						"Allowing the JSP compiler via " + callerClassName +
-							" to " + action + " " + subject);
+							" to " + actions + " " + subject);
 				}
 				else {
 					_log.debug(

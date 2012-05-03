@@ -134,18 +134,18 @@ public class FileChecker extends BaseChecker {
 	}
 
 	protected void addPermission(
-		List<Permission> permissions, String path, String action) {
+		List<Permission> permissions, String path, String actions) {
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Allowing " + action + " on " + path);
+			_log.debug("Allowing " + actions + " on " + path);
 		}
 
-		Permission permission = new FilePermission(path, action);
+		Permission permission = new FilePermission(path, actions);
 
 		permissions.add(permission);
 	}
 
-	protected List<Permission> getPermissions(String key, String action) {
+	protected List<Permission> getPermissions(String key, String actions) {
 		List<Permission> permissions = new CopyOnWriteArrayList<Permission>();
 
 		String value = getProperty(key);
@@ -161,7 +161,7 @@ public class FileChecker extends BaseChecker {
 			}
 
 			for (String path : paths) {
-				addPermission(permissions, path, action);
+				addPermission(permissions, path, actions);
 			}
 		}
 
@@ -172,11 +172,11 @@ public class FileChecker extends BaseChecker {
 
 		ServletContext servletContext = ServletContextPool.get(pathContext);
 
-		if (!action.equals(FILE_PERMISSION_ACTION_EXECUTE) &&
+		if (!actions.equals(FILE_PERMISSION_ACTION_EXECUTE) &&
 			(_workDir != null)) {
 
-			addPermission(permissions, _workDir, action);
-			addPermission(permissions, _workDir + "/-", action);
+			addPermission(permissions, _workDir, actions);
+			addPermission(permissions, _workDir + "/-", actions);
 
 			if (servletContext != null) {
 				File tempDir = (File)servletContext.getAttribute(
@@ -184,15 +184,15 @@ public class FileChecker extends BaseChecker {
 
 				String tempDirAbsolutePath = tempDir.getAbsolutePath();
 
-				if (action.equals(FILE_PERMISSION_ACTION_READ)) {
-					addPermission(permissions, tempDirAbsolutePath, action);
+				if (actions.equals(FILE_PERMISSION_ACTION_READ)) {
+					addPermission(permissions, tempDirAbsolutePath, actions);
 				}
 
-				addPermission(permissions, tempDirAbsolutePath + "/-", action);
+				addPermission(permissions, tempDirAbsolutePath + "/-", actions);
 			}
 		}
 
-		if (!action.equals(FILE_PERMISSION_ACTION_READ)) {
+		if (!actions.equals(FILE_PERMISSION_ACTION_READ)) {
 			return permissions;
 		}
 
@@ -238,7 +238,7 @@ public class FileChecker extends BaseChecker {
 		}
 
 		for (String path : paths) {
-			addPermission(permissions, path, action);
+			addPermission(permissions, path, actions);
 		}
 
 		return permissions;

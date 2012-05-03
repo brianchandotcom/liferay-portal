@@ -59,6 +59,18 @@ public class RuntimeVariables {
 
 	private String _replace(String text) {
 
+		// Email Addresses
+
+		text = StringUtil.replace(
+			text, "liferay-mailinglist@googlegroups.com",
+			"mainlinglist@liferay.com");
+
+		text = StringUtil.replace(
+			text, "liferay.qa.server.trunk@gmail.com", "serverea@liferay.com");
+
+		text = StringUtil.replace(
+			text, "liferay.qa.testing.trunk@gmail.com", "userea@liferay.com");
+
 		// Portal URL
 
 		text = StringUtil.replace(

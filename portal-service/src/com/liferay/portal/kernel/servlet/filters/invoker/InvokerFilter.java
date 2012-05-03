@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.servlet.filters.invoker;
 
+import com.liferay.portal.kernel.cache.key.CacheKeyGenerator;
+import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
 import com.liferay.portal.kernel.concurrent.ConcurrentLRUCache;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -123,7 +125,7 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 			PropsUtil.get(PropsKeys.INVOKER_FILTER_CHAIN_SIZE));
 
 		if (_invokerFilterChainSize > 0) {
-			_filterChains = new ConcurrentLRUCache<Integer, InvokerFilterChain>(
+			_filterChains = new ConcurrentLRUCache<String, InvokerFilterChain>(
 				_invokerFilterChainSize);
 		}
 
@@ -176,7 +178,11 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 				request, _dispatcher, uri, filterChain);
 		}
 
-		Integer key = uri.hashCode();
+		CacheKeyGenerator cacheKeyGenerator =
+			CacheKeyGeneratorUtil.getCacheKeyGenerator(
+				InvokerFilter.class.getName());
+		
+		String key = String.valueOf(cacheKeyGenerator.getCacheKey(uri));
 
 		InvokerFilterChain invokerFilterChain = _filterChains.get(key);
 
@@ -219,7 +225,7 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 
 	private String _contextPath;
 	private Dispatcher _dispatcher;
-	private ConcurrentLRUCache<Integer, InvokerFilterChain> _filterChains;
+	private ConcurrentLRUCache<String, InvokerFilterChain> _filterChains;
 	private FilterConfig _filterConfig;
 	private int _invokerFilterChainSize;
 	private InvokerFilterHelper _invokerFilterHelper;

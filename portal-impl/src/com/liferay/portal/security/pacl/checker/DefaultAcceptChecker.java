@@ -36,7 +36,7 @@ public class DefaultAcceptChecker extends BaseChecker {
 		if (!_log.isInfoEnabled()) {
 			return;
 		}
-		
+
 		Class<?> clazz = permission.getClass();
 		String name = permission.getName();
 		String actions = permission.getActions();
@@ -47,8 +47,7 @@ public class DefaultAcceptChecker extends BaseChecker {
 					" on " + actions);
 		}
 		else {
-			_log.info(
-				"Allowing permission " + clazz.getName() + " to " + name);
+			_log.info("Allowing permission " + clazz.getName() + " to " + name);
 		}
 	}
 

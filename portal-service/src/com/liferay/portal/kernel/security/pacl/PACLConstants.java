@@ -27,6 +27,12 @@ public interface PACLConstants {
 
 	public static final String FILE_PERMISSION_ACTION_WRITE = "write";
 
+	public static final String NET_PERMISSION_GET_PROXY_SELECTOR =
+		"getProxySelector";
+
+	public static final String NET_PERMISSION_SPECIFY_STREAM_HANDLER =
+		"specifyStreamHandler";
+
 	public static final String PORTAL_HOOK_PERMISSION_CUSTOM_JSP_DIR =
 		"customJspDir";
 

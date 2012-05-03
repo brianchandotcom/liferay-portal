@@ -44,7 +44,7 @@ public class VerifySQLServer extends VerifyProcess {
 		try {
 			con = DataAccess.getConnection();
 
-			StringBundler sb = new StringBundler(11);
+			StringBundler sb = new StringBundler(12);
 
 			sb.append("select sysobjects.name as table_name, syscolumns.name ");
 			sb.append("AS column_name, systypes.name as data_type, ");
@@ -53,6 +53,7 @@ public class VerifySQLServer extends VerifyProcess {
 			sb.append("sysobjects.id = syscolumns.id inner join systypes on ");
 			sb.append("syscolumns.xtype = systypes.xtype where ");
 			sb.append("(sysobjects.xtype = 'U') and ");
+			sb.append("(sysobjects.category != 2) and ");
 			sb.append(_FILTER_NONUNICODE_DATA_TYPES);
 			sb.append(" and ");
 			sb.append(_FILTER_EXCLUDED_TABLES);
@@ -177,7 +178,7 @@ public class VerifySQLServer extends VerifyProcess {
 		try {
 			con = DataAccess.getConnection();
 
-			StringBundler sb = new StringBundler(14);
+			StringBundler sb = new StringBundler(15);
 
 			sb.append("select distinct sysobjects.name as table_name, ");
 			sb.append("sysindexes.name as index_name FROM sysobjects inner ");
@@ -188,7 +189,8 @@ public class VerifySQLServer extends VerifyProcess {
 			sb.append("(syscolumns.colid = sysindexkeys.colid) and ");
 			sb.append("(sysindexes.indid = sysindexkeys.indid)) inner join ");
 			sb.append("systypes on syscolumns.xtype = systypes.xtype where ");
-			sb.append("sysobjects.type = 'U' and ");
+			sb.append("(sysobjects.type = 'U') and ");
+			sb.append("(sysobjects.category != 2) and ");
 			sb.append(_FILTER_NONUNICODE_DATA_TYPES);
 			sb.append(" and ");
 			sb.append(_FILTER_EXCLUDED_TABLES);

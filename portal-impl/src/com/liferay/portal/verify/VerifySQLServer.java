@@ -44,7 +44,7 @@ public class VerifySQLServer extends VerifyProcess {
 		try {
 			con = DataAccess.getConnection();
 
-			StringBundler sb = new StringBundler(11);
+			StringBundler sb = new StringBundler(12);
 
 			sb.append("select sysobjects.name as table_name, syscolumns.name ");
 			sb.append("AS column_name, systypes.name as data_type, ");
@@ -178,7 +178,7 @@ public class VerifySQLServer extends VerifyProcess {
 		try {
 			con = DataAccess.getConnection();
 
-			StringBundler sb = new StringBundler(14);
+			StringBundler sb = new StringBundler(15);
 
 			sb.append("select distinct sysobjects.name as table_name, ");
 			sb.append("sysindexes.name as index_name FROM sysobjects inner ");

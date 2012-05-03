@@ -15,9 +15,7 @@
 package com.liferay.portlet.sites.action;
 
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTypePortlet;
@@ -25,7 +23,6 @@ import com.liferay.portal.model.MembershipRequest;
 import com.liferay.portal.model.PortletPreferencesIds;
 import com.liferay.portal.model.Team;
 import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.MembershipRequestLocalServiceUtil;
 import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.service.TeamLocalServiceUtil;
@@ -34,6 +31,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portlet.sites.util.SitesUtil;
 
 import java.util.List;
 
@@ -54,6 +52,9 @@ public class ActionUtil
 		throws Exception {
 
 		long companyId = targetLayout.getCompanyId();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		LayoutTypePortlet sourceLayoutTypePortlet =
 			(LayoutTypePortlet)sourceLayout.getLayoutType();
@@ -104,46 +105,10 @@ public class ActionUtil
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, targetLayout.getPlid(),
 				sourcePortletId, sourcePreferences);
 
-			String scopeType = GetterUtil.getString(
-				sourcePreferences.getValue("lfrScopeType", null));
-
-			if (Validator.isNotNull(scopeType) && scopeType.equals("layout")) {
-				ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-				Layout targetScopeLayout =
-					LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
-						targetLayout.getUuid(), targetLayout.getGroupId());
-
-				String languageId = themeDisplay.getLanguageId();
-
-				if (!targetScopeLayout.hasScopeGroup()) {
-					GroupLocalServiceUtil.addGroup(
-						themeDisplay.getUserId(), Layout.class.getName(),
-						targetLayout.getPlid(),
-						targetLayout.getName(languageId), null, 0, null, false,
-						true, null);
-				}
-
-				String portletTitle = PortalUtil.getPortletTitle(
-					sourcePortletId, languageId);
-
-				String newPortletTitle = PortalUtil.getNewPortletTitle(
-					portletTitle, String.valueOf(sourceLayout.getLayoutId()),
-					targetLayout.getName(languageId));
-
-				targetPreferences.setValue(
-					"groupId", String.valueOf(targetLayout.getGroupId()));
-				targetPreferences.setValue("lfrScopeType", "layout");
-				targetPreferences.setValue(
-					"lfrScopeLayoutUuid", targetLayout.getUuid());
-				targetPreferences.setValue(
-					"portletSetupTitle_" + languageId, newPortletTitle);
-				targetPreferences.setValue(
-					"portletSetupUseCustomTitle", Boolean.TRUE.toString());
-
-				targetPreferences.store();
-			}
+			SitesUtil.updateLayoutScopes(
+				themeDisplay.getUserId(), sourceLayout, targetLayout,
+				sourcePreferences, targetPreferences, sourcePortletId,
+				themeDisplay.getLanguageId());
 		}
 	}
 

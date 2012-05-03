@@ -34,7 +34,6 @@ import com.liferay.portalweb.portlet.messageboards.message.editcategorymessagebo
 import com.liferay.portalweb.portlet.messageboards.message.editcategorymessagebodynull.EditCategoryMessageBodyNullTests;
 import com.liferay.portalweb.portlet.messageboards.message.editcategorymessagesubject.EditCategoryMessageSubjectTests;
 import com.liferay.portalweb.portlet.messageboards.message.editcategorymessagesubjectnull.EditCategoryMessageSubjectNullTests;
-import com.liferay.portalweb.portlet.messageboards.message.gmailviewmbthreadmessagegmail.Gmail_ViewMBThreadMessageGmailTests;
 import com.liferay.portalweb.portlet.messageboards.message.guestviewpermissionsmbthreadmessageguestviewoff.Guest_ViewPermissionsMBThreadMessageGuestViewOffTests;
 import com.liferay.portalweb.portlet.messageboards.message.markasanswercategorymessagequestionreply.MarkAsAnswerCategoryMessageQuestionReplyTests;
 import com.liferay.portalweb.portlet.messageboards.message.movecategorymessagetocategory.MoveCategoryMessageToCategoryTests;
@@ -80,7 +79,6 @@ public class MessageTestPlan extends BaseTestSuite {
 		testSuite.addTest(EditCategoryMessageBodyNullTests.suite());
 		testSuite.addTest(EditCategoryMessageSubjectTests.suite());
 		testSuite.addTest(EditCategoryMessageSubjectNullTests.suite());
-		testSuite.addTest(Gmail_ViewMBThreadMessageGmailTests.suite());
 		testSuite.addTest(
 			Guest_ViewPermissionsMBThreadMessageGuestViewOffTests.suite());
 		testSuite.addTest(

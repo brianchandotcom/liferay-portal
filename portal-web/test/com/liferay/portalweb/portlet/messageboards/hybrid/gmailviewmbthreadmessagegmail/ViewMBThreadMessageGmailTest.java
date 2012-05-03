@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.messageboards.message.gmailviewmbthreadmessagegmail;
+package com.liferay.portalweb.portlet.messageboards.hybrid.gmailviewmbthreadmessagegmail;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,10 +20,13 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddMBCategorySiteTest extends BaseTestCase {
-	public void testAddMBCategorySite() throws Exception {
+public class ViewMBThreadMessageGmailTest extends BaseTestCase {
+	public void testViewMBThreadMessageGmail() throws Exception {
+		selenium.selectWindow("null");
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/site-name/");
 		loadRequiredJavaScriptModules();
+		Thread.sleep(60000);
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,26 +48,33 @@ public class AddMBCategorySiteTest extends BaseTestCase {
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.clickAt("//input[@value='Add Category']",
-			RuntimeVariables.replace("Add Category"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		selenium.type("//input[@id='_19_name']",
-			RuntimeVariables.replace("MB Category Name"));
-		selenium.clickAt("//input[@value='Save']",
-			RuntimeVariables.replace("Save"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace(
-				"Your request completed successfully."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("MB Category Name"),
-			selenium.getText("//td[1]/a/strong"));
-		assertEquals(RuntimeVariables.replace("0"),
-			selenium.getText("//td[2]/a"));
-		assertEquals(RuntimeVariables.replace("0"),
+			selenium.getText("//a/strong"));
+		selenium.clickAt("//a/strong",
+			RuntimeVariables.replace("MB Category Name"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("MB Message Subject"),
+			selenium.getText("//td[1]/a"));
+		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText("//td[3]/a"));
-		assertEquals(RuntimeVariables.replace("0"),
+		assertEquals(RuntimeVariables.replace("2"),
 			selenium.getText("//td[4]/a"));
+		assertEquals(RuntimeVariables.replace("2"),
+			selenium.getText("//td[5]/a"));
+		selenium.clickAt("//td[1]/a",
+			RuntimeVariables.replace("MB Message Subject"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Re: MB Message Subject"),
+			selenium.getText("xpath=(//div[@class='subject']/a/strong)[2]"));
+		assertTrue(selenium.isPartialText(
+				"xpath=(//div[@class='thread-body'])[2]",
+				"MB Message Email Reply"));
+		assertEquals(RuntimeVariables.replace("userfn userln"),
+			selenium.getText("xpath=(//span[@class='user-name'])[2]"));
+		assertEquals(RuntimeVariables.replace("Posts: 1"),
+			selenium.getText(
+				"xpath=(//div[@class='thread-user-post-count'])[2]"));
 	}
 }

@@ -17,13 +17,10 @@ package com.liferay.portalweb.portlet.messageboards.hybrid.gmailviewmbthreadmess
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.sites.site.addmemberssiteuser.AddMembersSiteUserTest;
 import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.AddSiteTest;
+import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.TearDownSiteTest;
 import com.liferay.portalweb.portal.controlpanel.sites.siteportlet.addportletsite.AddPageMBSiteTest;
 import com.liferay.portalweb.portal.controlpanel.sites.siteportlet.addportletsite.AddPortletMBSiteTest;
-import com.liferay.portalweb.portlet.messageboards.message.gmailviewmbthreadmessagegmail.AddMBCategorySiteTest;
-import com.liferay.portalweb.portlet.messageboards.message.gmailviewmbthreadmessagegmail.AddUserGmailTest;
-import com.liferay.portalweb.portlet.messageboards.message.gmailviewmbthreadmessagegmail.ConfigurePortletEmailFromAddressTest;
-import com.liferay.portalweb.portlet.messageboards.message.gmailviewmbthreadmessagegmail.EditMBCategoryMailingListActiveActionsTest;
-import com.liferay.portalweb.portlet.messageboards.message.gmailviewmbthreadmessagegmail.PostNewMBCategoryThreadMessageSiteTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.adduser.TearDownUserTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -43,6 +40,8 @@ public class Gmail_ViewMBThreadMessageGmailTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddMBCategorySiteTest.class);
 		testSuite.addTestSuite(EditMBCategoryMailingListActiveActionsTest.class);
 		testSuite.addTestSuite(PostNewMBCategoryThreadMessageSiteTest.class);
+		testSuite.addTestSuite(TearDownUserTest.class);
+		testSuite.addTestSuite(TearDownSiteTest.class);
 
 		return testSuite;
 	}

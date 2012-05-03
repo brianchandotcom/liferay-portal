@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.messageboards.message.gmailviewmbthreadmessagegmail;
+package com.liferay.portalweb.portlet.messageboards.hybrid.gmailviewmbthreadmessagegmail;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;

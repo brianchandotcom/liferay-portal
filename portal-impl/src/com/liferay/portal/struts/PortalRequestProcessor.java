@@ -411,11 +411,7 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 			return sb.toString();
 		}
 
-		LastPath lastPath = (LastPath)request.getAttribute(WebKeys.LAST_PATH);
-
-		if (lastPath == null) {
-			lastPath = (LastPath)session.getAttribute(WebKeys.LAST_PATH);
-		}
+		LastPath lastPath = (LastPath)session.getAttribute(WebKeys.LAST_PATH);
 
 		if (lastPath == null) {
 			return sb.toString();

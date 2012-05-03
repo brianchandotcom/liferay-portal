@@ -144,11 +144,9 @@ public class RuntimeChecker extends BaseReflectChecker {
 		}
 
 		Class<?> callerClass6 = Reflection.getCallerClass(6);
-		Class<?> callerClass7 = null;
+		Class<?> callerClass7 = Reflection.getCallerClass(7);
 
 		if (_log.isDebugEnabled()) {
-			callerClass7 = Reflection.getCallerClass(7);
-
 			_log.debug(
 				callerClass7.getName() +
 					" is attempting to get the class loader via " +
@@ -168,9 +166,9 @@ public class RuntimeChecker extends BaseReflectChecker {
 			String methodName = stackTraceElement.getMethodName();
 
 			if (methodName.equals(_METHOD_NAME_GET_SYSTEM_CLASS_LOADER)) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Allow " + callerClass7.getName() +
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Allowing " + callerClass7.getName() +
 							" to access the system class loader");
 				}
 
@@ -184,11 +182,9 @@ public class RuntimeChecker extends BaseReflectChecker {
 			if (isSharedClassLoader(contextClassLoader) ||
 				isLocalClassLoader(contextClassLoader)) {
 
-				if (_log.isDebugEnabled()) {
-					callerClass7 = Reflection.getCallerClass(7);
-
-					_log.debug(
-						"Allow " + callerClass7.getName() +
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Allowing " + callerClass7.getName() +
 							" to access the context class loader");
 				}
 
@@ -219,7 +215,7 @@ public class RuntimeChecker extends BaseReflectChecker {
 
 			for (String referenceId : referenceIds) {
 				_log.debug(
-					"Allow access to class loader for reference " +
+					"Allowing access to class loader for reference " +
 						referenceId);
 			}
 		}
@@ -246,7 +242,7 @@ public class RuntimeChecker extends BaseReflectChecker {
 	protected void logCreateClassLoader(Class<?> callerClass, int frame) {
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				"Allow frame " + frame + " with caller " + callerClass +
+				"Allowing frame " + frame + " with caller " + callerClass +
 					" to create a class loader");
 		}
 	}

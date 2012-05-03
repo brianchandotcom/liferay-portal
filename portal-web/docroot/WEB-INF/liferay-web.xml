@@ -1095,57 +1095,85 @@
 	<filter-mapping>
 		<filter-name>Atom Servlet Filter</filter-name>
 		<url-pattern>/api/atom/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>Axis Servlet Filter</filter-name>
 		<url-pattern>/api/axis/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>JSON Servlet Filter</filter-name>
 		<url-pattern>/api/json/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>JSON Web Service Servlet Filter</filter-name>
 		<url-pattern>/api/jsonws/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>Remoting Servlet Filter</filter-name>
 		<url-pattern>/api/spring/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>Tunnel Servlet Filter</filter-name>
 		<url-pattern>/api/liferay/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>WebDAV Servlet Filter</filter-name>
 		<url-pattern>/api/webdav/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>Secure Atom Servlet Filter</filter-name>
 		<url-pattern>/api/secure/atom/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>Secure Axis Servlet Filter</filter-name>
 		<url-pattern>/api/secure/axis/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>Secure JSON Servlet Filter</filter-name>
 		<url-pattern>/api/secure/json/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>Secure JSON Web Service Servlet Filter</filter-name>
 		<url-pattern>/api/secure/jsonws/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>Secure Remoting Servlet Filter</filter-name>
 		<url-pattern>/api/secure/spring/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>Secure Tunnel Servlet Filter</filter-name>
 		<url-pattern>/api/secure/liferay/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>Secure WebDAV Servlet Filter</filter-name>
 		<url-pattern>/api/secure/webdav/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
 </web-app>

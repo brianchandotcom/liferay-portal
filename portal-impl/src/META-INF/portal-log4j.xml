@@ -470,6 +470,14 @@
 		<priority value="ERROR" />
 	</category>
 
+	<category name="com.liferay.portal.security.pacl.checker.DefaultAcceptChecker">
+		<priority value="INFO" />
+	</category>
+
+	<category name="com.liferay.portal.security.pacl.checker.DefaultRejectChecker">
+		<priority value="INFO" />
+	</category>
+
 	<category name="com.liferay.portal.security.pacl.checker.FileChecker">
 		<priority value="ERROR" />
 	</category>

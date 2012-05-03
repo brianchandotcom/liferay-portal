@@ -1,0 +1,143 @@
+.portlet-trash {
+	.document-info {
+		background: #D2DDE7;
+		border-bottom: 1px solid #6D6D6E;
+		padding: 10px;
+
+		&:after {
+			clear: both;
+			content: "";
+			display:block;
+			height: 0;
+		}
+
+		.document-title {
+			margin: 0 0 10px;
+			text-shadow: 1px 1px #FFF;
+		}
+
+		.user-date, .taglib-asset-tags-summary {
+			font-weight: bold;
+		}
+
+		.document-description {
+			margin: 8px 0;
+			display: block;
+		}
+
+		.document-thumbnail {
+			float: left;
+			margin: 0 10px 0 0;
+		}
+
+		.clear {
+			clear: both;
+		}
+	}
+
+	.asset-details {
+		h3.version {
+			margin: 0 0 10px;
+		}
+
+		.taglib-custom-attributes-list {
+			margin-bottom: 0;
+		}
+
+		.asset-details-content {
+			padding: 10px;
+
+			.taglib-workflow-status {
+				margin: 0;
+			}
+
+			.lfr-asset-icon {
+				background-position: 0 2px;
+				background-repeat: no-repeat;
+				border-right-width: 0;
+				float: none;
+				padding: 2px 0 2px 20px;
+			}
+
+			.lfr-asset-author {
+				background-image: url(@theme_image_path@/portlet/edit_defaults.png);
+			}
+
+			.lfr-asset-downloads {
+				background-image: url(@theme_image_path@/common/download.png);
+			}
+
+			.lfr-asset-ratings {
+				margin: 0 0 1em;
+			}
+		}
+	}
+
+	.taglib-discussion {
+		width: 90%;
+		margin: 0 auto;
+	}
+
+	.taglib-ratings.stars {
+		border: 1px solid transparent;
+		display: inline-block;
+		margin: 0 3px;
+		padding: 4px;
+		position: relative;
+		vertical-align: middle;
+
+		.liferay-rating-vote {
+			display: none;
+			left: -1px;
+			padding: 4px;
+			position: absolute;
+			right: -1px;
+			top: -1px;
+		}
+
+		&:hover, &:hover .liferay-rating-vote {
+			background: #B0D3F6;
+			border: 1px solid #3F6F9F;
+		}
+
+		&:hover .liferay-rating-vote {
+			display: block;
+		}
+
+		.aui-rating-content, .aui-rating-label-element {
+			display: inline;
+		}
+
+		.aui-rating-label-element {
+			color: #555;
+			font-size: 0.9em;
+			margin-left: 0.5em;
+		}
+
+		.liferay-rating-score {
+			padding-left: 0;
+		}
+	}
+
+	.lfr-actions {
+		&.lfr-extended .lfr-trigger {
+			min-width: auto;
+
+		strong {
+			min-width: 10px;
+		}
+			}
+
+		&.show-arrow.direction-down .lfr-trigger strong a {
+			background: url(@theme_image_path@/arrows/08_down.png) 100% -5px no-repeat;
+		}
+	}
+}
+
+.ie7 {
+	.portlet-trash {
+		.lfr-actions .lfr-trigger strong {
+			min-width: 0px;
+		}
+	}
+}

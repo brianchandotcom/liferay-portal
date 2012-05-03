@@ -872,8 +872,151 @@
 		</licenses>
 	</library>
 	<library>
+		<file-name>development/tomcat-annotations-api.jar</file-name>
+		<version>7.0.27</version>
+		<project-name>Tomcat</project-name>
+		<project-url>http://tomcat.apache.org</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
+		<file-name>development/tomcat-api.jar</file-name>
+		<version>7.0.27</version>
+		<project-name>Tomcat</project-name>
+		<project-url>http://tomcat.apache.org</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
+		<file-name>development/tomcat-catalina-ant.jar</file-name>
+		<version>7.0.27</version>
+		<project-name>Tomcat</project-name>
+		<project-url>http://tomcat.apache.org</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
+		<file-name>development/tomcat-catalina.jar</file-name>
+		<version>7.0.27</version>
+		<project-name>Tomcat</project-name>
+		<project-url>http://tomcat.apache.org</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
 		<file-name>development/tomcat-coyote.jar</file-name>
-		<version>7.0.25</version>
+		<version>7.0.27</version>
+		<project-name>Tomcat</project-name>
+		<project-url>http://tomcat.apache.org</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
+		<file-name>development/tomcat-el-api.jar</file-name>
+		<version>7.0.27</version>
+		<project-name>Tomcat</project-name>
+		<project-url>http://tomcat.apache.org</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
+		<file-name>development/tomcat-embed-core.jar</file-name>
+		<version>7.0.27</version>
+		<project-name>Tomcat</project-name>
+		<project-url>http://tomcat.apache.org</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
+		<file-name>development/tomcat-embed-jasper.jar</file-name>
+		<version>7.0.27</version>
+		<project-name>Tomcat</project-name>
+		<project-url>http://tomcat.apache.org</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
+		<file-name>development/tomcat-jasper-el.jar</file-name>
+		<version>7.0.27</version>
+		<project-name>Tomcat</project-name>
+		<project-url>http://tomcat.apache.org</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
+		<file-name>development/tomcat-jasper.jar</file-name>
+		<version>7.0.27</version>
+		<project-name>Tomcat</project-name>
+		<project-url>http://tomcat.apache.org</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
+		<file-name>development/tomcat-jsp-api.jar</file-name>
+		<version>7.0.27</version>
+		<project-name>Tomcat</project-name>
+		<project-url>http://tomcat.apache.org</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
+		<file-name>development/tomcat-juli.jar</file-name>
+		<version>7.0.27</version>
+		<project-name>Tomcat</project-name>
+		<project-url>http://tomcat.apache.org</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
+		<file-name>development/tomcat-servlet-api.jar</file-name>
+		<version>7.0.27</version>
+		<project-name>Tomcat</project-name>
+		<project-url>http://tomcat.apache.org</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
+		<file-name>development/tomcat-util.jar</file-name>
+		<version>7.0.27</version>
 		<project-name>Tomcat</project-name>
 		<project-url>http://tomcat.apache.org</project-url>
 		<licenses>

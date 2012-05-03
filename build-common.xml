@@ -39,10 +39,24 @@
 
 	<property name="liferay.home" value="${app.server.parent.dir}" />
 
+	<property name="tomcat.embedded.basedir" location="${tomcat.basedir}" />
+	<property name="liferay.webapp.basedir" location="${tomcat.webapp.basedir}" />
+
 	<path id="lib.classpath">
 		<fileset dir="${project.dir}/lib/development" includes="*.jar" />
 		<fileset dir="${project.dir}/lib/global" includes="*.jar" />
 		<fileset dir="${project.dir}/lib/portal" includes="*.jar" />
+	</path>
+
+	<path id="liferay.deploy.classpath">
+		<pathelement path="${project.dir}/portal-service/classes" />
+		<pathelement path="${project.dir}/portal-impl/classes" />
+		<pathelement path="${project.dir}/util-bridges/classes" />
+		<pathelement path="${project.dir}/util-java/classes" />
+		<pathelement path="${project.dir}/util-taglib/classes" />
+		<fileset dir="${project.dir}/lib/development" includes="tomcat-*.jar,ecj.jar,persistence.jar,jta.jar,mysql.jar,mail.jar" />
+		<fileset dir="${project.dir}/lib/portal" includes="*.jar" />
+		<fileset dir="${project.dir}/lib/global" includes="*.jar" />
 	</path>
 
 	<path id="project.classpath">
@@ -485,6 +499,48 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		<delete dir="${sonar.surefire.reportsPath}" />
 	</target>
 
+	<target name="start-tomcat">
+		<java
+			classname="com.liferay.util.appserver.tomcat.exploded.ExplodedTomcatServer"
+			classpathref="liferay.deploy.classpath"
+			fork="true"
+			newenvironment="true"
+		>
+			<jvmarg value="-Xms1024m" />
+			<jvmarg value="-Xmx1024m" />
+			<jvmarg value="-XX:MaxPermSize=256m" />
+			<arg value="${tomcat.embedded.basedir}" />
+			<arg value="${liferay.webapp.basedir}" />
+			<arg value="start" />
+		</java>
+	</target>
+
+	<target name="stop-tomcat">
+		<exec executable="${java.jps.executable}">
+			<arg value="${java.jps.args.fullpackage}"/>
+
+			<redirector outputproperty="tomcat.pid">
+				<outputfilterchain>
+					<linecontains>
+						<contains value="com.liferay.util.appserver.tomcat.exploded.ExplodedTomcatServer"/>
+					</linecontains>
+
+					<replacestring from=" com.liferay.util.appserver.tomcat.exploded.ExplodedTomcatServer"/>
+				</outputfilterchain>
+			</redirector>
+		</exec>
+
+		<exec executable="taskkill" osfamily="winnt">
+			<arg value="/F"/>
+			<arg value="/PID"/>
+			<arg value="${tomcat.pid}"/>
+		</exec>
+		<exec executable="kill" osfamily="unix">
+			<arg value="-9"/>
+			<arg value="${tomcat.pid}"/>
+		</exec>
+	</target>
+
 	<target name="test">
 		<delete dir="test-classes" />
 		<delete dir="test-results" />
@@ -626,6 +682,42 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		</ant>
 
 		<antcall target="report-test-coverage" />
+	</target>
+
+	<target name="test-integration-with-tomcat-started">
+		<parallel>
+			<antcall target="start-tomcat" inheritAll="false"/>
+
+			<sequential>
+				<waitfor maxwait="3" maxwaitunit="minute" checkevery="500">
+					<http url="http://${tomcat.host}:${tomcat.port}"/>
+				</waitfor>
+
+				<junit dir="${project.dir}" fork="on" forkmode="once" haltonfailure="${junit.halt.on.failure}" outputtoformatters="false" printsummary="on" showoutput="true">
+					<sysproperty key="net.sourceforge.cobertura.datafile" file="test-coverage/cobertura.ser" />
+					<jvmarg line="${junit.debug.jpda}" />
+					<jvmarg value="-Xmx1024m" />
+					<jvmarg value="-XX:MaxPermSize=256m" />
+					<jvmarg value="-Dexternal-properties=${test.properties}" />
+					<jvmarg value="-Djava.net.preferIPv4Stack=true" />
+					<jvmarg value="-Duser.timezone=GMT" />
+					<classpath location="test-coverage" />
+					<classpath refid="test.classpath" />
+					<formatter type="brief" usefile="false" />
+					<formatter type="xml" />
+					<batchtest todir="test-results/integration">
+						<fileset dir="test-classes/integration">
+							<include name="**/DLAppServiceHttpTest.class" />
+							<include name="**/DLAppServiceSoapTest.class" />
+							<include name="**/UserServiceHttpTest.class" />
+							<include name="**/UserServiceSoapTest.class" />
+						</fileset>
+					</batchtest>
+				</junit>
+
+				<antcall target="stop-tomcat" inheritAll="false"/>
+			</sequential>
+		</parallel>
 	</target>
 
 	<target name="test-unit" depends="compile,instrument-test-coverage,compile-test-unit">

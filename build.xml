@@ -1011,6 +1011,15 @@ Plugins: ${lp.plugins.dir}</echo>
 		<antcall target="print-current-time" />
 	</target>
 
+	<target name="start-tomcat">
+		<antcall target="compile" />
+		<ant antfile="build-common.xml" target="start-tomcat" />
+	</target>
+
+	<target name="stop-tomcat">
+		<ant antfile="build-common.xml" target="stop-tomcat" />
+	</target>
+
 	<target name="test">
 		<ant antfile="build-test.xml" target="test" inheritAll="false" />
 	</target>

@@ -17,8 +17,6 @@ package com.liferay.portal.security.pacl.checker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
-import java.security.AccessController;
-
 import org.springframework.util.ReflectionUtils;
 
 import sun.reflect.Reflection;
@@ -37,53 +35,28 @@ public abstract class BaseReflectChecker extends BaseChecker {
 			return true;
 		}
 
-		// Prefecth the necessary caller classes
-
-		Class<?> callerClass7 = Reflection.getCallerClass(7);
-		Class<?> callerClass8 = Reflection.getCallerClass(8);
-		Class<?> callerClass9 = Reflection.getCallerClass(9);
-		Class<?> callerClass10 = Reflection.getCallerClass(10);
-
 		// java.lang.Class
 
+		Class<?> callerClass7 = Reflection.getCallerClass(7);
+
 		if ((callerClass7.getEnclosingClass() == Class.class) &&
-			(callerClass8 == AccessController.class)) {
+			CheckerUtil.isAccessControllerDoPrivileged(8)) {
 
-			Thread currentThread = Thread.currentThread();
+			logReflect(callerClass7, 7);
 
-			StackTraceElement[] stackTraceElements =
-				currentThread.getStackTrace();
-
-			StackTraceElement stackTraceElement = stackTraceElements[8];
-
-			String methodName = stackTraceElement.getMethodName();
-
-			if (methodName.equals(_METHOD_NAME_DO_PRIVILEGED)) {
-				logReflect(callerClass7, 7);
-
-				return true;
-			}
+			return true;
 		}
 
 		// java.lang.Thread
 
+		Class<?> callerClass9 = Reflection.getCallerClass(9);
+
 		if ((callerClass9.getEnclosingClass() == Thread.class) &&
-			(callerClass10 == AccessController.class)) {
+			CheckerUtil.isAccessControllerDoPrivileged(10)) {
 
-			Thread currentThread = Thread.currentThread();
+			logReflect(callerClass9, 9);
 
-			StackTraceElement[] stackTraceElements =
-				currentThread.getStackTrace();
-
-			StackTraceElement stackTraceElement = stackTraceElements[10];
-
-			String methodName = stackTraceElement.getMethodName();
-
-			if (methodName.equals(_METHOD_NAME_DO_PRIVILEGED)) {
-				logReflect(callerClass9, 9);
-
-				return true;
-			}
+			return true;
 		}
 
 		// org.springframework.util.ReflectionUtils
@@ -120,8 +93,6 @@ public abstract class BaseReflectChecker extends BaseChecker {
 					" to reflect");
 		}
 	}
-
-	private static final String _METHOD_NAME_DO_PRIVILEGED = "doPrivileged";
 
 	private static Log _log = LogFactoryUtil.getLog(BaseReflectChecker.class);
 

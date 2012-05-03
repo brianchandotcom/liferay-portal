@@ -273,6 +273,10 @@
 		<display-name>Dictionary</display-name>
 		<portlet-class>com.liferay.util.bridges.mvc.MVCPortlet</portlet-class>
 		<init-param>
+			<name>template-path</name>
+			<value>/html/portlet/dictionary/</value>
+		</init-param>
+		<init-param>
 			<name>view-template</name>
 			<value>/html/portlet/dictionary/view.jsp</value>
 		</init-param>
@@ -313,6 +317,10 @@
 		<display-name>Translator</display-name>
 		<portlet-class>com.liferay.portlet.translator.TranslatorPortlet</portlet-class>
 		<init-param>
+			<name>template-path</name>
+			<value>/html/portlet/translator/</value>
+		</init-param>
+		<init-param>
 			<name>view-template</name>
 			<value>/html/portlet/translator/view.jsp</value>
 		</init-param>
@@ -332,6 +340,10 @@
 		<portlet-name>27</portlet-name>
 		<display-name>Unit Converter</display-name>
 		<portlet-class>com.liferay.util.bridges.mvc.MVCPortlet</portlet-class>
+		<init-param>
+			<name>template-path</name>
+			<value>/html/portlet/unit_converter/</value>
+		</init-param>
 		<init-param>
 			<name>view-template</name>
 			<value>/html/portlet/unit_converter/view.jsp</value>
@@ -795,6 +807,10 @@
 		<display-name>Loan Calculator</display-name>
 		<portlet-class>com.liferay.util.bridges.mvc.MVCPortlet</portlet-class>
 		<init-param>
+			<name>template-path</name>
+			<value>/html/portlet/loan_calculator/</value>
+		</init-param>
+		<init-param>
 			<name>view-template</name>
 			<value>/html/portlet/loan_calculator/view.jsp</value>
 		</init-param>
@@ -1008,6 +1024,10 @@
 		<portlet-name>70</portlet-name>
 		<display-name>Password Generator</display-name>
 		<portlet-class>com.liferay.util.bridges.mvc.MVCPortlet</portlet-class>
+		<init-param>
+			<name>template-path</name>
+			<value>/html/portlet/password_generator/</value>
+		</init-param>
 		<init-param>
 			<name>view-template</name>
 			<value>/html/portlet/password_generator/view.jsp</value>
@@ -1551,6 +1571,10 @@
 		<init-param>
 			<name>config-template</name>
 			<value>/html/portlet/recent_bloggers/configuration.jsp</value>
+		</init-param>
+		<init-param>
+			<name>template-path</name>
+			<value>/html/portlet/recent_bloggers/</value>
 		</init-param>
 		<init-param>
 			<name>view-template</name>
@@ -2642,6 +2666,10 @@
 		<display-name>License Manager</display-name>
 		<portlet-class>com.liferay.util.bridges.mvc.MVCPortlet</portlet-class>
 		<init-param>
+			<name>template-path</name>
+			<value>/html/portlet/license_manager/</value>
+		</init-param>
+		<init-param>
 			<name>view-template</name>
 			<value>/html/portlet/license_manager/view.jsp</value>
 		</init-param>
@@ -2720,6 +2748,10 @@
 			<value>/html/portlet/user_statistics/configuration.jsp</value>
 		</init-param>
 		<init-param>
+			<name>template-path</name>
+			<value>/html/portlet/user_statistics/</value>
+		</init-param>
+		<init-param>
 			<name>view-template</name>
 			<value>/html/portlet/user_statistics/view.jsp</value>
 		</init-param>
@@ -2775,6 +2807,10 @@
 		<init-param>
 			<name>config-template</name>
 			<value>/html/portlet/group_statistics/configuration.jsp</value>
+		</init-param>
+		<init-param>
+			<name>template-path</name>
+			<value>/html/portlet/group_statistics/</value>
 		</init-param>
 		<init-param>
 			<name>view-template</name>

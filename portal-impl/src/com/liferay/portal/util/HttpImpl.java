@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -1197,7 +1198,26 @@ public class HttpImpl implements Http {
 
 			proxifyState(httpState, hostConfiguration);
 
-			httpClient.executeMethod(hostConfiguration, httpMethod, httpState);
+			boolean checkReadFileDescriptor =
+				PortalSecurityManagerThreadLocal.isCheckReadFileDescriptor();
+			boolean checkWriteFileDescriptor =
+				PortalSecurityManagerThreadLocal.isCheckWriteFileDescriptor();
+
+			try {
+				PortalSecurityManagerThreadLocal.setCheckReadFileDescriptor(
+					false);
+				PortalSecurityManagerThreadLocal.setCheckWriteFileDescriptor(
+					false);
+
+				httpClient.executeMethod(
+					hostConfiguration, httpMethod, httpState);
+			}
+			finally {
+				PortalSecurityManagerThreadLocal.setCheckReadFileDescriptor(
+					checkReadFileDescriptor);
+				PortalSecurityManagerThreadLocal.setCheckWriteFileDescriptor(
+					checkWriteFileDescriptor);
+			}
 
 			Header locationHeader = httpMethod.getResponseHeader("location");
 

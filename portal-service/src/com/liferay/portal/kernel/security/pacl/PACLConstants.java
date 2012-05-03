@@ -64,16 +64,20 @@ public interface PACLConstants {
 	public static final String RUNTIME_PERMISSION_CREATE_CLASS_LOADER =
 		"createClassLoader";
 
-	public static final String RUNTIME_PERMISSION_EXIT_VM = "exitVM";
-
 	public static final String RUNTIME_PERMISSION_GET_CLASSLOADER =
 		"getClassLoader";
+
+	public static final String RUNTIME_PERMISSION_READ_FILE_DESCRIPTOR =
+		"readFileDescriptor";
 
 	public static final String RUNTIME_PERMISSION_SET_CONTEXT_CLASS_LOADER =
 		"setContextClassLoader";
 
 	public static final String RUNTIME_PERMISSION_SET_SECURITY_MANAGER =
 		"setSecurityManager";
+
+	public static final String RUNTIME_PERMISSION_WRITE_FILE_DESCRIPTOR =
+		"writeFileDescriptor";
 
 	public static final String SOCKET_PERMISSION_ACCEPT = "accept";
 

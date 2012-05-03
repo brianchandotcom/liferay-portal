@@ -29,11 +29,11 @@ import sun.reflect.Reflection;
  */
 public abstract class BaseReflectChecker extends BaseChecker {
 
-	protected boolean hasReflect(String name, String action) {
+	protected boolean hasReflect(String name, String actions) {
 
 		// JSP compiler
 
-		if (isJSPCompiler(name, action)) {
+		if (isJSPCompiler(name, actions)) {
 			return true;
 		}
 
@@ -116,7 +116,7 @@ public abstract class BaseReflectChecker extends BaseChecker {
 	protected void logReflect(Class<?> callerClass, int frame) {
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				"Allow frame " + frame + " with caller " + callerClass +
+				"Allowing frame " + frame + " with caller " + callerClass +
 					" to reflect");
 		}
 	}

@@ -53,6 +53,10 @@ public interface PACLConstants {
 	public static final String PORTAL_HOOK_PERMISSION_STRUTS_ACTION_PATH =
 		"strutsActionPath";
 
+	public static final String PORTAL_MESSAGE_BUS_PERMISSION_LISTEN = "listen";
+
+	public static final String PORTAL_MESSAGE_BUS_PERMISSION_SEND = "send";
+
 	public static final String PORTAL_RUNTIME_PERMISSION_SET_BEAN_PROPERTY =
 		"setBeanProperty";
 
@@ -72,6 +76,11 @@ public interface PACLConstants {
 
 	public static final String RUNTIME_PERMISSION_GET_CLASSLOADER =
 		"getClassLoader";
+
+	public static final String RUNTIME_PERMISSION_GET_ENV = "getenv";
+
+	public static final String RUNTIME_PERMISSION_GET_PROTECTION_DOMAIN =
+		"getProtectionDomain";
 
 	public static final String RUNTIME_PERMISSION_READ_FILE_DESCRIPTOR =
 		"readFileDescriptor";

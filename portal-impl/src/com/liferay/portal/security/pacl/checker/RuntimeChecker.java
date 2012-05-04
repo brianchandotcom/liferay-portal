@@ -16,6 +16,7 @@ package com.liferay.portal.security.pacl.checker;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.BaseAsyncDestination;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
@@ -24,6 +25,11 @@ import java.security.Permission;
 
 import java.util.Set;
 import java.util.TreeSet;
+
+import org.springframework.beans.CachedIntrospectionResults;
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
+import org.springframework.util.ClassUtils;
 
 import sun.reflect.Reflection;
 
@@ -45,7 +51,7 @@ public class RuntimeChecker extends BaseReflectChecker {
 
 			String pkg = name.substring(pos + 1);
 
-			if (!hasPackageAccess(pkg)) {
+			if (!hasAccessClassInPackage(pkg)) {
 				throw new SecurityException(
 					"Attempted to access package " + pkg);
 			}
@@ -70,6 +76,22 @@ public class RuntimeChecker extends BaseReflectChecker {
 				!hasGetClassLoader(name)) {
 
 				throw new SecurityException("Attempted to get class loader");
+			}
+		}
+		else if (name.startsWith(RUNTIME_PERMISSION_GET_PROTECTION_DOMAIN)) {
+			if (!hasGetProtectionDomain()) {
+				throw new SecurityException(
+					"Attempted to get protection domain");
+			}
+		}
+		else if (name.startsWith(RUNTIME_PERMISSION_GET_ENV)) {
+			int pos = name.indexOf(StringPool.PERIOD);
+
+			String envName = name.substring(pos + 1);
+
+			if (!hasGetEnv(envName)) {
+				throw new SecurityException(
+					"Attempted to get environment name " + envName);
 			}
 		}
 		else if (name.equals(RUNTIME_PERMISSION_READ_FILE_DESCRIPTOR)) {
@@ -105,12 +127,22 @@ public class RuntimeChecker extends BaseReflectChecker {
 		}
 	}
 
+	protected boolean hasAccessClassInPackage(String pkg) {
+
+		// TODO
+
+		if (pkg.startsWith("sun.reflect")) {
+		}
+
+		return true;
+	}
+
 	protected boolean hasCreateClassLoader() {
 		Class<?> callerClass10 = Reflection.getCallerClass(10);
 
-		String className10 = callerClass10.getName();
+		String callerClassName10 = callerClass10.getName();
 
-		if (className10.startsWith(_CLASS_NAME_CLASS_DEFINER) &&
+		if (callerClassName10.startsWith(_CLASS_NAME_CLASS_DEFINER) &&
 			CheckerUtil.isAccessControllerDoPrivileged(11)) {
 
 			logCreateClassLoader(callerClass10, 10);
@@ -131,6 +163,14 @@ public class RuntimeChecker extends BaseReflectChecker {
 				return true;
 			}
 
+			if (referenceId.equals("portal")) {
+				Class<?> callerClass7 = Reflection.getCallerClass(7);
+
+				if (callerClass7 == BaseAsyncDestination.class) {
+					return true;
+				}
+			}
+
 			return false;
 		}
 
@@ -142,6 +182,20 @@ public class RuntimeChecker extends BaseReflectChecker {
 				callerClass7.getName() +
 					" is attempting to get the class loader via " +
 						callerClass6.getName());
+		}
+
+		if ((callerClass7 == CachedIntrospectionResults.class) ||
+			(callerClass7 == ClassUtils.class) ||
+			(callerClass7.getEnclosingClass() ==
+				LocalVariableTableParameterNameDiscoverer.class)) {
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Allowing " + callerClass7.getName() +
+						" to get the class loader");
+			}
+
+			return true;
 		}
 
 		if (callerClass6 == Class.class) {
@@ -160,7 +214,7 @@ public class RuntimeChecker extends BaseReflectChecker {
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						"Allowing " + callerClass7.getName() +
-							" to access the system class loader");
+							" to get the system class loader");
 				}
 
 				return true;
@@ -186,22 +240,39 @@ public class RuntimeChecker extends BaseReflectChecker {
 		return false;
 	}
 
-	protected boolean hasPackageAccess(String pkg) {
+	protected boolean hasGetEnv(String name) {
+		Class<?> callerClass7 = Reflection.getCallerClass(7);
 
-		// TODO
+		if (callerClass7 == AbstractApplicationContext.class) {
+			logGetEnv(callerClass7, 7, name);
 
-		if (pkg.startsWith("sun.reflect")) {
+			return true;
 		}
 
-		return true;
+		return false;
+	}
+
+	protected boolean hasGetProtectionDomain() {
+		Class<?> callerClass8 = Reflection.getCallerClass(8);
+
+		if (isDefaultMBeanServerInterceptor(
+				callerClass8.getEnclosingClass()) &&
+			CheckerUtil.isAccessControllerDoPrivileged(9)) {
+
+			logGetProtectionDomain(callerClass8, 8);
+
+			return true;
+		}
+
+		return false;
 	}
 
 	protected boolean hasReadFileDescriptor() {
 		Class<?> callerClass8 = Reflection.getCallerClass(8);
 
-		String className8 = callerClass8.getName();
+		String callerClassName8 = callerClass8.getName();
 
-		if (className8.startsWith(_CLASS_NAME_PROCESS_IMPL) &&
+		if (callerClassName8.startsWith(_CLASS_NAME_PROCESS_IMPL) &&
 			CheckerUtil.isAccessControllerDoPrivileged(9)) {
 
 			logWriteFileDescriptor(callerClass8, 8);
@@ -215,9 +286,9 @@ public class RuntimeChecker extends BaseReflectChecker {
 	protected boolean hasWriteFileDescriptor() {
 		Class<?> callerClass8 = Reflection.getCallerClass(8);
 
-		String className8 = callerClass8.getName();
+		String callerClassName8 = callerClass8.getName();
 
-		if (className8.startsWith(_CLASS_NAME_PROCESS_IMPL) &&
+		if (callerClassName8.startsWith(_CLASS_NAME_PROCESS_IMPL) &&
 			CheckerUtil.isAccessControllerDoPrivileged(9)) {
 
 			logWriteFileDescriptor(callerClass8, 8);
@@ -242,6 +313,22 @@ public class RuntimeChecker extends BaseReflectChecker {
 						referenceId);
 			}
 		}
+	}
+
+	protected boolean isDefaultMBeanServerInterceptor(Class<?> clazz) {
+		String className = clazz.getName();
+
+		if (!className.equals(_CLASS_NAME_DEFAULT_MBEAN_SERVER_INTERCEPTOR)) {
+			return false;
+		}
+
+		String classLocation = PACLClassUtil.getClassLocation(clazz);
+
+		if (classLocation.length() > 0) {
+			return false;
+		}
+
+		return true;
 	}
 
 	protected boolean isLocalClassLoader(ClassLoader classLoader) {
@@ -270,6 +357,22 @@ public class RuntimeChecker extends BaseReflectChecker {
 		}
 	}
 
+	protected void logGetEnv(Class<?> callerClass, int frame, String name) {
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"Allowing frame " + frame + " with caller " + callerClass +
+					" to get environment " + name);
+		}
+	}
+
+	protected void logGetProtectionDomain(Class<?> callerClass, int frame) {
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"Allowing frame " + frame + " with caller " + callerClass +
+					" to get the protection domain");
+		}
+	}
+
 	protected void logReadFileDescriptor(Class<?> callerClass, int frame) {
 		if (_log.isInfoEnabled()) {
 			_log.info(
@@ -288,6 +391,9 @@ public class RuntimeChecker extends BaseReflectChecker {
 
 	private static final String _CLASS_NAME_CLASS_DEFINER =
 		"sun.reflect.ClassDefiner$";
+
+	private static final String _CLASS_NAME_DEFAULT_MBEAN_SERVER_INTERCEPTOR =
+		"com.sun.jmx.interceptor.DefaultMBeanServerInterceptor";
 
 	private static final String _CLASS_NAME_PROCESS_IMPL =
 		"java.lang.ProcessImpl$";

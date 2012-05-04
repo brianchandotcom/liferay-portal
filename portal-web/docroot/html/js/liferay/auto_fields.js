@@ -9,8 +9,6 @@ AUI.add(
 
 		var TPL_INPUT_HIDDEN = '<input name="{name}" type="hidden" />';
 
-		var TPL_AUTOROW_CONTROLS = '<span class="row-controls ' + CSS_AUTOROW_CONTROLS + '"><a href="javascript:;" class="add-row">{0}</a><a href="javascript:;" class="delete-row modify-link">{1}</a></span>';
-
 		var TPL_ADD_BUTTON = '<button type="button" class="add-row aui-buttonitem-content aui-buttonitem aui-state-default aui-buttonitem-icon-only aui-toolbar-first aui-toolbar-item" title=""><span class="aui-buttonitem-icon aui-icon aui-icon-plus"></span></button>';
 
 		var TPL_DELETE_BUTTON = '<button type="button" class="delete-row aui-buttonitem-content aui-buttonitem aui-state-default aui-buttonitem-icon-only aui-toolbar-last aui-toolbar-item" title=""><span class="aui-buttonitem-icon aui-icon aui-icon-minus"></span></button>';

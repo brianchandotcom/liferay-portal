@@ -79,6 +79,15 @@ public class DLFileVersionHistoryTest extends BaseDLAppTestCase {
 		testRevertVersion(true, true);
 	}
 
+	protected void assertFileEntryTitle(String fileName)
+		throws PortalException, SystemException {
+
+		FileEntry fileEntry = DLAppServiceUtil.getFileEntry(
+			_fileEntry.getFileEntryId());
+
+		Assert.assertEquals(fileName, fileEntry.getTitle());
+	}
+
 	protected void assertLatestFileVersionTitle(String fileName)
 		throws PortalException, SystemException {
 
@@ -89,14 +98,20 @@ public class DLFileVersionHistoryTest extends BaseDLAppTestCase {
 		Assert.assertEquals(fileName, latestDLFileVersion.getTitle());
 	}
 
-	protected void deleteFileVersion(String version, String fileName)
+	protected void deleteFileVersion(
+			String version, String fileName, boolean pwc)
 		throws PortalException, SystemException {
 
 		DLAppServiceUtil.deleteFileVersion(
 			_fileEntry.getFileEntryId(), version);
 
 		if (fileName != null) {
-			assertLatestFileVersionTitle(fileName);
+			if (pwc) {
+				assertLatestFileVersionTitle(fileName);
+			}
+			else {
+				assertFileEntryTitle(fileName);
+			}
 		}
 	}
 
@@ -104,7 +119,7 @@ public class DLFileVersionHistoryTest extends BaseDLAppTestCase {
 		throws PortalException, SystemException {
 
 		try {
-			deleteFileVersion(version, null);
+			deleteFileVersion(version, null, true);
 
 			Assert.fail();
 		}
@@ -164,7 +179,7 @@ public class DLFileVersionHistoryTest extends BaseDLAppTestCase {
 			Assert.assertEquals(3, getFileVersionsCount());
 
 			failDeleteFileVersion("PWC");
-			deleteFileVersion("1.1", _VERSION_PWC);
+			deleteFileVersion("1.1", _VERSION_PWC, true);
 			failDeleteFileVersion("1.0");
 
 			Assert.assertEquals(2, getFileVersionsCount());
@@ -172,7 +187,7 @@ public class DLFileVersionHistoryTest extends BaseDLAppTestCase {
 		else if (versioned) {
 			Assert.assertEquals(2, getFileVersionsCount());
 
-			deleteFileVersion("1.1", _VERSION_1_0);
+			deleteFileVersion("1.1", _VERSION_1_0, false);
 			failDeleteFileVersion("1.0");
 
 			Assert.assertEquals(1, getFileVersionsCount());

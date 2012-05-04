@@ -16,9 +16,7 @@ package com.liferay.portalweb.portlet.activities.activityblogsentry;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portlet.activities.activityblogsentry.viewactivityblogsentry.ViewActivityBlogsEntryTests;
-import com.liferay.portalweb.portlet.activities.activityblogsentry.viewactivityblogsentryhtmlescapecharacters.ViewActivityBlogsEntryHTMLEscapeCharactersTests;
 import com.liferay.portalweb.portlet.activities.activityblogsentry.viewactivityblogsentryxss.ViewActivityBlogsEntryXSSTests;
-import com.liferay.portalweb.portlet.activities.activityblogsentry.viewactivityblogsentryxssopen.ViewActivityBlogsEntryXSSOpenTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -32,10 +30,7 @@ public class ActivityBlogsEntryTestPlan extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(ViewActivityBlogsEntryTests.suite());
-		testSuite.addTest(
-			ViewActivityBlogsEntryHTMLEscapeCharactersTests.suite());
 		testSuite.addTest(ViewActivityBlogsEntryXSSTests.suite());
-		testSuite.addTest(ViewActivityBlogsEntryXSSOpenTests.suite());
 
 		return testSuite;
 	}

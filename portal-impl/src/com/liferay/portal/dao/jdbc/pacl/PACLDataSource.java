@@ -37,6 +37,8 @@ public class PACLDataSource extends DataSourceWrapper {
 		super(dataSource);
 
 		_dataSource = dataSource;
+
+		_log.debug("Loading " + PACLConnectionHandler.class.getName());
 	}
 
 	@Override
@@ -50,13 +52,8 @@ public class PACLDataSource extends DataSourceWrapper {
 			return connection;
 		}
 
-		PACLPolicy paclPolicy =
-			PortalSecurityManagerThreadLocal.getPACLPolicy();
-
-		if (paclPolicy == null) {
-			paclPolicy = PACLClassUtil.getPACLPolicyByReflection(
-				_log.isDebugEnabled());
-		}
+		PACLPolicy paclPolicy = PACLClassUtil.getPACLPolicy(
+			_log.isDebugEnabled());
 
 		if ((paclPolicy == null) || !paclPolicy.isActive()) {
 			return connection;

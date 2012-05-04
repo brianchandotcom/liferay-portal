@@ -15,7 +15,7 @@
 --%>
 
 <%
-if (!denyAccess && (themeDisplay.isStatePopUp() || layoutTypePortlet.hasStateMax() || Validator.isNotNull(controlPanelCategory))) {
+if (!denyAccess && (themeDisplay.isStatePopUp() || (layoutTypePortlet.hasStateMax() && portlet != null) || Validator.isNotNull(controlPanelCategory))) {
 	String velocityTemplateId = null;
 
 	String content = null;

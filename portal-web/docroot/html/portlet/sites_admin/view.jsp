@@ -220,6 +220,7 @@ pageContext.setAttribute("portletURL", portletURL);
 				<%
 				LinkedHashMap userParams = new LinkedHashMap();
 
+				userParams.put("inherit", true);
 				userParams.put("usersGroups", new Long(group.getGroupId()));
 
 				int usersCount = UserLocalServiceUtil.searchCount(company.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED, userParams);

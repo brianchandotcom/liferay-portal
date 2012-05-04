@@ -1110,7 +1110,7 @@
 	<sql id="com.liferay.portal.service.persistence.UserFinder.countByC_FN_MN_LN_SN_EA_S">
 		<![CDATA[
 			SELECT
-				COUNT(DISTINCT User_.userId) AS COUNT_VALUE
+				DISTINCT User_.userId AS userId
 			FROM
 				User_
 			[$JOIN$]
@@ -1187,7 +1187,7 @@
 	<sql id="com.liferay.portal.service.persistence.UserFinder.findByC_FN_MN_LN_SN_EA_S">
 		<![CDATA[
 			SELECT
-				DISTINCT {User_.*}
+				User_.userId AS userId, User_.screenName AS screenName, User_.emailAddress AS emailAddress, User_.firstName AS firstName, User_.middleName AS middleName, User_.lastName AS lastName, User_.jobTitle AS jobTitle, User_.loginDate AS loginDate
 			FROM
 				User_
 			[$JOIN$]
@@ -1202,10 +1202,6 @@
 					(lower(User_.screenName) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(lower(User_.emailAddress) LIKE ? [$AND_OR_NULL_CHECK$])
 				) AND (User_.status = ?)
-			ORDER BY
-				User_.firstName ASC,
-				User_.middleName ASC,
-				User_.lastName ASC
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.service.persistence.UserFinder.joinByContactTwitterSN">

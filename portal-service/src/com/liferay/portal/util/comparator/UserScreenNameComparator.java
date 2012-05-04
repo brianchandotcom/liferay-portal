@@ -22,9 +22,9 @@ import com.liferay.portal.model.User;
  */
 public class UserScreenNameComparator extends OrderByComparator {
 
-	public static final String ORDER_BY_ASC = "User_.screenName ASC";
+	public static final String ORDER_BY_ASC = "screenName ASC";
 
-	public static final String ORDER_BY_DESC = "User_.screenName DESC";
+	public static final String ORDER_BY_DESC = "screenName DESC";
 
 	public static final String[] ORDER_BY_FIELDS = {"screenName"};
 

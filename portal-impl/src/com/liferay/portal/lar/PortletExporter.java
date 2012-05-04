@@ -65,10 +65,10 @@ import com.liferay.portlet.asset.model.AssetCategoryProperty;
 import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.model.AssetTagProperty;
 import com.liferay.portlet.asset.model.AssetVocabulary;
+import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetCategoryPropertyLocalServiceUtil;
-import com.liferay.portlet.asset.service.AssetCategoryServiceUtil;
+import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagPropertyLocalServiceUtil;
-import com.liferay.portlet.asset.service.AssetTagServiceUtil;
 import com.liferay.portlet.asset.service.persistence.AssetCategoryUtil;
 import com.liferay.portlet.asset.service.persistence.AssetVocabularyUtil;
 import com.liferay.portlet.expando.model.ExpandoColumn;
@@ -368,7 +368,7 @@ public class PortletExporter {
 				"category-uuids", StringUtil.merge(entry.getValue()));
 
 			List<AssetCategory> assetCategories =
-				AssetCategoryServiceUtil.getCategories(className, classPK);
+				AssetCategoryLocalServiceUtil.getCategories(className, classPK);
 
 			for (AssetCategory assestCategory : assetCategories) {
 				exportAssetCategory(
@@ -545,7 +545,7 @@ public class PortletExporter {
 				"tags", StringUtil.merge(entry.getValue()));
 		}
 
-		List<AssetTag> assetTags = AssetTagServiceUtil.getGroupTags(
+		List<AssetTag> assetTags = AssetTagLocalServiceUtil.getGroupTags(
 			portletDataContext.getScopeGroupId());
 
 		for (AssetTag assetTag : assetTags) {

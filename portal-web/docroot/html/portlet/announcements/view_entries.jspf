@@ -129,7 +129,7 @@ hasResults = hasResults || (total > 0);
 	);
 </aui:script>
 
-<c:if test="<%= !hasResults && portletName.equals(PortletKeys.ALERTS) && !PortletPermissionUtil.contains(permissionChecker, layout, PortletKeys.ANNOUNCEMENTS, ActionKeys.ADD_ENTRY) %>">
+<c:if test="<%= !hasResults && portletName.equals(PortletKeys.ALERTS) && !AnnouncementsEntryPermission.contains(permissionChecker, layout, PortletKeys.ANNOUNCEMENTS, ActionKeys.ADD_ENTRY) %>">
 	<aui:script use="aui-base">
 		var portlet = A.one('#p_p_id<portlet:namespace />');
 

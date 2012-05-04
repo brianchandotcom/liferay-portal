@@ -25,7 +25,6 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.service.permission.OrganizationPermissionUtil;
-import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.service.permission.RolePermissionUtil;
 import com.liferay.portal.service.permission.UserGroupPermissionUtil;
 import com.liferay.portal.util.PortalUtil;
@@ -53,12 +52,12 @@ public class AnnouncementsEntryServiceImpl
 		PermissionChecker permissionChecker = getPermissionChecker();
 
 		if (alert) {
-			PortletPermissionUtil.check(
+			AnnouncementsEntryPermission.check(
 				permissionChecker, plid, PortletKeys.ALERTS,
 				ActionKeys.ADD_ENTRY);
 		}
 		else {
-			PortletPermissionUtil.check(
+			AnnouncementsEntryPermission.check(
 				permissionChecker, plid, PortletKeys.ANNOUNCEMENTS,
 				ActionKeys.ADD_ENTRY);
 		}

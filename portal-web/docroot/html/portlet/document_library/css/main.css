@@ -155,10 +155,17 @@
 		margin: 0 0 0.5em 0.5em;
 	}
 
-	img.locked-icon, img.shortcut-icon {
+	img.locked-icon {
 		bottom: 12px;
 		position: absolute;
 		right: 0;
+		z-index: 10;
+	}
+
+	img.shortcut-icon {
+		bottom: 12px;
+		position: absolute;
+		left: 0;
 		z-index: 10;
 	}
 
@@ -252,6 +259,7 @@
 			}
 
 			.document-thumbnail {
+				display: inline-block;
 				float: left;
 				margin: 5px 10px 5px 5px;
 				position: relative;
@@ -298,8 +306,9 @@
 			}
 
 			.document-thumbnail {
-				text-align: center;
+				display: inline-block;
 				position: relative;
+				text-align: center;
 			}
 
 			.entry-title {

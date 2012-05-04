@@ -922,7 +922,7 @@
 .firefox {
 	.portlet-document-library, .portlet-document-library-display {
 		.aui-audio-node {
-			height: 2.3em;
+			height: 28px;
 		}
 	}
 }

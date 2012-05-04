@@ -74,6 +74,7 @@ for (String previewFileURL : previewFileURLs) {
 						allowfullscreen: 'true',
 						bgColor: '#000000'
 					},
+
 					<c:if test="<%= Validator.isNotNull(ogvPreviewFileURL) %>">
 						ogvUrl: '<%= ogvPreviewFileURL %>',
 					</c:if>

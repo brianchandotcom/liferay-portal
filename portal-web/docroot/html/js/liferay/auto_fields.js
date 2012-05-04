@@ -235,7 +235,7 @@ AUI.add(
 					serialize: function(filter) {
 						var instance = this;
 
-						var visibleRows = instance._contentBox.all('.lfr-form-row:visible');
+						var visibleRows = instance._contentBox.all('.lfr-form-row').each(instance._clearHiddenRows, instance);
 
 						var serializedData = [];
 

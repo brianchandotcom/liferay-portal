@@ -16,6 +16,10 @@ package com.liferay.portal.kernel.messaging;
 
 import com.liferay.portal.kernel.messaging.sender.MessageSender;
 import com.liferay.portal.kernel.messaging.sender.SynchronousMessageSender;
+import com.liferay.portal.kernel.security.pacl.PACLConstants;
+import com.liferay.portal.kernel.security.pacl.permission.PortalMessageBusPermission;
+
+import java.security.Permission;
 
 /**
  * @author Michael C. Han
@@ -178,6 +182,16 @@ public class MessageBusUtil {
 	}
 
 	private void _sendMessage(String destinationName, Message message) {
+		SecurityManager securityManager = System.getSecurityManager();
+
+		if (securityManager != null) {
+			Permission permission = new PortalMessageBusPermission(
+				PACLConstants.PORTAL_MESSAGE_BUS_PERMISSION_SEND,
+				destinationName);
+
+			securityManager.checkPermission(permission);
+		}
+
 		_messageBus.sendMessage(destinationName, message);
 	}
 

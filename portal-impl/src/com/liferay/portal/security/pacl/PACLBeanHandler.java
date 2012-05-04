@@ -90,7 +90,7 @@ public class PACLBeanHandler implements InvocationHandler {
 			}
 		}
 
-		PACLPolicy paclPolicy = PACLClassUtil.getPACLPolicyByReflection(debug);
+		PACLPolicy paclPolicy = PACLClassUtil.getPACLPolicy(debug);
 
 		if (debug) {
 			if (paclPolicy != null) {

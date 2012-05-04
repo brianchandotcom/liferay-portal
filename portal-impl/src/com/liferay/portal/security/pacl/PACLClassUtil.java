@@ -40,6 +40,17 @@ public class PACLClassUtil {
 		}
 	}
 
+	public static PACLPolicy getPACLPolicy(boolean debug) {
+		PACLPolicy paclPolicy =
+			PortalSecurityManagerThreadLocal.getPACLPolicy();
+
+		if (paclPolicy != null) {
+			return paclPolicy;
+		}
+
+		return getPACLPolicyByReflection(debug);
+	}
+
 	public static PACLPolicy getPACLPolicyByReflection(boolean debug) {
 		boolean enabled = PortalSecurityManagerThreadLocal.isEnabled();
 

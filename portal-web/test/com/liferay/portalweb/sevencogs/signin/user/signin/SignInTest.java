@@ -83,6 +83,6 @@ public class SignInTest extends BaseTestCase {
 			selenium.getText("//a[contains(@class,'user-fullname')]"));
 		assertEquals(RuntimeVariables.replace(
 				"You are signed in as Joe Bloggs."),
-			selenium.getText("//div[@id='p_p_id_58_']/div/div/div[2]"));
+			selenium.getText("//div[@id='p_p_id_58_']/div/div[2]"));
 	}
 }

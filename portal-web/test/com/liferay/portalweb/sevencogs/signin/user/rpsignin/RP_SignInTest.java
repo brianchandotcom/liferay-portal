@@ -51,6 +51,6 @@ public class RP_SignInTest extends BaseTestCase {
 			selenium.getText("//a[contains(@class,'user-fullname')]"));
 		assertEquals(RuntimeVariables.replace(
 				"You are signed in as Richard Publisher."),
-			selenium.getText("//div[@id='p_p_id_58_']/div/div/div"));
+			selenium.getText("//div[@id='p_p_id_58_']/div/div"));
 	}
 }

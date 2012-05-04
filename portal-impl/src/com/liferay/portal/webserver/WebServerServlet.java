@@ -644,6 +644,14 @@ public class WebServerServlet extends HttpServlet {
 			HttpServletResponse response)
 		throws IOException, ServletException {
 
+		if (!PropsValues.WEB_SERVER_SERVLET_HTTP_STATUS_CODE_STRICT) {
+			PortalUtil.sendError(
+				HttpServletResponse.SC_NOT_FOUND,
+				new NoSuchFileEntryException(t), request, response);
+
+				return;
+		}
+
 		if (!user.isDefaultUser()) {
 			PortalUtil.sendError(
 				HttpServletResponse.SC_UNAUTHORIZED, (Exception)t, request,

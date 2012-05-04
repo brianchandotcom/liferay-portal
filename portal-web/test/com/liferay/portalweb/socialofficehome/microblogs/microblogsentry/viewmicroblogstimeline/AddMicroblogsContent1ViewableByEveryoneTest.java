@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddMicroblogsContentViewableByFollowersTest extends BaseTestCase {
-	public void testAddMicroblogsContentViewableByFollowers()
+public class AddMicroblogsContent1ViewableByEveryoneTest extends BaseTestCase {
+	public void testAddMicroblogsContent1ViewableByEveryone()
 		throws Exception {
 		selenium.open("/user/joebloggs/so/dashboard");
 		loadRequiredJavaScriptModules();
@@ -51,8 +51,6 @@ public class AddMicroblogsContentViewableByFollowersTest extends BaseTestCase {
 			selenium.getText("//span[@class='portlet-title-default']"));
 		assertTrue(selenium.isElementPresent(
 				"//div[contains(@id,'_1_WAR_microblogsportlet_autocompleteContent')]"));
-		assertEquals(RuntimeVariables.replace("You have no microblogs entry."),
-			selenium.getText("//div[@class='portlet-msg-info']"));
 		selenium.clickAt("//div[contains(@id,'_1_WAR_microblogsportlet_autocompleteContent')]",
 			RuntimeVariables.replace("Update your status..."));
 
@@ -97,7 +95,7 @@ public class AddMicroblogsContentViewableByFollowersTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("135"),
 			selenium.getText("//span[@class='microblogs-countdown']"));
 		selenium.select("//select[@id='_1_WAR_microblogsportlet_socialRelationType']",
-			RuntimeVariables.replace("Followers"));
+			RuntimeVariables.replace("Everyone"));
 		selenium.clickAt("//input[@value='Post']",
 			RuntimeVariables.replace("Post"));
 

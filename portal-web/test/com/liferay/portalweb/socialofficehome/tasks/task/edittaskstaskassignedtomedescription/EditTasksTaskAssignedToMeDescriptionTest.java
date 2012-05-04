@@ -95,9 +95,8 @@ public class EditTasksTaskAssignedToMeDescriptionTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("Update Task")
-										.equals(selenium.getText(
-								"//h1[@class='header-title']"))) {
+				if (selenium.isVisible(
+							"//input[@id='_1_WAR_tasksportlet_title']")) {
 					break;
 				}
 			}
@@ -107,9 +106,7 @@ public class EditTasksTaskAssignedToMeDescriptionTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Update Task"),
-			selenium.getText("//h1[@class='header-title']"));
-		selenium.type("//input[@class='input-task-description lfr-input-text']",
+		selenium.type("//input[@id='_1_WAR_tasksportlet_title']",
 			RuntimeVariables.replace("Task Description Edit"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));

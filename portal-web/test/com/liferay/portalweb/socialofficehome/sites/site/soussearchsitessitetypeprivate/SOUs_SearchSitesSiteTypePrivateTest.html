@@ -74,24 +74,9 @@
 	<td>Directory</td>
 </tr>
 <tr>
-	<td>storeChecked</td>
-	<td>//input[@id='_5_WAR_soportlet_userSites']</td>
-	<td>mySitesChecked1</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${mySitesChecked1}</td>
-	<td>MySitesNotChecked1</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//input[@id='_5_WAR_soportlet_userSites']</td>
-	<td>My Sites</td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>MySitesNotChecked1</td>
-	<td></td>
+	<td>select</td>
+	<td>//span[@class='sites-tabs']/span/span/span/select</td>
+	<td>All Sites</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
@@ -114,24 +99,9 @@
 	<td>There are no results.</td>
 </tr>
 <tr>
-	<td>storeChecked</td>
-	<td>//input[@id='_5_WAR_soportlet_userSites']</td>
-	<td>mySitesChecked2</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>${mySitesChecked2}</td>
-	<td>MySitesChecked2</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//input[@id='_5_WAR_soportlet_userSites']</td>
+	<td>select</td>
+	<td>//span[@class='sites-tabs']/span/span/span/select</td>
 	<td>My Sites</td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>MySitesChecked2</td>
-	<td></td>
 </tr>
 <tr>
 	<td>assertVisible</td>
@@ -153,7 +123,6 @@
 	<td>//li[@class='empty']</td>
 	<td>There are no results.</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

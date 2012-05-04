@@ -104,27 +104,6 @@ public class EditTasksTaskAssignedToMeDueDateTest extends BaseTestCase {
 					}
 
 					try {
-						if (RuntimeVariables.replace("Update Task")
-												.equals(selenium.getText(
-										"//h1[@class='header-title']"))) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				assertEquals(RuntimeVariables.replace("Update Task"),
-					selenium.getText("//h1[@class='header-title']"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
 						if (selenium.isVisible(
 									"//input[@id='_1_WAR_tasksportlet_neverDueCheckbox']")) {
 							break;

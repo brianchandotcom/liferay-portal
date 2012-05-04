@@ -237,6 +237,9 @@ public class FileChecker extends BaseChecker {
 			paths.add(
 				_portalDir + "WEB-INF/classes/META-INF/services/" +
 					"javax.el.ExpressionFactory");
+			paths.add(_portalDir + "WEB-INF/lib/hibernate3.jar");
+			paths.add(_portalDir + "WEB-INF/lib/log4j-extras.jar");
+			paths.add(_portalDir + "WEB-INF/lib/spring-beans.jar");
 			paths.add(_portalDir + "WEB-INF/tld/-");
 		}
 

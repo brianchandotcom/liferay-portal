@@ -138,15 +138,21 @@ if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
 }
 
 boolean showActions = PrefsParamUtil.getBoolean(preferences, request, "showActions");
+boolean showAssetMetadata = ParamUtil.getBoolean(request, "showAssetMetadata");
 boolean showAddFolderButton = false;
 boolean showFolderMenu = PrefsParamUtil.getBoolean(preferences, request, "showFolderMenu");
+boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 boolean showTabs = PrefsParamUtil.getBoolean(preferences, request, "showTabs");
 
-if (portletId.equals(PortletKeys.DOCUMENT_LIBRARY)) {
+if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY)) {
 	showActions = true;
+	showAssetMetadata = true;
 	showAddFolderButton = true;
 	showFolderMenu = true;
 	showTabs = true;
+}
+else if (portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY) || portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY)) {
+	showAssetMetadata = true;
 }
 
 boolean enableRelatedAssets = GetterUtil.getBoolean(preferences.getValue("enableRelatedAssets", null), true);

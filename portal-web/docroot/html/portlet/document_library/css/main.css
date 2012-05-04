@@ -176,20 +176,6 @@
 		}
 	}
 
-	.lfr-actions {
-		&.lfr-extended .lfr-trigger {
-			min-width: auto;
-
-			strong {
-				min-width: 10px;
-			}
-		}
-
-		&.show-arrow.direction-down .lfr-trigger strong a {
-			background: url(@theme_image_path@/arrows/08_down.png) 100% -5px no-repeat;
-		}
-	}
-
 	.document-display-style {
 		a {
 			color: #333;
@@ -662,6 +648,62 @@
 		z-index: 9999;
 	}
 
+	.lfr-document-library-comments.lfr-panel.lfr-extended {
+		background: #FFF;
+		border-width: 0;
+		border-right: 1px solid #CCC;
+		margin-bottom: 0;
+
+		.lfr-panel-titlebar {
+			margin-top: 0;
+		}
+	}
+
+	.version.document-locked {
+		background: url(@theme_image_path@/common/lock.png) no-repeat 0 50%;
+		padding-left: 20px;
+	}
+
+	.common-file-metadata-container {
+		padding: 1em;
+
+		.aui-field-element {
+			display: block;
+
+			textarea {
+				width: 100% !important;
+			}
+		}
+
+		&.selected {
+			background-color: #D3E8F1;
+		}
+
+		.selected-files-count {
+			border-bottom: 1px solid #C8C9CA;
+			color: #555;
+			font-size: 1.8em;
+			font-weight: bold;
+			margin-bottom: 10px;
+			overflow: hidden;
+		}
+
+		.document-type .lfr-panel-content {
+			min-height: 35px;
+		}
+
+		.document-type-fields {
+			clear: left;
+			padding-top: 0.5em;
+		}
+
+		.categorization-panel {
+			clear: left;
+		}
+	}
+}
+
+.portlet-document-library, .portlet-document-library-display, .portlet-trash {
 	.document-info {
 		background: #D2DDE7;
 		border-bottom: 1px solid #6D6D6E;
@@ -741,60 +783,6 @@
 		margin: 0 auto;
 	}
 
-	.lfr-document-library-comments.lfr-panel.lfr-extended {
-		background: #FFF;
-		border-width: 0;
-		border-right: 1px solid #CCC;
-		margin-bottom: 0;
-
-		.lfr-panel-titlebar {
-			margin-top: 0;
-		}
-	}
-
-	.version.document-locked {
-		background: url(@theme_image_path@/common/lock.png) no-repeat 0 50%;
-		padding-left: 20px;
-	}
-
-	.common-file-metadata-container {
-		padding: 1em;
-
-		.aui-field-element {
-			display: block;
-
-			textarea {
-				width: 100% !important;
-			}
-		}
-
-		&.selected {
-			background-color: #D3E8F1;
-		}
-
-		.selected-files-count {
-			border-bottom: 1px solid #C8C9CA;
-			color: #555;
-			font-size: 1.8em;
-			font-weight: bold;
-			margin-bottom: 10px;
-			overflow: hidden;
-		}
-
-		.document-type .lfr-panel-content {
-			min-height: 35px;
-		}
-
-		.document-type-fields {
-			clear: left;
-			padding-top: 0.5em;
-		}
-
-		.categorization-panel {
-			clear: left;
-		}
-	}
-
 	.taglib-ratings.stars {
 		border: 1px solid transparent;
 		display: inline-block;
@@ -833,6 +821,20 @@
 
 		.liferay-rating-score {
 			padding-left: 0;
+		}
+	}
+
+	.lfr-actions {
+		&.lfr-extended .lfr-trigger {
+			min-width: auto;
+
+			strong {
+				min-width: 10px;
+			}
+		}
+
+		&.show-arrow.direction-down .lfr-trigger strong a {
+			background: url(@theme_image_path@/arrows/08_down.png) 100% -5px no-repeat;
 		}
 	}
 }

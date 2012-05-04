@@ -94,6 +94,8 @@ portletURL.setParameter("tabs1", tabs1);
 			AssetRendererFactory assetRendererFactory = trashHandler.getAssetRendererFactory();
 
 			viewFullContentURL.setParameter("type", assetRendererFactory.getType());
+			viewFullContentURL.setParameter("showActions", String.valueOf(Boolean.FALSE));
+			viewFullContentURL.setParameter("showAssetMetadata", String.valueOf(Boolean.TRUE));
 			viewFullContentURL.setParameter("showEditURL", String.valueOf(Boolean.FALSE));
 			%>
 

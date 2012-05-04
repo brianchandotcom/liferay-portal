@@ -84,7 +84,9 @@ try {
 %>
 
 	<div>
-		<liferay-util:include page="/html/portlet/asset_publisher/display/full_content.jsp" />
+		<liferay-util:include page="/html/portlet/asset_publisher/display/full_content.jsp">
+			<liferay-util:param name="showHeader" value="<%= Boolean.FALSE.toString() %>" />
+		</liferay-util:include>
 	</div>
 
 	<liferay-util:include page="/html/portlet/asset_publisher/asset_html_metadata.jsp" />

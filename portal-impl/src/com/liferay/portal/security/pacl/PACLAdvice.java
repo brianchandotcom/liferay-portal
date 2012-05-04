@@ -65,7 +65,7 @@ public class PACLAdvice extends ChainableMethodAdvice {
 			}
 		}
 
-		PACLPolicy paclPolicy = PACLClassUtil.getPACLPolicyByReflection(debug);
+		PACLPolicy paclPolicy = PACLClassUtil.getPACLPolicy(debug);
 
 		if (debug) {
 			if (paclPolicy != null) {

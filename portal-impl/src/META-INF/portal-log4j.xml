@@ -302,6 +302,10 @@
 		<priority value="ERROR" />
 	</category>
 
+	<category name="com.liferay.portal.kernel.messaging.config.AbstractMessagingConfigurator">
+		<priority value="INFO" />
+	</category>
+
 	<category name="com.liferay.portal.kernel.search.HitsOpenSearchImpl">
 		<priority value="WARN" />
 	</category>
@@ -487,6 +491,10 @@
 	</category>
 
 	<category name="com.liferay.portal.security.pacl.checker.PortalHookChecker">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="com.liferay.portal.security.pacl.checker.PortalMessageBusChecker">
 		<priority value="ERROR" />
 	</category>
 

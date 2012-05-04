@@ -16,7 +16,15 @@ package com.liferay.portal.security.pacl.checker;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.config.AbstractMessagingConfigurator;
 
+import org.hibernate.property.BasicPropertyAccessor;
+import org.hibernate.tuple.entity.EntityTuplizerFactory;
+import org.hibernate.util.ReflectHelper;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.support.SimpleInstantiationStrategy;
+import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
 import org.springframework.util.ReflectionUtils;
 
 import sun.reflect.Reflection;
@@ -28,10 +36,25 @@ import sun.reflect.Reflection;
 public abstract class BaseReflectChecker extends BaseChecker {
 
 	protected boolean hasReflect(String name, String actions) {
+		/*for (int i = 6; i < 11; i++) {
+			System.out.println(
+				"caller class " + i + " " + Reflection.getCallerClass(i));
+		}*/
 
 		// JSP compiler
 
 		if (isJSPCompiler(name, actions)) {
+			return true;
+		}
+
+		// com.liferay.portal.kernel.messaging.config.
+		// AbstractMessagingConfigurator
+
+		Class<?> callerClass9 = Reflection.getCallerClass(9);
+
+		if (callerClass9 == AbstractMessagingConfigurator.class) {
+			logReflect(callerClass9, 9);
+
 			return true;
 		}
 
@@ -49,10 +72,60 @@ public abstract class BaseReflectChecker extends BaseChecker {
 
 		// java.lang.Thread
 
-		Class<?> callerClass9 = Reflection.getCallerClass(9);
-
 		if ((callerClass9.getEnclosingClass() == Thread.class) &&
 			CheckerUtil.isAccessControllerDoPrivileged(10)) {
+
+			logReflect(callerClass9, 9);
+
+			return true;
+		}
+
+		// org.hibernate.property.BasicPropertyAccessor
+
+		if (callerClass9 == BasicPropertyAccessor.class) {
+			logReflect(callerClass9, 9);
+
+			return true;
+		}
+
+		// org.hibernate.tuple.entity.EntityTuplizerFactory
+
+		if (callerClass7 == EntityTuplizerFactory.class) {
+			logReflect(callerClass7, 7);
+
+			return true;
+		}
+
+		// org.hibernate.util.ReflectHelper
+
+		if (callerClass9 == ReflectHelper.class) {
+			logReflect(callerClass9, 9);
+
+			return true;
+		}
+
+		// org.springframework.beans.BeanUtils
+
+		if (callerClass9 == BeanUtils.class) {
+			logReflect(callerClass9, 9);
+
+			return true;
+		}
+
+		// org.springframework.beans.factory.support.SimpleInstantiationStrategy
+
+		if (callerClass9.getEnclosingClass() ==
+				SimpleInstantiationStrategy.class) {
+
+			logReflect(callerClass9, 9);
+
+			return true;
+		}
+
+		// org.springframework.core.LocalVariableTableParameterNameDiscoverer
+
+		if (callerClass9.getEnclosingClass() ==
+				LocalVariableTableParameterNameDiscoverer.class) {
 
 			logReflect(callerClass9, 9);
 
@@ -78,7 +151,7 @@ public abstract class BaseReflectChecker extends BaseChecker {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Rejecting call stack:");
 
-			for (int i = 5; i < 11; i++) {
+			for (int i = 6; i < 11; i++) {
 				_log.debug("Frame " + i + " " + Reflection.getCallerClass(i));
 			}
 		}

@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.portlet;
 
 import com.liferay.portal.kernel.security.pacl.PACLConstants;
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.servlet.PluginContextListener;
 import com.liferay.portal.kernel.util.StringPool;
 
@@ -64,12 +65,18 @@ public class PortletClassLoaderUtil {
 	}
 
 	public static void setClassLoader(ClassLoader classLoader) {
+		PortalRuntimePermission.checkSetBeanProperty(
+			PortletClassLoaderUtil.class);
+
 		Thread currentThread = Thread.currentThread();
 
 		_classLoaders.put(currentThread.getId(), classLoader);
 	}
 
 	public static void setServletContextName(String servletContextName) {
+		PortalRuntimePermission.checkSetBeanProperty(
+			PortletClassLoaderUtil.class);
+
 		_servletContextName = servletContextName;
 	}
 

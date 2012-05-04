@@ -89,14 +89,20 @@ public class PortalSecurityManager extends SecurityManager {
 	}
 
 	protected PACLPolicy getPACLPolicy(Permission permission) {
+		PACLPolicy paclPolicy =
+			PortalSecurityManagerThreadLocal.getPACLPolicy();
+
+		if (paclPolicy != null) {
+			return paclPolicy;
+		}
+
 		if (permission instanceof PortalHookPermission) {
 			PortalHookPermission portalHookPermission =
 				(PortalHookPermission)permission;
 
 			ClassLoader classLoader = portalHookPermission.getClassLoader();
 
-			PACLPolicy paclPolicy = PACLPolicyManager.getPACLPolicy(
-				classLoader);
+			paclPolicy = PACLPolicyManager.getPACLPolicy(classLoader);
 
 			if (paclPolicy == null) {
 				paclPolicy = PACLPolicyManager.getDefaultPACLPolicy();

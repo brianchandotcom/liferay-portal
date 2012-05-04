@@ -255,7 +255,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="3" />
+		<property name="build-test-ant-scripts.version" value="4" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -1834,6 +1834,12 @@
 			<param name="test.ant.script.command" value="social-office-home-tasks" />
 			<param name="test.ant.script.social.office" value="true" />
 			<param name="test.ant.script.suite" value="SocialOfficeHomeTasksTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="social-office-home-upcoming-tasks" />
+			<param name="test.ant.script.social.office" value="true" />
+			<param name="test.ant.script.suite" value="SocialOfficeHomeUpcomingTasksTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">

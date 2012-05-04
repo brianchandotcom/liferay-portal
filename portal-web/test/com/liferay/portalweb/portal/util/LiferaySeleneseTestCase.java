@@ -26,11 +26,15 @@ import com.thoughtworks.selenium.SeleneseTestCase;
 public class LiferaySeleneseTestCase extends SeleneseTestCase {
 
 	public static void assertEquals(String expected, String actual) {
-		SeleneseTestBase.assertEquals(expected, actual);
+		SeleneseTestBase.assertEquals(
+			RuntimeVariables.replace(expected),
+			RuntimeVariables.replace(actual));
 	}
 
 	public static void assertNotEquals(String expected, String actual) {
-		SeleneseTestBase.assertNotEquals(expected, actual);
+		SeleneseTestBase.assertNotEquals(
+			RuntimeVariables.replace(expected),
+			RuntimeVariables.replace(actual));
 	}
 
 	public LiferaySeleneseTestCase() {

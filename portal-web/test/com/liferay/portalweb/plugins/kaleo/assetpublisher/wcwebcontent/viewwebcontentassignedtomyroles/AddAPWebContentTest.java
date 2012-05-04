@@ -46,7 +46,9 @@ public class AddAPWebContentTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		Thread.sleep(5000);
-		selenium.clickAt("//div/span/ul/li/strong/a",
+		assertEquals(RuntimeVariables.replace("Add New"),
+			selenium.getText("//span[@title='Add New']/ul/li/strong/a"));
+		selenium.clickAt("//span[@title='Add New']/ul/li/strong/a",
 			RuntimeVariables.replace("Add New"));
 
 		for (int second = 0;; second++) {
@@ -69,8 +71,8 @@ public class AddAPWebContentTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Web Content"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a");
-		Thread.sleep(5000);
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a",
+			RuntimeVariables.replace("Web Content"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -90,7 +92,101 @@ public class AddAPWebContentTest extends BaseTestCase {
 
 		selenium.type("//input[@id='_15_title_en_US']",
 			RuntimeVariables.replace("Web Content Name"));
-		Thread.sleep(5000);
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//span[.='Source']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("Source"),
+			selenium.getText("//span[.='Source']"));
+		selenium.clickAt("//span[.='Source']",
+			RuntimeVariables.replace("Source"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//a[@class='cke_button_source cke_on']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/textarea")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.type("//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/textarea",
+			RuntimeVariables.replace("Web Content Content"));
+		assertEquals(RuntimeVariables.replace("Source"),
+			selenium.getText("//span[.='Source']"));
+		selenium.clickAt("//span[.='Source']",
+			RuntimeVariables.replace("Source"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -111,7 +207,24 @@ public class AddAPWebContentTest extends BaseTestCase {
 
 		selenium.selectFrame(
 			"//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe");
-		selenium.type("//body", RuntimeVariables.replace("Web Content Content"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Web Content Content")
+										.equals(selenium.getText("//body"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.selectFrame("relative=top");
 
 		for (int second = 0;; second++) {

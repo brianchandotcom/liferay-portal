@@ -3533,7 +3533,10 @@
 			<basic name="classPK" />
 			<basic name="typeSettings" />
 			<basic name="status" />
+			<basic name="deletedByUserId" />
+			<basic name="deletedByUserName" />
 			<transient name="className" />
+			<transient name="deletedByUserUuid" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />

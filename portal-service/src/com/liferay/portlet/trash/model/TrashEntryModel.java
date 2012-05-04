@@ -15,6 +15,7 @@
 package com.liferay.portlet.trash.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.AttachedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
@@ -181,6 +182,50 @@ public interface TrashEntryModel extends AttachedModel, BaseModel<TrashEntry> {
 	 * @param status the status of this trash entry
 	 */
 	public void setStatus(int status);
+
+	/**
+	 * Returns the deleted by user ID of this trash entry.
+	 *
+	 * @return the deleted by user ID of this trash entry
+	 */
+	public long getDeletedByUserId();
+
+	/**
+	 * Sets the deleted by user ID of this trash entry.
+	 *
+	 * @param deletedByUserId the deleted by user ID of this trash entry
+	 */
+	public void setDeletedByUserId(long deletedByUserId);
+
+	/**
+	 * Returns the deleted by user uuid of this trash entry.
+	 *
+	 * @return the deleted by user uuid of this trash entry
+	 * @throws SystemException if a system exception occurred
+	 */
+	public String getDeletedByUserUuid() throws SystemException;
+
+	/**
+	 * Sets the deleted by user uuid of this trash entry.
+	 *
+	 * @param deletedByUserUuid the deleted by user uuid of this trash entry
+	 */
+	public void setDeletedByUserUuid(String deletedByUserUuid);
+
+	/**
+	 * Returns the deleted by user name of this trash entry.
+	 *
+	 * @return the deleted by user name of this trash entry
+	 */
+	@AutoEscape
+	public String getDeletedByUserName();
+
+	/**
+	 * Sets the deleted by user name of this trash entry.
+	 *
+	 * @param deletedByUserName the deleted by user name of this trash entry
+	 */
+	public void setDeletedByUserName(String deletedByUserName);
 
 	public boolean isNew();
 

@@ -35,7 +35,7 @@ public class TrashEntryCacheModel implements CacheModel<TrashEntry>,
 	Serializable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{entryId=");
 		sb.append(entryId);
@@ -53,6 +53,10 @@ public class TrashEntryCacheModel implements CacheModel<TrashEntry>,
 		sb.append(typeSettings);
 		sb.append(", status=");
 		sb.append(status);
+		sb.append(", deletedByUserId=");
+		sb.append(deletedByUserId);
+		sb.append(", deletedByUserName=");
+		sb.append(deletedByUserName);
 		sb.append("}");
 
 		return sb.toString();
@@ -83,6 +87,14 @@ public class TrashEntryCacheModel implements CacheModel<TrashEntry>,
 		}
 
 		trashEntryImpl.setStatus(status);
+		trashEntryImpl.setDeletedByUserId(deletedByUserId);
+
+		if (deletedByUserName == null) {
+			trashEntryImpl.setDeletedByUserName(StringPool.BLANK);
+		}
+		else {
+			trashEntryImpl.setDeletedByUserName(deletedByUserName);
+		}
 
 		trashEntryImpl.resetOriginalValues();
 
@@ -97,4 +109,6 @@ public class TrashEntryCacheModel implements CacheModel<TrashEntry>,
 	public long classPK;
 	public String typeSettings;
 	public int status;
+	public long deletedByUserId;
+	public String deletedByUserName;
 }

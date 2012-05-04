@@ -53,6 +53,8 @@ public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {
 		attributes.put("classPK", getClassPK());
 		attributes.put("typeSettings", getTypeSettings());
 		attributes.put("status", getStatus());
+		attributes.put("deletedByUserId", getDeletedByUserId());
+		attributes.put("deletedByUserName", getDeletedByUserName());
 
 		return attributes;
 	}
@@ -104,6 +106,18 @@ public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {
 
 		if (status != null) {
 			setStatus(status);
+		}
+
+		Long deletedByUserId = (Long)attributes.get("deletedByUserId");
+
+		if (deletedByUserId != null) {
+			setDeletedByUserId(deletedByUserId);
+		}
+
+		String deletedByUserName = (String)attributes.get("deletedByUserName");
+
+		if (deletedByUserName != null) {
+			setDeletedByUserName(deletedByUserName);
 		}
 	}
 
@@ -280,6 +294,62 @@ public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {
 	*/
 	public void setStatus(int status) {
 		_trashEntry.setStatus(status);
+	}
+
+	/**
+	* Returns the deleted by user ID of this trash entry.
+	*
+	* @return the deleted by user ID of this trash entry
+	*/
+	public long getDeletedByUserId() {
+		return _trashEntry.getDeletedByUserId();
+	}
+
+	/**
+	* Sets the deleted by user ID of this trash entry.
+	*
+	* @param deletedByUserId the deleted by user ID of this trash entry
+	*/
+	public void setDeletedByUserId(long deletedByUserId) {
+		_trashEntry.setDeletedByUserId(deletedByUserId);
+	}
+
+	/**
+	* Returns the deleted by user uuid of this trash entry.
+	*
+	* @return the deleted by user uuid of this trash entry
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.lang.String getDeletedByUserUuid()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _trashEntry.getDeletedByUserUuid();
+	}
+
+	/**
+	* Sets the deleted by user uuid of this trash entry.
+	*
+	* @param deletedByUserUuid the deleted by user uuid of this trash entry
+	*/
+	public void setDeletedByUserUuid(java.lang.String deletedByUserUuid) {
+		_trashEntry.setDeletedByUserUuid(deletedByUserUuid);
+	}
+
+	/**
+	* Returns the deleted by user name of this trash entry.
+	*
+	* @return the deleted by user name of this trash entry
+	*/
+	public java.lang.String getDeletedByUserName() {
+		return _trashEntry.getDeletedByUserName();
+	}
+
+	/**
+	* Sets the deleted by user name of this trash entry.
+	*
+	* @param deletedByUserName the deleted by user name of this trash entry
+	*/
+	public void setDeletedByUserName(java.lang.String deletedByUserName) {
+		_trashEntry.setDeletedByUserName(deletedByUserName);
 	}
 
 	public boolean isNew() {

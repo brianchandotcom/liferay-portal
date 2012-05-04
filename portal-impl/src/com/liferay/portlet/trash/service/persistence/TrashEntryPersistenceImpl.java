@@ -448,6 +448,8 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 		trashEntryImpl.setClassPK(trashEntry.getClassPK());
 		trashEntryImpl.setTypeSettings(trashEntry.getTypeSettings());
 		trashEntryImpl.setStatus(trashEntry.getStatus());
+		trashEntryImpl.setDeletedByUserId(trashEntry.getDeletedByUserId());
+		trashEntryImpl.setDeletedByUserName(trashEntry.getDeletedByUserName());
 
 		return trashEntryImpl;
 	}

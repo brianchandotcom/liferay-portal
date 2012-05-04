@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -89,7 +90,7 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 	public Object[] getEntries(long groupId)
 		throws SystemException, PrincipalException {
 
-		return getEntries(groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		return getEntries(groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
@@ -99,17 +100,21 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 	 * @param  start the lower bound of the range of trash entries to return
 	 * @param  end the upper bound of the range of trash entries to return (not
 	 *         inclusive)
-	 * @return the range of matching trash entries
+	 * @param  obc the comparator to order the trash entries (optionally
+	 *         <code>null</code>)
+	 * @return the range of matching trash entries ordered by comparator
+	 *         <code>obc</code>
 	 * @throws SystemException if a system exception occurred
 	 * @throws PrincipalException if a system exception occurred
 	 */
-	public Object[] getEntries(long groupId, int start, int end)
+	public Object[] getEntries(
+			long groupId, int start, int end, OrderByComparator obc)
 		throws SystemException, PrincipalException {
 
 		int entriesCount = trashEntryLocalService.getEntriesCount(groupId);
 
 		List<TrashEntry> entries = trashEntryLocalService.getEntries(
-			groupId, 0, end + PropsValues.TRASH_SEARCH_LIMIT);
+			groupId, 0, end + PropsValues.TRASH_SEARCH_LIMIT, obc);
 
 		List<TrashEntry> filteredEntries = new ArrayList<TrashEntry>();
 

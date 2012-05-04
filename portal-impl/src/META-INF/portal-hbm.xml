@@ -2547,6 +2547,8 @@
 		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="typeSettings" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="deletedByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="deletedByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portlet.trash.model.impl.TrashVersionImpl" table="TrashVersion">
 		<cache usage="read-write" />

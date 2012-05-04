@@ -1908,7 +1908,7 @@
 		<use-default-template>false</use-default-template>
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
-		<header-portlet-css>/html/portlet/trash/css/main.css</header-portlet-css>
+		<header-portlet-css>/html/portlet/document_library/css/main.css</header-portlet-css>
 		<css-class-wrapper>portlet-trash</css-class-wrapper>
 	</portlet>
 	<role-mapper>

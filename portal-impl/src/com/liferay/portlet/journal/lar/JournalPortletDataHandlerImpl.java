@@ -1267,11 +1267,32 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 					smallFile, serviceContext);
 			}
 			else {
+				String structureId = existingTemplate.getStructureId();
+
+				if (Validator.isNull(structureId) &&
+					Validator.isNotNull(template.getStructureId())) {
+
+					JournalStructure structure =
+						JournalStructureUtil.fetchByG_S(
+							template.getGroupId(), template.getStructureId());
+
+					if (structure == null) {
+						structureId = template.getStructureId();
+					}
+					else {
+						JournalStructure existingStructure =
+							JournalStructureUtil.findByUUID_G(
+								structure.getUuid(),
+								portletDataContext.getScopeGroupId());
+
+						structureId = existingStructure.getStructureId();
+					}
+				}
+
 				importedTemplate =
 					JournalTemplateLocalServiceUtil.updateTemplate(
 						existingTemplate.getGroupId(),
-						existingTemplate.getTemplateId(),
-						existingTemplate.getStructureId(),
+						existingTemplate.getTemplateId(), structureId,
 						template.getNameMap(), template.getDescriptionMap(),
 						template.getXsl(), formatXsl, template.getLangType(),
 						template.getCacheable(), template.isSmallImage(),

@@ -23,6 +23,12 @@ import com.liferay.portal.kernel.util.PropsUtil;
  */
 public class DDMTemplateConstants {
 
+	public static final String CUSTOM_ABSTRACTS_TEMPLATE_KEY =
+		"CUSTOM_ABSTRACTS";
+
+	public static final String CUSTOM_TITLE_LIST_TEMPLATE_KEY =
+		"CUSTOM_TITLE_LIST";
+
 	public static final String LANG_TYPE_FTL = "ftl";
 
 	public static final String LANG_TYPE_VM = "vm";

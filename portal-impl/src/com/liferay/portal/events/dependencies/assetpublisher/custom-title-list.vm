@@ -1,0 +1,37 @@
+## Sample Display Style for the Asset Publisher
+
+## Read portlet preferences
+
+#set ($preferences = $renderRequest.getPreferences())
+#set ($assetLinkBehaviour = $preferences.getValue("assetLinkBehavior", ''))
+
+## Iterate the asset entries
+
+<ul class="title-list">
+	#foreach($asset_entry in $assetEntries)
+		   #set ($assetRenderer = $asset_entry.getAssetRenderer())
+		   #set ($assetRendererFactory = $asset_entry.getAssetRendererFactory())
+		   #set ($iconPath = $assetRenderer.getIconPath($renderRequest))
+		   #set ($editURL = $assetRenderer.getURLEdit($renderRequest, $renderResponse))
+		   #set ($viewNoContext = $assetPublisherHelper.getAssetViewURL($renderRequest, $renderResponse, $asset_entry))
+
+		   #if ($assetLinkBehaviour == 'showFullContent')
+				  #set ($viewUrl = $viewNoContext)
+		   #else
+				  #set ($viewUrl = $assetRenderer.getURLViewInContext($renderRequest, $renderResponse, $viewNoContext))
+		   #end
+
+		   <li class="title-list document">
+				<a class="taglib-icon" href="$viewUrl">
+					<img class="icon" src="$iconPath" alt="$asset_entry.getTitle($locale)">
+					<span class="taglib-text">$asset_entry.getTitle($locale)</span>
+				</a>
+
+				<div class="lfr-meta-actions asset-actions">
+					<a class="taglib-icon" href="$editURL">
+						  <img class="icon" src="$themeDisplay.getPathThemeImages()/common/edit.png" alt="Edit $asset_entry.getTitle($locale)" title="Edit $asset_entry.getTitle($locale)">
+					</a>
+				</div>
+			</li>
+	#end
+</ul>

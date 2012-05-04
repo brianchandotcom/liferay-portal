@@ -181,7 +181,7 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 		CacheKeyGenerator cacheKeyGenerator =
 			CacheKeyGeneratorUtil.getCacheKeyGenerator(
 				InvokerFilter.class.getName());
-		
+
 		String key = String.valueOf(cacheKeyGenerator.getCacheKey(uri));
 
 		InvokerFilterChain invokerFilterChain = _filterChains.get(key);

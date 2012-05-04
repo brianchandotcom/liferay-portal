@@ -115,18 +115,18 @@ public class RSSAction extends PortletAction {
 
 			String value = null;
 
+			String languageId = LanguageUtil.getLanguageId(portletRequest);
+
 			if (displayStyle.equals(RSSUtil.DISPLAY_STYLE_TITLE)) {
 				value = StringPool.BLANK;
 			}
 			else {
-				value = assetEntry.getSummary();
+				value = assetEntry.getSummary(languageId, true);
 			}
 
 			SyndEntry syndEntry = new SyndEntryImpl();
 
 			syndEntry.setAuthor(author);
-
-			String languageId = LanguageUtil.getLanguageId(portletRequest);
 
 			syndEntry.setTitle(assetEntry.getTitle(languageId, true));
 

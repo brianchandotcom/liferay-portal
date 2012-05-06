@@ -35,6 +35,8 @@ import java.util.Map;
 
 import jodd.bean.BeanUtil;
 
+import jodd.typeconverter.TypeConverterManager;
+
 import jodd.util.KeyValue;
 import jodd.util.ReflectUtil;
 
@@ -111,7 +113,7 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 
 		for (Object entry : list) {
 			if (entry != null) {
-				entry = ReflectUtil.castType(entry, types[0]);
+				entry = TypeConverterManager.convertType(entry, types[0]);
 			}
 
 			newList.add(entry);
@@ -132,12 +134,13 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 		Map<Object, Object> newMap = new HashMap<Object, Object>(map.size());
 
 		for (Map.Entry<?, ?> entry : map.entrySet()) {
-			Object key = ReflectUtil.castType(entry.getKey(), types[0]);
+			Object key =
+				TypeConverterManager.convertType(entry.getKey(), types[0]);
 
 			Object value = entry.getValue();
 
 			if (value != null) {
-				value = ReflectUtil.castType(value, types[1]);
+				value = TypeConverterManager.convertType(value, types[1]);
 			}
 
 			newMap.put(key, value);
@@ -262,7 +265,8 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 					parameterValue = map;
 				}
 				else {
-					parameterValue = ReflectUtil.castType(value, parameterType);
+					parameterValue =
+						TypeConverterManager.convertType(value, parameterType);
 				}
 			}
 

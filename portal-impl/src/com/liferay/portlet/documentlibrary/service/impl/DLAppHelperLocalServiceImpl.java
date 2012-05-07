@@ -362,7 +362,7 @@ public class DLAppHelperLocalServiceImpl
 
 		trashEntryLocalService.addTrashEntry(
 			userId, fileEntry.getGroupId(), DLFileEntryConstants.getClassName(),
-			fileEntry.getFileEntryId(),	oldStatus, fileVersionStatuses, null);
+			fileEntry.getFileEntryId(), oldStatus, fileVersionStatuses, null);
 
 		// Workflow
 

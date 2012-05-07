@@ -122,7 +122,8 @@ public class TrashEntryServiceHttp {
 	}
 
 	public static java.lang.Object[] getEntries(HttpPrincipal httpPrincipal,
-		long groupId, int start, int end)
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portal.security.auth.PrincipalException {
 		try {
@@ -130,7 +131,7 @@ public class TrashEntryServiceHttp {
 					"getEntries", _getEntriesParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					start, end);
+					start, end, obc);
 
 			Object returnObj = null;
 
@@ -166,6 +167,7 @@ public class TrashEntryServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _getEntriesParameterTypes2 = new Class[] {
-			long.class, int.class, int.class
+			long.class, int.class, int.class,
+			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 }

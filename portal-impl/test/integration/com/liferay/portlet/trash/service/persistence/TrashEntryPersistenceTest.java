@@ -87,6 +87,10 @@ public class TrashEntryPersistenceTest {
 
 		newTrashEntry.setCompanyId(ServiceTestUtil.nextLong());
 
+		newTrashEntry.setUserId(ServiceTestUtil.nextLong());
+
+		newTrashEntry.setUserName(ServiceTestUtil.randomString());
+
 		newTrashEntry.setCreateDate(ServiceTestUtil.nextDate());
 
 		newTrashEntry.setClassNameId(ServiceTestUtil.nextLong());
@@ -107,6 +111,10 @@ public class TrashEntryPersistenceTest {
 			newTrashEntry.getGroupId());
 		Assert.assertEquals(existingTrashEntry.getCompanyId(),
 			newTrashEntry.getCompanyId());
+		Assert.assertEquals(existingTrashEntry.getUserId(),
+			newTrashEntry.getUserId());
+		Assert.assertEquals(existingTrashEntry.getUserName(),
+			newTrashEntry.getUserName());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingTrashEntry.getCreateDate()),
 			Time.getShortTimestamp(newTrashEntry.getCreateDate()));
@@ -258,6 +266,10 @@ public class TrashEntryPersistenceTest {
 		trashEntry.setGroupId(ServiceTestUtil.nextLong());
 
 		trashEntry.setCompanyId(ServiceTestUtil.nextLong());
+
+		trashEntry.setUserId(ServiceTestUtil.nextLong());
+
+		trashEntry.setUserName(ServiceTestUtil.randomString());
 
 		trashEntry.setCreateDate(ServiceTestUtil.nextDate());
 

@@ -15,6 +15,7 @@
 package com.liferay.portlet.trash.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.AttachedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
@@ -101,6 +102,50 @@ public interface TrashEntryModel extends AttachedModel, BaseModel<TrashEntry> {
 	 * @param companyId the company ID of this trash entry
 	 */
 	public void setCompanyId(long companyId);
+
+	/**
+	 * Returns the user ID of this trash entry.
+	 *
+	 * @return the user ID of this trash entry
+	 */
+	public long getUserId();
+
+	/**
+	 * Sets the user ID of this trash entry.
+	 *
+	 * @param userId the user ID of this trash entry
+	 */
+	public void setUserId(long userId);
+
+	/**
+	 * Returns the user uuid of this trash entry.
+	 *
+	 * @return the user uuid of this trash entry
+	 * @throws SystemException if a system exception occurred
+	 */
+	public String getUserUuid() throws SystemException;
+
+	/**
+	 * Sets the user uuid of this trash entry.
+	 *
+	 * @param userUuid the user uuid of this trash entry
+	 */
+	public void setUserUuid(String userUuid);
+
+	/**
+	 * Returns the user name of this trash entry.
+	 *
+	 * @return the user name of this trash entry
+	 */
+	@AutoEscape
+	public String getUserName();
+
+	/**
+	 * Sets the user name of this trash entry.
+	 *
+	 * @param userName the user name of this trash entry
+	 */
+	public void setUserName(String userName);
 
 	/**
 	 * Returns the create date of this trash entry.

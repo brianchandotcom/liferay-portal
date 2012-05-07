@@ -48,6 +48,8 @@ public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {
 		attributes.put("entryId", getEntryId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
+		attributes.put("userId", getUserId());
+		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
@@ -74,6 +76,18 @@ public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {
 
 		if (companyId != null) {
 			setCompanyId(companyId);
+		}
+
+		Long userId = (Long)attributes.get("userId");
+
+		if (userId != null) {
+			setUserId(userId);
+		}
+
+		String userName = (String)attributes.get("userName");
+
+		if (userName != null) {
+			setUserName(userName);
 		}
 
 		Date createDate = (Date)attributes.get("createDate");
@@ -177,6 +191,62 @@ public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {
 	*/
 	public void setCompanyId(long companyId) {
 		_trashEntry.setCompanyId(companyId);
+	}
+
+	/**
+	* Returns the user ID of this trash entry.
+	*
+	* @return the user ID of this trash entry
+	*/
+	public long getUserId() {
+		return _trashEntry.getUserId();
+	}
+
+	/**
+	* Sets the user ID of this trash entry.
+	*
+	* @param userId the user ID of this trash entry
+	*/
+	public void setUserId(long userId) {
+		_trashEntry.setUserId(userId);
+	}
+
+	/**
+	* Returns the user uuid of this trash entry.
+	*
+	* @return the user uuid of this trash entry
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.lang.String getUserUuid()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _trashEntry.getUserUuid();
+	}
+
+	/**
+	* Sets the user uuid of this trash entry.
+	*
+	* @param userUuid the user uuid of this trash entry
+	*/
+	public void setUserUuid(java.lang.String userUuid) {
+		_trashEntry.setUserUuid(userUuid);
+	}
+
+	/**
+	* Returns the user name of this trash entry.
+	*
+	* @return the user name of this trash entry
+	*/
+	public java.lang.String getUserName() {
+		return _trashEntry.getUserName();
+	}
+
+	/**
+	* Sets the user name of this trash entry.
+	*
+	* @param userName the user name of this trash entry
+	*/
+	public void setUserName(java.lang.String userName) {
+		_trashEntry.setUserName(userName);
 	}
 
 	/**

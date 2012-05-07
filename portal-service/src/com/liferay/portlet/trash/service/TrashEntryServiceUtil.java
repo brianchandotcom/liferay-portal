@@ -91,14 +91,18 @@ public class TrashEntryServiceUtil {
 	* @param start the lower bound of the range of trash entries to return
 	* @param end the upper bound of the range of trash entries to return (not
 	inclusive)
-	* @return the range of matching trash entries
+	* @param obc the comparator to order the trash entries (optionally
+	<code>null</code>)
+	* @return the range of matching trash entries ordered by comparator
+	<code>obc</code>
 	* @throws SystemException if a system exception occurred
 	* @throws PrincipalException if a system exception occurred
 	*/
-	public static java.lang.Object[] getEntries(long groupId, int start, int end)
+	public static java.lang.Object[] getEntries(long groupId, int start,
+		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portal.security.auth.PrincipalException {
-		return getService().getEntries(groupId, start, end);
+		return getService().getEntries(groupId, start, end, obc);
 	}
 
 	public static TrashEntryService getService() {

@@ -767,9 +767,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		// Trash
 
 		trashEntryLocalService.addTrashEntry(
-			entry.getCompanyId(), entry.getGroupId(),
-			BlogsEntry.class.getName(), entry.getEntryId(), oldStatus, null,
-			null);
+			userId, entry.getGroupId(), BlogsEntry.class.getName(),
+			entry.getEntryId(), oldStatus, null, null);
 
 		// Workflow
 

@@ -215,6 +215,10 @@ public class UserFinderImpl
 		screenNames = CustomSQLUtil.keywords(screenNames);
 		emailAddresses = CustomSQLUtil.keywords(emailAddresses);
 
+		if (params == null) {
+			params = _emptyLinkedHashMap;
+		}
+
 		Long groupId = (Long)params.get("usersGroups");
 		boolean inherit = GetterUtil.getBoolean(params.get("inherit"));
 
@@ -426,6 +430,10 @@ public class UserFinderImpl
 		lastNames = CustomSQLUtil.keywords(lastNames);
 		screenNames = CustomSQLUtil.keywords(screenNames);
 		emailAddresses = CustomSQLUtil.keywords(emailAddresses);
+
+		if (params == null) {
+			params = _emptyLinkedHashMap;
+		}
 
 		Long groupId = (Long)params.get("usersGroups");
 		boolean inherit = GetterUtil.getBoolean(params.get("inherit"));
@@ -994,5 +1002,8 @@ public class UserFinderImpl
 	}
 
 	private static final String _STATUS_SQL = "AND (User_.status = ?)";
+
+	private LinkedHashMap<String, Object> _emptyLinkedHashMap =
+		new LinkedHashMap<String, Object>(0);
 
 }

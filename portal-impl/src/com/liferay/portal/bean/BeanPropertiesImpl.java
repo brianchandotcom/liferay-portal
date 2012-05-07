@@ -83,7 +83,7 @@ public class BeanPropertiesImpl implements BeanProperties {
 			try {
 				Object value = BeanUtil.getProperty(bean, param);
 
-				beanValue = Convert.toBoolean(value, defaultValue);
+				beanValue = Convert.toBooleanValue(value, defaultValue);
 			}
 			catch (Exception e) {
 				_log.error(e, e);
@@ -106,7 +106,7 @@ public class BeanPropertiesImpl implements BeanProperties {
 			try {
 				Object value = BeanUtil.getProperty(bean, param);
 
-				beanValue = Convert.toBoolean(value, defaultValue);
+				beanValue = Convert.toBooleanValue(value, defaultValue);
 			}
 			catch (Exception e) {
 			}
@@ -126,7 +126,7 @@ public class BeanPropertiesImpl implements BeanProperties {
 			try {
 				Object value = BeanUtil.getProperty(bean, param);
 
-				beanValue = Convert.toByte(value, defaultValue);
+				beanValue = Convert.toByteValue(value, defaultValue);
 			}
 			catch (Exception e) {
 				_log.error(e, e);
@@ -147,7 +147,7 @@ public class BeanPropertiesImpl implements BeanProperties {
 			try {
 				Object value = BeanUtil.getProperty(bean, param);
 
-				beanValue = Convert.toByte(value, defaultValue);
+				beanValue = Convert.toByteValue(value, defaultValue);
 			}
 			catch (Exception e) {
 			}
@@ -167,7 +167,7 @@ public class BeanPropertiesImpl implements BeanProperties {
 			try {
 				Object value = BeanUtil.getProperty(bean, param);
 
-				beanValue = Convert.toDouble(value, defaultValue);
+				beanValue = Convert.toDoubleValue(value, defaultValue);
 			}
 			catch (Exception e) {
 				_log.error(e, e);
@@ -190,7 +190,7 @@ public class BeanPropertiesImpl implements BeanProperties {
 			try {
 				Object value = BeanUtil.getProperty(bean, param);
 
-				beanValue = Convert.toDouble(value, defaultValue);
+				beanValue = Convert.toDoubleValue(value, defaultValue);
 			}
 			catch (Exception e) {
 			}
@@ -210,7 +210,7 @@ public class BeanPropertiesImpl implements BeanProperties {
 			try {
 				Object value = BeanUtil.getProperty(bean, param);
 
-				beanValue = Convert.toFloat(value, defaultValue);
+				beanValue = Convert.toFloatValue(value, defaultValue);
 			}
 			catch (Exception e) {
 				_log.error(e, e);
@@ -231,7 +231,7 @@ public class BeanPropertiesImpl implements BeanProperties {
 			try {
 				Object value = BeanUtil.getProperty(bean, param);
 
-				beanValue = Convert.toFloat(value, defaultValue);
+				beanValue = Convert.toFloatValue(value, defaultValue);
 			}
 			catch (Exception e) {
 			}
@@ -251,7 +251,7 @@ public class BeanPropertiesImpl implements BeanProperties {
 			try {
 				Object value = BeanUtil.getProperty(bean, param);
 
-				beanValue = Convert.toInteger(value, defaultValue);
+				beanValue = Convert.toIntValue(value, defaultValue);
 			}
 			catch (Exception e) {
 				_log.error(e, e);
@@ -272,7 +272,7 @@ public class BeanPropertiesImpl implements BeanProperties {
 			try {
 				Object value = BeanUtil.getProperty(bean, param);
 
-				beanValue = Convert.toInteger(value, defaultValue);
+				beanValue = Convert.toIntValue(value, defaultValue);
 			}
 			catch (Exception e) {
 			}
@@ -292,7 +292,7 @@ public class BeanPropertiesImpl implements BeanProperties {
 			try {
 				Object value = BeanUtil.getProperty(bean, param);
 
-				beanValue = Convert.toLong(value, defaultValue);
+				beanValue = Convert.toLongValue(value, defaultValue);
 			}
 			catch (Exception e) {
 				_log.error(e, e);
@@ -313,7 +313,7 @@ public class BeanPropertiesImpl implements BeanProperties {
 			try {
 				Object value = BeanUtil.getProperty(bean, param);
 
-				beanValue = Convert.toLong(value, defaultValue);
+				beanValue = Convert.toLongValue(value, defaultValue);
 			}
 			catch (Exception e) {
 			}
@@ -433,7 +433,7 @@ public class BeanPropertiesImpl implements BeanProperties {
 			try {
 				Object value = BeanUtil.getProperty(bean, param);
 
-				beanValue = Convert.toShort(value, defaultValue);
+				beanValue = Convert.toShortValue(value, defaultValue);
 			}
 			catch (Exception e) {
 				_log.error(e, e);
@@ -454,7 +454,7 @@ public class BeanPropertiesImpl implements BeanProperties {
 			try {
 				Object value = BeanUtil.getProperty(bean, param);
 
-				beanValue = Convert.toShort(value, defaultValue);
+				beanValue = Convert.toShortValue(value, defaultValue);
 			}
 			catch (Exception e) {
 			}

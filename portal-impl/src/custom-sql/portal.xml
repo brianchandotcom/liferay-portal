@@ -1187,7 +1187,7 @@
 	<sql id="com.liferay.portal.service.persistence.UserFinder.findByC_FN_MN_LN_SN_EA_S">
 		<![CDATA[
 			SELECT
-				User_.userId AS userId, User_.screenName AS screenName, User_.emailAddress AS emailAddress, User_.firstName AS firstName, User_.middleName AS middleName, User_.lastName AS lastName, User_.jobTitle AS jobTitle, User_.loginDate AS loginDate
+				DISTINCT User_.userId AS userId, User_.screenName AS screenName, User_.emailAddress AS emailAddress, User_.firstName AS firstName, User_.middleName AS middleName, User_.lastName AS lastName, User_.jobTitle AS jobTitle, User_.loginDate AS loginDate
 			FROM
 				User_
 			[$JOIN$]

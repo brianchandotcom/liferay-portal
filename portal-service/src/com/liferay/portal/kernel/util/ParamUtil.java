@@ -250,7 +250,7 @@ public class ParamUtil {
 		HttpServletRequest request, String param, boolean[] defaultValue) {
 
 		return GetterUtil.getBooleanValues(
-			getParameterValues(request, param), defaultValue);
+			getParameterValues(request, param, null), defaultValue);
 	}
 
 	public static boolean[] getBooleanValues(
@@ -263,7 +263,7 @@ public class ParamUtil {
 		PortletRequest portletRequest, String param, boolean[] defaultValue) {
 
 		return GetterUtil.getBooleanValues(
-			getParameterValues(portletRequest, param), defaultValue);
+			getParameterValues(portletRequest, param, null), defaultValue);
 	}
 
 	public static boolean[] getBooleanValues(
@@ -331,7 +331,7 @@ public class ParamUtil {
 		Date[] defaultValue) {
 
 		return GetterUtil.getDateValues(
-			getParameterValues(request, param), dateFormat, defaultValue);
+			getParameterValues(request, param, null), dateFormat, defaultValue);
 	}
 
 	public static Date[] getDateValues(
@@ -345,7 +345,7 @@ public class ParamUtil {
 		Date[] defaultValue) {
 
 		return GetterUtil.getDateValues(
-			getParameterValues(portletRequest, param), dateFormat,
+			getParameterValues(portletRequest, param, null), dateFormat,
 			defaultValue);
 	}
 
@@ -407,7 +407,7 @@ public class ParamUtil {
 		HttpServletRequest request, String param, double[] defaultValue) {
 
 		return GetterUtil.getDoubleValues(
-			getParameterValues(request, param), defaultValue);
+			getParameterValues(request, param, null), defaultValue);
 	}
 
 	public static double[] getDoubleValues(
@@ -420,7 +420,7 @@ public class ParamUtil {
 		PortletRequest portletRequest, String param, double[] defaultValue) {
 
 		return GetterUtil.getDoubleValues(
-			getParameterValues(portletRequest, param), defaultValue);
+			getParameterValues(portletRequest, param, null), defaultValue);
 	}
 
 	public static double[] getDoubleValues(
@@ -476,7 +476,7 @@ public class ParamUtil {
 		HttpServletRequest request, String param, float[] defaultValue) {
 
 		return GetterUtil.getFloatValues(
-			getParameterValues(request, param), defaultValue);
+			getParameterValues(request, param, null), defaultValue);
 	}
 
 	public static float[] getFloatValues(
@@ -489,7 +489,7 @@ public class ParamUtil {
 		PortletRequest portletRequest, String param, float[] defaultValue) {
 
 		return GetterUtil.getFloatValues(
-			getParameterValues(portletRequest, param), defaultValue);
+			getParameterValues(portletRequest, param, null), defaultValue);
 	}
 
 	public static float[] getFloatValues(
@@ -545,7 +545,7 @@ public class ParamUtil {
 		HttpServletRequest request, String param, int[] defaultValue) {
 
 		return GetterUtil.getIntegerValues(
-			getParameterValues(request, param), defaultValue);
+			getParameterValues(request, param, null), defaultValue);
 	}
 
 	public static int[] getIntegerValues(
@@ -558,7 +558,7 @@ public class ParamUtil {
 		PortletRequest portletRequest, String param, int[] defaultValue) {
 
 		return GetterUtil.getIntegerValues(
-			getParameterValues(portletRequest, param), defaultValue);
+			getParameterValues(portletRequest, param, null), defaultValue);
 	}
 
 	public static int[] getIntegerValues(
@@ -614,7 +614,7 @@ public class ParamUtil {
 		HttpServletRequest request, String param, long[] defaultValue) {
 
 		return GetterUtil.getLongValues(
-			getParameterValues(request, param), defaultValue);
+			getParameterValues(request, param, null), defaultValue);
 	}
 
 	public static long[] getLongValues(
@@ -627,7 +627,7 @@ public class ParamUtil {
 		PortletRequest portletRequest, String param, long[] defaultValue) {
 
 		return GetterUtil.getLongValues(
-			getParameterValues(portletRequest, param), defaultValue);
+			getParameterValues(portletRequest, param, null), defaultValue);
 	}
 
 	public static long[] getLongValues(
@@ -720,7 +720,7 @@ public class ParamUtil {
 		HttpServletRequest request, String param, short[] defaultValue) {
 
 		return GetterUtil.getShortValues(
-			getParameterValues(request, param), defaultValue);
+			getParameterValues(request, param, null), defaultValue);
 	}
 
 	public static short[] getShortValues(
@@ -733,7 +733,7 @@ public class ParamUtil {
 		PortletRequest portletRequest, String param, short[] defaultValue) {
 
 		return GetterUtil.getShortValues(
-			getParameterValues(portletRequest, param), defaultValue);
+			getParameterValues(portletRequest, param, null), defaultValue);
 	}
 
 	public static short[] getShortValues(

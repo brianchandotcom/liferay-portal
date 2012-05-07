@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Theme;
 import com.liferay.taglib.util.ThemeUtil;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 
 /**
@@ -31,9 +29,6 @@ public class IncludeTag extends com.liferay.taglib.util.IncludeTag {
 	@Override
 	public int doEndTag() throws JspException {
 		try {
-			ServletContext servletContext = getServletContext();
-			HttpServletRequest request = getServletRequest();
-
 			Theme theme = (Theme)request.getAttribute(WebKeys.THEME);
 
 			ThemeUtil.include(

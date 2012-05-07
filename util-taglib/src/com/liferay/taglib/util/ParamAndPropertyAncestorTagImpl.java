@@ -25,7 +25,7 @@ import java.util.Set;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Brian Wing Shun Chan
@@ -36,14 +36,24 @@ public class ParamAndPropertyAncestorTagImpl
 	implements ParamAncestorTag, PropertyAncestorTag {
 
 	public void addParam(String name, String value) {
-		if (_params == null) {
-			_params = new LinkedHashMap<String, String[]>();
+		DynamicServletRequest dynamicServletRequest = null;
+
+		if (request instanceof DynamicServletRequest) {
+			dynamicServletRequest = (DynamicServletRequest)request;
 		}
+		else {
+			dynamicServletRequest = new DynamicServletRequest(request);
+
+			request = dynamicServletRequest;
+		}
+
+		Map<String, String[]> params =
+			dynamicServletRequest.getDynamicParameterMap();
 
 		// PLT.26.6
 
 		if (!_allowEmptyParam && ((value == null) || (value.length() == 0))) {
-			_params.remove(name);
+			params.remove(name);
 
 			if (_removedParameterNames == null) {
 				_removedParameterNames = new HashSet<String>();
@@ -54,7 +64,7 @@ public class ParamAndPropertyAncestorTagImpl
 			return;
 		}
 
-		String[] values = _params.get(name);
+		String[] values = params.get(name);
 
 		if (values == null) {
 			values = new String[] {value};
@@ -69,7 +79,7 @@ public class ParamAndPropertyAncestorTagImpl
 			values = newValues;
 		}
 
-		_params.put(name, values);
+		params.put(name, values);
 	}
 
 	public void addProperty(String name, String value) {
@@ -96,8 +106,16 @@ public class ParamAndPropertyAncestorTagImpl
 	}
 
 	public void clearParams() {
-		if (_params != null) {
-			_params.clear();
+		if (request instanceof DynamicServletRequest) {
+			DynamicServletRequest dynamicServletRequest =
+				(DynamicServletRequest)request;
+
+			Map<String, String[]> params =
+				dynamicServletRequest.getDynamicParameterMap();
+
+			params.clear();
+
+			request = (HttpServletRequest)dynamicServletRequest.getRequest();
 		}
 
 		if (_removedParameterNames != null) {
@@ -112,7 +130,15 @@ public class ParamAndPropertyAncestorTagImpl
 	}
 
 	public Map<String, String[]> getParams() {
-		return _params;
+		if (request instanceof DynamicServletRequest) {
+			DynamicServletRequest dynamicServletRequest =
+				(DynamicServletRequest)request;
+
+			return dynamicServletRequest.getDynamicParameterMap();
+		}
+		else {
+			return null;
+		}
 	}
 
 	public Map<String, String[]> getProperties() {
@@ -123,58 +149,48 @@ public class ParamAndPropertyAncestorTagImpl
 		return _removedParameterNames;
 	}
 
-	public ServletContext getServletContext() {
-		if (_servletContext != null) {
-			return _servletContext;
-		}
-
-		HttpServletRequest request =
-			(HttpServletRequest)pageContext.getRequest();
-
-		ServletContext servletContext = (ServletContext)request.getAttribute(
-			WebKeys.CTX);
-
-		if (servletContext == null) {
-			servletContext = pageContext.getServletContext();
-		}
-
-		return servletContext;
-	}
-
-	public HttpServletRequest getServletRequest() {
-		HttpServletRequest request =
-			(HttpServletRequest)pageContext.getRequest();
-
-		if (_params != null) {
-			request = new DynamicServletRequest(request, _params);
-		}
-
-		return request;
-	}
-
-	public HttpServletResponse getServletResponse() {
-		HttpServletResponse response =
-			(HttpServletResponse)pageContext.getResponse();
-
-		return response;
-	}
-
 	public boolean isAllowEmptyParam() {
 		return _allowEmptyParam;
+	}
+
+	@Override
+	public void release() {
+		super.release();
+
+		request = null;
+		servletContext = null;
+
+		_allowEmptyParam = false;
+		_properties = null;
+		_removedParameterNames = null;
 	}
 
 	public void setAllowEmptyParam(boolean allowEmptyParam) {
 		_allowEmptyParam = allowEmptyParam;
 	}
 
-	public void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
+	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+
+		request = (HttpServletRequest)pageContext.getRequest();
+
+		servletContext = (ServletContext)request.getAttribute(WebKeys.CTX);
+
+		if (servletContext == null) {
+			servletContext = pageContext.getServletContext();
+		}
 	}
 
+	public void setServletContext(ServletContext servletContext) {
+		this.servletContext = servletContext;
+	}
+
+	protected HttpServletRequest request;
+	protected ServletContext servletContext;
+
 	private boolean _allowEmptyParam;
-	private Map<String, String[]> _params;
 	private Map<String, String[]> _properties;
 	private Set<String> _removedParameterNames;
-	private ServletContext _servletContext;
 
 }

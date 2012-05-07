@@ -137,6 +137,25 @@ public class DynamicServletRequest extends HttpServletRequestWrapper {
 		}
 	}
 
+	public void appendParameter(String name, String value) {
+		String[] values = _params.get(name);
+
+		if (values == null) {
+			values = new String[] {value};
+		}
+		else {
+			String[] newValues = new String[values.length + 1];
+
+			System.arraycopy(values, 0, newValues, 0, values.length);
+
+			newValues[newValues.length - 1] = value;
+
+			values = newValues;
+		}
+
+		_params.put(name, values);
+	}
+
 	public Map<String, String[]> getDynamicParameterMap() {
 		return _params;
 	}

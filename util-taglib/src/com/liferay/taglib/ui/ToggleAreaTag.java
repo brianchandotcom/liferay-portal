@@ -32,7 +32,7 @@ public class ToggleAreaTag extends IncludeTag {
 	public int doEndTag() throws JspException {
 		try {
 			if (!FileAvailabilityUtil.isAvailable(
-					getServletContext(), getEndPage())) {
+				servletContext, getEndPage())) {
 
 				JspWriter jspWriter = pageContext.getOut();
 

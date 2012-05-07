@@ -134,8 +134,8 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 		Map<Object, Object> newMap = new HashMap<Object, Object>(map.size());
 
 		for (Map.Entry<?, ?> entry : map.entrySet()) {
-			Object key =
-				TypeConverterManager.convertType(entry.getKey(), types[0]);
+			Object key = TypeConverterManager.convertType(
+				entry.getKey(), types[0]);
 
 			Object value = entry.getValue();
 
@@ -265,8 +265,8 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 					parameterValue = map;
 				}
 				else {
-					parameterValue =
-						TypeConverterManager.convertType(value, parameterType);
+					parameterValue = TypeConverterManager.convertType(
+						value, parameterType);
 				}
 			}
 

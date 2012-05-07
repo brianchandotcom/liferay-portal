@@ -652,6 +652,11 @@ var defaultTypes = []]>
 	window.top.opener.CKEDITOR.tools.callFunction(funcNum, fileUrl);]]>
 					</replacevalue>
 				</replace>
+
+				<replace file="docroot/html/js/editor/ckeditor/editor/filemanager/browser/liferay/frmresourceslist.html">
+					<replacetoken><![CDATA[var sCurrentFolderPath	= oFolderNode.attributes.getNamedItem('path').value ;]]></replacetoken>
+					<replacevalue><![CDATA[var sCurrentFolderPath	= oFolderNode.attributes.getNamedItem('path').value.replace( /"/g, '') ;]]></replacevalue>
+				</replace>
 			</then>
 			<else>
 				<copy todir="docroot/html/js/editor/fckeditor">

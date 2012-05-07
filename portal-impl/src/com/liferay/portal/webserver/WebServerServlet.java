@@ -649,7 +649,7 @@ public class WebServerServlet extends HttpServlet {
 				HttpServletResponse.SC_NOT_FOUND,
 				new NoSuchFileEntryException(t), request, response);
 
-				return;
+			return;
 		}
 
 		if (!user.isDefaultUser()) {

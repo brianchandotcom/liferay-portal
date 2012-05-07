@@ -62,9 +62,6 @@ public class PreviewTag extends IncludeTag {
 	@Override
 	public int doEndTag() throws JspException {
 		try {
-			ServletContext servletContext = getServletContext();
-			HttpServletRequest request = getServletRequest();
-
 			doTag(
 				getPage(), _portletName, _queryString, _showBorders, _width,
 				servletContext, request,

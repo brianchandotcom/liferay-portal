@@ -31,7 +31,6 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 
 /**
@@ -70,8 +69,6 @@ public class SearchContainerTag<R> extends ParamAndPropertyAncestorTagImpl {
 	@Override
 	public int doStartTag() throws JspException {
 		try {
-			HttpServletRequest request = getServletRequest();
-
 			PortletRequest portletRequest =
 				(PortletRequest)request.getAttribute(
 					JavaConstants.JAVAX_PORTLET_REQUEST);

@@ -205,28 +205,20 @@
 	}
 
 	.folder-display-style li {
-		.overlay {
-			clip: rect(0, 0, 0, 0);
+		.overlay.article-action, .overlay.folder-action {
+			display: block;
+			height: 16px;
+			overflow: hidden;
+			position: absolute;
+			right: 15px;
+			top: 5px;
+			width: 24px;
 
-			&.article-action, &.folder-action {
+			a {
 				display: block;
-				height: 16px;
-				overflow: hidden;
-				position: absolute;
-				right: 15px;
-				top: 5px;
-				width: 24px;
-
-				a {
-					display: block;
-					float: right;
-					min-height: 15px;
-				}
+				float: right;
+				min-height: 15px;
 			}
-		}
-
-		&:hover .overlay, &.hover .overlay {
-			clip: rect(auto auto auto auto);
 		}
 	}
 

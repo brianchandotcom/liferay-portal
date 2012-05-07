@@ -313,7 +313,7 @@ public class StringUtil {
 	 * @return the number of times the text appears in the string
 	 */
 	public static int count(String s, String text) {
-		if ((s == null) || (text == null)) {
+		if ((s == null) || Validator.isNull(text)) {
 			return 0;
 		}
 

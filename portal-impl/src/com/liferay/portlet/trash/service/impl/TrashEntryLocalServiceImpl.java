@@ -17,6 +17,7 @@ package com.liferay.portlet.trash.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.User;
 import com.liferay.portal.util.PortalUtil;
@@ -177,6 +178,26 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 		throws SystemException {
 
 		return trashEntryPersistence.findByGroupId(groupId, start, end);
+	}
+
+	/**
+	 * Returns a range of all the trash entries matching the group ID.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  start the lower bound of the range of trash entries to return
+	 * @param  end the upper bound of the range of trash entries to return (not
+	 *         inclusive)
+	 * @param  obc the comparator to order the trash entries (optionally
+	 *         <code>null</code>)
+	 * @return the range of matching trash entries ordered by comparator
+	 *         <code>obc</code>
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<TrashEntry> getEntries(
+			long groupId, int start, int end, OrderByComparator obc)
+		throws SystemException {
+
+		return trashEntryPersistence.findByGroupId(groupId, start, end, obc);
 	}
 
 	/**

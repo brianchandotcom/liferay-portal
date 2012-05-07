@@ -51,9 +51,8 @@ portletURL.setParameter("tabs1", tabs1);
 	<aui:input name="restoreEntryIds" type="hidden" />
 
 	<liferay-ui:search-container
-		emptyResultsMessage="the-recycle-bin-is-empty"
-		headerNames="name,type,removed-date"
 		rowChecker="<%= new RowChecker(renderResponse) %>"
+		searchContainer="<%= new EntrySearch(renderRequest, portletURL) %>"
 	>
 
 		<%
@@ -63,7 +62,7 @@ portletURL.setParameter("tabs1", tabs1);
 		<liferay-ui:search-container-results>
 
 			<%
-			Object[] entries = TrashEntryServiceUtil.getEntries(groupId, searchContainer.getStart(), searchContainer.getEnd());
+			Object[] entries = TrashEntryServiceUtil.getEntries(groupId, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 
 			pageContext.setAttribute("results", entries[0]);
 			pageContext.setAttribute("total", entries[1]);
@@ -113,16 +112,19 @@ portletURL.setParameter("tabs1", tabs1);
 
 			<liferay-ui:search-container-column-text
 				name="type"
+				orderable="<%= true %>"
 				value="<%= LanguageUtil.get(pageContext, assetRendererFactory.getType()) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
 				name="removed-date"
+				orderable="<%= true %>"
 				value="<%= dateFormatDateTime.format(entry.getCreateDate()) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
 				name="removed-by"
+				orderable="<%= true %>"
 				value="<%= entry.getUserName() %>"
 			/>
 

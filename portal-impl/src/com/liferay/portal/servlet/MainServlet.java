@@ -923,9 +923,114 @@ public class MainServlet extends ActionServlet {
 	}
 
 	protected void initServerDetector() throws Exception {
-		if (ServerDetector.isTomcat()) {
+		if (ServerDetector.isJetty()) {
+			initServerDetectorJetty();
+		}
+		else if (ServerDetector.isTomcat()) {
 			initServerDetectorTomcat();
 		}
+	}
+
+	protected void initServerDetectorJetty() throws Exception {
+		ServletContext servletContext = getServletContext();
+
+		Field outerClassField = servletContext.getClass().getDeclaredField(
+			"this$0");
+
+		outerClassField.setAccessible(true);
+
+		// org.eclipse.jetty.webapp.WebAppContext
+
+		Object webAppContext = outerClassField.get(servletContext);
+
+		Class<?> abstractHandlerClass = webAppContext.getClass();
+
+		for (int i = 0; i < 6; i++) {
+			abstractHandlerClass = abstractHandlerClass.getSuperclass();
+		}
+
+		// org.eclipse.jetty.server.handler.AbstractHandler
+
+		Field serverField = abstractHandlerClass.getDeclaredField("_server");
+
+		serverField.setAccessible(true);
+
+		// org.eclipse.jetty.server.Server
+
+		Object server = serverField.get(webAppContext);
+
+		Class<?> aggregateLifeCycleClass = server.getClass();
+
+		for (int i = 0; i < 4; i++) {
+			aggregateLifeCycleClass = aggregateLifeCycleClass.getSuperclass();
+		}
+
+		// org.eclipse.jetty.util.component.AggregateLifeCycle
+
+		Field dependentBeansField = aggregateLifeCycleClass.getDeclaredField(
+			"_dependentBeans");
+
+		dependentBeansField.setAccessible(true);
+
+		List dependentBeans = (List)dependentBeansField.get(server);
+
+		Object deploymentManager = null;
+
+		for (Object bean : dependentBeans) {
+			Class<?> beanClass = bean.getClass();
+
+			if (beanClass.getName().equals(
+				"org.eclipse.jetty.deploy.DeploymentManager")) {
+
+				deploymentManager = bean;
+
+				break;
+			}
+		}
+
+		if (deploymentManager == null) {
+			throw new Exception("DeploymentManager not found.");
+		}
+
+		// org.eclipse.jetty.deploy.DeploymentManager
+
+		Field providersField = deploymentManager.getClass().getDeclaredField(
+			"_providers");
+
+		providersField.setAccessible(true);
+
+		List providers = (List)providersField.get(deploymentManager);
+
+		boolean hotDeploySupported = false;
+
+		for (Object provider : providers) {
+			Class<?> providerClass = provider.getClass();
+
+			if (!providerClass.getName().equals(
+				"org.eclipse.jetty.deploy.providers.ContextProvider")) {
+
+				continue;
+			}
+
+			// org.eclipse.jetty.deploy.providers.ScanningAppProvider
+
+			Class<?> scanningAppProviderClass = providerClass.getSuperclass();
+
+			Field scanIntervalField = scanningAppProviderClass.getDeclaredField(
+				"_scanInterval");
+
+			scanIntervalField.setAccessible(true);
+
+			Integer scanInterval = (Integer)scanIntervalField.get(provider);
+
+			if ((scanInterval != null) && (scanInterval.intValue() > 0)) {
+				hotDeploySupported = true;
+
+				break;
+			}
+		}
+
+		ServerDetector.setSupportsHotDeploy(hotDeploySupported);
 	}
 
 	protected void initServerDetectorTomcat() throws Exception {

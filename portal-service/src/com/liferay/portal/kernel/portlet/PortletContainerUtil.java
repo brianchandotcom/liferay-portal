@@ -15,6 +15,9 @@
 package com.liferay.portal.kernel.portlet;
 
 import com.liferay.portal.kernel.servlet.TempAttributesServletRequest;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
@@ -73,35 +76,71 @@ public class PortletContainerUtil {
 		HttpServletRequest request, String renderPath, String columnId,
 		Integer columnPos, Integer columnCount) {
 
-		TempAttributesServletRequest tempAttributesServletRequest =
-			new TempAttributesServletRequest(request);
+		if (_restrict) {
+			RestrictPortletServletRequest restrictPortletServletRequest =
+				new RestrictPortletServletRequest(request);
 
-		if (renderPath != null) {
-			tempAttributesServletRequest.setTempAttribute(
-				WebKeys.RENDER_PATH, renderPath);
+			if (renderPath != null) {
+				restrictPortletServletRequest.setAttribute(
+					WebKeys.RENDER_PATH, renderPath);
+			}
+
+			if (columnId != null) {
+				restrictPortletServletRequest.setAttribute(
+					WebKeys.RENDER_PORTLET_COLUMN_ID, columnId);
+			}
+
+			if (columnPos != null) {
+				restrictPortletServletRequest.setAttribute(
+					WebKeys.RENDER_PORTLET_COLUMN_POS, columnPos);
+			}
+
+			if (columnCount != null) {
+				restrictPortletServletRequest.setAttribute(
+					WebKeys.RENDER_PORTLET_COLUMN_COUNT, columnCount);
+			}
+
+			return restrictPortletServletRequest;
 		}
+		else {
+			TempAttributesServletRequest tempAttributesServletRequest =
+				new TempAttributesServletRequest(request);
 
-		if (columnId != null) {
-			tempAttributesServletRequest.setTempAttribute(
-				WebKeys.RENDER_PORTLET_COLUMN_ID, columnId);
+			if (renderPath != null) {
+				tempAttributesServletRequest.setTempAttribute(
+					WebKeys.RENDER_PATH, renderPath);
+			}
+
+			if (columnId != null) {
+				tempAttributesServletRequest.setTempAttribute(
+					WebKeys.RENDER_PORTLET_COLUMN_ID, columnId);
+			}
+
+			if (columnPos != null) {
+				tempAttributesServletRequest.setTempAttribute(
+					WebKeys.RENDER_PORTLET_COLUMN_POS, columnPos);
+			}
+
+			if (columnCount != null) {
+				tempAttributesServletRequest.setTempAttribute(
+					WebKeys.RENDER_PORTLET_COLUMN_COUNT, columnCount);
+			}
+
+			return tempAttributesServletRequest;
 		}
-
-		if (columnPos != null) {
-			tempAttributesServletRequest.setTempAttribute(
-				WebKeys.RENDER_PORTLET_COLUMN_POS, columnPos);
-		}
-
-		if (columnCount != null) {
-			tempAttributesServletRequest.setTempAttribute(
-				WebKeys.RENDER_PORTLET_COLUMN_COUNT, columnCount);
-		}
-
-		return tempAttributesServletRequest;
 	}
 
 	public void setPortletContainer(PortletContainer portletContainer) {
+		if (_restrict) {
+			portletContainer = new RestrictPortletContainerWrapper(
+				portletContainer);
+		}
+
 		_portletContainer = portletContainer;
 	}
+
+	private static final boolean _restrict = GetterUtil.getBoolean(
+		PropsUtil.get(PropsKeys.PORTLET_CONTAINER_RESTRICT));
 
 	private static PortletContainer _portletContainer;
 

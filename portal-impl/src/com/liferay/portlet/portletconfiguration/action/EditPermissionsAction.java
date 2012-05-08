@@ -184,6 +184,8 @@ public class EditPermissionsAction extends EditConfigurationAction {
 			selResource = modelResource;
 		}
 
+		String resourceGroupId = ParamUtil.getString(
+			actionRequest, "resourceGroupId");
 		String resourcePrimKey = ParamUtil.getString(
 			actionRequest, "resourcePrimKey");
 
@@ -199,9 +201,9 @@ public class EditPermissionsAction extends EditConfigurationAction {
 			}
 
 			ResourceBlockServiceUtil.setIndividualScopePermissions(
-				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
-				selResource, GetterUtil.getLong(resourcePrimKey),
-				roleIdsToActionIds);
+				themeDisplay.getCompanyId(),
+				GetterUtil.getLong(resourceGroupId), selResource,
+				GetterUtil.getLong(resourcePrimKey), roleIdsToActionIds);
 		}
 		else {
 			for (long roleId : roleIds) {
@@ -211,8 +213,9 @@ public class EditPermissionsAction extends EditConfigurationAction {
 			}
 
 			ResourcePermissionServiceUtil.setIndividualResourcePermissions(
-				themeDisplay.getScopeGroupId(), themeDisplay.getCompanyId(),
-				selResource, resourcePrimKey, roleIdsToActionIds);
+				GetterUtil.getLong(resourceGroupId),
+				themeDisplay.getCompanyId(), selResource, resourcePrimKey,
+				roleIdsToActionIds);
 		}
 
 		if (PropsValues.PERMISSIONS_PROPAGATION_ENABLED) {

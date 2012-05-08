@@ -934,13 +934,14 @@ public class MainServlet extends ActionServlet {
 	protected void initServerDetectorJetty() throws Exception {
 		ServletContext servletContext = getServletContext();
 
-		Field field = servletContext.getClass().getDeclaredField("this$0");
+		Field outerClassField = servletContext.getClass().getDeclaredField(
+			"this$0");
 
-		field.setAccessible(true);
+		outerClassField.setAccessible(true);
 
 		// org.eclipse.jetty.webapp.WebAppContext
 
-		Object webAppContext = field.get(servletContext);
+		Object webAppContext = outerClassField.get(servletContext);
 
 		Class<?> abstractHandlerClass = webAppContext.getClass();
 
@@ -1000,30 +1001,36 @@ public class MainServlet extends ActionServlet {
 
 		List providers = (List)providersField.get(deploymentManager);
 
+		boolean hotDeploySupported = false;
+
 		for (Object provider : providers) {
-			if (!provider.getClass().getName().equals(
+			Class<?> providerClass = provider.getClass();
+
+			if (!providerClass.getName().equals(
 				"org.eclipse.jetty.deploy.providers.ContextProvider")) {
 
 				continue;
 			}
 
-			Field scanIntervalField =
-				provider.getClass().getSuperclass().getDeclaredField(
-					"_scanInterval");
+			// org.eclipse.jetty.deploy.providers.ScanningAppProvider
+
+			Class<?> scanningAppProviderClass = providerClass.getSuperclass();
+
+			Field scanIntervalField = scanningAppProviderClass.getDeclaredField(
+				"_scanInterval");
 
 			scanIntervalField.setAccessible(true);
 
 			Integer scanInterval = (Integer)scanIntervalField.get(provider);
 
 			if ((scanInterval != null) && (scanInterval.intValue() > 0)) {
-				ServerDetector.setSupportsHotDeploy(true);
-			}
-			else {
-				ServerDetector.setSupportsHotDeploy(false);
-			}
+				hotDeploySupported = true;
 
-			break;
+				break;
+			}
 		}
+
+		ServerDetector.setSupportsHotDeploy(hotDeploySupported);
 	}
 
 	protected void initServerDetectorTomcat() throws Exception {

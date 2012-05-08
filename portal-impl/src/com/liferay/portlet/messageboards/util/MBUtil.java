@@ -259,6 +259,10 @@ public class MBUtil {
 		return categoryId;
 	}
 
+	public static boolean getEmailBulkAddress() {
+		return PropsValues.MESSAGE_BOARDS_EMAIL_BULK_ADDRESS;
+	}
+
 	public static String getEmailFromAddress(
 			PortletPreferences preferences, long companyId)
 		throws SystemException {
@@ -537,6 +541,10 @@ public class MBUtil {
 		}
 
 		return parentHeader;
+	}
+
+	public static boolean getPopServerNotifications() {
+		return PropsValues.POP_SERVER_NOTIFICATIONS_ENABLED;
 	}
 
 	public static String getSubjectWithoutMessageId(Message message)

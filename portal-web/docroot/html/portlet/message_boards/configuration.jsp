@@ -21,6 +21,8 @@ String tabs2 = ParamUtil.getString(request, "tabs2", "general");
 
 String redirect = ParamUtil.getString(request, "redirect");
 
+boolean emailBulkAddress = ParamUtil.getBoolean(request, "emailBulkAddress", MBUtil.getEmailBulkAddress());
+
 String emailFromName = ParamUtil.getString(request, "emailFromName", MBUtil.getEmailFromName(preferences, company.getCompanyId()));
 String emailFromAddress = ParamUtil.getString(request, "emailFromAddress", MBUtil.getEmailFromAddress(preferences, company.getCompanyId()));
 
@@ -31,6 +33,8 @@ String emailMessageAddedSignature = ParamUtil.getString(request, "emailMessageAd
 String emailMessageUpdatedSubjectPrefix = ParamUtil.getString(request, "emailMessageUpdatedSubjectPrefix", MBUtil.getEmailMessageUpdatedSubjectPrefix(preferences));
 String emailMessageUpdatedBody = ParamUtil.getString(request, "emailMessageUpdatedBody", MBUtil.getEmailMessageUpdatedBody(preferences));
 String emailMessageUpdatedSignature = ParamUtil.getString(request, "emailMessageUpdatedSignature", MBUtil.getEmailMessageUpdatedSignature(preferences));
+
+boolean popServerNotifications = ParamUtil.getBoolean(request, "popServerNotifiations", MBUtil.getPopServerNotifications());
 
 String bodyEditorParam = StringPool.BLANK;
 String bodyEditorContent = StringPool.BLANK;
@@ -137,12 +141,14 @@ else if (tabs2.equals("message-updated-email")) {
 					<dd>
 						<liferay-ui:message key="the-company-name-associated-with-the-message-board" />
 					</dd>
-					<dt>
-						[$MAILING_LIST_ADDRESS$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-email-address-of-the-mailing-list" />
-					</dd>
+					<% if (popServerNotifications) {%>
+						<dt>
+							[$MAILING_LIST_ADDRESS$]
+						</dt>
+						<dd>
+							<liferay-ui:message key="the-email-address-of-the-mailing-list" />
+						</dd>
+					<% } %>
 					<dt>
 						[$MESSAGE_USER_ADDRESS$]
 					</dt>
@@ -235,12 +241,14 @@ else if (tabs2.equals("message-updated-email")) {
 					<dd>
 						<%= HtmlUtil.escape(emailFromName) %>
 					</dd>
-					<dt>
-						[$MAILING_LIST_ADDRESS$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-email-address-of-the-mailing-list" />
-					</dd>
+					<% if (popServerNotifications) {%>
+						<dt>
+							[$MAILING_LIST_ADDRESS$]
+						</dt>
+						<dd>
+							<liferay-ui:message key="the-email-address-of-the-mailing-list" />
+						</dd>
+					<% } %>
 					<dt>
 						[$MESSAGE_BODY$]
 					</dt>
@@ -295,18 +303,20 @@ else if (tabs2.equals("message-updated-email")) {
 					<dd>
 						<liferay-ui:message key="the-site-name-associated-with-the-message-board" />
 					</dd>
-					<dt>
-						[$TO_ADDRESS$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-address-of-the-email-recipient" />
-					</dd>
-					<dt>
-						[$TO_NAME$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-name-of-the-email-recipient" />
-					</dd>
+					<% if (!(emailBulkAddress && !popServerNotifications)) {%>
+						<dt>
+							[$TO_ADDRESS$]
+						</dt>
+						<dd>
+							<liferay-ui:message key="the-address-of-the-email-recipient" />
+						</dd>
+						<dt>
+							[$TO_NAME$]
+						</dt>
+						<dd>
+							<liferay-ui:message key="the-name-of-the-email-recipient" />
+						</dd>
+					<% } %>
 				</dl>
 			</div>
 		</c:when>

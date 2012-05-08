@@ -312,11 +312,13 @@ List addresses = AddressServiceUtil.getAddresses(Contact.class.getName(), contac
 			</liferay-ui:panel>
 		</c:if>
 
-		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="shoppingCheckoutCommentsPanel" persistState="<%= true %>" title="comments">
-			<aui:fieldset>
-				<aui:input label="" name="comments" />
-			</aui:fieldset>
-		</liferay-ui:panel>
+		<c:if test="<%= PropsValues.SHOPPING_ORDER_COMMENTS_ENABLED %>">
+			<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="shoppingCheckoutCommentsPanel" persistState="<%= true %>" title="comments">
+				<aui:fieldset>
+					<aui:input label="" name="comments" />
+				</aui:fieldset>
+			</liferay-ui:panel>
+		</c:if>
 	</liferay-ui:panel-container>
 
 	<aui:button-row>

@@ -3,6 +3,14 @@
 
 <Configure class="org.eclipse.jetty.webapp.WebAppContext">
 	<Set name="contextPath">/@context@</Set>
-	<Set name="extraClasspath"><SystemProperty name="jetty.home" />/lib/jetty-server-<SystemProperty name="jetty.version" />.v<SystemProperty name="jetty.version.date" />.jar,<SystemProperty name="jetty.home" />/lib/jetty-util-<SystemProperty name="jetty.version" />.v<SystemProperty name="jetty.version.date" />.jar,<SystemProperty name="jetty.home" />/lib/jetty-webapp-<SystemProperty name="jetty.version" />.v<SystemProperty name="jetty.version.date" />.jar</Set>
+	<Set name="extraClasspath"><SystemProperty name="jetty.home" />/lib/jetty-server-<SystemProperty name="app.server.jetty.version" />.v<SystemProperty name="app.server.jetty.version.date" />.jar,<SystemProperty name="jetty.home" />/lib/jetty-util-<SystemProperty name="app.server.jetty.version" />.v<SystemProperty name="app.server.jetty.version.date" />.jar,<SystemProperty name="jetty.home" />/lib/jetty-webapp-<SystemProperty name="app.server.jetty.version" />.v<SystemProperty name="app.server.jetty.version.date" />.jar</Set>
 	<Set name="resourceBase"><SystemProperty name="jetty.home" />/webapps/@context@</Set>
+	<Get name="securityHandler">
+		<Set name="loginService">
+			<New class="org.eclipse.jetty.security.HashLoginService" id="defaultLoginService">
+				<Set name="name">Test Realm</Set>
+				<Set name="config"><SystemProperty name="jetty.home" default="."/>/etc/realm.properties</Set>
+			</New>
+		</Set>
+	</Get>
 </Configure>

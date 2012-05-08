@@ -373,7 +373,7 @@ JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true -Dus
 
 						<replace file="${app.server.jetty.bin.dir}/run.bat">
 							<replacetoken>set "JAVA_OPTS=-D</replacetoken>
-							<replacevalue>set "JAVA_OPTS=-Djetty.version=${app.server.jetty.version} -Djetty.version.date=${app.server.jetty.version.date} -D</replacevalue>
+							<replacevalue>set "JAVA_OPTS=-Dapp.server.jetty.version=${app.server.jetty.version} -Dapp.server.jetty.version.date=${app.server.jetty.version.date} -D</replacevalue>
 						</replace>
 
 						<loadfile property="run.bat.content" srcfile="${app.server.jetty.bin.dir}/run.bat">
@@ -403,7 +403,7 @@ JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true -Dus
 
 						<replace file="${app.server.jetty.bin.dir}/run.sh">
 							<replacetoken>export JAVA_OPTS="-D</replacetoken>
-							<replacevalue>export JAVA_OPTS="-Djetty.version=${app.server.jetty.version} -Djetty.version.date=${app.server.jetty.version.date} -D</replacevalue>
+							<replacevalue>export JAVA_OPTS="-Dapp.server.jetty.version=${app.server.jetty.version} -Dapp.server.jetty.version.date=${app.server.jetty.version.date} -D</replacevalue>
 						</replace>
 
 						<loadfile property="run.sh.content" srcfile="${app.server.jetty.bin.dir}/run.sh">
@@ -437,29 +437,6 @@ JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true -Dus
 							file="tools/servers/jetty/contexts/root.xml"
 							tofile="${app.server.dir}/contexts/root.xml"
 						/>
-					</then>
-				</if>
-
-				<if>
-					<not>
-						<available file="${app.server.dir}/etc/start.config" />
-					</not>
-					<then>
-						<unjar src="${app.server.dir}/start.jar" dest="${app.server.dir}">
-							<patternset>
-								<include name="**/start.config" />
-							</patternset>
-							<mapper
-								type="glob"
-								from="org/eclipse/jetty/start/*"
-								to="etc/*"
-							/>
-						</unjar>
-
-						<echo file="${app.server.dir}/etc/start.config" append="true">
-jetty.logs=$(jetty.home)/logs
-
-$(jetty.home)/lib/liferay/*</echo>
 					</then>
 				</if>
 

@@ -15,7 +15,9 @@
 package com.liferay.portal.search.lucene.dump;
 
 import com.liferay.portal.search.lucene.IndexAccessorImpl;
-import com.liferay.portal.util.BaseTestCase;
+import com.liferay.portal.test.EnvironmentExecutionTestListener;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.ByteArrayInputStream;
@@ -23,20 +25,30 @@ import java.io.ByteArrayOutputStream;
 
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
+import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TopDocs;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.powermock.api.mockito.PowerMockito;
+
 /**
  * @author Shuyang Zhou
+ * @author Mate Thurzo
  */
-public class IndexAccessorImplTest extends BaseTestCase {
+@ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class IndexAccessorImplTest extends PowerMockito {
 
-	@Override
+	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_documentsCount = PropsValues.LUCENE_COMMIT_BATCH_SIZE;
 
 		if (_documentsCount == 0) {
@@ -46,14 +58,15 @@ public class IndexAccessorImplTest extends BaseTestCase {
 		_indexAccessorImpl = new IndexAccessorImpl(_TEST_COMPANY_ID);
 	}
 
-	@Override
+	@After
 	public void tearDown() throws Exception {
-		super.tearDown();
+		System.gc();
 
 		_indexAccessorImpl.delete();
 		_indexAccessorImpl.close();
 	}
 
+	@Test
 	public void testEmptyDump() throws Exception {
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
@@ -64,6 +77,7 @@ public class IndexAccessorImplTest extends BaseTestCase {
 			new ByteArrayInputStream(byteArrayOutputStream.toByteArray()));
 	}
 
+	@Test
 	public void testOneCommitDump() throws Exception {
 		_addDocuments("test");
 
@@ -80,6 +94,7 @@ public class IndexAccessorImplTest extends BaseTestCase {
 		_assertHits("test", true);
 	}
 
+	@Test
 	public void testThreeCommitsDump() throws Exception {
 		_addDocuments("test1");
 		_addDocuments("test2");
@@ -102,6 +117,7 @@ public class IndexAccessorImplTest extends BaseTestCase {
 		_assertHits("test3", true);
 	}
 
+	@Test
 	public void testThreeCommitsOneDeletionDump() throws Exception {
 		_addDocuments("test1");
 		_addDocuments("test2");
@@ -126,6 +142,7 @@ public class IndexAccessorImplTest extends BaseTestCase {
 		_assertHits("test3", true);
 	}
 
+	@Test
 	public void testThreeCommitsTwoDeletionsDump() throws Exception {
 		_addDocuments("test1");
 		_addDocuments("test2");
@@ -151,6 +168,7 @@ public class IndexAccessorImplTest extends BaseTestCase {
 		_assertHits("test3", false);
 	}
 
+	@Test
 	public void testTwoCommitsDump() throws Exception {
 		_addDocuments("test1");
 		_addDocuments("test2");
@@ -184,8 +202,10 @@ public class IndexAccessorImplTest extends BaseTestCase {
 	}
 
 	private void _assertHits(String key, boolean expectHit) throws Exception {
-		IndexSearcher indexSearcher = new IndexSearcher(
+		IndexReader indexReader = IndexReader.open(
 			_indexAccessorImpl.getLuceneDir());
+
+		IndexSearcher indexSearcher = new IndexSearcher(indexReader);
 
 		for (int i = 0; i < _documentsCount * 2; i++) {
 			Term term = new Term("name", key + i);
@@ -196,14 +216,14 @@ public class IndexAccessorImplTest extends BaseTestCase {
 
 			if (i < _documentsCount) {
 				if (expectHit) {
-					assertEquals(1, topDocs.totalHits);
+					Assert.assertEquals(1, topDocs.totalHits);
 				}
 				else {
-					assertEquals(0, topDocs.totalHits);
+					Assert.assertEquals(0, topDocs.totalHits);
 				}
 			}
 			else {
-				assertEquals(0, topDocs.totalHits);
+				Assert.assertEquals(0, topDocs.totalHits);
 			}
 		}
 

@@ -19,7 +19,7 @@
 </c:if>
 
 <%
-SearchContainer userSearch = new UserSearch(renderRequest, "cur2", portletURL);
+SearchContainer userSearch = new UserSearch(renderRequest, "cur2", currentURLObj);
 
 userSearch.setRowChecker(new RowChecker(renderResponse));
 %>

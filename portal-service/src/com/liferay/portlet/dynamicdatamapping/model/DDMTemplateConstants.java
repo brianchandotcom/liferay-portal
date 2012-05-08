@@ -23,18 +23,18 @@ import com.liferay.portal.kernel.util.PropsUtil;
  */
 public class DDMTemplateConstants {
 
-	public static final String CUSTOM_ABSTRACTS_TEMPLATE_KEY =
-		"CUSTOM_ABSTRACTS";
-
-	public static final String CUSTOM_TITLE_LIST_TEMPLATE_KEY =
-		"CUSTOM_TITLE_LIST";
-
 	public static final String LANG_TYPE_FTL = "ftl";
 
 	public static final String LANG_TYPE_VM = "vm";
 
 	public static final String[] LANG_TYPES = PropsUtil.getArray(
 		PropsKeys.DYNAMIC_DATA_MAPPING_TEMPLATE_LANGUAGE_TYPES);
+
+	public static final String TEMPLATE_KEY_CUSTOM_ABSTRACTS =
+		"custom_abstracts";
+
+	public static final String TEMPLATE_KEY_CUSTOM_TITLE_LIST =
+		"custom_title_list";
 
 	public static final String TEMPLATE_MODE_CREATE = "create";
 

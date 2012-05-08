@@ -74,29 +74,18 @@ public class AddDefaultDDMTemplatesAction extends SimpleAction {
 
 		// Custom Abstracts
 
-		String ddmTemplateKey =
-			DDMTemplateConstants.CUSTOM_ABSTRACTS_TEMPLATE_KEY;
-		String name = LanguageUtil.get(
-			serviceContext.getLocale(), "custom-abstracts");
-		String description = LanguageUtil.get(
-			serviceContext.getLocale(), "custom-abstracts-description");
-
 		addDDMTemplate(
-			groupId, userId, ddmTemplateKey, name, description,
-			"custom-abstracts.vm", serviceContext);
+        	groupId, userId, DDMTemplateConstants.TEMPLATE_KEY_CUSTOM_ABSTRACTS,
+        	"custom-abstracts", "custom-abstracts-description",
+        	"asset-publisher-custom-abstracts.vm", serviceContext);
 
 		// Custom Title List
 
-		ddmTemplateKey =
-			DDMTemplateConstants.CUSTOM_TITLE_LIST_TEMPLATE_KEY;
-		name = LanguageUtil.get(
-			serviceContext.getLocale(), "custom-title-list");
-		description = LanguageUtil.get(
-			serviceContext.getLocale(), "custom-title-list-description");
-
-		addDDMTemplate(
-			groupId, userId, ddmTemplateKey, name, description,
-			"custom-title-list.vm", serviceContext);
+    	addDDMTemplate(
+			groupId, userId,
+			DDMTemplateConstants.TEMPLATE_KEY_CUSTOM_TITLE_LIST,
+			"custom-title-list", "custom-title-list-description",
+			"asset-publisher-custom-title-list.vm", serviceContext);
 	}
 
 	protected void addDDMTemplate(
@@ -112,15 +101,17 @@ public class AddDefaultDDMTemplatesAction extends SimpleAction {
 		}
 
 		String script = ContentUtil.get(
-			"com/liferay/portal/events/dependencies/assetpublisher" + fileName);
+			"com/liferay/portal/events/dependencies/" + fileName);
 
 		Map<Locale, String> nameMap = new HashMap<Locale, String>();
 
-		nameMap.put(LocaleUtil.getDefault(), name);
+		Locale locale = LocaleUtil.getDefault();
+
+		nameMap.put(locale, LanguageUtil.get(locale, name));
 
 		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
 
-		descriptionMap.put(LocaleUtil.getDefault(), description);
+		descriptionMap.put(locale, LanguageUtil.get(locale, description));
 
 		long classNameId = PortalUtil.getClassNameId(AssetEntry.class);
 		long classPK = groupId;

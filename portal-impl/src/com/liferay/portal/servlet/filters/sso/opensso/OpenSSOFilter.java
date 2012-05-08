@@ -25,6 +25,7 @@ import com.liferay.portal.servlet.filters.BasePortalFilter;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.util.WebKeys;
 
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
@@ -119,13 +120,13 @@ public class OpenSSOFilter extends BasePortalFilter {
 			return;
 		}
 
+		HttpSession session = request.getSession();
+
 		if (authenticated) {
 
 			// LEP-5943
 
 			String newSubjectId = OpenSSOUtil.getSubjectId(request, serviceUrl);
-
-			HttpSession session = request.getSession();
 
 			String oldSubjectId = (String)session.getAttribute(_SUBJECT_ID_KEY);
 
@@ -143,6 +144,9 @@ public class OpenSSOFilter extends BasePortalFilter {
 			processFilter(OpenSSOFilter.class, request, response, filterChain);
 
 			return;
+		}
+		else if (PortalUtil.getUserId(request) > 0) {
+			session.invalidate();
 		}
 
 		if (!PropsValues.AUTH_FORWARD_BY_LAST_PATH ||

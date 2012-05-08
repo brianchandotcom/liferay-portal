@@ -493,9 +493,20 @@ public class VelocityTaglib {
 			String windowState, int[] roleTypes)
 		throws Exception {
 
+		permissionsURL(
+			redirect, modelResourceDescription, modelResourceDescription, null,
+			resourcePrimKey, windowState, roleTypes);
+	}
+
+	public void permissionsURL(
+			String redirect, String modelResource,
+			String modelResourceDescription, String resourceGroupId,
+			String resourcePrimKey, String windowState, int[] roleTypes)
+		throws Exception {
+
 		PermissionsURLTag.doTag(
-			redirect, modelResource, modelResourceDescription, resourcePrimKey,
-			windowState, null, roleTypes, _pageContext);
+			redirect, modelResource, modelResourceDescription, resourceGroupId,
+			resourcePrimKey, windowState, null, roleTypes, _pageContext);
 	}
 
 	public void renderURL(long plid, String portletName, String queryString)

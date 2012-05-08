@@ -1282,7 +1282,7 @@
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
 		<init-param>
 			<name>template-path</name>
-			<value>/html/portlet/announcements/</value>
+			<value>/html/portlet/alerts/</value>
 		</init-param>
 		<init-param>
 			<name>view-action</name>

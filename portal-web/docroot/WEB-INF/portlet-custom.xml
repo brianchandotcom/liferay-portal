@@ -2391,7 +2391,7 @@
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
 		<init-param>
 			<name>template-path</name>
-			<value>/html/portlet/docbar/</value>
+			<value>/html/portlet/dockbar/</value>
 		</init-param>
 		<init-param>
 			<name>view-action</name>

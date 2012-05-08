@@ -1359,8 +1359,6 @@ public interface PropsKeys {
 
 	public static final String MESSAGE_BOARDS_CATEGORY_DISPLAY_STYLES_DEFAULT = "message.boards.category.display.styles.default";
 
-	public static final String MESSAGE_BOARDS_EMAIL_BULK_ADDRESS = "message.boards.email.bulk.address";
-
 	public static final String MESSAGE_BOARDS_EMAIL_FROM_ADDRESS = "message.boards.email.from.address";
 
 	public static final String MESSAGE_BOARDS_EMAIL_FROM_NAME = "message.boards.email.from.name";
@@ -1382,6 +1380,8 @@ public interface PropsKeys {
 	public static final String MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_SIGNATURE = "message.boards.email.message.updated.signature";
 
 	public static final String MESSAGE_BOARDS_EMAIL_MESSAGE_UPDATED_SUBJECT_PREFIX = "message.boards.email.message.updated.subject.prefix";
+
+	public static final String MESSAGE_BOARDS_EMAIL_SEND_BULK = "message.boards.email.send.bulk";
 
 	public static final String MESSAGE_BOARDS_EXPIRE_BAN_INTERVAL = "message.boards.expire.ban.interval";
 

@@ -362,8 +362,12 @@
 			}
 		}
 
-		&:hover .overlay, &.hover .overlay {
-			clip: rect(auto auto auto auto);
+		.lfr-actions.show-arrow.direction-down .lfr-trigger strong a {
+			background-position: 100% -25px;
+
+			&:hover {
+				background-position: 100% -5px;
+			}
 		}
 	}
 
@@ -379,7 +383,7 @@
 		display: none;
 	}
 
-	.document-display-style, .lfr-search-container, .folder-display-style li {
+	.document-display-style, .lfr-search-container {
 		.overlay {
 			clip: rect(0, 0, 0, 0);
 		}

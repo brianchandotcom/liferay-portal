@@ -192,8 +192,6 @@ public class ThemeUtil {
 			servletContext, request,
 			new PipingServletResponse(response, writer), pageContext);
 
-		request.setAttribute(WebKeys.VELOCITY_TAGLIB, velocityTaglib);
-
 		template.put("taglibLiferay", velocityTaglib);
 		template.put("theme", velocityTaglib);
 		template.put("writer", writer);
@@ -245,6 +243,8 @@ public class ThemeUtil {
 
 		template.put("Application", servletContextHashModel);
 
+		request.setAttribute(WebKeys.VELOCITY_TAGLIB, velocityTaglib);
+
 		HttpRequestHashModel httpRequestHashModel = new HttpRequestHashModel(
 			request, response, ObjectWrapper.DEFAULT_WRAPPER);
 
@@ -252,7 +252,12 @@ public class ThemeUtil {
 
 		// Merge templates
 
-		template.processTemplate(writer);
+		try {
+			template.processTemplate(writer);
+		}
+		finally {
+			request.removeAttribute(WebKeys.VELOCITY_TAGLIB);
+		}
 
 		if (write) {
 			return null;
@@ -410,7 +415,12 @@ public class ThemeUtil {
 
 		// Merge templates
 
-		template.processTemplate(writer);
+		try {
+			template.processTemplate(writer);
+		}
+		finally {
+			request.removeAttribute(WebKeys.VELOCITY_TAGLIB);
+		}
 
 		if (write) {
 			return null;

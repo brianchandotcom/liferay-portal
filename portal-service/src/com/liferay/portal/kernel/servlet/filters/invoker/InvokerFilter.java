@@ -61,16 +61,22 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 
 		request.setAttribute(WebKeys.INVOKER_FILTER_URI, uri);
 
-		InvokerFilterChain invokerFilterChain = getInvokerFilterChain(
-			request, uri, filterChain);
+		try {
+			InvokerFilterChain invokerFilterChain = getInvokerFilterChain(
+				request, uri, filterChain);
 
-		Thread currentThread = Thread.currentThread();
+			Thread currentThread = Thread.currentThread();
 
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+			ClassLoader contextClassLoader =
+				currentThread.getContextClassLoader();
 
-		invokerFilterChain.setContextClassLoader(contextClassLoader);
+			invokerFilterChain.setContextClassLoader(contextClassLoader);
 
-		invokerFilterChain.doFilter(servletRequest, servletResponse);
+			invokerFilterChain.doFilter(servletRequest, servletResponse);
+		}
+		finally {
+			request.removeAttribute(WebKeys.INVOKER_FILTER_URI);
+		}
 	}
 
 	public void init(FilterConfig filterConfig) throws ServletException {

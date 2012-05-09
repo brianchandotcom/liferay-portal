@@ -804,6 +804,8 @@ public class PortletContainerImpl implements PortletContainer {
 			if (lifecycle != null) {
 				request.setAttribute(PortletRequest.LIFECYCLE_PHASE, lifecycle);
 			}
+
+			request.removeAttribute(WebKeys.RENDER_PORTLET);
 		}
 	}
 

@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -311,8 +310,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		if (message.isDiscussion()) {
 			long classNameId = PortalUtil.getClassNameId(
 				(String)serviceContext.getAttribute("className"));
-			long classPK = GetterUtil.getLong(
-				(String)serviceContext.getAttribute("classPK"));
+			long classPK = ParamUtil.getLong(serviceContext, "classPK");
 
 			message.setClassNameId(classNameId);
 			message.setClassPK(classPK);
@@ -1626,8 +1624,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 					else {
 						String className = (String)serviceContext.getAttribute(
 							"className");
-						long classPK = GetterUtil.getLong(
-							(String)serviceContext.getAttribute("classPK"));
+						long classPK = ParamUtil.getLong(
+							serviceContext, "classPK");
 						long parentMessageId = message.getParentMessageId();
 
 						if (parentMessageId !=
@@ -1836,8 +1834,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		subscriptionSender.setUserId(message.getUserId());
 
 		String className = (String)serviceContext.getAttribute("className");
-		long classPK = GetterUtil.getLong(
-			(String)serviceContext.getAttribute("classPK"));
+		long classPK = ParamUtil.getLong(serviceContext, "classPK");
 
 		subscriptionSender.addPersistedSubscribers(className, classPK);
 

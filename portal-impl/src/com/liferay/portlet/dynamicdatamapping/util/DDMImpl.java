@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.upload.UploadRequest;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -108,8 +107,8 @@ public class DDMImpl implements DDM {
 
 			String fieldDataType = ddmStructure.getFieldDataType(fieldName);
 			String fieldType = ddmStructure.getFieldType(fieldName);
-			String fieldValue = ParamUtil.getString(
-				serviceContext, fieldNamespace + fieldName);
+			String fieldValue = (String)serviceContext.getAttribute(
+				fieldNamespace + fieldName);
 
 			if (fieldDataType.equals(FieldConstants.FILE_UPLOAD)) {
 				continue;

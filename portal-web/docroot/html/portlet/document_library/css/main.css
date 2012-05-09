@@ -156,10 +156,17 @@
 	}
 
 	img.locked-icon, img.shortcut-icon {
-		bottom: 12px;
+		bottom: 10px;
 		position: absolute;
-		right: 0;
 		z-index: 10;
+	}
+
+	img.locked-icon {
+		right: -10px;
+	}
+
+	img.shortcut-icon {
+		left: -5px;
 	}
 
 	.lfr-menu-list ul {
@@ -252,6 +259,7 @@
 			}
 
 			.document-thumbnail {
+				display: inline-block;
 				float: left;
 				margin: 5px 10px 5px 5px;
 				position: relative;
@@ -298,8 +306,9 @@
 			}
 
 			.document-thumbnail {
-				text-align: center;
+				display: inline-block;
 				position: relative;
+				text-align: center;
 			}
 
 			.entry-title {

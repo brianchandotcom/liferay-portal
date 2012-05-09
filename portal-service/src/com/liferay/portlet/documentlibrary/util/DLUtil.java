@@ -545,40 +545,57 @@ public class DLUtil {
 
 		String thumbnailSrc = sb.toString();
 
-		if (dlFileShortcut == null) {
-			String thumbnailQueryString = null;
+		String thumbnailQueryString = null;
 
-			if (ImageProcessorUtil.hasImages(fileVersion)) {
-				thumbnailQueryString = "&imageThumbnail=1";
-			}
-			else if (PDFProcessorUtil.hasImages(fileVersion)) {
-				thumbnailQueryString = "&documentThumbnail=1";
-			}
-			else if (VideoProcessorUtil.hasVideo(fileVersion)) {
-				thumbnailQueryString = "&videoThumbnail=1";
-			}
+		if (ImageProcessorUtil.hasImages(fileVersion)) {
+			thumbnailQueryString = "&imageThumbnail=1";
+		}
+		else if (PDFProcessorUtil.hasImages(fileVersion)) {
+			thumbnailQueryString = "&documentThumbnail=1";
+		}
+		else if (VideoProcessorUtil.hasVideo(fileVersion)) {
+			thumbnailQueryString = "&videoThumbnail=1";
+		}
 
-			if (Validator.isNotNull(thumbnailQueryString)) {
-				thumbnailSrc = getPreviewURL(
-					fileEntry, fileVersion, themeDisplay, thumbnailQueryString,
-					true, true);
-			}
+		if (Validator.isNotNull(thumbnailQueryString)) {
+			thumbnailSrc = getPreviewURL(
+				fileEntry, fileVersion, themeDisplay, thumbnailQueryString,
+				true, true);
 		}
 
 		return thumbnailSrc;
 	}
 
 	public static String getThumbnailStyle() throws Exception {
+		return getThumbnailStyle(true, 0);
+	}
+
+	public static String getThumbnailStyle(boolean max, int margin)
+		throws Exception {
+
 		StringBundler sb = new StringBundler(5);
 
-		sb.append("max-height: ");
+		if (max) {
+			sb.append("max-height: ");
+		}
+		else {
+			sb.append("height: ");
+		}
+
 		sb.append(
 			PrefsPropsUtil.getLong(
-				PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT));
-		sb.append("px; max-width: ");
+				PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT) + 2 * margin);
+
+		if (max) {
+			sb.append("px; max-width: ");
+		}
+		else {
+			sb.append("px; width: ");
+		}
+
 		sb.append(
 			PrefsPropsUtil.getLong(
-				PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH));
+				PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH) + 2 * margin);
 		sb.append("px;");
 
 		return sb.toString();

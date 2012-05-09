@@ -971,24 +971,35 @@ public class MainServlet extends ActionServlet {
 
 		// org.eclipse.jetty.deploy.DeploymentManager
 
-		Field dependentBeansField = aggregateLifeCycleClass.getDeclaredField(
-			"_dependentBeans");
+		Field beansField = aggregateLifeCycleClass.getDeclaredField("_beans");
 
-		dependentBeansField.setAccessible(true);
+		beansField.setAccessible(true);
 
-		List<?> dependentBeans = (List<?>)dependentBeansField.get(server);
+		List<?> beans = (List<?>)beansField.get(server);
 
 		Object deploymentManager = null;
 
-		for (Object dependentBean : dependentBeans) {
-			Class<?> dependentBeanClass = dependentBean.getClass();
+		for (Object bean : beans) {
 
-			String dependentBeanClassName = dependentBeanClass.getName();
+			// org.eclipse.jetty.util.component.AggregateLifeCycle$Bean
 
-			if (dependentBeanClassName.equals(
+			Class<?> aggregateLifeCycleBeanClass = bean.getClass();
+
+			Field beanField = aggregateLifeCycleBeanClass.getDeclaredField(
+				"_bean");
+
+			beanField.setAccessible(true);
+
+			Object beanBean = beanField.get(bean);
+
+			Class<?> beanBeanClass = beanBean.getClass();
+
+			String beanBeanClassName = beanBeanClass.getName();
+
+			if (beanBeanClassName.equals(
 					"org.eclipse.jetty.deploy.DeploymentManager")) {
 
-				deploymentManager = dependentBean;
+				deploymentManager = beanBean;
 
 				break;
 			}

@@ -16,8 +16,8 @@ package com.liferay.portlet.dynamicdatamapping.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -43,8 +43,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		String ddmResource = GetterUtil.getString(
-			serviceContext.getAttribute("ddmResource"));
+		String ddmResource = ParamUtil.getString(serviceContext, "ddmResource");
 
 		DDMPermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
@@ -60,8 +59,7 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		String ddmResource = GetterUtil.getString(
-			serviceContext.getAttribute("ddmResource"));
+		String ddmResource = ParamUtil.getString(serviceContext, "ddmResource");
 
 		DDMPermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),

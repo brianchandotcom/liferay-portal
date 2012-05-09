@@ -1681,8 +1681,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			}
 		}
 
-		boolean layoutUpdateable = GetterUtil.getBoolean(
-			serviceContext.getAttribute("layoutUpdateable"), true);
+		boolean layoutUpdateable = ParamUtil.getBoolean(
+			serviceContext, "layoutUpdateable", true);
 
 		UnicodeProperties typeSettingsProperties =
 			layout.getTypeSettingsProperties();

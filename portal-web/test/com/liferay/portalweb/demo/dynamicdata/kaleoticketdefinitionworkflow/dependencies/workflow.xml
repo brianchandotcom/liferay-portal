@@ -26,7 +26,7 @@
 
 				ServiceContext serviceContext = (ServiceContext) workflowContext.get(WorkflowConstants.CONTEXT_SERVICE_CONTEXT);
 
-				long ddlRecordId = GetterUtil.getLong(serviceContext.getAttribute("ddlRecordId"));
+				long ddlRecordId = ParamUtil.getLong(serviceContext, "ddlRecordId");
 
 				DDLRecord ddlRecord = DDLRecordLocalServiceUtil.getRecord(ddlRecordId);
 
@@ -146,8 +146,7 @@
 
 						ServiceContext serviceContext = (ServiceContext) workflowContext.get(WorkflowConstants.CONTEXT_SERVICE_CONTEXT);
 
-						long ddlRecordId = GetterUtil.getLong(
-						serviceContext.getAttribute("ddlRecordId"));
+						long ddlRecordId = ParamUtil.getLong(serviceContext, "ddlRecordId");
 
 						DDLRecord ddlRecord = DDLRecordLocalServiceUtil.getRecord(ddlRecordId);
 

@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -789,8 +788,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			ServiceContext serviceContext = (ServiceContext)workflowContext.get(
 				WorkflowConstants.CONTEXT_SERVICE_CONTEXT);
 
-			boolean update = GetterUtil.getBoolean(
-				serviceContext.getAttribute("update"), false);
+			boolean update = ParamUtil.getBoolean(
+				serviceContext, "update", false);
 
 			if (update) {
 				entry.setStatus(WorkflowConstants.STATUS_DRAFT_FROM_APPROVED);
@@ -1084,8 +1083,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 				String[] trackbacks = (String[])serviceContext.getAttribute(
 					"trackbacks");
-				Boolean pingOldTrackbacks = GetterUtil.getBoolean(
-					(String)serviceContext.getAttribute("pingOldTrackbacks"));
+				Boolean pingOldTrackbacks = ParamUtil.getBoolean(
+					serviceContext, "pingOldTrackbacks");
 
 				pingGoogle(entry, serviceContext);
 				pingPingback(entry, serviceContext);
@@ -1148,8 +1147,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws SystemException {
 
-		String serviceContextUrlTitle = GetterUtil.getString(
-			serviceContext.getAttribute("urlTitle"));
+		String serviceContextUrlTitle = ParamUtil.getString(
+			serviceContext, "urlTitle");
 
 		String urlTitle = null;
 

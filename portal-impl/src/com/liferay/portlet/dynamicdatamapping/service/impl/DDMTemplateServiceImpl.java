@@ -16,8 +16,8 @@ package com.liferay.portlet.dynamicdatamapping.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
@@ -44,11 +44,10 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		String ddmResource = GetterUtil.getString(
-			serviceContext.getAttribute("ddmResource"));
+		String ddmResource = ParamUtil.getString(serviceContext, "ddmResource");
 
-		String ddmResourceActionId = GetterUtil.getString(
-			serviceContext.getAttribute("ddmResourceActionId"));
+		String ddmResourceActionId = ParamUtil.getString(
+			serviceContext, "ddmResourceActionId");
 
 		if (Validator.isNull(ddmResourceActionId)) {
 			ddmResourceActionId = ActionKeys.ADD_TEMPLATE;
@@ -68,8 +67,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		String ddmResource = GetterUtil.getString(
-			serviceContext.getAttribute("ddmResource"));
+		String ddmResource = ParamUtil.getString(serviceContext, "ddmResource");
 
 		DDMPermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),

@@ -155,18 +155,18 @@
 		margin: 0 0 0.5em 0.5em;
 	}
 
-	img.locked-icon {
-		bottom: 12px;
+	img.locked-icon, img.shortcut-icon {
+		bottom: 10px;
 		position: absolute;
-		right: 0;
 		z-index: 10;
 	}
 
+	img.locked-icon {
+		right: -10px;
+	}
+
 	img.shortcut-icon {
-		bottom: 12px;
-		position: absolute;
-		left: 0;
-		z-index: 10;
+		left: -5px;
 	}
 
 	.lfr-menu-list ul {

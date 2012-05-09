@@ -517,6 +517,8 @@ public class PortletRequestProcessor extends TilesRequestProcessor {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Processing path " + path);
 			}
+
+			request.removeAttribute(WebKeys.PORTLET_STRUTS_ACTION);
 		}
 
 		return path;

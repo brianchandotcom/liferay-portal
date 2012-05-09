@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.portlet;
 
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
 
@@ -93,6 +94,14 @@ public class RestrictPortletContainerWrapper implements PortletContainer {
 			throw new PortletContainerException(e);
 		}
 		finally {
+			restrictPortletServletRequest.removeAttribute(WebKeys.RENDER_PATH);
+			restrictPortletServletRequest.removeAttribute(
+				WebKeys.RENDER_PORTLET_COLUMN_ID);
+			restrictPortletServletRequest.removeAttribute(
+				WebKeys.RENDER_PORTLET_COLUMN_POS);
+			restrictPortletServletRequest.removeAttribute(
+				WebKeys.RENDER_PORTLET_COLUMN_COUNT);
+
 			restrictPortletServletRequest.mergeSharedAttributes();
 		}
 	}

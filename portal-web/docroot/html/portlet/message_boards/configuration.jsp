@@ -260,6 +260,12 @@ else if (tabs2.equals("message-updated-email")) {
 						<liferay-ui:message key="the-message-subject" />
 					</dd>
 					<dt>
+						[$MESSAGE_URL$]
+					</dt>
+					<dd>
+						<liferay-ui:message key="the-message-url" />
+					</dd>
+					<dt>
 						[$MESSAGE_USER_ADDRESS$]
 					</dt>
 					<dd>

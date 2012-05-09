@@ -1,0 +1,46 @@
+## Sample Display Style for the Asset Publisher
+
+## Read portlet preferences
+
+#set ($preferences = $renderRequest.getPreferences())
+#set ($assetLinkBehaviour = $preferences.getValue("assetLinkBehavior", ''))
+
+## Iterate the asset entries
+
+#foreach($asset_entry in $assetEntries)
+	#set ($assetRenderer = $asset_entry.getAssetRenderer())
+	#set ($assetRendererFactory = $asset_entry.getAssetRendererFactory())
+	#set ($iconPath = $assetRenderer.getIconPath($renderRequest))
+	#set ($editURL = $assetRenderer.getURLEdit($renderRequest, $renderResponse))
+	#set ($viewNoContext = $assetPublisherHelper.getAssetViewURL($renderRequest, $renderResponse, $asset_entry))
+
+	#if ($assetLinkBehaviour == 'showFullContent')
+		#set ($viewUrl = $viewNoContext)
+	#else
+		#set ($viewUrl = $assetRenderer.getURLViewInContext($renderRequest, $renderResponse, $viewNoContext))
+	#end
+
+	<div class="asset-abstract">
+		<div class="lfr-meta-actions asset-actions">
+			<span>
+				<a class="taglib-icon" href="$editURL">
+					<img alt="Edit" class="icon" src="$themeDisplay.getPathThemeImages()/common/edit.png" />
+					<span class="taglib-text">$languageUtil.get($company_id, $locale, "edit") <span class="aui-helper-hidden-accessible">$asset_entry.getTitle($locale)</span></span>
+				</a>
+			</span>
+		</div>
+
+		<h3 class="asset-title">
+			<a href="$viewUrl"><img alt="" src="$iconPath" /> $asset_entry.getTitle($locale) </a>
+		</h3>
+
+		<div class="asset-content">
+			<div class="asset-summary">
+				$assetRenderer.getSummary($locale)
+			</div>
+			<div class="asset-more">
+				<a href="$viewUrl">$languageUtil.get($company_id, $locale, "read-more") <span class="aui-helper-hidden-accessible">$languageUtil.get($company_id, $locale, "about") $asset_entry.getTitle($locale)</span> » </a>
+			</div>
+		</div>
+	</div>
+#end

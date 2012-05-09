@@ -94,10 +94,8 @@ if (displayTerms.getParentOrganizationId() > 0) {
 			{
 				select: '<portlet:namespace /><%= displayTerms.COUNTRY_ID %>',
 				selectData: Liferay.Address.getCountries,
-				selectDesc: 'name',
+				selectDesc: 'nameCurrentValue',
 				selectId: 'countryId',
-				selectLocalizeDesc: '<%= true %>',
-				selectLocalizeDescPrefix: '<%= CountryConstants.NAME_PREFIX %>',
 				selectSort: '<%= true %>',
 				selectVal: '<%= displayTerms.getCountryId() %>'
 			},

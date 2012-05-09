@@ -103,8 +103,7 @@ AUI.add(
 				var select = A.one('#' + options.select);
 				var selectId = options.selectId;
 				var selectDesc = options.selectDesc;
-				var selectLocalizeDesc = options.selectLocalizeDesc || false;
-				var selectSort = options.selectSort || false;
+				var selectSort = options.selectSort;
 				var selectVal = options.selectVal;
 				var selectNullable = options.selectNullable || true;
 
@@ -119,16 +118,6 @@ AUI.add(
 					function(item, index, collection) {
 						var key = item[selectId];
 						var value = item[selectDesc];
-
-						if (selectLocalizeDesc) {
-							var selectLocalizeDescPrefix = options.selectLocalizeDescPrefix;
-
-							if (selectLocalizeDescPrefix != null) {
-								value = selectLocalizeDescPrefix + value;
-							}
-
-							value = Liferay.Language.get(value);
-						}
 
 						selectOptions.push('<option value="' + key + '">' + value + '</option>');
 					}

@@ -125,9 +125,7 @@ else {
 					{
 						select: '<portlet:namespace />addressCountryId<%= addressesIndex %>',
 						selectData: Liferay.Address.getCountries,
-						selectDesc: 'name',
-						selectLocalizeDesc: '<%= true %>',
-						selectLocalizeDescPrefix: '<%= CountryConstants.NAME_PREFIX %>',
+						selectDesc: 'nameCurrentValue',
 						selectSort: '<%= true %>',
 						selectId: 'countryId',
 						selectVal: '<%= countryId %>'
@@ -174,9 +172,7 @@ else {
 									{
 										select: '<portlet:namespace />addressCountryId' + guid,
 										selectData: Liferay.Address.getCountries,
-										selectDesc: 'name',
-										selectLocalizeDesc: '<%= true %>',
-										selectLocalizeDescPrefix: '<%= CountryConstants.NAME_PREFIX %>',
+										selectDesc: 'nameCurrentValue',
 										selectSort: '<%= true %>',
 										selectId: 'countryId',
 										selectVal: ''

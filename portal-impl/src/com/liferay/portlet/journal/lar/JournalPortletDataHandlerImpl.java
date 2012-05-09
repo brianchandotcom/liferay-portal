@@ -1419,6 +1419,7 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 			int endPos5 = content.indexOf(CharPool.LESS_THAN, beginPos);
 			int endPos6 = content.indexOf(CharPool.QUOTE, beginPos);
 			int endPos7 = content.indexOf(CharPool.SPACE, beginPos);
+			int endPos8 = content.indexOf(CharPool.QUESTION, beginPos);
 
 			int endPos = endPos1;
 
@@ -1444,6 +1445,10 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 
 			if ((endPos == -1) || ((endPos7 != -1) && (endPos7 < endPos))) {
 				endPos = endPos7;
+			}
+
+			if ((endPos == -1) || ((endPos8 != -1) && (endPos8 < endPos))) {
+				endPos = endPos8;
 			}
 
 			if ((beginPos == -1) || (endPos == -1)) {

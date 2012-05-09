@@ -203,6 +203,7 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 					<portlet:actionURL var="exportPagesURL">
 						<portlet:param name="struts_action" value="/layouts_admin/export_layouts" />
 						<portlet:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
+						<portlet:param name="isExportLAR" value="<%= Boolean.TRUE.toString() %>" />
 						<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 					</portlet:actionURL>
 

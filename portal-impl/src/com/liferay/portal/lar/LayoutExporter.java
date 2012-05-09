@@ -633,9 +633,13 @@ public class LayoutExporter {
 
 		LayoutRevision layoutRevision = null;
 
-		if (LayoutStagingUtil.isBranchingLayout(layout)) {
-			ServiceContext serviceContext =
-				ServiceContextThreadLocal.getServiceContext();
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		boolean isExportLAR = ParamUtil.getBoolean(
+			serviceContext, "isExportLAR");
+
+		if (LayoutStagingUtil.isBranchingLayout(layout) && !isExportLAR) {
 
 			long layoutSetBranchId = ParamUtil.getLong(
 				serviceContext, "layoutSetBranchId");

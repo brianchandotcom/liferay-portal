@@ -204,6 +204,8 @@ public class MBMessageFinderImpl
 			String sql = CustomSQLUtil.get(COUNT_BY_G_U_C_S);
 
 			if (userId <= 0) {
+				sql = StringUtil.replace(
+					sql, _INNER_JOIN_SQL, StringPool.BLANK);
 				sql = StringUtil.replace(sql, _USER_ID_SQL, StringPool.BLANK);
 			}
 
@@ -350,6 +352,8 @@ public class MBMessageFinderImpl
 			String sql = CustomSQLUtil.get(FIND_BY_G_U_C_S);
 
 			if (userId <= 0) {
+				sql = StringUtil.replace(
+					sql, _INNER_JOIN_SQL, StringPool.BLANK);
 				sql = StringUtil.replace(sql, _USER_ID_SQL, StringPool.BLANK);
 			}
 
@@ -462,6 +466,10 @@ public class MBMessageFinderImpl
 			closeSession(session);
 		}
 	}
+
+	private static final String _INNER_JOIN_SQL =
+		"INNER JOIN MBMessage rootMessage ON (rootMessage.messageId = " +
+			"currentMessage.rootMessageId)";
 
 	private static final String _USER_ID_SQL =
 		"AND (currentMessage.userId = ?)";

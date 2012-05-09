@@ -17,6 +17,8 @@ package com.liferay.portal.kernel.portlet;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.PersistentHttpServletRequestWrapper;
+import com.liferay.portal.kernel.util.Mergeable;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collections;
 import java.util.Enumeration;
@@ -24,6 +26,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.locks.Lock;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
@@ -88,33 +91,67 @@ public class RestrictPortletServletRequest
 		return _attributes;
 	}
 
+	@SuppressWarnings("unchecked")
 	public void mergeSharedAttributes() {
 		ServletRequest servletRequest = getRequest();
 
-		for (Map.Entry<String, Object> entry : _attributes.entrySet()) {
-			String name = entry.getKey();
-			Object value = entry.getValue();
+		Lock mergeLock = (Lock)servletRequest.getAttribute(
+			WebKeys.PARALLEL_RENDERRING_MERGE_LOCK);
 
-			if (name.startsWith("LIFERAY_SHARED_")) {
-				if (value == _nullValue) {
-					servletRequest.removeAttribute(name);
+		if (mergeLock != null) {
+			mergeLock.lock();
+		}
 
-					if (_log.isInfoEnabled()) {
-						_log.info("Remove shared attribute " + name);
+		try {
+			for (Map.Entry<String, Object> entry : _attributes.entrySet()) {
+				String name = entry.getKey();
+				Object value = entry.getValue();
+
+				if (name.startsWith("LIFERAY_SHARED_")) {
+					if (value == _nullValue) {
+						servletRequest.removeAttribute(name);
+
+						if (_log.isInfoEnabled()) {
+							_log.info("Remove shared attribute " + name);
+						}
+					}
+					else {
+						Object masterValue = servletRequest.getAttribute(name);
+
+						if ((masterValue == null) ||
+							!(value instanceof Mergeable)) {
+
+							servletRequest.setAttribute(name, value);
+
+							if (_log.isInfoEnabled()) {
+								_log.info("Set shared attribute " + name);
+							}
+						}
+						else {
+							Mergeable<Object> masterMergeable =
+								(Mergeable<Object>)value;
+							Mergeable<Object> slaveMergeable =
+								(Mergeable<Object>)value;
+
+							masterMergeable.merge(slaveMergeable);
+
+							if (_log.isInfoEnabled()) {
+								_log.info("Merge shared attribute " + name);
+							}
+						}
 					}
 				}
 				else {
-					servletRequest.setAttribute(name, value);
-
-					if (_log.isInfoEnabled()) {
-						_log.info("Set shared attribute " + name);
+					if ((value != _nullValue) && _log.isDebugEnabled()) {
+						_log.debug(
+							"Ignore setting restricted attribute " + name);
 					}
 				}
 			}
-			else {
-				if ((value != _nullValue) && _log.isDebugEnabled()) {
-					_log.debug("Ignore setting restricted attribute " + name);
-				}
+		}
+		finally {
+			if (mergeLock != null) {
+				mergeLock.unlock();
 			}
 		}
 	}

@@ -85,6 +85,8 @@ public interface WebKeys {
 
 	public static final String PAGE_TOP = "LIFERAY_SHARED_PAGE_TOP";
 
+	public static final String PARALLEL_RENDERRING_MERGE_LOCK = "PARALLEL_RENDERRING_MERGE_LOCK";
+
 	public static final String PORTLET_CONFIGURATOR_VISIBILITY = "PORTLET_CONFIGURATOR_VISIBILITY";
 
 	public static final String PORTLET_DECORATE = "PORTLET_DECORATE";

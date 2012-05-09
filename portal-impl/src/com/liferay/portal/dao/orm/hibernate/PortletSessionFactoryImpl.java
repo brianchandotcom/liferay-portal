@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
+import com.liferay.portal.kernel.util.PrototypeBean;
 import com.liferay.portal.spring.hibernate.PortletHibernateConfiguration;
 import com.liferay.portal.util.PropsValues;
 
@@ -32,12 +33,14 @@ import java.util.Map;
 import javax.sql.DataSource;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.engine.SessionFactoryImplementor;
 
 /**
  * @author Shuyang Zhou
  * @author Alexander Chow
  */
-public class PortletSessionFactoryImpl extends SessionFactoryImpl {
+public class PortletSessionFactoryImpl
+	extends SessionFactoryImpl implements PrototypeBean {
 
 	public void afterPropertiesSet() {
 		if (_dataSource == InfrastructureUtil.getDataSource()) {
@@ -47,6 +50,32 @@ public class PortletSessionFactoryImpl extends SessionFactoryImpl {
 
 			portletSessionFactories.add(this);
 		}
+	}
+
+	public PrototypeBean create(Object... args) {
+		if ((args.length != 3) ||
+			!(args[0] instanceof DataSource) ||
+			!(args[1] instanceof ClassLoader) ||
+			!(args[2] instanceof SessionFactoryImplementor)) {
+
+			throw new IllegalArgumentException();
+		}
+
+		DataSource dataSource = (DataSource)args[0];
+		ClassLoader sessionFactoryClassLoader = (ClassLoader)args[1];
+		SessionFactoryImplementor sessionFactoryImplementor =
+			(SessionFactoryImplementor)args[2];
+
+		PortletSessionFactoryImpl portletSessionFactoryImpl =
+			new PortletSessionFactoryImpl();
+
+		portletSessionFactoryImpl.setDataSource(dataSource);
+		portletSessionFactoryImpl.setSessionFactoryClassLoader(
+			sessionFactoryClassLoader);
+		portletSessionFactoryImpl.setSessionFactoryImplementor(
+			sessionFactoryImplementor);
+
+		return portletSessionFactoryImpl;
 	}
 
 	@Override

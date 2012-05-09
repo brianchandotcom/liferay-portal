@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.PrototypeBean;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -43,7 +44,11 @@ import org.springframework.util.ReflectionUtils;
  * @author Shuyang Zhou
  */
 public class BeanReferenceAnnotationBeanPostProcessor
-	implements BeanFactoryAware, BeanPostProcessor {
+	implements BeanFactoryAware, BeanPostProcessor, PrototypeBean {
+
+	public PrototypeBean create(Object... args) {
+		return new BeanReferenceAnnotationBeanPostProcessor();
+	}
 
 	public void destroy() {
 		_beans.clear();

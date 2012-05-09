@@ -8,10 +8,11 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
 >
-	<bean class="com.liferay.portal.spring.aop.ServiceBeanAutoProxyCreator">
+	<bean id="com.liferay.portal.spring.aop.ServiceBeanAutoProxyCreator" class="com.liferay.portal.spring.aop.ServiceBeanAutoProxyCreator">
 		<property name="methodInterceptor" ref="serviceAdvice" />
 	</bean>
-	<bean class="com.liferay.portal.spring.bean.BeanReferenceAnnotationBeanPostProcessor" />
+	<bean id="com.liferay.portal.spring.bean.BeanReferenceAnnotationBeanPostProcessor" class="com.liferay.portal.spring.bean.BeanReferenceAnnotationBeanPostProcessor" />
+	<bean class="com.liferay.portal.spring.bean.PrototypeBeanFactoryPostProcessor" />
 	<bean id="basePersistence" abstract="true">
 		<property name="dataSource" ref="liferayDataSource" />
 		<property name="sessionFactory" ref="liferaySessionFactory" />

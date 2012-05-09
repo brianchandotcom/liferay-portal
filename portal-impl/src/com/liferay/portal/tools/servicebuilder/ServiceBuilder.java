@@ -754,7 +754,6 @@ public class ServiceBuilder {
 
 				_createProps();
 				_createSpringBaseXml();
-				_createSpringClusterXml();
 				_createSpringDynamicDataSourceXml();
 				_createSpringHibernateXml();
 				_createSpringInfrastructureXml();
@@ -3096,22 +3095,6 @@ public class ServiceBuilder {
 				"docroot/WEB-INF/src/META-INF/data-source-spring.xml");
 			FileUtil.delete("docroot/WEB-INF/src/META-INF/misc-spring.xml");
 		}
-	}
-
-	private void _createSpringClusterXml() throws Exception {
-		if (Validator.isNull(_springClusterFileName)) {
-			return;
-		}
-
-		// Content
-
-		String content = _processTemplate(_tplSpringClusterXml);
-
-		// Write file
-
-		File ejbFile = new File(_springClusterFileName);
-
-		FileUtil.write(ejbFile, content, true);
 	}
 
 	private void _createSpringDynamicDataSourceXml() throws Exception {

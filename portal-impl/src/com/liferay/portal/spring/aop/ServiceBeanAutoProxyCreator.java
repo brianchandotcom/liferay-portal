@@ -14,6 +14,8 @@
 
 package com.liferay.portal.spring.aop;
 
+import com.liferay.portal.kernel.util.PrototypeBean;
+
 import org.aopalliance.intercept.MethodInterceptor;
 
 import org.springframework.aop.TargetSource;
@@ -28,7 +30,11 @@ import org.springframework.aop.framework.autoproxy.AbstractAdvisorAutoProxyCreat
  * @author Shuyang Zhou
  */
 public class ServiceBeanAutoProxyCreator
-	extends AbstractAdvisorAutoProxyCreator {
+	extends AbstractAdvisorAutoProxyCreator implements PrototypeBean {
+
+	public PrototypeBean create(Object... args) {
+		return this;
+	}
 
 	public void setMethodInterceptor(MethodInterceptor methodInterceptor) {
 		_methodInterceptor = methodInterceptor;

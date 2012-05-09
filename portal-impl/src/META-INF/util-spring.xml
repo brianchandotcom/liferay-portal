@@ -391,6 +391,18 @@
 			<bean class="com.liferay.portal.util.PrefsPropsImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.util.PrototypeBeanUtil" class="com.liferay.portal.kernel.util.PrototypeBeanUtil">
+		<property name="pluginPrototypeBeanClassNames">
+			<list>
+				<value>com.liferay.portal.dao.jdbc.aop.DynamicDataSourceTransactionInterceptor</value>
+				<value>com.liferay.portal.dao.orm.hibernate.PortletSessionFactoryImpl</value>
+				<value>com.liferay.portal.dao.shard.advice.ShardAdvice</value>
+				<value>com.liferay.portal.spring.context.PortletBeanFactoryCleaner</value>
+				<value>com.liferay.portal.spring.context.PortletBeanFactoryPostProcessor</value>
+				<value>com.liferay.portal.spring.hibernate.PortletHibernateConfiguration</value>
+			</list>
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.kernel.uuid.PortalUUID" class="com.liferay.portal.uuid.PortalUUIDImpl" />
 	<bean id="com.liferay.portal.kernel.uuid.PortalUUIDUtil" class="com.liferay.portal.kernel.uuid.PortalUUIDUtil">
 		<property name="portalUUID" ref="com.liferay.portal.kernel.uuid.PortalUUID" />

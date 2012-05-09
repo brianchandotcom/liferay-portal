@@ -2391,7 +2391,7 @@
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
 		<init-param>
 			<name>template-path</name>
-			<value>/html/portlet/docbar/</value>
+			<value>/html/portlet/dockbar/</value>
 		</init-param>
 		<init-param>
 			<name>view-action</name>
@@ -2554,7 +2554,7 @@
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
 		<init-param>
 			<name>template-path</name>
-			<value>/html/portlet/workflow_definition/</value>
+			<value>/html/portlet/workflow_definitions/</value>
 		</init-param>
 		<init-param>
 			<name>view-action</name>

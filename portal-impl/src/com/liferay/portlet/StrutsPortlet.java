@@ -265,9 +265,10 @@ public class StrutsPortlet extends LiferayPortlet {
 	}
 
 	protected void checkPath(String path) throws PortletException {
-		if (!path.startsWith(templatePath) ||
+		if (Validator.isNotNull(path) &&
+			(!path.startsWith(templatePath) ||
 			path.contains(StringPool.DOUBLE_PERIOD) ||
-			!PortalUtil.isValidResourceId(path)) {
+			!PortalUtil.isValidResourceId(path))) {
 
 			throw new PortletException(
 				"Path " + path + " is not accessible by this portlet");

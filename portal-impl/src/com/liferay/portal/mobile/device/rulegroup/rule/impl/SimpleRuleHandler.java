@@ -16,7 +16,9 @@ package com.liferay.portal.mobile.device.rulegroup.rule.impl;
 
 import com.liferay.portal.kernel.mobile.device.Device;
 import com.liferay.portal.kernel.mobile.device.rulegroup.rule.RuleHandler;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -50,7 +52,9 @@ public class SimpleRuleHandler implements RuleHandler {
 		String os = typeSettingsProperties.get("os");
 
 		if (Validator.isNotNull(os)) {
-			if (os.equals(device.getOS())) {
+			String[] operatingSystems = StringUtil.split(os);
+			
+			if (ArrayUtil.contains(operatingSystems, device.getOS())) {
 				result = true;
 			}
 			else {

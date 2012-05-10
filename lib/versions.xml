@@ -1873,7 +1873,7 @@
 	</library>
 	<library>
 		<file-name>portal/jackrabbit-api.jar</file-name>
-		<version>2.1.2</version>
+		<version>2.1.6</version>
 		<project-name>Jackrabbit</project-name>
 		<project-url>http://jackrabbit.apache.org</project-url>
 		<licenses>
@@ -1884,7 +1884,7 @@
 	</library>
 	<library>
 		<file-name>portal/jackrabbit-core.jar</file-name>
-		<version>2.1.2</version>
+		<version>2.1.6</version>
 		<project-name>Jackrabbit</project-name>
 		<project-url>http://jackrabbit.apache.org</project-url>
 		<licenses>
@@ -1898,7 +1898,7 @@
 	</library>
 	<library>
 		<file-name>portal/jackrabbit-jcr-commons.jar</file-name>
-		<version>2.1.2</version>
+		<version>2.1.6</version>
 		<project-name>Jackrabbit</project-name>
 		<project-url>http://jackrabbit.apache.org</project-url>
 		<licenses>
@@ -1909,7 +1909,7 @@
 	</library>
 	<library>
 		<file-name>portal/jackrabbit-spi.jar</file-name>
-		<version>2.1.2</version>
+		<version>2.1.6</version>
 		<project-name>Jackrabbit</project-name>
 		<project-url>http://jackrabbit.apache.org</project-url>
 		<licenses>
@@ -1920,7 +1920,7 @@
 	</library>
 	<library>
 		<file-name>portal/jackrabbit-spi-commons.jar</file-name>
-		<version>2.1.2</version>
+		<version>2.1.6</version>
 		<project-name>Jackrabbit</project-name>
 		<project-url>http://jackrabbit.apache.org</project-url>
 		<licenses>

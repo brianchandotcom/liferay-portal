@@ -37,6 +37,20 @@
 				MBCategory.lastPostDate DESC
 		]]>
 	</sql>
+	<sql id="com.liferay.portlet.messageboards.service.persistence.MBMessageFinder.countByModifiedDate">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT currentMessage.rootMessageId) AS COUNT_VALUE
+			FROM
+				MBMessage currentMessage
+			WHERE
+				(currentMessage.groupId = ?) AND
+				(currentMessage.categoryId = ?) AND
+				(currentMessage.userId = ?) AND
+				(currentMessage.modifiedDate > ?) AND
+				(currentMessage.status = 0)
+		]]>
+	</sql>
 	<sql id="com.liferay.portlet.messageboards.service.persistence.MBMessageFinder.countByC_T">
 		<![CDATA[
 			SELECT
@@ -95,6 +109,24 @@
 						classNameId = [$CLASS_NAME_ID_COM.LIFERAY.PORTLET.MESSAGEBOARDS.MODEL.MBMESSAGE$]
 				)) AND
 				(categoryId != -1)
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.messageboards.service.persistence.MBMessageFinder.findByModifiedDate">
+		<![CDATA[
+			SELECT
+				currentMessage.threadId, currentMessage.rootMessageId
+			FROM
+				MBMessage currentMessage
+			WHERE
+				(currentMessage.groupId = ?) AND
+				(currentMessage.categoryId = ?) AND
+				(currentMessage.userId = ?) AND
+				(currentMessage.modifiedDate > ?) AND
+				(currentMessage.status = 0)
+			GROUP BY
+				currentMessage.rootMessageId
+			ORDER BY
+				MAX(currentMessage.modifiedDate) DESC
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.messageboards.service.persistence.MBMessageFinder.findByG_U_C_S">

@@ -261,8 +261,14 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 					total = MBThreadServiceUtil.getGroupThreadsCount(scopeGroupId, groupThreadsUserId, WorkflowConstants.STATUS_APPROVED, true);
 				}
 				else if (topLink.equals("recent-posts")) {
-					results = MBThreadServiceUtil.getGroupThreads(scopeGroupId, groupThreadsUserId, WorkflowConstants.STATUS_APPROVED, false, false, searchContainer.getStart(), searchContainer.getEnd());
-					total = MBThreadServiceUtil.getGroupThreadsCount(scopeGroupId, groupThreadsUserId, WorkflowConstants.STATUS_APPROVED, false, false);
+					Calendar calendar = Calendar.getInstance();
+
+					int offset = Integer.parseInt(rangeLast);
+
+					calendar.add(Calendar.DATE, -offset);
+
+					results = MBThreadServiceUtil.getRecentPosts(scopeGroupId, groupThreadsUserId, calendar.getTime(), searchContainer.getStart(), searchContainer.getEnd());
+					total = MBThreadServiceUtil.getRecentPostsCount(scopeGroupId, groupThreadsUserId, calendar.getTime());
 				}
 
 				pageContext.setAttribute("results", results);

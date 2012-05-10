@@ -14,6 +14,8 @@
 
 package com.liferay.portal.spring.context;
 
+import com.liferay.portal.spring.bean.PrototypeBeanFactoryPostProcessor;
+
 import javax.servlet.ServletContext;
 
 import org.springframework.web.context.ConfigurableWebApplicationContext;
@@ -38,6 +40,8 @@ public class PortletContextLoader extends ContextLoader {
 			PORTAL_CONFIG_LOCATION_PARAM);
 
 		configurableWebApplicationContext.setConfigLocation(configLocation);
+		configurableWebApplicationContext.addBeanFactoryPostProcessor(
+			new PrototypeBeanFactoryPostProcessor(true));
 	}
 
 	@Override

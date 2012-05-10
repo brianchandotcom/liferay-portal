@@ -46,7 +46,7 @@ import org.springframework.util.ReflectionUtils;
 public class BeanReferenceAnnotationBeanPostProcessor
 	implements BeanFactoryAware, BeanPostProcessor, PrototypeBean {
 
-	public PrototypeBean create(Object... args) {
+	public BeanReferenceAnnotationBeanPostProcessor create(Object... args) {
 		return new BeanReferenceAnnotationBeanPostProcessor();
 	}
 

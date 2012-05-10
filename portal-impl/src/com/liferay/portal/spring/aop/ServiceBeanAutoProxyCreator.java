@@ -33,7 +33,20 @@ public class ServiceBeanAutoProxyCreator
 	extends AbstractAdvisorAutoProxyCreator implements PrototypeBean {
 
 	public PrototypeBean create(Object... args) {
-		return this;
+		if ((args.length != 1) || !(args[0] instanceof  ClassLoader)) {
+			throw new IllegalArgumentException();
+		}
+
+		ClassLoader classLoader = (ClassLoader)args[0];
+
+		ServiceBeanAutoProxyCreator serviceBeanAutoProxyCreator =
+			new ServiceBeanAutoProxyCreator();
+
+		serviceBeanAutoProxyCreator._methodInterceptor = _methodInterceptor;
+
+		serviceBeanAutoProxyCreator.setProxyClassLoader(classLoader);
+
+		return serviceBeanAutoProxyCreator;
 	}
 
 	public void setMethodInterceptor(MethodInterceptor methodInterceptor) {

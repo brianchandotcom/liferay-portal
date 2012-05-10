@@ -10,6 +10,11 @@
 >
 	<bean class="com.liferay.portal.kernel.util.PrototypeBeanUtil" factory-method="lookup">
 		<constructor-arg value="com.liferay.portal.spring.aop.ServiceBeanAutoProxyCreator"/>
+		<constructor-arg>
+			<array>
+				<ref bean="portletClassLoader" />
+			</array>
+		</constructor-arg>
 	</bean>
 	<bean class="com.liferay.portal.kernel.util.PrototypeBeanUtil" factory-method="lookup">
 		<constructor-arg value="com.liferay.portal.spring.context.PortletBeanFactoryCleaner"/>

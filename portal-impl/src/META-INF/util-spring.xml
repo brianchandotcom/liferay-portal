@@ -397,6 +397,7 @@
 				<value>com.liferay.portal.dao.jdbc.aop.DynamicDataSourceTransactionInterceptor</value>
 				<value>com.liferay.portal.dao.orm.hibernate.PortletSessionFactoryImpl</value>
 				<value>com.liferay.portal.dao.shard.advice.ShardAdvice</value>
+				<value>com.liferay.portal.dao.shard.advice.ShardPersistenceAdvice</value>
 				<value>com.liferay.portal.spring.context.PortletBeanFactoryCleaner</value>
 				<value>com.liferay.portal.spring.context.PortletBeanFactoryPostProcessor</value>
 				<value>com.liferay.portal.spring.hibernate.PortletHibernateConfiguration</value>

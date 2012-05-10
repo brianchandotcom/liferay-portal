@@ -17,11 +17,11 @@ package com.liferay.portal.spring.bean;
 import com.liferay.portal.kernel.util.PrototypeBean;
 import com.liferay.portal.kernel.util.PrototypeBeanUtil;
 
-import java.util.Map;
-
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
+import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.beans.factory.support.AbstractBeanFactory;
 
 /**
  * @author Shuyang Zhou
@@ -29,14 +29,40 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 public class PrototypeBeanFactoryPostProcessor
 	implements BeanFactoryPostProcessor {
 
+	public PrototypeBeanFactoryPostProcessor() {
+		this(false);
+	}
+
+	public PrototypeBeanFactoryPostProcessor(boolean portletContext) {
+		_portletContext = portletContext;
+	}
+
 	public void postProcessBeanFactory(
 			ConfigurableListableBeanFactory configurableListableBeanFactory)
 		throws BeansException {
 
-		Map<String, PrototypeBean> pluginBeans =
-			configurableListableBeanFactory.getBeansOfType(PrototypeBean.class);
+		String[] beanNames =
+			configurableListableBeanFactory.getBeanNamesForType(
+				PrototypeBean.class);
 
-		PrototypeBeanUtil.register(pluginBeans);
+		AbstractBeanFactory abstractBeanFactory =
+			(AbstractBeanFactory)configurableListableBeanFactory;
+
+		for (String beanName : beanNames) {
+			Object bean = configurableListableBeanFactory.getBean(beanName);
+
+			if (_portletContext) {
+				if (bean instanceof BeanPostProcessor) {
+					abstractBeanFactory.addBeanPostProcessor(
+						(BeanPostProcessor)bean);
+				}
+			}
+			else {
+				PrototypeBeanUtil.register(beanName, (PrototypeBean)bean);
+			}
+		}
 	}
+
+	private boolean _portletContext;
 
 }

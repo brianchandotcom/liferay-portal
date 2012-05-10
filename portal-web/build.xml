@@ -74,7 +74,7 @@
 
 				<!-- JavaScript -->
 
-				<copy todir="docroot/html/js/aui" overwrite="true">
+				<copy todir="docroot/html/js/aui" overwrite="true" preservelastmodified="true">
 					<fileset dir="docroot/html/ALLOY_ZIP/build/" />
 				</copy>
 
@@ -302,7 +302,7 @@
 					tofile="docroot/html/js/editor/ckeditor_diffs/ckeditor.js"
 				/>
 
-				<copy todir="docroot/html/js/editor/ckeditor" overwrite="true">
+				<copy todir="docroot/html/js/editor/ckeditor" overwrite="true" preservelastmodified="true">
 					<fileset dir="docroot/html/js/editor/ckeditor_diffs" />
 				</copy>
 			</then>
@@ -457,7 +457,7 @@
 					<fileset dir="docroot/html/js/editor/fckeditor/editor/filemanager/browser/default" />
 				</copy>
 
-				<copy todir="docroot/html/js/editor/fckeditor" overwrite="true">
+				<copy todir="docroot/html/js/editor/fckeditor" overwrite="true" preservelastmodified="true">
 					<fileset dir="docroot/html/js/editor/fckeditor_diffs" />
 				</copy>
 
@@ -886,14 +886,14 @@
 					</then>
 				</if>
 
-				<copy todir="@{module.name}" overwrite="true">
+				<copy todir="@{module.name}" overwrite="true" preservelastmodified="true">
 					<fileset
 						dir="docroot/html/themes/_unstyled"
 						excludes="templates/init.ftl,templates/init.vm"
 					/>
 				</copy>
 
-				<copy todir="@{module.name}" overwrite="true">
+				<copy todir="@{module.name}" overwrite="true" preservelastmodified="true">
 					<fileset
 						dir="docroot/html/themes/_styled"
 					/>
@@ -902,7 +902,7 @@
 				<if>
 					<available file="@{module.name}/_diffs" />
 					<then>
-						<copy todir="@{module.name}" overwrite="true">
+						<copy todir="@{module.name}" overwrite="true" preservelastmodified="true">
 							<fileset
 								dir="@{module.name}/_diffs"
 							/>
@@ -988,7 +988,7 @@
 
 				<move file="docroot/html/js/editor/tinymce/jscripts/tiny_mce" todir="docroot/html/js/editor" />
 
-				<copy todir="docroot/html/js/editor/tiny_mce" overwrite="true">
+				<copy todir="docroot/html/js/editor/tiny_mce" overwrite="true" preservelastmodified="true">
 					<fileset dir="docroot/html/js/editor/tiny_mce_diffs" />
 				</copy>
 

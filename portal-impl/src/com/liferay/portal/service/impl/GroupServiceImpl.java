@@ -80,17 +80,17 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	public Group addGroup(
-			long liveGroupId, String name, String description, int type,
-			String friendlyURL, boolean site, boolean active,
-			ServiceContext serviceContext)
+			long parentGroupId, long liveGroupId, String name,
+			String description, int type, String friendlyURL, boolean site,
+			boolean active, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		GroupPermissionUtil.check(
 			getPermissionChecker(), liveGroupId, ActionKeys.UPDATE);
 
 		return groupLocalService.addGroup(
-			getUserId(), null, 0, liveGroupId, name, description, type,
-			friendlyURL, site, active, serviceContext);
+			getUserId(), parentGroupId, null, 0, liveGroupId, name, description,
+			type, friendlyURL, site, active, serviceContext);
 	}
 
 	/**
@@ -115,16 +115,17 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	public Group addGroup(
-			String name, String description, int type, String friendlyURL,
-			boolean site, boolean active, ServiceContext serviceContext)
+			long parentGroupId, String name, String description, int type,
+			String friendlyURL, boolean site, boolean active,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		PortalPermissionUtil.check(
 			getPermissionChecker(), ActionKeys.ADD_COMMUNITY);
 
 		return groupLocalService.addGroup(
-			getUserId(), null, 0, name, description, type, friendlyURL, site,
-			active, serviceContext);
+			getUserId(), parentGroupId, null, 0, name, description, type,
+			friendlyURL, site, active, serviceContext);
 	}
 
 	/**
@@ -736,16 +737,17 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	public Group updateGroup(
-			long groupId, String name, String description, int type,
-			String friendlyURL, boolean active, ServiceContext serviceContext)
+			long groupId, long parentGroupId, String name, String description,
+			int type, String friendlyURL, boolean active,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		GroupPermissionUtil.check(
 			getPermissionChecker(), groupId, ActionKeys.UPDATE);
 
 		return groupLocalService.updateGroup(
-			groupId, name, description, type, friendlyURL, active,
-			serviceContext);
+			groupId, parentGroupId, name, description, type, friendlyURL,
+			active, serviceContext);
 	}
 
 	protected List<Group> filterGroups(List<Group> groups)

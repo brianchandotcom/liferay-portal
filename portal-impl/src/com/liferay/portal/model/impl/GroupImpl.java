@@ -431,6 +431,17 @@ public class GroupImpl extends GroupBaseImpl {
 		return hasClassName(Group.class);
 	}
 
+	public boolean isRoot() {
+		if (getParentGroupId() ==
+				GroupConstants.DEFAULT_PARENT_GROUP_ID) {
+
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	public boolean isStaged() {
 		return GetterUtil.getBoolean(getTypeSettingsProperty("staged"));
 	}

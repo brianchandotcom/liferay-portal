@@ -3671,7 +3671,9 @@
 	</entity>
 	<entity class="com.liferay.portal.model.impl.CountryImpl" name="Country">
 		<table name="Country" />
-		<attributes />
+		<attributes>
+			<transient name="nameCurrentLanguageId" />
+		</attributes>
 	</entity>
 	<entity class="com.liferay.portal.model.impl.EmailAddressImpl" name="EmailAddress">
 		<table name="EmailAddress" />

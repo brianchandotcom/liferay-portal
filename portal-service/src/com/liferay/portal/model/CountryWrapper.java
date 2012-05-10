@@ -356,6 +356,18 @@ public class CountryWrapper implements Country, ModelWrapper<Country> {
 		return _country.getName(locale);
 	}
 
+	public java.lang.String getNameCurrentLanguageId() {
+		return _country.getNameCurrentLanguageId();
+	}
+
+	public java.lang.String getNameCurrentValue() {
+		return _country.getNameCurrentValue();
+	}
+
+	public void setNameCurrentLanguageId(java.lang.String languageId) {
+		_country.setNameCurrentLanguageId(languageId);
+	}
+
 	/**
 	 * @deprecated Renamed to {@link #getWrappedModel}
 	 */

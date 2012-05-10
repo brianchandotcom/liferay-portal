@@ -211,8 +211,8 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 		return threads;
 	}
 
-	public int getRecentPostsCount(long groupId, long userId, Date modifiedDate,
-			int status)
+	public int getRecentPostsCount(
+			long groupId, long userId, Date modifiedDate, int status)
 		throws SystemException {
 
 		long[] categoryIds = mbCategoryService.getCategoryIds(

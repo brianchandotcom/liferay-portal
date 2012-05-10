@@ -172,7 +172,8 @@ public class MBMessageFinderImpl
 		throws SystemException {
 
 		return doFindByG_U_C_M_S(
-			groupId, userId, categoryIds, modifiedDate, status, start, end, true);
+			groupId, userId, categoryIds, modifiedDate, status, start, end,
+			true);
 	}
 
 	public List<MBMessage> findByNoAssets() throws SystemException {

@@ -42,8 +42,8 @@ import java.util.List;
 public class MBMessageFinderImpl
 	extends BasePersistenceImpl<MBMessage> implements MBMessageFinder {
 
-	public static final String COUNT_BY_MODIFIED_DATE =
-		MBMessageFinder.class.getName() + ".countByModifiedDate";
+	public static final String COUNT_BY_G_U_C_M_S =
+		MBMessageFinder.class.getName() + ".countByG_U_C_M_S";
 
 	public static final String COUNT_BY_C_T =
 		MBMessageFinder.class.getName() + ".countByC_T";
@@ -57,8 +57,8 @@ public class MBMessageFinderImpl
 	public static final String FIND_BY_NO_ASSETS =
 		MBMessageFinder.class.getName() + ".findByNoAssets";
 
-	public static final String FIND_BY_MODIFIED_DATE =
-		MBMessageFinder.class.getName() + ".findByModifiedDate";
+	public static final String FIND_BY_G_U_C_M_S =
+		MBMessageFinder.class.getName() + ".findByG_U_C_M_S";
 
 	public static final String FIND_BY_G_U_C_S =
 		MBMessageFinder.class.getName() + ".findByG_U_C_S";
@@ -123,12 +123,13 @@ public class MBMessageFinderImpl
 			groupId, userId, categoryIds, anonymous, status, false);
 	}
 
-	public int filterCountByModifiedDate(
-			long groupId, long userId, long[] categoryIds, Date modifiedDate)
+	public int filterCountByG_U_C_M_S(
+			long groupId, long userId, long[] categoryIds, Date modifiedDate,
+			int status)
 		throws SystemException {
 
-		return doCountByModifiedDate(
-			groupId, userId, categoryIds, modifiedDate, true);
+		return doCountByG_U_C_M_S(
+			groupId, userId, categoryIds, modifiedDate, status, true);
 	}
 
 	public int filterCountByG_U_C_S(
@@ -165,13 +166,13 @@ public class MBMessageFinderImpl
 			groupId, userId, categoryIds, anonymous, status, start, end, true);
 	}
 
-	public List<Long> filterFindByModifiedDate(
+	public List<Long> filterFindByG_U_C_M_S(
 			long groupId, long userId, long[] categoryIds, Date modifiedDate,
-			int start, int end)
+			int status, int start, int end)
 		throws SystemException {
 
-		return doFindByModifiedDate(
-			groupId, userId, categoryIds, modifiedDate, start, end, true);
+		return doFindByG_U_C_M_S(
+			groupId, userId, categoryIds, modifiedDate, status, start, end, true);
 	}
 
 	public List<MBMessage> findByNoAssets() throws SystemException {
@@ -360,9 +361,9 @@ public class MBMessageFinderImpl
 		}
 	}
 
-	protected int doCountByModifiedDate(
+	protected int doCountByG_U_C_M_S(
 			long groupId, long userId, long[] categoryIds, Date modifiedDate,
-			boolean inlineSQLHelper)
+			int status, boolean inlineSQLHelper)
 		throws SystemException {
 
 		Session session = null;
@@ -370,7 +371,7 @@ public class MBMessageFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(COUNT_BY_MODIFIED_DATE);
+			String sql = CustomSQLUtil.get(COUNT_BY_G_U_C_M_S);
 
 			if (userId <= 0) {
 				sql = StringUtil.replace(sql, _USER_ID_SQL, StringPool.BLANK);
@@ -387,6 +388,11 @@ public class MBMessageFinderImpl
 					"currentMessage.categoryId = " +
 						StringUtil.merge(
 							categoryIds, " OR currentMessage.categoryId = "));
+			}
+
+			if (status != WorkflowConstants.STATUS_ANY) {
+				sql = CustomSQLUtil.appendCriteria(
+					sql, "AND (currentMessage.status = ?)");
 			}
 
 			if (inlineSQLHelper) {
@@ -555,9 +561,9 @@ public class MBMessageFinderImpl
 		}
 	}
 
-	private List<Long> doFindByModifiedDate(
+	protected List<Long> doFindByG_U_C_M_S(
 			long groupId, long userId, long[] categoryIds, Date modifiedDate,
-			int start, int end, boolean inlineSQLHelper)
+			int status, int start, int end, boolean inlineSQLHelper)
 		throws SystemException {
 
 		Session session = null;
@@ -565,7 +571,7 @@ public class MBMessageFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_MODIFIED_DATE);
+			String sql = CustomSQLUtil.get(FIND_BY_G_U_C_M_S);
 
 			if (userId <= 0) {
 				sql = StringUtil.replace(sql, _USER_ID_SQL, StringPool.BLANK);
@@ -582,6 +588,11 @@ public class MBMessageFinderImpl
 					"currentMessage.categoryId = " +
 						StringUtil.merge(
 							categoryIds, " OR currentMessage.categoryId = "));
+			}
+
+			if (status != WorkflowConstants.STATUS_ANY) {
+				sql = CustomSQLUtil.appendCriteria(
+					sql, "AND (currentMessage.status = ?)");
 			}
 
 			if (inlineSQLHelper) {

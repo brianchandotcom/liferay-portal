@@ -184,7 +184,8 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 	}
 
 	public List<MBThread> getRecentPosts(
-			long groupId, long userId, Date modifiedDate, int start, int end)
+			long groupId, long userId, Date modifiedDate, int status, int start,
+			int end)
 		throws PortalException, SystemException {
 
 		long[] categoryIds = mbCategoryService.getCategoryIds(
@@ -196,8 +197,8 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 
 		List<Long> threadIds = null;
 
-		threadIds = mbMessageFinder.filterFindByModifiedDate(
-			groupId, userId, categoryIds, modifiedDate, start, end);
+		threadIds = mbMessageFinder.filterFindByG_U_C_M_S(
+			groupId, userId, categoryIds, modifiedDate, status, start, end);
 
 		List<MBThread> threads = new ArrayList<MBThread>(threadIds.size());
 
@@ -210,7 +211,8 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 		return threads;
 	}
 
-	public int getRecentPostsCount(long groupId, long userId, Date modifiedDate)
+	public int getRecentPostsCount(long groupId, long userId, Date modifiedDate,
+			int status)
 		throws SystemException {
 
 		long[] categoryIds = mbCategoryService.getCategoryIds(
@@ -220,8 +222,8 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 			return 0;
 		}
 
-		return mbMessageFinder.filterCountByModifiedDate(
-			groupId, userId, categoryIds, modifiedDate);
+		return mbMessageFinder.filterCountByG_U_C_M_S(
+			groupId, userId, categoryIds, modifiedDate, status);
 	}
 
 	public List<MBThread> getThreads(

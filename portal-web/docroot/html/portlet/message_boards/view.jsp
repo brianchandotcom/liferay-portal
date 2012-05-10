@@ -267,8 +267,8 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 					calendar.add(Calendar.DATE, -offset);
 
-					results = MBThreadServiceUtil.getRecentPosts(scopeGroupId, groupThreadsUserId, calendar.getTime(), searchContainer.getStart(), searchContainer.getEnd());
-					total = MBThreadServiceUtil.getRecentPostsCount(scopeGroupId, groupThreadsUserId, calendar.getTime());
+					results = MBThreadServiceUtil.getRecentPosts(scopeGroupId, groupThreadsUserId, calendar.getTime(), WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd());
+					total = MBThreadServiceUtil.getRecentPostsCount(scopeGroupId, groupThreadsUserId, calendar.getTime(), WorkflowConstants.STATUS_APPROVED);
 				}
 
 				pageContext.setAttribute("results", results);

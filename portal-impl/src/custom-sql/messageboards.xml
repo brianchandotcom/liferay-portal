@@ -37,7 +37,7 @@
 				MBCategory.lastPostDate DESC
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.messageboards.service.persistence.MBMessageFinder.countByModifiedDate">
+	<sql id="com.liferay.portlet.messageboards.service.persistence.MBMessageFinder.countByG_U_C_M_S">
 		<![CDATA[
 			SELECT
 				COUNT(DISTINCT currentMessage.rootMessageId) AS COUNT_VALUE
@@ -47,8 +47,7 @@
 				(currentMessage.groupId = ?) AND
 				(currentMessage.categoryId = ?) AND
 				(currentMessage.userId = ?) AND
-				(currentMessage.modifiedDate > ?) AND
-				(currentMessage.status = 0)
+				(currentMessage.modifiedDate > ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.messageboards.service.persistence.MBMessageFinder.countByC_T">
@@ -105,7 +104,7 @@
 				(categoryId != -1)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.messageboards.service.persistence.MBMessageFinder.findByModifiedDate">
+	<sql id="com.liferay.portlet.messageboards.service.persistence.MBMessageFinder.findByG_U_C_M_S">
 		<![CDATA[
 			SELECT
 				currentMessage.threadId, currentMessage.rootMessageId
@@ -115,8 +114,7 @@
 				(currentMessage.groupId = ?) AND
 				(currentMessage.categoryId = ?) AND
 				(currentMessage.userId = ?) AND
-				(currentMessage.modifiedDate > ?) AND
-				(currentMessage.status = 0)
+				(currentMessage.modifiedDate > ?)
 			GROUP BY
 				currentMessage.rootMessageId
 			ORDER BY

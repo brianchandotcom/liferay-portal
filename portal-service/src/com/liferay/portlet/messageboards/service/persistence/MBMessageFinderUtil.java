@@ -40,14 +40,6 @@ public class MBMessageFinderUtil {
 			status);
 	}
 
-	public static int filterCountByModifiedDate(long groupId, long userId,
-		long[] categoryIds, java.util.Date modifiedDate)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getFinder()
-				   .filterCountByModifiedDate(groupId, userId, categoryIds,
-			modifiedDate);
-	}
-
 	public static int filterCountByG_U_C_S(long groupId, long userId,
 		long[] categoryIds, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -61,6 +53,14 @@ public class MBMessageFinderUtil {
 		return getFinder()
 				   .filterCountByG_U_C_A_S(groupId, userId, categoryIds,
 			anonymous, status);
+	}
+
+	public static int filterCountByG_U_C_M_S(long groupId, long userId,
+		long[] categoryIds, java.util.Date modifiedDate, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .filterCountByG_U_C_M_S(groupId, userId, categoryIds,
+			modifiedDate, status);
 	}
 
 	public static java.util.List<java.lang.Long> filterFindByG_U_C_S(
@@ -80,13 +80,13 @@ public class MBMessageFinderUtil {
 			anonymous, status, start, end);
 	}
 
-	public static java.util.List<java.lang.Long> filterFindByModifiedDate(
+	public static java.util.List<java.lang.Long> filterFindByG_U_C_M_S(
 		long groupId, long userId, long[] categoryIds,
-		java.util.Date modifiedDate, int start, int end)
+		java.util.Date modifiedDate, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder()
-				   .filterFindByModifiedDate(groupId, userId, categoryIds,
-			modifiedDate, start, end);
+				   .filterFindByG_U_C_M_S(groupId, userId, categoryIds,
+			modifiedDate, status, start, end);
 	}
 
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByNoAssets()

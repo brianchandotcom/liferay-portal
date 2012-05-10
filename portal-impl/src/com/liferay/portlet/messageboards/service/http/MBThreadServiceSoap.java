@@ -174,12 +174,12 @@ public class MBThreadServiceSoap {
 	}
 
 	public static com.liferay.portlet.messageboards.model.MBThreadSoap[] getRecentPosts(
-		long groupId, long userId, java.util.Date modifiedDate, int start,
-		int end) throws RemoteException {
+		long groupId, long userId, java.util.Date modifiedDate, int status,
+		int start, int end) throws RemoteException {
 		try {
 			java.util.List<com.liferay.portlet.messageboards.model.MBThread> returnValue =
 				MBThreadServiceUtil.getRecentPosts(groupId, userId,
-					modifiedDate, start, end);
+					modifiedDate, status, start, end);
 
 			return com.liferay.portlet.messageboards.model.MBThreadSoap.toSoapModels(returnValue);
 		}
@@ -191,10 +191,10 @@ public class MBThreadServiceSoap {
 	}
 
 	public static int getRecentPostsCount(long groupId, long userId,
-		java.util.Date modifiedDate) throws RemoteException {
+		java.util.Date modifiedDate, int status) throws RemoteException {
 		try {
 			int returnValue = MBThreadServiceUtil.getRecentPostsCount(groupId,
-					userId, modifiedDate);
+					userId, modifiedDate, status);
 
 			return returnValue;
 		}

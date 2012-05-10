@@ -298,7 +298,7 @@ public class MBThreadServiceHttp {
 
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> getRecentPosts(
 		HttpPrincipal httpPrincipal, long groupId, long userId,
-		java.util.Date modifiedDate, int start, int end)
+		java.util.Date modifiedDate, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -306,7 +306,7 @@ public class MBThreadServiceHttp {
 					"getRecentPosts", _getRecentPostsParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					userId, modifiedDate, start, end);
+					userId, modifiedDate, status, start, end);
 
 			Object returnObj = null;
 
@@ -335,14 +335,14 @@ public class MBThreadServiceHttp {
 	}
 
 	public static int getRecentPostsCount(HttpPrincipal httpPrincipal,
-		long groupId, long userId, java.util.Date modifiedDate)
+		long groupId, long userId, java.util.Date modifiedDate, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(MBThreadServiceUtil.class.getName(),
 					"getRecentPostsCount", _getRecentPostsCountParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					userId, modifiedDate);
+					userId, modifiedDate, status);
 
 			Object returnObj = null;
 
@@ -598,10 +598,11 @@ public class MBThreadServiceHttp {
 			long.class, long.class, int.class, boolean.class, boolean.class
 		};
 	private static final Class<?>[] _getRecentPostsParameterTypes7 = new Class[] {
-			long.class, long.class, java.util.Date.class, int.class, int.class
+			long.class, long.class, java.util.Date.class, int.class, int.class,
+			int.class
 		};
 	private static final Class<?>[] _getRecentPostsCountParameterTypes8 = new Class[] {
-			long.class, long.class, java.util.Date.class
+			long.class, long.class, java.util.Date.class, int.class
 		};
 	private static final Class<?>[] _getThreadsParameterTypes9 = new Class[] {
 			long.class, long.class, int.class, int.class, int.class

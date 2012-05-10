@@ -110,18 +110,20 @@ public class MBThreadServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> getRecentPosts(
-		long groupId, long userId, java.util.Date modifiedDate, int start,
-		int end)
+		long groupId, long userId, java.util.Date modifiedDate, int status,
+		int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .getRecentPosts(groupId, userId, modifiedDate, start, end);
+				   .getRecentPosts(groupId, userId, modifiedDate, status,
+			start, end);
 	}
 
 	public static int getRecentPostsCount(long groupId, long userId,
-		java.util.Date modifiedDate)
+		java.util.Date modifiedDate, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getRecentPostsCount(groupId, userId, modifiedDate);
+		return getService()
+				   .getRecentPostsCount(groupId, userId, modifiedDate, status);
 	}
 
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> getThreads(

@@ -554,11 +554,6 @@ public class SubscriptionSender implements Serializable {
 				"src=\"" + getPortalURL(company) + "/"
 			});
 
-		if (htmlFormat) {
-			content = StringUtil.replace(
-				content, StringPool.NEW_LINE, "<br />");
-		}
-
 		return content;
 	}
 

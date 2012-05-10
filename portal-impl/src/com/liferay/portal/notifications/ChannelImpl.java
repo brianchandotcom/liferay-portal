@@ -136,7 +136,7 @@ public class ChannelImpl extends BaseChannelImpl {
 		}
 		catch (Exception e) {
 			throw new ChannelException(
-				"Uanble to confirm delivery for " + notificationEventUuid , e);
+				"Unable to confirm delivery for " + notificationEventUuid , e);
 		}
 		finally {
 			_reentrantLock.unlock();
@@ -146,14 +146,24 @@ public class ChannelImpl extends BaseChannelImpl {
 	public void deleteUserNotificiationEvent(String notificationEventUuid)
 		throws ChannelException {
 
+		_reentrantLock.lock();
+
 		try {
+			Map<String, NotificationEvent> unconfirmedNotificationEvents =
+					_getUnconfirmedNotificationEvents();
+
+			unconfirmedNotificationEvents.remove(notificationEventUuid);
+
 			UserNotificationEventLocalServiceUtil.
 				deleteUserNotificationEvent(
 					notificationEventUuid, getCompanyId());
 		}
 		catch (Exception e) {
 			throw new ChannelException(
-				"Uanble to delete event " + notificationEventUuid , e);
+				"Unable to delete event " + notificationEventUuid , e);
+		}
+		finally {
+			_reentrantLock.unlock();
 		}
 	}
 
@@ -161,14 +171,26 @@ public class ChannelImpl extends BaseChannelImpl {
 			Collection<String> notificationEventUuids)
 		throws ChannelException {
 
+		_reentrantLock.lock();
+
 		try {
+			for (String notificationEventUuid : notificationEventUuids) {
+				Map<String, NotificationEvent> unconfirmedNotificationEvents =
+						_getUnconfirmedNotificationEvents();
+
+				unconfirmedNotificationEvents.remove(notificationEventUuid);
+			}
+
 			UserNotificationEventLocalServiceUtil.
 				deleteUserNotificationEvents(
 					notificationEventUuids, getCompanyId());
 		}
 		catch (Exception e) {
 			throw new ChannelException(
-				"Uanble to delete events for user " + getUserId() , e);
+				"Unable to delete events for user " + getUserId() , e);
+		}
+		finally {
+			_reentrantLock.unlock();
 		}
 	}
 

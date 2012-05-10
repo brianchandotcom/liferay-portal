@@ -667,7 +667,9 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 		// Setup wizard
 
 		if (!SetupWizardUtil.isSetupFinished()) {
-			if (!path.equals(_PATH_PORTAL_LICENSE)) {
+			if (!path.equals(_PATH_PORTAL_LICENSE) &&
+				!path.equals(_PATH_PORTAL_STATUS)) {
+
 				return _PATH_PORTAL_SETUP_WIZARD;
 			}
 		}
@@ -991,6 +993,8 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 
 	private static final String _PATH_PORTAL_SETUP_WIZARD =
 		"/portal/setup_wizard";
+
+	private static final String _PATH_PORTAL_STATUS = "/portal/status";
 
 	private static final String _PATH_PORTAL_TCK = "/portal/tck";
 

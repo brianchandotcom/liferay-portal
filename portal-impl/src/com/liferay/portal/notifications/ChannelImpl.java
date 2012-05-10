@@ -75,13 +75,6 @@ public class ChannelImpl extends BaseChannelImpl {
 		_reentrantLock.lock();
 
 		try {
-			for (String notificationEventUuid : notificationEventUuids) {
-				Map<String, NotificationEvent> unconfirmedNotificationEvents =
-					_getUnconfirmedNotificationEvents();
-
-				unconfirmedNotificationEvents.remove(notificationEventUuid);
-			}
-
 			if (PropsValues.USER_NOTIFICATION_EVENT_CONFIRMATION_ENABLED) {
 				if (archive) {
 					UserNotificationEventLocalServiceUtil.
@@ -93,6 +86,13 @@ public class ChannelImpl extends BaseChannelImpl {
 						deleteUserNotificationEvents(
 							notificationEventUuids, getCompanyId());
 				}
+			}
+
+			for (String notificationEventUuid : notificationEventUuids) {
+				Map<String, NotificationEvent> unconfirmedNotificationEvents =
+					_getUnconfirmedNotificationEvents();
+
+				unconfirmedNotificationEvents.remove(notificationEventUuid);
 			}
 		}
 		catch (Exception e) {
@@ -116,11 +116,6 @@ public class ChannelImpl extends BaseChannelImpl {
 		_reentrantLock.lock();
 
 		try {
-			Map<String, NotificationEvent> unconfirmedNotificationEvents =
-				_getUnconfirmedNotificationEvents();
-
-				unconfirmedNotificationEvents.remove(notificationEventUuid);
-
 			if (PropsValues.USER_NOTIFICATION_EVENT_CONFIRMATION_ENABLED) {
 				if (archive) {
 					UserNotificationEventLocalServiceUtil.
@@ -133,6 +128,11 @@ public class ChannelImpl extends BaseChannelImpl {
 							notificationEventUuid, getCompanyId());
 				}
 			}
+
+			Map<String, NotificationEvent> unconfirmedNotificationEvents =
+				_getUnconfirmedNotificationEvents();
+
+			unconfirmedNotificationEvents.remove(notificationEventUuid);
 		}
 		catch (Exception e) {
 			throw new ChannelException(
@@ -149,14 +149,14 @@ public class ChannelImpl extends BaseChannelImpl {
 		_reentrantLock.lock();
 
 		try {
-			Map<String, NotificationEvent> unconfirmedNotificationEvents =
-					_getUnconfirmedNotificationEvents();
-
-			unconfirmedNotificationEvents.remove(notificationEventUuid);
-
 			UserNotificationEventLocalServiceUtil.
 				deleteUserNotificationEvent(
 					notificationEventUuid, getCompanyId());
+
+			Map<String, NotificationEvent> unconfirmedNotificationEvents =
+				_getUnconfirmedNotificationEvents();
+
+			unconfirmedNotificationEvents.remove(notificationEventUuid);
 		}
 		catch (Exception e) {
 			throw new ChannelException(
@@ -174,16 +174,16 @@ public class ChannelImpl extends BaseChannelImpl {
 		_reentrantLock.lock();
 
 		try {
+			UserNotificationEventLocalServiceUtil.
+				deleteUserNotificationEvents(
+					notificationEventUuids, getCompanyId());
+
 			for (String notificationEventUuid : notificationEventUuids) {
 				Map<String, NotificationEvent> unconfirmedNotificationEvents =
 						_getUnconfirmedNotificationEvents();
 
 				unconfirmedNotificationEvents.remove(notificationEventUuid);
 			}
-
-			UserNotificationEventLocalServiceUtil.
-				deleteUserNotificationEvents(
-					notificationEventUuids, getCompanyId());
 		}
 		catch (Exception e) {
 			throw new ChannelException(
@@ -630,7 +630,7 @@ public class ChannelImpl extends BaseChannelImpl {
 	private static Log _log = LogFactoryUtil.getLog(ChannelImpl.class);
 
 	private static Comparator<NotificationEvent> _comparator =
-					new NotificationEventComparator();
+		new NotificationEventComparator();
 
 	private TreeSet<NotificationEvent> _notificationEvents;
 	private ReentrantLock _reentrantLock = new ReentrantLock();

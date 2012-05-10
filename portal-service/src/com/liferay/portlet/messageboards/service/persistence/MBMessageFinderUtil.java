@@ -40,6 +40,14 @@ public class MBMessageFinderUtil {
 			status);
 	}
 
+	public static int filterCountByModifiedDate(long groupId, long userId,
+		long[] categoryIds, java.util.Date modifiedDate)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .filterCountByModifiedDate(groupId, userId, categoryIds,
+			modifiedDate);
+	}
+
 	public static int filterCountByG_U_C_S(long groupId, long userId,
 		long[] categoryIds, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -70,6 +78,15 @@ public class MBMessageFinderUtil {
 		return getFinder()
 				   .filterFindByG_U_C_A_S(groupId, userId, categoryIds,
 			anonymous, status, start, end);
+	}
+
+	public static java.util.List<java.lang.Long> filterFindByModifiedDate(
+		long groupId, long userId, long[] categoryIds,
+		java.util.Date modifiedDate, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .filterFindByModifiedDate(groupId, userId, categoryIds,
+			modifiedDate, start, end);
 	}
 
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByNoAssets()

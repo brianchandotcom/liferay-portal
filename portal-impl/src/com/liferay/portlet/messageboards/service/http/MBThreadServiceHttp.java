@@ -296,13 +296,83 @@ public class MBThreadServiceHttp {
 		}
 	}
 
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> getRecentPosts(
+		HttpPrincipal httpPrincipal, long groupId, long userId,
+		java.util.Date modifiedDate, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(MBThreadServiceUtil.class.getName(),
+					"getRecentPosts", _getRecentPostsParameterTypes7);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					userId, modifiedDate, start, end);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.portlet.messageboards.model.MBThread>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static int getRecentPostsCount(HttpPrincipal httpPrincipal,
+		long groupId, long userId, java.util.Date modifiedDate)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(MBThreadServiceUtil.class.getName(),
+					"getRecentPostsCount", _getRecentPostsCountParameterTypes8);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					userId, modifiedDate);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBThread> getThreads(
 		HttpPrincipal httpPrincipal, long groupId, long categoryId, int status,
 		int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(MBThreadServiceUtil.class.getName(),
-					"getThreads", _getThreadsParameterTypes7);
+					"getThreads", _getThreadsParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					categoryId, status, start, end);
@@ -334,7 +404,7 @@ public class MBThreadServiceHttp {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(MBThreadServiceUtil.class.getName(),
-					"getThreadsCount", _getThreadsCountParameterTypes8);
+					"getThreadsCount", _getThreadsCountParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					categoryId, status);
@@ -367,7 +437,7 @@ public class MBThreadServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(MBThreadServiceUtil.class.getName(),
-					"lockThread", _lockThreadParameterTypes9);
+					"lockThread", _lockThreadParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, threadId);
 
@@ -403,7 +473,7 @@ public class MBThreadServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(MBThreadServiceUtil.class.getName(),
-					"moveThread", _moveThreadParameterTypes10);
+					"moveThread", _moveThreadParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					categoryId, threadId);
@@ -441,7 +511,7 @@ public class MBThreadServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(MBThreadServiceUtil.class.getName(),
-					"splitThread", _splitThreadParameterTypes11);
+					"splitThread", _splitThreadParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					messageId, subject, serviceContext);
@@ -477,7 +547,7 @@ public class MBThreadServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(MBThreadServiceUtil.class.getName(),
-					"unlockThread", _unlockThreadParameterTypes12);
+					"unlockThread", _unlockThreadParameterTypes14);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, threadId);
 
@@ -527,23 +597,29 @@ public class MBThreadServiceHttp {
 	private static final Class<?>[] _getGroupThreadsCountParameterTypes6 = new Class[] {
 			long.class, long.class, int.class, boolean.class, boolean.class
 		};
-	private static final Class<?>[] _getThreadsParameterTypes7 = new Class[] {
+	private static final Class<?>[] _getRecentPostsParameterTypes7 = new Class[] {
+			long.class, long.class, java.util.Date.class, int.class, int.class
+		};
+	private static final Class<?>[] _getRecentPostsCountParameterTypes8 = new Class[] {
+			long.class, long.class, java.util.Date.class
+		};
+	private static final Class<?>[] _getThreadsParameterTypes9 = new Class[] {
 			long.class, long.class, int.class, int.class, int.class
 		};
-	private static final Class<?>[] _getThreadsCountParameterTypes8 = new Class[] {
+	private static final Class<?>[] _getThreadsCountParameterTypes10 = new Class[] {
 			long.class, long.class, int.class
 		};
-	private static final Class<?>[] _lockThreadParameterTypes9 = new Class[] {
+	private static final Class<?>[] _lockThreadParameterTypes11 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _moveThreadParameterTypes10 = new Class[] {
+	private static final Class<?>[] _moveThreadParameterTypes12 = new Class[] {
 			long.class, long.class
 		};
-	private static final Class<?>[] _splitThreadParameterTypes11 = new Class[] {
+	private static final Class<?>[] _splitThreadParameterTypes13 = new Class[] {
 			long.class, java.lang.String.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
-	private static final Class<?>[] _unlockThreadParameterTypes12 = new Class[] {
+	private static final Class<?>[] _unlockThreadParameterTypes14 = new Class[] {
 			long.class
 		};
 }

@@ -28,6 +28,10 @@ public interface MBMessageFinder {
 		boolean anonymous, int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public int filterCountByModifiedDate(long groupId, long userId,
+		long[] categoryIds, java.util.Date modifiedDate)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public int filterCountByG_U_C_S(long groupId, long userId,
 		long[] categoryIds, int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -43,6 +47,11 @@ public interface MBMessageFinder {
 	public java.util.List<java.lang.Long> filterFindByG_U_C_A_S(long groupId,
 		long userId, long[] categoryIds, boolean anonymous, int status,
 		int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<java.lang.Long> filterFindByModifiedDate(
+		long groupId, long userId, long[] categoryIds,
+		java.util.Date modifiedDate, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByNoAssets()

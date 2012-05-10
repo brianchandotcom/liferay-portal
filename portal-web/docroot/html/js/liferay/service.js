@@ -1033,6 +1033,8 @@ Liferay.Service.registerClass(
 		deleteThread: true,
 		getGroupThreads: true,
 		getGroupThreadsCount: true,
+		getRecentPosts: true,
+		getRecentPostsCount: true,
 		getThreads: true,
 		getThreadsCount: true,
 		lockThread: true,

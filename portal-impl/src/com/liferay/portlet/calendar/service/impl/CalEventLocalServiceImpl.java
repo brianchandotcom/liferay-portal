@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.ModelHintsUtil;
@@ -240,6 +241,14 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 			userId, event, serviceContext.getAssetCategoryIds(),
 			serviceContext.getAssetTagNames(),
 			serviceContext.getAssetLinkEntryIds());
+
+		// Message boards
+
+		if (PropsValues.CALENDAR_EVENT_COMMENTS_ENABLED) {
+			mbMessageLocalService.addDiscussionMessage(
+				userId, event.getUserName(), groupId, CalEvent.class.getName(),
+				event.getEventId(), WorkflowConstants.ACTION_PUBLISH);
+		}
 
 		// Social
 

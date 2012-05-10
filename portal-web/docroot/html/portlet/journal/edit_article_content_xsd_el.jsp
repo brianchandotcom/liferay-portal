@@ -51,6 +51,21 @@ String elParentStructureId = (String)request.getAttribute(WebKeys.JOURNAL_STRUCT
 
 Map<String, String> elMetaData = (Map<String, String>)request.getAttribute(WebKeys.JOURNAL_STRUCTURE_EL_META_DATA);
 
+Map <String, Integer> repeatCountMap = (Map<String, Integer>)request.getAttribute(WebKeys.JOURNAL_STRUCTURE_EL_REPEAT_COUNT_MAP);
+
+if (repeatCountMap == null) {
+	repeatCountMap = new HashMap<String, Integer>();
+}
+
+String elRepeatCount = String.valueOf(repeatCountMap.get(elName));
+
+if (Validator.isNotNull(elRepeatCount)) {
+	elRepeatCount = "_" + elRepeatCount;
+}
+else {
+	elRepeatCount = StringPool.BLANK;
+}
+
 String metaData = _buildMetaDataHTMLAttributes(elMetaData, elName);
 
 String elDisplayAsTooltip = elMetaData.get("displayAsTooltip");
@@ -114,7 +129,7 @@ Element contentEl = (Element)request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTEN
 				<c:if test='<%= elType.equals("text") %>'>
 
 					<%
-					String textInputName = "text_" + elName;
+					String textInputName = "text_" + elName + elRepeatCount;
 
 					if (Validator.isNull(elContent)) {
 						elContent = ParamUtil.getString(request, textInputName);
@@ -127,7 +142,7 @@ Element contentEl = (Element)request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTEN
 				<c:if test='<%= elType.equals("text_box") %>'>
 
 					<%
-					String textBoxInputName = "textBox_" + elName;
+					String textBoxInputName = "textBox_" + elName + elRepeatCount;
 
 					if (Validator.isNull(elContent)) {
 						elContent = ParamUtil.getString(request, textBoxInputName);
@@ -140,7 +155,7 @@ Element contentEl = (Element)request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTEN
 				<c:if test='<%= elType.equals("text_area") %>'>
 
 					<%
-					String textAreaInputName = "structure_el_" + elName + "_content";
+					String textAreaInputName = "structure_el_" + elName + elRepeatCount + "_content";
 
 					if (Validator.isNull(elContent)) {
 						elContent = ParamUtil.getString(request, textAreaInputName);
@@ -176,7 +191,7 @@ Element contentEl = (Element)request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTEN
 						<div class="journal-image-preview aui-helper-hidden">
 
 							<%
-							String journalImageContentInputName = "journalImageContent_" + elName;
+							String journalImageContentInputName = "journalImageContent_" + elName + elRepeatCount;
 							%>
 
 							<aui:input name="<%= journalImageContentInputName %>" type="hidden" value="<%= elContent %>" />
@@ -197,7 +212,7 @@ Element contentEl = (Element)request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTEN
 				<c:if test='<%= elType.equals("document_library") %>'>
 
 					<%
-					String journalDocumentLibraryInputName = "journalDocumentLibrary_" + elName;
+					String journalDocumentLibraryInputName = "journalDocumentLibrary_" + elName + elRepeatCount;
 
 					if (Validator.isNull(elContent)) {
 						elContent = ParamUtil.getString(request, journalDocumentLibraryInputName);
@@ -249,7 +264,7 @@ Element contentEl = (Element)request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTEN
 					<div class="journal-list-subfield">
 
 						<%
-						String listInputName = "listInputName_" + elName;
+						String listInputName = "listInputName_" + elName + elRepeatCount;
 
 						if (Validator.isNull(elContent)) {
 							elContent = ParamUtil.getString(request, listInputName);
@@ -304,7 +319,7 @@ Element contentEl = (Element)request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTEN
 					<div class="journal-list-subfield">
 
 						<%
-						String multiListInputName = "multiListInputName_" + elName;
+						String multiListInputName = "multiListInputName_" + elName + elRepeatCount;
 
 						String[] selectedOptions = null;
 
@@ -383,7 +398,7 @@ Element contentEl = (Element)request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTEN
 				<c:if test='<%= elType.equals("link_to_layout") %>'>
 
 					<%
-					String linkSelectName = "structure_el" + elName + "_content";
+					String linkSelectName = "structure_el" + elName + elRepeatCount + "_content";
 
 					if (Validator.isNull(elContent)) {
 						elContent = ParamUtil.getString(request, linkSelectName);

@@ -32,6 +32,7 @@ import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -180,6 +181,49 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 				}
 			}
 		}
+	}
+
+	public List<MBThread> getRecentPosts(
+			long groupId, long userId, Date modifiedDate, int status, int start,
+			int end)
+		throws PortalException, SystemException {
+
+		long[] categoryIds = mbCategoryService.getCategoryIds(
+			groupId, MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
+
+		if (categoryIds.length == 0) {
+			return Collections.emptyList();
+		}
+
+		List<Long> threadIds = null;
+
+		threadIds = mbMessageFinder.filterFindByG_U_C_M_S(
+			groupId, userId, categoryIds, modifiedDate, status, start, end);
+
+		List<MBThread> threads = new ArrayList<MBThread>(threadIds.size());
+
+		for (long threadId : threadIds) {
+			MBThread thread = mbThreadPersistence.findByPrimaryKey(threadId);
+
+			threads.add(thread);
+		}
+
+		return threads;
+	}
+
+	public int getRecentPostsCount(
+			long groupId, long userId, Date modifiedDate, int status)
+		throws SystemException {
+
+		long[] categoryIds = mbCategoryService.getCategoryIds(
+			groupId, MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
+
+		if (categoryIds.length == 0) {
+			return 0;
+		}
+
+		return mbMessageFinder.filterCountByG_U_C_M_S(
+			groupId, userId, categoryIds, modifiedDate, status);
 	}
 
 	public List<MBThread> getThreads(

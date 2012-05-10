@@ -143,4 +143,48 @@ boolean hasUpdatePermission = GroupPermissionUtil.contains(permissionChecker, gr
 
 		<liferay-ui:icon-delete url="<%= deleteURL %>" />
 	</c:if>
+
+	<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_COMMUNITY) || GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.MANAGE_SUBGROUPS) %>">
+
+		<%
+		List<LayoutSetPrototype> layoutSetPrototypes = LayoutSetPrototypeServiceUtil.search(company.getCompanyId(), Boolean.TRUE, null);
+		%>
+
+		<liferay-portlet:renderURL varImpl="addSiteURL">
+			<portlet:param name="struts_action" value="/sites_admin/edit_site" />
+			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="parentGroupSearchContainerPrimaryKeys" value="<%= String.valueOf(group.getGroupId()) %>" />
+		</liferay-portlet:renderURL>
+
+		<%
+		addSiteURL.setParameter("showPrototypes", "0");
+		%>
+
+		<liferay-ui:icon
+			image="site_icon"
+			message='<%= LanguageUtil.format(pageContext, "add-x", "blank-site") %>'
+			method="get"
+			url='<%= addSiteURL.toString() %>'
+		/>
+
+		<%
+		addSiteURL.setParameter("showPrototypes", "1");
+
+		for (LayoutSetPrototype layoutSetPrototype : layoutSetPrototypes) {
+			addSiteURL.setParameter("layoutSetPrototypeId", String.valueOf(layoutSetPrototype.getLayoutSetPrototypeId()));
+		%>
+
+			<liferay-ui:icon
+				image="site_icon"
+				message='<%= LanguageUtil.format(pageContext, "add-x", HtmlUtil.escape(layoutSetPrototype.getName(locale))) %>'
+				method="get"
+				url='<%= addSiteURL.toString() %>'
+			/>
+
+		<%
+		}
+		%>
+
+	</c:if>
 </liferay-ui:icon-menu>

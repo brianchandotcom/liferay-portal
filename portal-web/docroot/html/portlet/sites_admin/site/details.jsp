@@ -65,7 +65,25 @@ if (showPrototypes && (group != null)) {
 	catch (Exception e) {
 	}
 }
+
+long parentGroupId = ParamUtil.getLong(request, "parentGroupSearchContainerPrimaryKeys", (group != null) ? group.getParentGroupId() : GroupConstants.DEFAULT_PARENT_GROUP_ID);
+
+if (parentGroupId <= 0) {
+	parentGroupId = GroupConstants.DEFAULT_PARENT_GROUP_ID;
+
+	if (group != null) {
+		parentGroupId = liveGroup.getParentGroupId();
+	}
+}
 %>
+
+<liferay-util:buffer var="removeGroupIcon">
+	<liferay-ui:icon
+		image="unlink"
+		label="<%= true %>"
+		message="remove"
+	/>
+</liferay-util:buffer>
 
 <liferay-ui:error-marker key="errorSection" value="details" />
 
@@ -316,6 +334,144 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 		</c:when>
 	</c:choose>
 </aui:fieldset>
+
+<%
+Group parentGroup = null;
+
+if ((group == null) && (parentGroupId == GroupConstants.DEFAULT_PARENT_GROUP_ID) && !permissionChecker.isCompanyAdmin()) {
+	List<Group> manageableGroups = new ArrayList<Group>();
+
+	for (Group curGroup : user.getGroups()) {
+		if (GroupPermissionUtil.contains(permissionChecker, curGroup.getGroupId(), ActionKeys.MANAGE_SUBGROUPS)) {
+			manageableGroups.add(curGroup);
+		}
+	}
+
+	if (manageableGroups.size() == 1) {
+		parentGroupId = manageableGroups.get(0).getGroupId();
+	}
+}
+
+if (parentGroupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) {
+	try {
+		parentGroup = GroupLocalServiceUtil.getGroup(parentGroupId);
+	}
+	catch (NoSuchGroupException nsoe) {
+	}
+}
+
+List<Group> parentGroups = new ArrayList<Group>();
+
+if (parentGroup != null) {
+	parentGroups.add(parentGroup);
+}
+%>
+
+<h3><liferay-ui:message key="parent-site" /></h3>
+
+<liferay-ui:search-container
+	headerNames="name,type,null"
+	id="parentGroupSearchContainer"
+>
+	<liferay-ui:search-container-results
+		results="<%= parentGroups %>"
+		total="<%= parentGroups.size() %>"
+	/>
+
+	<liferay-ui:search-container-row
+		className="com.liferay.portal.model.Group"
+		escapedModel="<%= true %>"
+		keyProperty="groupId"
+		modelVar="curGroup"
+	>
+		<portlet:renderURL var="rowURL">
+			<portlet:param name="struts_action" value="/sites_admin/edit_group" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="groupId" value="<%= String.valueOf(curGroup.getGroupId()) %>" />
+		</portlet:renderURL>
+
+		<liferay-ui:search-container-column-text
+			href="<%= rowURL %>"
+			name="name"
+			value="<%= curGroup.getDescriptiveName(locale) %>"
+		/>
+
+		<liferay-ui:search-container-column-text
+			href="<%= rowURL %>"
+			name="type"
+			value="<%= LanguageUtil.get(pageContext, curGroup.getTypeLabel()) %>"
+		/>
+
+		<liferay-ui:search-container-column-text>
+			<a class="modify-link" data-rowId="<%= curGroup.getGroupId() %>" href="javascript:;"><%= removeGroupIcon %></a>
+		</liferay-ui:search-container-column-text>
+	</liferay-ui:search-container-row>
+
+	<liferay-ui:search-iterator paginate="<%= false %>" />
+</liferay-ui:search-container>
+
+<br />
+
+<liferay-ui:icon
+	cssClass="modify-link"
+	image="add"
+	label="<%= true %>"
+	message="select"
+	url='<%= "javascript:" + renderResponse.getNamespace() + "openGroupSelector();" %>'
+/>
+
+<aui:script>
+	function <portlet:namespace />createURL(href, value, onclick) {
+		return '<a href="' + href + '"' + (onclick ? ' onclick="' + onclick + '" ' : '') + '>' + value + '</a>';
+	};
+
+	function <portlet:namespace />openGroupSelector() {
+		var url = '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/users_admin/select_site" /></portlet:renderURL>';
+
+		var groupWindow = window.open(url, 'group', 'directories=no,height=640,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,width=680');
+
+		groupWindow.focus();
+	}
+
+	Liferay.provide(
+		window,
+		'<portlet:namespace />selectGroup',
+		function(groupId, name) {
+			var A = AUI();
+
+			var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />parentGroupSearchContainer');
+
+			var rowColumns = [];
+
+			var href = "<portlet:renderURL><portlet:param name="struts_action" value="/sites_admin/edit_group" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>&<portlet:namespace />groupId=" + groupId;
+
+			rowColumns.push(<portlet:namespace />createURL(href, name));
+			//rowColumns.push(<portlet:namespace />createURL(href, type));
+			rowColumns.push('<a class="modify-link" data-rowId="' + groupId + '" href="javascript:;"><%= UnicodeFormatter.toString(removeGroupIcon) %></a>');
+
+			searchContainer.deleteRow(1, searchContainer.getData());
+			searchContainer.addRow(rowColumns, groupId);
+			searchContainer.updateDataStore(groupId);
+		},
+		['liferay-search-container']
+	);
+</aui:script>
+
+<aui:script use="liferay-search-container">
+	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />parentGroupSearchContainer');
+
+	searchContainer.get('contentBox').delegate(
+		'click',
+		function(event) {
+			var link = event.currentTarget;
+			var tr = link.ancestor('tr');
+
+			searchContainer.deleteRow(tr, link.getAttribute('data-rowId'));
+		},
+		'.modify-link'
+	);
+</aui:script>
+
 
 <aui:script>
 	function <portlet:namespace />testVisibility(currentValue, value) {

@@ -248,8 +248,9 @@ public class EditGroupAction extends PortletAction {
 			Group.class.getName(), actionRequest);
 
 		GroupServiceUtil.updateGroup(
-			groupId, group.getName(), group.getDescription(), group.getType(),
-			group.getFriendlyURL(), active, serviceContext);
+			groupId, group.getParentGroupId(), group.getName(),
+			group.getDescription(), group.getType(), group.getFriendlyURL(),
+			active, serviceContext);
 	}
 
 	protected String updateCloseRedirect(
@@ -315,6 +316,10 @@ public class EditGroupAction extends PortletAction {
 
 		long liveGroupId = ParamUtil.getLong(actionRequest, "liveGroupId");
 
+		long parentGroupId = ParamUtil.getLong(
+			actionRequest, "parentGroupSearchContainerPrimaryKeys",
+			GroupConstants.DEFAULT_PARENT_GROUP_ID);
+
 		boolean active;
 		String description = null;
 		String friendlyURL = null;
@@ -339,8 +344,8 @@ public class EditGroupAction extends PortletAction {
 			active = ParamUtil.getBoolean(actionRequest, "active");
 
 			liveGroup = GroupServiceUtil.addGroup(
-				name, description, type, friendlyURL, true, active,
-				serviceContext);
+				parentGroupId, name, description, type, friendlyURL, true,
+				active, serviceContext);
 
 			LiveUsers.joinGroup(
 				themeDisplay.getCompanyId(), liveGroup.getGroupId(), userId);
@@ -365,8 +370,8 @@ public class EditGroupAction extends PortletAction {
 				actionRequest, "active", liveGroup.getActive());
 
 			liveGroup = GroupServiceUtil.updateGroup(
-				liveGroupId, name, description, type, friendlyURL, active,
-				serviceContext);
+				liveGroupId, parentGroupId, name, description, type,
+				friendlyURL, active, serviceContext);
 
 			if (type == GroupConstants.TYPE_SITE_OPEN) {
 				List<MembershipRequest> membershipRequests =

@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.Team;
 import com.liferay.portal.model.User;
@@ -126,7 +127,8 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		// Group
 
 		groupLocalService.addGroup(
-			userId, UserGroup.class.getName(), userGroup.getUserGroupId(),
+			userId, GroupConstants.DEFAULT_PARENT_GROUP_ID,
+			UserGroup.class.getName(), userGroup.getUserGroupId(),
 			String.valueOf(userGroupId), null, 0, null, false, true, null);
 
 		// Resources

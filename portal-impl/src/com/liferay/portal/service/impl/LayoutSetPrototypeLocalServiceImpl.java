@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.ResourceConstants;
@@ -88,7 +89,7 @@ public class LayoutSetPrototypeLocalServiceImpl
 			"/template-" + layoutSetPrototype.getLayoutSetPrototypeId();
 
 		Group group = groupLocalService.addGroup(
-			userId, LayoutSetPrototype.class.getName(),
+			userId, GroupConstants.DEFAULT_PARENT_GROUP_ID, LayoutSetPrototype.class.getName(),
 			layoutSetPrototype.getLayoutSetPrototypeId(),
 			layoutSetPrototype.getName(LocaleUtil.getDefault()), null, 0,
 			friendlyURL, false, true, serviceContext);

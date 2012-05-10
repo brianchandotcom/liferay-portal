@@ -99,8 +99,9 @@ public class ServiceTestUtil {
 		boolean active = true;
 
 		return GroupLocalServiceUtil.addGroup(
-			TestPropsValues.getUserId(), null, 0, name, description, type,
-			friendlyURL, site, active, getServiceContext());
+			TestPropsValues.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID,
+			null, 0, name, description, type, friendlyURL, site, active,
+			getServiceContext());
 	}
 
 	public static User addUser(

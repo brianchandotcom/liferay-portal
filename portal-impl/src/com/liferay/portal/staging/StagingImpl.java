@@ -448,7 +448,8 @@ public class StagingImpl implements Staging {
 			serviceContext.setAttribute("staging", String.valueOf(true));
 
 			Group stagingGroup = GroupLocalServiceUtil.addGroup(
-				userId, liveGroup.getClassName(), liveGroup.getClassPK(),
+				userId, GroupConstants.DEFAULT_PARENT_GROUP_ID,
+				liveGroup.getClassName(), liveGroup.getClassPK(),
 				liveGroup.getGroupId(), liveGroup.getDescriptiveName(),
 				liveGroup.getDescription(), liveGroup.getType(),
 				liveGroup.getFriendlyURL(), false, liveGroup.isActive(),

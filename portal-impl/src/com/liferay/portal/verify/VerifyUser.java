@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.ContactConstants;
+import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.ContactLocalServiceUtil;
@@ -96,9 +97,9 @@ public class VerifyUser extends VerifyProcess {
 			}
 
 			GroupLocalServiceUtil.addGroup(
-				user.getUserId(), User.class.getName(), user.getUserId(), null,
-				null, 0, StringPool.SLASH + user.getScreenName(), false, true,
-				null);
+				user.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID,
+				User.class.getName(), user.getUserId(), null, null, 0,
+				StringPool.SLASH + user.getScreenName(), false, true, null);
 		}
 
 		if (_log.isDebugEnabled()) {

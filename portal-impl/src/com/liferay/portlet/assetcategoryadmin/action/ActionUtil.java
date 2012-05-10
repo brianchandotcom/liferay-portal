@@ -58,6 +58,30 @@ public class ActionUtil {
 		getCategory(request);
 	}
 
+	public static void getParentCategory(HttpServletRequest request)
+		throws Exception {
+
+		long parentCategoryId = ParamUtil.getLong(request, "parentCategoryId");
+
+		AssetCategory parentCategory = null;
+
+		if (parentCategoryId > 0) {
+			parentCategory = AssetCategoryServiceUtil.getCategory(
+					parentCategoryId);
+		}
+
+		request.setAttribute(WebKeys.ASSET_CATEGORY_PARENT, parentCategory);
+	}
+
+	public static void getParentCategory(PortletRequest portletRequest)
+		throws Exception {
+
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+				portletRequest);
+
+		getParentCategory(request);
+	}
+
 	public static void getVocabularies(HttpServletRequest request)
 		throws Exception {
 

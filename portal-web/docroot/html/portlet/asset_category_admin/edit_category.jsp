@@ -25,6 +25,16 @@ long categoryId = BeanParamUtil.getLong(category, request, "categoryId");
 
 long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategoryId");
 
+if (category == null) {
+	AssetCategory parentCategory = null;
+
+	parentCategory = (AssetCategory)request.getAttribute(WebKeys.ASSET_CATEGORY_PARENT);
+
+	if (parentCategory != null) {
+		parentCategoryId = parentCategory.getCategoryId();
+	}
+}
+
 List<AssetVocabulary> vocabularies = (List<AssetVocabulary>)request.getAttribute(WebKeys.ASSET_VOCABULARIES);
 
 long vocabularyId = ParamUtil.getLong(request, "vocabularyId");
@@ -88,20 +98,29 @@ else {
 
 				<aui:input name="description" />
 
-				<aui:select inputCssClass="vocabulary-select-list" label="to-vocabulary" name="vocabularyId">
+				<c:choose>
+					<c:when test="<%=parentCategoryId == 0%>">
+						<aui:select inputCssClass="vocabulary-select-list" label="to-vocabulary" name="vocabularyId">
 
-					<%
-					for (AssetVocabulary vocabulary : vocabularies) {
-						vocabulary = vocabulary.toEscapedModel();
-					%>
+							<%
+							for (AssetVocabulary vocabulary : vocabularies) {
+								vocabulary = vocabulary.toEscapedModel();
+							%>
 
-						<aui:option label="<%= vocabulary.getTitle(locale) %>" selected="<%= vocabulary.getVocabularyId() == vocabularyId %>" value="<%= vocabulary.getVocabularyId() %>" />
+								<aui:option label="<%= vocabulary.getTitle(locale) %>"
+									selected="<%= vocabulary.getVocabularyId() == vocabularyId %>"
+									value="<%= vocabulary.getVocabularyId() %>" />
 
-					<%
-					}
-					%>
+							<%
+							}
+							%>
 
-				</aui:select>
+						</aui:select>
+					</c:when>
+					<c:otherwise>
+						<aui:input name="vocabularyId" type="hidden" value="<%= vocabularyId %>" />
+					</c:otherwise>
+				</c:choose>
 
 				<liferay-ui:panel-container extended="<%= false %>" id="assetCategoryPanelContainer" persistState="<%= true %>">
 					<c:if test="<%= category == null %>">

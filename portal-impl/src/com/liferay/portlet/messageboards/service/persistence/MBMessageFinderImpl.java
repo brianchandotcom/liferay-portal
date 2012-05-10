@@ -42,9 +42,6 @@ import java.util.List;
 public class MBMessageFinderImpl
 	extends BasePersistenceImpl<MBMessage> implements MBMessageFinder {
 
-	public static final String COUNT_BY_G_U_C_M_S =
-		MBMessageFinder.class.getName() + ".countByG_U_C_M_S";
-
 	public static final String COUNT_BY_C_T =
 		MBMessageFinder.class.getName() + ".countByC_T";
 
@@ -54,17 +51,20 @@ public class MBMessageFinderImpl
 	public static final String COUNT_BY_G_U_C_A_S =
 		MBMessageFinder.class.getName() + ".countByG_U_C_A_S";
 
+	public static final String COUNT_BY_G_U_C_M_S =
+		MBMessageFinder.class.getName() + ".countByG_U_C_M_S";
+
 	public static final String FIND_BY_NO_ASSETS =
 		MBMessageFinder.class.getName() + ".findByNoAssets";
-
-	public static final String FIND_BY_G_U_C_M_S =
-		MBMessageFinder.class.getName() + ".findByG_U_C_M_S";
 
 	public static final String FIND_BY_G_U_C_S =
 		MBMessageFinder.class.getName() + ".findByG_U_C_S";
 
 	public static final String FIND_BY_G_U_C_A_S =
 		MBMessageFinder.class.getName() + ".findByG_U_C_A_S";
+
+	public static final String FIND_BY_G_U_C_M_S =
+		MBMessageFinder.class.getName() + ".findByG_U_C_M_S";
 
 	public int countByC_T(Date createDate, long threadId)
 		throws SystemException {
@@ -123,15 +123,6 @@ public class MBMessageFinderImpl
 			groupId, userId, categoryIds, anonymous, status, false);
 	}
 
-	public int filterCountByG_U_C_M_S(
-			long groupId, long userId, long[] categoryIds, Date modifiedDate,
-			int status)
-		throws SystemException {
-
-		return doCountByG_U_C_M_S(
-			groupId, userId, categoryIds, modifiedDate, status, true);
-	}
-
 	public int filterCountByG_U_C_S(
 			long groupId, long userId, long[] categoryIds, int status)
 		throws SystemException {
@@ -146,6 +137,15 @@ public class MBMessageFinderImpl
 
 		return doCountByG_U_C_A_S(
 			groupId, userId, categoryIds, anonymous, status, true);
+	}
+
+	public int filterCountByG_U_C_M_S(
+			long groupId, long userId, long[] categoryIds, Date modifiedDate,
+			int status)
+		throws SystemException {
+
+		return doCountByG_U_C_M_S(
+			groupId, userId, categoryIds, modifiedDate, status, true);
 	}
 
 	public List<Long> filterFindByG_U_C_S(

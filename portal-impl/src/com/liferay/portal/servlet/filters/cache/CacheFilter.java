@@ -245,6 +245,9 @@ public class CacheFilter extends BasePortalFilter {
 				return 0;
 			}
 		}
+		else if (friendlyURL.endsWith(StringPool.FORWARD_SLASH)) {
+			friendlyURL = friendlyURL.substring(0, friendlyURL.length() - 1);
+		}
 
 		// If there is no layout path take the first from the group or user
 

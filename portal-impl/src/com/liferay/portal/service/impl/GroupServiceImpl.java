@@ -120,8 +120,16 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(), ActionKeys.ADD_COMMUNITY);
+		if (!GroupPermissionUtil.contains(
+				getPermissionChecker(), parentGroupId,
+				ActionKeys.MANAGE_SUBGROUPS) &&
+			!PortalPermissionUtil.contains(
+				getPermissionChecker(), ActionKeys.ADD_COMMUNITY)) {
+
+			throw new PrincipalException(
+				"User " + getUserId() + " does not have permissions to add " +
+					"a site with parent " + parentGroupId);
+		}
 
 		return groupLocalService.addGroup(
 			getUserId(), parentGroupId, null, 0, name, description, type,

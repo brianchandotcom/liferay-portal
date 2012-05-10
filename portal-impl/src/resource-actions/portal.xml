@@ -338,6 +338,7 @@
 				<action-key>MANAGE_ARCHIVED_SETUPS</action-key>
 				<action-key>MANAGE_LAYOUTS</action-key>
 				<action-key>MANAGE_STAGING</action-key>
+				<action-key>MANAGE_SUBGROUPS</action-key>
 				<action-key>MANAGE_TEAMS</action-key>
 				<action-key>PERMISSIONS</action-key>
 				<action-key>PUBLISH_STAGING</action-key>
@@ -362,6 +363,7 @@
 				<action-key>MANAGE_ARCHIVED_SETUPS</action-key>
 				<action-key>MANAGE_LAYOUTS</action-key>
 				<action-key>MANAGE_STAGING</action-key>
+				<action-key>MANAGE_SUBGROUPS</action-key>
 				<action-key>MANAGE_TEAMS</action-key>
 				<action-key>PERMISSIONS</action-key>
 				<action-key>PUBLISH_STAGING</action-key>

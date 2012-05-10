@@ -17,6 +17,7 @@ package com.liferay.portal.spring.context;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.util.PrototypeBean;
 import com.liferay.portal.spring.util.FilterClassLoader;
 
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
@@ -26,7 +27,11 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
  * @author Brian Wing Shun Chan
  */
 public class PortletBeanFactoryPostProcessor
-	implements BeanFactoryPostProcessor {
+	implements BeanFactoryPostProcessor, PrototypeBean {
+
+	public PrototypeBean create(Object... args) {
+		return new PortletBeanFactoryPostProcessor();
+	}
 
 	public void postProcessBeanFactory(
 		ConfigurableListableBeanFactory configurableListableBeanFactory) {

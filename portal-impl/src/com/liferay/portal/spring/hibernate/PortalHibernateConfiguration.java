@@ -57,6 +57,8 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 
 			};
 
+		setBeanClassLoader(getConfigurationClassLoader());
+
 		return super.buildSessionFactory();
 	}
 

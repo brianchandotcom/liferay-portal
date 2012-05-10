@@ -14,9 +14,19 @@
 
 package com.liferay.portal.spring.aop;
 
+import com.liferay.portal.kernel.util.PreloadClassLoader;
+import com.liferay.portal.kernel.util.PrototypeBean;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.aopalliance.aop.Advice;
 import org.aopalliance.intercept.MethodInterceptor;
 
+import org.springframework.aop.Advisor;
+import org.springframework.aop.SpringProxy;
 import org.springframework.aop.TargetSource;
+import org.springframework.aop.framework.Advised;
 import org.springframework.aop.framework.AdvisedSupport;
 import org.springframework.aop.framework.AopConfigException;
 import org.springframework.aop.framework.AopProxy;
@@ -28,7 +38,26 @@ import org.springframework.aop.framework.autoproxy.AbstractAdvisorAutoProxyCreat
  * @author Shuyang Zhou
  */
 public class ServiceBeanAutoProxyCreator
-	extends AbstractAdvisorAutoProxyCreator {
+	extends AbstractAdvisorAutoProxyCreator implements PrototypeBean {
+
+	public PrototypeBean create(Object... args) {
+		if ((args.length != 1) || !(args[0] instanceof ClassLoader)) {
+			throw new IllegalArgumentException();
+		}
+
+		ClassLoader classLoader = (ClassLoader)args[0];
+
+		classLoader = new PreloadClassLoader(classLoader, _preloadClasses);
+
+		ServiceBeanAutoProxyCreator serviceBeanAutoProxyCreator =
+			new ServiceBeanAutoProxyCreator();
+
+		serviceBeanAutoProxyCreator._methodInterceptor = _methodInterceptor;
+
+		serviceBeanAutoProxyCreator.setProxyClassLoader(classLoader);
+
+		return serviceBeanAutoProxyCreator;
+	}
 
 	public void setMethodInterceptor(MethodInterceptor methodInterceptor) {
 		_methodInterceptor = methodInterceptor;
@@ -69,8 +98,19 @@ public class ServiceBeanAutoProxyCreator
 		return advices;
 	}
 
+	private static final Map<String, Class<?>> _preloadClasses =
+		new HashMap<String, Class<?>>();
+
 	private static final String _SERVICE_SUFFIX = "Service";
 
 	private MethodInterceptor _methodInterceptor;
+
+	static {
+		_preloadClasses.put(Advice.class.getName(), Advice.class);
+		_preloadClasses.put(Advised.class.getName(), Advised.class);
+		_preloadClasses.put(Advisor.class.getName(), Advisor.class);
+		_preloadClasses.put(SpringProxy.class.getName(), SpringProxy.class);
+		_preloadClasses.put(TargetSource.class.getName(), TargetSource.class);
+	}
 
 }

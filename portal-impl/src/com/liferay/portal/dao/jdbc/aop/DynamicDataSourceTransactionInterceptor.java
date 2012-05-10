@@ -15,20 +15,24 @@
 package com.liferay.portal.dao.jdbc.aop;
 
 import com.liferay.portal.kernel.util.InfrastructureUtil;
+import com.liferay.portal.kernel.util.PrototypeBean;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.spring.transaction.AnnotationTransactionAttributeSource;
 import com.liferay.portal.spring.transaction.TransactionInterceptor;
 
 import java.lang.reflect.Method;
 
 import org.aopalliance.intercept.MethodInvocation;
 
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.interceptor.TransactionAttribute;
 
 /**
  * @author Michael Young
+ * @author Shuyang Zhou
  */
 public class DynamicDataSourceTransactionInterceptor
-	extends TransactionInterceptor {
+	extends TransactionInterceptor implements PrototypeBean {
 
 	public void afterPropertiesSet() {
 		if (_dynamicDataSourceTargetSource == null) {
@@ -36,6 +40,31 @@ public class DynamicDataSourceTransactionInterceptor
 				(DynamicDataSourceTargetSource)InfrastructureUtil.
 					getDynamicDataSourceTargetSource();
 		}
+
+		if (transactionAttributeSource == null) {
+			setTransactionAttributeSource(
+				new AnnotationTransactionAttributeSource());
+		}
+	}
+
+	public PrototypeBean create(Object... args) {
+		if ((args.length != 1) ||
+			!(args[0] instanceof PlatformTransactionManager)) {
+
+			throw new IllegalArgumentException();
+		}
+
+		PlatformTransactionManager platformTransactionManager =
+			(PlatformTransactionManager)args[0];
+
+		DynamicDataSourceTransactionInterceptor
+			dynamicDataSourceTransactionInterceptor =
+				new DynamicDataSourceTransactionInterceptor();
+
+		dynamicDataSourceTransactionInterceptor.setPlatformTransactionManager(
+			platformTransactionManager);
+
+		return dynamicDataSourceTransactionInterceptor;
 	}
 
 	@Override

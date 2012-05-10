@@ -15,13 +15,32 @@
 package com.liferay.portal.spring.hibernate;
 
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
+import com.liferay.portal.kernel.util.PrototypeBean;
+
+import javax.sql.DataSource;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Ganesh Ram
+ * @author Shuyang Zhou
  */
 public class PortletHibernateConfiguration
-	extends PortalHibernateConfiguration {
+	extends PortalHibernateConfiguration implements PrototypeBean {
+
+	public PrototypeBean create(Object... args) {
+		if ((args.length != 1) || !(args[0] instanceof DataSource)) {
+			throw new IllegalArgumentException();
+		}
+
+		DataSource dataSource = (DataSource)args[0];
+
+		PortletHibernateConfiguration portletHibernateConfiguration =
+			new PortletHibernateConfiguration();
+
+		portletHibernateConfiguration.setDataSource(dataSource);
+
+		return portletHibernateConfiguration;
+	}
 
 	@Override
 	protected ClassLoader getConfigurationClassLoader() {

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.InitialThreadLocal;
+import com.liferay.portal.kernel.util.PrototypeBean;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Shard;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
@@ -41,7 +42,7 @@ import javax.sql.DataSource;
  * @author Alexander Chow
  * @author Shuyang Zhou
  */
-public class ShardAdvice {
+public class ShardAdvice implements PrototypeBean {
 
 	public void afterPropertiesSet() {
 		if (_shardDataSourceTargetSource == null) {
@@ -55,6 +56,10 @@ public class ShardAdvice {
 				(ShardSessionFactoryTargetSource)InfrastructureUtil.
 					getShardSessionFactoryTargetSource();
 		}
+	}
+
+	public PrototypeBean create(Object... args) {
+		return new ShardAdvice();
 	}
 
 	public String getCompanyShardName(

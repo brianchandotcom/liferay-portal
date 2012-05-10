@@ -20,6 +20,7 @@ import com.liferay.portal.dao.shard.ShardDataSourceTargetSource;
 import com.liferay.portal.dao.shard.ShardSessionFactoryTargetSource;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.PrototypeBean;
 import com.liferay.portal.service.persistence.ClassNamePersistence;
 import com.liferay.portal.service.persistence.CompanyPersistence;
 import com.liferay.portal.service.persistence.PortalPreferencesPersistence;
@@ -38,7 +39,22 @@ import org.aopalliance.intercept.MethodInvocation;
  * @author Alexander Chow
  * @author Shuyang Zhou
  */
-public class ShardPersistenceAdvice implements MethodInterceptor {
+public class ShardPersistenceAdvice
+	implements MethodInterceptor, PrototypeBean {
+
+	public PrototypeBean create(Object... args) {
+		if ((args.length != 1) || !(args[0] instanceof ShardAdvice)) {
+			throw new IllegalArgumentException();
+		}
+
+		ShardAdvice shardAdvice = (ShardAdvice)args[0];
+		ShardPersistenceAdvice shardPersistenceAdvice =
+			new ShardPersistenceAdvice();
+
+		shardPersistenceAdvice.setShardAdvice(shardAdvice);
+
+		return shardPersistenceAdvice;
+	}
 
 	public Object invoke(MethodInvocation methodInvocation) throws Throwable {
 		ShardDataSourceTargetSource shardDataSourceTargetSource =

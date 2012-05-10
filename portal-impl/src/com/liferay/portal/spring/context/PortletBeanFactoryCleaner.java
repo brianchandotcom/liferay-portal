@@ -16,6 +16,7 @@ package com.liferay.portal.spring.context;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.PrototypeBean;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 
 import java.lang.reflect.Field;
@@ -38,7 +39,8 @@ import org.springframework.beans.factory.ListableBeanFactory;
 /**
  * @author Shuyang Zhou
  */
-public class PortletBeanFactoryCleaner implements BeanFactoryAware {
+public class PortletBeanFactoryCleaner
+	implements BeanFactoryAware, PrototypeBean {
 
 	public static void readBeans() {
 		if (_beanFactory == null) {
@@ -65,6 +67,10 @@ public class PortletBeanFactoryCleaner implements BeanFactoryAware {
 			catch (Exception e) {
 			}
 		}
+	}
+
+	public PrototypeBean create(Object... args) {
+		return new PortletBeanFactoryCleaner();
 	}
 
 	public void destroy() {

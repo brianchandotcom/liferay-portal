@@ -17,6 +17,7 @@ package com.liferay.taglib.portletext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletContainerUtil;
+import com.liferay.portal.kernel.portlet.RestrictPortletServletRequest;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.util.Validator;
@@ -70,6 +71,12 @@ public class RuntimeTag extends TagSupport {
 
 		String portletId = portletName;
 
+		RestrictPortletServletRequest restrictPortletServletRequest =
+			new RestrictPortletServletRequest(request);
+
+		request = DynamicServletRequest.addQueryString(
+			restrictPortletServletRequest, queryString);
+
 		try {
 			request.setAttribute(WebKeys.RENDER_PORTLET_RESOURCE, Boolean.TRUE);
 
@@ -77,9 +84,6 @@ public class RuntimeTag extends TagSupport {
 				PortletPreferencesFactoryUtil.getPortletSetup(
 					request, portletId, defaultPreferences);
 			}
-
-			request = DynamicServletRequest.addQueryString(
-				request, queryString);
 
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -102,7 +106,7 @@ public class RuntimeTag extends TagSupport {
 				WebKeys.RUNTIME_PORTLET_IDS, runtimePortletIds);
 		}
 		finally {
-			request.removeAttribute(WebKeys.RENDER_PORTLET_RESOURCE);
+			restrictPortletServletRequest.mergeSharedAttributes();
 		}
 	}
 

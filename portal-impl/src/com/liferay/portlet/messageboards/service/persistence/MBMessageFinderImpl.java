@@ -227,8 +227,8 @@ public class MBMessageFinderImpl
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, MBMessage.class.getName(), "rootMessage.messageId",
-					groupId);
+					sql, MBMessage.class.getName(),
+					"currentMessage.rootMessageId", groupId);
 			}
 
 			SQLQuery q = session.createSQLQuery(sql);
@@ -299,8 +299,8 @@ public class MBMessageFinderImpl
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, MBMessage.class.getName(), "rootMessage.messageId",
-					groupId);
+					sql, MBMessage.class.getName(),
+					"currentMessage.rootMessageId", groupId);
 			}
 
 			SQLQuery q = session.createSQLQuery(sql);
@@ -373,8 +373,8 @@ public class MBMessageFinderImpl
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, MBMessage.class.getName(), "rootMessage.messageId",
-					groupId);
+					sql, MBMessage.class.getName(),
+					"currentMessage.rootMessageId", groupId);
 			}
 
 			SQLQuery q = session.createSQLQuery(sql);
@@ -435,8 +435,8 @@ public class MBMessageFinderImpl
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, MBMessage.class.getName(), "rootMessage.messageId",
-					groupId);
+					sql, MBMessage.class.getName(),
+					"currentMessage.rootMessageId", groupId);
 			}
 
 			SQLQuery q = session.createSQLQuery(sql);

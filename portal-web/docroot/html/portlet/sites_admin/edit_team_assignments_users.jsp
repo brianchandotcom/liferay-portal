@@ -52,12 +52,8 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_team_assignments.
 
 	LinkedHashMap userParams = new LinkedHashMap();
 
-	if (group.isOrganization()) {
-		userParams.put("usersOrgs", organization.getOrganizationId());
-	}
-	else {
-		userParams.put("usersGroups", team.getGroupId());
-	}
+	userParams.put("inherit", true);
+	userParams.put("usersGroups", team.getGroupId());
 
 	if (tabs2.equals("current")) {
 		userParams.put("usersTeams", team.getTeamId());

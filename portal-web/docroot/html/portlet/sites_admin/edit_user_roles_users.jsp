@@ -62,12 +62,8 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_user_roles.jsp-po
 
 	LinkedHashMap userParams = new LinkedHashMap();
 
-	if (group.isOrganization()) {
-		userParams.put("usersOrgs", new Long(organization.getOrganizationId()));
-	}
-	else {
-		userParams.put("usersGroups", new Long(group.getGroupId()));
-	}
+	userParams.put("inherit", true);
+	userParams.put("usersGroups", new Long(group.getGroupId()));
 
 	if (tabs1.equals("current")) {
 		userParams.put("userGroupRole", new Long[] {new Long(group.getGroupId()), new Long(roleId)});

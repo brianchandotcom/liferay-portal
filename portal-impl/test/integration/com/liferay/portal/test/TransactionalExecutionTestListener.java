@@ -80,11 +80,11 @@ public class TransactionalExecutionTestListener
 		}
 	}
 
-	private void _rollbackTransaction(TransactionContext transactionContext) {
+	protected void _rollbackTransaction(TransactionContext transactionContext) {
 		transactionContext.rollBackTransaction();
 	}
 
-	private void _startNewTransaction(TransactionContext transactionContext) {
+	protected void _startNewTransaction(TransactionContext transactionContext) {
 		transactionContext.startTransaction();
 	}
 
@@ -93,7 +93,7 @@ public class TransactionalExecutionTestListener
 	private Map<Method, TransactionContext> _transactionContextCache =
 		new ConcurrentHashMap<Method, TransactionContext>();
 
-	private static class TransactionContext {
+	protected static class TransactionContext {
 
 		public TransactionContext(
 			PlatformTransactionManager platformTransactionManager,

@@ -23,7 +23,6 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.JspWriter;
 
 /**
  * @author Shuyang Zhou
@@ -37,18 +36,7 @@ public class OutputTag extends PositionTagSupport {
 	@Override
 	public int doEndTag() throws JspException {
 		try {
-			if (!_output) {
-				return EVAL_PAGE;
-			}
-
-			if (isPositionInLine()) {
-				JspWriter jspWriter = pageContext.getOut();
-
-				StringBundler bodyContent = getBodyContentAsStringBundler();
-
-				jspWriter.write(bodyContent.toString());
-			}
-			else {
+			if (_output) {
 				HttpServletRequest request =
 					(HttpServletRequest)pageContext.getRequest();
 
@@ -87,9 +75,16 @@ public class OutputTag extends PositionTagSupport {
 			}
 		}
 
-		_output = true;
+		if (isPositionInLine()) {
+			_output = false;
 
-		return EVAL_BODY_BUFFERED;
+			return EVAL_BODY_INCLUDE;
+		}
+		else {
+			_output = true;
+
+			return EVAL_BODY_BUFFERED;
+		}
 	}
 
 	public void setOutputKey(String outputKey) {

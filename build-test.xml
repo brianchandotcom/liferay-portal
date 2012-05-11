@@ -3819,6 +3819,24 @@ file.
 		<ant dir="util-java" target="test-integration" inheritAll="false" />
 	</target>
 
+	<target name="test-report">
+		<junitreport todir="test-results">
+			<fileset dir="portal-impl/test-results">
+				<include name="**/TEST-*.xml"/>
+			</fileset>
+			<fileset dir="portal-service/test-results">
+				<include name="**/TEST-*.xml"/>
+			</fileset>
+			<fileset dir="util-java/test-results">
+				<include name="**/TEST-*.xml"/>
+			</fileset>
+
+			<report format="frames" todir="test-results/html"/>
+		</junitreport>
+
+		<echo message="A report with all the test results can be found at [test-results/html/index.html]" />
+	</target>
+
 	<target name="test-unit">
 		<ant dir="portal-service" target="test-unit" inheritAll="false" />
 		<ant dir="portal-impl" target="test-unit" inheritAll="false" />

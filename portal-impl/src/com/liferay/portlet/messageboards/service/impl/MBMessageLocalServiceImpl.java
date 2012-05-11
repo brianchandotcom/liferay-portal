@@ -1968,13 +1968,22 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			message.setSubject(subject);
 		}
 
+		boolean htmlFormat = MBUtil.getEmailHtmlFormat(preferences);
+
 		if (Validator.isNotNull(signature)) {
-			body += "\n--\n" + signature;
+			String signatureSeparator = null;
+
+			if (htmlFormat) {
+				signatureSeparator = "<br />--<br />";
+			}
+			else {
+				signatureSeparator = "\n--\n";
+			}
+
+			body += signatureSeparator + signature;
 		}
 
 		String messageBody = message.getBody();
-
-		boolean htmlFormat = MBUtil.getEmailHtmlFormat(preferences);
 
 		if (htmlFormat && message.isFormatBBCode()) {
 			try {

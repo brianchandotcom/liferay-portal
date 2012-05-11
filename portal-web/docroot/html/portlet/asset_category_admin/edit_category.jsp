@@ -88,20 +88,27 @@ else {
 
 				<aui:input name="description" />
 
-				<aui:select inputCssClass="vocabulary-select-list" label="to-vocabulary" name="vocabularyId">
+				<c:choose>
+					<c:when test="<%= parentCategoryId == 0 %>">
+						<aui:select inputCssClass="vocabulary-select-list" label="to-vocabulary" name="vocabularyId">
 
-					<%
-					for (AssetVocabulary vocabulary : vocabularies) {
-						vocabulary = vocabulary.toEscapedModel();
-					%>
+							<%
+							for (AssetVocabulary vocabulary : vocabularies) {
+								vocabulary = vocabulary.toEscapedModel();
+							%>
 
-						<aui:option label="<%= vocabulary.getTitle(locale) %>" selected="<%= vocabulary.getVocabularyId() == vocabularyId %>" value="<%= vocabulary.getVocabularyId() %>" />
+								<aui:option label="<%= vocabulary.getTitle(locale) %>" selected="<%= vocabulary.getVocabularyId() == vocabularyId %>" value="<%= vocabulary.getVocabularyId() %>" />
 
-					<%
-					}
-					%>
+							<%
+							}
+							%>
 
-				</aui:select>
+						</aui:select>
+					</c:when>
+					<c:otherwise>
+						<aui:input name="vocabularyId" type="hidden" value="<%= vocabularyId %>" />
+					</c:otherwise>
+				</c:choose>
 
 				<liferay-ui:panel-container extended="<%= false %>" id="assetCategoryPanelContainer" persistState="<%= true %>">
 					<c:if test="<%= category == null %>">

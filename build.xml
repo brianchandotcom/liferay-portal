@@ -959,6 +959,10 @@ Plugins: ${lp.plugins.dir}</echo>
 		<ant antfile="build-test.xml" target="test-integration" inheritAll="false" />
 	</target>
 
+	<target name="test-report">
+		<ant antfile="build-test.xml" target="test-report" inheritAll="false" />
+	</target>
+
 	<target name="test-unit">
 		<ant antfile="build-test.xml" target="test-unit" inheritAll="false" />
 	</target>

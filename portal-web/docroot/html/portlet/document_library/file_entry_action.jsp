@@ -198,7 +198,7 @@ viewFolderURL.setParameter("folderId", String.valueOf(folderId));
 
 				<%@ include file="/html/portlet/document_library/file_entry_action_open_document.jspf" %>
 
-				<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) %>">
+				<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) %>">
 					<portlet:renderURL var="viewOriginalFileURL">
 						<portlet:param name="struts_action" value="/document_library/view_file_entry" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />

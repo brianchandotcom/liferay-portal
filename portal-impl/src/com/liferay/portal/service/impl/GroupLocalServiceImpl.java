@@ -183,6 +183,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * Adds a group.
 	 *
 	 * @param  userId the primary key of the group's creator/owner
+	 * @param  parentGroupId the primary key of the parent group
 	 * @param  className the entity's class name
 	 * @param  classPK the primary key of the entity's instance
 	 * @param  liveGroupId the primary key of the live group
@@ -205,9 +206,10 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	public Group addGroup(
-			long userId, String className, long classPK, long liveGroupId,
-			String name, String description, int type, String friendlyURL,
-			boolean site, boolean active, ServiceContext serviceContext)
+			long userId, long parentGroupId, String className, long classPK,
+			long liveGroupId, String name, String description, int type,
+			String friendlyURL, boolean site, boolean active,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		// Group
@@ -249,8 +251,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		if (className.equals(Organization.class.getName()) && staging) {
 			classPK = liveGroupId;
 		}
-
-		long parentGroupId = GroupConstants.DEFAULT_PARENT_GROUP_ID;
 
 		if (className.equals(Layout.class.getName())) {
 			Layout layout = layoutLocalService.getLayout(classPK);
@@ -356,6 +356,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * Adds the group using the default live group.
 	 *
 	 * @param  userId the primary key of the group's creator/owner
+	 * @param  parentGroupId the primary key of the parent group
 	 * @param  className the entity's class name
 	 * @param  classPK the primary key of the entity's instance
 	 * @param  name the entity's name
@@ -376,14 +377,15 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	public Group addGroup(
-			long userId, String className, long classPK, String name,
-			String description, int type, String friendlyURL, boolean site,
-			boolean active, ServiceContext serviceContext)
+			long userId, long parentGroupId, String className, long classPK,
+			String name, String description, int type, String friendlyURL,
+			boolean site, boolean active, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		return addGroup(
-			userId, className, classPK, GroupConstants.DEFAULT_LIVE_GROUP_ID,
-			name, description, type, friendlyURL, site, active, serviceContext);
+			userId, parentGroupId, className, classPK,
+			GroupConstants.DEFAULT_LIVE_GROUP_ID, name, description, type,
+			friendlyURL, site, active, serviceContext);
 	}
 
 	/**
@@ -440,8 +442,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			long defaultUserId = userLocalService.getDefaultUserId(companyId);
 
 			groupLocalService.addGroup(
-				defaultUserId, Company.class.getName(), companyId, null, null,
-				0, null, false, true, null);
+				defaultUserId, GroupConstants.DEFAULT_PARENT_GROUP_ID,
+				Company.class.getName(), companyId, null, null, 0, null, false,
+				true, null);
 		}
 	}
 
@@ -502,8 +505,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				}
 
 				group = groupLocalService.addGroup(
-					defaultUserId, className, classPK, name, null, type,
-					friendlyURL, site, true, null);
+					defaultUserId, GroupConstants.DEFAULT_PARENT_GROUP_ID,
+					className, classPK, name, null, type, friendlyURL, site,
+					true, null);
 
 				if (name.equals(GroupConstants.USER_PERSONAL_SITE)) {
 					initUserPersonalSitePermissions(group);
@@ -1931,6 +1935,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * Updates the group.
 	 *
 	 * @param  groupId the primary key of the group
+	 * @param  parentGroupId the primary key of the parent group
 	 * @param  name the group's new name
 	 * @param  description the group's new description (optionally
 	 *         <code>null</code>)
@@ -1949,8 +1954,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	public Group updateGroup(
-			long groupId, String name, String description, int type,
-			String friendlyURL, boolean active, ServiceContext serviceContext)
+			long groupId, long parentGroupId, String name, String description,
+			int type, String friendlyURL, boolean active,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		Group group = groupPersistence.findByPrimaryKey(groupId);
@@ -1988,6 +1994,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		group.setType(type);
 		group.setFriendlyURL(friendlyURL);
 		group.setActive(active);
+		group.setParentGroupId(parentGroupId);
 
 		groupPersistence.update(group, false);
 

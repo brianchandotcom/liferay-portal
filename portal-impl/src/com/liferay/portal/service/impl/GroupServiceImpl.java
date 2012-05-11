@@ -59,6 +59,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	/**
 	 * Adds a group.
 	 *
+	 * @param  parentGroupId the primary key of the parent group
 	 * @param  liveGroupId the primary key of the live group
 	 * @param  name the entity's name
 	 * @param  description the group's description (optionally
@@ -80,22 +81,23 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	public Group addGroup(
-			long liveGroupId, String name, String description, int type,
-			String friendlyURL, boolean site, boolean active,
-			ServiceContext serviceContext)
+			long parentGroupId, long liveGroupId, String name,
+			String description, int type, String friendlyURL, boolean site,
+			boolean active, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		GroupPermissionUtil.check(
 			getPermissionChecker(), liveGroupId, ActionKeys.UPDATE);
 
 		return groupLocalService.addGroup(
-			getUserId(), null, 0, liveGroupId, name, description, type,
-			friendlyURL, site, active, serviceContext);
+			getUserId(), parentGroupId, null, 0, liveGroupId, name, description,
+			type, friendlyURL, site, active, serviceContext);
 	}
 
 	/**
 	 * Adds the group using the group default live group ID.
 	 *
+	 * @param  parentGroupId the primary key of the parent group
 	 * @param  name the entity's name
 	 * @param  description the group's description (optionally
 	 *         <code>null</code>)
@@ -115,16 +117,26 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	public Group addGroup(
-			String name, String description, int type, String friendlyURL,
-			boolean site, boolean active, ServiceContext serviceContext)
+			long parentGroupId, String name, String description, int type,
+			String friendlyURL, boolean site, boolean active,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(), ActionKeys.ADD_COMMUNITY);
+		if (!(parentGroupId != GroupConstants.DEFAULT_PARENT_GROUP_ID &&
+			GroupPermissionUtil.contains(
+				getPermissionChecker(), parentGroupId,
+				ActionKeys.MANAGE_SUBGROUPS)) &&
+			!PortalPermissionUtil.contains(
+				getPermissionChecker(), ActionKeys.ADD_COMMUNITY)) {
+
+			throw new PrincipalException(
+				"User " + getUserId() + " does not have permissions to add " +
+					"a site with parent " + parentGroupId);
+		}
 
 		return groupLocalService.addGroup(
-			getUserId(), null, 0, name, description, type, friendlyURL, site,
-			active, serviceContext);
+			getUserId(), parentGroupId, null, 0, name, description, type,
+			friendlyURL, site, active, serviceContext);
 	}
 
 	/**
@@ -718,6 +730,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 * Updates the group.
 	 *
 	 * @param  groupId the primary key of the group
+	 * @param  parentGroupId the primary key of the parent group
 	 * @param  name the group's new name
 	 * @param  description the group's new description (optionally
 	 *         <code>null</code>)
@@ -736,16 +749,17 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	public Group updateGroup(
-			long groupId, String name, String description, int type,
-			String friendlyURL, boolean active, ServiceContext serviceContext)
+			long groupId, long parentGroupId, String name, String description,
+			int type, String friendlyURL, boolean active,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		GroupPermissionUtil.check(
 			getPermissionChecker(), groupId, ActionKeys.UPDATE);
 
 		return groupLocalService.updateGroup(
-			groupId, name, description, type, friendlyURL, active,
-			serviceContext);
+			groupId, parentGroupId, name, description, type, friendlyURL,
+			active, serviceContext);
 	}
 
 	protected List<Group> filterGroups(List<Group> groups)

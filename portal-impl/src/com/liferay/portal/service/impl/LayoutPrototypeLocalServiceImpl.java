@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.model.ResourceConstants;
@@ -72,7 +73,8 @@ public class LayoutPrototypeLocalServiceImpl
 			"/template-" + layoutPrototype.getLayoutPrototypeId();
 
 		Group group = groupLocalService.addGroup(
-			userId, LayoutPrototype.class.getName(),
+			userId, GroupConstants.DEFAULT_PARENT_GROUP_ID,
+			LayoutPrototype.class.getName(),
 			layoutPrototype.getLayoutPrototypeId(),
 			layoutPrototype.getName(LocaleUtil.getDefault()), null, 0,
 			friendlyURL, false, true, null);

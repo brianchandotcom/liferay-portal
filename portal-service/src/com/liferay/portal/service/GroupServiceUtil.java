@@ -79,15 +79,15 @@ public class GroupServiceUtil {
 	valid friendly URL could not be created for the group
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.Group addGroup(long liveGroupId,
-		java.lang.String name, java.lang.String description, int type,
-		java.lang.String friendlyURL, boolean site, boolean active,
+	public static com.liferay.portal.model.Group addGroup(long parentGroupId,
+		long liveGroupId, java.lang.String name, java.lang.String description,
+		int type, java.lang.String friendlyURL, boolean site, boolean active,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .addGroup(liveGroupId, name, description, type, friendlyURL,
-			site, active, serviceContext);
+				   .addGroup(parentGroupId, liveGroupId, name, description,
+			type, friendlyURL, site, active, serviceContext);
 	}
 
 	/**
@@ -111,15 +111,15 @@ public class GroupServiceUtil {
 	valid friendly URL could not be created for the group
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.Group addGroup(
+	public static com.liferay.portal.model.Group addGroup(long parentGroupId,
 		java.lang.String name, java.lang.String description, int type,
 		java.lang.String friendlyURL, boolean site, boolean active,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .addGroup(name, description, type, friendlyURL, site,
-			active, serviceContext);
+				   .addGroup(parentGroupId, name, description, type,
+			friendlyURL, site, active, serviceContext);
 	}
 
 	/**
@@ -551,14 +551,14 @@ public class GroupServiceUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Group updateGroup(long groupId,
-		java.lang.String name, java.lang.String description, int type,
-		java.lang.String friendlyURL, boolean active,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		long parentGroupId, java.lang.String name,
+		java.lang.String description, int type, java.lang.String friendlyURL,
+		boolean active, com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .updateGroup(groupId, name, description, type, friendlyURL,
-			active, serviceContext);
+				   .updateGroup(groupId, parentGroupId, name, description,
+			type, friendlyURL, active, serviceContext);
 	}
 
 	public static GroupService getService() {

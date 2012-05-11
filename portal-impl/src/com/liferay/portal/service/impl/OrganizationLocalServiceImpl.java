@@ -176,7 +176,8 @@ public class OrganizationLocalServiceImpl
 		// Group
 
 		Group group = groupLocalService.addGroup(
-			userId, Organization.class.getName(), organizationId, name, null,
+			userId, GroupConstants.DEFAULT_PARENT_GROUP_ID,
+			Organization.class.getName(), organizationId, name, null,
 			GroupConstants.TYPE_SITE_PRIVATE, null, site, true, null);
 
 		// Role
@@ -1619,9 +1620,9 @@ public class OrganizationLocalServiceImpl
 
 		if (!oldName.equals(name)) {
 			groupLocalService.updateGroup(
-				group.getGroupId(), name, group.getDescription(),
-				group.getType(), group.getFriendlyURL(), group.isActive(),
-				null);
+				group.getGroupId(), group.getParentGroupId(), name,
+				group.getDescription(), group.getType(), group.getFriendlyURL(),
+				group.isActive(), null);
 		}
 
 		if (group.isSite() != site) {

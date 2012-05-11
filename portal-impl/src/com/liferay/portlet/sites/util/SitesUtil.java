@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutPrototype;
@@ -1032,7 +1033,8 @@ public class SitesUtil {
 
 		if (!targetScopeLayout.hasScopeGroup()) {
 			GroupLocalServiceUtil.addGroup(
-				userId, Layout.class.getName(), targetLayout.getPlid(),
+				userId, GroupConstants.DEFAULT_PARENT_GROUP_ID,
+				Layout.class.getName(), targetLayout.getPlid(),
 				targetLayout.getName(languageId), null, 0, null, false, true,
 				null);
 		}

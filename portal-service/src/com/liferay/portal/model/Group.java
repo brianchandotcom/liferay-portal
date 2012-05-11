@@ -97,6 +97,8 @@ public interface Group extends GroupModel, PersistedModel {
 
 	public boolean isRegularSite();
 
+	public boolean isRoot();
+
 	public boolean isStaged();
 
 	public boolean isStagedPortlet(java.lang.String portletId);

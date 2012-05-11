@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -161,9 +162,10 @@ public class EditScopeAction extends EditConfigurationAction {
 				String name = String.valueOf(scopeLayout.getPlid());
 
 				GroupLocalServiceUtil.addGroup(
-					themeDisplay.getUserId(), Layout.class.getName(),
-					scopeLayout.getPlid(), name, null, 0, null, false, true,
-					null);
+					themeDisplay.getUserId(),
+					GroupConstants.DEFAULT_PARENT_GROUP_ID,
+					Layout.class.getName(), scopeLayout.getPlid(), name, null,
+					0, null, false, true, null);
 			}
 
 			scopeGroupId = scopeLayout.getGroupId();

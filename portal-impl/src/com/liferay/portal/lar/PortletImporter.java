@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.Portlet;
@@ -1678,6 +1679,7 @@ public class PortletImporter {
 
 					scopeGroup = GroupLocalServiceUtil.addGroup(
 						portletDataContext.getUserId(null),
+						GroupConstants.DEFAULT_PARENT_GROUP_ID,
 						Layout.class.getName(), scopeLayout.getPlid(), name,
 						null, 0, null, false, true, null);
 				}

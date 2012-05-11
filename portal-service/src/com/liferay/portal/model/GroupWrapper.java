@@ -662,6 +662,10 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 		return _group.isRegularSite();
 	}
 
+	public boolean isRoot() {
+		return _group.isRoot();
+	}
+
 	public boolean isStaged() {
 		return _group.isStaged();
 	}

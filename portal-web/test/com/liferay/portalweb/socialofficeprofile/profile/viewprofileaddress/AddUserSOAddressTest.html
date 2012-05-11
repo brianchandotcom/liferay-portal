@@ -74,48 +74,53 @@
 	<td>Addresses</td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//input[contains(@id,'addressStreet1')]</td>
+	<td>Street 1</td>
+</tr>
+<tr>
 	<td>type</td>
-	<td>//input[@id='_125_addressStreet1_0']</td>
+	<td>//input[contains(@id,'addressStreet1')]</td>
 	<td>123 Liferay Ln.</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>//select[@id='_125_addressCountryId0']</td>
+	<td>//select[contains(@id,'addressCountry')]</td>
 	<td>label=United States</td>
 </tr>
 <tr>
 	<td>waitForPartialText</td>
-	<td>//select[@id='_125_addressRegionId0']</td>
+	<td>//select[contains(@id,'addressRegion')]</td>
 	<td>California</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>//select[@id='_125_addressRegionId0']</td>
+	<td>//select[contains(@id,'addressRegion')]</td>
 	<td>label=California</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@id='_125_addressZip0']</td>
+	<td>//input[contains(@id,'addressZip')]</td>
 	<td>91234</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@id='_125_addressCity0']</td>
+	<td>//input[contains(@id,'addressCity')]</td>
 	<td>Ray of Light</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>//select[@id='_125_addressTypeId0']</td>
+	<td>//select[contains(@id,'addressType')]</td>
 	<td>label=Personal</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@id='_125_addressMailing0Checkbox']</td>
+	<td>//input[contains(@id,'addressMailing0Checkbox')]</td>
 	<td>Mailing Checkbox</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@id='_125_addressPrimary0']</td>
+	<td>//input[contains(@id,'addressPrimary')]</td>
 	<td>Primary Button</td>
 </tr>
 <tr>
@@ -135,42 +140,42 @@
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>//input[@id='_125_addressStreet1_0']</td>
+	<td>//input[contains(@id,'addressStreet1')]</td>
 	<td>123 Liferay Ln.</td>
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
-	<td>//select[@id='_125_addressTypeId0']</td>
+	<td>//select[contains(@id,'addressType')]</td>
 	<td>Personal</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>//input[@id='_125_addressZip0']</td>
+	<td>//input[contains(@id,'addressZip')]</td>
 	<td>91234</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>//input[@id='_125_addressCity0']</td>
+	<td>//input[contains(@id,'addressCity')]</td>
 	<td>Ray of Light</td>
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
-	<td>//select[@id='_125_addressCountryId0']</td>
+	<td>//select[contains(@id,'addressCountry')]</td>
 	<td>United States</td>
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
-	<td>//select[@id='_125_addressRegionId0']</td>
+	<td>//select[contains(@id,'addressRegion')]</td>
 	<td>California</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>//input[@id='_125_addressPrimary0']</td>
+	<td>//input[contains(@id,'addressPrimary')]</td>
 	<td>Primary Button</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>//input[@id='_125_addressMailing0Checkbox']</td>
+	<td>//input[contains(@id,'addressMailing0Checkbox')]</td>
 	<td>Mailing Checkbox</td>
 </tr>
 </tbody></table>

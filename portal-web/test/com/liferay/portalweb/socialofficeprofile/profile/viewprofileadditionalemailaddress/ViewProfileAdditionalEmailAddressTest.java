@@ -57,8 +57,7 @@ public class ViewProfileAdditionalEmailAddressTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Email Address"),
 			selenium.getText(
 				"//div[@class='section field-group lfr-user-email-addresses']/ul/li/span"));
-		assertEquals(RuntimeVariables.replace(
-				"socialofficefriendea02@liferay.com"),
+		assertEquals(RuntimeVariables.replace("socialoffice02@liferay.com"),
 			selenium.getText(
 				"//div[@class='section field-group lfr-user-email-addresses']/ul/li/span[2]/a"));
 	}

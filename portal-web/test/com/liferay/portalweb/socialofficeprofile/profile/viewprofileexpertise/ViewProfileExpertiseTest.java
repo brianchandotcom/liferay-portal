@@ -48,12 +48,29 @@ public class ViewProfileExpertiseTest extends BaseTestCase {
 			selenium.getText("//div[@class='lfr-contact-name']/a"));
 		assertEquals(RuntimeVariables.replace("socialoffice01@liferay.com"),
 			selenium.getText("//div[@class='lfr-contact-extra']"));
-		assertEquals(RuntimeVariables.replace("Expertise"),
-			selenium.getText("//div[2]/div[1]/div/span"));
-		assertTrue(selenium.isVisible("//div/h3"));
-		assertEquals(RuntimeVariables.replace("Jan 2012 - Current"),
-			selenium.getText("//div[2]/div[2]/div[2]/div/div/div[1]"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//div[@data-title='Projects']/div/h3")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("Expertise Title:"),
+			selenium.getText("//div[@data-title='Projects']/div/h3"));
+		assertEquals(RuntimeVariables.replace("01 Jan 2012 - Current"),
+			selenium.getText("//div[@class='project-date property-list']"));
 		assertEquals(RuntimeVariables.replace("Expertise Description"),
-			selenium.getText("//div[2]/div/div/div[2]"));
+			selenium.getText(
+				"//div[@class='project-description property-list']"));
 	}
 }

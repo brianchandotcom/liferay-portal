@@ -25,16 +25,6 @@ long categoryId = BeanParamUtil.getLong(category, request, "categoryId");
 
 long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategoryId");
 
-if (category == null) {
-	AssetCategory parentCategory = null;
-
-	parentCategory = (AssetCategory)request.getAttribute(WebKeys.ASSET_CATEGORY_PARENT);
-
-	if (parentCategory != null) {
-		parentCategoryId = parentCategory.getCategoryId();
-	}
-}
-
 List<AssetVocabulary> vocabularies = (List<AssetVocabulary>)request.getAttribute(WebKeys.ASSET_VOCABULARIES);
 
 long vocabularyId = ParamUtil.getLong(request, "vocabularyId");
@@ -107,9 +97,7 @@ else {
 								vocabulary = vocabulary.toEscapedModel();
 							%>
 
-								<aui:option label="<%= vocabulary.getTitle(locale) %>"
-									selected="<%= vocabulary.getVocabularyId() == vocabularyId %>"
-									value="<%= vocabulary.getVocabularyId() %>" />
+								<aui:option label="<%= vocabulary.getTitle(locale) %>" selected="<%= vocabulary.getVocabularyId() == vocabularyId %>" value="<%= vocabulary.getVocabularyId() %>" />
 
 							<%
 							}

@@ -17,6 +17,7 @@ package com.liferay.portal.security.pacl.checker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseAsyncDestination;
+import com.liferay.portal.kernel.util.JavaDetector;
 import com.liferay.portal.kernel.util.PathUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -141,16 +142,31 @@ public class RuntimeChecker extends BaseReflectChecker {
 	}
 
 	protected boolean hasCreateClassLoader() {
-		Class<?> callerClass10 = Reflection.getCallerClass(10);
+		if (JavaDetector.isIBM()) {
+			Class<?> callerClass9 = Reflection.getCallerClass(9);
 
-		String callerClassName10 = callerClass10.getName();
+			String callerClassName9 = callerClass9.getName();
 
-		if (callerClassName10.startsWith(_CLASS_NAME_CLASS_DEFINER) &&
-			CheckerUtil.isAccessControllerDoPrivileged(11)) {
+			if (callerClassName9.startsWith(_CLASS_NAME_CLASS_DEFINER) &&
+				CheckerUtil.isAccessControllerDoPrivileged(10)) {
 
-			logCreateClassLoader(callerClass10, 10);
+				logCreateClassLoader(callerClass9, 9);
 
-			return true;
+				return true;
+			}
+		}
+		else {
+			Class<?> callerClass10 = Reflection.getCallerClass(10);
+
+			String callerClassName10 = callerClass10.getName();
+
+			if (callerClassName10.startsWith(_CLASS_NAME_CLASS_DEFINER) &&
+				CheckerUtil.isAccessControllerDoPrivileged(11)) {
+
+				logCreateClassLoader(callerClass10, 10);
+
+				return true;
+			}
 		}
 
 		return false;
@@ -212,7 +228,14 @@ public class RuntimeChecker extends BaseReflectChecker {
 			StackTraceElement[] stackTraceElements =
 				currentThread.getStackTrace();
 
-			StackTraceElement stackTraceElement = stackTraceElements[6];
+			StackTraceElement stackTraceElement = null;
+
+			if (JavaDetector.isIBM()) {
+				stackTraceElement = stackTraceElements[7];
+			}
+			else {
+				stackTraceElement = stackTraceElements[6];
+			}
 
 			String methodName = stackTraceElement.getMethodName();
 

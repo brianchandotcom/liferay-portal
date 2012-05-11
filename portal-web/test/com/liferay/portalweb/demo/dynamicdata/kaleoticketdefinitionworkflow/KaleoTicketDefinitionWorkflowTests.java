@@ -15,6 +15,7 @@
 package com.liferay.portalweb.demo.dynamicdata.kaleoticketdefinitionworkflow;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignInTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
 
 import junit.framework.Test;
@@ -53,7 +54,7 @@ public class KaleoTicketDefinitionWorkflowTests extends BaseTestSuite {
 		testSuite.addTestSuite(AssignRoleProjectManagerTest.class);
 		testSuite.addTestSuite(AssignRoleCodeReviewerTest.class);
 		testSuite.addTestSuite(SignInUsersTest.class);
-		testSuite.addTestSuite(SA_SignInTest.class);
+		testSuite.addTestSuite(SignInTest.class);
 		testSuite.addTestSuite(AddDataDefinitionTest.class);
 		testSuite.addTestSuite(EditDataDefinitionFieldPriorityTest.class);
 		testSuite.addTestSuite(EditDataDefinitionFieldComponentTest.class);
@@ -94,7 +95,7 @@ public class KaleoTicketDefinitionWorkflowTests extends BaseTestSuite {
 		testSuite.addTestSuite(PM_AssignToMeTaskKFTest.class);
 		testSuite.addTestSuite(PM_CompletedTaskKaleoTicketKFTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
-		testSuite.addTestSuite(SA_SignInTest.class);
+		testSuite.addTestSuite(SignInTest.class);
 		testSuite.addTestSuite(ViewCompletedTaskKaleoTicketKFTest.class);
 		testSuite.addTestSuite(AddTaskJavascriptTicketKFTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
@@ -142,7 +143,7 @@ public class KaleoTicketDefinitionWorkflowTests extends BaseTestSuite {
 		testSuite.addTestSuite(PM_AssignToMeTaskKFTest.class);
 		testSuite.addTestSuite(PM_CompletedTaskJavascriptTicketKFTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
-		testSuite.addTestSuite(SA_SignInTest.class);
+		testSuite.addTestSuite(SignInTest.class);
 		testSuite.addTestSuite(ViewCompletedTaskJavascriptTicketKFTest.class);
 
 		return testSuite;

@@ -48,9 +48,8 @@ public class QAM_ViewTaskKaleoTicketClosedKFTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Ticket Process"),
-			selenium.getText(
-				"//div[@id='workflowMyTasksPanel']/div[2]/div/div/div/table/tbody/tr[3]/td[2]"));
-		selenium.clickAt("//div[@id='workflowMyTasksPanel']/div[2]/div/div/div/table/tbody/tr[3]/td[2]/a",
+			selenium.getText("//div[@id='workflowMyTasksPanel']//tr[3]/td[2]"));
+		selenium.clickAt("//div[@id='workflowMyTasksPanel']//tr[3]/td[2]/a",
 			RuntimeVariables.replace("Ticket Process"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();

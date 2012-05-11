@@ -183,6 +183,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * Adds a group.
 	 *
 	 * @param  userId the primary key of the group's creator/owner
+	 * @param  parentGroupId the primary key of the parent group
 	 * @param  className the entity's class name
 	 * @param  classPK the primary key of the entity's instance
 	 * @param  liveGroupId the primary key of the live group
@@ -355,6 +356,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * Adds the group using the default live group.
 	 *
 	 * @param  userId the primary key of the group's creator/owner
+	 * @param  parentGroupId the primary key of the parent group
 	 * @param  className the entity's class name
 	 * @param  classPK the primary key of the entity's instance
 	 * @param  name the entity's name
@@ -1933,6 +1935,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * Updates the group.
 	 *
 	 * @param  groupId the primary key of the group
+	 * @param  parentGroupId the primary key of the parent group
 	 * @param  name the group's new name
 	 * @param  description the group's new description (optionally
 	 *         <code>null</code>)

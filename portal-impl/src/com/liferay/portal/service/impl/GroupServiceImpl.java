@@ -59,6 +59,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	/**
 	 * Adds a group.
 	 *
+	 * @param  parentGroupId the primary key of the parent group
 	 * @param  liveGroupId the primary key of the live group
 	 * @param  name the entity's name
 	 * @param  description the group's description (optionally
@@ -96,6 +97,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	/**
 	 * Adds the group using the group default live group ID.
 	 *
+	 * @param  parentGroupId the primary key of the parent group
 	 * @param  name the entity's name
 	 * @param  description the group's description (optionally
 	 *         <code>null</code>)
@@ -728,6 +730,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 * Updates the group.
 	 *
 	 * @param  groupId the primary key of the group
+	 * @param  parentGroupId the primary key of the parent group
 	 * @param  name the group's new name
 	 * @param  description the group's new description (optionally
 	 *         <code>null</code>)

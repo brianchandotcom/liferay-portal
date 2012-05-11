@@ -8,7 +8,12 @@ AUI.add(
 		var PortletBase = function(config) {
 			var instance = this;
 
-			instance.NS = config.namespace;
+			var namespace = config.namespace;
+
+			instance.NS = namespace;
+			instance.ID = namespace.replace(/^_(.*)_$/, '$1');
+
+			instance.rootNode = A.one('#p_p_id' + namespace);
 
 			instance.ns = A.cached(
 				function(str) {
@@ -34,7 +39,7 @@ AUI.add(
 			all: function(selector, root) {
 				var instance = this;
 
-				root = root || A;
+				root = root || instance.rootNode || A;
 
 				return root.allNS(instance.NS, selector);
 			},
@@ -48,7 +53,7 @@ AUI.add(
 			one: function(selector, root) {
 				var instance = this;
 
-				root = root || A;
+				root = root || instance.rootNode || A;
 
 				return root.oneNS(instance.NS, selector);
 			},

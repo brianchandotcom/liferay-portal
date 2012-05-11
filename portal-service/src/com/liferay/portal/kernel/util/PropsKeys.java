@@ -2283,6 +2283,14 @@ public interface PropsKeys {
 
 	public static final String XUGGLER_FFPRESET = "xuggler.ffpreset.";
 
+	public static final String XUGGLER_JAR_FILE = "xuggler.jar.file";
+
+	public static final String XUGGLER_JAR_NAME = "xuggler.jar.name";
+
+	public static final String XUGGLER_JAR_OPTIONS = "xuggler.jar.options";
+
+	public static final String XUGGLER_JAR_URL = "xuggler.jar.url";
+
 	public static final String YM_LOGIN = "ym.login";
 
 	public static final String YM_PASSWORD = "ym.password";

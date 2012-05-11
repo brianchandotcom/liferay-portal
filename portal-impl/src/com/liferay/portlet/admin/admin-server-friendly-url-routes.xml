@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE routes PUBLIC "-//Liferay//DTD Friendly URL Routes 6.1.0//EN" "http://www.liferay.com/dtd/liferay-friendly-url-routes_6_1_0.dtd">
+
+<!-- SourceFormatter.Ignore -->
+
+<routes>
+	<route>
+		<pattern>/{tabs2}/{tabs3}</pattern>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+		<implicit-parameter name="struts_action">/admin_server/view</implicit-parameter>
+		<implicit-parameter name="tabs1">server</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/{tabs2}</pattern>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+		<implicit-parameter name="struts_action">/admin_server/view</implicit-parameter>
+		<implicit-parameter name="tabs1">server</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/resources</pattern>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+		<implicit-parameter name="struts_action">/admin_server/view</implicit-parameter>
+		<implicit-parameter name="tabs1">server</implicit-parameter>
+	</route>
+</routes>

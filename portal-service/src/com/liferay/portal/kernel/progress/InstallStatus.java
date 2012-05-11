@@ -12,22 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.poller;
-
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.poller.PollerHeader;
-
-import javax.servlet.http.HttpServletRequest;
+package com.liferay.portal.kernel.progress;
 
 /**
- * @author Edward Han
+ * @author Sergio González
  */
-public interface PollerRequestHandler {
+public interface InstallStatus {
 
-	public PollerHeader getPollerHeader(String pollerRequestString);
+	public static final int UNKNOWN = -1;
 
-	public JSONObject processRequest(
-			HttpServletRequest request, String pollerRequestString)
-		throws Exception;
+	public String getCurrentStatus();
+
+	public void setStatus(int status);
 
 }

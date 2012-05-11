@@ -89,7 +89,7 @@ String onClick = GetterUtil.getString((String)request.getAttribute("liferay-ui:t
 	<%
 	String oldPortletURLValue = null;
 
-	if (portletURL != null) {
+	if ((portletURL != null) && (param != null)) {
 		oldPortletURLValue = portletURL.getParameter(param);
 	}
 	%>
@@ -256,7 +256,7 @@ String onClick = GetterUtil.getString((String)request.getAttribute("liferay-ui:t
 	</c:choose>
 
 	<%
-	if (portletURL != null) {
+	if ((portletURL != null) && (param != null) && (oldPortletURLValue != null)) {
 		portletURL.setParameter(param, oldPortletURLValue);
 	}
 	%>

@@ -3344,8 +3344,8 @@
 		</licenses>
 	</library>
 	<library>
-		<file-name>portal/xuggle-xuggler.jar</file-name>
-		<version>3.4.1012</version>
+		<file-name>portal/xuggle-xuggler-noarch.jar</file-name>
+		<version>5.4</version>
 		<project-name>Xuggler</project-name>
 		<project-url>http://www.xuggle.com</project-url>
 		<licenses>
@@ -3353,9 +3353,5 @@
 				<license-name>LGPL 3</license-name>
 			</license>
 		</licenses>
-		<comments>
-			This includes a public patch from
-			http://code.google.com/p/xuggle/issues/detail?id=252.
-		</comments>
 	</library>
 </libraries>

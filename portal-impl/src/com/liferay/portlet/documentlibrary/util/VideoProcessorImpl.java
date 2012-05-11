@@ -40,9 +40,9 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SystemEnv;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xuggler.XugglerUtil;
 import com.liferay.portal.log.Log4jLogFactoryImpl;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
-import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
@@ -129,9 +129,7 @@ public class VideoProcessorImpl
 		}
 
 		try {
-			if (PrefsPropsUtil.getBoolean(
-					PropsKeys.XUGGLER_ENABLED, PropsValues.XUGGLER_ENABLED)) {
-
+			if (XugglerUtil.isEnabled()) {
 				return _videoMimeTypes.contains(mimeType);
 			}
 		}
@@ -362,10 +360,7 @@ public class VideoProcessorImpl
 	}
 
 	private void _generateVideo(FileVersion fileVersion) throws Exception {
-		if (!PrefsPropsUtil.getBoolean(
-				PropsKeys.XUGGLER_ENABLED, PropsValues.XUGGLER_ENABLED) ||
-			_hasVideo(fileVersion)) {
-
+		if (!XugglerUtil.isEnabled() || _hasVideo(fileVersion)) {
 			return;
 		}
 

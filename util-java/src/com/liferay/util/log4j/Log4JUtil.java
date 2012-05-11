@@ -119,6 +119,24 @@ public class Log4JUtil {
 		return new HashMap<String, String>(_customLogSettings);
 	}
 
+	public static String getOriginalLevel(String className) {
+		Level originalLevel = Level.ALL;
+
+		Enumeration<Logger> enu = LogManager.getCurrentLoggers();
+
+		while (enu.hasMoreElements()) {
+			Logger logger = (Logger)enu.nextElement();
+
+			if (logger.getName().equals(className)) {
+				originalLevel = logger.getLevel();
+
+				break;
+			}
+		}
+
+		return originalLevel.toString();
+	}
+
 	public static void initLog4J(
 		String serverId, String liferayHome, ClassLoader classLoader,
 		LogFactory logFactory, Map<String, String> customLogSettings) {

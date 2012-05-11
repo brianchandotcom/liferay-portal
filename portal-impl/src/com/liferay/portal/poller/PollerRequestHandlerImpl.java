@@ -46,6 +46,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
@@ -65,7 +67,8 @@ public class PollerRequestHandlerImpl
 		return parsePollerRequestHeader(pollerRequestChunks);
 	}
 
-	public JSONObject processRequest(String path, String pollerRequestString)
+	public JSONObject processRequest(
+			HttpServletRequest request, String pollerRequestString)
 		throws Exception {
 
 		if (Validator.isNull(pollerRequestString)) {
@@ -81,6 +84,8 @@ public class PollerRequestHandlerImpl
 		if (pollerHeader == null) {
 			return null;
 		}
+
+		String path = request.getPathInfo();
 
 		boolean receiveRequest = isReceiveRequest(path);
 
@@ -99,7 +104,7 @@ public class PollerRequestHandlerImpl
 		}
 
 		List<PollerRequest> pollerRequests = createPollerRequests(
-			pollerHeader, pollerRequestChunks, receiveRequest);
+			pollerHeader, pollerRequestChunks, receiveRequest, request);
 
 		executePollerRequests(pollerSession, pollerRequests);
 
@@ -137,17 +142,19 @@ public class PollerRequestHandlerImpl
 	}
 
 	protected PollerRequest createPollerRequest(
-			boolean receiveRequest, PollerHeader pollerHeader, String portletId)
+			boolean receiveRequest, PollerHeader pollerHeader, String portletId,
+			HttpServletRequest request)
 		throws Exception {
 
 		return createPollerRequest(
 			receiveRequest, pollerHeader, portletId,
-			new HashMap<String, String>(), null);
+			new HashMap<String, String>(), null, request);
 	}
 
 	protected PollerRequest createPollerRequest(
 			boolean receiveRequest, PollerHeader pollerHeader, String portletId,
-			Map<String, String> parameterMap, String chunkId)
+			Map<String, String> parameterMap, String chunkId,
+			HttpServletRequest request)
 		throws Exception {
 
 		PollerProcessor pollerProcessor =
@@ -163,12 +170,14 @@ public class PollerRequestHandlerImpl
 		}
 
 		return new PollerRequest(
-			pollerHeader, portletId, parameterMap, chunkId, receiveRequest);
+			pollerHeader, portletId, parameterMap, chunkId, receiveRequest,
+			request);
 	}
 
 	protected List<PollerRequest> createPollerRequests(
 			PollerHeader pollerHeader,
-			Map<String, Object>[] pollerRequestChunks, boolean receiveRequest)
+			Map<String, Object>[] pollerRequestChunks, boolean receiveRequest,
+			HttpServletRequest request)
 		throws Exception {
 
 		String[] portletIds = pollerHeader.getPortletIds();
@@ -193,7 +202,7 @@ public class PollerRequestHandlerImpl
 			try {
 				PollerRequest pollerRequest = createPollerRequest(
 					receiveRequest, pollerHeader, portletId, parameterMap,
-					chunkId);
+					chunkId, request);
 
 				pollerRequests.add(pollerRequest);
 
@@ -214,7 +223,7 @@ public class PollerRequestHandlerImpl
 
 				try {
 					PollerRequest pollerRequest = createPollerRequest(
-						receiveRequest, pollerHeader, portletId);
+						receiveRequest, pollerHeader, portletId, request);
 
 					pollerRequests.add(pollerRequest);
 				}

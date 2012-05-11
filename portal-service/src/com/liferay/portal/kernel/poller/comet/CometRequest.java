@@ -17,6 +17,8 @@ package com.liferay.portal.kernel.poller.comet;
 import java.util.Enumeration;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Edward Han
  * @author Brian Wing Shun Chan
@@ -32,6 +34,8 @@ public interface CometRequest {
 	public Enumeration<String> getParameterNames();
 
 	public String getPathInfo();
+
+	public HttpServletRequest getRequest();
 
 	public long getTimestamp();
 

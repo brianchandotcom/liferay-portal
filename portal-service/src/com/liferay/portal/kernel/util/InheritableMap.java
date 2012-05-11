@@ -95,6 +95,28 @@ public class InheritableMap<K, V> extends HashMap<K, V> {
 		_parentMap = (Map<K, V>)parentMap;
 	}
 
+	public String toString() {
+		String mapString = super.toString();
+
+		String parentMapString = "{}";
+
+		if (_parentMap != null) {
+			parentMapString = _parentMap.toString();
+		}
+
+		if (mapString.length() <= 2) {
+			return parentMapString;
+		}
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(mapString.substring(0, mapString.length() - 1));
+		sb.append(StringPool.COMMA_AND_SPACE);
+		sb.append(parentMapString.substring(1));
+
+		return sb.toString();
+	}
+
 	private Map<K, V> _parentMap;
 
 }

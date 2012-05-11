@@ -213,6 +213,11 @@ body.portlet {
 	background-image: url(../images/portlet/help.png);
 }
 
+.portlet-msg-progress, .lfr-message-progress {
+	@extend .portlet-msg-info;
+	background-image: url(../images/aui/loading_indicator.gif);
+}
+
 /* ---------- Error messages ---------- */
 
 .portlet-msg-error, .lfr-message-error {
@@ -244,20 +249,15 @@ body.portlet {
 
 /* ---------- Message labels ---------- */
 
-.portlet-msg-info-label, .portlet-msg-error-label, .portlet-msg-alert-label, .portlet-msg-success-label {
+.portlet-msg-alert-label, .portlet-msg-error-label, .portlet-msg-info-label, .portlet-msg-progress-label, .portlet-msg-success-label {
 	background: none no-repeat 0 50%;
 	padding: 3px 3px 3px 20px;
 	font-weight: bold;
 }
 
-.portlet-msg-info-label {
-	background-image: url(../images/messages/info.png);
-	color: #34404F;
-}
-
-.portlet-msg-help-label {
-	@extend .portlet-msg-info-label;
-	background-image: url(../images/portlet/help.png);
+.portlet-msg-alert-label {
+	background-image: url(../images/messages/alert.png);
+	color: #663;
 }
 
 .portlet-msg-error-label {
@@ -265,9 +265,17 @@ body.portlet {
 	color: #900;
 }
 
-.portlet-msg-alert-label {
-	background-image: url(../images/messages/alert.png);
-	color: #663;
+.portlet-msg-info-label, .portlet-msg-help-label, .portlet-msg-progress-label {
+	background-image: url(../images/messages/info.png);
+	color: #34404F;
+}
+
+.portlet-msg-help-label {
+	background-image: url(../images/portlet/help.png);
+}
+
+.portlet-msg-progress-label {
+	background-image: url(../images/aui/loading_indicator.gif);
 }
 
 .portlet-msg-success-label {

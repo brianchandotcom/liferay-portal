@@ -12,22 +12,21 @@
  * details.
  */
 
-package com.liferay.portal.poller;
-
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.poller.PollerHeader;
-
-import javax.servlet.http.HttpServletRequest;
+package com.liferay.portal.kernel.xuggler;
 
 /**
- * @author Edward Han
+ * @author Alexander Chow
  */
-public interface PollerRequestHandler {
+public interface Xuggler {
 
-	public PollerHeader getPollerHeader(String pollerRequestString);
-
-	public JSONObject processRequest(
-			HttpServletRequest request, String pollerRequestString)
+	public void installNativeLibraries(
+			String name, XugglerInstallStatus xugglerInstallStatus)
 		throws Exception;
+
+	public boolean isEnabled();
+
+	public boolean isEnabled(boolean checkNativeLibraries);
+
+	public boolean isNativeLibraryInstalled();
 
 }

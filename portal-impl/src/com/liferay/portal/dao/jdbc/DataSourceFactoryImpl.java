@@ -25,24 +25,17 @@ import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.SortedProperties;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.util.HttpImpl;
+import com.liferay.portal.util.JarUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.util.PwdGenerator;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
-import java.io.File;
-
 import java.lang.management.ManagementFactory;
-import java.lang.reflect.Method;
-
-import java.net.URI;
-import java.net.URL;
-import java.net.URLClassLoader;
 
 import java.util.Enumeration;
 import java.util.Map;
@@ -167,53 +160,6 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 		properties.setProperty("password", password);
 
 		return initDataSource(properties);
-	}
-
-	protected void addJarFileToClassLoader(File file) throws Exception {
-		Class<?> clazz = URLClassLoader.class;
-
-		Method method = clazz.getDeclaredMethod(
-			"addURL", new Class[] {URL.class});
-
-		method.setAccessible(true);
-
-		URI uri = file.toURI();
-
-		method.invoke(
-			ClassLoader.getSystemClassLoader(), new Object[] {uri.toURL()});
-	}
-
-	protected File downloadJarFileToGlobalClassPath(String url, String name)
-		throws Exception {
-
-		if (FileUtil.getFile() == null) {
-			FileUtil fileUtil = new FileUtil();
-
-			fileUtil.setFile(new FileImpl());
-		}
-
-		if (HttpUtil.getHttp() == null) {
-			HttpUtil httpUtil = new HttpUtil();
-
-			httpUtil.setHttp(new HttpImpl());
-		}
-
-		File file = new File(
-			PropsValues.LIFERAY_LIB_GLOBAL_DIR + StringPool.SLASH + name);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Downloading " + url);
-		}
-
-		byte[] bytes = HttpUtil.URLtoByteArray(url);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Writing " + file);
-		}
-
-		FileUtil.write(file, bytes);
-
-		return file;
 	}
 
 	protected DataSource initDataSourceC3PO(Properties properties)
@@ -420,9 +366,19 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 				throw cnfe;
 			}
 
-			File file = downloadJarFileToGlobalClassPath(url, name);
+			if (HttpUtil.getHttp() == null) {
+				HttpUtil httpUtil = new HttpUtil();
 
-			addJarFileToClassLoader(file);
+				httpUtil.setHttp(new HttpImpl());
+			}
+
+			if (FileUtil.getFile() == null) {
+				FileUtil fileUtil = new FileUtil();
+
+				fileUtil.setFile(new FileImpl());
+			}
+
+			JarUtil.downloadAndInstallJar(true, url, name, null);
 		}
 	}
 

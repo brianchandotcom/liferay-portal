@@ -37,7 +37,7 @@
 			showTabs1 = true;
 		}
 
-		String tabs2 = ParamUtil.getString(request, "tabs2", "memory");
+		String tabs2 = ParamUtil.getString(request, "tabs2");
 		String tabs3 = ParamUtil.getString(request, "tabs3");
 
 		if (tabs1.equals("plugins")) {
@@ -83,6 +83,16 @@
 			<c:choose>
 				<c:when test='<%= tabs1.equals("server") %>'>
 					<%@ include file="/html/portlet/admin/server.jspf" %>
+
+					<aui:script use="liferay-admin">
+						new Liferay.Portlet.Admin(
+							{
+								form: document.<portlet:namespace />fm,
+								namespace: '<portlet:namespace />',
+								url: '<portlet:actionURL><portlet:param name="struts_action" value="/admin/edit_server" /></portlet:actionURL>'
+							}
+						);
+					</aui:script>
 				</c:when>
 				<c:when test='<%= tabs1.equals("instances") %>'>
 					<%@ include file="/html/portlet/admin/instances.jspf" %>

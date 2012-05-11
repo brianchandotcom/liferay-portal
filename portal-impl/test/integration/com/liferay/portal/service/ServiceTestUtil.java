@@ -15,6 +15,7 @@
 package com.liferay.portal.service;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.jcr.JCRFactoryUtil;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.messaging.MessageBus;
@@ -32,6 +33,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
+import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.PortletImpl;
@@ -84,6 +87,12 @@ public class ServiceTestUtil {
 	public static final int THREAD_COUNT = 25;
 
 	public static Group addGroup(String name) throws Exception {
+		return addGroup(name, GroupConstants.DEFAULT_PARENT_GROUP_ID);
+	}
+
+	public static Group addGroup(String name, long parentGroupId)
+		throws Exception {
+
 		Group group = GroupLocalServiceUtil.fetchGroup(
 			TestPropsValues.getCompanyId(), name);
 
@@ -99,8 +108,31 @@ public class ServiceTestUtil {
 		boolean active = true;
 
 		return GroupLocalServiceUtil.addGroup(
-			TestPropsValues.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID,
-			null, 0, name, description, type, friendlyURL, site, active,
+			TestPropsValues.getUserId(), parentGroupId, null, 0, name,
+			description, type, friendlyURL, site, active, getServiceContext());
+	}
+
+	public static Layout addLayout(long groupId, String name) throws Exception {
+		String friendlyURL =
+			StringPool.SLASH + FriendlyURLNormalizerUtil.normalize(name);
+
+		Layout layout = null;
+
+		try {
+			layout = LayoutLocalServiceUtil.getFriendlyURLLayout(
+				groupId, false, friendlyURL);
+
+			return layout;
+		}
+		catch (NoSuchLayoutException nsle) {
+		}
+
+		String description ="This is a test page";
+
+		return LayoutLocalServiceUtil.addLayout(
+			TestPropsValues.getUserId(), groupId, false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, name, null, description,
+			LayoutConstants.TYPE_PORTLET, false, friendlyURL,
 			getServiceContext());
 	}
 

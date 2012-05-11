@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.servlet.WebDirDetector;
 import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.PathUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
@@ -143,9 +144,17 @@ public class FileChecker extends BaseChecker {
 			_log.debug("Allowing " + actions + " on " + path);
 		}
 
-		Permission permission = new FilePermission(path, actions);
+		String unixPath = PathUtil.toUnixPath(path);
 
-		permissions.add(permission);
+		Permission unixPermission = new FilePermission(unixPath, actions);
+
+		permissions.add(unixPermission);
+
+		String windowsPath = PathUtil.toWindowsPath(path);
+
+		Permission windowsPermission = new FilePermission(windowsPath, actions);
+
+		permissions.add(windowsPermission);
 	}
 
 	protected List<Permission> getPermissions(String key, String actions) {

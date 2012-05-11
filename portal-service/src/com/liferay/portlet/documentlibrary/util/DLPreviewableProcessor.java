@@ -215,7 +215,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		catch (DuplicateDirectoryException dde) {
 		}
 
-		DLStoreUtil.addFile(companyId, REPOSITORY_ID, filePath, srcFile);
+		DLStoreUtil.addFile(companyId, REPOSITORY_ID, filePath, false, srcFile);
 	}
 
 	protected void addFileToStore(
@@ -228,7 +228,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		catch (DuplicateDirectoryException dde) {
 		}
 
-		DLStoreUtil.addFile(companyId, REPOSITORY_ID, filePath, is);
+		DLStoreUtil.addFile(companyId, REPOSITORY_ID, filePath, false, is);
 	}
 
 	protected abstract void doExportGeneratedFiles(

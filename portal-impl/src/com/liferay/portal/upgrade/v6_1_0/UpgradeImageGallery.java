@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -292,16 +291,14 @@ public class UpgradeImageGallery extends UpgradeProcess {
 		byte[] bytes = FileUtil.getBytes(is);
 
 		if (name == null) {
-			name = GetterUtil.getString(image.getImageId());
+			name = image.getImageId() + StringPool.PERIOD + image.getType();
 		}
-
-		name = name + StringPool.PERIOD + image.getType();
 
 		if (DLStoreUtil.hasFile(companyId, repositoryId, name)) {
 			DLStoreUtil.deleteFile(companyId, repositoryId, name);
 		}
 
-		DLStoreUtil.addFile(companyId, repositoryId, name, true, bytes);
+		DLStoreUtil.addFile(companyId, repositoryId, name, false, bytes);
 	}
 
 	protected void migrateImage(long imageId) throws Exception {

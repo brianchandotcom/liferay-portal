@@ -255,6 +255,8 @@ public class UserFinderImpl
 
 			params3 = new LinkedHashMap<String, Object>(params1);
 
+			List<UserGroup> userGroups = GroupUtil.getUserGroups(groupId);
+
 			Long[] userGroupIds = new Long[userGroups.size()];
 
 			for (int i = 0; i < userGroups.size(); i++) {
@@ -472,6 +474,8 @@ public class UserFinderImpl
 			params2.put("usersOrgs", organizationIds);
 
 			params3 = new LinkedHashMap<String, Object>(params1);
+
+			List<UserGroup> userGroups = GroupUtil.getUserGroups(groupId);
 
 			Long[] userGroupIds = new Long[userGroups.size()];
 

@@ -89,7 +89,6 @@
 							{
 								form: document.<portlet:namespace />fm,
 								namespace: '<portlet:namespace />',
-								portletId: '<%= portletDisplay.getId() %>',
 								url: '<portlet:actionURL><portlet:param name="struts_action" value="/admin/edit_server" /></portlet:actionURL>'
 							}
 						);

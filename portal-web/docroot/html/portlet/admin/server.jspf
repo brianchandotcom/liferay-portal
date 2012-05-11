@@ -635,7 +635,7 @@ serverURL.setParameter("tabs2", tabs2);
 										<liferay-ui:message key="<%= xugglerHelp %>" />
 									</div>
 
-									<div class="aui-helper-hidden portlet-msg-progress" id="xugglerProgressInfo"></div>
+									<div class="aui-helper-hidden portlet-msg-progress" id="<portlet:namespace />xugglerProgressInfo"></div>
 
 									<aui:select label="jar-file" name="jarName">
 
@@ -662,8 +662,7 @@ serverURL.setParameter("tabs2", tabs2);
 									</aui:select>
 
 									<aui:button-row>
-
-										<aui:button id="installXugglerButton" value="install" />
+										<aui:button name="installXugglerButton" value="install" />
 									</aui:button-row>
 								</c:otherwise>
 							</c:choose>

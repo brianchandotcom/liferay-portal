@@ -137,12 +137,16 @@ else if (tabs2.equals("message-updated-email")) {
 					<dd>
 						<liferay-ui:message key="the-company-name-associated-with-the-message-board" />
 					</dd>
-					<dt>
-						[$MAILING_LIST_ADDRESS$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-email-address-of-the-mailing-list" />
-					</dd>
+
+					<c:if test="<%= PropsValues.POP_SERVER_NOTIFICATIONS_ENABLED %>">
+						<dt>
+							[$MAILING_LIST_ADDRESS$]
+						</dt>
+						<dd>
+							<liferay-ui:message key="the-email-address-of-the-mailing-list" />
+						</dd>
+					</c:if>
+
 					<dt>
 						[$MESSAGE_USER_ADDRESS$]
 					</dt>
@@ -235,12 +239,16 @@ else if (tabs2.equals("message-updated-email")) {
 					<dd>
 						<%= HtmlUtil.escape(emailFromName) %>
 					</dd>
-					<dt>
-						[$MAILING_LIST_ADDRESS$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-email-address-of-the-mailing-list" />
-					</dd>
+
+					<c:if test="<%= PropsValues.POP_SERVER_NOTIFICATIONS_ENABLED %>">
+						<dt>
+							[$MAILING_LIST_ADDRESS$]
+						</dt>
+						<dd>
+							<liferay-ui:message key="the-email-address-of-the-mailing-list" />
+						</dd>
+					</c:if>
+
 					<dt>
 						[$MESSAGE_BODY$]
 					</dt>
@@ -295,18 +303,22 @@ else if (tabs2.equals("message-updated-email")) {
 					<dd>
 						<liferay-ui:message key="the-site-name-associated-with-the-message-board" />
 					</dd>
-					<dt>
-						[$TO_ADDRESS$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-address-of-the-email-recipient" />
-					</dd>
-					<dt>
-						[$TO_NAME$]
-					</dt>
-					<dd>
-						<liferay-ui:message key="the-name-of-the-email-recipient" />
-					</dd>
+
+					<c:if test="<%= !PropsValues.MESSAGE_BOARDS_EMAIL_SEND_BULK %>">
+						<dt>
+							[$TO_ADDRESS$]
+						</dt>
+						<dd>
+							<liferay-ui:message key="the-address-of-the-email-recipient" />
+						</dd>
+						<dt>
+							[$TO_NAME$]
+						</dt>
+						<dd>
+							<liferay-ui:message key="the-name-of-the-email-recipient" />
+						</dd>
+					</c:if>
+
 				</dl>
 			</div>
 		</c:when>

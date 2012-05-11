@@ -2010,7 +2010,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			new MBSubscriptionSender();
 
 		subscriptionSenderPrototype.setBody(body);
-		subscriptionSenderPrototype.setBulk(true);
+		subscriptionSenderPrototype.setBulk(
+			PropsValues.MESSAGE_BOARDS_EMAIL_SEND_BULK);
 		subscriptionSenderPrototype.setCompanyId(message.getCompanyId());
 		subscriptionSenderPrototype.setContextAttribute(
 			"[$MESSAGE_BODY$]", messageBody, false);

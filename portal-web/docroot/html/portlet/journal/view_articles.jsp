@@ -234,11 +234,7 @@ for (int i = 0; i < results.size(); i++) {
 	var buttons = A.all('.delete-articles-button, .expire-articles-button');
 
 	if (buttons.size()) {
-		var toggleDisabled = function(disabled) {
-			buttons.all(':button').attr('disabled', disabled);
-
-			buttons.toggleClass('aui-button-disabled', disabled);
-		};
+		var toggleDisabled = A.bind(Liferay.Util.toggleDisabled, Liferay.Util, ':button');
 
 		var resultsGrid = A.one('.results-grid');
 

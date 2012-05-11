@@ -1189,13 +1189,7 @@
 
 			nameEl.empty();
 
-			var button = A.byIdNS(namespace, 'removeFolderButton');
-
-			if (button) {
-				button.attr('disabled', true);
-
-				button.ancestor('.aui-button').addClass('aui-button-disabled');
-			}
+			Liferay.Util.toggleDisabled(A.byIdNS(namespace, 'removeFolderButton'), true);
 		},
 		['aui-base']
 	);
@@ -1557,6 +1551,25 @@
 			}
 		},
 		['liferay-store']
+	);
+
+	Liferay.provide(
+		Util,
+		'toggleDisabled',
+		function(button, state) {
+			if (!A.instanceOf(button, A.NodeList)) {
+				button = A.all(button);
+			}
+
+			button.each(
+				function(item, index, collection) {
+					item.attr('disabled', state);
+
+					item.ancestor('.aui-button').toggleClass('aui-button-disabled', state);
+				}
+			);
+		},
+		['aui-base']
 	);
 
 	Liferay.provide(

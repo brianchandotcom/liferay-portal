@@ -329,7 +329,7 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 
 				if (existingTitleFileEntry != null) {
 					if (portletDataContext.
-							isDataStrategyMirrorWithOverwritting()) {
+							isDataStrategyMirrorWithOverwriting()) {
 
 						DLAppLocalServiceUtil.deleteFileEntry(
 							existingTitleFileEntry.getFileEntryId());

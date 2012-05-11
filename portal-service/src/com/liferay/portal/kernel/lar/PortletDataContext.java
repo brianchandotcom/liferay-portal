@@ -245,7 +245,7 @@ public interface PortletDataContext extends Serializable {
 
 	public boolean isDataStrategyMirror();
 
-	public boolean isDataStrategyMirrorWithOverwritting();
+	public boolean isDataStrategyMirrorWithOverwriting();
 
 	public boolean isPathNotProcessed(String path);
 

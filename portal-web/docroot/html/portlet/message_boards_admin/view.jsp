@@ -415,8 +415,14 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 				<liferay-ui:search-container-results>
 
 					<%
-					results = MBThreadServiceUtil.getGroupThreads(scopeGroupId, groupThreadsUserId, WorkflowConstants.STATUS_APPROVED, false, false, searchContainer.getStart(), searchContainer.getEnd());
-					total = MBThreadServiceUtil.getGroupThreadsCount(scopeGroupId, groupThreadsUserId, WorkflowConstants.STATUS_APPROVED, false, false);
+					Calendar calendar = Calendar.getInstance();
+
+					int offset = Integer.parseInt(recentPostsDateOffset);
+
+					calendar.add(Calendar.DATE, -offset);
+
+					results = MBThreadServiceUtil.getGroupThreads(scopeGroupId, groupThreadsUserId, calendar.getTime(), WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd());
+					total = MBThreadServiceUtil.getGroupThreadsCount(scopeGroupId, groupThreadsUserId, calendar.getTime(), WorkflowConstants.STATUS_APPROVED);
 
 					pageContext.setAttribute("results", results);
 					pageContext.setAttribute("total", total);

@@ -67,7 +67,7 @@ public class ActionUtil {
 
 		if (parentCategoryId > 0) {
 			parentCategory = AssetCategoryServiceUtil.getCategory(
-					parentCategoryId);
+				parentCategoryId);
 		}
 
 		request.setAttribute(WebKeys.ASSET_CATEGORY_PARENT, parentCategory);
@@ -77,7 +77,7 @@ public class ActionUtil {
 		throws Exception {
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-				portletRequest);
+			portletRequest);
 
 		getParentCategory(request);
 	}

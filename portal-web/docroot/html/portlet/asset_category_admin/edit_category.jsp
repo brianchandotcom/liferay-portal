@@ -99,7 +99,7 @@ else {
 				<aui:input name="description" />
 
 				<c:choose>
-					<c:when test="<%=parentCategoryId == 0%>">
+					<c:when test="<%= parentCategoryId == 0 %>">
 						<aui:select inputCssClass="vocabulary-select-list" label="to-vocabulary" name="vocabularyId">
 
 							<%

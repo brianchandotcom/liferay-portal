@@ -104,7 +104,7 @@ AUI.add(
 		var STR_PANEL_INSTANCE = 'panelInstance';
 
 		var STR_PARENT_NODE = 'parentNode';
-		
+
 		var STR_PARENT_CATEGORY_ID = 'parentCategoryId';
 
 		var STR_QUERY = 'query';
@@ -2135,7 +2135,7 @@ AUI.add(
 								uri: categoryURL.toString()
 							}
 						);
-						
+
 						categoryPanelAdd.show();
 
 						categoryPanelAdd._syncUIPosAlign();

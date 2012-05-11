@@ -14,6 +14,8 @@
 
 package com.liferay.portal.security.pacl.checker;
 
+import com.liferay.portal.kernel.util.JavaDetector;
+
 import java.security.AccessController;
 
 import sun.reflect.Reflection;
@@ -35,6 +37,10 @@ public class CheckerUtil {
 		Thread currentThread = Thread.currentThread();
 
 		StackTraceElement[] stackTraceElements = currentThread.getStackTrace();
+
+		if (JavaDetector.isIBM()) {
+			frame++;
+		}
 
 		StackTraceElement stackTraceElement = stackTraceElements[frame];
 

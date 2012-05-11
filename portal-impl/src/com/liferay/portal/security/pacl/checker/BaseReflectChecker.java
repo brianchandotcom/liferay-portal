@@ -17,6 +17,7 @@ package com.liferay.portal.security.pacl.checker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.config.AbstractMessagingConfigurator;
+import com.liferay.portal.kernel.util.JavaDetector;
 
 import org.hibernate.property.BasicPropertyAccessor;
 import org.hibernate.tuple.entity.EntityTuplizerFactory;
@@ -62,12 +63,25 @@ public abstract class BaseReflectChecker extends BaseChecker {
 
 		Class<?> callerClass7 = Reflection.getCallerClass(7);
 
-		if ((callerClass7.getEnclosingClass() == Class.class) &&
-			CheckerUtil.isAccessControllerDoPrivileged(8)) {
+		if (JavaDetector.isIBM()) {
+			Class<?> callerClass8 = Reflection.getCallerClass(8);
 
-			logReflect(callerClass7, 7);
+			if ((callerClass8.getEnclosingClass() == Class.class) &&
+				CheckerUtil.isAccessControllerDoPrivileged(9)) {
 
-			return true;
+				logReflect(callerClass8, 8);
+
+				return true;
+			}
+		}
+		else {
+			if ((callerClass7.getEnclosingClass() == Class.class) &&
+				CheckerUtil.isAccessControllerDoPrivileged(8)) {
+
+				logReflect(callerClass7, 7);
+
+				return true;
+			}
 		}
 
 		// java.lang.Thread

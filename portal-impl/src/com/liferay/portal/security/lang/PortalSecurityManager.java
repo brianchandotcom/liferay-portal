@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalHookPermission;
 import com.liferay.portal.security.pacl.PACLClassUtil;
 import com.liferay.portal.security.pacl.PACLPolicy;
 import com.liferay.portal.security.pacl.PACLPolicyManager;
+import com.liferay.portal.security.pacl.checker.CheckerUtil;
 
 import java.security.Permission;
 
@@ -122,6 +123,7 @@ public class PortalSecurityManager extends SecurityManager {
 
 		// Touch dependent classes to prevent NoClassDefError
 
+		CheckerUtil.isAccessControllerDoPrivileged(0);
 		PACLClassUtil.getPACLPolicyByReflection(false);
 	}
 

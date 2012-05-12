@@ -35,6 +35,10 @@ public class PortalSecurityManagerThreadLocal {
 		return _checkGetClassLoader.get();
 	}
 
+	public static boolean isCheckReadFile() {
+		return _checkReadFile.get();
+	}
+
 	public static boolean isCheckReadFileDescriptor() {
 		return _checkReadFileDescriptor.get();
 	}
@@ -59,6 +63,10 @@ public class PortalSecurityManagerThreadLocal {
 
 	public static void setCheckGetClassLoader(boolean checkGetClassLoader) {
 		_checkGetClassLoader.set(checkGetClassLoader);
+	}
+
+	public static void setCheckReadFile(boolean checkReadFile) {
+		_checkReadFile.set(checkReadFile);
 	}
 
 	public static void setCheckReadFileDescriptor(
@@ -93,6 +101,9 @@ public class PortalSecurityManagerThreadLocal {
 		new AutoResetThreadLocal<Boolean>(
 			PortalSecurityManagerThreadLocal.class + "._checkGetClassLoader",
 			true);
+	private static ThreadLocal<Boolean> _checkReadFile =
+		new AutoResetThreadLocal<Boolean>(
+			PortalSecurityManagerThreadLocal.class + "._checkReadFile", true);
 	private static ThreadLocal<Boolean> _checkReadFileDescriptor =
 		new AutoResetThreadLocal<Boolean>(
 			PortalSecurityManagerThreadLocal.class +

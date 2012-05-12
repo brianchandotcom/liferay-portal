@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.util.UniqueList;
 
@@ -75,7 +76,9 @@ public class FileChecker extends BaseChecker {
 			}
 		}
 		else if (actions.equals(FILE_PERMISSION_ACTION_READ)) {
-			if (!hasRead(permission)) {
+			if (PortalSecurityManagerThreadLocal.isCheckReadFile() &&
+				!hasRead(permission)) {
+
 				throw new SecurityException("Attempted to read file " + name);
 			}
 		}

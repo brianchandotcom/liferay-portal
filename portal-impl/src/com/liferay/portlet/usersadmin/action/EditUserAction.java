@@ -400,6 +400,7 @@ public class EditUserAction extends PortletAction {
 				userGroupRole.setUserId(user.getUserId());
 			}
 
+			screenName = user.getScreenName();
 			user = UserServiceUtil.updateUser(
 				user.getUserId(), StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, false, reminderQueryQuestion,

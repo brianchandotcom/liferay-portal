@@ -38,6 +38,7 @@
 			<arg value="sample.sql.wiki.node.count=${sample.sql.wiki.node.count}" />
 			<arg value="sample.sql.wiki.page.comment.count=${sample.sql.wiki.page.comment.count}" />
 			<arg value="sample.sql.wiki.page.count=${sample.sql.wiki.page.count}" />
+			<arg value="sample.sql.optimize.buffer.size=${sample.sql.optimize.buffer.size}" />
 		</java>
 	</target>
 

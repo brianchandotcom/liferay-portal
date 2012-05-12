@@ -122,6 +122,8 @@ public class SampleSQLBuilder {
 			arguments.get("sample.sql.wiki.page.comment.count"));
 		int maxWikiPageCount = GetterUtil.getInteger(
 			arguments.get("sample.sql.wiki.page.count"));
+		int optimizeBufferSize = GetterUtil.getInteger(
+			arguments.get("sample.sql.optimize.buffer.size"));
 
 		new SampleSQLBuilder(
 			arguments, baseDir, outputDir, outputMerge, dbType,
@@ -131,7 +133,7 @@ public class SampleSQLBuilder {
 			maxJournalArticleCount, maxJournalArticleSize, maxMBCategoryCount,
 			maxMBMessageCount, maxMBThreadCount, maxUserCount,
 			maxUserToGroupCount, maxWikiNodeCount, maxWikiPageCommentCount,
-			maxWikiPageCount);
+			maxWikiPageCount, optimizeBufferSize);
 	}
 
 	public SampleSQLBuilder(
@@ -143,7 +145,8 @@ public class SampleSQLBuilder {
 		int maxJournalArticleSize, int maxMBCategoryCount,
 		int maxMBMessageCount, int maxMBThreadCount, int maxUserCount,
 		int maxUserToGroupCount, int maxWikiNodeCount,
-		int maxWikiPageCommentCount, int maxWikiPageCount) {
+		int maxWikiPageCommentCount, int maxWikiPageCount,
+		int optimizeBufferSize) {
 
 		try {
 			_outputDir = outputDir;
@@ -167,6 +170,7 @@ public class SampleSQLBuilder {
 			_maxWikiNodeCount = maxWikiNodeCount;
 			_maxWikiPageCommentCount = maxWikiPageCommentCount;
 			_maxWikiPageCount = maxWikiPageCount;
+			_optimizeBufferSize = optimizeBufferSize;
 
 			int totalMThreadCount = maxMBCategoryCount * maxMBThreadCount;
 			int totalMBMessageCount = totalMThreadCount * maxMBMessageCount;
@@ -433,7 +437,7 @@ public class SampleSQLBuilder {
 
 		sb.append(values);
 
-		if (sb.index() >= _OPTIMIZE_BUFFER_SIZE) {
+		if (sb.index() >= _optimizeBufferSize) {
 			sb.append(";\n");
 
 			String sql = _db.buildSQL(sb.toString());
@@ -701,8 +705,6 @@ public class SampleSQLBuilder {
 		writer.write(sql);
 	}
 
-	private static final int _OPTIMIZE_BUFFER_SIZE = 8192;
-
 	private static final int _PIPE_BUFFER_SIZE = 16 * 1024 * 1024;
 
 	private static final String _TPL_ROOT =
@@ -737,6 +739,7 @@ public class SampleSQLBuilder {
 	private int _maxWikiNodeCount;
 	private int _maxWikiPageCommentCount;
 	private int _maxWikiPageCount;
+	private int _optimizeBufferSize;
 	private List<String> _otherSQLs = new ArrayList<String>();
 	private String _outputDir;
 	private boolean _outputMerge;

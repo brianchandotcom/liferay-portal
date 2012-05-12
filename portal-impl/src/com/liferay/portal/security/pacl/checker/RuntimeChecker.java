@@ -17,9 +17,12 @@ package com.liferay.portal.security.pacl.checker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseAsyncDestination;
+import com.liferay.portal.kernel.util.PathUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
+import com.liferay.portal.security.pacl.PACLClassUtil;
 
 import com.sun.jmx.interceptor.DefaultMBeanServerInterceptor;
 
@@ -201,6 +204,9 @@ public class RuntimeChecker extends BaseReflectChecker {
 		}
 
 		if (callerClass6 == Class.class) {
+			if (isTomcatJdbcLeakPrevention(callerClass7)) {
+				return true;
+			}
 		}
 		else if (callerClass6 == ClassLoader.class) {
 			Thread currentThread = Thread.currentThread();
@@ -334,6 +340,31 @@ public class RuntimeChecker extends BaseReflectChecker {
 		return false;
 	}
 
+	protected boolean isTomcatJdbcLeakPrevention(Class<?> clazz) {
+		String className = clazz.getName();
+
+		if (!className.equals(_JDBC_LEAK_PREVENTION)) {
+			return false;
+		}
+
+		String expectedClassLocation =
+			PathUtil.toUnixPath(
+				System.getProperty("catalina.home") + "/lib/catalina.jar!/");
+
+		expectedClassLocation += StringUtil.replace(
+			className, StringPool.PERIOD, StringPool.SLASH);
+		expectedClassLocation += ".class";
+
+		String actualClassLocation = PACLClassUtil.getClassLocation(clazz);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Expected class location " + expectedClassLocation);
+			_log.debug("Actual class location " + actualClassLocation);
+		}
+
+		return actualClassLocation.endsWith(expectedClassLocation);
+	}
+
 	protected void logCreateClassLoader(Class<?> callerClass, int frame) {
 		if (_log.isInfoEnabled()) {
 			_log.info(
@@ -379,6 +410,9 @@ public class RuntimeChecker extends BaseReflectChecker {
 
 	private static final String _CLASS_NAME_PROCESS_IMPL =
 		"java.lang.ProcessImpl$";
+
+	private static final String _JDBC_LEAK_PREVENTION =
+		"org.apache.catalina.loader.JdbcLeakPrevention";
 
 	private static final String _METHOD_NAME_GET_SYSTEM_CLASS_LOADER =
 		"getSystemClassLoader";

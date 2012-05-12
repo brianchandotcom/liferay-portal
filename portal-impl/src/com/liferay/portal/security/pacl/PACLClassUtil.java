@@ -17,8 +17,12 @@ package com.liferay.portal.security.pacl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 import com.liferay.portal.spring.util.FilterClassLoader;
+
+import java.net.URL;
 
 import sun.reflect.Reflection;
 
@@ -34,6 +38,34 @@ public class PACLClassUtil {
 			PortalSecurityManagerThreadLocal.setEnabled(false);
 
 			return _instance._getCallerClassLoader(callerClass);
+		}
+		finally {
+			PortalSecurityManagerThreadLocal.setEnabled(enabled);
+		}
+	}
+
+	public static String getClassLocation(Class<?> clazz) {
+		boolean enabled = PortalSecurityManagerThreadLocal.isEnabled();
+
+		try {
+			PortalSecurityManagerThreadLocal.setEnabled(false);
+
+			ClassLoader classLoader = clazz.getClassLoader();
+
+			if (classLoader == null) {
+				return StringPool.BLANK;
+			}
+
+			String className = clazz.getName();
+
+			String name = StringUtil.replace(
+				className, StringPool.PERIOD, StringPool.SLASH);
+
+			name += ".class";
+
+			URL url = classLoader.getResource(name);
+
+			return url.toString();
 		}
 		finally {
 			PortalSecurityManagerThreadLocal.setEnabled(enabled);

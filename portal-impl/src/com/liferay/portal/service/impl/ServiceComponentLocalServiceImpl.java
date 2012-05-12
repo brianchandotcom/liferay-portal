@@ -182,11 +182,19 @@ public class ServiceComponentLocalServiceImpl
 		PACLPolicy previousPACLPolicy =
 			PortalSecurityManagerThreadLocal.getPACLPolicy();
 
+		boolean checkGetClassLoader =
+			PortalSecurityManagerThreadLocal.isCheckGetClassLoader();
+		boolean checkReadFile =
+			PortalSecurityManagerThreadLocal.isCheckReadFile();
+
 		try {
 			PACLPolicy paclPolicy = PACLPolicyManager.getPACLPolicy(
 				classLoader);
 
 			PortalSecurityManagerThreadLocal.setPACLPolicy(paclPolicy);
+
+			PortalSecurityManagerThreadLocal.setCheckGetClassLoader(false);
+			PortalSecurityManagerThreadLocal.setCheckReadFile(false);
 
 			doUpgradeDB(
 				classLoader, buildNamespace, buildNumber, buildAutoUpgrade,
@@ -194,6 +202,10 @@ public class ServiceComponentLocalServiceImpl
 		}
 		finally {
 			PortalSecurityManagerThreadLocal.setPACLPolicy(previousPACLPolicy);
+
+			PortalSecurityManagerThreadLocal.setCheckGetClassLoader(
+				checkGetClassLoader);
+			PortalSecurityManagerThreadLocal.setCheckReadFile(checkReadFile);
 		}
 	}
 

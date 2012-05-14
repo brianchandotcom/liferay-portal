@@ -45,6 +45,7 @@ String messageFormat = MBUtil.getMessageFormat(preferences);
 boolean enableFlags = GetterUtil.getBoolean(preferences.getValue("enableFlags", null), true);
 boolean enableRatings = GetterUtil.getBoolean(preferences.getValue("enableRatings", null), true);
 boolean threadAsQuestionByDefault = GetterUtil.getBoolean(preferences.getValue("threadAsQuestionByDefault", null));
+String recentPostsDateOffset = preferences.getValue("recentPostsDateOffset", "7");
 
 String rssFormatType = RSSUtil.getFormatType(rssFormat);
 double rssFormatVersion = RSSUtil.getFormatVersion(rssFormat);

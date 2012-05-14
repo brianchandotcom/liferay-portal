@@ -37,6 +37,7 @@ import com.liferay.portlet.asset.model.AssetRendererFactory;
  * </ul>
  *
  * @author Alexander Chow
+ * @author Zsolt Berentey
  */
 public abstract class BaseTrashHandler implements TrashHandler {
 
@@ -46,28 +47,32 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		deleteTrashEntries(new long[] {classPK});
 	}
 
-	public AssetRenderer getAssetRenderer(long classPK)
+	public TrashRenderer getTrashRenderer(long classPK)
 		throws PortalException, SystemException {
 
 		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
 
 		if (assetRendererFactory != null) {
-			return assetRendererFactory.getAssetRenderer(classPK);
-		}
-		else {
-			return null;
-		}
-	}
+			AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
+				classPK);
 
-	public AssetRendererFactory getAssetRendererFactory() {
-		return AssetRendererFactoryRegistryUtil.
-			getAssetRendererFactoryByClassName(getClassName());
+			if (assetRenderer instanceof TrashRenderer) {
+				return (TrashRenderer)assetRenderer;
+			}
+		}
+
+		return null;
 	}
 
 	public void restoreTrashEntry(long classPK)
 		throws PortalException, SystemException {
 
 		restoreTrashEntries(new long[] {classPK});
+	}
+
+	private AssetRendererFactory getAssetRendererFactory() {
+		return AssetRendererFactoryRegistryUtil.
+				getAssetRendererFactoryByClassName(getClassName());
 	}
 
 }

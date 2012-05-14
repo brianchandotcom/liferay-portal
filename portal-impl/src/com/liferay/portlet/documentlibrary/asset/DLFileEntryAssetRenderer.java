@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -44,14 +45,20 @@ import javax.portlet.RenderResponse;
  * @author Julio Camarero
  * @author Juan Fernández
  * @author Sergio González
+ * @author Zsolt Berentey
  */
-public class DLFileEntryAssetRenderer extends BaseAssetRenderer {
+public class DLFileEntryAssetRenderer extends BaseAssetRenderer
+	implements TrashRenderer {
 
 	public DLFileEntryAssetRenderer(
 		FileEntry fileEntry, FileVersion fileVersion) {
 
 		_fileEntry = fileEntry;
 		_fileVersion = fileVersion;
+	}
+
+	public String getAssetRendererFactoryClassName() {
+		return DLFileEntryAssetRendererFactory.CLASS_NAME;
 	}
 
 	public long getClassPK() {
@@ -80,12 +87,26 @@ public class DLFileEntryAssetRenderer extends BaseAssetRenderer {
 		return _fileEntry.getGroupId();
 	}
 
+	@Override
+	public String getIconPath(ThemeDisplay themeDisplay) {
+		return themeDisplay.getPathThemeImages() + "/file_system/small/" +
+			_fileEntry.getIcon() + ".png";
+	}
+
+	public String getPortletId() {
+		return getAssetRendererFactory().getPortletId();
+	}
+
 	public String getSummary(Locale locale) {
 		return HtmlUtil.stripHtml(_fileEntry.getDescription());
 	}
 
 	public String getTitle(Locale locale) {
 		return _fileVersion.getTitle();
+	}
+
+	public String getType() {
+		return DLFileEntryAssetRendererFactory.TYPE;
 	}
 
 	@Override
@@ -149,6 +170,13 @@ public class DLFileEntryAssetRenderer extends BaseAssetRenderer {
 		return _fileEntry.getUuid();
 	}
 
+	public boolean hasDeletePermission(PermissionChecker permissionChecker)
+		throws PortalException, SystemException {
+
+		return DLFileEntryPermission.contains(
+			permissionChecker, _fileEntry.getFileEntryId(), ActionKeys.DELETE);
+	}
+
 	@Override
 	public boolean hasEditPermission(PermissionChecker permissionChecker)
 		throws PortalException, SystemException {
@@ -193,12 +221,6 @@ public class DLFileEntryAssetRenderer extends BaseAssetRenderer {
 		else {
 			return null;
 		}
-	}
-
-	@Override
-	protected String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/file_system/small/" +
-			_fileEntry.getIcon() + ".png";
 	}
 
 	private FileEntry _fileEntry;

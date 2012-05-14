@@ -48,6 +48,11 @@ public class MBCategoryAssetRenderer extends BaseAssetRenderer {
 		_category = category;
 	}
 
+	@Override
+	public String getAssetRendererFactoryClassName() {
+		return MBCategoryAssetRendererFactory.CLASS_NAME;
+	}
+
 	public long getClassPK() {
 		return _category.getCategoryId();
 	}

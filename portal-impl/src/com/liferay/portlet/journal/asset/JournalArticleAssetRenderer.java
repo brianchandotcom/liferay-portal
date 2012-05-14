@@ -56,6 +56,11 @@ public class JournalArticleAssetRenderer extends BaseAssetRenderer {
 	}
 
 	@Override
+	public String getAssetRendererFactoryClassName() {
+		return JournalArticleAssetRendererFactory.CLASS_NAME;
+	}
+
+	@Override
 	public String[] getAvailableLocales() {
 		return _article.getAvailableLocales();
 	}

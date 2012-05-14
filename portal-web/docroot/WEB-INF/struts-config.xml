@@ -1850,13 +1850,17 @@
 
 		<!-- Trash -->
 
+		<action path="/trash/edit_discussion" type="com.liferay.portlet.messageboards.action.EditDiscussionAction">
+			<forward name="portlet.message_boards.error" path="portlet.journal_content.error" />
+		</action>
+
 		<action path="/trash/edit_entry" type="com.liferay.portlet.trash.action.EditEntryAction">
 			<forward name="portlet.trash.view" path="portlet.trash.view" />
 		</action>
 
 		<action path="/trash/view" forward="portlet.trash.view" />
 
-		<action path="/trash/view_content" forward="portlet.asset_publisher.view_content" />
+		<action path="/trash/view_content" forward="portlet.trash.view_content" />
 
 		<!-- Update Manager -->
 

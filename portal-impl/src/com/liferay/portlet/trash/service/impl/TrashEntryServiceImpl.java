@@ -18,13 +18,11 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
+import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
-import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.service.base.TrashEntryServiceBaseImpl;
 
@@ -59,24 +57,20 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 			String className = entry.getClassName();
 			long classPK = entry.getClassPK();
 
-			AssetRendererFactory assetRendererFactory =
-				AssetRendererFactoryRegistryUtil.
-					getAssetRendererFactoryByClassName(className);
-
 			try {
-				if (assetRendererFactory.hasPermission(
-						permissionChecker, classPK, ActionKeys.DELETE)) {
+				TrashHandler trashHandler =
+					TrashHandlerRegistryUtil.getTrashHandler(className);
 
-					TrashHandler trashHandler =
-						TrashHandlerRegistryUtil.getTrashHandler(className);
+				TrashRenderer trashRenderer = trashHandler.getTrashRenderer(
+					classPK);
 
+				if (trashRenderer.hasDeletePermission(permissionChecker)) {
 					trashHandler.deleteTrashEntry(classPK);
 				}
 			}
 			catch (Exception e) {
 			}
 		}
-
 	}
 
 	/**
@@ -124,14 +118,14 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 			String className = entry.getClassName();
 			long classPK = entry.getClassPK();
 
-			AssetRendererFactory assetRendererFactory =
-				AssetRendererFactoryRegistryUtil.
-					getAssetRendererFactoryByClassName(className);
-
 			try {
-				if (assetRendererFactory.hasPermission(
-						permissionChecker, classPK, ActionKeys.VIEW)) {
+				TrashHandler trashHandler =
+					TrashHandlerRegistryUtil.getTrashHandler(className);
 
+				TrashRenderer trashRenderer = trashHandler.getTrashRenderer(
+					classPK);
+
+				if (trashRenderer.hasViewPermission(permissionChecker)) {
 					filteredEntries.add(entry);
 				}
 			}

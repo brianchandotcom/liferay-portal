@@ -81,39 +81,36 @@ portletURL.setParameter("tabs1", tabs1);
 			<%
 			TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(entry.getClassName());
 
-			PortletURL viewFullContentURL = renderResponse.createRenderURL();
+			TrashRenderer trashRenderer = trashHandler.getTrashRenderer(entry.getClassPK());
 
-			viewFullContentURL.setParameter("struts_action", "/trash/view_content");
-			viewFullContentURL.setParameter("redirect", currentURL);
+			String viewContentURLString = null;
 
-			AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(entry.getClassName(), entry.getClassPK());
+			if (trashRenderer != null) {
+				PortletURL viewContentURL = renderResponse.createRenderURL();
 
-			viewFullContentURL.setParameter("assetEntryId", String.valueOf(assetEntry.getEntryId()));
+				viewContentURL.setParameter("struts_action", "/trash/view_content");
+				viewContentURL.setParameter("redirect", currentURL);
+				viewContentURL.setParameter("type", trashRenderer.getType());
+				viewContentURL.setParameter("entryId", String.valueOf(entry.getEntryId()));
+				viewContentURL.setParameter("showActions", String.valueOf(Boolean.FALSE));
+				viewContentURL.setParameter("showAssetMetadata", String.valueOf(Boolean.TRUE));
+				viewContentURL.setParameter("showEditURL", String.valueOf(Boolean.FALSE));
 
-			AssetRendererFactory assetRendererFactory = trashHandler.getAssetRendererFactory();
-
-			viewFullContentURL.setParameter("type", assetRendererFactory.getType());
-			viewFullContentURL.setParameter("showActions", String.valueOf(Boolean.FALSE));
-			viewFullContentURL.setParameter("showAssetMetadata", String.valueOf(Boolean.TRUE));
-			viewFullContentURL.setParameter("showEditURL", String.valueOf(Boolean.FALSE));
+				viewContentURLString = viewContentURL.toString();
+			}
 			%>
 
 			<liferay-ui:search-container-column-text
-				href="<%= viewFullContentURL.toString() %>"
+				href="<%= viewContentURLString %>"
 				name="name"
 			>
-
-				<%
-				AssetRenderer assetRenderer = trashHandler.getAssetRenderer(entry.getClassPK());
-				%>
-
-				<liferay-ui:icon label="<%= true %>" message="<%= assetEntry.getTitle(locale) %>" src="<%= assetRenderer.getIconPath(renderRequest) %>" />
+				<liferay-ui:icon label="<%= true %>" message="<%= trashRenderer.getTitle(locale) %>" src="<%= trashRenderer.getIconPath(renderRequest) %>" />
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
 				name="type"
 				orderable="<%= true %>"
-				value="<%= LanguageUtil.get(pageContext, assetRendererFactory.getType()) %>"
+				value="<%= LanguageUtil.get(pageContext, trashRenderer.getType()) %>"
 			/>
 
 			<liferay-ui:search-container-column-text

@@ -16,8 +16,6 @@ package com.liferay.portal.kernel.trash;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portlet.asset.model.AssetRenderer;
-import com.liferay.portlet.asset.model.AssetRendererFactory;
 
 /**
  * Represents the interface to manage the basic operations of the Recycle Bin.
@@ -76,30 +74,23 @@ public interface TrashHandler {
 		throws PortalException, SystemException;
 
 	/**
-	 * Returns the asset renderer associated to the trash entry.
-	 *
-	 * @param  classPK the primary key of the trash entry
-	 * @return the asset renderer associated to the trash entry
-	 * @throws PortalException if an entry with the primary key could not be
-	 *         found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public AssetRenderer getAssetRenderer(long classPK)
-		throws PortalException, SystemException;
-
-	/**
-	 * Returns the asset renderer factory for the entry entity
-	 *
-	 * @return the asset renderer factory for the entry entity
-	 */
-	public AssetRendererFactory getAssetRendererFactory();
-
-	/**
 	 * Returns the class name of the entry.
 	 *
 	 * @return the class name of the entry
 	 */
 	public String getClassName();
+
+	/**
+	 * Returns the trash renderer associated to the trash entry.
+	 *
+	 * @param  classPK the primary key of the trash entry
+	 * @return the trash renderer associated to the trash entry
+	 * @throws PortalException if an entry with the primary key could not be
+	 *         found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public TrashRenderer getTrashRenderer(long classPK)
+		throws PortalException, SystemException;
 
 	/**
 	 * Restores all entries with the primary keys.

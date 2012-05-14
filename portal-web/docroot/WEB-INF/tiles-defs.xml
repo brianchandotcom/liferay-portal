@@ -1549,6 +1549,10 @@
 		<put name="portlet_content" value="/portlet/trash/view.jsp" />
 	</definition>
 
+	<definition name="portlet.trash.view_content" extends="portlet.trash">
+		<put name="portlet_content" value="/portlet/trash/view_content.jsp" />
+	</definition>
+
 	<!-- Update Manager -->
 
 	<definition name="portlet.update_manager" extends="portlet" />

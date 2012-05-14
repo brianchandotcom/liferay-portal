@@ -1,0 +1,10 @@
+.portlet-trash {
+	.asset-ratings {
+		clear: both;
+		margin: 1em 0;
+	}
+
+	.asset-discussion .taglib-discussion {
+		width: 100%;
+	}
+}

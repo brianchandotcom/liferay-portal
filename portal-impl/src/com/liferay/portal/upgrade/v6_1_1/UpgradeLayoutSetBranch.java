@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v6_1_1;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.dao.jdbc.SmartConnection;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
 
@@ -37,16 +38,22 @@ public class UpgradeLayoutSetBranch extends UpgradeProcess {
 		try {
 			con = DataAccess.getConnection();
 
-			ps = con.prepareStatement(
+			SmartConnection smartConnection = new SmartConnection(con);
+
+			ps = smartConnection.prepareStatement(
 				"select groupId, layoutSetBranchId, privateLayout from " +
 					"LayoutSetBranch");
 
 			rs = ps.executeQuery();
 
-			while (rs.next()) {
+			boolean hasNext = rs.next();
+
+			while (hasNext) {
 				long layoutSetBranchId = rs.getLong("layoutSetBranchId");
 				long groupId = rs.getLong("groupId");
 				boolean privateLayout = rs.getBoolean("privateLayout");
+
+				hasNext = rs.next();
 
 				upgradeLayoutSetBranch(
 					layoutSetBranchId, groupId, privateLayout);

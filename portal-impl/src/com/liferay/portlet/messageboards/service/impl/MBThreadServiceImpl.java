@@ -74,9 +74,7 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 			return Collections.emptyList();
 		}
 
-		List<Long> threadIds = null;
-
-		threadIds = mbMessageFinder.filterFindByG_U_C_MD_S(
+		List<Long> threadIds = mbMessageFinder.filterFindByG_U_C_MD_S(
 			groupId, userId, categoryIds, modifiedDate, status, start, end);
 
 		List<MBThread> threads = new ArrayList<MBThread>(threadIds.size());

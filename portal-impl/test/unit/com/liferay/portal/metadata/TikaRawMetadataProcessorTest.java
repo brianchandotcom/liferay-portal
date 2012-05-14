@@ -41,13 +41,14 @@ import org.xml.sax.ContentHandler;
 /**
  * @author Miguel Pastor
  */
-@PrepareForTest(PrefsPropsUtil.class)
+@PrepareForTest({PrefsPropsUtil.class, XugglerUtil.class})
 @RunWith(PowerMockRunner.class)
 public class TikaRawMetadataProcessorTest extends PowerMockito {
 
 	@Test
 	public void testExtractMetadataFromInputStream() throws Exception {
 		mockStatic(PrefsPropsUtil.class);
+		mockStatic(XugglerUtil.class);
 
 		try {
 			when(

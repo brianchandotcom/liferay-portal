@@ -19,7 +19,7 @@
 <%-- Raw Text --%>
 
 <%
-StringBundler bodyTopSB = (StringBundler)request.getAttribute(WebKeys.PAGE_BODY_TOP);
+StringBundler bodyTopSB = OutputTag.getData(request, WebKeys.PAGE_BODY_TOP);
 %>
 
 <c:if test="<%= bodyTopSB != null %>">

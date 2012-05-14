@@ -29,7 +29,7 @@ if (Validator.isNull(doAsUserId)) {
 
 long doAsGroupId = themeDisplay.getDoAsGroupId();
 
-String ckEditorConfigFileName = ParamUtil.getString(request, "ckEditorConfigFileName", "ckconfig.jsp");
+String ckEditorConfigFileName = HtmlUtil.escape(ParamUtil.getString(request, "ckEditorConfigFileName", "ckconfig.jsp"));
 
 boolean useCustomDataProcessor = false;
 

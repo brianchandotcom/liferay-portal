@@ -25,6 +25,14 @@ import java.util.Locale;
  */
 public class FooService {
 
+	public static FooDataImpl getFooData(int id) {
+		FooDataImpl fooData = new FooDataImpl();
+
+		fooData.setId(id);
+
+		return fooData;
+	}
+
 	public static String hello() {
 		return "world";
 	}

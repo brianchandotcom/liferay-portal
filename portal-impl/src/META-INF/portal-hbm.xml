@@ -1393,7 +1393,7 @@
 				<param name="property">com.liferay.portlet.documentlibrary.model.impl.DLContentImpl</param>
 			</generator>
 		</id>
-		<property column="data_" name="dataBlob" type="org.hibernate.type.BlobType" />
+		<property column="data_" name="dataBlob" type="blob" />
 	</class>
 	<class name="com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl" table="DLFileEntry">
 		<cache usage="read-write" />

@@ -123,17 +123,17 @@ public class EditPageAttachmentAction extends EditFileEntryAction {
 
 				setForward(actionRequest, "portlet.wiki.error");
 			}
-			else if (e instanceof FileSizeException) {
-				SessionErrors.add(actionRequest, e.getClass().getName());
-			}
 			else if (e instanceof FileNameException) {
 				SessionErrors.add(actionRequest, e.getClass().getName());
 
 				HttpServletResponse response =
-						PortalUtil.getHttpServletResponse(actionResponse);
+					PortalUtil.getHttpServletResponse(actionResponse);
 
 				response.setStatus(
 					ServletResponseConstants.SC_FILE_NAME_EXCEPTION);
+			}
+			else if (e instanceof FileSizeException) {
+				SessionErrors.add(actionRequest, e.getClass().getName());
 			}
 			else {
 				throw e;

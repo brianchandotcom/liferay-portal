@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.upgrade;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.dao.jdbc.SmartConnection;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -217,6 +218,8 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 		try {
 			con = DataAccess.getConnection();
 
+			SmartConnection smartConnection = new SmartConnection(con);
+
 			StringBundler sb = new StringBundler(4);
 
 			sb.append("select portletPreferencesId, ownerId, ownerType, ");
@@ -231,17 +234,21 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 
 			String sql = sb.toString();
 
-			ps = con.prepareStatement(sql);
+			ps = smartConnection.prepareStatement(sql);
 
 			rs = ps.executeQuery();
 
-			while (rs.next()) {
+			boolean hasNext = rs.next();
+
+			while (hasNext) {
 				long portletPreferencesId = rs.getLong("portletPreferencesId");
 				long ownerId = rs.getLong("ownerId");
 				int ownerType = rs.getInt("ownerType");
 				long plid = rs.getLong("plid");
 				String portletId = rs.getString("portletId");
 				String preferences = rs.getString("preferences");
+
+				hasNext = rs.next();
 
 				long companyId = 0;
 

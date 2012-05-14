@@ -88,6 +88,10 @@ public class LayoutStagingImpl implements LayoutStaging {
 	}
 
 	public boolean isBranchingLayout(Layout layout) {
+		if (layout.isTypeURL()) {
+			return false;
+		}
+
 		try {
 			return isBranchingLayoutSet(
 				layout.getGroup(), layout.isPrivateLayout());

@@ -64,7 +64,7 @@ if (assetCategoryId != 0) {
 <liferay-util:buffer var="removeTag">
 	<c:if test="<%= Validator.isNotNull(assetTagName) %>">
 		<span class="asset-entry">
-			<%= assetTagName %>
+			<%= HtmlUtil.escape(assetTagName) %>
 
 			<liferay-portlet:renderURL allowEmptyParam="<%= true %>" var="viewURLWithoutTag">
 				<liferay-portlet:param name="tag" value="" />

@@ -1,0 +1,73 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>ViewDMFolderDocumentDMDTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ViewDMFolderDocumentDMDTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/web/guest/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>link=Documents and Media Test Page</td>
+	<td>Documents and Media Test Page</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Documents and Media Test Page</td>
+	<td>Documents and Media Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=DM Folder Name</td>
+	<td>DM Folder Name</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=DM Folder Name</td>
+	<td>DM Folder Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h1[@class='header-title']</td>
+	<td>DM Folder Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='entry-title']</td>
+	<td>DM Folder Document Title</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//span[@class='entry-title']</td>
+	<td>DM Folder Document Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h2[@class='document-title']</td>
+	<td>DM Folder Document Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='document-description']</td>
+	<td>DM Folder Document Description</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='workflow-status']</td>
+	<td>Status: Approved</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//span[@class='download-document']</td>
+	<td>Download</td>
+</tr>
+</tbody></table>
+</body>
+</html>

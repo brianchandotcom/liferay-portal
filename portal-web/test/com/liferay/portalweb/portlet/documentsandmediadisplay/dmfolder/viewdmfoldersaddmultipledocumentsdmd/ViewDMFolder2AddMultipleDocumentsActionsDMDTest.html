@@ -1,0 +1,68 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>ViewDMFolder2AddMultipleDocumentsActionsDMDTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ViewDMFolder2AddMultipleDocumentsActionsDMDTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/web/guest/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>link=Documents and Media Test Page</td>
+	<td>Documents and Media Test Page</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Documents and Media Test Page</td>
+	<td>Documents and Media Test Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=DM Folder2 Name</td>
+	<td>DM Folder2 Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(@id,'multiple-documents')]</td>
+	<td>Multiple Documents</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(@id,'multiple-documents')]</td>
+	<td>Multiple Documents</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(@id,'multiple-documents')]</td>
+	<td>Multiple Documents</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h1[@class='header-title']/span</td>
+	<td>Add Multiple Documents</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[@class='lfr-upload-movie-content']/object</td>
+	<td>Browse (you can select multiple files).</td>
+</tr>
+</tbody></table>
+</body>
+</html>

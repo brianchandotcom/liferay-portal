@@ -19,23 +19,61 @@
 		padding-top: 3px;
 	}
 
-	.image-thumbnail {
-		border: 2px solid #eee;
+	.image-icon {
+		display: block;
 		float: left;
-		height: 162px;
-		margin: 20px 4px 0;
-		padding: 5px 5px 0;
+		height: 170px;
+		margin: 10px 4px;
+		padding: 5px 15px 0;
 		text-align: center;
-		text-decoration: none;
-		width: 150px;
 
-		&:hover {
-			border-color: #ccc;
+		&:hover, &.hover {
+			background-color: #D3E8F1;
 		}
 
-        &.error:hover {
+		&.error:hover {
             background-color: #FDD;
         }
+
+        &:hover .image-thumbnail img {
+			background-color: #B0D2E1;
+			border-color: #7ABFDD;
+		}
+
+		a {
+			color: #5B677D;
+		}
+    }
+
+	.image-link {
+		text-align: center;
+		text-decoration: none;
+ 	}
+
+	.image-thumbnail {
+       	display: inline-block;
+		position: relative;
+
+		img {
+			background: #EAEAEA;
+			border: 1px solid #CCC;
+			margin: 0;
+			padding: 5px;
+		}
+	}
+
+	img.locked-icon, img.shortcut-icon {
+		bottom: 10px;
+		position: absolute;
+		z-index: 10;
+	}
+
+	img.locked-icon {
+		right: -10px;
+	}
+
+	img.shortcut-icon {
+		left: -5px;
 	}
 
 	.taglib-webdav {
@@ -43,6 +81,9 @@
 	}
 
 	.image-title {
+		clear: both;
 		display: block;
+		padding: 0 10px;
+		word-wrap: break-word;
 	}
 }

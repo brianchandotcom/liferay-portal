@@ -24,7 +24,7 @@ com.liferay.portlet.currencyconverter.model.Currency currency = CurrencyUtil.get
 
 double number = ParamUtil.getDouble(request, "number", 1.0);
 
-String chartId = ParamUtil.getString(request, "chartId", "3m");
+String chartId = HtmlUtil.escape(ParamUtil.getString(request, "chartId", "3m"));
 
 NumberFormat decimalFormat = NumberFormat.getNumberInstance(locale);
 

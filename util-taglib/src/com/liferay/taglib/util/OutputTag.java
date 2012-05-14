@@ -14,20 +14,40 @@
 
 package com.liferay.taglib.util;
 
+import com.liferay.portal.kernel.servlet.taglib.util.OutputData;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.ServletRequest;
 import javax.servlet.jsp.JspException;
 
 /**
  * @author Shuyang Zhou
  */
 public class OutputTag extends PositionTagSupport {
+
+	public static StringBundler getData(
+		ServletRequest servletRequest, String webKey) {
+
+		OutputData outputData = _getOutputData(servletRequest);
+
+		return outputData.getMergedData(webKey);
+	}
+
+	private static OutputData _getOutputData(ServletRequest request) {
+		OutputData outputData = (OutputData)request.getAttribute(
+			WebKeys.OUTPUT_DATA);
+
+		if (outputData == null) {
+			outputData = new OutputData();
+
+			request.setAttribute(WebKeys.OUTPUT_DATA, outputData);
+		}
+
+		return outputData;
+	}
 
 	public OutputTag(String stringBundlerKey) {
 		_webKey = stringBundlerKey;
@@ -37,18 +57,11 @@ public class OutputTag extends PositionTagSupport {
 	public int doEndTag() throws JspException {
 		try {
 			if (_output) {
-				HttpServletRequest request =
-					(HttpServletRequest)pageContext.getRequest();
+				OutputData outputData = _getOutputData(
+					pageContext.getRequest());
 
-				StringBundler sb = (StringBundler)request.getAttribute(_webKey);
-
-				if (sb == null) {
-					sb = new StringBundler();
-
-					request.setAttribute(_webKey, sb);
-				}
-
-				sb.append(getBodyContentAsStringBundler());
+				outputData.addData(
+					_outputKey, _webKey, getBodyContentAsStringBundler());
 			}
 
 			return EVAL_PAGE;
@@ -66,9 +79,9 @@ public class OutputTag extends PositionTagSupport {
 	@Override
 	public int doStartTag() {
 		if (Validator.isNotNull(_outputKey)) {
-			Set<String> outputKeys = getOutputKeys();
+			OutputData outputData = _getOutputData(pageContext.getRequest());
 
-			if (!outputKeys.add(_outputKey)) {
+			if (!outputData.addOutputKey(_outputKey)) {
 				_output = false;
 
 				return SKIP_BODY;
@@ -88,22 +101,6 @@ public class OutputTag extends PositionTagSupport {
 
 	public void setOutputKey(String outputKey) {
 		_outputKey = outputKey;
-	}
-
-	protected Set<String> getOutputKeys() {
-		HttpServletRequest request =
-			(HttpServletRequest)pageContext.getRequest();
-
-		Set<String> outputKeys = (Set<String>)request.getAttribute(
-			OutputTag.class.getName());
-
-		if (outputKeys == null) {
-			outputKeys = new HashSet<String>();
-
-			request.setAttribute(OutputTag.class.getName(), outputKeys);
-		}
-
-		return outputKeys;
 	}
 
 	private boolean _output;

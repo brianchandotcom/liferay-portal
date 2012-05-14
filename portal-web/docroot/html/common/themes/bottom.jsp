@@ -76,7 +76,7 @@ ScriptTag.flushScriptData(pageContext);
 <%-- Raw Text --%>
 
 <%
-StringBundler pageBottomSB = (StringBundler)request.getAttribute(WebKeys.PAGE_BOTTOM);
+StringBundler pageBottomSB = OutputTag.getData(request, WebKeys.PAGE_BOTTOM);
 %>
 
 <c:if test="<%= pageBottomSB != null %>">

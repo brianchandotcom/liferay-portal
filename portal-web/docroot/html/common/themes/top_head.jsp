@@ -148,7 +148,7 @@ if (markupHeaders != null) {
 	}
 }
 
-StringBundler pageTopSB = (StringBundler)request.getAttribute(WebKeys.PAGE_TOP);
+StringBundler pageTopSB = OutputTag.getData(request, WebKeys.PAGE_TOP);
 %>
 
 <c:if test="<%= pageTopSB != null %>">

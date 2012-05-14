@@ -186,6 +186,7 @@ page import="com.liferay.portlet.RenderRequestImpl" %><%@
 page import="com.liferay.portlet.RenderResponseFactory" %><%@
 page import="com.liferay.portlet.RenderResponseImpl" %><%@
 page import="com.liferay.portlet.portletconfiguration.util.PortletConfigurationUtil" %><%@
+page import="com.liferay.taglib.util.OutputTag" %><%@
 page import="com.liferay.util.ContentUtil" %><%@
 page import="com.liferay.util.CreditCard" %><%@
 page import="com.liferay.util.Encryptor" %><%@

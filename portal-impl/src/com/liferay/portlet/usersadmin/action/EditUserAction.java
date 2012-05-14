@@ -400,17 +400,17 @@ public class EditUserAction extends PortletAction {
 				userGroupRole.setUserId(user.getUserId());
 			}
 
-			screenName = user.getScreenName();
 			user = UserServiceUtil.updateUser(
 				user.getUserId(), StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, false, reminderQueryQuestion,
-				reminderQueryAnswer, screenName, emailAddress, facebookId,
-				openId, languageId, timeZoneId, greeting, comments, firstName,
-				middleName, lastName, prefixId, suffixId, male, birthdayMonth,
-				birthdayDay, birthdayYear, smsSn, aimSn, facebookSn, icqSn,
-				jabberSn, msnSn, mySpaceSn, skypeSn, twitterSn, ymSn, jobTitle,
-				groupIds, organizationIds, roleIds, userGroupRoles,
-				userGroupIds, addresses, emailAddresses, phones, websites,
+				reminderQueryAnswer, user.getScreenName(),
+				user.getEmailAddress(), facebookId, openId, languageId,
+				timeZoneId, greeting, comments, firstName, middleName, lastName,
+				prefixId, suffixId, male, birthdayMonth, birthdayDay,
+				birthdayYear, smsSn, aimSn, facebookSn, icqSn, jabberSn, msnSn,
+				mySpaceSn, skypeSn, twitterSn, ymSn, jobTitle, groupIds,
+				organizationIds, roleIds, userGroupRoles, userGroupIds,
+				addresses, emailAddresses, phones, websites,
 				announcementsDeliveries, serviceContext);
 		}
 

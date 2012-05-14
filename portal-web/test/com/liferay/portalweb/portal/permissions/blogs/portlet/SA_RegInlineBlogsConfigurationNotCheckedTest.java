@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SA_AllowConfigurePortletPermissionsTest extends BaseTestCase {
-	public void testSA_AllowConfigurePortletPermissions()
+public class SA_RegInlineBlogsConfigurationNotCheckedTest extends BaseTestCase {
+	public void testSA_RegInlineBlogsConfigurationNotChecked()
 		throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
@@ -94,58 +94,11 @@ public class SA_AllowConfigurePortletPermissionsTest extends BaseTestCase {
 		}
 
 		selenium.selectFrame("//iframe[@id='_33_configurationIframeDialog']");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Permissions")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.clickAt("link=Permissions",
 			RuntimeVariables.replace("Permissions"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertFalse(selenium.isChecked(
-				"//input[@id='portlet_ACTION_CONFIGURATION']"));
-		selenium.check("//input[@id='portlet_ACTION_CONFIGURATION']");
-		assertTrue(selenium.isChecked(
-				"//input[@id='portlet_ACTION_CONFIGURATION']"));
-		selenium.clickAt("//input[@value='Save']",
-			RuntimeVariables.replace("Save"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace(
-				"Your request completed successfully."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"//input[@id='portlet_ACTION_CONFIGURATION']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		assertTrue(selenium.isChecked(
 				"//input[@id='portlet_ACTION_CONFIGURATION']"));
 		selenium.selectFrame("relative=top");
 	}

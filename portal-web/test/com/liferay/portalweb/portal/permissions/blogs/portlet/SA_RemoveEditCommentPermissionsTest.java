@@ -53,8 +53,11 @@ public class SA_RemoveEditCommentPermissionsTest extends BaseTestCase {
 			RuntimeVariables.replace("Permissions"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.uncheck("//tr[5]/td[7]/input");
-		selenium.uncheck("//tr[6]/td[7]/input");
+		assertTrue(selenium.isChecked(
+				"//input[@id='portlet_ACTION_UPDATE_DISCUSSION']"));
+		selenium.uncheck("//input[@id='portlet_ACTION_UPDATE_DISCUSSION']");
+		assertFalse(selenium.isChecked(
+				"//input[@id='portlet_ACTION_UPDATE_DISCUSSION']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
@@ -62,7 +65,7 @@ public class SA_RemoveEditCommentPermissionsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertFalse(selenium.isChecked("//tr[5]/td[7]/input"));
-		assertFalse(selenium.isChecked("//tr[6]/td[7]/input"));
+		assertFalse(selenium.isChecked(
+				"//input[@id='portlet_ACTION_UPDATE_DISCUSSION']"));
 	}
 }

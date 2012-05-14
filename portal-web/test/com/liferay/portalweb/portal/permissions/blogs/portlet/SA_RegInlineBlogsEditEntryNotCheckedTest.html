@@ -1,12 +1,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>SA_RemoveEditEntryPermissionsTest</title>
+<title>SA_RegInlineBlogsEditEntryNotCheckedTest</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">SA_RemoveEditEntryPermissionsTest</td></tr>
+<tr><td rowspan="1" colspan="3">SA_RegInlineBlogsEditEntryNotCheckedTest</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -32,31 +32,6 @@
 	<td>clickAtAndWait</td>
 	<td>link=Permissions</td>
 	<td>Permissions</td>
-</tr>
-<tr>
-	<td>assertChecked</td>
-	<td>//input[@id='portlet_ACTION_UPDATE']</td>
-	<td>Portlet Update</td>
-</tr>
-<tr>
-	<td>uncheck</td>
-	<td>//input[@id='portlet_ACTION_UPDATE']</td>
-	<td>Portlet Update</td>
-</tr>
-<tr>
-	<td>assertNotChecked</td>
-	<td>//input[@id='portlet_ACTION_UPDATE']</td>
-	<td>Portlet Update</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//input[@value='Save']</td>
-	<td>Save</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertNotChecked</td>

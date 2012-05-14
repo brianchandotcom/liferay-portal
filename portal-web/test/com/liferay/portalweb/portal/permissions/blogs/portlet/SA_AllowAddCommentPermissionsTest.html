@@ -34,14 +34,19 @@
 	<td>Permissions</td>
 </tr>
 <tr>
-	<td>check</td>
-	<td>//tr[5]/td[2]/input</td>
-	<td>Add Discussion</td>
+	<td>assertNotChecked</td>
+	<td>//input[@id='guest_ACTION_ADD_DISCUSSION']</td>
+	<td>Guest Add Discussion</td>
 </tr>
 <tr>
 	<td>check</td>
-	<td>//tr[6]/td[2]/input</td>
-	<td>Add Discussion</td>
+	<td>//input[@id='guest_ACTION_ADD_DISCUSSION']</td>
+	<td>Guest Add Discussion</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@id='guest_ACTION_ADD_DISCUSSION']</td>
+	<td>Guest Add Discussion</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -55,15 +60,9 @@
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>//tr[5]/td[2]/input</td>
-	<td>Add Discussion</td>
+	<td>//input[@id='guest_ACTION_ADD_DISCUSSION']</td>
+	<td>Guest Add Discussion</td>
 </tr>
-<tr>
-	<td>assertChecked</td>
-	<td>//tr[6]/td[2]/input</td>
-	<td>Add Discussion</td>
-</tr>
-
 </tbody></table>
 </body>
 </html>

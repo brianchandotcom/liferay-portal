@@ -57,7 +57,7 @@ public class SA_AddPortletRoleTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(@id,'regular-role')]")) {
 					break;
 				}
 			}
@@ -69,9 +69,9 @@ public class SA_AddPortletRoleTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Regular Role"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(@id,'regular-role')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(@id,'regular-role')]"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_128_name']",

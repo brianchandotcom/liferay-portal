@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Blogs Entry Title Temporary</td>
+	<td>//div[@class='entry-title']/h2/a</td>
 	<td>Blogs Entry Title Temporary</td>
 </tr>
 <tr>
@@ -34,19 +34,29 @@
 	<td>Permissions</td>
 </tr>
 <tr>
-	<td>uncheck</td>
-	<td>//input[@name='16_ACTION_VIEW']</td>
-	<td>View</td>
+	<td>assertChecked</td>
+	<td>//input[@id='guest_ACTION_VIEW']</td>
+	<td>Guest View</td>
 </tr>
 <tr>
 	<td>uncheck</td>
-	<td>//tr[5]/td[8]/input</td>
-	<td>View</td>
+	<td>//input[@id='guest_ACTION_VIEW']</td>
+	<td>Guest View</td>
 </tr>
 <tr>
-	<td>uncheck</td>
-	<td>//tr[6]/td[8]/input</td>
-	<td>View</td>
+	<td>assertNotChecked</td>
+	<td>//input[@id='guest_ACTION_VIEW']</td>
+	<td>Guest View</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//input[@id='portlet_ACTION_VIEW']</td>
+	<td>Portlet View</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//input[@id='power-user_ACTION_VIEW']</td>
+	<td>Power User View</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -60,20 +70,19 @@
 </tr>
 <tr>
 	<td>assertNotChecked</td>
-	<td>//input[@name='16_ACTION_VIEW']</td>
-	<td>View</td>
+	<td>//input[@id='guest_ACTION_VIEW']</td>
+	<td>Guest View</td>
 </tr>
 <tr>
 	<td>assertNotChecked</td>
-	<td>//tr[5]/td[8]/input</td>
-	<td>View</td>
+	<td>//input[@id='portlet_ACTION_VIEW']</td>
+	<td>Portlet View</td>
 </tr>
 <tr>
 	<td>assertNotChecked</td>
-	<td>//tr[6]/td[8]/input</td>
-	<td>View</td>
+	<td>//input[@id='power-user_ACTION_VIEW']</td>
+	<td>Power User View</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

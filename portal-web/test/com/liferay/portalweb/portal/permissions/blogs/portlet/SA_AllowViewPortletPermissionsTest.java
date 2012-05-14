@@ -47,8 +47,9 @@ public class SA_AllowViewPortletPermissionsTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Options"),
-			selenium.getText("//strong/a"));
-		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
+			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
+		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
+			RuntimeVariables.replace("Options"));
 		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
@@ -58,7 +59,7 @@ public class SA_AllowViewPortletPermissionsTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(@id,'configuration')]")) {
 					break;
 				}
 			}
@@ -68,7 +69,11 @@ public class SA_AllowViewPortletPermissionsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+		assertEquals(RuntimeVariables.replace("Configuration"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(@id,'configuration')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(@id,'configuration')]",
+			RuntimeVariables.replace("Configuration"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -97,7 +102,8 @@ public class SA_AllowViewPortletPermissionsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//input[@value='Save']")) {
+				if (selenium.isVisible(
+							"//iframe[@id='_33_configurationIframeDialog']")) {
 					break;
 				}
 			}
@@ -107,8 +113,10 @@ public class SA_AllowViewPortletPermissionsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.check("//input[@name='16_ACTION_VIEW']");
-		selenium.check("//tr[6]/td[4]/input");
+		selenium.selectFrame("//iframe[@id='_33_configurationIframeDialog']");
+		assertFalse(selenium.isChecked("//input[@id='guest_ACTION_VIEW']"));
+		selenium.check("//input[@id='guest_ACTION_VIEW']");
+		assertTrue(selenium.isChecked("//input[@id='guest_ACTION_VIEW']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
@@ -116,7 +124,24 @@ public class SA_AllowViewPortletPermissionsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertTrue(selenium.isChecked("//input[@name='16_ACTION_VIEW']"));
-		assertTrue(selenium.isChecked("//tr[6]/td[4]/input"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//input[@id='guest_ACTION_VIEW']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertTrue(selenium.isChecked("//input[@id='guest_ACTION_VIEW']"));
+		selenium.selectFrame("relative=top");
 	}
 }

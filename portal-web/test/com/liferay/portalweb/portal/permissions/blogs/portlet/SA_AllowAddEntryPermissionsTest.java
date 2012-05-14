@@ -49,8 +49,10 @@ public class SA_AllowAddEntryPermissionsTest extends BaseTestCase {
 			RuntimeVariables.replace("Permissions"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.check("//tr[5]/td[2]/input");
-		selenium.check("//tr[6]/td[2]/input");
+		assertFalse(selenium.isChecked(
+				"//input[@id='portlet_ACTION_ADD_ENTRY']"));
+		selenium.check("//input[@id='portlet_ACTION_ADD_ENTRY']");
+		assertTrue(selenium.isChecked("//input[@id='portlet_ACTION_ADD_ENTRY']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
@@ -58,7 +60,6 @@ public class SA_AllowAddEntryPermissionsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertTrue(selenium.isChecked("//tr[5]/td[2]/input"));
-		assertTrue(selenium.isChecked("//tr[6]/td[2]/input"));
+		assertTrue(selenium.isChecked("//input[@id='portlet_ACTION_ADD_ENTRY']"));
 	}
 }

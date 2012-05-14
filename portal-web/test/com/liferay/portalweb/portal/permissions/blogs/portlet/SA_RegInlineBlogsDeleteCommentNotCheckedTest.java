@@ -20,8 +20,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class Portlet_AssertCannotViewEntryTest extends BaseTestCase {
-	public void testPortlet_AssertCannotViewEntry() throws Exception {
+public class SA_RegInlineBlogsDeleteCommentNotCheckedTest extends BaseTestCase {
+	public void testSA_RegInlineBlogsDeleteCommentNotChecked()
+		throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
@@ -45,11 +46,15 @@ public class Portlet_AssertCannotViewEntryTest extends BaseTestCase {
 			RuntimeVariables.replace("Blogs Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isTextPresent("Blogs Entry Title Temporary"));
-		assertFalse(selenium.isElementPresent(
-				"//div[@class='entry-title']/h2/a"));
-		assertFalse(selenium.isElementPresent("//input[@value='Search']"));
-		assertEquals(RuntimeVariables.replace("Showing 0 results."),
-			selenium.getText("//div[@class='search-results']"));
+		selenium.clickAt("//div[@class='entry-title']/h2/a",
+			RuntimeVariables.replace("Blogs Entry Title Temporary"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		selenium.clickAt("link=Permissions",
+			RuntimeVariables.replace("Permissions"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		assertFalse(selenium.isChecked(
+				"//input[@id='portlet_ACTION_DELETE_DISCUSSION']"));
 	}
 }

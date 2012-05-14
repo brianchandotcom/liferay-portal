@@ -1,12 +1,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Portlet_AssertEditEntryPermissionsTest</title>
+<title>SA_RegInlineBlogsEntryPermissionsNotCheckedTest</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">Portlet_AssertEditEntryPermissionsTest</td></tr>
+<tr><td rowspan="1" colspan="3">SA_RegInlineBlogsEntryPermissionsNotCheckedTest</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -29,29 +29,14 @@
 	<td>Blogs Entry Title Temporary</td>
 </tr>
 <tr>
-	<td>assertVisible</td>
-	<td>link=Permissions</td>
-	<td>Permissions</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Permissions</td>
 	<td>Permissions</td>
 </tr>
 <tr>
-	<td>assertVisible</td>
-	<td>//div[@id='_86_rolesSearchContainer']</td>
-	<td>Roles Permissions</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//input[@value='Save']</td>
-	<td>Save</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
+	<td>assertNotChecked</td>
+	<td>//input[@id='portlet_ACTION_PERMISSIONS']</td>
+	<td>Portlet Permissions</td>
 </tr>
 </tbody></table>
 </body>

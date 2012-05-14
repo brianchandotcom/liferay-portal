@@ -20,8 +20,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class Portlet_AssertCannotViewEntryTest extends BaseTestCase {
-	public void testPortlet_AssertCannotViewEntry() throws Exception {
+public class SA_RegInlineBlogsEntryNotCheckedTest extends BaseTestCase {
+	public void testSA_RegInlineBlogsEntryNotChecked()
+		throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
@@ -45,11 +46,29 @@ public class Portlet_AssertCannotViewEntryTest extends BaseTestCase {
 			RuntimeVariables.replace("Blogs Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isTextPresent("Blogs Entry Title Temporary"));
-		assertFalse(selenium.isElementPresent(
-				"//div[@class='entry-title']/h2/a"));
-		assertFalse(selenium.isElementPresent("//input[@value='Search']"));
-		assertEquals(RuntimeVariables.replace("Showing 0 results."),
-			selenium.getText("//div[@class='search-results']"));
+		selenium.clickAt("//input[@value='Permissions']",
+			RuntimeVariables.replace("Permissions"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//input[@id='guest_ACTION_ADD_ENTRY']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertFalse(selenium.isChecked("//input[@id='guest_ACTION_ADD_ENTRY']"));
+		assertFalse(selenium.isChecked(
+				"//input[@id='portlet_ACTION_ADD_ENTRY']"));
 	}
 }

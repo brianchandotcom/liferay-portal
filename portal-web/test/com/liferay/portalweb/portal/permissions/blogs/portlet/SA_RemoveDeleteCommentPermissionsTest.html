@@ -34,14 +34,19 @@
 	<td>Permissions</td>
 </tr>
 <tr>
-	<td>uncheck</td>
-	<td>//tr[5]/td[4]/input</td>
-	<td>Delete Discussion</td>
+	<td>assertChecked</td>
+	<td>//input[@id='portlet_ACTION_DELETE_DISCUSSION']</td>
+	<td>Portlet Delete Discussion</td>
 </tr>
 <tr>
 	<td>uncheck</td>
-	<td>//tr[6]/td[4]/input</td>
-	<td>Delete Discussion</td>
+	<td>//input[@id='portlet_ACTION_DELETE_DISCUSSION']</td>
+	<td>Portlet Delete Discussion</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//input[@id='portlet_ACTION_DELETE_DISCUSSION']</td>
+	<td>Portlet Delete Discussion</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -55,15 +60,9 @@
 </tr>
 <tr>
 	<td>assertNotChecked</td>
-	<td>//tr[5]/td[4]/input</td>
-	<td>Delete Discussion</td>
+	<td>//input[@id='portlet_ACTION_DELETE_DISCUSSION']</td>
+	<td>Portlet Delete Discussion</td>
 </tr>
-<tr>
-	<td>assertNotChecked</td>
-	<td>//tr[6]/td[4]/input</td>
-	<td>Delete Discussion</td>
-</tr>
-
 </tbody></table>
 </body>
 </html>

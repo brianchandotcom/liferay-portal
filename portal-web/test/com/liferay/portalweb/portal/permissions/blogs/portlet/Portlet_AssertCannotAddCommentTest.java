@@ -22,55 +22,80 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class Portlet_AssertCannotAddCommentTest extends BaseTestCase {
 	public void testPortlet_AssertCannotAddComment() throws Exception {
-		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
+		int label = 1;
 
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
+		while (label >= 1) {
+			switch (label) {
+			case 1:
+				selenium.open("/web/guest/home/");
+				loadRequiredJavaScriptModules();
 
-			try {
-				if (selenium.isElementPresent("link=Blogs Permissions Page")) {
-					break;
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isElementPresent(
+									"link=Blogs Permissions Page")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
 				}
-			}
-			catch (Exception e) {
-			}
 
-			Thread.sleep(1000);
-		}
+				selenium.clickAt("link=Blogs Permissions Page",
+					RuntimeVariables.replace("Blogs Permissions Page"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
+				selenium.clickAt("//div[@class='entry-title']/h2/a",
+					RuntimeVariables.replace("Blogs Entry Title Temporary"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
 
-		selenium.clickAt("link=Blogs Permissions Page",
-			RuntimeVariables.replace("Blogs Permissions Page"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		selenium.clickAt("//div[@class='entry-title']/h2/a",
-			RuntimeVariables.replace("Blogs Entry Title Temporary"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
 
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
+					try {
+						if (RuntimeVariables.replace("Comments")
+												.equals(selenium.getText(
+										"//div[@class='lfr-panel-title']/span"))) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
 
-			try {
-				if (RuntimeVariables.replace("Comments")
-										.equals(selenium.getText(
-								"//div[@class='lfr-panel-title']/span"))) {
-					break;
+					Thread.sleep(1000);
 				}
-			}
-			catch (Exception e) {
-			}
 
-			Thread.sleep(1000);
+				assertEquals(RuntimeVariables.replace("Comments"),
+					selenium.getText("//div[@class='lfr-panel-title']/span"));
+
+				boolean blogCommentsExpanded = selenium.isVisible(
+						"//input[@class='form-text lfr-input-resource ']");
+
+				if (blogCommentsExpanded) {
+					label = 2;
+
+					continue;
+				}
+
+				selenium.clickAt("//div[@class='lfr-panel-title']/span[contains(text(),'Comments')]",
+					RuntimeVariables.replace(""));
+
+			case 2:
+				assertFalse(selenium.isElementPresent("link=Add Comment"));
+				assertFalse(selenium.isElementPresent("link=Be the first."));
+
+			case 100:
+				label = -1;
+			}
 		}
-
-		assertEquals(RuntimeVariables.replace("Comments"),
-			selenium.getText("//div[@class='lfr-panel-title']/span"));
-		assertFalse(selenium.isElementPresent("link=Be the first."));
-		assertFalse(selenium.isElementPresent("link=Add Comment"));
 	}
 }

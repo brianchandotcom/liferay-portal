@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
@@ -35,6 +36,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
+import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.FileSizeException;
 import com.liferay.portlet.documentlibrary.action.EditFileEntryAction;
 import com.liferay.portlet.wiki.NoSuchNodeException;
@@ -52,6 +54,8 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -121,6 +125,15 @@ public class EditPageAttachmentAction extends EditFileEntryAction {
 			}
 			else if (e instanceof FileSizeException) {
 				SessionErrors.add(actionRequest, e.getClass().getName());
+			}
+			else if (e instanceof FileNameException) {
+				SessionErrors.add(actionRequest, e.getClass().getName());
+
+				HttpServletResponse response =
+						PortalUtil.getHttpServletResponse(actionResponse);
+
+				response.setStatus(
+					ServletResponseConstants.SC_FILE_NAME_EXCEPTION);
 			}
 			else {
 				throw e;

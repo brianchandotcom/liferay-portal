@@ -42,6 +42,10 @@ WikiPage wikiPage = (WikiPage)request.getAttribute(WebKeys.WIKI_PAGE);
 	<aui:input name="title" type="hidden" value="<%= wikiPage.getTitle() %>" />
 	<aui:input name="numOfFiles" type="hidden" value="3" />
 
+	<liferay-ui:error exception="<%= FileNameException.class %>">
+		<liferay-ui:message key="please-enter-a-file-with-a-valid-file-name" />
+	</liferay-ui:error>
+
 	<liferay-ui:error exception="<%= FileSizeException.class %>">
 
 		<%

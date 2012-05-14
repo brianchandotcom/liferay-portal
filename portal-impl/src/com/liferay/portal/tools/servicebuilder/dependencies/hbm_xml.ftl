@@ -118,7 +118,7 @@
 							<param name="property">${packagePath}.model.impl.${entity.name}Impl</param>
 						</generator>
 					</id>
-					<property column="${blobColumn.DBName}" name="${blobColumn.name}Blob" type="org.hibernate.type.BlobType" />
+					<property column="${blobColumn.DBName}" name="${blobColumn.name}Blob" type="blob" />
 				</class>
 			</#if>
 		</#list>

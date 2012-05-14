@@ -25,6 +25,7 @@
 		height: 170px;
 		margin: 10px 4px;
 		padding: 5px 15px 0;
+		text-align: center;
 
 		&:hover, &.hover {
 			background-color: #D3E8F1;
@@ -52,7 +53,6 @@
 	.image-thumbnail {
        	display: inline-block;
 		position: relative;
-		text-align: center;
 
 		img {
 			background: #EAEAEA;

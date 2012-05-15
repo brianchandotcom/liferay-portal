@@ -776,7 +776,7 @@ release was successful.</echo>
 				</exec>
 			</then>
 			<else>
-				<exec dir="${patching.tool.dir" executable="cmd.exe">
+				<exec dir="${patching.tool.dir}" executable="cmd.exe">
 					<arg line="/c patching-tool.bat ${patching.tool.arg.line}" />
 				</exec>
 			</else>

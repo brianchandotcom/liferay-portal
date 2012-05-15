@@ -255,7 +255,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="4" />
+		<property name="build-test-ant-scripts.version" value="5" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -1602,6 +1602,11 @@
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="portal-web-unit-converter" />
 			<param name="test.ant.script.suite" value="PortalWebUnitConverterTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="portal-web-user-statistics" />
+			<param name="test.ant.script.suite" value="PortalWebUserStatisticsTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">

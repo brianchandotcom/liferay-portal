@@ -48,15 +48,15 @@ public class PortalHookChecker extends BaseChecker {
 
 		if (name.equals(PORTAL_HOOK_PERMISSION_CUSTOM_JSP_DIR)) {
 			if (!_customJspDir) {
-				throw new SecurityException("Attempted to set custom jsp dir");
+				throwSecurityException(_log, "Attempted to set custom jsp dir");
 			}
 		}
 		else if (name.equals(PORTAL_HOOK_PERMISSION_INDEXER)) {
 			String indexerClassName = (String)subject;
 
 			if (!_indexers.contains(indexerClassName)) {
-				throw new SecurityException(
-					"Attempted to add indexer " + indexerClassName);
+				throwSecurityException(
+					_log, "Attempted to add indexer " + indexerClassName);
 			}
 		}
 		else if (name.equals(
@@ -69,37 +69,38 @@ public class PortalHookChecker extends BaseChecker {
 				!_languagePropertiesLanguageIds.contains(
 					locale.getLanguage() + "_" + locale.getCountry())) {
 
-				throw new SecurityException(
-					"Attempted to override locale " + locale);
+				throwSecurityException(
+					_log, "Attempted to override locale " + locale);
 			}
 		}
 		else if (name.equals(PORTAL_HOOK_PERMISSION_PORTAL_PROPERTIES_KEY)) {
 			String key = (String)subject;
 
 			if (!_portalPropertiesKeys.contains(key)) {
-				throw new SecurityException(
-					"Attempted to set portal property " + key);
+				throwSecurityException(
+					_log, "Attempted to set portal property " + key);
 			}
 		}
 		else if (name.equals(PORTAL_HOOK_PERMISSION_SERVICE)) {
 			String serviceType = (String)subject;
 
 			if (!_services.contains(serviceType)) {
-				throw new SecurityException(
-					"Attempted to override service " + serviceType);
+				throwSecurityException(
+					_log, "Attempted to override service " + serviceType);
 			}
 		}
 		else if (name.equals(PORTAL_HOOK_PERMISSION_SERVLET_FILTERS)) {
 			if (!_servletFilters) {
-				throw new SecurityException(
-					"Attempted to override serlvet filters");
+				throwSecurityException(
+					_log, "Attempted to override serlvet filters");
 			}
 		}
 		else if (name.equals(PORTAL_HOOK_PERMISSION_STRUTS_ACTION_PATH)) {
 			String strutsActionPath = (String)subject;
 
 			if (!_strutsActionPaths.contains(strutsActionPath)) {
-				throw new SecurityException(
+				throwSecurityException(
+					_log,
 					"Attempted to use struts action path " + strutsActionPath);
 			}
 		}

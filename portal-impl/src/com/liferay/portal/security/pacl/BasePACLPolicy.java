@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.SortedProperties;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.pacl.checker.Checker;
@@ -119,6 +120,8 @@ public abstract class BasePACLPolicy implements PACLPolicy {
 
 		Properties portalProperties = PropsUtil.getProperties(
 			"portal.security.manager.pacl.policy.checker", false);
+
+		portalProperties = new SortedProperties(portalProperties);
 
 		if (_log.isInfoEnabled()) {
 			_log.info(

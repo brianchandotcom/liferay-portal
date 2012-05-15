@@ -38,12 +38,14 @@ public class DefaultRejectChecker extends BaseChecker {
 		String actions = permission.getActions();
 
 		if (Validator.isNotNull(actions)) {
-			throw new SecurityException(
+			throwSecurityException(
+				_log,
 				"Permission " + clazz.getName() + " attempted to " + name +
 					" on " + actions);
 		}
 		else {
-			throw new SecurityException(
+			throwSecurityException(
+				_log,
 				"Permission " + clazz.getName() + " attempted to " + name);
 		}
 	}

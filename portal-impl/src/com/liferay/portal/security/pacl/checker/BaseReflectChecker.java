@@ -37,9 +37,9 @@ import sun.reflect.Reflection;
 public abstract class BaseReflectChecker extends BaseChecker {
 
 	protected boolean hasReflect(String name, String actions) {
-		/*for (int i = 6; i < 11; i++) {
+		/*for (int i = 6; i <= 15; i++) {
 			System.out.println(
-				"caller class " + i + " " + Reflection.getCallerClass(i));
+				"Caller class " + i + " " + Reflection.getCallerClass(i));
 		}*/
 
 		// JSP compiler
@@ -63,7 +63,7 @@ public abstract class BaseReflectChecker extends BaseChecker {
 
 		Class<?> callerClass7 = Reflection.getCallerClass(7);
 
-		if (JavaDetector.isIBM()) {
+		if (JavaDetector.isIBM() || JavaDetector.isJDK7()) {
 			Class<?> callerClass8 = Reflection.getCallerClass(8);
 
 			if ((callerClass8.getEnclosingClass() == Class.class) &&
@@ -86,12 +86,25 @@ public abstract class BaseReflectChecker extends BaseChecker {
 
 		// java.lang.Thread
 
-		if ((callerClass9.getEnclosingClass() == Thread.class) &&
-			CheckerUtil.isAccessControllerDoPrivileged(10)) {
+		if (JavaDetector.isJDK7()) {
+			Class<?> callerClass10 = Reflection.getCallerClass(10);
 
-			logReflect(callerClass9, 9);
+			if ((callerClass10.getEnclosingClass() == Thread.class) &&
+				CheckerUtil.isAccessControllerDoPrivileged(11)) {
 
-			return true;
+				logReflect(callerClass10, 10);
+
+				return true;
+			}
+		}
+		else {
+			if ((callerClass9.getEnclosingClass() == Thread.class) &&
+				CheckerUtil.isAccessControllerDoPrivileged(10)) {
+
+				logReflect(callerClass9, 9);
+
+				return true;
+			}
 		}
 
 		// org.hibernate.property.BasicPropertyAccessor

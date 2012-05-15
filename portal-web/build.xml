@@ -246,6 +246,100 @@
 							</replacevalue>
 						</replace>
 
+						<replace file="docroot/html/js/editor/ckeditor/_source/core/editor.js">
+							<replacetoken><![CDATA[throw '[CKEDITOR.editor] The instance "' + this.name + '" already exists.';]]></replacetoken>
+							<replacevalue><![CDATA[{
+								var previous = CKEDITOR.instances[ this.name ];
+								// Destroy detached editor silently.
+								if ( previous.element.isOffline() || previous.container && previous.container.isOffline() )
+									previous.destroy( false );
+								else
+									throw '[CKEDITOR.editor] The instance "' + previous.name + '" already exists.';
+								}
+								]]></replacevalue>
+						</replace>
+
+						<replace file="docroot/html/js/editor/ckeditor/_source/core/editor.js">
+							<replacetoken><![CDATA[if ( !noUpdate )]]></replacetoken>
+							<replacevalue><![CDATA[]]></replacevalue>
+						</replace>
+
+						<replace file="docroot/html/js/editor/ckeditor/_source/core/editor.js">
+							<replacetoken><![CDATA[this.updateElement();]]></replacetoken>
+							<replacevalue><![CDATA[var notDetached = !this.checkDetached();
+											notDetached && !noUpdate && this.updateElement();
+											]]>
+							</replacevalue>
+						</replace>
+
+						<replace file="docroot/html/js/editor/ckeditor/_source/core/editor.js">
+							<replacetoken><![CDATA[this.theme && this.theme.destroy( this );]]></replacetoken>
+							<replacevalue><![CDATA[notDetached && this.theme && this.theme.destroy( this );]]></replacevalue>
+						</replace>
+						<replace file="docroot/html/js/editor/ckeditor/_source/core/editor.js">
+							<replacetoken><![CDATA[* Destroys the editor instance]]></replacetoken>
+							<replacevalue><![CDATA[
+								* Check whether the editor UI has been removed from DOM thus
+								* the editor instance is considered to be obsoleted.
+								* @since 3.6.2
+								* @example
+								* editor.container.remove();
+								* alert( editor.checkDetached() );
+								*/
+								checkDetached : function()
+								{
+									this.element.isOffline() || this.container && this.container.isOffline();
+								},
+
+								/**
+								 * Destroys the editor instance]]>
+							</replacevalue>
+						</replace>
+
+						<replace file="docroot/html/js/editor/ckeditor/_source/core/dom/element.js">
+							<replacetoken><![CDATA[return $ && new CKEDITOR.dom.document( $.contentWindow.document );]]></replacetoken>
+							<replacevalue><![CDATA[return $ && $.contentWindow && new CKEDITOR.dom.document( $.contentWindow.document );]]></replacevalue>
+						</replace>
+
+						<replace file="docroot/html/js/editor/ckeditor/_source/core/dom/element.js">
+							<replacetoken><![CDATA[disableContextMenu : function()]]></replacetoken>
+							<replacevalue><![CDATA[/**
+								*  Whether this element is not present in the DOM tree.
+								*/
+								isOffline : function()
+								{
+									var root = this.getDocument().getDocumentElement();
+									return !root.contains( this );
+								},
+
+								disableContextMenu : function()]]>
+							</replacevalue>
+						</replace>
+
+
+						<replace file="docroot/html/js/editor/ckeditor/_source/themes/default/theme.js">
+							<replacetoken><![CDATA[container.clearCustomData();]]></replacetoken>
+							<replacevalue><![CDATA[]]></replacevalue>
+						</replace>
+
+						<replace file="docroot/html/js/editor/ckeditor/_source/themes/default/theme.js">
+							<replacetoken><![CDATA[editor.fireOnce( 'themeLoaded' );]]></replacetoken>
+							<replacevalue><![CDATA[editor.on( 'destroy', function()
+								{
+									var container = editor.container,
+									element = editor.element;
+									container && container.clearCustomData();
+									element.clearCustomData();
+								});
+
+								editor.fireOnce( 'themeLoaded' );]]></replacevalue>
+						</replace>
+
+						<replace file="docroot/html/js/editor/ckeditor/_source/themes/default/theme.js">
+							<replacetoken><![CDATA[element.clearCustomData();]]></replacetoken>
+							<replacevalue><![CDATA[]]></replacevalue>
+						</replace>
+
 						<java
 							classname="ckpackager.ckpackager"
 							classpathref="project.classpath"

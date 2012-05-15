@@ -244,16 +244,9 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 		List<Object> list = _convertObjectToList(result);
 
 		for (Object object : list) {
-			if (object instanceof List) {
-				Object value = _filterResultList(statement, object, results);
+			Object value = _filterResult(statement, object);
 
-				results.add(value);
-			}
-			else {
-				Object value = _filterResult(statement, object);
-
-				results.add(value);
-			}
+			results.add(value);
 		}
 
 		return results;

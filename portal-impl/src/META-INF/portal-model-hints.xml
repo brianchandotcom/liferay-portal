@@ -1372,6 +1372,7 @@
 		<field name="userId" type="long" />
 		<field name="createDate" type="Date" />
 		<field name="fileEntryId" type="long" />
+		<field name="active" type="boolean" />
 	</model>
 	<model name="com.liferay.portlet.documentlibrary.model.DLFileShortcut">
 		<field name="uuid" type="String" />
@@ -1389,6 +1390,7 @@
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
+		<field name="active" type="boolean" />
 	</model>
 	<model name="com.liferay.portlet.documentlibrary.model.DLFileVersion">
 		<field name="uuid" type="String" />

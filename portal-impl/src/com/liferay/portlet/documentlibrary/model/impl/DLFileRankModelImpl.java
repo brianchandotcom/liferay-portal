@@ -65,9 +65,10 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "createDate", Types.TIMESTAMP },
-			{ "fileEntryId", Types.BIGINT }
+			{ "fileEntryId", Types.BIGINT },
+			{ "active_", Types.BOOLEAN }
 		};
-	public static final String TABLE_SQL_CREATE = "create table DLFileRank (fileRankId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,createDate DATE null,fileEntryId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table DLFileRank (fileRankId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,createDate DATE null,fileEntryId LONG,active_ BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table DLFileRank";
 	public static final String ORDER_BY_JPQL = " ORDER BY dlFileRank.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY DLFileRank.createDate DESC";
@@ -83,10 +84,11 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.column.bitmask.enabled.com.liferay.portlet.documentlibrary.model.DLFileRank"),
 			true);
-	public static long COMPANYID_COLUMN_BITMASK = 1L;
-	public static long FILEENTRYID_COLUMN_BITMASK = 2L;
-	public static long GROUPID_COLUMN_BITMASK = 4L;
-	public static long USERID_COLUMN_BITMASK = 8L;
+	public static long ACTIVE_COLUMN_BITMASK = 1L;
+	public static long COMPANYID_COLUMN_BITMASK = 2L;
+	public static long FILEENTRYID_COLUMN_BITMASK = 4L;
+	public static long GROUPID_COLUMN_BITMASK = 8L;
+	public static long USERID_COLUMN_BITMASK = 16L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.documentlibrary.model.DLFileRank"));
 
@@ -127,6 +129,7 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("fileEntryId", getFileEntryId());
+		attributes.put("active", getActive());
 
 		return attributes;
 	}
@@ -167,6 +170,12 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 
 		if (fileEntryId != null) {
 			setFileEntryId(fileEntryId);
+		}
+
+		Boolean active = (Boolean)attributes.get("active");
+
+		if (active != null) {
+			setActive(active);
 		}
 	}
 
@@ -276,6 +285,30 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 		return _originalFileEntryId;
 	}
 
+	public boolean getActive() {
+		return _active;
+	}
+
+	public boolean isActive() {
+		return _active;
+	}
+
+	public void setActive(boolean active) {
+		_columnBitmask |= ACTIVE_COLUMN_BITMASK;
+
+		if (!_setOriginalActive) {
+			_setOriginalActive = true;
+
+			_originalActive = _active;
+		}
+
+		_active = active;
+	}
+
+	public boolean getOriginalActive() {
+		return _originalActive;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -314,6 +347,7 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 		dlFileRankImpl.setUserId(getUserId());
 		dlFileRankImpl.setCreateDate(getCreateDate());
 		dlFileRankImpl.setFileEntryId(getFileEntryId());
+		dlFileRankImpl.setActive(getActive());
 
 		dlFileRankImpl.resetOriginalValues();
 
@@ -384,6 +418,10 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 
 		dlFileRankModelImpl._setOriginalFileEntryId = false;
 
+		dlFileRankModelImpl._originalActive = dlFileRankModelImpl._active;
+
+		dlFileRankModelImpl._setOriginalActive = false;
+
 		dlFileRankModelImpl._columnBitmask = 0;
 	}
 
@@ -410,12 +448,14 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 
 		dlFileRankCacheModel.fileEntryId = getFileEntryId();
 
+		dlFileRankCacheModel.active = getActive();
+
 		return dlFileRankCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{fileRankId=");
 		sb.append(getFileRankId());
@@ -429,13 +469,15 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 		sb.append(getCreateDate());
 		sb.append(", fileEntryId=");
 		sb.append(getFileEntryId());
+		sb.append(", active=");
+		sb.append(getActive());
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(22);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.documentlibrary.model.DLFileRank");
@@ -465,6 +507,10 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 			"<column><column-name>fileEntryId</column-name><column-value><![CDATA[");
 		sb.append(getFileEntryId());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>active</column-name><column-value><![CDATA[");
+		sb.append(getActive());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -490,6 +536,9 @@ public class DLFileRankModelImpl extends BaseModelImpl<DLFileRank>
 	private long _fileEntryId;
 	private long _originalFileEntryId;
 	private boolean _setOriginalFileEntryId;
+	private boolean _active;
+	private boolean _originalActive;
+	private boolean _setOriginalActive;
 	private long _columnBitmask;
 	private DLFileRank _escapedModelProxy;
 }

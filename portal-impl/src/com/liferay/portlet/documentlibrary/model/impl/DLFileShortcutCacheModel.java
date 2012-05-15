@@ -35,7 +35,7 @@ public class DLFileShortcutCacheModel implements CacheModel<DLFileShortcut>,
 	Serializable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -67,6 +67,8 @@ public class DLFileShortcutCacheModel implements CacheModel<DLFileShortcut>,
 		sb.append(statusByUserName);
 		sb.append(", statusDate=");
 		sb.append(statusDate);
+		sb.append(", active=");
+		sb.append(active);
 		sb.append("}");
 
 		return sb.toString();
@@ -128,6 +130,8 @@ public class DLFileShortcutCacheModel implements CacheModel<DLFileShortcut>,
 			dlFileShortcutImpl.setStatusDate(new Date(statusDate));
 		}
 
+		dlFileShortcutImpl.setActive(active);
+
 		dlFileShortcutImpl.resetOriginalValues();
 
 		return dlFileShortcutImpl;
@@ -148,4 +152,5 @@ public class DLFileShortcutCacheModel implements CacheModel<DLFileShortcut>,
 	public long statusByUserId;
 	public String statusByUserName;
 	public long statusDate;
+	public boolean active;
 }

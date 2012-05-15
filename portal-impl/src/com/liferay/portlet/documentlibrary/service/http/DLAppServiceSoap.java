@@ -1966,6 +1966,28 @@ public class DLAppServiceSoap {
 	}
 
 	/**
+	* Moves the file shortcut with the primary key to the trash portlet.
+	*
+	* @param fileShortcutId the primary key of the file shortcut
+	* @throws PortalException if the file shortcut could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.documentlibrary.model.DLFileShortcutSoap moveFileShortcutToTrash(
+		long fileShortcutId) throws RemoteException {
+		try {
+			com.liferay.portlet.documentlibrary.model.DLFileShortcut returnValue =
+				DLAppServiceUtil.moveFileShortcutToTrash(fileShortcutId);
+
+			return com.liferay.portlet.documentlibrary.model.DLFileShortcutSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
 	* Moves the folder to the new parent folder with the primary key.
 	*
 	* @param folderId the primary key of the folder
@@ -2014,7 +2036,7 @@ public class DLAppServiceSoap {
 	}
 
 	/**
-	* Moves the file entry with the primary key to the trash portlet.
+	* Restores the file entry with the primary key from the trash portlet.
 	*
 	* @param fileEntryId the primary key of the file entry
 	* @throws PortalException if the file entry could not be found
@@ -2033,7 +2055,26 @@ public class DLAppServiceSoap {
 	}
 
 	/**
-	* Moves the folder with the primary key to the trash portlet.
+	* Restores the file shortcut with the primary key from the trash portlet.
+	*
+	* @param fileShortcutId the primary key of the file shortcut
+	* @throws PortalException if the file shortcut could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void restoreFileShortcutFromTrash(long fileShortcutId)
+		throws RemoteException {
+		try {
+			DLAppServiceUtil.restoreFileShortcutFromTrash(fileShortcutId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* Restores the folder with the primary key from the trash portlet.
 	*
 	* @param folderId the primary key of the folder
 	* @throws PortalException if the folder could not be found

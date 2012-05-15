@@ -233,10 +233,11 @@ create index IX_6E00A2EC on DLFileEntryTypes_DLFolders (folderId);
 create unique index IX_38F0315 on DLFileRank (companyId, userId, fileEntryId);
 create index IX_A65A1F8B on DLFileRank (fileEntryId);
 create index IX_BAFB116E on DLFileRank (groupId, userId);
+create index IX_4E96195B on DLFileRank (groupId, userId, active_);
 create index IX_EED06670 on DLFileRank (userId);
 
-create index IX_B0051937 on DLFileShortcut (groupId, folderId);
-create index IX_ECCE311D on DLFileShortcut (groupId, folderId, status);
+create index IX_348DC3B2 on DLFileShortcut (groupId, folderId, active_);
+create index IX_5D0A2E8C on DLFileShortcut (groupId, folderId, status, active_);
 create index IX_4B7247F6 on DLFileShortcut (toFileEntryId);
 create index IX_4831EBE4 on DLFileShortcut (uuid_);
 create index IX_29AE81C4 on DLFileShortcut (uuid_, companyId);

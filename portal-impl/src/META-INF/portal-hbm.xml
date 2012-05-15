@@ -1463,6 +1463,7 @@
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="fileEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="active_" />
 	</class>
 	<class name="com.liferay.portlet.documentlibrary.model.impl.DLFileShortcutImpl" table="DLFileShortcut">
 		<cache usage="read-write" />
@@ -1483,6 +1484,7 @@
 		<property name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="statusDate" type="org.hibernate.type.TimestampType" />
+		<property name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="active_" />
 	</class>
 	<class name="com.liferay.portlet.documentlibrary.model.impl.DLFileVersionImpl" table="DLFileVersion">
 		<cache usage="read-write" />

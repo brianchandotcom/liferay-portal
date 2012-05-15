@@ -158,6 +158,27 @@ public interface DLFileRankModel extends BaseModel<DLFileRank> {
 	 */
 	public void setFileEntryId(long fileEntryId);
 
+	/**
+	 * Returns the active of this document library file rank.
+	 *
+	 * @return the active of this document library file rank
+	 */
+	public boolean getActive();
+
+	/**
+	 * Returns <code>true</code> if this document library file rank is active.
+	 *
+	 * @return <code>true</code> if this document library file rank is active; <code>false</code> otherwise
+	 */
+	public boolean isActive();
+
+	/**
+	 * Sets whether this document library file rank is active.
+	 *
+	 * @param active the active of this document library file rank
+	 */
+	public void setActive(boolean active);
+
 	public boolean isNew();
 
 	public void setNew(boolean n);

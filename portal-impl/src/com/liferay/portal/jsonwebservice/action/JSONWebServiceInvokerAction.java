@@ -273,7 +273,14 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 				String whitelistString = name.substring(
 					y + 1, name.length() - 1);
 
-				statement.setWhitelist(StringUtil.split(whitelistString));
+				String[] whiteListStringArray = StringUtil.split(
+					whitelistString);
+
+				for (int i = 0; i < whiteListStringArray.length; i++) {
+					whiteListStringArray[i] = whiteListStringArray[i].trim();
+				}
+
+				statement.setWhitelist(whiteListStringArray);
 
 				name = name.substring(0, y);
 			}

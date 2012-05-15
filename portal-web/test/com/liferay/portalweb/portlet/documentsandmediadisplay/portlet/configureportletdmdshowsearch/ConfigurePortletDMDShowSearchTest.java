@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.documentsandmediadisplay.portlet.configureportletdmdshowfoldermenu;
+package com.liferay.portalweb.portlet.documentsandmediadisplay.portlet.configureportletdmdshowsearch;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ConfigurePortletShowFolderMenuTest extends BaseTestCase {
-	public void testConfigurePortletShowFolderMenu() throws Exception {
+public class ConfigurePortletDMDShowSearchTest extends BaseTestCase {
+	public void testConfigurePortletDMDShowSearch() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
@@ -70,8 +70,7 @@ public class ConfigurePortletShowFolderMenuTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
-			RuntimeVariables.replace("Configuration"));
+		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
 		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
@@ -81,7 +80,7 @@ public class ConfigurePortletShowFolderMenuTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//input[@id='_86_showFolderMenuCheckbox']")) {
+							"//input[@id='_86_showFoldersSearchCheckbox']")) {
 					break;
 				}
 			}
@@ -92,11 +91,11 @@ public class ConfigurePortletShowFolderMenuTest extends BaseTestCase {
 		}
 
 		assertFalse(selenium.isChecked(
-				"//input[@id='_86_showFolderMenuCheckbox']"));
-		selenium.clickAt("//input[@id='_86_showFolderMenuCheckbox']",
-			RuntimeVariables.replace("Show Folder Menu"));
+				"//input[@id='_86_showFoldersSearchCheckbox']"));
+		selenium.clickAt("//input[@id='_86_showFoldersSearchCheckbox']",
+			RuntimeVariables.replace("Show Search"));
 		assertTrue(selenium.isChecked(
-				"//input[@id='_86_showFolderMenuCheckbox']"));
+				"//input[@id='_86_showFoldersSearchCheckbox']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

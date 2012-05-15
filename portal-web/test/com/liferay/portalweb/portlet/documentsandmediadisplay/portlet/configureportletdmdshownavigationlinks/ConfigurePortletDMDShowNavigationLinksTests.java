@@ -25,13 +25,13 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ConfigurePortletShowNavigationLinksTests extends BaseTestSuite {
+public class ConfigurePortletDMDShowNavigationLinksTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddPageDMDTest.class);
 		testSuite.addTestSuite(AddPortletDMDTest.class);
-		testSuite.addTestSuite(ConfigurePortletShowNavigationLinksTest.class);
-		testSuite.addTestSuite(ViewPortletShowNavigationLinksTest.class);
+		testSuite.addTestSuite(ConfigurePortletDMDShowNavigationLinksTest.class);
+		testSuite.addTestSuite(ViewPortletDMDShowNavigationLinksTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

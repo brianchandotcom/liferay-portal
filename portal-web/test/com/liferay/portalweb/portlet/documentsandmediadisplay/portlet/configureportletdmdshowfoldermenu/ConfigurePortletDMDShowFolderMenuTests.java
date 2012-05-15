@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.documentsandmediadisplay.portlet.configureportletdmdshowsearch;
+package com.liferay.portalweb.portlet.documentsandmediadisplay.portlet.configureportletdmdshowfoldermenu;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
@@ -25,13 +25,13 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ConfigurePortletShowSearchTests extends BaseTestSuite {
+public class ConfigurePortletDMDShowFolderMenuTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddPageDMDTest.class);
 		testSuite.addTestSuite(AddPortletDMDTest.class);
-		testSuite.addTestSuite(ConfigurePortletShowSearchTest.class);
-		testSuite.addTestSuite(ViewPortletShowSearchTest.class);
+		testSuite.addTestSuite(ConfigurePortletDMDShowFolderMenuTest.class);
+		testSuite.addTestSuite(ViewPortletDMDShowFolderMenuTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

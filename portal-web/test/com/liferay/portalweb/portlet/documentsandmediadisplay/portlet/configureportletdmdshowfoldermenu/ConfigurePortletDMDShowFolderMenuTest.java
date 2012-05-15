@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.documentsandmediadisplay.portlet.configureportletdmdshowactions;
+package com.liferay.portalweb.portlet.documentsandmediadisplay.portlet.configureportletdmdshowfoldermenu;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ConfigurePortletShowActionsTest extends BaseTestCase {
-	public void testConfigurePortletShowActions() throws Exception {
+public class ConfigurePortletDMDShowFolderMenuTest extends BaseTestCase {
+	public void testConfigurePortletDMDShowFolderMenu()
+		throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
@@ -80,7 +81,8 @@ public class ConfigurePortletShowActionsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//input[@id='_86_showActionsCheckbox']")) {
+				if (selenium.isVisible(
+							"//input[@id='_86_showFolderMenuCheckbox']")) {
 					break;
 				}
 			}
@@ -90,10 +92,12 @@ public class ConfigurePortletShowActionsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertFalse(selenium.isChecked("//input[@id='_86_showActionsCheckbox']"));
-		selenium.clickAt("//input[@id='_86_showActionsCheckbox']",
-			RuntimeVariables.replace("Show Actions"));
-		assertTrue(selenium.isChecked("//input[@id='_86_showActionsCheckbox']"));
+		assertFalse(selenium.isChecked(
+				"//input[@id='_86_showFolderMenuCheckbox']"));
+		selenium.clickAt("//input[@id='_86_showFolderMenuCheckbox']",
+			RuntimeVariables.replace("Show Folder Menu"));
+		assertTrue(selenium.isChecked(
+				"//input[@id='_86_showFolderMenuCheckbox']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

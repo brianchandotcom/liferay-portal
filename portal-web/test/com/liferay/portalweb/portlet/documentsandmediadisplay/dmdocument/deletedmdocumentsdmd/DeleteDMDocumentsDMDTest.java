@@ -51,6 +51,7 @@ public class DeleteDMDocumentsDMDTest extends BaseTestCase {
 					RuntimeVariables.replace("Documents and Media Test Page"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
+				Thread.sleep(5000);
 
 				boolean dmDocument1Present = selenium.isElementPresent(
 						"//span[@class='entry-title']");
@@ -128,6 +129,9 @@ public class DeleteDMDocumentsDMDTest extends BaseTestCase {
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
 
+			case 2:
+				Thread.sleep(5000);
+
 				boolean dmDocument2Present = selenium.isElementPresent(
 						"//span[@class='entry-title']");
 
@@ -204,6 +208,9 @@ public class DeleteDMDocumentsDMDTest extends BaseTestCase {
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
 
+			case 3:
+				Thread.sleep(5000);
+
 				boolean dmDocument3Present = selenium.isElementPresent(
 						"//span[@class='entry-title']");
 
@@ -213,7 +220,6 @@ public class DeleteDMDocumentsDMDTest extends BaseTestCase {
 					continue;
 				}
 
-				Thread.sleep(5000);
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText(
 						"//a[contains(@id,'objectsSearchContainer_1_menuButton')]/span"));
@@ -281,8 +287,6 @@ public class DeleteDMDocumentsDMDTest extends BaseTestCase {
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
 
-			case 2:
-			case 3:
 			case 4:
 				Thread.sleep(5000);
 				selenium.clickAt("//div[@id='dockbar']",

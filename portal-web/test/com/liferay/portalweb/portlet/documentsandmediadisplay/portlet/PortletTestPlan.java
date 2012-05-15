@@ -17,11 +17,11 @@ package com.liferay.portalweb.portlet.documentsandmediadisplay.portlet;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portlet.documentsandmediadisplay.portlet.addportletdmd.AddPortletDMDTests;
 import com.liferay.portalweb.portlet.documentsandmediadisplay.portlet.addportletsdmd.AddPortletsDMDTests;
-import com.liferay.portalweb.portlet.documentsandmediadisplay.portlet.configureportletdmdshowactions.ConfigurePortletShowActionsTests;
-import com.liferay.portalweb.portlet.documentsandmediadisplay.portlet.configureportletdmdshowfoldermenu.ConfigurePortletShowFolderMenuTests;
-import com.liferay.portalweb.portlet.documentsandmediadisplay.portlet.configureportletdmdshownavigationlinks.ConfigurePortletShowNavigationLinksTests;
-import com.liferay.portalweb.portlet.documentsandmediadisplay.portlet.configureportletdmdshowsearch.ConfigurePortletShowSearchTests;
-import com.liferay.portalweb.portlet.documentsandmediadisplay.portlet.removeportlet.RemovePortletDMDTests;
+import com.liferay.portalweb.portlet.documentsandmediadisplay.portlet.configureportletdmdshowactions.ConfigurePortletDMDShowActionsTests;
+import com.liferay.portalweb.portlet.documentsandmediadisplay.portlet.configureportletdmdshowfoldermenu.ConfigurePortletDMDShowFolderMenuTests;
+import com.liferay.portalweb.portlet.documentsandmediadisplay.portlet.configureportletdmdshownavigationlinks.ConfigurePortletDMDShowNavigationLinksTests;
+import com.liferay.portalweb.portlet.documentsandmediadisplay.portlet.configureportletdmdshowsearch.ConfigurePortletDMDShowSearchTests;
+import com.liferay.portalweb.portlet.documentsandmediadisplay.portlet.removeportletdmd.RemovePortletDMDTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -36,10 +36,10 @@ public class PortletTestPlan extends BaseTestSuite {
 
 		testSuite.addTest(AddPortletDMDTests.suite());
 		testSuite.addTest(AddPortletsDMDTests.suite());
-		testSuite.addTest(ConfigurePortletShowActionsTests.suite());
-		testSuite.addTest(ConfigurePortletShowFolderMenuTests.suite());
-		testSuite.addTest(ConfigurePortletShowNavigationLinksTests.suite());
-		testSuite.addTest(ConfigurePortletShowSearchTests.suite());
+		testSuite.addTest(ConfigurePortletDMDShowActionsTests.suite());
+		testSuite.addTest(ConfigurePortletDMDShowFolderMenuTests.suite());
+		testSuite.addTest(ConfigurePortletDMDShowNavigationLinksTests.suite());
+		testSuite.addTest(ConfigurePortletDMDShowSearchTests.suite());
 		testSuite.addTest(RemovePortletDMDTests.suite());
 
 		return testSuite;

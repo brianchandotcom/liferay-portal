@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.documentsandmediadisplay.portlet.configureportletdmdshowactions;
+package com.liferay.portalweb.portlet.documentsandmediadisplay.portlet.removeportletdmd;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ViewPortletShowActionsTest extends BaseTestCase {
-	public void testViewPortletShowActions() throws Exception {
+public class ViewRemovePortletDMDTest extends BaseTestCase {
+	public void testViewRemovePortletDMD() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
@@ -45,7 +45,23 @@ public class ViewPortletShowActionsTest extends BaseTestCase {
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertTrue(selenium.isVisible(
-				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[2]/a"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (!selenium.isElementPresent("//section")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertFalse(selenium.isElementPresent("//section"));
 	}
 }

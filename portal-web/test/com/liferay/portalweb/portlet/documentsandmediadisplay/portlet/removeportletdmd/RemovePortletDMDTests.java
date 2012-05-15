@@ -12,12 +12,13 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.documentsandmediadisplay.portlet.configureportletdmdshowfoldermenu;
+package com.liferay.portalweb.portlet.documentsandmediadisplay.portlet.removeportletdmd;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.documentsandmediadisplay.portlet.addportletdmd.AddPageDMDTest;
 import com.liferay.portalweb.portlet.documentsandmediadisplay.portlet.addportletdmd.AddPortletDMDTest;
+import com.liferay.portalweb.portlet.documentsandmediadisplay.portlet.addportletdmd.ViewPortletDMDTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -25,13 +26,14 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ConfigurePortletShowFolderMenuTests extends BaseTestSuite {
+public class RemovePortletDMDTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddPageDMDTest.class);
 		testSuite.addTestSuite(AddPortletDMDTest.class);
-		testSuite.addTestSuite(ConfigurePortletShowFolderMenuTest.class);
-		testSuite.addTestSuite(ViewPortletShowFolderMenuTest.class);
+		testSuite.addTestSuite(ViewPortletDMDTest.class);
+		testSuite.addTestSuite(RemovePortletDMDTest.class);
+		testSuite.addTestSuite(ViewRemovePortletDMDTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

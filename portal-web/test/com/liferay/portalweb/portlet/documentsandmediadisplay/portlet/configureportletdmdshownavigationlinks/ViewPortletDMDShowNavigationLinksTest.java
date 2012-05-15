@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.documentsandmediadisplay.portlet.configureportletdmdshowsearch;
+package com.liferay.portalweb.portlet.documentsandmediadisplay.portlet.configureportletdmdshownavigationlinks;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ViewPortletShowSearchTest extends BaseTestCase {
-	public void testViewPortletShowSearch() throws Exception {
+public class ViewPortletDMDShowNavigationLinksTest extends BaseTestCase {
+	public void testViewPortletDMDShowNavigationLinks()
+		throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
@@ -45,6 +46,6 @@ public class ViewPortletShowSearchTest extends BaseTestCase {
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertTrue(selenium.isVisible("//input[@value='Search']"));
+		assertTrue(selenium.isVisible("//ul[@class='top-links-navigation']"));
 	}
 }

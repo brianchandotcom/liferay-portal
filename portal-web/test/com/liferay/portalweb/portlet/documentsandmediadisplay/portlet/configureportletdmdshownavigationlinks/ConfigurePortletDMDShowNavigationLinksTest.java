@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.documentsandmediadisplay.portlet.configureportletdmdshowsearch;
+package com.liferay.portalweb.portlet.documentsandmediadisplay.portlet.configureportletdmdshownavigationlinks;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ConfigurePortletShowSearchTest extends BaseTestCase {
-	public void testConfigurePortletShowSearch() throws Exception {
+public class ConfigurePortletDMDShowNavigationLinksTest extends BaseTestCase {
+	public void testConfigurePortletDMDShowNavigationLinks()
+		throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
@@ -70,7 +71,8 @@ public class ConfigurePortletShowSearchTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
+			RuntimeVariables.replace("Configuration"));
 		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
@@ -79,8 +81,7 @@ public class ConfigurePortletShowSearchTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible(
-							"//input[@id='_86_showFoldersSearchCheckbox']")) {
+				if (selenium.isVisible("//input[@id='_86_showTabsCheckbox']")) {
 					break;
 				}
 			}
@@ -90,12 +91,10 @@ public class ConfigurePortletShowSearchTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertFalse(selenium.isChecked(
-				"//input[@id='_86_showFoldersSearchCheckbox']"));
-		selenium.clickAt("//input[@id='_86_showFoldersSearchCheckbox']",
-			RuntimeVariables.replace("Show Search"));
-		assertTrue(selenium.isChecked(
-				"//input[@id='_86_showFoldersSearchCheckbox']"));
+		assertFalse(selenium.isChecked("//input[@id='_86_showTabsCheckbox']"));
+		selenium.clickAt("//input[@id='_86_showTabsCheckbox']",
+			RuntimeVariables.replace("Show Navigation Links"));
+		assertTrue(selenium.isChecked("//input[@id='_86_showTabsCheckbox']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

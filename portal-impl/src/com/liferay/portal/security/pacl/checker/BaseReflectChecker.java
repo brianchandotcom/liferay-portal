@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.config.AbstractMessagingConfigurator;
 import com.liferay.portal.kernel.util.JavaDetector;
 
+import java.beans.Introspector;
+
 import org.hibernate.property.BasicPropertyAccessor;
 import org.hibernate.tuple.entity.EntityTuplizerFactory;
 import org.hibernate.util.ReflectHelper;
@@ -54,6 +56,16 @@ public abstract class BaseReflectChecker extends BaseChecker {
 		Class<?> callerClass9 = Reflection.getCallerClass(9);
 
 		if (callerClass9 == AbstractMessagingConfigurator.class) {
+			logReflect(callerClass9, 9);
+
+			return true;
+		}
+
+		// java.beans.Introspector
+
+		if ((callerClass9.getEnclosingClass() == Introspector.class) &&
+			CheckerUtil.isAccessControllerDoPrivileged(10)) {
+
 			logReflect(callerClass9, 9);
 
 			return true;

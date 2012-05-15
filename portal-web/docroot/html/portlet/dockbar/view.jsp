@@ -74,7 +74,7 @@ boolean hasLayoutUpdatePermission = LayoutPermissionUtil.contains(permissionChec
 												<ul>
 
 													<%
-													Set<String> runtimePortletIds = (Set<String>)request.getAttribute(WebKeys.RUNTIME_PORTLET_IDS);
+													Set<String> runtimePortletIds = RuntimeTag.getRuntimePortletIDs(request);
 
 													int j = 0;
 

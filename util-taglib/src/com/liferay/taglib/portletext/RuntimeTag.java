@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.portlet.PortletContainerUtil;
 import com.liferay.portal.kernel.portlet.RestrictPortletServletRequest;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
+import com.liferay.portal.kernel.servlet.taglib.portletext.RuntimePortletIDs;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
@@ -28,9 +29,9 @@ import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
-import java.util.HashSet;
 import java.util.Set;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
@@ -93,21 +94,36 @@ public class RuntimeTag extends TagSupport {
 
 			PortletContainerUtil.render(request, response, portlet);
 
-			Set<String> runtimePortletIds = (Set<String>)request.getAttribute(
-				WebKeys.RUNTIME_PORTLET_IDS);
+			RuntimePortletIDs runtimePortletIds =
+				(RuntimePortletIDs)request.getAttribute(
+					WebKeys.RUNTIME_PORTLET_IDS);
 
 			if (runtimePortletIds == null) {
-				runtimePortletIds = new HashSet<String>();
+				runtimePortletIds = new RuntimePortletIDs();
+
+				request.setAttribute(
+					WebKeys.RUNTIME_PORTLET_IDS, runtimePortletIds);
 			}
 
-			runtimePortletIds.add(portletName);
-
-			request.setAttribute(
-				WebKeys.RUNTIME_PORTLET_IDS, runtimePortletIds);
+			runtimePortletIds.addRuntimePortletID(portletName);
 		}
 		finally {
 			restrictPortletServletRequest.mergeSharedAttributes();
 		}
+	}
+
+	public static Set<String> getRuntimePortletIDs(
+		ServletRequest servletRequest) {
+
+		RuntimePortletIDs runtimePortletIds =
+			(RuntimePortletIDs)servletRequest.getAttribute(
+				WebKeys.RUNTIME_PORTLET_IDS);
+
+		if (runtimePortletIds != null) {
+			return runtimePortletIds.getRuntimePortletIDs();
+		}
+
+		return null;
 	}
 
 	@Override

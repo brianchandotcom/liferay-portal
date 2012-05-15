@@ -31,7 +31,7 @@ List<Portlet> portlets = (List<Portlet>)request.getAttribute(WebKeys.LAYOUT_PORT
 <%@ include file="/html/common/themes/bottom_portlet_resources_js.jspf" %>
 
 <%
-Set<String> runtimePortletIds = (Set<String>)request.getAttribute(WebKeys.RUNTIME_PORTLET_IDS);
+Set<String> runtimePortletIds = RuntimeTag.getRuntimePortletIDs(request);
 
 if ((runtimePortletIds != null) && !runtimePortletIds.isEmpty()) {
 	List<Portlet> runtimePortlets = new ArrayList<Portlet>();

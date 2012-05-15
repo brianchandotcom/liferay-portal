@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
 
+import java.util.Map;
+
 import javax.portlet.Event;
 
 import javax.servlet.http.HttpServletRequest;
@@ -81,6 +83,14 @@ public class RestrictPortletContainerWrapper implements PortletContainer {
 		if (request instanceof RestrictPortletServletRequest) {
 			restrictPortletServletRequest =
 				(RestrictPortletServletRequest)request;
+
+			Map<String, Object> attributes =
+				restrictPortletServletRequest.getAttributes();
+
+			if (attributes.containsKey(WebKeys.RENDER_PORTLET)) {
+				restrictPortletServletRequest =
+					new RestrictPortletServletRequest(request);
+			}
 		}
 		else {
 			restrictPortletServletRequest =

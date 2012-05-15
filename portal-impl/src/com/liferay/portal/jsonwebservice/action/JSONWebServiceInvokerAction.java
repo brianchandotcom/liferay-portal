@@ -15,6 +15,8 @@
 package com.liferay.portal.jsonwebservice.action;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONSerializable;
+import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionMapping;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
@@ -110,11 +112,16 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 			list.set(i, result);
 		}
 
+		Object result = null;
+
 		if (batchMode == false) {
-			return list.get(0);
+			result = list.get(0);
+		}
+		else {
+			result = list;
 		}
 
-		return list;
+		return new ActionResultJSONSerializable(result);
 	}
 
 	private Object _addVariableStatement(
@@ -397,11 +404,36 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 		return results;
 	}
 
-	private String _command;
-	private HttpServletRequest _request;
-	private List<Statement> _statements = new ArrayList<Statement>();
+	private class ActionResultJSONSerializable implements JSONSerializable {
 
-	private class Flag extends KeyValue<String, String> {
+		public String toJSONString() {
+			JSONSerializer jsonSerializer =
+				JSONFactoryUtil.createJSONSerializer();
+
+			jsonSerializer.exclude("*.class");
+
+			for (Statement statement : _statements) {
+
+				String statementName = statement.getName();
+
+				if (statementName == null) {
+					continue;
+				}
+
+				jsonSerializer.include(statementName.substring(1));
+			}
+
+			return jsonSerializer.serialize(_result);
+		}
+
+		private ActionResultJSONSerializable(Object result) {
+			_result = result;
+		}
+
+		private Object _result;
+	}
+
+	private static class Flag extends KeyValue<String, String> {
 	}
 
 	private class Statement {
@@ -462,5 +494,9 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 		private String[] _whitelist;
 
 	}
+
+	private String _command;
+	private HttpServletRequest _request;
+	private List<Statement> _statements = new ArrayList<Statement>();
 
 }

@@ -17,10 +17,6 @@ package com.liferay.portalweb.portal.controlpanel.socialactivity.usecase.message
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.AddSiteTest;
 import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.TearDownSiteTest;
-import com.liferay.portalweb.portal.controlpanel.sites.siteportlet.addportletsite.AddPageMBSiteTest;
-import com.liferay.portalweb.portal.controlpanel.sites.siteportlet.addportletsite.AddPageUSSiteTest;
-import com.liferay.portalweb.portal.controlpanel.sites.siteportlet.addportletsite.AddPortletMBSiteTest;
-import com.liferay.portalweb.portal.controlpanel.sites.siteportlet.addportletsite.AddPortletUSSiteTest;
 import com.liferay.portalweb.portal.controlpanel.socialactivity.usecase.blogsentry.User_ViewUserStatisticsUnsubscribeBlogsEntry2Test;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.AddUserTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.TearDownUserTest;
@@ -30,6 +26,10 @@ import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignInTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.User_SignInTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.User_SignOutTest;
+import com.liferay.portalweb.portlet.messageboards.portlet.addportletmbsite.AddPageMBSiteTest;
+import com.liferay.portalweb.portlet.messageboards.portlet.addportletmbsite.AddPortletMBSiteTest;
+import com.liferay.portalweb.portlet.userstatistics.portlet.addportletussite.AddPageUSSiteTest;
+import com.liferay.portalweb.portlet.userstatistics.portlet.addportletussite.AddPortletUSSiteTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

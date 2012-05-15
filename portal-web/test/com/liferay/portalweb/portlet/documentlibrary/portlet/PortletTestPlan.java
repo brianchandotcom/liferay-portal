@@ -16,6 +16,7 @@ package com.liferay.portalweb.portlet.documentlibrary.portlet;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portlet.documentlibrary.portlet.addportletdm.AddPortletDMTests;
+import com.liferay.portalweb.portlet.documentlibrary.portlet.addportletdmsite.AddPortletDMSiteTests;
 import com.liferay.portalweb.portlet.documentlibrary.portlet.addportletduplicate.AddPortletDuplicateTests;
 import com.liferay.portalweb.portlet.documentlibrary.portlet.configureportletdocumentsperpage5.ConfigurePortletDocumentsPerPage5Tests;
 import com.liferay.portalweb.portlet.documentlibrary.portlet.configureportletenablecommentratings.ConfigurePortletEnableCommentRatingsTests;
@@ -38,6 +39,7 @@ public class PortletTestPlan extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(AddPortletDMTests.suite());
+		testSuite.addTest(AddPortletDMSiteTests.suite());
 		testSuite.addTest(AddPortletDuplicateTests.suite());
 		testSuite.addTest(ConfigurePortletDocumentsPerPage5Tests.suite());
 		testSuite.addTest(ConfigurePortletEnableCommentRatingsTests.suite());

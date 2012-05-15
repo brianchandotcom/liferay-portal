@@ -17,12 +17,12 @@ package com.liferay.portalweb.properties.messageboards.mailintegration.replymbca
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.AddSiteTest;
 import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.TearDownSiteTest;
-import com.liferay.portalweb.portal.controlpanel.sites.siteportlet.addportletsite.AddPageMBSiteTest;
-import com.liferay.portalweb.portal.controlpanel.sites.siteportlet.addportletsite.AddPortletMBSiteTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.TearDownUserTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignInTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.messageboards.portlet.addportletmbsite.AddPageMBSiteTest;
+import com.liferay.portalweb.portlet.messageboards.portlet.addportletmbsite.AddPortletMBSiteTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

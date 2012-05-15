@@ -17,8 +17,6 @@ package com.liferay.portalweb.demo.useradmin.permissionssitetemplate;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.AddSiteTest;
 import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.TearDownSiteTest;
-import com.liferay.portalweb.portal.controlpanel.sites.siteportlet.addportletsite.AddPageBlogsSiteTest;
-import com.liferay.portalweb.portal.controlpanel.sites.siteportlet.addportletsite.AddPortletBlogsSiteTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.AddUserTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.TearDownUserTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.edituserpassword.EditUserPasswordTest;
@@ -31,6 +29,8 @@ import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentry.AddBlogsEntr
 import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentry.TearDownBlogsEntryTest;
 import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPageBlogsTest;
 import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPortletBlogsTest;
+import com.liferay.portalweb.portlet.blogs.portlet.addportletblogssite.AddPageBlogsSiteTest;
+import com.liferay.portalweb.portlet.blogs.portlet.addportletblogssite.AddPortletBlogsSiteTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

@@ -48,6 +48,10 @@ public class FileChecker extends BaseChecker {
 	public void afterPropertiesSet() {
 		_rootDir = WebDirDetector.getRootDir(getClassLoader());
 
+		if (_log.isDebugEnabled()) {
+			_log.debug("Root directory " + _rootDir);
+		}
+
 		ServletContext servletContext = ServletContextPool.get(
 			getServletContextName());
 
@@ -56,6 +60,10 @@ public class FileChecker extends BaseChecker {
 				JavaConstants.JAVAX_SERVLET_CONTEXT_TEMPDIR);
 
 			_workDir = tempDir.getAbsolutePath();
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Work directory " + _workDir);
+			}
 		}
 
 		initPermissions();
@@ -195,6 +203,10 @@ public class FileChecker extends BaseChecker {
 					JavaConstants.JAVAX_SERVLET_CONTEXT_TEMPDIR);
 
 				String tempDirAbsolutePath = tempDir.getAbsolutePath();
+
+				if (_log.isDebugEnabled()) {
+					_log.debug("Temp directory " + tempDirAbsolutePath);
+				}
 
 				if (actions.equals(FILE_PERMISSION_ACTION_READ)) {
 					addPermission(permissions, tempDirAbsolutePath, actions);

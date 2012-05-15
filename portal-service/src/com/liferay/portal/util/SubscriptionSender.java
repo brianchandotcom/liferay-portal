@@ -92,8 +92,7 @@ public class SubscriptionSender implements Serializable {
 
 	public void addRuntimeSubscribers(String toAddress, String toName) {
 		ObjectValuePair<String, String> ovp =
-			new ObjectValuePair<String, String>(
-				toAddress, HtmlUtil.escape(toName));
+			new ObjectValuePair<String, String>(toAddress, toName);
 
 		_runtimeSubscribersOVPs.add(ovp);
 	}

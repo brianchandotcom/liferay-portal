@@ -66,13 +66,26 @@ public class PACLInitialContextFactory implements InitialContextFactory {
 
 		String initialContextFactoryClassName = null;
 
-		if (environment == null) {
-			initialContextFactoryClassName = System.getProperty(
-				Context.INITIAL_CONTEXT_FACTORY);
-		}
-		else {
+		if (environment != null) {
 			initialContextFactoryClassName = (String)environment.get(
 				Context.INITIAL_CONTEXT_FACTORY);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Environment initial context factory " +
+						initialContextFactoryClassName);
+			}
+		}
+
+		if (initialContextFactoryClassName == null) {
+			initialContextFactoryClassName = System.getProperty(
+				Context.INITIAL_CONTEXT_FACTORY);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"System initial context factory " +
+						initialContextFactoryClassName);
+			}
 		}
 
 		if (_log.isDebugEnabled()) {

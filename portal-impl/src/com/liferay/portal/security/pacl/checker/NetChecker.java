@@ -35,7 +35,7 @@ public class NetChecker extends BaseChecker {
 
 		if (name.equals(NET_PERMISSION_GET_PROXY_SELECTOR)) {
 			if (!hasGetProxySelector()) {
-				throw new SecurityException("Attempted to get proxy selector");
+				throwSecurityException(_log, "Attempted to get proxy selector");
 			}
 		}
 		else if (name.equals(NET_PERMISSION_SPECIFY_STREAM_HANDLER)) {

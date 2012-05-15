@@ -54,7 +54,8 @@ public class PortalServiceChecker extends BaseChecker {
 			Class<?> implClass = (Class<?>)object;
 
 			if (!hasDynamicQuery(implClass)) {
-				throw new SecurityException(
+				throwSecurityException(
+					_log,
 					"Attempted to create a dynamic query for " + implClass);
 			}
 		}

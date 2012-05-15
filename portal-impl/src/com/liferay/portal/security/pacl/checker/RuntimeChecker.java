@@ -56,14 +56,14 @@ public class RuntimeChecker extends BaseReflectChecker {
 			String pkg = name.substring(pos + 1);
 
 			if (!hasAccessClassInPackage(pkg)) {
-				throw new SecurityException(
-					"Attempted to access package " + pkg);
+				throwSecurityException(
+					_log, "Attempted to access package " + pkg);
 			}
 		}
 		else if (name.equals(RUNTIME_PERMISSION_ACCESS_DECLARED_MEMBERS)) {
 			if (!hasReflect(permission.getName(), permission.getActions())) {
-				throw new SecurityException(
-					"Attempted to access declared members");
+				throwSecurityException(
+					_log, "Attempted to access declared members");
 			}
 		}
 		else if (name.equals(RUNTIME_PERMISSION_CREATE_CLASS_LOADER)) {
@@ -71,21 +71,21 @@ public class RuntimeChecker extends BaseReflectChecker {
 				!isJSPCompiler(permission.getName(), permission.getActions()) &&
 				!hasCreateClassLoader()) {
 
-				throw new SecurityException(
-					"Attempted to create a class loader");
+				throwSecurityException(
+					_log, "Attempted to create a class loader");
 			}
 		}
 		else if (name.startsWith(RUNTIME_PERMISSION_GET_CLASSLOADER)) {
 			if (PortalSecurityManagerThreadLocal.isCheckGetClassLoader() &&
 				!hasGetClassLoader(name)) {
 
-				throw new SecurityException("Attempted to get class loader");
+				throwSecurityException(_log, "Attempted to get class loader");
 			}
 		}
 		else if (name.startsWith(RUNTIME_PERMISSION_GET_PROTECTION_DOMAIN)) {
 			if (!hasGetProtectionDomain()) {
-				throw new SecurityException(
-					"Attempted to get protection domain");
+				throwSecurityException(
+					_log, "Attempted to get protection domain");
 			}
 		}
 		else if (name.startsWith(RUNTIME_PERMISSION_GET_ENV)) {
@@ -94,30 +94,30 @@ public class RuntimeChecker extends BaseReflectChecker {
 			String envName = name.substring(pos + 1);
 
 			if (!hasGetEnv(envName)) {
-				throw new SecurityException(
-					"Attempted to get environment name " + envName);
+				throwSecurityException(
+					_log, "Attempted to get environment name " + envName);
 			}
 		}
 		else if (name.equals(RUNTIME_PERMISSION_READ_FILE_DESCRIPTOR)) {
 			if (PortalSecurityManagerThreadLocal.isCheckReadFileDescriptor() &&
 				!hasReadFileDescriptor()) {
 
-				throw new SecurityException(
-					"Attempted to read file descriptor");
+				throwSecurityException(
+					_log, "Attempted to read file descriptor");
 			}
 		}
 		else if (name.equals(RUNTIME_PERMISSION_SET_CONTEXT_CLASS_LOADER)) {
 		}
 		else if (name.equals(RUNTIME_PERMISSION_SET_SECURITY_MANAGER)) {
-			throw new SecurityException(
-				"Attempted to set another security manager");
+			throwSecurityException(
+				_log, "Attempted to set another security manager");
 		}
 		else if (name.equals(RUNTIME_PERMISSION_WRITE_FILE_DESCRIPTOR)) {
 			if (PortalSecurityManagerThreadLocal.isCheckWriteFileDescriptor() &&
 				!hasWriteFileDescriptor()) {
 
-				throw new SecurityException(
-					"Attempted to write file descriptor");
+				throwSecurityException(
+					_log, "Attempted to write file descriptor");
 			}
 		}
 		else {
@@ -125,7 +125,8 @@ public class RuntimeChecker extends BaseReflectChecker {
 				Thread.dumpStack();
 			}
 
-			throw new SecurityException(
+			throwSecurityException(
+				_log,
 				"Attempted to " + permission.getName() + " on " +
 					permission.getActions());
 		}

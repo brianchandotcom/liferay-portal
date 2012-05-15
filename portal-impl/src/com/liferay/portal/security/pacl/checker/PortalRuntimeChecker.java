@@ -43,8 +43,8 @@ public class PortalRuntimeChecker extends BaseChecker {
 			Class<?> clazz = (Class<?>)subject;
 
 			if (!_classNames.contains(clazz.getName())) {
-				throw new SecurityException(
-					"Attempted to set bean property on " + clazz);
+				throwSecurityException(
+					_log, "Attempted to set bean property on " + clazz);
 			}
 		}
 	}

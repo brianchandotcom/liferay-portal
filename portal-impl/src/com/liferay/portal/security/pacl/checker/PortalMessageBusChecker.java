@@ -43,14 +43,15 @@ public class PortalMessageBusChecker extends BaseChecker {
 
 		if (name.equals(PORTAL_MESSAGE_BUS_PERMISSION_LISTEN)) {
 			if (!_listenDestinationNames.contains(destinationName)) {
-				throw new SecurityException(
+				throwSecurityException(
+					_log,
 					"Attempted to listen on destination " + destinationName);
 			}
 		}
 		else if (name.equals(PORTAL_MESSAGE_BUS_PERMISSION_SEND)) {
 			if (!_sendDestinationNames.contains(destinationName)) {
-				throw new SecurityException(
-					"Attempted to send to " + destinationName);
+				throwSecurityException(
+					_log, "Attempted to send to " + destinationName);
 			}
 		}
 	}

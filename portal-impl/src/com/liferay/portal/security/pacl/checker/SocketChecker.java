@@ -72,15 +72,16 @@ public class SocketChecker extends BaseChecker {
 		}
 		else if (actions.contains(SOCKET_PERMISSION_CONNECT)) {
 			if (!hasConnect(host, port)) {
-				throw new SecurityException(
+				throwSecurityException(
+					_log,
 					"Attempted to connect to host " + host + " on port " +
 						port);
 			}
 		}
 		else if (actions.contains(SOCKET_PERMISSION_LISTEN)) {
 			if (!hasListen(port)) {
-				throw new SecurityException(
-					"Attempted to listen on port " + port);
+				throwSecurityException(
+					_log, "Attempted to listen on port " + port);
 			}
 		}
 	}

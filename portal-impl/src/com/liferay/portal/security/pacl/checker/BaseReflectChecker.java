@@ -111,7 +111,8 @@ public abstract class BaseReflectChecker extends BaseChecker {
 		}
 		else {
 			if ((callerClass9.getEnclosingClass() == Thread.class) &&
-				CheckerUtil.isAccessControllerDoPrivileged(10)) {
+				(CheckerUtil.isAccessControllerDoPrivileged(10) ||
+				 CheckerUtil.isAccessControllerDoPrivileged(11))) {
 
 				logReflect(callerClass9, 9);
 

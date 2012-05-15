@@ -31,4 +31,9 @@ public class CamelFooService {
 	public static void helloWorld() {
 	}
 
+	@JSONWebService(method = "POST")
+	public static String post(String value) {
+		return "post " + value;
+	}
+
 }

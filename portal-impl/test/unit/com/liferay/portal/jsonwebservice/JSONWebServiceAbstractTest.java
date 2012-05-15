@@ -26,12 +26,14 @@ import java.lang.reflect.Method;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.powermock.api.mockito.PowerMockito;
+
 import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Igor Spasic
  */
-public class JSONWebServiceAbstractTest {
+public abstract class JSONWebServiceAbstractTest extends PowerMockito {
 
 	protected String toJson(Object object) {
 		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
@@ -80,6 +82,19 @@ public class JSONWebServiceAbstractTest {
 			new MockHttpServletRequest();
 
 		mockHttpServletRequest.setPathInfo(pathInfo);
+		mockHttpServletRequest.setMethod("GET");
+
+		return mockHttpServletRequest;
+	}
+
+	protected MockHttpServletRequest createHttpRequest(
+		String pathInfo, String httpMethod) {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setPathInfo(pathInfo);
+		mockHttpServletRequest.setMethod(httpMethod);
 
 		return mockHttpServletRequest;
 	}

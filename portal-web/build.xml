@@ -256,7 +256,8 @@
 								else
 									throw '[CKEDITOR.editor] The instance "' + previous.name + '" already exists.';
 								}
-								]]></replacevalue>
+								]]>
+							</replacevalue>
 						</replace>
 
 						<replace file="docroot/html/js/editor/ckeditor/_source/core/editor.js">
@@ -332,7 +333,8 @@
 									element.clearCustomData();
 								});
 
-								editor.fireOnce( 'themeLoaded' );]]></replacevalue>
+								editor.fireOnce( 'themeLoaded' );]]>
+							</replacevalue>
 						</replace>
 
 						<replace file="docroot/html/js/editor/ckeditor/_source/themes/default/theme.js">

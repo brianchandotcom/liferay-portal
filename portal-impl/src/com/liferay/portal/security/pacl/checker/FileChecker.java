@@ -48,6 +48,10 @@ public class FileChecker extends BaseChecker {
 	public void afterPropertiesSet() {
 		_rootDir = WebDirDetector.getRootDir(getClassLoader());
 
+		if (_log.isDebugEnabled()) {
+			_log.debug("Root directory " + _rootDir);
+		}
+
 		ServletContext servletContext = ServletContextPool.get(
 			getServletContextName());
 
@@ -56,6 +60,10 @@ public class FileChecker extends BaseChecker {
 				JavaConstants.JAVAX_SERVLET_CONTEXT_TEMPDIR);
 
 			_workDir = tempDir.getAbsolutePath();
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Work directory " + _workDir);
+			}
 		}
 
 		initPermissions();
@@ -196,6 +204,10 @@ public class FileChecker extends BaseChecker {
 
 				String tempDirAbsolutePath = tempDir.getAbsolutePath();
 
+				if (_log.isDebugEnabled()) {
+					_log.debug("Temp directory " + tempDirAbsolutePath);
+				}
+
 				if (actions.equals(FILE_PERMISSION_ACTION_READ)) {
 					addPermission(permissions, tempDirAbsolutePath, actions);
 				}
@@ -235,6 +247,7 @@ public class FileChecker extends BaseChecker {
 		// Portal
 
 		if (!_portalDir.equals(_rootDir)) {
+			paths.add(_portalDir);
 			paths.add(_portalDir + "html/common/-");
 			paths.add(_portalDir + "html/taglib/-");
 			paths.add(_portalDir + "localhost/html/common/-");
@@ -250,6 +263,13 @@ public class FileChecker extends BaseChecker {
 			paths.add(_portalDir + "WEB-INF/lib/log4j-extras.jar");
 			paths.add(_portalDir + "WEB-INF/lib/spring-beans.jar");
 			paths.add(_portalDir + "WEB-INF/tld/-");
+
+			// Jetty complains about needing this JAR when hot deploying
+			// test-pacl-portlet. It does not complain if the portlet was
+			// already deployed when you restart Jetty.
+
+			paths.add(
+				_portalDir + "WEB-INF/lib/org.springframework.aspects.jar");
 		}
 
 		for (String path : paths) {

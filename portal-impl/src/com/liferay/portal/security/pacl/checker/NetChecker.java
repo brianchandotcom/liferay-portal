@@ -16,6 +16,7 @@ package com.liferay.portal.security.pacl.checker;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.JavaDetector;
 
 import java.security.Permission;
 
@@ -45,16 +46,31 @@ public class NetChecker extends BaseChecker {
 	}
 
 	protected boolean hasGetProxySelector() {
-		Class<?> callerClass7 = Reflection.getCallerClass(7);
+		if (JavaDetector.isJDK7()) {
+			Class<?> callerClass8 = Reflection.getCallerClass(8);
 
-		String className7 = callerClass7.getName();
+			String className8 = callerClass8.getName();
 
-		if (className7.startsWith(_CLASS_NAME_SOCKS_SOCKET_IMPL) &&
-			CheckerUtil.isAccessControllerDoPrivileged(8)) {
+			if (className8.startsWith(_CLASS_NAME_SOCKS_SOCKET_IMPL) &&
+				CheckerUtil.isAccessControllerDoPrivileged(9)) {
 
-			logGetProxySelector(callerClass7, 7);
+				logGetProxySelector(callerClass8, 8);
 
-			return true;
+				return true;
+			}
+		}
+		else {
+			Class<?> callerClass7 = Reflection.getCallerClass(7);
+
+			String className7 = callerClass7.getName();
+
+			if (className7.startsWith(_CLASS_NAME_SOCKS_SOCKET_IMPL) &&
+				CheckerUtil.isAccessControllerDoPrivileged(8)) {
+
+				logGetProxySelector(callerClass7, 7);
+
+				return true;
+			}
 		}
 
 		return false;

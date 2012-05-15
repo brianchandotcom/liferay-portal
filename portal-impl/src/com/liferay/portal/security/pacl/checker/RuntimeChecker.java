@@ -155,6 +155,19 @@ public class RuntimeChecker extends BaseReflectChecker {
 				return true;
 			}
 		}
+		else if (JavaDetector.isJDK7()) {
+			Class<?> callerClass11 = Reflection.getCallerClass(11);
+
+			String callerClassName11 = callerClass11.getName();
+
+			if (callerClassName11.startsWith(_CLASS_NAME_CLASS_DEFINER) &&
+				CheckerUtil.isAccessControllerDoPrivileged(12)) {
+
+				logCreateClassLoader(callerClass11, 11);
+
+				return true;
+			}
+		}
 		else {
 			Class<?> callerClass10 = Reflection.getCallerClass(10);
 
@@ -297,32 +310,62 @@ public class RuntimeChecker extends BaseReflectChecker {
 	}
 
 	protected boolean hasReadFileDescriptor() {
-		Class<?> callerClass8 = Reflection.getCallerClass(8);
+		if (JavaDetector.isJDK7()) {
+			Class<?> callerClass9 = Reflection.getCallerClass(9);
 
-		String callerClassName8 = callerClass8.getName();
+			String callerClassName9 = callerClass9.getName();
 
-		if (callerClassName8.startsWith(_CLASS_NAME_PROCESS_IMPL) &&
-			CheckerUtil.isAccessControllerDoPrivileged(9)) {
+			if (callerClassName9.startsWith(_CLASS_NAME_PROCESS_IMPL) &&
+				CheckerUtil.isAccessControllerDoPrivileged(10)) {
 
-			logWriteFileDescriptor(callerClass8, 8);
+				logWriteFileDescriptor(callerClass9, 9);
 
-			return true;
+				return true;
+			}
+		}
+		else {
+			Class<?> callerClass8 = Reflection.getCallerClass(8);
+
+			String callerClassName8 = callerClass8.getName();
+
+			if (callerClassName8.startsWith(_CLASS_NAME_PROCESS_IMPL) &&
+				CheckerUtil.isAccessControllerDoPrivileged(9)) {
+
+				logWriteFileDescriptor(callerClass8, 8);
+
+				return true;
+			}
 		}
 
 		return false;
 	}
 
 	protected boolean hasWriteFileDescriptor() {
-		Class<?> callerClass8 = Reflection.getCallerClass(8);
+		if (JavaDetector.isJDK7()) {
+			Class<?> callerClass9 = Reflection.getCallerClass(9);
 
-		String callerClassName8 = callerClass8.getName();
+			String callerClassName9 = callerClass9.getName();
 
-		if (callerClassName8.startsWith(_CLASS_NAME_PROCESS_IMPL) &&
-			CheckerUtil.isAccessControllerDoPrivileged(9)) {
+			if (callerClassName9.startsWith(_CLASS_NAME_PROCESS_IMPL) &&
+				CheckerUtil.isAccessControllerDoPrivileged(10)) {
 
-			logWriteFileDescriptor(callerClass8, 8);
+				logWriteFileDescriptor(callerClass9, 9);
 
-			return true;
+				return true;
+			}
+		}
+		else {
+			Class<?> callerClass8 = Reflection.getCallerClass(8);
+
+			String callerClassName8 = callerClass8.getName();
+
+			if (callerClassName8.startsWith(_CLASS_NAME_PROCESS_IMPL) &&
+				CheckerUtil.isAccessControllerDoPrivileged(9)) {
+
+				logWriteFileDescriptor(callerClass8, 8);
+
+				return true;
+			}
 		}
 
 		return false;

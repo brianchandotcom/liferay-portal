@@ -697,8 +697,8 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 		}
 
 		if (portletDataContext.getBooleanParameter(_NAMESPACE, "shortcuts")) {
-			List<DLFileShortcut> fileShortcuts = DLFileShortcutUtil.findByG_F(
-				folder.getRepositoryId(), folder.getFolderId());
+			List<DLFileShortcut> fileShortcuts = DLFileShortcutUtil.findByG_F_A(
+				folder.getRepositoryId(), folder.getFolderId(), true);
 
 			for (DLFileShortcut fileShortcut : fileShortcuts) {
 				exportFileShortcut(
@@ -1630,9 +1630,9 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 		}
 
 		if (portletDataContext.getBooleanParameter(_NAMESPACE, "shortcuts")) {
-			List<DLFileShortcut> fileShortcuts = DLFileShortcutUtil.findByG_F(
+			List<DLFileShortcut> fileShortcuts = DLFileShortcutUtil.findByG_F_A(
 				portletDataContext.getScopeGroupId(),
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, true);
 
 			for (DLFileShortcut fileShortcut : fileShortcuts) {
 				exportFileShortcut(

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
+import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 
 import org.junit.After;
@@ -92,6 +93,19 @@ public abstract class BaseDLAppTestCase {
 			TestPropsValues.getGroupId(), folderId, sourceFileName,
 			ContentTypes.TEXT_PLAIN, title, description, changeLog, bytes,
 			serviceContext);
+	}
+
+	protected DLFileShortcut addFileShortcut(FileEntry fileEntry)
+		throws Exception {
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
+		return DLAppServiceUtil.addFileShortcut(
+			TestPropsValues.getGroupId(), fileEntry.getFolderId(),
+			fileEntry.getFileEntryId(), serviceContext);
 	}
 
 	protected Folder addFolder(boolean rootFolder, String name)

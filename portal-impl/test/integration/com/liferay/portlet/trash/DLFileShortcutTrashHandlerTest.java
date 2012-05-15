@@ -15,11 +15,11 @@
 package com.liferay.portlet.trash;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.ExecutionTestListeners;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
-import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
+import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
+import com.liferay.portlet.documentlibrary.model.DLFileShortcutConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
 
@@ -28,102 +28,67 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * @author Alexander Chow
+ * @author Zsolt Berentey
  */
 @ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class DLFileEntryTrashHandlerTest extends BaseDLTrashHandlerTestCase {
+public class DLFileShortcutTrashHandlerTest extends BaseDLTrashHandlerTestCase {
 
 	@Test
 	public void testTrashAndDelete() throws Exception {
-		testTrash(true, false, false);
-	}
-
-	@Test
-	public void testTrashAndDeleteVersioned() throws Exception {
-		testTrash(true, true, false);
-	}
-
-	@Test
-	public void testTrashAndDeleteVersionedAndCheckedOut() throws Exception {
-		testTrash(true, true, true);
+		testTrash(true);
 	}
 
 	@Test
 	public void testTrashAndRestore() throws Exception {
-		testTrash(false, false, false);
+		testTrash(false);
 	}
 
-	@Test
-	public void testTrashAndRestoreVersioned() throws Exception {
-		testTrash(false, true, false);
-	}
-
-	@Test
-	public void testTrashAndRestoreVersionedAndCheckedOut() throws Exception {
-		testTrash(false, true, true);
-	}
-
-	protected void testTrash(
-			boolean delete, boolean versioned, boolean leaveCheckedOut)
-		throws Exception {
-
+	protected void testTrash(boolean delete) throws Exception {
 		int initialNotInTrashCount = getNotInTrashCount();
 		int initialTrashEntriesCount = getTrashEntriesCount();
-		int initialSearchFileEntriesCount = searchFileEntriesCount();
 
 		FileEntry fileEntry = addFileEntry(false, "Test Basic.txt");
 
 		long fileEntryId = fileEntry.getFileEntryId();
 
-		if (versioned) {
-			updateFileEntry(fileEntryId, null, "Test Basic 2.txt");
-		}
+		DLFileShortcut fileShortcut = addFileShortcut(fileEntry);
 
-		if (leaveCheckedOut) {
-			DLAppServiceUtil.checkOutFileEntry(
-				fileEntryId, new ServiceContext());
-		}
+		long fileShortcutId = fileShortcut.getFileShortcutId();
 
-		Assert.assertEquals(initialNotInTrashCount + 1, getNotInTrashCount());
+		Assert.assertEquals(initialNotInTrashCount + 2, getNotInTrashCount());
 		Assert.assertEquals(initialTrashEntriesCount, getTrashEntriesCount());
-		Assert.assertTrue(
-			isAssetEntryVisible(
-				DLFileEntryConstants.getClassName(), fileEntryId));
-		Assert.assertEquals(
-			initialSearchFileEntriesCount + 1, searchFileEntriesCount());
 
 		DLAppServiceUtil.moveFileEntryToTrash(fileEntryId);
 
 		Assert.assertEquals(initialNotInTrashCount, getNotInTrashCount());
 		Assert.assertEquals(
 			initialTrashEntriesCount + 1, getTrashEntriesCount());
-		Assert.assertFalse(
-			isAssetEntryVisible(
-				DLFileEntryConstants.getClassName(), fileEntryId));
+
+		DLAppServiceUtil.restoreFileEntryFromTrash(fileEntryId);
+
+		Assert.assertEquals(initialNotInTrashCount + 2, getNotInTrashCount());
+
+		DLAppServiceUtil.moveFileShortcutToTrash(fileShortcutId);
+
+		Assert.assertEquals(initialNotInTrashCount + 1, getNotInTrashCount());
 		Assert.assertEquals(
-			initialSearchFileEntriesCount, searchFileEntriesCount());
+			initialTrashEntriesCount + 1, getTrashEntriesCount());
 
 		if (delete) {
 			TrashEntryServiceUtil.deleteEntries(parentFolder.getGroupId());
 
-			Assert.assertEquals(initialNotInTrashCount, getNotInTrashCount());
-			Assert.assertNull(
-				fetchAssetEntry(
-					DLFileEntryConstants.getClassName(), fileEntryId));
-			Assert.assertEquals(
-				initialSearchFileEntriesCount, searchFileEntriesCount());
-		}
-		else {
-			DLAppServiceUtil.restoreFileEntryFromTrash(fileEntryId);
-
 			Assert.assertEquals(
 				initialNotInTrashCount + 1, getNotInTrashCount());
-			Assert.assertTrue(
-				isAssetEntryVisible(
-					DLFileEntryConstants.getClassName(), fileEntryId));
+			Assert.assertNull(
+				fetchAssetEntry(
+					DLFileShortcutConstants.getClassName(), fileShortcutId));
+		}
+		else {
+			DLAppServiceUtil.restoreFileShortcutFromTrash(fileShortcutId);
+
 			Assert.assertEquals(
-				initialSearchFileEntriesCount + 1, searchFileEntriesCount());
+				initialNotInTrashCount + 2, getNotInTrashCount());
 		}
 
 		Assert.assertEquals(initialTrashEntriesCount, getTrashEntriesCount());

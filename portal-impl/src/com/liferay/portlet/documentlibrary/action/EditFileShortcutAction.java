@@ -56,7 +56,10 @@ public class EditFileShortcutAction extends PortletAction {
 				updateFileShortcut(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteFileShortcut(actionRequest);
+				deleteFileShortcut(actionRequest, false);
+			}
+			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
+				deleteFileShortcut(actionRequest, true);
 			}
 
 			sendRedirect(actionRequest, actionResponse);
@@ -106,13 +109,19 @@ public class EditFileShortcutAction extends PortletAction {
 			renderRequest, "portlet.document_library.edit_file_shortcut"));
 	}
 
-	protected void deleteFileShortcut(ActionRequest actionRequest)
+	protected void deleteFileShortcut(
+			ActionRequest actionRequest, boolean moveToTrash)
 		throws Exception {
 
 		long fileShortcutId = ParamUtil.getLong(
 			actionRequest, "fileShortcutId");
 
-		DLAppServiceUtil.deleteFileShortcut(fileShortcutId);
+		if (moveToTrash) {
+			DLAppServiceUtil.moveFileShortcutToTrash(fileShortcutId);
+		}
+		else {
+			DLAppServiceUtil.deleteFileShortcut(fileShortcutId);
+		}
 	}
 
 	protected void updateFileShortcut(ActionRequest actionRequest)

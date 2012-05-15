@@ -213,13 +213,8 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			long groupId, long folderId, QueryDefinition queryDefinition)
 		throws SystemException {
 
-		int fileEntriesCount = dlFolderFinder.countFE_ByG_F(
+		return dlFolderFinder.countFE_FS_ByG_F(
 			groupId, folderId, queryDefinition);
-
-		int fileShortcutsCount = dlFileShortcutPersistence.countByG_F_S(
-			groupId, folderId, 0);
-
-		return fileEntriesCount + fileShortcutsCount;
 	}
 
 	public DLFolder getFolder(long folderId)

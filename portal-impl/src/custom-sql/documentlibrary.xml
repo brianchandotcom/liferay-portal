@@ -294,7 +294,7 @@
 				[$FILE_ENTRY_FOLDER_ID$]
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder.countFS_ByG_F_S">
+	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder.countFS_ByG_F_S_A">
 		<![CDATA[
 			SELECT
 				COUNT(DISTINCT fileShortcutId) AS COUNT_VALUE
@@ -303,7 +303,8 @@
 			[$JOIN$]
 			WHERE
 				(DLFileShortcut.groupId = ?) AND
-				(DLFileShortcut.status = 0) AND
+				(DLFileShortcut.status = ?) AND
+				(DLFileShortcut.active_ = ?) AND
 				[$FILE_SHORTCUT_FOLDER_ID$]
 		]]>
 	</sql>
@@ -358,7 +359,7 @@
 				[$FILE_ENTRY_FOLDER_ID$]
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder.findFS_ByG_F_S">
+	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder.findFS_ByG_F_S_A">
 		<![CDATA[
 			SELECT
 				DISTINCT DLFileEntry.folderId AS modelFolderId, DLFileEntry.createDate as createDate, DLFileEntry.modifiedDate as modifiedDate, DLFileEntry.name AS name, DLFileEntry.title AS title, DLFileEntry.size_ AS size_, DLFileEntry.readCount AS readCount, fileShortcutId AS fileShortcutId, 0 AS modelFolder
@@ -369,7 +370,8 @@
 					(DLFileEntry.fileEntryId = DLFileShortcut.toFileEntryId)
 			WHERE
 				(DLFileShortcut.groupId = ?) AND
-				(DLFileShortcut.status = 0) AND
+				(DLFileShortcut.status = ?) AND
+				(DLFileShortcut.active_ = ?) AND
 				[$FILE_SHORTCUT_FOLDER_ID$]
 		]]>
 	</sql>

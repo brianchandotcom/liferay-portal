@@ -14,6 +14,9 @@
 
 package com.liferay.portal.security.pacl.checker;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
 import java.security.Permission;
 
 /**
@@ -26,8 +29,10 @@ public class ReflectChecker extends BaseReflectChecker {
 
 	public void checkPermission(Permission permission) {
 		if (!hasReflect(permission.getName(), permission.getActions())) {
-			throw new SecurityException("Attempted to reflect");
+			throwSecurityException(_log, "Attempted to reflect");
 		}
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(ReflectChecker.class);
 
 }

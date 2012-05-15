@@ -75,25 +75,26 @@ public class FileChecker extends BaseChecker {
 
 		if (actions.equals(FILE_PERMISSION_ACTION_DELETE)) {
 			if (!hasDelete(permission)) {
-				throw new SecurityException("Attempted to delete file " + name);
+				throwSecurityException(
+					_log, "Attempted to delete file " + name);
 			}
 		}
 		else if (actions.equals(FILE_PERMISSION_ACTION_EXECUTE)) {
 			if (!hasExecute(permission)) {
-				throw new SecurityException(
-					"Attempted to execute file " + name);
+				throwSecurityException(
+					_log, "Attempted to execute file " + name);
 			}
 		}
 		else if (actions.equals(FILE_PERMISSION_ACTION_READ)) {
 			if (PortalSecurityManagerThreadLocal.isCheckReadFile() &&
 				!hasRead(permission)) {
 
-				throw new SecurityException("Attempted to read file " + name);
+				throwSecurityException(_log, "Attempted to read file " + name);
 			}
 		}
 		else if (actions.equals(FILE_PERMISSION_ACTION_WRITE)) {
 			if (!hasWrite(permission)) {
-				throw new SecurityException("Attempted to write file " + name);
+				throwSecurityException(_log, "Attempted to write file " + name);
 			}
 		}
 	}

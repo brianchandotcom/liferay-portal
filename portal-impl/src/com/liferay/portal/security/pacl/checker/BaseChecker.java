@@ -148,6 +148,14 @@ public abstract class BaseChecker implements Checker, PACLConstants {
 		return false;
 	}
 
+	protected void throwSecurityException(Log log, String message) {
+		if (log.isWarnEnabled()) {
+			log.warn(message);
+		}
+
+		throw new SecurityException(message);
+	}
+
 	private static final String _ClASS_NAME_DEFAULT_INSTANCE_MANAGER =
 		"org.apache.catalina.core.DefaultInstanceManager";
 

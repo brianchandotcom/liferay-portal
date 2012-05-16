@@ -24,6 +24,19 @@ import java.security.Permission;
  */
 public class PortalRuntimePermission extends BasicPermission {
 
+	public static void checkAccessibleFeature(Class<?> clazz) {
+		SecurityManager securityManager = System.getSecurityManager();
+
+		if (securityManager == null) {
+			return;
+		}
+
+		Permission permission = new PortalRuntimePermission(
+			PACLConstants.PORTAL_RUNTIME_PERMISSION_ACCESSIBLE_FEATURE, clazz);
+
+		securityManager.checkPermission(permission);
+	}
+
 	public static void checkSetBeanProperty(Class<?> clazz) {
 		SecurityManager securityManager = System.getSecurityManager();
 

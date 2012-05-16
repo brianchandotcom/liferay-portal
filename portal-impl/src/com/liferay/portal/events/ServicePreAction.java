@@ -1651,7 +1651,7 @@ public class ServicePreAction extends Action {
 		}
 
 		if (accessibleLayouts.isEmpty()) {
-			layouts = null;
+			layouts = new ArrayList<Layout>();
 
 			if (!hasViewLayoutPermission) {
 				SessionErrors.add(

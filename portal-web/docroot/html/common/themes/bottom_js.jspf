@@ -124,22 +124,20 @@ if (layout != null) {
 						layoutIds: [
 
 							<%
-							if (layouts != null) {
-								for (int i = 0; i < layouts.size(); i++) {
-									Layout curLayout = (Layout)layouts.get(i);
+							for (int i = 0; i < layouts.size(); i++) {
+								Layout curLayout = (Layout)layouts.get(i);
 
-									boolean updateable = SitesUtil.isLayoutUpdateable(curLayout);
-									boolean deleteable = updateable && LayoutPermissionUtil.contains(themeDisplay.getPermissionChecker(), curLayout, ActionKeys.DELETE);
+								boolean updateable = SitesUtil.isLayoutUpdateable(curLayout);
+								boolean deleteable = updateable && LayoutPermissionUtil.contains(themeDisplay.getPermissionChecker(), curLayout, ActionKeys.DELETE);
 							%>
 
-									{
-										deletable: <%= deleteable %>,
-										id: <%= curLayout.getLayoutId() %>,
-										updateable: <%= updateable %>
-									},
+								{
+									deletable: <%= deleteable %>,
+									id: <%= curLayout.getLayoutId() %>,
+									updateable: <%= updateable %>
+								},
 
 							<%
-								}
 							}
 							%>
 

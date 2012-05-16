@@ -17,8 +17,10 @@ package com.liferay.portal.security.pacl.checker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseAsyncDestination;
+import com.liferay.portal.kernel.messaging.config.AbstractMessagingConfigurator;
 import com.liferay.portal.kernel.util.JavaDetector;
 import com.liferay.portal.kernel.util.PathUtil;
+import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
@@ -266,12 +268,24 @@ public class RuntimeChecker extends BaseReflectChecker {
 			}
 		}
 		else if (callerClass6 == Thread.class) {
+			boolean allow = false;
+
 			ClassLoader contextClassLoader =
 				PACLClassLoaderUtil.getContextClassLoader();
-
+			
 			if (isSharedClassLoader(contextClassLoader) ||
 				isLocalClassLoader(contextClassLoader)) {
 
+				allow = true;
+			}
+			
+			if (ServerDetector.isJBoss()) {
+				if (callerClass7 == AbstractMessagingConfigurator.class) {
+					allow = true;
+				}
+			}
+
+			if (allow) {
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						"Allowing " + callerClass7.getName() +
@@ -300,12 +314,29 @@ public class RuntimeChecker extends BaseReflectChecker {
 	protected boolean hasGetProtectionDomain() {
 		Class<?> callerClass7 = Reflection.getCallerClass(7);
 
-		if (callerClass7.getEnclosingClass() ==
-				DefaultMBeanServerInterceptor.class) {
+		if (ServerDetector.isJBoss()) {
+			Class<?> enclosingClass7 = callerClass7.getEnclosingClass();
 
-			logGetProtectionDomain(callerClass7, 7);
+			String enclosingClassName7 = enclosingClass7.getName(); 
 
-			return true;
+			if (enclosingClassName7.equals(
+					_CLASS_NAME_DEFAULT_MBEAN_SERVER_INTERCEPTOR)) {
+	
+				logGetProtectionDomain(callerClass7, 7);
+	
+				return true;
+			}
+
+			return false;
+		}
+		else {
+			if (callerClass7.getEnclosingClass() ==
+					DefaultMBeanServerInterceptor.class) {
+	
+				logGetProtectionDomain(callerClass7, 7);
+	
+				return true;
+			}
 		}
 
 		return false;
@@ -474,6 +505,9 @@ public class RuntimeChecker extends BaseReflectChecker {
 
 	private static final String _CLASS_NAME_CLASS_DEFINER =
 		"sun.reflect.ClassDefiner$";
+
+	private static final String _CLASS_NAME_DEFAULT_MBEAN_SERVER_INTERCEPTOR =
+	"com.sun.jmx.interceptor.DefaultMBeanServerInterceptor";
 
 	private static final String _CLASS_NAME_PROCESS_IMPL =
 		"java.lang.ProcessImpl$";

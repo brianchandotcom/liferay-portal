@@ -57,6 +57,8 @@ public class ExpandoBridgeFactoryUtil {
 	}
 
 	public static ExpandoBridgeFactory getExpandoBridgeFactory() {
+		PortalRuntimePermission.checkAccessibleFeature(ExpandoBridge.class);
+
 		return _expandoBridgeFactory;
 	}
 

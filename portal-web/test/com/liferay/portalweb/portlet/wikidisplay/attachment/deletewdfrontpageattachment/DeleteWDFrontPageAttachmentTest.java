@@ -51,7 +51,7 @@ public class DeleteWDFrontPageAttachmentTest extends BaseTestCase {
 			RuntimeVariables.replace("1 Attachment"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Wiki_Attachment.jpg"),
+		assertEquals(RuntimeVariables.replace("Document_1.jpg"),
 			selenium.getText("//td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Delete"),
 			selenium.getText("//td[3]/span/a/span"));

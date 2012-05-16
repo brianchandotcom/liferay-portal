@@ -97,9 +97,8 @@ public class AddWDFrontPageAttachmentTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.type("//fieldset/div/span[1]/span/span/input",
-			RuntimeVariables.replace(
-				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portlet\\wiki\\attachment\\addfrontpageattachment\\dependencies\\Wiki_Attachment.jpg"));
+		selenium.uploadCommonFile("//fieldset/div/span[1]/span/span/input",
+			RuntimeVariables.replace("Document_1.jpg"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
@@ -107,9 +106,9 @@ public class AddWDFrontPageAttachmentTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("Wiki_Attachment.jpg"),
+		assertEquals(RuntimeVariables.replace("Document_1.jpg"),
 			selenium.getText("//td[1]/a"));
-		assertEquals(RuntimeVariables.replace("3.1k"),
+		assertEquals(RuntimeVariables.replace("12.9k"),
 			selenium.getText("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Showing 1 result."),
 			selenium.getText("//div[@class='search-results']/"));

@@ -50,20 +50,14 @@ if (percent.floatValue() >= 100) {
 	;(function() {
 		var progressId = parent['<%= HtmlUtil.escapeJS(uploadProgressId) %>'];
 
-		var hasOwnProperty = Object.prototype.hasOwnProperty;
-
-		if (progressId && hasOwnProperty(progressId, 'updateBar')) {
-			var updateBar = progressId.updateBar;
-
-			if (typeof updateBar == 'function') {
-				progressId.updateBar(<%= percent.intValue() %>, "<%= HtmlUtil.escapeJS(fileName) %>");
-			}
+		if (progressId && typeof progressId.updateBar == 'function') {
+			progressId.updateBar(<%= percent.intValue() %>, '<%= HtmlUtil.escapeJS(fileName) %>');
 		}
-	}());
 
-	<c:if test="<%= percent.intValue() < 100 %>">
-		setTimeout("window.location.reload();", 1000);
-	</c:if>
+		<c:if test="<%= percent.intValue() < 100 %>">
+			setTimeout(window.location.reload, 1000);
+		</c:if>
+	}());
 </script>
 
 </body>

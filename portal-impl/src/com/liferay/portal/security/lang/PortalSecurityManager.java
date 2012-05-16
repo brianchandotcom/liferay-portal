@@ -18,13 +18,17 @@ import com.liferay.portal.jndi.pacl.PACLInitialContextFactoryBuilder;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.permission.PortalHookPermission;
+import com.liferay.portal.kernel.util.JavaDetector;
 import com.liferay.portal.security.pacl.PACLClassUtil;
 import com.liferay.portal.security.pacl.PACLPolicy;
 import com.liferay.portal.security.pacl.PACLPolicyManager;
 import com.liferay.portal.security.pacl.checker.CheckerUtil;
 
+import java.lang.reflect.Field;
+
 import java.security.Permission;
 
+import javax.naming.spi.InitialContextFactoryBuilder;
 import javax.naming.spi.NamingManager;
 
 /**
@@ -49,7 +53,16 @@ public class PortalSecurityManager extends SecurityManager {
 			initInitialContextFactoryBuilder();
 		}
 		catch (Exception e) {
-			_log.error(e, e);
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Unable to override the initial context factory builder " +
+						"because one already exists. JNDI security is not " +
+							"enabled.");
+			}
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
+			}
 		}
 	}
 
@@ -128,25 +141,52 @@ public class PortalSecurityManager extends SecurityManager {
 	}
 
 	protected void initInitialContextFactoryBuilder() throws Exception {
-		if (!_initInitialContextFactoryBuilder) {
-			return;
-		}
+		if (!NamingManager.hasInitialContextFactoryBuilder()) {
+			PACLInitialContextFactoryBuilder paclInitialContextFactoryBuilder =
+				new PACLInitialContextFactoryBuilder();
 
-		_initInitialContextFactoryBuilder = false;
-
-		if (NamingManager.hasInitialContextFactoryBuilder()) {
 			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Unable to override the initial context factory builder " +
-						"because one already exists. JNDI security is not " +
-							"enabled.");
+				_log.info("Overriding the initial context factory builder");
 			}
 
+			NamingManager.setInitialContextFactoryBuilder(
+				paclInitialContextFactoryBuilder);
+		}
+
+		Class<?> clazz = NamingManager.class;
+
+		String fieldName = "initctx_factory_builder";
+
+		if (JavaDetector.isIBM()) {
+			fieldName = "icfb";
+		}
+
+		Field field = clazz.getDeclaredField(fieldName);
+
+		field.setAccessible(true);
+
+		InitialContextFactoryBuilder initialContextFactoryBuilder =
+			(InitialContextFactoryBuilder)field.get(null);
+
+		if (initialContextFactoryBuilder
+				instanceof PACLInitialContextFactoryBuilder) {
+
 			return;
 		}
 
-		NamingManager.setInitialContextFactoryBuilder(
-			new PACLInitialContextFactoryBuilder());
+		PACLInitialContextFactoryBuilder paclInitialContextFactoryBuilder =
+			new PACLInitialContextFactoryBuilder();
+
+		paclInitialContextFactoryBuilder.setInitialContextFactoryBuilder(
+			initialContextFactoryBuilder);
+
+		field.set(null, paclInitialContextFactoryBuilder);
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"Overriding the initial context factory builder using " +
+					"reflection");
+		}
 	}
 
 	protected void parentCheckPermission(
@@ -159,8 +199,6 @@ public class PortalSecurityManager extends SecurityManager {
 
 	private static Log _log = LogFactoryUtil.getLog(
 		PortalSecurityManager.class.getName());
-
-	private static boolean _initInitialContextFactoryBuilder = true;
 
 	private SecurityManager _parentSecurityManager;
 

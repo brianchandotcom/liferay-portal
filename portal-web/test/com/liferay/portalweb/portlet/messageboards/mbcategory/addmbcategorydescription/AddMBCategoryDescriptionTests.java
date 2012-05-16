@@ -12,14 +12,13 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.messageboards;
+package com.liferay.portalweb.portlet.messageboards.mbcategory.addmbcategorydescription;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portlet.messageboards.hybrid.HybridTestPlan;
-import com.liferay.portalweb.portlet.messageboards.mbcategory.MBCategoryTestPlan;
-import com.liferay.portalweb.portlet.messageboards.mblar.MBLARTestPlan;
-import com.liferay.portalweb.portlet.messageboards.mbmessage.MBMessageTestPlan;
-import com.liferay.portalweb.portlet.messageboards.portlet.PortletTestPlan;
+import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.messageboards.mbcategory.addmbcategory.TearDownMBCategoryTest;
+import com.liferay.portalweb.portlet.messageboards.portlet.addportletmb.AddPageMBTest;
+import com.liferay.portalweb.portlet.messageboards.portlet.addportletmb.AddPortletMBTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -27,18 +26,15 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class MessageBoardsTestPlan extends BaseTestSuite {
-
+public class AddMBCategoryDescriptionTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-
-		testSuite.addTest(HybridTestPlan.suite());
-		testSuite.addTest(MBLARTestPlan.suite());
-		testSuite.addTest(MBCategoryTestPlan.suite());
-		testSuite.addTest(MBMessageTestPlan.suite());
-		testSuite.addTest(PortletTestPlan.suite());
+		testSuite.addTestSuite(AddPageMBTest.class);
+		testSuite.addTestSuite(AddPortletMBTest.class);
+		testSuite.addTestSuite(AddMBCategoryDescriptionTest.class);
+		testSuite.addTestSuite(TearDownMBCategoryTest.class);
+		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;
 	}
-
 }

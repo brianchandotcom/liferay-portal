@@ -12,14 +12,10 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.messageboards;
+package com.liferay.portalweb.portlet.messageboards.mblar;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portlet.messageboards.hybrid.HybridTestPlan;
-import com.liferay.portalweb.portlet.messageboards.mbcategory.MBCategoryTestPlan;
-import com.liferay.portalweb.portlet.messageboards.mblar.MBLARTestPlan;
-import com.liferay.portalweb.portlet.messageboards.mbmessage.MBMessageTestPlan;
-import com.liferay.portalweb.portlet.messageboards.portlet.PortletTestPlan;
+import com.liferay.portalweb.portlet.messageboards.mblar.importmblar.ImportMBLARTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -27,16 +23,12 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class MessageBoardsTestPlan extends BaseTestSuite {
+public class MBLARTestPlan extends BaseTestSuite {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(HybridTestPlan.suite());
-		testSuite.addTest(MBLARTestPlan.suite());
-		testSuite.addTest(MBCategoryTestPlan.suite());
-		testSuite.addTest(MBMessageTestPlan.suite());
-		testSuite.addTest(PortletTestPlan.suite());
+		testSuite.addTest(ImportMBLARTests.suite());
 
 		return testSuite;
 	}

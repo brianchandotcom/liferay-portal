@@ -16,9 +16,16 @@ package com.liferay.portalweb.portlet.messageboards.mbcategory;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portlet.messageboards.mbcategory.addmbcategory.AddMBCategoryTests;
+import com.liferay.portalweb.portlet.messageboards.mbcategory.addmbcategorydescription.AddMBCategoryDescriptionTests;
 import com.liferay.portalweb.portlet.messageboards.mbcategory.addmbcategorymultiple.AddMBCategoryMultipleTests;
+import com.liferay.portalweb.portlet.messageboards.mbcategory.addmbcategorynamenull.AddMBCategoryNameNullTests;
+import com.liferay.portalweb.portlet.messageboards.mbcategory.addmbcategorynameutf8.AddMBCategoryNameUtf8Tests;
 import com.liferay.portalweb.portlet.messageboards.mbcategory.addmbsubcategory.AddMBSubcategoryTests;
+import com.liferay.portalweb.portlet.messageboards.mbcategory.addmbsubcategorydescription.AddMBSubcategoryDescriptionTests;
 import com.liferay.portalweb.portlet.messageboards.mbcategory.addmbsubcategorymultiple.AddMBSubcategoryMultipleTests;
+import com.liferay.portalweb.portlet.messageboards.mbcategory.addmbsubcategorynamenull.AddMBSubcategoryNameNullTests;
+import com.liferay.portalweb.portlet.messageboards.mbcategory.deletembcategory.DeleteMBCategoryTests;
+import com.liferay.portalweb.portlet.messageboards.mbcategory.editmbcategory.EditMBCategoryTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -32,9 +39,16 @@ public class MBCategoryTestPlan extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(AddMBCategoryTests.suite());
+		testSuite.addTest(AddMBCategoryDescriptionTests.suite());
 		testSuite.addTest(AddMBCategoryMultipleTests.suite());
+		testSuite.addTest(AddMBCategoryNameNullTests.suite());
+		testSuite.addTest(AddMBCategoryNameUtf8Tests.suite());
 		testSuite.addTest(AddMBSubcategoryTests.suite());
+		testSuite.addTest(AddMBSubcategoryDescriptionTests.suite());
 		testSuite.addTest(AddMBSubcategoryMultipleTests.suite());
+		testSuite.addTest(AddMBSubcategoryNameNullTests.suite());
+		testSuite.addTest(DeleteMBCategoryTests.suite());
+		testSuite.addTest(EditMBCategoryTests.suite());
 
 		return testSuite;
 	}

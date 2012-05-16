@@ -57,7 +57,7 @@ public class DLSyncServiceImpl extends DLSyncServiceBaseImpl {
 		List<DLSync> dlSyncs = null;
 
 		if (lastAccessDate != null) {
-			dlSyncs = dlSyncPersistence.findByC_M_R(
+			dlSyncs = dlSyncFinder.filterFindSByC_M_R(
 				companyId, lastAccessDate, repositoryId);
 		}
 

@@ -60,6 +60,7 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.InheritableMap;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ListMergeable;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -180,7 +181,6 @@ import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.util.Encryptor;
 import com.liferay.util.JS;
 import com.liferay.util.PwdGenerator;
-import com.liferay.util.UniqueList;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -465,54 +465,64 @@ public class PortalImpl implements Portal {
 	public void addPageDescription(
 		String description, HttpServletRequest request) {
 
-		String requestDescription = (String)request.getAttribute(
-			WebKeys.PAGE_DESCRIPTION);
+		ListMergeable<String> descriptionListMergeable =
+			(ListMergeable<String>)request.getAttribute(
+				WebKeys.PAGE_DESCRIPTION);
 
-		if (requestDescription != null) {
-			description = requestDescription + StringPool.SPACE + description;
+		if (descriptionListMergeable == null) {
+			descriptionListMergeable = new ListMergeable<String>();
+
+			request.setAttribute(
+				WebKeys.PAGE_DESCRIPTION, descriptionListMergeable);
 		}
 
-		request.setAttribute(WebKeys.PAGE_DESCRIPTION, description);
+		descriptionListMergeable.add(description);
+
 	}
 
 	public void addPageKeywords(String keywords, HttpServletRequest request) {
-		List<String> requestKeywords = (List<String>)request.getAttribute(
-			WebKeys.PAGE_KEYWORDS);
+		ListMergeable<String> keywordsListMergeable =
+			(ListMergeable<String>)request.getAttribute(WebKeys.PAGE_KEYWORDS);
 
-		if (requestKeywords == null) {
-			requestKeywords = new UniqueList<String>();
+		if (keywordsListMergeable == null) {
+			keywordsListMergeable = new ListMergeable<String>();
+
+			request.setAttribute(WebKeys.PAGE_KEYWORDS, keywordsListMergeable);
 		}
 
 		String[] keywordsArray = StringUtil.split(keywords);
 
 		for (String keyword : keywordsArray) {
-			if (!requestKeywords.contains(keyword.toLowerCase())) {
-				requestKeywords.add(keyword.toLowerCase());
+			if (!keywordsListMergeable.contains(keyword.toLowerCase())) {
+				keywordsListMergeable.add(keyword.toLowerCase());
 			}
 		}
-
-		request.setAttribute(WebKeys.PAGE_KEYWORDS, requestKeywords);
 	}
 
 	public void addPageSubtitle(String subtitle, HttpServletRequest request) {
-		String requestSubtitle = (String)request.getAttribute(
-			WebKeys.PAGE_SUBTITLE);
+		ListMergeable<String> subtitleListMergeable =
+			(ListMergeable<String>)request.getAttribute(WebKeys.PAGE_SUBTITLE);
 
-		if (requestSubtitle != null) {
-			subtitle = requestSubtitle + StringPool.SPACE + subtitle;
+		if (subtitleListMergeable == null) {
+			subtitleListMergeable = new ListMergeable<String>();
+
+			request.setAttribute(WebKeys.PAGE_SUBTITLE, subtitleListMergeable);
 		}
 
-		request.setAttribute(WebKeys.PAGE_SUBTITLE, subtitle);
+		subtitleListMergeable.add(subtitle);
 	}
 
 	public void addPageTitle(String title, HttpServletRequest request) {
-		String requestTitle = (String)request.getAttribute(WebKeys.PAGE_TITLE);
+		ListMergeable<String> titleListMergeable =
+			(ListMergeable<String>)request.getAttribute(WebKeys.PAGE_TITLE);
 
-		if (requestTitle != null) {
-			title = requestTitle + StringPool.SPACE + title;
+		if (titleListMergeable != null) {
+			titleListMergeable = new ListMergeable<String>();
+
+			request.setAttribute(WebKeys.PAGE_TITLE, titleListMergeable);
 		}
 
-		request.setAttribute(WebKeys.PAGE_TITLE, title);
+		titleListMergeable.add(title);
 	}
 
 	public void addPortalPortEventListener(
@@ -5057,7 +5067,13 @@ public class PortalImpl implements Portal {
 	public void setPageDescription(
 		String description, HttpServletRequest request) {
 
-		request.setAttribute(WebKeys.PAGE_DESCRIPTION, description);
+		ListMergeable<String> descriptionListMergeable =
+			new ListMergeable<String>();
+
+		descriptionListMergeable.add(description);
+
+		request.setAttribute(
+			WebKeys.PAGE_DESCRIPTION, descriptionListMergeable);
 	}
 
 	public void setPageKeywords(String keywords, HttpServletRequest request) {
@@ -5067,11 +5083,20 @@ public class PortalImpl implements Portal {
 	}
 
 	public void setPageSubtitle(String subtitle, HttpServletRequest request) {
-		request.setAttribute(WebKeys.PAGE_SUBTITLE, subtitle);
+		ListMergeable<String> subtitleListMergeable =
+			new ListMergeable<String>();
+
+		subtitleListMergeable.add(subtitle);
+
+		request.setAttribute(WebKeys.PAGE_SUBTITLE, subtitleListMergeable);
 	}
 
 	public void setPageTitle(String title, HttpServletRequest request) {
-		request.setAttribute(WebKeys.PAGE_TITLE, title);
+		ListMergeable<String> titleListMergeable = new ListMergeable<String>();
+
+		titleListMergeable.add(title);
+
+		request.setAttribute(WebKeys.PAGE_TITLE, titleListMergeable);
 	}
 
 	public void setPortalPort(HttpServletRequest request) {

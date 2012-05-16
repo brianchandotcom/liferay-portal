@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -250,19 +251,22 @@ public class ExportLayoutsAction extends PortletAction {
 
 		List<Long> layoutIds = new ArrayList<Long>();
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(layoutIdsJSON);
+		if (Validator.isNotNull(layoutIdsJSON)) {
+			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
+				layoutIdsJSON);
 
-		for (int i = 0; i < jsonArray.length(); ++i) {
-			JSONObject jsonObject = jsonArray.getJSONObject(i);
+			for (int i = 0; i < jsonArray.length(); ++i) {
+				JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-			long layoutId = jsonObject.getLong("layoutId");
+				long layoutId = jsonObject.getLong("layoutId");
 
-			if (layoutId > 0) {
-				layoutIds.add(layoutId);
-			}
+				if (layoutId > 0) {
+					layoutIds.add(layoutId);
+				}
 
-			if (jsonObject.getBoolean("includeChildren")) {
-				addLayoutIds(layoutIds, groupId, privateLayout, layoutId);
+				if (jsonObject.getBoolean("includeChildren")) {
+					addLayoutIds(layoutIds, groupId, privateLayout, layoutId);
+				}
 			}
 		}
 

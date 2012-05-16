@@ -17,6 +17,7 @@ package com.liferay.portal.security.pacl.checker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.permission.PortalServicePermission;
+import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -230,10 +231,14 @@ public class PortalServiceChecker extends BaseChecker {
 
 		// Invoke method since it will attempt to access declared members
 
-		ClassLoader commonClassLoader = getCommonClassLoader();
+		ClassLoader classLoader = getCommonClassLoader();
+
+		if (ServerDetector.isJBoss()) {
+			classLoader = getPortalClassLoader();
+		}
 
 		try {
-			Class<?> clazz = commonClassLoader.loadClass(className);
+			Class<?> clazz = classLoader.loadClass(className);
 
 			Method method = clazz.getMethod(methodName);
 

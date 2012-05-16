@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.pacl.checker;
 
+import com.liferay.portal.deploy.DeployUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
@@ -21,6 +22,7 @@ import com.liferay.portal.kernel.servlet.WebDirDetector;
 import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PathUtil;
+import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
@@ -172,6 +174,15 @@ public class FileChecker extends BaseChecker {
 		String value = getProperty(key);
 
 		if (value != null) {
+			try {
+				value = StringUtil.replace(
+					value, "${auto.deploy.dest.dir}",
+					DeployUtil.getAutoDeployDestDir());
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
+
 			String[] paths = StringUtil.split(value);
 
 			if (value.contains("${comma}")) {
@@ -271,6 +282,12 @@ public class FileChecker extends BaseChecker {
 
 			paths.add(
 				_portalDir + "WEB-INF/lib/org.springframework.aspects.jar");
+		}
+
+		if (ServerDetector.isJBoss()) {
+			String jbossHome = System.getProperty("jboss.home.dir");
+
+			paths.add(jbossHome + "/modules/-");
 		}
 
 		for (String path : paths) {

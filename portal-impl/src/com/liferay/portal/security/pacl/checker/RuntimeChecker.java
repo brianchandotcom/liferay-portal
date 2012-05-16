@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseAsyncDestination;
 import com.liferay.portal.kernel.util.JavaDetector;
 import com.liferay.portal.kernel.util.PathUtil;
+import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
@@ -234,7 +235,10 @@ public class RuntimeChecker extends BaseReflectChecker {
 		}
 
 		if (callerClass6 == Class.class) {
-			if (isTomcatJdbcLeakPrevention(callerClass7)) {
+			if (isJBossMessages(callerClass7) ||
+				isJBossServiceControllerImpl(callerClass7) ||
+				isTomcatJdbcLeakPrevention(callerClass7)) {
+
 				return true;
 			}
 		}
@@ -266,12 +270,24 @@ public class RuntimeChecker extends BaseReflectChecker {
 			}
 		}
 		else if (callerClass6 == Thread.class) {
+			boolean allow = false;
+
 			ClassLoader contextClassLoader =
 				PACLClassLoaderUtil.getContextClassLoader();
+			ClassLoader portalClassLoader = getPortalClassLoader();
 
-			if (isSharedClassLoader(contextClassLoader) ||
-				isLocalClassLoader(contextClassLoader)) {
+			if (contextClassLoader == portalClassLoader) {
+				if (PACLClassLoaderUtil.getClassLoader(callerClass7) !=
+						getClassLoader()) {
 
+					allow = true;
+				}
+			}
+			else {
+				allow = true;
+			}
+
+			if (allow) {
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						"Allowing " + callerClass7.getName() +
@@ -300,12 +316,29 @@ public class RuntimeChecker extends BaseReflectChecker {
 	protected boolean hasGetProtectionDomain() {
 		Class<?> callerClass7 = Reflection.getCallerClass(7);
 
-		if (callerClass7.getEnclosingClass() ==
-				DefaultMBeanServerInterceptor.class) {
+		if (ServerDetector.isJBoss()) {
+			Class<?> enclosingClass7 = callerClass7.getEnclosingClass();
 
-			logGetProtectionDomain(callerClass7, 7);
+			String enclosingClassName7 = enclosingClass7.getName();
 
-			return true;
+			if (enclosingClassName7.equals(
+					_CLASS_NAME_DEFAULT_MBEAN_SERVER_INTERCEPTOR)) {
+
+				logGetProtectionDomain(callerClass7, 7);
+
+				return true;
+			}
+
+			return false;
+		}
+		else {
+			if (callerClass7.getEnclosingClass() ==
+					DefaultMBeanServerInterceptor.class) {
+
+				logGetProtectionDomain(callerClass7, 7);
+
+				return true;
+			}
 		}
 
 		return false;
@@ -389,28 +422,47 @@ public class RuntimeChecker extends BaseReflectChecker {
 		}
 	}
 
-	protected boolean isLocalClassLoader(ClassLoader classLoader) {
-		if (classLoader == getClassLoader()) {
-			return true;
+	protected boolean isJBossMessages(Class<?> clazz) {
+		if (!ServerDetector.isJBoss()) {
+			return false;
 		}
 
-		return false;
+		String className = clazz.getName();
+
+		if (!className.equals(_CLASS_NAME_MESSAGES)) {
+			return false;
+		}
+
+		String classLocation = PACLClassUtil.getClassLocation(clazz);
+
+		return classLocation.contains(
+			"/modules/org/jboss/logging/main/jboss-logging-");
 	}
 
-	protected boolean isSharedClassLoader(ClassLoader classLoader) {
-		if ((classLoader == null) || (classLoader == getCommonClassLoader()) ||
-			(classLoader == getSystemClassLoader())) {
-
-			return true;
+	protected boolean isJBossServiceControllerImpl(Class<?> clazz) {
+		if (!ServerDetector.isJBoss()) {
+			return false;
 		}
 
-		return false;
+		String className = clazz.getName();
+
+		if (!className.equals(_CLASS_NAME_SERVICE_CONTROLLER_IMPL)) {
+			return false;
+		}
+
+		String classLocation = PACLClassUtil.getClassLocation(clazz);
+
+		return classLocation.contains("/modules/org/jboss/msc/main/jboss-msc-");
 	}
 
 	protected boolean isTomcatJdbcLeakPrevention(Class<?> clazz) {
+		if (!ServerDetector.isTomcat()) {
+			return false;
+		}
+
 		String className = clazz.getName();
 
-		if (!className.equals(_JDBC_LEAK_PREVENTION)) {
+		if (!className.equals(_CLASS_NAME_JDBC_LEAK_PREVENTION)) {
 			return false;
 		}
 
@@ -475,11 +527,20 @@ public class RuntimeChecker extends BaseReflectChecker {
 	private static final String _CLASS_NAME_CLASS_DEFINER =
 		"sun.reflect.ClassDefiner$";
 
+	private static final String _CLASS_NAME_DEFAULT_MBEAN_SERVER_INTERCEPTOR =
+		"com.sun.jmx.interceptor.DefaultMBeanServerInterceptor";
+
+	private static final String _CLASS_NAME_JDBC_LEAK_PREVENTION =
+		"org.apache.catalina.loader.JdbcLeakPrevention";
+
+	private static final String _CLASS_NAME_MESSAGES =
+		"org.jboss.logging.Messages";
+
 	private static final String _CLASS_NAME_PROCESS_IMPL =
 		"java.lang.ProcessImpl$";
 
-	private static final String _JDBC_LEAK_PREVENTION =
-		"org.apache.catalina.loader.JdbcLeakPrevention";
+	private static final String _CLASS_NAME_SERVICE_CONTROLLER_IMPL =
+		"org.jboss.msc.service.ServiceControllerImpl";
 
 	private static final String _METHOD_NAME_GET_SYSTEM_CLASS_LOADER =
 		"getSystemClassLoader";

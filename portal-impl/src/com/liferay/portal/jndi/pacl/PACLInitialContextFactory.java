@@ -27,13 +27,19 @@ import java.util.Hashtable;
 import javax.naming.Context;
 import javax.naming.NamingException;
 import javax.naming.spi.InitialContextFactory;
+import javax.naming.spi.InitialContextFactoryBuilder;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class PACLInitialContextFactory implements InitialContextFactory {
 
-	public PACLInitialContextFactory(Hashtable<?, ?> environment) {
+	public PACLInitialContextFactory(
+		InitialContextFactoryBuilder initialContextFactoryBuilder,
+		Hashtable<?, ?> environment) {
+
+		_initialContextFactoryBuilder = initialContextFactoryBuilder;
+
 		if (environment != null) {
 			_environment = new Hashtable<Object, Object>(environment);
 		}
@@ -60,41 +66,56 @@ public class PACLInitialContextFactory implements InitialContextFactory {
 	protected Context doGetInitialContext(Hashtable<?, ?> environment)
 		throws Exception {
 
-		if (environment == null) {
-			environment = _environment;
-		}
+		InitialContextFactory initialContextFactory = null;
 
-		String initialContextFactoryClassName = null;
-
-		if (environment != null) {
-			initialContextFactoryClassName = (String)environment.get(
-				Context.INITIAL_CONTEXT_FACTORY);
-
+		if (_initialContextFactoryBuilder != null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Environment initial context factory " +
-						initialContextFactoryClassName);
+					"Use " + _initialContextFactoryBuilder.getClass() +
+						" to instantiate initial context factory");
 			}
-		}
 
-		if (initialContextFactoryClassName == null) {
-			initialContextFactoryClassName = System.getProperty(
-				Context.INITIAL_CONTEXT_FACTORY);
+			initialContextFactory =
+				_initialContextFactoryBuilder.createInitialContextFactory(
+					environment);
+		}
+		else {
+			if (environment == null) {
+				environment = _environment;
+			}
+
+			String initialContextFactoryClassName = null;
+
+			if (environment != null) {
+				initialContextFactoryClassName = (String)environment.get(
+					Context.INITIAL_CONTEXT_FACTORY);
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Environment initial context factory " +
+							initialContextFactoryClassName);
+				}
+			}
+
+			if (initialContextFactoryClassName == null) {
+				initialContextFactoryClassName = System.getProperty(
+					Context.INITIAL_CONTEXT_FACTORY);
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"System initial context factory " +
+							initialContextFactoryClassName);
+				}
+			}
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"System initial context factory " +
-						initialContextFactoryClassName);
+				_log.debug("Instantiating " + initialContextFactoryClassName);
 			}
-		}
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Instantiating " + initialContextFactoryClassName);
+			initialContextFactory =
+				(InitialContextFactory)InstanceFactory.newInstance(
+					initialContextFactoryClassName);
 		}
-
-		InitialContextFactory initialContextFactory =
-			(InitialContextFactory)InstanceFactory.newInstance(
-				initialContextFactoryClassName);
 
 		Context context = initialContextFactory.getInitialContext(environment);
 
@@ -118,5 +139,6 @@ public class PACLInitialContextFactory implements InitialContextFactory {
 		PACLInitialContextFactory.class.getName());
 
 	private Hashtable<?, ?> _environment;
+	private InitialContextFactoryBuilder _initialContextFactoryBuilder;
 
 }

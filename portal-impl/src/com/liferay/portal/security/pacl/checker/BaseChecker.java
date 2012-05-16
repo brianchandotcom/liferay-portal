@@ -17,6 +17,7 @@ package com.liferay.portal.security.pacl.checker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.PACLConstants;
+import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.security.pacl.PACLPolicy;
@@ -115,18 +116,34 @@ public abstract class BaseChecker implements Checker, PACLConstants {
 				callerClass);
 
 			if (callerClassLoader != _commonClassLoader) {
-				if (Validator.isNotNull(actions)) {
-					_log.error(
-						"A plugin is hijacking the JSP compiler via " +
-							callerClassName + " to " + actions + " " + subject);
-				}
-				else {
-					_log.error(
-						"A plugin is hijacking the JSP compiler via " +
-							callerClassName + " to " + subject);
+				boolean allow = false;
+
+				if (ServerDetector.isJBoss()) {
+					String callerClassLoaderString =
+						callerClassLoader.toString();
+
+					if (callerClassLoaderString.contains(
+							_MODULE_NAME_ORG_JBOSS_AS_WEB_MAIN)) {
+
+						allow = true;
+					}
 				}
 
-				return false;
+				if (!allow) {
+					if (Validator.isNotNull(actions)) {
+						_log.error(
+							"A plugin is hijacking the JSP compiler via " +
+								callerClassName + " to " + actions + " " +
+									subject);
+					}
+					else {
+						_log.error(
+							"A plugin is hijacking the JSP compiler via " +
+								callerClassName + " to " + subject);
+					}
+
+					return false;
+				}
 			}
 
 			if (_log.isDebugEnabled()) {
@@ -164,6 +181,9 @@ public abstract class BaseChecker implements Checker, PACLConstants {
 
 	private static final String _ClASS_NAME_TAG_HANDLER_POOL =
 		"org.apache.jasper.runtime.TagHandlerPool";
+
+	private static final String _MODULE_NAME_ORG_JBOSS_AS_WEB_MAIN =
+		"org.jboss.as.web:main";
 
 	private static final String _PACKAGE_NAME_ORG_APACHE_JASPER_COMPILER =
 		"org.apache.jasper.compiler.";

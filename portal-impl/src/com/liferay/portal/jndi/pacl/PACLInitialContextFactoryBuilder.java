@@ -14,6 +14,9 @@
 
 package com.liferay.portal.jndi.pacl;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
 import java.util.Hashtable;
 
 import javax.naming.spi.InitialContextFactory;
@@ -28,7 +31,23 @@ public class PACLInitialContextFactoryBuilder
 	public InitialContextFactory createInitialContextFactory(
 		Hashtable<?, ?> environment) {
 
-		return new PACLInitialContextFactory(environment);
+		if (_log.isDebugEnabled()) {
+			_log.debug("Creating " + PACLInitialContextFactory.class.getName());
+		}
+
+		return new PACLInitialContextFactory(
+			_initialContextFactoryBuilder, environment);
 	}
+
+	public void setInitialContextFactoryBuilder(
+		InitialContextFactoryBuilder initialContextFactoryBuilder) {
+
+		_initialContextFactoryBuilder = initialContextFactoryBuilder;
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		PACLInitialContextFactoryBuilder.class.getName());
+
+	private InitialContextFactoryBuilder _initialContextFactoryBuilder;
 
 }

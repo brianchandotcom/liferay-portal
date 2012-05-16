@@ -114,8 +114,7 @@ public class EditPageAttachmentAction extends EditFileEntryAction {
 			}
 		}
 		catch (Exception e) {
-			if (e instanceof DuplicateFileException ||
-				e instanceof NoSuchNodeException ||
+			if (e instanceof NoSuchNodeException ||
 				e instanceof NoSuchPageException ||
 				e instanceof PrincipalException) {
 
@@ -123,7 +122,8 @@ public class EditPageAttachmentAction extends EditFileEntryAction {
 
 				setForward(actionRequest, "portlet.wiki.error");
 			}
-			else if (e instanceof FileNameException) {
+			else if (e instanceof DuplicateFileException ||
+					 e instanceof FileNameException) {
 				SessionErrors.add(actionRequest, e.getClass().getName());
 
 				HttpServletResponse response =

@@ -21,7 +21,6 @@
 	title="error"
 />
 
-<liferay-ui:error exception="<%= DuplicateFileException.class %>" message="please-enter-a-file-with-a-valid-file-name" />
 <liferay-ui:error exception="<%= NoSuchNodeException.class %>" message="please-enter-a-valid-page-title" />
 
 <c:if test="<%= SessionErrors.contains(renderRequest, NoSuchPageException.class.getName()) %>">

@@ -1319,7 +1319,11 @@ public class DLFileEntryLocalServiceImpl
 				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 					DLFileEntry.class);
 
-				indexer.delete(dlFileEntry);
+				dlFileEntry.setGroupId(-dlFileEntry.getGroupId());
+
+				indexer.reindex(dlFileEntry);
+
+				dlFileEntry.setGroupId(-dlFileEntry.getGroupId());
 			}
 		}
 

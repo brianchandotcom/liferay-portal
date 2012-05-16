@@ -112,7 +112,7 @@ public class BlogsIndexer extends BaseIndexer {
 
 		Property statusProperty = PropertyFactoryUtil.forName("status");
 
-		dynamicQuery.add(statusProperty.eq(WorkflowConstants.STATUS_APPROVED));
+		dynamicQuery.add(statusProperty.ne(WorkflowConstants.STATUS_IN_TRASH));
 	}
 
 	@Override
@@ -125,6 +125,10 @@ public class BlogsIndexer extends BaseIndexer {
 	@Override
 	protected Document doGetDocument(Object obj) throws Exception {
 		BlogsEntry entry = (BlogsEntry)obj;
+
+		if (entry.getStatus() == WorkflowConstants.STATUS_IN_TRASH) {
+			entry.setGroupId(-entry.getGroupId());
+		}
 
 		Document document = getBaseModelDocument(PORTLET_ID, entry);
 
@@ -161,7 +165,10 @@ public class BlogsIndexer extends BaseIndexer {
 	protected void doReindex(Object obj) throws Exception {
 		BlogsEntry entry = (BlogsEntry)obj;
 
-		if (!entry.isApproved()) {
+		if (!entry.isApproved() &&
+			(entry.getStatus() != WorkflowConstants.STATUS_IN_TRASH) &&
+			(entry.getStatus() != WorkflowConstants.STATUS_DRAFT)) {
+
 			return;
 		}
 

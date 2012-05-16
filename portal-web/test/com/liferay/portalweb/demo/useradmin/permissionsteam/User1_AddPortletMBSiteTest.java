@@ -107,6 +107,8 @@ public class User1_AddPortletMBSiteTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		selenium.type("//input[@id='layout_configuration_content']",
+			RuntimeVariables.replace("m"));
 		selenium.typeKeys("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("m"));
 

@@ -15,6 +15,7 @@
 --%>
 
 <%@ include file="/html/taglib/init.jsp" %>
+<%@ page import="com.liferay.portal.kernel.util.ListMergeable" %>
 
 <c:if test="<%= layout != null %>">
 
@@ -48,13 +49,13 @@
 		metaDescriptionLanguageId = w3cDefaultLanguageId;
 	}
 
-	String dynamicMetaDescription = (String)request.getAttribute(WebKeys.PAGE_DESCRIPTION);
+	ListMergeable<String> dynamicMetaDescription = (ListMergeable<String>)request.getAttribute(WebKeys.PAGE_DESCRIPTION);
 
 	if (Validator.isNotNull(dynamicMetaDescription)) {
 		if (Validator.isNotNull(metaDescription)) {
 			StringBundler sb = new StringBundler(4);
 
-			sb.append(dynamicMetaDescription);
+			sb.append(dynamicMetaDescription.mergeToString(StringPool.SPACE));
 			sb.append(StringPool.PERIOD);
 			sb.append(StringPool.SPACE);
 			sb.append(metaDescription);
@@ -62,7 +63,7 @@
 			metaDescription = sb.toString();
 		}
 		else {
-			metaDescription = dynamicMetaDescription;
+			metaDescription = dynamicMetaDescription.mergeToString(StringPool.SPACE);
 		}
 	}
 	%>
@@ -80,13 +81,13 @@
 		metaKeywordsLanguageId = w3cDefaultLanguageId;
 	}
 
-	List<String> dynamicMetaKeywords = (List<String>)request.getAttribute(WebKeys.PAGE_KEYWORDS);
+	ListMergeable<String> dynamicMetaKeywords = (ListMergeable<String>)request.getAttribute(WebKeys.PAGE_KEYWORDS);
 
 	if (dynamicMetaKeywords != null) {
 		if (Validator.isNotNull(metaKeywords)) {
 			StringBundler sb = new StringBundler(4);
 
-			sb.append(StringUtil.merge(dynamicMetaKeywords));
+			sb.append(dynamicMetaKeywords.mergeToString(StringPool.COMMA));
 			sb.append(StringPool.COMMA);
 			sb.append(StringPool.SPACE);
 			sb.append(metaKeywords);
@@ -94,7 +95,7 @@
 			metaKeywords = sb.toString();
 		}
 		else {
-			metaKeywords = StringUtil.merge(dynamicMetaKeywords);
+			metaKeywords = dynamicMetaKeywords.mergeToString(StringPool.COMMA);
 		}
 
 	}

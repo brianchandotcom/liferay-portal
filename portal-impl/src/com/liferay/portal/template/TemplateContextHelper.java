@@ -30,12 +30,14 @@ import com.liferay.portal.kernel.util.GetterUtil_IW;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ListMergeable;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil_IW;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Randomizer_IW;
 import com.liferay.portal.kernel.util.StaticFieldGetter;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil_IW;
 import com.liferay.portal.kernel.util.TimeZoneUtil_IW;
 import com.liferay.portal.kernel.util.UnicodeFormatter_IW;
@@ -443,10 +445,25 @@ public class TemplateContextHelper {
 
 		// Page title and subtitle
 
-		templateContext.put(
-			"pageTitle", request.getAttribute(WebKeys.PAGE_TITLE));
-		templateContext.put(
-			"pageSubtitle", request.getAttribute(WebKeys.PAGE_SUBTITLE));
+		ListMergeable<String> pageTitleListMergeable =
+			(ListMergeable<String>)request.getAttribute(WebKeys.PAGE_TITLE);
+
+		if (pageTitleListMergeable != null) {
+			String pageTitle = pageTitleListMergeable.mergeToString(
+				StringPool.SPACE);
+
+			templateContext.put("pageTitle", pageTitle);
+		}
+
+		ListMergeable<String> pageSubtitleListMergeable =
+			(ListMergeable<String>)request.getAttribute(WebKeys.PAGE_SUBTITLE);
+
+		if (pageSubtitleListMergeable != null) {
+			String pageSubtitle = pageSubtitleListMergeable.mergeToString(
+				StringPool.SPACE);
+
+			templateContext.put("pageSubtitle", pageSubtitle);
+		}
 	}
 
 	protected void prepareTiles(

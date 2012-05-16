@@ -14,6 +14,12 @@
  */
 --%>
 
+<%@ page import="com.liferay.portal.kernel.search.BooleanClause" %>
+<%@ page import="com.liferay.portal.kernel.search.BooleanClauseFactoryUtil" %>
+<%@ page import="com.liferay.portal.kernel.search.Field" %>
+<%@ page import="com.liferay.portal.kernel.search.SearchContext" %>
+<%@ page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %>
+
 <%
 SearchContainer mainSearchSearchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, null, LanguageUtil.format(pageContext, "no-results-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>"));
 
@@ -42,6 +48,10 @@ for (FacetConfiguration facetConfiguration : facetConfigurations) {
 
 	searchContext.addFacet(facet);
 }
+
+BooleanClause booleanClause = BooleanClauseFactoryUtil.create(searchContext, Field.STATUS, String.valueOf(WorkflowConstants.STATUS_IN_TRASH), "MUST_NOT");
+
+searchContext.setBooleanClauses(new BooleanClause[] {booleanClause});
 
 Indexer indexer = FacetedSearcher.getInstance();
 

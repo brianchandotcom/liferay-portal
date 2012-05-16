@@ -745,6 +745,10 @@ public abstract class BaseIndexer implements Indexer {
 
 		boolean stagingGroup = false;
 
+		if (groupId < 0) {
+			groupId = -groupId;
+		}
+
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
 		if (group.isLayout()) {

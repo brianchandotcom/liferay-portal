@@ -250,7 +250,6 @@
 							<replacetoken><![CDATA[throw '[CKEDITOR.editor] The instance "' + this.name + '" already exists.';]]></replacetoken>
 							<replacevalue><![CDATA[{
 								var previous = CKEDITOR.instances[ this.name ];
-								// Destroy detached editor silently.
 								if ( previous.element.isOffline() || previous.container && previous.container.isOffline() )
 									previous.destroy( false );
 								else
@@ -283,9 +282,6 @@
 								* Check whether the editor UI has been removed from DOM thus
 								* the editor instance is considered to be obsoleted.
 								* @since 3.6.2
-								* @example
-								* editor.container.remove();
-								* alert( editor.checkDetached() );
 								*/
 								checkDetached : function()
 								{

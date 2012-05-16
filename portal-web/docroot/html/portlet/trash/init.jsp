@@ -16,7 +16,15 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.trash.TrashHandler" %><%@
+<%@ page import="com.liferay.portal.kernel.search.BooleanClauseOccur" %><%@
+page import="com.liferay.portal.kernel.search.BooleanQuery" %><%@
+page import="com.liferay.portal.kernel.search.BooleanQueryFactoryUtil" %><%@
+page import="com.liferay.portal.kernel.search.Document" %><%@
+page import="com.liferay.portal.kernel.search.Hits" %><%@
+page import="com.liferay.portal.kernel.search.SearchContext" %><%@
+page import="com.liferay.portal.kernel.search.SearchContextFactory" %><%@
+page import="com.liferay.portal.kernel.search.SearchEngineUtil" %><%@
+page import="com.liferay.portal.kernel.trash.TrashHandler" %><%@
 page import="com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil" %><%@
 page import="com.liferay.portal.kernel.trash.TrashRenderer" %><%@
 page import="com.liferay.portlet.asset.model.AssetEntry" %><%@
@@ -25,7 +33,9 @@ page import="com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.asset.DLFileEntryAssetRendererFactory" %><%@
 page import="com.liferay.portlet.trash.action.EditEntryAction" %><%@
 page import="com.liferay.portlet.trash.model.TrashEntry" %><%@
+page import="com.liferay.portlet.trash.search.EntryDisplayTerms" %><%@
 page import="com.liferay.portlet.trash.search.EntrySearch" %><%@
+page import="com.liferay.portlet.trash.search.EntrySearchTerms" %><%@
 page import="com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil" %><%@
 page import="com.liferay.portlet.trash.service.TrashEntryServiceUtil" %>
 

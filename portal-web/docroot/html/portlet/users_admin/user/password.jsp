@@ -23,7 +23,7 @@ PasswordPolicy passwordPolicy = (PasswordPolicy)request.getAttribute("user.passw
 
 boolean passwordResetDisabled = false;
 
-if ((selUser.getLastLoginDate() == null) && passwordPolicy.isChangeable() && passwordPolicy.isChangeRequired()) {
+if (selUser != null && (selUser.getLastLoginDate() == null) && passwordPolicy.isChangeable() && passwordPolicy.isChangeRequired()) {
 	passwordResetDisabled = true;
 }
 
@@ -99,7 +99,7 @@ else {
 		</aui:validator>
 	</aui:input>
 
-	<c:if test="<%= user.getUserId() != selUser.getUserId() %>">
+	<c:if test="<%= !(selUser == null ) && (user.getUserId() != selUser.getUserId()) %>">
 		<aui:input disabled="<%= passwordResetDisabled %>" label="password-reset-required" name="passwordReset" type="checkbox" value="<%= passwordReset %>" />
 	</c:if>
 </aui:fieldset>

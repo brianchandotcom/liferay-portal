@@ -389,6 +389,37 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	}
 
 	/**
+	 * @deprecated {@link #addGroup(long, long, String, long, long, String,
+	 *             String, int, String, boolean, boolean, ServiceContext)}
+	 */
+	public Group addGroup(
+			long userId, String className, long classPK, long liveGroupId,
+			String name, String description, int type, String friendlyURL,
+			boolean site, boolean active, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return addGroup(
+			userId, GroupConstants.DEFAULT_PARENT_GROUP_ID, className, classPK,
+			liveGroupId, name, description, type, friendlyURL, site, active,
+			serviceContext);
+	}
+
+	/**
+	 * @deprecated {@link #addGroup(long, long, String, long, String, String,
+	 *             int, String, boolean, boolean, ServiceContext)}
+	 */
+	public Group addGroup(
+			long userId, String className, long classPK, String name,
+			String description, int type, String friendlyURL, boolean site,
+			boolean active, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return addGroup(
+			userId, GroupConstants.DEFAULT_PARENT_GROUP_ID, className, classPK,
+			name, description, type, friendlyURL, site, active, serviceContext);
+	}
+
+	/**
 	 * Adds the groups to the role.
 	 *
 	 * @param  roleId the primary key of the role

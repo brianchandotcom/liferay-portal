@@ -304,6 +304,30 @@ public interface GroupLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* @deprecated {@link #addGroup(long, long, String, long, long, String,
+	String, int, String, boolean, boolean, ServiceContext)}
+	*/
+	public com.liferay.portal.model.Group addGroup(long userId,
+		java.lang.String className, long classPK, long liveGroupId,
+		java.lang.String name, java.lang.String description, int type,
+		java.lang.String friendlyURL, boolean site, boolean active,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* @deprecated {@link #addGroup(long, long, String, long, String, String,
+	int, String, boolean, boolean, ServiceContext)}
+	*/
+	public com.liferay.portal.model.Group addGroup(long userId,
+		java.lang.String className, long classPK, java.lang.String name,
+		java.lang.String description, int type, java.lang.String friendlyURL,
+		boolean site, boolean active,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Adds the groups to the role.
 	*
 	* @param roleId the primary key of the role

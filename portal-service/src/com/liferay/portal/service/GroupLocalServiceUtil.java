@@ -341,6 +341,38 @@ public class GroupLocalServiceUtil {
 	}
 
 	/**
+	* @deprecated {@link #addGroup(long, long, String, long, long, String,
+	String, int, String, boolean, boolean, ServiceContext)}
+	*/
+	public static com.liferay.portal.model.Group addGroup(long userId,
+		java.lang.String className, long classPK, long liveGroupId,
+		java.lang.String name, java.lang.String description, int type,
+		java.lang.String friendlyURL, boolean site, boolean active,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .addGroup(userId, className, classPK, liveGroupId, name,
+			description, type, friendlyURL, site, active, serviceContext);
+	}
+
+	/**
+	* @deprecated {@link #addGroup(long, long, String, long, String, String,
+	int, String, boolean, boolean, ServiceContext)}
+	*/
+	public static com.liferay.portal.model.Group addGroup(long userId,
+		java.lang.String className, long classPK, java.lang.String name,
+		java.lang.String description, int type, java.lang.String friendlyURL,
+		boolean site, boolean active,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .addGroup(userId, className, classPK, name, description,
+			type, friendlyURL, site, active, serviceContext);
+	}
+
+	/**
 	* Adds the groups to the role.
 	*
 	* @param roleId the primary key of the role

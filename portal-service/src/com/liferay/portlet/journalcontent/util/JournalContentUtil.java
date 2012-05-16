@@ -134,6 +134,9 @@ public class JournalContentUtil {
 	}
 
 	public static JournalContent getJournalContent() {
+		PortalRuntimePermission.checkAccessibleFeature(
+			JournalContentUtil.class);
+
 		return _journalContent;
 	}
 

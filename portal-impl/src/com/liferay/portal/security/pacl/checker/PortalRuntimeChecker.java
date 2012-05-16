@@ -29,6 +29,7 @@ import java.util.TreeSet;
 public class PortalRuntimeChecker extends BaseChecker {
 
 	public void afterPropertiesSet() {
+		initAccessibleFeatures();
 		initClassNames();
 	}
 
@@ -39,12 +40,33 @@ public class PortalRuntimeChecker extends BaseChecker {
 		String name = portalRuntimePermission.getName();
 		Object subject = portalRuntimePermission.getSubject();
 
-		if (name.equals(PORTAL_RUNTIME_PERMISSION_SET_BEAN_PROPERTY)) {
+		if (name.equals(PORTAL_RUNTIME_PERMISSION_ACCESSIBLE_FEATURE)) {
+			Class<?> clazz = (Class<?>)subject;
+
+			if (!_accessibleFeatures.contains(clazz.getName())) {
+				throw new SecurityException(
+					"Attempted to access feature " + clazz);
+			}
+		}
+		else if (name.equals(PORTAL_RUNTIME_PERMISSION_SET_BEAN_PROPERTY)) {
 			Class<?> clazz = (Class<?>)subject;
 
 			if (!_classNames.contains(clazz.getName())) {
 				throwSecurityException(
 					_log, "Attempted to set bean property on " + clazz);
+			}
+		}
+	}
+
+	protected void initAccessibleFeatures() {
+		_accessibleFeatures = getPropertySet(
+			"security-manager-accessible-features");
+
+		if (_log.isDebugEnabled()) {
+			Set<String> features = new TreeSet<String>(_accessibleFeatures);
+
+			for (String feature : features) {
+				_log.debug("Allowing access to feature " + feature);
 			}
 		}
 	}
@@ -64,6 +86,7 @@ public class PortalRuntimeChecker extends BaseChecker {
 
 	private static Log _log = LogFactoryUtil.getLog(PortalRuntimeChecker.class);
 
+	private Set<String> _accessibleFeatures;
 	private Set<String> _classNames;
 
 }

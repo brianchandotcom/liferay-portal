@@ -28,6 +28,8 @@ import javax.servlet.jsp.PageContext;
 public class RuntimePageUtil {
 
 	public static RuntimePage getRuntimePage() {
+		PortalRuntimePermission.checkAccessibleFeature(RuntimePageUtil.class);
+
 		return _runtimePage;
 	}
 

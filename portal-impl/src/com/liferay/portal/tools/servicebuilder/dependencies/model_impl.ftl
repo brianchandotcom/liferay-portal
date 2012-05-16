@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -693,6 +694,8 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 				${entity.name}.class.getName(), getPrimaryKey());
 			}
+
+			PortalRuntimePermission.checkAccessibleFeature(ExpandoBridge.class);
 
 			return _expandoBridge;
 		}

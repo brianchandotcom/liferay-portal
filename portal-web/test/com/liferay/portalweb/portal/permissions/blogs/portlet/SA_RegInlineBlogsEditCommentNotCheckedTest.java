@@ -20,8 +20,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SA_RemoveDeleteEntryPermissionsTest extends BaseTestCase {
-	public void testSA_RemoveDeleteEntryPermissions() throws Exception {
+public class SA_RegInlineBlogsEditCommentNotCheckedTest extends BaseTestCase {
+	public void testSA_RegInlineBlogsEditCommentNotChecked()
+		throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
@@ -46,23 +47,14 @@ public class SA_RemoveDeleteEntryPermissionsTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div[@class='entry-title']/h2/a",
-			RuntimeVariables.replace("Blogs Entry Title Edited"));
+			RuntimeVariables.replace("Blogs Entry Title Temporary"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Permissions",
 			RuntimeVariables.replace("Permissions"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.uncheck("//tr[5]/td[3]/input");
-		selenium.uncheck("//tr[6]/td[3]/input");
-		selenium.clickAt("//input[@value='Save']",
-			RuntimeVariables.replace("Save"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace(
-				"Your request completed successfully."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertFalse(selenium.isChecked("//tr[5]/td[3]/input"));
-		assertFalse(selenium.isChecked("//tr[6]/td[3]/input"));
+		assertFalse(selenium.isChecked(
+				"//input[@id='portlet_ACTION_UPDATE_DISCUSSION']"));
 	}
 }

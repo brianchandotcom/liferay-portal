@@ -34,19 +34,29 @@
 	<td>Permissions</td>
 </tr>
 <tr>
-	<td>uncheck</td>
-	<td>//tr[3]/td[2]/input</td>
-	<td>Add Discussion</td>
+	<td>assertChecked</td>
+	<td>//input[@id='guest_ACTION_ADD_DISCUSSION']</td>
+	<td>Guest Add Discussion</td>
 </tr>
 <tr>
 	<td>uncheck</td>
-	<td>//tr[5]/td[2]/input</td>
-	<td>Add Discussion</td>
+	<td>//input[@id='guest_ACTION_ADD_DISCUSSION']</td>
+	<td>Guest Add Discussion</td>
 </tr>
 <tr>
-	<td>uncheck</td>
-	<td>//tr[6]/td[2]/input</td>
-	<td>Add Discussion</td>
+	<td>assertNotChecked</td>
+	<td>//input[@id='guest_ACTION_ADD_DISCUSSION']</td>
+	<td>Guest Add Discussion</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//input[@id='portlet_ACTION_ADD_DISCUSSION']</td>
+	<td>Portlet Add Discussion</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//input[@id='power-user_ACTION_ADD_DISCUSSION']</td>
+	<td>Power User Add Discussion</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -60,20 +70,19 @@
 </tr>
 <tr>
 	<td>assertNotChecked</td>
-	<td>//tr[3]/td[2]/input</td>
-	<td>Add Discussion</td>
+	<td>//input[@id='guest_ACTION_ADD_DISCUSSION']</td>
+	<td>Guest Add Discussion</td>
 </tr>
 <tr>
 	<td>assertNotChecked</td>
-	<td>//tr[5]/td[2]/input</td>
-	<td>Add Discussion</td>
+	<td>//input[@id='portlet_ACTION_ADD_DISCUSSION']</td>
+	<td>Portlet Add Discussion</td>
 </tr>
 <tr>
 	<td>assertNotChecked</td>
-	<td>//tr[6]/td[2]/input</td>
-	<td>Add Discussion</td>
+	<td>//input[@id='power-user_ACTION_ADD_DISCUSSION']</td>
+	<td>Power User Add Discussion</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

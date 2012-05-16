@@ -29,6 +29,26 @@
 	<td>Blogs Entry Title Temporary</td>
 </tr>
 <tr>
+	<td>storeVisible</td>
+	<td>//input[@class='form-text lfr-input-resource ']</td>
+	<td>blogCommentsExpanded</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${blogCommentsExpanded}</td>
+	<td>BlogCommentsExpanded</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[@class='lfr-panel-title']/span[contains(text(),'Comments')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>BlogCommentsExpanded</td>
+	<td></td>
+</tr>
+<tr>
 	<td>waitForVisible</td>
 	<td>link=Be the first.</td>
 	<td>Be the first.</td>
@@ -73,7 +93,6 @@
 	<td>//div[@class='lfr-discussion-message']</td>
 	<td>Portlet Comment</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

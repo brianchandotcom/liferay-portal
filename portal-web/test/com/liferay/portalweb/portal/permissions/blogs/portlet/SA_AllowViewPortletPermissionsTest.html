@@ -30,12 +30,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//strong/a</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
 	<td>Options</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//strong/a</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
 	<td>Options</td>
 </tr>
 <tr>
@@ -45,12 +45,17 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(@id,'configuration')]</td>
 	<td>Configuration</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(@id,'configuration')]</td>
+	<td>Configuration</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(@id,'configuration')]</td>
 	<td>Configuration</td>
 </tr>
 <tr>
@@ -65,18 +70,28 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//input[@value='Save']</td>
-	<td>Save</td>
+	<td>//iframe[@id='_33_configurationIframeDialog']</td>
+	<td>iframe - Blogs - Configuration</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[@id='_33_configurationIframeDialog']</td>
+	<td>iframe - Blogs - Configuration</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//input[@id='guest_ACTION_VIEW']</td>
+	<td>Guest View</td>
 </tr>
 <tr>
 	<td>check</td>
-	<td>//input[@name='16_ACTION_VIEW']</td>
-	<td>View</td>
+	<td>//input[@id='guest_ACTION_VIEW']</td>
+	<td>Guest View</td>
 </tr>
 <tr>
-	<td>check</td>
-	<td>//tr[6]/td[4]/input</td>
-	<td>View</td>
+	<td>assertChecked</td>
+	<td>//input[@id='guest_ACTION_VIEW']</td>
+	<td>Guest View</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -89,16 +104,20 @@
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
-	<td>assertChecked</td>
-	<td>//input[@name='16_ACTION_VIEW']</td>
-	<td>View</td>
+	<td>waitForVisible</td>
+	<td>//input[@id='guest_ACTION_VIEW']</td>
+	<td>Guest View</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>//tr[6]/td[4]/input</td>
-	<td>View</td>
+	<td>//input[@id='guest_ACTION_VIEW']</td>
+	<td>Guest View</td>
 </tr>
-
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td></td>
+</tr>
 </tbody></table>
 </body>
 </html>

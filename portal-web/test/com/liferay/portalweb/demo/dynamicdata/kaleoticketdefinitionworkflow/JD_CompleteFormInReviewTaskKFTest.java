@@ -46,8 +46,7 @@ public class JD_CompleteFormInReviewTaskKFTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Ticket Process"),
-			selenium.getText(
-				"//div[@id='workflowMyTasksPanel']/div[2]/div/div/div/table/tbody/tr[3]/td[2]"));
+			selenium.getText("//div[@id='workflowMyTasksPanel']//tr[3]/td[2]"));
 		Thread.sleep(5000);
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));

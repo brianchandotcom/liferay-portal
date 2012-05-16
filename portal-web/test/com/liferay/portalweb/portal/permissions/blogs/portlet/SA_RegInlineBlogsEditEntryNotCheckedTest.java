@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.demo.dynamicdata.kaleoticketdefinitionworkflow;
+package com.liferay.portalweb.portal.permissions.blogs.portlet;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SA_SignInTest extends BaseTestCase {
-	public void testSA_SignIn() throws Exception {
+public class SA_RegInlineBlogsEditEntryNotCheckedTest extends BaseTestCase {
+	public void testSA_RegInlineBlogsEditEntryNotChecked()
+		throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
@@ -31,7 +32,7 @@ public class SA_SignInTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("//input[@id='_58_login']")) {
+				if (selenium.isElementPresent("link=Blogs Permissions Page")) {
 					break;
 				}
 			}
@@ -41,14 +42,18 @@ public class SA_SignInTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.type("//input[@id='_58_login']",
-			RuntimeVariables.replace("test@liferay.com"));
-		selenium.type("//input[@id='_58_password']",
-			RuntimeVariables.replace("test"));
-		selenium.click("//input[@id='_58_rememberMeCheckbox']");
-		selenium.clickAt("//input[@value='Sign In']",
-			RuntimeVariables.replace("Sign In"));
+		selenium.clickAt("link=Blogs Permissions Page",
+			RuntimeVariables.replace("Blogs Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
+		selenium.clickAt("//div[@class='entry-title']/h2/a",
+			RuntimeVariables.replace("Blogs Entry Title"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		selenium.clickAt("link=Permissions",
+			RuntimeVariables.replace("Permissions"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		assertFalse(selenium.isChecked("//input[@id='portlet_ACTION_UPDATE']"));
 	}
 }

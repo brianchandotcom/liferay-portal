@@ -44,7 +44,7 @@ public class PortletTests extends BaseTestSuite {
 		testSuite.addTestSuite(Portlet_AssertViewPortletTest.class);
 		testSuite.addTestSuite(LogoutTest.class);
 		testSuite.addTestSuite(SA_LoginTest.class);
-		testSuite.addTestSuite(SA_RemoveConfigurePortletPermissionsTest.class);
+		testSuite.addTestSuite(SA_RegInlineBlogsConfigurationNotCheckedTest.class);
 		testSuite.addTestSuite(LogoutTest.class);
 		testSuite.addTestSuite(Portlet_LoginTest.class);
 		testSuite.addTestSuite(Portlet_AssertCannotConfigurePortletTest.class);
@@ -57,7 +57,7 @@ public class PortletTests extends BaseTestSuite {
 		testSuite.addTestSuite(LogoutTest.class);
 		testSuite.addTestSuite(SA_LoginTest.class);
 		testSuite.addTestSuite(SA_RemoveConfigurePortletPermissionsTest.class);
-		testSuite.addTestSuite(SA_RemoveAddEntryPermissionsTest.class);
+		testSuite.addTestSuite(SA_RegInlineBlogsAddEntryNotCheckedTest.class);
 		testSuite.addTestSuite(LogoutTest.class);
 		testSuite.addTestSuite(Portlet_LoginTest.class);
 		testSuite.addTestSuite(Portlet_AssertCannotAddEntryTest.class);
@@ -97,7 +97,7 @@ public class PortletTests extends BaseTestSuite {
 		testSuite.addTestSuite(LogoutTest.class);
 		testSuite.addTestSuite(SA_LoginTest.class);
 		testSuite.addTestSuite(SA_RemoveAddCommentPermissionsTest.class);
-		testSuite.addTestSuite(SA_RemoveEditCommentPermissionsTest.class);
+		testSuite.addTestSuite(SA_RegInlineBlogsEditCommentNotCheckedTest.class);
 		testSuite.addTestSuite(LogoutTest.class);
 		testSuite.addTestSuite(Portlet_LoginTest.class);
 		testSuite.addTestSuite(Portlet_AssertCannotEditCommentTest.class);
@@ -110,7 +110,7 @@ public class PortletTests extends BaseTestSuite {
 		testSuite.addTestSuite(LogoutTest.class);
 		testSuite.addTestSuite(SA_LoginTest.class);
 		testSuite.addTestSuite(SA_RemoveEditCommentPermissionsTest.class);
-		testSuite.addTestSuite(SA_RemoveDeleteCommentPermissionsTest.class);
+		testSuite.addTestSuite(SA_RegInlineBlogsDeleteCommentNotCheckedTest.class);
 		testSuite.addTestSuite(LogoutTest.class);
 		testSuite.addTestSuite(Portlet_LoginTest.class);
 		testSuite.addTestSuite(Portlet_AssertCannotDeleteCommentTest.class);
@@ -123,7 +123,7 @@ public class PortletTests extends BaseTestSuite {
 		testSuite.addTestSuite(LogoutTest.class);
 		testSuite.addTestSuite(SA_LoginTest.class);
 		testSuite.addTestSuite(SA_RemoveDeleteCommentPermissionsTest.class);
-		testSuite.addTestSuite(SA_RemovePermissionsEntryPermissionsTest.class);
+		testSuite.addTestSuite(SA_RegInlineBlogsEntryPermissionsNotCheckedTest.class);
 		testSuite.addTestSuite(LogoutTest.class);
 		testSuite.addTestSuite(Portlet_LoginTest.class);
 		testSuite.addTestSuite(Portlet_AssertCannotEditEntryPermissionsTest.class);
@@ -136,7 +136,7 @@ public class PortletTests extends BaseTestSuite {
 		testSuite.addTestSuite(LogoutTest.class);
 		testSuite.addTestSuite(SA_LoginTest.class);
 		testSuite.addTestSuite(SA_RemovePermissionsEntryPermissionsTest.class);
-		testSuite.addTestSuite(SA_RemoveEditEntryPermissionsTest.class);
+		testSuite.addTestSuite(SA_RegInlineBlogsEditEntryNotCheckedTest.class);
 		testSuite.addTestSuite(LogoutTest.class);
 		testSuite.addTestSuite(Portlet_LoginTest.class);
 		testSuite.addTestSuite(Portlet_AssertCannotEditEntryTest.class);
@@ -149,7 +149,7 @@ public class PortletTests extends BaseTestSuite {
 		testSuite.addTestSuite(LogoutTest.class);
 		testSuite.addTestSuite(SA_LoginTest.class);
 		testSuite.addTestSuite(SA_RemoveEditEntryPermissionsTest.class);
-		testSuite.addTestSuite(SA_RemoveDeleteEntryPermissionsTest.class);
+		testSuite.addTestSuite(SA_RegInlineBlogsDeleteEntryNotCheckedTest.class);
 		testSuite.addTestSuite(LogoutTest.class);
 		testSuite.addTestSuite(Portlet_LoginTest.class);
 		testSuite.addTestSuite(Portlet_AssertCannotDeleteEntryTest.class);

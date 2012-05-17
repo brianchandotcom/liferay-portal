@@ -43,23 +43,18 @@ public class JSONWebServiceInvokerTest extends JSONWebServiceAbstractTest {
 
 	@Test
 	public void testBatchCalls() throws Exception {
-		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
-			"/invoker");
-
 		String command =
 			"{\n" +
-			"   \"/foo/hello-world\": {\n" +
-			"       \"userId\": 173,\n" +
-			"       \"worldName\": \"Jupiter\",\n" +
-			"   }\n" +
-			"}";
+			"\"/foo/hello-world\": {\n" +
+				"\"userId\": 173,\n" +
+					"\"worldName\": \"Jupiter\",\n" +
+						"}\n" +
+							"}";
 
 		command = "[" + command + ", " + command + "]";
 
-		mockHttpServletRequest.setContent(command.getBytes());
-
-		JSONWebServiceAction jsonWebServiceAction =
-			new JSONWebServiceInvokerAction(mockHttpServletRequest);
+		JSONWebServiceAction jsonWebServiceAction = prepareInvokerAction(
+			command);
 
 		Object result = jsonWebServiceAction.invoke();
 
@@ -67,30 +62,26 @@ public class JSONWebServiceInvokerTest extends JSONWebServiceAbstractTest {
 
 		String jsonResult = toJson(result);
 
-		assertEquals("[\"Welcome 173 to Jupiter\",\"Welcome 173 to Jupiter\"]",
+		assertEquals(
+			"[\"Welcome 173 to Jupiter\",\"Welcome 173 to Jupiter\"]",
 			jsonResult);
 	}
 
 	@Test
 	public void testFiltering() throws Exception {
-		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
-			"/invoker");
-
 		String command =
 			"{\n" +
-			"   \"$data[id, world] = /foo/get-foo-data\": {\n" +
-			"       \"id\": 173,\n" +
-			"		\"$world = /foo/hello-world\": {\n" +
-			"			\"@userId\": \"$data.id\", \n" +
-			"			\"worldName\": \"Jupiter\"\n" +
-			"		}\n" +
-			"   }\n" +
-			"}";
+				"\"$data[id, world] = /foo/get-foo-data\": {\n" +
+					"\"id\": 173,\n" +
+						"\"$world = /foo/hello-world\": {\n" +
+							"\"@userId\": \"$data.id\", \n" +
+								"\"worldName\": \"Jupiter\"\n" +
+									"}\n" +
+										"}\n" +
+											"}";
 
-		mockHttpServletRequest.setContent(command.getBytes());
-
-		JSONWebServiceAction jsonWebServiceAction =
-			new JSONWebServiceInvokerAction(mockHttpServletRequest);
+		JSONWebServiceAction jsonWebServiceAction = prepareInvokerAction(
+			command);
 
 		Object result = jsonWebServiceAction.invoke();
 
@@ -99,31 +90,25 @@ public class JSONWebServiceInvokerTest extends JSONWebServiceAbstractTest {
 		String jsonResult = toJson(result);
 
 		assertEquals(
-			"{\"id\":173,\" world\":null," +
-				"\"world\":\"Welcome 173 to Jupiter\"}", jsonResult);
-
+			"{\"id\":173,\" world\":null,\"world\":\"Welcome 173 to Jupiter\"}",
+			jsonResult);
 	}
 
 	@Test
 	public void testInnerCalls() throws Exception {
-		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
-			"/invoker");
-
 		String command =
 			"{\n" +
-			"   \"$data = /foo/get-foo-data\": {\n" +
-			"       \"id\": 173,\n" +
-			"		\"$world = /foo/hello-world\": {\n" +
-			"			\"@userId\": \"$data.id\", \n" +
-			"			\"worldName\": \"Jupiter\"\n" +
-			"		}\n" +
-			"   }\n" +
-			"}";
+				"\"$data = /foo/get-foo-data\": {\n" +
+					"\"id\": 173,\n" +
+						"\"$world = /foo/hello-world\": {\n" +
+							"\"@userId\": \"$data.id\", \n" +
+								"\"worldName\": \"Jupiter\"\n" +
+									"}\n" +
+										"}\n" +
+											"}";
 
-		mockHttpServletRequest.setContent(command.getBytes());
-
-		JSONWebServiceAction jsonWebServiceAction =
-			new JSONWebServiceInvokerAction(mockHttpServletRequest);
+		JSONWebServiceAction jsonWebServiceAction = prepareInvokerAction(
+			command);
 
 		Object result = jsonWebServiceAction.invoke();
 
@@ -135,77 +120,64 @@ public class JSONWebServiceInvokerTest extends JSONWebServiceAbstractTest {
 			"{\"id\":173,\"height\":177,\"name\":\"John Doe\"," +
 				"\"value\":\"foo!\",\"world\":\"Welcome 173 to Jupiter\"}",
 			jsonResult);
-
 	}
 
 	@Test
 	public void testSimpleCall() throws Exception {
+		String command ="{\n" +
+			"\"/foo/hello-world\": {\n" +
+				"\"userId\": 173,\n" +
+					"\"worldName\": \"Jupiter\",\n" +
+						"}\n" +
+							"}";
 
-		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
-			"/invoker");
+		JSONWebServiceAction jsonWebServiceAction = prepareInvokerAction(
+			command);
 
-		String command =
-			"{\n" +
-			"   \"/foo/hello-world\": {\n" +
-			"       \"userId\": 173,\n" +
-			"       \"worldName\": \"Jupiter\",\n" +
-			"   }\n" +
-			"}";
-
-		mockHttpServletRequest.setContent(command.getBytes());
-
-		JSONWebServiceAction jsonWebServiceAction =
-			new JSONWebServiceInvokerAction(mockHttpServletRequest);
-
-		assertEquals(
-			"Welcome 173 to Jupiter", jsonWebServiceAction.invoke());
-
+		assertEquals("Welcome 173 to Jupiter", jsonWebServiceAction.invoke());
 	}
 
 	@Test
 	public void testSimpleCallUsingCmdParam() throws Exception {
-
-		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
-			"/invoker");
-
 		String command =
 			"{\n" +
-			"   \"/foo/hello-world\": {\n" +
-			"       \"userId\": 173,\n" +
-			"       \"worldName\": \"Jupiter\",\n" +
-			"   }\n" +
-			"}";
+				"\"/foo/hello-world\": {\n" +
+					"\"userId\": 173,\n" +
+						"\"worldName\": \"Jupiter\",\n" +
+							"}\n" +
+								"}";
 
-		mockHttpServletRequest.setParameter("cmd", command);
+		JSONWebServiceAction jsonWebServiceAction = prepareInvokerAction(
+			command);
 
-		JSONWebServiceAction jsonWebServiceAction =
-			new JSONWebServiceInvokerAction(mockHttpServletRequest);
-
-		assertEquals(
-			"Welcome 173 to Jupiter", jsonWebServiceAction.invoke());
-
+		assertEquals("Welcome 173 to Jupiter", jsonWebServiceAction.invoke());
 	}
 
 	@Test
 	public void testSimpleCallWithName() throws Exception {
+		String command =
+			"{\n" +
+				"\"$world = /foo/hello-world\": {\n" +
+					"\"userId\": 173,\n" +
+						"\"worldName\": \"Jupiter\",\n" +
+							"}\n" +
+								"}";
+
+		JSONWebServiceAction jsonWebServiceAction = prepareInvokerAction(
+			command);
+
+		assertEquals("Welcome 173 to Jupiter", jsonWebServiceAction.invoke());
+	}
+
+	protected JSONWebServiceAction prepareInvokerAction(String command)
+		throws Exception {
+
 		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
 			"/invoker");
 
-		String command =
-			"{\n" +
-			"   \"$world = /foo/hello-world\": {\n" +
-			"       \"userId\": 173,\n" +
-			"       \"worldName\": \"Jupiter\",\n" +
-			"   }\n" +
-			"}";
-
 		mockHttpServletRequest.setContent(command.getBytes());
 
-		JSONWebServiceAction jsonWebServiceAction =
-			new JSONWebServiceInvokerAction(mockHttpServletRequest);
-
-		assertEquals(
-			"Welcome 173 to Jupiter", jsonWebServiceAction.invoke());
+		return new JSONWebServiceInvokerAction(mockHttpServletRequest);
 	}
 
 }

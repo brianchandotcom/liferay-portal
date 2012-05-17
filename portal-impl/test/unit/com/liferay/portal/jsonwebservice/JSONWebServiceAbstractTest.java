@@ -35,14 +35,6 @@ import org.springframework.mock.web.MockHttpServletRequest;
  */
 public abstract class JSONWebServiceAbstractTest extends PowerMockito {
 
-	protected String toJson(Object object) {
-		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
-
-		jsonSerializer.exclude("*.class");
-
-		return jsonSerializer.serialize(object);
-	}
-
 	protected static void initPortalServices() {
 		new MethodParametersResolverUtil().setMethodParametersResolver(
 			new MethodParametersResolverImpl());
@@ -104,6 +96,14 @@ public abstract class JSONWebServiceAbstractTest extends PowerMockito {
 
 		return JSONWebServiceActionsManagerUtil.getJSONWebServiceAction(
 			httpServletRequest);
+	}
+
+	protected String toJson(Object object) {
+		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
+
+		jsonSerializer.exclude("*.class");
+
+		return jsonSerializer.serialize(object);
 	}
 
 }

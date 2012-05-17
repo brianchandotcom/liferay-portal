@@ -52,18 +52,19 @@ public class FooService {
 		return "m-2";
 	}
 
-	public static String methodOne(long id, String name) {
-		return "m-1";
-	}
-
 	public static String methodOne(long id, long nameId, String subname) {
 		return "m-3";
+	}
+
+	public static String methodOne(long id, String name) {
+		return "m-1";
 	}
 
 	public static String nullLover(String name, int number) {
 		if (name == null) {
 			return "null!";
 		}
+
 		return '[' + name + '|' + number + ']';
 	}
 

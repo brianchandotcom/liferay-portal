@@ -48,7 +48,6 @@ public class JSONWebServiceStrictTest extends JSONWebServiceAbstractTest {
 		).thenReturn(
 			"true"
 		);
-
 	}
 
 	@Test
@@ -56,8 +55,8 @@ public class JSONWebServiceStrictTest extends JSONWebServiceAbstractTest {
 		initPortalServices();
 		registerActionClass(CamelFooService.class);
 
-		MockHttpServletRequest mockHttpServletRequest =
-			createHttpRequest("/camelfoo/post/value/123");
+		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
+			"/camelfoo/post/value/123");
 
 		try {
 			lookupAction(mockHttpServletRequest);
@@ -70,8 +69,8 @@ public class JSONWebServiceStrictTest extends JSONWebServiceAbstractTest {
 		mockHttpServletRequest = createHttpRequest(
 			"/camelfoo/post/value/123", "POST");
 
-		JSONWebServiceAction jsonWebServiceAction =
-			lookupAction(mockHttpServletRequest);
+		JSONWebServiceAction jsonWebServiceAction = lookupAction(
+			mockHttpServletRequest);
 
 		assertNotNull(jsonWebServiceAction);
 

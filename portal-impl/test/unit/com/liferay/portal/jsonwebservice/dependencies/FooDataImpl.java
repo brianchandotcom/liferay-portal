@@ -36,22 +36,22 @@ public class FooDataImpl implements FooData {
 	}
 
 	public void setHeight(int height) {
-		this._height = height;
+		_height = height;
 	}
 
 	public void setId(int id) {
-		this._id = id;
+		_id = id;
 	}
 
 	public void setName(String name) {
-		this._name = name;
+		_name = name;
 	}
 
 	public void setValue(String value) {
 		_value = value;
 	}
-	private int _height = 177;
 
+	private int _height = 177;
 	private int _id = -1;
 	private String _name = "John Doe";
 	private String _value = "foo!";

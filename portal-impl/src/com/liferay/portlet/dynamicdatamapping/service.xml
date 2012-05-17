@@ -175,6 +175,10 @@
 		<finder name="Language" return-type="Collection">
 			<finder-column name="language" />
 		</finder>
+		<finder name="G_C" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="classNameId" />
+		</finder>
 		<finder name="G_T" return-type="DDMStructure" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="templateKey" />

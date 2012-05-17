@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
@@ -284,8 +285,9 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 		if (portletDataContext.getBooleanParameter(_NAMESPACE, "templates")) {
 			Element templatesElement = rootElement.addElement("templates");
 
-			List<DDMTemplate> templates = DDMTemplateUtil.findByGroupId(
-				portletDataContext.getScopeGroupId());
+			List<DDMTemplate> templates = DDMTemplateUtil.findByG_C(
+				 portletDataContext.getScopeGroupId(),
+				 PortalUtil.getClassNameId(DDMStructure.class));
 
 			for (DDMTemplate template : templates) {
 				if (portletDataContext.isWithinDateRange(

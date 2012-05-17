@@ -108,6 +108,12 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 		return ddmTemplateLocalService.getTemplate(groupId, templateKey);
 	}
 
+	public List<DDMTemplate> getTemplates(long groupId, long classNameId)
+		throws SystemException {
+
+		return ddmTemplatePersistence.findByG_C(groupId, classNameId);
+	}
+
 	public List<DDMTemplate> getTemplates(
 			long groupId, long classNameId, long classPK)
 		throws SystemException {

@@ -23,11 +23,14 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.User;
 import com.liferay.portal.repository.cmis.CMISRepository;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.CMISRepositoryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 
 import java.io.Serializable;
 
@@ -60,7 +63,27 @@ public class CMISFolder extends CMISModel implements Folder {
 			PermissionChecker permissionChecker, String actionId)
 		throws SystemException {
 
-		return containsPermission(_cmisFolder, actionId);
+		if (_cmisFolder.isRootFolder() &&
+			(actionId.equals(ActionKeys.DELETE) ||
+				actionId.equals(ActionKeys.UPDATE))) {
+
+			try {
+				Folder folder = DLAppLocalServiceUtil.getMountFolder(
+					getRepositoryId());
+
+				DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(
+					folder.getFolderId());
+
+				return DLFolderPermission.contains(
+					permissionChecker, dlFolder, actionId);
+			}
+			catch (PortalException pe) {
+				throw new SystemException(pe);
+			}
+		}
+		else {
+			return containsPermission(_cmisFolder, actionId);
+		}
 	}
 
 	public List<Folder> getAncestors() throws PortalException, SystemException {

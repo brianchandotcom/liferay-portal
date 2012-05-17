@@ -1650,19 +1650,12 @@ public class ServicePreAction extends Action {
 			}
 		}
 
-		if (accessibleLayouts.isEmpty()) {
-			layouts = null;
-
-			if (!hasViewLayoutPermission) {
-				SessionErrors.add(
-					request, LayoutPermissionException.class.getName());
-			}
-		}
-		else {
-			layouts = accessibleLayouts;
+		if (accessibleLayouts.isEmpty() && !hasViewLayoutPermission) {
+			SessionErrors.add(
+				request, LayoutPermissionException.class.getName());
 		}
 
-		return new Object[] {layout, layouts};
+		return new Object[] {layout, accessibleLayouts};
 	}
 
 	protected Boolean hasPowerUserRole(User user) throws Exception {

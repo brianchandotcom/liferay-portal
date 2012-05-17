@@ -15,7 +15,6 @@
 package com.liferay.portalweb.portal.controlpanel.sites.siteportlet;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portal.controlpanel.sites.siteportlet.addportletsite.AddPortletSiteTests;
 import com.liferay.portalweb.portal.controlpanel.sites.siteportlet.addsitepublicpageportlet.AddSitePublicPagePortletTests;
 import com.liferay.portalweb.portal.controlpanel.sites.siteportlet.addsitepublicpageportletstaging.AddSitePublicPagePortletStagingTests;
 
@@ -30,7 +29,6 @@ public class SitePortletTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(AddPortletSiteTests.suite());
 		testSuite.addTest(AddSitePublicPagePortletTests.suite());
 		testSuite.addTest(AddSitePublicPagePortletStagingTests.suite());
 

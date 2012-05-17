@@ -19,7 +19,6 @@ import com.liferay.portalweb.portal.controlpanel.sites.site.addmemberssiteuser.A
 import com.liferay.portalweb.portal.controlpanel.sites.site.addmemberssiteuser.AddMembersSiteUser2Test;
 import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.AddSiteTest;
 import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.TearDownSiteTest;
-import com.liferay.portalweb.portal.controlpanel.sites.siteportlet.addportletsite.AddPageMBSiteTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.AddUser1Test;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.AddUser2Test;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.TearDownUserTest;
@@ -31,6 +30,7 @@ import com.liferay.portalweb.portal.controlpanel.users.user.signin.User1_SignInT
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.User1_SignOutTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.User2_SignInTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.User2_SignOutTest;
+import com.liferay.portalweb.portlet.messageboards.portlet.addportletmbsite.AddPageMBSiteTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

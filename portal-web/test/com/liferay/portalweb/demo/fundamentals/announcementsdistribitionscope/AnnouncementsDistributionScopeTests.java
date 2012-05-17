@@ -17,8 +17,6 @@ package com.liferay.portalweb.demo.fundamentals.announcementsdistribitionscope;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.AddSiteTest;
 import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.TearDownSiteTest;
-import com.liferay.portalweb.portal.controlpanel.sites.siteportlet.addportletsite.AddPageAnnouncementsSiteTest;
-import com.liferay.portalweb.portal.controlpanel.sites.siteportlet.addportletsite.AddPortletAnnouncementsSiteTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.AddUserTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.TearDownUserTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.edituserpassword.EditUserPasswordTest;
@@ -30,6 +28,8 @@ import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.announcements.announcementsentry.addannouncementsentrygeneral.TearDownAnnouncementsEntryTest;
 import com.liferay.portalweb.portlet.announcements.portlet.addportletannouncements.AddPageAnnouncementsTest;
 import com.liferay.portalweb.portlet.announcements.portlet.addportletannouncements.AddPortletAnnouncementsTest;
+import com.liferay.portalweb.portlet.announcements.portlet.addportletannouncementssite.AddPageAnnouncementsSiteTest;
+import com.liferay.portalweb.portlet.announcements.portlet.addportletannouncementssite.AddPortletAnnouncementsSiteTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

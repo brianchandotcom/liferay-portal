@@ -17,8 +17,8 @@ package com.liferay.portalweb.portlet.messageboards.hybrid.gmailviewmbthreadmess
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.sites.site.addmemberssiteuser.AddMembersSiteUserTest;
 import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.AddSiteTest;
-import com.liferay.portalweb.portal.controlpanel.sites.siteportlet.addportletsite.AddPageMBSiteTest;
-import com.liferay.portalweb.portal.controlpanel.sites.siteportlet.addportletsite.AddPortletMBSiteTest;
+import com.liferay.portalweb.portlet.messageboards.portlet.addportletmbsite.AddPageMBSiteTest;
+import com.liferay.portalweb.portlet.messageboards.portlet.addportletmbsite.AddPortletMBSiteTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

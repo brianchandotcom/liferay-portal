@@ -281,9 +281,9 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 			}
 		}
 
-		if (portletDataContext.getBooleanParameter(_NAMESPACE, "templates")) {
-			Element templatesElement = rootElement.addElement("templates");
+		Element templatesElement = rootElement.addElement("templates");
 
+		if (portletDataContext.getBooleanParameter(_NAMESPACE, "templates")) {
 			List<DDMTemplate> templates = DDMTemplateUtil.findByGroupId(
 				portletDataContext.getScopeGroupId());
 

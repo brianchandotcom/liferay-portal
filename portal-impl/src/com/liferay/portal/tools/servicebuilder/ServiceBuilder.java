@@ -2161,13 +2161,35 @@ public class ServiceBuilder {
 			return;
 		}
 
-		JavaClass javaClass = _getJavaClass(
+		JavaClass implJavaClass = _getJavaClass(
 			_outputPath + "/model/impl/" + entity.getName() + "Impl.java");
+
+		JavaClass modelImplJavaClass = _getJavaClass(
+			_outputPath + "/model/impl/" + entity.getName() + "ModelImpl.java");
+
+		JavaMethod[] implMethods = _getMethods(implJavaClass);
+		JavaMethod[] implModelMethods = _getMethods(modelImplJavaClass);
+
+		Map<String, JavaMethod> Methods = new HashMap<String, JavaMethod>();
+
+		for (JavaMethod method : implMethods) {
+			Methods.put(method.getDeclarationSignature(false), method);
+		}
+
+		for (JavaMethod method : implModelMethods) {
+			Methods.remove(method.getDeclarationSignature(false));
+		}
+
+		List<JavaMethod> contextMethods = new ArrayList<JavaMethod>();
+
+		for (String DeclarationSignature : Methods.keySet()) {
+			contextMethods.add(Methods.get(DeclarationSignature));
+		}
 
 		Map<String, Object> context = _getContext();
 
 		context.put("entity", entity);
-		context.put("methods", _getMethods(javaClass));
+		context.put("methods", contextMethods);
 
 		// Content
 

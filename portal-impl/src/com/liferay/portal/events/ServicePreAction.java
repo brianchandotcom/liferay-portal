@@ -1786,7 +1786,7 @@ public class ServicePreAction extends Action {
 
 			guestLayouts = (List<Layout>)viewableLayouts[1];
 
-			if (layouts == null) {
+			if ((layouts == null) || layouts.isEmpty()) {
 				return guestLayouts;
 			}
 

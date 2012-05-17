@@ -57,6 +57,9 @@ public interface PACLConstants {
 
 	public static final String PORTAL_MESSAGE_BUS_PERMISSION_SEND = "send";
 
+	public static final String PORTAL_RUNTIME_PERMISSION_GET_BEAN_PROPERTY =
+		"getBeanProperty";
+
 	public static final String PORTAL_RUNTIME_PERMISSION_SET_BEAN_PROPERTY =
 		"setBeanProperty";
 

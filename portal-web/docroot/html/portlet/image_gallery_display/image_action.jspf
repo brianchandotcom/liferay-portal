@@ -20,7 +20,7 @@ boolean view = GetterUtil.getBoolean((String)request.getAttribute("view_image.js
 
 <portlet:renderURL var="viewFolderURL">
 	<portlet:param name="struts_action" value="/image_gallery_display/view" />
-	<portlet:param name="folderId" value="<%= String.valueOf(fileEntry.getFolderId()) %>" />
+	<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 </portlet:renderURL>
 
 <%@ include file="/html/portlet/document_library/action/download.jspf" %>

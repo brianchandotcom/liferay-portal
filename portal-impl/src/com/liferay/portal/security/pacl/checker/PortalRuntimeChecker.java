@@ -29,7 +29,8 @@ import java.util.TreeSet;
 public class PortalRuntimeChecker extends BaseChecker {
 
 	public void afterPropertiesSet() {
-		initClassNames();
+		initGetBeanPropertyClassNames();
+		initSetBeanPropertyClassNames();
 	}
 
 	public void checkPermission(Permission permission) {
@@ -39,21 +40,54 @@ public class PortalRuntimeChecker extends BaseChecker {
 		String name = portalRuntimePermission.getName();
 		Object subject = portalRuntimePermission.getSubject();
 
-		if (name.equals(PORTAL_RUNTIME_PERMISSION_SET_BEAN_PROPERTY)) {
+		if (name.equals(PORTAL_RUNTIME_PERMISSION_GET_BEAN_PROPERTY)) {
 			Class<?> clazz = (Class<?>)subject;
 
-			if (!_classNames.contains(clazz.getName())) {
+			if (!hasGetBeanProperty(clazz)) {
+				throwSecurityException(
+					_log, "Attempted to get bean property on " + clazz);
+			}
+		}
+		else if (name.equals(PORTAL_RUNTIME_PERMISSION_SET_BEAN_PROPERTY)) {
+			Class<?> clazz = (Class<?>)subject;
+
+			if (!_setBeanPropertyClassNames.contains(clazz.getName())) {
 				throwSecurityException(
 					_log, "Attempted to set bean property on " + clazz);
 			}
 		}
 	}
 
-	protected void initClassNames() {
-		_classNames = getPropertySet("security-manager-set-bean-property");
+	protected boolean hasGetBeanProperty(Class<?> clazz) {
+		if (_getBeanPropertyClassNames.contains(clazz.getName())) {
+			return true;
+		}
+
+		return false;
+	}
+
+	protected void initGetBeanPropertyClassNames() {
+		_getBeanPropertyClassNames = getPropertySet(
+			"security-manager-get-bean-property");
 
 		if (_log.isDebugEnabled()) {
-			Set<String> classNames = new TreeSet<String>(_classNames);
+			Set<String> classNames = new TreeSet<String>(
+				_getBeanPropertyClassNames);
+
+			for (String className : classNames) {
+				_log.debug(
+					"Allowing get bean property name on class " + className);
+			}
+		}
+	}
+
+	protected void initSetBeanPropertyClassNames() {
+		_setBeanPropertyClassNames = getPropertySet(
+			"security-manager-set-bean-property");
+
+		if (_log.isDebugEnabled()) {
+			Set<String> classNames = new TreeSet<String>(
+				_setBeanPropertyClassNames);
 
 			for (String className : classNames) {
 				_log.debug(
@@ -64,6 +98,7 @@ public class PortalRuntimeChecker extends BaseChecker {
 
 	private static Log _log = LogFactoryUtil.getLog(PortalRuntimeChecker.class);
 
-	private Set<String> _classNames;
+	private Set<String> _getBeanPropertyClassNames;
+	private Set<String> _setBeanPropertyClassNames;
 
 }

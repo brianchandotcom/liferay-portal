@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.config.AbstractMessagingConfigurator;
 import com.liferay.portal.kernel.util.JavaDetector;
 
+import java.beans.Introspector;
+
 import org.hibernate.property.BasicPropertyAccessor;
 import org.hibernate.tuple.entity.EntityTuplizerFactory;
 import org.hibernate.util.ReflectHelper;
@@ -59,6 +61,18 @@ public abstract class BaseReflectChecker extends BaseChecker {
 			return true;
 		}
 
+		// java.beans.Introspector
+
+		if (JavaDetector.isOpenJDK()) {
+			if ((callerClass9.getEnclosingClass() == Introspector.class) &&
+				CheckerUtil.isAccessControllerDoPrivileged(10)) {
+
+				logReflect(callerClass9, 9);
+
+				return true;
+			}
+		}
+
 		// java.lang.Class
 
 		Class<?> callerClass7 = Reflection.getCallerClass(7);
@@ -86,7 +100,7 @@ public abstract class BaseReflectChecker extends BaseChecker {
 
 		// java.lang.Thread
 
-		if (JavaDetector.isJDK7()) {
+		if (JavaDetector.isJDK7() || JavaDetector.isOpenJDK()) {
 			Class<?> callerClass10 = Reflection.getCallerClass(10);
 
 			if ((callerClass10.getEnclosingClass() == Thread.class) &&

@@ -17,41 +17,37 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%
+Integer height = (Integer)request.getAttribute("liferay-ui:upload-progress:height");
 String id = (String)request.getAttribute("liferay-ui:upload-progress:id");
-String iframeSrc = (String)request.getAttribute("liferay-ui:upload-progress:iframe-src");
 String redirect = (String)request.getAttribute("liferay-ui:upload-progress:redirect");
 String message = (String)request.getAttribute("liferay-ui:upload-progress:message");
 %>
 
-<c:if test="<%= Validator.isNotNull(iframeSrc) %>">
-	<div><iframe frameborder="0" id="<%= id %>-iframe" src="<%= iframeSrc %>" style="width: 100%;"></iframe></div>
-</c:if>
 
-<div><iframe frameborder="0" id="<%= id %>-poller" src="" style="height: 0; width: 0;"></iframe></div>
+<div><iframe frameborder="0" id="<%= id %>-poller" src="javascript:0" style="display:none" height="0" width="0" tabindex="-1" title="empty"></iframe></div>
 
-<div id="<%= id %>-bar-div" style="display: none; text-align: center;">
-	<br />
+<div id="<%= id %>Bar"></div>
 
-	<c:if test="<%= Validator.isNotNull(message) %>">
-		<%= LanguageUtil.get(pageContext, message) %>...<br />
-	</c:if>
+<aui:script use="liferay-upload-progress">
+	A.config.win['<%= id %>'] = new Liferay.UploadProgressBar(
+		{
+			boundingBox: '#<%= id %>Bar',
+			height: <%= height %>,
+			id: '<%= id %>',
+			label: '<%= LanguageUtil.get(pageContext, message) %>',
+			on: {
+				complete: function(event) {
+					var instance = this;
 
-	<div style="background: url(<%= themeDisplay.getPathThemeImages() %>/progress_bar/incomplete_middle.png) scroll repeat-x top left; margin: auto; text-align: left; width: 80%;">
-		<div style="background: url(<%= themeDisplay.getPathThemeImages() %>/progress_bar/incomplete_left.png) scroll no-repeat top left;">
-			<div style="height: 23px; background: url(<%= themeDisplay.getPathThemeImages() %>/progress_bar/incomplete_right.png) scroll no-repeat top right;">
-				<div id="<%= id %>-bar" style="background: url(<%= themeDisplay.getPathThemeImages() %>/progress_bar/complete_middle.png) scroll repeat-x top left; overflow: hidden; width: 0;">
-					<div style="background: url(<%= themeDisplay.getPathThemeImages() %>/progress_bar/complete_left.png) scroll no-repeat top left;">
-						<div class="font-small" style="font-weight: bold; height: 23px; padding-top: 3px; text-align: center; background: url(<%= themeDisplay.getPathThemeImages() %>/progress_bar/complete_right.png) scroll no-repeat top right;">
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
+					instance.set('label', '<%= LanguageUtil.get(pageContext, "done") %>');
+				},
+				valueChange: function(event) {
+					var instance = this;
 
-<script src="<%= themeDisplay.getCDNHost() + themeDisplay.getPathJavaScript() %>/liferay/upload_progress.js" type="text/javascript"></script>
-
-<aui:script>
-	var <%= id %> = new UploadProgress("<%= id %>", "<%= HttpUtil.encodeURL(redirect) %>");
+					instance.set('label', event.newVal + '%');
+				}
+			},
+			redirect: '<%= HttpUtil.encodeURL(redirect) %>'
+		}
+	);
 </aui:script>

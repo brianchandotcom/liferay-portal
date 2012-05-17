@@ -19,6 +19,8 @@
 <%
 String uploadProgressId = ParamUtil.getString(request, "uploadProgressId");
 
+Integer updatePeriod = ParamUtil.getInteger(request, "updatePeriod", 1000);
+
 String fileName = GetterUtil.getString((String)session.getAttribute(LiferayFileUpload.FILE_NAME + uploadProgressId));
 
 if (fileName == null) {
@@ -55,7 +57,12 @@ if (percent.floatValue() >= 100) {
 		}
 
 		<c:if test="<%= percent.intValue() < 100 %>">
-			setTimeout(window.location.reload, 1000);
+			setTimeout(
+				function() {
+					window.location.reload();
+				},
+				<%= updatePeriod %>
+			);
 		</c:if>
 	}());
 </script>

@@ -85,7 +85,7 @@ public class AddPageDMDTest extends BaseTestCase {
 		}
 
 		selenium.type("//input[@type='text']",
-			RuntimeVariables.replace("Documents and Media Test Page"));
+			RuntimeVariables.replace("Documents and Media Display Test Page"));
 		selenium.clickAt("//button[@id='save']",
 			RuntimeVariables.replace("Save"));
 
@@ -95,7 +95,8 @@ public class AddPageDMDTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Documents and Media Test Page")) {
+				if (selenium.isVisible(
+							"link=Documents and Media Display Test Page")) {
 					break;
 				}
 			}
@@ -105,8 +106,8 @@ public class AddPageDMDTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Documents and Media Test Page",
-			RuntimeVariables.replace("Documents and Media Test Page"));
+		selenium.clickAt("link=Documents and Media Display Test Page",
+			RuntimeVariables.replace("Documents and Media Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 	}

@@ -25,27 +25,19 @@ public class ViewPortletDMDShowNavigationLinksTest extends BaseTestCase {
 		throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Documents and Media Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.clickAt("link=Documents and Media Test Page",
-			RuntimeVariables.replace("Documents and Media Test Page"));
+		selenium.clickAt("link=Documents and Media Display Test Page",
+			RuntimeVariables.replace("Documents and Media Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isVisible("//ul[@class='top-links-navigation']"));
+		assertEquals(RuntimeVariables.replace("Home"),
+			selenium.getText(
+				"//ul[@class='top-links-navigation']/li[1]/span/span"));
+		assertEquals(RuntimeVariables.replace("Recent"),
+			selenium.getText(
+				"//ul[@class='top-links-navigation']/li[2]/span/a/span"));
+		assertEquals(RuntimeVariables.replace("Mine"),
+			selenium.getText(
+				"//ul[@class='top-links-navigation']/li[3]/span/a/span"));
 	}
 }

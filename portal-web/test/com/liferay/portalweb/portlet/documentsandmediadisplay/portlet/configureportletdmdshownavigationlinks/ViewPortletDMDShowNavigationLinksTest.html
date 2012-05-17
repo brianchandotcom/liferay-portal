@@ -14,19 +14,29 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Documents and Media Test Page</td>
-	<td>Documents and Media Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
-	<td>link=Documents and Media Test Page</td>
-	<td>Documents and Media Test Page</td>
+	<td>link=Documents and Media Display Test Page</td>
+	<td>Documents and Media Display Test Page</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
 	<td>//ul[@class='top-links-navigation']</td>
 	<td>Navigation Links</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//ul[@class='top-links-navigation']/li[1]/span/span</td>
+	<td>Home</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//ul[@class='top-links-navigation']/li[2]/span/a/span</td>
+	<td>Recent</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//ul[@class='top-links-navigation']/li[3]/span/a/span</td>
+	<td>Mine</td>
 </tr>
 </tbody></table>
 </body>

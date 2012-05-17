@@ -24,28 +24,70 @@ public class ViewDMFolderDMDTest extends BaseTestCase {
 	public void testViewDMFolderDMD() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Documents and Media Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.clickAt("link=Documents and Media Test Page",
-			RuntimeVariables.replace("Documents and Media Test Page"));
+		selenium.clickAt("link=Documents and Media Display Test Page",
+			RuntimeVariables.replace("Documents and Media Display Test Page"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Folder"),
+			selenium.getText("//tr[1]/th[1]"));
+		assertEquals(RuntimeVariables.replace("# of Folders"),
+			selenium.getText("//tr[1]/th[2]"));
+		assertEquals(RuntimeVariables.replace("# of Documents"),
+			selenium.getText("//tr[1]/th[3]"));
+		assertEquals(RuntimeVariables.replace("DM Folder Name"),
+			selenium.getText("//tr[3]/td[1]/a[2]/strong"));
+		assertEquals(RuntimeVariables.replace("0"),
+			selenium.getText("//tr[3]/td[2]/a"));
+		assertEquals(RuntimeVariables.replace("0"),
+			selenium.getText("//tr[3]/td[3]/a"));
+		selenium.clickAt("//tr[3]/td[1]/a[2]/strong",
+			RuntimeVariables.replace("DM Folder Name"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("DM Folder Name"),
-			selenium.getText("link=DM Folder Name"));
+			selenium.getText("//h1[@class='header-title']/span"));
+		assertEquals(RuntimeVariables.replace("\u00ab Back"),
+			selenium.getText("//span[@class='header-back-to']/a"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class='lfr-asset-icon lfr-asset-date']", "Last Updated"));
+		assertEquals(RuntimeVariables.replace("0 Subfolders"),
+			selenium.getText(
+				"//div[@class='lfr-asset-icon lfr-asset-subfolders']"));
+		assertEquals(RuntimeVariables.replace("0 Documents"),
+			selenium.getText(
+				"//div[@class='lfr-asset-icon lfr-asset-items last']"));
+		assertEquals(RuntimeVariables.replace(
+				"There are no documents or media files in this folder."),
+			selenium.getText("//div[@class='portlet-msg-info']"));
+		assertTrue(selenium.isVisible("//span[@class='lfr-asset-avatar']/img"));
+		assertEquals(RuntimeVariables.replace("DM Folder Name"),
+			selenium.getText("//div[@class='lfr-asset-name']/h4"));
+		assertEquals(RuntimeVariables.replace("Edit"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[1]/a"));
+		assertEquals(RuntimeVariables.replace("Move"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[2]/a"));
+		assertEquals(RuntimeVariables.replace("Permissions"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[3]/a"));
+		assertEquals(RuntimeVariables.replace("Delete"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[4]/a"));
+		assertEquals(RuntimeVariables.replace("Add Subfolder"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[5]/a"));
+		assertEquals(RuntimeVariables.replace("Multiple Documents"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[6]/a"));
+		assertEquals(RuntimeVariables.replace("Add Document"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[7]/a"));
+		assertEquals(RuntimeVariables.replace("Add Shortcut"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[8]/a"));
+		assertEquals(RuntimeVariables.replace("Access from Desktop"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[9]/a"));
 	}
 }

@@ -24,37 +24,22 @@ public class AddDMFolderDocument2DMDTest extends BaseTestCase {
 	public void testAddDMFolderDocument2DMD() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Documents and Media Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.clickAt("link=Documents and Media Test Page",
-			RuntimeVariables.replace("Documents and Media Test Page"));
+		selenium.clickAt("link=Documents and Media Display Test Page",
+			RuntimeVariables.replace("Documents and Media Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("DM Folder Name"),
-			selenium.getText("link=DM Folder Name"));
-		selenium.clickAt("link=DM Folder Name",
+			selenium.getText("//tr[3]/td[1]/a[2]/strong"));
+		selenium.clickAt("//tr[3]/td[1]/a[2]/strong",
 			RuntimeVariables.replace("DM Folder Name"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("DM Folder Name"),
+			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("Add Document"),
 			selenium.getText(
-				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[7]/a"));
-		selenium.clickAt("//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[7]/a",
+				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[contains(.,'Add Document')]/a"));
+		selenium.clickAt("//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[contains(.,'Add Document')]/a",
 			RuntimeVariables.replace("Add Document"));
 
 		for (int second = 0;; second++) {
@@ -74,7 +59,6 @@ public class AddDMFolderDocument2DMDTest extends BaseTestCase {
 		}
 
 		selenium.selectFrame("//iframe");
-		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -82,7 +66,8 @@ public class AddDMFolderDocument2DMDTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Basic Document")) {
+				if (selenium.isElementPresent(
+							"//script[contains(@src,'/liferay/navigation_interaction.js')]")) {
 					break;
 				}
 			}
@@ -92,21 +77,52 @@ public class AddDMFolderDocument2DMDTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Basic Document",
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//tr[3]/td[1]/a")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.clickAt("//tr[3]/td[1]/a",
 			RuntimeVariables.replace("Basic Document"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
 		selenium.selectFrame("relative=top");
-		Thread.sleep(5000);
 		selenium.uploadCommonFile("//span[@class='aui-field aui-field-text']/span/span/input[contains(@id,'_file')]",
-			RuntimeVariables.replace("Document_2.docx"));
+			RuntimeVariables.replace("Document_2.txt"));
 		selenium.type("//input[contains(@id,'_title')]",
 			RuntimeVariables.replace("DM Folder Document2 Title"));
-		selenium.type("//textarea[contains(@id,'_description')]",
-			RuntimeVariables.replace("DM Folder Document2 Description"));
-		assertTrue(selenium.isVisible("//input[@value='Publish']"));
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

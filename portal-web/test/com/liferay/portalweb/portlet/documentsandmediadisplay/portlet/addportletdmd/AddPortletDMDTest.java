@@ -24,8 +24,8 @@ public class AddPortletDMDTest extends BaseTestCase {
 	public void testAddPortletDMD() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
-		selenium.clickAt("link=Documents and Media Test Page",
-			RuntimeVariables.replace("Documents and Media Test Page"));
+		selenium.clickAt("link=Documents and Media Display Test Page",
+			RuntimeVariables.replace("Documents and Media Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div[@id='dockbar']",
@@ -108,9 +108,11 @@ public class AddPortletDMDTest extends BaseTestCase {
 		}
 
 		selenium.type("//input[@id='layout_configuration_content']",
-			RuntimeVariables.replace("m"));
-		selenium.typeKeys("//input[@id='layout_configuration_content']",
-			RuntimeVariables.replace("m"));
+			RuntimeVariables.replace("d"));
+		selenium.keyDown("//input[@id='layout_configuration_content']",
+			RuntimeVariables.replace("\\13"));
+		selenium.keyUp("//input[@id='layout_configuration_content']",
+			RuntimeVariables.replace("\\13"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

@@ -29,31 +29,14 @@ public class TearDownDMDFolderTest extends BaseTestCase {
 			case 1:
 				selenium.open("/web/guest/home/");
 				loadRequiredJavaScriptModules();
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"link=Documents and Media Test Page")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.clickAt("link=Documents and Media Test Page",
-					RuntimeVariables.replace("Documents and Media Test Page"));
+				selenium.clickAt("link=Documents and Media Display Test Page",
+					RuntimeVariables.replace(
+						"Documents and Media Display Test Page"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 
 				boolean dmdFolder1Present = selenium.isElementPresent(
-						"//span[@title='Actions']/ul/li/strong/a/span");
+						"//a[contains(@id,'foldersSearchContainer_1_menuButton')]/span");
 
 				if (!dmdFolder1Present) {
 					label = 2;
@@ -63,8 +46,8 @@ public class TearDownDMDFolderTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText(
-						"//span[@title='Actions']/ul/li/strong/a/span"));
-				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+						"//a[contains(@id,'foldersSearchContainer_1_menuButton')]/span"));
+				selenium.clickAt("//a[contains(@id,'foldersSearchContainer_1_menuButton')]/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -74,7 +57,7 @@ public class TearDownDMDFolderTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(@id,'menu_delete')]")) {
+									"//a[contains(@id,'foldersSearchContainer_1_menu_delete')]")) {
 							break;
 						}
 					}
@@ -86,31 +69,19 @@ public class TearDownDMDFolderTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(@id,'menu_delete')]"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(@id,'menu_delete')]",
+						"//a[contains(@id,'foldersSearchContainer_1_menu_delete')]"));
+				selenium.clickAt("//a[contains(@id,'foldersSearchContainer_1_menu_delete')]",
 					RuntimeVariables.replace("Delete"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if ("Are you sure you want to delete this? It will be deleted immediately.".equals(
-									selenium.getConfirmation())) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				Thread.sleep(5000);
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
+				assertTrue(selenium.getConfirmation()
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
 
 				boolean dmdFolder2Present = selenium.isElementPresent(
-						"//span[@title='Actions']/ul/li/strong/a/span");
+						"//a[contains(@id,'foldersSearchContainer_1_menuButton')]/span");
 
 				if (!dmdFolder2Present) {
 					label = 3;
@@ -120,8 +91,8 @@ public class TearDownDMDFolderTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText(
-						"//span[@title='Actions']/ul/li/strong/a/span"));
-				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+						"//a[contains(@id,'foldersSearchContainer_1_menuButton')]/span"));
+				selenium.clickAt("//a[contains(@id,'foldersSearchContainer_1_menuButton')]/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -131,7 +102,7 @@ public class TearDownDMDFolderTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(@id,'menu_delete')]")) {
+									"//a[contains(@id,'foldersSearchContainer_1_menu_delete')]")) {
 							break;
 						}
 					}
@@ -143,31 +114,19 @@ public class TearDownDMDFolderTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(@id,'menu_delete')]"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(@id,'menu_delete')]",
+						"//a[contains(@id,'foldersSearchContainer_1_menu_delete')]"));
+				selenium.clickAt("//a[contains(@id,'foldersSearchContainer_1_menu_delete')]",
 					RuntimeVariables.replace("Delete"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if ("Are you sure you want to delete this? It will be deleted immediately.".equals(
-									selenium.getConfirmation())) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				Thread.sleep(5000);
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
+				assertTrue(selenium.getConfirmation()
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
 
 				boolean dmdFolder3Present = selenium.isElementPresent(
-						"//span[@title='Actions']/ul/li/strong/a/span");
+						"//a[contains(@id,'foldersSearchContainer_1_menuButton')]/span");
 
 				if (!dmdFolder3Present) {
 					label = 4;
@@ -177,8 +136,8 @@ public class TearDownDMDFolderTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText(
-						"//span[@title='Actions']/ul/li/strong/a/span"));
-				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+						"//a[contains(@id,'foldersSearchContainer_1_menuButton')]/span"));
+				selenium.clickAt("//a[contains(@id,'foldersSearchContainer_1_menuButton')]/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -188,7 +147,7 @@ public class TearDownDMDFolderTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(@id,'menu_delete')]")) {
+									"//a[contains(@id,'foldersSearchContainer_1_menu_delete')]")) {
 							break;
 						}
 					}
@@ -200,31 +159,19 @@ public class TearDownDMDFolderTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(@id,'menu_delete')]"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(@id,'menu_delete')]",
+						"//a[contains(@id,'foldersSearchContainer_1_menu_delete')]"));
+				selenium.clickAt("//a[contains(@id,'foldersSearchContainer_1_menu_delete')]",
 					RuntimeVariables.replace("Delete"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if ("Are you sure you want to delete this? It will be deleted immediately.".equals(
-									selenium.getConfirmation())) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				Thread.sleep(5000);
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
+				assertTrue(selenium.getConfirmation()
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
 
 				boolean dmdFolder4Present = selenium.isElementPresent(
-						"//span[@title='Actions']/ul/li/strong/a/span");
+						"//a[contains(@id,'foldersSearchContainer_1_menuButton')]/span");
 
 				if (!dmdFolder4Present) {
 					label = 5;
@@ -234,8 +181,8 @@ public class TearDownDMDFolderTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText(
-						"//span[@title='Actions']/ul/li/strong/a/span"));
-				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+						"//a[contains(@id,'foldersSearchContainer_1_menuButton')]/span"));
+				selenium.clickAt("//a[contains(@id,'foldersSearchContainer_1_menuButton')]/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -245,7 +192,7 @@ public class TearDownDMDFolderTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(@id,'menu_delete')]")) {
+									"//a[contains(@id,'foldersSearchContainer_1_menu_delete')]")) {
 							break;
 						}
 					}
@@ -257,31 +204,19 @@ public class TearDownDMDFolderTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(@id,'menu_delete')]"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(@id,'menu_delete')]",
+						"//a[contains(@id,'foldersSearchContainer_1_menu_delete')]"));
+				selenium.clickAt("//a[contains(@id,'foldersSearchContainer_1_menu_delete')]",
 					RuntimeVariables.replace("Delete"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if ("Are you sure you want to delete this? It will be deleted immediately.".equals(
-									selenium.getConfirmation())) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				Thread.sleep(5000);
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
+				assertTrue(selenium.getConfirmation()
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
 
 				boolean dmdFolder5Present = selenium.isElementPresent(
-						"//span[@title='Actions']/ul/li/strong/a/span");
+						"//a[contains(@id,'foldersSearchContainer_1_menuButton')]/span");
 
 				if (!dmdFolder5Present) {
 					label = 6;
@@ -291,8 +226,8 @@ public class TearDownDMDFolderTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText(
-						"//span[@title='Actions']/ul/li/strong/a/span"));
-				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+						"//a[contains(@id,'foldersSearchContainer_1_menuButton')]/span"));
+				selenium.clickAt("//a[contains(@id,'foldersSearchContainer_1_menuButton')]/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -302,7 +237,7 @@ public class TearDownDMDFolderTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(@id,'menu_delete')]")) {
+									"//a[contains(@id,'foldersSearchContainer_1_menu_delete')]")) {
 							break;
 						}
 					}
@@ -314,26 +249,16 @@ public class TearDownDMDFolderTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(@id,'menu_delete')]"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(@id,'menu_delete')]",
+						"//a[contains(@id,'foldersSearchContainer_1_menu_delete')]"));
+				selenium.clickAt("//a[contains(@id,'foldersSearchContainer_1_menu_delete')]",
 					RuntimeVariables.replace("Delete"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if ("Are you sure you want to delete this? It will be deleted immediately.".equals(
-									selenium.getConfirmation())) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
+				assertTrue(selenium.getConfirmation()
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
 
 			case 2:
 			case 3:

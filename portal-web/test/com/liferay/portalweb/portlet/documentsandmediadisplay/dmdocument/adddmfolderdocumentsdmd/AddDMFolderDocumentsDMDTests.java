@@ -21,17 +21,12 @@ import com.liferay.portalweb.portlet.documentsandmediadisplay.dmdocument.adddmfo
 import com.liferay.portalweb.portlet.documentsandmediadisplay.dmdocument.adddmfolderdocumentdmd.AddDMFolderDocument3DMDTest;
 import com.liferay.portalweb.portlet.documentsandmediadisplay.dmfolder.adddmfolderdmd.AddDMFolderDMDTest;
 import com.liferay.portalweb.portlet.documentsandmediadisplay.dmfolder.adddmfolderdmd.TearDownDMDFolderTest;
-import com.liferay.portalweb.portlet.documentsandmediadisplay.dmfolder.adddmfolderdmd.ViewDMFolderDMDTest;
 import com.liferay.portalweb.portlet.documentsandmediadisplay.portlet.addportletdmd.AddPageDMDTest;
 import com.liferay.portalweb.portlet.documentsandmediadisplay.portlet.addportletdmd.AddPortletDMDTest;
 import com.liferay.portalweb.portlet.documentsandmediadisplay.portlet.configureportletdmdshowactions.ConfigurePortletDMDShowActionsTest;
-import com.liferay.portalweb.portlet.documentsandmediadisplay.portlet.configureportletdmdshowactions.ViewPortletDMDShowActionsTest;
 import com.liferay.portalweb.portlet.documentsandmediadisplay.portlet.configureportletdmdshowfoldermenu.ConfigurePortletDMDShowFolderMenuTest;
-import com.liferay.portalweb.portlet.documentsandmediadisplay.portlet.configureportletdmdshowfoldermenu.ViewPortletDMDShowFolderMenuTest;
 import com.liferay.portalweb.portlet.documentsandmediadisplay.portlet.configureportletdmdshownavigationlinks.ConfigurePortletDMDShowNavigationLinksTest;
-import com.liferay.portalweb.portlet.documentsandmediadisplay.portlet.configureportletdmdshownavigationlinks.ViewPortletDMDShowNavigationLinksTest;
 import com.liferay.portalweb.portlet.documentsandmediadisplay.portlet.configureportletdmdshowsearch.ConfigurePortletDMDShowSearchTest;
-import com.liferay.portalweb.portlet.documentsandmediadisplay.portlet.configureportletdmdshowsearch.ViewPortletDMDShowSearchTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -48,12 +43,7 @@ public class AddDMFolderDocumentsDMDTests extends BaseTestSuite {
 		testSuite.addTestSuite(ConfigurePortletDMDShowActionsTest.class);
 		testSuite.addTestSuite(ConfigurePortletDMDShowNavigationLinksTest.class);
 		testSuite.addTestSuite(ConfigurePortletDMDShowSearchTest.class);
-		testSuite.addTestSuite(ViewPortletDMDShowFolderMenuTest.class);
-		testSuite.addTestSuite(ViewPortletDMDShowActionsTest.class);
-		testSuite.addTestSuite(ViewPortletDMDShowNavigationLinksTest.class);
-		testSuite.addTestSuite(ViewPortletDMDShowSearchTest.class);
 		testSuite.addTestSuite(AddDMFolderDMDTest.class);
-		testSuite.addTestSuite(ViewDMFolderDMDTest.class);
 		testSuite.addTestSuite(AddDMFolderDocument1DMDTest.class);
 		testSuite.addTestSuite(AddDMFolderDocument2DMDTest.class);
 		testSuite.addTestSuite(AddDMFolderDocument3DMDTest.class);

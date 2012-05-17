@@ -14,23 +14,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Documents and Media Test Page</td>
-	<td>Documents and Media Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
-	<td>link=Documents and Media Test Page</td>
-	<td>Documents and Media Test Page</td>
+	<td>link=Documents and Media Display Test Page</td>
+	<td>Documents and Media Display Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[2]/a</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[contains(.,'Add Folder')]/a</td>
 	<td>Add Folder</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[2]/a</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[contains(.,'Add Folder')]/a</td>
 	<td>Add Folder</td>
 </tr>
 <tr>
@@ -50,7 +45,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>link=DM Folder1 Name</td>
+	<td>//tr[3]/td[1]/a[2]/strong</td>
 	<td>DM Folder1 Name</td>
 </tr>
 </tbody></table>

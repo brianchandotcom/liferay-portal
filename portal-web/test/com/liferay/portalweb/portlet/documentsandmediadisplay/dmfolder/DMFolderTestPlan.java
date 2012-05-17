@@ -17,7 +17,6 @@ package com.liferay.portalweb.portlet.documentsandmediadisplay.dmfolder;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portlet.documentsandmediadisplay.dmfolder.adddmfolderdmd.AddDMFolderDMDTests;
 import com.liferay.portalweb.portlet.documentsandmediadisplay.dmfolder.adddmfoldersdmd.AddDMFoldersDMDTests;
-import com.liferay.portalweb.portlet.documentsandmediadisplay.dmfolder.viewdmfoldersaddmultipledocumentsdmd.ViewDMFoldersAddMultipleDocumentsDMDTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -32,7 +31,6 @@ public class DMFolderTestPlan extends BaseTestSuite {
 
 		testSuite.addTest(AddDMFolderDMDTests.suite());
 		testSuite.addTest(AddDMFoldersDMDTests.suite());
-		testSuite.addTest(ViewDMFoldersAddMultipleDocumentsDMDTests.suite());
 
 		return testSuite;
 	}

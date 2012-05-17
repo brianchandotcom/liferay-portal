@@ -19,7 +19,7 @@ import com.liferay.portalweb.portlet.documentsandmediadisplay.dmdocument.adddmdo
 import com.liferay.portalweb.portlet.documentsandmediadisplay.dmdocument.adddmdocumentsdmd.AddDMDocumentsDMDTests;
 import com.liferay.portalweb.portlet.documentsandmediadisplay.dmdocument.adddmfolderdocumentdmd.AddDMFolderDocumentDMDTests;
 import com.liferay.portalweb.portlet.documentsandmediadisplay.dmdocument.adddmfolderdocumentsdmd.AddDMFolderDocumentsDMDTests;
-import com.liferay.portalweb.portlet.documentsandmediadisplay.dmdocument.deletedmdocumentsdmd.DeleteDMDocumentsDMDTests;
+import com.liferay.portalweb.portlet.documentsandmediadisplay.dmdocument.deletedmdocumentsdmdactions.DeleteDMDocumentsDMDActionsTests;
 import com.liferay.portalweb.portlet.documentsandmediadisplay.dmdocument.searchdmfolderdocumentdmd.SearchDMFolderDocumentDMDTests;
 
 import junit.framework.Test;
@@ -37,7 +37,7 @@ public class DMDocumentTestPlan extends BaseTestSuite {
 		testSuite.addTest(AddDMDocumentsDMDTests.suite());
 		testSuite.addTest(AddDMFolderDocumentDMDTests.suite());
 		testSuite.addTest(AddDMFolderDocumentsDMDTests.suite());
-		testSuite.addTest(DeleteDMDocumentsDMDTests.suite());
+		testSuite.addTest(DeleteDMDocumentsDMDActionsTests.suite());
 		testSuite.addTest(SearchDMFolderDocumentDMDTests.suite());
 
 		return testSuite;

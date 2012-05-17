@@ -24,31 +24,14 @@ public class AddDMDocumentDMDTest extends BaseTestCase {
 	public void testAddDMDocumentDMD() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Documents and Media Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.clickAt("link=Documents and Media Test Page",
-			RuntimeVariables.replace("Documents and Media Test Page"));
+		selenium.clickAt("link=Documents and Media Display Test Page",
+			RuntimeVariables.replace("Documents and Media Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Add Document"),
 			selenium.getText(
-				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[5]/a"));
-		selenium.clickAt("//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[5]/a",
+				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[contains(.,'Add Document')]/a"));
+		selenium.clickAt("//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[contains(.,'Add Document')]/a",
 			RuntimeVariables.replace("Add Document"));
 
 		for (int second = 0;; second++) {
@@ -68,7 +51,6 @@ public class AddDMDocumentDMDTest extends BaseTestCase {
 		}
 
 		selenium.selectFrame("//iframe");
-		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -76,7 +58,8 @@ public class AddDMDocumentDMDTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Basic Document")) {
+				if (selenium.isElementPresent(
+							"//script[contains(@src,'/liferay/navigation_interaction.js')]")) {
 					break;
 				}
 			}
@@ -86,29 +69,31 @@ public class AddDMDocumentDMDTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Basic Document",
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//tr[3]/td[1]/a")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.clickAt("//tr[3]/td[1]/a",
 			RuntimeVariables.replace("Basic Document"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
 		selenium.selectFrame("relative=top");
-		Thread.sleep(5000);
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@type='file']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.uploadCommonFile("//input[@type='file']",
-			RuntimeVariables.replace("Document_1.docx"));
+			RuntimeVariables.replace("Document_1.txt"));
+		selenium.type("//input[contains(@id,'_title')]",
+			RuntimeVariables.replace("DM Document Title"));
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
@@ -120,10 +105,7 @@ public class AddDMDocumentDMDTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace(
-							"Your request completed successfully.")
-										.equals(selenium.getText(
-								"//div[@class='portlet-msg-success']"))) {
+				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
 					break;
 				}
 			}
@@ -136,8 +118,7 @@ public class AddDMDocumentDMDTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		Thread.sleep(5000);
-		assertEquals(RuntimeVariables.replace("Document_1.docx"),
+		assertEquals(RuntimeVariables.replace("DM Document Title"),
 			selenium.getText("//span[@class='entry-title']"));
 	}
 }

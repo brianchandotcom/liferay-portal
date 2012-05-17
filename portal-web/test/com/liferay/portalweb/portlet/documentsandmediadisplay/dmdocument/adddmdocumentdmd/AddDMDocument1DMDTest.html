@@ -14,23 +14,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Documents and Media Test Page</td>
-	<td>Documents and Media Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
-	<td>link=Documents and Media Test Page</td>
-	<td>Documents and Media Test Page</td>
+	<td>link=Documents and Media Display Test Page</td>
+	<td>Documents and Media Display Test Page</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[5]/a</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[contains(.,'Add Document')]/a</td>
 	<td>Add Document</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[5]/a</td>
+	<td>//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[contains(.,'Add Document')]/a</td>
 	<td>Add Document</td>
 </tr>
 <tr>
@@ -44,29 +39,24 @@
 	<td>Select Document Type</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/navigation_interaction.js')]</td>
+	<td>Navigation Interaction</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>link=Basic Document</td>
+	<td>//tr[3]/td[1]/a</td>
 	<td>Basic Document</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>link=Basic Document</td>
+	<td>clickAtAndWait</td>
+	<td>//tr[3]/td[1]/a</td>
 	<td>Basic Document</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
 	<td>relative=top</td>
-	<td></td>
-</tr>
-<tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>top</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -76,7 +66,12 @@
 <tr>
 	<td>uploadCommonFile</td>
 	<td>//input[@type='file']</td>
-	<td>Document_1.docx</td>
+	<td>Document_1.txt</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[contains(@id,'_title')]</td>
+	<td>DM Document1 Title</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -96,7 +91,7 @@
 <tr>
 	<td>assertText</td>
 	<td>//span[@class='entry-title']</td>
-	<td>Document_1.docx</td>
+	<td>DM Document1 Title</td>
 </tr>
 </tbody></table>
 </body>

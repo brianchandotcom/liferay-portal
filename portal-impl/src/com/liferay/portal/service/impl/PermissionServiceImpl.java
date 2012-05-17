@@ -17,9 +17,14 @@ package com.liferay.portal.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.model.AuditedModel;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.GroupedModel;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.PermissionedModel;
 import com.liferay.portal.model.PortletConstants;
+import com.liferay.portal.model.ResourceConstants;
+import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.Team;
 import com.liferay.portal.model.User;
@@ -259,6 +264,41 @@ public class PermissionServiceImpl extends PermissionServiceBaseImpl {
 		}
 		else if (!permissionChecker.hasPermission(
 					groupId, name, primKey, ActionKeys.PERMISSIONS)) {
+
+			long ownerId = 0;
+
+			if (resourceBlockLocalService.isSupported(name)) {
+				PermissionedModel permissionedModel =
+					resourceBlockLocalService.getPermissionedModel(
+						name, Long.valueOf(primKey));
+
+				if (permissionedModel instanceof GroupedModel) {
+					GroupedModel groupedModel = (GroupedModel)permissionedModel;
+
+					ownerId = groupedModel.getUserId();
+				}
+				else if (permissionedModel instanceof AuditedModel) {
+					AuditedModel auditedModel = (AuditedModel)permissionedModel;
+
+					ownerId = auditedModel.getUserId();
+				}
+			}
+			else {
+				ResourcePermission resourcePermission =
+					resourcePermissionLocalService.getResourcePermission(
+						permissionChecker.getCompanyId(), name,
+						ResourceConstants.SCOPE_INDIVIDUAL, primKey,
+						permissionChecker.getOwnerRoleId());
+
+				ownerId = resourcePermission.getOwnerId();
+			}
+
+			if (permissionChecker.hasOwnerPermission(
+					permissionChecker.getCompanyId(), name, primKey, ownerId,
+					ActionKeys.PERMISSIONS)) {
+
+				return;
+			}
 
 			Role role = null;
 

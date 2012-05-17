@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v6_0_3;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.dao.jdbc.SmartConnection;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -165,18 +166,24 @@ public class UpgradeAsset extends UpgradeProcess {
 		try {
 			con = DataAccess.getConnection();
 
-			ps = con.prepareStatement(
+			SmartConnection smartConnection = new SmartConnection(con);
+
+			ps = smartConnection.prepareStatement(
 				"select classPK from AssetEntry where classNameId = ?");
 
 			ps.setLong(1, classNameId);
 
 			rs = ps.executeQuery();
 
-			while (rs.next()) {
+			boolean hasNext = rs.next();
+
+			while (hasNext) {
 				long classPK = rs.getLong("classPK");
 
 				String uuid = getUuid(
 					tableName, columnName1, columnName2, classPK);
+
+				hasNext = rs.next();
 
 				updateAssetEntry(classNameId, classPK, uuid);
 			}

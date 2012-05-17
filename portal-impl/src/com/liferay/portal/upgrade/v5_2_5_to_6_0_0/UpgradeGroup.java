@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v5_2_5_to_6_0_0;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.dao.jdbc.SmartConnection;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.util.PortalUtil;
@@ -68,18 +69,24 @@ public class UpgradeGroup extends UpgradeProcess {
 		try {
 			con = DataAccess.getConnection();
 
+			SmartConnection smartConnection = new SmartConnection(con);
+
 			long classNameId = PortalUtil.getClassNameId(
 				Layout.class.getName());
 
-			ps = con.prepareStatement(
+			ps = smartConnection.prepareStatement(
 				"select groupId, classPK from Group_ where classNameId = " +
 					classNameId);
 
 			rs = ps.executeQuery();
 
-			while (rs.next()) {
+			boolean hasNext = rs.next();
+
+			while (hasNext) {
 				long groupId = rs.getLong("groupId");
 				long classPK = rs.getLong("classPK");
+
+				hasNext = rs.next();
 
 				Object[] layout = getLayout(classPK);
 

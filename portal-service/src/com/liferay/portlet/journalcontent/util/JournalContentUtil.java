@@ -134,6 +134,8 @@ public class JournalContentUtil {
 	}
 
 	public static JournalContent getJournalContent() {
+		PortalRuntimePermission.checkGetBeanProperty(JournalContentUtil.class);
+
 		return _journalContent;
 	}
 

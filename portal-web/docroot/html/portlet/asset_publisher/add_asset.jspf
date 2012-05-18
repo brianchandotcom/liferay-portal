@@ -181,21 +181,21 @@ public PortletURL getAddPortletURL(LiferayPortletRequest liferayPortletRequest, 
 		}
 
 		addPortletURL.setParameter("assetTagNames", StringUtil.merge(allAssetTagNames));
+	}
 
-		if (classTypeId > 0) {
-			addPortletURL.setParameter("classTypeId", String.valueOf(classTypeId));
+	if (classTypeId > 0) {
+		addPortletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 
-			if (className.equals(DLFileEntry.class.getName())) {
-				addPortletURL.setParameter(Constants.CMD, Constants.ADD);
-				addPortletURL.setParameter("folderId", String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
-				addPortletURL.setParameter("fileEntryTypeId", String.valueOf(classTypeId));
-			}
+		if (className.equals(DLFileEntry.class.getName())) {
+			addPortletURL.setParameter(Constants.CMD, Constants.ADD);
+			addPortletURL.setParameter("folderId", String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
+			addPortletURL.setParameter("fileEntryTypeId", String.valueOf(classTypeId));
+		}
 
-			if (className.equals(JournalArticle.class.getName())) {
-				JournalStructure structure = JournalStructureLocalServiceUtil.getJournalStructure(classTypeId);
+		if (className.equals(JournalArticle.class.getName())) {
+			JournalStructure structure = JournalStructureLocalServiceUtil.getJournalStructure(classTypeId);
 
-				addPortletURL.setParameter("structureId", structure.getStructureId());
-			}
+			addPortletURL.setParameter("structureId", structure.getStructureId());
 		}
 	}
 

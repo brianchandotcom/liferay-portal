@@ -59,7 +59,7 @@ public class GetMethodImpl implements Method {
 				try {
 					response.setContentType(resource.getContentType());
 
-					ServletResponseUtil.write(response, is);
+					ServletResponseUtil.write(response, is, resource.getSize());
 				}
 				catch (Exception e) {
 					if (_log.isWarnEnabled()) {

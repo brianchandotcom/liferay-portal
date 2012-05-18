@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddEventDisplayDays2SOTest extends BaseTestCase {
 	public void testAddEventDisplayDays2SO() throws Exception {
-		selenium.open("/user/joebloggs/home1");
+		selenium.open("/user/joebloggs/so/dashboard/");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
@@ -51,6 +51,8 @@ public class AddEventDisplayDays2SOTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_8_title']",
 			RuntimeVariables.replace("Calendar Event Title"));
+		selenium.keyPress("//select[@id='_8_startDateDay']",
+			RuntimeVariables.replace("\\40"));
 		assertEquals(RuntimeVariables.replace("Source"),
 			selenium.getText("//span[@id='cke_48_label' and .='Source']"));
 		selenium.clickAt("//span[@id='cke_48_label' and .='Source']",

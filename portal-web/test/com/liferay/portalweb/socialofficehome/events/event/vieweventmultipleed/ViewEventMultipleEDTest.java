@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewEventMultipleEDTest extends BaseTestCase {
 	public void testViewEventMultipleED() throws Exception {
-		selenium.open("/user/joebloggs/home1");
+		selenium.open("/user/joebloggs/so/dashboard/");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
@@ -56,7 +56,7 @@ public class ViewEventMultipleEDTest extends BaseTestCase {
 			selenium.getValue("//input[@value='Add Event']"));
 		assertEquals(RuntimeVariables.replace("Calendar Event1 Title"),
 			selenium.getText("xPath=(//div[@class='event-title'])[1]"));
-		selenium.open("/user/joebloggs/home1");
+		selenium.open("/user/joebloggs/so/dashboard/");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
@@ -91,7 +91,7 @@ public class ViewEventMultipleEDTest extends BaseTestCase {
 			selenium.getValue("//input[@value='Add Event']"));
 		assertEquals(RuntimeVariables.replace("Calendar Event2 Title"),
 			selenium.getText("xPath=(//div[@class='event-title'])[2]"));
-		selenium.open("/user/joebloggs/home1");
+		selenium.open("/user/joebloggs/so/dashboard/");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {

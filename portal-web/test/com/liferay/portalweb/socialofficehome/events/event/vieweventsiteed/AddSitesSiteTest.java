@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddSitesSiteTest extends BaseTestCase {
 	public void testAddSitesSite() throws Exception {
-		selenium.open("/user/joebloggs/home1/");
+		selenium.open("/user/joebloggs/so/dashboard/");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
@@ -42,7 +42,7 @@ public class AddSitesSiteTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Home"),
+		assertEquals(RuntimeVariables.replace("Dashboard"),
 			selenium.getText("//li[contains(@class, 'selected')]/a/span"));
 		assertEquals(RuntimeVariables.replace("Sites"),
 			selenium.getText("//div[@id='so-sidebar']/h3"));
@@ -166,9 +166,9 @@ public class AddSitesSiteTest extends BaseTestCase {
 
 			try {
 				if (RuntimeVariables.replace(
-							"Your request processed successfully.")
+							"Your request completed successfully.")
 										.equals(selenium.getText(
-								"//div[@class='portlet-msg-success']"))) {
+								"//span[@class='portlet-msg-success']"))) {
 					break;
 				}
 			}
@@ -179,8 +179,8 @@ public class AddSitesSiteTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace(
-				"Your request processed successfully."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
+				"Your request completed successfully."),
+			selenium.getText("//span[@class='portlet-msg-success']"));
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Open Site Name"),
 			selenium.getText(

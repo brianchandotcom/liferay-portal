@@ -20,8 +20,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ConfigurePortletDisplayDays2Test extends BaseTestCase {
-	public void testConfigurePortletDisplayDays2() throws Exception {
+public class TearDownConfigurePortletDisplayDaysTest extends BaseTestCase {
+	public void testTearDownConfigurePortletDisplayDays()
+		throws Exception {
 		selenium.open("/user/joebloggs/so/dashboard/");
 		loadRequiredJavaScriptModules();
 
@@ -114,7 +115,7 @@ public class ConfigurePortletDisplayDays2Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("How many days to display?"),
 			selenium.getText("//label[@for='maxDaysDisplayed']"));
 		selenium.select("//select[@id='_86_maxDaysDisplayed']",
-			RuntimeVariables.replace("2"));
+			RuntimeVariables.replace("1"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 

@@ -32,7 +32,7 @@ public class ViewDeleteEventEDTests extends BaseTestSuite {
 		testSuite.addTestSuite(DeleteEventSOTest.class);
 		testSuite.addTestSuite(ViewDeleteEventEDTest.class);
 		testSuite.addTestSuite(TearDownEventSOTest.class);
-		testSuite.addTestSuite(TearDownPageSOTest.class);
+		testSuite.addTestSuite(TearDownPageCalendarSOTest.class);
 
 		return testSuite;
 	}

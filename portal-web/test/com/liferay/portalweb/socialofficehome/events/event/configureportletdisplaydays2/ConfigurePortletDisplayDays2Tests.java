@@ -31,8 +31,9 @@ public class ConfigurePortletDisplayDays2Tests extends BaseTestSuite {
 		testSuite.addTestSuite(ViewEventEDDisplayDays1Test.class);
 		testSuite.addTestSuite(ConfigurePortletDisplayDays2Test.class);
 		testSuite.addTestSuite(ViewEventEDDisplayDays2Test.class);
+		testSuite.addTestSuite(TearDownConfigurePortletDisplayDaysTest.class);
 		testSuite.addTestSuite(TearDownEventSOTest.class);
-		testSuite.addTestSuite(TearDownPageSOTest.class);
+		testSuite.addTestSuite(TearDownPageCalendarSOTest.class);
 
 		return testSuite;
 	}

@@ -30,7 +30,7 @@ public class ViewEventEDTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddEventSOTest.class);
 		testSuite.addTestSuite(ViewEventEDTest.class);
 		testSuite.addTestSuite(TearDownEventSOTest.class);
-		testSuite.addTestSuite(TearDownPageSOTest.class);
+		testSuite.addTestSuite(TearDownPageCalendarSOTest.class);
 
 		return testSuite;
 	}

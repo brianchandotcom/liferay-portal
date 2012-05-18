@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class ViewEventSiteEDTest extends BaseTestCase {
 	public void testViewEventSiteED() throws Exception {
-		selenium.open("/user/joebloggs/home1");
+		selenium.open("/user/joebloggs/so/dashboard/");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {

@@ -1187,6 +1187,12 @@
 	<definition name="portlet.portal_settings.test_opensso_configuration" extends="portlet.portal_settings">
 		<put name="portlet_content" value="/portlet/portal_settings/test_opensso_configuration.jsp" />
 	</definition>
+	
+	<!-- START : LPSS-26599 changes -->
+    <definition name="portlet.portal_settings.export_settings" extends="portlet.portal_settings">
+		<put name="portlet_content" value="/portlet/portal_settings/export_import.jsp" />
+	</definition>
+        <!-- END : LPSS-26599 changes -->
 
 	<!-- Portlet Configuration -->
 

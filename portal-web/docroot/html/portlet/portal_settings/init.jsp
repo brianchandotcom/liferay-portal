@@ -20,7 +20,10 @@
 page import="com.liferay.portal.CompanyMxException" %><%@
 page import="com.liferay.portal.CompanyVirtualHostException" %><%@
 page import="com.liferay.portal.ImageTypeException" %><%@
+page import="com.liferay.portal.LARFileException" %><%@
+page import="com.liferay.portal.LARTypeException" %><%@
 page import="com.liferay.portal.LocaleException" %><%@
+page import="com.liferay.portal.PortalSettingsImportException" %><%@
 page import="com.liferay.portal.kernel.facebook.FacebookConnectUtil" %><%@
 page import="com.liferay.portal.security.auth.AuthSettingsUtil" %><%@
 page import="com.liferay.portal.security.ldap.LDAPSettingsUtil" %><%@

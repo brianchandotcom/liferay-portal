@@ -1488,6 +1488,17 @@
 		<action path="/portal_settings/test_opensso_configuration" forward="portlet.portal_settings.test_opensso_configuration" />
 
 		<action path="/portal_settings/view" forward="portlet.portal_settings.edit_company" />
+		
+		<!-- START : LPS-26599 Changes -->
+		<action path="/portal_settings/export_settings" type="com.liferay.portlet.portalsettings.action.ExportPortalSettingsAction">
+			<forward name="portlet.portal_settings.error" path="portlet.portal_settings.error" />
+			<forward name="portlet.portal_settings.export_settings" path="portlet.portal_settings.export_settings" />
+		</action>
+		<action path="/portal_settings/import_settings" type="com.liferay.portlet.portalsettings.action.ImportPortalSettingsAction">
+			<forward name="portlet.portal_settings.error" path="portlet.portal_settings.error" />
+			<forward name="portlet.portal_settings.export_settings" path="portlet.portal_settings.export_settings" />
+		</action>
+		<!-- END : LPS-26599 Changes -->
 
 		<!-- Portlet Configuration -->
 

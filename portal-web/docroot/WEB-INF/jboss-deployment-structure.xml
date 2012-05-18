@@ -4,6 +4,7 @@
 	<deployment>
 		<exclusions>
 			<module name="org.hibernate" />
+			<module name="org.apache.log4j" />
 		</exclusions>
 		<dependencies>
 			<module name="com.liferay.portal" />

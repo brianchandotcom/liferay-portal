@@ -37,7 +37,7 @@ import org.junit.runner.RunWith;
  */
 @ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class DLFileVersionHistoryTest extends BaseDLAppTestCase {
+public class DLFileVersionHistoryTest extends BaseDLAppTest {
 
 	@Test
 	public void testDeleteOneVersion() throws Exception {

@@ -184,14 +184,33 @@ if ((row == null) && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) |
 							<portlet:param name="folderId" value="<%= String.valueOf(folder.getParentFolderId()) %>" />
 						</portlet:renderURL>
 
-						<portlet:actionURL var="deleteURL">
-							<portlet:param name="struts_action" value="/document_library/edit_folder" />
-							<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
-							<portlet:param name="redirect" value="<%= (view || folderSelected) ? redirectURL : redirect %>" />
-							<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-						</portlet:actionURL>
+						<c:choose>
+							<c:when test="<%= folder.getModel() instanceof DLFolder %>">
+								<portlet:actionURL var="deleteURL">
+									<portlet:param name="struts_action" value="/document_library/edit_folder" />
+									<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.MOVE_TO_TRASH %>" />
+									<portlet:param name="redirect" value="<%= (view || folderSelected) ? redirectURL : redirect %>" />
+									<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+								</portlet:actionURL>
 
-						<liferay-ui:icon-delete url="<%= deleteURL %>" />
+								<liferay-ui:icon-delete
+									trash="<%= true %>"
+									url="<%= deleteURL %>"
+								/>
+							</c:when>
+							<c:otherwise>
+								<portlet:actionURL var="deleteURL">
+									<portlet:param name="struts_action" value="/document_library/edit_folder" />
+									<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+									<portlet:param name="redirect" value="<%= (view || folderSelected) ? redirectURL : redirect %>" />
+									<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+								</portlet:actionURL>
+
+								<liferay-ui:icon-delete
+									url="<%= deleteURL %>"
+								/>
+							</c:otherwise>
+						</c:choose>
 					</c:if>
 
 					<c:if test="<%= hasDeletePermission && folder.isMountPoint() %>">

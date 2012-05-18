@@ -304,6 +304,17 @@ public class BaseRepositoryProxyBean
 		return toFolderProxyBeans(folders);
 	}
 
+	public List<Folder> getFolders(
+			long parentFolderId, int status, boolean includeMountfolders,
+			int start, int end, OrderByComparator obc)
+		throws PortalException, SystemException {
+
+		List<Folder> folders = _baseRepository.getFolders(
+			parentFolderId, status, includeMountfolders, start, end, obc);
+
+		return toFolderProxyBeans(folders);
+	}
+
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
 			long folderId, int status, boolean includeMountFolders, int start,
 			int end, OrderByComparator obc)
@@ -352,6 +363,14 @@ public class BaseRepositoryProxyBean
 
 		return _baseRepository.getFoldersCount(
 			parentFolderId, includeMountfolders);
+	}
+
+	public int getFoldersCount(
+			long parentFolderId, int status, boolean includeMountfolders)
+		throws PortalException, SystemException {
+
+		return _baseRepository.getFoldersCount(
+			parentFolderId, status, includeMountfolders);
 	}
 
 	public int getFoldersFileEntriesCount(List<Long> folderIds, int status)

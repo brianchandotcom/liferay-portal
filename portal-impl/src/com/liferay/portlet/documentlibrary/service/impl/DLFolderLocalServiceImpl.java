@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
@@ -40,10 +41,13 @@ import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.base.DLFolderLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
@@ -565,6 +569,39 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		dlFolder.setLastPostDate(lastPostDate);
 
 		dlFolderPersistence.update(dlFolder, false);
+	}
+
+	public DLFolder updateStatus(
+			long userId, long folderId, int status,
+			Map<String, Serializable> workflowContext,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		// Folder
+
+		User user = userPersistence.findByPrimaryKey(userId);
+
+		DLFolder dlFolder = dlFolderPersistence.findByPrimaryKey(folderId);
+
+		dlFolder.setStatus(status);
+		dlFolder.setStatusByUserId(user.getUserId());
+		dlFolder.setStatusByUserName(user.getFullName());
+		dlFolder.setStatusDate(new Date());
+
+		dlFolderPersistence.update(dlFolder, false);
+
+		// Children
+
+		QueryDefinition queryDefinition = new QueryDefinition(
+			WorkflowConstants.STATUS_ANY);
+
+		List<Object> children =
+			getFoldersAndFileEntriesAndFileShortcuts(
+				dlFolder.getGroupId(), folderId, null, false, queryDefinition);
+
+		dlAppHelperLocalService.updateChildrenStatuses(user, children, status);
+
+		return dlFolder;
 	}
 
 	protected void addFolderResources(

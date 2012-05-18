@@ -15,7 +15,7 @@
 package com.liferay.portlet.trash;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.ExecutionTestListeners;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
@@ -31,7 +31,7 @@ import org.junit.runner.RunWith;
  */
 @ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class DLFileEntryTrashHandlerTest extends BaseDLTrashHandlerTest {
+public class DLFolderTrashHandlerTest extends BaseDLTrashHandlerTest {
 
 	@Test
 	public void testTrashAndDelete() throws Exception {
@@ -39,12 +39,12 @@ public class DLFileEntryTrashHandlerTest extends BaseDLTrashHandlerTest {
 	}
 
 	@Test
-	public void testTrashAndDeleteVersioned() throws Exception {
+	public void testTrashAndDeleteAndAddFile() throws Exception {
 		testTrash(true, true, false);
 	}
 
 	@Test
-	public void testTrashAndDeleteVersionedAndCheckedOut() throws Exception {
+	public void testTrashAndDeleteAndTrashFile() throws Exception {
 		testTrash(true, true, true);
 	}
 
@@ -54,17 +54,16 @@ public class DLFileEntryTrashHandlerTest extends BaseDLTrashHandlerTest {
 	}
 
 	@Test
-	public void testTrashAndRestoreVersioned() throws Exception {
+	public void testTrashAndRestoreAndAddFile() throws Exception {
 		testTrash(false, true, false);
 	}
 
 	@Test
-	public void testTrashAndRestoreVersionedAndCheckedOut() throws Exception {
+	public void testTrashAndRestoreAndTrashFile() throws Exception {
 		testTrash(false, true, true);
 	}
 
-	protected void testTrash(
-			boolean delete, boolean versioned, boolean leaveCheckedOut)
+	protected void testTrash(boolean delete, boolean file, boolean trashFile)
 		throws Exception {
 
 		int initialFoldersAndFileEntriesCount =
@@ -72,57 +71,100 @@ public class DLFileEntryTrashHandlerTest extends BaseDLTrashHandlerTest {
 		int initialTrashEntriesCount = getTrashEntriesCount();
 		int initialSearchFileEntriesCount = searchFileEntriesCount();
 
-		FileEntry fileEntry = addFileEntry(false, "Test Basic.txt");
+		Folder folder = addFolder(parentFolder.getFolderId(), "Test Folder");
 
-		long fileEntryId = fileEntry.getFileEntryId();
+		Folder subFolder = addFolder(folder.getFolderId(), "Test Subfolder");
 
-		if (versioned) {
-			updateFileEntry(fileEntryId, null, "Test Basic 2.txt");
-		}
+		long fileEntryId = 0;
 
-		if (leaveCheckedOut) {
-			DLAppServiceUtil.checkOutFileEntry(
-				fileEntryId, new ServiceContext());
+		if (file) {
+			FileEntry fileEntry = addFileEntry(
+				subFolder.getFolderId(), "Test File.txt");
+
+			fileEntryId = fileEntry.getFileEntryId();
+
+			Assert.assertEquals(
+				initialSearchFileEntriesCount + 1, searchFileEntriesCount());
+			Assert.assertTrue(isAssetEntryVisible(fileEntryId));
+
+			if (trashFile) {
+				DLAppServiceUtil.moveFileEntryToTrash(fileEntryId);
+			}
 		}
 
 		Assert.assertEquals(
 			initialFoldersAndFileEntriesCount + 1,
 			getFolderAndFileEntriesNotInTrashCount());
-		Assert.assertEquals(initialTrashEntriesCount, getTrashEntriesCount());
-		Assert.assertTrue(isAssetEntryVisible(fileEntryId));
-		Assert.assertEquals(
-			initialSearchFileEntriesCount + 1, searchFileEntriesCount());
 
-		DLAppServiceUtil.moveFileEntryToTrash(fileEntryId);
+		if (trashFile) {
+			Assert.assertEquals(
+				initialTrashEntriesCount + 1, getTrashEntriesCount());
+		}
+		else {
+			Assert.assertEquals(
+				initialTrashEntriesCount, getTrashEntriesCount());
+		}
+
+		DLAppServiceUtil.moveFolderToTrash(folder.getFolderId());
 
 		Assert.assertEquals(
 			initialFoldersAndFileEntriesCount,
 			getFolderAndFileEntriesNotInTrashCount());
-		Assert.assertEquals(
-			initialTrashEntriesCount + 1, getTrashEntriesCount());
-		Assert.assertFalse(isAssetEntryVisible(fileEntryId));
+
+		if (trashFile) {
+			Assert.assertEquals(
+				initialTrashEntriesCount + 2, getTrashEntriesCount());
+		}
+		else {
+			Assert.assertEquals(
+				initialTrashEntriesCount + 1, getTrashEntriesCount());
+		}
+
 		Assert.assertEquals(
 			initialSearchFileEntriesCount, searchFileEntriesCount());
 
+		if (file) {
+			Assert.assertFalse(isAssetEntryVisible(fileEntryId));
+		}
+
 		if (delete) {
-			TrashEntryServiceUtil.deleteEntries(parentFolder.getGroupId());
+			TrashEntryServiceUtil.deleteEntries(folder.getGroupId());
 
 			Assert.assertEquals(
 				initialFoldersAndFileEntriesCount,
 				getFolderAndFileEntriesNotInTrashCount());
-			Assert.assertNull(fetchAssetEntry(fileEntryId));
 			Assert.assertEquals(
 				initialSearchFileEntriesCount, searchFileEntriesCount());
+
+			if (file) {
+				Assert.assertNull(fetchAssetEntry(fileEntryId));
+			}
 		}
 		else {
-			DLAppServiceUtil.restoreFileEntryFromTrash(fileEntryId);
+			DLAppServiceUtil.restoreFolderFromTrash(folder.getFolderId());
 
 			Assert.assertEquals(
 				initialFoldersAndFileEntriesCount + 1,
 				getFolderAndFileEntriesNotInTrashCount());
-			Assert.assertTrue(isAssetEntryVisible(fileEntryId));
-			Assert.assertEquals(
-				initialSearchFileEntriesCount + 1, searchFileEntriesCount());
+
+			if (file) {
+				if (trashFile) {
+					Assert.assertEquals(
+						initialTrashEntriesCount + 1, getTrashEntriesCount());
+					Assert.assertEquals(
+						initialSearchFileEntriesCount,
+						searchFileEntriesCount());
+					Assert.assertFalse(isAssetEntryVisible(fileEntryId));
+
+					return;
+				}
+				else {
+					Assert.assertEquals(
+						initialSearchFileEntriesCount + 1,
+						searchFileEntriesCount());
+					Assert.assertTrue(isAssetEntryVisible(fileEntryId));
+				}
+			}
 		}
 
 		Assert.assertEquals(initialTrashEntriesCount, getTrashEntriesCount());

@@ -659,7 +659,11 @@ create table DLFolder (
 	description STRING null,
 	lastPostDate DATE null,
 	defaultFileEntryTypeId LONG,
-	overrideFileEntryTypes BOOLEAN
+	overrideFileEntryTypes BOOLEAN,
+	status INTEGER,
+	statusByUserId LONG,
+	statusByUserName VARCHAR(75) null,
+	statusDate DATE null
 );
 
 create table DLSync (

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.GroupedModel;
+import com.liferay.portal.model.WorkflowedModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -40,7 +41,8 @@ import java.util.Date;
  * @see com.liferay.portlet.documentlibrary.model.impl.DLFolderModelImpl
  * @generated
  */
-public interface DLFolderModel extends BaseModel<DLFolder>, GroupedModel {
+public interface DLFolderModel extends BaseModel<DLFolder>, GroupedModel,
+	WorkflowedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -317,6 +319,111 @@ public interface DLFolderModel extends BaseModel<DLFolder>, GroupedModel {
 	 * @param overrideFileEntryTypes the override file entry types of this document library folder
 	 */
 	public void setOverrideFileEntryTypes(boolean overrideFileEntryTypes);
+
+	/**
+	 * Returns the status of this document library folder.
+	 *
+	 * @return the status of this document library folder
+	 */
+	public int getStatus();
+
+	/**
+	 * Sets the status of this document library folder.
+	 *
+	 * @param status the status of this document library folder
+	 */
+	public void setStatus(int status);
+
+	/**
+	 * Returns the status by user ID of this document library folder.
+	 *
+	 * @return the status by user ID of this document library folder
+	 */
+	public long getStatusByUserId();
+
+	/**
+	 * Sets the status by user ID of this document library folder.
+	 *
+	 * @param statusByUserId the status by user ID of this document library folder
+	 */
+	public void setStatusByUserId(long statusByUserId);
+
+	/**
+	 * Returns the status by user uuid of this document library folder.
+	 *
+	 * @return the status by user uuid of this document library folder
+	 * @throws SystemException if a system exception occurred
+	 */
+	public String getStatusByUserUuid() throws SystemException;
+
+	/**
+	 * Sets the status by user uuid of this document library folder.
+	 *
+	 * @param statusByUserUuid the status by user uuid of this document library folder
+	 */
+	public void setStatusByUserUuid(String statusByUserUuid);
+
+	/**
+	 * Returns the status by user name of this document library folder.
+	 *
+	 * @return the status by user name of this document library folder
+	 */
+	@AutoEscape
+	public String getStatusByUserName();
+
+	/**
+	 * Sets the status by user name of this document library folder.
+	 *
+	 * @param statusByUserName the status by user name of this document library folder
+	 */
+	public void setStatusByUserName(String statusByUserName);
+
+	/**
+	 * Returns the status date of this document library folder.
+	 *
+	 * @return the status date of this document library folder
+	 */
+	public Date getStatusDate();
+
+	/**
+	 * Sets the status date of this document library folder.
+	 *
+	 * @param statusDate the status date of this document library folder
+	 */
+	public void setStatusDate(Date statusDate);
+
+	/**
+	 * @deprecated Renamed to {@link #isApproved()}
+	 */
+	public boolean getApproved();
+
+	/**
+	 * Returns <code>true</code> if this document library folder is approved.
+	 *
+	 * @return <code>true</code> if this document library folder is approved; <code>false</code> otherwise
+	 */
+	public boolean isApproved();
+
+	/**
+	 * Returns <code>true</code> if this document library folder is a draft.
+	 *
+	 * @return <code>true</code> if this document library folder is a draft; <code>false</code> otherwise
+	 */
+	public boolean isDraft();
+
+	/**
+	 * Returns <code>true</code> if this document library folder is expired.
+	 *
+	 * @return <code>true</code> if this document library folder is expired; <code>false</code> otherwise
+	 */
+	public boolean isExpired();
+
+	/**
+	 * Returns <code>true</code> if this document library folder is pending.
+	 *
+	 * @return <code>true</code> if this document library folder is pending; <code>false</code> otherwise
+	 */
+	public boolean isPending();
 
 	public boolean isNew();
 

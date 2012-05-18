@@ -62,10 +62,13 @@ public class EditFolderAction extends PortletAction {
 				updateFolder(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteFolders(actionRequest);
+				deleteFolders(actionRequest, false);
 			}
 			else if (cmd.equals(Constants.MOVE)) {
 				moveFolders(actionRequest);
+			}
+			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
+				deleteFolders(actionRequest, true);
 			}
 			else if (cmd.equals("updateWorkflowDefinitions")) {
 				updateWorkflowDefinitions(actionRequest);
@@ -119,25 +122,31 @@ public class EditFolderAction extends PortletAction {
 			getForward(renderRequest, "portlet.document_library.edit_folder"));
 	}
 
-	protected void deleteFolders(ActionRequest actionRequest) throws Exception {
+	protected void deleteFolders(
+			ActionRequest actionRequest, boolean moveToTrash)
+		throws Exception {
+
 		long folderId = ParamUtil.getLong(actionRequest, "folderId");
+		long[] deleteFolderIds = null;
 
 		if (folderId > 0) {
-			DLAppServiceUtil.deleteFolder(folderId);
-
-			AssetPublisherUtil.removeRecentFolderId(
-				actionRequest, DLFileEntry.class.getName(), folderId);
+			deleteFolderIds = new long[] {folderId};
 		}
 		else {
-			long[] folderIds = StringUtil.split(
+			deleteFolderIds = StringUtil.split(
 				ParamUtil.getString(actionRequest, "folderIds"), 0L);
+		}
 
-			for (long curFolderId : folderIds) {
-				DLAppServiceUtil.deleteFolder(curFolderId);
-
-				AssetPublisherUtil.removeRecentFolderId(
-					actionRequest, DLFileEntry.class.getName(), curFolderId);
+		for (long deleteFolderId : deleteFolderIds) {
+			if (moveToTrash) {
+				DLAppServiceUtil.moveFolderToTrash(deleteFolderId);
 			}
+			else {
+				DLAppServiceUtil.deleteFolder(deleteFolderId);
+			}
+
+			AssetPublisherUtil.removeRecentFolderId(
+				actionRequest, DLFileEntry.class.getName(), deleteFolderId);
 		}
 	}
 

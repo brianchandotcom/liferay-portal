@@ -258,6 +258,17 @@ drop table ResourceCode;
 
 drop table Roles_Permissions;
 
+alter table DLFolder add status INTEGER;
+alter table DLFolder add statusByUserId LONG;
+alter table DLFolder add statusByUserName VARCHAR(75) null;
+alter table DLFolder add statusDate DATE null;
+
+COMMIT_TRANSACTION;
+
+update DLFolder set statusByUserId = userId;
+update DLFolder set statusByUserName = userName;
+update DLFolder set statusDate = modifiedDate;
+
 alter table SocialActivityCounter add active_ BOOLEAN;
 
 COMMIT_TRANSACTION;

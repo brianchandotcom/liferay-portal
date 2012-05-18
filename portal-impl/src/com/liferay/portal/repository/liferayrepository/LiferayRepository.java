@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SortedArrayList;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
@@ -392,9 +393,19 @@ public class LiferayRepository
 			int end, OrderByComparator obc)
 		throws SystemException {
 
+		return getFolders(
+			parentFolderId, WorkflowConstants.STATUS_APPROVED,
+			includeMountfolders, start, end, obc);
+	}
+
+	public List<Folder> getFolders(
+			long parentFolderId, int status, boolean includeMountfolders,
+			int start, int end, OrderByComparator obc)
+		throws SystemException {
+
 		List<DLFolder> dlFolders = dlFolderService.getFolders(
-			getGroupId(), toFolderId(parentFolderId), includeMountfolders,
-			start, end, obc);
+			getGroupId(), toFolderId(parentFolderId), status,
+			includeMountfolders, start, end, obc);
 
 		return toFolders(dlFolders);
 	}
@@ -444,15 +455,21 @@ public class LiferayRepository
 			includeMountFolders);
 	}
 
-	public int getFoldersCount(long parentFolderId) throws SystemException {
-		return getFoldersCount(parentFolderId, true);
-	}
-
 	public int getFoldersCount(long parentFolderId, boolean includeMountfolders)
 		throws SystemException {
 
+		return getFoldersCount(
+			parentFolderId, WorkflowConstants.STATUS_APPROVED,
+			includeMountfolders);
+	}
+
+	public int getFoldersCount(
+			long parentFolderId, int status, boolean includeMountfolders)
+		throws SystemException {
+
 		return dlFolderService.getFoldersCount(
-			getGroupId(), toFolderId(parentFolderId), includeMountfolders);
+			getGroupId(), toFolderId(parentFolderId), status,
+			includeMountfolders);
 	}
 
 	public int getFoldersFileEntriesCount(List<Long> folderIds, int status)

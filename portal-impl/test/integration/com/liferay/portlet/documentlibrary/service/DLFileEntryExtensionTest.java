@@ -182,7 +182,7 @@ import org.junit.runner.RunWith;
  */
 @ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
+public class DLFileEntryExtensionTest extends BaseDLAppTest {
 
 	@Test
 	public void testAddFileEntryBasic01() throws Exception {

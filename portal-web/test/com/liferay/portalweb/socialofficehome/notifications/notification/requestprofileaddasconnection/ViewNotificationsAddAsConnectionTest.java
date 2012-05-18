@@ -25,25 +25,11 @@ public class ViewNotificationsAddAsConnectionTest extends BaseTestCase {
 		throws Exception {
 		selenium.open("/user/joebloggs/so/dashboard/");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//span[@class='notification-count']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.clickAt("//span[@class='notification-count']",
-			RuntimeVariables.replace("Notification Count"));
+		assertTrue(selenium.isElementPresent(
+				"//li[@id='_145_notificationsMenu']"));
+		assertEquals(RuntimeVariables.replace("1"),
+			selenium.getText("//span[@class='notification-count']"));
+		selenium.mouseOver("//li[@id='_145_notificationsMenu']");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

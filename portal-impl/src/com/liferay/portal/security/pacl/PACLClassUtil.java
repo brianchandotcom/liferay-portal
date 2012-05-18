@@ -72,7 +72,7 @@ public class PACLClassUtil {
 		}
 	}
 
-	public static PACLPolicy getPACLPolicy(boolean debug) {
+	public static PACLPolicy getPACLPolicy(boolean deep, boolean debug) {
 		PACLPolicy paclPolicy =
 			PortalSecurityManagerThreadLocal.getPACLPolicy();
 
@@ -80,32 +80,18 @@ public class PACLClassUtil {
 			return paclPolicy;
 		}
 
-		return getPACLPolicyByReflection(debug);
+		return getPACLPolicyByReflection(deep, debug);
 	}
 
-	public static PACLPolicy getPACLPolicyByReflection(boolean debug) {
-		boolean enabled = PortalSecurityManagerThreadLocal.isEnabled();
-
-		try {
-			PortalSecurityManagerThreadLocal.setEnabled(false);
-
-			return _instance._getPACLPolicyByReflection(debug);
-		}
-		finally {
-			PortalSecurityManagerThreadLocal.setEnabled(enabled);
-		}
-	}
-
-	public static PACLPolicy getPACLPolicyBySecurityManagerClassContext(
-		Class<?>[] classes, boolean debug) {
+	public static PACLPolicy getPACLPolicyByReflection(
+		boolean deep, boolean debug) {
 
 		boolean enabled = PortalSecurityManagerThreadLocal.isEnabled();
 
 		try {
 			PortalSecurityManagerThreadLocal.setEnabled(false);
 
-			return _instance._getPACLPolicyBySecurityManagerClassContext(
-				classes, debug);
+			return _instance._getPACLPolicyByReflection(deep, debug);
 		}
 		finally {
 			PortalSecurityManagerThreadLocal.setEnabled(enabled);
@@ -160,7 +146,9 @@ public class PACLClassUtil {
 		return callerClassLoader;
 	}
 
-	private PACLPolicy _getPACLPolicyByReflection(boolean debug) {
+	private PACLPolicy _getPACLPolicyByReflection(boolean deep, boolean debug) {
+		PACLPolicy paclPolicy = null;
+
 		boolean initialPortalClassLoaderPhase = true;
 
 		// int i = 0 always returns sun.reflect.Reflection
@@ -204,72 +192,18 @@ public class PACLClassUtil {
 			if (!initialPortalClassLoaderPhase &&
 				(callerClassLoader == _portalClassLoader)) {
 
-				return PACLPolicyManager.getDefaultPACLPolicy();
-			}
+				PACLPolicy defaultPACLPolicy =
+					PACLPolicyManager.getDefaultPACLPolicy();
 
-			if (initialPortalClassLoaderPhase &&
-				(callerClassLoader != _portalClassLoader)) {
-
-				initialPortalClassLoaderPhase = false;
-			}
-
-			if ((callerClassLoader == _commonClassLoader) ||
-				(callerClassLoader == _portalClassLoader) ||
-				(callerClassLoader == _systemClassLoader)) {
-
-				continue;
-			}
-
-			PACLPolicy paclPolicy = PACLPolicyManager.getPACLPolicy(
-				callerClassLoader);
-
-			if (paclPolicy != null) {
-				return paclPolicy;
-			}
-
-			/*_log.error(
-				"Unable to locate PACL policy for caller class loader " +
-					callerClassLoader);*/
-		}
-
-		return null;
-	}
-
-	private PACLPolicy _getPACLPolicyBySecurityManagerClassContext(
-		Class<?>[] classes, boolean debug) {
-
-		boolean initialPortalClassLoaderPhase = true;
-
-		// int i = 0 always returns
-		// com.liferay.portal.security.lang.PortalSecurityManager
-
-		for (int i = 1; i < classes.length; i++) {
-			Class<?> callerClass = classes[i];
-
-			if (callerClass == null) {
-				break;
-			}
-
-			if (debug) {
-				_log.debug(
-					"Frame " + i + " has caller class " +
-						callerClass.getName());
-			}
-
-			ClassLoader callerClassLoader = _getCallerClassLoader(callerClass);
-
-			if (callerClassLoader == null) {
-				continue;
-			}
-
-			if (!initialPortalClassLoaderPhase &&
-				(callerClassLoader == _portalClassLoader)) {
-
-				if (debug) {
-					_log.debug("Located the default PACL policy");
+				if (paclPolicy == null) {
+					paclPolicy = defaultPACLPolicy;
 				}
 
-				return PACLPolicyManager.getDefaultPACLPolicy();
+				if (!deep) {
+					break;
+				}
+
+				continue;
 			}
 
 			if (initialPortalClassLoaderPhase &&
@@ -285,19 +219,23 @@ public class PACLClassUtil {
 				continue;
 			}
 
-			PACLPolicy paclPolicy = PACLPolicyManager.getPACLPolicy(
+			PACLPolicy callerPACLPolicy = PACLPolicyManager.getPACLPolicy(
 				callerClassLoader);
 
-			if (paclPolicy != null) {
-				return paclPolicy;
-			}
+			if (callerPACLPolicy != null) {
+				paclPolicy = callerPACLPolicy;
 
-			/*_log.error(
-				"Unable to locate PACL policy for caller class loader " +
-					callerClassLoader);*/
+				if (!deep) {
+					break;
+				}
+			}
 		}
 
-		return null;
+		if (debug) {
+			_log.debug("Returning PACL policy " + paclPolicy);
+		}
+
+		return paclPolicy;
 	}
 
 	private static final String _ClASS_NAME_DYNAMIC_CLASS_LOADER =

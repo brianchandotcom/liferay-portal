@@ -29,6 +29,7 @@ import java.util.TreeSet;
 public class PortalRuntimeChecker extends BaseChecker {
 
 	public void afterPropertiesSet() {
+		initExpandoBridgeClassNames();
 		initGetBeanPropertyClassNames();
 		initSetBeanPropertyClassNames();
 	}
@@ -40,7 +41,15 @@ public class PortalRuntimeChecker extends BaseChecker {
 		String name = portalRuntimePermission.getName();
 		Object subject = portalRuntimePermission.getSubject();
 
-		if (name.equals(PORTAL_RUNTIME_PERMISSION_GET_BEAN_PROPERTY)) {
+		if (name.equals(PORTAL_RUNTIME_PERMISSION_EXPANDO_BRIDGE)) {
+			String className = (String)subject;
+
+			if (!_expandoBridgeClassNames.contains(className)) {
+				throwSecurityException(
+					_log, "Attempted to get Expando bridge on " + className);
+			}
+		}
+		else if (name.equals(PORTAL_RUNTIME_PERMISSION_GET_BEAN_PROPERTY)) {
 			Class<?> clazz = (Class<?>)subject;
 
 			if (!hasGetBeanProperty(clazz)) {
@@ -66,6 +75,20 @@ public class PortalRuntimeChecker extends BaseChecker {
 		return false;
 	}
 
+	protected void initExpandoBridgeClassNames() {
+		_expandoBridgeClassNames = getPropertySet(
+			"security-manager-expando-bridge");
+
+		if (_log.isDebugEnabled()) {
+			Set<String> classNames = new TreeSet<String>(
+				_expandoBridgeClassNames);
+
+			for (String className : classNames) {
+				_log.debug("Allowing Expando bridge on class " + className);
+			}
+		}
+	}
+
 	protected void initGetBeanPropertyClassNames() {
 		_getBeanPropertyClassNames = getPropertySet(
 			"security-manager-get-bean-property");
@@ -75,8 +98,7 @@ public class PortalRuntimeChecker extends BaseChecker {
 				_getBeanPropertyClassNames);
 
 			for (String className : classNames) {
-				_log.debug(
-					"Allowing get bean property name on class " + className);
+				_log.debug("Allowing get bean property on class " + className);
 			}
 		}
 	}
@@ -90,14 +112,14 @@ public class PortalRuntimeChecker extends BaseChecker {
 				_setBeanPropertyClassNames);
 
 			for (String className : classNames) {
-				_log.debug(
-					"Allowing set bean property name on class " + className);
+				_log.debug("Allowing set bean property on class " + className);
 			}
 		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(PortalRuntimeChecker.class);
 
+	private Set<String> _expandoBridgeClassNames;
 	private Set<String> _getBeanPropertyClassNames;
 	private Set<String> _setBeanPropertyClassNames;
 

@@ -53,7 +53,7 @@ public class PACLDataSource extends DataSourceWrapper {
 		}
 
 		PACLPolicy paclPolicy = PACLClassUtil.getPACLPolicy(
-			_log.isDebugEnabled());
+			false, _log.isDebugEnabled());
 
 		if ((paclPolicy == null) || !paclPolicy.isActive()) {
 			return connection;

@@ -126,7 +126,7 @@ public class PACLInitialContextFactory implements InitialContextFactory {
 		}
 
 		PACLPolicy paclPolicy = PACLClassUtil.getPACLPolicy(
-			_log.isDebugEnabled());
+			false, _log.isDebugEnabled());
 
 		if ((paclPolicy == null) || !paclPolicy.isActive()) {
 			return context;

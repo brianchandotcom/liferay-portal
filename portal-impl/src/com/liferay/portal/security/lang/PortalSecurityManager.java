@@ -17,7 +17,9 @@ package com.liferay.portal.security.lang;
 import com.liferay.portal.jndi.pacl.PACLInitialContextFactoryBuilder;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.pacl.PACLConstants;
 import com.liferay.portal.kernel.security.pacl.permission.PortalHookPermission;
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.security.pacl.PACLClassUtil;
 import com.liferay.portal.security.pacl.PACLPolicy;
 import com.liferay.portal.security.pacl.PACLPolicyManager;
@@ -123,8 +125,22 @@ public class PortalSecurityManager extends SecurityManager {
 
 			return paclPolicy;
 		}
+		else if (permission instanceof PortalRuntimePermission) {
+			PortalRuntimePermission portalRuntimePermission =
+				(PortalRuntimePermission)permission;
 
-		return PACLClassUtil.getPACLPolicyByReflection(_log.isDebugEnabled());
+			String name = portalRuntimePermission.getName();
+
+			if (name.equals(
+					PACLConstants.PORTAL_RUNTIME_PERMISSION_EXPANDO_BRIDGE)) {
+
+				return PACLClassUtil.getPACLPolicyByReflection(
+					true, _log.isDebugEnabled());
+			}
+		}
+
+		return PACLClassUtil.getPACLPolicyByReflection(
+			false, _log.isDebugEnabled());
 	}
 
 	protected void initClasses() {
@@ -136,7 +152,7 @@ public class PortalSecurityManager extends SecurityManager {
 		// Touch dependent classes to prevent NoClassDefError
 
 		CheckerUtil.isAccessControllerDoPrivileged(0);
-		PACLClassUtil.getPACLPolicyByReflection(false);
+		PACLClassUtil.getPACLPolicyByReflection(false, false);
 	}
 
 	protected void initInitialContextFactoryBuilder() throws Exception {

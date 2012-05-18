@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.expando.util;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.model.impl.ExpandoBridgeImpl;
 
@@ -23,11 +24,15 @@ import com.liferay.portlet.expando.model.impl.ExpandoBridgeImpl;
 public class ExpandoBridgeFactoryImpl implements ExpandoBridgeFactory {
 
 	public ExpandoBridge getExpandoBridge(long companyId, String className) {
+		PortalRuntimePermission.checkExpandoBridge(className);
+
 		return new ExpandoBridgeImpl(companyId, className);
 	}
 
 	public ExpandoBridge getExpandoBridge(
 		long companyId, String className, long classPK) {
+
+		PortalRuntimePermission.checkExpandoBridge(className);
 
 		return new ExpandoBridgeImpl(companyId, className, classPK);
 	}

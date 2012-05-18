@@ -24,6 +24,19 @@ import java.security.Permission;
  */
 public class PortalRuntimePermission extends BasicPermission {
 
+	public static void checkExpandoBridge(String className) {
+		SecurityManager securityManager = System.getSecurityManager();
+
+		if (securityManager == null) {
+			return;
+		}
+
+		Permission permission = new PortalRuntimePermission(
+			PACLConstants.PORTAL_RUNTIME_PERMISSION_EXPANDO_BRIDGE, className);
+
+		securityManager.checkPermission(permission);
+	}
+
 	public static void checkGetBeanProperty(Class<?> clazz) {
 		SecurityManager securityManager = System.getSecurityManager();
 

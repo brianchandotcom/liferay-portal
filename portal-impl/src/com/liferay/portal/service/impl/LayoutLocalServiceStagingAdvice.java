@@ -427,9 +427,7 @@ public class LayoutLocalServiceStagingAdvice
 			return layout;
 		}
 
-		if (!LayoutStagingUtil.isBranchingLayout(layout) &&
-			!layout.isTypeURL()) {
-
+		if (!LayoutStagingUtil.isBranchingLayout(layout)) {
 			return layout;
 		}
 

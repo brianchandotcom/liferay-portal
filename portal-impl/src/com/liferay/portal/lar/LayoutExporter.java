@@ -638,7 +638,9 @@ public class LayoutExporter {
 
 		boolean exportLAR = ParamUtil.getBoolean(serviceContext, "exportLAR");
 
-		if (!exportLAR && LayoutStagingUtil.isBranchingLayout(layout)) {
+		if (!exportLAR && LayoutStagingUtil.isBranchingLayout(layout) &&
+			!layout.isTypeURL()) {
+
 			long layoutSetBranchId = ParamUtil.getLong(
 				serviceContext, "layoutSetBranchId");
 

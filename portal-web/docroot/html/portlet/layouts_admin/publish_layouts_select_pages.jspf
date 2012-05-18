@@ -43,7 +43,7 @@ for (int i = 0; i < results.size(); i++) {
 
 	ResultRow row = new ResultRow(curLayout, curLayout.getPrimaryKey(), i);
 
-	if (LayoutStagingUtil.isBranchingLayout(curLayout)) {
+	if (LayoutStagingUtil.isBranchingLayout(curLayout) && !curLayout.isTypeURL()) {
 %>
 
 		<liferay-util:buffer var="layoutDetails">

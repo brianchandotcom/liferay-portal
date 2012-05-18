@@ -70,7 +70,7 @@ public class PortalSecurityManager extends SecurityManager {
 
 	@Override
 	public void checkPermission(Permission permission) {
-		checkPermission(permission, getSecurityContext());
+		checkPermission(permission, null);
 	}
 
 	@Override
@@ -221,6 +221,10 @@ public class PortalSecurityManager extends SecurityManager {
 		Permission permission, Object context) {
 
 		if (_parentSecurityManager != null) {
+			if (context == null) {
+				context = getSecurityContext();
+			}
+
 			_parentSecurityManager.checkPermission(permission, context);
 		}
 	}

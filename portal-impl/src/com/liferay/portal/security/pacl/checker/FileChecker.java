@@ -284,7 +284,15 @@ public class FileChecker extends BaseChecker {
 				_portalDir + "WEB-INF/lib/org.springframework.aspects.jar");
 		}
 
-		if (ServerDetector.isJBoss()) {
+		if (ServerDetector.isGlassfish()) {
+			String glassfishHome = System.getProperty(
+				"com.sun.aas.installRoot");
+
+			paths.add(glassfishHome + "/lib/install/applications/-");
+
+			paths.add(_portalDir + "WEB-INF/classes/org/springframework/-");
+		}
+		else if (ServerDetector.isJBoss()) {
 			String jbossHome = System.getProperty("jboss.home.dir");
 
 			paths.add(jbossHome + "/modules/-");

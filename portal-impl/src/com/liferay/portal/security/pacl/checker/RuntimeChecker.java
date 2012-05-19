@@ -225,24 +225,38 @@ public class RuntimeChecker extends BaseReflectChecker {
 			(callerClass7.getEnclosingClass() ==
 				LocalVariableTableParameterNameDiscoverer.class)) {
 
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Allowing " + callerClass7.getName() +
-						" to get the class loader");
-			}
+			logGetClassLoader(callerClass7, 7);
 
 			return true;
 		}
+
+		/*for (int i = 6; i <= 15; i++) {
+			System.out.println(
+				"Caller class " + i + " " + Reflection.getCallerClass(i));
+		}*/
 
 		if (callerClass6 == Class.class) {
 			if (isJBossMessages(callerClass7) ||
 				isJBossServiceControllerImpl(callerClass7) ||
 				isTomcatJdbcLeakPrevention(callerClass7)) {
 
+				logGetClassLoader(callerClass7, 7);
+
 				return true;
 			}
 		}
 		else if (callerClass6 == ClassLoader.class) {
+			Class<?> callerClass8 = Reflection.getCallerClass(8);
+
+			/*if (isGlassfishAPIClassLoaderServiceImpl(
+					callerClass8.getEnclosingClass()) &&
+				CheckerUtil.isAccessControllerDoPrivileged(9)) {
+
+				logGetClassLoader(callerClass8, 8);
+
+				return true;
+			}*/
+
 			Thread currentThread = Thread.currentThread();
 
 			StackTraceElement[] stackTraceElements =
@@ -422,6 +436,16 @@ public class RuntimeChecker extends BaseReflectChecker {
 		}
 	}
 
+	protected boolean isGlassfishAPIClassLoaderServiceImpl(Class<?> clazz) {
+		if (!ServerDetector.isGlassfish()) {
+			return false;
+		}
+
+		String className = clazz.getName();
+
+		return className.equals(_CLASS_NAME_API_CLASS_LOADER_SERVICE_IMPL);
+	}
+
 	protected boolean isJBossMessages(Class<?> clazz) {
 		if (!ServerDetector.isJBoss()) {
 			return false;
@@ -492,6 +516,14 @@ public class RuntimeChecker extends BaseReflectChecker {
 		}
 	}
 
+	protected void logGetClassLoader(Class<?> callerClass, int frame) {
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"Allowing frame " + frame + " with caller " + callerClass +
+					" to get the class loader");
+		}
+	}
+
 	protected void logGetEnv(Class<?> callerClass, int frame, String name) {
 		if (_log.isInfoEnabled()) {
 			_log.info(
@@ -523,6 +555,9 @@ public class RuntimeChecker extends BaseReflectChecker {
 					" to write a file descriptor");
 		}
 	}
+
+	private static final String _CLASS_NAME_API_CLASS_LOADER_SERVICE_IMPL =
+		"com.sun.enterprise.v3.server.APIClassLoaderServiceImpl";
 
 	private static final String _CLASS_NAME_CLASS_DEFINER =
 		"sun.reflect.ClassDefiner$";

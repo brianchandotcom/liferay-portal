@@ -28,7 +28,7 @@ public class SOUs_ViewReplyMicroblogsContentTagTest extends BaseTestCase {
 		while (label >= 1) {
 			switch (label) {
 			case 1:
-				selenium.open("/user/socialoffice01/home1");
+				selenium.open("/user/socialoffice01/so/dashboard/");
 				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {

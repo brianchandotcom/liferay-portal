@@ -23,7 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddMicroblogsContentViewableByEveryoneTest extends BaseTestCase {
 	public void testAddMicroblogsContentViewableByEveryone()
 		throws Exception {
-		selenium.open("/user/joebloggs/home1");
+		selenium.open("/user/joebloggs/so/dashboard");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
@@ -50,10 +50,11 @@ public class AddMicroblogsContentViewableByEveryoneTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Microblogs"),
 			selenium.getText("//span[@class='portlet-title-default']"));
 		assertTrue(selenium.isElementPresent(
-				"//div[@id='_1_WAR_microblogsportlet_autocompleteContent']"));
-		assertEquals(RuntimeVariables.replace("You have no microblogs entry."),
+				"//div[contains(@id,'_1_WAR_microblogsportlet_autocompleteContent')]"));
+		assertEquals(RuntimeVariables.replace(
+				"You do not have any microblog entries."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
-		selenium.clickAt("//div[@id='_1_WAR_microblogsportlet_autocompleteContent']",
+		selenium.clickAt("//div[contains(@id,'_1_WAR_microblogsportlet_autocompleteContent')]",
 			RuntimeVariables.replace("Update your status..."));
 
 		for (int second = 0;; second++) {

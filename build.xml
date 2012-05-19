@@ -240,6 +240,24 @@ ${app.server.tomcat.dir}, then run "ant -buildfile build-dist.xml unzip-tomcat".
 						</replace>
 					</then>
 				</if>
+
+				<loadfile property="server.policy.content" srcfile="${app.server.glassfish.instance.dir}/config/server.policy" />
+
+				<antelope:stringutil string="${server.policy.content}" property="server.policy.content.index">
+					<indexof string="permission javax.security.auth.AuthPermission &quot;doAsPrivileged&quot;;" fromindex="0" />
+				</antelope:stringutil>
+
+				<if>
+					<equals arg1="${server.policy.content.index}" arg2="-1" />
+					<then>
+						<echo file="${app.server.glassfish.instance.dir}/config/server.policy" append="true">
+							grant {
+								permission java.lang.reflect.ReflectPermission  "suppressAccessChecks";
+								permission javax.security.auth.AuthPermission "doAsPrivileged";
+							};
+						</echo>
+					</then>
+				</if>
 			</then>
 		</if>
 

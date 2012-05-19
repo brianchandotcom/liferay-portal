@@ -14,7 +14,8 @@
 
 package com.liferay.portal.security.pacl.checker;
 
-import com.liferay.portal.deploy.DeployUtil;
+import com.liferay.portal.kernel.configuration.Filter;
+import com.liferay.portal.kernel.deploy.DeployManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
@@ -22,10 +23,12 @@ import com.liferay.portal.kernel.servlet.WebDirDetector;
 import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PathUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.util.UniqueList;
 
@@ -66,6 +69,37 @@ public class FileChecker extends BaseChecker {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Work directory " + _workDir);
 			}
+		}
+
+		_defaultReadPathsFromArray = new String[] {
+			"${catalina.base}",
+			"${com.sun.aas.instanceRoot}",
+			"${com.sun.aas.installRoot}",
+			"${jboss.home.dir}",
+			"${jetty.home}",
+			"${jonas.base}",
+			"${liferay.web.portal.dir}",
+			"${org.apache.geronimo.home.dir}",
+			"${org.apache.geronimo.home.dir}",
+			"${plugin.servlet.context.name}",
+			"${weblogic.home.dir}"
+		};
+
+		_defaultReadPathsToArray = new String[] {
+			System.getProperty("catalina.base"),
+			System.getProperty("com.sun.aas.instanceRoot"),
+			System.getProperty("com.sun.aas.installRoot"),
+			System.getProperty("jboss.home.dir"),
+			System.getProperty("jetty.home"), System.getProperty("jonas.base"),
+			_portalDir, System.getProperty("org.apache.geronimo.home.dir"),
+			System.getProperty("resin.home"), getServletContextName(),
+			System.getenv("DOMAIN_HOME")
+		};
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Default read paths replace with " +
+					StringUtil.merge(_defaultReadPathsToArray));
 		}
 
 		initPermissions();
@@ -148,6 +182,19 @@ public class FileChecker extends BaseChecker {
 		}
 	}
 
+	protected void addDefaultReadPaths(List<String> paths, String selector) {
+		String[] pathsArray = PropsUtil.getArray(
+			PropsKeys.PORTAL_SECURITY_MANAGER_FILE_CHECKER_DEFAULT_READ_PATHS,
+			new Filter(selector));
+
+		for (String path : pathsArray) {
+			path = StringUtil.replace(
+				path, _defaultReadPathsFromArray, _defaultReadPathsToArray);
+
+			paths.add(path);
+		}
+	}
+
 	protected void addPermission(
 		List<Permission> permissions, String path, String actions) {
 
@@ -176,8 +223,8 @@ public class FileChecker extends BaseChecker {
 		if (value != null) {
 			try {
 				value = StringUtil.replace(
-					value, "${auto.deploy.dest.dir}",
-					DeployUtil.getAutoDeployDestDir());
+					value, "${auto.deploy.installed.dir}",
+					DeployManagerUtil.getInstalledDir());
 			}
 			catch (Exception e) {
 				_log.error(e, e);
@@ -258,37 +305,8 @@ public class FileChecker extends BaseChecker {
 
 		// Portal
 
-		if (!_portalDir.equals(_rootDir)) {
-			paths.add(_portalDir);
-			paths.add(_portalDir + "html/common/-");
-			paths.add(_portalDir + "html/taglib/-");
-			paths.add(_portalDir + "localhost/html/common/-");
-			paths.add(_portalDir + "localhost/html/taglib/-");
-			paths.add(_portalDir + "localhost/WEB-INF/tld/-");
-			paths.add(_portalDir + "WEB-INF/classes/java/-");
-			paths.add(_portalDir + "WEB-INF/classes/javax/-");
-			paths.add(_portalDir + "WEB-INF/classes/org/apache/-");
-			paths.add(
-				_portalDir + "WEB-INF/classes/META-INF/services/" +
-					"javax.el.ExpressionFactory");
-			paths.add(_portalDir + "WEB-INF/lib/hibernate3.jar");
-			paths.add(_portalDir + "WEB-INF/lib/log4j-extras.jar");
-			paths.add(_portalDir + "WEB-INF/lib/spring-beans.jar");
-			paths.add(_portalDir + "WEB-INF/tld/-");
-
-			// Jetty complains about needing this JAR when hot deploying
-			// test-pacl-portlet. It does not complain if the portlet was
-			// already deployed when you restart Jetty.
-
-			paths.add(
-				_portalDir + "WEB-INF/lib/org.springframework.aspects.jar");
-		}
-
-		if (ServerDetector.isJBoss()) {
-			String jbossHome = System.getProperty("jboss.home.dir");
-
-			paths.add(jbossHome + "/modules/-");
-		}
+		addDefaultReadPaths(paths, "common");
+		addDefaultReadPaths(paths, ServerDetector.getServerId());
 
 		for (String path : paths) {
 			addPermission(permissions, path, actions);
@@ -364,6 +382,8 @@ public class FileChecker extends BaseChecker {
 
 	private static Log _log = LogFactoryUtil.getLog(FileChecker.class);
 
+	private String[] _defaultReadPathsFromArray;
+	private String[] _defaultReadPathsToArray;
 	private List<Permission> _deletePermissions;
 	private List<Permission> _executePermissions;
 	private String _globalSharedLibDir =

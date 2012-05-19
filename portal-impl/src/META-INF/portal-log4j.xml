@@ -518,6 +518,10 @@
 		<priority value="ERROR" />
 	</category>
 
+	<category name="com.liferay.portal.security.pacl.checker.SecurityChecker">
+		<priority value="ERROR" />
+	</category>
+
 	<category name="com.liferay.portal.security.pacl.checker.SocketChecker">
 		<priority value="ERROR" />
 	</category>

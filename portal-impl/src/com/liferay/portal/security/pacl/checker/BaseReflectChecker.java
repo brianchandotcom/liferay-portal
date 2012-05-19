@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.config.AbstractMessagingConfigurator;
 import com.liferay.portal.kernel.util.JavaDetector;
+import com.liferay.portal.kernel.util.ServerDetector;
+import com.liferay.portal.security.pacl.PACLClassUtil;
 
 import java.beans.Introspector;
 
@@ -121,6 +123,17 @@ public abstract class BaseReflectChecker extends BaseChecker {
 			}
 		}
 
+		// org.apache.felix.framework.util.SecureAction
+
+		if (isGlassfishSecureAction(
+				callerClass7.getEnclosingClass()) &&
+			CheckerUtil.isAccessControllerDoPrivileged(8)) {
+
+			logReflect(callerClass7, 7);
+
+			return true;
+		}
+
 		// org.hibernate.property.BasicPropertyAccessor
 
 		if (callerClass9 == BasicPropertyAccessor.class) {
@@ -200,6 +213,26 @@ public abstract class BaseReflectChecker extends BaseChecker {
 		return false;
 	}
 
+	protected boolean isGlassfishSecureAction(Class<?> clazz) {
+		if (!ServerDetector.isGlassfish()) {
+			return false;
+		}
+
+		if (clazz == null) {
+			return false;
+		}
+
+		String className = clazz.getName();
+
+		if (!className.equals(_CLASS_NAME_SECURE_ACTION)) {
+			return false;
+		}
+
+		String classLocation = PACLClassUtil.getClassLocation(clazz);
+
+		return classLocation.contains("/osgi/felix/bin/felix.jar!");
+	}
+
 	protected void logReflect(Class<?> callerClass, int frame) {
 		if (_log.isInfoEnabled()) {
 			_log.info(
@@ -207,6 +240,9 @@ public abstract class BaseReflectChecker extends BaseChecker {
 					" to reflect");
 		}
 	}
+
+	private static final String _CLASS_NAME_SECURE_ACTION =
+		"org.apache.felix.framework.util.SecureAction";
 
 	private static Log _log = LogFactoryUtil.getLog(BaseReflectChecker.class);
 

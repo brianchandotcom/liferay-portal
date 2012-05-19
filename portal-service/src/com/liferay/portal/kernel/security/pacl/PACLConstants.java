@@ -94,6 +94,10 @@ public interface PACLConstants {
 	public static final String RUNTIME_PERMISSION_WRITE_FILE_DESCRIPTOR =
 		"writeFileDescriptor";
 
+	public static final String SECURITY_PERMISSION_GET_POLICY = "getPolicy";
+
+	public static final String SECURITY_PERMISSION_SET_POLICY = "setPolicy";
+
 	public static final String SOCKET_PERMISSION_ACCEPT = "accept";
 
 	public static final String SOCKET_PERMISSION_CONNECT = "connect";

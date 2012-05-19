@@ -118,7 +118,25 @@ public abstract class BaseChecker implements Checker, PACLConstants {
 			if (callerClassLoader != _commonClassLoader) {
 				boolean allow = false;
 
-				if (ServerDetector.isJBoss()) {
+				if (ServerDetector.isGlassfish()) {
+					Class<?> callerClassLoaderClass =
+						callerClassLoader.getClass();
+
+					callerClassLoaderClass =
+						callerClassLoaderClass.getEnclosingClass();
+
+					if (callerClassLoaderClass != null) {
+						String callerClassLoaderClassName =
+							callerClassLoaderClass.getName();
+
+						if (callerClassLoaderClassName.equals(
+								_ClASS_NAME_BUNDLE_WIRING_IMPL)) {
+
+							allow = true;
+						}
+					}
+				}
+				else if (ServerDetector.isJBoss()) {
 					String callerClassLoaderString =
 						callerClassLoader.toString();
 
@@ -172,6 +190,9 @@ public abstract class BaseChecker implements Checker, PACLConstants {
 
 		throw new SecurityException(message);
 	}
+
+	private static final String _ClASS_NAME_BUNDLE_WIRING_IMPL =
+		"org.apache.felix.framework.BundleWiringImpl";
 
 	private static final String _ClASS_NAME_DEFAULT_INSTANCE_MANAGER =
 		"org.apache.catalina.core.DefaultInstanceManager";

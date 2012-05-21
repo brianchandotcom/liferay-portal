@@ -19,8 +19,8 @@ import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.assetpublisher.portlet.addportletap.AddPageAPTest;
 import com.liferay.portalweb.portlet.assetpublisher.portlet.addportletap.AddPortletAPTest;
 import com.liferay.portalweb.portlet.messageboards.mbcategory.addmbcategory.AddMBCategoryTest;
-import com.liferay.portalweb.portlet.messageboards.mbmessage.postnewmbcategorythreadmessage.PostNewMBCategoryThreadMessageTest;
-import com.liferay.portalweb.portlet.messageboards.mbmessage.postnewmbthreadmessage.TearDownMBThreadTest;
+import com.liferay.portalweb.portlet.messageboards.mbthread.postnewmbcategorythread.PostNewMBCategoryThreadTest;
+import com.liferay.portalweb.portlet.messageboards.mbthread.postnewmbthread.TearDownMBThreadTest;
 import com.liferay.portalweb.portlet.messageboards.portlet.addportletmb.AddPageMBTest;
 import com.liferay.portalweb.portlet.messageboards.portlet.addportletmb.AddPortletMBTest;
 
@@ -39,7 +39,7 @@ public class ViewPortletFullContentMBCategoryThreadMessageAPTests
 		testSuite.addTestSuite(AddPageMBTest.class);
 		testSuite.addTestSuite(AddPortletMBTest.class);
 		testSuite.addTestSuite(AddMBCategoryTest.class);
-		testSuite.addTestSuite(PostNewMBCategoryThreadMessageTest.class);
+		testSuite.addTestSuite(PostNewMBCategoryThreadTest.class);
 		testSuite.addTestSuite(ConfigurePortletDisplayStyleFullContentTest.class);
 		testSuite.addTestSuite(ViewPortletFullContentMBCategoryThreadMessageAPTest.class);
 		testSuite.addTestSuite(TearDownMBThreadTest.class);

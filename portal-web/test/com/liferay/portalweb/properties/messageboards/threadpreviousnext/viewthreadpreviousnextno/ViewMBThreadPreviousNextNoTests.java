@@ -16,9 +16,9 @@ package com.liferay.portalweb.properties.messageboards.threadpreviousnext.viewth
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
-import com.liferay.portalweb.portlet.messageboards.mbmessage.postnewmbthreadmessage.PostNewMBThread1MessageTest;
-import com.liferay.portalweb.portlet.messageboards.mbmessage.postnewmbthreadmessage.PostNewMBThread2MessageTest;
-import com.liferay.portalweb.portlet.messageboards.mbmessage.postnewmbthreadmessage.TearDownMBThreadTest;
+import com.liferay.portalweb.portlet.messageboards.mbthread.postnewmbthread.PostNewMBThread1Test;
+import com.liferay.portalweb.portlet.messageboards.mbthread.postnewmbthread.PostNewMBThread2Test;
+import com.liferay.portalweb.portlet.messageboards.mbthread.postnewmbthread.TearDownMBThreadTest;
 import com.liferay.portalweb.portlet.messageboards.portlet.addportletmb.AddPageMBTest;
 import com.liferay.portalweb.portlet.messageboards.portlet.addportletmb.AddPortletMBTest;
 
@@ -33,8 +33,8 @@ public class ViewMBThreadPreviousNextNoTests extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddPageMBTest.class);
 		testSuite.addTestSuite(AddPortletMBTest.class);
-		testSuite.addTestSuite(PostNewMBThread1MessageTest.class);
-		testSuite.addTestSuite(PostNewMBThread2MessageTest.class);
+		testSuite.addTestSuite(PostNewMBThread1Test.class);
+		testSuite.addTestSuite(PostNewMBThread2Test.class);
 		testSuite.addTestSuite(ViewMBThreadPreviousNextNoTest.class);
 		testSuite.addTestSuite(TearDownMBThreadTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);

@@ -26,6 +26,8 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 LayoutPrototype layoutPrototype = (LayoutPrototype)row.getObject();
 
 long layoutPrototypeId = layoutPrototype.getLayoutPrototypeId();
+
+Group layoutPrototypeGroup = layoutPrototype.getGroup();
 %>
 
 <liferay-ui:icon-menu>
@@ -69,58 +71,38 @@ long layoutPrototypeId = layoutPrototype.getLayoutPrototypeId();
 		/>
 	</c:if>
 
-	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, layoutPrototype.getGroupId(), ActionKeys.EXPORT_IMPORT_LAYOUTS) %>">
+	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, layoutPrototypeGroup.getGroupId(), ActionKeys.EXPORT_IMPORT_LAYOUTS) %>">
 		<portlet:renderURL var="exportURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 			<portlet:param name="struts_action" value="/layout_prototypes/export_layouts" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
-			<portlet:param name="layoutPrototypeId" value="<%= String.valueOf(layoutPrototypeId) %>" />
-			<portlet:param name="layoutPrototypeExportImport" value="<%= Boolean.TRUE.toString() %>" />
+			<portlet:param name="privateLayout" value="<%= Boolean.TRUE.toString() %>" />
 			<portlet:param name="rootNodeName" value="<%= layoutPrototype.getName(locale) %>" />
-			<portlet:param name="groupId" value="<%= String.valueOf(layoutPrototype.getGroupId()) %>" />
+			<portlet:param name="groupId" value="<%= String.valueOf(layoutPrototypeGroup.getGroupId()) %>" />
 		</portlet:renderURL>
 
-		<%
-		StringBundler sb = new StringBundler(6);
-
-		sb.append("javascript:");
-		sb.append(renderResponse.getNamespace());
-		sb.append("exportLayoutPrototype");
-		sb.append("('");
-		sb.append(exportURL);
-		sb.append("');");
-		%>
-
 		<liferay-ui:icon
+			cssClass="export-layout-prototype layout-prototype-action"
 			image="export"
-			url="<%= sb.toString() %>"
+			method="get"
+			url="<%= exportURL %>"
 		/>
 	</c:if>
 
-	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, layoutPrototype.getGroupId(), ActionKeys.EXPORT_IMPORT_LAYOUTS) %>">
+	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, layoutPrototypeGroup.getGroupId(), ActionKeys.EXPORT_IMPORT_LAYOUTS) %>">
 		<portlet:renderURL var="importURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 			<portlet:param name="struts_action" value="/layout_prototypes/import_layouts" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.IMPORT %>" />
-			<portlet:param name="layoutPrototypeId" value="<%= String.valueOf(layoutPrototypeId) %>" />
-			<portlet:param name="layoutPrototypeExportImport" value="<%= Boolean.TRUE.toString() %>" />
+			<portlet:param name="privateLayout" value="<%= Boolean.TRUE.toString() %>" />
 			<portlet:param name="rootNodeName" value="<%= layoutPrototype.getName(locale) %>" />
-			<portlet:param name="groupId" value="<%= String.valueOf(layoutPrototype.getGroupId()) %>" />
+			<portlet:param name="groupId" value="<%= String.valueOf(layoutPrototypeGroup.getGroupId()) %>" />
 		</portlet:renderURL>
 
-		<%
-			StringBundler sb = new StringBundler(6);
-
-			sb.append("javascript:");
-			sb.append(renderResponse.getNamespace());
-			sb.append("importLayoutPrototype");
-			sb.append("('");
-			sb.append(importURL);
-			sb.append("');");
-		%>
-
 		<liferay-ui:icon
+			cssClass="import-layout-prototype layout-prototype-action"
 			image="../aui/arrowthick-1-t"
 			message="import"
-			url="<%= sb.toString() %>"
+			method="get"
+			url="<%= importURL %>"
 		/>
 	</c:if>
 </liferay-ui:icon-menu>

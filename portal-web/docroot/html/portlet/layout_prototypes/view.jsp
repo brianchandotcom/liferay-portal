@@ -83,33 +83,15 @@ portletURL.setParameter("struts_action", "/layout_prototypes/view");
 	</liferay-ui:search-container>
 </aui:form>
 
-<aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />exportLayoutPrototype',
-		function(dialogTargetURL) {
-			Liferay.Util.openWindow(
-				{
-					dialog:
-						{
-							centered: true,
-							constrain: true,
-							modal: true,
-							width: 600
-						},
-					id: '<portlet:namespace />exportDialog',
-					title: '<%= UnicodeLanguageUtil.get(pageContext, "export") %>',
-					uri: dialogTargetURL
-				}
-			);
-		},
-		['aui-dialog']
-	);
+<aui:script use="aui-base,aui-dialog">
+	A.getBody().delegate(
+		'click',
+		function(event){
+			event.preventDefault();
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />importLayoutPrototype',
-		function(dialogTargetURL) {
+			var link = event.currentTarget;
+			var title = link.get('text');
+
 			Liferay.Util.openWindow(
 				{
 					dialog:
@@ -119,12 +101,12 @@ portletURL.setParameter("struts_action", "/layout_prototypes/view");
 							modal: true,
 							width: 600
 						},
-					id: '<portlet:namespace />importDialog',
-					title: '<%= UnicodeLanguageUtil.get(pageContext, "import") %>',
-					uri: dialogTargetURL
+					id: '<portlet:namespace />' + title,
+					title: title,
+					uri: link.attr('href')
 				}
 			);
 		},
-		['aui-dialog']
+		'.layout-prototype-action a'
 	);
 </aui:script>

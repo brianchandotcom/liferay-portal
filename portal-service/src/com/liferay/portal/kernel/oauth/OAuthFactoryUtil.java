@@ -49,6 +49,8 @@ public class OAuthFactoryUtil {
 	}
 
 	public static OAuthFactory getOAuthFactory() {
+		PortalRuntimePermission.checkGetBeanProperty(OAuthFactoryUtil.class);
+
 		return _oAuthFactory;
 	}
 

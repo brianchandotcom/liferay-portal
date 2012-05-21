@@ -23,6 +23,9 @@ import com.liferay.portal.security.permission.PermissionChecker;
 public class WorkflowPermissionUtil {
 
 	public static WorkflowPermission getWorkflowPermission() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			WorkflowPermissionUtil.class);
+
 		return _workflowPermission;
 	}
 

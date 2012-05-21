@@ -28,6 +28,7 @@ import java.util.Map;
  * @author Shuyang Zhou
  * @author Brian Wing Shun Chan
  * @author Marcellus Tavares
+ * @author Raymond Augé
  */
 public class WorkflowTaskManagerUtil {
 
@@ -37,7 +38,7 @@ public class WorkflowTaskManagerUtil {
 			Map<String, Serializable> workflowContext)
 		throws WorkflowException {
 
-		return _workflowTaskManager.assignWorkflowTaskToRole(
+		return getWorkflowTaskManager().assignWorkflowTaskToRole(
 			companyId, userId, workflowTaskId, roleId, comment, dueDate,
 			workflowContext);
 	}
@@ -48,7 +49,7 @@ public class WorkflowTaskManagerUtil {
 			Map<String, Serializable> workflowContext)
 		throws WorkflowException {
 
-		return _workflowTaskManager.assignWorkflowTaskToUser(
+		return getWorkflowTaskManager().assignWorkflowTaskToUser(
 			companyId, userId, workflowTaskId, assigneeUserId, comment, dueDate,
 			workflowContext);
 	}
@@ -59,7 +60,7 @@ public class WorkflowTaskManagerUtil {
 			Map<String, Serializable> workflowContext)
 		throws WorkflowException {
 
-		return _workflowTaskManager.completeWorkflowTask(
+		return getWorkflowTaskManager().completeWorkflowTask(
 			companyId, userId, workflowTaskId, transitionName, comment,
 			workflowContext);
 	}
@@ -68,14 +69,14 @@ public class WorkflowTaskManagerUtil {
 			long companyId, long userId, long workflowTaskId)
 		throws WorkflowException {
 
-		return _workflowTaskManager.getNextTransitionNames(
+		return getWorkflowTaskManager().getNextTransitionNames(
 			companyId, userId, workflowTaskId);
 	}
 
 	public static long[] getPooledActorsIds(long companyId, long workflowTaskId)
 		throws WorkflowException {
 
-		return _workflowTaskManager.getPooledActorsIds(
+		return getWorkflowTaskManager().getPooledActorsIds(
 			companyId, workflowTaskId);
 	}
 
@@ -83,20 +84,22 @@ public class WorkflowTaskManagerUtil {
 			long companyId, long workflowTaskId)
 		throws WorkflowException {
 
-		return _workflowTaskManager.getWorkflowTask(companyId, workflowTaskId);
+		return getWorkflowTaskManager().getWorkflowTask(
+			companyId, workflowTaskId);
 	}
 
 	public static int getWorkflowTaskCount(long companyId, Boolean completed)
 		throws WorkflowException {
 
-		return _workflowTaskManager.getWorkflowTaskCount(companyId, completed);
+		return getWorkflowTaskManager().getWorkflowTaskCount(
+			companyId, completed);
 	}
 
 	public static int getWorkflowTaskCountByRole(
 			long companyId, long roleId, Boolean completed)
 		throws WorkflowException {
 
-		return _workflowTaskManager.getWorkflowTaskCountByRole(
+		return getWorkflowTaskManager().getWorkflowTaskCountByRole(
 			companyId, roleId, completed);
 	}
 
@@ -104,7 +107,7 @@ public class WorkflowTaskManagerUtil {
 			long companyId, long userId, Boolean completed)
 		throws WorkflowException {
 
-		return _workflowTaskManager.getWorkflowTaskCountBySubmittingUser(
+		return getWorkflowTaskManager().getWorkflowTaskCountBySubmittingUser(
 			companyId, userId, completed);
 	}
 
@@ -112,7 +115,7 @@ public class WorkflowTaskManagerUtil {
 			long companyId, long userId, Boolean completed)
 		throws WorkflowException {
 
-		return _workflowTaskManager.getWorkflowTaskCountByUser(
+		return getWorkflowTaskManager().getWorkflowTaskCountByUser(
 			companyId, userId, completed);
 	}
 
@@ -120,7 +123,7 @@ public class WorkflowTaskManagerUtil {
 			long companyId, long userId, Boolean completed)
 		throws WorkflowException {
 
-		return _workflowTaskManager.getWorkflowTaskCountByUserRoles(
+		return getWorkflowTaskManager().getWorkflowTaskCountByUserRoles(
 			companyId, userId, completed);
 	}
 
@@ -129,11 +132,14 @@ public class WorkflowTaskManagerUtil {
 			Boolean completed)
 		throws WorkflowException {
 
-		return _workflowTaskManager.getWorkflowTaskCountByWorkflowInstance(
+		return getWorkflowTaskManager().getWorkflowTaskCountByWorkflowInstance(
 			companyId, userId, workflowInstanceId, completed);
 	}
 
 	public static WorkflowTaskManager getWorkflowTaskManager() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			WorkflowTaskManagerUtil.class);
+
 		return _workflowTaskManager;
 	}
 
@@ -142,7 +148,7 @@ public class WorkflowTaskManagerUtil {
 			OrderByComparator orderByComparator)
 		throws WorkflowException {
 
-		return _workflowTaskManager.getWorkflowTasks(
+		return getWorkflowTaskManager().getWorkflowTasks(
 			companyId, completed, start, end, orderByComparator);
 	}
 
@@ -151,7 +157,7 @@ public class WorkflowTaskManagerUtil {
 			OrderByComparator orderByComparator)
 		throws WorkflowException {
 
-		return _workflowTaskManager.getWorkflowTasksByRole(
+		return getWorkflowTaskManager().getWorkflowTasksByRole(
 			companyId, roleId, completed, start, end, orderByComparator);
 	}
 
@@ -160,7 +166,7 @@ public class WorkflowTaskManagerUtil {
 			OrderByComparator orderByComparator)
 		throws WorkflowException {
 
-		return _workflowTaskManager.getWorkflowTasksBySubmittingUser(
+		return getWorkflowTaskManager().getWorkflowTasksBySubmittingUser(
 			companyId, userId, completed, start, end, orderByComparator);
 	}
 
@@ -169,7 +175,7 @@ public class WorkflowTaskManagerUtil {
 			OrderByComparator orderByComparator)
 		throws WorkflowException {
 
-		return _workflowTaskManager.getWorkflowTasksByUser(
+		return getWorkflowTaskManager().getWorkflowTasksByUser(
 			companyId, userId, completed, start, end, orderByComparator);
 	}
 
@@ -178,7 +184,7 @@ public class WorkflowTaskManagerUtil {
 			OrderByComparator orderByComparator)
 		throws WorkflowException {
 
-		return _workflowTaskManager.getWorkflowTasksByUserRoles(
+		return getWorkflowTaskManager().getWorkflowTasksByUserRoles(
 			companyId, userId, completed, start, end, orderByComparator);
 	}
 
@@ -188,7 +194,7 @@ public class WorkflowTaskManagerUtil {
 			OrderByComparator orderByComparator)
 		throws WorkflowException {
 
-		return _workflowTaskManager.getWorkflowTasksByWorkflowInstance(
+		return getWorkflowTaskManager().getWorkflowTasksByWorkflowInstance(
 			companyId, userId, workflowInstanceId, completed, start, end,
 			orderByComparator);
 	}
@@ -199,7 +205,7 @@ public class WorkflowTaskManagerUtil {
 			OrderByComparator orderByComparator)
 		throws WorkflowException {
 
-		return _workflowTaskManager.search(
+		return getWorkflowTaskManager().search(
 			companyId, userId, keywords, completed, searchByUserRoles, start,
 			end, orderByComparator);
 	}
@@ -211,7 +217,7 @@ public class WorkflowTaskManagerUtil {
 			int start, int end, OrderByComparator orderByComparator)
 		throws WorkflowException {
 
-		return _workflowTaskManager.search(
+		return getWorkflowTaskManager().search(
 			companyId, userId, taskName, assetType, assetPrimaryKey, dueDateGT,
 			dueDateLT, completed, searchByUserRoles, andOperator, start, end,
 			orderByComparator);
@@ -223,7 +229,7 @@ public class WorkflowTaskManagerUtil {
 			OrderByComparator orderByComparator)
 		throws WorkflowException {
 
-		return _workflowTaskManager.search(
+		return getWorkflowTaskManager().search(
 			companyId, userId, keywords, assetTypes, completed,
 			searchByUserRoles, start, end, orderByComparator);
 	}
@@ -233,7 +239,7 @@ public class WorkflowTaskManagerUtil {
 			Boolean searchByUserRoles)
 		throws WorkflowException {
 
-		return _workflowTaskManager.searchCount(
+		return getWorkflowTaskManager().searchCount(
 			companyId, userId, keywords, completed, searchByUserRoles);
 	}
 
@@ -243,7 +249,7 @@ public class WorkflowTaskManagerUtil {
 			Boolean completed, Boolean searchByUserRoles, boolean andOperator)
 		throws WorkflowException {
 
-		return _workflowTaskManager.searchCount(
+		return getWorkflowTaskManager().searchCount(
 			companyId, userId, taskName, assetType, assetPrimaryKey, dueDateGT,
 			dueDateLT, completed, searchByUserRoles, andOperator);
 	}
@@ -253,7 +259,7 @@ public class WorkflowTaskManagerUtil {
 			Boolean completed, Boolean searchByUserRoles)
 		throws WorkflowException {
 
-		return _workflowTaskManager.searchCount(
+		return getWorkflowTaskManager().searchCount(
 			companyId, userId, keywords, assetTypes, completed,
 			searchByUserRoles);
 	}
@@ -263,7 +269,7 @@ public class WorkflowTaskManagerUtil {
 			Date dueDate)
 		throws WorkflowException {
 
-		return _workflowTaskManager.updateDueDate(
+		return getWorkflowTaskManager().updateDueDate(
 			companyId, userId, workflowTaskId, comment, dueDate);
 	}
 

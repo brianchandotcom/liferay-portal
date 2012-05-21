@@ -22,6 +22,9 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermissio
 public class CompoundSessionIdSplitterUtil {
 
 	public static CompoundSessionIdSplitter getCompoundSessionIdSplitter() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			CompoundSessionIdSplitterUtil.class);
+
 		return _compoundSessionIdSplitter;
 	}
 

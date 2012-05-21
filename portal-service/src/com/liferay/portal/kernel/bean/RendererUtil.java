@@ -28,6 +28,8 @@ import javax.servlet.http.HttpServletResponse;
 public class RendererUtil {
 
 	public static Renderer getRenderer() {
+		PortalRuntimePermission.checkGetBeanProperty(RendererUtil.class);
+
 		return _renderer;
 	}
 

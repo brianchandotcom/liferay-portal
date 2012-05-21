@@ -80,6 +80,8 @@ public class UserPermissionUtil {
 	}
 
 	public static UserPermission getUserPermission() {
+		PortalRuntimePermission.checkGetBeanProperty(UserPermissionUtil.class);
+
 		return _userPermission;
 	}
 

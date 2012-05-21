@@ -35,6 +35,8 @@ public class DDMIndexerUtil {
 	}
 
 	public static DDMIndexer getDDMIndexer() {
+		PortalRuntimePermission.checkGetBeanProperty(DDMIndexerUtil.class);
+
 		return _ddmIndexer;
 	}
 

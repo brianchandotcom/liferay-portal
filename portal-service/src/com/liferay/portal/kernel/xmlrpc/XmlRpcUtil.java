@@ -37,6 +37,8 @@ public class XmlRpcUtil {
 	}
 
 	public static XmlRpc getXmlRpc() {
+		PortalRuntimePermission.checkGetBeanProperty(XmlRpcUtil.class);
+
 		return _xmlRpc;
 	}
 

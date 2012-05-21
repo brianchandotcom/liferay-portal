@@ -31,6 +31,8 @@ import javax.servlet.http.HttpServletResponse;
 public class DDMUtil {
 
 	public static DDM getDDM() {
+		PortalRuntimePermission.checkGetBeanProperty(DDMUtil.class);
+
 		return _ddm;
 	}
 

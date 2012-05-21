@@ -36,6 +36,9 @@ public class ZipReaderFactoryUtil {
 	}
 
 	public static ZipReaderFactory getZipReaderFactory() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			ZipReaderFactoryUtil.class);
+
 		return _zipReaderFactory;
 	}
 

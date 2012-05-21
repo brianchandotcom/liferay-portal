@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermissio
 public class QueryTranslatorUtil {
 
 	public static QueryTranslator getQueryTranslator() {
+		PortalRuntimePermission.checkGetBeanProperty(QueryTranslatorUtil.class);
+
 		return _queryTranslator;
 	}
 

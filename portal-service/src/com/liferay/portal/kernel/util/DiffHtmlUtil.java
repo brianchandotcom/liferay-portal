@@ -34,6 +34,8 @@ public class DiffHtmlUtil {
 	}
 
 	public static DiffHtml getDiffHtml() {
+		PortalRuntimePermission.checkGetBeanProperty(DiffHtmlUtil.class);
+
 		return _diffHtml;
 	}
 

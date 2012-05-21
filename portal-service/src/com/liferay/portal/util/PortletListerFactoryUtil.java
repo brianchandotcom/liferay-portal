@@ -28,6 +28,9 @@ public class PortletListerFactoryUtil {
 	}
 
 	public static PortletListerFactory getPortletListerFactory() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			PortletListerFactoryUtil.class);
+
 		return _portletListerFactory;
 	}
 

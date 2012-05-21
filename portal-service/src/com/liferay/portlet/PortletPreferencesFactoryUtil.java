@@ -106,6 +106,9 @@ public class PortletPreferencesFactoryUtil {
 	}
 
 	public static PortletPreferencesFactory getPortletPreferencesFactory() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			PortletPreferencesFactoryUtil.class);
+
 		return _portletPreferencesFactory;
 	}
 

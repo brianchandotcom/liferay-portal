@@ -43,6 +43,8 @@ public class SortFactoryUtil {
 	}
 
 	public static SortFactory getSortFactory() {
+		PortalRuntimePermission.checkGetBeanProperty(SortFactoryUtil.class);
+
 		return _sortFactory;
 	}
 

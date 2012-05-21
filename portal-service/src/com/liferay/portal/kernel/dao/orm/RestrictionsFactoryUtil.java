@@ -67,6 +67,9 @@ public class RestrictionsFactoryUtil {
 	}
 
 	public static RestrictionsFactory getRestrictionsFactory() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			RestrictionsFactoryUtil.class);
+
 		return _restrictionsFactory;
 	}
 

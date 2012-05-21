@@ -23,11 +23,18 @@ import com.liferay.portal.security.permission.PermissionChecker;
  */
 public class StagingPermissionUtil {
 
+	public static StagingPermission getStagingPermission() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			StagingPermissionUtil.class);
+
+		return _stagingPermission;
+	}
+
 	public static Boolean hasPermission(
 		PermissionChecker permissionChecker, Group group, String className,
 		long classPK, String portletId, String actionId) {
 
-		return _stagingPermission.hasPermission(
+		return getStagingPermission().hasPermission(
 			permissionChecker, group, className, classPK, portletId, actionId);
 	}
 
@@ -35,7 +42,7 @@ public class StagingPermissionUtil {
 		PermissionChecker permissionChecker, long groupId, String className,
 		long classPK, String portletId, String actionId) {
 
-		return _stagingPermission.hasPermission(
+		return getStagingPermission().hasPermission(
 			permissionChecker, groupId, className, classPK, portletId,
 			actionId);
 	}

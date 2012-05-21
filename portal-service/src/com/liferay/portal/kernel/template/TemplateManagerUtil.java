@@ -24,6 +24,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Tina Tian
+ * @author Raymond Augé
  */
 public class TemplateManagerUtil {
 
@@ -46,11 +47,13 @@ public class TemplateManagerUtil {
 	}
 
 	public static void destroy() {
-		for (TemplateManager templateManager : _templateManagers.values()) {
+		for (TemplateManager templateManager :
+				_getTemplateManagers().values()) {
+
 			templateManager.destroy();
 		}
 
-		_templateManagers.clear();
+		_getTemplateManagers().clear();
 	}
 
 	public static Template getTemplate(
@@ -107,17 +110,17 @@ public class TemplateManagerUtil {
 	public static TemplateManager getTemplateManager(
 		String templateManagerName) {
 
-		return _templateManagers.get(templateManagerName);
+		return _getTemplateManagers().get(templateManagerName);
 	}
 
 	public static Set<String> getTemplateManagerNames(
 		String templateManagerName) {
 
-		return _templateManagers.keySet();
+		return _getTemplateManagers().keySet();
 	}
 
 	public static Map<String, TemplateManager> getTemplateManagers() {
-		return Collections.unmodifiableMap(_templateManagers);
+		return Collections.unmodifiableMap(_getTemplateManagers());
 	}
 
 	public static boolean hasTemplate(
@@ -131,11 +134,13 @@ public class TemplateManagerUtil {
 	}
 
 	public static boolean hasTemplateManager(String templateManagerName) {
-		return _templateManagers.containsKey(templateManagerName);
+		return _getTemplateManagers().containsKey(templateManagerName);
 	}
 
 	public static void init() throws TemplateException {
-		for (TemplateManager templateManager : _templateManagers.values()) {
+		for (TemplateManager templateManager :
+				_getTemplateManagers().values()) {
+
 			templateManager.init();
 		}
 	}
@@ -145,12 +150,12 @@ public class TemplateManagerUtil {
 
 		templateManager.init();
 
-		_templateManagers.put(
+		_getTemplateManagers().put(
 			templateManager.getTemplateManagerName(), templateManager);
 	}
 
 	public static void unregisterTemplateManager(String templateManagerName) {
-		TemplateManager templateManager = _templateManagers.remove(
+		TemplateManager templateManager = _getTemplateManagers().remove(
 			templateManagerName);
 
 		if (templateManager != null) {
@@ -160,6 +165,8 @@ public class TemplateManagerUtil {
 
 	public void setTemplateManagers(List<TemplateManager> templateManagers) {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
+		Map<String, TemplateManager> _templateManagers = _getTemplateManagers();
 
 		for (TemplateManager templateManager : templateManagers) {
 			_templateManagers.put(
@@ -171,7 +178,7 @@ public class TemplateManagerUtil {
 			String templateManagerName)
 		throws TemplateException {
 
-		TemplateManager templateManager = _templateManagers.get(
+		TemplateManager templateManager = _getTemplateManagers().get(
 			templateManagerName);
 
 		if (templateManager == null) {
@@ -180,6 +187,12 @@ public class TemplateManagerUtil {
 		}
 
 		return templateManager;
+	}
+
+	private static Map<String, TemplateManager> _getTemplateManagers() {
+		PortalRuntimePermission.checkGetBeanProperty(TemplateManagerUtil.class);
+
+		return _templateManagers;
 	}
 
 	private static Map<String, TemplateManager> _templateManagers =

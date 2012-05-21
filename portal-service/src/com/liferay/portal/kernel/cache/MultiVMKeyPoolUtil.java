@@ -45,6 +45,8 @@ public class MultiVMKeyPoolUtil {
 	}
 
 	public static MultiVMPool getMultiVMPool() {
+		PortalRuntimePermission.checkGetBeanProperty(MultiVMKeyPoolUtil.class);
+
 		return _multiVMPool;
 	}
 

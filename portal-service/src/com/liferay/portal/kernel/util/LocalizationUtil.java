@@ -50,6 +50,8 @@ public class LocalizationUtil {
 	}
 
 	public static Localization getLocalization() {
+		PortalRuntimePermission.checkGetBeanProperty(LocalizationUtil.class);
+
 		return _localization;
 	}
 
@@ -108,6 +110,8 @@ public class LocalizationUtil {
 
 	public static List<Locale> getModifiedLocales(
 		Map<Locale, String> oldMap, Map<Locale, String> newMap) {
+
+		getLocalization();
 
 		if ((newMap == null) || newMap.isEmpty()) {
 			return Collections.emptyList();

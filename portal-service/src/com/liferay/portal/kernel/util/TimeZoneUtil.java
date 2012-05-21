@@ -22,19 +22,26 @@ import java.util.TimeZone;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Raymond Augé
  */
 public class TimeZoneUtil {
 
 	public static TimeZone getDefault() {
-		return _instance._getDefault();
+		return getInstance()._getDefault();
+	}
+
+	public static TimeZoneUtil getInstance() {
+		PortalRuntimePermission.checkGetBeanProperty(TimeZoneUtil.class);
+
+		return _instance;
 	}
 
 	public static TimeZone getTimeZone(String timeZoneId) {
-		return _instance._getTimeZone(timeZoneId);
+		return getInstance()._getTimeZone(timeZoneId);
 	}
 
 	public static void setDefault(String timeZoneId) {
-		_instance._setDefault(timeZoneId);
+		getInstance()._setDefault(timeZoneId);
 	}
 
 	private TimeZoneUtil() {

@@ -37,6 +37,9 @@ public class PortalPermissionUtil {
 	}
 
 	public static PortalPermission getPortalPermission() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			PortalPermissionUtil.class);
+
 		return _portalPermission;
 	}
 

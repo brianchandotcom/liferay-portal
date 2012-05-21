@@ -62,6 +62,9 @@ public class LayoutBranchPermissionUtil {
 	}
 
 	public static LayoutBranchPermission getLayoutBranchPermission() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			LayoutBranchPermissionUtil.class);
+
 		return _layoutBranchPermission;
 	}
 

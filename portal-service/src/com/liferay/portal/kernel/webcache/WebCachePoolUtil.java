@@ -30,6 +30,8 @@ public class WebCachePoolUtil {
 	}
 
 	public static WebCachePool getWebCachePool() {
+		PortalRuntimePermission.checkGetBeanProperty(WebCachePoolUtil.class);
+
 		return _webCachePool;
 	}
 

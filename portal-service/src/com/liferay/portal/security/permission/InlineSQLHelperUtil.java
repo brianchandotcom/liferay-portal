@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermissio
 public class InlineSQLHelperUtil {
 
 	public static InlineSQLHelper getInlineSQLHelper() {
+		PortalRuntimePermission.checkGetBeanProperty(InlineSQLHelperUtil.class);
+
 		return _inlineSQLPermission;
 	}
 

@@ -44,6 +44,8 @@ public class ImageProcessorUtil {
 	}
 
 	public static ImageProcessor getImageProcessor() {
+		PortalRuntimePermission.checkGetBeanProperty(ImageProcessorUtil.class);
+
 		return _imageProcessor;
 	}
 

@@ -212,6 +212,8 @@ public class UsersAdminUtil {
 	}
 
 	public static UsersAdmin getUsersAdmin() {
+		PortalRuntimePermission.checkGetBeanProperty(UsersAdminUtil.class);
+
 		return _usersAdmin;
 	}
 

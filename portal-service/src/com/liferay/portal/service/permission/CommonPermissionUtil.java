@@ -43,6 +43,9 @@ public class CommonPermissionUtil {
 	}
 
 	public static CommonPermission getCommonPermission() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			CommonPermissionUtil.class);
+
 		return _commonPermission;
 	}
 

@@ -28,6 +28,9 @@ public class DDMTemplateHelperUtil {
 	}
 
 	public static DDMTemplateHelper getDDMTemplateHelper() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			DDMTemplateHelperUtil.class);
+
 		return _ddmTemplateHelper;
 	}
 

@@ -50,6 +50,9 @@ public class PortletInstanceFactoryUtil {
 	}
 
 	public static PortletInstanceFactory getPortletInstanceFactory() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			PortletInstanceFactoryUtil.class);
+
 		return _portletInstanceFactory;
 	}
 

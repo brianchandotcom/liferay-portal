@@ -36,6 +36,8 @@ public class EntityCacheUtil {
 	}
 
 	public static EntityCache getEntityCache() {
+		PortalRuntimePermission.checkGetBeanProperty(EntityCacheUtil.class);
+
 		return _entityCache;
 	}
 

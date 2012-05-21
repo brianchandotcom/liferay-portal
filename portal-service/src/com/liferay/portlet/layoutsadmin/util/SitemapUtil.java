@@ -29,6 +29,8 @@ public class SitemapUtil {
 	}
 
 	public static Sitemap getSitemap() {
+		PortalRuntimePermission.checkGetBeanProperty(SitemapUtil.class);
+
 		return _sitemap;
 	}
 

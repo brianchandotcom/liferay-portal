@@ -34,6 +34,8 @@ import javax.servlet.jsp.PageContext;
 public class DDMXSDUtil {
 
 	public static DDMXSD getDDMXSD() {
+		PortalRuntimePermission.checkGetBeanProperty(DDMXSDUtil.class);
+
 		return _ddmXSD;
 	}
 

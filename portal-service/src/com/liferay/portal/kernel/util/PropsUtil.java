@@ -55,6 +55,8 @@ public class PropsUtil {
 	}
 
 	public static Props getProps() {
+		PortalRuntimePermission.checkGetBeanProperty(PropsUtil.class);
+
 		return _props;
 	}
 

@@ -17,7 +17,6 @@ package com.liferay.portal.action;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
@@ -26,8 +25,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.service.CompanyLocalServiceUtil;
-import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.util.PropsValues;
 
 import javax.servlet.http.HttpServletRequest;
@@ -86,38 +83,24 @@ public class RESTProxyAction extends Action {
 			return false;
 		}
 
-		String domain = StringUtil.split(
-			HttpUtil.getDomain(url), CharPool.COLON)[0];
+		String[] allowedUrlPrefixes =
+			PropsValues.REST_PROXY_URL_PREFIXES_ALLOWED;
 
-		try {
-			CompanyLocalServiceUtil.getCompanyByVirtualHost(domain);
-
+		if (allowedUrlPrefixes.length == 0) {
 			return true;
 		}
-		catch (Exception e) {
-		}
 
-		try {
-			LayoutSetLocalServiceUtil.getLayoutSet(domain);
-
-			return true;
-		}
-		catch (Exception e) {
-		}
-
-		String[] allowedDomains = PropsValues.REST_PROXY_DOMAINS_ALLOWED;
-
-		if ((allowedDomains.length > 0) &&
-			!ArrayUtil.contains(allowedDomains, domain)) {
-
-			if (_log.isDebugEnabled()) {
-				_log.debug("URL " + url + " is not allowed");
+		for (String allowedUrlPrefix : allowedUrlPrefixes) {
+			if (StringUtil.startsWith(url, allowedUrlPrefix)) {
+				return true;
 			}
-
-			return false;
 		}
 
-		return true;
+		if (_log.isDebugEnabled()) {
+			_log.debug("URL " + url + " is not allowed");
+		}
+
+		return false;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(RESTProxyAction.class);

@@ -116,6 +116,8 @@ public class SAXReaderUtil {
 	}
 
 	public static SAXReader getSAXReader() {
+		PortalRuntimePermission.checkGetBeanProperty(SAXReaderUtil.class);
+
 		return _saxReader;
 	}
 

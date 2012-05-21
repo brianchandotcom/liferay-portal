@@ -31,6 +31,8 @@ public class PDFProcessorUtil {
 	}
 
 	public static PDFProcessor getPDFProcessor() {
+		PortalRuntimePermission.checkGetBeanProperty(PDFProcessorUtil.class);
+
 		return _pdfProcessor;
 	}
 

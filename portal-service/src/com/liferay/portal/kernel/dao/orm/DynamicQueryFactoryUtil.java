@@ -42,6 +42,9 @@ public class DynamicQueryFactoryUtil {
 	}
 
 	public static DynamicQueryFactory getDynamicQueryFactory() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			DynamicQueryFactoryUtil.class);
+
 		return _dynamicQueryFactory;
 	}
 

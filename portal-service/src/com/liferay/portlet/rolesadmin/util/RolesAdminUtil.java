@@ -27,6 +27,8 @@ public class RolesAdminUtil {
 	}
 
 	public static RolesAdmin getRolesAdmin() {
+		PortalRuntimePermission.checkGetBeanProperty(RolesAdminUtil.class);
+
 		return _rolesAdmin;
 	}
 

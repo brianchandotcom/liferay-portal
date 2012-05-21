@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermissio
 public class XugglerUtil {
 
 	public static Xuggler getXuggler() {
+		PortalRuntimePermission.checkGetBeanProperty(XugglerUtil.class);
+
 		return _xuggler;
 	}
 

@@ -104,6 +104,8 @@ public class HttpUtil {
 	}
 
 	public static Http getHttp() {
+		PortalRuntimePermission.checkGetBeanProperty(HttpUtil.class);
+
 		return _http;
 	}
 

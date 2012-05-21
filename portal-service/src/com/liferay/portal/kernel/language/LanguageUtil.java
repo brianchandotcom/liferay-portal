@@ -184,6 +184,8 @@ public class LanguageUtil {
 	}
 
 	public static Language getLanguage() {
+		PortalRuntimePermission.checkGetBeanProperty(LanguageUtil.class);
+
 		return _language;
 	}
 

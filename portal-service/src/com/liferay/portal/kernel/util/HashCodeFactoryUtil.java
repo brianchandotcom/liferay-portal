@@ -33,6 +33,8 @@ public class HashCodeFactoryUtil {
 	}
 
 	public static HashCodeFactory getHashCodeFactory() {
+		PortalRuntimePermission.checkGetBeanProperty(HashCodeFactoryUtil.class);
+
 		return _hashCodeFactory;
 	}
 

@@ -24,6 +24,9 @@ import java.lang.reflect.Method;
 public class MethodParametersResolverUtil {
 
 	public static MethodParametersResolver getMethodParametersResolver() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			MethodParametersResolverUtil.class);
+
 		return _methodParametersResolver;
 	}
 

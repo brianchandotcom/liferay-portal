@@ -78,6 +78,8 @@ public class DiffUtil {
 	}
 
 	public static Diff getDiff() {
+		PortalRuntimePermission.checkGetBeanProperty(DiffUtil.class);
+
 		return _diff;
 	}
 

@@ -26,6 +26,8 @@ public class PortalCustomSQLUtil {
 	}
 
 	public static PortalCustomSQL getPortalCustomSQL() {
+		PortalRuntimePermission.checkGetBeanProperty(PortalCustomSQLUtil.class);
+
 		return _portalCustomSQL;
 	}
 

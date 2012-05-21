@@ -32,6 +32,8 @@ public class HotDeployUtil {
 	}
 
 	public static HotDeploy getHotDeploy() {
+		PortalRuntimePermission.checkGetBeanProperty(HotDeployUtil.class);
+
 		return _hotDeploy;
 	}
 

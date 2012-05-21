@@ -18,19 +18,27 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermissio
 
 /**
  * @author Michael C. Han
+ * @author Raymond Augé
  */
 public class AuthenticatedUserUUIDStoreUtil {
 
 	public static boolean exists(String userUUID) {
-		return _authenticatedUserUUIDStore.exists(userUUID);
+		return getAuthenticatedUserUUIDStore().exists(userUUID);
+	}
+
+	public static AuthenticatedUserUUIDStore getAuthenticatedUserUUIDStore() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			AuthenticatedUserUUIDStoreUtil.class);
+
+		return _authenticatedUserUUIDStore;
 	}
 
 	public static boolean register(String userUUID) {
-		return _authenticatedUserUUIDStore.register(userUUID);
+		return getAuthenticatedUserUUIDStore().register(userUUID);
 	}
 
 	public static boolean unregister(String userUUID) {
-		return _authenticatedUserUUIDStore.unregister(userUUID);
+		return getAuthenticatedUserUUIDStore().unregister(userUUID);
 	}
 
 	public void setAuthenticatedUserUUIDStore(

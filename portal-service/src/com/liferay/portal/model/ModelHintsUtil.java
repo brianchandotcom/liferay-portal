@@ -43,6 +43,8 @@ public class ModelHintsUtil {
 	}
 
 	public static ModelHints getModelHints() {
+		PortalRuntimePermission.checkGetBeanProperty(ModelHintsUtil.class);
+
 		return _modelHints;
 	}
 

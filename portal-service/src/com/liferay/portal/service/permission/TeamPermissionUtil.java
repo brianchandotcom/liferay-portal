@@ -22,6 +22,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Raymond Augé
  */
 public class TeamPermissionUtil {
 
@@ -55,15 +56,17 @@ public class TeamPermissionUtil {
 	}
 
 	public static TeamPermission getTeamPermission() {
-		return _userGroupPermission;
+		PortalRuntimePermission.checkGetBeanProperty(TeamPermissionUtil.class);
+
+		return _teamPermission;
 	}
 
-	public void setTeamPermission(TeamPermission userGroupPermission) {
+	public void setTeamPermission(TeamPermission teamPermission) {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
-		_userGroupPermission = userGroupPermission;
+		_teamPermission = teamPermission;
 	}
 
-	private static TeamPermission _userGroupPermission;
+	private static TeamPermission _teamPermission;
 
 }

@@ -32,6 +32,8 @@ public class IndexerRegistryUtil {
 	}
 
 	public static IndexerRegistry getIndexerRegistry() {
+		PortalRuntimePermission.checkGetBeanProperty(IndexerRegistryUtil.class);
+
 		return _indexerRegistry;
 	}
 

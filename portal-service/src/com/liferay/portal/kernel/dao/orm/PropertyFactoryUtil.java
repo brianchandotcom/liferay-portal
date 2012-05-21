@@ -26,6 +26,8 @@ public class PropertyFactoryUtil {
 	}
 
 	public static PropertyFactory getPropertyFactory() {
+		PortalRuntimePermission.checkGetBeanProperty(PropertyFactoryUtil.class);
+
 		return _projectionFactory;
 	}
 

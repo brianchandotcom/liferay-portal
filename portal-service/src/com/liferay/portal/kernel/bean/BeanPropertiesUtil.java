@@ -40,6 +40,8 @@ public class BeanPropertiesUtil {
 	}
 
 	public static BeanProperties getBeanProperties() {
+		PortalRuntimePermission.checkGetBeanProperty(BeanPropertiesUtil.class);
+
 		return _beanProperties;
 	}
 

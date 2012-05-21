@@ -22,14 +22,22 @@ import java.util.Map;
 
 /**
  * @author Bruno Farache
+ * @author Raymond Augé
  */
 public class WorkflowStatusManagerUtil {
+
+	public static WorkflowStatusManager getWorkflowStatusManager() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			WorkflowStatusManagerUtil.class);
+
+		return _workflowStatusManager;
+	}
 
 	public static void updateStatus(
 			int status, Map<String, Serializable> workflowContext)
 		throws WorkflowException {
 
-		_workflowStatusManager.updateStatus(status, workflowContext);
+		getWorkflowStatusManager().updateStatus(status, workflowContext);
 	}
 
 	public void setWorkflowStatusManager(

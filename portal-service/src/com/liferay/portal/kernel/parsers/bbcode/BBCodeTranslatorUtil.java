@@ -25,6 +25,9 @@ public class BBCodeTranslatorUtil {
 	public static final String NEW_THREAD_URL = "${newThreadURL}";
 
 	public static BBCodeTranslator getBBCodeTranslator() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			BBCodeTranslatorUtil.class);
+
 		return _bbCodeTranslator;
 	}
 

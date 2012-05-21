@@ -33,6 +33,9 @@ public class RepositorySearchQueryBuilderUtil {
 	public static RepositorySearchQueryBuilder
 		getRepositorySearchQueryBuilder() {
 
+		PortalRuntimePermission.checkGetBeanProperty(
+			RepositorySearchQueryBuilderUtil.class);
+
 		return _repositorySearchQueryBuilder;
 	}
 

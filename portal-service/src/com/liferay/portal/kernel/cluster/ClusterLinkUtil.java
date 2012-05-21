@@ -24,6 +24,7 @@ import java.util.List;
 
 /**
  * @author Shuyang Zhou
+ * @author Raymond Augé
  */
 public class ClusterLinkUtil {
 
@@ -31,10 +32,14 @@ public class ClusterLinkUtil {
 		"CLUSTER_FORWARD_MESSAGE";
 
 	public static Address getAddress(Message message) {
+		getClusterLink();
+
 		return (Address)message.get(_ADDRESS);
 	}
 
 	public static ClusterLink getClusterLink() {
+		PortalRuntimePermission.checkGetBeanProperty(ClusterLinkUtil.class);
+
 		if ((_clusterLink == null) || !_clusterLink.isEnabled()) {
 			if (_log.isWarnEnabled()) {
 				_log.warn("ClusterLinkUtil has not been initialized");
@@ -47,45 +52,41 @@ public class ClusterLinkUtil {
 	}
 
 	public static List<Address> getLocalTransportAddresses() {
-		if ((_clusterLink == null) || !_clusterLink.isEnabled()) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("ClusterLinkUtil has not been initialized");
-			}
+		ClusterLink clusterLink = getClusterLink();
 
+		if (clusterLink == null) {
 			return Collections.emptyList();
 		}
 
-		return _clusterLink.getLocalTransportAddresses();
+		return clusterLink.getLocalTransportAddresses();
 	}
 
 	public static List<Address> getTransportAddresses(Priority priority) {
-		if ((_clusterLink == null) || !_clusterLink.isEnabled()) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("ClusterLinkUtil has not been initialized");
-			}
+		ClusterLink clusterLink = getClusterLink();
 
+		if (clusterLink == null) {
 			return Collections.emptyList();
 		}
 
-		return _clusterLink.getTransportAddresses(priority);
+		return clusterLink.getTransportAddresses(priority);
 	}
 
 	public static boolean isForwardMessage(Message message) {
+		getClusterLink();
+
 		return message.getBoolean(CLUSTER_FORWARD_MESSAGE);
 	}
 
 	public static void sendMulticastMessage(
 		Message message, Priority priority) {
 
-		if ((_clusterLink == null) || !_clusterLink.isEnabled()) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("ClusterLinkUtil has not been initialized");
-			}
+		ClusterLink clusterLink = getClusterLink();
 
+		if (clusterLink == null) {
 			return;
 		}
 
-		_clusterLink.sendMulticastMessage(message, priority);
+		clusterLink.sendMulticastMessage(message, priority);
 	}
 
 	public static void sendMulticastMessage(Object payload, Priority priority) {
@@ -99,24 +100,26 @@ public class ClusterLinkUtil {
 	public static void sendUnicastMessage(
 		Address address, Message message, Priority priority) {
 
-		if ((_clusterLink == null) || !_clusterLink.isEnabled()) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("ClusterLinkUtil has not been initialized");
-			}
+		ClusterLink clusterLink = getClusterLink();
 
+		if (clusterLink == null) {
 			return;
 		}
 
-		_clusterLink.sendUnicastMessage(address, message, priority);
+		clusterLink.sendUnicastMessage(address, message, priority);
 	}
 
 	public static Message setAddress(Message message, Address address) {
+		getClusterLink();
+
 		message.put(_ADDRESS, address);
 
 		return message;
 	}
 
 	public static void setForwardMessage(Message message) {
+		getClusterLink();
+
 		message.put(CLUSTER_FORWARD_MESSAGE, true);
 	}
 

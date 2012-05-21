@@ -46,6 +46,8 @@ public class RolePermissionUtil {
 	}
 
 	public static RolePermission getRolePermission() {
+		PortalRuntimePermission.checkGetBeanProperty(RolePermissionUtil.class);
+
 		return _rolePermission;
 	}
 

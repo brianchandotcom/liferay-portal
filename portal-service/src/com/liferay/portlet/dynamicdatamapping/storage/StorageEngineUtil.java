@@ -107,6 +107,8 @@ public class StorageEngineUtil {
 	}
 
 	public static StorageEngine getStorageEngine() {
+		PortalRuntimePermission.checkGetBeanProperty(StorageEngineUtil.class);
+
 		return _storageEngine;
 	}
 

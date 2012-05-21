@@ -42,6 +42,9 @@ public class ProjectionFactoryUtil {
 	}
 
 	public static ProjectionFactory getProjectionFactory() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			ProjectionFactoryUtil.class);
+
 		return _projectionFactory;
 	}
 

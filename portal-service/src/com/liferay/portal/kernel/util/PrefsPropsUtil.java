@@ -199,6 +199,8 @@ public class PrefsPropsUtil {
 	}
 
 	public static PrefsProps getPrefsProps() {
+		PortalRuntimePermission.checkGetBeanProperty(PrefsPropsUtil.class);
+
 		return _prefsProps;
 	}
 

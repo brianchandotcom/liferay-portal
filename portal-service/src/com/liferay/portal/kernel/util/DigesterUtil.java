@@ -90,6 +90,8 @@ public class DigesterUtil {
 	}
 
 	public static Digester getDigester() {
+		PortalRuntimePermission.checkGetBeanProperty(DigesterUtil.class);
+
 		return _digester;
 	}
 

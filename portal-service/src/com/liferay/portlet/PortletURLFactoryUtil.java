@@ -43,6 +43,9 @@ public class PortletURLFactoryUtil {
 	}
 
 	public static PortletURLFactory getPortletURLFactory() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			PortletURLFactoryUtil.class);
+
 		return _portletURLFactory;
 	}
 

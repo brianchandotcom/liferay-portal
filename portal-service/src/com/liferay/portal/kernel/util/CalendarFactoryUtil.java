@@ -60,6 +60,8 @@ public class CalendarFactoryUtil {
 	}
 
 	public static CalendarFactory getCalendarFactory() {
+		PortalRuntimePermission.checkGetBeanProperty(CalendarFactoryUtil.class);
+
 		return _calendarFactory;
 	}
 

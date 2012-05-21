@@ -32,6 +32,8 @@ public class PortletQNameUtil {
 	}
 
 	public static PortletQName getPortletQName() {
+		PortalRuntimePermission.checkGetBeanProperty(PortletQNameUtil.class);
+
 		return _portletQName;
 	}
 

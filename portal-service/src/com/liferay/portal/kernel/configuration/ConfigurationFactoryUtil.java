@@ -28,6 +28,9 @@ public class ConfigurationFactoryUtil {
 	}
 
 	public static ConfigurationFactory getConfigurationFactory() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			ConfigurationFactoryUtil.class);
+
 		return _configurationFactory;
 	}
 

@@ -52,6 +52,8 @@ public class SingleVMPoolUtil {
 	}
 
 	public static SingleVMPool getSingleVMPool() {
+		PortalRuntimePermission.checkGetBeanProperty(SingleVMPoolUtil.class);
+
 		return _singleVMPool;
 	}
 

@@ -37,6 +37,9 @@ public class PortletConfigFactoryUtil {
 	}
 
 	public static PortletConfigFactory getPortletConfigFactory() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			PortletConfigFactoryUtil.class);
+
 		return _portletConfigFactory;
 	}
 

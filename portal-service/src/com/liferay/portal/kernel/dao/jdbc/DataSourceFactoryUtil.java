@@ -32,6 +32,9 @@ public class DataSourceFactoryUtil {
 	}
 
 	public static DataSourceFactory getDataSourceFactory() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			DataSourceFactoryUtil.class);
+
 		return _dataSourceFactory;
 	}
 

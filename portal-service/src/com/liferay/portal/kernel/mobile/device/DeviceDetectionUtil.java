@@ -23,23 +23,30 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Milen Dyankov
+ * @author Raymond Augé
  */
 public class DeviceDetectionUtil {
 
 	public static Device detectDevice(HttpServletRequest request) {
-		return _deviceRecognitionProvider.detectDevice(request);
+		return getDeviceRecognitionProvider().detectDevice(request);
+	}
+
+	public static DeviceRecognitionProvider getDeviceRecognitionProvider() {
+		PortalRuntimePermission.checkGetBeanProperty(DeviceDetectionUtil.class);
+
+		return _deviceRecognitionProvider;
 	}
 
 	public static Set<VersionableName> getKnownBrands() {
 		KnownDevices knownDevices =
-			_deviceRecognitionProvider.getKnownDevices();
+			getDeviceRecognitionProvider().getKnownDevices();
 
 		return knownDevices.getBrands();
 	}
 
 	public static Set<VersionableName> getKnownBrowsers() {
 		KnownDevices knownDevices =
-			_deviceRecognitionProvider.getKnownDevices();
+			getDeviceRecognitionProvider().getKnownDevices();
 
 		return knownDevices.getBrowsers();
 	}
@@ -48,7 +55,7 @@ public class DeviceDetectionUtil {
 		Capability capability) {
 
 		KnownDevices knownDevices =
-			_deviceRecognitionProvider.getKnownDevices();
+			getDeviceRecognitionProvider().getKnownDevices();
 
 		Map<Capability, Set<String>> deviceIds = knownDevices.getDeviceIds();
 
@@ -57,14 +64,14 @@ public class DeviceDetectionUtil {
 
 	public static Set<VersionableName> getKnownOperatingSystems() {
 		KnownDevices knownDevices =
-			_deviceRecognitionProvider.getKnownDevices();
+			getDeviceRecognitionProvider().getKnownDevices();
 
 		return knownDevices.getOperatingSystems();
 	}
 
 	public static Set<String> getKnownPointingMethods() {
 		KnownDevices knownDevices =
-			_deviceRecognitionProvider.getKnownDevices();
+			getDeviceRecognitionProvider().getKnownDevices();
 
 		return knownDevices.getPointingMethods();
 	}

@@ -24,6 +24,8 @@ import java.lang.reflect.Method;
 public class JavadocManagerUtil {
 
 	public static JavadocManager getJavadocManager() {
+		PortalRuntimePermission.checkGetBeanProperty(JavadocManagerUtil.class);
+
 		return _javadocManager;
 	}
 

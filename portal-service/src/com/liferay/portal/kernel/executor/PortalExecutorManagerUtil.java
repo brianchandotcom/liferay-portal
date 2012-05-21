@@ -52,6 +52,9 @@ public class PortalExecutorManagerUtil {
 	}
 
 	public static PortalExecutorManager getPortalExecutorManager() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			PortalExecutorManagerUtil.class);
+
 		return _portalExecutorManager;
 	}
 

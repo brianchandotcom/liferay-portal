@@ -56,6 +56,8 @@ public class GroupPermissionUtil {
 	}
 
 	public static GroupPermission getGroupPermission() {
+		PortalRuntimePermission.checkGetBeanProperty(GroupPermissionUtil.class);
+
 		return _groupPermission;
 	}
 

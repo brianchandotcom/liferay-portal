@@ -27,6 +27,7 @@ import java.util.Map;
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
  * @author Marcellus Tavares
+ * @author Raymond Augé
  */
 public class PortalLDAPExporterUtil {
 
@@ -34,21 +35,29 @@ public class PortalLDAPExporterUtil {
 			Contact contact, Map<String, Serializable> contactExpandoAttributes)
 		throws Exception {
 
-		_portalLDAPExporter.exportToLDAP(contact, contactExpandoAttributes);
+		getPortalLDAPExporter().exportToLDAP(contact, contactExpandoAttributes);
 	}
 
 	public static void exportToLDAP(
 			long userId, long userGroupId, LDAPOperation ldapOperation)
 		throws Exception {
 
-		_portalLDAPExporter.exportToLDAP(userId, userGroupId, ldapOperation);
+		getPortalLDAPExporter().exportToLDAP(
+			userId, userGroupId, ldapOperation);
 	}
 
 	public static void exportToLDAP(
 			User user, Map<String, Serializable> userExpandoAttributes)
 		throws Exception {
 
-		_portalLDAPExporter.exportToLDAP(user, userExpandoAttributes);
+		getPortalLDAPExporter().exportToLDAP(user, userExpandoAttributes);
+	}
+
+	public static PortalLDAPExporter getPortalLDAPExporter() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			PortalLDAPExporterUtil.class);
+
+		return _portalLDAPExporter;
 	}
 
 	public void setPortalLDAPExporter(PortalLDAPExporter portalLDAPExporter) {

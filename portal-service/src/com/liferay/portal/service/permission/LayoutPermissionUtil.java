@@ -135,6 +135,9 @@ public class LayoutPermissionUtil {
 	}
 
 	public static LayoutPermission getLayoutPermission() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			LayoutPermissionUtil.class);
+
 		return _layoutPermission;
 	}
 

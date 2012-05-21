@@ -50,6 +50,8 @@ public class OrderFactoryUtil {
 	}
 
 	public static OrderFactory getOrderFactory() {
+		PortalRuntimePermission.checkGetBeanProperty(OrderFactoryUtil.class);
+
 		return _orderFactory;
 	}
 

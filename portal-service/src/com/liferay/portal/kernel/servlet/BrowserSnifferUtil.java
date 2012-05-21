@@ -35,6 +35,8 @@ public class BrowserSnifferUtil {
 	}
 
 	public static BrowserSniffer getBrowserSniffer() {
+		PortalRuntimePermission.checkGetBeanProperty(BrowserSnifferUtil.class);
+
 		return _browserSniffer;
 	}
 

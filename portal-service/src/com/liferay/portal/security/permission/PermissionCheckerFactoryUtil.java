@@ -37,6 +37,9 @@ public class PermissionCheckerFactoryUtil {
 	}
 
 	public static PermissionCheckerFactory getPermissionCheckerFactory() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			PermissionCheckerFactoryUtil.class);
+
 		return _permissionCheckerFactory;
 	}
 

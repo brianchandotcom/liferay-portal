@@ -27,6 +27,9 @@ public class PhoneNumberFormatUtil {
 	}
 
 	public static PhoneNumberFormat getPhoneNumberFormat() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			PhoneNumberFormatUtil.class);
+
 		return _phoneNumberFormat;
 	}
 

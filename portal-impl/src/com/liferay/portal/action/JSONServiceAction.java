@@ -422,6 +422,10 @@ public class JSONServiceAction extends JSONAction {
 
 		String parameterTypesNames = StringUtil.merge(parameterTypes);
 
+		if (Validator.isNull(parameterTypesNames)) {
+			parameterTypesNames = StringUtil.merge(parameters);
+		}
+
 		String key =
 			clazz.getName() + "_METHOD_NAME_" + methodName + "_PARAMETERS_" +
 				parameterTypesNames;

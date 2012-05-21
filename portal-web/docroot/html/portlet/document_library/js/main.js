@@ -328,8 +328,10 @@ AUI.add(
 
 						eventHandles.push(Liferay.on(config.portletId + ':portletRefreshed', A.bind(instance.destructor, instance)));
 
-						if (instance.one('#fm1')) {
-							instance.one('#fm1').on('submit', instance._onSearchFormSubmit, instance);
+						var searchFormNode = instance.one('#fm1');
+
+						if (searchFormNode) {
+							searchFormNode.on('submit', instance._onSearchFormSubmit, instance);
 						}
 
 						instance._toggleSyncNotification();

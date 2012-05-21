@@ -101,7 +101,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	public static long FRIENDLYURL_COLUMN_BITMASK = 16L;
 	public static long LIVEGROUPID_COLUMN_BITMASK = 32L;
 	public static long NAME_COLUMN_BITMASK = 64L;
-	public static long TYPE_COLUMN_BITMASK = 128L;
+	public static long PARENTGROUPID_COLUMN_BITMASK = 128L;
+	public static long TYPE_COLUMN_BITMASK = 256L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -431,7 +432,19 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	}
 
 	public void setParentGroupId(long parentGroupId) {
+		_columnBitmask |= PARENTGROUPID_COLUMN_BITMASK;
+
+		if (!_setOriginalParentGroupId) {
+			_setOriginalParentGroupId = true;
+
+			_originalParentGroupId = _parentGroupId;
+		}
+
 		_parentGroupId = parentGroupId;
+	}
+
+	public long getOriginalParentGroupId() {
+		return _originalParentGroupId;
 	}
 
 	@JSON
@@ -700,6 +713,10 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 
 		groupModelImpl._setOriginalClassPK = false;
 
+		groupModelImpl._originalParentGroupId = groupModelImpl._parentGroupId;
+
+		groupModelImpl._setOriginalParentGroupId = false;
+
 		groupModelImpl._originalLiveGroupId = groupModelImpl._liveGroupId;
 
 		groupModelImpl._setOriginalLiveGroupId = false;
@@ -901,6 +918,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	private long _originalClassPK;
 	private boolean _setOriginalClassPK;
 	private long _parentGroupId;
+	private long _originalParentGroupId;
+	private boolean _setOriginalParentGroupId;
 	private long _liveGroupId;
 	private long _originalLiveGroupId;
 	private boolean _setOriginalLiveGroupId;

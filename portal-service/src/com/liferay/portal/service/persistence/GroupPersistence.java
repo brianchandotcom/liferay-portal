@@ -235,6 +235,45 @@ public interface GroupPersistence extends BasePersistence<Group> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns the group where companyId = &#63; and parentGroupId = &#63; or throws a {@link com.liferay.portal.NoSuchGroupException} if it could not be found.
+	*
+	* @param companyId the company ID
+	* @param parentGroupId the parent group ID
+	* @return the matching group
+	* @throws com.liferay.portal.NoSuchGroupException if a matching group could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Group findByC_P(long companyId,
+		long parentGroupId)
+		throws com.liferay.portal.NoSuchGroupException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the group where companyId = &#63; and parentGroupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param companyId the company ID
+	* @param parentGroupId the parent group ID
+	* @return the matching group, or <code>null</code> if a matching group could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Group fetchByC_P(long companyId,
+		long parentGroupId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the group where companyId = &#63; and parentGroupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param companyId the company ID
+	* @param parentGroupId the parent group ID
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching group, or <code>null</code> if a matching group could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Group fetchByC_P(long companyId,
+		long parentGroupId, boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns the group where companyId = &#63; and name = &#63; or throws a {@link com.liferay.portal.NoSuchGroupException} if it could not be found.
 	*
 	* @param companyId the company ID
@@ -616,6 +655,19 @@ public interface GroupPersistence extends BasePersistence<Group> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Removes the group where companyId = &#63; and parentGroupId = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param parentGroupId the parent group ID
+	* @return the group that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Group removeByC_P(long companyId,
+		long parentGroupId)
+		throws com.liferay.portal.NoSuchGroupException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Removes the group where companyId = &#63; and name = &#63; from the database.
 	*
 	* @param companyId the company ID
@@ -720,6 +772,17 @@ public interface GroupPersistence extends BasePersistence<Group> {
 	* @throws SystemException if a system exception occurred
 	*/
 	public int countByLiveGroupId(long liveGroupId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of groups where companyId = &#63; and parentGroupId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param parentGroupId the parent group ID
+	* @return the number of matching groups
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByC_P(long companyId, long parentGroupId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

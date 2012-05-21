@@ -20,9 +20,11 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.model.BlogsStatsUser;
+import com.liferay.portlet.ratings.InvalidScoreException;
 import com.liferay.portlet.ratings.model.RatingsEntry;
 import com.liferay.portlet.ratings.model.RatingsStats;
 import com.liferay.portlet.ratings.service.base.RatingsEntryLocalServiceBaseImpl;
@@ -142,6 +144,8 @@ public class RatingsEntryLocalServiceImpl
 		double oldScore = 0;
 		Date now = new Date();
 
+		validate(score);
+
 		RatingsEntry entry = ratingsEntryPersistence.fetchByU_C_C(
 			userId, classNameId, classPK);
 
@@ -241,6 +245,15 @@ public class RatingsEntryLocalServiceImpl
 		}
 
 		return entry;
+	}
+
+	protected void validate(double score) throws PortalException {
+
+		if ((score < 0) ||
+			(score > PropsValues.RATINGS_DEFAULT_NUMBER_OF_STARS)) {
+
+			throw new InvalidScoreException();
+		}
 	}
 
 }

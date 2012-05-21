@@ -18,15 +18,18 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermissio
 
 /**
  * @author Michael C. Han
+ * @author Raymond Augé
  */
 public class AuditRouterUtil {
 
 	public static AuditRouter getAuditRouter() {
+		PortalRuntimePermission.checkGetBeanProperty(AuditRouterUtil.class);
+
 		return _auditRouter;
 	}
 
 	public static void route(AuditMessage auditMessage) throws AuditException {
-		_auditRouter.route(auditMessage);
+		getAuditRouter().route(auditMessage);
 	}
 
 	public void setAuditRouter(AuditRouter auditRouter) {

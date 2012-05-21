@@ -28,6 +28,9 @@ public class TrashHandlerRegistryUtil {
 	}
 
 	public static TrashHandlerRegistry getTrashHandlerRegistry() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			TrashHandlerRegistryUtil.class);
+
 		return _trashHandlerRegistry;
 	}
 

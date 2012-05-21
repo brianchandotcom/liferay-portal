@@ -26,6 +26,9 @@ import java.util.Date;
 public class AuditMessageFactoryUtil {
 
 	public static AuditMessageFactory getAuditMessageFactory() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			AuditMessageFactoryUtil.class);
+
 		return _auditMessageFactory;
 	}
 

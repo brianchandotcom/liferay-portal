@@ -30,6 +30,9 @@ public class SqlUpdateFactoryUtil {
 	}
 
 	public static SqlUpdateFactory getSqlUpdateFactory() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			SqlUpdateFactoryUtil.class);
+
 		return _sqlUpdateFactory;
 	}
 

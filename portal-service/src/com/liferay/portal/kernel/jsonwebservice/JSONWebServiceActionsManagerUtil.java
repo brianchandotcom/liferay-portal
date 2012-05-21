@@ -53,6 +53,9 @@ public class JSONWebServiceActionsManagerUtil {
 	public static List<JSONWebServiceActionMapping>
 		getJSONWebServiceActionMappings(String servletContextPath) {
 
+		PortalRuntimePermission.checkGetBeanProperty(
+			JSONWebServiceActionsManagerUtil.class);
+
 		return _jsonWebServiceActionsManager.getJSONWebServiceActionMappings(
 			servletContextPath);
 	}

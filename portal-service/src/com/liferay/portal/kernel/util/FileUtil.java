@@ -173,6 +173,8 @@ public class FileUtil {
 	}
 
 	public static com.liferay.portal.kernel.util.File getFile() {
+		PortalRuntimePermission.checkGetBeanProperty(FileUtil.class);
+
 		return _file;
 	}
 

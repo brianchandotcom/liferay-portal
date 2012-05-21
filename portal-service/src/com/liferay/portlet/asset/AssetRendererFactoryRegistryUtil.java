@@ -46,6 +46,9 @@ public class AssetRendererFactoryRegistryUtil {
 	public static AssetRendererFactoryRegistry
 		getAssetRendererFactoryRegistry() {
 
+		PortalRuntimePermission.checkGetBeanProperty(
+			AssetRendererFactoryRegistryUtil.class);
+
 		return _assetRendererFactoryRegistry;
 	}
 

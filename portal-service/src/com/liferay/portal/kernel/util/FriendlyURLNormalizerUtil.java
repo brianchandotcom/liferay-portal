@@ -23,6 +23,9 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermissio
 public class FriendlyURLNormalizerUtil {
 
 	public static FriendlyURLNormalizer getFriendlyURLNormalizer() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			FriendlyURLNormalizerUtil.class);
+
 		return _friendlyURLNormalizer;
 	}
 

@@ -36,6 +36,9 @@ public class GoogleAppsFactoryUtil {
 	}
 
 	public static GoogleAppsFactory getGoogleAppsFactory() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			GoogleAppsFactoryUtil.class);
+
 		return _googleAppsFactory;
 	}
 

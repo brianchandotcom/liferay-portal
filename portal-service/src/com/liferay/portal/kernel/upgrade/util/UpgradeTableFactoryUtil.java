@@ -29,6 +29,9 @@ public class UpgradeTableFactoryUtil {
 	}
 
 	public static UpgradeTableFactory getUpgradeTableFactory() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			UpgradeTableFactoryUtil.class);
+
 		return _upgradeTableFactory;
 	}
 

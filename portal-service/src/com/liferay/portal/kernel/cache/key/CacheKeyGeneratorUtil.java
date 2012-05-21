@@ -33,6 +33,9 @@ public class CacheKeyGeneratorUtil {
 	}
 
 	public static CacheKeyGenerator getCacheKeyGenerator(String cacheName) {
+		PortalRuntimePermission.checkGetBeanProperty(
+			CacheKeyGeneratorUtil.class);
+
 		ThreadLocalCache<CacheKeyGenerator> threadLocalCacheKeyGenerators =
 			ThreadLocalCacheManager.getThreadLocalCache(
 				Lifecycle.ETERNAL, CacheKeyGeneratorUtil.class.getName());

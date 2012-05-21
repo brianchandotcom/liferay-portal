@@ -30,6 +30,9 @@ public class MultiValueMapFactoryUtil {
 	}
 
 	public static MultiValueMapFactory getMultiValueMapFactory() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			MultiValueMapFactoryUtil.class);
+
 		return _multiValueMapFactory;
 	}
 

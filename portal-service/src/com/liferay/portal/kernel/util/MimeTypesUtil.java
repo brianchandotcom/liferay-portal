@@ -76,6 +76,8 @@ public class MimeTypesUtil {
 	}
 
 	public static MimeTypes getMimeTypes() {
+		PortalRuntimePermission.checkGetBeanProperty(MimeTypesUtil.class);
+
 		return _mimeTypes;
 	}
 

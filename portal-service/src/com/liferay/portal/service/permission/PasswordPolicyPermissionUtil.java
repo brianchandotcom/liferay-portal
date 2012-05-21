@@ -41,6 +41,9 @@ public class PasswordPolicyPermissionUtil {
 	}
 
 	public static PasswordPolicyPermission getPasswordPolicyPermission() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			PasswordPolicyPermissionUtil.class);
+
 		return _passwordPolicyPermission;
 	}
 

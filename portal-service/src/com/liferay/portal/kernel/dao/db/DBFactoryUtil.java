@@ -34,6 +34,8 @@ public class DBFactoryUtil {
 	}
 
 	public static DBFactory getDBFactory() {
+		PortalRuntimePermission.checkGetBeanProperty(DBFactoryUtil.class);
+
 		return _dbFactory;
 	}
 

@@ -27,6 +27,9 @@ public class StringQueryFactoryUtil {
 	}
 
 	public static StringQueryFactory getStringQueryFactory() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			StringQueryFactoryUtil.class);
+
 		return _stringQueryFactory;
 	}
 

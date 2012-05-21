@@ -23,6 +23,9 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 public class PasswordPoliciesAdminUtil {
 
 	public static PasswordPoliciesAdmin getPasswordPoliciesAdmin() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			PasswordPoliciesAdminUtil.class);
+
 		return _passwordPoliciesAdmin;
 	}
 

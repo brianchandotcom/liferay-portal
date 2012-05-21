@@ -71,6 +71,9 @@ public class OrganizationPermissionUtil {
 	}
 
 	public static OrganizationPermission getOrganizationPermission() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			OrganizationPermissionUtil.class);
+
 		return _organizationPermission;
 	}
 

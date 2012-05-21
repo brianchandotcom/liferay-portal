@@ -28,6 +28,7 @@ import java.lang.reflect.Method;
 
 /**
  * @author Shuyang Zhou
+ * @author Raymond Augé
  */
 public class PortalManagerUtil {
 
@@ -37,6 +38,12 @@ public class PortalManagerUtil {
 		return new MethodHandler(_manageMethod, manageAction);
 	}
 
+	public static PortalManager getPortalManager() {
+		PortalRuntimePermission.checkGetBeanProperty(PortalManagerUtil.class);
+
+		return _portalManager;
+	}
+
 	public static FutureClusterResponses manage(
 			ClusterGroup clusterGroup, ManageAction<?> manageAction)
 		throws ManageActionException {
@@ -44,13 +51,13 @@ public class PortalManagerUtil {
 		ManageAction<FutureClusterResponses> manageActionWrapper =
 			new ClusterManageActionWrapper(clusterGroup, manageAction);
 
-		return _portalManager.manage(manageActionWrapper);
+		return getPortalManager().manage(manageActionWrapper);
 	}
 
 	public static <T> T manage(ManageAction<T> manageAction)
 		throws ManageActionException {
 
-		return _portalManager.manage(manageAction);
+		return getPortalManager().manage(manageAction);
 	}
 
 	public static void manageAsync(

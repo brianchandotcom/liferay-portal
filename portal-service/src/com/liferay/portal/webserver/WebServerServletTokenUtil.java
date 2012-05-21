@@ -27,6 +27,9 @@ public class WebServerServletTokenUtil {
 	}
 
 	public static WebServerServletToken getWebServerServletToken() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			WebServerServletTokenUtil.class);
+
 		return _webServerServletToken;
 	}
 

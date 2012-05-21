@@ -28,6 +28,9 @@ public class LayoutTypePortletFactoryUtil {
 	}
 
 	public static LayoutTypePortletFactory getLayoutTypePortletFactory() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			LayoutTypePortletFactoryUtil.class);
+
 		return _layoutTypePortletFactory;
 	}
 

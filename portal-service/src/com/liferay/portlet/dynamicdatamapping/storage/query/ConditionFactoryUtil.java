@@ -34,6 +34,9 @@ public class ConditionFactoryUtil {
 	}
 
 	public static ConditionFactory getConditionFactory() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			ConditionFactoryUtil.class);
+
 		return _conditionFactory;
 	}
 

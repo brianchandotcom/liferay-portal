@@ -31,6 +31,9 @@ public class CMISSearchQueryBuilderUtil {
 	}
 
 	public static CMISSearchQueryBuilder getCmisSearchQueryBuilder() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			CMISSearchQueryBuilderUtil.class);
+
 		return _cmisSearchQueryBuilder;
 	}
 

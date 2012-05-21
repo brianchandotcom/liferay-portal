@@ -24,6 +24,8 @@ import java.util.Map;
 public class SpringFactoryUtil {
 
 	public static SpringFactory getSpringFactory() {
+		PortalRuntimePermission.checkGetBeanProperty(SpringFactoryUtil.class);
+
 		return _springFactory;
 	}
 

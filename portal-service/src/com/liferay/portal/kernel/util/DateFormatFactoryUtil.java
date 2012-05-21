@@ -39,6 +39,9 @@ public class DateFormatFactoryUtil {
 	}
 
 	public static DateFormatFactory getDateFormatFactory() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			DateFormatFactoryUtil.class);
+
 		return _fastDateFormatFactory;
 	}
 

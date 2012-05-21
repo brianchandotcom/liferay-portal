@@ -62,6 +62,9 @@ public class FastDateFormatFactoryUtil {
 	}
 
 	public static FastDateFormatFactory getFastDateFormatFactory() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			FastDateFormatFactoryUtil.class);
+
 		return _fastDateFormatFactory;
 	}
 

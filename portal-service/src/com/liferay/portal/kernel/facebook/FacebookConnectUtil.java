@@ -53,6 +53,8 @@ public class FacebookConnectUtil {
 	}
 
 	public static FacebookConnect getFacebookConnect() {
+		PortalRuntimePermission.checkGetBeanProperty(FacebookConnectUtil.class);
+
 		return _facebookConnect;
 	}
 

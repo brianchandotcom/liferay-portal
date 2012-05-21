@@ -246,6 +246,9 @@ public class PortletPermissionUtil {
 	}
 
 	public static PortletPermission getPortletPermission() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			PortletPermissionUtil.class);
+
 		return _portletPermission;
 	}
 

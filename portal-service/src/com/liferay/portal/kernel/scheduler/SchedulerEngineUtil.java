@@ -47,6 +47,7 @@ import javax.portlet.PortletRequest;
  * @author Bruno Farache
  * @author Shuyang Zhou
  * @author Tina Tian
+ * @author Raymond Augé
  */
 public class SchedulerEngineUtil {
 
@@ -57,7 +58,7 @@ public class SchedulerEngineUtil {
 			int exceptionsMaxSize)
 		throws SchedulerException {
 
-		_instance._addJob(
+		getInstance()._addJob(
 			trigger, storageType, description, destinationName, message,
 			messageListenerClassName, portletId, exceptionsMaxSize);
 	}
@@ -69,7 +70,7 @@ public class SchedulerEngineUtil {
 			int exceptionsMaxSize)
 		throws SchedulerException {
 
-		_instance._addJob(
+		getInstance()._addJob(
 			trigger, storageType, description, destinationName, payload,
 			messageListenerClassName, portletId, exceptionsMaxSize);
 	}
@@ -79,7 +80,7 @@ public class SchedulerEngineUtil {
 			String language, String script, int exceptionsMaxSize)
 		throws SchedulerException {
 
-		_instance._addScriptingJob(
+		getInstance()._addScriptingJob(
 			trigger, storageType, description, language, script,
 			exceptionsMaxSize);
 	}
@@ -88,155 +89,162 @@ public class SchedulerEngineUtil {
 			Message message, TriggerState triggerState)
 		throws SchedulerException {
 
-		_instance._auditSchedulerJobs(message, triggerState);
+		getInstance()._auditSchedulerJobs(message, triggerState);
 	}
 
 	public static void delete(
 			SchedulerEntry schedulerEntry, StorageType storageType)
 		throws SchedulerException {
 
-		_instance._delete(schedulerEntry, storageType);
+		getInstance()._delete(schedulerEntry, storageType);
 	}
 
 	public static void delete(String groupName, StorageType storageType)
 		throws SchedulerException {
 
-		_instance._delete(groupName, storageType);
+		getInstance()._delete(groupName, storageType);
 	}
 
 	public static void delete(
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException {
 
-		_instance._delete(jobName, groupName, storageType);
+		getInstance()._delete(jobName, groupName, storageType);
 	}
 
 	public static String getCronText(
 		Calendar calendar, boolean timeZoneSensitive) {
 
-		return _instance._getCronText(calendar, timeZoneSensitive);
+		return getInstance()._getCronText(calendar, timeZoneSensitive);
 	}
 
 	public static String getCronText(
 		PortletRequest portletRequest, Calendar calendar,
 		boolean timeZoneSensitive, int recurrenceType) {
 
-		return _instance._getCronText(
+		return getInstance()._getCronText(
 			portletRequest, calendar, timeZoneSensitive, recurrenceType);
 	}
 
 	public static Date getEndTime(SchedulerResponse schedulerResponse) {
-		return _instance._getEndTime(schedulerResponse);
+		return getInstance()._getEndTime(schedulerResponse);
 	}
 
 	public static Date getEndTime(
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException {
 
-		return _instance._getEndTime(jobName, groupName, storageType);
+		return getInstance()._getEndTime(jobName, groupName, storageType);
 	}
 
 	public static Date getFinalFireTime(SchedulerResponse schedulerResponse) {
-		return _instance._getFinalFireTime(schedulerResponse);
+		return getInstance()._getFinalFireTime(schedulerResponse);
 	}
 
 	public static Date getFinalFireTime(
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException {
 
-		return _instance._getFinalFireTime(jobName, groupName, storageType);
+		return getInstance()._getFinalFireTime(jobName, groupName, storageType);
+	}
+
+	public static SchedulerEngineUtil getInstance() {
+		PortalRuntimePermission.checkGetBeanProperty(SchedulerEngineUtil.class);
+
+		return _instance;
 	}
 
 	public static ObjectValuePair<Exception, Date>[] getJobExceptions(
 		SchedulerResponse schedulerResponse) {
 
-		return _instance._getJobExceptions(schedulerResponse);
+		return getInstance()._getJobExceptions(schedulerResponse);
 	}
 
 	public static ObjectValuePair<Exception, Date>[] getJobExceptions(
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException {
 
-		return _instance._getJobExceptions(jobName, groupName, storageType);
+		return getInstance()._getJobExceptions(jobName, groupName, storageType);
 	}
 
 	public static TriggerState getJobState(
 		SchedulerResponse schedulerResponse) {
 
-		return _instance._getJobState(schedulerResponse);
+		return getInstance()._getJobState(schedulerResponse);
 	}
 
 	public static TriggerState getJobState(
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException {
 
-		return _instance._getJobState(jobName, groupName, storageType);
+		return getInstance()._getJobState(jobName, groupName, storageType);
 	}
 
 	public static Date getNextFireTime(SchedulerResponse schedulerResponse) {
-		return _instance._getNextFireTime(schedulerResponse);
+		return getInstance()._getNextFireTime(schedulerResponse);
 	}
 
 	public static Date getNextFireTime(
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException {
 
-		return _instance._getNextFireTime(jobName, groupName, storageType);
+		return getInstance()._getNextFireTime(jobName, groupName, storageType);
 	}
 
 	public static Date getPreviousFireTime(
 		SchedulerResponse schedulerResponse) {
 
-		return _instance._getPreviousFireTime(schedulerResponse);
+		return getInstance()._getPreviousFireTime(schedulerResponse);
 	}
 
 	public static Date getPreviousFireTime(
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException {
 
-		return _instance._getPreviousFireTime(jobName, groupName, storageType);
+		return getInstance()._getPreviousFireTime(
+			jobName, groupName, storageType);
 	}
 
 	public static SchedulerResponse getScheduledJob(
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException {
 
-		return _instance._getScheduledJob(jobName, groupName, storageType);
+		return getInstance()._getScheduledJob(jobName, groupName, storageType);
 	}
 
 	public static List<SchedulerResponse> getScheduledJobs()
 		throws SchedulerException {
 
-		return _instance._getScheduledJobs();
+		return getInstance()._getScheduledJobs();
 	}
 
 	public static List<SchedulerResponse> getScheduledJobs(
 			StorageType storageType)
 		throws SchedulerException {
 
-		return _instance._getScheduledJobs(storageType);
+		return getInstance()._getScheduledJobs(storageType);
 	}
 
 	public static List<SchedulerResponse> getScheduledJobs(
 			String groupName, StorageType storageType)
 		throws SchedulerException {
 
-		return _instance._getScheduledJobs(groupName, storageType);
+		return getInstance()._getScheduledJobs(groupName, storageType);
 	}
 
 	public static Date getStartTime(SchedulerResponse schedulerResponse) {
-		return _instance._getStartTime(schedulerResponse);
+		return getInstance()._getStartTime(schedulerResponse);
 	}
 
 	public static Date getStartTime(
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException {
 
-		return _instance._getStartTime(jobName, groupName, storageType);
+		return getInstance()._getStartTime(jobName, groupName, storageType);
 	}
 
 	public static void initialize() throws SchedulerException {
-		_instance._initialize();
+		getInstance()._initialize();
 
 		SchedulerLifecycle schedulerLifecycle = new SchedulerLifecycle();
 
@@ -246,33 +254,33 @@ public class SchedulerEngineUtil {
 	public static String namespaceGroupName(
 		String groupName, StorageType storageType) {
 
-		return _instance._namespaceGroupName(groupName, storageType);
+		return getInstance()._namespaceGroupName(groupName, storageType);
 	}
 
 	public static void pause(String groupName, StorageType storageType)
 		throws SchedulerException {
 
-		_instance._pause(groupName, storageType);
+		getInstance()._pause(groupName, storageType);
 	}
 
 	public static void pause(
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException {
 
-		_instance._pause(jobName, groupName, storageType);
+		getInstance()._pause(jobName, groupName, storageType);
 	}
 
 	public static void resume(String groupName, StorageType storageType)
 		throws SchedulerException {
 
-		_instance._resume(groupName, storageType);
+		getInstance()._resume(groupName, storageType);
 	}
 
 	public static void resume(
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException {
 
-		_instance._resume(jobName, groupName, storageType);
+		getInstance()._resume(jobName, groupName, storageType);
 	}
 
 	public static void schedule(
@@ -280,7 +288,7 @@ public class SchedulerEngineUtil {
 			String portletId, int exceptionsMaxSize)
 		throws SchedulerException {
 
-		_instance._schedule(
+		getInstance()._schedule(
 			schedulerEntry, storageType, portletId, exceptionsMaxSize);
 	}
 
@@ -289,7 +297,7 @@ public class SchedulerEngineUtil {
 			String destinationName, Message message, int exceptionsMaxSize)
 		throws SchedulerException {
 
-		_instance._schedule(
+		getInstance()._schedule(
 			trigger, storageType, description, destinationName, message,
 			exceptionsMaxSize);
 	}
@@ -299,44 +307,44 @@ public class SchedulerEngineUtil {
 			String destinationName, Object payload, int exceptionsMaxSize)
 		throws SchedulerException {
 
-		_instance._schedule(
+		getInstance()._schedule(
 			trigger, storageType, description, destinationName, payload,
 			exceptionsMaxSize);
 	}
 
 	public static void shutdown() throws SchedulerException {
-		_instance._shutdown();
+		getInstance()._shutdown();
 	}
 
 	public static void start() throws SchedulerException {
-		_instance._start();
+		getInstance()._start();
 	}
 
 	public static void suppressError(
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException {
 
-		_instance._suppressError(jobName, groupName, storageType);
+		getInstance()._suppressError(jobName, groupName, storageType);
 	}
 
 	public static void unschedule(
 			SchedulerEntry schedulerEntry, StorageType storageType)
 		throws SchedulerException {
 
-		_instance._unschedule(schedulerEntry, storageType);
+		getInstance()._unschedule(schedulerEntry, storageType);
 	}
 
 	public static void unschedule(String groupName, StorageType storageType)
 		throws SchedulerException {
 
-		_instance._unschedule(groupName, storageType);
+		getInstance()._unschedule(groupName, storageType);
 	}
 
 	public static void unschedule(
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException {
 
-		_instance._unschedule(jobName, groupName, storageType);
+		getInstance()._unschedule(jobName, groupName, storageType);
 	}
 
 	public static void update(
@@ -345,7 +353,7 @@ public class SchedulerEngineUtil {
 			int exceptionsMaxSize)
 		throws SchedulerException {
 
-		_instance._update(
+		getInstance()._update(
 			jobName, groupName, storageType, description, language, script,
 			exceptionsMaxSize);
 	}
@@ -353,13 +361,13 @@ public class SchedulerEngineUtil {
 	public static void update(Trigger trigger, StorageType storageType)
 		throws SchedulerException {
 
-		_instance._update(trigger, storageType);
+		getInstance()._update(trigger, storageType);
 	}
 
 	public static void updateMemorySchedulerClusterMaster()
 		throws SchedulerException {
 
-		_instance._updateMemorySchedulerClusterMaster();
+		getInstance()._updateMemorySchedulerClusterMaster();
 	}
 
 	public void setSchedulerEngine(SchedulerEngine schedulerEngine) {

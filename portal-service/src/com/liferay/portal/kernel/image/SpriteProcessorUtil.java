@@ -43,6 +43,8 @@ public class SpriteProcessorUtil {
 	}
 
 	public static SpriteProcessor getSpriteProcessor() {
+		PortalRuntimePermission.checkGetBeanProperty(SpriteProcessorUtil.class);
+
 		return _spriteProcessor;
 	}
 

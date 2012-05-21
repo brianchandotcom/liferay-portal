@@ -28,6 +28,8 @@ import java.util.Map;
 public class SanitizerUtil {
 
 	public static Sanitizer getSanitizer() {
+		PortalRuntimePermission.checkGetBeanProperty(SanitizerUtil.class);
+
 		return _sanitizer;
 	}
 

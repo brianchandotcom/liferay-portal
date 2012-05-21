@@ -27,26 +27,38 @@ import javax.sql.DataSource;
 public class InfrastructureUtil {
 
 	public static DataSource getDataSource() {
+		PortalRuntimePermission.checkGetBeanProperty(InfrastructureUtil.class);
+
 		return _dataSource;
 	}
 
 	public static Object getDynamicDataSourceTargetSource() {
+		PortalRuntimePermission.checkGetBeanProperty(InfrastructureUtil.class);
+
 		return _dynamicDataSourceTargetSource;
 	}
 
 	public static Session getMailSession() {
+		PortalRuntimePermission.checkGetBeanProperty(InfrastructureUtil.class);
+
 		return _mailSession;
 	}
 
 	public static Object getShardDataSourceTargetSource() {
+		PortalRuntimePermission.checkGetBeanProperty(InfrastructureUtil.class);
+
 		return _shardDataSourceTargetSource;
 	}
 
 	public static Object getShardSessionFactoryTargetSource() {
+		PortalRuntimePermission.checkGetBeanProperty(InfrastructureUtil.class);
+
 		return _shardSessionFactoryTargetSource;
 	}
 
 	public static Object getTransactionManager() {
+		PortalRuntimePermission.checkGetBeanProperty(InfrastructureUtil.class);
+
 		return _transactionManager;
 	}
 

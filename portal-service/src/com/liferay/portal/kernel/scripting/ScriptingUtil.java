@@ -60,6 +60,8 @@ public class ScriptingUtil {
 	}
 
 	public static Scripting getScripting() {
+		PortalRuntimePermission.checkGetBeanProperty(ScriptingUtil.class);
+
 		return _scripting;
 	}
 

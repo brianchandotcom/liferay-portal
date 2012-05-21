@@ -30,6 +30,8 @@ public class CacheRegistryUtil {
 	}
 
 	public static CacheRegistry getCacheRegistry() {
+		PortalRuntimePermission.checkGetBeanProperty(CacheRegistryUtil.class);
+
 		return _cacheRegistry;
 	}
 

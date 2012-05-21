@@ -44,6 +44,9 @@ public class ActionHandlerManagerUtil {
 	}
 
 	public static ActionHandlerManager getActionHandlerManager() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			ActionHandlerManagerUtil.class);
+
 		return _actionHandlerManager;
 	}
 

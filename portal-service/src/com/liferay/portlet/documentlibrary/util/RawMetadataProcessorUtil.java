@@ -60,6 +60,9 @@ public class RawMetadataProcessorUtil {
 	}
 
 	public static RawMetadataProcessor getRawMetadataProcessor() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			RawMetadataProcessorUtil.class);
+
 		return _rawMetadataProcessor;
 	}
 

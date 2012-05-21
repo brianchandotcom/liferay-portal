@@ -81,6 +81,8 @@ public class JSONFactoryUtil {
 	}
 
 	public static JSONFactory getJSONFactory() {
+		PortalRuntimePermission.checkGetBeanProperty(JSONFactoryUtil.class);
+
 		return _jsonFactory;
 	}
 

@@ -865,16 +865,6 @@
 			}
 		}
 	}
-
-	.aui-progress-bar-status {
-		$transition-value: width 1s ease-out;
-
-		transition: $transition-value;
-		-moz-transition: $transition-value;
-		-ms-transition: $transition-value;
-		-o-transition: $transition-value;
-		-webkit-transition: $transition-value;
-	}
 }
 
 .active-area-proxy {

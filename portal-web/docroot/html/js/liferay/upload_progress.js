@@ -7,16 +7,15 @@ AUI.add(
 
 		var STR_UPDATE_PERIOD = 'updatePeriod';
 
-		var NAME = 'uploadprogress';
+		var TPL_FRAME = '<iframe frameborder="0" height="0" id="{0}-poller" src="javascript:;" style="display:none" tabindex="-1" title="empty" width="0"></iframe>';
+
+		var TPL_URL_UPDATE = themeDisplay.getPathMain() + '/portal/upload_progress_poller?uploadProgressId={0}&updatePeriod={1}';
+
+		var WIN = A.config.win;
 
 		var UploadProgressBar = A.Component.create(
 			{
 				ATTRS: {
-					redirect: {
-						validator: Lang.isString,
-						value: null
-					},
-
 					updatePeriod: {
 						validator: Lang.isNumber,
 						value: 1000
@@ -25,27 +24,30 @@ AUI.add(
 
 				EXTENDS: A.ProgressBar,
 
-				NAME: NAME,
+				NAME: 'uploadprogress',
 
 				prototype: {
-					animateBar: function(percent) {
+					renderUI: function() {
 						var instance = this;
 
-						instance.set(STR_VALUE, percent);
+						UploadProgressBar.superclass.renderUI.call(instance, arguments);
+
+						var tplFrame = Lang.sub(TPL_FRAME, [instance.get('id')]);
+
+						var frame = A.Node.create(tplFrame);
+
+						instance.get('boundingBox').placeBefore(frame);
+
+						instance._frame = frame;
 					},
 
-					hideProgress: function() {
+					bindUI: function() {
 						var instance = this;
 
-						instance.hide();
-					},
+						UploadProgressBar.superclass.bindUI.call(instance, arguments);
 
-					sendRedirect: function() {
-						var instance = this;
-
-						var redirect = instance.get('redirect');
-
-						window.location = decodeURIComponent(redirect);
+						instance.after('complete', instance._afterComplete);
+						instance.after('valueChange', instance._afterValueChange);
 					},
 
 					startProgress: function() {
@@ -65,22 +67,24 @@ AUI.add(
 						);
 					},
 
-					updateBar: function(percent) {
-						var instance = this;
-
-						instance.set(STR_VALUE, percent);
-					},
-
 					updateProgress: function() {
 						var instance = this;
 
-						var uploadProgressId = instance.get('id');
+						var url = Lang.sub(TPL_URL_UPDATE, [instance.get('id'), instance.get(STR_UPDATE_PERIOD)]);
 
-						var uploadProgressPoller = document.getElementById(uploadProgressId + '-poller');
+						instance._frame.set('src', url);
+					},
 
-						var updatePeriod = instance.get(STR_UPDATE_PERIOD);
+					_afterComplete: function(event) {
+						var instance = this;
 
-						uploadProgressPoller.src = themeDisplay.getPathMain() + '/portal/upload_progress_poller?uploadProgressId=' + uploadProgressId + '&updatePeriod=' + updatePeriod;
+						instance.set('label', instance.get('strings.complete'));
+					},
+
+					_afterValueChange: function(event) {
+						var instance = this;
+
+						instance.set('label', event.newVal + '%');
 					}
 				}
 			}

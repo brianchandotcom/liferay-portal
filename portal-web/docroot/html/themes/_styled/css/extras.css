@@ -129,3 +129,57 @@ body > .lfr-menu-list, body > .lfr-menu-list ul, .lfr-actions, .aui-dialog-conte
 .lfr-api-service-search .aui-field-input {
 	@include box-sizing("border-box");
 }
+
+@-webkit-keyframes aui-progress-bar-stripes {
+	from {
+		background-position: 40px 0;
+	}
+	to {
+		background-position: 0 0;
+	}
+}
+
+@-moz-keyframes aui-progress-bar-stripes {
+	from {
+		background-position: 40px 0;
+	}
+	to {
+		background-position: 0 0;
+	}
+}
+
+@-ms-keyframes aui-progress-bar-stripes {
+	from {
+		background-position: 40px 0;
+	}
+	to {
+		background-position: 0 0;
+	}
+}
+
+@-o-keyframes aui-progress-bar-stripes {
+	from {
+		background-position: 0 0;
+	}
+	to {
+		background-position: 40px 0;
+	}
+}
+
+@keyframes aui-progress-bar-stripes {
+	from {
+		background-position: 40px 0;
+	}
+	to {
+		background-position: 0 0;
+	}
+}
+
+.aui-progress-bar-status {
+	$transparent: rgba(255, 255, 255, 0);
+
+	@include background-image(linear-gradient(-45deg, rgba(255, 255, 255, 0.3) 25%, $transparent 25%, $transparent 50%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.3) 75%, $transparent 75%, $transparent));
+	@include background-size(40px 40px);
+	@include experimental(animation, aui-progress-bar-stripes 0.5s linear infinite);
+	@include single-transition(width, 0.5s, ease-out);
+}

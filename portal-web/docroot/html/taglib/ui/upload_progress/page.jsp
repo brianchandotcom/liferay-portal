@@ -19,12 +19,8 @@
 <%
 Integer height = (Integer)request.getAttribute("liferay-ui:upload-progress:height");
 String id = (String)request.getAttribute("liferay-ui:upload-progress:id");
-String redirect = (String)request.getAttribute("liferay-ui:upload-progress:redirect");
 String message = (String)request.getAttribute("liferay-ui:upload-progress:message");
 %>
-
-
-<div><iframe frameborder="0" id="<%= id %>-poller" src="javascript:0" style="display:none" height="0" width="0" tabindex="-1" title="empty"></iframe></div>
 
 <div id="<%= id %>Bar"></div>
 
@@ -32,22 +28,13 @@ String message = (String)request.getAttribute("liferay-ui:upload-progress:messag
 	A.config.win['<%= id %>'] = new Liferay.UploadProgressBar(
 		{
 			boundingBox: '#<%= id %>Bar',
-			height: <%= height %>,
+
+			<c:if test="<%= Validator.isNotNull(height) %>">
+				height: <%= height %>,
+			</c:if>
+
 			id: '<%= id %>',
-			label: '<%= LanguageUtil.get(pageContext, message) %>',
-			on: {
-				complete: function(event) {
-					var instance = this;
-
-					instance.set('label', '<%= LanguageUtil.get(pageContext, "done") %>');
-				},
-				valueChange: function(event) {
-					var instance = this;
-
-					instance.set('label', event.newVal + '%');
-				}
-			},
-			redirect: '<%= HttpUtil.encodeURL(redirect) %>'
+			label: '<%= LanguageUtil.get(pageContext, message) %>'
 		}
 	);
 </aui:script>

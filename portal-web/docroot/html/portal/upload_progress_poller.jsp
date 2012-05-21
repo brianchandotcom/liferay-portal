@@ -52,8 +52,8 @@ if (percent.floatValue() >= 100) {
 	;(function() {
 		var progressId = parent['<%= HtmlUtil.escapeJS(uploadProgressId) %>'];
 
-		if (progressId && (typeof progressId.updateBar == 'function')) {
-			progressId.updateBar(<%= percent.intValue() %>, '<%= HtmlUtil.escapeJS(fileName) %>');
+		if (progressId && (typeof progressId.set == 'function')) {
+			progressId.set('value', <%= percent.intValue() %>);
 		}
 
 		<c:if test="<%= percent.intValue() < 100 %>">

@@ -28,6 +28,9 @@ public class OrderByComparatorFactoryUtil {
 	}
 
 	public static OrderByComparatorFactory getOrderByComparatorFactory() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			OrderByComparatorFactoryUtil.class);
+
 		return _orderByComparatorFactory;
 	}
 

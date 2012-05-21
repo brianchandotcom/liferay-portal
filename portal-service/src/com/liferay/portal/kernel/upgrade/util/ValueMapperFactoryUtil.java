@@ -26,6 +26,9 @@ public class ValueMapperFactoryUtil {
 	}
 
 	public static ValueMapperFactory getValueMapperFactory() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			ValueMapperFactoryUtil.class);
+
 		return _valueMapperFactory;
 	}
 

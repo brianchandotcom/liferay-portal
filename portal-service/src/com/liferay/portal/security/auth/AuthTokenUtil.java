@@ -31,6 +31,8 @@ public class AuthTokenUtil {
 	}
 
 	public static AuthToken getAuthToken() {
+		PortalRuntimePermission.checkGetBeanProperty(AuthTokenUtil.class);
+
 		return _authToken;
 	}
 

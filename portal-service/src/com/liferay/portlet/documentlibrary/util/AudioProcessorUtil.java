@@ -39,6 +39,8 @@ public class AudioProcessorUtil {
 	}
 
 	public static AudioProcessor getAudioProcessor() {
+		PortalRuntimePermission.checkGetBeanProperty(AudioProcessorUtil.class);
+
 		return _audioProcessor;
 	}
 

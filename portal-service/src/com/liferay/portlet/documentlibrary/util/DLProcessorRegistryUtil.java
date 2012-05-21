@@ -43,6 +43,9 @@ public class DLProcessorRegistryUtil {
 	}
 
 	public static DLProcessorRegistry getDLProcessorRegistry() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			DLProcessorRegistryUtil.class);
+
 		return _dlProcessorRegistry;
 	}
 

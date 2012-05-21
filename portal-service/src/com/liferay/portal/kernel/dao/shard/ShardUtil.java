@@ -21,12 +21,15 @@ import javax.sql.DataSource;
 
 /**
  * @author Alexander Chow
+ * @author Raymond Augé
  */
 public class ShardUtil {
 
 	public static String[] getAvailableShardNames() {
-		if (_shard != null) {
-			String[] availableShardNames = _shard.getAvailableShardNames();
+		Shard shard = getShard();
+
+		if (shard != null) {
+			String[] availableShardNames = shard.getAvailableShardNames();
 
 			if (availableShardNames != null) {
 				return availableShardNames;
@@ -37,32 +40,46 @@ public class ShardUtil {
 	}
 
 	public static String getCurrentShardName() {
-		if (_shard != null) {
-			return _shard.getCurrentShardName();
+		Shard shard = getShard();
+
+		if (shard != null) {
+			return shard.getCurrentShardName();
 		}
 
 		return StringPool.BLANK;
 	}
 
 	public static DataSource getDataSource() {
-		if (_shard != null) {
-			return _shard.getDataSource();
+		Shard shard = getShard();
+
+		if (shard != null) {
+			return shard.getDataSource();
 		}
 
 		return null;
 	}
 
 	public static String getDefaultShardName() {
-		if (_shard != null) {
-			return _shard.getDefaultShardName();
+		Shard shard = getShard();
+
+		if (shard != null) {
+			return shard.getDefaultShardName();
 		}
 
 		return null;
 	}
 
+	public static Shard getShard() {
+		PortalRuntimePermission.checkGetBeanProperty(ShardUtil.class);
+
+		return _shard;
+	}
+
 	public static boolean isEnabled() {
-		if (_shard != null) {
-			return _shard.isEnabled();
+		Shard shard = getShard();
+
+		if (shard != null) {
+			return shard.isEnabled();
 		}
 
 		return false;
@@ -71,22 +88,28 @@ public class ShardUtil {
 	public static String popCompanyService() {
 		String value = null;
 
-		if (_shard != null) {
-			value = _shard.popCompanyService();
+		Shard shard = getShard();
+
+		if (shard != null) {
+			value = shard.popCompanyService();
 		}
 
 		return value;
 	}
 
 	public static void pushCompanyService(long companyId) {
-		if (_shard != null) {
-			_shard.pushCompanyService(companyId);
+		Shard shard = getShard();
+
+		if (shard != null) {
+			shard.pushCompanyService(companyId);
 		}
 	}
 
 	public static void pushCompanyService(String shardName) {
-		if (_shard != null) {
-			_shard.pushCompanyService(shardName);
+		Shard shard = getShard();
+
+		if (shard != null) {
+			shard.pushCompanyService(shardName);
 		}
 	}
 

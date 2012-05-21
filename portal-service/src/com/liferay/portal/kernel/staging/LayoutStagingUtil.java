@@ -43,6 +43,8 @@ public class LayoutStagingUtil {
 		}
 
 	public static LayoutStaging getLayoutStaging() {
+		PortalRuntimePermission.checkGetBeanProperty(LayoutStagingUtil.class);
+
 		return _layoutStaging;
 	}
 

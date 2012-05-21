@@ -62,6 +62,8 @@ public class LicenseManagerUtil {
 	}
 
 	public static LicenseManager getLicenseManager() {
+		PortalRuntimePermission.checkGetBeanProperty(LicenseManagerUtil.class);
+
 		return _licenseManager;
 	}
 

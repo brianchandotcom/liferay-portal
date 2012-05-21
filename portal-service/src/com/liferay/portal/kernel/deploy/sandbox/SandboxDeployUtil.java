@@ -14,25 +14,34 @@
 
 package com.liferay.portal.kernel.deploy.sandbox;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * @author Igor Spasic
  * @author Brian Wing Shun Chan
+ * @author Raymond Augé
  */
 public class SandboxDeployUtil {
 
 	public static SandboxDeployDir getDir(String name) {
-		return _instance._getDir(name);
+		return getInstance()._getDir(name);
+	}
+
+	public static SandboxDeployUtil getInstance() {
+		PortalRuntimePermission.checkGetBeanProperty(SandboxDeployUtil.class);
+
+		return _instance;
 	}
 
 	public static void registerDir(SandboxDeployDir sandboxDeployDir) {
-		_instance._registerDir(sandboxDeployDir);
+		getInstance()._registerDir(sandboxDeployDir);
 	}
 
 	public static void unregisterDir(String name) {
-		_instance._unregisterDir(name);
+		getInstance()._unregisterDir(name);
 	}
 
 	private SandboxDeployUtil() {

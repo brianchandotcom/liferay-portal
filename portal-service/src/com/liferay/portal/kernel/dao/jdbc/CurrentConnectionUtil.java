@@ -30,6 +30,9 @@ public class CurrentConnectionUtil {
 	}
 
 	public static CurrentConnection getCurrentConnection() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			CurrentConnectionUtil.class);
+
 		return _currentConnection;
 	}
 

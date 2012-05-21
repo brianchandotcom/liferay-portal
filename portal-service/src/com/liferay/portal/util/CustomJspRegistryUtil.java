@@ -32,6 +32,9 @@ public class CustomJspRegistryUtil {
 	}
 
 	public static CustomJspRegistry getCustomJspRegistry() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			CustomJspRegistryUtil.class);
+
 		return _customJspRegistry;
 	}
 

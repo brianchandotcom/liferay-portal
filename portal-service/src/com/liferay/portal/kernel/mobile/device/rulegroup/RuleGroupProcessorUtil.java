@@ -35,6 +35,9 @@ public class RuleGroupProcessorUtil {
 	}
 
 	public static RuleGroupProcessor getRuleGroupProcessor() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			RuleGroupProcessorUtil.class);
+
 		return _ruleGroupProcessor;
 	}
 

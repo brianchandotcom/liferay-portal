@@ -28,6 +28,9 @@ public class DirectServletRegistryUtil {
 	}
 
 	public static DirectServletRegistry getDirectServletRegistry() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			DirectServletRegistryUtil.class);
+
 		return _directServletRegistry;
 	}
 

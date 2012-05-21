@@ -34,6 +34,9 @@ public class ExpandoBridgeIndexerUtil {
 	}
 
 	public static ExpandoBridgeIndexer getExpandoBridgeIndexer() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			ExpandoBridgeIndexerUtil.class);
+
 		return _expandoBridgeIndexer;
 	}
 

@@ -32,6 +32,9 @@ public class ZipWriterFactoryUtil {
 	}
 
 	public static ZipWriterFactory getZipWriterFactory() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			ZipWriterFactoryUtil.class);
+
 		return _zipWriterFactory;
 	}
 

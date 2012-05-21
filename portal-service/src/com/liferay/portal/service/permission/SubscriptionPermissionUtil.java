@@ -41,6 +41,9 @@ public class SubscriptionPermissionUtil {
 	}
 
 	public static SubscriptionPermission getSubscriptionPermission() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			SubscriptionPermissionUtil.class);
+
 		return _subscriptionPermission;
 	}
 

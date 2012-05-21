@@ -44,6 +44,9 @@ public class WorkflowHandlerRegistryUtil {
 	}
 
 	public static WorkflowHandlerRegistry getWorkflowHandlerRegistry() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			WorkflowHandlerRegistryUtil.class);
+
 		return _workflowHandlerRegistry;
 	}
 

@@ -41,6 +41,9 @@ public class UserGroupRolePermissionUtil {
 	}
 
 	public static UserGroupRolePermission getUserGroupRolePermission() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			UserGroupRolePermissionUtil.class);
+
 		return _userGroupRolePermission;
 	}
 

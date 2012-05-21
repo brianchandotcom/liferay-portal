@@ -53,6 +53,8 @@ public class ImageMagickUtil {
 	}
 
 	public static ImageMagick getImageMagick() {
+		PortalRuntimePermission.checkGetBeanProperty(ImageMagickUtil.class);
+
 		return _imageMagick;
 	}
 

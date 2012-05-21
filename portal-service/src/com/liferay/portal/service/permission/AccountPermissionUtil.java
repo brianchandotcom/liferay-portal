@@ -60,6 +60,9 @@ public class AccountPermissionUtil {
 	}
 
 	public static AccountPermission getAccountPermission() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			AccountPermissionUtil.class);
+
 		return _accountPermission;
 	}
 

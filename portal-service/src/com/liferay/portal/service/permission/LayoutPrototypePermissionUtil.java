@@ -41,6 +41,9 @@ public class LayoutPrototypePermissionUtil {
 	}
 
 	public static LayoutPrototypePermission getLayoutPrototypePermission() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			LayoutPrototypePermissionUtil.class);
+
 		return _layoutPrototypePermission;
 	}
 

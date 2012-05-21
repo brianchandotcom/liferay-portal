@@ -19,6 +19,7 @@ import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -49,6 +50,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Brian Wing Shun Chan
  * @author Alexander Chow
+ * @author Raymond Augé
  */
 public class WebDAVUtil {
 
@@ -62,10 +64,12 @@ public class WebDAVUtil {
 	public static final String TOKEN_PREFIX = "opaquelocktoken:";
 
 	public static void addStorage(WebDAVStorage storage) {
-		_instance._addStorage(storage);
+		getInstance()._addStorage(storage);
 	}
 
 	public static Namespace createNamespace(String prefix, String uri) {
+		getInstance();
+
 		Namespace namespace = null;
 
 		if (uri.equals(WebDAVUtil.DAV_URI.getURI())) {
@@ -82,10 +86,12 @@ public class WebDAVUtil {
 	}
 
 	public static void deleteStorage(WebDAVStorage storage) {
-		_instance._deleteStorage(storage);
+		getInstance()._deleteStorage(storage);
 	}
 
 	public static long getDepth(HttpServletRequest request) {
+		getInstance();
+
 		String value = GetterUtil.getString(request.getHeader("Depth"));
 
 		if (_log.isDebugEnabled()) {
@@ -102,6 +108,8 @@ public class WebDAVUtil {
 
 	public static String getDestination(
 		HttpServletRequest request, String rootPath) {
+
+		getInstance();
 
 		String headerDestination = request.getHeader("Destination");
 		String[] pathSegments = StringUtil.split(headerDestination, rootPath);
@@ -127,6 +135,8 @@ public class WebDAVUtil {
 
 	public static long getGroupId(long companyId, String[] pathArray)
 		throws WebDAVException {
+
+		getInstance();
 
 		try {
 			if (pathArray.length == 0) {
@@ -169,6 +179,7 @@ public class WebDAVUtil {
 	}
 
 	public static List<Group> getGroups(User user) throws Exception {
+		getInstance();
 
 		// Guest
 
@@ -214,8 +225,16 @@ public class WebDAVUtil {
 		return groups;
 	}
 
+	public static WebDAVUtil getInstance() {
+		PortalRuntimePermission.checkGetBeanProperty(WebDAVUtil.class);
+
+		return _instance;
+	}
+
 	public static String getLockUuid(HttpServletRequest request)
 		throws WebDAVException {
+
+		getInstance();
 
 		String token = StringPool.BLANK;
 
@@ -253,12 +272,16 @@ public class WebDAVUtil {
 	}
 
 	public static String[] getPathArray(String path, boolean fixTrailing) {
+		getInstance();
+
 		path = HttpUtil.fixPath(path, true, fixTrailing);
 
 		return StringUtil.split(path, CharPool.SLASH);
 	}
 
 	public static String getResourceName(String[] pathArray) {
+		getInstance();
+
 		if (pathArray.length <= 2) {
 			return StringPool.BLANK;
 		}
@@ -268,14 +291,16 @@ public class WebDAVUtil {
 	}
 
 	public static WebDAVStorage getStorage(String token) {
-		return _instance._getStorage(token);
+		return getInstance()._getStorage(token);
 	}
 
 	public static Collection<String> getStorageTokens() {
-		return _instance._getStorageTokens();
+		return getInstance()._getStorageTokens();
 	}
 
 	public static long getTimeout(HttpServletRequest request) {
+		getInstance();
+
 		final String TIME_PREFIX = "Second-";
 
 		long timeout = 0;
@@ -300,7 +325,7 @@ public class WebDAVUtil {
 	}
 
 	public static boolean isOverwrite(HttpServletRequest request) {
-		return _instance._isOverwrite(request);
+		return getInstance()._isOverwrite(request);
 	}
 
 	private WebDAVUtil() {

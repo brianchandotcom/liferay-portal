@@ -18,24 +18,28 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermissio
 
 /**
  * @author Edward Han
+ * @author Raymond Augé
  */
 public class CometHandlerPoolUtil {
 
 	public static void closeCometHandler(String sessionId)
 		throws CometException {
 
-		_cometHandlerPool.closeCometHandler(sessionId);
+		getCometHandlerPool().closeCometHandler(sessionId);
 	}
 
 	public static void closeCometHandlers() throws CometException {
-		_cometHandlerPool.closeCometHandlers();
+		getCometHandlerPool().closeCometHandlers();
 	}
 
 	public static CometHandler getCometHandler(String sessionId) {
-		return _cometHandlerPool.getCometHandler(sessionId);
+		return getCometHandlerPool().getCometHandler(sessionId);
 	}
 
 	public static CometHandlerPool getCometHandlerPool() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			CometHandlerPoolUtil.class);
+
 		return _cometHandlerPool;
 	}
 
@@ -43,7 +47,7 @@ public class CometHandlerPoolUtil {
 			CometSession cometSession, CometHandler cometHandler)
 		throws CometException {
 
-		_cometHandlerPool.startCometHandler(cometSession, cometHandler);
+		getCometHandlerPool().startCometHandler(cometSession, cometHandler);
 	}
 
 	public void setCometHandlerPool(CometHandlerPool cometHandlerPool) {

@@ -30,14 +30,22 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Shuyang Zhou
+ * @author Raymond Augé
  */
 public class PortletContainerUtil {
+
+	public static PortletContainer getPortletContainer() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			PortletContainerUtil.class);
+
+		return _portletContainer;
+	}
 
 	public static void preparePortlet(
 			HttpServletRequest request, Portlet portlet)
 		throws PortletContainerException {
 
-		_portletContainer.preparePortlet(request, portlet);
+		getPortletContainer().preparePortlet(request, portlet);
 	}
 
 	public static void processAction(
@@ -45,7 +53,7 @@ public class PortletContainerUtil {
 			Portlet portlet)
 		throws PortletContainerException {
 
-		_portletContainer.processAction(request, response, portlet);
+		getPortletContainer().processAction(request, response, portlet);
 	}
 
 	public static void processEvent(
@@ -53,7 +61,7 @@ public class PortletContainerUtil {
 			Portlet portlet, Layout layout, Event event)
 		throws PortletContainerException {
 
-		_portletContainer.processEvent(
+		getPortletContainer().processEvent(
 			request, response, portlet, layout, event);
 	}
 
@@ -62,7 +70,7 @@ public class PortletContainerUtil {
 			Portlet portlet)
 		throws PortletContainerException {
 
-		_portletContainer.render(request, response, portlet);
+		getPortletContainer().render(request, response, portlet);
 	}
 
 	public static void serveResource(
@@ -70,12 +78,14 @@ public class PortletContainerUtil {
 			Portlet portlet)
 		throws PortletContainerException {
 
-		_portletContainer.serveResource(request, response, portlet);
+		getPortletContainer().serveResource(request, response, portlet);
 	}
 
 	public static HttpServletRequest setupOptionalRenderParameters(
 		HttpServletRequest request, String renderPath, String columnId,
 		Integer columnPos, Integer columnCount) {
+
+		getPortletContainer();
 
 		if (_LAYOUT_PARALLEL_RENDER_ENABLE || _PORTLET_CONTAINER_RESTRICT) {
 			RestrictPortletServletRequest restrictPortletServletRequest =

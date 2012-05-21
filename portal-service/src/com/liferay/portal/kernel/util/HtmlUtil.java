@@ -61,6 +61,8 @@ public class HtmlUtil {
 	}
 
 	public static Html getHtml() {
+		PortalRuntimePermission.checkGetBeanProperty(HtmlUtil.class);
+
 		return _html;
 	}
 

@@ -32,6 +32,9 @@ public class MappingSqlQueryFactoryUtil {
 	}
 
 	public static MappingSqlQueryFactory getMappingSqlQueryFactory() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			MappingSqlQueryFactoryUtil.class);
+
 		return _mappingSqlUpdateFactory;
 	}
 

@@ -33,6 +33,9 @@ public class AtomCollectionAdapterRegistryUtil {
 	public static AtomCollectionAdapterRegistry
 		getAtomCollectionAdapterRegistry() {
 
+		PortalRuntimePermission.checkGetBeanProperty(
+			AtomCollectionAdapterRegistryUtil.class);
+
 		return _atomCollectionAdapterRegistry;
 	}
 

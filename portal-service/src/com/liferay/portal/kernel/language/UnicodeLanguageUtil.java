@@ -190,6 +190,8 @@ public class UnicodeLanguageUtil {
 	}
 
 	public static UnicodeLanguage getUnicodeLanguage() {
+		PortalRuntimePermission.checkGetBeanProperty(UnicodeLanguageUtil.class);
+
 		return _unicodeLanguage;
 	}
 

@@ -673,7 +673,7 @@ public class JournalArticleLocalServiceImpl
 			// Expando
 
 			expandoValueLocalService.deleteValues(
-				JournalArticle.class.getName(), article.getResourcePrimKey());
+				JournalArticle.class.getName(), article.getId());
 
 			// Resources
 

@@ -65,7 +65,7 @@ public class SQLTransformer {
 		_vendorDB2 = false;
 		_vendorDerby = false;
 		_vendorFirebird = false;
-		//_vendorHypersonic = false;
+		_vendorHypersonic = false;
 		_vendorInformix = false;
 		_vendorIngres = false;
 		_vendorInterbase = false;
@@ -91,7 +91,7 @@ public class SQLTransformer {
 			_vendorFirebird = true;
 		}
 		else if (dbType.equals(DB.TYPE_HYPERSONIC)) {
-			//_vendorHypersonic = true;
+			_vendorHypersonic = true;
 		}
 		else if (dbType.equals(DB.TYPE_INFORMIX)) {
 			_vendorInformix = true;
@@ -203,6 +203,9 @@ public class SQLTransformer {
 
 		if (_vendorDB2 || _vendorDerby) {
 			return matcher.replaceAll("CAST($1 AS CHAR(254))");
+		}
+		else if (_vendorHypersonic) {
+			return matcher.replaceAll("CONVERT($1, SQL_VARCHAR)");
 		}
 		else if (_vendorOracle) {
 			return matcher.replaceAll("CAST($1 AS VARCHAR(4000))");
@@ -420,7 +423,7 @@ public class SQLTransformer {
 	private boolean _vendorDB2;
 	private boolean _vendorDerby;
 	private boolean _vendorFirebird;
-	//private boolean _vendorHypersonic;
+	private boolean _vendorHypersonic;
 	private boolean _vendorInformix;
 	private boolean _vendorIngres;
 	private boolean _vendorInterbase;

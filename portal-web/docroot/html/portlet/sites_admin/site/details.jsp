@@ -73,7 +73,25 @@ if (showPrototypes && (group != null)) {
 
 <liferay-ui:error exception="<%= DuplicateGroupException.class %>" message="please-enter-a-unique-name" />
 <liferay-ui:error exception="<%= GroupNameException.class %>" message="please-enter-a-valid-name" />
-<liferay-ui:error exception="<%= RequiredGroupException.class %>" message="old-group-name-is-a-required-system-group" />
+
+<liferay-ui:error exception="<%= RequiredGroupException.class %>">
+
+	<%
+	RequiredGroupException rge = (RequiredGroupException)errorException;
+	%>
+
+	<c:if test="<%= rge.getType() == RequiredGroupException.CURRENT_GROUP %>">
+		<liferay-ui:message key="the-site-cannot-be-deleted-or-deactivated-because-you-are-accessing-the-site" />
+	</c:if>
+
+	<c:if test="<%= rge.getType() == RequiredGroupException.HAS_SUBGROUPS %>">
+		<liferay-ui:message key="you-cannot-delete-sites-that-have-subsites" />
+	</c:if>
+
+	<c:if test="<%= rge.getType() == RequiredGroupException.SYSTEM_GROUP %>">
+		<liferay-ui:message key="the-site-cannot-be-deleted-or-deactivated-because-it-is-a-required-system-site" />
+	</c:if>
+</liferay-ui:error>
 
 <aui:fieldset>
 	<c:choose>

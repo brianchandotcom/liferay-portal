@@ -558,7 +558,18 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		if (PortalUtil.isSystemGroup(group.getName())) {
+
 			throw new RequiredGroupException(
+				RequiredGroupException.SYSTEM_GROUP,
+				String.valueOf(group.getGroupId()));
+		}
+
+		if (groupPersistence.countByC_P(
+				group.getCompanyId(),
+				group.getGroupId()) > 0) {
+
+			throw new RequiredGroupException(
+				RequiredGroupException.HAS_SUBGROUPS,
 				String.valueOf(group.getGroupId()));
 		}
 
@@ -1959,7 +1970,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		if (PortalUtil.isSystemGroup(group.getName()) &&
 			!group.getName().equals(name)) {
 
-			throw new RequiredGroupException();
+			throw new RequiredGroupException(
+				RequiredGroupException.SYSTEM_GROUP,
+				String.valueOf(group.getGroupId()));
 		}
 
 		validateFriendlyURL(

@@ -51,7 +51,25 @@ MembershipRequest membershipRequest = (MembershipRequest)request.getAttribute(We
 	<liferay-ui:error exception="<%= DuplicateGroupException.class %>" message="please-enter-a-unique-name" />
 	<liferay-ui:error exception="<%= GroupNameException.class %>" message="please-enter-a-valid-name" />
 	<liferay-ui:error exception="<%= MembershipRequestCommentsException.class %>" message="please-enter-valid-comments" />
-	<liferay-ui:error exception="<%= RequiredGroupException.class %>" message="old-group-name-is-a-required-system-group" />
+
+	<liferay-ui:error exception="<%= RequiredGroupException.class %>">
+
+		<%
+		RequiredGroupException rge = (RequiredGroupException)errorException;
+		%>
+
+		<c:if test="<%= rge.getType() == RequiredGroupException.CURRENT_GROUP %>">
+			<liferay-ui:message key="you-cannot-delete-this-site-because-you-are-currently-accessing-this-site" />
+		</c:if>
+
+		<c:if test="<%= rge.getType() == RequiredGroupException.HAS_SUBGROUPS %>">
+			<liferay-ui:message key="you-cannot-delete-sites-that-have-subsites" />
+		</c:if>
+
+		<c:if test="<%= rge.getType() == RequiredGroupException.SYSTEM_GROUP %>">
+			<liferay-ui:message key="the-site-cannot-be-deleted-or-deactivated-because-it-is-a-required-system-site" />
+		</c:if>
+	</liferay-ui:error>
 
 	<aui:model-context bean="<%= membershipRequest %>" model="<%= MembershipRequest.class %>" />
 

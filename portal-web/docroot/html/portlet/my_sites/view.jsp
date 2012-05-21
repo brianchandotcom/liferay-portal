@@ -80,20 +80,19 @@ request.setAttribute("view.jsp-tabs1", tabs1);
 
 			<%
 			RequiredGroupException rge = (RequiredGroupException)errorException;
-
-			long groupId = GetterUtil.getLong(rge.getMessage());
-
-			Group group = GroupLocalServiceUtil.getGroup(groupId);
 			%>
 
-			<c:choose>
-				<c:when test="<%= PortalUtil.isSystemGroup(group.getName()) %>">
-					<liferay-ui:message key="the-site-cannot-be-deleted-or-deactivated-because-it-is-a-required-system-site" />
-				</c:when>
-				<c:otherwise>
-					<liferay-ui:message key="the-site-cannot-be-deleted-or-deactivated-because-you-are-accessing-the-site" />
-				</c:otherwise>
-			</c:choose>
+			<c:if test="<%= rge.getType() == RequiredGroupException.CURRENT_GROUP %>">
+				<liferay-ui:message key="you-cannot-delete-this-site-because-you-are-currently-accessing-this-site" />
+			</c:if>
+
+			<c:if test="<%= rge.getType() == RequiredGroupException.HAS_SUBGROUPS %>">
+				<liferay-ui:message key="you-cannot-delete-sites-that-have-subsites" />
+			</c:if>
+
+			<c:if test="<%= rge.getType() == RequiredGroupException.SYSTEM_GROUP %>">
+				<liferay-ui:message key="the-site-cannot-be-deleted-or-deactivated-because-it-is-a-required-system-site" />
+			</c:if>
 		</liferay-ui:error>
 
 		<liferay-ui:search-container-row

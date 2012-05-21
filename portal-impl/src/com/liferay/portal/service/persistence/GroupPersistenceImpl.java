@@ -133,6 +133,16 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 			GroupModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByLiveGroupId",
 			new String[] { Long.class.getName() });
+	public static final FinderPath FINDER_PATH_FETCH_BY_C_P = new FinderPath(GroupModelImpl.ENTITY_CACHE_ENABLED,
+			GroupModelImpl.FINDER_CACHE_ENABLED, GroupImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_P",
+			new String[] { Long.class.getName(), Long.class.getName() },
+			GroupModelImpl.COMPANYID_COLUMN_BITMASK |
+			GroupModelImpl.PARENTGROUPID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_C_P = new FinderPath(GroupModelImpl.ENTITY_CACHE_ENABLED,
+			GroupModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_P",
+			new String[] { Long.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_N = new FinderPath(GroupModelImpl.ENTITY_CACHE_ENABLED,
 			GroupModelImpl.FINDER_CACHE_ENABLED, GroupImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_N",
@@ -244,6 +254,12 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_LIVEGROUPID,
 			new Object[] { Long.valueOf(group.getLiveGroupId()) }, group);
 
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_P,
+			new Object[] {
+				Long.valueOf(group.getCompanyId()),
+				Long.valueOf(group.getParentGroupId())
+			}, group);
+
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_N,
 			new Object[] { Long.valueOf(group.getCompanyId()), group.getName() },
 			group);
@@ -353,6 +369,12 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	protected void clearUniqueFindersCache(Group group) {
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_LIVEGROUPID,
 			new Object[] { Long.valueOf(group.getLiveGroupId()) });
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_P,
+			new Object[] {
+				Long.valueOf(group.getCompanyId()),
+				Long.valueOf(group.getParentGroupId())
+			});
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_N,
 			new Object[] { Long.valueOf(group.getCompanyId()), group.getName() });
@@ -599,6 +621,12 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_LIVEGROUPID,
 				new Object[] { Long.valueOf(group.getLiveGroupId()) }, group);
 
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_P,
+				new Object[] {
+					Long.valueOf(group.getCompanyId()),
+					Long.valueOf(group.getParentGroupId())
+				}, group);
+
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_N,
 				new Object[] { Long.valueOf(group.getCompanyId()), group.getName() },
 				group);
@@ -648,6 +676,23 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_LIVEGROUPID,
 					new Object[] { Long.valueOf(group.getLiveGroupId()) }, group);
+			}
+
+			if ((groupModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_C_P.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(groupModelImpl.getOriginalCompanyId()),
+						Long.valueOf(groupModelImpl.getOriginalParentGroupId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_P, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_P, args);
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_P,
+					new Object[] {
+						Long.valueOf(group.getCompanyId()),
+						Long.valueOf(group.getParentGroupId())
+					}, group);
 			}
 
 			if ((groupModelImpl.getColumnBitmask() &
@@ -1356,6 +1401,156 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 			finally {
 				if (result == null) {
 					FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_LIVEGROUPID,
+						finderArgs);
+				}
+
+				closeSession(session);
+			}
+		}
+		else {
+			if (result instanceof List<?>) {
+				return null;
+			}
+			else {
+				return (Group)result;
+			}
+		}
+	}
+
+	/**
+	 * Returns the group where companyId = &#63; and parentGroupId = &#63; or throws a {@link com.liferay.portal.NoSuchGroupException} if it could not be found.
+	 *
+	 * @param companyId the company ID
+	 * @param parentGroupId the parent group ID
+	 * @return the matching group
+	 * @throws com.liferay.portal.NoSuchGroupException if a matching group could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Group findByC_P(long companyId, long parentGroupId)
+		throws NoSuchGroupException, SystemException {
+		Group group = fetchByC_P(companyId, parentGroupId);
+
+		if (group == null) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("companyId=");
+			msg.append(companyId);
+
+			msg.append(", parentGroupId=");
+			msg.append(parentGroupId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchGroupException(msg.toString());
+		}
+
+		return group;
+	}
+
+	/**
+	 * Returns the group where companyId = &#63; and parentGroupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param parentGroupId the parent group ID
+	 * @return the matching group, or <code>null</code> if a matching group could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Group fetchByC_P(long companyId, long parentGroupId)
+		throws SystemException {
+		return fetchByC_P(companyId, parentGroupId, true);
+	}
+
+	/**
+	 * Returns the group where companyId = &#63; and parentGroupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param parentGroupId the parent group ID
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching group, or <code>null</code> if a matching group could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Group fetchByC_P(long companyId, long parentGroupId,
+		boolean retrieveFromCache) throws SystemException {
+		Object[] finderArgs = new Object[] { companyId, parentGroupId };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_C_P,
+					finderArgs, this);
+		}
+
+		if (result instanceof Group) {
+			Group group = (Group)result;
+
+			if ((companyId != group.getCompanyId()) ||
+					(parentGroupId != group.getParentGroupId())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_SELECT_GROUP__WHERE);
+
+			query.append(_FINDER_COLUMN_C_P_COMPANYID_2);
+
+			query.append(_FINDER_COLUMN_C_P_PARENTGROUPID_2);
+
+			query.append(GroupModelImpl.ORDER_BY_JPQL);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				qPos.add(parentGroupId);
+
+				List<Group> list = q.list();
+
+				result = list;
+
+				Group group = null;
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_P,
+						finderArgs, list);
+				}
+				else {
+					group = list.get(0);
+
+					cacheResult(group);
+
+					if ((group.getCompanyId() != companyId) ||
+							(group.getParentGroupId() != parentGroupId)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_P,
+							finderArgs, group);
+					}
+				}
+
+				return group;
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (result == null) {
+					FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_P,
 						finderArgs);
 				}
 
@@ -2746,6 +2941,21 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	}
 
 	/**
+	 * Removes the group where companyId = &#63; and parentGroupId = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param parentGroupId the parent group ID
+	 * @return the group that was removed
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Group removeByC_P(long companyId, long parentGroupId)
+		throws NoSuchGroupException, SystemException {
+		Group group = findByC_P(companyId, parentGroupId);
+
+		return remove(group);
+	}
+
+	/**
 	 * Removes the group where companyId = &#63; and name = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -2947,6 +3157,65 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_LIVEGROUPID,
 					finderArgs, count);
+
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of groups where companyId = &#63; and parentGroupId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param parentGroupId the parent group ID
+	 * @return the number of matching groups
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByC_P(long companyId, long parentGroupId)
+		throws SystemException {
+		Object[] finderArgs = new Object[] { companyId, parentGroupId };
+
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_C_P,
+				finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_GROUP__WHERE);
+
+			query.append(_FINDER_COLUMN_C_P_COMPANYID_2);
+
+			query.append(_FINDER_COLUMN_C_P_PARENTGROUPID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				qPos.add(parentGroupId);
+
+				count = (Long)q.uniqueResult();
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (count == null) {
+					count = Long.valueOf(0);
+				}
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_P, finderArgs,
+					count);
 
 				closeSession(session);
 			}
@@ -6217,6 +6486,8 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	private static final String _SQL_CONTAINSUSER = "SELECT COUNT(*) AS COUNT_VALUE FROM Users_Groups WHERE groupId = ? AND userId = ?";
 	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 = "group_.companyId = ?";
 	private static final String _FINDER_COLUMN_LIVEGROUPID_LIVEGROUPID_2 = "group_.liveGroupId = ?";
+	private static final String _FINDER_COLUMN_C_P_COMPANYID_2 = "group_.companyId = ? AND ";
+	private static final String _FINDER_COLUMN_C_P_PARENTGROUPID_2 = "group_.parentGroupId = ?";
 	private static final String _FINDER_COLUMN_C_N_COMPANYID_2 = "group_.companyId = ? AND ";
 	private static final String _FINDER_COLUMN_C_N_NAME_1 = "group_.name IS NULL";
 	private static final String _FINDER_COLUMN_C_N_NAME_2 = "group_.name = ?";

@@ -33,11 +33,13 @@ if (group.isStagingGroup()) {
 	liveGroup = group.getLiveGroup();
 }
 
-long liveGroupId = ParamUtil.getLong(request, "liveGroupId");
+long liveGroupId = ParamUtil.getLong(request, "liveGroupId", liveGroup.getGroupId());
 
 boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 
 String rootNodeName = ParamUtil.getString(request, "rootNodeName");
+
+boolean isLayoutPrototype = group.isLayoutPrototype();
 
 List<Portlet> portletsList = new ArrayList<Portlet>();
 Set<String> portletIdsSet = new HashSet<String>();
@@ -166,39 +168,41 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 
 			<c:choose>
 				<c:when test="<%= cmd.equals(Constants.EXPORT) %>">
-					var layoutsExportTreeOutput = A.one('#<portlet:namespace />layoutsExportTreeOutput');
+					<c:if test="<%= !isLayoutPrototype %>">
+						var layoutsExportTreeOutput = A.one('#<portlet:namespace />layoutsExportTreeOutput');
 
-					if (layoutsExportTreeOutput) {
-						var treeView = layoutsExportTreeOutput.getData('treeInstance');
+						if (layoutsExportTreeOutput) {
+							var treeView = layoutsExportTreeOutput.getData('treeInstance');
 
-						var layoutIds = [];
+							var layoutIds = [];
 
-						var regexLayoutId = /layoutId_(\d+)/;
+							var regexLayoutId = /layoutId_(\d+)/;
 
-						treeView.eachChildren(
-							function(item, index, collection) {
-								if (item.isChecked()) {
-									var match = regexLayoutId.exec(item.get('id'));
+							treeView.eachChildren(
+								function(item, index, collection) {
+									if (item.isChecked()) {
+										var match = regexLayoutId.exec(item.get('id'));
 
-									if (match) {
-										layoutIds.push(
-											{
-												includeChildren: !item.hasChildNodes(),
-												layoutId: match[1]
-											}
-										);
+										if (match) {
+											layoutIds.push(
+												{
+													includeChildren: !item.hasChildNodes(),
+													layoutId: match[1]
+												}
+											);
+										}
 									}
-								}
-							},
-							true
-						);
+								},
+								true
+							);
 
-						var layoutIdsInput = A.one('#<portlet:namespace />layoutIds');
+							var layoutIdsInput = A.one('#<portlet:namespace />layoutIds');
 
-						if (layoutIdsInput) {
-							layoutIdsInput.val(A.JSON.stringify(layoutIds));
+							if (layoutIdsInput) {
+								layoutIdsInput.val(A.JSON.stringify(layoutIds));
+							}
 						}
-					}
+					</c:if>
 
 					<portlet:actionURL var="exportPagesURL">
 						<portlet:param name="struts_action" value="/layouts_admin/export_layouts" />

@@ -87,6 +87,8 @@ public interface HttpHeaders {
 	public static final String CACHE_CONTROL_NO_CACHE_VALUE =
 		"private, no-cache, no-store, must-revalidate";
 
+	public static final String CACHE_CONTROL_PRIVATE_VALUE = "private";
+
 	public static final String CACHE_CONTROL_PUBLIC_VALUE = "public";
 
 	/**

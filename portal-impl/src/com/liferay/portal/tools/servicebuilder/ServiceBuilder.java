@@ -2161,35 +2161,41 @@ public class ServiceBuilder {
 			return;
 		}
 
-		JavaClass implJavaClass = _getJavaClass(
+		JavaClass javaClass = _getJavaClass(
 			_outputPath + "/model/impl/" + entity.getName() + "Impl.java");
 
-		JavaClass modelImplJavaClass = _getJavaClass(
-			_outputPath + "/model/impl/" + entity.getName() + "ModelImpl.java");
+		Map<String, JavaMethod> methods = new HashMap<String, JavaMethod>();
 
-		JavaMethod[] implMethods = _getMethods(implJavaClass);
-		JavaMethod[] implModelMethods = _getMethods(modelImplJavaClass);
-
-		Map<String, JavaMethod> Methods = new HashMap<String, JavaMethod>();
-
-		for (JavaMethod method : implMethods) {
-			Methods.put(method.getDeclarationSignature(false), method);
+		for (JavaMethod method : javaClass.getMethods()) {
+			methods.put(method.getDeclarationSignature(false), method);
 		}
 
-		for (JavaMethod method : implModelMethods) {
-			Methods.remove(method.getDeclarationSignature(false));
-		}
+		Type superClassType = javaClass.getSuperClass();
 
-		List<JavaMethod> contextMethods = new ArrayList<JavaMethod>();
+		String superClassValue = superClassType.getValue();
 
-		for (String DeclarationSignature : Methods.keySet()) {
-			contextMethods.add(Methods.get(DeclarationSignature));
+		while (!superClassValue.endsWith("BaseModelImpl")) {
+			int lastPeriod = superClassValue.lastIndexOf(StringPool.PERIOD);
+
+			if (lastPeriod > 0) {
+				superClassValue = superClassValue.substring(lastPeriod + 1);
+			}
+
+			javaClass = _getJavaClass(
+				_outputPath + "/model/impl/" + superClassValue + ".java");
+
+			for (JavaMethod method : _getMethods(javaClass)) {
+				methods.remove(method.getDeclarationSignature(false));
+			}
+
+			superClassType = javaClass.getSuperClass();
+			superClassValue = superClassType.getValue();
 		}
 
 		Map<String, Object> context = _getContext();
 
 		context.put("entity", entity);
-		context.put("methods", contextMethods);
+		context.put("methods", methods.values());
 
 		// Content
 

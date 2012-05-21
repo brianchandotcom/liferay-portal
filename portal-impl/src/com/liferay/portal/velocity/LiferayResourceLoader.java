@@ -101,14 +101,18 @@ public class LiferayResourceLoader extends ResourceLoader {
 
 	@Override
 	public boolean resourceExists(String resourceName) {
-		InputStream is = doGetResourceStream(resourceName);
+		InputStream is = null;
 
 		try {
+			is = doGetResourceStream(resourceName);
+
 			if (is != null) {
 				is.close();
 			}
 		}
 		catch (IOException ioe) {
+		}
+		catch (ResourceNotFoundException rnfe) {
 		}
 
 		if (is != null) {

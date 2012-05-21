@@ -37,7 +37,7 @@ public class ModelContextTag extends BaseModelContextTag {
 		else {
 			pageContext.removeAttribute("aui:model-context:bean");
 			pageContext.removeAttribute("aui:model-context:defaultLanguageId");
-			pageContext.removeAttribute("aui:model-context::model");
+			pageContext.removeAttribute("aui:model-context:model");
 		}
 	}
 

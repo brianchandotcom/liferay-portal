@@ -21,13 +21,12 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import junit.framework.Assert;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import org.springframework.mock.web.MockHttpServletRequest;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
 
 /**
  * @author Igor Spasic
@@ -62,11 +61,11 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 
 		Object result = jsonWebServiceAction.invoke();
 
-		assertTrue(result instanceof List);
+		Assert.assertTrue(result instanceof List);
 
 		String jsonResult = toJSON(result);
 
-		assertEquals(
+		Assert.assertEquals(
 			"[\"Welcome 173 to Jupiter\",\"Welcome 173 to Jupiter\"]",
 			jsonResult);
 	}
@@ -96,11 +95,11 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 
 		Object result = jsonWebServiceAction.invoke();
 
-		assertTrue(result instanceof Map);
+		Assert.assertTrue(result instanceof Map);
 
 		String jsonResult = toJSON(result);
 
-		assertEquals(
+		Assert.assertEquals(
 			"{\"id\":173,\" world\":null,\"world\":\"Welcome 173 to Jupiter\"}",
 			jsonResult);
 	}
@@ -130,11 +129,11 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 
 		Object result = jsonWebServiceAction.invoke();
 
-		assertTrue(result instanceof Map);
+		Assert.assertTrue(result instanceof Map);
 
 		String jsonResult = toJSON(result);
 
-		assertEquals(
+		Assert.assertEquals(
 			"{\"id\":173,\"height\":177,\"name\":\"John Doe\"," +
 				"\"value\":\"foo!\",\"world\":\"Welcome 173 to Jupiter\"}",
 			jsonResult);
@@ -157,7 +156,8 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 		JSONWebServiceAction jsonWebServiceAction = prepareInvokerAction(
 			command);
 
-		assertEquals("Welcome 173 to Jupiter", jsonWebServiceAction.invoke());
+		Assert.assertEquals(
+			"Welcome 173 to Jupiter", jsonWebServiceAction.invoke());
 	}
 
 	@Test
@@ -177,7 +177,8 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 		JSONWebServiceAction jsonWebServiceAction = prepareInvokerAction(
 			command);
 
-		assertEquals("Welcome 173 to Jupiter", jsonWebServiceAction.invoke());
+		Assert.assertEquals(
+			"Welcome 173 to Jupiter", jsonWebServiceAction.invoke());
 	}
 
 	@Test
@@ -197,7 +198,8 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 		JSONWebServiceAction jsonWebServiceAction = prepareInvokerAction(
 			command);
 
-		assertEquals("Welcome 173 to Jupiter", jsonWebServiceAction.invoke());
+		Assert.assertEquals(
+			"Welcome 173 to Jupiter", jsonWebServiceAction.invoke());
 	}
 
 	protected JSONWebServiceAction prepareInvokerAction(String command)

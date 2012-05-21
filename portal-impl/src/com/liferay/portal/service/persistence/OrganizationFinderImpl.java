@@ -386,7 +386,9 @@ public class OrganizationFinderImpl
 		cities = CustomSQLUtil.keywords(cities);
 		zips = CustomSQLUtil.keywords(zips);
 
-		params = new LinkedHashMap<String, Object>();
+		if (params == null) {
+			params = new LinkedHashMap<String, Object>();
+		}
 
 		StringBundler sb = new StringBundler();
 

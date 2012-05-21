@@ -21,20 +21,22 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class RequiredGroupException extends PortalException {
 
-	public RequiredGroupException() {
-		super();
-	}
+	public static final int CURRENT_GROUP = 3;
 
-	public RequiredGroupException(String msg) {
+	public static final int HAS_SUBGROUPS = 2;
+
+	public static final int SYSTEM_GROUP = 1;
+
+	public RequiredGroupException(int type, String msg) {
 		super(msg);
+
+		_type = type;
 	}
 
-	public RequiredGroupException(String msg, Throwable cause) {
-		super(msg, cause);
+	public int getType() {
+		return _type;
 	}
 
-	public RequiredGroupException(Throwable cause) {
-		super(cause);
-	}
+	private int _type;
 
 }

@@ -636,7 +636,8 @@ public class ServletResponseUtil {
 	private static final String _CLIENT_ABORT_EXCEPTION =
 		"org.apache.catalina.connector.ClientAbortException";
 
-	private static final String _RANGE_REGEX = "^bytes=\\d*-\\d*(,\\d*-\\d*)*$";
+	private static final String _RANGE_REGEX =
+		"^bytes=\\d*-\\d*(,\\s?\\d*-\\d*)*$";
 
 	private static Log _log = LogFactoryUtil.getLog(ServletResponseUtil.class);
 

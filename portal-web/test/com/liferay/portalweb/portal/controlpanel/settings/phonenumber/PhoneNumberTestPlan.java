@@ -16,7 +16,7 @@ package com.liferay.portalweb.portal.controlpanel.settings.phonenumber;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.settings.phonenumber.addsettingsphonenumber.AddSettingsPhoneNumberTests;
-import com.liferay.portalweb.portal.controlpanel.settings.phonenumber.addsettingsphonenumbermultiple.AddSettingsPhoneNumberMultipleTests;
+import com.liferay.portalweb.portal.controlpanel.settings.phonenumber.addsettingsphonenumbers.AddSettingsPhoneNumbersTests;
 import com.liferay.portalweb.portal.controlpanel.settings.phonenumber.deletesettingsphonenumber.DeleteSettingsPhoneNumberTests;
 
 import junit.framework.Test;
@@ -31,7 +31,7 @@ public class PhoneNumberTestPlan extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(AddSettingsPhoneNumberTests.suite());
-		testSuite.addTest(AddSettingsPhoneNumberMultipleTests.suite());
+		testSuite.addTest(AddSettingsPhoneNumbersTests.suite());
 		testSuite.addTest(DeleteSettingsPhoneNumberTests.suite());
 
 		return testSuite;

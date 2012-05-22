@@ -33,7 +33,7 @@ import com.liferay.portalweb.portal.controlpanel.categories.category.deletesubca
 import com.liferay.portalweb.portal.controlpanel.categories.category.editcategory.EditCategoryTests;
 import com.liferay.portalweb.portal.controlpanel.categories.category.editsubcategory.EditSubcategoryTests;
 import com.liferay.portalweb.portal.controlpanel.categories.category.editvocabulary1categorytovocabulary2dad.EditVocabulary1CategoryToVocabulary2DADTests;
-import com.liferay.portalweb.portal.controlpanel.categories.category.editvocabulary1categorytovocabulary2details.EditVocabulary1CategoryToVocabulary2DetailsTests;
+import com.liferay.portalweb.portal.controlpanel.categories.category.editvocabulary1categorytovocabulary2detail.EditVocabulary1CategoryToVocabulary2DetailTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -65,7 +65,7 @@ public class CategoryTestPlan extends BaseTestSuite {
 		testSuite.addTest(EditSubcategoryTests.suite());
 		testSuite.addTest(EditVocabulary1CategoryToVocabulary2DADTests.suite());
 		testSuite.addTest(
-			EditVocabulary1CategoryToVocabulary2DetailsTests.suite());
+			EditVocabulary1CategoryToVocabulary2DetailTests.suite());
 
 		return testSuite;
 	}

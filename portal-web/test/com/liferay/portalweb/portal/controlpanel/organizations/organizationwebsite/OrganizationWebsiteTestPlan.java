@@ -17,7 +17,7 @@ package com.liferay.portalweb.portal.controlpanel.organizations.organizationwebs
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.organizations.organizationwebsite.addorganizationwebsite.AddOrganizationWebsiteTests;
 import com.liferay.portalweb.portal.controlpanel.organizations.organizationwebsite.addorganizationwebsiteinvalid.AddOrganizationWebsiteInvalidTests;
-import com.liferay.portalweb.portal.controlpanel.organizations.organizationwebsite.addorganizationwebsitemultiple.AddOrganizationWebsiteMultipleTests;
+import com.liferay.portalweb.portal.controlpanel.organizations.organizationwebsite.addorganizationwebsites.AddOrganizationWebsitesTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -32,7 +32,7 @@ public class OrganizationWebsiteTestPlan extends BaseTestSuite {
 
 		testSuite.addTest(AddOrganizationWebsiteTests.suite());
 		testSuite.addTest(AddOrganizationWebsiteInvalidTests.suite());
-		testSuite.addTest(AddOrganizationWebsiteMultipleTests.suite());
+		testSuite.addTest(AddOrganizationWebsitesTests.suite());
 
 		return testSuite;
 	}

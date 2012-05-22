@@ -17,7 +17,7 @@ package com.liferay.portalweb.portal.controlpanel.organizations.organizationphon
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.organizations.organizationphonenumber.addorganizationphonenumber.AddOrganizationPhoneNumberTests;
 import com.liferay.portalweb.portal.controlpanel.organizations.organizationphonenumber.addorganizationphonenumberinvalid.AddOrganizationPhoneNumberInvalidTests;
-import com.liferay.portalweb.portal.controlpanel.organizations.organizationphonenumber.addorganizationphonenumbermultiple.AddOrganizationPhoneNumberMultipleTests;
+import com.liferay.portalweb.portal.controlpanel.organizations.organizationphonenumber.addorganizationphonenumbers.AddOrganizationPhoneNumbersTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -32,7 +32,7 @@ public class OrganizationPhoneNumberTestPlan extends BaseTestSuite {
 
 		testSuite.addTest(AddOrganizationPhoneNumberTests.suite());
 		testSuite.addTest(AddOrganizationPhoneNumberInvalidTests.suite());
-		testSuite.addTest(AddOrganizationPhoneNumberMultipleTests.suite());
+		testSuite.addTest(AddOrganizationPhoneNumbersTests.suite());
 
 		return testSuite;
 	}

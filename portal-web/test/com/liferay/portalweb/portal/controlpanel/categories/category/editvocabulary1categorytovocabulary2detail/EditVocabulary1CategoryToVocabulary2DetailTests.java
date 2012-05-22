@@ -12,12 +12,9 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.controlpanel.organizations.organizationemailaddress;
+package com.liferay.portalweb.portal.controlpanel.categories.category.editvocabulary1categorytovocabulary2detail;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portal.controlpanel.organizations.organizationemailaddress.addorganizationemailaddress.AddOrganizationEmailAddressTests;
-import com.liferay.portalweb.portal.controlpanel.organizations.organizationemailaddress.addorganizationemailaddresses.AddOrganizationEmailAddressesTests;
-import com.liferay.portalweb.portal.controlpanel.organizations.organizationemailaddress.addorganizationemailaddressinvalid.AddOrganizationEmailAddressInvalidTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -25,16 +22,17 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class OrganizationEmailAddressTestPlan extends BaseTestSuite {
-
+public class EditVocabulary1CategoryToVocabulary2DetailTests
+	extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-
-		testSuite.addTest(AddOrganizationEmailAddressTests.suite());
-		testSuite.addTest(AddOrganizationEmailAddressesTests.suite());
-		testSuite.addTest(AddOrganizationEmailAddressInvalidTests.suite());
+		testSuite.addTestSuite(AddVocabulary1Test.class);
+		testSuite.addTestSuite(AddVocabulary2Test.class);
+		testSuite.addTestSuite(AddVocabulary1CategoryTest.class);
+		testSuite.addTestSuite(EditVocabulary1CategoryToVocabulary2DetailTest.class);
+		testSuite.addTestSuite(ViewEditVocabulary1CategoryToVocabulary2DetailTest.class);
+		testSuite.addTestSuite(TearDownVocabularyTest.class);
 
 		return testSuite;
 	}
-
 }

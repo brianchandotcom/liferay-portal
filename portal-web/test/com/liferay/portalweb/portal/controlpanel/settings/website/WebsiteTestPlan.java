@@ -16,7 +16,7 @@ package com.liferay.portalweb.portal.controlpanel.settings.website;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.settings.website.addsettingswebsite.AddSettingsWebsiteTests;
-import com.liferay.portalweb.portal.controlpanel.settings.website.addsettingswebsitemultiple.AddSettingsWebsiteMultipleTests;
+import com.liferay.portalweb.portal.controlpanel.settings.website.addsettingswebsites.AddSettingsWebsitesTests;
 import com.liferay.portalweb.portal.controlpanel.settings.website.addsettingswebsiteurlinvalid.AddSettingsWebsiteUrlInvalidTests;
 import com.liferay.portalweb.portal.controlpanel.settings.website.deletesettingswebsite.DeleteSettingsWebsiteTests;
 
@@ -32,7 +32,7 @@ public class WebsiteTestPlan extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(AddSettingsWebsiteTests.suite());
-		testSuite.addTest(AddSettingsWebsiteMultipleTests.suite());
+		testSuite.addTest(AddSettingsWebsitesTests.suite());
 		testSuite.addTest(AddSettingsWebsiteUrlInvalidTests.suite());
 		testSuite.addTest(DeleteSettingsWebsiteTests.suite());
 

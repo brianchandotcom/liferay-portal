@@ -17,7 +17,7 @@ package com.liferay.portalweb.portal.controlpanel.settings.address;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.settings.address.addsettingsaddress.AddSettingsAddressTests;
 import com.liferay.portalweb.portal.controlpanel.settings.address.addsettingsaddresscitynull.AddSettingsAddressCityNullTests;
-import com.liferay.portalweb.portal.controlpanel.settings.address.addsettingsaddressmultiple.AddSettingsAddressMultipleTests;
+import com.liferay.portalweb.portal.controlpanel.settings.address.addsettingsaddresses.AddSettingsAddressesTests;
 import com.liferay.portalweb.portal.controlpanel.settings.address.addsettingsaddressstreetnull.AddSettingsAddressStreetNullTests;
 import com.liferay.portalweb.portal.controlpanel.settings.address.addsettingsaddresszipnull.AddSettingsAddressZipNullTests;
 import com.liferay.portalweb.portal.controlpanel.settings.address.deletesettingsaddress.DeleteSettingsAddressTests;
@@ -35,7 +35,7 @@ public class AddressTestPlan extends BaseTestSuite {
 
 		testSuite.addTest(AddSettingsAddressTests.suite());
 		testSuite.addTest(AddSettingsAddressCityNullTests.suite());
-		testSuite.addTest(AddSettingsAddressMultipleTests.suite());
+		testSuite.addTest(AddSettingsAddressesTests.suite());
 		testSuite.addTest(AddSettingsAddressStreetNullTests.suite());
 		testSuite.addTest(AddSettingsAddressZipNullTests.suite());
 		testSuite.addTest(DeleteSettingsAddressTests.suite());

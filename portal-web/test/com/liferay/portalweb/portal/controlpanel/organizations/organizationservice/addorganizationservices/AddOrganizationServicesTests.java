@@ -12,12 +12,9 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.controlpanel.organizations.organizationemailaddress;
+package com.liferay.portalweb.portal.controlpanel.organizations.organizationservice.addorganizationservices;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portal.controlpanel.organizations.organizationemailaddress.addorganizationemailaddress.AddOrganizationEmailAddressTests;
-import com.liferay.portalweb.portal.controlpanel.organizations.organizationemailaddress.addorganizationemailaddresses.AddOrganizationEmailAddressesTests;
-import com.liferay.portalweb.portal.controlpanel.organizations.organizationemailaddress.addorganizationemailaddressinvalid.AddOrganizationEmailAddressInvalidTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -25,16 +22,15 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class OrganizationEmailAddressTestPlan extends BaseTestSuite {
-
+public class AddOrganizationServicesTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-
-		testSuite.addTest(AddOrganizationEmailAddressTests.suite());
-		testSuite.addTest(AddOrganizationEmailAddressesTests.suite());
-		testSuite.addTest(AddOrganizationEmailAddressInvalidTests.suite());
+		testSuite.addTestSuite(AddOrganizationTest.class);
+		testSuite.addTestSuite(AddOrganizationService1Test.class);
+		testSuite.addTestSuite(AddOrganizationService2Test.class);
+		testSuite.addTestSuite(AddOrganizationService3Test.class);
+		testSuite.addTestSuite(TearDownTest.class);
 
 		return testSuite;
 	}
-
 }

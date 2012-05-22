@@ -28,7 +28,7 @@ userSearch.setRowChecker(new RowChecker(renderResponse));
 	searchContainer="<%= userSearch %>"
 >
 	<aui:input name="deleteUserIds" type="hidden" />
-	<aui:input disabled="<%= true %>" name="usersRedirect" type="hidden" value="<%= portletURL.toString() %>" />
+	<aui:input disabled="<%= true %>" name="usersRedirect" type="hidden" value="<%= currentURLObj.toString() %>" />
 
 	<%
 	UserDisplayTerms displayTerms = (UserDisplayTerms)searchContainer.getDisplayTerms();

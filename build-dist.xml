@@ -923,6 +923,16 @@ release was successful.</echo>
 		</replace>
 
 		<replace file="${app.server.jboss.dir}/standalone/configuration/standalone.xml">
+			<replacetoken><![CDATA[</extensions>]]></replacetoken>
+			<replacevalue><![CDATA[</extensions>
+				<system-properties>
+					<property name="org.apache.catalina.connector.URI_ENCODING" value="UTF-8"/>
+					<property name="org.apache.catalina.connector.USE_BODY_ENCODING_FOR_QUERY_STRING" value="true"/>
+				</system-properties>]]>
+			</replacevalue>
+		</replace>
+
+		<replace file="${app.server.jboss.dir}/standalone/configuration/standalone.xml">
 			<replacetoken><![CDATA[<deployment-scanner ]]></replacetoken>
 			<replacevalue><![CDATA[<deployment-scanner deployment-timeout="120" ]]></replacevalue>
 		</replace>

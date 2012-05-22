@@ -349,49 +349,132 @@ public class GroupUtil {
 	}
 
 	/**
-	* Returns the group where companyId = &#63; and parentGroupId = &#63; or throws a {@link com.liferay.portal.NoSuchGroupException} if it could not be found.
+	* Returns all the groups where companyId = &#63; and parentGroupId = &#63;.
 	*
 	* @param companyId the company ID
 	* @param parentGroupId the parent group ID
-	* @return the matching group
-	* @throws com.liferay.portal.NoSuchGroupException if a matching group could not be found
+	* @return the matching groups
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.Group findByC_P(long companyId,
-		long parentGroupId)
-		throws com.liferay.portal.NoSuchGroupException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static java.util.List<com.liferay.portal.model.Group> findByC_P(
+		long companyId, long parentGroupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().findByC_P(companyId, parentGroupId);
 	}
 
 	/**
-	* Returns the group where companyId = &#63; and parentGroupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns a range of all the groups where companyId = &#63; and parentGroupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
 	*
 	* @param companyId the company ID
 	* @param parentGroupId the parent group ID
-	* @return the matching group, or <code>null</code> if a matching group could not be found
+	* @param start the lower bound of the range of groups
+	* @param end the upper bound of the range of groups (not inclusive)
+	* @return the range of matching groups
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.Group fetchByC_P(long companyId,
-		long parentGroupId)
+	public static java.util.List<com.liferay.portal.model.Group> findByC_P(
+		long companyId, long parentGroupId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByC_P(companyId, parentGroupId);
+		return getPersistence().findByC_P(companyId, parentGroupId, start, end);
 	}
 
 	/**
-	* Returns the group where companyId = &#63; and parentGroupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns an ordered range of all the groups where companyId = &#63; and parentGroupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
 	*
 	* @param companyId the company ID
 	* @param parentGroupId the parent group ID
-	* @param retrieveFromCache whether to use the finder cache
-	* @return the matching group, or <code>null</code> if a matching group could not be found
+	* @param start the lower bound of the range of groups
+	* @param end the upper bound of the range of groups (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching groups
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.Group fetchByC_P(long companyId,
-		long parentGroupId, boolean retrieveFromCache)
+	public static java.util.List<com.liferay.portal.model.Group> findByC_P(
+		long companyId, long parentGroupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .fetchByC_P(companyId, parentGroupId, retrieveFromCache);
+				   .findByC_P(companyId, parentGroupId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first group in the ordered set where companyId = &#63; and parentGroupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param parentGroupId the parent group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching group
+	* @throws com.liferay.portal.NoSuchGroupException if a matching group could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Group findByC_P_First(
+		long companyId, long parentGroupId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchGroupException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByC_P_First(companyId, parentGroupId, orderByComparator);
+	}
+
+	/**
+	* Returns the last group in the ordered set where companyId = &#63; and parentGroupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param parentGroupId the parent group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching group
+	* @throws com.liferay.portal.NoSuchGroupException if a matching group could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Group findByC_P_Last(
+		long companyId, long parentGroupId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchGroupException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByC_P_Last(companyId, parentGroupId, orderByComparator);
+	}
+
+	/**
+	* Returns the groups before and after the current group in the ordered set where companyId = &#63; and parentGroupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param groupId the primary key of the current group
+	* @param companyId the company ID
+	* @param parentGroupId the parent group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next group
+	* @throws com.liferay.portal.NoSuchGroupException if a group with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Group[] findByC_P_PrevAndNext(
+		long groupId, long companyId, long parentGroupId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchGroupException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByC_P_PrevAndNext(groupId, companyId, parentGroupId,
+			orderByComparator);
 	}
 
 	/**
@@ -842,18 +925,15 @@ public class GroupUtil {
 	}
 
 	/**
-	* Removes the group where companyId = &#63; and parentGroupId = &#63; from the database.
+	* Removes all the groups where companyId = &#63; and parentGroupId = &#63; from the database.
 	*
 	* @param companyId the company ID
 	* @param parentGroupId the parent group ID
-	* @return the group that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.Group removeByC_P(long companyId,
-		long parentGroupId)
-		throws com.liferay.portal.NoSuchGroupException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().removeByC_P(companyId, parentGroupId);
+	public static void removeByC_P(long companyId, long parentGroupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByC_P(companyId, parentGroupId);
 	}
 
 	/**

@@ -265,11 +265,6 @@ public class GroupPersistenceTest {
 
 		Assert.assertEquals(existingGroupModelImpl.getCompanyId(),
 			existingGroupModelImpl.getOriginalCompanyId());
-		Assert.assertEquals(existingGroupModelImpl.getParentGroupId(),
-			existingGroupModelImpl.getOriginalParentGroupId());
-
-		Assert.assertEquals(existingGroupModelImpl.getCompanyId(),
-			existingGroupModelImpl.getOriginalCompanyId());
 		Assert.assertTrue(Validator.equals(existingGroupModelImpl.getName(),
 				existingGroupModelImpl.getOriginalName()));
 

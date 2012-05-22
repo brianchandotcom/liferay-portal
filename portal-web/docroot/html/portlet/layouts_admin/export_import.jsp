@@ -23,9 +23,16 @@ String redirectWindowState = ParamUtil.getString(request, "redirectWindowState")
 
 String cmd = ParamUtil.getString(request, Constants.CMD, Constants.EXPORT);
 
-Group group = (Group)request.getAttribute(WebKeys.GROUP);
-
 long groupId = ParamUtil.getLong(request, "groupId");
+
+Group group = null;
+
+if (groupId > 0) {
+	group = GroupLocalServiceUtil.getGroup(groupId);
+}
+else {
+	group = (Group)request.getAttribute(WebKeys.GROUP);
+}
 
 Group liveGroup = group;
 

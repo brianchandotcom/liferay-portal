@@ -127,6 +127,14 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 		return getFileEntriesCount(folderId, mimeTypes);
 	}
 
+	public List<Folder> getFolders(
+			long parentFolderId, int status, boolean includeMountfolders,
+			int start, int end, OrderByComparator obc)
+		throws PortalException, SystemException {
+
+		return getFolders(parentFolderId, includeMountfolders, start, end, obc);
+	}
+
 	public abstract List<Object> getFoldersAndFileEntries(
 			long folderId, int start, int end, OrderByComparator obc)
 		throws SystemException;
@@ -174,6 +182,13 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 	public abstract int getFoldersAndFileEntriesCount(
 			long folderId, String[] mimeTypes)
 		throws PortalException, SystemException;
+
+	public int getFoldersCount(
+			long parentFolderId, int status, boolean includeMountfolders)
+		throws PortalException, SystemException {
+
+		return getFoldersCount(parentFolderId, includeMountfolders);
+	}
 
 	public long getGroupId() {
 		return _groupId;

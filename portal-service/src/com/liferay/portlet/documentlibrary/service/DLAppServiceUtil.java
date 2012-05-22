@@ -1033,6 +1033,45 @@ public class DLAppServiceUtil {
 	}
 
 	/**
+	* Returns an ordered range of all the immediate subfolders of the parent
+	* folder.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to {@link
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
+	* </p>
+	*
+	* @param repositoryId the primary key of the folder's repository
+	* @param parentFolderId the primary key of the folder's parent folder
+	* @param status the workflow status
+	* @param includeMountFolders whether to include mount folders for
+	third-party repositories
+	* @param start the lower bound of the range of results
+	* @param end the upper bound of the range of results (not inclusive)
+	* @param obc the comparator to order the folders (optionally
+	<code>null</code>)
+	* @return the range of immediate subfolders of the parent folder ordered by
+	comparator <code>obc</code>
+	* @throws PortalException if the parent folder could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.kernel.repository.model.Folder> getFolders(
+		long repositoryId, long parentFolderId, int status,
+		boolean includeMountFolders, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getFolders(repositoryId, parentFolderId, status,
+			includeMountFolders, start, end, obc);
+	}
+
+	/**
 	* Returns a range of all the immediate subfolders of the parent folder.
 	*
 	* <p>
@@ -1249,6 +1288,28 @@ public class DLAppServiceUtil {
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .getFoldersCount(repositoryId, parentFolderId,
+			includeMountFolders);
+	}
+
+	/**
+	* Returns the number of immediate subfolders of the parent folder,
+	* optionally including mount folders for third-party repositories.
+	*
+	* @param repositoryId the primary key of the folder's repository
+	* @param parentFolderId the primary key of the folder's parent folder
+	* @param status the workflow status
+	* @param includeMountFolders whether to include mount folders for
+	third-party repositories
+	* @return the number of immediate subfolders of the parent folder
+	* @throws PortalException if the parent folder could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int getFoldersCount(long repositoryId, long parentFolderId,
+		int status, boolean includeMountFolders)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getFoldersCount(repositoryId, parentFolderId, status,
 			includeMountFolders);
 	}
 
@@ -1762,6 +1823,20 @@ public class DLAppServiceUtil {
 	}
 
 	/**
+	* Moves the folder with the primary key to the trash portlet.
+	*
+	* @param folderId the primary key of the folder
+	* @throws PortalException if the folder could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.kernel.repository.model.Folder moveFolderToTrash(
+		long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().moveFolderToTrash(folderId);
+	}
+
+	/**
 	* Refreshes the lock for the file entry. This method is primarily used by
 	* WebDAV.
 	*
@@ -1814,6 +1889,19 @@ public class DLAppServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().restoreFileEntryFromTrash(fileEntryId);
+	}
+
+	/**
+	* Moves the folder with the primary key to the trash portlet.
+	*
+	* @param folderId the primary key of the folder
+	* @throws PortalException if the folder could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void restoreFolderFromTrash(long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().restoreFolderFromTrash(folderId);
 	}
 
 	/**

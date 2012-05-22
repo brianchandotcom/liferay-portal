@@ -114,6 +114,14 @@ public class DLFolderPersistenceTest {
 
 		newDLFolder.setOverrideFileEntryTypes(ServiceTestUtil.randomBoolean());
 
+		newDLFolder.setStatus(ServiceTestUtil.nextInt());
+
+		newDLFolder.setStatusByUserId(ServiceTestUtil.nextLong());
+
+		newDLFolder.setStatusByUserName(ServiceTestUtil.randomString());
+
+		newDLFolder.setStatusDate(ServiceTestUtil.nextDate());
+
 		_persistence.update(newDLFolder, false);
 
 		DLFolder existingDLFolder = _persistence.findByPrimaryKey(newDLFolder.getPrimaryKey());
@@ -151,6 +159,15 @@ public class DLFolderPersistenceTest {
 			newDLFolder.getDefaultFileEntryTypeId());
 		Assert.assertEquals(existingDLFolder.getOverrideFileEntryTypes(),
 			newDLFolder.getOverrideFileEntryTypes());
+		Assert.assertEquals(existingDLFolder.getStatus(),
+			newDLFolder.getStatus());
+		Assert.assertEquals(existingDLFolder.getStatusByUserId(),
+			newDLFolder.getStatusByUserId());
+		Assert.assertEquals(existingDLFolder.getStatusByUserName(),
+			newDLFolder.getStatusByUserName());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingDLFolder.getStatusDate()),
+			Time.getShortTimestamp(newDLFolder.getStatusDate()));
 	}
 
 	@Test
@@ -329,6 +346,14 @@ public class DLFolderPersistenceTest {
 		dlFolder.setDefaultFileEntryTypeId(ServiceTestUtil.nextLong());
 
 		dlFolder.setOverrideFileEntryTypes(ServiceTestUtil.randomBoolean());
+
+		dlFolder.setStatus(ServiceTestUtil.nextInt());
+
+		dlFolder.setStatusByUserId(ServiceTestUtil.nextLong());
+
+		dlFolder.setStatusByUserName(ServiceTestUtil.randomString());
+
+		dlFolder.setStatusDate(ServiceTestUtil.nextDate());
 
 		_persistence.update(dlFolder, false);
 

@@ -36,7 +36,7 @@
 		<reference package-path="com.liferay.portlet.ratings" entity="RatingsEntry" />
 		<reference package-path="com.liferay.portlet.ratings" entity="RatingsStats" />
 		<reference package-path="com.liferay.portlet.social" entity="SocialActivity" />
-        <reference package-path="com.liferay.portlet.social" entity="SocialActivityCounter" />
+		<reference package-path="com.liferay.portlet.social" entity="SocialActivityCounter" />
 		<reference package-path="com.liferay.portlet.trash" entity="TrashEntry" />
 	</entity>
 	<entity name="DLContent" human-name="document library content" local-service="true" remote-service="false">
@@ -462,6 +462,10 @@
 		<column name="lastPostDate" type="Date" />
 		<column name="defaultFileEntryTypeId" type="long" />
 		<column name="overrideFileEntryTypes" type="boolean" />
+		<column name="status" type="int" />
+		<column name="statusByUserId" type="long" />
+		<column name="statusByUserName" type="String" />
+		<column name="statusDate" type="Date" />
 
 		<!-- Relationships -->
 
@@ -489,6 +493,11 @@
 			<finder-column name="groupId" />
 			<finder-column name="parentFolderId" />
 		</finder>
+		<finder name="G_P_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="parentFolderId" />
+			<finder-column name="status" />
+		</finder>
 		<finder name="P_N" return-type="Collection">
 			<finder-column name="parentFolderId" />
 			<finder-column name="name" />
@@ -496,6 +505,12 @@
 		<finder name="G_P_M" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="parentFolderId" />
+			<finder-column name="mountPoint" />
+		</finder>
+		<finder name="G_P_S_M" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="parentFolderId" />
+			<finder-column name="status" />
 			<finder-column name="mountPoint" />
 		</finder>
 		<finder name="G_P_N" return-type="DLFolder" unique="true">

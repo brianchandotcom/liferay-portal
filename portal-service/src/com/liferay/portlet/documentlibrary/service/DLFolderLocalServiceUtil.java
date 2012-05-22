@@ -575,6 +575,17 @@ public class DLFolderLocalServiceUtil {
 		getService().updateLastPostDate(folderId, lastPostDate);
 	}
 
+	public static com.liferay.portlet.documentlibrary.model.DLFolder updateStatus(
+		long userId, long folderId, int status,
+		java.util.Map<java.lang.String, java.io.Serializable> workflowContext,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateStatus(userId, folderId, status, workflowContext,
+			serviceContext);
+	}
+
 	public static DLFolderLocalService getService() {
 		if (_service == null) {
 			_service = (DLFolderLocalService)PortalBeanLocatorUtil.locate(DLFolderLocalService.class.getName());

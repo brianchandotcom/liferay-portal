@@ -1444,6 +1444,10 @@
 		<field name="lastPostDate" type="Date" />
 		<field name="defaultFileEntryTypeId" type="long" />
 		<field name="overrideFileEntryTypes" type="boolean" />
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
 	</model>
 	<model name="com.liferay.portlet.documentlibrary.model.DLSync">
 		<field name="syncId" type="long" />

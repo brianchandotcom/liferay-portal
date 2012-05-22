@@ -1233,6 +1233,46 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	}
 
 	/**
+	 * Returns an ordered range of all the immediate subfolders of the parent
+	 * folder.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link
+	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * result set.
+	 * </p>
+	 *
+	 * @param  repositoryId the primary key of the folder's repository
+	 * @param  parentFolderId the primary key of the folder's parent folder
+	 * @param  status the workflow status
+	 * @param  includeMountFolders whether to include mount folders for
+	 *         third-party repositories
+	 * @param  start the lower bound of the range of results
+	 * @param  end the upper bound of the range of results (not inclusive)
+	 * @param  obc the comparator to order the folders (optionally
+	 *         <code>null</code>)
+	 * @return the range of immediate subfolders of the parent folder ordered by
+	 *         comparator <code>obc</code>
+	 * @throws PortalException if the parent folder could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Folder> getFolders(
+			long repositoryId, long parentFolderId, int status,
+			boolean includeMountFolders, int start, int end,
+			OrderByComparator obc)
+		throws PortalException, SystemException {
+
+		Repository repository = getRepository(repositoryId);
+
+		return repository.getFolders(
+			parentFolderId, status, includeMountFolders, start, end, obc);
+	}
+
+	/**
 	 * Returns a range of all the immediate subfolders of the parent folder.
 	 *
 	 * <p>
@@ -1452,6 +1492,30 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		Repository repository = getRepository(repositoryId);
 
 		return repository.getFoldersCount(parentFolderId, includeMountFolders);
+	}
+
+	/**
+	 * Returns the number of immediate subfolders of the parent folder,
+	 * optionally including mount folders for third-party repositories.
+	 *
+	 * @param  repositoryId the primary key of the folder's repository
+	 * @param  parentFolderId the primary key of the folder's parent folder
+	 * @param  status the workflow status
+	 * @param  includeMountFolders whether to include mount folders for
+	 *         third-party repositories
+	 * @return the number of immediate subfolders of the parent folder
+	 * @throws PortalException if the parent folder could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int getFoldersCount(
+			long repositoryId, long parentFolderId, int status,
+			boolean includeMountFolders)
+		throws PortalException, SystemException {
+
+		Repository repository = getRepository(repositoryId);
+
+		return repository.getFoldersCount(
+			parentFolderId, status, includeMountFolders);
 	}
 
 	/**
@@ -2031,6 +2095,32 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	}
 
 	/**
+	 * Moves the folder with the primary key to the trash portlet.
+	 *
+	 * @param  folderId the primary key of the folder
+	 * @throws PortalException if the folder could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Folder moveFolderToTrash(long folderId)
+		throws PortalException, SystemException {
+
+		Repository repository = getRepository(folderId, 0, 0);
+
+		if (!(repository instanceof LiferayRepository)) {
+			throw new InvalidRepositoryException(
+				"Repository " + repository.getRepositoryId() +
+					" does not support trash operations");
+		}
+
+		Folder folder = repository.getFolder(folderId);
+
+		DLFolderPermission.check(
+			getPermissionChecker(), folder, ActionKeys.DELETE);
+
+		return dlAppHelperLocalService.moveFolderToTrash(getUserId(), folder);
+	}
+
+	/**
 	 * Refreshes the lock for the file entry. This method is primarily used by
 	 * WebDAV.
 	 *
@@ -2111,6 +2201,32 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		dlAppHelperLocalService.restoreFileEntryFromTrash(
 			getUserId(), fileEntry);
+	}
+
+	/**
+	 * Moves the folder with the primary key to the trash portlet.
+	 *
+	 * @param  folderId the primary key of the folder
+	 * @throws PortalException if the folder could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void restoreFolderFromTrash(long folderId)
+		throws PortalException, SystemException {
+
+		Repository repository = getRepository(folderId, 0, 0);
+
+		if (!(repository instanceof LiferayRepository)) {
+			throw new InvalidRepositoryException(
+				"Repository " + repository.getRepositoryId() +
+					" does not support trash operations");
+		}
+
+		Folder folder = repository.getFolder(folderId);
+
+		DLFolderPermission.check(
+			getPermissionChecker(), folder, ActionKeys.UPDATE);
+
+		dlAppHelperLocalService.restoreFolderFromTrash(getUserId(), folder);
 	}
 
 	/**

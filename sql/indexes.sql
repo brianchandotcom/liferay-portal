@@ -255,6 +255,8 @@ create index IX_F2EA1ACE on DLFolder (groupId);
 create index IX_49C37475 on DLFolder (groupId, parentFolderId);
 create index IX_2A048EA0 on DLFolder (groupId, parentFolderId, mountPoint);
 create unique index IX_902FD874 on DLFolder (groupId, parentFolderId, name);
+create index IX_24946E5B on DLFolder (groupId, parentFolderId, status);
+create index IX_7DFDF86 on DLFolder (groupId, parentFolderId, status, mountPoint);
 create index IX_51556082 on DLFolder (parentFolderId, name);
 create index IX_EE29C715 on DLFolder (repositoryId);
 create index IX_CBC408D8 on DLFolder (uuid_);

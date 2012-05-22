@@ -30,36 +30,18 @@ import org.junit.Before;
 /**
  * @author Alexander Chow
  */
-public class BaseDLAppTestCase {
+public class BaseDLAppTest {
 
 	@Before
 	public void setUp() throws Exception {
-		String name = "Test Folder";
-		String description = "This is a test folder.";
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-
-		try {
-			DLAppServiceUtil.deleteFolder(
-				TestPropsValues.getGroupId(),
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, name);
-		}
-		catch (NoSuchFolderException nsfe) {
-		}
-
-		folder = DLAppServiceUtil.addFolder(
-			TestPropsValues.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, name, description,
-			serviceContext);
+		parentFolder = addFolder(
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test Folder", true);
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		if (folder != null) {
-			DLAppServiceUtil.deleteFolder(folder.getFolderId());
+		if (parentFolder != null) {
+			DLAppServiceUtil.deleteFolder(parentFolder.getFolderId());
 		}
 	}
 
@@ -76,8 +58,21 @@ public class BaseDLAppTestCase {
 		long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 
 		if (!rootFolder) {
-			folderId = folder.getFolderId();
+			folderId = parentFolder.getFolderId();
 		}
+
+		return addFileEntry(folderId, sourceFileName, title);
+	}
+
+	protected FileEntry addFileEntry(long folderId, String fileName)
+		throws Exception {
+
+		return addFileEntry(folderId, fileName, fileName);
+	}
+
+	protected FileEntry addFileEntry(
+			long folderId, String sourceFileName, String title)
+		throws Exception {
 
 		String description = StringPool.BLANK;
 		String changeLog = StringPool.BLANK;
@@ -96,6 +91,37 @@ public class BaseDLAppTestCase {
 		return DLAppServiceUtil.addFileEntry(
 			TestPropsValues.getGroupId(), folderId, sourceFileName,
 			ContentTypes.TEXT_PLAIN, title, description, changeLog, bytes,
+			serviceContext);
+	}
+
+	protected Folder addFolder(long parentFolderId, String name)
+		throws Exception {
+
+		return addFolder(parentFolderId, name, false);
+	}
+
+	protected Folder addFolder(
+			long parentFolderId, String name, boolean deleteExisting)
+		throws Exception {
+
+		String description = StringPool.BLANK;
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
+		if (deleteExisting) {
+			try {
+				DLAppServiceUtil.deleteFolder(
+					TestPropsValues.getGroupId(), parentFolderId, name);
+			}
+			catch (NoSuchFolderException nsfe) {
+			}
+		}
+
+		return DLAppServiceUtil.addFolder(
+			TestPropsValues.getGroupId(), parentFolderId, name, description,
 			serviceContext);
 	}
 
@@ -133,6 +159,6 @@ public class BaseDLAppTestCase {
 	protected static final String CONTENT =
 		"Content: Enterprise. Open Source. For Life.";
 
-	protected Folder folder;
+	protected Folder parentFolder;
 
 }

@@ -34,7 +34,7 @@ import java.util.Date;
 public class DLFolderCacheModel implements CacheModel<DLFolder>, Serializable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -68,6 +68,14 @@ public class DLFolderCacheModel implements CacheModel<DLFolder>, Serializable {
 		sb.append(defaultFileEntryTypeId);
 		sb.append(", overrideFileEntryTypes=");
 		sb.append(overrideFileEntryTypes);
+		sb.append(", status=");
+		sb.append(status);
+		sb.append(", statusByUserId=");
+		sb.append(statusByUserId);
+		sb.append(", statusByUserName=");
+		sb.append(statusByUserName);
+		sb.append(", statusDate=");
+		sb.append(statusDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -136,6 +144,22 @@ public class DLFolderCacheModel implements CacheModel<DLFolder>, Serializable {
 
 		dlFolderImpl.setDefaultFileEntryTypeId(defaultFileEntryTypeId);
 		dlFolderImpl.setOverrideFileEntryTypes(overrideFileEntryTypes);
+		dlFolderImpl.setStatus(status);
+		dlFolderImpl.setStatusByUserId(statusByUserId);
+
+		if (statusByUserName == null) {
+			dlFolderImpl.setStatusByUserName(StringPool.BLANK);
+		}
+		else {
+			dlFolderImpl.setStatusByUserName(statusByUserName);
+		}
+
+		if (statusDate == Long.MIN_VALUE) {
+			dlFolderImpl.setStatusDate(null);
+		}
+		else {
+			dlFolderImpl.setStatusDate(new Date(statusDate));
+		}
 
 		dlFolderImpl.resetOriginalValues();
 
@@ -158,4 +182,8 @@ public class DLFolderCacheModel implements CacheModel<DLFolder>, Serializable {
 	public long lastPostDate;
 	public long defaultFileEntryTypeId;
 	public boolean overrideFileEntryTypes;
+	public int status;
+	public long statusByUserId;
+	public String statusByUserName;
+	public long statusDate;
 }

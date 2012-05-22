@@ -151,6 +151,11 @@ public interface Repository {
 			int end, OrderByComparator obc)
 		throws PortalException, SystemException;
 
+	public List<Folder> getFolders(
+			long parentFolderId, int status, boolean includeMountFolders,
+			int start, int end, OrderByComparator obc)
+		throws PortalException, SystemException;
+
 	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
 			long folderId, int status, boolean includeMountFolders, int start,
 			int end, OrderByComparator obc)
@@ -172,6 +177,10 @@ public interface Repository {
 		throws PortalException, SystemException;
 
 	public int getFoldersCount(long parentFolderId, boolean includeMountfolders)
+		throws PortalException, SystemException;
+
+	public int getFoldersCount(
+			long parentFolderId, int status, boolean includeMountfolders)
 		throws PortalException, SystemException;
 
 	public int getFoldersFileEntriesCount(List<Long> folderIds, int status)

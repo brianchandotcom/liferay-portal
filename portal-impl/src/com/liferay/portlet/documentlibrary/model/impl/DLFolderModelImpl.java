@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
@@ -80,9 +81,13 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 			{ "description", Types.VARCHAR },
 			{ "lastPostDate", Types.TIMESTAMP },
 			{ "defaultFileEntryTypeId", Types.BIGINT },
-			{ "overrideFileEntryTypes", Types.BOOLEAN }
+			{ "overrideFileEntryTypes", Types.BOOLEAN },
+			{ "status", Types.INTEGER },
+			{ "statusByUserId", Types.BIGINT },
+			{ "statusByUserName", Types.VARCHAR },
+			{ "statusDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table DLFolder (uuid_ VARCHAR(75) null,folderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,mountPoint BOOLEAN,parentFolderId LONG,name VARCHAR(100) null,description STRING null,lastPostDate DATE null,defaultFileEntryTypeId LONG,overrideFileEntryTypes BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table DLFolder (uuid_ VARCHAR(75) null,folderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,mountPoint BOOLEAN,parentFolderId LONG,name VARCHAR(100) null,description STRING null,lastPostDate DATE null,defaultFileEntryTypeId LONG,overrideFileEntryTypes BOOLEAN,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table DLFolder";
 	public static final String ORDER_BY_JPQL = " ORDER BY dlFolder.parentFolderId ASC, dlFolder.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY DLFolder.parentFolderId ASC, DLFolder.name ASC";
@@ -104,7 +109,8 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 	public static long NAME_COLUMN_BITMASK = 8L;
 	public static long PARENTFOLDERID_COLUMN_BITMASK = 16L;
 	public static long REPOSITORYID_COLUMN_BITMASK = 32L;
-	public static long UUID_COLUMN_BITMASK = 64L;
+	public static long STATUS_COLUMN_BITMASK = 64L;
+	public static long UUID_COLUMN_BITMASK = 128L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -131,6 +137,10 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		model.setLastPostDate(soapModel.getLastPostDate());
 		model.setDefaultFileEntryTypeId(soapModel.getDefaultFileEntryTypeId());
 		model.setOverrideFileEntryTypes(soapModel.getOverrideFileEntryTypes());
+		model.setStatus(soapModel.getStatus());
+		model.setStatusByUserId(soapModel.getStatusByUserId());
+		model.setStatusByUserName(soapModel.getStatusByUserName());
+		model.setStatusDate(soapModel.getStatusDate());
 
 		return model;
 	}
@@ -212,6 +222,10 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		attributes.put("lastPostDate", getLastPostDate());
 		attributes.put("defaultFileEntryTypeId", getDefaultFileEntryTypeId());
 		attributes.put("overrideFileEntryTypes", getOverrideFileEntryTypes());
+		attributes.put("status", getStatus());
+		attributes.put("statusByUserId", getStatusByUserId());
+		attributes.put("statusByUserName", getStatusByUserName());
+		attributes.put("statusDate", getStatusDate());
 
 		return attributes;
 	}
@@ -314,6 +328,30 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 
 		if (overrideFileEntryTypes != null) {
 			setOverrideFileEntryTypes(overrideFileEntryTypes);
+		}
+
+		Integer status = (Integer)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
+		}
+
+		Long statusByUserId = (Long)attributes.get("statusByUserId");
+
+		if (statusByUserId != null) {
+			setStatusByUserId(statusByUserId);
+		}
+
+		String statusByUserName = (String)attributes.get("statusByUserName");
+
+		if (statusByUserName != null) {
+			setStatusByUserName(statusByUserName);
+		}
+
+		Date statusDate = (Date)attributes.get("statusDate");
+
+		if (statusDate != null) {
+			setStatusDate(statusDate);
 		}
 	}
 
@@ -575,6 +613,112 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		_overrideFileEntryTypes = overrideFileEntryTypes;
 	}
 
+	@JSON
+	public int getStatus() {
+		return _status;
+	}
+
+	public void setStatus(int status) {
+		_columnBitmask |= STATUS_COLUMN_BITMASK;
+
+		if (!_setOriginalStatus) {
+			_setOriginalStatus = true;
+
+			_originalStatus = _status;
+		}
+
+		_status = status;
+	}
+
+	public int getOriginalStatus() {
+		return _originalStatus;
+	}
+
+	@JSON
+	public long getStatusByUserId() {
+		return _statusByUserId;
+	}
+
+	public void setStatusByUserId(long statusByUserId) {
+		_statusByUserId = statusByUserId;
+	}
+
+	public String getStatusByUserUuid() throws SystemException {
+		return PortalUtil.getUserValue(getStatusByUserId(), "uuid",
+			_statusByUserUuid);
+	}
+
+	public void setStatusByUserUuid(String statusByUserUuid) {
+		_statusByUserUuid = statusByUserUuid;
+	}
+
+	@JSON
+	public String getStatusByUserName() {
+		if (_statusByUserName == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _statusByUserName;
+		}
+	}
+
+	public void setStatusByUserName(String statusByUserName) {
+		_statusByUserName = statusByUserName;
+	}
+
+	@JSON
+	public Date getStatusDate() {
+		return _statusDate;
+	}
+
+	public void setStatusDate(Date statusDate) {
+		_statusDate = statusDate;
+	}
+
+	/**
+	 * @deprecated {@link #isApproved}
+	 */
+	public boolean getApproved() {
+		return isApproved();
+	}
+
+	public boolean isApproved() {
+		if (getStatus() == WorkflowConstants.STATUS_APPROVED) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	public boolean isDraft() {
+		if ((getStatus() == WorkflowConstants.STATUS_DRAFT) ||
+				(getStatus() == WorkflowConstants.STATUS_DRAFT_FROM_APPROVED)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	public boolean isExpired() {
+		if (getStatus() == WorkflowConstants.STATUS_EXPIRED) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	public boolean isPending() {
+		if (getStatus() == WorkflowConstants.STATUS_PENDING) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -623,6 +767,10 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		dlFolderImpl.setLastPostDate(getLastPostDate());
 		dlFolderImpl.setDefaultFileEntryTypeId(getDefaultFileEntryTypeId());
 		dlFolderImpl.setOverrideFileEntryTypes(getOverrideFileEntryTypes());
+		dlFolderImpl.setStatus(getStatus());
+		dlFolderImpl.setStatusByUserId(getStatusByUserId());
+		dlFolderImpl.setStatusByUserName(getStatusByUserName());
+		dlFolderImpl.setStatusDate(getStatusDate());
 
 		dlFolderImpl.resetOriginalValues();
 
@@ -714,6 +862,10 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 
 		dlFolderModelImpl._originalName = dlFolderModelImpl._name;
 
+		dlFolderModelImpl._originalStatus = dlFolderModelImpl._status;
+
+		dlFolderModelImpl._setOriginalStatus = false;
+
 		dlFolderModelImpl._columnBitmask = 0;
 	}
 
@@ -798,12 +950,33 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 
 		dlFolderCacheModel.overrideFileEntryTypes = getOverrideFileEntryTypes();
 
+		dlFolderCacheModel.status = getStatus();
+
+		dlFolderCacheModel.statusByUserId = getStatusByUserId();
+
+		dlFolderCacheModel.statusByUserName = getStatusByUserName();
+
+		String statusByUserName = dlFolderCacheModel.statusByUserName;
+
+		if ((statusByUserName != null) && (statusByUserName.length() == 0)) {
+			dlFolderCacheModel.statusByUserName = null;
+		}
+
+		Date statusDate = getStatusDate();
+
+		if (statusDate != null) {
+			dlFolderCacheModel.statusDate = statusDate.getTime();
+		}
+		else {
+			dlFolderCacheModel.statusDate = Long.MIN_VALUE;
+		}
+
 		return dlFolderCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -837,13 +1010,21 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		sb.append(getDefaultFileEntryTypeId());
 		sb.append(", overrideFileEntryTypes=");
 		sb.append(getOverrideFileEntryTypes());
+		sb.append(", status=");
+		sb.append(getStatus());
+		sb.append(", statusByUserId=");
+		sb.append(getStatusByUserId());
+		sb.append(", statusByUserName=");
+		sb.append(getStatusByUserName());
+		sb.append(", statusDate=");
+		sb.append(getStatusDate());
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(52);
+		StringBundler sb = new StringBundler(64);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.documentlibrary.model.DLFolder");
@@ -913,6 +1094,22 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 			"<column><column-name>overrideFileEntryTypes</column-name><column-value><![CDATA[");
 		sb.append(getOverrideFileEntryTypes());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>status</column-name><column-value><![CDATA[");
+		sb.append(getStatus());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>statusByUserId</column-name><column-value><![CDATA[");
+		sb.append(getStatusByUserId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
+		sb.append(getStatusByUserName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>statusDate</column-name><column-value><![CDATA[");
+		sb.append(getStatusDate());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -952,6 +1149,13 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 	private Date _lastPostDate;
 	private long _defaultFileEntryTypeId;
 	private boolean _overrideFileEntryTypes;
+	private int _status;
+	private int _originalStatus;
+	private boolean _setOriginalStatus;
+	private long _statusByUserId;
+	private String _statusByUserUuid;
+	private String _statusByUserName;
+	private Date _statusDate;
 	private long _columnBitmask;
 	private DLFolder _escapedModelProxy;
 }

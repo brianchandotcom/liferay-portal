@@ -85,9 +85,9 @@ public class SeleneseToJavaBuilder {
 		Set<String> fileNames = getFileNames();
 
 		for (String fileName : fileNames) {
-			if (fileName.length() > 169) {
+			if (fileName.length() > 161) {
 				System.out.println(
-					"Exceeds 185 characters: portal-web/test/" + fileName);
+					"Exceeds 177 characters: portal-web/test/" + fileName);
 			}
 
 			if (fileName.endsWith("Test.html")) {

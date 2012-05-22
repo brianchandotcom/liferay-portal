@@ -19,6 +19,7 @@ import com.liferay.portal.LayoutFriendlyURLException;
 import com.liferay.portal.LayoutHiddenException;
 import com.liferay.portal.LayoutNameException;
 import com.liferay.portal.LayoutParentLayoutIdException;
+import com.liferay.portal.LayoutPrototypeException;
 import com.liferay.portal.LayoutSetVirtualHostException;
 import com.liferay.portal.LayoutTypeException;
 import com.liferay.portal.NoSuchGroupException;
@@ -273,7 +274,8 @@ public class EditLayoutsAction extends PortletAction {
 					SessionErrors.add(actionRequest, e.getClass().getName(), e);
 				}
 			}
-			else if (e instanceof RemoteExportException ||
+			else if (e instanceof LayoutPrototypeException ||
+					 e instanceof RemoteExportException ||
 					 e instanceof RemoteOptionsException ||
 					 e instanceof SystemException) {
 

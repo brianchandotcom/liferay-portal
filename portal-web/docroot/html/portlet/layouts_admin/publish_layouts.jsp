@@ -266,6 +266,36 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 	<aui:input name="lastImportUserName" type="hidden" value="<%= user.getFullName() %>" />
 	<aui:input name="lastImportUserUuid" type="hidden" value="<%= String.valueOf(user.getUserUuid()) %>" />
 
+	<liferay-ui:error exception="<%= LayoutPrototypeException.class %>">
+
+		<%
+			LayoutPrototypeException lpe = (LayoutPrototypeException)errorException;
+		%>
+
+		<liferay-ui:message key="the-pages-could-not-be-published-because-one-of-them-require-a-page-template-could-not-be-found-on-the-remote-system.-please-import-the-following-templates-manually" />
+
+		<ul>
+
+			<%
+				List<Tuple> missingLayoutPrototypes = lpe.getMissingLayoutPrototypes();
+
+				for (Tuple missingLayoutPrototype : missingLayoutPrototypes) {
+					String layoutPrototypeClassName = (String)missingLayoutPrototype.getObject(0);
+					String layoutPrototypeUuid = (String)missingLayoutPrototype.getObject(1);
+					String layoutPrototypeName = (String)missingLayoutPrototype.getObject(2);
+			%>
+
+			<li>
+				<%= ResourceActionsUtil.getModelResource(locale, layoutPrototypeClassName) %>: <strong><%= layoutPrototypeName %></strong> (<%= layoutPrototypeUuid %>)
+			</li>
+
+			<%
+				}
+			%>
+
+		</ul>
+	</liferay-ui:error>
+
 	<liferay-ui:error exception="<%= RemoteExportException.class %>">
 
 		<%

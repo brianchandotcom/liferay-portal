@@ -295,7 +295,7 @@ create unique index IX_5DE0BE11 on Group_ (companyId, classNameId, liveGroupId, 
 create unique index IX_5BDDB872 on Group_ (companyId, friendlyURL);
 create unique index IX_BBCA55B on Group_ (companyId, liveGroupId, name);
 create unique index IX_5AA68501 on Group_ (companyId, name);
-create unique index IX_5D75499E on Group_ (companyId, parentGroupId);
+create index IX_5D75499E on Group_ (companyId, parentGroupId);
 create index IX_16218A38 on Group_ (liveGroupId);
 create index IX_7B590A7A on Group_ (type_, active_);
 

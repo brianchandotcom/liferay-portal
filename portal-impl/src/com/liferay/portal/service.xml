@@ -369,7 +369,7 @@
 		<finder name="LiveGroupId" return-type="Group">
 			<finder-column name="liveGroupId" />
 		</finder>
-		<finder name="C_P" return-type="Group" unique="true">
+		<finder name="C_P" return-type="Group">
 			<finder-column name="companyId" />
 			<finder-column name="parentGroupId" />
 		</finder>

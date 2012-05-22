@@ -80,7 +80,36 @@ public class SecurityChecker extends BaseChecker {
 			return true;
 		}
 
+		Class<?> callerClass7 = Reflection.getCallerClass(7);
+
+		if (isGeronimoDispatchListener(callerClass7)) {
+			logSetPolicy(callerClass7, 7);
+
+			return true;
+		}
+
 		return false;
+	}
+
+	protected boolean isGeronimoDispatchListener(Class<?> clazz) {
+		if (!ServerDetector.isGeronimo()) {
+			return false;
+		}
+
+		if (clazz == null) {
+			return false;
+		}
+
+		String className = clazz.getName();
+
+		if (!className.equals(_CLASS_NAME_DISPATCH_LISTENER)) {
+			return false;
+		}
+
+		String classLocation = PACLClassUtil.getClassLocation(clazz);
+
+		return classLocation.contains(
+			"/repository/org/apache/geronimo/modules/geronimo-tomcat6/");
 	}
 
 	protected boolean isGlassfishJ2EEInstanceListener(Class<?> clazz) {
@@ -138,6 +167,9 @@ public class SecurityChecker extends BaseChecker {
 					" to set the policy");
 		}
 	}
+
+	private static final String _CLASS_NAME_DISPATCH_LISTENER =
+		"org.apache.geronimo.tomcat.listener.DispatchListener";
 
 	private static final String _CLASS_NAME_J2EE_INSTANCE_LISTENER =
 		"com.sun.web.server.J2EEInstanceListener";

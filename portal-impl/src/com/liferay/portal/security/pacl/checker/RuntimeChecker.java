@@ -81,6 +81,7 @@ public class RuntimeChecker extends BaseReflectChecker {
 		}
 		else if (name.startsWith(RUNTIME_PERMISSION_GET_CLASSLOADER)) {
 			if (PortalSecurityManagerThreadLocal.isCheckGetClassLoader() &&
+				!isJSPCompiler(permission.getName(), permission.getActions()) &&
 				!hasGetClassLoader(name)) {
 
 				throwSecurityException(_log, "Attempted to get class loader");

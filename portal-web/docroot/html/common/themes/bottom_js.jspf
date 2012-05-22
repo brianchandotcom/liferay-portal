@@ -124,7 +124,7 @@ if (layout != null) {
 						layoutIds: [
 
 							<%
-							for (int i = 0; i < layouts.size(); i++) {
+							for (int i = 0; (layouts != null) && (i < layouts.size()); i++) {
 								Layout curLayout = (Layout)layouts.get(i);
 
 								boolean updateable = SitesUtil.isLayoutUpdateable(curLayout);

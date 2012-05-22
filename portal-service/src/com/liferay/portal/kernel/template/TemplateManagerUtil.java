@@ -47,13 +47,13 @@ public class TemplateManagerUtil {
 	}
 
 	public static void destroy() {
-		for (TemplateManager templateManager :
-				_getTemplateManagers().values()) {
+		Map<String, TemplateManager> templateManagers = _getTemplateManagers();
 
+		for (TemplateManager templateManager : templateManagers.values()) {
 			templateManager.destroy();
 		}
 
-		_getTemplateManagers().clear();
+		templateManagers.clear();
 	}
 
 	public static Template getTemplate(
@@ -110,13 +110,17 @@ public class TemplateManagerUtil {
 	public static TemplateManager getTemplateManager(
 		String templateManagerName) {
 
-		return _getTemplateManagers().get(templateManagerName);
+		Map<String, TemplateManager> templateManagers = _getTemplateManagers();
+
+		return templateManagers.get(templateManagerName);
 	}
 
 	public static Set<String> getTemplateManagerNames(
 		String templateManagerName) {
 
-		return _getTemplateManagers().keySet();
+		Map<String, TemplateManager> templateManagers = _getTemplateManagers();
+
+		return templateManagers.keySet();
 	}
 
 	public static Map<String, TemplateManager> getTemplateManagers() {
@@ -134,13 +138,15 @@ public class TemplateManagerUtil {
 	}
 
 	public static boolean hasTemplateManager(String templateManagerName) {
-		return _getTemplateManagers().containsKey(templateManagerName);
+		Map<String, TemplateManager> templateManagers = _getTemplateManagers();
+
+		return templateManagers.containsKey(templateManagerName);
 	}
 
 	public static void init() throws TemplateException {
-		for (TemplateManager templateManager :
-				_getTemplateManagers().values()) {
+		Map<String, TemplateManager> templateManagers = _getTemplateManagers();
 
+		for (TemplateManager templateManager : templateManagers.values()) {
 			templateManager.init();
 		}
 	}
@@ -150,12 +156,16 @@ public class TemplateManagerUtil {
 
 		templateManager.init();
 
-		_getTemplateManagers().put(
+		Map<String, TemplateManager> templateManagers = _getTemplateManagers();
+
+		templateManagers.put(
 			templateManager.getTemplateManagerName(), templateManager);
 	}
 
 	public static void unregisterTemplateManager(String templateManagerName) {
-		TemplateManager templateManager = _getTemplateManagers().remove(
+		Map<String, TemplateManager> templateManagers = _getTemplateManagers();
+
+		TemplateManager templateManager = templateManagers.remove(
 			templateManagerName);
 
 		if (templateManager != null) {
@@ -166,10 +176,11 @@ public class TemplateManagerUtil {
 	public void setTemplateManagers(List<TemplateManager> templateManagers) {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
-		Map<String, TemplateManager> _templateManagers = _getTemplateManagers();
+		Map<String, TemplateManager> templateManagersMap =
+			_getTemplateManagers();
 
 		for (TemplateManager templateManager : templateManagers) {
-			_templateManagers.put(
+			templateManagersMap.put(
 				templateManager.getTemplateManagerName(), templateManager);
 		}
 	}
@@ -178,7 +189,9 @@ public class TemplateManagerUtil {
 			String templateManagerName)
 		throws TemplateException {
 
-		TemplateManager templateManager = _getTemplateManagers().get(
+		Map<String, TemplateManager> templateManagers = _getTemplateManagers();
+
+		TemplateManager templateManager = templateManagers.get(
 			templateManagerName);
 
 		if (templateManager == null) {

@@ -33,8 +33,6 @@ public class MessageBusUtil {
 	}
 
 	public static Message createResponseMessage(Message requestMessage) {
-		getInstance();
-
 		Message responseMessage = new Message();
 
 		responseMessage.setDestinationName(
@@ -46,8 +44,6 @@ public class MessageBusUtil {
 
 	public static Message createResponseMessage(
 		Message requestMessage, Object payload) {
-
-		getInstance();
 
 		Message responseMessage = createResponseMessage(requestMessage);
 

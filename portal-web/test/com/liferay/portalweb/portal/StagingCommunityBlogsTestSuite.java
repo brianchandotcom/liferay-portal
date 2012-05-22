@@ -15,7 +15,7 @@
 package com.liferay.portalweb.portal;
 
 import com.liferay.portalweb.portal.login.LoginTests;
-import com.liferay.portalweb.stagingsite.documentlibrary.DocumentLibraryTestPlan;
+import com.liferay.portalweb.stagingsite.blogs.BlogsTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -23,13 +23,13 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class StagingSiteDocumentLibraryTestSuite extends BaseTestSuite {
+public class StagingCommunityBlogsTestSuite extends BaseTestSuite {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(LoginTests.suite());
-		testSuite.addTest(DocumentLibraryTestPlan.suite());
+		testSuite.addTest(BlogsTests.suite());
 
 		testSuite.addTestSuite(StopSeleniumTest.class);
 

@@ -478,10 +478,12 @@ public class JSONServiceAction extends JSONAction {
 						}
 					}
 					else if (method != null) {
+						String parameterNames = StringUtil.merge(parameters);
+
 						_log.error(
 							"Obscure method name for class " + clazz +
 								", method " + methodName + ", and parameters " +
-									parameterTypesNames);
+									parameterNames);
 
 						return null;
 					}
@@ -503,9 +505,11 @@ public class JSONServiceAction extends JSONAction {
 			return methodAndParameterTypes;
 		}
 		else {
+			String parameterNames = StringUtil.merge(parameters);
+
 			_log.error(
 				"No method found for class " + clazz + ", method " +
-					methodName + ", and parameters " + parameterTypesNames);
+					methodName + ", and parameters " + parameterNames);
 
 			return null;
 		}

@@ -21,8 +21,7 @@ import com.liferay.portlet.expando.model.BaseCustomAttributesDisplay;
 /**
  * @author Jorge Ferrer
  */
-public class SiteCustomAttributesDisplay
-	extends BaseCustomAttributesDisplay {
+public class SiteCustomAttributesDisplay extends BaseCustomAttributesDisplay {
 
 	public static final String CLASS_NAME = Group.class.getName();
 
@@ -32,8 +31,7 @@ public class SiteCustomAttributesDisplay
 
 	@Override
 	public String getIconPath(ThemeDisplay themeDisplay) {
-		return
-			themeDisplay.getPathThemeImages() + "/common/site_icon.png";
+		return themeDisplay.getPathThemeImages() + "/common/site_icon.png";
 	}
 
 }

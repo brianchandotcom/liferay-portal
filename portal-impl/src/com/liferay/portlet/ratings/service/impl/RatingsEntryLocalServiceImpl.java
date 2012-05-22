@@ -252,20 +252,19 @@ public class RatingsEntryLocalServiceImpl
 	protected void validate(String className, double score)
 		throws PortalException {
 
+		double maxScore = PropsValues.RATINGS_DEFAULT_NUMBER_OF_STARS;
+		double minScore = 0;
+
 		if (className.equals(MBDiscussion.class.getName()) ||
 			className.equals(MBMessage.class.getName())) {
 
-			if ((score >= -1) && (score <= 1)) {
-				return;
-			}
-		}
-		else if ((score >= 0) ||
-				 (score <= PropsValues.RATINGS_DEFAULT_NUMBER_OF_STARS)) {
-
-			return;
+			maxScore = 1;
+			minScore = -1;
 		}
 
-		throw new EntryScoreException();
+		if ((score < minScore) || (score > maxScore)) {
+			throw new EntryScoreException();
+		}
 	}
 
 }

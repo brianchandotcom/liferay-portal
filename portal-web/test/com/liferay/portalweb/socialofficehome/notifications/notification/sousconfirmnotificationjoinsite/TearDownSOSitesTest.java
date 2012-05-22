@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.socialofficehome.notifications.notification.sousconfirmnotificationsjoinrestrictedsite;
+package com.liferay.portalweb.socialofficehome.notifications.notification.sousconfirmnotificationjoinsite;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;

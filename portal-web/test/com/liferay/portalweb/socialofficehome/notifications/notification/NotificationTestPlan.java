@@ -17,9 +17,9 @@ package com.liferay.portalweb.socialofficehome.notifications.notification;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.socialofficehome.notifications.notification.requestccaddasconnection.RequestCCAddConnnectionTests;
 import com.liferay.portalweb.socialofficehome.notifications.notification.requestprofileaddasconnection.RequestProfileAddConnnectionTests;
-import com.liferay.portalweb.socialofficehome.notifications.notification.sousconfirmnotificationsjoinprivatesite.SOUs_ConfirmNotificationsJoinPrivateSiteTests;
-import com.liferay.portalweb.socialofficehome.notifications.notification.sousconfirmnotificationsjoinrestrictedsite.SOUs_ConfirmNotificationsJoinRestrictedSiteTests;
-import com.liferay.portalweb.socialofficehome.notifications.notification.sousconfirmnotificationsjoinsite.SOUs_ConfirmNotificationsJoinSiteTests;
+import com.liferay.portalweb.socialofficehome.notifications.notification.sousconfirmnotificationjoinprivatesite.SOUs_ConfirmNotificationJoinPrivateSiteTests;
+import com.liferay.portalweb.socialofficehome.notifications.notification.sousconfirmnotificationjoinrestrictedsite.SOUs_ConfirmNotificationJoinRestrictedSiteTests;
+import com.liferay.portalweb.socialofficehome.notifications.notification.sousconfirmnotificationjoinsite.SOUs_ConfirmNotificationJoinSiteTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -34,11 +34,10 @@ public class NotificationTestPlan extends BaseTestSuite {
 
 		testSuite.addTest(RequestCCAddConnnectionTests.suite());
 		testSuite.addTest(RequestProfileAddConnnectionTests.suite());
+		testSuite.addTest(SOUs_ConfirmNotificationJoinPrivateSiteTests.suite());
 		testSuite.addTest(
-			SOUs_ConfirmNotificationsJoinPrivateSiteTests.suite());
-		testSuite.addTest(
-			SOUs_ConfirmNotificationsJoinRestrictedSiteTests.suite());
-		testSuite.addTest(SOUs_ConfirmNotificationsJoinSiteTests.suite());
+			SOUs_ConfirmNotificationJoinRestrictedSiteTests.suite());
+		testSuite.addTest(SOUs_ConfirmNotificationJoinSiteTests.suite());
 
 		return testSuite;
 	}

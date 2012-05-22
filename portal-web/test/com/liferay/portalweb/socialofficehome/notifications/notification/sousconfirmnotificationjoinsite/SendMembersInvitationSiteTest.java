@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.socialofficehome.notifications.notification.sousconfirmnotificationsjoinprivatesite;
+package com.liferay.portalweb.socialofficehome.notifications.notification.sousconfirmnotificationjoinsite;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,9 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SendMembersInvitationPrivateSiteTest extends BaseTestCase {
-	public void testSendMembersInvitationPrivateSite()
-		throws Exception {
+public class SendMembersInvitationSiteTest extends BaseTestCase {
+	public void testSendMembersInvitationSite() throws Exception {
 		selenium.open("/user/joebloggs/so/dashboard/");
 		loadRequiredJavaScriptModules();
 
@@ -65,14 +64,14 @@ public class SendMembersInvitationPrivateSiteTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Private Site Name"),
+		assertEquals(RuntimeVariables.replace("Open Site Name"),
 			selenium.getText(
 				"//li[contains(@class, 'social-office-enabled')]/span[2]/a"));
 		selenium.clickAt("//li[contains(@class, 'social-office-enabled')]/span[2]/a",
-			RuntimeVariables.replace("Private Site Name"));
+			RuntimeVariables.replace("Open Site Name"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Private Site Name"),
+		assertEquals(RuntimeVariables.replace("Open Site Name"),
 			selenium.getText("//div[@class='community-title']/a/span"));
 		assertEquals(RuntimeVariables.replace("Members"),
 			selenium.getText("//nav/ul/li[contains(.,'Members')]/a/span"));

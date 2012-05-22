@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.socialofficehome.notifications.notification.sousconfirmnotificationsjoinrestrictedsite;
+package com.liferay.portalweb.socialofficehome.notifications.notification.sousconfirmnotificationjoinprivatesite;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,9 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SOUs_ConfirmNotificationsJoinRestrictedSiteTest
-	extends BaseTestCase {
-	public void testSOUs_ConfirmNotificationsJoinRestrictedSite()
+public class SOUs_ConfirmNotificationJoinPrivateSiteTest extends BaseTestCase {
+	public void testSOUs_ConfirmNotificationJoinPrivateSite()
 		throws Exception {
 		selenium.open("/user/socialoffice01/so/dashboard/");
 		loadRequiredJavaScriptModules();
@@ -69,7 +68,7 @@ public class SOUs_ConfirmNotificationsJoinRestrictedSiteTest
 		assertTrue(selenium.isPartialText(
 				"//div[contains(@class, 'user-notification-event-content')]/div[2]/div",
 				"Joe Bloggs invited you to join"));
-		assertEquals(RuntimeVariables.replace("Restricted Site Name"),
+		assertEquals(RuntimeVariables.replace("Private Site Name"),
 			selenium.getText(
 				"//div[contains(@class, 'user-notification-event-content')]/div[2]/div/a[2]"));
 		assertEquals(RuntimeVariables.replace("Confirm"),
@@ -146,7 +145,7 @@ public class SOUs_ConfirmNotificationsJoinRestrictedSiteTest
 
 		assertFalse(selenium.isPartialText(
 				"//ul[contains(@class, 'site-list')]/", "liferay.com"));
-		assertEquals(RuntimeVariables.replace("Restricted Site Name"),
+		assertEquals(RuntimeVariables.replace("Private Site Name"),
 			selenium.getText(
 				"//li[contains(@class, 'social-office-enabled')]/span[2]/a"));
 	}

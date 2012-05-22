@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.socialofficehome.notifications.notification.sousconfirmnotificationsjoinprivatesite;
+package com.liferay.portalweb.socialofficehome.notifications.notification.sousconfirmnotificationjoinsite;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddSitesSiteTypePrivateTest extends BaseTestCase {
-	public void testAddSitesSiteTypePrivate() throws Exception {
+public class AddSitesSiteTest extends BaseTestCase {
+	public void testAddSitesSite() throws Exception {
 		selenium.open("/user/joebloggs/so/dashboard/");
 		loadRequiredJavaScriptModules();
 
@@ -90,11 +90,11 @@ public class AddSitesSiteTypePrivateTest extends BaseTestCase {
 			selenium.getText("xPath=(//h1[@class='header-title']/span)[1]"));
 		assertTrue(selenium.isVisible("//input[@id='_5_WAR_soportlet_name']"));
 		selenium.type("//input[@id='_5_WAR_soportlet_name']",
-			RuntimeVariables.replace("Private Site Name"));
+			RuntimeVariables.replace("Open Site Name"));
 		assertTrue(selenium.isVisible(
 				"//textarea[@id='_5_WAR_soportlet_description']"));
 		selenium.type("//textarea[@id='_5_WAR_soportlet_description']",
-			RuntimeVariables.replace("Private Site Description"));
+			RuntimeVariables.replace("Open Site Description"));
 		assertEquals("Next", selenium.getValue("//input[@value='Next']"));
 		selenium.clickAt("//input[@value='Next']",
 			RuntimeVariables.replace("Next"));
@@ -124,7 +124,7 @@ public class AddSitesSiteTypePrivateTest extends BaseTestCase {
 			RuntimeVariables.replace("Default Social Office Site"));
 		assertTrue(selenium.isVisible("//select[@id='_5_WAR_soportlet_type']"));
 		selenium.select("//select[@id='_5_WAR_soportlet_type']",
-			RuntimeVariables.replace("Private"));
+			RuntimeVariables.replace("Open"));
 		assertEquals("Next", selenium.getValue("//input[@value='Next']"));
 		selenium.clickAt("//input[@value='Next']",
 			RuntimeVariables.replace("Next"));
@@ -179,7 +179,7 @@ public class AddSitesSiteTypePrivateTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//span[@class='portlet-msg-success']"));
 		Thread.sleep(5000);
-		assertEquals(RuntimeVariables.replace("Private Site Name"),
+		assertEquals(RuntimeVariables.replace("Open Site Name"),
 			selenium.getText(
 				"//li[contains(@class, 'social-office-enabled')]/span[2]/a"));
 	}

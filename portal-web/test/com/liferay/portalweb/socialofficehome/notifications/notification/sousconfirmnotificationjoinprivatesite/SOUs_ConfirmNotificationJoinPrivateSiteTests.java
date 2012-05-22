@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.socialofficehome.notifications.notification.sousconfirmnotificationsjoinsite;
+package com.liferay.portalweb.socialofficehome.notifications.notification.sousconfirmnotificationjoinprivatesite;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.socialoffice.users.user.addsouser.AddSOUserTest;
@@ -31,24 +31,24 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SOUs_ConfirmNotificationsJoinSiteTests extends BaseTestSuite {
+public class SOUs_ConfirmNotificationJoinPrivateSiteTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddSOUserTest.class);
 		testSuite.addTestSuite(SelectRegularRolesSOUserTest.class);
 		testSuite.addTestSuite(EditSOUserPasswordTest.class);
-		testSuite.addTestSuite(AddSitesSiteTest.class);
+		testSuite.addTestSuite(AddSitesSiteTypePrivateTest.class);
 		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SOUs_SignInSOTest.class);
 		testSuite.addTestSuite(SOUs_AddAsConnectionCCUserTest.class);
 		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SignInSOTest.class);
 		testSuite.addTestSuite(ConfirmNotificationsAddConnectionTest.class);
-		testSuite.addTestSuite(SendMembersInvitationSiteTest.class);
+		testSuite.addTestSuite(SendMembersInvitationPrivateSiteTest.class);
 		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SOUs_SignInSOTest.class);
-		testSuite.addTestSuite(SOUs_ConfirmNotificationsJoinSiteTest.class);
-		testSuite.addTestSuite(SOUs_ViewSitesSiteTest.class);
+		testSuite.addTestSuite(SOUs_ConfirmNotificationJoinPrivateSiteTest.class);
+		testSuite.addTestSuite(SOUs_ViewSitesSiteTypePrivateTest.class);
 		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SignInSOTest.class);
 		testSuite.addTestSuite(TearDownNotificationsTest.class);

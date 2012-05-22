@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.socialofficehome.notifications.notification.sousconfirmnotificationsjoinprivatesite;
+package com.liferay.portalweb.socialofficehome.notifications.notification.sousconfirmnotificationjoinrestrictedsite;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.socialoffice.users.user.addsouser.AddSOUserTest;
@@ -31,24 +31,25 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SOUs_ConfirmNotificationsJoinPrivateSiteTests extends BaseTestSuite {
+public class SOUs_ConfirmNotificationJoinRestrictedSiteTests
+	extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddSOUserTest.class);
 		testSuite.addTestSuite(SelectRegularRolesSOUserTest.class);
 		testSuite.addTestSuite(EditSOUserPasswordTest.class);
-		testSuite.addTestSuite(AddSitesSiteTypePrivateTest.class);
+		testSuite.addTestSuite(AddSitesSiteTypeRestrictedTest.class);
 		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SOUs_SignInSOTest.class);
 		testSuite.addTestSuite(SOUs_AddAsConnectionCCUserTest.class);
 		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SignInSOTest.class);
 		testSuite.addTestSuite(ConfirmNotificationsAddConnectionTest.class);
-		testSuite.addTestSuite(SendMembersInvitationPrivateSiteTest.class);
+		testSuite.addTestSuite(SendMembersInvitationRestrictedSiteTest.class);
 		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SOUs_SignInSOTest.class);
-		testSuite.addTestSuite(SOUs_ConfirmNotificationsJoinPrivateSiteTest.class);
-		testSuite.addTestSuite(SOUs_ViewSitesSiteTypePrivateTest.class);
+		testSuite.addTestSuite(SOUs_ConfirmNotificationJoinRestrictedSiteTest.class);
+		testSuite.addTestSuite(SOUs_ViewSitesSiteTypeRestrictedTest.class);
 		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SignInSOTest.class);
 		testSuite.addTestSuite(TearDownNotificationsTest.class);

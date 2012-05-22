@@ -1185,6 +1185,8 @@ public interface PropsKeys {
 
 	public static final String LDAP_IMPORT_INTERVAL = "ldap.import.interval";
 
+	public static final String LDAP_IMPORT_LOCK_EXPIRATION_TIME = "ldap.import.lock.expiration.time";
+
 	public static final String LDAP_IMPORT_METHOD = "ldap.import.method";
 
 	public static final String LDAP_IMPORT_ON_STARTUP = "ldap.import.on.startup";

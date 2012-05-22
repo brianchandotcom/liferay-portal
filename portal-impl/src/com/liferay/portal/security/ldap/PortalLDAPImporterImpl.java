@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.CompanyConstants;
@@ -118,7 +117,8 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 
 		LockLocalServiceUtil.lock(
 			defaultUserId, PortalLDAPImporterUtil.class.getName(), companyId,
-			PortalLDAPImporterImpl.class.getName(), false, Time.DAY);
+			PortalLDAPImporterImpl.class.getName(), false,
+			PropsValues.LDAP_IMPORT_LOCK_EXPIRATION_TIME);
 
 		try {
 			long[] ldapServerIds = StringUtil.split(

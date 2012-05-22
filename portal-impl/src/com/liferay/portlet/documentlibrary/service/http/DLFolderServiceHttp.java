@@ -368,7 +368,7 @@ public class DLFolderServiceHttp {
 
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getFolders(
 		HttpPrincipal httpPrincipal, long groupId, long parentFolderId,
-		boolean includeMountfolders, int start, int end,
+		int status, boolean includeMountfolders, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -376,7 +376,7 @@ public class DLFolderServiceHttp {
 					"getFolders", _getFoldersParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					parentFolderId, includeMountfolders, start, end, obc);
+					parentFolderId, status, includeMountfolders, start, end, obc);
 
 			Object returnObj = null;
 
@@ -639,14 +639,15 @@ public class DLFolderServiceHttp {
 	}
 
 	public static int getFoldersCount(HttpPrincipal httpPrincipal,
-		long groupId, long parentFolderId, boolean includeMountfolders)
+		long groupId, long parentFolderId, int status,
+		boolean includeMountfolders)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(DLFolderServiceUtil.class.getName(),
 					"getFoldersCount", _getFoldersCountParameterTypes17);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					parentFolderId, includeMountfolders);
+					parentFolderId, status, includeMountfolders);
 
 			Object returnObj = null;
 
@@ -1224,8 +1225,8 @@ public class DLFolderServiceHttp {
 			long.class, long.class
 		};
 	private static final Class<?>[] _getFoldersParameterTypes9 = new Class[] {
-			long.class, long.class, boolean.class, int.class, int.class,
-			com.liferay.portal.kernel.util.OrderByComparator.class
+			long.class, long.class, int.class, boolean.class, int.class,
+			int.class, com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getFoldersParameterTypes10 = new Class[] {
 			long.class, long.class, int.class, int.class,
@@ -1258,7 +1259,7 @@ public class DLFolderServiceHttp {
 			long.class, long.class
 		};
 	private static final Class<?>[] _getFoldersCountParameterTypes17 = new Class[] {
-			long.class, long.class, boolean.class
+			long.class, long.class, int.class, boolean.class
 		};
 	private static final Class<?>[] _getMountFoldersParameterTypes18 = new Class[] {
 			long.class, long.class, int.class, int.class,

@@ -113,10 +113,11 @@ public class DLFolderServiceWrapper implements DLFolderService,
 	}
 
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getFolders(
-		long groupId, long parentFolderId, boolean includeMountfolders,
-		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		long groupId, long parentFolderId, int status,
+		boolean includeMountfolders, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _dlFolderService.getFolders(groupId, parentFolderId,
+		return _dlFolderService.getFolders(groupId, parentFolderId, status,
 			includeMountfolders, start, end, obc);
 	}
 
@@ -173,11 +174,11 @@ public class DLFolderServiceWrapper implements DLFolderService,
 		return _dlFolderService.getFoldersCount(groupId, parentFolderId);
 	}
 
-	public int getFoldersCount(long groupId, long parentFolderId,
+	public int getFoldersCount(long groupId, long parentFolderId, int status,
 		boolean includeMountfolders)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _dlFolderService.getFoldersCount(groupId, parentFolderId,
-			includeMountfolders);
+			status, includeMountfolders);
 	}
 
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getMountFolders(

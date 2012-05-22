@@ -138,11 +138,25 @@ public class DLAppHelperLocalServiceUtil {
 		getService().moveFolder(folder);
 	}
 
+	public static com.liferay.portal.kernel.repository.model.Folder moveFolderToTrash(
+		long userId, com.liferay.portal.kernel.repository.model.Folder folder)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().moveFolderToTrash(userId, folder);
+	}
+
 	public static void restoreFileEntryFromTrash(long userId,
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().restoreFileEntryFromTrash(userId, fileEntry);
+	}
+
+	public static void restoreFolderFromTrash(long userId,
+		com.liferay.portal.kernel.repository.model.Folder folder)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().restoreFolderFromTrash(userId, folder);
 	}
 
 	public static com.liferay.portlet.asset.model.AssetEntry updateAsset(
@@ -167,6 +181,14 @@ public class DLAppHelperLocalServiceUtil {
 		return getService()
 				   .updateAsset(userId, fileEntry, fileVersion,
 			assetCategoryIds, assetTagNames, assetLinkEntryIds);
+	}
+
+	public static void updateChildrenStatuses(
+		com.liferay.portal.model.User user,
+		java.util.List<java.lang.Object> children, int status)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().updateChildrenStatuses(user, children, status);
 	}
 
 	public static void updateFileEntry(long userId,

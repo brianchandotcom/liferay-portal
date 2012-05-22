@@ -17,19 +17,17 @@
 <%@ include file="/html/portlet/document_library/init.jsp" %>
 
 <%
-int abstractLength = (Integer)request.getAttribute(WebKeys.ASSET_PUBLISHER_ABSTRACT_LENGTH);
-
 Folder folder = (Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);
 %>
 
 <div class="asset-resource-info">
 	<liferay-ui:icon
-		image='<%= "../file_system/small/folder" %>'
+		image='<%= "../common/folder_empty" %>'
 		label="<%= true %>"
 		message="<%= HtmlUtil.escape(folder.getName()) %>"
 	/>
 </div>
 
 <p class="asset-description">
-	<%= HtmlUtil.escape(StringUtil.shorten(folder.getDescription(), abstractLength)) %>
+	<%= HtmlUtil.escape(StringUtil.shorten(folder.getDescription())) %>
 </p>

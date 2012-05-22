@@ -474,53 +474,53 @@ public class AssetEntryQuery {
 
 		sb.append("{allCategoryIds=");
 		sb.append(StringUtil.merge(_allCategoryIds));
-		sb.append(", allTagIds");
+		sb.append(", allTagIds=");
 		sb.append(StringUtil.merge(_allTagIds));
-		sb.append(", anyCategoryIds");
+		sb.append(", anyCategoryIds=");
 		sb.append(StringUtil.merge(_anyCategoryIds));
-		sb.append(", anyTagIds");
+		sb.append(", anyTagIds=");
 		sb.append(StringUtil.merge(_anyTagIds));
-		sb.append(", classNameIds");
+		sb.append(", classNameIds=");
 		sb.append(StringUtil.merge(_classNameIds));
-		sb.append(", classTypeIds");
+		sb.append(", classTypeIds=");
 		sb.append(StringUtil.merge(_classTypeIds));
 
 		if (_layout != null) {
-			sb.append(", layout");
+			sb.append(", layout=");
 			sb.append(_layout.getPlid());
 		}
 
-		sb.append(", end");
+		sb.append(", end=");
 		sb.append(_end);
-		sb.append(", excludeZeroViewCount");
+		sb.append(", excludeZeroViewCount=");
 		sb.append(_excludeZeroViewCount);
-		sb.append(", expirationDate");
+		sb.append(", expirationDate=");
 		sb.append(_expirationDate);
-		sb.append(", groupIds");
+		sb.append(", groupIds=");
 		sb.append(StringUtil.merge(_groupIds));
-		sb.append(", linkedAssetEntryId");
+		sb.append(", linkedAssetEntryId=");
 		sb.append(_linkedAssetEntryId);
-		sb.append(", notAllCategoryIds");
+		sb.append(", notAllCategoryIds=");
 		sb.append(StringUtil.merge(_notAllCategoryIds));
-		sb.append(", notAllTagIds");
+		sb.append(", notAllTagIds=");
 		sb.append(StringUtil.merge(_notAllTagIds));
-		sb.append(", notAnyCategoryIds");
+		sb.append(", notAnyCategoryIds=");
 		sb.append(StringUtil.merge(_notAnyCategoryIds));
-		sb.append(", notAnyTagIds");
+		sb.append(", notAnyTagIds=");
 		sb.append(StringUtil.merge(_notAnyTagIds));
-		sb.append(", orderByCol1");
+		sb.append(", orderByCol1=");
 		sb.append(_orderByCol1);
-		sb.append(", orderByCol2");
+		sb.append(", orderByCol2=");
 		sb.append(_orderByCol2);
-		sb.append(", orderByType1");
+		sb.append(", orderByType1=");
 		sb.append(_orderByType1);
-		sb.append(", orderByType2");
+		sb.append(", orderByType2=");
 		sb.append(_orderByType2);
-		sb.append(", publishDate");
+		sb.append(", publishDate=");
 		sb.append(_publishDate);
-		sb.append(", start");
+		sb.append(", start=");
 		sb.append(_start);
-		sb.append(", visible");
+		sb.append(", visible=");
 		sb.append(_visible);
 		sb.append("}");
 

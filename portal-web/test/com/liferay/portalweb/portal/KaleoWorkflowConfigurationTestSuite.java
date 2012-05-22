@@ -14,7 +14,7 @@
 
 package com.liferay.portalweb.portal;
 
-import com.liferay.portalweb.plugins.kaleo.workflowconfiguration.WorkflowConfigurationTestPlan;
+import com.liferay.portalweb.kaleo.workflowconfiguration.WorkflowConfigurationTestPlan;
 import com.liferay.portalweb.portal.login.LoginTests;
 
 import junit.framework.Test;

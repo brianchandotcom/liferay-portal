@@ -348,6 +348,12 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				group.getCompanyId(), 0, 0, Group.class.getName(),
 				group.getGroupId(), false, false, false);
 		}
+		
+		// Expando
+		
+		if (serviceContext != null) {
+			group.setExpandoBridgeAttributes(serviceContext);
+		}
 
 		return group;
 	}
@@ -2010,6 +2016,10 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			updateAsset(
 				user.getUserId(), group, serviceContext.getAssetCategoryIds(),
 				serviceContext.getAssetTagNames());
+			
+			// Expando
+			
+			group.setExpandoBridgeAttributes(serviceContext);
 		}
 
 		return group;

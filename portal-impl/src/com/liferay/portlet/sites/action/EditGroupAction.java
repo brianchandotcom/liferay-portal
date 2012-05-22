@@ -482,6 +482,11 @@ public class EditGroupAction extends PortletAction {
 		liveGroup = GroupServiceUtil.updateGroup(
 			liveGroup.getGroupId(), typeSettingsProperties.toString());
 
+		GroupServiceUtil.updateGroup(liveGroup.getGroupId(),
+				parentGroupId, liveGroup.getName(), liveGroup.getDescription(), liveGroup.getType(),
+				liveGroup.getFriendlyURL(), liveGroup.isActive(),
+				serviceContext);
+
 		// Layout set prototypes
 
 		if (!liveGroup.isStaged()) {

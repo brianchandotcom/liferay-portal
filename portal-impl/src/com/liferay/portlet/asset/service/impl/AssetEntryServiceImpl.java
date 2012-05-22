@@ -277,7 +277,8 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 		}
 		else {
 			filteredEntries = entries;
-			filteredEntriesCount = entries.size();
+			filteredEntriesCount = assetEntryLocalService.getEntriesCount(
+				entryQuery);
 		}
 
 		results = new Object[] {filteredEntries, filteredEntriesCount};

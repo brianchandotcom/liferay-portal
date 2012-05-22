@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -420,11 +421,23 @@ public class JSONServiceAction extends JSONAction {
 			String[] parameterTypes)
 		throws Exception {
 
+		StringBundler keyStringBundler = new StringBundler(5);
+
+		keyStringBundler.append(clazz.getName());
+		keyStringBundler.append("_METHOD_NAME_");
+		keyStringBundler.append(methodName);
+		keyStringBundler.append("_PARAMETERS_");
+
 		String parameterTypesNames = StringUtil.merge(parameterTypes);
 
-		String key =
-			clazz.getName() + "_METHOD_NAME_" + methodName + "_PARAMETERS_" +
-				parameterTypesNames;
+		if (Validator.isNull(parameterTypesNames)) {
+			keyStringBundler.append(parameters.length);
+		}
+		else {
+			keyStringBundler.append(parameterTypesNames);
+		}
+
+		String key = keyStringBundler.toString();
 
 		Object[] methodAndParameterTypes = _methodCache.get(key);
 
@@ -465,10 +478,12 @@ public class JSONServiceAction extends JSONAction {
 						}
 					}
 					else if (method != null) {
+						String parameterNames = StringUtil.merge(parameters);
+
 						_log.error(
 							"Obscure method name for class " + clazz +
 								", method " + methodName + ", and parameters " +
-									parameterTypesNames);
+									parameterNames);
 
 						return null;
 					}
@@ -490,9 +505,11 @@ public class JSONServiceAction extends JSONAction {
 			return methodAndParameterTypes;
 		}
 		else {
+			String parameterNames = StringUtil.merge(parameters);
+
 			_log.error(
 				"No method found for class " + clazz + ", method " +
-					methodName + ", and parameters " + parameterTypesNames);
+					methodName + ", and parameters " + parameterNames);
 
 			return null;
 		}

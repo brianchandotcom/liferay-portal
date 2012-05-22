@@ -28,6 +28,8 @@ public interface DLProcessorRegistry {
 
 	public void cleanUp(FileVersion fileVersion);
 
+	public void copy(FileEntry fileEntry, FileVersion copyFromVersion);
+
 	public void exportGeneratedFiles(
 			PortletDataContext portletDataContext, FileEntry fileEntry,
 			Element fileEntryElement)
@@ -40,7 +42,7 @@ public interface DLProcessorRegistry {
 
 	public void register(DLProcessor dlProcessor);
 
-	public void trigger(FileEntry fileEntry);
+	public void trigger(FileEntry fileEntry, FileVersion copyFromVersion);
 
 	public void unregister(DLProcessor dlProcessor);
 

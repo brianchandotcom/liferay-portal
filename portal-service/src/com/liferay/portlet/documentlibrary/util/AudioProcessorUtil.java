@@ -25,8 +25,11 @@ import java.util.Set;
  */
 public class AudioProcessorUtil {
 
-	public static void generateAudio(FileVersion fileVersion) throws Exception {
-		getAudioProcessor().generateAudio(fileVersion);
+	public static void generateAudio(
+			FileVersion copyFromVersion, FileVersion fileVersion)
+		throws Exception {
+
+		getAudioProcessor().generateAudio(copyFromVersion, fileVersion);
 	}
 
 	public static Set<String> getAudioMimeTypes() {
@@ -66,8 +69,10 @@ public class AudioProcessorUtil {
 		return getAudioProcessor().isSupported(mimeType);
 	}
 
-	public static void trigger(FileVersion fileVersion) {
-		getAudioProcessor().trigger(fileVersion);
+	public static void trigger(
+			FileVersion copyFromVersion, FileVersion fileVersion) {
+
+		getAudioProcessor().trigger(copyFromVersion, fileVersion);
 	}
 
 	public void setAudioProcessor(AudioProcessor audioProcessor) {

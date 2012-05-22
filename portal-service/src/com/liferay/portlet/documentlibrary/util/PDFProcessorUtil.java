@@ -23,10 +23,11 @@ import java.io.InputStream;
  */
 public class PDFProcessorUtil {
 
-	public static void generateImages(FileVersion fileVersion)
+	public static void generateImages(
+			FileVersion copyFromVersion, FileVersion fileVersion)
 		throws Exception {
 
-		getPDFProcessor().generateImages(fileVersion);
+		getPDFProcessor().generateImages(copyFromVersion, fileVersion);
 	}
 
 	public static PDFProcessor getPDFProcessor() {
@@ -79,8 +80,10 @@ public class PDFProcessorUtil {
 		return getPDFProcessor().isSupported(mimeType);
 	}
 
-	public static void trigger(FileVersion fileVersion) {
-		getPDFProcessor().trigger(fileVersion);
+	public static void trigger(
+			FileVersion fileVersion, FileVersion copyFromVersion) {
+
+		getPDFProcessor().trigger(fileVersion, copyFromVersion);
 	}
 
 	public void setPDFProcessor(PDFProcessor pdfProcessor) {

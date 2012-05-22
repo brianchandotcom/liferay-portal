@@ -35,7 +35,9 @@ public interface AudioProcessor {
 			Element fileEntryElement)
 		throws Exception;
 
-	public void generateAudio(FileVersion fileVersion) throws Exception;
+	public void generateAudio(
+			FileVersion copyFromVersion, FileVersion fileVersion)
+		throws Exception;
 
 	public Set<String> getAudioMimeTypes();
 
@@ -58,6 +60,6 @@ public interface AudioProcessor {
 
 	public boolean isSupported(String mimeType);
 
-	public void trigger(FileVersion fileVersion);
+	public void trigger(FileVersion copyFromVersion, FileVersion fileVersion);
 
 }

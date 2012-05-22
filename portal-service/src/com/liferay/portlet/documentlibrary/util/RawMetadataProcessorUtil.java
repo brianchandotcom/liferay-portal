@@ -99,8 +99,10 @@ public class RawMetadataProcessorUtil {
 	 * @param fileVersion the latest file version from which the raw metadata is
 	 *        to be generated
 	 */
-	public static void trigger(FileVersion fileVersion) {
-		getRawMetadataProcessor().trigger(fileVersion);
+	public static void trigger(
+			FileVersion copyFromVersion, FileVersion fileVersion) {
+
+		getRawMetadataProcessor().trigger(copyFromVersion, fileVersion);
 	}
 
 	public void setRawMetadataProcessor(

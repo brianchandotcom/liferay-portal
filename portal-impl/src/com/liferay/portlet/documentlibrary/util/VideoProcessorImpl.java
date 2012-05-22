@@ -74,8 +74,11 @@ public class VideoProcessorImpl
 		return _instance;
 	}
 
-	public void generateVideo(FileVersion fileVersion) throws Exception {
-		_instance._generateVideo(fileVersion);
+	public void generateVideo(
+			FileVersion copyFromVersion, FileVersion fileVersion)
+		throws Exception {
+
+		_instance._generateVideo(copyFromVersion, fileVersion);
 	}
 
 	public InputStream getPreviewAsStream(FileVersion fileVersion, String type)
@@ -113,7 +116,7 @@ public class VideoProcessorImpl
 			hasVideo = _instance._hasVideo(fileVersion);
 
 			if (!hasVideo && _instance.isSupported(fileVersion)) {
-				_instance._queueGeneration(fileVersion);
+				_instance._queueGeneration(null, fileVersion);
 			}
 		}
 		catch (Exception e) {
@@ -147,8 +150,8 @@ public class VideoProcessorImpl
 		return _instance.isSupported(mimeType);
 	}
 
-	public void trigger(FileVersion fileVersion) {
-		_instance._queueGeneration(fileVersion);
+	public void trigger(FileVersion copyFromVersion, FileVersion fileVersion) {
+		_instance._queueGeneration(copyFromVersion, fileVersion);
 	}
 
 	@Override
@@ -359,7 +362,10 @@ public class VideoProcessorImpl
 		}
 	}
 
-	private void _generateVideo(FileVersion fileVersion) throws Exception {
+	private void _generateVideo(
+			FileVersion copyFromVersion, FileVersion fileVersion)
+		throws Exception {
+
 		if (!XugglerUtil.isEnabled() || _hasVideo(fileVersion)) {
 			return;
 		}
@@ -371,61 +377,65 @@ public class VideoProcessorImpl
 		File videoTempFile = null;
 
 		try {
-			File file = null;
+			if (copyFromVersion != null) {
+				copy(copyFromVersion, fileVersion);
+			}else {
+				File file = null;
 
-			if (!hasPreviews(fileVersion) || !hasThumbnails(fileVersion)) {
-				if (fileVersion instanceof LiferayFileVersion) {
+				if (!hasPreviews(fileVersion) || !hasThumbnails(fileVersion)) {
+					if (fileVersion instanceof LiferayFileVersion) {
+						try {
+							LiferayFileVersion liferayFileVersion =
+								(LiferayFileVersion)fileVersion;
+
+							file = liferayFileVersion.getFile(false);
+						}
+						catch (UnsupportedOperationException uoe) {
+						}
+					}
+
+					if (file == null) {
+						inputStream = fileVersion.getContentStream(false);
+
+						videoTempFile = FileUtil.createTempFile(
+							fileVersion.getExtension());
+
+						FileUtil.write(videoTempFile, inputStream);
+
+						file = videoTempFile;
+					}
+				}
+
+				if (!hasPreviews(fileVersion)) {
+					String tempFileId = DLUtil.getTempFileId(
+						fileVersion.getFileEntryId(), fileVersion.getVersion());
+
+					for (int i = 0; i < _PREVIEW_TYPES.length; i++) {
+						previewTempFiles[i] = getPreviewTempFile(
+							tempFileId, _PREVIEW_TYPES[i]);
+					}
+
 					try {
-						LiferayFileVersion liferayFileVersion =
-							(LiferayFileVersion)fileVersion;
-
-						file = liferayFileVersion.getFile(false);
+						_generateVideoXuggler(
+							fileVersion, file, previewTempFiles,
+							PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_HEIGHT,
+							PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_WIDTH);
 					}
-					catch (UnsupportedOperationException uoe) {
+					catch (Exception e) {
+						_log.error(e, e);
 					}
 				}
 
-				if (file == null) {
-					inputStream = fileVersion.getContentStream(false);
-
-					videoTempFile = FileUtil.createTempFile(
-						fileVersion.getExtension());
-
-					FileUtil.write(videoTempFile, inputStream);
-
-					file = videoTempFile;
-				}
-			}
-
-			if (!hasPreviews(fileVersion)) {
-				String tempFileId = DLUtil.getTempFileId(
-					fileVersion.getFileEntryId(), fileVersion.getVersion());
-
-				for (int i = 0; i < _PREVIEW_TYPES.length; i++) {
-					previewTempFiles[i] = getPreviewTempFile(
-						tempFileId, _PREVIEW_TYPES[i]);
-				}
-
-				try {
-					_generateVideoXuggler(
-						fileVersion, file, previewTempFiles,
-						PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_HEIGHT,
-						PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_WIDTH);
-				}
-				catch (Exception e) {
-					_log.error(e, e);
-				}
-			}
-
-			if (!hasThumbnails(fileVersion)) {
-				try {
-					_generateThumbnailXuggler(
-						fileVersion, file,
-						PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_HEIGHT,
-						PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_WIDTH);
-				}
-				catch (Exception e) {
-					_log.error(e, e);
+				if (!hasThumbnails(fileVersion)) {
+					try {
+						_generateThumbnailXuggler(
+							fileVersion, file,
+							PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_HEIGHT,
+							PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_WIDTH);
+					}
+					catch (Exception e) {
+						_log.error(e, e);
+					}
 				}
 			}
 		}
@@ -523,7 +533,9 @@ public class VideoProcessorImpl
 		return hasPreviews(fileVersion) && hasThumbnails(fileVersion);
 	}
 
-	private void _queueGeneration(FileVersion fileVersion) {
+	private void _queueGeneration(
+			final FileVersion copyFromVersion, final FileVersion fileVersion) {
+
 		if (_fileVersionIds.contains(fileVersion.getFileVersionId()) ||
 			!isSupported(fileVersion)) {
 
@@ -536,7 +548,7 @@ public class VideoProcessorImpl
 			try {
 				MessageBusUtil.sendSynchronousMessage(
 					DestinationNames.DOCUMENT_LIBRARY_VIDEO_PROCESSOR,
-					fileVersion);
+						new Object[]{copyFromVersion, fileVersion});
 			}
 			catch (MessageBusException mbe) {
 				if (_log.isWarnEnabled()) {
@@ -546,7 +558,8 @@ public class VideoProcessorImpl
 		}
 		else {
 			MessageBusUtil.sendMessage(
-				DestinationNames.DOCUMENT_LIBRARY_VIDEO_PROCESSOR, fileVersion);
+				DestinationNames.DOCUMENT_LIBRARY_VIDEO_PROCESSOR,
+					new Object[]{copyFromVersion, fileVersion});
 		}
 	}
 

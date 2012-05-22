@@ -105,7 +105,7 @@ public class DLAppHelperLocalServiceImpl
 				workflowContext);
 		}
 
-		registerDLProcessorCallback(fileEntry);
+		registerDLProcessorCallback(fileEntry, null);
 	}
 
 	public void addFolder(Folder folder, ServiceContext serviceContext)
@@ -574,8 +574,8 @@ public class DLAppHelperLocalServiceImpl
 	}
 
 	public void updateFileEntry(
-			long userId, FileEntry fileEntry, FileVersion fileVersion,
-			long assetClassPk)
+			long userId, FileEntry fileEntry, FileVersion copyFromVersion,
+			FileVersion fileVersion, long assetClassPk)
 		throws PortalException, SystemException {
 
 		boolean updateAsset = true;
@@ -590,12 +590,12 @@ public class DLAppHelperLocalServiceImpl
 			updateAsset(userId, fileEntry, fileVersion, assetClassPk);
 		}
 
-		registerDLProcessorCallback(fileEntry);
+		registerDLProcessorCallback(fileEntry, copyFromVersion);
 	}
 
 	public void updateFileEntry(
-			long userId, FileEntry fileEntry, FileVersion fileVersion,
-			ServiceContext serviceContext)
+			long userId, FileEntry fileEntry, FileVersion copyFromVersion,
+			FileVersion fileVersion, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		updateAsset(
@@ -604,7 +604,7 @@ public class DLAppHelperLocalServiceImpl
 			serviceContext.getAssetTagNames(),
 			serviceContext.getAssetLinkEntryIds());
 
-		registerDLProcessorCallback(fileEntry);
+		registerDLProcessorCallback(fileEntry, copyFromVersion);
 	}
 
 	public void updateFolder(Folder folder, ServiceContext serviceContext)
@@ -875,12 +875,14 @@ public class DLAppHelperLocalServiceImpl
 		}
 	}
 
-	protected void registerDLProcessorCallback(final FileEntry fileEntry) {
+	protected void registerDLProcessorCallback(
+			final FileEntry fileEntry, final FileVersion copyFromVersion) {
+
 		TransactionCommitCallbackUtil.registerCallback(
 			new Callable<Void>() {
 
 				public Void call() throws Exception {
-					DLProcessorRegistryUtil.trigger(fileEntry);
+					DLProcessorRegistryUtil.trigger(fileEntry, copyFromVersion);
 
 					return null;
 				}

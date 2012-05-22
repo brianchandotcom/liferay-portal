@@ -67,6 +67,9 @@ public class RawMetadataProcessorImpl
 	public void cleanUp(FileVersion fileVersion) {
 	}
 
+	public void copy(FileVersion srcVersion, FileVersion destVersion) {
+	}
+
 	public void exportGeneratedFiles(
 			PortletDataContext portletDataContext, FileEntry fileEntry,
 			Element fileEntryElement)
@@ -83,7 +86,7 @@ public class RawMetadataProcessorImpl
 				fileVersion.getFileEntryId(), fileVersion.getFileVersionId());
 
 		if (fileEntryMetadataCount == 0) {
-			_instance.trigger(fileVersion);
+			_instance.trigger(fileVersion, null);
 		}
 	}
 
@@ -165,7 +168,7 @@ public class RawMetadataProcessorImpl
 		}
 	}
 
-	public void trigger(FileVersion fileVersion) {
+	public void trigger(FileVersion copyFromVersion, FileVersion fileVersion) {
 		if (PropsValues.DL_FILE_ENTRY_PROCESSORS_TRIGGER_SYNCHRONOUSLY) {
 			try {
 				MessageBusUtil.sendSynchronousMessage(

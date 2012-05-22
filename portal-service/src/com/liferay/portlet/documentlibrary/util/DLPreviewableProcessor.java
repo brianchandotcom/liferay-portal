@@ -113,6 +113,11 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		deleteFiles(fileVersion, getThumbnailType());
 	}
 
+	public void copy(FileVersion srcVersion, FileVersion destVersion) {
+		doCopyThumbnails(srcVersion, destVersion);
+		doCopyPreviews(srcVersion, destVersion);
+	}
+
 	public void exportGeneratedFiles(
 			PortletDataContext portletDataContext, FileEntry fileEntry,
 			Element fileEntryElement)
@@ -229,6 +234,93 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		}
 
 		DLStoreUtil.addFile(companyId, REPOSITORY_ID, filePath, false, is);
+	}
+
+	protected void doCopyPreviews(
+		FileVersion srcVersion, FileVersion destVersion) {
+
+		try {
+			String[] previewTypes = getPreviewTypes();
+
+			for (int i = 0; i < previewTypes.length; i++) {
+				if (hasPreview(srcVersion, previewTypes[i]) &&
+					!hasPreview(destVersion, previewTypes[i])) {
+
+					String previewFilePath = getPreviewFilePath(
+						destVersion, previewTypes[i]);
+
+					InputStream is = doGetPreviewAsStream(
+						srcVersion, previewTypes[i]);
+
+					addFileToStore(
+						destVersion.getCompanyId(), PREVIEW_PATH,
+						previewFilePath, is);
+				}
+			}
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+	}
+
+	protected void doCopyThumbnails(
+		FileVersion srcVersion, FileVersion destVersion) {
+
+		try {
+			if (isThumbnailEnabled(THUMBNAIL_INDEX_DEFAULT)) {
+				if (hasThumbnail(srcVersion, THUMBNAIL_INDEX_DEFAULT) &&
+					!hasThumbnail(destVersion, THUMBNAIL_INDEX_DEFAULT)) {
+
+					InputStream is = doGetThumbnailAsStream(
+						srcVersion, THUMBNAIL_INDEX_DEFAULT);
+
+					String thumbnailFilePath = getThumbnailFilePath(
+						destVersion, getThumbnailType(destVersion),
+						THUMBNAIL_INDEX_DEFAULT);
+
+					addFileToStore(
+						destVersion.getCompanyId(), THUMBNAIL_PATH,
+						thumbnailFilePath, is);
+				}
+			}
+
+			if (isThumbnailEnabled(THUMBNAIL_INDEX_CUSTOM_1)) {
+				if (hasThumbnail(srcVersion, THUMBNAIL_INDEX_CUSTOM_1) &&
+					!hasThumbnail(destVersion, THUMBNAIL_INDEX_CUSTOM_1)) {
+
+					InputStream is = doGetThumbnailAsStream(
+						srcVersion, THUMBNAIL_INDEX_CUSTOM_1);
+
+					String thumbnailFilePath = getThumbnailFilePath(
+						destVersion, getThumbnailType(destVersion),
+						THUMBNAIL_INDEX_CUSTOM_1);
+
+					addFileToStore(
+						destVersion.getCompanyId(), THUMBNAIL_PATH,
+						thumbnailFilePath, is);
+				}
+			}
+
+			if (isThumbnailEnabled(THUMBNAIL_INDEX_CUSTOM_2)) {
+				if (hasThumbnail(srcVersion, THUMBNAIL_INDEX_CUSTOM_2) &&
+					!hasThumbnail(destVersion, THUMBNAIL_INDEX_CUSTOM_2)) {
+
+					InputStream is = doGetThumbnailAsStream(
+						srcVersion, THUMBNAIL_INDEX_CUSTOM_2);
+
+					String thumbnailFilePath = getThumbnailFilePath(
+						destVersion, getThumbnailType(destVersion),
+						THUMBNAIL_INDEX_CUSTOM_2);
+
+					addFileToStore(
+						destVersion.getCompanyId(), THUMBNAIL_PATH,
+						thumbnailFilePath, is);
+				}
+			}
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
 	}
 
 	protected abstract void doExportGeneratedFiles(

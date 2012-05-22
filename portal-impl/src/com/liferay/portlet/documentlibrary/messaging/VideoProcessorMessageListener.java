@@ -31,10 +31,13 @@ public class VideoProcessorMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		FileVersion fileVersion = (FileVersion)message.getPayload();
+		Object[] array = (Object[])message.getPayload();
+
+		FileVersion copyFromVersion = (FileVersion)array[0];
+		FileVersion fileVersion = (FileVersion)array[1];
 
 		try {
-			VideoProcessorUtil.generateVideo(fileVersion);
+			VideoProcessorUtil.generateVideo(copyFromVersion, fileVersion);
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {

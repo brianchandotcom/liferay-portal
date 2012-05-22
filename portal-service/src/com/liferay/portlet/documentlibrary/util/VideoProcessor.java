@@ -35,7 +35,9 @@ public interface VideoProcessor {
 			Element fileEntryElement)
 		throws Exception;
 
-	public void generateVideo(FileVersion fileVersion) throws Exception;
+	public void generateVideo(
+			FileVersion copyFromVersion, FileVersion fileVersion)
+		throws Exception;
 
 	public InputStream getPreviewAsStream(FileVersion fileVersion, String type)
 		throws Exception;
@@ -64,6 +66,6 @@ public interface VideoProcessor {
 
 	public boolean isVideoSupported(String mimeType);
 
-	public void trigger(FileVersion fileVersion);
+	public void trigger(FileVersion copyFromVersion, FileVersion fileVersion);
 
 }

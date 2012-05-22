@@ -71,8 +71,10 @@ public class ImageProcessorImpl
 		deleteFiles(fileVersion, type);
 	}
 
-	public void generateImages(FileVersion fileVersion) {
-		_instance._generateImages(fileVersion);
+	public void generateImages(
+			FileVersion copyFromVersion, FileVersion fileVersion) {
+
+		_instance._generateImages(copyFromVersion, fileVersion);
 	}
 
 	public Set<String> getImageMimeTypes() {
@@ -140,7 +142,7 @@ public class ImageProcessorImpl
 			}
 
 			if (!hasImages && _instance.isSupported(fileVersion)) {
-				_instance._queueGeneration(fileVersion);
+				_instance._queueGeneration(null, fileVersion);
 			}
 		}
 		catch (Exception e) {
@@ -177,8 +179,8 @@ public class ImageProcessorImpl
 			custom2ImageId, is, type);
 	}
 
-	public void trigger(FileVersion fileVersion) {
-		_instance._queueGeneration(fileVersion);
+	public void trigger(FileVersion copyFromVersion, FileVersion fileVersion) {
+		_instance._queueGeneration(copyFromVersion, fileVersion);
 	}
 
 	@Override
@@ -236,45 +238,51 @@ public class ImageProcessorImpl
 	private ImageProcessorImpl() {
 	}
 
-	private void _generateImages(FileVersion fileVersion) {
+	private void _generateImages(
+			FileVersion copyFromVersion, FileVersion fileVersion) {
+
 		InputStream inputStream = null;
 
 		try {
-			if (!PropsValues.DL_FILE_ENTRY_THUMBNAIL_ENABLED &&
-				!PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED) {
+			if (copyFromVersion != null) {
+				copy(copyFromVersion, fileVersion);
+			}else {
+				if (!PropsValues.DL_FILE_ENTRY_THUMBNAIL_ENABLED &&
+					!PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED) {
 
-				return;
-			}
-
-			inputStream = fileVersion.getContentStream(false);
-
-			byte[] bytes = FileUtil.getBytes(inputStream);
-
-			ImageBag imageBag = ImageToolUtil.read(bytes);
-
-			RenderedImage renderedImage = imageBag.getRenderedImage();
-
-			if (renderedImage == null) {
-				return;
-			}
-
-			if (renderedImage.getColorModel().getNumComponents() == 4) {
-				RenderedImage convertedRenderedImage =
-					ImageToolUtil.convertCMYKtoRGB(
-						bytes, imageBag.getType(),
-						PropsValues.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED);
-
-				if (convertedRenderedImage != null) {
-					renderedImage = convertedRenderedImage;
+					return;
 				}
-			}
 
-			if (!_hasPreview(fileVersion)) {
-				_storePreviewImage(fileVersion, renderedImage);
-			}
+				inputStream = fileVersion.getContentStream(false);
 
-			if (!hasThumbnails(fileVersion)) {
-				storeThumbnailImages(fileVersion, renderedImage);
+				byte[] bytes = FileUtil.getBytes(inputStream);
+
+				ImageBag imageBag = ImageToolUtil.read(bytes);
+
+				RenderedImage renderedImage = imageBag.getRenderedImage();
+
+				if (renderedImage == null) {
+					return;
+				}
+
+				if (renderedImage.getColorModel().getNumComponents() == 4) {
+					RenderedImage convertedRenderedImage =
+						ImageToolUtil.convertCMYKtoRGB(
+							bytes, imageBag.getType(), PropsValues
+								.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED);
+
+					if (convertedRenderedImage != null) {
+						renderedImage = convertedRenderedImage;
+					}
+				}
+
+				if (!_hasPreview(fileVersion)) {
+					_storePreviewImage(fileVersion, renderedImage);
+				}
+
+				if (!hasThumbnails(fileVersion)) {
+					storeThumbnailImages(fileVersion, renderedImage);
+				}
 			}
 		}
 		catch (NoSuchFileEntryException nsfee) {
@@ -340,7 +348,9 @@ public class ImageProcessorImpl
 		}
 	}
 
-	private void _queueGeneration(FileVersion fileVersion) {
+	private void _queueGeneration(
+			FileVersion copyFromVersion, FileVersion fileVersion) {
+
 		if (!_fileVersionIds.contains(fileVersion.getFileVersionId()) &&
 			isSupported(fileVersion) && !hasThumbnails(fileVersion)) {
 			_fileVersionIds.add(fileVersion.getFileVersionId());
@@ -349,7 +359,7 @@ public class ImageProcessorImpl
 				try {
 					MessageBusUtil.sendSynchronousMessage(
 						DestinationNames.DOCUMENT_LIBRARY_IMAGE_PROCESSOR,
-						fileVersion);
+							new Object[]{copyFromVersion, fileVersion});
 				}
 				catch (MessageBusException mbe) {
 					if (_log.isWarnEnabled()) {
@@ -360,7 +370,7 @@ public class ImageProcessorImpl
 			else {
 				MessageBusUtil.sendMessage(
 					DestinationNames.DOCUMENT_LIBRARY_IMAGE_PROCESSOR,
-					fileVersion);
+						new Object[]{copyFromVersion, fileVersion});
 			}
 		}
 	}

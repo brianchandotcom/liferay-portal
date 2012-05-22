@@ -73,8 +73,12 @@ public class PDFProcessorImpl
 		return _instance;
 	}
 
-	public void generateImages(FileVersion fileVersion) throws Exception {
-		Initializer._initializedInstance._generateImages(fileVersion);
+	public void generateImages(
+			FileVersion copyFromVersion, FileVersion fileVersion)
+		throws Exception {
+
+		Initializer._initializedInstance._generateImages(
+				copyFromVersion, fileVersion);
 	}
 
 	public InputStream getPreviewAsStream(FileVersion fileVersion, int index)
@@ -122,7 +126,8 @@ public class PDFProcessorImpl
 			hasImages = _hasImages(fileVersion);
 
 			if (!hasImages && isSupported(fileVersion)) {
-				Initializer._initializedInstance._queueGeneration(fileVersion);
+				Initializer._initializedInstance._queueGeneration(
+						null, fileVersion);
 			}
 		}
 		catch (Exception e) {
@@ -191,8 +196,42 @@ public class PDFProcessorImpl
 		return false;
 	}
 
-	public void trigger(FileVersion fileVersion) {
-		Initializer._initializedInstance._queueGeneration(fileVersion);
+	public void trigger(FileVersion copyFromVersion, FileVersion fileVersion) {
+		Initializer._initializedInstance._queueGeneration(
+				copyFromVersion, fileVersion);
+	}
+
+	protected void doCopyPreviews(
+		FileVersion srcVersion, FileVersion destVersion) {
+
+		if (PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED) {
+			try {
+				if (DLStoreUtil.hasFile(
+					srcVersion.getCompanyId(), REPOSITORY_ID,
+					getPreviewFilePath(srcVersion, 1)) &&
+					!DLStoreUtil.hasFile(
+						destVersion.getCompanyId(), REPOSITORY_ID,
+						getPreviewFilePath(destVersion, 1))) {
+
+					int total = getPreviewFileCount(srcVersion);
+
+					for (int i = 0; i < total; i++) {
+						String previewFilePath = getPreviewFilePath(
+							destVersion, i + 1);
+
+						InputStream is = doGetPreviewAsStream(
+							srcVersion, i + 1, PREVIEW_TYPE);
+
+						addFileToStore(
+							destVersion.getCompanyId(), PREVIEW_PATH,
+							previewFilePath, is);
+					}
+				}
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
+		}
 	}
 
 	@Override
@@ -287,46 +326,64 @@ public class PDFProcessorImpl
 	private PDFProcessorImpl() {
 	}
 
-	private void _generateImages(FileVersion fileVersion) throws Exception {
+	private void _generateImages(FileVersion fileVersion, File file)
+			throws Exception {
+
+		if (isImageMagickEnabled()) {
+			_generateImagesIM(fileVersion, file);
+		}
+		else {
+			_generateImagesPB(fileVersion, file);
+		}
+	}
+
+	private void _generateImages(
+			FileVersion copyFromVersion, FileVersion fileVersion)
+		throws Exception {
+
 		InputStream inputStream = null;
 
 		try {
-			if (_hasImages(fileVersion)) {
-				return;
-			}
-
-			String extension = fileVersion.getExtension();
-
-			if (extension.equals("pdf")) {
-				if (fileVersion instanceof LiferayFileVersion) {
-					try {
-						LiferayFileVersion liferayFileVersion =
-							(LiferayFileVersion)fileVersion;
-
-						File file = liferayFileVersion.getFile(false);
-
-						_generateImages(fileVersion, file);
-
-						return;
-					}
-					catch (UnsupportedOperationException uoe) {
-					}
+			if (copyFromVersion != null) {
+				copy(copyFromVersion, fileVersion);
+			}else {
+				if (_hasImages(fileVersion)) {
+					return;
 				}
 
-				inputStream = fileVersion.getContentStream(false);
+				String extension = fileVersion.getExtension();
 
-				_generateImages(fileVersion, inputStream);
-			}
-			else if (DocumentConversionUtil.isEnabled()) {
-				inputStream = fileVersion.getContentStream(false);
+				if (extension.equals("pdf")) {
+					if (fileVersion instanceof LiferayFileVersion) {
+						try {
+							LiferayFileVersion liferayFileVersion =
+								(LiferayFileVersion)fileVersion;
 
-				String tempFileId = DLUtil.getTempFileId(
-					fileVersion.getFileEntryId(), fileVersion.getVersion());
+							File file = liferayFileVersion.getFile(false);
 
-				File file = DocumentConversionUtil.convert(
-					tempFileId, inputStream, extension, "pdf");
+							_generateImages(fileVersion, file);
 
-				_generateImages(fileVersion, file);
+							return;
+						}
+						catch (UnsupportedOperationException uoe) {
+						}
+					}
+
+					inputStream = fileVersion.getContentStream(false);
+
+					_generateImages(fileVersion, inputStream);
+				}
+				else if (DocumentConversionUtil.isEnabled()) {
+					inputStream = fileVersion.getContentStream(false);
+
+					String tempFileId = DLUtil.getTempFileId(
+						fileVersion.getFileEntryId(), fileVersion.getVersion());
+
+					File file = DocumentConversionUtil.convert(
+						tempFileId, inputStream, extension, "pdf");
+
+					_generateImages(fileVersion, file);
+				}
 			}
 		}
 		catch (NoSuchFileEntryException nsfee) {
@@ -335,17 +392,6 @@ public class PDFProcessorImpl
 			StreamUtil.cleanUp(inputStream);
 
 			_fileVersionIds.remove(fileVersion.getFileVersionId());
-		}
-	}
-
-	private void _generateImages(FileVersion fileVersion, File file)
-		throws Exception {
-
-		if (isImageMagickEnabled()) {
-			_generateImagesIM(fileVersion, file);
-		}
-		else {
-			_generateImagesPB(fileVersion, file);
 		}
 	}
 
@@ -660,7 +706,9 @@ public class PDFProcessorImpl
 		}
 	}
 
-	private void _queueGeneration(FileVersion fileVersion) {
+	private void _queueGeneration(
+			final FileVersion copyFromVersion, final FileVersion fileVersion) {
+
 		if (_fileVersionIds.contains(fileVersion.getFileVersionId())) {
 			return;
 		}
@@ -692,7 +740,7 @@ public class PDFProcessorImpl
 				try {
 					MessageBusUtil.sendSynchronousMessage(
 						DestinationNames.DOCUMENT_LIBRARY_PDF_PROCESSOR,
-						fileVersion);
+						new Object[]{copyFromVersion, fileVersion});
 				}
 				catch (MessageBusException mbe) {
 					if (_log.isWarnEnabled()) {
@@ -703,7 +751,7 @@ public class PDFProcessorImpl
 			else {
 				MessageBusUtil.sendMessage(
 					DestinationNames.DOCUMENT_LIBRARY_PDF_PROCESSOR,
-					fileVersion);
+						new Object[]{copyFromVersion, fileVersion});
 			}
 		}
 	}

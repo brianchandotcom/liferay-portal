@@ -217,7 +217,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 					FileVersion fileVersion = new LiferayFileVersion(
 						dlFileVersion);
 
-					ImageProcessorUtil.generateImages(fileVersion);
+					ImageProcessorUtil.generateImages(null, fileVersion);
 				}
 			}
 		}

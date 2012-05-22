@@ -81,6 +81,6 @@ public interface RawMetadataProcessor {
 	 * @param fileVersion the latest file version from which the raw metadata is
 	 *        to be generated
 	 */
-	public void trigger(FileVersion fileVersion);
+	public void trigger(FileVersion copyFromVersion, FileVersion fileVersion);
 
 }

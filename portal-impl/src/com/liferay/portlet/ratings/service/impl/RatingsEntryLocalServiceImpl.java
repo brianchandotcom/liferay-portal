@@ -24,6 +24,8 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.model.BlogsStatsUser;
+import com.liferay.portlet.messageboards.model.MBDiscussion;
+import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.ratings.EntryScoreException;
 import com.liferay.portlet.ratings.model.RatingsEntry;
 import com.liferay.portlet.ratings.model.RatingsStats;
@@ -144,7 +146,7 @@ public class RatingsEntryLocalServiceImpl
 		double oldScore = 0;
 		Date now = new Date();
 
-		validate(score);
+		validate(className, score);
 
 		RatingsEntry entry = ratingsEntryPersistence.fetchByU_C_C(
 			userId, classNameId, classPK);
@@ -247,10 +249,20 @@ public class RatingsEntryLocalServiceImpl
 		return entry;
 	}
 
-	protected void validate(double score) throws PortalException {
-		if ((score < 0) ||
-			(score > PropsValues.RATINGS_DEFAULT_NUMBER_OF_STARS)) {
+	protected void validate(String className, double score)
+		throws PortalException {
 
+		double maxScore = PropsValues.RATINGS_DEFAULT_NUMBER_OF_STARS;
+		double minScore = 0;
+
+		if (className.equals(MBDiscussion.class.getName()) ||
+			className.equals(MBMessage.class.getName())) {
+
+			maxScore = 1;
+			minScore = -1;
+		}
+
+		if ((score < minScore) || (score > maxScore)) {
 			throw new EntryScoreException();
 		}
 	}

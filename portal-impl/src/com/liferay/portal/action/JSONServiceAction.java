@@ -420,15 +420,17 @@ public class JSONServiceAction extends JSONAction {
 			String[] parameterTypes)
 		throws Exception {
 
+		String key =
+			clazz.getName() + "_METHOD_NAME_" + methodName + "_PARAMETERS_";
+
 		String parameterTypesNames = StringUtil.merge(parameterTypes);
 
 		if (Validator.isNull(parameterTypesNames)) {
-			parameterTypesNames = StringUtil.merge(parameters);
+			key += parameters.length;
 		}
-
-		String key =
-			clazz.getName() + "_METHOD_NAME_" + methodName + "_PARAMETERS_" +
-				parameterTypesNames;
+		else {
+			key += parameterTypesNames;
+		}
 
 		Object[] methodAndParameterTypes = _methodCache.get(key);
 

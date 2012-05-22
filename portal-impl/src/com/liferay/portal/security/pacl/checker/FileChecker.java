@@ -24,10 +24,12 @@ import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PathUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
+import com.liferay.portal.security.pacl.PACLClassUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.util.UniqueList;
@@ -43,6 +45,8 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.servlet.ServletContext;
+
+import sun.reflect.Reflection;
 
 /**
  * @author Brian Wing Shun Chan
@@ -72,6 +76,7 @@ public class FileChecker extends BaseChecker {
 		}
 
 		_defaultReadPathsFromArray = new String[] {
+			"${auto.deploy.installed.dir}",
 			"${catalina.base}",
 			"${com.sun.aas.instanceRoot}",
 			"${com.sun.aas.installRoot}",
@@ -82,18 +87,30 @@ public class FileChecker extends BaseChecker {
 			"${org.apache.geronimo.home.dir}",
 			"${org.apache.geronimo.home.dir}",
 			"${plugin.servlet.context.name}",
+			"${release.info.version}",
 			"${weblogic.home.dir}"
 		};
 
+		String installedDir = StringPool.BLANK;
+
+		try {
+			if (DeployManagerUtil.getDeployManager() != null) {
+				installedDir = DeployManagerUtil.getInstalledDir();
+			}
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
 		_defaultReadPathsToArray = new String[] {
-			System.getProperty("catalina.base"),
+			installedDir, System.getProperty("catalina.base"),
 			System.getProperty("com.sun.aas.instanceRoot"),
 			System.getProperty("com.sun.aas.installRoot"),
 			System.getProperty("jboss.home.dir"),
 			System.getProperty("jetty.home"), System.getProperty("jonas.base"),
 			_portalDir, System.getProperty("org.apache.geronimo.home.dir"),
 			System.getProperty("resin.home"), getServletContextName(),
-			System.getenv("DOMAIN_HOME")
+			ReleaseInfo.getVersion(), System.getenv("DOMAIN_HOME")
 		};
 
 		if (_log.isDebugEnabled()) {
@@ -221,14 +238,8 @@ public class FileChecker extends BaseChecker {
 		String value = getProperty(key);
 
 		if (value != null) {
-			try {
-				value = StringUtil.replace(
-					value, "${auto.deploy.installed.dir}",
-					DeployManagerUtil.getInstalledDir());
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
+			value = StringUtil.replace(
+				value, _defaultReadPathsFromArray, _defaultReadPathsToArray);
 
 			String[] paths = StringUtil.split(value);
 
@@ -352,6 +363,24 @@ public class FileChecker extends BaseChecker {
 			return true;
 		}
 
+		Class<?> callerClass10 = Reflection.getCallerClass(10);
+
+		if (isGeronimoJarFileClassLoader(
+				callerClass10.getEnclosingClass()) &&
+			CheckerUtil.isAccessControllerDoPrivileged(11)) {
+
+			return true;
+		}
+
+		Class<?> callerClass20 = Reflection.getCallerClass(20);
+
+		if (isGeronimoJarFileClassLoader(
+				callerClass20.getEnclosingClass()) &&
+			CheckerUtil.isAccessControllerDoPrivileged(21)) {
+
+			return true;
+		}
+
 		return false;
 	}
 
@@ -379,6 +408,32 @@ public class FileChecker extends BaseChecker {
 		_writePermissions = getPermissions(
 			"security-manager-files-write", FILE_PERMISSION_ACTION_WRITE);
 	}
+
+	protected boolean isGeronimoJarFileClassLoader(Class<?> clazz) {
+		if (!ServerDetector.isGeronimo()) {
+			return false;
+		}
+
+		if (clazz == null) {
+			return false;
+		}
+
+		String className = clazz.getName();
+
+		if (!className.equals(_CLASS_NAME_JAR_FILE_CLASS_LOADER)) {
+			return false;
+		}
+
+		String actualClassLocation = PACLClassUtil.getClassLocation(clazz);
+		String expectedClassLocation = PathUtil.toUnixPath(
+			System.getProperty("org.apache.geronimo.home.dir") +
+				"/lib/geronimo-kernel-");
+
+		return actualClassLocation.contains(expectedClassLocation);
+	}
+
+	private static final String _CLASS_NAME_JAR_FILE_CLASS_LOADER =
+		"org.apache.geronimo.kernel.classloader.JarFileClassLoader";
 
 	private static Log _log = LogFactoryUtil.getLog(FileChecker.class);
 

@@ -487,7 +487,7 @@
 	</category>
 
 	<category name="com.liferay.portal.security.pacl.checker.FileChecker">
-		<priority value="ERROR" />
+		<priority value="WARN" />
 	</category>
 
 	<category name="com.liferay.portal.security.pacl.checker.NetChecker">
@@ -511,11 +511,11 @@
 	</category>
 
 	<category name="com.liferay.portal.security.pacl.checker.ReflectChecker">
-		<priority value="ERROR" />
+		<priority value="WARN" />
 	</category>
 
 	<category name="com.liferay.portal.security.pacl.checker.RuntimeChecker">
-		<priority value="ERROR" />
+		<priority value="WARN" />
 	</category>
 
 	<category name="com.liferay.portal.security.pacl.checker.SecurityChecker">

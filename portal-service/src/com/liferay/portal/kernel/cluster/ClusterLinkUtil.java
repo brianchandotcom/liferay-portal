@@ -32,8 +32,6 @@ public class ClusterLinkUtil {
 		"CLUSTER_FORWARD_MESSAGE";
 
 	public static Address getAddress(Message message) {
-		getClusterLink();
-
 		return (Address)message.get(_ADDRESS);
 	}
 
@@ -72,8 +70,6 @@ public class ClusterLinkUtil {
 	}
 
 	public static boolean isForwardMessage(Message message) {
-		getClusterLink();
-
 		return message.getBoolean(CLUSTER_FORWARD_MESSAGE);
 	}
 
@@ -110,16 +106,12 @@ public class ClusterLinkUtil {
 	}
 
 	public static Message setAddress(Message message, Address address) {
-		getClusterLink();
-
 		message.put(_ADDRESS, address);
 
 		return message;
 	}
 
 	public static void setForwardMessage(Message message) {
-		getClusterLink();
-
 		message.put(CLUSTER_FORWARD_MESSAGE, true);
 	}
 

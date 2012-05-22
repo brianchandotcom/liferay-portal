@@ -86,8 +86,6 @@ public class PortletContainerUtil {
 		HttpServletRequest request, String renderPath, String columnId,
 		Integer columnPos, Integer columnCount) {
 
-		getPortletContainer();
-
 		if ((_LAYOUT_PARALLEL_RENDER_ENABLE && ServerDetector.isTomcat()) ||
 			_PORTLET_CONTAINER_RESTRICT) {
 

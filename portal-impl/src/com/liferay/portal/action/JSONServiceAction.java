@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -420,17 +421,23 @@ public class JSONServiceAction extends JSONAction {
 			String[] parameterTypes)
 		throws Exception {
 
-		String key =
-			clazz.getName() + "_METHOD_NAME_" + methodName + "_PARAMETERS_";
+		StringBundler keyStringBundler = new StringBundler(5);
+
+		keyStringBundler.append(clazz.getName());
+		keyStringBundler.append("_METHOD_NAME_");
+		keyStringBundler.append(methodName);
+		keyStringBundler.append("_PARAMETERS_");
 
 		String parameterTypesNames = StringUtil.merge(parameterTypes);
 
 		if (Validator.isNull(parameterTypesNames)) {
-			key += parameters.length;
+			keyStringBundler.append(parameters.length);
 		}
 		else {
-			key += parameterTypesNames;
+			keyStringBundler.append(parameterTypesNames);
 		}
+
+		String key = keyStringBundler.toString();
 
 		Object[] methodAndParameterTypes = _methodCache.get(key);
 

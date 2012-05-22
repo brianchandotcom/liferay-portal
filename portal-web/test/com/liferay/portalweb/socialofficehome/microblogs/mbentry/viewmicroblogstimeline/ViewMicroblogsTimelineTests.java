@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.portalweb.socialofficehome.microblogs;
+package com.liferay.portalweb.socialofficehome.microblogs.mbentry.viewmicroblogstimeline;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.socialofficehome.microblogs.mbentry.MBEntryTestPlan;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -23,14 +22,15 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class MicroblogsTestPlan extends BaseTestSuite {
-
+public class ViewMicroblogsTimelineTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-
-		testSuite.addTest(MBEntryTestPlan.suite());
+		testSuite.addTestSuite(AddMicroblogsContent1ViewableByConnectionsTest.class);
+		testSuite.addTestSuite(AddMicroblogsContent1ViewableByEveryoneTest.class);
+		testSuite.addTestSuite(AddMicroblogsContent1ViewableByFollowersTest.class);
+		testSuite.addTestSuite(ViewMicroblogsTimelineTest.class);
+		testSuite.addTestSuite(TearDownWHEntryContentTest.class);
 
 		return testSuite;
 	}
-
 }

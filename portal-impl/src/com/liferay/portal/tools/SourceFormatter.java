@@ -1598,7 +1598,9 @@ public class SourceFormatter {
 							line, addedToPreviousLine, StringPool.BLANK);
 					}
 				}
-				else if (line.endsWith(StringPool.OPEN_CURLY_BRACE)) {
+				else if (line.endsWith(StringPool.OPEN_CURLY_BRACE) &&
+						 !previousLine.contains(" class ")) {
+
 					lineToSkipIfEmpty = lineCount + 1;
 				}
 			}
@@ -2411,7 +2413,8 @@ public class SourceFormatter {
 				return new String[] {previousLine + StringPool.SPACE + line};
 			}
 
-			if (previousLine.endsWith(StringPool.EQUAL) &&
+			if ((previousLine.endsWith(StringPool.EQUAL) ||
+				 trimmedPreviousLine.equals("return")) &&
 				line.endsWith(StringPool.SEMICOLON)) {
 
 				return new String[] {previousLine + StringPool.SPACE + line};
@@ -2425,7 +2428,9 @@ public class SourceFormatter {
 				return new String[] {previousLine + StringPool.SPACE + line};
 			}
 
-			if (line.startsWith("throws ") &&
+			if ((line.startsWith("extends ") ||
+				 line.startsWith("implements ") ||
+				 line.startsWith("throws")) &&
 				line.endsWith(StringPool.OPEN_CURLY_BRACE) &&
 				(lineTabCount == (previousLineTabCount + 1))) {
 

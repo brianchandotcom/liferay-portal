@@ -59,7 +59,7 @@ public class TearDownDMContentTest extends BaseTestCase {
 				loadRequiredJavaScriptModules();
 
 				boolean documentsNotRecycled = selenium.isElementPresent(
-						"//a[@class='document-link']/span/img");
+						"//a[@class='document-link']/div/img");
 
 				if (!documentsNotRecycled) {
 					label = 2;

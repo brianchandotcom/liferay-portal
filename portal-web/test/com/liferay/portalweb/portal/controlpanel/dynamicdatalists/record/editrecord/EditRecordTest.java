@@ -158,7 +158,7 @@ public class EditRecordTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("document.txt")
+				if (RuntimeVariables.replace("document_1.txt")
 										.equals(selenium.getValue(
 								"//div[4]/div/span/span/span/input"))) {
 					break;
@@ -170,14 +170,13 @@ public class EditRecordTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals("document.txt",
+		assertEquals("document_1.txt",
 			selenium.getValue("//div[4]/div/span/span/span/input"));
 		assertTrue(selenium.isPartialText(
 				"//div[@class='aui-fieldset-content ']/div[5]/span/span/label",
 				"File Upload"));
-		selenium.type("//div[@class='aui-fieldset-content ']/div[5]/span/span/span/input",
-			RuntimeVariables.replace(
-				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portal\\controlpanel\\dynamicdatalists\\dependencies\\document.txt"));
+		selenium.uploadCommonFile("//div[@class='aui-fieldset-content ']/div[5]/span/span/span/input",
+			RuntimeVariables.replace("document_2.txt"));
 		assertEquals(RuntimeVariables.replace("Integer"),
 			selenium.getText(
 				"//div[@class='aui-fieldset-content ']/div[6]/span/span/label"));

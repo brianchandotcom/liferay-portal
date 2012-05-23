@@ -18,12 +18,12 @@ import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portlet.assetpublisher.bmbookmark.addnewbmfolderbookmarkapactions.AddNewBMFolderBookmarkAPActionsTests;
 import com.liferay.portalweb.portlet.assetpublisher.bmbookmark.deletebmfolderbookmarkap.DeleteBMFolderBookmarkAPTests;
 import com.liferay.portalweb.portlet.assetpublisher.bmbookmark.selectexistingbmfolderbookmarkapactions.SelectExistingBMFolderBookmarkAPActionsTests;
-import com.liferay.portalweb.portlet.assetpublisher.bmbookmark.viewconfigureportletabstractsbmfolderbookmarkap.ViewConfigurePortletAbstractsBMFolderBookmarkAPTests;
-import com.liferay.portalweb.portlet.assetpublisher.bmbookmark.viewconfigureportletavailablebookmarksentryap.ViewConfigurePortletAvailableBookmarksEntryAPTests;
-import com.liferay.portalweb.portlet.assetpublisher.bmbookmark.viewconfigureportletcurrentbookmarksentryap.ViewConfigurePortletCurrentBookmarksEntryAPTests;
-import com.liferay.portalweb.portlet.assetpublisher.bmbookmark.viewconfigureportletfullcontentbmfolderbookmarkap.ViewConfigurePortletFullContentBMFolderBookmarkAPTests;
-import com.liferay.portalweb.portlet.assetpublisher.bmbookmark.viewconfigureportlettablebmfolderbookmarkap.ViewConfigurePortletTableBMFolderBookmarkAPTests;
-import com.liferay.portalweb.portlet.assetpublisher.bmbookmark.viewconfigureportlettitlelistbmfolderbookmarkap.ViewConfigurePortletTitleListBMFolderBookmarkAPTests;
+import com.liferay.portalweb.portlet.assetpublisher.bmbookmark.viewportletabstractsbmfolderbookmarkap.ViewPortletAbstractsBMFolderBookmarkAPTests;
+import com.liferay.portalweb.portlet.assetpublisher.bmbookmark.viewportletavailablebookmarksentryap.ViewPortletAvailableBookmarksEntryAPTests;
+import com.liferay.portalweb.portlet.assetpublisher.bmbookmark.viewportletcurrentbookmarksentryap.ViewPortletCurrentBookmarksEntryAPTests;
+import com.liferay.portalweb.portlet.assetpublisher.bmbookmark.viewportletfullcontentbmfolderbookmarkap.ViewPortletFullContentBMFolderBookmarkAPTests;
+import com.liferay.portalweb.portlet.assetpublisher.bmbookmark.viewportlettablebmfolderbookmarkap.ViewPortletTableBMFolderBookmarkAPTests;
+import com.liferay.portalweb.portlet.assetpublisher.bmbookmark.viewportlettitlelistbmfolderbookmarkap.ViewPortletTitleListBMFolderBookmarkAPTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -39,18 +39,13 @@ public class BMBookmarkTestPlan extends BaseTestSuite {
 		testSuite.addTest(AddNewBMFolderBookmarkAPActionsTests.suite());
 		testSuite.addTest(DeleteBMFolderBookmarkAPTests.suite());
 		testSuite.addTest(SelectExistingBMFolderBookmarkAPActionsTests.suite());
+		testSuite.addTest(ViewPortletAbstractsBMFolderBookmarkAPTests.suite());
+		testSuite.addTest(ViewPortletAvailableBookmarksEntryAPTests.suite());
+		testSuite.addTest(ViewPortletCurrentBookmarksEntryAPTests.suite());
 		testSuite.addTest(
-			ViewConfigurePortletAbstractsBMFolderBookmarkAPTests.suite());
-		testSuite.addTest(
-			ViewConfigurePortletAvailableBookmarksEntryAPTests.suite());
-		testSuite.addTest(
-			ViewConfigurePortletCurrentBookmarksEntryAPTests.suite());
-		testSuite.addTest(
-			ViewConfigurePortletFullContentBMFolderBookmarkAPTests.suite());
-		testSuite.addTest(
-			ViewConfigurePortletTableBMFolderBookmarkAPTests.suite());
-		testSuite.addTest(
-			ViewConfigurePortletTitleListBMFolderBookmarkAPTests.suite());
+			ViewPortletFullContentBMFolderBookmarkAPTests.suite());
+		testSuite.addTest(ViewPortletTableBMFolderBookmarkAPTests.suite());
+		testSuite.addTest(ViewPortletTitleListBMFolderBookmarkAPTests.suite());
 
 		return testSuite;
 	}

@@ -15,7 +15,7 @@
 package com.liferay.portalweb.socialofficehome.microblogs;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.socialofficehome.microblogs.microblogsentry.MicroblogsEntryTestPlan;
+import com.liferay.portalweb.socialofficehome.microblogs.mbentry.MBEntryTestPlan;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -28,7 +28,7 @@ public class MicroblogsTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(MicroblogsEntryTestPlan.suite());
+		testSuite.addTest(MBEntryTestPlan.suite());
 
 		return testSuite;
 	}

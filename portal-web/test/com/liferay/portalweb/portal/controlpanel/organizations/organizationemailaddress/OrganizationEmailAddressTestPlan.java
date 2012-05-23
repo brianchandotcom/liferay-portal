@@ -16,8 +16,8 @@ package com.liferay.portalweb.portal.controlpanel.organizations.organizationemai
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.organizations.organizationemailaddress.addorganizationemailaddress.AddOrganizationEmailAddressTests;
+import com.liferay.portalweb.portal.controlpanel.organizations.organizationemailaddress.addorganizationemailaddresses.AddOrganizationEmailAddressesTests;
 import com.liferay.portalweb.portal.controlpanel.organizations.organizationemailaddress.addorganizationemailaddressinvalid.AddOrganizationEmailAddressInvalidTests;
-import com.liferay.portalweb.portal.controlpanel.organizations.organizationemailaddress.addorganizationemailaddressmultiple.AddOrganizationEmailAddressMultipleTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -31,8 +31,8 @@ public class OrganizationEmailAddressTestPlan extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(AddOrganizationEmailAddressTests.suite());
+		testSuite.addTest(AddOrganizationEmailAddressesTests.suite());
 		testSuite.addTest(AddOrganizationEmailAddressInvalidTests.suite());
-		testSuite.addTest(AddOrganizationEmailAddressMultipleTests.suite());
 
 		return testSuite;
 	}

@@ -17,7 +17,7 @@ package com.liferay.portalweb.portal.controlpanel.organizations.organizationaddr
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.organizations.organizationaddress.addorganizationaddress.AddOrganizationAddressTests;
 import com.liferay.portalweb.portal.controlpanel.organizations.organizationaddress.addorganizationaddresscitynull.AddOrganizationAddressCityNullTests;
-import com.liferay.portalweb.portal.controlpanel.organizations.organizationaddress.addorganizationaddressmultiple.AddOrganizationAddressMultipleTests;
+import com.liferay.portalweb.portal.controlpanel.organizations.organizationaddress.addorganizationaddresses.AddOrganizationAddressesTests;
 import com.liferay.portalweb.portal.controlpanel.organizations.organizationaddress.addorganizationaddressstreetnull.AddOrganizationAddressStreetNullTests;
 import com.liferay.portalweb.portal.controlpanel.organizations.organizationaddress.addorganizationaddresszipnull.AddOrganizationAddressZipNullTests;
 import com.liferay.portalweb.portal.controlpanel.organizations.organizationaddress.advancedsearchorganizationaddress.AdvancedSearchOrganizationAddressTests;
@@ -35,7 +35,7 @@ public class OrganizationAddressTestPlan extends BaseTestSuite {
 
 		testSuite.addTest(AddOrganizationAddressTests.suite());
 		testSuite.addTest(AddOrganizationAddressCityNullTests.suite());
-		testSuite.addTest(AddOrganizationAddressMultipleTests.suite());
+		testSuite.addTest(AddOrganizationAddressesTests.suite());
 		testSuite.addTest(AddOrganizationAddressStreetNullTests.suite());
 		testSuite.addTest(AddOrganizationAddressZipNullTests.suite());
 		testSuite.addTest(AdvancedSearchOrganizationAddressTests.suite());

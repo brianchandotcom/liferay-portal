@@ -23,7 +23,7 @@ import com.liferay.portalweb.portlet.assetpublisher.dldocument.DLDocumentTestPla
 import com.liferay.portalweb.portlet.assetpublisher.dldocumentcomment.DLDocumentCommentTestPlan;
 import com.liferay.portalweb.portlet.assetpublisher.igimage.IGImageTestPlan;
 import com.liferay.portalweb.portlet.assetpublisher.lar.LARTestPlan;
-import com.liferay.portalweb.portlet.assetpublisher.mbthreadmessage.MBThreadMessageTestPlan;
+import com.liferay.portalweb.portlet.assetpublisher.mbthread.MBThreadTestPlan;
 import com.liferay.portalweb.portlet.assetpublisher.portlet.PortletTestPlan;
 import com.liferay.portalweb.portlet.assetpublisher.wcwebcontent.WCWebContentTestPlan;
 import com.liferay.portalweb.portlet.assetpublisher.wcwebcontentcomment.WCWebContentCommentTestPlan;
@@ -49,7 +49,7 @@ public class AssetPublisherTestPlan extends BaseTestSuite {
 		testSuite.addTest(DLDocumentCommentTestPlan.suite());
 		testSuite.addTest(IGImageTestPlan.suite());
 		testSuite.addTest(LARTestPlan.suite());
-		testSuite.addTest(MBThreadMessageTestPlan.suite());
+		testSuite.addTest(MBThreadTestPlan.suite());
 		testSuite.addTest(PortletTestPlan.suite());
 		testSuite.addTest(WCWebContentTestPlan.suite());
 		testSuite.addTest(WCWebContentCommentTestPlan.suite());

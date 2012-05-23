@@ -14,7 +14,7 @@
 
 package com.liferay.portalweb.portal;
 
-import com.liferay.portalweb.plugins.kaleo.messageboards.MessageBoardsTestPlan;
+import com.liferay.portalweb.kaleo.messageboards.MessageBoardsTestPlan;
 import com.liferay.portalweb.portal.login.LoginTests;
 
 import junit.framework.Test;

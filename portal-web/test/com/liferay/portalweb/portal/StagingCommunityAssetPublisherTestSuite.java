@@ -15,7 +15,7 @@
 package com.liferay.portalweb.portal;
 
 import com.liferay.portalweb.portal.login.LoginTests;
-import com.liferay.portalweb.stagingcommunity.assetpublisher.AssetPublisherTestPlan;
+import com.liferay.portalweb.stagingsite.assetpublisher.AssetPublisherTestPlan;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

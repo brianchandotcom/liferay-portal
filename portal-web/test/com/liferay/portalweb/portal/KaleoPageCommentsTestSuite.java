@@ -14,7 +14,7 @@
 
 package com.liferay.portalweb.portal;
 
-import com.liferay.portalweb.plugins.kaleo.pagecomments.PageCommentsTestPlan;
+import com.liferay.portalweb.kaleo.pagecomments.PageCommentsTestPlan;
 import com.liferay.portalweb.portal.login.LoginTests;
 
 import junit.framework.Test;

@@ -272,7 +272,7 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 			LayoutPrototypeException lpe = (LayoutPrototypeException)errorException;
 		%>
 
-		<liferay-ui:message key="the-pages-could-not-be-published-because-one-of-them-require-a-page-template-could-not-be-found-on-the-remote-system.-please-import-the-following-templates-manually" />
+		<liferay-ui:message key="the-pages-could-not-be-published-because-one-or-more-required-page-templates-could-not-be-found-on-the-remote-system.-please-import-the-following-templates-manually" />
 
 		<ul>
 

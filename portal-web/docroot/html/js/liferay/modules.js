@@ -88,6 +88,7 @@
 			'translation-manager': ['aui-base'],
 			'undo-manager': ['aui-data-set', 'base'],
 			'upload': ['aui-io-request', 'aui-swf', 'collection', 'swfupload'],
+			'upload-progress': ['aui-progressbar'],
 			'util-list-fields': ['aui-base'],
 			'util-window': ['aui-dialog', 'aui-dialog-iframe']
 		};

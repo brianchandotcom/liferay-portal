@@ -1,97 +1,99 @@
-function UploadProgress(uploadProgressId, redirect) {
-	this.uploadProgressId = uploadProgressId;
-	this.redirect = decodeURIComponent(redirect);
-	this.count = 0;
-	this.currentPercent = 0;
-	this.currentSpeed = 0.1;
-	this.startTime = 0;
+AUI.add(
+	'liferay-upload-progress',
+	function(A) {
+		var Lang = A.Lang;
 
-	this.animateBar = UploadProgress_animateBar;
-	this.hideProgress = UploadProgress_hideProgress;
-	this.sendRedirect = UploadProgress_sendRedirect;
-	this.startProgress = UploadProgress_startProgress;
-	this.updateBar = UploadProgress_updateBar;
-	this.updateIFrame = UploadProgress_updateIFrame;
-	this.updateProgress = UploadProgress_updateProgress;
-}
+		var STR_VALUE = 'value';
 
-function UploadProgress_animateBar(percent) {
-	this.count++
+		var STR_UPDATE_PERIOD = 'updatePeriod';
 
-	percent = Math.max(percent, this.currentPercent);
+		var TPL_FRAME = '<iframe frameborder="0" height="0" id="{0}-poller" src="javascript:;" style="display:none" tabindex="-1" title="empty" width="0"></iframe>';
 
-	this.currentPercent = percent;
+		var TPL_URL_UPDATE = themeDisplay.getPathMain() + '/portal/upload_progress_poller?uploadProgressId={0}&updatePeriod={1}';
 
-	var barContainer = document.getElementById(this.uploadProgressId + "-bar-div");
-	var progressBar = document.getElementById(this.uploadProgressId + "-bar");
-	var progressText = progressBar.getElementsByTagName("div")[1];
+		var WIN = A.config.win;
 
-	barContainer.style.display = "block";
+		var UploadProgressBar = A.Component.create(
+			{
+				ATTRS: {
+					updatePeriod: {
+						validator: Lang.isNumber,
+						value: 1000
+					}
+				},
 
-	if (percent < 100) {
-		progressBar.style.width = percent + "%";
-		progressText.innerHTML = Math.round(percent) + "%";
+				EXTENDS: A.ProgressBar,
 
-		setTimeout(this.uploadProgressId + ".animateBar(" + percent + ")", 100);
-	}
-	else {
-		progressBar.style.width = "100%";
-		progressText.innerHTML = Liferay.Language.get("done");
-	}
-}
+				NAME: 'uploadprogress',
 
-function UploadProgress_hideProgress() {
-	var barContainer = document.getElementById(this.uploadProgressId + "-bar-div");
+				prototype: {
+					renderUI: function() {
+						var instance = this;
 
-	barContainer.style.display = "none";
-}
+						UploadProgressBar.superclass.renderUI.call(instance, arguments);
 
-function UploadProgress_sendRedirect() {
-	window.location = this.redirect;
-}
+						var tplFrame = Lang.sub(TPL_FRAME, [instance.get('id')]);
 
-function UploadProgress_startProgress() {
-	var barContainer = document.getElementById(this.uploadProgressId + "-bar-div");
-	var timeLeftText = barContainer.getElementsByTagName("span")[0];
+						var frame = A.Node.create(tplFrame);
 
-	var date = new Date();
+						instance.get('boundingBox').placeBefore(frame);
 
-	this.count = 0;
-	this.currentPercent = 0;
-	this.currentSpeed = 0.01;
-	this.startTime = date.getTime();
+						instance._frame = frame;
+					},
 
-	this.animateBar(0);
+					bindUI: function() {
+						var instance = this;
 
-	setTimeout(this.uploadProgressId + ".updateProgress()", 1000);
-}
+						UploadProgressBar.superclass.bindUI.call(instance, arguments);
 
-function UploadProgress_updateBar(percent, filename) {
-	this.currentPercent = percent;
-}
+						instance.after('complete', instance._afterComplete);
+						instance.after('valueChange', instance._afterValueChange);
+					},
 
-function UploadProgress_updateProgress() {
-	var uploadProgressPoller = document.getElementById(this.uploadProgressId + "-poller");
+					startProgress: function() {
+						var instance = this;
 
-	uploadProgressPoller.src = themeDisplay.getPathMain() + "/portal/upload_progress_poller?uploadProgressId=" + this.uploadProgressId;
-}
+						if (!instance.get('rendered')) {
+							instance.render();
+						}
 
-Liferay.provide(
-	window,
-	'UploadProgress_updateIFrame',
-	function(height) {
-		var A = AUI();
+						instance.set(STR_VALUE, 0);
 
-		var uploadPollerIFrame = document.getElementById(this.uploadProgressId + "-iframe");
+						setTimeout(
+							function() {
+								instance.updateProgress();
+							},
+							instance.get(STR_UPDATE_PERIOD)
+						);
+					},
 
-		height += 40;
+					updateProgress: function() {
+						var instance = this;
 
-		var uploadIframe = A.one(uploadPollerIFrame).setStyle('height', height + 'px');
+						var url = Lang.sub(TPL_URL_UPDATE, [instance.get('id'), instance.get(STR_UPDATE_PERIOD)]);
 
-		var iframeBody = A.one(uploadPollerIFrame.contentWindow.document.body);
+						instance._frame.set('src', url);
+					},
 
-		iframeBody.replaceClass('portal-popup', 'portal-iframe');
-		iframeBody.setStyle('height', height + 'px');
+					_afterComplete: function(event) {
+						var instance = this;
+
+						instance.set('label', instance.get('strings.complete'));
+					},
+
+					_afterValueChange: function(event) {
+						var instance = this;
+
+						instance.set('label', event.newVal + '%');
+					}
+				}
+			}
+		);
+
+		Liferay.UploadProgressBar = UploadProgressBar;
 	},
-	['aui-base']
+	'',
+	{
+		requires: ['aui-progressbar']
+	}
 );

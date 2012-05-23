@@ -75,14 +75,16 @@ boolean showPrototypes = ParamUtil.getBoolean(request, "showPrototypes", true);
 String[] mainSections = PropsValues.SITES_FORM_ADD_MAIN;
 String[] seoSections = PropsValues.SITES_FORM_ADD_SEO;
 String[] advancedSections = PropsValues.SITES_FORM_ADD_ADVANCED;
+String[] miscellaneousSections = PropsValues.SITES_FORM_ADD_MISCELLANEOUS;
 
 if (group != null) {
 	mainSections = PropsValues.SITES_FORM_UPDATE_MAIN;
 	seoSections = PropsValues.SITES_FORM_UPDATE_SEO;
 	advancedSections = PropsValues.SITES_FORM_UPDATE_ADVANCED;
+	miscellaneousSections = PropsValues.SITES_FORM_UPDATE_MISCELLANEOUS;
 }
 
-String[][] categorySections = {mainSections, seoSections, advancedSections};
+String[][] categorySections = {mainSections, seoSections, advancedSections, miscellaneousSections};
 %>
 
 <c:if test="<%= portletName.equals(PortletKeys.SITES_ADMIN) %>">
@@ -242,5 +244,5 @@ else {
 %>
 
 <%!
-private static String[] _CATEGORY_NAMES = {"basic-information", "search-engine-optimization", "advanced"};
+private static String[] _CATEGORY_NAMES = {"basic-information", "search-engine-optimization", "advanced", "miscellaneous"};
 %>

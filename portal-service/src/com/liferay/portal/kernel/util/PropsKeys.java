@@ -1951,11 +1951,15 @@ public interface PropsKeys {
 
 	public static final String SITES_FORM_ADD_MAIN = "sites.form.add.main";
 
+	public static final String SITES_FORM_ADD_MISCELLANEOUS = "sites.form.add.miscellaneous";
+
 	public static final String SITES_FORM_ADD_SEO = "sites.form.add.seo";
 
 	public static final String SITES_FORM_UPDATE_ADVANCED = "sites.form.update.advanced";
 
 	public static final String SITES_FORM_UPDATE_MAIN = "sites.form.update.main";
+
+	public static final String SITES_FORM_UPDATE_MISCELLANEOUS = "sites.form.update.miscellaneous";
 
 	public static final String SITES_FORM_UPDATE_SEO = "sites.form.update.seo";
 

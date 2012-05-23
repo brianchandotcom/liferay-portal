@@ -1421,6 +1421,8 @@ public class PropsValues {
 	public static final boolean SITES_CONTROL_PANEL_MEMBERS_VISIBLE = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.SITES_CONTROL_PANEL_MEMBERS_VISIBLE));
 
 	public static String[] SITES_FORM_ADD_ADVANCED = PropsUtil.getArray(PropsKeys.SITES_FORM_ADD_ADVANCED);
+	
+	public static String[] SITES_FORM_ADD_MISCELLANEOUS = PropsUtil.getArray(PropsKeys.SITES_FORM_ADD_MISCELLANEOUS);
 
 	public static String[] SITES_FORM_ADD_MAIN = PropsUtil.getArray(PropsKeys.SITES_FORM_ADD_MAIN);
 
@@ -1429,6 +1431,8 @@ public class PropsValues {
 	public static String[] SITES_FORM_UPDATE_ADVANCED = PropsUtil.getArray(PropsKeys.SITES_FORM_UPDATE_ADVANCED);
 
 	public static String[] SITES_FORM_UPDATE_MAIN = PropsUtil.getArray(PropsKeys.SITES_FORM_UPDATE_MAIN);
+	
+	public static String[] SITES_FORM_UPDATE_MISCELLANEOUS = PropsUtil.getArray(PropsKeys.SITES_FORM_UPDATE_MISCELLANEOUS);
 
 	public static String[] SITES_FORM_UPDATE_SEO = PropsUtil.getArray(PropsKeys.SITES_FORM_UPDATE_SEO);
 

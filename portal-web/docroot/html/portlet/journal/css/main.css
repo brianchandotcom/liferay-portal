@@ -508,6 +508,12 @@
 		}
 	}
 
+	.journal-structure-selection-break {
+		.journal-article-field-label, .journal-article-localized-checkbox, .journal-article-buttons {
+			display: none;
+		}
+	}
+
 	.journal-article-buttons {
 		display: none;
 	}

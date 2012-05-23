@@ -77,11 +77,11 @@ public class ViewRecordSpreadsheetViewTest extends BaseTestCase {
 			selenium.getText("//tr[3]/td[3]"));
 		assertEquals(RuntimeVariables.replace("Documents and Media"),
 			selenium.getText("//tr[1]/th[4]"));
-		assertEquals(RuntimeVariables.replace("document_1.txt"),
+		assertEquals(RuntimeVariables.replace("Document_1.txt"),
 			selenium.getText("//tr[3]/td[4]"));
 		assertEquals(RuntimeVariables.replace("File Upload"),
 			selenium.getText("//tr[1]/th[5]"));
-		assertTrue(selenium.isPartialText("//tr[3]/td[5]", "document_2.txt"));
+		assertTrue(selenium.isPartialText("//tr[3]/td[5]", "Document_2.txt"));
 		assertEquals(RuntimeVariables.replace("Integer"),
 			selenium.getText("//tr[1]/th[6]"));
 		assertEquals(RuntimeVariables.replace("123"),
@@ -145,11 +145,11 @@ public class ViewRecordSpreadsheetViewTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Decimal 1.23"),
 			selenium.getText("//div[@class='aui-fieldset-content ']/div[3]"));
 		assertEquals(RuntimeVariables.replace(
-				"Documents and Media document_1.txt"),
+				"Documents and Media Document_1.txt"),
 			selenium.getText("//div[@class='aui-fieldset-content ']/div[4]"));
 		assertTrue(selenium.isPartialText(
 				"//div[@class='aui-fieldset-content ']/div[5]",
-				"File Upload document_2.txt"));
+				"File Upload Document_2.txt"));
 		assertEquals(RuntimeVariables.replace("Integer 123"),
 			selenium.getText("//div[@class='aui-fieldset-content ']/div[6]"));
 		assertEquals(RuntimeVariables.replace("Number 456"),
@@ -234,9 +234,9 @@ public class ViewRecordSpreadsheetViewTest extends BaseTestCase {
 		assertTrue(selenium.isPartialText("//td[2]/div", "-10"));
 		assertEquals(RuntimeVariables.replace("1.23"),
 			selenium.getText("//td[3]/div"));
-		assertEquals(RuntimeVariables.replace("document_1.txt"),
+		assertEquals(RuntimeVariables.replace("Document_1.txt"),
 			selenium.getText("//td[4]/div"));
-		assertEquals(RuntimeVariables.replace("document_2.txt"),
+		assertEquals(RuntimeVariables.replace("Document_2.txt"),
 			selenium.getText("//td[5]/div"));
 		assertEquals(RuntimeVariables.replace("123"),
 			selenium.getText("//td[6]/div"));

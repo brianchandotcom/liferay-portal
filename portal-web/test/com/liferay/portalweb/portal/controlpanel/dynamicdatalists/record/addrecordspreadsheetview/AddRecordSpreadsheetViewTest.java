@@ -257,7 +257,7 @@ public class AddRecordSpreadsheetViewTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("document_1.txt"),
+		assertEquals(RuntimeVariables.replace("Document_1.txt"),
 			selenium.getText("//tr[3]/td[1]/a"));
 		selenium.clickAt("//input[@value='Choose']",
 			RuntimeVariables.replace("Choose"));
@@ -293,7 +293,7 @@ public class AddRecordSpreadsheetViewTest extends BaseTestCase {
 		selenium.clickAt("//div[contains(@class,'aui-fileupload-cell-editor')]",
 			RuntimeVariables.replace("File Upload Cell Editor"));
 		selenium.uploadCommonFile("//div[contains(@class,'aui-fileupload-cell-editor-focused')]/form/div[1]/input",
-			RuntimeVariables.replace("document_2.txt"));
+			RuntimeVariables.replace("Document_2.txt"));
 		assertEquals(RuntimeVariables.replace("Save"),
 			selenium.getText(
 				"//div[contains(@class,'aui-fileupload-cell-editor-focused')]/form/div[2]/span/span/button[1]"));

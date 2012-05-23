@@ -170,6 +170,7 @@ public class OrganizationLocalServiceImpl
 		organization.setCountryId(countryId);
 		organization.setStatusId(statusId);
 		organization.setComments(comments);
+		organization.setExpandoBridgeAttributes(serviceContext);
 
 		organizationPersistence.update(organization, false);
 
@@ -198,14 +199,6 @@ public class OrganizationLocalServiceImpl
 			updateAsset(
 				userId, organization, serviceContext.getAssetCategoryIds(),
 				serviceContext.getAssetTagNames());
-		}
-
-		// Expando
-
-		if (serviceContext != null) {
-			ExpandoBridge expandoBridge = organization.getExpandoBridge();
-
-			expandoBridge.setAttributes(serviceContext);
 		}
 
 		// Indexer
@@ -1611,6 +1604,7 @@ public class OrganizationLocalServiceImpl
 		organization.setCountryId(countryId);
 		organization.setStatusId(statusId);
 		organization.setComments(comments);
+		organization.setExpandoBridgeAttributes(serviceContext);
 
 		organizationPersistence.update(organization, false);
 
@@ -1636,14 +1630,6 @@ public class OrganizationLocalServiceImpl
 				serviceContext.getUserId(), organization,
 				serviceContext.getAssetCategoryIds(),
 				serviceContext.getAssetTagNames());
-		}
-
-		// Expando
-
-		if (serviceContext != null) {
-			ExpandoBridge expandoBridge = organization.getExpandoBridge();
-
-			expandoBridge.setAttributes(serviceContext);
 		}
 
 		// Indexer

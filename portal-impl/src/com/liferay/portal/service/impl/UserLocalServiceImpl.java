@@ -759,6 +759,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		user.setLastName(lastName);
 		user.setJobTitle(jobTitle);
 		user.setStatus(WorkflowConstants.STATUS_DRAFT);
+		user.setExpandoBridgeAttributes(serviceContext);
 
 		userPersistence.update(user, false, serviceContext);
 
@@ -863,12 +864,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			updateAsset(
 				creatorUserId, user, serviceContext.getAssetCategoryIds(),
 				serviceContext.getAssetTagNames());
-		}
-
-		// Expando
-
-		if (serviceContext != null) {
-			user.setExpandoBridgeAttributes(serviceContext);
 		}
 
 		// Indexer
@@ -4005,6 +4000,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			user.setMiddleName(middleName);
 			user.setLastName(lastName);
 			user.setJobTitle(jobTitle);
+			user.setExpandoBridgeAttributes(serviceContext);
 
 			Date birthday = PortalUtil.getDate(
 				birthdayMonth, birthdayDay, birthdayYear,
@@ -4022,10 +4018,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			contact.setJobTitle(jobTitle);
 
 			contactPersistence.update(contact, false, serviceContext);
-
-			// Expando
-
-			user.setExpandoBridgeAttributes(serviceContext);
 
 			// Indexer
 
@@ -4761,6 +4753,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		user.setMiddleName(middleName);
 		user.setLastName(lastName);
 		user.setJobTitle(jobTitle);
+		user.setExpandoBridgeAttributes(serviceContext);
 
 		userPersistence.update(user, false, serviceContext);
 
@@ -4857,12 +4850,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			updateAsset(
 				userId, user, serviceContext.getAssetCategoryIds(),
 				serviceContext.getAssetTagNames());
-		}
-
-		// Expando
-
-		if (serviceContext != null) {
-			user.setExpandoBridgeAttributes(serviceContext);
 		}
 
 		// Message boards

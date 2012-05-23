@@ -906,7 +906,8 @@ private void _format(long groupId, Element contentParentElement, Element xsdPare
 			if (!_hasRepeatedParent(contentElement)) {
 				repeatablePrototype = (siblingIndex == 0);
 			}
-			else {
+
+			if (elRepeatable || _hasRepeatedParent(contentElement)) {
 				Map <String, Integer> repeatCountMap = (Map<String, Integer>)request.getAttribute(WebKeys.JOURNAL_STRUCTURE_EL_REPEAT_COUNT_MAP);
 
 				if (repeatCountMap == null) {

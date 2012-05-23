@@ -51,21 +51,6 @@ String elParentStructureId = (String)request.getAttribute(WebKeys.JOURNAL_STRUCT
 
 Map<String, String> elMetaData = (Map<String, String>)request.getAttribute(WebKeys.JOURNAL_STRUCTURE_EL_META_DATA);
 
-Map <String, Integer> repeatCountMap = (Map<String, Integer>)request.getAttribute(WebKeys.JOURNAL_STRUCTURE_EL_REPEAT_COUNT_MAP);
-
-if (repeatCountMap == null) {
-	repeatCountMap = new HashMap<String, Integer>();
-}
-
-String elRepeatCount = String.valueOf(repeatCountMap.get(elName));
-
-if (Validator.isNotNull(elRepeatCount)) {
-	elRepeatCount = "_" + elRepeatCount;
-}
-else {
-	elRepeatCount = StringPool.BLANK;
-}
-
 String metaData = _buildMetaDataHTMLAttributes(elMetaData, elName);
 
 String elDisplayAsTooltip = elMetaData.get("displayAsTooltip");
@@ -106,6 +91,18 @@ if (Validator.isNull(elContent) && Validator.isNotNull(elPredefinedValue)) {
 }
 
 Element contentEl = (Element)request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTENT_EL);
+
+String elRepeatCount = StringPool.BLANK;
+
+Map <String, Integer> repeatCountMap = (Map<String, Integer>)request.getAttribute(WebKeys.JOURNAL_STRUCTURE_EL_REPEAT_COUNT_MAP);
+
+if (repeatCountMap != null) {
+	Integer repeatCount = repeatCountMap.get(elName);
+
+	if (repeatCount != null) {
+		elRepeatCount = StringPool.UNDERLINE + repeatCount;
+	}
+}
 %>
 
 <li class="structure-field <%= css.trim() %>" <%= parentStructureData %> dataInstanceId='<%= elInstanceId %>' dataName='<%= elName %>' dataRepeatable='<%= elRepeatable %>' dataType='<%= elType %>' dataIndexType='<%= elIndexType %>' <%= metaData %>>

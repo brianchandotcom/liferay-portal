@@ -24,6 +24,9 @@ public class AddConsumerHWTest extends BaseTestCase {
 	public void testAddConsumerHW() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -31,7 +34,7 @@ public class AddConsumerHWTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -41,13 +44,14 @@ public class AddConsumerHWTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.clickAt("link=WSRP", RuntimeVariables.replace(""));
+		selenium.clickAt("link=WSRP", RuntimeVariables.replace("WSRP"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.clickAt("link=Producers", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Producers", RuntimeVariables.replace("Producers"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.clickAt("//td[1]/a",
@@ -59,6 +63,9 @@ public class AddConsumerHWTest extends BaseTestCase {
 		RuntimeVariables.setValue("wsrpUrl", wsrpUrl);
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -66,7 +73,7 @@ public class AddConsumerHWTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -76,24 +83,26 @@ public class AddConsumerHWTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.clickAt("link=WSRP", RuntimeVariables.replace(""));
+		selenium.clickAt("link=WSRP", RuntimeVariables.replace("WSRP"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.clickAt("link=Consumers", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Consumers", RuntimeVariables.replace("Consumers"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.clickAt("//input[@value='Add Consumer']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Add Consumer"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.type("_1_WAR_wsrpportlet_name",
 			RuntimeVariables.replace("Hello World Consumer Name"));
 		selenium.type("_1_WAR_wsrpportlet_url",
 			RuntimeVariables.replace(RuntimeVariables.getValue("wsrpUrl")));
-		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(

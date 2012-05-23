@@ -16,6 +16,7 @@ package com.liferay.portalweb.plugins.wsrp.helloworld;
 
 import com.liferay.portalweb.plugins.wsrp.helloworld.addconsumerhw.AddConsumerHWTests;
 import com.liferay.portalweb.plugins.wsrp.helloworld.addportletwsrphw.AddPortletWSRPHWTests;
+import com.liferay.portalweb.plugins.wsrp.helloworld.addportletwsrphwutf8.AddPortletWSRPHWUTF8Tests;
 import com.liferay.portalweb.plugins.wsrp.helloworld.addproducerhw.AddProducerHWTests;
 import com.liferay.portalweb.plugins.wsrp.helloworld.manageportletconsumerhw.ManagePortletConsumerHWTests;
 import com.liferay.portalweb.portal.BaseTestSuite;
@@ -33,6 +34,7 @@ public class HelloWorldTestPlan extends BaseTestSuite {
 
 		testSuite.addTest(AddConsumerHWTests.suite());
 		testSuite.addTest(AddPortletWSRPHWTests.suite());
+		testSuite.addTest(AddPortletWSRPHWUTF8Tests.suite());
 		testSuite.addTest(AddProducerHWTests.suite());
 		testSuite.addTest(ManagePortletConsumerHWTests.suite());
 

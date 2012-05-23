@@ -12,13 +12,15 @@
  * details.
  */
 
-package com.liferay.portalweb.plugins.wsrp.helloworld.manageportletconsumerhw;
+package com.liferay.portalweb.plugins.wsrp.helloworld.addportletwsrphwutf8;
 
 import com.liferay.portalweb.plugins.wsrp.helloworld.addconsumerhw.AddConsumerHWTest;
 import com.liferay.portalweb.plugins.wsrp.helloworld.addconsumerhw.TearDownConsumerTest;
+import com.liferay.portalweb.plugins.wsrp.helloworld.addportletwsrphw.AddPageWSRPHWTest;
 import com.liferay.portalweb.plugins.wsrp.helloworld.addproducerhw.AddProducerHWTest;
 import com.liferay.portalweb.plugins.wsrp.helloworld.addproducerhw.TearDownProducerTest;
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.util.TearDownPageTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -26,14 +28,17 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ManagePortletConsumerHWTests extends BaseTestSuite {
+public class AddPortletWSRPHWUTF8Tests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddProducerHWTest.class);
 		testSuite.addTestSuite(AddConsumerHWTest.class);
-		testSuite.addTestSuite(ManagePortletConsumerHWTest.class);
+		testSuite.addTestSuite(ManagePortletConsumerHWUTF8Test.class);
+		testSuite.addTestSuite(AddPageWSRPHWTest.class);
+		testSuite.addTestSuite(AddPortletWSRPHWUTF8Test.class);
 		testSuite.addTestSuite(TearDownConsumerTest.class);
 		testSuite.addTestSuite(TearDownProducerTest.class);
+		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;
 	}

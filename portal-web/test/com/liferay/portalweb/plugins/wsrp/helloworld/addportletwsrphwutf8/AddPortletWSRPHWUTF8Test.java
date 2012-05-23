@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.plugins.wsrp.helloworld.addportletwsrphw;
+package com.liferay.portalweb.plugins.wsrp.helloworld.addportletwsrphwutf8;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddPortletWSRPHWTest extends BaseTestCase {
-	public void testAddPortletWSRPHW() throws Exception {
+public class AddPortletWSRPHWUTF8Test extends BaseTestCase {
+	public void testAddPortletWSRPHWUTF8() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
@@ -138,7 +138,7 @@ public class AddPortletWSRPHWTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@title='WSRP Hello World Portlet']/p/a")) {
+							"//div[@title='WSRP \u4e16\u754c\u60a8\u597d Portlet']/p/a")) {
 					break;
 				}
 			}
@@ -148,7 +148,7 @@ public class AddPortletWSRPHWTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("//div[@title='WSRP Hello World Portlet']/p/a",
+		selenium.clickAt("//div[@title='WSRP \u4e16\u754c\u60a8\u597d Portlet']/p/a",
 			RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {

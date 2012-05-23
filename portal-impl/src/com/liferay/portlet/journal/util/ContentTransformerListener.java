@@ -178,7 +178,7 @@ public class ContentTransformerListener extends BaseTransformerListener {
 						el.attributeValue("type"));
 
 					if (type.equals("text_box")) {
-						text = text.replaceAll("\\n", "<br>");
+						text = text.replaceAll("\\n", "<br />");
 					}
 
 					dynamicContent.setText(text);

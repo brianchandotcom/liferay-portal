@@ -326,10 +326,11 @@ AUI.add(
 					_getSocialActivitySettingMapping: function(groupId, modelName, callback) {
 						var instance = this;
 
-						Liferay.Service.Social.SocialActivitySetting.getJSONActivityDefinitions(
+						Liferay.Service(
+							'/socialactivitysetting/get-json-activity-definitions',
 							{
 								groupId: groupId,
-								modelName: modelName
+								className: modelName
 							},
 							callback
 						);
@@ -354,11 +355,12 @@ AUI.add(
 
 						var modelName = currentTarget.ancestor(SELECTOR_SOCIAL_ACTIVITY_ITEM).attr(STR_DATA_MODEL_NAME);
 
-						Liferay.Service.Social.SocialActivitySetting.updateActivitySetting(
+						Liferay.Service(
+							'/socialactivitysetting/update-activity-setting',
 							{
 								groupId: themeDisplay.getScopeGroupIdOrLiveGroupId(),
-								modelName: modelName,
-								value: currentTarget.attr('checked')
+								className: modelName,
+								enabled: currentTarget.attr('checked')
 							}
 						);
 					},

@@ -106,7 +106,8 @@ MBThread thread = messageDisplay.getThread();
 		function(messageId) {
 			var A = AUI();
 
-			Liferay.Service.MB.MBMessage.updateAnswer(
+			Liferay.Service(
+				'/mbmessage/update-answer',
 				{
 					messageId: messageId,
 					answer: true,
@@ -171,7 +172,8 @@ MBThread thread = messageDisplay.getThread();
 		function(messageId) {
 			var A = AUI();
 
-			Liferay.Service.MB.MBMessage.updateAnswer(
+			Liferay.Service(
+				'/mbmessage/update-answer',
 				{
 					messageId: messageId,
 					answer: false,

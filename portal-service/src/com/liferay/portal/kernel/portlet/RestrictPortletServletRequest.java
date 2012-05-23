@@ -157,7 +157,7 @@ public class RestrictPortletServletRequest
 				}
 				else {
 					Mergeable<Object> masterMergeable =
-						(Mergeable<Object>)value;
+						(Mergeable<Object>)masterValue;
 					Mergeable<Object> slaveMergeable = (Mergeable<Object>)value;
 
 					masterMergeable.merge(slaveMergeable);

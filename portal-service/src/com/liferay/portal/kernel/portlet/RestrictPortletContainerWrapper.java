@@ -112,7 +112,18 @@ public class RestrictPortletContainerWrapper implements PortletContainer {
 			restrictPortletServletRequest.removeAttribute(
 				WebKeys.RENDER_PORTLET_COLUMN_POS);
 
-			restrictPortletServletRequest.mergeSharedAttributes();
+			// Don't merge for parallel rendering portlet, the caller
+			// (worker thread) should decide whether to merge. If we do merge
+			// here and the caller cancel the rendering right after this, we
+			// will have a corrupt shared attributes set.
+			// The only safe point to merge is the caller gets the render result
+			// and decide to take it in.
+			Object lockObject = request.getAttribute(
+				WebKeys.PARALLEL_RENDERING_MERGE_LOCK);
+
+			if (lockObject == null) {
+				restrictPortletServletRequest.mergeSharedAttributes();
+			}
 		}
 	}
 

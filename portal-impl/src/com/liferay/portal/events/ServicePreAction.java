@@ -1913,35 +1913,25 @@ public class ServicePreAction extends Action {
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
-		// Parallel render
+		// Ajaxable render
 
-		boolean parallelRenderEnable = true;
+		if (PropsValues.LAYOUT_AJAXABLE_RENDER_ENABLE) {
+			Boolean ajaxableRenderEnableObj = Boolean.valueOf(
+				ParamUtil.getBoolean(request, "p_p_ajaxable", true));
 
-		Layout layout = themeDisplay.getLayout();
-
-		if (layout != null) {
-			LayoutTypePortlet layoutTypePortlet =
-				themeDisplay.getLayoutTypePortlet();
-
-			List<String> portletIds = layoutTypePortlet.getPortletIds();
-
-			if (portletIds.size() == 1) {
-				String portletId = portletIds.get(0);
-
-				Portlet portlet = PortletLocalServiceUtil.getPortletById(
-					portletId);
-
-				if ((portlet != null) && !portlet.isAjaxable()) {
-					parallelRenderEnable = false;
-				}
-			}
+			request.setAttribute(
+				WebKeys.PORTLET_AJAXABLE_RENDER, ajaxableRenderEnableObj);
 		}
 
-		Boolean parallelRenderEnableObj = Boolean.valueOf(ParamUtil.getBoolean(
-			request, "p_p_parallel", parallelRenderEnable));
+		// Parallel render
 
-		request.setAttribute(
-			WebKeys.PORTLET_PARALLEL_RENDER, parallelRenderEnableObj);
+		if (PropsValues.LAYOUT_PARALLEL_RENDER_ENABLE) {
+			Boolean parallelRenderEnableObj = Boolean.valueOf(
+				ParamUtil.getBoolean(request, "p_p_parallel", true));
+
+			request.setAttribute(
+				WebKeys.PORTLET_PARALLEL_RENDER, parallelRenderEnableObj);
+		}
 
 		// Main Journal article
 

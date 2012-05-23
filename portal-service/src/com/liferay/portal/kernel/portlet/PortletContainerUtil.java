@@ -141,7 +141,9 @@ public class PortletContainerUtil {
 
 	private static final boolean _PORTLET_CONTAINER_RESTRICT =
 		GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.PORTLET_CONTAINER_RESTRICT));
+			PropsUtil.get(PropsKeys.PORTLET_CONTAINER_RESTRICT)) ||
+				GetterUtil.getBoolean(
+					PropsUtil.get(PropsKeys.LAYOUT_PARALLEL_RENDER_ENABLE));
 
 	private static PortletContainer _portletContainer;
 

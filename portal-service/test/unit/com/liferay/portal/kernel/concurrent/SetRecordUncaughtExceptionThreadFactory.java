@@ -20,8 +20,7 @@ import java.util.concurrent.ThreadFactory;
 /**
  * @author Shuyang Zhou
  */
-public class SetRecordUncaughtExceptionThreadFactory
-	implements ThreadFactory {
+public class SetRecordUncaughtExceptionThreadFactory implements ThreadFactory {
 
 	public RecordUncaughtExceptionHandler getRecordUncaughtExceptionHandler() {
 		return recordUncaughtExceptionHandler;

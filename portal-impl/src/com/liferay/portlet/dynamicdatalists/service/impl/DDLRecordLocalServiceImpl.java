@@ -63,8 +63,7 @@ import java.util.Map;
  * @author Marcellus Tavares
  * @author Eduardo Lundgren
  */
-public class DDLRecordLocalServiceImpl
-	extends DDLRecordLocalServiceBaseImpl {
+public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 	public DDLRecord addRecord(
 			long userId, long groupId, long recordSetId, int displayIndex,

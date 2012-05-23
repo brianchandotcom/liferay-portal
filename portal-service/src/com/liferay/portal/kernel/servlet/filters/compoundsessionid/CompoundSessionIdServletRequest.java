@@ -21,8 +21,7 @@ import javax.servlet.http.HttpSession;
 /**
  * @author Michael C. Han
  */
-public class CompoundSessionIdServletRequest
-	extends HttpServletRequestWrapper {
+public class CompoundSessionIdServletRequest extends HttpServletRequestWrapper {
 
 	public CompoundSessionIdServletRequest(HttpServletRequest request) {
 		super(request);

@@ -44,8 +44,7 @@ import org.apache.velocity.tools.generic.SortTool;
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
  */
-public class VelocityTemplateContextHelper
-	extends TemplateContextHelper {
+public class VelocityTemplateContextHelper extends TemplateContextHelper {
 
 	@Override
 	public Map<String, Object> getHelperUtilities() {

@@ -30,8 +30,7 @@ import java.util.List;
 /**
  * @author Juan Fernández
  */
-public class JournalFolderServiceImpl
-	extends JournalFolderServiceBaseImpl {
+public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 
 	public JournalFolder addFolder(
 			long groupId, long parentFolderId, String name, String description,

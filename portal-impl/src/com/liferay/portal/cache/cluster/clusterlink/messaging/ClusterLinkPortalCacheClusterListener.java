@@ -34,8 +34,7 @@ import net.sf.ehcache.Element;
 /**
  * @author Shuyang Zhou
  */
-public class ClusterLinkPortalCacheClusterListener
-	extends BaseMessageListener {
+public class ClusterLinkPortalCacheClusterListener extends BaseMessageListener {
 
 	public ClusterLinkPortalCacheClusterListener() {
 		LiferayEhcacheRegionFactory liferayEhcacheRegionFactory =

@@ -43,8 +43,7 @@ import java.util.Map;
  * @author Jorge Ferrer
  * @author Juan Fernández
  */
-public class AssetVocabularyServiceImpl
-	extends AssetVocabularyServiceBaseImpl {
+public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 
 	/**
 	 * @deprecated

@@ -15,7 +15,9 @@
 package com.liferay.portal.kernel.util;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -112,6 +114,18 @@ public class CentralizedThreadLocal<T> extends ThreadLocal<T> {
 		threadLocalMap.putEntry(this, value);
 	}
 
+	protected T copy(T value) {
+		if (value != null) {
+			Class<?> clazz = value.getClass();
+
+			if (_immutableTypes.contains(clazz)) {
+				return value;
+			}
+		}
+
+		return null;
+	}
+
 	private static Map<CentralizedThreadLocal<?>, Object> _toMap(
 		ThreadLocalMap threadLocalMap) {
 
@@ -121,7 +135,14 @@ public class CentralizedThreadLocal<T> extends ThreadLocal<T> {
 
 		for (Entry entry : threadLocalMap._table) {
 			if (entry != null) {
-				map.put(entry._key, entry._value);
+				CentralizedThreadLocal<Object> centralizedThreadLocal =
+					(CentralizedThreadLocal<Object>)entry._key;
+
+				Object value = centralizedThreadLocal.copy(entry._value);
+
+				if (value != null) {
+					map.put(centralizedThreadLocal, value);
+				}
 			}
 		}
 
@@ -138,6 +159,9 @@ public class CentralizedThreadLocal<T> extends ThreadLocal<T> {
 	}
 
 	private static final int _HASH_INCREMENT = 0x61c88647;
+
+	private static final Set<Class<?>> _immutableTypes =
+		new HashSet<Class<?>>();
 
 	private static final AtomicInteger _longLivedNextHasCode =
 		new AtomicInteger();
@@ -292,6 +316,18 @@ public class CentralizedThreadLocal<T> extends ThreadLocal<T> {
 			return new ThreadLocalMap();
 		}
 
+	}
+
+	static {
+		_immutableTypes.add(Boolean.class);
+		_immutableTypes.add(Byte.class);
+		_immutableTypes.add(Character.class);
+		_immutableTypes.add(Short.class);
+		_immutableTypes.add(Integer.class);
+		_immutableTypes.add(Long.class);
+		_immutableTypes.add(Float.class);
+		_immutableTypes.add(Double.class);
+		_immutableTypes.add(String.class);
 	}
 
 }

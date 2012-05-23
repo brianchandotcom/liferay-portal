@@ -14,15 +14,16 @@
 
 package com.liferay.portlet.layoutconfiguration.util;
 
+import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.PortletContainerUtil;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateContextType;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -30,13 +31,22 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.layoutconfiguration.util.velocity.CustomizationSettingsProcessor;
 import com.liferay.portlet.layoutconfiguration.util.velocity.TemplateProcessor;
 import com.liferay.portlet.layoutconfiguration.util.xml.RuntimeLogic;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -157,38 +167,203 @@ public class RuntimePageImpl implements RuntimePage {
 			throw e;
 		}
 
-		String output = unsyncStringWriter.toString();
-
-		Map<Portlet, Object[]> portletsMap = processor.getPortletsMap();
+		Map<Integer, List<PortletRenderer>> portletRenderersMap =
+			processor.getPortletRenderersMap();
 
 		Map<String, StringBundler> contentsMap =
-			new HashMap<String, StringBundler>(portletsMap.size());
+			new HashMap<String, StringBundler>();
 
-		for (Map.Entry<Portlet, Object[]> entry : portletsMap.entrySet()) {
-			Portlet portlet = entry.getKey();
-			Object[] value = entry.getValue();
+		Lock mergeLock = null;
 
-			String columnId = (String)value[0];
-			Integer columnPos = (Integer)value[1];
-			Integer columnCount = (Integer)value[2];
+		long timeStamp = 0;
 
-			UnsyncStringWriter portletUnsyncStringWriter =
-				new UnsyncStringWriter();
+		boolean parallelRenderEnable = GetterUtil.getBoolean(
+			request.getAttribute(WebKeys.PORTLET_PARALLEL_RENDER));
 
-			PipingServletResponse pipingServletResponse =
-				new PipingServletResponse(response, portletUnsyncStringWriter);
+		for (Map.Entry<Integer, List<PortletRenderer>> entry :
+			portletRenderersMap.entrySet()) {
 
-			HttpServletRequest setupRequest =
-				PortletContainerUtil.setupOptionalRenderParameters(
-					request, null, columnId, columnPos, columnCount);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Processing render weight : " + entry.getKey());
+			}
 
-			PortletContainerUtil.render(
-				setupRequest, pipingServletResponse, portlet);
+			List<PortletRenderer> portletRenderers = entry.getValue();
 
-			contentsMap.put(
-				portlet.getPortletId(),
-				portletUnsyncStringWriter.getStringBundler());
+			if (parallelRenderEnable && (portletRenderers.size() > 1)) {
+
+				if (_log.isDebugEnabled()) {
+					_log.debug("Start parallel rendering.");
+
+					timeStamp = System.currentTimeMillis();
+				}
+
+				if (mergeLock == null) {
+					mergeLock = new ReentrantLock();
+				}
+
+				request.setAttribute(
+					WebKeys.PARALLEL_RENDERING_MERGE_LOCK, mergeLock);
+
+				ExecutorService executorService =
+					PortalExecutorManagerUtil.getPortalExecutor(
+						RuntimePageImpl.class.getName());
+
+				Map<Future<StringBundler>, PortletRenderer> futureResultMap =
+					new HashMap<Future<StringBundler>, PortletRenderer>(
+						portletRenderers.size());
+
+				for (PortletRenderer portletRenderer : portletRenderers) {
+
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Submit parallel rendering request for portlet : " +
+								portletRenderer.getPortlet().getPortletId());
+					}
+
+					Future<StringBundler> futureResult = executorService.submit(
+						portletRenderer.getCallable(request, response));
+
+					futureResultMap.put(futureResult, portletRenderer);
+				}
+
+				long waitTime = _waitTime;
+
+				for (Map.Entry<Future<StringBundler>, PortletRenderer>
+					futureResultEntry : futureResultMap.entrySet()) {
+
+					Future<StringBundler> futureResult =
+						futureResultEntry.getKey();
+					PortletRenderer portletRenderer =
+						futureResultEntry.getValue();
+
+					Portlet portlet = portletRenderer.getPortlet();
+
+					if ((waitTime > 0) || futureResult.isDone()) {
+						try {
+							long startTime = System.currentTimeMillis();
+
+							StringBundler result = futureResult.get(
+								waitTime, TimeUnit.MILLISECONDS);
+
+							long duration =
+								System.currentTimeMillis() - startTime;
+
+							waitTime -= duration;
+
+							contentsMap.put(portlet.getPortletId(), result);
+
+							portletRenderer.finishParallelRender();
+
+							if (_log.isDebugEnabled()) {
+								_log.debug(
+									"Successfully parallel rendered portlet : "
+										+ portlet.getPortletId());
+							}
+
+							continue;
+						}
+						catch (ExecutionException ee) {
+							throw ee;
+						}
+						catch (InterruptedException ie) {
+							// On interruption, stop waiting, force all pending
+							// portlets fall back to ajax loading or error
+							// message.
+
+							waitTime = -1;
+						}
+						catch (TimeoutException te) {
+							// On timeout, stop waiting, force all pending
+							// portlets fall back to ajax loading or error
+							// message.
+
+							waitTime = -1;
+						}
+					}
+
+					// Cancel by interrupting rendering thread.
+					futureResult.cancel(true);
+
+					StringBundler result = null;
+
+					if (processor.isAjaxableRenderEnable() &&
+						portlet.isAjaxable()) {
+
+						if (_log.isDebugEnabled()) {
+							_log.debug(
+								"Fall back to ajax rendering portlet : " +
+									portlet.getPortletId());
+						}
+
+						result = portletRenderer.renderAjax(request, response);
+					}
+					else {
+						if (_log.isDebugEnabled()) {
+							if (processor.isAjaxableRenderEnable()) {
+								_log.debug(
+									"Fall back to error page, as portlet : " +
+										portlet.getPortletId() +
+											" is not ajaxable");
+							}
+							else {
+								_log.debug(
+									"Fall back to error page for portlet : " +
+										portlet.getPortletId() +
+											", as ajaxable render is disabled");
+							}
+						}
+
+						result = portletRenderer.renderError(request, response);
+					}
+
+					contentsMap.put(portlet.getPortletId(), result);
+				}
+
+				request.removeAttribute(WebKeys.PARALLEL_RENDERING_MERGE_LOCK);
+
+				if (_log.isDebugEnabled()) {
+					long duration = System.currentTimeMillis() - timeStamp;
+
+					_log.debug(
+						"End parallel rendering. Took " + duration + " ms");
+				}
+			}
+			else {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Start serial rendering.");
+
+					timeStamp = System.currentTimeMillis();
+				}
+
+				for (PortletRenderer portletRenderer : portletRenderers) {
+					StringBundler result = portletRenderer.render(
+						request, response);
+
+					Portlet portlet = portletRenderer.getPortlet();
+
+					contentsMap.put(portlet.getPortletId(), result);
+
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Serial rendered portlet : " +
+								portlet.getPortletId());
+					}
+				}
+
+				if (_log.isDebugEnabled()) {
+					long duration = System.currentTimeMillis() - timeStamp;
+
+					_log.debug(
+						"End serial rendering. Took " + duration + " ms");
+				}
+			}
 		}
+
+		if (parallelRenderEnable && (_waitTime == Integer.MAX_VALUE)) {
+			_waitTime = PropsValues.LAYOUT_PARALLEL_RENDER_TIMEOUT;
+		}
+
+		String output = unsyncStringWriter.toString();
 
 		StringBundler sb = StringUtil.replaceWithStringBundler(
 			output, "[$TEMPLATE_PORTLET_", "$]", contentsMap);
@@ -274,10 +449,15 @@ public class RuntimePageImpl implements RuntimePage {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(RuntimePageUtil.class);
+	private static Log _log = LogFactoryUtil.getLog(RuntimePageImpl.class);
 
 	private static MethodKey _initMethodKey = new MethodKey(
 		"com.liferay.taglib.util.VelocityTaglib", "init", ServletContext.class,
 		HttpServletRequest.class, HttpServletResponse.class, PageContext.class);
+
+	// Set init wait time to Integer.MAX_VALUE to protect first hit jsp
+	// compilation and class loading delay, lost update is acceptable, no need
+	// to ensure thread safety.
+	private int _waitTime = Integer.MAX_VALUE;
 
 }

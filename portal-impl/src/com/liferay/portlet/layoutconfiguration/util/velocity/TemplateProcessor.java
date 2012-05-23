@@ -15,10 +15,9 @@
 package com.liferay.portlet.layoutconfiguration.util.velocity;
 
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletContainerUtil;
 import com.liferay.portal.kernel.servlet.StringServletResponse;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -26,10 +25,11 @@ import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portal.util.comparator.PortletRenderWeightComparator;
+import com.liferay.portlet.layoutconfiguration.util.PortletRenderer;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -49,10 +49,22 @@ public class TemplateProcessor implements ColumnProcessor {
 			String portletId)
 		throws SystemException {
 
+		_ajaxableRenderEnable = GetterUtil.getBoolean(
+			request.getAttribute(WebKeys.PORTLET_AJAXABLE_RENDER));
+
 		_request = request;
 		_response = response;
-		_portletsMap = new TreeMap<Portlet, Object[]>(
-			new PortletRenderWeightComparator());
+		_portletRenderersMap =
+			new TreeMap<Integer, List<PortletRenderer>>(
+				new Comparator<Integer>() {
+
+					public int compare(
+						Integer renderWeight1, Integer renderWeight2) {
+
+						return renderWeight2.compareTo(renderWeight1);
+					}
+
+				});
 
 		if (Validator.isNotNull(portletId)) {
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
@@ -63,8 +75,13 @@ public class TemplateProcessor implements ColumnProcessor {
 		}
 	}
 
-	public Map<Portlet, Object[]> getPortletsMap() {
-		return _portletsMap;
+	public Map<Integer, List<PortletRenderer>> getPortletRenderersMap() {
+
+		return _portletRenderersMap;
+	}
+
+	public boolean isAjaxableRenderEnable() {
+		return _ajaxableRenderEnable;
 	}
 
 	public String processColumn(String columnId) throws Exception {
@@ -73,30 +90,6 @@ public class TemplateProcessor implements ColumnProcessor {
 
 	public String processColumn(String columnId, String classNames)
 		throws Exception {
-
-		boolean parallelRenderEnable =
-			PropsValues.LAYOUT_PARALLEL_RENDER_ENABLE;
-
-		if (parallelRenderEnable) {
-			if (PropsValues.SESSION_DISABLED) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Parallel rendering should be disabled if sessions " +
-							"are disabled");
-				}
-			}
-
-			Boolean portletParallelRender =
-				(Boolean)_request.getAttribute(WebKeys.PORTLET_PARALLEL_RENDER);
-
-			if (Boolean.FALSE.equals(portletParallelRender)) {
-
-				parallelRenderEnable = false;
-			}
-		}
-		else {
-			_request.removeAttribute(WebKeys.PORTLET_PARALLEL_RENDER);
-		}
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -137,27 +130,31 @@ public class TemplateProcessor implements ColumnProcessor {
 		for (int i = 0; i < portlets.size(); i++) {
 			Portlet portlet = portlets.get(i);
 
-			if (parallelRenderEnable && (portlet.getRenderWeight() < 1)) {
-				String path = "/html/portal/load_render_portlet.jsp";
+			Integer columnPos = new Integer(i);
+			Integer columnCount = new Integer(portlets.size());
 
-				StringServletResponse stringServletResponse =
-					new StringServletResponse(_response);
+			Integer renderWeight = portlet.getRenderWeight();
 
-				HttpServletRequest request =
-					PortletContainerUtil.setupOptionalRenderParameters(
-						_request, path, null, null, null);
+			PortletRenderer portletRenderer =
+				new PortletRenderer(portlet, columnId, columnCount, columnPos);
 
-				PortletContainerUtil.render(
-					request, stringServletResponse, portlet);
+			if (_ajaxableRenderEnable && (portlet.getRenderWeight() < 1)) {
+				StringBundler renderResult = portletRenderer.renderAjax(
+					_request, _response);
 
-				sb.append(stringServletResponse.getString());
+				sb.append(renderResult);
 			}
 			else {
-				Integer columnPos = new Integer(i);
-				Integer columnCount = new Integer(portlets.size());
+				List<PortletRenderer> portletRenderers =
+					_portletRenderersMap.get(renderWeight);
 
-				_portletsMap.put(
-					portlet, new Object[] {columnId, columnPos, columnCount});
+				if (portletRenderers == null) {
+					portletRenderers = new ArrayList<PortletRenderer>();
+
+					_portletRenderersMap.put(renderWeight, portletRenderers);
+				}
+
+				portletRenderers.add(portletRenderer);
 
 				sb.append("[$TEMPLATE_PORTLET_");
 				sb.append(portlet.getPortletId());
@@ -197,10 +194,9 @@ public class TemplateProcessor implements ColumnProcessor {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(TemplateProcessor.class);
-
+	private boolean _ajaxableRenderEnable;
 	private Portlet _portlet;
-	private Map<Portlet, Object[]> _portletsMap;
+	private Map<Integer, List<PortletRenderer>> _portletRenderersMap;
 	private HttpServletRequest _request;
 	private HttpServletResponse _response;
 

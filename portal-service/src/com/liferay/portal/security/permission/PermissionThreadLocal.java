@@ -56,6 +56,15 @@ public class PermissionThreadLocal {
 			PermissionThreadLocal.class + "._flushEnabled", true);
 	private static ThreadLocal<PermissionChecker> _permissionChecker =
 		new AutoResetThreadLocal<PermissionChecker>(
-			PermissionThreadLocal.class + "._permissionChecker");
+			PermissionThreadLocal.class + "._permissionChecker") {
+
+				@Override
+				protected PermissionChecker copy(
+					PermissionChecker permissionChecker) {
+
+					return permissionChecker;
+				}
+
+			};
 
 }

@@ -89,6 +89,8 @@ public interface WebKeys {
 
 	public static final String PARALLEL_RENDERING_MERGE_LOCK = "PARALLEL_RENDERING_MERGE_LOCK";
 
+	public static final String PARALLEL_RENDERING_TIMEOUT_ERROR = "PARALLEL_RENDERING_TIMEOUT_ERROR";
+
 	public static final String PORTLET_CONFIGURATOR_VISIBILITY = "PORTLET_CONFIGURATOR_VISIBILITY";
 
 	public static final String PORTLET_DECORATE = "PORTLET_DECORATE";
@@ -133,7 +135,7 @@ public interface WebKeys {
 
 	public static final String THEME = "THEME";
 
-	public static final String THEME_DISPLAY = "THEME_DISPLAY";
+	public static final String THEME_DISPLAY = "LIFERAY_SHARED_THEME_DISPLAY";
 
 	public static final String UPLOAD_EXCEPTION = "UPLOAD_EXCEPTION";
 

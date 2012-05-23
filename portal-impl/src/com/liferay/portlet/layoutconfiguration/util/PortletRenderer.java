@@ -1,0 +1,169 @@
+/**
+ * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portlet.layoutconfiguration.util;
+
+import com.liferay.portal.kernel.executor.CopyThreadLocalCallable;
+import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
+import com.liferay.portal.kernel.portlet.PortletContainerException;
+import com.liferay.portal.kernel.portlet.PortletContainerUtil;
+import com.liferay.portal.kernel.portlet.RestrictPortletServletRequest;
+import com.liferay.portal.kernel.servlet.PipingServletResponse;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Portlet;
+import com.liferay.portal.theme.ThemeDisplay;
+
+import java.util.concurrent.Callable;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * @author Shuyang Zhou
+ */
+public class PortletRenderer {
+
+	public PortletRenderer(
+		Portlet portlet, String columnId, Integer columnCount,
+		Integer columnPos) {
+
+		_portlet = portlet;
+		_columnCount = columnCount;
+		_columnId = columnId;
+		_columnPos = columnPos;
+	}
+
+	public void finishParallelRender() {
+		if (_restrictPortletServletRequest != null) {
+			_restrictPortletServletRequest.mergeSharedAttributes();
+		}
+	}
+
+	public Callable<StringBundler> getCallable(
+		HttpServletRequest request, HttpServletResponse response) {
+
+		return new PortletRendererCallable(request, response);
+	}
+
+	public Portlet getPortlet() {
+		return _portlet;
+	}
+
+	public StringBundler render(
+			HttpServletRequest request, HttpServletResponse response)
+		throws PortletContainerException {
+
+		request = PortletContainerUtil.setupOptionalRenderParameters(
+			request, null, _columnId, _columnPos, _columnCount);
+
+		return _render(request, response);
+	}
+
+	public StringBundler renderAjax(
+			HttpServletRequest request, HttpServletResponse response)
+		throws PortletContainerException {
+
+		request = PortletContainerUtil.setupOptionalRenderParameters(
+			request, _ajaxRenderPath, null, null, null);
+
+		return _render(request, response);
+	}
+
+	public StringBundler renderError(
+			HttpServletRequest request, HttpServletResponse response)
+		throws PortletContainerException {
+
+		request.setAttribute(WebKeys.PARALLEL_RENDERING_TIMEOUT_ERROR, true);
+
+		request = PortletContainerUtil.setupOptionalRenderParameters(
+			request, null, null, null, null);
+
+		try {
+			return _render(request, response);
+		}
+		finally {
+			request.removeAttribute(WebKeys.PARALLEL_RENDERING_TIMEOUT_ERROR);
+		}
+	}
+
+	private StringBundler _render(
+			HttpServletRequest request, HttpServletResponse response)
+		throws PortletContainerException {
+
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+		PipingServletResponse pipingServletResponse =
+			new PipingServletResponse(response, unsyncStringWriter);
+
+		PortletContainerUtil.render(request, pipingServletResponse, _portlet);
+
+		return unsyncStringWriter.getStringBundler();
+	}
+
+	private static String _ajaxRenderPath =
+		"/html/portal/load_render_portlet.jsp";
+
+	private Integer _columnCount;
+	private String _columnId;
+	private Integer _columnPos;
+	private Portlet _portlet;
+	private RestrictPortletServletRequest _restrictPortletServletRequest;
+
+	private class PortletRendererCallable
+		extends CopyThreadLocalCallable<StringBundler> {
+
+		public PortletRendererCallable(
+			HttpServletRequest request, HttpServletResponse response) {
+
+			super(false, true);
+			_request= request;
+			_response = response;
+		}
+
+		@Override
+		public StringBundler doCall() throws Exception {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)_request.getAttribute(WebKeys.THEME_DISPLAY);
+
+			HttpServletRequest request =
+				PortletContainerUtil.setupOptionalRenderParameters(
+					_request, null, _columnId, _columnPos, _columnCount);
+
+			_restrictPortletServletRequest =
+				(RestrictPortletServletRequest)request;
+
+			try {
+				themeDisplay = (ThemeDisplay)themeDisplay.clone();
+
+				request.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
+
+				return _render(request, _response);
+			}
+			catch (Exception e) {
+				// Under parallel rendering context, interrupted means cancelled
+				// Don't rethrow exception on cancelling
+				if (!Thread.currentThread().isInterrupted()) {
+					throw e;
+				}
+
+				return null;
+			}
+		}
+
+		private HttpServletRequest _request;
+		private HttpServletResponse _response;
+	}
+
+}

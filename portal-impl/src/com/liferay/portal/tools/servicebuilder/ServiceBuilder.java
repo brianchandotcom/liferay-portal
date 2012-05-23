@@ -2170,9 +2170,9 @@ public class ServiceBuilder {
 			methods.put(method.getDeclarationSignature(false), method);
 		}
 
-		Type superClassType = javaClass.getSuperClass();
+		Type superClass = javaClass.getSuperClass();
 
-		String superClassValue = superClassType.getValue();
+		String superClassValue = superClass.getValue();
 
 		while (!superClassValue.endsWith("BaseModelImpl")) {
 			int lastPeriod = superClassValue.lastIndexOf(StringPool.PERIOD);
@@ -2188,8 +2188,8 @@ public class ServiceBuilder {
 				methods.remove(method.getDeclarationSignature(false));
 			}
 
-			superClassType = javaClass.getSuperClass();
-			superClassValue = superClassType.getValue();
+			superClass = javaClass.getSuperClass();
+			superClassValue = superClass.getValue();
 		}
 
 		Map<String, Object> context = _getContext();

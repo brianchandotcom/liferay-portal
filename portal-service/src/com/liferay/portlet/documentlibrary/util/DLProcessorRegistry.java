@@ -40,7 +40,7 @@ public interface DLProcessorRegistry {
 
 	public void register(DLProcessor dlProcessor);
 
-	public void trigger(FileEntry fileEntry);
+	public void trigger(FileEntry fileEntry, FileVersion copyFromVersion);
 
 	public void unregister(DLProcessor dlProcessor);
 

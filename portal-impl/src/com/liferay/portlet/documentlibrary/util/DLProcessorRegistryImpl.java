@@ -140,7 +140,7 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 		_dlProcessors.add(dlProcessor);
 	}
 
-	public void trigger(FileEntry fileEntry) {
+	public void trigger(FileEntry fileEntry, FileVersion copyFromVersion) {
 		if (!DLProcessorThreadLocal.isEnabled()) {
 			return;
 		}
@@ -160,13 +160,13 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 				dlProcessorClassName);
 
 			if (dlProcessor.isSupported(latestFileVersion)) {
-				dlProcessor.trigger(latestFileVersion);
+				dlProcessor.trigger(copyFromVersion, latestFileVersion);
 			}
 		}
 
 		for (DLProcessor dlProcessor : _dlProcessors) {
 			if (dlProcessor.isSupported(latestFileVersion)) {
-				dlProcessor.trigger(latestFileVersion);
+				dlProcessor.trigger(latestFileVersion, copyFromVersion);
 			}
 		}
 	}

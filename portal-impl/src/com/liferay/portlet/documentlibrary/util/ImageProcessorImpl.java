@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.messaging.MessageBusException;
-import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -71,8 +69,11 @@ public class ImageProcessorImpl
 		deleteFiles(fileVersion, type);
 	}
 
-	public void generateImages(FileVersion fileVersion) {
-		_instance._generateImages(fileVersion);
+	public void generateImages(
+			FileVersion copyFromVersion, FileVersion fileVersion)
+		throws Exception {
+
+		_instance._generateImages(copyFromVersion, fileVersion);
 	}
 
 	public Set<String> getImageMimeTypes() {
@@ -140,7 +141,7 @@ public class ImageProcessorImpl
 			}
 
 			if (!hasImages && _instance.isSupported(fileVersion)) {
-				_instance._queueGeneration(fileVersion);
+				_instance._queueGeneration(null, fileVersion);
 			}
 		}
 		catch (Exception e) {
@@ -177,8 +178,8 @@ public class ImageProcessorImpl
 			custom2ImageId, is, type);
 	}
 
-	public void trigger(FileVersion fileVersion) {
-		_instance._queueGeneration(fileVersion);
+	public void trigger(FileVersion copyFromVersion, FileVersion fileVersion) {
+		_instance._queueGeneration(copyFromVersion, fileVersion);
 	}
 
 	@Override
@@ -236,10 +237,19 @@ public class ImageProcessorImpl
 	private ImageProcessorImpl() {
 	}
 
-	private void _generateImages(FileVersion fileVersion) {
+	private void _generateImages(
+			FileVersion copyFromVersion, FileVersion fileVersion)
+		throws Exception {
+
 		InputStream inputStream = null;
 
 		try {
+			if (copyFromVersion != null) {
+				copy(copyFromVersion, fileVersion);
+
+				return;
+			}
+
 			if (!PropsValues.DL_FILE_ENTRY_THUMBNAIL_ENABLED &&
 				!PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED) {
 
@@ -278,9 +288,6 @@ public class ImageProcessorImpl
 			}
 		}
 		catch (NoSuchFileEntryException nsfee) {
-		}
-		catch (Exception e) {
-			_log.error(e, e);
 		}
 		finally {
 			StreamUtil.cleanUp(inputStream);
@@ -340,29 +347,21 @@ public class ImageProcessorImpl
 		}
 	}
 
-	private void _queueGeneration(FileVersion fileVersion) {
-		if (!_fileVersionIds.contains(fileVersion.getFileVersionId()) &&
-			isSupported(fileVersion) && !hasThumbnails(fileVersion)) {
-			_fileVersionIds.add(fileVersion.getFileVersionId());
+	private void _queueGeneration(
+		FileVersion copyFromVersion, FileVersion fileVersion) {
 
-			if (PropsValues.DL_FILE_ENTRY_PROCESSORS_TRIGGER_SYNCHRONOUSLY) {
-				try {
-					MessageBusUtil.sendSynchronousMessage(
-						DestinationNames.DOCUMENT_LIBRARY_IMAGE_PROCESSOR,
-						fileVersion);
-				}
-				catch (MessageBusException mbe) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(mbe, mbe);
-					}
-				}
-			}
-			else {
-				MessageBusUtil.sendMessage(
-					DestinationNames.DOCUMENT_LIBRARY_IMAGE_PROCESSOR,
-					fileVersion);
-			}
+		if (_fileVersionIds.contains(fileVersion.getFileVersionId()) ||
+			!isSupported(fileVersion)) {
+
+			return;
 		}
+
+		_fileVersionIds.add(fileVersion.getFileVersionId());
+
+		sendGenerationMessage(
+			DestinationNames.DOCUMENT_LIBRARY_IMAGE_PROCESSOR,
+			PropsValues.DL_FILE_ENTRY_PROCESSORS_TRIGGER_SYNCHRONOUSLY,
+			copyFromVersion, fileVersion);
 	}
 
 	private void _storePreviewImage(

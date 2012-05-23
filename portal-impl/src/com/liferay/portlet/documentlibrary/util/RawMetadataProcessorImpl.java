@@ -67,6 +67,9 @@ public class RawMetadataProcessorImpl
 	public void cleanUp(FileVersion fileVersion) {
 	}
 
+	public void copy(FileVersion srcVersion, FileVersion destVersion) {
+	}
+
 	public void exportGeneratedFiles(
 			PortletDataContext portletDataContext, FileEntry fileEntry,
 			Element fileEntryElement)
@@ -166,6 +169,10 @@ public class RawMetadataProcessorImpl
 	}
 
 	public void trigger(FileVersion fileVersion) {
+		trigger(fileVersion, fileVersion);
+	}
+
+	public void trigger(FileVersion copyFromVersion, FileVersion fileVersion) {
 		if (PropsValues.DL_FILE_ENTRY_PROCESSORS_TRIGGER_SYNCHRONOUSLY) {
 			try {
 				MessageBusUtil.sendSynchronousMessage(

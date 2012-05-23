@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.messaging.MessageBusException;
-import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessException;
@@ -74,8 +72,11 @@ public class VideoProcessorImpl
 		return _instance;
 	}
 
-	public void generateVideo(FileVersion fileVersion) throws Exception {
-		_instance._generateVideo(fileVersion);
+	public void generateVideo(
+			FileVersion copyFromVersion, FileVersion fileVersion)
+		throws Exception {
+
+		_instance._generateVideo(copyFromVersion, fileVersion);
 	}
 
 	public InputStream getPreviewAsStream(FileVersion fileVersion, String type)
@@ -113,7 +114,7 @@ public class VideoProcessorImpl
 			hasVideo = _instance._hasVideo(fileVersion);
 
 			if (!hasVideo && _instance.isSupported(fileVersion)) {
-				_instance._queueGeneration(fileVersion);
+				_instance._queueGeneration(null, fileVersion);
 			}
 		}
 		catch (Exception e) {
@@ -147,8 +148,8 @@ public class VideoProcessorImpl
 		return _instance.isSupported(mimeType);
 	}
 
-	public void trigger(FileVersion fileVersion) {
-		_instance._queueGeneration(fileVersion);
+	public void trigger(FileVersion copyFromVersion, FileVersion fileVersion) {
+		_instance._queueGeneration(copyFromVersion, fileVersion);
 	}
 
 	@Override
@@ -359,7 +360,10 @@ public class VideoProcessorImpl
 		}
 	}
 
-	private void _generateVideo(FileVersion fileVersion) throws Exception {
+	private void _generateVideo(
+			FileVersion copyFromVersion, FileVersion fileVersion)
+		throws Exception {
+
 		if (!XugglerUtil.isEnabled() || _hasVideo(fileVersion)) {
 			return;
 		}
@@ -371,6 +375,12 @@ public class VideoProcessorImpl
 		File videoTempFile = null;
 
 		try {
+			if (copyFromVersion != null) {
+				copy(copyFromVersion, fileVersion);
+
+				return;
+			}
+
 			File file = null;
 
 			if (!hasPreviews(fileVersion) || !hasThumbnails(fileVersion)) {
@@ -523,7 +533,9 @@ public class VideoProcessorImpl
 		return hasPreviews(fileVersion) && hasThumbnails(fileVersion);
 	}
 
-	private void _queueGeneration(FileVersion fileVersion) {
+	private void _queueGeneration(
+		FileVersion copyFromVersion, FileVersion fileVersion) {
+
 		if (_fileVersionIds.contains(fileVersion.getFileVersionId()) ||
 			!isSupported(fileVersion)) {
 
@@ -532,22 +544,10 @@ public class VideoProcessorImpl
 
 		_fileVersionIds.add(fileVersion.getFileVersionId());
 
-		if (PropsValues.DL_FILE_ENTRY_PROCESSORS_TRIGGER_SYNCHRONOUSLY) {
-			try {
-				MessageBusUtil.sendSynchronousMessage(
-					DestinationNames.DOCUMENT_LIBRARY_VIDEO_PROCESSOR,
-					fileVersion);
-			}
-			catch (MessageBusException mbe) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(mbe, mbe);
-				}
-			}
-		}
-		else {
-			MessageBusUtil.sendMessage(
-				DestinationNames.DOCUMENT_LIBRARY_VIDEO_PROCESSOR, fileVersion);
-		}
+		sendGenerationMessage(
+			DestinationNames.DOCUMENT_LIBRARY_VIDEO_PROCESSOR,
+			PropsValues.DL_FILE_ENTRY_PROCESSORS_TRIGGER_SYNCHRONOUSLY,
+			copyFromVersion, fileVersion);
 	}
 
 	private static final String[] _PREVIEW_TYPES =

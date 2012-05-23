@@ -58,8 +58,10 @@ public class DLProcessorRegistryUtil {
 		getDLProcessorRegistry().register(dlProcessor);
 	}
 
-	public static void trigger(FileEntry fileEntry) {
-		getDLProcessorRegistry().trigger(fileEntry);
+	public static void trigger(
+			FileEntry fileEntry, FileVersion copyFromVersion) {
+
+		getDLProcessorRegistry().trigger(fileEntry, copyFromVersion);
 	}
 
 	public static void unregister(DLProcessor dlProcessor) {

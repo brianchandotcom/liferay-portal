@@ -404,7 +404,8 @@ AUI.add(
 								var checkedItemsIds = tagsNodes.attr('data-tagId');
 
 								if (checkedItemsIds.length > 0) {
-									Liferay.Service.Asset.AssetTag.deleteTags(
+									Liferay.Service(
+										'/assettag/delete-tags',
 										{
 											tagIds: checkedItemsIds
 										},
@@ -421,7 +422,8 @@ AUI.add(
 					_deleteTag: function(tagId, callback) {
 						var instance = this;
 
-						Liferay.Service.Asset.AssetTag.deleteTag(
+						Liferay.Service(
+							'/assettag/delete-tag',
 							{
 								tagId: tagId
 							},
@@ -806,10 +808,11 @@ AUI.add(
 						var start = currentPage * rowsPerPage;
 						var end = start + rowsPerPage;
 
-						Liferay.Service.Asset.AssetTag.getJSONGroupTags(
+						Liferay.Service(
+							'/assettag/get-json-group-tags',
 							{
 								groupId: themeDisplay.getParentGroupId(),
-								tagName: query,
+								name: query,
 								start: start,
 								end: end
 							},
@@ -1040,36 +1043,24 @@ AUI.add(
 					},
 
 					_mergeTags: function(fromIds, toId, overrideProperties, callback) {
-						var serviceParameterTypes = [
-							'[J',
-							'long',
-							'boolean'
-						];
-
-						Liferay.Service.Asset.AssetTag.mergeTags(
+						Liferay.Service(
+							'/assettag/merge-tags',
 							{
 								fromTagIds: fromIds,
 								toTagId: toId,
-								overrideProperties: overrideProperties,
-								serviceParameterTypes: A.JSON.stringify(serviceParameterTypes)
+								overrideProperties: overrideProperties
 							},
 							callback
 						);
 					},
 
 					_mergeTag: function(fromId, toId, callback) {
-						var serviceParameterTypes = [
-							'long',
-							'long',
-							'boolean'
-						];
-
-						Liferay.Service.Asset.AssetTag.mergeTags(
+						Liferay.Service(
+							'/assettag/merge-tags',
 							{
 								fromTagId: fromId,
 								toTagId: toId,
-								overrideProperties: true,
-								serviceParameterTypes: A.JSON.stringify(serviceParameterTypes)
+								overrideProperties: true
 							},
 							callback
 						);

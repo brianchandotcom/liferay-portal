@@ -764,7 +764,8 @@ AUI.add(
 					_deleteCategory: function(categoryId, callback) {
 						var instance = this;
 
-						Liferay.Service.Asset.AssetCategory.deleteCategory(
+						Liferay.Service(
+							'/assetcategory/delete-category',
 							{
 								categoryId: categoryId
 							},
@@ -801,7 +802,8 @@ AUI.add(
 						if (Lang.isArray(categoryIds) && categoryIds.length > 0 &&
 							confirm(Liferay.Language.get('are-you-sure-you-want-to-delete-the-selected-categories'))) {
 
-							Liferay.Service.Asset.AssetCategory.deleteCategories(
+							Liferay.Service(
+								'/assetcategory/delete-categories',
 								{
 									categoryIds: categoryIds
 								},
@@ -816,7 +818,8 @@ AUI.add(
 						if (vocabularyIds.length > 0 &&
 							confirm(Liferay.Language.get('are-you-sure-you-want-to-delete-the-selected-vocabularies'))) {
 
-							Liferay.Service.Asset.AssetVocabulary.deleteVocabularies(
+							Liferay.Service(
+								'/assetvocabulary/delete-vocabularies',
 								{
 									vocabularyIds: vocabularyIds
 								},
@@ -828,7 +831,8 @@ AUI.add(
 					_deleteVocabulary: function(vocabularyId, callback) {
 						var instance = this;
 
-						Liferay.Service.Asset.AssetVocabulary.deleteVocabulary(
+						Liferay.Service(
+							'/assetvocabulary/delete-vocabulary',
 							{
 								vocabularyId: vocabularyId
 							},
@@ -1276,7 +1280,8 @@ AUI.add(
 						var start = currentPage * rowsPerPage;
 						var end = start + rowsPerPage;
 
-						Liferay.Service.Asset.AssetVocabulary.getJSONGroupVocabularies(
+						Liferay.Service(
+							'/assetvocabulary/get-json-group-vocabularies',
 							{
 								groupId: themeDisplay.getParentGroupId(),
 								name: query,
@@ -1328,7 +1333,7 @@ AUI.add(
 							);
 						}
 
-						Liferay.Service.Asset.AssetCategory.getJSONVocabularyCategories(params, callback);
+						Liferay.Service('/assetcategory/get-json-vocabulary-categories', params, callback);
 					},
 
 					_getVocabularyId: function(exp) {

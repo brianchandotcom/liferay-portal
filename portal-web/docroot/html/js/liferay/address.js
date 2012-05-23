@@ -1,6 +1,7 @@
 Liferay.Address = {
 	getCountries: function(callback) {
-		Liferay.Service.Portal.Country.getCountries(
+		Liferay.Service(
+			'/country/get-countries',
 			{
 				active: true
 			},
@@ -9,7 +10,8 @@ Liferay.Address = {
 	},
 
 	getRegions: function(callback, selectKey) {
-		Liferay.Service.Portal.Region.getRegions(
+		Liferay.Service(
+			'/region/get-regions',
 			{
 				countryId: Number(selectKey),
 				active: true

@@ -5,6 +5,8 @@ Liferay = window.Liferay || {};
 
 	var CONTEXT = themeDisplay.getPathContext();
 
+	var PREFIX_PARAM_NULL_VALUE = '-';
+
 	var REGEX_SELECTOR_ID = /^#/;
 
 	var REGEX_TRIM_SLASH = /^\/|\/$/g;
@@ -156,6 +158,21 @@ Liferay = window.Liferay || {};
 		}
 
 		config.method = method;
+
+		var prefixedData = {};
+
+		A.each(
+			config.data,
+			function(value, key) {
+				if (Lang.isNull(value) && key.charAt(0) != PREFIX_PARAM_NULL_VALUE) {
+					key = PREFIX_PARAM_NULL_VALUE + key;
+				}
+
+				prefixedData[key] = value;
+			}
+		);
+
+		config.data = prefixedData;
 
 		return Service._ioRequest(url, config);
 	};

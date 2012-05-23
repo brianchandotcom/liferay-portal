@@ -365,17 +365,6 @@ AUI.add(
 
 				var defaultLocale = instance.getDefaultLocale();
 
-				var serviceParameterTypes = [
-					'long',
-					'java.lang.String',
-					'boolean',
-					'java.lang.String',
-					'java.util.Map<java.util.Locale, java.lang.String>',
-					'java.util.Map<java.util.Locale, java.lang.String>',
-					'java.lang.String',
-					'com.liferay.portal.service.ServiceContext'
-				];
-
 				var nameMap = {};
 
 				nameMap[defaultLocale] = name;
@@ -384,7 +373,8 @@ AUI.add(
 
 				descriptionMap[defaultLocale] = (Lang.isString(description) && description) ? description : null;
 
-				Liferay.Service.Journal.JournalStructure.addStructure(
+				Liferay.Service(
+					'/journalstructure/add-structure',
 					{
 						groupId: groupId,
 						structureId: structureId,
@@ -399,8 +389,7 @@ AUI.add(
 								addGuestPermissions: addGuestPermissions,
 								scopeGroupId: groupId
 							}
-						),
-						serviceParameterTypes: JSON.stringify(serviceParameterTypes)
+						)
 					},
 					function(message) {
 						if (Lang.isFunction(callback)) {
@@ -1658,16 +1647,6 @@ AUI.add(
 
 				var defaultLocale = instance.getDefaultLocale();
 
-				var serviceParameterTypes = [
-					'long',
-					'java.lang.String',
-					'java.lang.String',
-					'java.util.Map<java.util.Locale, java.lang.String>',
-					'java.util.Map<java.util.Locale, java.lang.String>',
-					'java.lang.String',
-					'com.liferay.portal.service.ServiceContext'
-				];
-
 				var nameMap = {};
 
 				nameMap[defaultLocale] = name;
@@ -1676,7 +1655,8 @@ AUI.add(
 
 				descriptionMap[defaultLocale] = (Lang.isString(description) && description) ? description : null;
 
-				Liferay.Service.Journal.JournalStructure.updateStructure(
+				Liferay.Service(
+					'/journalstructure/update-structure',
 					{
 						groupId: groupId,
 						structureId: structureId,
@@ -1688,8 +1668,7 @@ AUI.add(
 							{
 								scopeGroupId: groupId
 							}
-						),
-						serviceParameterTypes: JSON.stringify(serviceParameterTypes)
+						)
 					},
 					function(message) {
 						if (Lang.isFunction(callback)) {

@@ -273,7 +273,8 @@ AUI.add(
 
 						groupIds.push(themeDisplay.getCompanyGroupId());
 
-						Liferay.Service.Asset.AssetTag.getGroupsTags(
+						Liferay.Service(
+							'/assettag/get-groups-tags',
 							{
 								groupIds: groupIds
 							},

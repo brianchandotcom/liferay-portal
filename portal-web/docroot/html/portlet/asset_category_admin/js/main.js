@@ -75,6 +75,8 @@ AUI.add(
 
 		var SELECTOR_UPDATE_VOCABULARY_FORM = 'form.update-vocabulary-form';
 
+		var SELECTOR_VOCABULARY_CATEGORY_MESSAGES = '#vocabulary-category-messages';
+
 		var SELECTOR_VOCABULARY_NAME_INPUT = '.vocabulary-name input';
 
 		var SELECTOR_VOCABULARY_SELECT_LIST = '.vocabulary-select-list';
@@ -319,6 +321,10 @@ AUI.add(
 					_buildCategoryTreeview: function(categories, parentCategoryId) {
 						var instance = this;
 
+						if (Lang.isUndefined(parentCategoryId) && categories.length) {
+							parentCategoryId = categories[0].parentCategoryId;
+						}
+
 						var children = instance._filterCategory(categories, parentCategoryId);
 
 						A.each(
@@ -472,7 +478,7 @@ AUI.add(
 							}
 						).render();
 
-						instance._buildCategoryTreeview(categories, 0);
+						instance._buildCategoryTreeview(categories);
 					},
 
 					_createLiveSearch: function() {
@@ -775,7 +781,7 @@ AUI.add(
 						instance._createCategoryTreeView(categories);
 
 						if (categories.length <= 0) {
-							var categoryMessages = A.one('#vocabulary-category-messages');
+							var categoryMessages = A.one(SELECTOR_VOCABULARY_CATEGORY_MESSAGES);
 
 							categoryMessages.removeClass(CSS_MESSAGE_ERROR).removeClass(CSS_MESSAGE_SUCCESS);
 							categoryMessages.addClass('portlet-msg-info');
@@ -864,7 +870,7 @@ AUI.add(
 					_displayVocabularyCategories: function(vocabularyId, callback) {
 						var instance = this;
 
-						var categoryMessages = A.one('#vocabulary-category-messages');
+						var categoryMessages = A.one(SELECTOR_VOCABULARY_CATEGORY_MESSAGES);
 
 						if (categoryMessages) {
 							categoryMessages.hide();

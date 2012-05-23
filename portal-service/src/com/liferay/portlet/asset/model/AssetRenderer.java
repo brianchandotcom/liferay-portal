@@ -82,6 +82,8 @@ public interface AssetRenderer {
 
 	public long getUserId();
 
+	public String getUserName();
+
 	public String getUuid();
 
 	public String getViewInContextMessage();

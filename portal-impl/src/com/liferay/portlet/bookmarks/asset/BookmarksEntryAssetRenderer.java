@@ -97,6 +97,10 @@ public class BookmarksEntryAssetRenderer extends BaseAssetRenderer {
 		return _entry.getUserId();
 	}
 
+	public String getUserName() {
+		return _entry.getUserName();
+	}
+
 	public String getUuid() {
 		return _entry.getUuid();
 	}

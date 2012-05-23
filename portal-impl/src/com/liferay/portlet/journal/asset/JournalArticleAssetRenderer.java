@@ -172,6 +172,10 @@ public class JournalArticleAssetRenderer extends BaseAssetRenderer {
 		return _article.getUserId();
 	}
 
+	public String getUserName() {
+		return _article.getUserName();
+	}
+
 	public String getUuid() {
 		return _article.getUuid();
 	}

@@ -159,6 +159,10 @@ public class WikiPageAssetRenderer extends BaseAssetRenderer {
 		return _page.getUserId();
 	}
 
+	public String getUserName() {
+		return _page.getUserName();
+	}
+
 	public String getUuid() {
 		return _page.getUuid();
 	}

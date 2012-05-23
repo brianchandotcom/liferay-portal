@@ -148,6 +148,10 @@ public class BlogsEntryAssetRenderer
 		return _entry.getUserId();
 	}
 
+	public String getUserName() {
+		return _entry.getUserName();
+	}
+
 	public String getUuid() {
 		return _entry.getUuid();
 	}

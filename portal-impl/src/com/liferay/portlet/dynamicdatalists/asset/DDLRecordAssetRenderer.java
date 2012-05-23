@@ -104,6 +104,10 @@ public class DDLRecordAssetRenderer extends BaseAssetRenderer {
 		return _record.getUserId();
 	}
 
+	public String getUserName() {
+		return _record.getUserName();
+	}
+
 	public String getUuid() {
 		return _record.getUuid();
 	}

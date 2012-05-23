@@ -127,6 +127,10 @@ public class LayoutRevisionAssetRenderer extends BaseAssetRenderer {
 		return _layoutRevision.getUserId();
 	}
 
+	public String getUserName() {
+		return _layoutRevision.getUserName();
+	}
+
 	public String getUuid() {
 		return null;
 	}

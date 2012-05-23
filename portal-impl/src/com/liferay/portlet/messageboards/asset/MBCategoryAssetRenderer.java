@@ -120,6 +120,10 @@ public class MBCategoryAssetRenderer extends BaseAssetRenderer {
 		return _category.getUserId();
 	}
 
+	public String getUserName() {
+		return _category.getUserName();
+	}
+
 	public String getUuid() {
 		return _category.getUuid();
 	}

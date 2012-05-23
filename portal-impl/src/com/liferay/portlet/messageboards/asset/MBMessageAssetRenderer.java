@@ -121,6 +121,10 @@ public class MBMessageAssetRenderer extends BaseAssetRenderer {
 		return _message.getUserId();
 	}
 
+	public String getUserName() {
+		return _message.getUserName();
+	}
+
 	public String getUuid() {
 		return _message.getUuid();
 	}

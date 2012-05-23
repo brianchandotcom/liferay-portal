@@ -103,6 +103,10 @@ public class UserAssetRenderer extends BaseAssetRenderer {
 		return _user.getUserId();
 	}
 
+	public String getUserName() {
+		return _user.getFullName();
+	}
+
 	public String getUuid() {
 		return _user.getUuid();
 	}

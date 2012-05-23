@@ -123,6 +123,10 @@ public class CalEventAssetRenderer extends BaseAssetRenderer {
 		return _event.getUserId();
 	}
 
+	public String getUserName() {
+		return _event.getUserName();
+	}
+
 	public String getUuid() {
 		return _event.getUuid();
 	}

@@ -18,8 +18,6 @@ import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.messaging.MessageBusException;
-import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessException;
@@ -267,43 +265,43 @@ public class AudioProcessorImpl
 		try {
 			if (copyFromVersion != null) {
 				copy(copyFromVersion, fileVersion);
-			}else {
-				audioTempFile = FileUtil.createTempFile(
-						fileVersion.getExtension());
 
-				if (!XugglerUtil.isEnabled() || _hasAudio(fileVersion)) {
-					return;
+				return;
+			}
+
+			if (!XugglerUtil.isEnabled() || _hasAudio(fileVersion)) {
+				return;
+			}
+
+			audioTempFile = FileUtil.createTempFile(fileVersion.getExtension());
+
+			if (!hasPreviews(fileVersion)) {
+				File file = null;
+
+				if (fileVersion instanceof LiferayFileVersion) {
+					try {
+						LiferayFileVersion liferayFileVersion =
+							(LiferayFileVersion)fileVersion;
+
+						file = liferayFileVersion.getFile(false);
+					}
+					catch (UnsupportedOperationException uoe) {
+					}
 				}
 
-				if (!hasPreviews(fileVersion)) {
-					File file = null;
+				if (file == null) {
+					inputStream = fileVersion.getContentStream(false);
 
-					if (fileVersion instanceof LiferayFileVersion) {
-						try {
-							LiferayFileVersion liferayFileVersion =
-								(LiferayFileVersion)fileVersion;
+					FileUtil.write(audioTempFile, inputStream);
 
-							file = liferayFileVersion.getFile(false);
-						}
-						catch (UnsupportedOperationException uoe) {
-						}
-					}
+					file = audioTempFile;
+				}
 
-					if (file == null) {
-						inputStream = fileVersion.getContentStream(false);
-
-						FileUtil.write(audioTempFile, inputStream);
-
-						file = audioTempFile;
-					}
-
-					try {
-						_generateAudioXuggler(
-								fileVersion, file, previewTempFiles);
-					}
-					catch (Exception e) {
-						_log.error(e, e);
-					}
+				try {
+					_generateAudioXuggler(fileVersion, file, previewTempFiles);
+				}
+				catch (Exception e) {
+					_log.error(e, e);
 				}
 			}
 		}
@@ -405,7 +403,7 @@ public class AudioProcessorImpl
 	}
 
 	private void _queueGeneration(
-			FileVersion copyFromVersion, FileVersion fileVersion) {
+		FileVersion copyFromVersion, FileVersion fileVersion) {
 
 		if (_fileVersionIds.contains(fileVersion.getFileVersionId()) ||
 			!isSupported(fileVersion)) {
@@ -415,23 +413,10 @@ public class AudioProcessorImpl
 
 		_fileVersionIds.add(fileVersion.getFileVersionId());
 
-		if (PropsValues.DL_FILE_ENTRY_PROCESSORS_TRIGGER_SYNCHRONOUSLY) {
-			try {
-				MessageBusUtil.sendSynchronousMessage(
-					DestinationNames.DOCUMENT_LIBRARY_AUDIO_PROCESSOR,
-					new Object[]{copyFromVersion, fileVersion});
-			}
-			catch (MessageBusException mbe) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(mbe, mbe);
-				}
-			}
-		}
-		else {
-			MessageBusUtil.sendMessage(
-				DestinationNames.DOCUMENT_LIBRARY_AUDIO_PROCESSOR,
-					new Object[]{copyFromVersion, fileVersion});
-		}
+		sendGenerationMessage(
+			DestinationNames.DOCUMENT_LIBRARY_AUDIO_PROCESSOR,
+			PropsValues.DL_FILE_ENTRY_PROCESSORS_TRIGGER_SYNCHRONOUSLY,
+			copyFromVersion, fileVersion);
 	}
 
 	private static final String[] _PREVIEW_TYPES =

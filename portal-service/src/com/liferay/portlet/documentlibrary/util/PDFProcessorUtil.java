@@ -81,7 +81,7 @@ public class PDFProcessorUtil {
 	}
 
 	public static void trigger(
-			FileVersion fileVersion, FileVersion copyFromVersion) {
+		FileVersion fileVersion, FileVersion copyFromVersion) {
 
 		getPDFProcessor().trigger(fileVersion, copyFromVersion);
 	}

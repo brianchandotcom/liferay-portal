@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.messaging.MessageBusException;
-import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -198,21 +196,16 @@ public class PDFProcessorImpl
 
 	public void trigger(FileVersion copyFromVersion, FileVersion fileVersion) {
 		Initializer._initializedInstance._queueGeneration(
-				copyFromVersion, fileVersion);
+			copyFromVersion, fileVersion);
 	}
 
-	protected void doCopyPreviews(
+	@Override
+	protected void copyPreviews(
 		FileVersion srcVersion, FileVersion destVersion) {
 
 		if (PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED) {
 			try {
-				if (DLStoreUtil.hasFile(
-					srcVersion.getCompanyId(), REPOSITORY_ID,
-					getPreviewFilePath(srcVersion, 1)) &&
-					!DLStoreUtil.hasFile(
-						destVersion.getCompanyId(), REPOSITORY_ID,
-						getPreviewFilePath(destVersion, 1))) {
-
+				if (hasPreview(srcVersion) && !hasPreview(destVersion)) {
 					int total = getPreviewFileCount(srcVersion);
 
 					for (int i = 0; i < total; i++) {
@@ -296,6 +289,26 @@ public class PDFProcessorImpl
 		return THUMBNAIL_TYPE;
 	}
 
+	protected boolean hasPreview(FileVersion fileVersion) throws Exception {
+		return hasPreview(fileVersion, null);
+	}
+
+	@Override
+	protected boolean hasPreview(FileVersion fileVersion, String type)
+		throws Exception {
+
+		String previewFilePath = getPreviewFilePath(fileVersion, 1);
+
+		if (DLStoreUtil.hasFile(
+				fileVersion.getCompanyId(), REPOSITORY_ID, previewFilePath)) {
+
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	protected void importPreviews(
 			PortletDataContext portletDataContext, FileEntry fileEntry,
 			FileEntry importedFileEntry, Element fileEntryElement)
@@ -327,7 +340,7 @@ public class PDFProcessorImpl
 	}
 
 	private void _generateImages(FileVersion fileVersion, File file)
-			throws Exception {
+		throws Exception {
 
 		if (isImageMagickEnabled()) {
 			_generateImagesIM(fileVersion, file);
@@ -346,44 +359,46 @@ public class PDFProcessorImpl
 		try {
 			if (copyFromVersion != null) {
 				copy(copyFromVersion, fileVersion);
-			}else {
-				if (_hasImages(fileVersion)) {
-					return;
-				}
 
-				String extension = fileVersion.getExtension();
+				return;
+			}
 
-				if (extension.equals("pdf")) {
-					if (fileVersion instanceof LiferayFileVersion) {
-						try {
-							LiferayFileVersion liferayFileVersion =
-								(LiferayFileVersion)fileVersion;
+			if (_hasImages(fileVersion)) {
+				return;
+			}
 
-							File file = liferayFileVersion.getFile(false);
+			String extension = fileVersion.getExtension();
 
-							_generateImages(fileVersion, file);
+			if (extension.equals("pdf")) {
+				if (fileVersion instanceof LiferayFileVersion) {
+					try {
+						LiferayFileVersion liferayFileVersion =
+							(LiferayFileVersion)fileVersion;
 
-							return;
-						}
-						catch (UnsupportedOperationException uoe) {
-						}
+						File file = liferayFileVersion.getFile(false);
+
+						_generateImages(fileVersion, file);
+
+						return;
 					}
-
-					inputStream = fileVersion.getContentStream(false);
-
-					_generateImages(fileVersion, inputStream);
+					catch (UnsupportedOperationException uoe) {
+					}
 				}
-				else if (DocumentConversionUtil.isEnabled()) {
-					inputStream = fileVersion.getContentStream(false);
 
-					String tempFileId = DLUtil.getTempFileId(
-						fileVersion.getFileEntryId(), fileVersion.getVersion());
+				inputStream = fileVersion.getContentStream(false);
 
-					File file = DocumentConversionUtil.convert(
-						tempFileId, inputStream, extension, "pdf");
+				_generateImages(fileVersion, inputStream);
+			}
+			else if (DocumentConversionUtil.isEnabled()) {
+				inputStream = fileVersion.getContentStream(false);
 
-					_generateImages(fileVersion, file);
-				}
+				String tempFileId = DLUtil.getTempFileId(
+					fileVersion.getFileEntryId(), fileVersion.getVersion());
+
+				File file = DocumentConversionUtil.convert(
+					tempFileId, inputStream, extension, "pdf");
+
+				_generateImages(fileVersion, file);
 			}
 		}
 		catch (NoSuchFileEntryException nsfee) {
@@ -662,10 +677,7 @@ public class PDFProcessorImpl
 
 	private boolean _hasImages(FileVersion fileVersion) throws Exception {
 		if (PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED) {
-			if (!DLStoreUtil.hasFile(
-					fileVersion.getCompanyId(), REPOSITORY_ID,
-					getPreviewFilePath(fileVersion, 1))) {
-
+			if (!hasPreview(fileVersion)) {
 				return false;
 			}
 		}
@@ -676,11 +688,8 @@ public class PDFProcessorImpl
 	private boolean _isGeneratePreview(FileVersion fileVersion)
 		throws Exception {
 
-		String previewFilePath = getPreviewFilePath(fileVersion, 1);
-
 		if (PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED &&
-			!DLStoreUtil.hasFile(
-				fileVersion.getCompanyId(), REPOSITORY_ID, previewFilePath)) {
+			!hasPreview(fileVersion)) {
 
 			return true;
 		}
@@ -692,12 +701,8 @@ public class PDFProcessorImpl
 	private boolean _isGenerateThumbnail(FileVersion fileVersion)
 		throws Exception {
 
-		String thumbnailFilePath = getThumbnailFilePath(
-			fileVersion, THUMBNAIL_INDEX_DEFAULT);
-
 		if (PropsValues.DL_FILE_ENTRY_THUMBNAIL_ENABLED &&
-			!DLStoreUtil.hasFile(
-				fileVersion.getCompanyId(), REPOSITORY_ID, thumbnailFilePath)) {
+			!hasThumbnail(fileVersion, THUMBNAIL_INDEX_DEFAULT)) {
 
 			return true;
 		}
@@ -707,7 +712,7 @@ public class PDFProcessorImpl
 	}
 
 	private void _queueGeneration(
-			final FileVersion copyFromVersion, final FileVersion fileVersion) {
+		FileVersion copyFromVersion, FileVersion fileVersion) {
 
 		if (_fileVersionIds.contains(fileVersion.getFileVersionId())) {
 			return;
@@ -736,23 +741,10 @@ public class PDFProcessorImpl
 		if (generateImages) {
 			_fileVersionIds.add(fileVersion.getFileVersionId());
 
-			if (PropsValues.DL_FILE_ENTRY_PROCESSORS_TRIGGER_SYNCHRONOUSLY) {
-				try {
-					MessageBusUtil.sendSynchronousMessage(
-						DestinationNames.DOCUMENT_LIBRARY_PDF_PROCESSOR,
-						new Object[]{copyFromVersion, fileVersion});
-				}
-				catch (MessageBusException mbe) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(mbe, mbe);
-					}
-				}
-			}
-			else {
-				MessageBusUtil.sendMessage(
-					DestinationNames.DOCUMENT_LIBRARY_PDF_PROCESSOR,
-						new Object[]{copyFromVersion, fileVersion});
-			}
+			sendGenerationMessage(
+				DestinationNames.DOCUMENT_LIBRARY_PDF_PROCESSOR,
+				PropsValues.DL_FILE_ENTRY_PROCESSORS_TRIGGER_SYNCHRONOUSLY,
+				copyFromVersion, fileVersion);
 		}
 	}
 

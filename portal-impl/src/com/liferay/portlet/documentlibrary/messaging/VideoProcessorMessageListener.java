@@ -14,47 +14,21 @@
 
 package com.liferay.portlet.documentlibrary.messaging;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.BaseMessageListener;
-import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.util.VideoProcessorUtil;
 
 /**
  * @author Juan González
  * @author Sergio González
  */
-public class VideoProcessorMessageListener extends BaseMessageListener {
+public class VideoProcessorMessageListener
+	extends BaseProcessorMessageListener {
 
-	@Override
-	protected void doReceive(Message message) throws Exception {
-		Object[] array = (Object[])message.getPayload();
+	protected void generate(
+			FileVersion copyFromVersion, FileVersion fileVersion)
+		throws Exception {
 
-		FileVersion copyFromVersion = (FileVersion)array[0];
-		FileVersion fileVersion = (FileVersion)array[1];
-
-		try {
-			VideoProcessorUtil.generateVideo(copyFromVersion, fileVersion);
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to generate video for file version " +
-						fileVersion.getFileVersionId(),
-					e);
-			}
-		}
-
-		if (PropsValues.DL_FILE_ENTRY_PROCESSORS_TRIGGER_SYNCHRONOUSLY) {
-			MessageBusUtil.sendMessage(
-				message.getResponseDestinationName(), message);
-		}
+		VideoProcessorUtil.generateVideo(copyFromVersion, fileVersion);
 	}
-
-	private static Log _log = LogFactoryUtil.getLog(
-		VideoProcessorMessageListener.class);
 
 }

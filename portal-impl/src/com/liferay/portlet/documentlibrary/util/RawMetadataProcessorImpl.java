@@ -86,7 +86,7 @@ public class RawMetadataProcessorImpl
 				fileVersion.getFileEntryId(), fileVersion.getFileVersionId());
 
 		if (fileEntryMetadataCount == 0) {
-			_instance.trigger(fileVersion, null);
+			_instance.trigger(fileVersion);
 		}
 	}
 
@@ -166,6 +166,10 @@ public class RawMetadataProcessorImpl
 
 			indexer.reindex(liferayFileEntry.getDLFileEntry());
 		}
+	}
+
+	public void trigger(FileVersion fileVersion) {
+		trigger(fileVersion, fileVersion);
 	}
 
 	public void trigger(FileVersion copyFromVersion, FileVersion fileVersion) {

@@ -35,7 +35,8 @@ public class ImageProcessorUtil {
 	}
 
 	public static void generateImages(
-			FileVersion copyFromVersion, FileVersion fileVersion) {
+			FileVersion copyFromVersion, FileVersion fileVersion)
+		throws Exception {
 
 		getImageProcessor().generateImages(copyFromVersion, fileVersion);
 	}
@@ -109,7 +110,7 @@ public class ImageProcessorUtil {
 	}
 
 	public static void trigger(
-			FileVersion copyFromVersion, FileVersion fileVersion) {
+		FileVersion copyFromVersion, FileVersion fileVersion) {
 
 		getImageProcessor().trigger(copyFromVersion, fileVersion);
 	}

@@ -68,39 +68,6 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 		}
 	}
 
-	public void copy(FileEntry fileEntry, FileVersion copyFromVersion) {
-
-		if (!DLProcessorThreadLocal.isEnabled()) {
-			return;
-		}
-
-		if ((fileEntry == null) || (fileEntry.getSize() == 0) ||
-			(copyFromVersion == null)) {
-			return;
-		}
-
-		FileVersion latestFileVersion = _getLatestFileVersion(fileEntry);
-
-		if (latestFileVersion == null) {
-			return;
-		}
-
-		for (String dlProcessorClassName : _DL_FILE_ENTRY_PROCESSORS) {
-			DLProcessor dlProcessor = (DLProcessor)InstancePool.get(
-				dlProcessorClassName);
-
-			if (dlProcessor.isSupported(latestFileVersion)) {
-				dlProcessor.copy(copyFromVersion, latestFileVersion);
-			}
-		}
-
-		for (DLProcessor dlProcessor : _dlProcessors) {
-			if (dlProcessor.isSupported(latestFileVersion)) {
-				dlProcessor.copy(copyFromVersion, latestFileVersion);
-			}
-		}
-	}
-
 	public void exportGeneratedFiles(
 			PortletDataContext portletDataContext, FileEntry fileEntry,
 			Element fileEntryElement)

@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.messaging.MessageBusException;
-import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -72,7 +70,8 @@ public class ImageProcessorImpl
 	}
 
 	public void generateImages(
-			FileVersion copyFromVersion, FileVersion fileVersion) {
+			FileVersion copyFromVersion, FileVersion fileVersion)
+		throws Exception {
 
 		_instance._generateImages(copyFromVersion, fileVersion);
 	}
@@ -239,56 +238,56 @@ public class ImageProcessorImpl
 	}
 
 	private void _generateImages(
-			FileVersion copyFromVersion, FileVersion fileVersion) {
+			FileVersion copyFromVersion, FileVersion fileVersion)
+		throws Exception {
 
 		InputStream inputStream = null;
 
 		try {
 			if (copyFromVersion != null) {
 				copy(copyFromVersion, fileVersion);
-			}else {
-				if (!PropsValues.DL_FILE_ENTRY_THUMBNAIL_ENABLED &&
-					!PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED) {
 
-					return;
+				return;
+			}
+
+			if (!PropsValues.DL_FILE_ENTRY_THUMBNAIL_ENABLED &&
+				!PropsValues.DL_FILE_ENTRY_PREVIEW_ENABLED) {
+
+				return;
+			}
+
+			inputStream = fileVersion.getContentStream(false);
+
+			byte[] bytes = FileUtil.getBytes(inputStream);
+
+			ImageBag imageBag = ImageToolUtil.read(bytes);
+
+			RenderedImage renderedImage = imageBag.getRenderedImage();
+
+			if (renderedImage == null) {
+				return;
+			}
+
+			if (renderedImage.getColorModel().getNumComponents() == 4) {
+				RenderedImage convertedRenderedImage =
+					ImageToolUtil.convertCMYKtoRGB(
+						bytes, imageBag.getType(),
+						PropsValues.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED);
+
+				if (convertedRenderedImage != null) {
+					renderedImage = convertedRenderedImage;
 				}
+			}
 
-				inputStream = fileVersion.getContentStream(false);
+			if (!_hasPreview(fileVersion)) {
+				_storePreviewImage(fileVersion, renderedImage);
+			}
 
-				byte[] bytes = FileUtil.getBytes(inputStream);
-
-				ImageBag imageBag = ImageToolUtil.read(bytes);
-
-				RenderedImage renderedImage = imageBag.getRenderedImage();
-
-				if (renderedImage == null) {
-					return;
-				}
-
-				if (renderedImage.getColorModel().getNumComponents() == 4) {
-					RenderedImage convertedRenderedImage =
-						ImageToolUtil.convertCMYKtoRGB(
-							bytes, imageBag.getType(), PropsValues
-								.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED);
-
-					if (convertedRenderedImage != null) {
-						renderedImage = convertedRenderedImage;
-					}
-				}
-
-				if (!_hasPreview(fileVersion)) {
-					_storePreviewImage(fileVersion, renderedImage);
-				}
-
-				if (!hasThumbnails(fileVersion)) {
-					storeThumbnailImages(fileVersion, renderedImage);
-				}
+			if (!hasThumbnails(fileVersion)) {
+				storeThumbnailImages(fileVersion, renderedImage);
 			}
 		}
 		catch (NoSuchFileEntryException nsfee) {
-		}
-		catch (Exception e) {
-			_log.error(e, e);
 		}
 		finally {
 			StreamUtil.cleanUp(inputStream);
@@ -349,30 +348,20 @@ public class ImageProcessorImpl
 	}
 
 	private void _queueGeneration(
-			FileVersion copyFromVersion, FileVersion fileVersion) {
+		FileVersion copyFromVersion, FileVersion fileVersion) {
 
-		if (!_fileVersionIds.contains(fileVersion.getFileVersionId()) &&
-			isSupported(fileVersion) && !hasThumbnails(fileVersion)) {
-			_fileVersionIds.add(fileVersion.getFileVersionId());
+		if (_fileVersionIds.contains(fileVersion.getFileVersionId()) ||
+			!isSupported(fileVersion)) {
 
-			if (PropsValues.DL_FILE_ENTRY_PROCESSORS_TRIGGER_SYNCHRONOUSLY) {
-				try {
-					MessageBusUtil.sendSynchronousMessage(
-						DestinationNames.DOCUMENT_LIBRARY_IMAGE_PROCESSOR,
-							new Object[]{copyFromVersion, fileVersion});
-				}
-				catch (MessageBusException mbe) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(mbe, mbe);
-					}
-				}
-			}
-			else {
-				MessageBusUtil.sendMessage(
-					DestinationNames.DOCUMENT_LIBRARY_IMAGE_PROCESSOR,
-						new Object[]{copyFromVersion, fileVersion});
-			}
+			return;
 		}
+
+		_fileVersionIds.add(fileVersion.getFileVersionId());
+
+		sendGenerationMessage(
+			DestinationNames.DOCUMENT_LIBRARY_IMAGE_PROCESSOR,
+			PropsValues.DL_FILE_ENTRY_PROCESSORS_TRIGGER_SYNCHRONOUSLY,
+			copyFromVersion, fileVersion);
 	}
 
 	private void _storePreviewImage(

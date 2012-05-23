@@ -84,7 +84,7 @@ public class VideoProcessorUtil {
 	}
 
 	public static void trigger(
-			FileVersion copyFromVersion, FileVersion fileVersion) {
+		FileVersion copyFromVersion, FileVersion fileVersion) {
 
 		getVideoProcessor().trigger(copyFromVersion, fileVersion);
 	}

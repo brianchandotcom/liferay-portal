@@ -15,6 +15,8 @@
 package com.liferay.portal.upgrade.v6_1_0;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.CharPool;
@@ -448,7 +450,17 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 					FileVersion fileVersion = new LiferayFileVersion(
 						dlFileVersion);
 
-					ImageProcessorUtil.generateImages(null, fileVersion);
+					try {
+						ImageProcessorUtil.generateImages(null, fileVersion);
+					}
+					catch (Exception e) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Error trying to generate thumbnails for " +
+									fileVersion.getFileVersionId(),
+								e);
+						}
+					}
 				}
 			}
 		}
@@ -456,6 +468,9 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			DataAccess.cleanUp(con, ps, rs);
 		}
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		UpgradeDocumentLibrary.class);
 
 	private static Set<String> _imageMimeTypes = SetUtil.fromArray(
 		PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES);

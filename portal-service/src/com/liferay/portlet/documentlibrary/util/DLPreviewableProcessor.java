@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.io.FileFilter;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.MessageBusException;
+import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -114,8 +116,12 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 	}
 
 	public void copy(FileVersion srcVersion, FileVersion destVersion) {
-		doCopyThumbnails(srcVersion, destVersion);
-		doCopyPreviews(srcVersion, destVersion);
+		if (srcVersion.getFileVersionId() == destVersion.getFileVersionId()) {
+			return;
+		}
+
+		copyPreviews(srcVersion, destVersion);
+		copyThumbnails(srcVersion, destVersion);
 	}
 
 	public void exportGeneratedFiles(
@@ -236,21 +242,21 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		DLStoreUtil.addFile(companyId, REPOSITORY_ID, filePath, false, is);
 	}
 
-	protected void doCopyPreviews(
+	protected void copyPreviews(
 		FileVersion srcVersion, FileVersion destVersion) {
 
 		try {
 			String[] previewTypes = getPreviewTypes();
 
-			for (int i = 0; i < previewTypes.length; i++) {
-				if (hasPreview(srcVersion, previewTypes[i]) &&
-					!hasPreview(destVersion, previewTypes[i])) {
+			for (String previewType : previewTypes) {
+				if (hasPreview(srcVersion, previewType) &&
+					!hasPreview(destVersion, previewType)) {
 
 					String previewFilePath = getPreviewFilePath(
-						destVersion, previewTypes[i]);
+						destVersion, previewType);
 
 					InputStream is = doGetPreviewAsStream(
-						srcVersion, previewTypes[i]);
+						srcVersion, previewType);
 
 					addFileToStore(
 						destVersion.getCompanyId(), PREVIEW_PATH,
@@ -263,7 +269,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		}
 	}
 
-	protected void doCopyThumbnails(
+	protected void copyThumbnails(
 		FileVersion srcVersion, FileVersion destVersion) {
 
 		try {
@@ -1095,6 +1101,27 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		}
 
 		return false;
+	}
+
+	protected void sendGenerationMessage(
+		String destinationName, boolean synchronous,
+		FileVersion copyFromVersion, FileVersion fileVersion) {
+
+		Object[] payload = new Object[] {copyFromVersion, fileVersion};
+
+		if (synchronous) {
+			try {
+				MessageBusUtil.sendSynchronousMessage(destinationName, payload);
+			}
+			catch (MessageBusException mbe) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(mbe, mbe);
+				}
+			}
+		}
+		else {
+			MessageBusUtil.sendMessage(destinationName, payload);
+		}
 	}
 
 	protected void storeThumbnailImages(FileVersion fileVersion, File file)

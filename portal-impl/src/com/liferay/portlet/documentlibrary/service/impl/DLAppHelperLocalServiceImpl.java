@@ -876,7 +876,7 @@ public class DLAppHelperLocalServiceImpl
 	}
 
 	protected void registerDLProcessorCallback(
-			final FileEntry fileEntry, final FileVersion copyFromVersion) {
+		final FileEntry fileEntry, final FileVersion copyFromVersion) {
 
 		TransactionCommitCallbackUtil.registerCallback(
 			new Callable<Void>() {

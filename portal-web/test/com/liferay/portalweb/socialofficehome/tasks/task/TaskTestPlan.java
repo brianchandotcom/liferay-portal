@@ -25,6 +25,7 @@ import com.liferay.portalweb.socialofficehome.tasks.task.clicktasksprogressbar10
 import com.liferay.portalweb.socialofficehome.tasks.task.clicktasksprogressbar60percentcomplete.ClickTasksProgressBar60PercentCompleteTests;
 import com.liferay.portalweb.socialofficehome.tasks.task.deletetaskstaskassignedtome.DeleteTasksTaskAssignedToMeTests;
 import com.liferay.portalweb.socialofficehome.tasks.task.deletetaskstaskassignedtomecomment.DeleteTasksTaskAssignedToMeCommentTests;
+import com.liferay.portalweb.socialofficehome.tasks.task.edittaskstaskassignedtoconnection.EditTasksTaskAssignedToConnectionTests;
 import com.liferay.portalweb.socialofficehome.tasks.task.edittaskstaskassignedtomecomment.EditTasksTaskAssignedToMeCommentTests;
 import com.liferay.portalweb.socialofficehome.tasks.task.edittaskstaskassignedtomedescription.EditTasksTaskAssignedToMeDescriptionTests;
 import com.liferay.portalweb.socialofficehome.tasks.task.edittaskstaskassignedtomeduedate.EditTasksTaskAssignedToMeDueDateTests;
@@ -55,6 +56,7 @@ public class TaskTestPlan extends BaseTestSuite {
 		testSuite.addTest(ClickTasksProgressBar100PercentCompleteTests.suite());
 		testSuite.addTest(DeleteTasksTaskAssignedToMeTests.suite());
 		testSuite.addTest(DeleteTasksTaskAssignedToMeCommentTests.suite());
+		testSuite.addTest(EditTasksTaskAssignedToConnectionTests.suite());
 		testSuite.addTest(EditTasksTaskAssignedToMeCommentTests.suite());
 		testSuite.addTest(EditTasksTaskAssignedToMeDescriptionTests.suite());
 		testSuite.addTest(EditTasksTaskAssignedToMeDueDateTests.suite());

@@ -190,6 +190,8 @@ public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 
 	public static final String JOURNAL_STRUCTURE_EL_REPEATABLE_PROTOTYPE = "JOURNAL_STRUCTURE_EL_REPEATABLE_PROTOTYPE";
 
+	public static final String JOURNAL_STRUCTURE_EL_REPEAT_COUNT_MAP = "JOURNAL_STRUCTURE_EL_REPEAT_COUNT_MAP";
+
 	public static final String JOURNAL_STRUCTURE_EL_SIBLINGS = "JOURNAL_STRUCTURE_EL_SIBLINGS";
 
 	public static final String JOURNAL_STRUCTURE_EL_TYPE = "JOURNAL_STRUCTURE_EL_TYPE";

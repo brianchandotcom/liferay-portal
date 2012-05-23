@@ -907,6 +907,26 @@ private void _format(long groupId, Element contentParentElement, Element xsdPare
 				repeatablePrototype = (siblingIndex == 0);
 			}
 
+			if (elRepeatable || _hasRepeatedParent(contentElement)) {
+				Map <String, Integer> repeatCountMap = (Map<String, Integer>)request.getAttribute(WebKeys.JOURNAL_STRUCTURE_EL_REPEAT_COUNT_MAP);
+
+				if (repeatCountMap == null) {
+					repeatCountMap = new HashMap<String, Integer>();
+				}
+
+				Integer repeatCount = repeatCountMap.get(elName);
+
+				if (repeatCount == null) {
+					repeatCount = 0;
+				}
+
+				repeatCount++;
+
+				repeatCountMap.put(elName, repeatCount);
+
+				request.setAttribute(WebKeys.JOURNAL_STRUCTURE_EL_REPEAT_COUNT_MAP, repeatCountMap);
+			}
+
 			request.setAttribute(WebKeys.JOURNAL_ARTICLE_GROUP_ID, String.valueOf(groupId));
 
 			request.setAttribute(WebKeys.JOURNAL_ARTICLE_CONTENT_EL, contentElement);

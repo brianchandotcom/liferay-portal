@@ -1616,6 +1616,7 @@ public class SourceFormatter {
 						Validator.isNotNull(trimmedLine) &&
 						!trimmedLine.equals(");") &&
 						!trimmedLine.startsWith(StringPool.CLOSE_CURLY_BRACE) &&
+						!trimmedLine.startsWith(StringPool.DOUBLE_SLASH) &&
 						!trimmedLine.startsWith("catch ") &&
 						!trimmedLine.startsWith("else ") &&
 						!trimmedLine.startsWith("finally ") &&

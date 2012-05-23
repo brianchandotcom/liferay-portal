@@ -25,8 +25,7 @@ import java.util.Set;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SocialRequestInterpreterImpl
-	implements SocialRequestInterpreter {
+public class SocialRequestInterpreterImpl implements SocialRequestInterpreter {
 
 	public SocialRequestInterpreterImpl(
 		String portletId, SocialRequestInterpreter requestInterpreter) {

@@ -40,8 +40,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Mika Koivisto
  * @author Raymond Augé
  */
-public class FreeMarkerTemplateContextHelper
-	extends TemplateContextHelper {
+public class FreeMarkerTemplateContextHelper extends TemplateContextHelper {
 
 	@Override
 	public Map<String, Object> getHelperUtilities() {

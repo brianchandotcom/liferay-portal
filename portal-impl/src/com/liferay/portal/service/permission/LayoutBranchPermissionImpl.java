@@ -24,8 +24,7 @@ import com.liferay.portal.service.LayoutBranchLocalServiceUtil;
 /**
  * @author Brian Wing Shun Chan
  */
-public class LayoutBranchPermissionImpl
-	implements LayoutBranchPermission {
+public class LayoutBranchPermissionImpl implements LayoutBranchPermission {
 
 	public void check(
 			PermissionChecker permissionChecker, LayoutBranch layoutBranch,

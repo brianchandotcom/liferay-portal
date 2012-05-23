@@ -24,8 +24,7 @@ import java.util.Comparator;
 /**
  * @author Bruno Farache
  */
-public class FileVersionVersionComparator
-	implements Comparator<DLFileVersion> {
+public class FileVersionVersionComparator implements Comparator<DLFileVersion> {
 
 	public FileVersionVersionComparator() {
 		this(false);

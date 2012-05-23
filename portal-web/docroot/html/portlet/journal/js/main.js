@@ -25,7 +25,7 @@ AUI.add(
 
 		var TPL_EDITOR_ELEMENT = '<div id="{name}" name="{name}"></div>';
 
-		var TPL_FIELD_CONTAINER = '<div><li class="structure-field">' +
+		var TPL_FIELD_CONTAINER = '<div><li class="structure-field {cssClass}">' +
 				'<span class="journal-article-close"></span>' +
 				'<span class="folder">' +
 					'<div class="field-container">' +
@@ -3247,6 +3247,7 @@ AUI.add(
 								TPL_FIELD_CONTAINER,
 								{
 									articleButtonsRowCSSClass: articleButtonsRowCSSClass,
+									cssClass: 'journal-structure-' + fieldType.replace(/_/g, '-'),
 									editButtonTemplateHTML: editButtonTemplateHTML,
 									fieldLabel: fieldLabel,
 									localizedLabelLanguage: localizedLabelLanguage,

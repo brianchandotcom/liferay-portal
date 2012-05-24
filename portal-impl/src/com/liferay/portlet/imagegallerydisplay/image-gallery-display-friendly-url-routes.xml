@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE routes PUBLIC "-//Liferay//DTD Friendly URL Routes 6.1.0//EN" "http://www.liferay.com/dtd/liferay-friendly-url-routes_6_1_0.dtd">
+
+<routes>
+	<route>
+		<pattern></pattern>
+		<implicit-parameter name="folderId">0</implicit-parameter>
+		<implicit-parameter name="struts_action">/image_gallery_display/view</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/view/{folderId:\d+}</pattern>
+		<implicit-parameter name="struts_action">/image_gallery_display/view</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/view/{folderId:\d+}/{name}</pattern>
+		<implicit-parameter name="struts_action">/image_gallery_display/view_image</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/view/{folderId:\d+}/{name}</pattern>
+		<implicit-parameter name="struts_action">/image_gallery_display/view_image</implicit-parameter>
+	</route>
+</routes>

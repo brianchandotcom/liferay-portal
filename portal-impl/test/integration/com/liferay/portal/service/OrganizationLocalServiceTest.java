@@ -54,16 +54,19 @@ public class OrganizationLocalServiceTest {
 				ListTypeConstants.ORGANIZATION_STATUS_DEFAULT, StringPool.BLANK,
 				false, null);
 
-		List<Organization> organizations = user.getOrganizations(true);
+		try {
+			List<Organization> organizations = user.getOrganizations(true);
 
-		Assert.assertTrue(organizations.contains(organization));
+			Assert.assertTrue(organizations.contains(organization));
 
-		Assert.assertFalse(
-			OrganizationLocalServiceUtil.hasUserOrganization(
-				user.getUserId(), organization.getOrganizationId()));
-
-		OrganizationLocalServiceUtil.deleteOrganization(
-			organization.getOrganizationId());
+			Assert.assertFalse(
+				OrganizationLocalServiceUtil.hasUserOrganization(
+					user.getUserId(), organization.getOrganizationId()));
+		}
+		finally {
+			OrganizationLocalServiceUtil.deleteOrganization(
+				organization.getOrganizationId());
+		}
 	}
 
 }

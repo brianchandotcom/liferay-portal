@@ -495,28 +495,18 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			boolean supportsBatchUpdates =
 				databaseMetaData.supportsBatchUpdates();
 
-			StringBundler sb = new StringBundler();
-
-			sb.append("select companyId, scope, primKey, roleId from ");
-			sb.append("ResourcePermission where name = ?");
-
-			String sql = sb.toString();
-
-			ps = con.prepareStatement(sql);
+			ps = con.prepareStatement(
+				"select companyId, scope, primKey, roleId from " +
+					"ResourcePermission where name = ?");
 
 			ps.setString(1, igResourceName);
 
 			rs = ps.executeQuery();
 
-			sb = new StringBundler();
-
-			sb.append("delete from ResourcePermission where name = ? and ");
-			sb.append("companyId = ? and scope = ? and primKey = ? and ");
-			sb.append("roleId = ?");
-
-			sql = sb.toString();
-
-			ps = con.prepareStatement(sql);
+			ps = con.prepareStatement(
+				"delete from ResourcePermission where name = ? and " +
+					"companyId = ? and scope = ? and primKey = ? and " +
+						"roleId = ?");
 
 			int count = 0;
 

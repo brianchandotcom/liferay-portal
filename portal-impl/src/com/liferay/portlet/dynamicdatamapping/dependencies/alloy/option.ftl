@@ -13,5 +13,9 @@
 <#if parentType == "select">
 	<@aui.option cssClass=cssClass label=fieldStructure.label selected=selected value=fieldStructure.value />
 <#else>
-	<@aui.input checked=selected cssClass=cssClass label=fieldStructure.label name=namespacedParentName type="radio" value=fieldStructure.value />
+	<@aui.input checked=selected cssClass=cssClass label=fieldStructure.label name=namespacedParentName type="radio" value=fieldStructure.value>
+		<#if parentFieldStructure.required?? && (parentFieldStructure.required == "true")>
+			<@aui.validator name="required" />
+		</#if>
+	</@aui.input>
 </#if>

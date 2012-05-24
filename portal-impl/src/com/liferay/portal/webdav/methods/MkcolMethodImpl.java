@@ -38,8 +38,6 @@ public class MkcolMethodImpl implements Method {
 		HttpServletResponse response = webDavRequest.getHttpServletResponse();
 		long groupId = webDavRequest.getGroupId();
 
-		int statusCode = HttpServletResponse.SC_FORBIDDEN;
-
 		if (groupId != 0) {
 			Status status = storage.makeCollection(webDavRequest);
 
@@ -51,10 +49,10 @@ public class MkcolMethodImpl implements Method {
 							status.getObject());
 			}
 
-			statusCode = status.getCode();
+			return status.getCode();
 		}
 
-		return statusCode;
+		return HttpServletResponse.SC_FORBIDDEN;
 	}
 
 }

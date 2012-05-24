@@ -44,18 +44,18 @@ public class GetMethodImpl implements Method {
 
 			Resource resource = storage.getResource(webDavRequest);
 
-			if (resource != null) {
-				try {
-					is = resource.getContentAsStream();
-				}
-				catch (Exception e) {
-					if (_log.isErrorEnabled()) {
-						_log.error(e.getMessage());
-					}
-				}
+			if (resource == null) {
+				return HttpServletResponse.SC_NOT_FOUND;
 			}
 
-			int status = HttpServletResponse.SC_NOT_FOUND;
+			try {
+				is = resource.getContentAsStream();
+			}
+			catch (Exception e) {
+				if (_log.isErrorEnabled()) {
+					_log.error(e.getMessage());
+				}
+			}
 
 			if (is != null) {
 				try {
@@ -69,10 +69,10 @@ public class GetMethodImpl implements Method {
 					}
 				}
 
-				status = HttpServletResponse.SC_OK;
+				return HttpServletResponse.SC_OK;
 			}
 
-			return status;
+			return HttpServletResponse.SC_NOT_FOUND;
 		}
 		catch (Exception e) {
 			throw new WebDAVException(e);

@@ -35,21 +35,15 @@ public class HeadMethodImpl implements Method {
 
 			Resource resource = storage.getResource(webDavRequest);
 
-			int status = HttpServletResponse.SC_NOT_FOUND;
-
 			if (resource == null) {
-				response.sendError(
-					HttpServletResponse.SC_NOT_FOUND, webDavRequest.getPath());
-			}
-			else {
-				if (!resource.isCollection()) {
-					response.setContentLength((int)resource.getSize());
-				}
-
-				status = HttpServletResponse.SC_OK;
+				return HttpServletResponse.SC_NOT_FOUND;
 			}
 
-			return status;
+			if (!resource.isCollection()) {
+				response.setContentLength((int)resource.getSize());
+			}
+
+			return HttpServletResponse.SC_OK;
 		}
 		catch (Exception e) {
 			throw new WebDAVException(e);

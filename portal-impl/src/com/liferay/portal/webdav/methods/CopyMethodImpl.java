@@ -47,8 +47,6 @@ public class CopyMethodImpl implements Method {
 			sb.append(destination);
 		}
 
-		int status = HttpServletResponse.SC_FORBIDDEN;
-
 		if (!destination.equals(webDavRequest.getPath()) &&
 			(WebDAVUtil.getGroupId(companyId, destination) ==
 				webDavRequest.getGroupId())) {
@@ -56,9 +54,10 @@ public class CopyMethodImpl implements Method {
 			Resource resource = storage.getResource(webDavRequest);
 
 			if (resource == null) {
-				status = HttpServletResponse.SC_NOT_FOUND;
+				return HttpServletResponse.SC_NOT_FOUND;
 			}
-			else if (resource.isCollection()) {
+
+			if (resource.isCollection()) {
 				boolean overwrite = WebDAVUtil.isOverwrite(request);
 				long depth = WebDAVUtil.getDepth(request);
 
@@ -71,25 +70,24 @@ public class CopyMethodImpl implements Method {
 					_log.info(sb.toString());
 				}
 
-				status = storage.copyCollectionResource(
+				return storage.copyCollectionResource(
 					webDavRequest, resource, destination, overwrite, depth);
 			}
-			else {
-				boolean overwrite = WebDAVUtil.isOverwrite(request);
 
-				if (_log.isInfoEnabled()) {
-					sb.append(", overwrite is ");
-					sb.append(overwrite);
+			boolean overwrite = WebDAVUtil.isOverwrite(request);
 
-					_log.info(sb.toString());
-				}
+			if (_log.isInfoEnabled()) {
+				sb.append(", overwrite is ");
+				sb.append(overwrite);
 
-				status = storage.copySimpleResource(
-					webDavRequest, resource, destination, overwrite);
+				_log.info(sb.toString());
 			}
+
+			return storage.copySimpleResource(
+				webDavRequest, resource, destination, overwrite);
 		}
 
-		return status;
+		return HttpServletResponse.SC_FORBIDDEN;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(CopyMethodImpl.class);

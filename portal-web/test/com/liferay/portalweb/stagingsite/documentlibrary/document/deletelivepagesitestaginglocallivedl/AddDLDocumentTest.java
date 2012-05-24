@@ -95,9 +95,8 @@ public class AddDLDocumentTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.type("//input[@id='_20_file']",
-			RuntimeVariables.replace(
-				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\stagingcommunity\\documentlibrary\\dependencies\\DLDocument.docx"));
+		selenium.uploadCommonFile("//input[@id='_20_file']",
+			RuntimeVariables.replace("Document_1.docx"));
 		selenium.type("//input[@id='_20_title']",
 			RuntimeVariables.replace("DL Document Title"));
 		selenium.type("//textarea[@id='_20_description']",
@@ -141,7 +140,7 @@ public class AddDLDocumentTest extends BaseTestCase {
 			selenium.getText("//span[@class='document-description']"));
 		assertEquals(RuntimeVariables.replace("Status: Approved"),
 			selenium.getText("//span[@class='workflow-status']"));
-		assertEquals(RuntimeVariables.replace("Download (9.6k)"),
+		assertEquals(RuntimeVariables.replace("Download (12.4k)"),
 			selenium.getText("//span[@class='download-document']"));
 	}
 }

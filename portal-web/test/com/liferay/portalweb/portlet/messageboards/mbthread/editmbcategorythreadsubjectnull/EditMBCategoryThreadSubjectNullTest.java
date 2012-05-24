@@ -54,9 +54,10 @@ public class EditMBCategoryThreadSubjectNullTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"MB Category Thread Message Subject"),
 			selenium.getText("//td[1]/a"));
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//td[7]/span/ul/li/strong/a"));
-		selenium.clickAt("//td[7]/span/ul/li/strong/a",
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {

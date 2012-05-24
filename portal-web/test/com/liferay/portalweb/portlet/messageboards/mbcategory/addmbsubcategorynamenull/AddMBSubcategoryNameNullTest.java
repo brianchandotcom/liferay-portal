@@ -24,23 +24,6 @@ public class AddMBSubcategoryNameNullTest extends BaseTestCase {
 	public void testAddMBSubcategoryNameNull() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Message Boards Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -56,7 +39,7 @@ public class AddMBSubcategoryNameNullTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.type("//textarea[@id='_19_description']",
-			RuntimeVariables.replace("MB Subcategory Description"));
+			RuntimeVariables.replace("MB Category Subcategory Description"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 
@@ -84,23 +67,6 @@ public class AddMBSubcategoryNameNullTest extends BaseTestCase {
 				"//div[@class='aui-form-validator-message required']"));
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Message Boards Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -119,7 +85,9 @@ public class AddMBSubcategoryNameNullTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("MB Category Name"),
 			selenium.getText("//div[3]/h1/span"));
-		assertFalse(selenium.isTextPresent("MB Category Description"));
-		assertFalse(selenium.isElementPresent("//td[5]/span/ul/li/strong/a"));
+		assertFalse(selenium.isTextPresent(
+				"MB Category Subcategory Description"));
+		assertFalse(selenium.isElementPresent(
+				"//span[@title='Actions']/ul/li/strong/a"));
 	}
 }

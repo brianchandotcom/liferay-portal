@@ -14,14 +14,14 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
+	<td>clickAtAndWait</td>
 	<td>link=Message Boards Test Page</td>
 	<td>Message Boards Test Page</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=Message Boards Test Page</td>
-	<td>Message Boards Test Page</td>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -30,27 +30,27 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[5]/span/ul/li/strong/a</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//td[5]/span/ul/li/strong/a</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a</td>
 	<td>Edit</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>clickAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a</td>
 	<td>Edit</td>
 </tr>
 <tr>
@@ -73,12 +73,6 @@
 	<td>//a/strong</td>
 	<td>MB Category Name Edit</td>
 </tr>
-<tr>
-	<td>assertNotText</td>
-	<td>//a/strong</td>
-	<td>MB Category Name</td>
-</tr>
-
 </tbody></table>
 </body>
 </html>

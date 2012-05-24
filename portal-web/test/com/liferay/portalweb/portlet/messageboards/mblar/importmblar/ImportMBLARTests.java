@@ -34,7 +34,6 @@ public class ImportMBLARTests extends BaseTestSuite {
 		testSuite.addTestSuite(ImportMBLARTest.class);
 		testSuite.addTestSuite(ViewImportMBLARTest.class);
 		testSuite.addTestSuite(TearDownMBCategoryTest.class);
-		testSuite.addTestSuite(TearDownMBMessageTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

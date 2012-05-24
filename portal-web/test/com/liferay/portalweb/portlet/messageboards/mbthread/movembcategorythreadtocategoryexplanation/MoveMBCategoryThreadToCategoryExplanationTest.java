@@ -55,6 +55,7 @@ public class MoveMBCategoryThreadToCategoryExplanationTest extends BaseTestCase 
 		assertEquals(RuntimeVariables.replace(
 				"MB Category1 Thread Message Subject"),
 			selenium.getText("//td[1]/a"));
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",

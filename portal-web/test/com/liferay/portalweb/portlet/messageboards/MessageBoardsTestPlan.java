@@ -18,7 +18,7 @@ import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portlet.messageboards.hybrid.HybridTestPlan;
 import com.liferay.portalweb.portlet.messageboards.mbcategory.MBCategoryTestPlan;
 import com.liferay.portalweb.portlet.messageboards.mblar.MBLARTestPlan;
-import com.liferay.portalweb.portlet.messageboards.mbmessage.MBMessageTestPlan;
+import com.liferay.portalweb.portlet.messageboards.mbthread.MBThreadTestPlan;
 import com.liferay.portalweb.portlet.messageboards.portlet.PortletTestPlan;
 
 import junit.framework.Test;
@@ -35,7 +35,7 @@ public class MessageBoardsTestPlan extends BaseTestSuite {
 		testSuite.addTest(HybridTestPlan.suite());
 		testSuite.addTest(MBLARTestPlan.suite());
 		testSuite.addTest(MBCategoryTestPlan.suite());
-		testSuite.addTest(MBMessageTestPlan.suite());
+		testSuite.addTest(MBThreadTestPlan.suite());
 		testSuite.addTest(PortletTestPlan.suite());
 
 		return testSuite;

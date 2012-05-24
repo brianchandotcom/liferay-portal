@@ -25,23 +25,6 @@ public class ConfigurePortletEmailFromAddressTest extends BaseTestCase {
 		throws Exception {
 		selenium.open("/web/site-name/");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Message Boards Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -74,6 +57,25 @@ public class ConfigurePortletEmailFromAddressTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
 			RuntimeVariables.replace("Configuration"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//iframe[@id='_19_configurationIframeDialog']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.selectFrame("//iframe[@id='_19_configurationIframeDialog']");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -121,5 +123,6 @@ public class ConfigurePortletEmailFromAddressTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals("liferay.qa.server.trunk@gmail.com",
 			selenium.getValue("//input[@id='_86_emailFromAddress']"));
+		selenium.selectFrame("relative=top");
 	}
 }

@@ -24,23 +24,6 @@ public class AddMBCategoryNameNullTest extends BaseTestCase {
 	public void testAddMBCategoryNameNull() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Message Boards Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -100,6 +83,7 @@ public class AddMBCategoryNameNullTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertFalse(selenium.isTextPresent("MB Category Description"));
-		assertFalse(selenium.isElementPresent("//td[5]/span/ul/li/strong/a"));
+		assertFalse(selenium.isElementPresent(
+				"//span[@title='Actions']/ul/li/strong/a"));
 	}
 }

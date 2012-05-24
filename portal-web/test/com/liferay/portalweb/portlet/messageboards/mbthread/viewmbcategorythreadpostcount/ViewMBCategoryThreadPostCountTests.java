@@ -21,6 +21,9 @@ import com.liferay.portalweb.portlet.messageboards.mbcategory.addmbcategory.Tear
 import com.liferay.portalweb.portlet.messageboards.mbthread.postnewmbcategorythread.PostNewMBCategoryThread1Test;
 import com.liferay.portalweb.portlet.messageboards.mbthread.postnewmbcategorythread.PostNewMBCategoryThread2Test;
 import com.liferay.portalweb.portlet.messageboards.mbthread.postnewmbcategorythread.PostNewMBCategoryThread3Test;
+import com.liferay.portalweb.portlet.messageboards.mbthread.replymbcategorythreadreply.ReplyMBCategoryThread1Reply1Test;
+import com.liferay.portalweb.portlet.messageboards.mbthread.replymbcategorythreadreply.ReplyMBCategoryThread1Reply2Test;
+import com.liferay.portalweb.portlet.messageboards.mbthread.replymbcategorythreadreply.ReplyMBCategoryThread1Reply3Test;
 import com.liferay.portalweb.portlet.messageboards.portlet.addportletmb.AddPageMBTest;
 import com.liferay.portalweb.portlet.messageboards.portlet.addportletmb.AddPortletMBTest;
 

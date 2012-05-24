@@ -18,7 +18,9 @@ import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.sites.site.addmemberssiteuser.AddMembersSiteUserTest;
 import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.AddSiteTest;
 import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.TearDownSiteTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.adduser.AddUserGmailTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.TearDownUserTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.edituserpassword.EditUserPasswordGmailTest;
 import com.liferay.portalweb.portlet.messageboards.portlet.addportletmbsite.AddPageMBSiteTest;
 import com.liferay.portalweb.portlet.messageboards.portlet.addportletmbsite.AddPortletMBSiteTest;
 
@@ -33,6 +35,7 @@ public class Gmail_ViewMBThreadGmailTests extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddSiteTest.class);
 		testSuite.addTestSuite(AddUserGmailTest.class);
+		testSuite.addTestSuite(EditUserPasswordGmailTest.class);
 		testSuite.addTestSuite(AddMembersSiteUserTest.class);
 		testSuite.addTestSuite(AddPageMBSiteTest.class);
 		testSuite.addTestSuite(AddPortletMBSiteTest.class);

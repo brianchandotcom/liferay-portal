@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Message Boards Test Page</td>
-	<td>Message Boards Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Message Boards Test Page</td>
 	<td>Message Boards Test Page</td>
@@ -55,6 +50,16 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
+	<td>//iframe[@id='_19_configurationIframeDialog']</td>
+	<td>Message Boards - Configuration</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[@id='_19_configurationIframeDialog']</td>
+	<td>Message Boards - Configuration</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>link=Email From</td>
 	<td>Email From</td>
 </tr>
@@ -87,6 +92,11 @@
 	<td>assertValue</td>
 	<td>//input[@id='_86_emailFromAddress']</td>
 	<td>liferay.qa.server.trunk@gmail.com</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
 </tr>
 </tbody></table>
 </body>

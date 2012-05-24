@@ -36,6 +36,8 @@ public class PostNewMBCategoryThreadTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddMBCategoryTest.class);
 		testSuite.addTestSuite(PostNewMBCategoryThreadTest.class);
 		testSuite.addTestSuite(ViewMBCategoryThreadTest.class);
+		testSuite.addTestSuite(ViewMBCategoryThreadMyPostsTest.class);
+		testSuite.addTestSuite(ViewMBCategoryThreadRecentPostsTest.class);
 		testSuite.addTestSuite(TearDownMBCategoryTest.class);
 		testSuite.addTestSuite(TearDownMBThreadTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);

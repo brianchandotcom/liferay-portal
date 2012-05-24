@@ -40,8 +40,6 @@ public interface IndexAccessor {
 
 	public void dumpIndex(OutputStream outputStream) throws IOException;
 
-	public void enableDumpIndex();
-
 	public long getCompanyId();
 
 	public long getLastGeneration();

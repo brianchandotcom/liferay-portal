@@ -95,10 +95,6 @@ public class SynchronizedIndexAccessorImpl implements IndexAccessor {
 		}
 	}
 
-	public void enableDumpIndex() {
-		_indexAccessor.enableDumpIndex();
-	}
-
 	public long getCompanyId() {
 		return _indexAccessor.getCompanyId();
 	}

@@ -32,7 +32,6 @@ import java.io.OutputStream;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -122,19 +121,11 @@ public class IndexAccessorImpl implements IndexAccessor {
 		_dumpIndexDeletionPolicy.dump(outputStream, _indexWriter, _commitLock);
 	}
 
-	public void enableDumpIndex() {
-		_countDownLatch.countDown();
-	}
-
 	public long getCompanyId() {
 		return _companyId;
 	}
 
 	public long getLastGeneration() {
-		if (_countDownLatch.getCount() > 0) {
-			return DEFAULT_LAST_GENERATION;
-		}
-
 		return _dumpIndexDeletionPolicy.getLastGeneration();
 	}
 
@@ -439,7 +430,6 @@ public class IndexAccessorImpl implements IndexAccessor {
 	private volatile int _batchCount;
 	private Lock _commitLock = new ReentrantLock();
 	private long _companyId;
-	private CountDownLatch _countDownLatch = new CountDownLatch(1);
 	private DumpIndexDeletionPolicy _dumpIndexDeletionPolicy =
 		new DumpIndexDeletionPolicy();
 	private IndexWriter _indexWriter;

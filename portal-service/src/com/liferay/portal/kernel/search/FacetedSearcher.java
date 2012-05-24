@@ -80,18 +80,18 @@ public class FacetedSearcher extends BaseIndexer {
 			PermissionChecker permissionChecker =
 				PermissionThreadLocal.getPermissionChecker();
 
-			int start = searchContext.getStart();
 			int end = searchContext.getEnd();
+			int start = searchContext.getStart();
 
 			if (isFilterSearch(searchContext) && (permissionChecker != null)) {
-				searchContext.setStart(0);
 				searchContext.setEnd(end + INDEX_FILTER_SEARCH_LIMIT);
+				searchContext.setStart(0);
 			}
 
 			Hits hits = SearchEngineUtil.search(searchContext, fullQuery);
 
-			searchContext.setStart(start);
 			searchContext.setEnd(end);
+			searchContext.setStart(start);
 
 			if (isFilterSearch(searchContext) && (permissionChecker != null)) {
 				hits = filterSearch(hits, permissionChecker, searchContext);

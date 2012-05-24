@@ -106,7 +106,7 @@ public class WikiActivityInterpreter extends BaseSocialActivityInterpreter {
 		}
 
 		String pageTitle = wrapLink(
-			link, HtmlUtil.escape(cleanContent(pageResource.getTitle())));
+			link, HtmlUtil.escape(pageResource.getTitle()));
 
 		Object[] titleArguments = new Object[] {
 			groupName, creatorUserName, pageTitle

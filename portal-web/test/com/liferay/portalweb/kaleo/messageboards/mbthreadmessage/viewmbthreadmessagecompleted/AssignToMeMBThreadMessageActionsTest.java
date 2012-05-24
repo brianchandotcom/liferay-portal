@@ -25,6 +25,9 @@ public class AssignToMeMBThreadMessageActionsTest extends BaseTestCase {
 		throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -32,7 +35,7 @@ public class AssignToMeMBThreadMessageActionsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -73,7 +76,7 @@ public class AssignToMeMBThreadMessageActionsTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Assign to Me')]/a")) {
 					break;
 				}
 			}
@@ -85,8 +88,8 @@ public class AssignToMeMBThreadMessageActionsTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Assign to Me"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a",
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Assign to Me')]/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Assign to Me')]/a",
 			RuntimeVariables.replace("Assign to Me"));
 
 		for (int second = 0;; second++) {

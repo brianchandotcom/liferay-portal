@@ -22,10 +22,14 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.model.DLFileRank;
 import com.liferay.portlet.documentlibrary.service.BaseDLAppTestCase;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileRankLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLIndexer;
 import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
+
+import java.util.List;
 
 /**
  * @author Alexander Chow
@@ -36,6 +40,21 @@ public abstract class BaseDLTrashHandlerTestCase extends BaseDLAppTestCase {
 		throws Exception {
 
 		return AssetEntryLocalServiceUtil.fetchEntry(className, classPK);
+	}
+
+	protected int getActiveFileRankCount(long fileEntryId) throws Exception {
+		List<DLFileRank> dlFileRanks = DLFileRankLocalServiceUtil.getFileRanks(
+			parentFolder.getGroupId(), parentFolder.getUserId());
+
+		int count = 0;
+
+		for (DLFileRank dlFileRank : dlFileRanks) {
+			if (dlFileRank.getFileEntryId() == fileEntryId) {
+				count++;
+			}
+		}
+
+		return count;
 	}
 
 	protected int getNotInTrashCount() throws Exception {

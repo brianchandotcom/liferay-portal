@@ -36,38 +36,45 @@ public class DLFileEntryTrashHandlerTest extends BaseDLTrashHandlerTestCase {
 
 	@Test
 	public void testTrashAndDelete() throws Exception {
-		testTrash(true, false, false);
+		testTrash(true, false, false, false);
 	}
 
 	@Test
 	public void testTrashAndDeleteVersioned() throws Exception {
-		testTrash(true, true, false);
+		testTrash(true, true, false, false);
 	}
 
 	@Test
 	public void testTrashAndDeleteVersionedAndCheckedOut() throws Exception {
-		testTrash(true, true, true);
+		testTrash(true, true, true, false);
 	}
 
 	@Test
 	public void testTrashAndRestore() throws Exception {
-		testTrash(false, false, false);
+		testTrash(false, false, false, false);
 	}
 
 	@Test
 	public void testTrashAndRestoreVersioned() throws Exception {
-		testTrash(false, true, false);
+		testTrash(false, true, false, false);
 	}
 
 	@Test
 	public void testTrashAndRestoreVersionedAndCheckedOut() throws Exception {
-		testTrash(false, true, true);
+		testTrash(false, true, true, false);
+	}
+
+	@Test
+	public void testTrashAndRestoreWithFileRank() throws Exception {
+		testTrash(false, false, false, true);
 	}
 
 	protected void testTrash(
-			boolean delete, boolean versioned, boolean leaveCheckedOut)
+			boolean delete, boolean versioned, boolean leaveCheckedOut,
+			boolean fileRank)
 		throws Exception {
 
+		int initialFileRanksCount = 0;
 		int initialNotInTrashCount = getNotInTrashCount();
 		int initialTrashEntriesCount = getTrashEntriesCount();
 		int initialSearchFileEntriesCount = searchFileEntriesCount();
@@ -78,6 +85,10 @@ public class DLFileEntryTrashHandlerTest extends BaseDLTrashHandlerTestCase {
 
 		if (versioned) {
 			updateFileEntry(fileEntryId, null, "Test Basic 2.txt");
+		}
+
+		if (fileRank) {
+			addFileRank(fileEntryId);
 		}
 
 		if (leaveCheckedOut) {
@@ -104,6 +115,11 @@ public class DLFileEntryTrashHandlerTest extends BaseDLTrashHandlerTestCase {
 		Assert.assertEquals(
 			initialSearchFileEntriesCount, searchFileEntriesCount());
 
+		if (fileRank) {
+			Assert.assertEquals(
+				initialFileRanksCount, getActiveFileRankCount(fileEntryId));
+		}
+
 		if (delete) {
 			TrashEntryServiceUtil.deleteEntries(parentFolder.getGroupId());
 
@@ -124,6 +140,12 @@ public class DLFileEntryTrashHandlerTest extends BaseDLTrashHandlerTestCase {
 					DLFileEntryConstants.getClassName(), fileEntryId));
 			Assert.assertEquals(
 				initialSearchFileEntriesCount + 1, searchFileEntriesCount());
+
+			if (fileRank) {
+				Assert.assertEquals(
+					initialFileRanksCount + 1,
+					getActiveFileRankCount(fileEntryId));
+			}
 		}
 
 		Assert.assertEquals(initialTrashEntriesCount, getTrashEntriesCount());

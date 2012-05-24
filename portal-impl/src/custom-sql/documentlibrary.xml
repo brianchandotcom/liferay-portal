@@ -234,6 +234,19 @@
 				name ASC
 		]]>
 	</sql>
+	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileRankFinder.findByFolder">
+		<![CDATA[
+			SELECT
+				{DLFileRank.*}
+			FROM
+				DLFileRank
+			INNER JOIN
+				DLFileEntry ON
+					(DLFileEntry.fileEntryId = DLFileRank.fileEntryId)
+			WHERE
+				(DLFileEntry.folderId = ?)
+		]]>
+	</sql>
 	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileRankFinder.findByStaleRanks">
 		<![CDATA[
 			SELECT

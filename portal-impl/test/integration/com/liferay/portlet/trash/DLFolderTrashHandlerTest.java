@@ -67,6 +67,7 @@ public class DLFolderTrashHandlerTest extends BaseDLTrashHandlerTestCase {
 	protected void testTrash(boolean delete, boolean file, boolean trashFile)
 		throws Exception {
 
+		int initialFileRanksCount = 0;
 		int initialNotInTrashCount = getNotInTrashCount();
 		int initialTrashEntriesCount = getTrashEntriesCount();
 		int initialSearchFileEntriesCount = searchFileEntriesCount();
@@ -82,6 +83,8 @@ public class DLFolderTrashHandlerTest extends BaseDLTrashHandlerTestCase {
 				subfolder.getFolderId(), "Test File.txt");
 
 			fileEntryId = fileEntry.getFileEntryId();
+
+			addFileRank(fileEntryId);
 
 			Assert.assertEquals(
 				initialSearchFileEntriesCount + 1, searchFileEntriesCount());
@@ -125,6 +128,8 @@ public class DLFolderTrashHandlerTest extends BaseDLTrashHandlerTestCase {
 			Assert.assertFalse(
 				isAssetEntryVisible(
 					DLFileEntryConstants.getClassName(), fileEntryId));
+			Assert.assertEquals(
+				initialFileRanksCount, getActiveFileRankCount(fileEntryId));
 		}
 
 		if (delete) {
@@ -166,6 +171,9 @@ public class DLFolderTrashHandlerTest extends BaseDLTrashHandlerTestCase {
 					Assert.assertTrue(
 						isAssetEntryVisible(
 							DLFileEntryConstants.getClassName(), fileEntryId));
+					Assert.assertEquals(
+						initialFileRanksCount + 1,
+						getActiveFileRankCount(fileEntryId));
 				}
 			}
 		}

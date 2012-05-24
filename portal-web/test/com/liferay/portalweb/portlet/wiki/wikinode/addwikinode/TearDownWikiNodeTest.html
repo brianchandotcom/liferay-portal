@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>storeElementPresent</td>
-	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]</td>
 	<td>wikiNode1Present</td>
 </tr>
 <tr>
@@ -54,13 +54,13 @@
 	<td>WikiNode1NotPresent</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>assertText</td>
+	<td>xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]</td>
 	<td>Actions</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>clickAt</td>
+	<td>xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -85,7 +85,7 @@
 </tr>
 <tr>
 	<td>storeElementPresent</td>
-	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]</td>
 	<td>wikiNode2Present</td>
 </tr>
 <tr>
@@ -94,13 +94,13 @@
 	<td>WikiNode2NotPresent</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>assertText</td>
+	<td>xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]</td>
 	<td>Actions</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>clickAt</td>
+	<td>xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -125,7 +125,7 @@
 </tr>
 <tr>
 	<td>storeElementPresent</td>
-	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]</td>
 	<td>wikiNode3Present</td>
 </tr>
 <tr>
@@ -134,13 +134,13 @@
 	<td>WikiNode3NotPresent</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>assertText</td>
+	<td>xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]</td>
 	<td>Actions</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>clickAt</td>
+	<td>xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -165,7 +165,7 @@
 </tr>
 <tr>
 	<td>storeElementPresent</td>
-	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]</td>
 	<td>wikiNode4Present</td>
 </tr>
 <tr>
@@ -174,13 +174,13 @@
 	<td>WikiNode4NotPresent</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>assertText</td>
+	<td>xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]</td>
 	<td>Actions</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>clickAt</td>
+	<td>xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -205,7 +205,7 @@
 </tr>
 <tr>
 	<td>storeElementPresent</td>
-	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]</td>
 	<td>wikiNode5Present</td>
 </tr>
 <tr>
@@ -214,13 +214,13 @@
 	<td>WikiNode5NotPresent</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>assertText</td>
+	<td>xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]</td>
 	<td>Actions</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>clickAt</td>
+	<td>xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -266,6 +266,36 @@
 <tr>
 	<td>label</td>
 	<td>WikiNode5NotPresent</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertConfirmation</td>
+	<td>Are you sure you want to delete this? It will be deleted immediately.</td>
 	<td></td>
 </tr>
 </tbody></table>

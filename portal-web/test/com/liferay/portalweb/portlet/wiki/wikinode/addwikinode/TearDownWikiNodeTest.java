@@ -62,7 +62,7 @@ public class TearDownWikiNodeTest extends BaseTestCase {
 				loadRequiredJavaScriptModules();
 
 				boolean wikiNode1Present = selenium.isElementPresent(
-						"//span[@title='Actions']/ul/li/strong/a/span");
+						"xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]");
 
 				if (!wikiNode1Present) {
 					label = 2;
@@ -70,11 +70,11 @@ public class TearDownWikiNodeTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
-					RuntimeVariables.replace("Actions"));
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText(
-						"//span[@title='Actions']/ul/li/strong/a/span"));
+						"xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]"));
+				selenium.clickAt("xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]",
+					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -104,7 +104,7 @@ public class TearDownWikiNodeTest extends BaseTestCase {
 								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
 				boolean wikiNode2Present = selenium.isElementPresent(
-						"//span[@title='Actions']/ul/li/strong/a/span");
+						"xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]");
 
 				if (!wikiNode2Present) {
 					label = 3;
@@ -112,11 +112,11 @@ public class TearDownWikiNodeTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
-					RuntimeVariables.replace("Actions"));
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText(
-						"//span[@title='Actions']/ul/li/strong/a/span"));
+						"xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]"));
+				selenium.clickAt("xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]",
+					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -146,7 +146,7 @@ public class TearDownWikiNodeTest extends BaseTestCase {
 								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
 				boolean wikiNode3Present = selenium.isElementPresent(
-						"//span[@title='Actions']/ul/li/strong/a/span");
+						"xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]");
 
 				if (!wikiNode3Present) {
 					label = 4;
@@ -154,11 +154,11 @@ public class TearDownWikiNodeTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
-					RuntimeVariables.replace("Actions"));
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText(
-						"//span[@title='Actions']/ul/li/strong/a/span"));
+						"xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]"));
+				selenium.clickAt("xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]",
+					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -188,7 +188,7 @@ public class TearDownWikiNodeTest extends BaseTestCase {
 								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
 				boolean wikiNode4Present = selenium.isElementPresent(
-						"//span[@title='Actions']/ul/li/strong/a/span");
+						"xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]");
 
 				if (!wikiNode4Present) {
 					label = 5;
@@ -196,11 +196,11 @@ public class TearDownWikiNodeTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
-					RuntimeVariables.replace("Actions"));
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText(
-						"//span[@title='Actions']/ul/li/strong/a/span"));
+						"xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]"));
+				selenium.clickAt("xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]",
+					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -230,7 +230,7 @@ public class TearDownWikiNodeTest extends BaseTestCase {
 								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
 				boolean wikiNode5Present = selenium.isElementPresent(
-						"//span[@title='Actions']/ul/li/strong/a/span");
+						"xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]");
 
 				if (!wikiNode5Present) {
 					label = 6;
@@ -238,11 +238,11 @@ public class TearDownWikiNodeTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
-					RuntimeVariables.replace("Actions"));
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText(
-						"//span[@title='Actions']/ul/li/strong/a/span"));
+						"xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]"));
+				selenium.clickAt("xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]",
+					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -276,6 +276,39 @@ public class TearDownWikiNodeTest extends BaseTestCase {
 			case 4:
 			case 5:
 			case 6:
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+					RuntimeVariables.replace("Actions"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
+				selenium.click(RuntimeVariables.replace(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
+				assertTrue(selenium.getConfirmation()
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
+
 			case 100:
 				label = -1;
 			}

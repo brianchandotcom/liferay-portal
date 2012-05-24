@@ -286,6 +286,16 @@ public class ResourceBlockPermissionLocalServiceUtil {
 		getService().deleteResourceBlockPermissions(resourceBlockId);
 	}
 
+	public static java.util.Map<java.lang.Long, java.util.Set<java.lang.String>> getAvailableResourcePermissionActionIds(
+		long[] roleIds, java.lang.String className, long primKey,
+		java.util.List<java.lang.String> actionIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getAvailableResourcePermissionActionIds(roleIds, className,
+			primKey, actionIds);
+	}
+
 	public static com.liferay.portal.model.ResourceBlockPermissionsContainer getResourceBlockPermissionsContainer(
 		long resourceBlockId)
 		throws com.liferay.portal.kernel.exception.SystemException {

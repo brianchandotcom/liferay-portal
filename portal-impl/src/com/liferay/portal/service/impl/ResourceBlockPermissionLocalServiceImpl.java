@@ -14,14 +14,19 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.ResourceBlock;
 import com.liferay.portal.model.ResourceBlockConstants;
 import com.liferay.portal.model.ResourceBlockPermission;
 import com.liferay.portal.model.ResourceBlockPermissionsContainer;
 import com.liferay.portal.service.base.ResourceBlockPermissionLocalServiceBaseImpl;
 
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Manages resource block permissions.
@@ -64,6 +69,45 @@ public class ResourceBlockPermissionLocalServiceImpl
 
 		resourceBlockPermissionPersistence.removeByResourceBlockId(
 			resourceBlockId);
+	}
+
+	public Map<Long, Set<String>> getAvailableResourcePermissionActionIds(
+			long[] roleIds, String className, long primKey,
+			List<String> actionIds)
+		throws PortalException, SystemException {
+
+		ResourceBlock resourceBlock =
+			resourceBlockLocalService.getResourceBlock(className, primKey);
+
+		Map<Long, Set<String>> roleIdsToActionIds =
+			new HashMap<Long, Set<String>>();
+
+		for (long roleId : roleIds) {
+			Set<String> availableActionIds = roleIdsToActionIds.get(roleId);
+
+			if (availableActionIds != null) {
+				continue;
+			}
+
+			List<String> resourceBlockActions =
+				resourceBlockLocalService.getPermissions(resourceBlock, roleId);
+
+			if (resourceBlockActions.isEmpty()) {
+				continue;
+			}
+
+			availableActionIds = new HashSet<String>();
+
+			roleIdsToActionIds.put(roleId, availableActionIds);
+
+			for (String actionId : actionIds) {
+				if (resourceBlockActions.contains(actionId)) {
+					availableActionIds.add(actionId);
+				}
+			}
+		}
+
+		return roleIdsToActionIds;
 	}
 
 	public ResourceBlockPermissionsContainer

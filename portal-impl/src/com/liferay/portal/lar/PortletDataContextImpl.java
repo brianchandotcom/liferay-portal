@@ -50,6 +50,8 @@ import com.liferay.portal.model.impl.LockImpl;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LockLocalServiceUtil;
+import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
+import com.liferay.portal.service.ResourceBlockPermissionLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -467,8 +469,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 			resourceName);
 
 		Map<Long, Set<String>> roleIdsToActionIds = getActionIds_6(
-			_companyId, roleIds.getArray(), resourceName,
-			String.valueOf(resourcePK), actionIds);
+			_companyId, roleIds.getArray(), resourceName, resourcePK,
+			actionIds);
 
 		for (Map.Entry<Long, String> entry : roleIdsToNames.entrySet()) {
 			long roleId = entry.getKey();
@@ -1092,9 +1094,16 @@ public class PortletDataContextImpl implements PortletDataContext {
 			return;
 		}
 
-		ResourcePermissionLocalServiceUtil.setResourcePermissions(
-			_companyId, resourceName, ResourceConstants.SCOPE_INDIVIDUAL,
-			String.valueOf(newResourcePK), roleIdsToActionIds);
+		if (ResourceBlockLocalServiceUtil.isSupported(resourceName)) {
+			ResourceBlockLocalServiceUtil.setIndividualScopePermissions(
+				_companyId, _groupId, resourceName, newResourcePK,
+				roleIdsToActionIds);
+		}
+		else {
+			ResourcePermissionLocalServiceUtil.setResourcePermissions(
+				_companyId, resourceName, ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(newResourcePK), roleIdsToActionIds);
+		}
 	}
 
 	public void importRatingsEntries(
@@ -1309,14 +1318,21 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	protected Map<Long, Set<String>> getActionIds_6(
-			long companyId, long[] roleIds, String className, String primKey,
+			long companyId, long[] roleIds, String className, long primKey,
 			List<String> actionIds)
 		throws PortalException, SystemException {
 
-		return ResourcePermissionLocalServiceUtil.
-			getAvailableResourcePermissionActionIds(
-				companyId, className, ResourceConstants.SCOPE_INDIVIDUAL,
-				primKey, roleIds, actionIds);
+		if (ResourceBlockLocalServiceUtil.isSupported(className)) {
+			return ResourceBlockPermissionLocalServiceUtil.
+				getAvailableResourcePermissionActionIds(
+					roleIds, className, primKey, actionIds);
+		}
+		else {
+			return ResourcePermissionLocalServiceUtil.
+				getAvailableResourcePermissionActionIds(
+					companyId, className, ResourceConstants.SCOPE_INDIVIDUAL,
+					String.valueOf(primKey), roleIds, actionIds);
+		}
 	}
 
 	protected long getClassPK(ClassedModel classedModel) {

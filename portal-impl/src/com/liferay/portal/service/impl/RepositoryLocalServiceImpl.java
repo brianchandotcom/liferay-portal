@@ -196,14 +196,6 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 		long repositoryEntryId = getRepositoryEntryId(
 			folderId, fileEntryId, fileVersionId);
 
-		if (repositoryEntryId == folderId) {
-			DLFolder dlFolder = dlFolderLocalService.fetchDLFolder(folderId);
-
-			if ((dlFolder != null) && dlFolder.isMountPoint()) {
-				return getLocalRepositoryImpl(dlFolder.getRepositoryId());
-			}
-		}
-
 		LocalRepository localRepositoryImpl =
 			_localRepositoriesByRepositoryEntryId.get(repositoryEntryId);
 
@@ -278,14 +270,6 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 
 		long repositoryEntryId = getRepositoryEntryId(
 			folderId, fileEntryId, fileVersionId);
-
-		if (repositoryEntryId == folderId) {
-			DLFolder dlFolder = dlFolderLocalService.fetchDLFolder(folderId);
-
-			if ((dlFolder != null) && dlFolder.isMountPoint()) {
-				return getRepositoryImpl(dlFolder.getRepositoryId());
-			}
-		}
 
 		com.liferay.portal.kernel.repository.Repository repositoryImpl =
 			_repositoriesByEntryId.get(repositoryEntryId);

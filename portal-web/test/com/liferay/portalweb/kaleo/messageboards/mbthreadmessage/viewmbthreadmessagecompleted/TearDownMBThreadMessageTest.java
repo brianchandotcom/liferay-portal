@@ -115,8 +115,6 @@ public class TearDownMBThreadMessageTest extends BaseTestCase {
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
-			case 2:
-
 				boolean mbMessage2Present = selenium.isElementPresent(
 						"//span[@title='Actions']/ul/li/strong/a/span");
 
@@ -176,8 +174,6 @@ public class TearDownMBThreadMessageTest extends BaseTestCase {
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
-
-			case 3:
 
 				boolean mbMessage3Present = selenium.isElementPresent(
 						"//span[@title='Actions']/ul/li/strong/a/span");
@@ -239,8 +235,6 @@ public class TearDownMBThreadMessageTest extends BaseTestCase {
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
-			case 4:
-
 				boolean mbMessage4Present = selenium.isElementPresent(
 						"//span[@title='Actions']/ul/li/strong/a/span");
 
@@ -300,8 +294,6 @@ public class TearDownMBThreadMessageTest extends BaseTestCase {
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
-
-			case 5:
 
 				boolean mbMessage5Present = selenium.isElementPresent(
 						"//span[@title='Actions']/ul/li/strong/a/span");
@@ -363,6 +355,10 @@ public class TearDownMBThreadMessageTest extends BaseTestCase {
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
+			case 2:
+			case 3:
+			case 4:
+			case 5:
 			case 6:
 			case 100:
 				label = -1;

@@ -21,7 +21,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author Shuyang Zhou
@@ -175,84 +174,6 @@ public class TaskQueueTest extends TestCase {
 		boolean result = taskQueue.offer(new Object(), hasWaiterMarker);
 
 		assertTrue(result);
-		assertFalse(hasWaiterMarker[0]);
-
-		final TaskQueue<Object> taskQueue2 = new TaskQueue<Object>(10);
-
-		hasWaiterMarker = new boolean[1];
-
-		Thread thread = new Thread() {
-
-			@Override
-			public void run() {
-				try {
-					taskQueue2.take();
-				}
-				catch (InterruptedException ie) {
-					fail();
-				}
-			}
-
-		};
-
-		thread.start();
-
-		Thread.sleep(100);
-
-		result = taskQueue2.offer(new Object(), hasWaiterMarker);
-
-		assertTrue(result);
-		assertTrue(hasWaiterMarker[0]);
-
-		final TaskQueue<Object> taskQueue3 = new TaskQueue<Object>(10);
-
-		thread = new Thread() {
-			@Override
-			public void run() {
-				try {
-					ReentrantLock takeLock = taskQueue3.getTakeLock();
-
-					takeLock.lock();
-
-					try {
-						while (!takeLock.hasQueuedThreads()) {
-							Thread.sleep(1);
-						}
-
-						assertNotNull(taskQueue3.take());
-					}
-					finally {
-						takeLock.unlock();
-					}
-				}
-				catch (InterruptedException ie) {
-					fail();
-				}
-			}
-
-		};
-
-		thread.start();
-
-		hasWaiterMarker = new boolean[1];
-
-		Thread.sleep(100);
-
-		result = taskQueue3.offer(new Object(), hasWaiterMarker);
-
-		assertTrue(result);
-		assertTrue(hasWaiterMarker[0]);
-
-		taskQueue = new TaskQueue<Object>(1);
-
-		result = taskQueue.offer(new Object(), hasWaiterMarker);
-
-		assertTrue(result);
-		assertFalse(hasWaiterMarker[0]);
-
-		result = taskQueue.offer(new Object(), hasWaiterMarker);
-
-		assertFalse(result);
 		assertFalse(hasWaiterMarker[0]);
 	}
 

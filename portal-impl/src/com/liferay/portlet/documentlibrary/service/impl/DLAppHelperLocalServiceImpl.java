@@ -472,6 +472,10 @@ public class DLAppHelperLocalServiceImpl
 			userId, folder.getFolderId(), WorkflowConstants.STATUS_IN_TRASH,
 			new HashMap<String, Serializable>(), new ServiceContext());
 
+		dlFolder.setName(DLAppUtil.appendTrashNamespace(dlFolder.getName()));
+
+		dlFolderPersistence.update(dlFolder, false);
+
 		// File rank
 
 		dlFileRankLocalService.disableFileRanksByFolder(folder.getFolderId());

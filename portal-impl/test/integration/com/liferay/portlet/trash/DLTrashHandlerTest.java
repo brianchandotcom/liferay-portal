@@ -69,8 +69,7 @@ public class DLTrashHandlerTest extends BaseDLTrashHandlerTestCase {
 			boolean duplicateFileEntry, boolean duplicateFolder)
 		throws Exception {
 
-		int initialFoldersAndFileEntriesCount =
-			getFolderAndFileEntriesNotInTrashCount();
+		int initialNotInTrashCount = getNotInTrashCount();
 		int initialTrashEntriesCount = getTrashEntriesCount();
 
 		int trashCount = 0;
@@ -87,9 +86,7 @@ public class DLTrashHandlerTest extends BaseDLTrashHandlerTestCase {
 			trashCount++;
 		}
 
-		Assert.assertEquals(
-			initialFoldersAndFileEntriesCount,
-			getFolderAndFileEntriesNotInTrashCount());
+		Assert.assertEquals(initialNotInTrashCount, getNotInTrashCount());
 		Assert.assertEquals(
 			initialTrashEntriesCount + trashCount, getTrashEntriesCount());
 
@@ -105,9 +102,7 @@ public class DLTrashHandlerTest extends BaseDLTrashHandlerTestCase {
 			trashCount++;
 		}
 
-		Assert.assertEquals(
-			initialFoldersAndFileEntriesCount,
-			getFolderAndFileEntriesNotInTrashCount());
+		Assert.assertEquals(initialNotInTrashCount, getNotInTrashCount());
 		Assert.assertEquals(
 			initialTrashEntriesCount + trashCount, getTrashEntriesCount());
 	}

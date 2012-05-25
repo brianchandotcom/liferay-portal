@@ -38,6 +38,9 @@ public interface PortalExecutorManager {
 	public ThreadPoolExecutor getPortalExecutor(
 		String name, boolean createIfAbsent);
 
+	public ThreadPoolExecutor registerPortalExecutor(
+		String name, ThreadPoolExecutor threadPoolExecutor);
+
 	public void shutdown();
 
 	public void shutdown(boolean interrupt);

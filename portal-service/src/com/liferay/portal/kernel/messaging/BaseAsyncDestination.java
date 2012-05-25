@@ -17,12 +17,12 @@ package com.liferay.portal.kernel.messaging;
 import com.liferay.portal.kernel.concurrent.RejectedExecutionHandler;
 import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 import com.liferay.portal.kernel.concurrent.ThreadPoolHandlerAdapter;
+import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.NamedThreadFactory;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
-import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -57,23 +57,6 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 
 	@Override
 	public void close(boolean force) {
-		if (!_threadPoolExecutor.isShutdown() &&
-			!_threadPoolExecutor.isTerminating()) {
-
-			if (!force) {
-				_threadPoolExecutor.shutdown();
-			}
-			else {
-				List<Runnable> pendingTasks = _threadPoolExecutor.shutdownNow();
-
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						"The following " + pendingTasks.size() + " tasks " +
-							"were not executed due to shutown: " +
-								pendingTasks);
-				}
-			}
-		}
 	}
 
 	public DestinationStatistics getDestinationStatistics() {
@@ -119,12 +102,31 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 				_rejectedExecutionHandler = createRejectionExecutionHandler();
 			}
 
-			_threadPoolExecutor = new ThreadPoolExecutor(
+			ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(
 				_workersCoreSize, _workersMaxSize, 60L, TimeUnit.SECONDS, false,
 				_maximumQueueSize, _rejectedExecutionHandler,
 				new NamedThreadFactory(
 					getName(), Thread.NORM_PRIORITY, classLoader),
 				new ThreadPoolHandlerAdapter());
+
+			ThreadPoolExecutor oldThreadPoolExecutor =
+				PortalExecutorManagerUtil.registerPortalExecutor(
+					getName(), threadPoolExecutor);
+
+			if (oldThreadPoolExecutor != null) {
+
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Abort creating new ThreadPool for Destination : " +
+							getName() + ", reuse previous one.");
+				}
+
+				threadPoolExecutor.shutdownNow();
+
+				threadPoolExecutor = oldThreadPoolExecutor;
+			}
+
+			_threadPoolExecutor = threadPoolExecutor;
 		}
 	}
 

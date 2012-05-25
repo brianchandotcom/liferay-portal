@@ -16,6 +16,8 @@ package com.liferay.portal.search.lucene.cluster;
 
 import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.search.lucene.LuceneHelperUtil;
 
 import java.io.IOException;
@@ -39,6 +41,12 @@ public class LuceneClusterUtil {
 
 		if (bootupAddress == null) {
 			return;
+		}
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"Start loading lucene index files from cluster node : " +
+					bootupAddress);
 		}
 
 		InputStream inputStream = null;
@@ -69,5 +77,7 @@ public class LuceneClusterUtil {
 			}
 		}
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(LuceneClusterUtil.class);
 
 }

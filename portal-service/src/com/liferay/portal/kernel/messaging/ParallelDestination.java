@@ -16,9 +16,11 @@ package com.liferay.portal.kernel.messaging;
 
 import com.liferay.portal.kernel.cache.Lifecycle;
 import com.liferay.portal.kernel.cache.ThreadLocalCacheManager;
+import com.liferay.portal.kernel.cluster.ClusterLinkUtil;
 import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.proxy.MessageValuesThreadLocal;
 import com.liferay.portal.kernel.util.CentralizedThreadLocal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
@@ -78,11 +80,6 @@ public class ParallelDestination extends BaseAsyncDestination {
 			Runnable runnable = new MessageRunnable(message) {
 
 				public void run() {
-					long companyId = CompanyThreadLocal.getCompanyId();
-					String principalName = PrincipalThreadLocal.getName();
-					String principalPassword =
-						PrincipalThreadLocal.getPassword();
-
 					try {
 						long messageCompanyId = message.getLong("companyId");
 
@@ -105,15 +102,22 @@ public class ParallelDestination extends BaseAsyncDestination {
 								messagePrincipalPassword);
 						}
 
+						Boolean messageClusterForward =
+							(Boolean)message.get(
+								ClusterLinkUtil.CLUSTER_FORWARD_MESSAGE);
+
+						if (messageClusterForward != null) {
+							MessageValuesThreadLocal.setValue(
+								ClusterLinkUtil.CLUSTER_FORWARD_MESSAGE,
+								messageClusterForward);
+						}
+
 						messageListener.receive(message);
 					}
 					catch (MessageListenerException mle) {
 						_log.error("Unable to process message " + message, mle);
 					}
 					finally {
-						CompanyThreadLocal.setCompanyId(companyId);
-						PrincipalThreadLocal.setName(principalName);
-						PrincipalThreadLocal.setPassword(principalPassword);
 						ThreadLocalCacheManager.clearAll(Lifecycle.REQUEST);
 
 						CentralizedThreadLocal.clearShortLivedThreadLocals();

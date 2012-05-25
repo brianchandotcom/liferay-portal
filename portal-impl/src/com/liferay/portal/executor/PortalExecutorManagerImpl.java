@@ -82,6 +82,25 @@ public class PortalExecutorManagerImpl implements PortalExecutorManager {
 		return portalExecutor;
 	}
 
+	public ThreadPoolExecutor registerPortalExecutor(
+		String name, ThreadPoolExecutor threadPoolExecutor) {
+
+		ThreadPoolExecutor portalExecutor = _portalExecutors.get(name);
+
+		if (portalExecutor == null) {
+			synchronized (_portalExecutors) {
+				portalExecutor = _portalExecutors.get(name);
+
+				if (portalExecutor == null) {
+					portalExecutor = _portalExecutors.put(
+						name, threadPoolExecutor);
+				}
+			}
+		}
+
+		return portalExecutor;
+	}
+
 	public void setPortalExecutorFactory(
 		PortalExecutorFactory portalExecutorFactory) {
 

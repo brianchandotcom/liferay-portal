@@ -1806,6 +1806,12 @@
 		</antcall>
 
 		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="social-office-home-events" />
+			<param name="test.ant.script.social.office" value="true" />
+		<param name="test.ant.script.suite" value="SocialOfficeHomeEventsTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="social-office-home-microblogs" />
 			<param name="test.ant.script.social.office" value="true" />
 			<param name="test.ant.script.suite" value="SocialOfficeHomeMicroblogsTestSuite" />

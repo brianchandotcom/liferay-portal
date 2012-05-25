@@ -35,6 +35,7 @@ import com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletdisp
 import com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletdisplaystylefullcontent.ConfigurePortletDisplayStyleFullContentTests;
 import com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletdisplaystyletable.ConfigurePortletDisplayStyleTableTests;
 import com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletdisplaystyletitlelist.ConfigurePortletDisplayStyleTitleListTests;
+import com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletfilterdisplaypage.ConfigurePortletFilterDisplayPageTests;
 import com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletmaximumitemstodisplay2.ConfigurePortletMaximumItemsToDisplay2Tests;
 import com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletmaximumitemstodisplay5.ConfigurePortletMaximumItemsToDisplay5Tests;
 import com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletpaginationtyperegular.ConfigurePortletPaginationTypeRegularTests;
@@ -72,6 +73,7 @@ public class PortletTestPlan extends BaseTestSuite {
 		testSuite.addTest(ConfigurePortletDisplayStyleTableTests.suite());
 		testSuite.addTest(ConfigurePortletDisplayStyleTitleListTests.suite());
 		testSuite.addTest(ConfigurePortletDisplayStyleTitleListTests.suite());
+		testSuite.addTest(ConfigurePortletFilterDisplayPageTests.suite());
 		testSuite.addTest(ConfigurePortletMaximumItemsToDisplay2Tests.suite());
 		testSuite.addTest(ConfigurePortletMaximumItemsToDisplay5Tests.suite());
 		testSuite.addTest(ConfigurePortletPaginationTypeRegularTests.suite());

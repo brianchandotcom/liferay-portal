@@ -1,0 +1,104 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>ConfigurePortletFilterDisplayPageTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ConfigurePortletFilterDisplayPageTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/web/guest/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>link=Asset Publisher Test Page</td>
+	<td>Asset Publisher Test Page</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Asset Publisher Test Page</td>
+	<td>Asset Publisher Test Page</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
+	<td>Options</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
+	<td>Options</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>Configuration</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>Configuration</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>Configuration</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>id=_86_showOnlyLayoutAssetsCheckbox</td>
+	<td>Show Only Assets on this Page</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>id=_86_showOnlyLayoutAssetsCheckbox</td>
+	<td>off</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>id=_86_showOnlyLayoutAssetsCheckbox</td>
+	<td>Show Only Assets on this Page</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>id=_86_defaultAssetPublisherCheckbox</td>
+	<td>off</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>id=_86_defaultAssetPublisherCheckbox</td>
+	<td>Set as Default Asset Publisher for This Page</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Save']</td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>You have successfully updated the setup.</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>id=_86_showOnlyLayoutAssetsCheckbox</td>
+	<td>on</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>id=_86_defaultAssetPublisherCheckbox</td>
+	<td>on</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

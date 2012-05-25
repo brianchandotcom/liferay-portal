@@ -47,10 +47,11 @@ public class TearDownEventTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("link=Calendar Test Page",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Calendar Test Page"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
-				selenium.clickAt("link=Events", RuntimeVariables.replace(""));
+				selenium.clickAt("link=Events",
+					RuntimeVariables.replace("Events"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 
@@ -87,7 +88,8 @@ public class TearDownEventTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("//td[6]/span/ul/li/strong/a")) {
+						if (selenium.isVisible(
+									"//span[@title='Actions']/ul/li/strong/a")) {
 							break;
 						}
 					}
@@ -97,7 +99,7 @@ public class TearDownEventTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.clickAt("//td[6]/span/ul/li/strong/a",
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -107,7 +109,7 @@ public class TearDownEventTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a")) {
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a")) {
 							break;
 						}
 					}
@@ -119,13 +121,13 @@ public class TearDownEventTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
 			case 2:
 
@@ -160,7 +162,8 @@ public class TearDownEventTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("//td[6]/span/ul/li/strong/a")) {
+						if (selenium.isVisible(
+									"//span[@title='Actions']/ul/li/strong/a")) {
 							break;
 						}
 					}
@@ -170,7 +173,7 @@ public class TearDownEventTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.clickAt("//td[6]/span/ul/li/strong/a",
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -180,7 +183,7 @@ public class TearDownEventTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a")) {
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a")) {
 							break;
 						}
 					}
@@ -192,13 +195,13 @@ public class TearDownEventTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
 			case 3:
 
@@ -233,7 +236,8 @@ public class TearDownEventTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("//td[6]/span/ul/li/strong/a")) {
+						if (selenium.isVisible(
+									"//span[@title='Actions']/ul/li/strong/a")) {
 							break;
 						}
 					}
@@ -243,7 +247,7 @@ public class TearDownEventTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.clickAt("//td[6]/span/ul/li/strong/a",
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -253,7 +257,7 @@ public class TearDownEventTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a")) {
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a")) {
 							break;
 						}
 					}
@@ -265,13 +269,13 @@ public class TearDownEventTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
 			case 4:
 
@@ -306,7 +310,8 @@ public class TearDownEventTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("//td[6]/span/ul/li/strong/a")) {
+						if (selenium.isVisible(
+									"//span[@title='Actions']/ul/li/strong/a")) {
 							break;
 						}
 					}
@@ -316,7 +321,7 @@ public class TearDownEventTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.clickAt("//td[6]/span/ul/li/strong/a",
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -326,7 +331,7 @@ public class TearDownEventTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a")) {
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a")) {
 							break;
 						}
 					}
@@ -338,13 +343,13 @@ public class TearDownEventTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
 			case 5:
 
@@ -379,7 +384,8 @@ public class TearDownEventTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("//td[6]/span/ul/li/strong/a")) {
+						if (selenium.isVisible(
+									"//span[@title='Actions']/ul/li/strong/a")) {
 							break;
 						}
 					}
@@ -389,7 +395,7 @@ public class TearDownEventTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.clickAt("//td[6]/span/ul/li/strong/a",
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -399,7 +405,7 @@ public class TearDownEventTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a")) {
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a")) {
 							break;
 						}
 					}
@@ -411,13 +417,13 @@ public class TearDownEventTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
 			case 6:
 			case 100:

@@ -255,6 +255,12 @@ public class RuntimeChecker extends BaseReflectChecker {
 				return true;
 			}
 
+			if (isResinEnvironmentLocal(callerClass7)) {
+				logGetClassLoader(callerClass7, 7);
+
+				return true;
+			}
+
 			if (isXercesSecuritySupport(callerClass7) &&
 				CheckerUtil.isAccessControllerDoPrivileged(8)) {
 
@@ -517,6 +523,24 @@ public class RuntimeChecker extends BaseReflectChecker {
 		return classLocation.contains("/lib/bootstrap/felix-launcher.jar!/");
 	}
 
+	protected boolean isResinEnvironmentLocal(Class<?> clazz) {
+		if (!ServerDetector.isResin()) {
+			return false;
+		}
+
+		String className = clazz.getName();
+
+		if (!className.equals(_CLASS_NAME_ENVIRONMENT_LOCAL)) {
+			return false;
+		}
+
+		String actualClassLocation = PACLClassUtil.getClassLocation(clazz);
+		String expectedClassLocation = PathUtil.toUnixPath(
+			System.getProperty("resin.home") + "/lib/resin.jar!/");
+
+		return actualClassLocation.contains(expectedClassLocation);
+	}
+
 	protected boolean isTomcatJdbcLeakPrevention(Class<?> clazz) {
 		if (!ServerDetector.isTomcat()) {
 			return false;
@@ -615,6 +639,9 @@ public class RuntimeChecker extends BaseReflectChecker {
 
 	private static final String _CLASS_NAME_DEFAULT_MBEAN_SERVER_INTERCEPTOR =
 		"com.sun.jmx.interceptor.DefaultMBeanServerInterceptor";
+
+	private static final String _CLASS_NAME_ENVIRONMENT_LOCAL =
+		"com.caucho.loader.EnvironmentLocal";
 
 	private static final String _CLASS_NAME_JDBC_LEAK_PREVENTION =
 		"org.apache.catalina.loader.JdbcLeakPrevention";

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.security.pacl.PACLConstants;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
+import com.liferay.portal.security.pacl.PACLClassUtil;
 import com.liferay.portal.security.pacl.PACLPolicy;
 
 import java.util.Properties;
@@ -111,6 +112,8 @@ public abstract class BaseChecker implements Checker, PACLConstants {
 				!callerClassName.equals(_ClASS_NAME_JASPER_LOADER) &&
 				!callerClassName.startsWith(
 					_CLASS_NAME_JASPER_SERVLET_CONTEXT_CUSTOMIZER) &&
+				!callerClassName.equals(_ClASS_NAME_JSP_MANAGER) &&
+				!callerClassName.equals(_ClASS_NAME_PAGE_MANAGER) &&
 				!callerClassName.equals(_ClASS_NAME_TAG_HANDLER_POOL)) {
 
 				continue;
@@ -173,6 +176,17 @@ public abstract class BaseChecker implements Checker, PACLConstants {
 					if (callerClassLoaderClassName.startsWith(
 							_CLASS_NAME_MODULE_IMPL)) {
 
+						allow = true;
+					}
+				}
+				else if (ServerDetector.isResin()) {
+					Class<?> callerClassLoaderClass =
+						callerClassLoader.getClass();
+
+					String classLocation = PACLClassUtil.getClassLocation(
+						callerClassLoaderClass);
+
+					if (Validator.isNull(classLocation)) {
 						allow = true;
 					}
 				}
@@ -239,8 +253,14 @@ public abstract class BaseChecker implements Checker, PACLConstants {
 	private static final String _CLASS_NAME_JASPER_SERVLET_CONTEXT_CUSTOMIZER =
 		"org.apache.geronimo.jasper.JasperServletContextCustomizer$";
 
+	private static final String _ClASS_NAME_JSP_MANAGER =
+		"com.caucho.jsp.JspManager";
+
 	private static final String _CLASS_NAME_MODULE_IMPL =
 		"org.apache.felix.framework.ModuleImpl";
+
+	private static final String _ClASS_NAME_PAGE_MANAGER =
+		"com.caucho.jsp.PageManager";
 
 	private static final String _ClASS_NAME_TAG_HANDLER_POOL =
 		"org.apache.jasper.runtime.TagHandlerPool";

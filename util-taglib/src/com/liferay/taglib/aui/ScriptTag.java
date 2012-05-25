@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Portlet;
 import com.liferay.taglib.aui.base.BaseScriptTag;
 
 import java.util.Set;
@@ -117,7 +118,14 @@ public class ScriptTag extends BaseScriptTag {
 		boolean positionInline = isPositionInLine();
 
 		try {
-			String portletId = (String)request.getAttribute(WebKeys.PORTLET_ID);
+			String portletId = null;
+
+			Portlet portlet = (Portlet)request.getAttribute(
+				WebKeys.RENDER_PORTLET);
+
+			if (portlet != null) {
+				portletId = portlet.getPortletId();
+			}
 
 			StringBundler bodyContentSB = getBodyContentAsStringBundler();
 

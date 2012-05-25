@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.controlpanel.organizations.organization.addorganizationmultiple;
+package com.liferay.portalweb.portal.controlpanel.organizations.organization.addorganization;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddOrganization1Test extends BaseTestCase {
-	public void testAddOrganization1() throws Exception {
+public class AddOrganization3Test extends BaseTestCase {
+	public void testAddOrganization3() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Go to"),
@@ -52,7 +52,10 @@ public class AddOrganization1Test extends BaseTestCase {
 			RuntimeVariables.replace("Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText("//span[@title='Add']/ul/li/strong/a"));
+		selenium.clickAt("//span[@title='Add']/ul/li/strong/a",
+			RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -61,7 +64,7 @@ public class AddOrganization1Test extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Regular Organization')]")) {
 					break;
 				}
 			}
@@ -73,48 +76,23 @@ public class AddOrganization1Test extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Regular Organization"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Regular Organization')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Regular Organization')]"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_125_name']",
-			RuntimeVariables.replace("Test1 Organization1"));
+			RuntimeVariables.replace("Organization3 Name"));
 		selenium.select("//select[@id='_125_type']",
 			RuntimeVariables.replace("label=Regular Organization"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		selenium.clickAt("link=View All", RuntimeVariables.replace("View All"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		selenium.type("//input[@name='_125_keywords']",
-			RuntimeVariables.replace("Test*"));
-		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace("Search"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		assertTrue(selenium.isVisible("link=Test1 Organization1"));
+		assertEquals(RuntimeVariables.replace("Organization3 Name"),
+			selenium.getText("//h1[@class='header-title']"));
 	}
 }

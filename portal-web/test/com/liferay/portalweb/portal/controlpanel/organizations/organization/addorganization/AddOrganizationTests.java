@@ -26,7 +26,9 @@ public class AddOrganizationTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddOrganizationTest.class);
-		testSuite.addTestSuite(TearDownTest.class);
+		testSuite.addTestSuite(ViewOrganizationTest.class);
+		testSuite.addTestSuite(TearDownSubOrganizationTest.class);
+		testSuite.addTestSuite(TearDownOrganizationTest.class);
 
 		return testSuite;
 	}

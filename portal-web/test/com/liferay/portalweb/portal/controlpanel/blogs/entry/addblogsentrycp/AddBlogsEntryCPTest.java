@@ -56,10 +56,44 @@ public class AddBlogsEntryCPTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_161_title']",
 			RuntimeVariables.replace("Blogs Entry Title"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//textarea[@id='_161_editor' and @style='display: none;']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[@id='cke_48_label' and .='Source']"));
-		selenium.clickAt("//span[@id='cke_48_label' and .='Source']",
+			selenium.getText("//span[.='Source']"));
+		selenium.clickAt("//span[.='Source']",
 			RuntimeVariables.replace("Source"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//a[@class='cke_button_source cke_on']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -81,9 +115,26 @@ public class AddBlogsEntryCPTest extends BaseTestCase {
 		selenium.type("//td[@id='cke_contents__161_editor']/textarea",
 			RuntimeVariables.replace("Blogs Entry Content"));
 		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[@id='cke_48_label' and .='Source']"));
-		selenium.clickAt("//span[@id='cke_48_label' and .='Source']",
+			selenium.getText("//span[.='Source']"));
+		selenium.clickAt("//span[.='Source']",
 			RuntimeVariables.replace("Source"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//textarea[@id='_161_editor' and @style='display: none;']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

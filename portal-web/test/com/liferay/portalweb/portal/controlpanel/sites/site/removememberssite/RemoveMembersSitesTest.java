@@ -29,6 +29,9 @@ public class RemoveMembersSitesTest extends BaseTestCase {
 			case 1:
 				selenium.open("/web/guest/home/");
 				loadRequiredJavaScriptModules();
+				assertEquals(RuntimeVariables.replace("Go to"),
+					selenium.getText("//li[@id='_145_mySites']/a/span"));
+				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -36,7 +39,7 @@ public class RemoveMembersSitesTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent("link=Control Panel")) {
+						if (selenium.isVisible("link=Control Panel")) {
 							break;
 						}
 					}
@@ -60,8 +63,9 @@ public class RemoveMembersSitesTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[7]/span/ul/li/strong/a/span"));
-				selenium.clickAt("//td[7]/span/ul/li/strong/a/span",
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -71,7 +75,7 @@ public class RemoveMembersSitesTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a")) {
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Memberships')]/a")) {
 							break;
 						}
 					}
@@ -83,9 +87,9 @@ public class RemoveMembersSitesTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Manage Memberships"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Memberships')]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Memberships')]/a"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				selenium.clickAt("//li[2]/span/a",
@@ -112,8 +116,9 @@ public class RemoveMembersSitesTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("Actions"),
-					selenium.getText("//td[4]/span/ul/li/strong/a/span"));
-				selenium.clickAt("//td[4]/span/ul/li/strong/a/span",
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -123,7 +128,7 @@ public class RemoveMembersSitesTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Remove Membership')]/a")) {
 							break;
 						}
 					}
@@ -135,9 +140,9 @@ public class RemoveMembersSitesTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Remove Membership"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Remove Membership')]/a"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Remove Membership')]/a"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 

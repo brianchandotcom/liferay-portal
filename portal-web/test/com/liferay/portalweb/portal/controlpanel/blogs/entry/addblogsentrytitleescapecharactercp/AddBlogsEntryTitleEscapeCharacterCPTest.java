@@ -25,6 +25,9 @@ public class AddBlogsEntryTitleEscapeCharacterCPTest extends BaseTestCase {
 		throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -32,7 +35,7 @@ public class AddBlogsEntryTitleEscapeCharacterCPTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -42,10 +45,11 @@ public class AddBlogsEntryTitleEscapeCharacterCPTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Control Panel",
+			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.clickAt("link=Blogs", RuntimeVariables.replace(""));
+		selenium.clickAt("link=Blogs", RuntimeVariables.replace("Blogs"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
@@ -53,10 +57,44 @@ public class AddBlogsEntryTitleEscapeCharacterCPTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_161_title']",
 			RuntimeVariables.replace("<!--Html Escape Character Test-->"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//textarea[@id='_161_editor' and @style='display: none;']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[@id='cke_48_label' and .='Source']"));
-		selenium.clickAt("//span[@id='cke_48_label' and .='Source']",
+			selenium.getText("//span[.='Source']"));
+		selenium.clickAt("//span[.='Source']",
 			RuntimeVariables.replace("Source"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//a[@class='cke_button_source cke_on']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -78,9 +116,26 @@ public class AddBlogsEntryTitleEscapeCharacterCPTest extends BaseTestCase {
 		selenium.type("//td[@id='cke_contents__161_editor']/textarea",
 			RuntimeVariables.replace("Blogs Entry Content"));
 		assertEquals(RuntimeVariables.replace("Source"),
-			selenium.getText("//span[@id='cke_48_label' and .='Source']"));
-		selenium.clickAt("//span[@id='cke_48_label' and .='Source']",
+			selenium.getText("//span[.='Source']"));
+		selenium.clickAt("//span[.='Source']",
 			RuntimeVariables.replace("Source"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//textarea[@id='_161_editor' and @style='display: none;']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -120,7 +175,7 @@ public class AddBlogsEntryTitleEscapeCharacterCPTest extends BaseTestCase {
 
 		selenium.selectFrame("relative=top");
 		selenium.clickAt("//input[@value='Publish']",
-			RuntimeVariables.replace(""));
+			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(

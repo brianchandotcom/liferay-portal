@@ -24,6 +24,9 @@ public class PublishBlogsEntryDraftCPTest extends BaseTestCase {
 	public void testPublishBlogsEntryDraftCP() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -31,7 +34,7 @@ public class PublishBlogsEntryDraftCPTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -65,7 +68,7 @@ public class PublishBlogsEntryDraftCPTest extends BaseTestCase {
 			try {
 				if (RuntimeVariables.replace("Edit")
 										.equals(selenium.getText(
-								"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"))) {
+								"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"))) {
 					break;
 				}
 			}
@@ -77,9 +80,9 @@ public class PublishBlogsEntryDraftCPTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		Thread.sleep(5000);
@@ -92,6 +95,9 @@ public class PublishBlogsEntryDraftCPTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -99,7 +105,7 @@ public class PublishBlogsEntryDraftCPTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}

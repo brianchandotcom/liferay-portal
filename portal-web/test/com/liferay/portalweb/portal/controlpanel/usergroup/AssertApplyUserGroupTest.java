@@ -24,6 +24,9 @@ public class AssertApplyUserGroupTest extends BaseTestCase {
 	public void testAssertApplyUserGroup() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -31,7 +34,7 @@ public class AssertApplyUserGroupTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -50,8 +53,8 @@ public class AssertApplyUserGroupTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//td[4]/span/ul/li/strong/a"));
-		selenium.clickAt("//td[4]/span/ul/li/strong/a",
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
@@ -61,7 +64,7 @@ public class AssertApplyUserGroupTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Assign Members')]/a")) {
 					break;
 				}
 			}
@@ -73,9 +76,9 @@ public class AssertApplyUserGroupTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Assign Members"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Assign Members')]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Assign Members')]/a"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(""),

@@ -58,49 +58,95 @@ public class TearDownBlogsEntryCPTest extends BaseTestCase {
 				loadRequiredJavaScriptModules();
 
 				boolean entry1Present = selenium.isElementPresent(
-						"//input[@name='_161_rowIds']");
+						"//td[1]/input");
 
 				if (!entry1Present) {
-					label = 6;
+					label = 2;
 
 					continue;
 				}
 
-				assertFalse(selenium.isChecked(
-						"//input[@name='_161_allRowIds']"));
-				selenium.clickAt("//input[@name='_161_allRowIds']",
-					RuntimeVariables.replace("All Rows"));
-				assertTrue(selenium.isChecked("//input[@name='_161_allRowIds']"));
-				selenium.clickAt("//input[@value='Delete']",
-					RuntimeVariables.replace("Delete"));
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+					RuntimeVariables.replace("Actions"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a"));
+				selenium.click(RuntimeVariables.replace(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete the selected entries[\\s\\S]$"));
+								   .matches("^Are you sure you want to move this to the Recycle Bin[\\s\\S]$"));
+
+			case 2:
 
 				boolean entry2Present = selenium.isElementPresent(
-						"//input[@name='_161_rowIds']");
+						"//td[1]/input");
 
 				if (!entry2Present) {
-					label = 5;
+					label = 3;
 
 					continue;
 				}
 
-				assertFalse(selenium.isChecked(
-						"//input[@name='_161_allRowIds']"));
-				selenium.clickAt("//input[@name='_161_allRowIds']",
-					RuntimeVariables.replace("All Rows"));
-				assertTrue(selenium.isChecked("//input[@name='_161_allRowIds']"));
-				selenium.clickAt("//input[@value='Delete']",
-					RuntimeVariables.replace("Delete"));
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+					RuntimeVariables.replace("Actions"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a"));
+				selenium.click(RuntimeVariables.replace(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete the selected entries[\\s\\S]$"));
+								   .matches("^Are you sure you want to move this to the Recycle Bin[\\s\\S]$"));
+
+			case 3:
 
 				boolean entry3Present = selenium.isElementPresent(
-						"//input[@name='_161_rowIds']");
+						"//td[1]/input");
 
 				if (!entry3Present) {
 					label = 4;
@@ -108,65 +154,368 @@ public class TearDownBlogsEntryCPTest extends BaseTestCase {
 					continue;
 				}
 
-				assertFalse(selenium.isChecked(
-						"//input[@name='_161_allRowIds']"));
-				selenium.clickAt("//input[@name='_161_allRowIds']",
-					RuntimeVariables.replace("All Rows"));
-				assertTrue(selenium.isChecked("//input[@name='_161_allRowIds']"));
-				selenium.clickAt("//input[@value='Delete']",
-					RuntimeVariables.replace("Delete"));
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+					RuntimeVariables.replace("Actions"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a"));
+				selenium.click(RuntimeVariables.replace(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete the selected entries[\\s\\S]$"));
+								   .matches("^Are you sure you want to move this to the Recycle Bin[\\s\\S]$"));
+
+			case 4:
 
 				boolean entry4Present = selenium.isElementPresent(
-						"//input[@name='_161_rowIds']");
+						"//td[1]/input");
 
 				if (!entry4Present) {
-					label = 3;
+					label = 5;
 
 					continue;
 				}
 
-				assertFalse(selenium.isChecked(
-						"//input[@name='_161_allRowIds']"));
-				selenium.clickAt("//input[@name='_161_allRowIds']",
-					RuntimeVariables.replace("All Rows"));
-				assertTrue(selenium.isChecked("//input[@name='_161_allRowIds']"));
-				selenium.clickAt("//input[@value='Delete']",
-					RuntimeVariables.replace("Delete"));
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+					RuntimeVariables.replace("Actions"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a"));
+				selenium.click(RuntimeVariables.replace(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete the selected entries[\\s\\S]$"));
+								   .matches("^Are you sure you want to move this to the Recycle Bin[\\s\\S]$"));
+
+			case 5:
 
 				boolean entry5Present = selenium.isElementPresent(
-						"//input[@name='_161_rowIds']");
+						"//td[1]/input");
 
 				if (!entry5Present) {
-					label = 2;
+					label = 6;
 
 					continue;
 				}
 
-				assertFalse(selenium.isChecked(
-						"//input[@name='_161_allRowIds']"));
-				selenium.clickAt("//input[@name='_161_allRowIds']",
-					RuntimeVariables.replace("All Rows"));
-				assertTrue(selenium.isChecked("//input[@name='_161_allRowIds']"));
-				selenium.clickAt("//input[@value='Delete']",
-					RuntimeVariables.replace("Delete"));
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+					RuntimeVariables.replace("Actions"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a"));
+				selenium.click(RuntimeVariables.replace(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete the selected entries[\\s\\S]$"));
+								   .matches("^Are you sure you want to move this to the Recycle Bin[\\s\\S]$"));
 
-			case 2:
-			case 3:
-			case 4:
-			case 5:
 			case 6:
+				selenium.open("/web/guest/home/");
+				loadRequiredJavaScriptModules();
+				assertEquals(RuntimeVariables.replace("Go to"),
+					selenium.getText("//li[@id='_145_mySites']/a/span"));
+				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible("link=Control Panel")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				selenium.clickAt("link=Control Panel",
+					RuntimeVariables.replace("Control Panel"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
+				selenium.clickAt("link=Recycle Bin",
+					RuntimeVariables.replace("Recycle Bin"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
+
+				boolean entry1Present1 = selenium.isElementPresent(
+						"//td[1]/input");
+
+				if (!entry1Present1) {
+					label = 7;
+
+					continue;
+				}
+
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+					RuntimeVariables.replace("Actions"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
+				selenium.click(RuntimeVariables.replace(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
+
+			case 7:
+
+				boolean entry2Present2 = selenium.isElementPresent(
+						"//td[1]/input");
+
+				if (!entry2Present2) {
+					label = 8;
+
+					continue;
+				}
+
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+					RuntimeVariables.replace("Actions"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
+				selenium.click(RuntimeVariables.replace(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
+
+			case 8:
+
+				boolean entry3Present3 = selenium.isElementPresent(
+						"//td[1]/input");
+
+				if (!entry3Present3) {
+					label = 9;
+
+					continue;
+				}
+
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+					RuntimeVariables.replace("Actions"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
+				selenium.click(RuntimeVariables.replace(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
+
+			case 9:
+
+				boolean entry4Present4 = selenium.isElementPresent(
+						"//td[1]/input");
+
+				if (!entry4Present4) {
+					label = 10;
+
+					continue;
+				}
+
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+					RuntimeVariables.replace("Actions"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
+				selenium.click(RuntimeVariables.replace(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
+
+			case 10:
+
+				boolean entry5Present5 = selenium.isElementPresent(
+						"//td[1]/input");
+
+				if (!entry5Present5) {
+					label = 11;
+
+					continue;
+				}
+
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+					RuntimeVariables.replace("Actions"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
+				selenium.click(RuntimeVariables.replace(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
+
+			case 11:
 			case 100:
 				label = -1;
 			}

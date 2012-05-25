@@ -14,19 +14,29 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Blogs</td>
-	<td></td>
+	<td>Blogs</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -45,28 +55,38 @@
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a</td>
 	<td>Edit</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a</td>
 	<td>Edit</td>
 </tr>
 <tr>
+	<td>waitForElementPresent</td>
+	<td>//textarea[@id='_161_editor' and @style='display: none;']</td>
+	<td>Text Area</td>
+</tr>
+<tr>
 	<td>assertText</td>
-	<td>//span[@id='cke_48_label' and .='Source']</td>
+	<td>//span[.='Source']</td>
 	<td>Source</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[@id='cke_48_label' and .='Source']</td>
+	<td>//span[.='Source']</td>
 	<td>Source</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//a[@class='cke_button_source cke_on']</td>
+	<td>Source Button On</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -80,13 +100,18 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@id='cke_48_label' and .='Source']</td>
+	<td>//span[.='Source']</td>
 	<td>Source</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[@id='cke_48_label' and .='Source']</td>
+	<td>//span[.='Source']</td>
 	<td>Source</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//textarea[@id='_161_editor' and @style='display: none;']</td>
+	<td>Text Area</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>

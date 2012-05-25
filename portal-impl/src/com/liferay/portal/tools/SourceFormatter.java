@@ -1519,6 +1519,23 @@ public class SourceFormatter {
 				}
 			}
 
+			if ((line.contains(" && ") || line.contains(" || ")) &&
+				line.endsWith(StringPool.OPEN_PARENTHESIS)) {
+
+				_sourceFormatterHelper.printError(
+					fileName, "line break: " + fileName + " " + lineCount);
+			}
+
+			if (line.contains(StringPool.COMMA) &&
+				!line.contains(StringPool.CLOSE_PARENTHESIS) &&
+				!line.contains(StringPool.GREATER_THAN) &&
+				!line.contains(StringPool.QUOTE) &&
+				line.endsWith(StringPool.OPEN_PARENTHESIS)) {
+
+				_sourceFormatterHelper.printError(
+					fileName, "line break: " + fileName + " " + lineCount);
+			}
+
 			if (line.contains("    ") && !line.matches("\\s*\\*.*")) {
 				if (!fileName.endsWith("StringPool.java")) {
 					_sourceFormatterHelper.printError(

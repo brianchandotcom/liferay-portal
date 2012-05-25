@@ -191,8 +191,10 @@ public class UpdateLayoutAction extends JSONAction {
 		}
 
 		boolean updateable = SitesUtil.isLayoutUpdateable(layout);
-		boolean deleteable = updateable && LayoutPermissionUtil.contains(
-			themeDisplay.getPermissionChecker(), layout, ActionKeys.DELETE);
+		boolean deleteable =
+			updateable &&
+			LayoutPermissionUtil.contains(
+				themeDisplay.getPermissionChecker(), layout, ActionKeys.DELETE);
 
 		return new String[] {
 			String.valueOf(layout.getLayoutId()), layoutURL,

@@ -409,8 +409,8 @@ public class DLIndexer extends BaseIndexer {
 
 			document.addKeyword(Field.USER_ID, userId);
 			document.addKeyword(
-				Field.USER_NAME, PortalUtil.getUserName(
-					userId, dlFileEntry.getUserName()),
+				Field.USER_NAME,
+				PortalUtil.getUserName(userId, dlFileEntry.getUserName()),
 				true);
 
 			document.addKeyword(

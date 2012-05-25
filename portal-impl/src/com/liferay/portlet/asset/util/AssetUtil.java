@@ -88,8 +88,8 @@ public class AssetUtil {
 		Collections.reverse(ancestorCategories);
 
 		for (AssetCategory ancestorCategory : ancestorCategories) {
-			portletURL.setParameter("categoryId", String.valueOf(
-				ancestorCategory.getCategoryId()));
+			portletURL.setParameter(
+				"categoryId", String.valueOf(ancestorCategory.getCategoryId()));
 
 			addPortletBreadcrumbEntry(
 				request, ancestorCategory.getTitleCurrentValue(),

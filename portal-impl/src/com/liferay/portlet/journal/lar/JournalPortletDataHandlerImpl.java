@@ -643,8 +643,9 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 					fileName = fileName.substring(0, pos);
 				}
 
-				images.put(fileName, portletDataContext.getZipEntryAsByteArray(
-					imageFile));
+				images.put(
+					fileName,
+					portletDataContext.getZipEntryAsByteArray(imageFile));
 			}
 		}
 

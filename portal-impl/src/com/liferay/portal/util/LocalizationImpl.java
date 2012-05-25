@@ -111,8 +111,9 @@ public class LocalizationImpl implements Localization {
 
 		Locale requestedLocale = LocaleUtil.fromLanguageId(requestedLanguageId);
 
-		if (useDefault && LanguageUtil.isDuplicateLanguageCode(
-			requestedLocale.getLanguage())) {
+		if (useDefault &&
+			LanguageUtil.isDuplicateLanguageCode(
+				requestedLocale.getLanguage())) {
 
 			Locale priorityLocale = LanguageUtil.getLocale(
 				requestedLocale.getLanguage());

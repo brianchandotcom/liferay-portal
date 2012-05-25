@@ -898,8 +898,9 @@ public abstract class BaseIndexer implements Indexer {
 				Indexer indexer = IndexerRegistryUtil.getIndexer(
 					entryClassName);
 
-				if ((indexer.isFilterSearch() && indexer.hasPermission(
-						permissionChecker, entryClassPK, ActionKeys.VIEW)) ||
+				if ((indexer.isFilterSearch() &&
+					 indexer.hasPermission(
+						 permissionChecker, entryClassPK, ActionKeys.VIEW)) ||
 					!indexer.isFilterSearch() ||
 					!indexer.isPermissionAware()) {
 

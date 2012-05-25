@@ -51,8 +51,8 @@ public class CreoleWikiEngine implements WikiEngine {
 		XhtmlTranslator xhtmlTranslator = new XhtmlTranslator();
 
 		return xhtmlTranslator.translate(
-			page, viewPageURL, editPageURL, attachmentURLPrefix, parse(
-			page.getContent()));
+			page, viewPageURL, editPageURL, attachmentURLPrefix,
+			parse(page.getContent()));
 	}
 
 	public Map<String, Boolean> getOutgoingLinks(WikiPage page)

@@ -26,7 +26,9 @@ import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.comparator.PortletLuceneComparator;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.lang.time.StopWatch;
 
@@ -37,6 +39,11 @@ public class LuceneIndexer implements Runnable {
 
 	public LuceneIndexer(long companyId) {
 		_companyId = companyId;
+		_usedSearchEngineIds = new HashSet<String>();
+	}
+
+	public Set<String> getUsedSearchEngineIds() {
+		return _usedSearchEngineIds;
 	}
 
 	public void halt() {
@@ -150,6 +157,8 @@ public class LuceneIndexer implements Runnable {
 
 		indexer.reindex(new String[] {String.valueOf(_companyId)});
 
+		_usedSearchEngineIds.add(indexer.getSearchEngineId());
+
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				"Reindexing with " + indexer.getClass() +
@@ -162,5 +171,6 @@ public class LuceneIndexer implements Runnable {
 
 	private long _companyId;
 	private boolean _finished;
+	private Set<String> _usedSearchEngineIds;
 
 }

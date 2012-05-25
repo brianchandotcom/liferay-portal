@@ -54,6 +54,13 @@ public class PortalExecutorManagerUtil {
 		return _portalExecutorManager;
 	}
 
+	public static ThreadPoolExecutor registerPortalExecutor(
+		String name, ThreadPoolExecutor threadPoolExecutor) {
+
+		return getPortalExecutorManager().registerPortalExecutor(
+			name, threadPoolExecutor);
+	}
+
 	public static void shutdown() {
 		getPortalExecutorManager().shutdown();
 	}

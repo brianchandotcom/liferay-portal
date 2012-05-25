@@ -113,17 +113,10 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			long groupId, long folderId, int status)
 		throws SystemException {
 
-		int fileEntriesCount = 0;
-
 		QueryDefinition queryDefinition = new QueryDefinition(status);
 
-		fileEntriesCount = dlFolderFinder.filterCountFE_ByG_F(
+		return dlFolderFinder.filterCountFE_FS_ByG_F(
 			groupId, folderId, queryDefinition);
-
-		int fileShortcutsCount = dlFileShortcutPersistence.filterCountByG_F_S(
-			groupId, folderId, 0);
-
-		return fileEntriesCount + fileShortcutsCount;
 	}
 
 	public int getFileEntriesAndFileShortcutsCount(

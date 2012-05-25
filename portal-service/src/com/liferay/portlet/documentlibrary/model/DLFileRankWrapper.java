@@ -51,6 +51,7 @@ public class DLFileRankWrapper implements DLFileRank, ModelWrapper<DLFileRank> {
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("fileEntryId", getFileEntryId());
+		attributes.put("active", getActive());
 
 		return attributes;
 	}
@@ -90,6 +91,12 @@ public class DLFileRankWrapper implements DLFileRank, ModelWrapper<DLFileRank> {
 
 		if (fileEntryId != null) {
 			setFileEntryId(fileEntryId);
+		}
+
+		Boolean active = (Boolean)attributes.get("active");
+
+		if (active != null) {
+			setActive(active);
 		}
 	}
 
@@ -237,6 +244,33 @@ public class DLFileRankWrapper implements DLFileRank, ModelWrapper<DLFileRank> {
 	*/
 	public void setFileEntryId(long fileEntryId) {
 		_dlFileRank.setFileEntryId(fileEntryId);
+	}
+
+	/**
+	* Returns the active of this document library file rank.
+	*
+	* @return the active of this document library file rank
+	*/
+	public boolean getActive() {
+		return _dlFileRank.getActive();
+	}
+
+	/**
+	* Returns <code>true</code> if this document library file rank is active.
+	*
+	* @return <code>true</code> if this document library file rank is active; <code>false</code> otherwise
+	*/
+	public boolean isActive() {
+		return _dlFileRank.isActive();
+	}
+
+	/**
+	* Sets whether this document library file rank is active.
+	*
+	* @param active the active of this document library file rank
+	*/
+	public void setActive(boolean active) {
+		_dlFileRank.setActive(active);
 	}
 
 	public boolean isNew() {

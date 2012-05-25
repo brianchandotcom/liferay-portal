@@ -350,6 +350,18 @@ public class DLFileShortcutLocalServiceUtil {
 		getService().deleteFileShortcuts(toFileEntryId);
 	}
 
+	public static void disableFileShortcuts(long toFileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().disableFileShortcuts(toFileEntryId);
+	}
+
+	public static void enableFileShortcuts(long toFileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().enableFileShortcuts(toFileEntryId);
+	}
+
 	public static com.liferay.portlet.documentlibrary.model.DLFileShortcut getFileShortcut(
 		long fileShortcutId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -380,6 +392,13 @@ public class DLFileShortcutLocalServiceUtil {
 		long newToFileEntryId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getService().updateFileShortcuts(oldToFileEntryId, newToFileEntryId);
+	}
+
+	public static void updateStatus(long userId, long fileShortcutId,
+		int status, com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().updateStatus(userId, fileShortcutId, status, serviceContext);
 	}
 
 	public static DLFileShortcutLocalService getService() {

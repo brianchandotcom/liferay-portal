@@ -112,6 +112,8 @@ public class DLFileShortcutPersistenceTest {
 
 		newDLFileShortcut.setStatusDate(ServiceTestUtil.nextDate());
 
+		newDLFileShortcut.setActive(ServiceTestUtil.randomBoolean());
+
 		_persistence.update(newDLFileShortcut, false);
 
 		DLFileShortcut existingDLFileShortcut = _persistence.findByPrimaryKey(newDLFileShortcut.getPrimaryKey());
@@ -149,6 +151,8 @@ public class DLFileShortcutPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingDLFileShortcut.getStatusDate()),
 			Time.getShortTimestamp(newDLFileShortcut.getStatusDate()));
+		Assert.assertEquals(existingDLFileShortcut.getActive(),
+			newDLFileShortcut.getActive());
 	}
 
 	@Test
@@ -317,6 +321,8 @@ public class DLFileShortcutPersistenceTest {
 		dlFileShortcut.setStatusByUserName(ServiceTestUtil.randomString());
 
 		dlFileShortcut.setStatusDate(ServiceTestUtil.nextDate());
+
+		dlFileShortcut.setActive(ServiceTestUtil.randomBoolean());
 
 		_persistence.update(dlFileShortcut, false);
 

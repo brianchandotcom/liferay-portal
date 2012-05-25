@@ -294,6 +294,7 @@
 		<!-- Other fields -->
 
 		<column name="fileEntryId" type="long" />
+		<column name="active" type="boolean" />
 
 		<!-- Order -->
 
@@ -317,6 +318,11 @@
 			<finder-column name="companyId" />
 			<finder-column name="userId" />
 			<finder-column name="fileEntryId" />
+		</finder>
+		<finder name="G_U_A" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="userId" />
+			<finder-column name="active" />
 		</finder>
 
 		<!-- References -->
@@ -350,26 +356,30 @@
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />
 		<column name="statusDate" type="Date" />
+		<column name="active" type="boolean" />
 
 		<!-- Finder methods -->
 
 		<finder name="ToFileEntryId" return-type="Collection">
 			<finder-column name="toFileEntryId" />
 		</finder>
-		<finder name="G_F" return-type="Collection">
+		<finder name="G_F_A" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="folderId" />
+			<finder-column name="active" />
 		</finder>
-		<finder name="G_F_S" return-type="Collection">
+		<finder name="G_F_S_A" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="folderId" />
 			<finder-column name="status" />
+			<finder-column name="active" />
 		</finder>
 
 		<!-- References -->
 
 		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
 		<reference package-path="com.liferay.portlet.asset" entity="AssetTag" />
+		<reference package-path="com.liferay.portlet.trash" entity="TrashEntry" />
 	</entity>
 	<entity name="DLFileVersion" human-name="document library file version" uuid="true" local-service="true" remote-service="true">
 

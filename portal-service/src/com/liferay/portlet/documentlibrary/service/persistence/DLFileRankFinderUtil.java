@@ -21,6 +21,12 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  * @author Brian Wing Shun Chan
  */
 public class DLFileRankFinderUtil {
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileRank> findByFolder(
+		long folderId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().findByFolder(folderId);
+	}
+
 	public static java.util.List<java.lang.Object[]> findByStaleRanks(int count)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder().findByStaleRanks(count);

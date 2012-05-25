@@ -595,7 +595,8 @@ create table DLFileRank (
 	companyId LONG,
 	userId LONG,
 	createDate DATE null,
-	fileEntryId LONG
+	fileEntryId LONG,
+	active_ BOOLEAN
 );
 
 create table DLFileShortcut (
@@ -613,7 +614,8 @@ create table DLFileShortcut (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null
+	statusDate DATE null,
+	active_ BOOLEAN
 );
 
 create table DLFileVersion (

@@ -105,6 +105,8 @@ public abstract class BaseChecker implements Checker, PACLConstants {
 					_PACKAGE_NAME_ORG_APACHE_JASPER_XMLPARSER) &&
 				!callerClassName.startsWith(
 					_PACKAGE_NAME_ORG_APACHE_NAMING_RESOURCES) &&
+				!callerClassName.equals(
+					_ClASS_NAME_DEFAULT_ANNOTATION_PROCESSOR) &&
 				!callerClassName.equals(_ClASS_NAME_DEFAULT_INSTANCE_MANAGER) &&
 				!callerClassName.equals(_ClASS_NAME_JASPER_LOADER) &&
 				!callerClassName.startsWith(
@@ -161,6 +163,19 @@ public abstract class BaseChecker implements Checker, PACLConstants {
 						allow = true;
 					}
 				}
+				else if (ServerDetector.isJOnAS()) {
+					Class<?> callerClassLoaderClass =
+						callerClassLoader.getClass();
+
+					String callerClassLoaderClassName =
+						callerClassLoaderClass.getName();
+
+					if (callerClassLoaderClassName.startsWith(
+							_CLASS_NAME_MODULE_IMPL)) {
+
+						allow = true;
+					}
+				}
 
 				if (!allow) {
 					if (Validator.isNotNull(actions)) {
@@ -209,6 +224,9 @@ public abstract class BaseChecker implements Checker, PACLConstants {
 	private static final String _ClASS_NAME_BUNDLE_WIRING_IMPL =
 		"org.apache.felix.framework.BundleWiringImpl";
 
+	private static final String _ClASS_NAME_DEFAULT_ANNOTATION_PROCESSOR =
+		"org.apache.catalina.util.DefaultAnnotationProcessor";
+
 	private static final String _ClASS_NAME_DEFAULT_INSTANCE_MANAGER =
 		"org.apache.catalina.core.DefaultInstanceManager";
 
@@ -220,6 +238,9 @@ public abstract class BaseChecker implements Checker, PACLConstants {
 
 	private static final String _CLASS_NAME_JASPER_SERVLET_CONTEXT_CUSTOMIZER =
 		"org.apache.geronimo.jasper.JasperServletContextCustomizer$";
+
+	private static final String _CLASS_NAME_MODULE_IMPL =
+		"org.apache.felix.framework.ModuleImpl";
 
 	private static final String _ClASS_NAME_TAG_HANDLER_POOL =
 		"org.apache.jasper.runtime.TagHandlerPool";

@@ -235,6 +235,7 @@ public class RuntimeChecker extends BaseReflectChecker {
 		if (callerClass6 == Class.class) {
 			if (isJBossMessages(callerClass7) ||
 				isJBossServiceControllerImpl(callerClass7) ||
+				isJOnASModuleImpl(callerClass7) ||
 				isTomcatJdbcLeakPrevention(callerClass7)) {
 
 				logGetClassLoader(callerClass7, 7);
@@ -500,6 +501,22 @@ public class RuntimeChecker extends BaseReflectChecker {
 		return classLocation.contains("/modules/org/jboss/msc/main/jboss-msc-");
 	}
 
+	protected boolean isJOnASModuleImpl(Class<?> clazz) {
+		if (!ServerDetector.isJOnAS()) {
+			return false;
+		}
+
+		String className = clazz.getName();
+
+		if (!className.equals(_CLASS_NAME_MODULE_IMPL)) {
+			return false;
+		}
+
+		String classLocation = PACLClassUtil.getClassLocation(clazz);
+
+		return classLocation.contains("/lib/bootstrap/felix-launcher.jar!/");
+	}
+
 	protected boolean isTomcatJdbcLeakPrevention(Class<?> clazz) {
 		if (!ServerDetector.isTomcat()) {
 			return false;
@@ -604,6 +621,9 @@ public class RuntimeChecker extends BaseReflectChecker {
 
 	private static final String _CLASS_NAME_MESSAGES =
 		"org.jboss.logging.Messages";
+
+	private static final String _CLASS_NAME_MODULE_IMPL =
+		"org.apache.felix.framework.ModuleImpl";
 
 	private static final String _CLASS_NAME_PROCESS_IMPL =
 		"java.lang.ProcessImpl$";

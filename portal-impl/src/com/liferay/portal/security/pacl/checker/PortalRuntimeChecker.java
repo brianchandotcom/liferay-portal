@@ -14,14 +14,18 @@
 
 package com.liferay.portal.security.pacl.checker;
 
+import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.BaseAsyncDestination;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
 import java.security.Permission;
 
 import java.util.Set;
 import java.util.TreeSet;
+
+import sun.reflect.Reflection;
 
 /**
  * @author Brian Wing Shun Chan
@@ -70,6 +74,14 @@ public class PortalRuntimeChecker extends BaseChecker {
 	protected boolean hasGetBeanProperty(Class<?> clazz) {
 		if (_getBeanPropertyClassNames.contains(clazz.getName())) {
 			return true;
+		}
+
+		if (clazz == PortalExecutorManagerUtil.class) {
+			Class<?> callerClass9 = Reflection.getCallerClass(9);
+
+			if (callerClass9 == BaseAsyncDestination.class) {
+				return true;
+			}
 		}
 
 		return false;

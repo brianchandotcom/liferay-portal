@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
@@ -28,6 +30,16 @@ import java.io.InputStream;
  * @author Alexander Chow
  */
 public class DLAppUtil {
+
+	public static String appendTrashNamespace(String title) {
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(title);
+		sb.append(StringPool.SLASH);
+		sb.append(System.currentTimeMillis());
+
+		return sb.toString();
+	}
 
 	public static String getExtension(String title, String sourceFileName) {
 		String extension = FileUtil.getExtension(sourceFileName);
@@ -77,6 +89,16 @@ public class DLAppUtil {
 			previousFileVersion.getVersion());
 
 		return (currentVersion - previousVersion) >= 1;
+	}
+
+	public static String stripTrashNamespace(String title) {
+		int index = title.indexOf(StringPool.SLASH);
+
+		if (index >= 0) {
+			title = title.substring(0, index);
+		}
+
+		return title;
 	}
 
 }

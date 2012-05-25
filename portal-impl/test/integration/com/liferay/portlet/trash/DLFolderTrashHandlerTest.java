@@ -71,7 +71,7 @@ public class DLFolderTrashHandlerTest extends BaseDLTrashHandlerTestCase {
 		int initialTrashEntriesCount = getTrashEntriesCount();
 		int initialSearchFileEntriesCount = searchFileEntriesCount();
 
-		Folder folder = addFolder(parentFolder.getFolderId(), "Test Folder");
+		Folder folder = addFolder(false, "Test Folder");
 
 		Folder subfolder = addFolder(folder.getFolderId(), "Test Subfolder");
 

@@ -94,6 +94,18 @@ public abstract class BaseDLAppTestCase {
 			serviceContext);
 	}
 
+	protected Folder addFolder(boolean rootFolder, String name)
+		throws Exception {
+
+		long parentFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+
+		if (!rootFolder) {
+			parentFolderId = parentFolder.getFolderId();
+		}
+
+		return addFolder(parentFolderId, name);
+	}
+
 	protected Folder addFolder(long parentFolderId, String name)
 		throws Exception {
 

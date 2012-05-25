@@ -51,6 +51,7 @@ import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
 import com.liferay.portlet.documentlibrary.service.base.DLAppHelperLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
+import com.liferay.portlet.documentlibrary.util.DLAppUtil;
 import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
 import com.liferay.portlet.documentlibrary.util.comparator.FileVersionVersionComparator;
 import com.liferay.portlet.social.model.SocialActivityConstants;
@@ -325,6 +326,13 @@ public class DLAppHelperLocalServiceImpl
 
 		// File entry
 
+		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+
+		dlFileEntry.setTitle(
+			DLAppUtil.appendTrashNamespace(dlFileEntry.getTitle()));
+
+		dlFileEntryPersistence.update(dlFileEntry, false);
+
 		List<DLFileVersion> dlFileVersions =
 			dlFileVersionLocalService.getFileVersions(
 				fileEntry.getFileEntryId(), WorkflowConstants.STATUS_ANY);
@@ -403,6 +411,10 @@ public class DLAppHelperLocalServiceImpl
 			userId, folder.getFolderId(), WorkflowConstants.STATUS_IN_TRASH,
 			new HashMap<String, Serializable>(), new ServiceContext());
 
+		dlFolder.setName(DLAppUtil.appendTrashNamespace(dlFolder.getName()));
+
+		dlFolderPersistence.update(dlFolder, false);
+
 		// Trash
 
 		trashEntryLocalService.addTrashEntry(
@@ -419,6 +431,11 @@ public class DLAppHelperLocalServiceImpl
 		// File entry
 
 		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+
+		dlFileEntry.setTitle(
+			DLAppUtil.stripTrashNamespace(dlFileEntry.getTitle()));
+
+		dlFileEntryPersistence.update(dlFileEntry, false);
 
 		FileVersion fileVersion = new LiferayFileVersion(
 			dlFileEntry.getLatestFileVersion(true));
@@ -464,9 +481,13 @@ public class DLAppHelperLocalServiceImpl
 		TrashEntry trashEntry = trashEntryLocalService.getEntry(
 			DLFolderConstants.getClassName(), folder.getFolderId());
 
-		dlFolderLocalService.updateStatus(
+		DLFolder dlFolder = dlFolderLocalService.updateStatus(
 			userId, folder.getFolderId(), WorkflowConstants.STATUS_APPROVED,
 			new HashMap<String, Serializable>(), new ServiceContext());
+
+		dlFolder.setName(DLAppUtil.stripTrashNamespace(dlFolder.getName()));
+
+		dlFolderPersistence.update(dlFolder, false);
 
 		// Trash
 

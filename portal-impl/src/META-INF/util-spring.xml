@@ -805,6 +805,13 @@
 			<bean class="com.liferay.portlet.mobiledevicerules.service.permission.MDRRuleGroupInstancePermissionImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portlet.parallelrender.appserver.JettyThreadLocalBinder" class="com.liferay.portlet.parallelrender.appserver.JettyThreadLocalBinder">
+		<property name="threadLocalSourceMap">
+			<map>
+				<entry key="org.eclipse.jetty.server.AbstractHttpConnection" value="__currentConnection" />
+			</map>
+		</property>
+	</bean>
 	<bean id="com.liferay.portlet.passwordpoliciesadmin.util.PasswordPoliciesAdmin" class="com.liferay.portlet.passwordpoliciesadmin.util.PasswordPoliciesAdminImpl" />
 	<bean id="com.liferay.portlet.passwordpoliciesadmin.util.PasswordPoliciesAdminUtil" class="com.liferay.portlet.passwordpoliciesadmin.util.PasswordPoliciesAdminUtil">
 		<property name="passwordPoliciesAdmin" ref="com.liferay.portlet.passwordpoliciesadmin.util.PasswordPoliciesAdmin" />

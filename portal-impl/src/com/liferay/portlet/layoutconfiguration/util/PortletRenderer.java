@@ -16,6 +16,7 @@ package com.liferay.portlet.layoutconfiguration.util;
 
 import com.liferay.portal.kernel.executor.CopyThreadLocalCallable;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
+import com.liferay.portal.kernel.portlet.ParallelRenderThreadLocalBinderUtil;
 import com.liferay.portal.kernel.portlet.PortletContainerException;
 import com.liferay.portal.kernel.portlet.PortletContainerUtil;
 import com.liferay.portal.kernel.portlet.RestrictPortletServletRequest;
@@ -128,7 +129,9 @@ public class PortletRenderer {
 		public PortletRendererCallable(
 			HttpServletRequest request, HttpServletResponse response) {
 
-			super(false, true);
+			super(
+				ParallelRenderThreadLocalBinderUtil.getThreadLocalBinder(),
+				false, true);
 
 			_request= request;
 			_response = response;

@@ -50,10 +50,10 @@ public class SOUs_AddAsConnectionProfileUserTest extends BaseTestCase {
 			selenium.getText("//div[@class='lfr-contact-name']/a"));
 		assertEquals(RuntimeVariables.replace("test@liferay.com"),
 			selenium.getText("//div[@class='lfr-contact-extra']"));
-		assertEquals(RuntimeVariables.replace("Add as Connection"),
+		assertEquals(RuntimeVariables.replace("Add Connection"),
 			selenium.getText("//span[@class='action add-connection']/a"));
 		selenium.clickAt("//span[@class='action add-connection']/a",
-			RuntimeVariables.replace("Add as Connection"));
+			RuntimeVariables.replace("Add Connection"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

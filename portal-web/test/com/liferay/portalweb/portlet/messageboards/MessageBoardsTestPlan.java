@@ -15,12 +15,10 @@
 package com.liferay.portalweb.portlet.messageboards;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portlet.messageboards.category.CategoryTestPlan;
 import com.liferay.portalweb.portlet.messageboards.hybrid.HybridTestPlan;
-import com.liferay.portalweb.portlet.messageboards.lar.LARTestPlan;
 import com.liferay.portalweb.portlet.messageboards.mbcategory.MBCategoryTestPlan;
-import com.liferay.portalweb.portlet.messageboards.mbmessage.MBMessageTestPlan;
-import com.liferay.portalweb.portlet.messageboards.message.MessageTestPlan;
+import com.liferay.portalweb.portlet.messageboards.mblar.MBLARTestPlan;
+import com.liferay.portalweb.portlet.messageboards.mbthread.MBThreadTestPlan;
 import com.liferay.portalweb.portlet.messageboards.portlet.PortletTestPlan;
 
 import junit.framework.Test;
@@ -34,12 +32,10 @@ public class MessageBoardsTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(CategoryTestPlan.suite());
 		testSuite.addTest(HybridTestPlan.suite());
-		testSuite.addTest(LARTestPlan.suite());
+		testSuite.addTest(MBLARTestPlan.suite());
 		testSuite.addTest(MBCategoryTestPlan.suite());
-		testSuite.addTest(MBMessageTestPlan.suite());
-		testSuite.addTest(MessageTestPlan.suite());
+		testSuite.addTest(MBThreadTestPlan.suite());
 		testSuite.addTest(PortletTestPlan.suite());
 
 		return testSuite;

@@ -15,7 +15,7 @@
 package com.liferay.portalweb.portlet.messageboards.hybrid;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portlet.messageboards.hybrid.gmailviewmbthreadmessagegmail.Gmail_ViewMBThreadMessageGmailTests;
+import com.liferay.portalweb.portlet.messageboards.hybrid.gmailviewmbthreadgmail.Gmail_ViewMBThreadGmailTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -28,7 +28,7 @@ public class HybridTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(Gmail_ViewMBThreadMessageGmailTests.suite());
+		testSuite.addTest(Gmail_ViewMBThreadGmailTests.suite());
 
 		return testSuite;
 	}

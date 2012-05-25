@@ -52,11 +52,9 @@ public class IgnoreNotificationsAddConnnectionTest extends BaseTestCase {
 			selenium.getText("//div[@class='title']"));
 		assertEquals(RuntimeVariables.replace("Ignore"),
 			selenium.getText(
-				"//span[@class='lfr-user-action-item lfr-user-action-ignore']/a"));
-		selenium.clickAt("//span[@class='lfr-user-action-item lfr-user-action-ignore']/a",
+				"//div[@class='notification-entry']/div[2]/span[2]/a"));
+		selenium.clickAt("//div[@class='notification-entry']/div[2]/span[2]/a",
 			RuntimeVariables.replace("Ignore"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent(
 				"//li[@id='_145_notificationsMenu']"));
 		assertEquals(RuntimeVariables.replace("0"),

@@ -1752,8 +1752,8 @@ public class JournalArticleLocalServiceImpl
 			searchContext.setAttributes(attributes);
 
 			searchContext.setCompanyId(companyId);
-			searchContext.setGroupIds(new long[] {groupId});
 			searchContext.setEnd(end);
+			searchContext.setGroupIds(new long[] {groupId});
 
 			if (params != null) {
 				String keywords = (String)params.remove("keywords");

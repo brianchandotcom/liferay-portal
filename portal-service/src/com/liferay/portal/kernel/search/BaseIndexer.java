@@ -382,18 +382,18 @@ public abstract class BaseIndexer implements Indexer {
 			PermissionChecker permissionChecker =
 				PermissionThreadLocal.getPermissionChecker();
 
-			int start = searchContext.getStart();
 			int end = searchContext.getEnd();
+			int start = searchContext.getStart();
 
 			if (isFilterSearch() && (permissionChecker != null)) {
-				searchContext.setStart(0);
 				searchContext.setEnd(end + INDEX_FILTER_SEARCH_LIMIT);
+				searchContext.setStart(0);
 			}
 
 			Hits hits = SearchEngineUtil.search(searchContext, fullQuery);
 
-			searchContext.setStart(start);
 			searchContext.setEnd(end);
+			searchContext.setStart(start);
 
 			if (isFilterSearch() && (permissionChecker != null)) {
 				hits = filterSearch(hits, permissionChecker, searchContext);

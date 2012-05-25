@@ -175,7 +175,9 @@ else {
 
 			AssetEntryQuery assetEntryQuery = new AssetEntryQuery(classNameIds, searchContainer);
 
+			assetEntryQuery.setEnd(entryEnd);
 			assetEntryQuery.setExcludeZeroViewCount(false);
+			assetEntryQuery.setStart(entryStart);
 
 			results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
 			total = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);

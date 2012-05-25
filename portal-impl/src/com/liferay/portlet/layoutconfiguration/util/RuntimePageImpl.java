@@ -461,6 +461,8 @@ public class RuntimePageImpl implements RuntimePage {
 			}
 
 			contentsMap.put(portlet.getPortletId(), sb);
+
+			portletRenderer.finishParallelRender();
 		}
 	}
 

@@ -262,5 +262,85 @@ public class SearchSitesDirectoryTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Private Site3 Name"),
 			selenium.getText("//div[@class='community-title']"));
+		selenium.open("/user/joebloggs/so/dashboard/");
+		loadRequiredJavaScriptModules();
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//li[contains(@class, 'selected')]/a/span")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("Dashboard"),
+			selenium.getText("//li[contains(@class, 'selected')]/a/span"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//button[contains(.,'Site Directory')]/span[2]")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("Site Directory"),
+			selenium.getText("//button[contains(.,'Site Directory')]/span[2]"));
+		selenium.clickAt("//button[contains(.,'Site Directory')]/span[2]",
+			RuntimeVariables.replace("Site Directory"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"xPath=(//h1[@class='header-title']/span)[1]")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("Directory"),
+			selenium.getText("xPath=(//h1[@class='header-title']/span)[1]"));
+		assertTrue(selenium.isVisible(
+				"//input[@id='_5_WAR_soportlet_dialogKeywords']"));
+		selenium.type("//input[@id='_5_WAR_soportlet_dialogKeywords']",
+			RuntimeVariables.replace("Public Restricted Site4 Name"));
+		Thread.sleep(5000);
+		assertEquals(RuntimeVariables.replace("Public Restricted Site4 Name"),
+			selenium.getText("//span[@class='name']/a"));
+		assertEquals(RuntimeVariables.replace(
+				"Public Restricted Site4 Description"),
+			selenium.getText("//span[@class='description']"));
+		selenium.clickAt("//span[@class='name']/a",
+			RuntimeVariables.replace("Public Restricted Site4 Name"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Public Restricted Site4 Name"),
+			selenium.getText("//div[@class='community-title']"));
 	}
 }

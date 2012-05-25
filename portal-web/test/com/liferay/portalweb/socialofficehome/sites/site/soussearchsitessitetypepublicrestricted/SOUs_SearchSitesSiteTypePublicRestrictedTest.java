@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.socialofficehome.sites.site.viewsitesdirectorymysites;
+package com.liferay.portalweb.socialofficehome.sites.site.soussearchsitessitetypepublicrestricted;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,9 +20,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ViewSitesDirectoryMySitesTest extends BaseTestCase {
-	public void testViewSitesDirectoryMySites() throws Exception {
-		selenium.open("/user/joebloggs/so/dashboard/");
+public class SOUs_SearchSitesSiteTypePublicRestrictedTest extends BaseTestCase {
+	public void testSOUs_SearchSitesSiteTypePublicRestricted()
+		throws Exception {
+		selenium.open("/user/socialoffice01/so/dashboard");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
@@ -44,6 +45,15 @@ public class ViewSitesDirectoryMySitesTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Dashboard"),
 			selenium.getText("//li[contains(@class, 'selected')]/a/span"));
+		assertEquals(RuntimeVariables.replace("Sites"),
+			selenium.getText("//div[@id='so-sidebar']/h3"));
+		assertTrue(selenium.isVisible("//input[@class='search-input']"));
+		selenium.type("//input[@class='search-input']",
+			RuntimeVariables.replace("Public Restricted"));
+		Thread.sleep(5000);
+		assertEquals(RuntimeVariables.replace("Public Restricted Site Name"),
+			selenium.getText(
+				"//li[contains(@class, 'social-office-enabled')]/span[2]/a"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -86,34 +96,21 @@ public class ViewSitesDirectoryMySitesTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Directory"),
 			selenium.getText("xPath=(//h1[@class='header-title']/span)[1]"));
-		selenium.select("//span[@class='sites-tabs']/span/span/span/select",
-			RuntimeVariables.replace("My Sites"));
+		assertTrue(selenium.isVisible(
+				"//input[@id='_5_WAR_soportlet_dialogKeywords']"));
+		selenium.type("//input[@id='_5_WAR_soportlet_dialogKeywords']",
+			RuntimeVariables.replace("Public Restricted Site Name"));
 		Thread.sleep(5000);
-		assertEquals(RuntimeVariables.replace("Open Site1 Name"),
-			selenium.getText(
-				"xPath=(//span[@class='name']/a)[contains(.,'Open Site1 Name')]"));
-		assertEquals(RuntimeVariables.replace("Open Site1 Description"),
-			selenium.getText(
-				"xPath=(//span[@class='description'])[contains(.,'Open Site1 Description')]"));
-		assertEquals(RuntimeVariables.replace("Private Restricted Site2 Name"),
-			selenium.getText(
-				"xPath=(//span[@class='name']/a)[contains(.,'Private Restricted Site2 Name')]"));
+		assertEquals(RuntimeVariables.replace("Public Restricted Site Name"),
+			selenium.getText("//span[@class='name']/a"));
 		assertEquals(RuntimeVariables.replace(
-				"Private Restricted Site2 Description"),
-			selenium.getText(
-				"xPath=(//span[@class='description'])[contains(.,'Private Restricted Site2 Description')]"));
-		assertEquals(RuntimeVariables.replace("Private Site3 Name"),
-			selenium.getText(
-				"xPath=(//span[@class='name']/a)[contains(.,'Private Site3 Name')]"));
-		assertEquals(RuntimeVariables.replace("Private Site3 Description"),
-			selenium.getText(
-				"xPath=(//span[@class='description'])[contains(.,'Private Site3 Description')]"));
-		assertEquals(RuntimeVariables.replace("Public Restricted Site4 Name"),
-			selenium.getText(
-				"xPath=(//span[@class='name']/a)[contains(.,'Public Restricted Site4 Name')]"));
-		assertEquals(RuntimeVariables.replace(
-				"Public Restricted Site4 Description"),
-			selenium.getText(
-				"xPath=(//span[@class='description'])[contains(.,'Public Restricted Site4 Description')]"));
+				"Public Restricted Site Description"),
+			selenium.getText("//span[@class='description']"));
+		selenium.clickAt("//span[@class='name']/a",
+			RuntimeVariables.replace("Public Restricted Site Name"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Public Restricted Site Name"),
+			selenium.getText("//div[@class='community-title']"));
 	}
 }

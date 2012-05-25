@@ -238,6 +238,81 @@
 	<td>//div[@class='community-title']</td>
 	<td>Private Site3 Name</td>
 </tr>
+<tr>
+	<td>open</td>
+	<td>/user/joebloggs/so/dashboard/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//li[contains(@class, 'selected')]/a/span</td>
+	<td>Dashboard</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[contains(@class, 'selected')]/a/span</td>
+	<td>Dashboard</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//button[contains(.,'Site Directory')]/span[2]</td>
+	<td>Site Directory</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//button[contains(.,'Site Directory')]/span[2]</td>
+	<td>Site Directory</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//button[contains(.,'Site Directory')]/span[2]</td>
+	<td>Site Directory</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>xPath=(//h1[@class='header-title']/span)[1]</td>
+	<td>Directory</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//h1[@class='header-title']/span)[1]</td>
+	<td>Directory</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//input[@id='_5_WAR_soportlet_dialogKeywords']</td>
+	<td>Search</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@id='_5_WAR_soportlet_dialogKeywords']</td>
+	<td>Public Restricted Site4 Name</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='name']/a</td>
+	<td>Public Restricted Site4 Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='description']</td>
+	<td>Public Restricted Site4 Description</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//span[@class='name']/a</td>
+	<td>Public Restricted Site4 Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='community-title']</td>
+	<td>Public Restricted Site4 Name</td>
+</tr>
 </tbody></table>
 </body>
 </html>

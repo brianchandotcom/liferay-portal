@@ -28,6 +28,7 @@ public class SearchSitesDirectoryTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddSitesSite1Test.class);
 		testSuite.addTestSuite(AddSitesSite2TypePrivateRestrictedTest.class);
 		testSuite.addTestSuite(AddSitesSite3TypePrivateTest.class);
+		testSuite.addTestSuite(AddSitesSite4TypePublicRestrictedTest.class);
 		testSuite.addTestSuite(SearchSitesDirectoryTest.class);
 		testSuite.addTestSuite(TearDownSOSitesTest.class);
 

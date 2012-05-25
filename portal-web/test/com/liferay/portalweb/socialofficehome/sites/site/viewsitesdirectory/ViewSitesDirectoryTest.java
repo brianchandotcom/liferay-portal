@@ -108,5 +108,12 @@ public class ViewSitesDirectoryTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Private Site3 Description"),
 			selenium.getText(
 				"xPath=(//span[@class='description'])[contains(.,'Private Site3 Description')]"));
+		assertEquals(RuntimeVariables.replace("Public Restricted Site4 Name"),
+			selenium.getText(
+				"xPath=(//span[@class='name']/a)[contains(.,'Public Restricted Site4 Name')]"));
+		assertEquals(RuntimeVariables.replace(
+				"Public Restricted Site4 Description"),
+			selenium.getText(
+				"xPath=(//span[@class='description'])[contains(.,'Public Restricted Site4 Description')]"));
 	}
 }

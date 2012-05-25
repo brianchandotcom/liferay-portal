@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.socialofficehome.sites.site.viewsitesdirectory;
+package com.liferay.portalweb.socialofficehome.sites.site.addsitessitetypepublicrestricted;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 
@@ -22,14 +22,10 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ViewSitesDirectoryTests extends BaseTestSuite {
+public class AddSitesSiteTypePublicRestrictedTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(AddSitesSite1Test.class);
-		testSuite.addTestSuite(AddSitesSite2TypePrivateRestrictedTest.class);
-		testSuite.addTestSuite(AddSitesSite3TypePrivateTest.class);
-		testSuite.addTestSuite(AddSitesSite4TypePublicRestrictedTest.class);
-		testSuite.addTestSuite(ViewSitesDirectoryTest.class);
+		testSuite.addTestSuite(AddSitesSiteTypePublicRestrictedTest.class);
 		testSuite.addTestSuite(TearDownSOSitesTest.class);
 
 		return testSuite;

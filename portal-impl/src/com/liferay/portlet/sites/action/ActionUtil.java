@@ -128,11 +128,12 @@ public class ActionUtil
 			WebKeys.THEME_DISPLAY);
 
 		String cmd = ParamUtil.getString(request, Constants.CMD);
-		long groupId = ParamUtil.getLong(request, "groupId");
 
 		Group group = null;
 
 		if (!cmd.equals(Constants.ADD)) {
+			long groupId = ParamUtil.getLong(request, "groupId");
+
 			if (groupId > 0) {
 				group = GroupLocalServiceUtil.getGroup(groupId);
 			}

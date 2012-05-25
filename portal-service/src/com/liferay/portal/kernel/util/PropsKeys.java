@@ -1023,6 +1023,10 @@ public interface PropsKeys {
 
 	public static final String JSON_DESERIALIZER_STRICT_MODE = "json.deserializer.strict.mode";
 
+	public static final String JSON_SERVICE_AUTH_TOKEN_ENABLED = "json.service.auth.token.enabled";
+
+	public static final String JSON_SERVICE_AUTH_TOKEN_WHITELIST_HOSTS = "json.service.auth.token.whitelist.hosts";
+
 	public static final String JSON_SERVICE_INVALID_CLASS_NAMES = "json.service.invalid.class.names";
 
 	public static final String JSON_SERVICE_PUBLIC_METHODS = "json.service.public.methods";

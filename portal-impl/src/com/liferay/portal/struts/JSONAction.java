@@ -14,6 +14,7 @@
 
 package com.liferay.portal.struts;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -21,16 +22,22 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.auth.AuthSettingsUtil;
+import com.liferay.portal.security.auth.AuthTokenUtil;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 
 import java.io.OutputStream;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import edu.emory.mathcs.backport.java.util.Arrays;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -105,6 +112,25 @@ public abstract class JSONAction extends Action {
 
 	public void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;
+	}
+
+	protected void checkAuthToken(HttpServletRequest request)
+		throws PortalException {
+
+		if (PropsValues.AUTH_TOKEN_CHECK_ENABLED &&
+			PropsValues.JSON_SERVICE_AUTH_TOKEN_ENABLED) {
+
+			Set<String> whiteList = new HashSet<String>(Arrays.asList(
+				PropsValues.JSON_SERVICE_AUTH_TOKEN_WHITELIST_HOSTS));
+
+			if(whiteList.size() > 0 &&
+				AuthSettingsUtil.isAccessAllowed(request, whiteList)){
+
+				return;
+			}
+
+			AuthTokenUtil.check(request);
+		}
 	}
 
 	protected String getReroutePath() {

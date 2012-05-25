@@ -443,8 +443,8 @@ public class LDAPAuth implements Authenticator {
 			return SUCCESS;
 		}
 
-		if (PrefsPropsUtil.getBoolean(companyId, PropsKeys.LDAP_AUTH_REQUIRED) || 
-				!PrefsPropsUtil.getBoolean(companyId, PropsKeys.LDAP_IMPORT_USER_PASSWORD_DEFAULT)) {
+		if (PrefsPropsUtil.getBoolean(companyId, PropsKeys.LDAP_AUTH_REQUIRED) ||
+				!PrefsPropsUtil.getBoolean(companyId, PropsKeys.LDAP_IMPORT_USER_PASSWORD_ENABLED)) {
 
 			return failureCode;
 		}

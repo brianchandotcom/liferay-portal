@@ -306,6 +306,7 @@
 
 		Liferay.currentURL = '<%= HtmlUtil.escapeJS(currentURL) %>';
 		Liferay.currentURLEncoded = '<%= HttpUtil.encodeURL(currentURL) %>';
+		Liferay.securityPAuthToken = '<%= AuthTokenUtil.getToken(request)%>';
 	// ]]>
 </script>
 

@@ -317,7 +317,7 @@
 			WHERE
 				(DLFileShortcut.groupId = ?) AND
 				(DLFileShortcut.status = ?) AND
-				(DLFileShortcut.active_ = ?) AND
+				(DLFileShortcut.active_ = [$TRUE$]) AND
 				[$FILE_SHORTCUT_FOLDER_ID$]
 		]]>
 	</sql>
@@ -384,7 +384,7 @@
 			WHERE
 				(DLFileShortcut.groupId = ?) AND
 				(DLFileShortcut.status = ?) AND
-				(DLFileShortcut.active_ = ?) AND
+				(DLFileShortcut.active_ = [$TRUE$]) AND
 				[$FILE_SHORTCUT_FOLDER_ID$]
 		]]>
 	</sql>

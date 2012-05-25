@@ -19,7 +19,6 @@ import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.ExecutionTestListeners;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
-import com.liferay.portlet.documentlibrary.model.DLFileShortcutConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
 
@@ -82,7 +81,7 @@ public class DLFileShortcutTrashHandlerTest extends BaseDLTrashHandlerTestCase {
 				initialNotInTrashCount + 1, getNotInTrashCount());
 			Assert.assertNull(
 				fetchAssetEntry(
-					DLFileShortcutConstants.getClassName(), fileShortcutId));
+					DLFileShortcut.class.getName(), fileShortcutId));
 		}
 		else {
 			DLAppServiceUtil.restoreFileShortcutFromTrash(fileShortcutId);

@@ -78,8 +78,8 @@ public class DLFileRankLocalServiceImpl extends DLFileRankLocalServiceBaseImpl {
 			long groupId = (Long)staleFileRank[0];
 			long userId = (Long)staleFileRank[1];
 
-			List<DLFileRank> dlFileRanks = dlFileRankPersistence.findByG_U(
-				groupId, userId, PropsValues.DL_FILE_RANK_MAX_SIZE,
+			List<DLFileRank> dlFileRanks = dlFileRankPersistence.findByG_U_A(
+				groupId, userId, true, PropsValues.DL_FILE_RANK_MAX_SIZE,
 				QueryUtil.ALL_POS, new FileRankCreateDateComparator());
 
 			for (DLFileRank dlFileRank : dlFileRanks) {

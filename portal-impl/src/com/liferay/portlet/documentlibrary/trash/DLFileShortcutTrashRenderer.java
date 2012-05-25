@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.kernel.trash.TrashRenderer;
+import com.liferay.portal.kernel.trash.BaseTrashRenderer;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -33,14 +33,13 @@ import com.liferay.portlet.documentlibrary.service.permission.DLFileShortcutPerm
 
 import java.util.Locale;
 
-import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 /**
  * @author Zsolt Berentey
  */
-public class DLFileShortcutTrashRenderer implements TrashRenderer {
+public class DLFileShortcutTrashRenderer extends BaseTrashRenderer {
 
 	public static final String TYPE = "shortcut";
 
@@ -55,11 +54,10 @@ public class DLFileShortcutTrashRenderer implements TrashRenderer {
 		_fileVersion = _fileEntry.getFileVersion();
 	}
 
-	public String getIconPath(PortletRequest portletRequest) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return themeDisplay.getPathThemeImages() + "/document_library/page.png";
+	@Override
+	public String getIconPath(ThemeDisplay themeDisplay) {
+		return themeDisplay.getPathThemeImages() + "/file_system/small/" +
+			_fileEntry.getIcon() + ".png";
 	}
 
 	public String getPortletId() {

@@ -31,7 +31,7 @@ public abstract class BaseTrashRenderer implements TrashRenderer {
 		return getIconPath(themeDisplay);
 	}
 
-	protected String getIconPath(ThemeDisplay themeDisplay) {
+	public String getIconPath(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPathThemeImages() + "/common/page.png";
 	}
 

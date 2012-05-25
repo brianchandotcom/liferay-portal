@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -30,7 +29,6 @@ import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
-import com.liferay.portlet.documentlibrary.model.DLFileShortcutConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
@@ -256,12 +254,6 @@ public class DLFolderFinderImpl
 				qPos.add(WorkflowConstants.STATUS_APPROVED);
 			}
 
-			boolean active =
-				GetterUtil.getBoolean(
-					queryDefinition.getAttribute(
-						DLFileShortcutConstants.QUERY_PARAM_ACTIVE), true);
-
-			qPos.add(active);
 			qPos.add(folderId);
 
 			int count = 0;
@@ -397,12 +389,6 @@ public class DLFolderFinderImpl
 				qPos.add(WorkflowConstants.STATUS_APPROVED);
 			}
 
-			boolean active =
-				GetterUtil.getBoolean(
-					queryDefinition.getAttribute(
-						DLFileShortcutConstants.QUERY_PARAM_ACTIVE), true);
-
-			qPos.add(active);
 			qPos.add(folderId);
 
 			int count = 0;
@@ -585,12 +571,6 @@ public class DLFolderFinderImpl
 				qPos.add(WorkflowConstants.STATUS_APPROVED);
 			}
 
-			boolean active =
-				GetterUtil.getBoolean(
-					queryDefinition.getAttribute(
-						DLFileShortcutConstants.QUERY_PARAM_ACTIVE), true);
-
-			qPos.add(active);
 			qPos.add(folderId);
 
 			List<Object> models = new ArrayList<Object>();
@@ -713,12 +693,6 @@ public class DLFolderFinderImpl
 				qPos.add(WorkflowConstants.STATUS_APPROVED);
 			}
 
-			boolean active =
-				GetterUtil.getBoolean(
-					queryDefinition.getAttribute(
-						DLFileShortcutConstants.QUERY_PARAM_ACTIVE), true);
-
-			qPos.add(active);
 			qPos.add(folderId);
 
 			List<Object> models = new ArrayList<Object>();

@@ -45,7 +45,6 @@ import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
-import com.liferay.portlet.documentlibrary.model.DLFileShortcutConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -423,33 +422,31 @@ public class DLAppHelperLocalServiceImpl
 	}
 
 	public DLFileShortcut moveFileShortcutToTrash(
-			long userId, DLFileShortcut fileShortcut)
+			long userId, DLFileShortcut dlFileShortcut)
 		throws PortalException, SystemException {
 
 		// File shortcut
 
-		int oldStatus = fileShortcut.getStatus();
+		int oldStatus = dlFileShortcut.getStatus();
 
 		dlFileShortcutLocalService.updateStatus(
-			userId, fileShortcut.getFileShortcutId(),
+			userId, dlFileShortcut.getFileShortcutId(),
 			WorkflowConstants.STATUS_IN_TRASH, new ServiceContext());
 
 		// Social
 
 		socialActivityLocalService.addActivity(
-			userId, fileShortcut.getGroupId(),
-			DLFileShortcutConstants.getClassName(),
-			fileShortcut.getFileShortcutId(),
+			userId, dlFileShortcut.getGroupId(), DLFileShortcut.class.getName(),
+			dlFileShortcut.getFileShortcutId(),
 			SocialActivityConstants.TYPE_MOVE_TO_TRASH, StringPool.BLANK, 0);
 
 		// Trash
 
 		trashEntryLocalService.addTrashEntry(
-			userId, fileShortcut.getGroupId(),
-			DLFileShortcutConstants.getClassName(),
-			fileShortcut.getFileShortcutId(), oldStatus, null, null);
+			userId, dlFileShortcut.getGroupId(), DLFileShortcut.class.getName(),
+			dlFileShortcut.getFileShortcutId(), oldStatus, null, null);
 
-		return fileShortcut;
+		return dlFileShortcut;
 	}
 
 	public void moveFolder(Folder folder)
@@ -549,29 +546,26 @@ public class DLAppHelperLocalServiceImpl
 	}
 
 	public void restoreFileShortcutFromTrash(
-			long userId, DLFileShortcut fileShortcut)
+			long userId, DLFileShortcut dlFileShortcut)
 		throws PortalException, SystemException {
 
 		// File shortcut
 
 		TrashEntry trashEntry = trashEntryLocalService.getEntry(
-			DLFileShortcutConstants.getClassName(),
-			fileShortcut.getFileShortcutId());
+			DLFileShortcut.class.getName(), dlFileShortcut.getFileShortcutId());
 
 		dlFileShortcutLocalService.updateStatus(
-			userId, fileShortcut.getFileShortcutId(), trashEntry.getStatus(),
+			userId, dlFileShortcut.getFileShortcutId(), trashEntry.getStatus(),
 			new ServiceContext());
 
 		// Social
 
 		socialActivityCounterLocalService.enableActivityCounters(
-			DLFileShortcutConstants.getClassName(),
-			fileShortcut.getFileShortcutId());
+			DLFileShortcut.class.getName(), dlFileShortcut.getFileShortcutId());
 
 		socialActivityLocalService.addActivity(
-			userId, fileShortcut.getGroupId(),
-			DLFileShortcutConstants.getClassName(),
-			fileShortcut.getFileShortcutId(),
+			userId, dlFileShortcut.getGroupId(), DLFileShortcut.class.getName(),
+			dlFileShortcut.getFileShortcutId(),
 			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH, StringPool.BLANK,
 			0);
 

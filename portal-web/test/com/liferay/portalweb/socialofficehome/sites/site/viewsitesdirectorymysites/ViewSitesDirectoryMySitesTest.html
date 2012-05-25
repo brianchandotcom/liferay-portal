@@ -25,18 +25,18 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//button[contains(.,'More Sites')]/span[2]</td>
-	<td>More Sites</td>
+	<td>//button[contains(.,'Site Directory')]/span[2]</td>
+	<td>Site Directory</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//button[contains(.,'More Sites')]/span[2]</td>
-	<td>More Sites</td>
+	<td>//button[contains(.,'Site Directory')]/span[2]</td>
+	<td>Site Directory</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//button[contains(.,'More Sites')]/span[2]</td>
-	<td>More Sites</td>
+	<td>//button[contains(.,'Site Directory')]/span[2]</td>
+	<td>Site Directory</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -60,48 +60,33 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//span[@class='name']/a)[1]</td>
-	<td>Liferay, Inc.</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>xPath=(//span[@class='name'])[2]</td>
-	<td>Liferay Los Angeles</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>xPath=(//span[@class='name']/a)[2]</td>
-	<td>Liferay</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>xPath=(//span[@class='name']/a)[3]</td>
+	<td>xPath=(//span[@class='name']/a)[contains(.,'Open Site1 Name')]</td>
 	<td>Open Site1 Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//span[@class='description'])[4]</td>
+	<td>xPath=(//span[@class='description'])[contains(.,'Open Site1 Description')]</td>
 	<td>Open Site1 Description</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//span[@class='name']/a)[4]</td>
-	<td>Private Site2 Name</td>
+	<td>xPath=(//span[@class='name']/a)[contains(.,'Private Restricted Site2 Name')]</td>
+	<td>Private Restricted Site2 Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//span[@class='description'])[5]</td>
-	<td>Private Site2 Description</td>
+	<td>xPath=(//span[@class='description'])[contains(.,'Private Restricted Site2 Description')]</td>
+	<td>Private Restricted Site2 Description</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//span[@class='name']/a)[5]</td>
-	<td>Restricted Site3 Name</td>
+	<td>xPath=(//span[@class='name']/a)[contains(.,'Private Site3 Name')]</td>
+	<td>Private Site3 Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//span[@class='description'])[6]</td>
-	<td>Restricted Site3 Description</td>
+	<td>xPath=(//span[@class='description'])[contains(.,'Private Site3 Description')]</td>
+	<td>Private Site3 Description</td>
 </tr>
 </tbody></table>
 </body>

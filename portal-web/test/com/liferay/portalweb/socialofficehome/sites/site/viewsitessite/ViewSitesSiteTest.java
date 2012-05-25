@@ -124,7 +124,7 @@ public class ViewSitesSiteTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//button[contains(.,'More Sites')]/span[2]")) {
+							"//button[contains(.,'Site Directory')]/span[2]")) {
 					break;
 				}
 			}
@@ -134,10 +134,10 @@ public class ViewSitesSiteTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("More Sites"),
-			selenium.getText("//button[contains(.,'More Sites')]/span[2]"));
-		selenium.clickAt("//button[contains(.,'More Sites')]/span[2]",
-			RuntimeVariables.replace("More Sites"));
+		assertEquals(RuntimeVariables.replace("Site Directory"),
+			selenium.getText("//button[contains(.,'Site Directory')]/span[2]"));
+		selenium.clickAt("//button[contains(.,'Site Directory')]/span[2]",
+			RuntimeVariables.replace("Site Directory"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

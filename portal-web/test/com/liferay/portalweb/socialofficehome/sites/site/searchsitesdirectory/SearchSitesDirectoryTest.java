@@ -52,7 +52,7 @@ public class SearchSitesDirectoryTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//button[contains(.,'More Sites')]/span[2]")) {
+							"//button[contains(.,'Site Directory')]/span[2]")) {
 					break;
 				}
 			}
@@ -62,10 +62,10 @@ public class SearchSitesDirectoryTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("More Sites"),
-			selenium.getText("//button[contains(.,'More Sites')]/span[2]"));
-		selenium.clickAt("//button[contains(.,'More Sites')]/span[2]",
-			RuntimeVariables.replace("More Sites"));
+		assertEquals(RuntimeVariables.replace("Site Directory"),
+			selenium.getText("//button[contains(.,'Site Directory')]/span[2]"));
+		selenium.clickAt("//button[contains(.,'Site Directory')]/span[2]",
+			RuntimeVariables.replace("Site Directory"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -131,7 +131,7 @@ public class SearchSitesDirectoryTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//button[contains(.,'More Sites')]/span[2]")) {
+							"//button[contains(.,'Site Directory')]/span[2]")) {
 					break;
 				}
 			}
@@ -141,10 +141,10 @@ public class SearchSitesDirectoryTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("More Sites"),
-			selenium.getText("//button[contains(.,'More Sites')]/span[2]"));
-		selenium.clickAt("//button[contains(.,'More Sites')]/span[2]",
-			RuntimeVariables.replace("More Sites"));
+		assertEquals(RuntimeVariables.replace("Site Directory"),
+			selenium.getText("//button[contains(.,'Site Directory')]/span[2]"));
+		selenium.clickAt("//button[contains(.,'Site Directory')]/span[2]",
+			RuntimeVariables.replace("Site Directory"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -165,31 +165,21 @@ public class SearchSitesDirectoryTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Directory"),
 			selenium.getText("xPath=(//h1[@class='header-title']/span)[1]"));
-		selenium.select("//span[@class='sites-tabs']/span/span/span/select",
-			RuntimeVariables.replace("All Sites"));
 		assertTrue(selenium.isVisible(
 				"//input[@id='_5_WAR_soportlet_dialogKeywords']"));
 		selenium.type("//input[@id='_5_WAR_soportlet_dialogKeywords']",
-			RuntimeVariables.replace("Private Site2 Name"));
+			RuntimeVariables.replace("Private Restricted Site2 Name"));
 		Thread.sleep(5000);
-		assertEquals(RuntimeVariables.replace("There are no results."),
-			selenium.getText("//li[@class='empty']"));
-		selenium.select("//span[@class='sites-tabs']/span/span/span/select",
-			RuntimeVariables.replace("My Sites"));
-		assertTrue(selenium.isVisible(
-				"//input[@id='_5_WAR_soportlet_dialogKeywords']"));
-		selenium.type("//input[@id='_5_WAR_soportlet_dialogKeywords']",
-			RuntimeVariables.replace("Private Site2 Name"));
-		Thread.sleep(5000);
-		assertEquals(RuntimeVariables.replace("Private Site2 Name"),
+		assertEquals(RuntimeVariables.replace("Private Restricted Site2 Name"),
 			selenium.getText("//span[@class='name']/a"));
-		assertEquals(RuntimeVariables.replace("Private Site2 Description"),
+		assertEquals(RuntimeVariables.replace(
+				"Private Restricted Site2 Description"),
 			selenium.getText("//span[@class='description']"));
 		selenium.clickAt("//span[@class='name']/a",
-			RuntimeVariables.replace("Private Site2 Name"));
+			RuntimeVariables.replace("Private Restricted Site2 Name"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Private Site2 Name"),
+		assertEquals(RuntimeVariables.replace("Private Restricted Site2 Name"),
 			selenium.getText("//div[@class='community-title']"));
 		selenium.open("/user/joebloggs/so/dashboard/");
 		loadRequiredJavaScriptModules();
@@ -221,7 +211,7 @@ public class SearchSitesDirectoryTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//button[contains(.,'More Sites')]/span[2]")) {
+							"//button[contains(.,'Site Directory')]/span[2]")) {
 					break;
 				}
 			}
@@ -231,10 +221,10 @@ public class SearchSitesDirectoryTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("More Sites"),
-			selenium.getText("//button[contains(.,'More Sites')]/span[2]"));
-		selenium.clickAt("//button[contains(.,'More Sites')]/span[2]",
-			RuntimeVariables.replace("More Sites"));
+		assertEquals(RuntimeVariables.replace("Site Directory"),
+			selenium.getText("//button[contains(.,'Site Directory')]/span[2]"));
+		selenium.clickAt("//button[contains(.,'Site Directory')]/span[2]",
+			RuntimeVariables.replace("Site Directory"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -255,20 +245,22 @@ public class SearchSitesDirectoryTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Directory"),
 			selenium.getText("xPath=(//h1[@class='header-title']/span)[1]"));
+		selenium.select("//span[@class='sites-tabs']/span/span/span/select",
+			RuntimeVariables.replace("All Sites"));
 		assertTrue(selenium.isVisible(
 				"//input[@id='_5_WAR_soportlet_dialogKeywords']"));
 		selenium.type("//input[@id='_5_WAR_soportlet_dialogKeywords']",
-			RuntimeVariables.replace("Restricted Site3 Name"));
+			RuntimeVariables.replace("Private Site3 Name"));
 		Thread.sleep(5000);
-		assertEquals(RuntimeVariables.replace("Restricted Site3 Name"),
+		assertEquals(RuntimeVariables.replace("Private Site3 Name"),
 			selenium.getText("//span[@class='name']/a"));
-		assertEquals(RuntimeVariables.replace("Restricted Site3 Description"),
+		assertEquals(RuntimeVariables.replace("Private Site3 Description"),
 			selenium.getText("//span[@class='description']"));
 		selenium.clickAt("//span[@class='name']/a",
-			RuntimeVariables.replace("Restricted Site3 Name"));
+			RuntimeVariables.replace("Private Site3 Name"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Restricted Site3 Name"),
+		assertEquals(RuntimeVariables.replace("Private Site3 Name"),
 			selenium.getText("//div[@class='community-title']"));
 	}
 }

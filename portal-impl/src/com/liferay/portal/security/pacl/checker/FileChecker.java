@@ -339,6 +339,10 @@ public class FileChecker extends BaseChecker {
 			return true;
 		}
 
+		if (isResinVFS()) {
+			return true;
+		}
+
 		return false;
 	}
 
@@ -360,6 +364,10 @@ public class FileChecker extends BaseChecker {
 		}
 
 		if (isJSPCompiler(permission.getName(), FILE_PERMISSION_ACTION_READ)) {
+			return true;
+		}
+
+		if (isResinVFS()) {
 			return true;
 		}
 
@@ -432,8 +440,38 @@ public class FileChecker extends BaseChecker {
 		return actualClassLocation.contains(expectedClassLocation);
 	}
 
+	protected boolean isResinVFS() {
+		if (!ServerDetector.isResin()) {
+			return false;
+		}
+
+		for (int i = 7;; i++) {
+			Class<?> callerClass = Reflection.getCallerClass(i);
+
+			if (callerClass == null) {
+				return false;
+			}
+
+			String callerClassName = callerClass.getName();
+
+			if (!callerClassName.startsWith(_PACKAGE_NAME_ORG_CAUCHO_VFS)) {
+				continue;
+			}
+
+			String actualClassLocation = PACLClassUtil.getClassLocation(
+				callerClass);
+			String expectedClassLocation = PathUtil.toUnixPath(
+				System.getProperty("resin.home") + "/lib/resin.jar!/");
+
+			return actualClassLocation.contains(expectedClassLocation);
+		}
+	}
+
 	private static final String _CLASS_NAME_JAR_FILE_CLASS_LOADER =
 		"org.apache.geronimo.kernel.classloader.JarFileClassLoader";
+
+	private static final String _PACKAGE_NAME_ORG_CAUCHO_VFS =
+		"com.caucho.vfs.";
 
 	private static Log _log = LogFactoryUtil.getLog(FileChecker.class);
 

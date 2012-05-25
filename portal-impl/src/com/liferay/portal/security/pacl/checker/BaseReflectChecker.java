@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.config.AbstractMessagingConfigurator;
 import com.liferay.portal.kernel.util.JavaDetector;
+import com.liferay.portal.kernel.util.PathUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.security.pacl.PACLClassUtil;
 
@@ -52,10 +53,24 @@ public abstract class BaseReflectChecker extends BaseChecker {
 			return true;
 		}
 
-		// com.liferay.portal.kernel.messaging.config.
-		// AbstractMessagingConfigurator
+		// com.caucho.config.reflect.ReflectionAnnotatedType
 
 		Class<?> callerClass9 = Reflection.getCallerClass(9);
+
+		if (isResinReflectionAnnotatedType(callerClass9)) {
+			logReflect(callerClass9, 9);
+
+			return true;
+		}
+
+		// com.caucho.server.session.JavaSessionSerializer
+
+		if (isResinJavaSessionSerializer()) {
+			return true;
+		}
+
+		// com.liferay.portal.kernel.messaging.config.
+		// AbstractMessagingConfigurator
 
 		if (callerClass9 == AbstractMessagingConfigurator.class) {
 			logReflect(callerClass9, 9);
@@ -233,6 +248,57 @@ public abstract class BaseReflectChecker extends BaseChecker {
 		return classLocation.contains("/osgi/felix/bin/felix.jar!");
 	}
 
+	protected boolean isResinJavaSessionSerializer() {
+		if (!ServerDetector.isResin()) {
+			return false;
+		}
+
+		for (int i = 7;; i++) {
+			Class<?> callerClass = Reflection.getCallerClass(i);
+
+			if (callerClass == null) {
+				return false;
+			}
+
+			String callerClassName = callerClass.getName();
+
+			if (!callerClassName.equals(_CLASS_NAME_JAVA_SESSION_SERIALIZER)) {
+				continue;
+			}
+
+			String actualClassLocation = PACLClassUtil.getClassLocation(
+				callerClass);
+			String expectedClassLocation = PathUtil.toUnixPath(
+				System.getProperty("resin.home") + "/lib/resin.jar!/");
+
+			if (actualClassLocation.contains(expectedClassLocation)) {
+				logReflect(callerClass, i);
+
+				return true;
+			}
+
+			return false;
+		}
+	}
+
+	protected boolean isResinReflectionAnnotatedType(Class<?> clazz) {
+		if (!ServerDetector.isResin()) {
+			return false;
+		}
+
+		String className = clazz.getName();
+
+		if (!className.equals(_CLASS_NAME_REFLECTION_ANNOTATED_TYPE)) {
+			return false;
+		}
+
+		String actualClassLocation = PACLClassUtil.getClassLocation(clazz);
+		String expectedClassLocation = PathUtil.toUnixPath(
+			System.getProperty("resin.home") + "/lib/resin.jar!/");
+
+		return actualClassLocation.contains(expectedClassLocation);
+	}
+
 	protected void logReflect(Class<?> callerClass, int frame) {
 		if (_log.isInfoEnabled()) {
 			_log.info(
@@ -240,6 +306,12 @@ public abstract class BaseReflectChecker extends BaseChecker {
 					" to reflect");
 		}
 	}
+
+	private static final String _CLASS_NAME_JAVA_SESSION_SERIALIZER =
+		"com.caucho.server.session.JavaSessionSerializer";
+
+	private static final String _CLASS_NAME_REFLECTION_ANNOTATED_TYPE =
+		"com.caucho.config.reflect.ReflectionAnnotatedType";
 
 	private static final String _CLASS_NAME_SECURE_ACTION =
 		"org.apache.felix.framework.util.SecureAction";

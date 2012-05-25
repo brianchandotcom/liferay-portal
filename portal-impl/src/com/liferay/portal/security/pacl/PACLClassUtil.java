@@ -139,7 +139,10 @@ public class PACLClassUtil {
 			}
 		}
 
-		if (callerClassLoaderClassName.equals(_ClASS_NAME_JASPER_LOADER)) {
+		if (callerClassLoaderClassName.equals(
+				_ClASS_NAME_DYNAMIC_CLASS_LOADER) ||
+			callerClassLoaderClassName.equals(_ClASS_NAME_JASPER_LOADER)) {
+
 			callerClassLoader = callerClassLoader.getParent();
 		}
 
@@ -268,6 +271,9 @@ public class PACLClassUtil {
 
 		return null;
 	}
+
+	private static final String _ClASS_NAME_DYNAMIC_CLASS_LOADER =
+		"com.caucho.loader.DynamicClassLoader";
 
 	private static final String _ClASS_NAME_JASPER_LOADER =
 		"org.apache.jasper.servlet.JasperLoader";

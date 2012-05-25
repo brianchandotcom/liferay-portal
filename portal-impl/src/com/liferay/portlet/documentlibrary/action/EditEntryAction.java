@@ -263,7 +263,12 @@ public class EditEntryAction extends PortletAction {
 			ParamUtil.getString(actionRequest, "fileShortcutIds"), 0L);
 
 		for (long deleteFileShortcutId : deleteFileShortcutIds) {
-			DLAppServiceUtil.deleteFileShortcut(deleteFileShortcutId);
+			if (moveToTrash) {
+				DLAppServiceUtil.moveFileShortcutToTrash(deleteFileShortcutId);
+			}
+			else {
+				DLAppServiceUtil.deleteFileShortcut(deleteFileShortcutId);
+			}
 		}
 
 		long[] deleteFileEntryIds = StringUtil.split(

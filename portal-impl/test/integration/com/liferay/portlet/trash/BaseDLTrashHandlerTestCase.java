@@ -22,23 +22,42 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
+import com.liferay.portlet.documentlibrary.model.DLFileRank;
 import com.liferay.portlet.documentlibrary.service.BaseDLAppTestCase;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileRankLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLIndexer;
 import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
+
+import java.util.List;
 
 /**
  * @author Alexander Chow
  */
 public abstract class BaseDLTrashHandlerTestCase extends BaseDLAppTestCase {
 
-	protected AssetEntry fetchAssetEntry(long fileEntryId) throws Exception {
-		return AssetEntryLocalServiceUtil.fetchEntry(
-			DLFileEntryConstants.getClassName(), fileEntryId);
+	protected AssetEntry fetchAssetEntry(String className, long classPK)
+		throws Exception {
+
+		return AssetEntryLocalServiceUtil.fetchEntry(className, classPK);
 	}
 
-	protected int getFolderAndFileEntriesNotInTrashCount() throws Exception {
+	protected int getActiveFileRankCount(long fileEntryId) throws Exception {
+		List<DLFileRank> dlFileRanks = DLFileRankLocalServiceUtil.getFileRanks(
+			parentFolder.getGroupId(), parentFolder.getUserId());
+
+		int count = 0;
+
+		for (DLFileRank dlFileRank : dlFileRanks) {
+			if (dlFileRank.getFileEntryId() == fileEntryId) {
+				count++;
+			}
+		}
+
+		return count;
+	}
+
+	protected int getNotInTrashCount() throws Exception {
 		return DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(
 			parentFolder.getRepositoryId(), parentFolder.getFolderId(),
 			WorkflowConstants.STATUS_ANY, false);
@@ -51,9 +70,11 @@ public abstract class BaseDLTrashHandlerTestCase extends BaseDLAppTestCase {
 		return (Integer)result[1];
 	}
 
-	protected boolean isAssetEntryVisible(long fileEntryId) throws Exception {
+	protected boolean isAssetEntryVisible(String className, long classPK)
+		throws Exception {
+
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
-			DLFileEntryConstants.getClassName(), fileEntryId);
+			className, classPK);
 
 		return assetEntry.isVisible();
 	}

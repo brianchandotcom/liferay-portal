@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -65,6 +66,10 @@ public class QueryDefinition {
 	}
 
 	public Serializable getAttribute(String name) {
+		if (_attributes == null) {
+			return null;
+		}
+
 		return _attributes.get(name);
 	}
 
@@ -97,6 +102,10 @@ public class QueryDefinition {
 	}
 
 	public void setAttributes(Map<String, Serializable> attributes) {
+		if (_attributes == null) {
+			_attributes = new HashMap<String, Serializable>();
+		}
+
 		_attributes = attributes;
 	}
 

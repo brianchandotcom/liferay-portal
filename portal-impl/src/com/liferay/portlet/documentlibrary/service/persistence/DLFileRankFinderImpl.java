@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portlet.documentlibrary.model.DLFileRank;
+import com.liferay.portlet.documentlibrary.model.impl.DLFileRankImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.List;
@@ -31,8 +32,37 @@ import java.util.List;
 public class DLFileRankFinderImpl
 	extends BasePersistenceImpl<DLFileRank> implements DLFileRankFinder {
 
+	public static final String FIND_BY_FOLDER =
+		DLFileRankFinder.class.getName() + ".findByFolder";
+
 	public static final String FIND_BY_STALE_RANKS =
 		DLFileRankFinder.class.getName() + ".findByStaleRanks";
+
+	public List<DLFileRank> findByFolder(long folderId) throws SystemException {
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_FOLDER);
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addEntity("DLFileRank", DLFileRankImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(folderId);
+
+			return q.list(true);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
 
 	public List<Object[]> findByStaleRanks(int count) throws SystemException {
 		Session session = null;

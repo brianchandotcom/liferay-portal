@@ -292,18 +292,39 @@ public class DLAppHelperLocalServiceImpl
 		}
 	}
 
+	/**
+	 * @deprecated {@Link #getFileShortcuts(long, long, int, boolean)}
+	 */
 	public List<DLFileShortcut> getFileShortcuts(
 			long groupId, long folderId, int status)
 		throws SystemException {
 
-		return dlFileShortcutPersistence.findByG_F_S(groupId, folderId, status);
+		return getFileShortcuts(groupId, folderId, status, true);
 	}
 
+	public List<DLFileShortcut> getFileShortcuts(
+			long groupId, long folderId, int status, boolean active)
+		throws SystemException {
+
+		return dlFileShortcutPersistence.findByG_F_S_A(
+			groupId, folderId, status, active);
+	}
+
+	/**
+	 * @deprecated {@Link #getFileShortcutsCount(long, long, int, boolean)}
+	 */
 	public int getFileShortcutsCount(long groupId, long folderId, int status)
 		throws SystemException {
 
-		return dlFileShortcutPersistence.countByG_F_S(
-			groupId, folderId, status);
+		return getFileShortcutsCount(groupId, folderId, status, true);
+	}
+
+	public int getFileShortcutsCount(
+			long groupId, long folderId, int status, boolean active)
+		throws SystemException {
+
+		return dlFileShortcutPersistence.countByG_F_S_A(
+			groupId, folderId, status, active);
 	}
 
 	public List<FileEntry> getNoAssetFileEntries() {
@@ -352,6 +373,15 @@ public class DLAppHelperLocalServiceImpl
 			WorkflowConstants.STATUS_IN_TRASH,
 			new HashMap<String, Serializable>(), new ServiceContext());
 
+		// File shortcut
+
+		dlFileShortcutLocalService.disableFileShortcuts(
+			fileEntry.getFileEntryId());
+
+		// File rank
+
+		dlFileRankLocalService.disableFileRanks(fileEntry.getFileEntryId());
+
 		// Social
 
 		socialActivityLocalService.addActivity(
@@ -391,6 +421,34 @@ public class DLAppHelperLocalServiceImpl
 		return fileEntry;
 	}
 
+	public DLFileShortcut moveFileShortcutToTrash(
+			long userId, DLFileShortcut dlFileShortcut)
+		throws PortalException, SystemException {
+
+		// File shortcut
+
+		int oldStatus = dlFileShortcut.getStatus();
+
+		dlFileShortcutLocalService.updateStatus(
+			userId, dlFileShortcut.getFileShortcutId(),
+			WorkflowConstants.STATUS_IN_TRASH, new ServiceContext());
+
+		// Social
+
+		socialActivityLocalService.addActivity(
+			userId, dlFileShortcut.getGroupId(), DLFileShortcut.class.getName(),
+			dlFileShortcut.getFileShortcutId(),
+			SocialActivityConstants.TYPE_MOVE_TO_TRASH, StringPool.BLANK, 0);
+
+		// Trash
+
+		trashEntryLocalService.addTrashEntry(
+			userId, dlFileShortcut.getGroupId(), DLFileShortcut.class.getName(),
+			dlFileShortcut.getFileShortcutId(), oldStatus, null, null);
+
+		return dlFileShortcut;
+	}
+
 	public void moveFolder(Folder folder)
 		throws PortalException, SystemException {
 
@@ -414,6 +472,10 @@ public class DLAppHelperLocalServiceImpl
 		dlFolder.setName(DLAppUtil.appendTrashNamespace(dlFolder.getName()));
 
 		dlFolderPersistence.update(dlFolder, false);
+
+		// File rank
+
+		dlFileRankLocalService.disableFileRanksByFolder(folder.getFolderId());
 
 		// Trash
 
@@ -457,6 +519,15 @@ public class DLAppHelperLocalServiceImpl
 			userId, fileVersion.getFileVersionId(), trashEntry.getStatus(),
 			workflowContext, new ServiceContext());
 
+		// File shortcut
+
+		dlFileShortcutLocalService.enableFileShortcuts(
+			fileEntry.getFileEntryId());
+
+		// File rank
+
+		dlFileRankLocalService.enableFileRanks(fileEntry.getFileEntryId());
+
 		// Social
 
 		socialActivityCounterLocalService.enableActivityCounters(
@@ -465,6 +536,36 @@ public class DLAppHelperLocalServiceImpl
 		socialActivityLocalService.addActivity(
 			userId, fileEntry.getGroupId(), DLFileEntryConstants.getClassName(),
 			fileEntry.getFileEntryId(),
+			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH, StringPool.BLANK,
+			0);
+
+		// Trash
+
+		trashEntryLocalService.deleteEntry(
+			trashEntry.getClassName(), trashEntry.getClassPK());
+	}
+
+	public void restoreFileShortcutFromTrash(
+			long userId, DLFileShortcut dlFileShortcut)
+		throws PortalException, SystemException {
+
+		// File shortcut
+
+		TrashEntry trashEntry = trashEntryLocalService.getEntry(
+			DLFileShortcut.class.getName(), dlFileShortcut.getFileShortcutId());
+
+		dlFileShortcutLocalService.updateStatus(
+			userId, dlFileShortcut.getFileShortcutId(), trashEntry.getStatus(),
+			new ServiceContext());
+
+		// Social
+
+		socialActivityCounterLocalService.enableActivityCounters(
+			DLFileShortcut.class.getName(), dlFileShortcut.getFileShortcutId());
+
+		socialActivityLocalService.addActivity(
+			userId, dlFileShortcut.getGroupId(), DLFileShortcut.class.getName(),
+			dlFileShortcut.getFileShortcutId(),
 			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH, StringPool.BLANK,
 			0);
 
@@ -488,6 +589,10 @@ public class DLAppHelperLocalServiceImpl
 		dlFolder.setName(DLAppUtil.stripTrashNamespace(dlFolder.getName()));
 
 		dlFolderPersistence.update(dlFolder, false);
+
+		// File rank
+
+		dlFileRankLocalService.enableFileRanksByFolder(folder.getFolderId());
 
 		// Trash
 

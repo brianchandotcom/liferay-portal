@@ -297,6 +297,30 @@ public class DLFileRankLocalServiceWrapper implements DLFileRankLocalService,
 		_dlFileRankLocalService.deleteFileRanksByUserId(userId);
 	}
 
+	public void disableFileRanks(long fileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_dlFileRankLocalService.disableFileRanks(fileEntryId);
+	}
+
+	public void disableFileRanksByFolder(long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_dlFileRankLocalService.disableFileRanksByFolder(folderId);
+	}
+
+	public void enableFileRanks(long fileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_dlFileRankLocalService.enableFileRanks(fileEntryId);
+	}
+
+	public void enableFileRanksByFolder(long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_dlFileRankLocalService.enableFileRanksByFolder(folderId);
+	}
+
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileRank> getFileRanks(
 		long groupId, long userId)
 		throws com.liferay.portal.kernel.exception.SystemException {

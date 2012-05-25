@@ -34,7 +34,7 @@ public class DLFileRankCacheModel implements CacheModel<DLFileRank>,
 	Serializable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{fileRankId=");
 		sb.append(fileRankId);
@@ -48,6 +48,8 @@ public class DLFileRankCacheModel implements CacheModel<DLFileRank>,
 		sb.append(createDate);
 		sb.append(", fileEntryId=");
 		sb.append(fileEntryId);
+		sb.append(", active=");
+		sb.append(active);
 		sb.append("}");
 
 		return sb.toString();
@@ -69,6 +71,7 @@ public class DLFileRankCacheModel implements CacheModel<DLFileRank>,
 		}
 
 		dlFileRankImpl.setFileEntryId(fileEntryId);
+		dlFileRankImpl.setActive(active);
 
 		dlFileRankImpl.resetOriginalValues();
 
@@ -81,4 +84,5 @@ public class DLFileRankCacheModel implements CacheModel<DLFileRank>,
 	public long userId;
 	public long createDate;
 	public long fileEntryId;
+	public boolean active;
 }

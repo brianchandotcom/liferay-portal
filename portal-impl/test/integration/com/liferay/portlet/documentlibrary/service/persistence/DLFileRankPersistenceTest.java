@@ -93,6 +93,8 @@ public class DLFileRankPersistenceTest {
 
 		newDLFileRank.setFileEntryId(ServiceTestUtil.nextLong());
 
+		newDLFileRank.setActive(ServiceTestUtil.randomBoolean());
+
 		_persistence.update(newDLFileRank, false);
 
 		DLFileRank existingDLFileRank = _persistence.findByPrimaryKey(newDLFileRank.getPrimaryKey());
@@ -110,6 +112,8 @@ public class DLFileRankPersistenceTest {
 			Time.getShortTimestamp(newDLFileRank.getCreateDate()));
 		Assert.assertEquals(existingDLFileRank.getFileEntryId(),
 			newDLFileRank.getFileEntryId());
+		Assert.assertEquals(existingDLFileRank.getActive(),
+			newDLFileRank.getActive());
 	}
 
 	@Test
@@ -258,6 +262,8 @@ public class DLFileRankPersistenceTest {
 		dlFileRank.setCreateDate(ServiceTestUtil.nextDate());
 
 		dlFileRank.setFileEntryId(ServiceTestUtil.nextLong());
+
+		dlFileRank.setActive(ServiceTestUtil.randomBoolean());
 
 		_persistence.update(dlFileRank, false);
 

@@ -307,6 +307,27 @@ public interface DLFileShortcutModel extends BaseModel<DLFileShortcut>,
 	public void setStatusDate(Date statusDate);
 
 	/**
+	 * Returns the active of this document library file shortcut.
+	 *
+	 * @return the active of this document library file shortcut
+	 */
+	public boolean getActive();
+
+	/**
+	 * Returns <code>true</code> if this document library file shortcut is active.
+	 *
+	 * @return <code>true</code> if this document library file shortcut is active; <code>false</code> otherwise
+	 */
+	public boolean isActive();
+
+	/**
+	 * Sets whether this document library file shortcut is active.
+	 *
+	 * @param active the active of this document library file shortcut
+	 */
+	public void setActive(boolean active);
+
+	/**
 	 * @deprecated Renamed to {@link #isApproved()}
 	 */
 	public boolean getApproved();

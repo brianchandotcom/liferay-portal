@@ -298,3 +298,11 @@ create table TrashVersion (
 );
 
 drop table Users_Permissions;
+
+alter table DLFileShortcut add active_ BOOLEAN;
+alter table DLFileRank add active_ BOOLEAN;
+
+COMMIT_TRANSACTION;
+
+update DLFileShortcut set active_ = TRUE;
+update DLFileRank set active_ = TRUE;

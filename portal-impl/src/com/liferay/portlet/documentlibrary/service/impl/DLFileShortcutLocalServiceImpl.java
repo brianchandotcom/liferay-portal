@@ -67,6 +67,7 @@ public class DLFileShortcutLocalServiceImpl
 		fileShortcut.setStatusByUserId(userId);
 		fileShortcut.setStatusByUserName(user.getFullName());
 		fileShortcut.setStatusDate(now);
+		fileShortcut.setActive(true);
 
 		dlFileShortcutPersistence.update(fileShortcut, false);
 
@@ -174,6 +175,11 @@ public class DLFileShortcutLocalServiceImpl
 
 		assetEntryLocalService.deleteEntry(
 			DLFileShortcut.class.getName(), fileShortcut.getFileShortcutId());
+
+		// Trash
+
+		trashEntryLocalService.deleteEntry(
+			DLFileShortcut.class.getName(), fileShortcut.getFileShortcutId());
 	}
 
 	public void deleteFileShortcut(long fileShortcutId)
@@ -193,6 +199,32 @@ public class DLFileShortcutLocalServiceImpl
 
 		for (DLFileShortcut fileShortcut : fileShortcuts) {
 			deleteFileShortcut(fileShortcut);
+		}
+	}
+
+	public void disableFileShortcuts(long toFileEntryId)
+		throws PortalException, SystemException {
+
+		List<DLFileShortcut> fileShortcuts =
+			dlFileShortcutPersistence.findByToFileEntryId(toFileEntryId);
+
+		for (DLFileShortcut fileShortcut : fileShortcuts) {
+			fileShortcut.setActive(false);
+
+			dlFileShortcutPersistence.update(fileShortcut, false);
+		}
+	}
+
+	public void enableFileShortcuts(long toFileEntryId)
+		throws PortalException, SystemException {
+
+		List<DLFileShortcut> fileShortcuts =
+			dlFileShortcutPersistence.findByToFileEntryId(toFileEntryId);
+
+		for (DLFileShortcut fileShortcut : fileShortcuts) {
+			fileShortcut.setActive(true);
+
+			dlFileShortcutPersistence.update(fileShortcut, false);
 		}
 	}
 
@@ -274,6 +306,24 @@ public class DLFileShortcutLocalServiceImpl
 
 			dlFileShortcutPersistence.update(fileShortcut, false);
 		}
+	}
+
+	public void updateStatus(
+			long userId, long fileShortcutId, int status,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		User user = userPersistence.findByPrimaryKey(userId);
+
+		DLFileShortcut fileShortcut =
+			dlFileShortcutPersistence.findByPrimaryKey(fileShortcutId);
+
+		fileShortcut.setStatus(status);
+		fileShortcut.setStatusByUserId(user.getUserId());
+		fileShortcut.setStatusByUserName(user.getFullName());
+		fileShortcut.setStatusDate(serviceContext.getModifiedDate(new Date()));
+
+		dlFileShortcutPersistence.update(fileShortcut, false);
 	}
 
 	protected void copyAssetTags(

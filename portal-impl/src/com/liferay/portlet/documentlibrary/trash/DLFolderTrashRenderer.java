@@ -46,6 +46,35 @@ public class DLFolderTrashRenderer extends BaseTrashRenderer {
 		_folder = folder;
 	}
 
+	@Override
+	public String getIconPath(ThemeDisplay themeDisplay) {
+		int fileEntriesCount = 0;
+		int foldersCount = 0;
+
+		try {
+			foldersCount = DLAppServiceUtil.getFoldersCount(
+				_folder.getRepositoryId(), _folder.getFolderId());
+
+			fileEntriesCount =
+				DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(
+					_folder.getRepositoryId(), _folder.getFolderId(),
+					WorkflowConstants.STATUS_APPROVED);
+		}
+		catch (Exception e) {
+		}
+
+		int totalCount = fileEntriesCount + foldersCount;
+
+		if (totalCount > 0) {
+			return themeDisplay.getPathThemeImages() +
+				"/common/folder_full_document.png";
+		}
+		else {
+			return themeDisplay.getPathThemeImages() +
+				"/common/folder_empty.png";
+		}
+	}
+
 	public String getPortletId() {
 		AssetRendererFactory assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
@@ -88,35 +117,6 @@ public class DLFolderTrashRenderer extends BaseTrashRenderer {
 		renderRequest.setAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER, _folder);
 
 		return "/html/portlet/document_library/trash/folder.jsp";
-	}
-
-	@Override
-	protected String getIconPath(ThemeDisplay themeDisplay) {
-		int fileEntriesCount = 0;
-		int foldersCount = 0;
-
-		try {
-			foldersCount = DLAppServiceUtil.getFoldersCount(
-				_folder.getRepositoryId(), _folder.getFolderId());
-
-			fileEntriesCount =
-				DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(
-					_folder.getRepositoryId(), _folder.getFolderId(),
-					WorkflowConstants.STATUS_APPROVED);
-		}
-		catch (Exception e) {
-		}
-
-		int totalCount = fileEntriesCount + foldersCount;
-
-		if (totalCount > 0) {
-			return themeDisplay.getPathThemeImages() +
-				"/common/folder_full_document.png";
-		}
-		else {
-			return themeDisplay.getPathThemeImages() +
-				"/common/folder_empty.png";
-		}
 	}
 
 	private Folder _folder;

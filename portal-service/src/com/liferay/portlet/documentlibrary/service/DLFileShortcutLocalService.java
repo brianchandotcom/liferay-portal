@@ -299,6 +299,14 @@ public interface DLFileShortcutLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public void disableFileShortcuts(long toFileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void enableFileShortcuts(long toFileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut getFileShortcut(
 		long fileShortcutId)
@@ -319,4 +327,9 @@ public interface DLFileShortcutLocalService extends BaseLocalService,
 
 	public void updateFileShortcuts(long oldToFileEntryId, long newToFileEntryId)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public void updateStatus(long userId, long fileShortcutId, int status,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 }

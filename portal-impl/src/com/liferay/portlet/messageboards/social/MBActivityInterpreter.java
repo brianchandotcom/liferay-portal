@@ -113,7 +113,7 @@ public class MBActivityInterpreter extends BaseSocialActivityInterpreter {
 		}
 
 		String messageSubject = wrapLink(
-			link, HtmlUtil.escape(cleanContent(message.getSubject())));
+			link, HtmlUtil.escape(message.getSubject()));
 
 		Object[] titleArguments = new Object[] {
 			groupName, creatorUserName, receiverUserName, messageSubject

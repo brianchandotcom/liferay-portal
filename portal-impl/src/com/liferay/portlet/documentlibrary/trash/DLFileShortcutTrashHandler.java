@@ -30,7 +30,7 @@ import com.liferay.portlet.documentlibrary.service.DLFileShortcutLocalServiceUti
 public class DLFileShortcutTrashHandler extends BaseTrashHandler {
 
 	/**
-	 * The class name of the file shortcut entity
+	 * The class name of the file shortcut entity.
 	 */
 	public static final String CLASS_NAME = DLFileShortcut.class.getName();
 
@@ -51,7 +51,7 @@ public class DLFileShortcutTrashHandler extends BaseTrashHandler {
 	}
 
 	/**
-	 * Returns the file entry entity's class name
+	 * Returns the file entry entity's class name.
 	 *
 	 * @return the file entry entity's class name
 	 */
@@ -60,7 +60,7 @@ public class DLFileShortcutTrashHandler extends BaseTrashHandler {
 	}
 
 	/**
-	 * Returns the trash renderer for the entity with the primary key
+	 * Returns the trash renderer for the entity with the primary key.
 	 *
 	 * @param  classPK the primary key of the file shortcut
 	 * @return Returns the trash renderer

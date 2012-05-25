@@ -466,10 +466,26 @@ public class LuceneHelperImpl implements LuceneHelper {
 		IndexAccessor indexAccessor = _indexAccessors.get(companyId);
 
 		if (indexAccessor == null) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Skip loading lucene index files for company : " +
+						companyId + ", as it is not needed yet. Will do a " +
+							"lazy loading on first usage.");
+			}
+
 			return;
 		}
 
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"Start loading lucene index files for company : " + companyId);
+		}
+
 		indexAccessor.loadIndex(inputStream);
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Loaded index files for company : " + companyId);
+		}
 	}
 
 	public void loadIndexesFromCluster(long companyId) throws SystemException {
@@ -623,8 +639,6 @@ public class LuceneHelperImpl implements LuceneHelper {
 								indexAccessor.getCompanyId(),
 							e);
 					}
-
-					indexAccessor.enableDumpIndex();
 				}
 
 				_indexAccessors.put(companyId, indexAccessor);

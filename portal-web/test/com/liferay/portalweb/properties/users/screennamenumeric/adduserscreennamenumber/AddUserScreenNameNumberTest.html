@@ -14,7 +14,17 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
 	<td>Control Panel</td>
 </tr>
@@ -26,26 +36,31 @@
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Users and Organizations</td>
-	<td>Users</td>
+	<td>Users and Organizations</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@title='Add']/ul/li/strong/a/span</td>
+	<td>Add</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>link=Add</td>
+	<td>//span[@title='Add']/ul/li/strong/a/span</td>
 	<td>Add</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
 	<td>User</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
 	<td>User</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
 	<td>User</td>
 </tr>
 <tr>
@@ -56,17 +71,17 @@
 <tr>
 	<td>type</td>
 	<td>//input[@id='_125_emailAddress']</td>
-	<td>testA@selenium.com</td>
+	<td>userea@liferay.com</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//input[@id='_125_firstName']</td>
-	<td>testA</td>
+	<td>userfn</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//input[@id='_125_lastName']</td>
-	<td>testA</td>
+	<td>userln</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -78,7 +93,26 @@
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
-
+<tr>
+	<td>assertValue</td>
+	<td>//input[@id='_125_screenName']</td>
+	<td>11111</td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>//input[@id='_125_emailAddress']</td>
+	<td>userea@liferay.com</td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>//input[@id='_125_firstName']</td>
+	<td>userfn</td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>//input[@id='_125_lastName']</td>
+	<td>userln</td>
+</tr>
 </tbody></table>
 </body>
 </html>

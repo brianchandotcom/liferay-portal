@@ -24,6 +24,9 @@ public class AddUserScreenNameNumberTest extends BaseTestCase {
 	public void testAddUserScreenNameNumber() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -31,7 +34,7 @@ public class AddUserScreenNameNumberTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -46,10 +49,13 @@ public class AddUserScreenNameNumberTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Users and Organizations",
-			RuntimeVariables.replace("Users"));
+			RuntimeVariables.replace("Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
+			RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -58,7 +64,7 @@ public class AddUserScreenNameNumberTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a")) {
 					break;
 				}
 			}
@@ -70,19 +76,19 @@ public class AddUserScreenNameNumberTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("User"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_125_screenName']",
 			RuntimeVariables.replace("11111"));
 		selenium.type("//input[@id='_125_emailAddress']",
-			RuntimeVariables.replace("testA@selenium.com"));
+			RuntimeVariables.replace("userea@liferay.com"));
 		selenium.type("//input[@id='_125_firstName']",
-			RuntimeVariables.replace("testA"));
+			RuntimeVariables.replace("userfn"));
 		selenium.type("//input[@id='_125_lastName']",
-			RuntimeVariables.replace("testA"));
+			RuntimeVariables.replace("userln"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
@@ -90,5 +96,12 @@ public class AddUserScreenNameNumberTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals("11111",
+			selenium.getValue("//input[@id='_125_screenName']"));
+		assertEquals("userea@liferay.com",
+			selenium.getValue("//input[@id='_125_emailAddress']"));
+		assertEquals("userfn",
+			selenium.getValue("//input[@id='_125_firstName']"));
+		assertEquals("userln", selenium.getValue("//input[@id='_125_lastName']"));
 	}
 }

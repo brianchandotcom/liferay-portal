@@ -35,4 +35,7 @@ public interface MDRRuleGroupInstance extends MDRRuleGroupInstanceModel,
 	public com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup getRuleGroup()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRAction> getMDRActions()
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

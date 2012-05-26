@@ -36,19 +36,14 @@ public class ParamAndPropertyAncestorTagImpl
 	implements ParamAncestorTag, PropertyAncestorTag {
 
 	public void addParam(String name, String value) {
-		DynamicServletRequest dynamicServletRequest = null;
+		if (_dynamicServletRequest == null) {
+			_dynamicServletRequest = new DynamicServletRequest(request);
 
-		if (request instanceof DynamicServletRequest) {
-			dynamicServletRequest = (DynamicServletRequest)request;
-		}
-		else {
-			dynamicServletRequest = new DynamicServletRequest(request);
-
-			request = dynamicServletRequest;
+			request = _dynamicServletRequest;
 		}
 
 		Map<String, String[]> params =
-			dynamicServletRequest.getDynamicParameterMap();
+			_dynamicServletRequest.getDynamicParameterMap();
 
 		// PLT.26.6
 
@@ -106,16 +101,14 @@ public class ParamAndPropertyAncestorTagImpl
 	}
 
 	public void clearParams() {
-		if (request instanceof DynamicServletRequest) {
-			DynamicServletRequest dynamicServletRequest =
-				(DynamicServletRequest)request;
-
+		if (_dynamicServletRequest != null) {
 			Map<String, String[]> params =
-				dynamicServletRequest.getDynamicParameterMap();
+				_dynamicServletRequest.getDynamicParameterMap();
 
 			params.clear();
 
-			request = (HttpServletRequest)dynamicServletRequest.getRequest();
+			request = (HttpServletRequest)_dynamicServletRequest.getRequest();
+			_dynamicServletRequest = null;
 		}
 
 		if (_removedParameterNames != null) {
@@ -130,11 +123,8 @@ public class ParamAndPropertyAncestorTagImpl
 	}
 
 	public Map<String, String[]> getParams() {
-		if (request instanceof DynamicServletRequest) {
-			DynamicServletRequest dynamicServletRequest =
-				(DynamicServletRequest)request;
-
-			return dynamicServletRequest.getDynamicParameterMap();
+		if (_dynamicServletRequest != null) {
+			return _dynamicServletRequest.getDynamicParameterMap();
 		}
 		else {
 			return null;
@@ -190,6 +180,7 @@ public class ParamAndPropertyAncestorTagImpl
 	protected ServletContext servletContext;
 
 	private boolean _allowEmptyParam;
+	private DynamicServletRequest _dynamicServletRequest;
 	private Map<String, String[]> _properties;
 	private Set<String> _removedParameterNames;
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.plugins.wsrp.helloworld.addportletwsrphwutf8;
+package com.liferay.portalweb.plugins.wsrp.helloworld.manageportletconsumerhwutf8;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;

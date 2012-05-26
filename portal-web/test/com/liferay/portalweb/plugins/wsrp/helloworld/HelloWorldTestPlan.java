@@ -19,6 +19,7 @@ import com.liferay.portalweb.plugins.wsrp.helloworld.addportletwsrphw.AddPortlet
 import com.liferay.portalweb.plugins.wsrp.helloworld.addportletwsrphwutf8.AddPortletWSRPHWUTF8Tests;
 import com.liferay.portalweb.plugins.wsrp.helloworld.addproducerhw.AddProducerHWTests;
 import com.liferay.portalweb.plugins.wsrp.helloworld.manageportletconsumerhw.ManagePortletConsumerHWTests;
+import com.liferay.portalweb.plugins.wsrp.helloworld.manageportletconsumerhwutf8.ManagePortletConsumerHWUTF8Tests;
 import com.liferay.portalweb.portal.BaseTestSuite;
 
 import junit.framework.Test;
@@ -37,6 +38,7 @@ public class HelloWorldTestPlan extends BaseTestSuite {
 		testSuite.addTest(AddPortletWSRPHWUTF8Tests.suite());
 		testSuite.addTest(AddProducerHWTests.suite());
 		testSuite.addTest(ManagePortletConsumerHWTests.suite());
+		testSuite.addTest(ManagePortletConsumerHWUTF8Tests.suite());
 
 		return testSuite;
 	}

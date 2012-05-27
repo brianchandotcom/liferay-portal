@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.servlet.WebDirDetector;
+import com.liferay.portal.kernel.servlet.taglib.FileAvailabilityUtil;
 import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PathUtil;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 import com.liferay.portal.security.pacl.PACLClassUtil;
+import com.liferay.portal.servlet.DirectServletRegistryImpl;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.util.UniqueList;
@@ -37,6 +39,8 @@ import com.liferay.util.UniqueList;
 import java.io.File;
 import java.io.FilePermission;
 import java.io.IOException;
+
+import java.net.URLClassLoader;
 
 import java.security.Permission;
 
@@ -316,7 +320,6 @@ public class FileChecker extends BaseChecker {
 
 		// Portal
 
-		addDefaultReadPaths(paths, "common");
 		addDefaultReadPaths(paths, ServerDetector.getServerId());
 
 		for (String path : paths) {
@@ -333,14 +336,25 @@ public class FileChecker extends BaseChecker {
 			}
 		}
 
-		if (isJSPCompiler(
-				permission.getName(), FILE_PERMISSION_ACTION_DELETE)) {
+		if (ServerDetector.isResin()) {
+			for (int i = 7;; i++) {
+				Class<?> callerClass = Reflection.getCallerClass(i);
 
-			return true;
-		}
+				if (callerClass == null) {
+					return false;
+				}
 
-		if (isResinVFS()) {
-			return true;
+				String callerClassName = callerClass.getName();
+
+				if (callerClassName.equals(_CLASS_NAME_FILE_PATH)) {
+					String actualClassLocation = PACLClassUtil.getClassLocation(
+						callerClass);
+					String expectedClassLocation = PathUtil.toUnixPath(
+						System.getProperty("resin.home") + "/lib/resin.jar!/");
+
+					return actualClassLocation.contains(expectedClassLocation);
+				}
+			}
 		}
 
 		return false;
@@ -367,29 +381,45 @@ public class FileChecker extends BaseChecker {
 			return true;
 		}
 
-		if (isResinVFS()) {
-			return true;
+		for (int i = 7;; i++) {
+			Class<?> callerClass = Reflection.getCallerClass(i);
+
+			if (callerClass == null) {
+				return false;
+			}
+
+			if ((callerClass == DirectServletRegistryImpl.class) ||
+				(callerClass == FileAvailabilityUtil.class) ||
+				ClassLoader.class.isAssignableFrom(callerClass)) {
+
+				return true;
+			}
+
+			if (ServerDetector.isGlassfish()) {
+				Class<?> enclosingClass = callerClass.getEnclosingClass();
+
+				if (enclosingClass != null) {
+					if ((enclosingClass.getEnclosingClass() ==
+							URLClassLoader.class) &&
+						CheckerUtil.isAccessControllerDoPrivileged(i + 1)) {
+
+						return true;
+					}
+				}
+			}
+			else if (ServerDetector.isResin()) {
+				String callerClassName = callerClass.getName();
+
+				if (callerClassName.equals(_CLASS_NAME_FILE_PATH)) {
+					String actualClassLocation = PACLClassUtil.getClassLocation(
+						callerClass);
+					String expectedClassLocation = PathUtil.toUnixPath(
+						System.getProperty("resin.home") + "/lib/resin.jar!/");
+
+					return actualClassLocation.contains(expectedClassLocation);
+				}
+			}
 		}
-
-		Class<?> callerClass10 = Reflection.getCallerClass(10);
-
-		if (isGeronimoJarFileClassLoader(
-				callerClass10.getEnclosingClass()) &&
-			CheckerUtil.isAccessControllerDoPrivileged(11)) {
-
-			return true;
-		}
-
-		Class<?> callerClass20 = Reflection.getCallerClass(20);
-
-		if (isGeronimoJarFileClassLoader(
-				callerClass20.getEnclosingClass()) &&
-			CheckerUtil.isAccessControllerDoPrivileged(21)) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	protected boolean hasWrite(Permission permission) {
@@ -399,8 +429,25 @@ public class FileChecker extends BaseChecker {
 			}
 		}
 
-		if (isJSPCompiler(permission.getName(), FILE_PERMISSION_ACTION_WRITE)) {
-			return true;
+		if (ServerDetector.isResin()) {
+			for (int i = 7;; i++) {
+				Class<?> callerClass = Reflection.getCallerClass(i);
+
+				if (callerClass == null) {
+					return false;
+				}
+
+				String callerClassName = callerClass.getName();
+
+				if (callerClassName.equals(_CLASS_NAME_FILE_PATH)) {
+					String actualClassLocation = PACLClassUtil.getClassLocation(
+						callerClass);
+					String expectedClassLocation = PathUtil.toUnixPath(
+						System.getProperty("resin.home") + "/lib/resin.jar!/");
+
+					return actualClassLocation.contains(expectedClassLocation);
+				}
+			}
 		}
 
 		return false;
@@ -417,61 +464,8 @@ public class FileChecker extends BaseChecker {
 			"security-manager-files-write", FILE_PERMISSION_ACTION_WRITE);
 	}
 
-	protected boolean isGeronimoJarFileClassLoader(Class<?> clazz) {
-		if (!ServerDetector.isGeronimo()) {
-			return false;
-		}
-
-		if (clazz == null) {
-			return false;
-		}
-
-		String className = clazz.getName();
-
-		if (!className.equals(_CLASS_NAME_JAR_FILE_CLASS_LOADER)) {
-			return false;
-		}
-
-		String actualClassLocation = PACLClassUtil.getClassLocation(clazz);
-		String expectedClassLocation = PathUtil.toUnixPath(
-			System.getProperty("org.apache.geronimo.home.dir") +
-				"/lib/geronimo-kernel-");
-
-		return actualClassLocation.contains(expectedClassLocation);
-	}
-
-	protected boolean isResinVFS() {
-		if (!ServerDetector.isResin()) {
-			return false;
-		}
-
-		for (int i = 7;; i++) {
-			Class<?> callerClass = Reflection.getCallerClass(i);
-
-			if (callerClass == null) {
-				return false;
-			}
-
-			String callerClassName = callerClass.getName();
-
-			if (!callerClassName.startsWith(_PACKAGE_NAME_ORG_CAUCHO_VFS)) {
-				continue;
-			}
-
-			String actualClassLocation = PACLClassUtil.getClassLocation(
-				callerClass);
-			String expectedClassLocation = PathUtil.toUnixPath(
-				System.getProperty("resin.home") + "/lib/resin.jar!/");
-
-			return actualClassLocation.contains(expectedClassLocation);
-		}
-	}
-
-	private static final String _CLASS_NAME_JAR_FILE_CLASS_LOADER =
-		"org.apache.geronimo.kernel.classloader.JarFileClassLoader";
-
-	private static final String _PACKAGE_NAME_ORG_CAUCHO_VFS =
-		"com.caucho.vfs.";
+	private static final String _CLASS_NAME_FILE_PATH =
+		"com.caucho.vfs.FilePath";
 
 	private static Log _log = LogFactoryUtil.getLog(FileChecker.class);
 

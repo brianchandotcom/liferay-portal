@@ -17,6 +17,7 @@ package com.liferay.portal.security.pacl.checker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.PACLConstants;
+import com.liferay.portal.kernel.util.PathUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
@@ -91,140 +92,141 @@ public abstract class BaseChecker implements Checker, PACLConstants {
 	}
 
 	protected boolean isJSPCompiler(String subject, String actions) {
-		for (int i = 1;; i++) {
+		for (int i = 7;; i++) {
 			Class<?> callerClass = Reflection.getCallerClass(i);
 
 			if (callerClass == null) {
-				break;
+				return false;
 			}
+
+			Boolean allowed = null;
 
 			String callerClassName = callerClass.getName();
 
-			if (!callerClassName.startsWith(
-					_PACKAGE_NAME_ORG_APACHE_JASPER_COMPILER) &&
-				!callerClassName.startsWith(
-					_PACKAGE_NAME_ORG_APACHE_JASPER_XMLPARSER) &&
-				!callerClassName.startsWith(
-					_PACKAGE_NAME_ORG_APACHE_NAMING_RESOURCES) &&
-				!callerClassName.equals(
-					_ClASS_NAME_DEFAULT_ANNOTATION_PROCESSOR) &&
-				!callerClassName.equals(_ClASS_NAME_DEFAULT_INSTANCE_MANAGER) &&
-				!callerClassName.equals(_ClASS_NAME_JASPER_LOADER) &&
-				!callerClassName.startsWith(
-					_CLASS_NAME_JASPER_SERVLET_CONTEXT_CUSTOMIZER) &&
-				!callerClassName.equals(_ClASS_NAME_JSP_MANAGER) &&
-				!callerClassName.equals(_ClASS_NAME_PAGE_MANAGER) &&
-				!callerClassName.equals(_ClASS_NAME_TAG_HANDLER_POOL)) {
+			if (ServerDetector.isGeronimo()) {
+				if (callerClassName.equals(_ClASS_NAME_COMPILER) ||
+					callerClassName.startsWith(
+						_CLASS_NAME_JASPER_SERVLET_CONTEXT_CUSTOMIZER) ||
+					callerClassName.equals(_ClASS_NAME_TAG_HANDLER_POOL)) {
 
-				continue;
+					String actualClassLocation = PACLClassUtil.getClassLocation(
+						callerClass);
+					String expectedClassLocation = PathUtil.toUnixPath(
+						System.getProperty("org.apache.geronimo.home.dir") +
+							"/repository/org/apache/geronimo/");
+
+					allowed = actualClassLocation.contains(
+						expectedClassLocation);
+				}
 			}
+			else if (ServerDetector.isGlassfish()) {
+				if (callerClassName.equals(_ClASS_NAME_COMPILER) ||
+					callerClassName.equals(
+						_ClASS_NAME_JSP_COMPILATION_CONTEXT)) {
 
-			ClassLoader callerClassLoader = PACLClassLoaderUtil.getClassLoader(
-				callerClass);
+					String classLocation = PACLClassUtil.getClassLocation(
+						callerClass);
 
-			if (callerClassLoader != _commonClassLoader) {
-				boolean allow = false;
-
-				if (ServerDetector.isGeronimo()) {
-					Class<?> callerClassLoaderClass =
-						callerClassLoader.getClass();
-
-					String callerClassLoaderClassName =
-						callerClassLoaderClass.getName();
-
-					if (callerClassLoaderClassName.equals(
-							_CLASS_NAME_JAR_FILE_CLASS_LOADER)) {
-
-						allow = true;
-					}
+					allowed = classLocation.startsWith("bundle://");
 				}
-				else if (ServerDetector.isGlassfish()) {
-					Class<?> callerClassLoaderClass =
-						callerClassLoader.getClass();
+			}
+			else if (ServerDetector.isJBoss()) {
+				if (callerClassName.equals(_ClASS_NAME_COMPILER)) {
+					ClassLoader callerClassLoader =
+						PACLClassLoaderUtil.getClassLoader(callerClass);
 
-					callerClassLoaderClass =
-						callerClassLoaderClass.getEnclosingClass();
-
-					if (callerClassLoaderClass != null) {
-						String callerClassLoaderClassName =
-							callerClassLoaderClass.getName();
-
-						if (callerClassLoaderClassName.equals(
-								_ClASS_NAME_BUNDLE_WIRING_IMPL)) {
-
-							allow = true;
-						}
-					}
-				}
-				else if (ServerDetector.isJBoss()) {
 					String callerClassLoaderString =
 						callerClassLoader.toString();
 
-					if (callerClassLoaderString.contains(
-							_MODULE_NAME_ORG_JBOSS_AS_WEB_MAIN)) {
-
-						allow = true;
-					}
+					allowed = callerClassLoaderString.contains(
+						_MODULE_NAME_ORG_JBOSS_AS_WEB_MAIN);
 				}
-				else if (ServerDetector.isJOnAS()) {
-					Class<?> callerClassLoaderClass =
-						callerClassLoader.getClass();
+			}
+			else if (ServerDetector.isJetty()) {
+				if (callerClassName.equals(_ClASS_NAME_COMPILER) ||
+					callerClassName.equals(_ClASS_NAME_JASPER_LOADER)) {
 
-					String callerClassLoaderClassName =
-						callerClassLoaderClass.getName();
+					ClassLoader callerClassLoader =
+						PACLClassLoaderUtil.getClassLoader(callerClass);
 
-					if (callerClassLoaderClassName.startsWith(
-							_CLASS_NAME_MODULE_IMPL)) {
-
-						allow = true;
-					}
+					allowed = (callerClassLoader == _commonClassLoader);
 				}
-				else if (ServerDetector.isResin()) {
-					Class<?> callerClassLoaderClass =
-						callerClassLoader.getClass();
+			}
+			else if (ServerDetector.isJOnAS()) {
+				if (callerClassName.equals(
+						_ClASS_NAME_DEFAULT_ANNOTATION_PROCESSOR) ||
+					callerClassName.equals(_ClASS_NAME_JASPER_LOADER) ||
+					callerClassName.equals(
+						_ClASS_NAME_JSP_COMPILATION_CONTEXT)) {
 
 					String classLocation = PACLClassUtil.getClassLocation(
-						callerClassLoaderClass);
+						callerClass);
 
-					if (Validator.isNull(classLocation)) {
-						allow = true;
-					}
+					allowed = classLocation.startsWith("bundle://");
 				}
+			}
+			else if (ServerDetector.isResin()) {
+				if (callerClassName.equals(_ClASS_NAME_JSP_MANAGER) ||
+					callerClassName.equals(_ClASS_NAME_PAGE_MANAGER)) {
 
-				if (!allow) {
+					String actualClassLocation = PACLClassUtil.getClassLocation(
+						callerClass);
+					String expectedClassLocation = PathUtil.toUnixPath(
+						System.getProperty("resin.home") + "/lib/resin.jar!/");
+
+					allowed = actualClassLocation.contains(
+						expectedClassLocation);
+				}
+			}
+			else if (ServerDetector.isTomcat()) {
+				if (callerClassName.equals(
+						_ClASS_NAME_DEFAULT_INSTANCE_MANAGER) ||
+					callerClassName.equals(_ClASS_NAME_COMPILER) ||
+					callerClassName.equals(_ClASS_NAME_TAG_HANDLER_POOL)) {
+
+					ClassLoader callerClassLoader =
+						PACLClassLoaderUtil.getClassLoader(callerClass);
+
+					allowed = (callerClassLoader == _commonClassLoader);
+				}
+			}
+
+			if (allowed == null) {
+				continue;
+			}
+
+			if (allowed) {
+				if (_log.isDebugEnabled()) {
 					if (Validator.isNotNull(actions)) {
-						_log.error(
-							"A plugin is hijacking the JSP compiler via " +
-								callerClassName + " to " + actions + " " +
-									subject);
+						_log.debug(
+							"Allowing the JSP compiler via " + callerClassName +
+								" to " + actions + " " + subject);
 					}
 					else {
-						_log.error(
-							"A plugin is hijacking the JSP compiler via " +
-								callerClassName + " to " + subject);
+						_log.debug(
+							"Allowing the JSP compiler via " + callerClassName +
+								" to " + subject);
 					}
-
-					return false;
 				}
-			}
 
-			if (_log.isDebugEnabled()) {
+				return true;
+			}
+			else {
 				if (Validator.isNotNull(actions)) {
-					_log.debug(
-						"Allowing the JSP compiler via " + callerClassName +
-							" to " + actions + " " + subject);
+					_log.error(
+						"A plugin is hijacking the JSP compiler via " +
+							callerClassName + " to " + actions + " " +
+								subject);
 				}
 				else {
-					_log.debug(
-						"Allowing the JSP compiler via " + callerClassName +
-							" to " + subject);
+					_log.error(
+						"A plugin is hijacking the JSP compiler via " +
+							callerClassName + " to " + subject);
 				}
+
+				return false;
 			}
-
-			return true;
 		}
-
-		return false;
 	}
 
 	protected void throwSecurityException(Log log, String message) {
@@ -235,8 +237,8 @@ public abstract class BaseChecker implements Checker, PACLConstants {
 		throw new SecurityException(message);
 	}
 
-	private static final String _ClASS_NAME_BUNDLE_WIRING_IMPL =
-		"org.apache.felix.framework.BundleWiringImpl";
+	private static final String _ClASS_NAME_COMPILER =
+		"org.apache.jasper.compiler.Compiler";
 
 	private static final String _ClASS_NAME_DEFAULT_ANNOTATION_PROCESSOR =
 		"org.apache.catalina.util.DefaultAnnotationProcessor";
@@ -244,20 +246,17 @@ public abstract class BaseChecker implements Checker, PACLConstants {
 	private static final String _ClASS_NAME_DEFAULT_INSTANCE_MANAGER =
 		"org.apache.catalina.core.DefaultInstanceManager";
 
-	private static final String _CLASS_NAME_JAR_FILE_CLASS_LOADER =
-		"org.apache.geronimo.kernel.classloader.JarFileClassLoader";
-
 	private static final String _ClASS_NAME_JASPER_LOADER =
 		"org.apache.jasper.servlet.JasperLoader";
 
 	private static final String _CLASS_NAME_JASPER_SERVLET_CONTEXT_CUSTOMIZER =
 		"org.apache.geronimo.jasper.JasperServletContextCustomizer$";
 
+	private static final String _ClASS_NAME_JSP_COMPILATION_CONTEXT =
+		"org.apache.jasper.JspCompilationContext";
+
 	private static final String _ClASS_NAME_JSP_MANAGER =
 		"com.caucho.jsp.JspManager";
-
-	private static final String _CLASS_NAME_MODULE_IMPL =
-		"org.apache.felix.framework.ModuleImpl";
 
 	private static final String _ClASS_NAME_PAGE_MANAGER =
 		"com.caucho.jsp.PageManager";
@@ -267,15 +266,6 @@ public abstract class BaseChecker implements Checker, PACLConstants {
 
 	private static final String _MODULE_NAME_ORG_JBOSS_AS_WEB_MAIN =
 		"org.jboss.as.web:main";
-
-	private static final String _PACKAGE_NAME_ORG_APACHE_JASPER_COMPILER =
-		"org.apache.jasper.compiler.";
-
-	private static final String _PACKAGE_NAME_ORG_APACHE_JASPER_XMLPARSER =
-		"org.apache.jasper.xmlparser.";
-
-	private static final String _PACKAGE_NAME_ORG_APACHE_NAMING_RESOURCES =
-		"org.apache.naming.resources";
 
 	private static Log _log = LogFactoryUtil.getLog(BaseChecker.class);
 

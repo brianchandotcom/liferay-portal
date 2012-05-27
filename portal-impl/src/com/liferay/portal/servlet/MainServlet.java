@@ -100,6 +100,7 @@ import java.io.IOException;
 
 import java.lang.reflect.Field;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -923,12 +924,127 @@ public class MainServlet extends ActionServlet {
 	}
 
 	protected void initServerDetector() throws Exception {
-		if (ServerDetector.isJetty()) {
+		if (ServerDetector.isGlassfish()) {
+			initServerDetectorGlassfish();
+		}
+		else if (ServerDetector.isJetty()) {
 			initServerDetectorJetty();
 		}
 		else if (ServerDetector.isTomcat()) {
 			initServerDetectorTomcat();
 		}
+	}
+
+	protected void initServerDetectorGlassfish() throws Exception {
+
+		// org.apache.catalina.core.ApplicationContext
+
+		ServletContext servletContext = getServletContext();
+
+		Class<?> servletContextClass = servletContext.getClass();
+
+		Field contextField = servletContextClass.getDeclaredField("context");
+
+		contextField.setAccessible(true);
+
+		Object applicationContext = contextField.get(servletContext);
+
+		// com.sun.enterprise.web.WebModule
+
+		Class<?> applicationContextClass = applicationContext.getClass();
+
+		contextField = applicationContextClass.getDeclaredField("context");
+
+		contextField.setAccessible(true);
+
+		Object webModule = contextField.get(applicationContext);
+
+		// org.apache.catalina.core.ContainerBase
+
+		Class<?> containerBaseClass = webModule.getClass();
+
+		for (int i = 0; i < 3; i++) {
+			containerBaseClass = containerBaseClass.getSuperclass();
+		}
+
+		// com.sun.enterprise.web.VirtualServer
+
+		Field parentField = containerBaseClass.getDeclaredField("parent");
+
+		parentField.setAccessible(true);
+
+		Object virtualServer = parentField.get(webModule);
+
+		// com.sun.enterprise.web.WebContainer
+
+		Object webEngine = parentField.get(virtualServer);
+
+		Class<?> webEngineClass = webEngine.getClass();
+
+		Field webContainerField = webEngineClass.getDeclaredField(
+			"webContainer");
+
+		webContainerField.setAccessible(true);
+
+		Object webContainer = webContainerField.get(webEngine);
+
+		// org.glassfish.config.support.TranslatedConfigView
+
+		Class<?> webContainerClass = webContainer.getClass();
+
+		Field dasConfigField = webContainerClass.getDeclaredField("dasConfig");
+
+		dasConfigField.setAccessible(true);
+
+		Object dasConfigProxy = dasConfigField.get(webContainer);
+
+		Class<?> proxyClass = dasConfigProxy.getClass().getSuperclass();
+
+		Field hField = proxyClass.getDeclaredField("h");
+
+		hField.setAccessible(true);
+
+		Object translatedConfigView = hField.get(dasConfigProxy);
+
+		// org.glassfish.config.support.GlassFishConfigBean
+
+		Class<?> translatedConfigViewClass = translatedConfigView.getClass();
+
+		Field masterViewField = translatedConfigViewClass.getDeclaredField(
+			"masterView");
+
+		masterViewField.setAccessible(true);
+
+		Object masterView = masterViewField.get(translatedConfigView);
+
+		// org.jvnet.hk2.config.Dom
+
+		Class domClass = masterView.getClass();
+
+		for (int i = 0; i < 2; i++) {
+			domClass = domClass.getSuperclass();
+		}
+
+		// attributes
+
+		Field attributesField = domClass.getDeclaredField("attributes");
+
+		attributesField.setAccessible(true);
+
+		HashMap<String, String> attributes =
+			(HashMap<String, String>)attributesField.get(masterView);
+
+		// getting value
+
+		String autoDeployEnabledValue = attributes.get("autodeploy-enabled");
+
+		if (autoDeployEnabledValue == null) {
+			autoDeployEnabledValue = "true";
+		}
+
+		boolean autoDeploy = GetterUtil.getBoolean(autoDeployEnabledValue);
+
+		ServerDetector.setSupportsHotDeploy(autoDeploy);
 	}
 
 	protected void initServerDetectorJetty() throws Exception {

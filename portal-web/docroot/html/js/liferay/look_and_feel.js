@@ -1019,7 +1019,8 @@ AUI.add(
 										css: A.JSON.stringify(instance._objData),
 										doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
 										p_l_id: themeDisplay.getPlid(),
-										portletId: instance._portletId
+										portletId: instance._portletId,
+										p_auth: Liferay.securityPAuthToken
 									},
 									on: {
 										complete: saveHandler
@@ -1063,7 +1064,8 @@ AUI.add(
 						data: {
 							doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
 							p_l_id: themeDisplay.getPlid(),
-							portletId: instance._portletId
+							portletId: instance._portletId,
+							p_auth: Liferay.securityPAuthToken
 						},
 						dataType: 'json',
 						on: {

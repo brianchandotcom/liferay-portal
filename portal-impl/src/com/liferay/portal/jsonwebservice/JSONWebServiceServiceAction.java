@@ -71,8 +71,6 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
-		checkAuthToken(request);
-
 		JSONWebServiceAction jsonWebServiceAction = null;
 
 		String path = GetterUtil.getString(request.getPathInfo());

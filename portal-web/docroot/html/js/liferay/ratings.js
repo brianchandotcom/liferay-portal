@@ -104,7 +104,8 @@ AUI.add(
 									className: instance.get('className'),
 									classPK: instance.get('classPK'),
 									p_l_id: themeDisplay.getPlid(),
-									score: score
+									score: score,
+									p_auth: Liferay.securityPAuthToken
 								},
 								dataType: 'json',
 								on: {

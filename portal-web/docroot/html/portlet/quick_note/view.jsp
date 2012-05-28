@@ -60,7 +60,8 @@
 							data: {
 								color: bgColor,
 								p_l_id: '<%= plid %>',
-								portletId: '<%= portletDisplay.getId() %>'
+								portletId: '<%= portletDisplay.getId() %>',
+								p_auth: Liferay.securityPAuthToken
 							}
 						}
 					);
@@ -87,7 +88,8 @@
 									data: {
 										data: newValue,
 										p_l_id: '<%= plid %>',
-										portletId: '<%= portletDisplay.getId() %>'
+										portletId: '<%= portletDisplay.getId() %>',
+										p_auth: '<%= AuthTokenUtil.getToken(request) %>'
 									}
 								}
 							);

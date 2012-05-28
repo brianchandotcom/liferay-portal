@@ -1152,7 +1152,20 @@ release was successful.</echo>
 	</target>
 
 	<target name="unzip-weblogic">
-		<var name="wl.home" value="${app.server.weblogic.dir}/wlserver" />
+
+		<property name="app.server.weblogic.dir.abs" location="${app.server.weblogic.dir}"/>
+
+		<var name="wl.home" value="${app.server.weblogic.dir.abs}/wlserver" />
+
+		<pathconvert targetos="unix" property="wl.home.unix">
+			<path location="${wl.home}"/>
+		</pathconvert>
+
+		<property name="app.server.weblogic.instance.dir.abs" location="${app.server.weblogic.instance.dir}"/>
+
+		<pathconvert targetos="unix" property="app.server.weblogic.instance.dir.abs.unix">
+			<path location="${app.server.weblogic.instance.dir.abs}"/>
+		</pathconvert>
 
 		<delete dir="${app.server.weblogic.dir}" />
 
@@ -1180,7 +1193,7 @@ rerun this task.</echo>
 
 		<mkdir dir="${tstamp.value}" />
 
-		<echo file="${tstamp.value}/create-weblogic-domain.py">readTemplate('${wl.home}/common/templates/domains/wls.jar')
+		<echo file="${tstamp.value}/create-weblogic-domain.py">readTemplate('${wl.home.unix}/common/templates/domains/wls.jar')
 
 set('Name', '${app.server.weblogic.instance.name}')
 
@@ -1193,15 +1206,15 @@ cd('/Servers/AdminServer')
 set('ListenAddress', '')
 set('ListenPort', 8080)
 
-writeDomain('${app.server.weblogic.instance.dir}')
+writeDomain('${app.server.weblogic.instance.dir.abs.unix}')
 
 closeTemplate()</echo>
 
 		<if>
 			<os family="windows" />
 			<then>
-				<exec dir="${app.server.weblogic.dir}" executable="cmd">
-					<env key="MW_HOME" value="${app.server.weblogic.dir}" />
+				<exec dir="${app.server.weblogic.dir.abs}" executable="cmd">
+					<env key="MW_HOME" value="${app.server.weblogic.dir.abs}" />
 					<arg value="/c" />
 					<arg value="configure.cmd" />
 				</exec>
@@ -1210,7 +1223,7 @@ closeTemplate()</echo>
 
 set "USER_MEM_ARGS=-Xmx1024m -XX:PermSize=256m"
 
-set "MW_HOME=${app.server.weblogic.dir}"
+set "MW_HOME=${app.server.weblogic.dir.abs}"
 
 set "WL_HOME=${wl.home}"
 
@@ -1229,7 +1242,7 @@ set "CLASSPATH=%FMWCONFIG_CLASSPATH%"
 
 set "USER_MEM_ARGS=-Xmx1024m -XX:PermSize=512m"
 
-set "MW_HOME=${app.server.weblogic.dir}"
+set "MW_HOME=${app.server.weblogic.dir.abs}"
 
 call startWebLogic.cmd</echo>
 			</then>

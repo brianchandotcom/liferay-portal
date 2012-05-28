@@ -434,6 +434,18 @@ public class ExpandoValueWrapper implements ExpandoValue,
 		return _expandoValue.getLongArray();
 	}
 
+	public java.lang.Number getNumber()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _expandoValue.getNumber();
+	}
+
+	public java.lang.Number[] getNumberArray()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _expandoValue.getNumberArray();
+	}
+
 	public java.io.Serializable getSerializable()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

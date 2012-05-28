@@ -533,6 +533,7 @@ create unique index IX_46665CC4 on MDRRuleGroup (uuid_, groupId);
 
 create index IX_C95A08D8 on MDRRuleGroupInstance (classNameId, classPK);
 create unique index IX_808A0036 on MDRRuleGroupInstance (classNameId, classPK, ruleGroupId);
+create index IX_AFF28547 on MDRRuleGroupInstance (groupId);
 create index IX_22DAB85C on MDRRuleGroupInstance (groupId, classNameId, classPK);
 create index IX_BF3E642B on MDRRuleGroupInstance (ruleGroupId);
 create index IX_B6A6BD91 on MDRRuleGroupInstance (uuid_);

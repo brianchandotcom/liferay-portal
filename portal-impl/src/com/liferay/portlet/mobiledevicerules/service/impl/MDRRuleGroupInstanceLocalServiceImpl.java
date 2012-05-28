@@ -124,6 +124,17 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 		}
 	}
 
+	public void deleteRuleGroupInstancesByGroupId(long groupId)
+		throws SystemException {
+
+		List<MDRRuleGroupInstance> ruleGroupInstances =
+			mdrRuleGroupInstancePersistence.findByGroupId(groupId);
+
+		for (MDRRuleGroupInstance ruleGroupInstance : ruleGroupInstances) {
+			deleteRuleGroupInstance(ruleGroupInstance);
+		}
+	}
+
 	public MDRRuleGroupInstance fetchRuleGroupInstance(long ruleGroupInstanceId)
 		throws SystemException {
 

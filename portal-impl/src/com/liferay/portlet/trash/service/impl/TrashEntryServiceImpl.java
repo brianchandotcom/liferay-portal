@@ -16,6 +16,8 @@ package com.liferay.portlet.trash.service.impl;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.trash.TrashRenderer;
@@ -69,6 +71,7 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 				}
 			}
 			catch (Exception e) {
+				_log.error(e, e);
 			}
 		}
 	}
@@ -130,6 +133,7 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 				}
 			}
 			catch (Exception e) {
+				_log.error(e, e);
 			}
 		}
 
@@ -152,5 +156,8 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 		return new Object[] {
 			filteredEntries, filteredEntriesCount, approximate};
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		TrashEntryServiceImpl.class);
 
 }

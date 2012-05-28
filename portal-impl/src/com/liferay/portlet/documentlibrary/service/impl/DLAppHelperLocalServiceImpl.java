@@ -41,7 +41,6 @@ import com.liferay.portlet.asset.NoSuchEntryException;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLink;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
-import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
@@ -230,34 +229,30 @@ public class DLAppHelperLocalServiceImpl
 
 		// Trash
 
-		if (!(fileEntry.getModel() instanceof DLFileEntry)) {
-			return;
-		}
-
-		try {
-			DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
-
-			FileVersion fileVersion = new LiferayFileVersion(
-				dlFileEntry.getLatestFileVersion(true));
-
+		if (fileEntry.getModel() instanceof DLFileEntry) {
 			trashEntryLocalService.deleteEntry(
 				DLFileEntryConstants.getClassName(),
-				fileVersion.getFileVersionId());
-		}
-		catch (NoSuchFileVersionException nsfve) {
-		}
-		catch (com.liferay.portlet.trash.NoSuchEntryException nsee) {
+				fileEntry.getFileEntryId());
 		}
 	}
 
 	public void deleteFolder(Folder folder)
 		throws PortalException, SystemException {
 
+		// Sync
+
 		if (!isStagingGroup(folder.getGroupId())) {
 			dlSyncLocalService.updateSync(
 				folder.getFolderId(), folder.getParentFolderId(),
 				folder.getName(), folder.getDescription(),
 				DLSyncConstants.EVENT_DELETE, "-1");
+		}
+
+		// Trash
+
+		if (folder.getModel() instanceof DLFolder) {
+			trashEntryLocalService.deleteEntry(
+				DLFolderConstants.getClassName(), folder.getFolderId());
 		}
 	}
 
@@ -571,7 +566,7 @@ public class DLAppHelperLocalServiceImpl
 
 		// Trash
 
-		trashEntryLocalService.deleteTrashEntry(trashEntry.getEntryId());
+		trashEntryLocalService.deleteEntry(trashEntry.getEntryId());
 	}
 
 	public void restoreFolderFromTrash(long userId, Folder folder)
@@ -596,7 +591,7 @@ public class DLAppHelperLocalServiceImpl
 
 		// Trash
 
-		trashEntryLocalService.deleteTrashEntry(trashEntry.getEntryId());
+		trashEntryLocalService.deleteEntry(trashEntry.getEntryId());
 	}
 
 	public AssetEntry updateAsset(

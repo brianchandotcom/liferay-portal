@@ -65,5 +65,9 @@
 		<finder name="EntryId" return-type="Collection">
 			<finder-column name="entryId" />
 		</finder>
+		<finder name="C_C" return-type="Collection">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
 	</entity>
 </service-builder>

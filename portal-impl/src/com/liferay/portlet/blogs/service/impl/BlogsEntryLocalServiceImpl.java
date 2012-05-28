@@ -835,7 +835,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		// Trash
 
-		trashEntryLocalService.deleteTrashEntry(trashEntry.getEntryId());
+		trashEntryLocalService.deleteEntry(trashEntry.getEntryId());
 	}
 
 	public void subscribe(long userId, long groupId)

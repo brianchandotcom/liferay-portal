@@ -16,6 +16,8 @@ package com.liferay.portlet.trash.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -103,15 +105,34 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 	}
 
 	/**
+	 * Deletes the trash entry with the primary key.
+	 *
+	 * @param  entryId the primary key of the trash entry
+	 * @throws PortalException if a trash entry with the primary key could not
+	 *         be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Indexable(type = IndexableType.DELETE)
+	public TrashEntry deleteEntry(long entryId)
+		throws PortalException, SystemException {
+
+		TrashEntry trashEntry = trashEntryPersistence.fetchByPrimaryKey(
+			entryId);
+
+		return deleteEntry(trashEntry);
+	}
+
+	/**
 	 * Deletes the trash entry with the entity class name and primary key.
 	 *
 	 * @param  className the class name of entity
 	 * @param  classPK the primary key of the entry
-	 * @throws PortalException if the user did not have permission to delete the
-	 *         entry
+	 * @throws PortalException if a trash entry with the primary key could not
+	 *         be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void deleteEntry(String className, long classPK)
+	@Indexable(type = IndexableType.DELETE)
+	public TrashEntry deleteEntry(String className, long classPK)
 		throws PortalException, SystemException {
 
 		long classNameId = PortalUtil.getClassNameId(className);
@@ -119,11 +140,7 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 		TrashEntry trashEntry = trashEntryPersistence.fetchByC_C(
 			classNameId, classPK);
 
-		if (trashEntry != null) {
-			trashVersionPersistence.removeByEntryId(trashEntry.getEntryId());
-
-			trashEntryPersistence.remove(trashEntry);
-		}
+		return deleteEntry(trashEntry);
 	}
 
 	/**
@@ -216,7 +233,8 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 	 *
 	 * @param  entryId the primary key of the trash entry
 	 * @return the trash entry with the primary key
-	 * @throws PortalException if a portal exception occurred
+	 * @throws PortalException if a trash entry with the primary key could not
+	 *         be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	public TrashEntry getEntry(long entryId)
@@ -252,6 +270,35 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 	 */
 	public List<TrashVersion> getVersions(long entryId) throws SystemException {
 		return trashEntryPersistence.getTrashVersions(entryId);
+	}
+
+	/**
+	 * Returns all the trash versions associated with the trash entry.
+	 *
+	 * @param  className the class name of the trash entity
+	 * @param  classPK the primary key of the trash entity
+	 * @return all the trash versions associated with the trash entry
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<TrashVersion> getVersions(String className, long classPK)
+		throws SystemException {
+
+		long classNameId = PortalUtil.getClassNameId(className);
+
+		return trashVersionPersistence.findByC_C(classNameId, classPK);
+	}
+
+	@Indexable(type = IndexableType.DELETE)
+	protected TrashEntry deleteEntry(TrashEntry trashEntry)
+		throws SystemException {
+
+		if (trashEntry != null) {
+			trashVersionPersistence.removeByEntryId(trashEntry.getEntryId());
+
+			trashEntry = trashEntryPersistence.remove(trashEntry);
+		}
+
+		return trashEntry;
 	}
 
 }

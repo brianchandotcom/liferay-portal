@@ -146,6 +146,17 @@ public class PACLClassUtil {
 			callerClassLoader = callerClassLoader.getParent();
 		}
 
+		if (callerClassLoaderClassName.equals(_CLASS_NAME_JSP_CLASS_LOADER)) {
+
+			// weblogic.servlet.jsp.TagFileClassLoader
+
+			callerClassLoader = callerClassLoader.getParent();
+
+			// weblogic.utils.classloaders.ChangeAwareClassLoader
+
+			callerClassLoader = callerClassLoader.getParent();
+		}
+
 		return callerClassLoader;
 	}
 
@@ -172,6 +183,23 @@ public class PACLClassUtil {
 			if (callerClassLoader == null) {
 				continue;
 			}
+
+			/*if (debug) {
+				StringBundler sb = new StringBundler(10);
+
+				sb.append("Frame ");
+				sb.append(i);
+				sb.append(" ");
+				sb.append(callerClass);
+				sb.append(" ");
+				sb.append(callerClassLoader);
+				sb.append(" ");
+				sb.append(callerClassLoader.getClass());
+				sb.append(" ");
+				sb.append(PACLPolicyManager.getPACLPolicy(callerClassLoader));
+
+				System.out.println(sb.toString());
+			}*/
 
 			if (!initialPortalClassLoaderPhase &&
 				(callerClassLoader == _portalClassLoader)) {
@@ -277,6 +305,9 @@ public class PACLClassUtil {
 
 	private static final String _ClASS_NAME_JASPER_LOADER =
 		"org.apache.jasper.servlet.JasperLoader";
+
+	private static final String _CLASS_NAME_JSP_CLASS_LOADER =
+		"weblogic.servlet.jsp.JspClassLoader";
 
 	private static Log _log = LogFactoryUtil.getLog(PACLClassUtil.class);
 

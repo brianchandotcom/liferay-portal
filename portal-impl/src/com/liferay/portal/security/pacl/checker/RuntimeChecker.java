@@ -261,6 +261,15 @@ public class RuntimeChecker extends BaseReflectChecker {
 				return true;
 			}
 
+			if (isWebLogicGenericClassLoader(
+					callerClass7.getEnclosingClass()) &&
+				CheckerUtil.isAccessControllerDoPrivileged(8)) {
+
+				logGetClassLoader(callerClass7, 7);
+
+				return true;
+			}
+
 			if (isXercesSecuritySupport(callerClass7) &&
 				CheckerUtil.isAccessControllerDoPrivileged(8)) {
 
@@ -570,6 +579,33 @@ public class RuntimeChecker extends BaseReflectChecker {
 		return actualClassLocation.endsWith(expectedClassLocation);
 	}
 
+	protected boolean isWebLogicGenericClassLoader(Class<?> clazz) {
+		if (!ServerDetector.isWebLogic()) {
+			return false;
+		}
+
+		if (clazz == null) {
+			return false;
+		}
+
+		String className = clazz.getName();
+
+		if (!className.equals(_CLASS_NAME_GENERIC_CLASS_LOADER)) {
+			return false;
+		}
+
+		String classLocation = PACLClassUtil.getClassLocation(clazz);
+
+		if (classLocation.contains(
+				"/modules/com.bea.core.utils.classloaders_") ||
+			classLocation.contains("/patch_jars/BUG")) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	protected boolean isXercesSecuritySupport(Class<?> clazz) {
 		String className = clazz.getName();
 
@@ -642,6 +678,9 @@ public class RuntimeChecker extends BaseReflectChecker {
 
 	private static final String _CLASS_NAME_ENVIRONMENT_LOCAL =
 		"com.caucho.loader.EnvironmentLocal";
+
+	private static final String _CLASS_NAME_GENERIC_CLASS_LOADER =
+		"weblogic.utils.classloaders.GenericClassLoader";
 
 	private static final String _CLASS_NAME_JDBC_LEAK_PREVENTION =
 		"org.apache.catalina.loader.JdbcLeakPrevention";

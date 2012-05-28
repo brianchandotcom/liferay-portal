@@ -215,6 +215,22 @@ public abstract class BaseReflectChecker extends BaseChecker {
 			return true;
 		}
 
+		// weblogic.spring.monitoring.utils.AbstractApplicationContextDelegator
+
+		if (isWebLogicAbstractApplicationContextDelegator(callerClass9)) {
+			logReflect(callerClass9, 9);
+
+			return true;
+		}
+
+		// weblogic.spring.monitoring.utils.AbstractBeanDefinitionDelegator
+
+		if (isWebLogicAbstractBeanDefinitionDelegator(callerClass9)) {
+			logReflect(callerClass9, 9);
+
+			return true;
+		}
+
 		// Reject
 
 		if (_log.isDebugEnabled()) {
@@ -299,6 +315,58 @@ public abstract class BaseReflectChecker extends BaseChecker {
 		return actualClassLocation.contains(expectedClassLocation);
 	}
 
+	protected boolean isWebLogicAbstractApplicationContextDelegator(
+		Class<?> clazz) {
+
+		if (!ServerDetector.isWebLogic()) {
+			return false;
+		}
+
+		String className = clazz.getName();
+
+		if (!className.equals(
+				_CLASS_NAME_ABSTRACT_APPLICATION_CONTEXT_DELEGATOR)) {
+
+			return false;
+		}
+
+		String classLocation = PACLClassUtil.getClassLocation(clazz);
+
+		if (classLocation.contains(
+				"/modules/com.bea.core.weblogic.spring.instrument_") ||
+			classLocation.contains("/patch_jars/BUG")) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean isWebLogicAbstractBeanDefinitionDelegator(
+		Class<?> clazz) {
+
+		if (!ServerDetector.isWebLogic()) {
+			return false;
+		}
+
+		String className = clazz.getName();
+
+		if (!className.equals(_CLASS_NAME_ABSTRACT_BEAN_DEFINITION_DELEGATOR)) {
+			return false;
+		}
+
+		String classLocation = PACLClassUtil.getClassLocation(clazz);
+
+		if (classLocation.contains(
+				"/modules/com.bea.core.weblogic.spring.instrument_") ||
+			classLocation.contains("/patch_jars/BUG")) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	protected void logReflect(Class<?> callerClass, int frame) {
 		if (_log.isInfoEnabled()) {
 			_log.info(
@@ -306,6 +374,14 @@ public abstract class BaseReflectChecker extends BaseChecker {
 					" to reflect");
 		}
 	}
+
+	private static final String _CLASS_NAME_ABSTRACT_BEAN_DEFINITION_DELEGATOR =
+		"weblogic.spring.monitoring.utils.AbstractBeanDefinitionDelegator";
+
+	private static final String
+		_CLASS_NAME_ABSTRACT_APPLICATION_CONTEXT_DELEGATOR =
+			"weblogic.spring.monitoring.utils." +
+				"AbstractApplicationContextDelegator";
 
 	private static final String _CLASS_NAME_JAVA_SESSION_SERIALIZER =
 		"com.caucho.server.session.JavaSessionSerializer";

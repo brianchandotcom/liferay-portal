@@ -443,6 +443,69 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 								</c:when>
 							</c:choose>
 						</c:when>
+						<c:when test="<%= type == ExpandoColumnConstants.NUMBER_ARRAY %>">
+							<c:choose>
+								<c:when test="<%= propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_CHECKBOX) %>">
+
+									<%
+									Number[] curValue = (Number[])value;
+
+									for (Number curDefaultValue : (Number[])defaultValue) {
+									%>
+
+										<input <%= ((curValue.length > 0) && ArrayUtil.contains(curValue, curDefaultValue)) ? "checked" : "" %> name="<portlet:namespace />ExpandoAttribute--<%= escapedName %>--" type="checkbox" value="<%= curDefaultValue %>"><%= curDefaultValue %></input><br />
+
+									<%
+									}
+									%>
+
+								</c:when>
+								<c:when test="<%= propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_RADIO) %>">
+
+									<%
+									Number[] curValue = (Number[])value;
+
+									for (Number curDefaultValue : (Number[])defaultValue) {
+									%>
+
+										<input <%= ((curValue.length > 0) && ArrayUtil.contains(curValue, curDefaultValue)) ? "checked" : "" %> name="<portlet:namespace />ExpandoAttribute--<%= escapedName %>--" type="radio" value="<%= curDefaultValue %>"><%= curDefaultValue %></input><br />
+
+									<%
+									}
+									%>
+
+								</c:when>
+								<c:when test="<%= propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_SELECTION_LIST) %>">
+									<select name="<portlet:namespace />ExpandoAttribute--<%= escapedName %>--">
+
+										<%
+										Number[] curValue = (Number[])value;
+
+										for (Number curDefaultValue : (Number[])defaultValue) {
+										%>
+
+											<option <%= ((curValue.length > 0) && ArrayUtil.contains(curValue, curDefaultValue)) ? "selected" : "" %>><%= curDefaultValue %></option>
+
+										<%
+										}
+										%>
+
+									</select>
+								</c:when>
+								<c:when test="<%= propertyDisplayType.equals(ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX) %>">
+
+									<%
+									if (((Number[])value).length == 0) {
+										value = defaultValue;
+									}
+
+									Number[] values = ParamUtil.getNumberValues(request, "ExpandoAttribute--" + escapedName + "--", (Number[])value);
+									%>
+
+									<textarea class="lfr-textarea" id="<%= randomNamespace %><%= escapedName %>" name="<portlet:namespace />ExpandoAttribute--<%= escapedName %>--"><%= StringUtil.merge(values, StringPool.NEW_LINE) %></textarea>
+								</c:when>
+							</c:choose>
+						</c:when>
 						<c:when test="<%= type == ExpandoColumnConstants.SHORT_ARRAY %>">
 							<c:choose>
 
@@ -669,6 +732,12 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 				}
 				else if (type == ExpandoColumnConstants.LONG_ARRAY) {
 					sb.append(StringUtil.merge((long[])value));
+				}
+				else if (type == ExpandoColumnConstants.NUMBER) {
+					sb.append((Number)value);
+				}
+				else if (type == ExpandoColumnConstants.NUMBER_ARRAY) {
+					sb.append(StringUtil.merge((Number[])value));
 				}
 				else if (type == ExpandoColumnConstants.SHORT) {
 					sb.append((Short)value);

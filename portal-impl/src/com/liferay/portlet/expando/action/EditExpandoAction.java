@@ -328,6 +328,20 @@ public class EditExpandoAction extends PortletAction {
 
 			value = GetterUtil.getLongValues(values);
 		}
+		else if (type == ExpandoColumnConstants.NUMBER) {
+			value = ParamUtil.getNumber(portletRequest, name);
+		}
+		else if (type == ExpandoColumnConstants.NUMBER_ARRAY) {
+			String paramValue = ParamUtil.getString(portletRequest, name);
+
+			if (paramValue.contains(StringPool.NEW_LINE)) {
+				delimiter = StringPool.NEW_LINE;
+			}
+
+			String[] values = StringUtil.split(paramValue, delimiter);
+
+			value = GetterUtil.getNumberValues(values);
+		}
 		else if (type == ExpandoColumnConstants.SHORT) {
 			value = ParamUtil.getShort(portletRequest, name);
 		}

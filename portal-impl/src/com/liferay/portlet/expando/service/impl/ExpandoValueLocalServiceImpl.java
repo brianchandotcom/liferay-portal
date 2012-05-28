@@ -910,6 +910,12 @@ public class ExpandoValueLocalServiceImpl
 			else if (type == ExpandoColumnConstants.LONG_ARRAY) {
 				value.setLongArray((long[])attributeValue);
 			}
+			else if (type == ExpandoColumnConstants.NUMBER) {
+				value.setNumber((Number)attributeValue);
+			}
+			else if (type == ExpandoColumnConstants.NUMBER_ARRAY) {
+				value.setNumberArray((Number[])attributeValue);
+			}
 			else if (type == ExpandoColumnConstants.SHORT) {
 				value.setShort((Short)attributeValue);
 			}
@@ -1441,6 +1447,38 @@ public class ExpandoValueLocalServiceImpl
 		}
 		else {
 			return value.getLongArray();
+		}
+	}
+
+	public Number getData(
+			long companyId, String className, String tableName,
+			String columnName, long classPK, Number defaultData)
+		throws PortalException, SystemException {
+
+		ExpandoValue value = expandoValueLocalService.getValue(
+			companyId, className, tableName, columnName, classPK);
+
+		if (value == null) {
+			return defaultData;
+		}
+		else {
+			return value.getNumber();
+		}
+	}
+
+	public Number[] getData(
+			long companyId, String className, String tableName,
+			String columnName, long classPK, Number[] defaultData)
+		throws PortalException, SystemException {
+
+		ExpandoValue value = expandoValueLocalService.getValue(
+			companyId, className, tableName, columnName, classPK);
+
+		if (value == null) {
+			return defaultData;
+		}
+		else {
+			return value.getNumberArray();
 		}
 	}
 
@@ -2043,6 +2081,16 @@ public class ExpandoValueLocalServiceImpl
 			return expandoValueLocalService.getData(
 				companyId, className, tableName, columnName, classPK,
 				new long[0]);
+		}
+		else if (type == ExpandoColumnConstants.NUMBER) {
+			return expandoValueLocalService.getData(
+				companyId, className, tableName, columnName, classPK,
+				value.getNumber());
+		}
+		else if (type == ExpandoColumnConstants.NUMBER_ARRAY) {
+			return expandoValueLocalService.getData(
+				companyId, className, tableName, columnName, classPK,
+				new Number[0]);
 		}
 		else if (type == ExpandoColumnConstants.SHORT) {
 			return expandoValueLocalService.getData(

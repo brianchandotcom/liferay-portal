@@ -191,6 +191,9 @@ portletURL.setParameter("modelResource", modelResource);
 				<c:when test="<%= type == ExpandoColumnConstants.LONG_ARRAY %>">
 					<aui:input cssClass="lfr-textarea-container" name="defaultValue" type="textarea" value="<%= StringUtil.merge((long[])defaultValue, StringPool.NEW_LINE) %>" />
 				</c:when>
+				<c:when test="<%= type == ExpandoColumnConstants.NUMBER_ARRAY %>">
+					<aui:input cssClass="lfr-textarea-container" name="defaultValue" type="textarea" value="<%= StringUtil.merge((Number[])defaultValue, StringPool.NEW_LINE) %>" />
+				</c:when>
 				<c:when test="<%= type == ExpandoColumnConstants.SHORT_ARRAY %>">
 					<aui:input cssClass="lfr-textarea-container" name="defaultValue" type="textarea" value="<%= StringUtil.merge((short[])defaultValue, StringPool.NEW_LINE) %>" />
 				</c:when>
@@ -232,7 +235,7 @@ portletURL.setParameter("modelResource", modelResource);
 				<aui:option label="as-keyword" selected="<%= propertyIndexType == ExpandoColumnConstants.INDEX_TYPE_KEYWORD %>" value="<%= ExpandoColumnConstants.INDEX_TYPE_KEYWORD %>" />
 			</aui:select>
 
-			<c:if test="<%= (type == ExpandoColumnConstants.DOUBLE_ARRAY) || (type == ExpandoColumnConstants.FLOAT_ARRAY) || (type == ExpandoColumnConstants.INTEGER_ARRAY) || (type == ExpandoColumnConstants.LONG_ARRAY) || (type == ExpandoColumnConstants.SHORT_ARRAY) || (type == ExpandoColumnConstants.STRING_ARRAY) %>">
+			<c:if test="<%= (type == ExpandoColumnConstants.DOUBLE_ARRAY) || (type == ExpandoColumnConstants.FLOAT_ARRAY) || (type == ExpandoColumnConstants.INTEGER_ARRAY) || (type == ExpandoColumnConstants.LONG_ARRAY) || (type == ExpandoColumnConstants.NUMBER_ARRAY) || (type == ExpandoColumnConstants.SHORT_ARRAY) || (type == ExpandoColumnConstants.STRING_ARRAY) %>">
 				<aui:input name="PropertyName--display-type--" type="hidden" value="display-type" />
 
 				<aui:select helpMessage="custom-field-display-type-help" label="display-type" name="Property--display-type--">

@@ -15,6 +15,9 @@
 package com.liferay.portal.struts;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -24,11 +27,14 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.AuthSettingsUtil;
 import com.liferay.portal.security.auth.AuthTokenUtil;
+import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 
 import java.io.OutputStream;
+
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -37,7 +43,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import edu.emory.mathcs.backport.java.util.Arrays;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -64,6 +69,8 @@ public abstract class JSONAction extends Action {
 		String json = null;
 
 		try {
+			checkAuthToken(request);
+
 			json = getJSON(mapping, form, request, response);
 
 			if (Validator.isNotNull(callback)) {
@@ -72,6 +79,10 @@ public abstract class JSONAction extends Action {
 			else if (Validator.isNotNull(instance)) {
 				json = "var " + instance + "=" + json + ";";
 			}
+		}
+		catch (PrincipalException e) {
+			_log.error(e);
+			json = JSONFactoryUtil.serializeException(e);
 		}
 		catch (Exception e) {
 			PortalUtil.sendError(
@@ -123,8 +134,8 @@ public abstract class JSONAction extends Action {
 			Set<String> whiteList = new HashSet<String>(Arrays.asList(
 				PropsValues.JSON_SERVICE_AUTH_TOKEN_WHITELIST_HOSTS));
 
-			if(whiteList.size() > 0 &&
-				AuthSettingsUtil.isAccessAllowed(request, whiteList)){
+			if ((whiteList.size() > 0) &&
+				AuthSettingsUtil.isAccessAllowed(request, whiteList)) {
 
 				return;
 			}
@@ -185,6 +196,8 @@ public abstract class JSONAction extends Action {
 
 		return true;
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(JSONAction.class);
 
 	private ServletContext _servletContext;
 

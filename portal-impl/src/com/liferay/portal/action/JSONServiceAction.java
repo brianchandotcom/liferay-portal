@@ -81,8 +81,6 @@ public class JSONServiceAction extends JSONAction {
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
-		checkAuthToken(request);
-
 		String className = ParamUtil.getString(request, "serviceClassName");
 		String methodName = ParamUtil.getString(request, "serviceMethodName");
 

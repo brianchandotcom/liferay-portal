@@ -38,7 +38,8 @@
 						doAsUserId: event.doAsUserId,
 						p_l_id: event.plid,
 						p_p_id: event.portletId,
-						p_v_g_id: themeDisplay.getParentGroupId()
+						p_v_g_id: themeDisplay.getParentGroupId(),
+						p_auth: Liferay.securityPAuthToken
 					}
 				}
 			);
@@ -171,7 +172,8 @@
 				p_p_id: portletId,
 				p_p_i_id: portletItemId,
 				p_p_isolated: true,
-				p_v_g_id: themeDisplay.getParentGroupId()
+				p_v_g_id: themeDisplay.getParentGroupId(),
+				p_auth: Liferay.securityPAuthToken
 			};
 
 			var firstPortlet = container.one('.portlet-boundary');
@@ -444,7 +446,8 @@
 								p_l_id: plid,
 								p_p_id: portlet.portletId,
 								p_p_restore: restore,
-								p_v_g_id: themeDisplay.getParentGroupId()
+								p_v_g_id: themeDisplay.getParentGroupId(),
+								p_auth: Liferay.securityPAuthToken
 							}
 						}
 					);

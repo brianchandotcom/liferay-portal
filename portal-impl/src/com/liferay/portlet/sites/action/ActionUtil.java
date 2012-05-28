@@ -135,7 +135,7 @@ public class ActionUtil
 		Group group = null;
 
 		if (groupId > 0) {
-			if ((doAsGroupId != 0) && (doAsGroupId != groupId)) {
+			if (doAsGroupId > 0) {
 				group = GroupLocalServiceUtil.getGroup(doAsGroupId);
 			}
 			else {

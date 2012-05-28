@@ -74,18 +74,25 @@ public class WorkflowInstanceLinkLocalServiceImpl
 		return workflowInstanceLink;
 	}
 
-	public void deleteWorkflowInstanceLink(
+	@Override
+	public WorkflowInstanceLink deleteWorkflowInstanceLink(
+			long workflowInstanceLinkId)
+		throws PortalException, SystemException {
+
+		WorkflowInstanceLink workflowInstanceLink = fetchWorkflowInstanceLink(
+			workflowInstanceLinkId);
+
+		return deleteWorkflowInstanceLink(workflowInstanceLink);
+	}
+
+	public WorkflowInstanceLink deleteWorkflowInstanceLink(
 			long companyId, long groupId, String className, long classPK)
 		throws PortalException, SystemException {
 
 		WorkflowInstanceLink workflowInstanceLink = fetchWorkflowInstanceLink(
 			companyId, groupId, className, classPK);
 
-		if (workflowInstanceLink == null) {
-			return;
-		}
-
-		deleteWorkflowInstanceLink(workflowInstanceLink);
+		return deleteWorkflowInstanceLink(workflowInstanceLink);
 	}
 
 	@Override
@@ -93,16 +100,18 @@ public class WorkflowInstanceLinkLocalServiceImpl
 			WorkflowInstanceLink workflowInstanceLink)
 		throws PortalException, SystemException {
 
-		super.deleteWorkflowInstanceLink(workflowInstanceLink);
+		if (workflowInstanceLink != null) {
+			super.deleteWorkflowInstanceLink(workflowInstanceLink);
 
-		subscriptionLocalService.deleteSubscriptions(
-			workflowInstanceLink.getCompanyId(),
-			WorkflowInstance.class.getName(),
-			workflowInstanceLink.getWorkflowInstanceId());
+			subscriptionLocalService.deleteSubscriptions(
+				workflowInstanceLink.getCompanyId(),
+				WorkflowInstance.class.getName(),
+				workflowInstanceLink.getWorkflowInstanceId());
 
-		WorkflowInstanceManagerUtil.deleteWorkflowInstance(
-			workflowInstanceLink.getCompanyId(),
-			workflowInstanceLink.getWorkflowInstanceId());
+			WorkflowInstanceManagerUtil.deleteWorkflowInstance(
+				workflowInstanceLink.getCompanyId(),
+				workflowInstanceLink.getWorkflowInstanceId());
+		}
 
 		return workflowInstanceLink;
 	}

@@ -2678,40 +2678,51 @@ public class PortalImpl implements Portal {
 	public HttpServletRequest getOriginalServletRequest(
 		HttpServletRequest request) {
 
-		List<HttpServletRequestWrapper> persistentHttpServletRequestWrappers =
-			new ArrayList<HttpServletRequestWrapper>();
+		List<PersistentHttpServletRequestWrapper>
+			persistentHttpServletRequestWrappers =
+				new ArrayList<PersistentHttpServletRequestWrapper>();
 
 		HttpServletRequest originalRequest = request;
 
 		while (originalRequest.getClass().getName().startsWith(
 					"com.liferay.")) {
 
-			if (originalRequest instanceof
-					PersistentHttpServletRequestWrapper) {
-
-				persistentHttpServletRequestWrappers.add(
-					(HttpServletRequestWrapper)originalRequest);
-			}
-
 			// Get original request so that portlets inside portlets render
 			// properly
 
-			HttpServletRequestWrapper httpServletRequestWrapper =
-				(HttpServletRequestWrapper)originalRequest;
+			if (originalRequest instanceof
+					PersistentHttpServletRequestWrapper) {
 
-			originalRequest =
-				(HttpServletRequest)httpServletRequestWrapper.getRequest();
+				PersistentHttpServletRequestWrapper
+					persistentHttpServletRequestWrapper =
+						(PersistentHttpServletRequestWrapper)originalRequest;
+
+				persistentHttpServletRequestWrappers.add(
+					persistentHttpServletRequestWrapper);
+
+				originalRequest =
+					(HttpServletRequest)
+						persistentHttpServletRequestWrapper.getRealRequest();
+			}
+			else {
+				HttpServletRequestWrapper httpServletRequestWrapper =
+					(HttpServletRequestWrapper)originalRequest;
+
+				originalRequest =
+					(HttpServletRequest)httpServletRequestWrapper.getRequest();
+			}
 		}
 
 		for (int i = persistentHttpServletRequestWrappers.size() - 1; i >= 0;
 				i--) {
 
-			HttpServletRequestWrapper httpServletRequestWrapper =
-				persistentHttpServletRequestWrappers.get(i);
+			PersistentHttpServletRequestWrapper
+				persistentHttpServletRequestWrapper =
+					persistentHttpServletRequestWrappers.get(i);
 
-			httpServletRequestWrapper.setRequest(originalRequest);
+			persistentHttpServletRequestWrapper.setRealRequest(originalRequest);
 
-			originalRequest = httpServletRequestWrapper;
+			originalRequest = persistentHttpServletRequestWrapper;
 		}
 
 		return originalRequest;

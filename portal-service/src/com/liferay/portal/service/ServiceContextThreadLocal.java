@@ -56,6 +56,25 @@ public class ServiceContextThreadLocal {
 		_serviceContextThreadLocal =
 			new AutoResetThreadLocal<Stack<ServiceContext>>(
 				ServiceContextThreadLocal.class + "._serviceContextThreadLocal",
-				new Stack<ServiceContext>());
+				new Stack<ServiceContext>()) {
+
+					@Override
+					protected Stack<ServiceContext> copy(
+						Stack<ServiceContext> serviceContexts) {
+
+						Stack<ServiceContext> cloneServiceContexts =
+							new Stack<ServiceContext>();
+
+						for (ServiceContext serviceContext : serviceContexts) {
+							ServiceContext cloneServiceContext =
+								(ServiceContext)serviceContext.clone();
+
+							cloneServiceContexts.add(cloneServiceContext);
+						}
+
+						return cloneServiceContexts;
+					}
+
+				};
 
 }

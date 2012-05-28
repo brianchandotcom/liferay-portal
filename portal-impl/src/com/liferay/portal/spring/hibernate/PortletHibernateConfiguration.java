@@ -25,7 +25,17 @@ public class PortletHibernateConfiguration
 
 	@Override
 	protected ClassLoader getConfigurationClassLoader() {
-		return PortletClassLoaderUtil.getClassLoader();
+		ClassLoader classLoader = PortletClassLoaderUtil.getClassLoader();
+
+		if (classLoader == null) {
+			// Sharding enabled
+
+			Thread currentThread = Thread.currentThread();
+
+			classLoader = currentThread.getContextClassLoader();
+		}
+
+		return classLoader;
 	}
 
 	@Override

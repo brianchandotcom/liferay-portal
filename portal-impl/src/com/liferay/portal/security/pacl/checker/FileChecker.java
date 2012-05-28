@@ -92,7 +92,7 @@ public class FileChecker extends BaseChecker {
 			"${org.apache.geronimo.home.dir}",
 			"${plugin.servlet.context.name}",
 			"${release.info.version}",
-			"${weblogic.home.dir}"
+			"${weblogic.domain.dir}"
 		};
 
 		String installedDir = StringPool.BLANK;

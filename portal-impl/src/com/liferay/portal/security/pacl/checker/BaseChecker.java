@@ -190,6 +190,17 @@ public abstract class BaseChecker implements Checker, PACLConstants {
 					allowed = (callerClassLoader == _commonClassLoader);
 				}
 			}
+			else if (ServerDetector.isWebLogic()) {
+				if (callerClassName.equals(_CLASS_NAME_JSP_CLASS_LOADER) ||
+					callerClassName.equals(_CLASS_NAME_JSP_STUB)) {
+
+					String classLocation = PACLClassUtil.getClassLocation(
+						callerClass);
+
+					allowed = classLocation.contains(
+						"/wlserver/server/lib/weblogic.jar!/");
+				}
+			}
 
 			if (allowed == null) {
 				continue;
@@ -252,11 +263,17 @@ public abstract class BaseChecker implements Checker, PACLConstants {
 	private static final String _CLASS_NAME_JASPER_SERVLET_CONTEXT_CUSTOMIZER =
 		"org.apache.geronimo.jasper.JasperServletContextCustomizer$";
 
+	private static final String _CLASS_NAME_JSP_CLASS_LOADER =
+		"weblogic.servlet.jsp.JspClassLoader";
+
 	private static final String _ClASS_NAME_JSP_COMPILATION_CONTEXT =
 		"org.apache.jasper.JspCompilationContext";
 
 	private static final String _ClASS_NAME_JSP_MANAGER =
 		"com.caucho.jsp.JspManager";
+
+	private static final String _CLASS_NAME_JSP_STUB =
+		"weblogic.servlet.jsp.JspStub";
 
 	private static final String _ClASS_NAME_PAGE_MANAGER =
 		"com.caucho.jsp.PageManager";

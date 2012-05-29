@@ -129,17 +129,15 @@ public class ActionUtil
 
 		String cmd = ParamUtil.getString(request, Constants.CMD);
 
+		long groupId = ParamUtil.getLong(request, "groupId");
+
 		Group group = null;
 
-		if (!cmd.equals(Constants.ADD)) {
-			long groupId = ParamUtil.getLong(request, "groupId");
-
-			if (groupId > 0) {
-				group = GroupLocalServiceUtil.getGroup(groupId);
-			}
-			else {
-				group = themeDisplay.getScopeGroup();
-			}
+		if (groupId > 0) {
+			group = GroupLocalServiceUtil.getGroup(groupId);
+		}
+		else if (!cmd.equals(Constants.ADD)) {
+			group = themeDisplay.getScopeGroup();
 		}
 
 		request.setAttribute(WebKeys.GROUP, group);

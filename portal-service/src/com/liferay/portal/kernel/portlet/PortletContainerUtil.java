@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.servlet.TempAttributesServletRequest;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
@@ -78,7 +79,8 @@ public class PortletContainerUtil {
 
 		if (_LAYOUT_PARALLEL_RENDER_ENABLE || _PORTLET_CONTAINER_RESTRICT) {
 			RestrictPortletServletRequest restrictPortletServletRequest =
-				new RestrictPortletServletRequest(request);
+				new RestrictPortletServletRequest(
+					request, _LAYOUT_PARALLEL_RENDER_ENABLE);
 
 			if (renderPath != null) {
 				restrictPortletServletRequest.setAttribute(
@@ -141,7 +143,8 @@ public class PortletContainerUtil {
 
 	private static final boolean _LAYOUT_PARALLEL_RENDER_ENABLE =
 		GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.LAYOUT_PARALLEL_RENDER_ENABLE));
+			PropsUtil.get(PropsKeys.LAYOUT_PARALLEL_RENDER_ENABLE)) &&
+				ServerDetector.isTomcat();
 
 	private static final boolean _PORTLET_CONTAINER_RESTRICT =
 		GetterUtil.getBoolean(

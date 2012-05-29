@@ -37,8 +37,14 @@ import javax.servlet.http.HttpServletRequest;
 public class RestrictPortletServletRequest
 	extends PersistentHttpServletRequestWrapper {
 
+	public RestrictPortletServletRequest(
+		HttpServletRequest request, boolean stopTrespassing) {
+
+		super(request, stopTrespassing);
+	}
+
 	public RestrictPortletServletRequest(HttpServletRequest request) {
-		super(request);
+		super(request, false);
 	}
 
 	@Override

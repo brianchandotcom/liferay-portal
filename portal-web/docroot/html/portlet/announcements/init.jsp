@@ -43,7 +43,7 @@ if (Validator.isNotNull(portletResource)) {
 	preferences = PortletPreferencesFactoryUtil.getPortletSetup(request, portletResource);
 }
 
-int pageDelta = GetterUtil.getInteger(preferences.getValue("pageDelta", StringPool.BLANK), PropsValues.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
+int pageDelta = GetterUtil.getInteger(preferences.getValue("pageDelta", StringPool.BLANK), SearchContainer.DEFAULT_DELTA);
 
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 %>

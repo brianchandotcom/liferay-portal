@@ -916,9 +916,9 @@ public class DLAppHelperLocalServiceImpl
 					}
 				}
 				else {
-					assetEntryLocalService.updateVisible(
+					assetEntryLocalService.moveEntryToTrash(
 						DLFileEntryConstants.getClassName(),
-						dlFileEntry.getFileEntryId(), false);
+						dlFileEntry.getFileEntryId());
 				}
 
 				// Social

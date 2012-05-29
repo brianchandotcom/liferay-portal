@@ -100,18 +100,20 @@ public class WorkflowInstanceLinkLocalServiceImpl
 			WorkflowInstanceLink workflowInstanceLink)
 		throws PortalException, SystemException {
 
-		if (workflowInstanceLink != null) {
-			super.deleteWorkflowInstanceLink(workflowInstanceLink);
-
-			subscriptionLocalService.deleteSubscriptions(
-				workflowInstanceLink.getCompanyId(),
-				WorkflowInstance.class.getName(),
-				workflowInstanceLink.getWorkflowInstanceId());
-
-			WorkflowInstanceManagerUtil.deleteWorkflowInstance(
-				workflowInstanceLink.getCompanyId(),
-				workflowInstanceLink.getWorkflowInstanceId());
+		if (workflowInstanceLink == null) {
+			return null;
 		}
+
+		super.deleteWorkflowInstanceLink(workflowInstanceLink);
+
+		subscriptionLocalService.deleteSubscriptions(
+			workflowInstanceLink.getCompanyId(),
+			WorkflowInstance.class.getName(),
+			workflowInstanceLink.getWorkflowInstanceId());
+
+		WorkflowInstanceManagerUtil.deleteWorkflowInstance(
+			workflowInstanceLink.getCompanyId(),
+			workflowInstanceLink.getWorkflowInstanceId());
 
 		return workflowInstanceLink;
 	}

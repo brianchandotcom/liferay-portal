@@ -95,9 +95,8 @@ public class AddDLDocumentSiteStagingLocalLiveDLTest extends BaseTestCase {
 				"The data of this portlet is not staged. Any data changes are immediately available to the Local Live site. The portlet's own workflow is still honored. Portlet setup is still managed from staging."));
 		assertFalse(selenium.isElementPresent(
 				"//div[@class='portlet-msg-alert']"));
-		selenium.type("//input[@id='_20_file']",
-			RuntimeVariables.replace(
-				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\stagingcommunity\\documentlibrary\\dependencies\\DLDocument.docx"));
+		selenium.uploadCommonFile("//input[@id='_20_file']",
+			RuntimeVariables.replace("Document_1.docx"));
 		selenium.type("//input[@id='_20_title']",
 			RuntimeVariables.replace("DL Document Title"));
 		selenium.type("//textarea[@id='_20_description']",
@@ -141,7 +140,7 @@ public class AddDLDocumentSiteStagingLocalLiveDLTest extends BaseTestCase {
 			selenium.getText("//span[@class='document-description']"));
 		assertEquals(RuntimeVariables.replace("Status: Approved"),
 			selenium.getText("//span[@class='workflow-status']"));
-		assertEquals(RuntimeVariables.replace("Download (9.6k)"),
+		assertEquals(RuntimeVariables.replace("Download (12.4k)"),
 			selenium.getText("//span[@class='download-document']"));
 	}
 }

@@ -53,6 +53,8 @@ public class GetterUtil {
 
 	public static final Number DEFAULT_NUMBER = 0;
 
+	public static final Number[] DEFAULT_NUMBER_VALUES = new Number[0];
+
 	public static final Number DEFAULT_OBJECT = null;
 
 	public static final short DEFAULT_SHORT = 0;
@@ -759,6 +761,49 @@ public class GetterUtil {
 
 	public static Number getNumber(String value, Number defaultValue) {
 		return get(value, defaultValue);
+	}
+
+	public static Number[] getNumberValues(Object value) {
+		return getNumberValues(value, DEFAULT_NUMBER_VALUES);
+	}
+
+	public static Number[] getNumberValues(
+		Object value, Number[] defaultValue) {
+
+		Class<?> clazz = value.getClass();
+
+		if (clazz.isArray()) {
+			Class<?> componentType = clazz.getComponentType();
+
+			if (componentType.isAssignableFrom(String.class)) {
+				return getNumberValues((String[])value, defaultValue);
+			}
+			else if (componentType.isAssignableFrom(Number.class)) {
+				return (Number[])value;
+			}
+		}
+
+		return defaultValue;
+	}
+
+	public static Number[] getNumberValues(String[] values) {
+		return getNumberValues(values, DEFAULT_NUMBER_VALUES);
+	}
+
+	public static Number[] getNumberValues(
+		String[] values, Number[] defaultValue) {
+
+		if (values == null) {
+			return defaultValue;
+		}
+
+		Number[] numberValues = new Number[values.length];
+
+		for (int i = 0; i < values.length; i++) {
+			numberValues[i] = getNumber(values[i]);
+		}
+
+		return numberValues;
 	}
 
 	public static Object getObject(Object value) {

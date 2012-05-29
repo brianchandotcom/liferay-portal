@@ -132,6 +132,18 @@ public class ExpandoValueImpl extends ExpandoValueBaseImpl {
 		return GetterUtil.getLongValues(StringUtil.split(getData()));
 	}
 
+	public Number getNumber() throws PortalException, SystemException {
+		validate(ExpandoColumnConstants.NUMBER);
+
+		return GetterUtil.getNumber(getData());
+	}
+
+	public Number[] getNumberArray() throws PortalException, SystemException {
+		validate(ExpandoColumnConstants.NUMBER_ARRAY);
+
+		return GetterUtil.getNumberValues(StringUtil.split(getData()));
+	}
+
 	public Serializable getSerializable()
 		throws PortalException, SystemException {
 
@@ -174,6 +186,12 @@ public class ExpandoValueImpl extends ExpandoValueBaseImpl {
 		}
 		else if (type == ExpandoColumnConstants.LONG_ARRAY) {
 			return getLongArray();
+		}
+		else if (type == ExpandoColumnConstants.NUMBER) {
+			return getNumber();
+		}
+		else if (type == ExpandoColumnConstants.NUMBER_ARRAY) {
+			return getNumberArray();
 		}
 		else if (type == ExpandoColumnConstants.SHORT) {
 			return getShort();

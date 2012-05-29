@@ -4192,6 +4192,8 @@
 			<transient name="integerArray" />
 			<transient name="long" />
 			<transient name="longArray" />
+			<transient name="number" />
+			<transient name="numberArray" />
 			<transient name="short" />
 			<transient name="shortArray" />
 			<transient name="string" />

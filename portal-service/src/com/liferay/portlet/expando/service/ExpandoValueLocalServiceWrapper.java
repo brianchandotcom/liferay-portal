@@ -965,6 +965,25 @@ public class ExpandoValueLocalServiceWrapper implements ExpandoValueLocalService
 			tableName, columnName, classPK, defaultData);
 	}
 
+	public java.lang.Number getData(long companyId, java.lang.String className,
+		java.lang.String tableName, java.lang.String columnName, long classPK,
+		java.lang.Number defaultData)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _expandoValueLocalService.getData(companyId, className,
+			tableName, columnName, classPK, defaultData);
+	}
+
+	public java.lang.Number[] getData(long companyId,
+		java.lang.String className, java.lang.String tableName,
+		java.lang.String columnName, long classPK,
+		java.lang.Number[] defaultData)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _expandoValueLocalService.getData(companyId, className,
+			tableName, columnName, classPK, defaultData);
+	}
+
 	public short getData(long companyId, java.lang.String className,
 		java.lang.String tableName, java.lang.String columnName, long classPK,
 		short defaultData)

@@ -73,6 +73,12 @@ public class ParamUtil {
 		return GetterUtil.get(request.getParameter(param), defaultValue);
 	}
 
+	public static Number get(
+		HttpServletRequest request, String param, Number defaultValue) {
+
+		return GetterUtil.get(request.getParameter(param), defaultValue);
+	}
+
 	public static short get(
 		HttpServletRequest request, String param, short defaultValue) {
 
@@ -130,6 +136,12 @@ public class ParamUtil {
 		return GetterUtil.get(portletRequest.getParameter(param), defaultValue);
 	}
 
+	public static Number get(
+		PortletRequest portletRequest, String param, Number defaultValue) {
+
+		return GetterUtil.get(portletRequest.getParameter(param), defaultValue);
+	}
+
 	public static short get(
 		PortletRequest portletRequest, String param, short defaultValue) {
 
@@ -183,6 +195,12 @@ public class ParamUtil {
 
 	public static long get(
 		ServiceContext serviceContext, String param, long defaultValue) {
+
+		return GetterUtil.get(serviceContext.getAttribute(param), defaultValue);
+	}
+
+	public static Number get(
+		ServiceContext serviceContext, String param, Number defaultValue) {
 
 		return GetterUtil.get(serviceContext.getAttribute(param), defaultValue);
 	}
@@ -640,6 +658,79 @@ public class ParamUtil {
 		ServiceContext serviceContext, String param, long[] defaultValue) {
 
 		return GetterUtil.getLongValues(
+			serviceContext.getAttribute(param), defaultValue);
+	}
+
+	public static Number getNumber(HttpServletRequest request, String param) {
+		return GetterUtil.getNumber(request.getParameter(param));
+	}
+
+	public static Number getNumber(
+		HttpServletRequest request, String param, Number defaultValue) {
+
+		return get(request, param, defaultValue);
+	}
+
+	public static Number getNumber(
+		PortletRequest portletRequest, String param) {
+
+		return GetterUtil.getNumber(portletRequest.getParameter(param));
+	}
+
+	public static Number getNumber(
+		PortletRequest portletRequest, String param, Number defaultValue) {
+
+		return get(portletRequest, param, defaultValue);
+	}
+
+	public static Number getNumber(
+		ServiceContext serviceContext, String param) {
+
+		return GetterUtil.getNumber(serviceContext.getAttribute(param));
+	}
+
+	public static Number getNumber(
+		ServiceContext serviceContext, String param, Number defaultValue) {
+
+		return get(serviceContext, param, defaultValue);
+	}
+
+	public static Number[] getNumberValues(
+		HttpServletRequest request, String param) {
+
+		return getNumberValues(request, param, new Number[0]);
+	}
+
+	public static Number[] getNumberValues(
+		HttpServletRequest request, String param, Number[] defaultValue) {
+
+		return GetterUtil.getNumberValues(
+			getParameterValues(request, param, null), defaultValue);
+	}
+
+	public static Number[] getNumberValues(
+		PortletRequest portletRequest, String param) {
+
+		return getNumberValues(portletRequest, param, new Number[0]);
+	}
+
+	public static Number[] getNumberValues(
+		PortletRequest portletRequest, String param, Number[] defaultValue) {
+
+		return GetterUtil.getNumberValues(
+			getParameterValues(portletRequest, param, null), defaultValue);
+	}
+
+	public static Number[] getNumberValues(
+		ServiceContext serviceContext, String param) {
+
+		return getNumberValues(serviceContext, param, new Number[0]);
+	}
+
+	public static Number[] getNumberValues(
+		ServiceContext serviceContext, String param, Number[] defaultValue) {
+
+		return GetterUtil.getNumberValues(
 			serviceContext.getAttribute(param), defaultValue);
 	}
 

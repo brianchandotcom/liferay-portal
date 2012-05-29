@@ -81,6 +81,12 @@ public class ExpandoColumnImpl extends ExpandoColumnBaseImpl {
 			else if (type == ExpandoColumnConstants.LONG_ARRAY) {
 				return value.getLongArray();
 			}
+			else if (type == ExpandoColumnConstants.NUMBER) {
+				return value.getNumber();
+			}
+			else if (type == ExpandoColumnConstants.NUMBER_ARRAY) {
+				return value.getNumberArray();
+			}
 			else if (type == ExpandoColumnConstants.SHORT) {
 				return value.getShort();
 			}

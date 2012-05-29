@@ -16,7 +16,7 @@
 			<param name="simple.server.portal.dir" value="${app.server.jboss.portal.dir}" />
 			<param name="simple.server.start.executable" value="standalone${file.suffix.bat}" />
 			<param name="simple.server.start.executable.arg.line" value="" />
-			<param name="simple.server.stop.executable" value="jboss-admin${file.suffix.bat}" />
+			<param name="simple.server.stop.executable" value="jboss-cli${file.suffix.bat}" />
 			<param name="simple.server.stop.executable.arg.line" value="--connect command=:shutdown" />
 		</antcall>
 

@@ -75,17 +75,10 @@ public class GroupPermissionImpl implements GroupPermission {
 			}
 		}
 
-		if (actionId.equals(ActionKeys.VIEW) &&
+		if (actionId.equals(ActionKeys.ADD_LAYOUT) &&
 			permissionChecker.hasPermission(
 				groupId, Group.class.getName(), groupId,
-				ActionKeys.ASSIGN_USER_ROLES)) {
-
-			return true;
-		}
-		else if (actionId.equals(ActionKeys.ADD_LAYOUT) &&
-				 permissionChecker.hasPermission(
-					 groupId, Group.class.getName(), groupId,
-					 ActionKeys.MANAGE_LAYOUTS)) {
+				ActionKeys.MANAGE_LAYOUTS)) {
 
 			return true;
 		}
@@ -94,6 +87,13 @@ public class GroupPermissionImpl implements GroupPermission {
 				 permissionChecker.hasPermission(
 					 groupId, Group.class.getName(), groupId,
 					 ActionKeys.PUBLISH_STAGING)) {
+
+			return true;
+		}
+		else if (actionId.equals(ActionKeys.VIEW) &&
+				 permissionChecker.hasPermission(
+					 groupId, Group.class.getName(), groupId,
+					 ActionKeys.ASSIGN_USER_ROLES)) {
 
 			return true;
 		}

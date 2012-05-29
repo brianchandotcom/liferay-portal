@@ -2049,8 +2049,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				group.getGroupId(), group.getCompanyId(), name, group.isSite());
 		}
 		else if (className.equals(Organization.class.getName())) {
-			Organization organization = organizationPersistence.findByPrimaryKey(
-				classPK);
+			Organization organization =
+				organizationPersistence.findByPrimaryKey(classPK);
 
 			name = getOrgGroupName(classPK, organization.getName());
 		}

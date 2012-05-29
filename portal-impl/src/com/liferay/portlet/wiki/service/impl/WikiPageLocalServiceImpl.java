@@ -1561,10 +1561,10 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		PortletPreferences preferences = null;
 
-		String portletId = serviceContext.getPortletId();
+		String rootPortletId = serviceContext.getRootPortletId();
 
-		if (Validator.isNull(portletId) ||
-			!portletId.startsWith(PortletKeys.WIKI_DISPLAY)) {
+		if (Validator.isNull(rootPortletId) ||
+			rootPortletId.equals(PortletKeys.WIKI_DISPLAY)) {
 
 			preferences = ServiceContextUtil.getPortletPreferences(
 				serviceContext);

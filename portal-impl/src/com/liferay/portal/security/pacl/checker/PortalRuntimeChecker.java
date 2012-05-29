@@ -39,6 +39,7 @@ public class PortalRuntimeChecker extends BaseChecker {
 		initExpandoBridgeClassNames();
 		initGetBeanPropertyClassNames();
 		initSetBeanPropertyClassNames();
+		initThreadPoolExecutorNames();
 	}
 
 	public void checkPermission(Permission permission) {
@@ -88,6 +89,15 @@ public class PortalRuntimeChecker extends BaseChecker {
 					throwSecurityException(
 						_log, "Attempted to set bean property on " + clazz);
 				}
+			}
+		}
+		else if (name.equals(PORTAL_RUNTIME_PERMISSION_THREAD_POOL_EXECUTOR)) {
+			String threadPoolExecutorName = (String)subject;
+
+			if (!_threadPoolExecutorNames.contains(threadPoolExecutorName)) {
+				throwSecurityException(
+					_log, "Attempted to modify Thread pool executor " +
+						threadPoolExecutorName);
 			}
 		}
 	}
@@ -178,10 +188,26 @@ public class PortalRuntimeChecker extends BaseChecker {
 		}
 	}
 
+	protected void initThreadPoolExecutorNames() {
+		_threadPoolExecutorNames = getPropertySet(
+			"security-manager-thread-pool-executor-names");
+
+		if (_log.isDebugEnabled()) {
+			Set<String> threadPoolExecutorNames = new TreeSet<String>(
+				_threadPoolExecutorNames);
+
+			for (String threadPoolExecutorName : threadPoolExecutorNames) {
+				_log.debug(
+					"Allowing Thread pool executor " + threadPoolExecutorName);
+			}
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(PortalRuntimeChecker.class);
 
 	private Set<String> _expandoBridgeClassNames;
 	private Set<String> _getBeanPropertyClassNames;
 	private Set<String> _setBeanPropertyClassNames;
+	private Set<String> _threadPoolExecutorNames;
 
 }

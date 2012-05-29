@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+
 import java.lang.reflect.Method;
 
 import java.util.Map;
@@ -40,13 +42,13 @@ public class MethodCache {
 		MethodKey methodKey = new MethodKey(
 			className, methodName, parameterTypes);
 
-		return _instance._get(classesMap, methodsMap, methodKey);
+		return getInstance()._get(classesMap, methodsMap, methodKey);
 	}
 
 	public static Method get(MethodKey methodKey)
 		throws ClassNotFoundException, NoSuchMethodException {
 
-		return _instance._get(null, null, methodKey);
+		return getInstance()._get(null, null, methodKey);
 	}
 
 	public static Method get(String className, String methodName)
@@ -62,16 +64,22 @@ public class MethodCache {
 		return get(null, null, className, methodName, parameterTypes);
 	}
 
+	public static MethodCache getInstance() {
+		PortalRuntimePermission.checkGetBeanProperty(MethodCache.class);
+
+		return _instance;
+	}
+
 	public static Method put(MethodKey methodKey, Method method) {
-		return _instance._put(methodKey, method);
+		return getInstance()._put(methodKey, method);
 	}
 
 	public static void remove(Class<?> clazz) {
-		_instance._remove(clazz);
+		getInstance()._remove(clazz);
 	}
 
 	public static void reset() {
-		_instance._reset();
+		getInstance()._reset();
 	}
 
 	private MethodCache() {

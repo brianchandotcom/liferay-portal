@@ -65,12 +65,12 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>_1_WAR_wsrpportlet_name</td>
+	<td>//input[@id='_1_WAR_wsrpportlet_name']</td>
 	<td>WSRP 世界您好 Portlet</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_1_WAR_wsrpportlet_portletHandle</td>
+	<td>//select[@name='_1_WAR_wsrpportlet_portletHandle']</td>
 	<td>label=Hello World</td>
 </tr>
 <tr>
@@ -80,7 +80,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//section/div/div/div/div</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>

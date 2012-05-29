@@ -82,9 +82,9 @@ public class ManagePortletConsumerHWUTF8Test extends BaseTestCase {
 			RuntimeVariables.replace("Add Portlet"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.type("_1_WAR_wsrpportlet_name",
+		selenium.type("//input[@id='_1_WAR_wsrpportlet_name']",
 			RuntimeVariables.replace("WSRP \u4e16\u754c\u60a8\u597d Portlet"));
-		selenium.select("_1_WAR_wsrpportlet_portletHandle",
+		selenium.select("//select[@name='_1_WAR_wsrpportlet_portletHandle']",
 			RuntimeVariables.replace("label=Hello World"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
@@ -92,7 +92,7 @@ public class ManagePortletConsumerHWUTF8Test extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
-			selenium.getText("//section/div/div/div/div"));
+			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace(
 				"WSRP \u4e16\u754c\u60a8\u597d Portlet"),
 			selenium.getText("//tr[3]/td[1]"));

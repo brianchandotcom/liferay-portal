@@ -50,12 +50,12 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>_1_WAR_wsrpportlet_name</td>
+	<td>//input[@id='_1_WAR_wsrpportlet_name']</td>
 	<td>Hello World Producer Name</td>
 </tr>
 <tr>
 	<td>addSelection</td>
-	<td>_1_WAR_wsrpportlet_availablePortletIds</td>
+	<td>//select[@id='_1_WAR_wsrpportlet_availablePortletIds']</td>
 	<td>label=Hello World</td>
 </tr>
 <tr>
@@ -65,12 +65,12 @@
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>_1_WAR_wsrpportlet_currentPortletIds</td>
+	<td>//select[@id='_1_WAR_wsrpportlet_currentPortletIds']</td>
 	<td>Hello World</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>_1_WAR_wsrpportlet_currentPortletIds</td>
+	<td>//select[@id='_1_WAR_wsrpportlet_currentPortletIds']</td>
 	<td>Hello World</td>
 </tr>
 <tr>
@@ -80,7 +80,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//section/div/div/div/div[1]</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>

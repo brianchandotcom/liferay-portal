@@ -58,9 +58,9 @@ public class AddProducerHWTest extends BaseTestCase {
 			RuntimeVariables.replace("Add Producer"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.type("_1_WAR_wsrpportlet_name",
+		selenium.type("//input[@id='_1_WAR_wsrpportlet_name']",
 			RuntimeVariables.replace("Hello World Producer Name"));
-		selenium.addSelection("_1_WAR_wsrpportlet_availablePortletIds",
+		selenium.addSelection("//select[@id='_1_WAR_wsrpportlet_availablePortletIds']",
 			RuntimeVariables.replace("label=Hello World"));
 		selenium.clickAt("//button[2]",
 			RuntimeVariables.replace("Move Left Arrow"));
@@ -73,7 +73,7 @@ public class AddProducerHWTest extends BaseTestCase {
 			try {
 				if (RuntimeVariables.replace("Hello World")
 										.equals(selenium.getText(
-								"_1_WAR_wsrpportlet_currentPortletIds"))) {
+								"//select[@id='_1_WAR_wsrpportlet_currentPortletIds']"))) {
 					break;
 				}
 			}
@@ -84,14 +84,15 @@ public class AddProducerHWTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("Hello World"),
-			selenium.getText("_1_WAR_wsrpportlet_currentPortletIds"));
+			selenium.getText(
+				"//select[@id='_1_WAR_wsrpportlet_currentPortletIds']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
-			selenium.getText("//section/div/div/div/div[1]"));
+			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Hello World Producer Name"),
 			selenium.getText("//td[1]/a"));
 	}

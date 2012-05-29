@@ -97,9 +97,9 @@ public class AddConsumerHWTest extends BaseTestCase {
 			RuntimeVariables.replace("Add Consumer"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.type("_1_WAR_wsrpportlet_name",
+		selenium.type("//input[@id='_1_WAR_wsrpportlet_name']",
 			RuntimeVariables.replace("Hello World Consumer Name"));
-		selenium.type("_1_WAR_wsrpportlet_url",
+		selenium.type("//input[@id='_1_WAR_wsrpportlet_url']",
 			RuntimeVariables.replace(RuntimeVariables.getValue("wsrpUrl")));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
@@ -107,7 +107,7 @@ public class AddConsumerHWTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
-			selenium.getText("//section/div/div/div/div[1]"));
+			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Hello World Consumer Name"),
 			selenium.getText("//td[1]/a"));
 	}

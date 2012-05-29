@@ -14,28 +14,38 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=WSRP</td>
-	<td></td>
+	<td>WSRP</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Consumers</td>
-	<td></td>
+	<td>Consumers</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//td[2]/span/ul/li/strong/a</td>
+	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -51,26 +61,26 @@
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Add Portlet']</td>
-	<td></td>
+	<td>Add Portlet</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_1_WAR_wsrpportlet_name</td>
+	<td>//input[@id='_1_WAR_wsrpportlet_name']</td>
 	<td>WSRP Hello World Portlet</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>_1_WAR_wsrpportlet_portletHandle</td>
+	<td>//select[@name='_1_WAR_wsrpportlet_portletHandle']</td>
 	<td>label=Hello World</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//section/div/div/div/div</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
@@ -83,7 +93,6 @@
 	<td>//tr[3]/td[2]</td>
 	<td>Hello World</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

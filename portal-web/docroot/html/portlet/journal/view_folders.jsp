@@ -206,9 +206,9 @@ request.setAttribute("view_folders.jsp-total", String.valueOf(total));
 							int foldersCount = JournalFolderServiceUtil.getFoldersCount(scopeGroupId, curFolder.getFolderId());
 							int articlesCount = JournalArticleServiceUtil.getArticlesCount(scopeGroupId, curFolder.getFolderId());
 
-							request.setAttribute("view_articles.jsp-folder", curFolder);
-							request.setAttribute("view_articles.jsp-folderId", String.valueOf(curFolder.getFolderId()));
-							request.setAttribute("view_articles.jsp-folderSelected", String.valueOf(folderId == curFolder.getFolderId()));
+							request.setAttribute("view_entries.jsp-folder", curFolder);
+							request.setAttribute("view_entries.jsp-folderId", String.valueOf(curFolder.getFolderId()));
+							request.setAttribute("view_entries.jsp-folderSelected", String.valueOf(folderId == curFolder.getFolderId()));
 						%>
 
 							<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" varImpl="viewURL">

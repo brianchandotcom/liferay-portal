@@ -29,53 +29,48 @@ public class InfrastructureUtil implements PACLConstants {
 
 	public static DataSource getDataSource() {
 		PortalRuntimePermission.checkGetBeanProperty(
-			InfrastructureUtil.class, PORTAL_RUNTIME_PERMISSION_DATA_SOURCE);
+			InfrastructureUtil.class, "dataSource");
 
 		return _dataSource;
 	}
 
 	public static Object getDynamicDataSourceTargetSource() {
 		PortalRuntimePermission.checkGetBeanProperty(
-			InfrastructureUtil.class,
-			PORTAL_RUNTIME_PERMISSION_DYNAMIC_DATA_SOURCE_TARGET_SOURCE);
+			InfrastructureUtil.class, "dynamicDataSourceTargetSource");
 
 		return _dynamicDataSourceTargetSource;
 	}
 
 	public static Session getMailSession() {
 		PortalRuntimePermission.checkGetBeanProperty(
-			InfrastructureUtil.class, PORTAL_RUNTIME_PERMISSION_MAIL_SESSION);
+			InfrastructureUtil.class, "mailSession");
 
 		return _mailSession;
 	}
 
 	public static Object getShardDataSourceTargetSource() {
 		PortalRuntimePermission.checkGetBeanProperty(
-			InfrastructureUtil.class,
-			PORTAL_RUNTIME_PERMISSION_SHARD_DATA_SOURCE_TARGET_SOURCE);
+			InfrastructureUtil.class, "shardDataSourceTargetSource");
 
 		return _shardDataSourceTargetSource;
 	}
 
 	public static Object getShardSessionFactoryTargetSource() {
 		PortalRuntimePermission.checkGetBeanProperty(
-			InfrastructureUtil.class,
-			PORTAL_RUNTIME_PERMISSION_SHARD_SESSION_FACTORY_TARGET_SOURCE);
+			InfrastructureUtil.class, "shardSessionFactoryTargetSource");
 
 		return _shardSessionFactoryTargetSource;
 	}
 
 	public static Object getTransactionManager() {
 		PortalRuntimePermission.checkGetBeanProperty(
-			InfrastructureUtil.class,
-			PORTAL_RUNTIME_PERMISSION_TRANSACTION_MANAGER);
+			InfrastructureUtil.class, "transactionManager");
 
 		return _transactionManager;
 	}
 
 	public void setDataSource(DataSource dataSource) {
-		PortalRuntimePermission.checkSetBeanProperty(
-			getClass(), PORTAL_RUNTIME_PERMISSION_DATA_SOURCE);
+		PortalRuntimePermission.checkSetBeanProperty(getClass(), "dataSource");
 
 		_dataSource = dataSource;
 	}
@@ -84,15 +79,13 @@ public class InfrastructureUtil implements PACLConstants {
 		Object dynamicDataSourceTargetSource) {
 
 		PortalRuntimePermission.checkSetBeanProperty(
-			getClass(),
-			PORTAL_RUNTIME_PERMISSION_DYNAMIC_DATA_SOURCE_TARGET_SOURCE);
+			getClass(), "dynamicDataSourceTargetSource");
 
 		_dynamicDataSourceTargetSource = dynamicDataSourceTargetSource;
 	}
 
 	public void setMailSession(Session mailSession) {
-		PortalRuntimePermission.checkSetBeanProperty(
-			getClass(), PORTAL_RUNTIME_PERMISSION_MAIL_SESSION);
+		PortalRuntimePermission.checkSetBeanProperty(getClass(), "mailSession");
 
 		_mailSession = mailSession;
 	}
@@ -101,8 +94,7 @@ public class InfrastructureUtil implements PACLConstants {
 		Object shardDataSourceTargetSource) {
 
 		PortalRuntimePermission.checkSetBeanProperty(
-			getClass(),
-			PORTAL_RUNTIME_PERMISSION_SHARD_DATA_SOURCE_TARGET_SOURCE);
+			getClass(), "shardDataSourceTargetSource");
 
 		_shardDataSourceTargetSource = shardDataSourceTargetSource;
 	}
@@ -111,15 +103,14 @@ public class InfrastructureUtil implements PACLConstants {
 		Object shardSessionFactoryTargetSource) {
 
 		PortalRuntimePermission.checkSetBeanProperty(
-			getClass(),
-			PORTAL_RUNTIME_PERMISSION_SHARD_SESSION_FACTORY_TARGET_SOURCE);
+			getClass(), "shardSessionFactoryTargetSource");
 
 		_shardSessionFactoryTargetSource = shardSessionFactoryTargetSource;
 	}
 
 	public void setTransactionManager(Object transactionManager) {
 		PortalRuntimePermission.checkSetBeanProperty(
-			getClass(), PORTAL_RUNTIME_PERMISSION_TRANSACTION_MANAGER);
+			getClass(), "transactionManager");
 
 		_transactionManager = transactionManager;
 	}

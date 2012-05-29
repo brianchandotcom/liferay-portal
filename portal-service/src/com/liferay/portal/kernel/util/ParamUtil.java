@@ -666,7 +666,7 @@ public class ParamUtil {
 	}
 
 	public static Number getNumber(
-		HttpServletRequest request, String param, long defaultValue) {
+		HttpServletRequest request, String param, Number defaultValue) {
 
 		return get(request, param, defaultValue);
 	}
@@ -678,7 +678,7 @@ public class ParamUtil {
 	}
 
 	public static Number getNumber(
-		PortletRequest portletRequest, String param, long defaultValue) {
+		PortletRequest portletRequest, String param, Number defaultValue) {
 
 		return get(portletRequest, param, defaultValue);
 	}
@@ -690,7 +690,7 @@ public class ParamUtil {
 	}
 
 	public static Number getNumber(
-		ServiceContext serviceContext, String param, long defaultValue) {
+		ServiceContext serviceContext, String param, Number defaultValue) {
 
 		return get(serviceContext, param, defaultValue);
 	}

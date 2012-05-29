@@ -74,24 +74,35 @@ public class WorkflowInstanceLinkLocalServiceImpl
 		return workflowInstanceLink;
 	}
 
-	public void deleteWorkflowInstanceLink(
+	@Override
+	public WorkflowInstanceLink deleteWorkflowInstanceLink(
+			long workflowInstanceLinkId)
+		throws PortalException, SystemException {
+
+		WorkflowInstanceLink workflowInstanceLink = fetchWorkflowInstanceLink(
+			workflowInstanceLinkId);
+
+		return deleteWorkflowInstanceLink(workflowInstanceLink);
+	}
+
+	public WorkflowInstanceLink deleteWorkflowInstanceLink(
 			long companyId, long groupId, String className, long classPK)
 		throws PortalException, SystemException {
 
 		WorkflowInstanceLink workflowInstanceLink = fetchWorkflowInstanceLink(
 			companyId, groupId, className, classPK);
 
-		if (workflowInstanceLink == null) {
-			return;
-		}
-
-		deleteWorkflowInstanceLink(workflowInstanceLink);
+		return deleteWorkflowInstanceLink(workflowInstanceLink);
 	}
 
 	@Override
 	public WorkflowInstanceLink deleteWorkflowInstanceLink(
 			WorkflowInstanceLink workflowInstanceLink)
 		throws PortalException, SystemException {
+
+		if (workflowInstanceLink == null) {
+			return null;
+		}
 
 		super.deleteWorkflowInstanceLink(workflowInstanceLink);
 

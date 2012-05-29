@@ -75,6 +75,15 @@ public class GroupPermissionImpl implements GroupPermission {
 			}
 		}
 
+		if (actionId.equals(ActionKeys.VIEW)) {
+			if (permissionChecker.hasPermission(
+					groupId, Group.class.getName(), groupId,
+					ActionKeys.ASSIGN_USER_ROLES)) {
+	
+					return true;
+			}
+		}
+
 		if (actionId.equals(ActionKeys.ADD_LAYOUT)) {
 			if (permissionChecker.hasPermission(
 					groupId, Group.class.getName(), groupId,

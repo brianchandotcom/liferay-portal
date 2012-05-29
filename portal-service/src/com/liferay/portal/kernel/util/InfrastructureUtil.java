@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.kernel.security.pacl.PACLConstants;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
 import javax.mail.Session;
@@ -24,46 +25,57 @@ import javax.sql.DataSource;
  * @author Brian Wing Shun Chan
  * @author Michael Young
  */
-public class InfrastructureUtil {
+public class InfrastructureUtil implements PACLConstants {
 
 	public static DataSource getDataSource() {
-		PortalRuntimePermission.checkGetBeanProperty(InfrastructureUtil.class);
+		PortalRuntimePermission.checkGetBeanProperty(
+			InfrastructureUtil.class, PORTAL_RUNTIME_PERMISSION_DATA_SOURCE);
 
 		return _dataSource;
 	}
 
 	public static Object getDynamicDataSourceTargetSource() {
-		PortalRuntimePermission.checkGetBeanProperty(InfrastructureUtil.class);
+		PortalRuntimePermission.checkGetBeanProperty(
+			InfrastructureUtil.class,
+			PORTAL_RUNTIME_PERMISSION_DYNAMIC_DATA_SOURCE_TARGET_SOURCE);
 
 		return _dynamicDataSourceTargetSource;
 	}
 
 	public static Session getMailSession() {
-		PortalRuntimePermission.checkGetBeanProperty(InfrastructureUtil.class);
+		PortalRuntimePermission.checkGetBeanProperty(
+			InfrastructureUtil.class, PORTAL_RUNTIME_PERMISSION_MAIL_SESSION);
 
 		return _mailSession;
 	}
 
 	public static Object getShardDataSourceTargetSource() {
-		PortalRuntimePermission.checkGetBeanProperty(InfrastructureUtil.class);
+		PortalRuntimePermission.checkGetBeanProperty(
+			InfrastructureUtil.class,
+			PORTAL_RUNTIME_PERMISSION_SHARD_DATA_SOURCE_TARGET_SOURCE);
 
 		return _shardDataSourceTargetSource;
 	}
 
 	public static Object getShardSessionFactoryTargetSource() {
-		PortalRuntimePermission.checkGetBeanProperty(InfrastructureUtil.class);
+		PortalRuntimePermission.checkGetBeanProperty(
+			InfrastructureUtil.class,
+			PORTAL_RUNTIME_PERMISSION_SHARD_SESSION_FACTORY_TARGET_SOURCE);
 
 		return _shardSessionFactoryTargetSource;
 	}
 
 	public static Object getTransactionManager() {
-		PortalRuntimePermission.checkGetBeanProperty(InfrastructureUtil.class);
+		PortalRuntimePermission.checkGetBeanProperty(
+			InfrastructureUtil.class,
+			PORTAL_RUNTIME_PERMISSION_TRANSACTION_MANAGER);
 
 		return _transactionManager;
 	}
 
 	public void setDataSource(DataSource dataSource) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
+		PortalRuntimePermission.checkSetBeanProperty(
+			getClass(), PORTAL_RUNTIME_PERMISSION_DATA_SOURCE);
 
 		_dataSource = dataSource;
 	}
@@ -71,13 +83,16 @@ public class InfrastructureUtil {
 	public void setDynamicDataSourceTargetSource(
 		Object dynamicDataSourceTargetSource) {
 
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
+		PortalRuntimePermission.checkSetBeanProperty(
+			getClass(),
+			PORTAL_RUNTIME_PERMISSION_DYNAMIC_DATA_SOURCE_TARGET_SOURCE);
 
 		_dynamicDataSourceTargetSource = dynamicDataSourceTargetSource;
 	}
 
 	public void setMailSession(Session mailSession) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
+		PortalRuntimePermission.checkSetBeanProperty(
+			getClass(), PORTAL_RUNTIME_PERMISSION_MAIL_SESSION);
 
 		_mailSession = mailSession;
 	}
@@ -85,7 +100,9 @@ public class InfrastructureUtil {
 	public void setShardDataSourceTargetSource(
 		Object shardDataSourceTargetSource) {
 
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
+		PortalRuntimePermission.checkSetBeanProperty(
+			getClass(),
+			PORTAL_RUNTIME_PERMISSION_SHARD_DATA_SOURCE_TARGET_SOURCE);
 
 		_shardDataSourceTargetSource = shardDataSourceTargetSource;
 	}
@@ -93,13 +110,16 @@ public class InfrastructureUtil {
 	public void setShardSessionFactoryTargetSource(
 		Object shardSessionFactoryTargetSource) {
 
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
+		PortalRuntimePermission.checkSetBeanProperty(
+			getClass(),
+			PORTAL_RUNTIME_PERMISSION_SHARD_SESSION_FACTORY_TARGET_SOURCE);
 
 		_shardSessionFactoryTargetSource = shardSessionFactoryTargetSource;
 	}
 
 	public void setTransactionManager(Object transactionManager) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
+		PortalRuntimePermission.checkSetBeanProperty(
+			getClass(), PORTAL_RUNTIME_PERMISSION_TRANSACTION_MANAGER);
 
 		_transactionManager = transactionManager;
 	}

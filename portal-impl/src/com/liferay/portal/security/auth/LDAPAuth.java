@@ -444,7 +444,9 @@ public class LDAPAuth implements Authenticator {
 		}
 
 		if (PrefsPropsUtil.getBoolean(
-				companyId, PropsKeys.LDAP_AUTH_REQUIRED)) {
+				companyId, PropsKeys.LDAP_AUTH_REQUIRED) ||
+			!PrefsPropsUtil.getBoolean(
+				companyId, PropsKeys.LDAP_IMPORT_USER_PASSWORD_ENABLED)) {
 
 			return failureCode;
 		}

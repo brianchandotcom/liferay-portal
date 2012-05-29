@@ -38,6 +38,10 @@ public class PortalRuntimePermission extends BasicPermission {
 	}
 
 	public static void checkGetBeanProperty(Class<?> clazz) {
+		checkGetBeanProperty(clazz, null);
+	}
+
+	public static void checkGetBeanProperty(Class<?> clazz, String property) {
 		SecurityManager securityManager = System.getSecurityManager();
 
 		if (securityManager == null) {
@@ -45,12 +49,17 @@ public class PortalRuntimePermission extends BasicPermission {
 		}
 
 		Permission permission = new PortalRuntimePermission(
-			PACLConstants.PORTAL_RUNTIME_PERMISSION_GET_BEAN_PROPERTY, clazz);
+			PACLConstants.PORTAL_RUNTIME_PERMISSION_GET_BEAN_PROPERTY, clazz,
+			property);
 
 		securityManager.checkPermission(permission);
 	}
 
 	public static void checkSetBeanProperty(Class<?> clazz) {
+		checkSetBeanProperty(clazz, null);
+	}
+
+	public static void checkSetBeanProperty(Class<?> clazz, String property) {
 		SecurityManager securityManager = System.getSecurityManager();
 
 		if (securityManager == null) {
@@ -58,21 +67,34 @@ public class PortalRuntimePermission extends BasicPermission {
 		}
 
 		Permission permission = new PortalRuntimePermission(
-			PACLConstants.PORTAL_RUNTIME_PERMISSION_SET_BEAN_PROPERTY, clazz);
+			PACLConstants.PORTAL_RUNTIME_PERMISSION_SET_BEAN_PROPERTY, clazz,
+			property);
 
 		securityManager.checkPermission(permission);
 	}
 
 	public PortalRuntimePermission(String name, Object subject) {
+		this(name, subject, null);
+	}
+
+	public PortalRuntimePermission(
+		String name, Object subject, String property) {
+
 		super(name);
 
+		_property = property;
 		_subject = subject;
+	}
+
+	public String getProperty() {
+		return _property;
 	}
 
 	public Object getSubject() {
 		return _subject;
 	}
 
+	private String _property;
 	private Object _subject;
 
 }

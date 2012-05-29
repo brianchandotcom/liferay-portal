@@ -94,7 +94,9 @@ _sass_cache_*.css
 /portal-web/test-results
 
 /portal-web/docroot/dtd
+/portal-web/docroot/favicon.ico
 /portal-web/docroot/wsrp
+
 
 /portal-web/docroot/html/ALLOY_ZIP
 

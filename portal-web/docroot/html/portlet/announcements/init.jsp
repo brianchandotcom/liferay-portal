@@ -35,7 +35,15 @@ page import="com.liferay.portlet.announcements.service.permission.AnnouncementsE
 page import="com.liferay.portlet.announcements.util.AnnouncementsUtil" %>
 
 <%
-int delta = 3;
+PortletPreferences preferences = renderRequest.getPreferences();
+		 
+String portletResource = ParamUtil.getString(request, "portletResource");
+
+if (Validator.isNotNull(portletResource)) {
+	preferences = PortletPreferencesFactoryUtil.getPortletSetup(request, portletResource);
+}
+
+int pageDelta = GetterUtil.getInteger(preferences.getValue("pageDelta", StringPool.BLANK), PropsValues.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
 
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 %>

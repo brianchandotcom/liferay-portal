@@ -745,6 +745,7 @@
 		<portlet-name>84</portlet-name>
 		<icon>/html/icons/announcements.png</icon>
 		<struts-path>announcements</struts-path>
+		<configuration-action-class>com.liferay.portlet.announcements.action.ConfigurationActionImpl</configuration-action-class>
 		<scheduler-entry>
 			<scheduler-event-listener-class>com.liferay.portlet.announcements.messaging.CheckEntryMessageListener</scheduler-event-listener-class>
 			<trigger>

@@ -17,7 +17,7 @@
 <%
 LinkedHashMap<Long, long[]> scopes = AnnouncementsUtil.getAnnouncementScopes(user.getUserId());
 
-SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur1", delta, portletURL, null, "no-entries-were-found");
+SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur1", pageDelta, portletURL, null, "no-entries-were-found");
 
 List<AnnouncementsEntry> results = null;
 int total = 0;
@@ -40,7 +40,7 @@ boolean hasResults = total > 0;
 <%
 flagValue = AnnouncementsFlagConstants.HIDDEN;
 
-searchContainer = new SearchContainer(renderRequest, null, null, "cur2", delta, portletURL, null, "no-entries-were-found");
+searchContainer = new SearchContainer(renderRequest, null, null, "cur2", pageDelta, portletURL, null, "no-entries-were-found");
 %>
 
 <div class="read-entries">

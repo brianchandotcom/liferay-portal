@@ -26,16 +26,20 @@ import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.servlet.ThreadLocalFacadeServletRequestWrapperUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.layoutconfiguration.util.velocity.CustomizationSettingsProcessor;
 import com.liferay.portlet.layoutconfiguration.util.velocity.TemplateProcessor;
 import com.liferay.portlet.layoutconfiguration.util.xml.RuntimeLogic;
+
+import java.io.Closeable;
 
 import java.util.HashMap;
 import java.util.List;
@@ -208,9 +212,21 @@ public class RuntimePageImpl implements RuntimePage {
 				request.setAttribute(
 					WebKeys.PARALLEL_RENDERING_MERGE_LOCK, lock);
 
-				parallelyRenderPortlets(
-					request, response, processor, contentsMap,
-					portletRenderers);
+				ObjectValuePair<HttpServletRequest, Closeable> objectValuePair =
+					ThreadLocalFacadeServletRequestWrapperUtil.inject(request);
+
+				HttpServletRequest threadSafeRequest = objectValuePair.getKey();
+
+				Closeable closeable = objectValuePair.getValue();
+
+				try {
+					parallelyRenderPortlets(
+						threadSafeRequest, response, processor, contentsMap,
+						portletRenderers);
+				}
+				finally {
+					closeable.close();
+				}
 
 				request.removeAttribute(WebKeys.PARALLEL_RENDERING_MERGE_LOCK);
 

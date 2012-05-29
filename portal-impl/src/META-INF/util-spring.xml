@@ -598,6 +598,15 @@
 			<bean class="com.liferay.portal.service.persistence.BatchSessionImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.servlet.ThreadLocalFacadeServletRequestWrapperUtil" class="com.liferay.portal.servlet.ThreadLocalFacadeServletRequestWrapperUtil">
+		<property name="injectStopperClassNames">
+			<set>
+				<value>org.apache.catalina.connector.Request</value>
+				<value>org.apache.catalina.core.ApplicationHttpRequest</value>
+				<value>org.apache.catalina.core.ApplicationRequest</value>
+			</set>
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.struts.StrutsActionRegistryUtil" class="com.liferay.portal.struts.StrutsActionRegistryUtil">
 		<property name="strutsActionRegistry">
 			<bean class="com.liferay.portal.struts.StrutsActionRegistryImpl" />

@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.SessionParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -1925,7 +1926,9 @@ public class ServicePreAction extends Action {
 
 		// Parallel render
 
-		if (PropsValues.LAYOUT_PARALLEL_RENDER_ENABLE) {
+		if (PropsValues.LAYOUT_PARALLEL_RENDER_ENABLE &&
+			ServerDetector.isTomcat()) {
+
 			boolean portletParallelRender = ParamUtil.getBoolean(
 				request, "p_p_parallel", true);
 

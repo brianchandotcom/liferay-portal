@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseAsyncDestination;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -46,11 +47,8 @@ public class PortalRuntimeChecker extends BaseChecker {
 
 		String name = portalRuntimePermission.getName();
 		Object subject = portalRuntimePermission.getSubject();
-		String property = portalRuntimePermission.getProperty();
-
-		if (Validator.isNull(property)) {
-			property = StringPool.BLANK;
-		}
+		String property = GetterUtil.getString(
+			portalRuntimePermission.getProperty());
 
 		if (name.equals(PORTAL_RUNTIME_PERMISSION_EXPANDO_BRIDGE)) {
 			String className = (String)subject;
@@ -64,18 +62,32 @@ public class PortalRuntimeChecker extends BaseChecker {
 			Class<?> clazz = (Class<?>)subject;
 
 			if (!hasGetBeanProperty(clazz, property)) {
-				throwSecurityException(
-					_log, "Attempted to get bean property " + property + " on " +
-						clazz);
+				if (Validator.isNotNull(property)) {
+					throwSecurityException(
+						_log,
+						"Attempted to get bean property " + property + " on " +
+							clazz);
+				}
+				else {
+					throwSecurityException(
+						_log, "Attempted to get bean property on " + clazz);
+				}
 			}
 		}
 		else if (name.equals(PORTAL_RUNTIME_PERMISSION_SET_BEAN_PROPERTY)) {
 			Class<?> clazz = (Class<?>)subject;
 
 			if (!hasSetBeanProperty(clazz, property)) {
-				throwSecurityException(
-					_log, "Attempted to set bean property " + property + " on " +
-						clazz);
+				if (Validator.isNotNull(property)) {
+					throwSecurityException(
+						_log,
+						"Attempted to set bean property " + property + " on " +
+							clazz);
+				}
+				else {
+					throwSecurityException(
+						_log, "Attempted to set bean property on " + clazz);
+				}
 			}
 		}
 	}
@@ -88,17 +100,17 @@ public class PortalRuntimeChecker extends BaseChecker {
 		}
 
 		if (Validator.isNotNull(property)) {
-			className = className.concat(StringPool.POUND).concat(property);
-		}
+			if (_getBeanPropertyClassNames.contains(
+					className.concat(StringPool.POUND).concat(property))) {
 
-		if (_getBeanPropertyClassNames.contains(className)) {
-			return true;
+				return true;
+			}
 		}
 
 		if (clazz == PortalExecutorManagerUtil.class) {
-			Class<?> callerClass9 = Reflection.getCallerClass(9);
+			Class<?> callerClass10 = Reflection.getCallerClass(10);
 
-			if (callerClass9 == BaseAsyncDestination.class) {
+			if (callerClass10 == BaseAsyncDestination.class) {
 				return true;
 			}
 		}
@@ -109,16 +121,16 @@ public class PortalRuntimeChecker extends BaseChecker {
 	protected boolean hasSetBeanProperty(Class<?> clazz, String property) {
 		String className = clazz.getName();
 
-		if (_getBeanPropertyClassNames.contains(className)) {
+		if (_setBeanPropertyClassNames.contains(className)) {
 			return true;
 		}
 
 		if (Validator.isNotNull(property)) {
-			className = className.concat(StringPool.POUND).concat(property);
-		}
+			if (_setBeanPropertyClassNames.contains(
+					className.concat(StringPool.POUND).concat(property))) {
 
-		if (_setBeanPropertyClassNames.contains(className)) {
-			return true;
+				return true;
+			}
 		}
 
 		return false;

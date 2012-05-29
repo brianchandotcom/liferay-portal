@@ -57,14 +57,32 @@ public interface PACLConstants {
 
 	public static final String PORTAL_MESSAGE_BUS_PERMISSION_SEND = "send";
 
+	public static final String PORTAL_RUNTIME_PERMISSION_DATA_SOURCE =
+		"dataSource";
+
+	public static final String PORTAL_RUNTIME_PERMISSION_DYNAMIC_DATA_SOURCE_TARGET_SOURCE =
+		"dynamicDataSourceTargetSource";
+
 	public static final String PORTAL_RUNTIME_PERMISSION_EXPANDO_BRIDGE =
 		"expandoBridge";
 
 	public static final String PORTAL_RUNTIME_PERMISSION_GET_BEAN_PROPERTY =
 		"getBeanProperty";
 
+	public static final String PORTAL_RUNTIME_PERMISSION_MAIL_SESSION =
+		"mailSession";
+
 	public static final String PORTAL_RUNTIME_PERMISSION_SET_BEAN_PROPERTY =
 		"setBeanProperty";
+
+	public static final String PORTAL_RUNTIME_PERMISSION_SHARD_DATA_SOURCE_TARGET_SOURCE =
+		"shardDataSourceTargetSource";
+
+	public static final String PORTAL_RUNTIME_PERMISSION_SHARD_SESSION_FACTORY_TARGET_SOURCE =
+		"shardSessionFactoryTargetSource";
+
+	public static final String PORTAL_RUNTIME_PERMISSION_TRANSACTION_MANAGER =
+		"transactionManager";
 
 	public static final String PORTAL_SERVICE_PERMISSION_DYNAMIC_QUERY =
 		"dynamicQuery";

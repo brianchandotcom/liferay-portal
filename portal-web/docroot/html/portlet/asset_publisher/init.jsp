@@ -241,7 +241,7 @@ String socialBookmarksDisplayStyle = preferences.getValue("socialBookmarksDispla
 String socialBookmarksDisplayPosition = preferences.getValue("socialBookmarksDisplayPosition", "bottom");
 
 String defaultMetadataFields = StringPool.BLANK;
-String allMetadataFields = "create-date,modified-date,publish-date,expiration-date,priority,author,view-count,categories,tags,ratings";
+String allMetadataFields = "create-date,modified-date,publish-date,expiration-date,priority,author,view-count,categories,tags";
 
 String[] metadataFields = StringUtil.split(preferences.getValue("metadataFields", defaultMetadataFields));
 

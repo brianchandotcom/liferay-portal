@@ -1329,6 +1329,8 @@ them in ${app.server.parent.dir}. Then rerun this task.
 
 		<delete dir="${app.server.websphere.dir}" />
 
+		<property name="app.server.websphere.dir.abs" location="${app.server.websphere.dir}" />
+
 		<tstamp>
 			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
 		</tstamp>
@@ -1340,7 +1342,7 @@ them in ${app.server.parent.dir}. Then rerun this task.
 
 		<echo file="${tstamp.value}/was/WAS/liferay-responsefile.txt">
 			-OPT feature="noFeature"
-			-OPT installLocation="${app.server.websphere.dir}"
+			-OPT installLocation="${app.server.websphere.dir.abs}"
 			-OPT installType="installNew"
 			-OPT PROF_cellName=liferay-cell
 			-OPT PROF_enableAdminSecurity="false"
@@ -1356,6 +1358,7 @@ them in ${app.server.parent.dir}. Then rerun this task.
 			-OPT PROF_winserviceCheck="false"
 			-OPT profileType="standAlone"
 			-OPT silentInstallLicenseAcceptance="true"
+			-OPT disableOSPrereqChecking="true"
 		</echo>
 
 		<echo file="${tstamp.value}/was/WAS/liferay-portdef.props">
@@ -1374,7 +1377,7 @@ them in ${app.server.parent.dir}. Then rerun this task.
 		/>
 
 		<echo file="${tstamp.value}/updi/UpdateInstaller/liferay-responsefile.txt">
-			-OPT installLocation="${app.server.websphere.dir}\UpdateInstaller"
+			-OPT installLocation="${app.server.websphere.dir.abs}\UpdateInstaller"
 			-OPT silentInstallLicenseAcceptance="true"
 			-OPT skipStartMenu=true
 		</echo>
@@ -1385,16 +1388,18 @@ them in ${app.server.parent.dir}. Then rerun this task.
 			<arg line="/c install.exe -options liferay-responsefile.txt -silent" />
 		</exec>
 
-		<echo file="${app.server.websphere.dir}/UpdateInstaller/liferay-responsefile.txt">
-			-W maintenance.package="${app.server.parent.dir}\${app.server.websphere.fix.pack.jdk.name};${app.server.parent.dir}\${app.server.websphere.fix.pack.was.name}"
-			-W product.location="${app.server.websphere.dir}"
+		<property name="app.server.parent.dir.abs" location="${app.server.parent.dir}" />
+
+		<echo file="${app.server.websphere.dir.abs}/UpdateInstaller/liferay-responsefile.txt">
+			-W maintenance.package="${app.server.parent.dir.abs}\${app.server.websphere.fix.pack.jdk.name};${app.server.parent.dir.abs}\${app.server.websphere.fix.pack.was.name}"
+			-W product.location="${app.server.websphere.dir.abs}"
 			-W update.type="install"
 		</echo>
 
 		<echo>Installing fix pack.</echo>
 
-		<exec dir="${app.server.websphere.dir}/UpdateInstaller" executable="cmd.exe">
-			<arg line="/c update.bat -options liferay-responsefile.txt -silent" />
+		<exec dir="${app.server.websphere.dir.abs}/UpdateInstaller" executable="cmd.exe">
+			<arg line="/c update.exe -options liferay-responsefile.txt -silent" />
 		</exec>
 
 		<delete dir="${tstamp.value}" />

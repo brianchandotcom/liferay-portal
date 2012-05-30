@@ -99,7 +99,7 @@
 		<finder name="C_LtD_NeS" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="displayDate" comparator="&lt;" />
-			<finder-column name="status" />
+			<finder-column name="status" comparator="!="/>
 		</finder>
 		<finder name="C_LtD_S" return-type="Collection">
 			<finder-column name="companyId" />

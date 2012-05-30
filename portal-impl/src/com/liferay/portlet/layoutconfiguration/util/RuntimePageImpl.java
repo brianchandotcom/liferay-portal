@@ -44,9 +44,13 @@ import java.io.Closeable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
+import java.util.concurrent.FutureTask;
+import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.locks.Lock;
@@ -380,8 +384,27 @@ public class RuntimePageImpl implements RuntimePage {
 						" for parallel rendering");
 			}
 
-			Future<StringBundler> future = executorService.submit(
-				portletRenderer.getCallable(request, response));
+			Callable<StringBundler> renderCallable =
+				portletRenderer.getCallable(request, response);
+
+			Future<StringBundler> future = null;
+
+			try {
+				future = executorService.submit(renderCallable);
+			}
+			catch (RejectedExecutionException ree) {
+				// This should only happen when user configuring
+				// AbortPolicy(or some other customized RejectedExecutionHandler
+				// that throws RejectedExecutionException) for this
+				// ThreadPoolExecutor. AbortPolicy is not the recommended
+				// setting, but to be more robust, we take care of this by
+				// converting the rejection to be a fallback action.
+
+				future = new FutureTask<StringBundler>(renderCallable);
+
+				// Cancel immediately
+				future.cancel(true);
+			}
 
 			futures.put(future, portletRenderer);
 		}
@@ -396,7 +419,14 @@ public class RuntimePageImpl implements RuntimePage {
 
 			Portlet portlet = portletRenderer.getPortlet();
 
-			if ((waitTime > 0) || future.isDone()) {
+			if (future.isCancelled()) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Reject portlet " + portlet.getPortletId() +
+							" for parallel rendering");
+				}
+			}
+			else if ((waitTime > 0) || future.isDone()) {
 				try {
 					long startTime = System.currentTimeMillis();
 
@@ -438,11 +468,25 @@ public class RuntimePageImpl implements RuntimePage {
 
 					waitTime = -1;
 				}
+				catch (CancellationException ce) {
+
+					// This should only happen on concurrent shutdown
+					// ThreadPool. Simply stops the render process.
+
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Asynchronized cancellation detected, should " +
+								"only be caused by concurrent shutdown " +
+									"ThreadPool, otherwise could be a bug", ce);
+					}
+
+					return;
+				}
+
+				// Cancel by interrupting rendering thread
+
+				future.cancel(true);
 			}
-
-			// Cancel by interrupting rendering thread
-
-			future.cancel(true);
 
 			StringBundler sb = null;
 

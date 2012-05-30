@@ -1077,6 +1077,16 @@ public interface PropsKeys {
 
 	public static final String LAYOUT_PARALLEL_RENDER_ENABLE = "layout.parallel.render.enable";
 
+	public static final String LAYOUT_PARALLEL_RENDER_THREADPOOL_ALLOW_CORE_THREAD_TIMEOUT = "layout.parallel.render.threadpool.allow.core.thread.timeout";
+
+	public static final String LAYOUT_PARALLEL_RENDER_THREADPOOL_CORE_THREAD_COUNT = "layout.parallel.render.threadpool.core.thread.count";
+
+	public static final String LAYOUT_PARALLEL_RENDER_THREADPOOL_KEEP_ALIVE_TIME = "layout.parallel.render.threadpool.keep.alive.time";
+
+	public static final String LAYOUT_PARALLEL_RENDER_THREADPOOL_MAX_QUEUE_SIZE = "layout.parallel.render.threadpool.max.queue.size";
+
+	public static final String LAYOUT_PARALLEL_RENDER_THREADPOOL_MAX_THREAD_COUNT = "layout.parallel.render.threadpool.max.thread.count";
+
 	public static final String LAYOUT_PARALLEL_RENDER_TIMEOUT = "layout.parallel.render.timeout";
 
 	public static final String LAYOUT_PARENTABLE = "layout.parentable";

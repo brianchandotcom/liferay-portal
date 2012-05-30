@@ -32,8 +32,80 @@
 
 	<!-- Executor manager -->
 
+	<bean id="parallel.render.threadpool.name" class="com.liferay.portal.kernel.spring.util.ClassNameUtil" factory-method="getClassName">
+		<constructor-arg value="com.liferay.portlet.layoutconfiguration.util.RuntimePageImpl" />
+	</bean>
 	<bean id="com.liferay.portal.kernel.executor.PortalExecutorManager" class="com.liferay.portal.executor.PortalExecutorManagerImpl">
 		<property name="portalExecutorFactory" ref="com.liferay.portal.kernel.executor.PortalExecutorFactory" />
+		<property name="portalExecutors">
+			<map>
+				<entry>
+					<key>
+						<ref bean="parallel.render.threadpool.name" />
+					</key>
+					<bean class="com.liferay.portal.kernel.concurrent.ThreadPoolExecutor">
+						<constructor-arg name="corePoolSize">
+							<util:constant static-field="com.liferay.portal.util.PropsValues.LAYOUT_PARALLEL_RENDER_THREADPOOL_CORE_THREAD_COUNT" />
+						</constructor-arg>
+						<constructor-arg name="maxPoolSize">
+							<util:constant static-field="com.liferay.portal.util.PropsValues.LAYOUT_PARALLEL_RENDER_THREADPOOL_MAX_THREAD_COUNT" />
+						</constructor-arg>
+						<constructor-arg name="keepAliveTime">
+							<util:constant static-field="com.liferay.portal.util.PropsValues.LAYOUT_PARALLEL_RENDER_THREADPOOL_KEEP_ALIVE_TIME" />
+						</constructor-arg>
+						<constructor-arg name="timeUnit">
+							<util:constant static-field="java.util.concurrent.TimeUnit.SECONDS" />
+						</constructor-arg>
+						<constructor-arg name="allowCoreThreadTimeout">
+							<util:constant static-field="com.liferay.portal.util.PropsValues.LAYOUT_PARALLEL_RENDER_THREADPOOL_ALLOW_CORE_THREAD_TIMEOUT" />
+						</constructor-arg>
+						<!--
+							Recommend a bounded queue size.
+
+							An unbounded queue size will never trigger RejectedExecutionHandler,
+							under heavy load this will lead to massive memory usage.
+
+							A bounded queue size with a proper RejectedExecutionHandler can help the server to do a graceful degradation.
+						-->
+						<constructor-arg name="maxQueueSize">
+							<util:constant static-field="com.liferay.portal.util.PropsValues.LAYOUT_PARALLEL_RENDER_THREADPOOL_MAX_QUEUE_SIZE" />
+						</constructor-arg>
+						<!--
+							Recommend to use DiscardWithCancelPolicy.
+							1) For AbortPolicy
+								An unnecessary RejectedExecutionException is thrown and captured to trigger the fallback logic which is not efficient.
+							2) For CallerRunsPolicy
+								Tie up app-server worker thread to portlet rendering which will lose the timeout feature for the current portlet.
+								Also will ruin FIFO feature for task execution, the rejected task will be served immediately by caller thread while
+								its predecessors are still waiting in the TaskQueue.
+							3) For DiscardOldestPolicy and DiscardPolicy
+								Silently remove the job from task queue with no further processing to the canceled job. This will cause the following
+								Future.get() to do a meaningless blocking wait until timeout.
+
+							With DiscardWithCancelPolicy, on rejecting, the job is canceled immediately, so the following Future.get() can avoid waiting.
+							This will allow app-server worker thread to continue doing meaningful job, like merging finished portlets render results.
+						-->
+						<constructor-arg name="rejectedExecutionHandler">
+							<bean class="com.liferay.portal.kernel.concurrent.DiscardWithCancelPolicy" />
+						</constructor-arg>
+						<constructor-arg name="threadFactory">
+							<bean class="com.liferay.portal.kernel.util.NamedThreadFactory">
+								<constructor-arg name="name" ref="parallel.render.threadpool.name"/>
+								<constructor-arg name="priority">
+									<util:constant static-field="java.lang.Thread.NORM_PRIORITY" />
+								</constructor-arg>
+								<constructor-arg name="contextClassLoader">
+									<bean class="com.liferay.portal.kernel.util.PortalClassLoaderUtil" factory-method="getClassLoader"/>
+								</constructor-arg>
+							</bean>
+						</constructor-arg>
+						<constructor-arg name="threadPoolHandler">
+							<bean class="com.liferay.portal.kernel.concurrent.ClearThreadLocalThreadPoolHandler" />
+						</constructor-arg>
+					</bean>
+				</entry>
+			</map>
+		</property>
 	</bean>
 	<bean id="com.liferay.portal.kernel.executor.PortalExecutorManagerUtil" class="com.liferay.portal.kernel.executor.PortalExecutorManagerUtil">
 		<property name="portalExecutorManager" ref="com.liferay.portal.kernel.executor.PortalExecutorManager" />

@@ -78,6 +78,8 @@ public class PortletRenderer {
 		request = PortletContainerUtil.setupOptionalRenderParameters(
 			request, _RENDER_PATH, null, null, null);
 
+		_restrictPortletServletRequest = (RestrictPortletServletRequest)request;
+
 		return _render(request, response);
 	}
 
@@ -90,6 +92,8 @@ public class PortletRenderer {
 
 		request = PortletContainerUtil.setupOptionalRenderParameters(
 			request, null, null, null, null);
+
+		_restrictPortletServletRequest = (RestrictPortletServletRequest)request;
 
 		try {
 			return _render(request, response);

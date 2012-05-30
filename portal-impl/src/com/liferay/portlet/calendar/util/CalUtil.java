@@ -115,6 +115,10 @@ public class CalUtil {
 	public static boolean isAllDay(
 		CalEvent event, TimeZone timeZone, Locale locale) {
 
+		if (event.isAllDay()) {
+			return true;
+		}
+
 		Calendar cal = null;
 
 		if (event.getTimeZoneSensitive()) {

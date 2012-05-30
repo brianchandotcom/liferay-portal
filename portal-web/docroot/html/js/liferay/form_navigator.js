@@ -82,7 +82,7 @@ AUI.add(
 			_addModifiedSection: function (section) {
 				var instance = this;
 
-				if (A.Array.indexOf(section, instance._modifiedSectionsArray) == -1) {
+				if (A.Array.indexOf(instance._modifiedSectionsArray, section) == -1) {
 					instance._modifiedSectionsArray.push(section);
 				}
 			},

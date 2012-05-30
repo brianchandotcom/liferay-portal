@@ -426,6 +426,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 			searchContext.addFacet(scopeFacet);
 
+			searchContext.setAttribute("paginationType", "regular");
 			searchContext.setCompanyId(companyId);
 			searchContext.setEnd(end);
 			searchContext.setEntryClassNames(getClassNames(className));
@@ -465,6 +466,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			attributes.put(Field.DESCRIPTION, description);
 			attributes.put(Field.TITLE, title);
 			attributes.put(Field.USER_NAME, userName);
+			attributes.put("paginationType", "regular");
 
 			SearchContext searchContext = new SearchContext();
 

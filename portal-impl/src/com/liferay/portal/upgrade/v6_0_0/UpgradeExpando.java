@@ -14,6 +14,7 @@
 
 package com.liferay.portal.upgrade.v6_0_0;
 
+import com.liferay.portal.kernel.dao.jdbc.ConcurrentlyUpdatableConnection;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
@@ -42,7 +43,10 @@ public class UpgradeExpando extends UpgradeProcess {
 		try {
 			con = DataAccess.getConnection();
 
-			ps = con.prepareStatement(
+			ConcurrentlyUpdatableConnection concurrentConnection =
+				new ConcurrentlyUpdatableConnection(con);
+
+			ps = concurrentConnection.prepareStatement(
 				"select * from ExpandoColumn where tableId = ?");
 
 			ps.setLong(1, wolTableId);
@@ -52,9 +56,13 @@ public class UpgradeExpando extends UpgradeProcess {
 			long scColumnId = 0;
 			long snColumnId = 0;
 
-			while (rs.next()) {
+			boolean hasNext = rs.next();
+
+			while (hasNext) {
 				long wolColumnId = rs.getLong("columnId");
 				String name = rs.getString("name");
+
+				hasNext = rs.next();
 
 				long newTableId = 0;
 
@@ -93,17 +101,24 @@ public class UpgradeExpando extends UpgradeProcess {
 		try {
 			con = DataAccess.getConnection();
 
-			ps = con.prepareStatement(
+			ConcurrentlyUpdatableConnection concurrentConnection =
+				new ConcurrentlyUpdatableConnection(con);
+
+			ps = concurrentConnection.prepareStatement(
 				"select * from ExpandoRow where tableId = ?");
 
 			ps.setLong(1, wolTableId);
 
 			rs = ps.executeQuery();
 
-			while (rs.next()) {
+			boolean hasNext = rs.next();
+
+			while (hasNext) {
 				long wolRowId = rs.getLong("rowId_");
 				long companyId = rs.getLong("companyId");
 				long classPK = rs.getLong("classPK");
+
+				hasNext = rs.next();
 
 				long scRowId = increment();
 
@@ -139,17 +154,24 @@ public class UpgradeExpando extends UpgradeProcess {
 		try {
 			con = DataAccess.getConnection();
 
-			ps = con.prepareStatement(
+			ConcurrentlyUpdatableConnection concurrentConnection =
+				new ConcurrentlyUpdatableConnection(con);
+
+			ps = concurrentConnection.prepareStatement(
 				"select * from ExpandoTable where name = ?");
 
 			ps.setString(1, "WOL");
 
 			rs = ps.executeQuery();
 
-			while (rs.next()) {
+			boolean hasNext = rs.next();
+
+			while (hasNext) {
 				long wolTableId = rs.getLong("tableId");
 				long companyId = rs.getLong("companyId");
 				long classNameId = rs.getLong("classNameId");
+
+				hasNext = rs.next();
 
 				long scTableId = increment();
 
@@ -188,7 +210,10 @@ public class UpgradeExpando extends UpgradeProcess {
 		try {
 			con = DataAccess.getConnection();
 
-			ps = con.prepareStatement(
+			ConcurrentlyUpdatableConnection concurrentConnection =
+				new ConcurrentlyUpdatableConnection(con);
+
+			ps = concurrentConnection.prepareStatement(
 				"select * from ExpandoValue where tableId = ? and rowId_ = ?");
 
 			ps.setLong(1, wolTableId);
@@ -196,9 +221,13 @@ public class UpgradeExpando extends UpgradeProcess {
 
 			rs = ps.executeQuery();
 
-			while (rs.next()) {
+			boolean hasNext = rs.next();
+
+			while (hasNext) {
 				long valueId = rs.getLong("valueId");
 				long columnId = rs.getLong("columnId");
+
+				hasNext = rs.next();
 
 				long newTableId = 0;
 				long newRowId = 0;

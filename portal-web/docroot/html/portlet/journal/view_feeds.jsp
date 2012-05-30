@@ -19,7 +19,7 @@
 <%
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/journal/view_structures");
+portletURL.setParameter("struts_action", "/journal/view_feeds");
 %>
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">

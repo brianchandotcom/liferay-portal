@@ -138,7 +138,7 @@ public class EditUser1RegRole1Test extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//tr[contains(.,'regrole1')]/td[@headers='_125_rolesSearchContainer_col-title']/a")) {
+							"//tr[contains(.,'Regrole1 Name')]/td[@headers='_125_rolesSearchContainer_col-title']/a")) {
 					break;
 				}
 			}
@@ -148,11 +148,11 @@ public class EditUser1RegRole1Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("regrole1"),
+		assertEquals(RuntimeVariables.replace("Regrole1 Name"),
 			selenium.getText(
-				"//tr[contains(.,'regrole1')]/td[@headers='_125_rolesSearchContainer_col-title']/a"));
-		selenium.clickAt("//tr[contains(.,'regrole1')]/td[@headers='_125_rolesSearchContainer_col-title']/a",
-			RuntimeVariables.replace("regrole1"));
+				"//tr[contains(.,'Regrole1 Name')]/td[@headers='_125_rolesSearchContainer_col-title']/a"));
+		selenium.clickAt("//tr[contains(.,'Regrole1 Name')]/td[@headers='_125_rolesSearchContainer_col-title']/a",
+			RuntimeVariables.replace("Regrole1 Name"));
 		selenium.selectWindow("null");
 
 		for (int second = 0;; second++) {
@@ -162,7 +162,8 @@ public class EditUser1RegRole1Test extends BaseTestCase {
 
 			try {
 				if (selenium.isPartialText(
-							"//div[@id='_125_rolesSearchContainer']", "regrole1")) {
+							"//div[@id='_125_rolesSearchContainer']",
+							"Regrole1 Name")) {
 					break;
 				}
 			}
@@ -173,7 +174,7 @@ public class EditUser1RegRole1Test extends BaseTestCase {
 		}
 
 		assertTrue(selenium.isPartialText(
-				"//div[@id='_125_rolesSearchContainer']", "regrole1"));
+				"//div[@id='_125_rolesSearchContainer']", "Regrole1 Name"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
@@ -181,8 +182,8 @@ public class EditUser1RegRole1Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("regrole1"),
+		assertEquals(RuntimeVariables.replace("Regrole1 Name"),
 			selenium.getText(
-				"//tr[contains(.,'regrole')]/td[@headers='_125_rolesSearchContainer_col-title']"));
+				"//tr[contains(.,'Regrole1 Name')]/td[@headers='_125_rolesSearchContainer_col-title']"));
 	}
 }

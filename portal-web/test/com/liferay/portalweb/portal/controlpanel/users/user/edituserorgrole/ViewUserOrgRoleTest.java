@@ -148,8 +148,14 @@ public class ViewUserOrgRoleTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
+				assertEquals(RuntimeVariables.replace("userfn userln"),
+					selenium.getText("//h1[@class='header-title']/span"));
+				assertEquals(RuntimeVariables.replace("\u00ab Back"),
+					selenium.getText("//a[@id='_125_TabsBack']"));
 				assertEquals(RuntimeVariables.replace("Regular Roles"),
 					selenium.getText("//div[@id='_125_roles']/h3"));
+				assertEquals(RuntimeVariables.replace("Inherited Roles"),
+					selenium.getText("//div[@id='_125_roles']/h3[2]"));
 				assertEquals(RuntimeVariables.replace("Organization Roles"),
 					selenium.getText("//div[@id='_125_roles']/h3[3]"));
 				assertEquals(RuntimeVariables.replace("Title"),
@@ -158,7 +164,7 @@ public class ViewUserOrgRoleTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Organization"),
 					selenium.getText(
 						"//th[@id='_125_organizationRolesSearchContainer_col-organization']"));
-				assertEquals(RuntimeVariables.replace("orgrole"),
+				assertEquals(RuntimeVariables.replace("Orgrole Name"),
 					selenium.getText(
 						"//td[@id='_125_organizationRolesSearchContainer_col-title_row-1']"));
 				assertEquals(RuntimeVariables.replace("Organization Name"),
@@ -167,6 +173,8 @@ public class ViewUserOrgRoleTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Remove"),
 					selenium.getText(
 						"//td[@id='_125_organizationRolesSearchContainer_col-3_row-1']"));
+				assertEquals(RuntimeVariables.replace("Site Roles"),
+					selenium.getText("//div[@id='_125_roles']/h3[4]"));
 
 			case 100:
 				label = -1;

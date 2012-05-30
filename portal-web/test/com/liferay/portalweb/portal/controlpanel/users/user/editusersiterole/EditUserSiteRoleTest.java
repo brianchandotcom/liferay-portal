@@ -138,7 +138,7 @@ public class EditUserSiteRoleTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//tr[contains(.,'siterole')]/td[@headers='_125_rolesSearchContainer_col-title']/a")) {
+							"//tr[contains(.,'Siterole Name')]/td[@headers='_125_rolesSearchContainer_col-title']/a")) {
 					break;
 				}
 			}
@@ -148,11 +148,11 @@ public class EditUserSiteRoleTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("siterole"),
+		assertEquals(RuntimeVariables.replace("Siterole Name"),
 			selenium.getText(
-				"//tr[contains(.,'siterole')]/td[@headers='_125_rolesSearchContainer_col-title']/a"));
-		selenium.clickAt("//tr[contains(.,'siterole')]/td[@headers='_125_rolesSearchContainer_col-title']/a",
-			RuntimeVariables.replace("siterole"));
+				"//tr[contains(.,'Siterole Name')]/td[@headers='_125_rolesSearchContainer_col-title']/a"));
+		selenium.clickAt("//tr[contains(.,'Siterole Name')]/td[@headers='_125_rolesSearchContainer_col-title']/a",
+			RuntimeVariables.replace("Siterole Name"));
 		selenium.selectWindow("null");
 
 		for (int second = 0;; second++) {
@@ -163,7 +163,7 @@ public class EditUserSiteRoleTest extends BaseTestCase {
 			try {
 				if (selenium.isPartialText(
 							"//div[@id='_125_communityRolesSearchContainerSearchContainer']",
-							"siterole")) {
+							"Siterole Name")) {
 					break;
 				}
 			}
@@ -175,7 +175,7 @@ public class EditUserSiteRoleTest extends BaseTestCase {
 
 		assertTrue(selenium.isPartialText(
 				"//div[@id='_125_communityRolesSearchContainerSearchContainer']",
-				"siterole"));
+				"Siterole Name"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
@@ -183,7 +183,7 @@ public class EditUserSiteRoleTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("siterole"),
+		assertEquals(RuntimeVariables.replace("Siterole Name"),
 			selenium.getText(
 				"//td[@id='_125_communityRolesSearchContainer_col-title_row-1']"));
 		assertEquals(RuntimeVariables.replace("Site Name"),

@@ -141,7 +141,7 @@ public class EditUserOrgRoleTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//tr[contains(.,'orgrole')]/td[@headers='_125_rolesSearchContainer_col-title']/a")) {
+							"//tr[contains(.,'Orgrole Name')]/td[@headers='_125_rolesSearchContainer_col-title']/a")) {
 					break;
 				}
 			}
@@ -151,11 +151,11 @@ public class EditUserOrgRoleTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("orgrole"),
+		assertEquals(RuntimeVariables.replace("Orgrole Name"),
 			selenium.getText(
-				"//tr[contains(.,'orgrole')]/td[@headers='_125_rolesSearchContainer_col-title']/a"));
-		selenium.clickAt("//tr[contains(.,'orgrole')]/td[@headers='_125_rolesSearchContainer_col-title']/a",
-			RuntimeVariables.replace("orgrole"));
+				"//tr[contains(.,'Orgrole Name')]/td[@headers='_125_rolesSearchContainer_col-title']/a"));
+		selenium.clickAt("//tr[contains(.,'Orgrole Name')]/td[@headers='_125_rolesSearchContainer_col-title']/a",
+			RuntimeVariables.replace("Orgrole Name"));
 		selenium.selectWindow("null");
 
 		for (int second = 0;; second++) {
@@ -166,7 +166,7 @@ public class EditUserOrgRoleTest extends BaseTestCase {
 			try {
 				if (selenium.isPartialText(
 							"//div[@id='_125_organizationRolesSearchContainer']",
-							"orgrole")) {
+							"Orgrole Name")) {
 					break;
 				}
 			}
@@ -177,7 +177,8 @@ public class EditUserOrgRoleTest extends BaseTestCase {
 		}
 
 		assertTrue(selenium.isPartialText(
-				"//div[@id='_125_organizationRolesSearchContainer']", "orgrole"));
+				"//div[@id='_125_organizationRolesSearchContainer']",
+				"Orgrole Name"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
@@ -185,7 +186,7 @@ public class EditUserOrgRoleTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("orgrole"),
+		assertEquals(RuntimeVariables.replace("Orgrole Name"),
 			selenium.getText(
 				"//td[@id='_125_organizationRolesSearchContainer_col-title_row-1']"));
 		assertEquals(RuntimeVariables.replace("Organization Name"),

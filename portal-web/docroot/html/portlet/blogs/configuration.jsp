@@ -276,23 +276,19 @@ String[] socialBookmarksTypesArray = StringUtil.split(preferences.getValue("soci
 
 			<aui:fieldset>
 				<aui:select label="maximum-items-to-display" name="preferences--pageDelta--">
-					<aui:option label="1" selected="<%= pageDelta == 1 %>" />
-					<aui:option label="2" selected="<%= pageDelta == 2 %>" />
-					<aui:option label="3" selected="<%= pageDelta == 3 %>" />
-					<aui:option label="4" selected="<%= pageDelta == 4 %>" />
-					<aui:option label="5" selected="<%= pageDelta == 5 %>" />
-					<aui:option label="10" selected="<%= pageDelta == 10 %>" />
-					<aui:option label="15" selected="<%= pageDelta == 15 %>" />
-					<aui:option label="20" selected="<%= pageDelta == 20 %>" />
-					<aui:option label="25" selected="<%= pageDelta == 25 %>" />
-					<aui:option label="30" selected="<%= pageDelta == 30 %>" />
-					<aui:option label="40" selected="<%= pageDelta == 40 %>" />
-					<aui:option label="50" selected="<%= pageDelta == 50 %>" />
-					<aui:option label="60" selected="<%= pageDelta == 60 %>" />
-					<aui:option label="70" selected="<%= pageDelta == 70 %>" />
-					<aui:option label="80" selected="<%= pageDelta == 80 %>" />
-					<aui:option label="90" selected="<%= pageDelta == 90 %>" />
-					<aui:option label="100" selected="<%= pageDelta == 100 %>" />
+
+					<%
+					String[] pageDeltaValues = PropsUtil.getArray(PropsKeys.BLOGS_PAGE_DELTA_VALUES);
+
+					for (int i = 0; i < pageDeltaValues.length; i++) {
+					%>
+
+						<aui:option label="<%= pageDeltaValues[i] %>" selected="<%= pageDelta == GetterUtil.getInteger(pageDeltaValues[i]) %>" />
+
+					<%
+					}
+					%>
+
 				</aui:select>
 
 				<aui:select label="display-style" name="preferences--pageDisplayStyle--">

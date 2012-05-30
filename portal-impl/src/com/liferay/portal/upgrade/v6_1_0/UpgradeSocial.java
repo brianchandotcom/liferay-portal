@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v6_1_0;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.dao.jdbc.SmartConnection;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -369,12 +370,18 @@ public class UpgradeSocial extends UpgradeProcess {
 			sb.append(mbThreadClassNameId);
 			sb.append(")");
 
-			ps = con.prepareStatement(sb.toString());
+			SmartConnection smartConnection = new SmartConnection(con);
+
+			ps = smartConnection.prepareStatement(sb.toString());
 
 			rs = ps.executeQuery();
 
-			while (rs.next()) {
+			boolean hasNext = rs.next();
+
+			while (hasNext) {
 				long groupId = rs.getLong("groupId");
+
+				hasNext = rs.next();
 
 				sb = new StringBundler(6);
 

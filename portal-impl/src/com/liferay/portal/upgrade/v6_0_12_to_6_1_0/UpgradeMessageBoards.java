@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v6_0_12_to_6_1_0;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.dao.jdbc.SmartConnection;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
 
@@ -80,12 +81,18 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 
 			String sql = sb.toString();
 
-			ps = con.prepareStatement(sql);
+			SmartConnection smartConnection = new SmartConnection(con);
+
+			ps = smartConnection.prepareStatement(sql);
 
 			rs = ps.executeQuery();
 
-			while (rs.next()) {
+			boolean hasNext = rs.next();
+
+			while (hasNext) {
 				long messageId = rs.getLong("messageId");
+
+				hasNext = rs.next();
 
 				updateMessageAnswer(messageId, true);
 			}

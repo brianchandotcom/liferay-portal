@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v6_1_1;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.dao.jdbc.SmartConnection;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
 
@@ -123,16 +124,22 @@ public class UpgradeLayout extends UpgradeProcess {
 			sb.append("sourcePrototypeLayoutUuid is not null and ");
 			sb.append("sourcePrototypeLayoutUuid != ''");
 
-			ps = con.prepareStatement(sb.toString());
+			SmartConnection smartConnection = new SmartConnection(con);
+
+			ps = smartConnection.prepareStatement(sb.toString());
 
 			rs = ps.executeQuery();
 
-			while (rs.next()) {
+			boolean hasNext = rs.next();
+
+			while (hasNext) {
 				long plid = rs.getLong("plid");
 				String layoutPrototypeUuid = rs.getString(
 					"layoutPrototypeUuid");
 				String sourcePrototypeLayoutUuid = rs.getString(
 					"sourcePrototypeLayoutUuid");
+
+				hasNext = rs.next();
 
 				long groupId = getLayoutPrototypeGroupId(layoutPrototypeUuid);
 

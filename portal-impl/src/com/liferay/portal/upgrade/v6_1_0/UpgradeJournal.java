@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v6_1_0;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.dao.jdbc.SmartConnection;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.upgrade.v6_1_0.util.JournalArticleTable;
@@ -81,15 +82,21 @@ public class UpgradeJournal extends UpgradeProcess {
 		catch (Exception e) {
 			con = DataAccess.getConnection();
 
-			ps = con.prepareStatement(
+			SmartConnection smartConnection = new SmartConnection(con);
+
+			ps = smartConnection.prepareStatement(
 				"select id_, xsd from JournalStructure where xsd like " +
 					"'%image_gallery%'");
 
 			rs = ps.executeQuery();
 
-			while (rs.next()) {
+			boolean hasNext = rs.next();
+
+			while (hasNext) {
 				long id = rs.getLong("id_");
 				String xsd = rs.getString("xsd");
+
+				hasNext = rs.next();
 
 				xsd = StringUtil.replace(
 					xsd, "image_gallery", "document_library");

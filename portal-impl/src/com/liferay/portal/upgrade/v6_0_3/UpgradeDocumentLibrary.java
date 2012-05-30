@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v6_0_3;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.dao.jdbc.SmartConnection;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.util.PortalUtil;
@@ -103,19 +104,25 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		try {
 			con = DataAccess.getConnection();
 
-			ps = con.prepareStatement(
+			SmartConnection smartConnection = new SmartConnection(con);
+
+			ps = smartConnection.prepareStatement(
 				"select uuid_, fileEntryId, groupId, folderId, name, title " +
 					"from DLFileEntry");
 
 			rs = ps.executeQuery();
 
-			while (rs.next()) {
+			boolean hasNext = rs.next();
+
+			while (hasNext) {
 				String uuid_ = rs.getString("uuid_");
 				long fileEntryId = rs.getLong("fileEntryId");
 				long groupId = rs.getLong("groupId");
 				long folderId = rs.getLong("folderId");
 				String name = rs.getString("name");
 				String title = rs.getString("title");
+
+				hasNext = rs.next();
 
 				String extension = FileUtil.getExtension(title);
 

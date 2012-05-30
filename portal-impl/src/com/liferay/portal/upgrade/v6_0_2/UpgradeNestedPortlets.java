@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v6_0_2;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.dao.jdbc.SmartConnection;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -45,13 +46,19 @@ public class UpgradeNestedPortlets extends UpgradeProcess {
 		try {
 			con = DataAccess.getConnection();
 
-			ps = con.prepareStatement(_GET_LAYOUT);
+			SmartConnection smartConnection = new SmartConnection(con);
+
+			ps = smartConnection.prepareStatement(_GET_LAYOUT);
 
 			rs = ps.executeQuery();
 
-			while (rs.next()) {
+			boolean hasNext = rs.next();
+
+			while (hasNext) {
 				long plid = rs.getLong("plid");
 				String typeSettings = rs.getString("typeSettings");
+
+				hasNext = rs.next();
 
 				String newTypeSettings = typeSettings;
 

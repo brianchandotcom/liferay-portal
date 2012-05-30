@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v6_1_0;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.dao.jdbc.SmartConnection;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -66,16 +67,22 @@ public class UpgradeExpando extends UpgradeProcess {
 		try {
 			con = DataAccess.getConnection();
 
-			ps = con.prepareStatement(
+			SmartConnection smartConnection = new SmartConnection(con);
+
+			ps = smartConnection.prepareStatement(
 				"select columnId, type_, typeSettings from ExpandoColumn " +
 					"where typeSettings like '%indexable%'");
 
 			rs = ps.executeQuery();
 
-			while (rs.next()) {
+			boolean hasNext = rs.next();
+
+			while (hasNext) {
 				long columnId = rs.getLong("columnId");
 				int type = rs.getInt("type_");
 				String typeSettings = rs.getString("typeSettings");
+
+				hasNext = rs.next();
 
 				UnicodeProperties typeSettingsProperties =
 					new UnicodeProperties(true);
@@ -126,16 +133,22 @@ public class UpgradeExpando extends UpgradeProcess {
 		try {
 			con = DataAccess.getConnection();
 
-			ps = con.prepareStatement(
+			SmartConnection smartConnection = new SmartConnection(con);
+
+			ps = smartConnection.prepareStatement(
 				"select columnId, typeSettings from ExpandoColumn where " +
 					"typeSettings like '%selection%'");
 
 			rs = ps.executeQuery();
 
-			while (rs.next()) {
+			boolean hasNext = rs.next();
+
+			while (hasNext) {
 				long columnId = rs.getLong("columnId");
 
 				String typeSettings = rs.getString("typeSettings");
+
+				hasNext = rs.next();
 
 				typeSettings = typeSettings.replace(
 					"selection=1", "display-type=selection-list");

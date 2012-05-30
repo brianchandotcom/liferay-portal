@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v6_1_0;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.dao.jdbc.SmartConnection;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -161,14 +162,20 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		try {
 			con = DataAccess.getConnection();
 
-			ps = con.prepareStatement(
+			SmartConnection smartConnection = new SmartConnection(con);
+
+			ps = smartConnection.prepareStatement(
 				"select fileEntryId, extension from DLFileEntry");
 
 			rs = ps.executeQuery();
 
-			while (rs.next()) {
+			boolean hasNext = rs.next();
+
+			while (hasNext) {
 				long fileEntryId = rs.getLong("fileEntryId");
 				String extension = rs.getString("extension");
+
+				hasNext = rs.next();
 
 				String mimeType = MimeTypesUtil.getContentType(
 					"A." + extension);
@@ -191,16 +198,22 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		try {
 			con = DataAccess.getConnection();
 
-			ps = con.prepareStatement(
+			SmartConnection smartConnection = new SmartConnection(con);
+
+			ps = smartConnection.prepareStatement(
 				"select groupId, fileRankId, folderId, name from DLFileRank");
 
 			rs = ps.executeQuery();
 
-			while (rs.next()) {
+			boolean hasNext = rs.next();
+
+			while (hasNext) {
 				long groupId = rs.getLong("groupId");
 				long fileRankId = rs.getLong("fileRankId");
 				long folderId = rs.getLong("folderId");
 				String name = rs.getString("name");
+
+				hasNext = rs.next();
 
 				long fileEntryId = getFileEntryId(groupId, folderId, name);
 
@@ -225,16 +238,22 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		try {
 			con = DataAccess.getConnection();
 
-			ps = con.prepareStatement(
+			SmartConnection smartConnection = new SmartConnection(con);
+
+			ps = smartConnection.prepareStatement(
 				"select fileShortcutId, toFolderId, toName from " +
 					"DLFileShortcut");
 
 			rs = ps.executeQuery();
 
-			while (rs.next()) {
+			boolean hasNext = rs.next();
+
+			while (hasNext) {
 				long fileShortcutId = rs.getLong("fileShortcutId");
 				long toFolderId = rs.getLong("toFolderId");
 				String toName = rs.getString("toName");
+
+				hasNext = rs.next();
 
 				long groupId = getGroupId(toFolderId);
 
@@ -263,18 +282,24 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		try {
 			con = DataAccess.getConnection();
 
-			ps = con.prepareStatement(
+			SmartConnection smartConnection = new SmartConnection(con);
+
+			ps = smartConnection.prepareStatement(
 				"select groupId, fileVersionId, folderId, name, extension " +
 					"from DLFileVersion");
 
 			rs = ps.executeQuery();
 
-			while (rs.next()) {
+			boolean hasNext = rs.next();
+
+			while (hasNext) {
 				long groupId = rs.getLong("groupId");
 				long fileVersionId = rs.getLong("fileVersionId");
 				long folderId = rs.getLong("folderId");
 				String name = rs.getString("name");
 				String extension = rs.getString("extension");
+
+				hasNext = rs.next();
 
 				String mimeType = MimeTypesUtil.getContentType(
 					"A." + extension);
@@ -312,16 +337,22 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		try {
 			con = DataAccess.getConnection();
 
-			ps = con.prepareStatement(
+			SmartConnection smartConnection = new SmartConnection(con);
+
+			ps = smartConnection.prepareStatement(
 				"select lockId, key_ from Lock_ where className = ?");
 
 			ps.setString(1, DLFileEntry.class.getName());
 
 			rs = ps.executeQuery();
 
-			while (rs.next()) {
+			boolean hasNext = rs.next();
+
+			while (hasNext) {
 				long lockId = rs.getLong("lockId");
 				String key = rs.getString("key_");
+
+				hasNext = rs.next();
 
 				String[] keyArray = StringUtil.split(key, CharPool.POUND);
 

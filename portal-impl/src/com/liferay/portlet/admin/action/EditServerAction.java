@@ -885,19 +885,15 @@ public class EditServerAction extends PortletAction {
 			}
 
 			try {
-				boolean result = _countDownLatch.await(
-					PropsValues.LUCENE_CLUSTER_INDEX_LOADING_SYNC_TIMEOUT,
-					TimeUnit.MILLISECONDS);
+				if (_master) {
+					_countDownLatch.await();
+				}
+				else {
+					boolean result = _countDownLatch.await(
+						PropsValues.LUCENE_CLUSTER_INDEX_LOADING_SYNC_TIMEOUT,
+						TimeUnit.MILLISECONDS);
 
-				if (!result) {
-					if (_master) {
-						_log.error(
-							logPrefix + " timed out. Skip cluster index " +
-								"loading notification.");
-
-						return;
-					}
-					else {
+					if (!result) {
 						_log.error(
 							logPrefix + " timed out. You may need to " +
 								"re-trigger a reindex process.");

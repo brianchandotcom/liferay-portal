@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.AuditedModel;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.PortletPreferencesIds;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
@@ -519,12 +520,11 @@ public class ServiceContext implements Cloneable, Serializable {
 	 * @see    com.liferay.portal.model.PortletPreferencesIds
 	 */
 	public String getPortletId() {
-		if (_portletPreferencesIds != null) {
-			return _portletPreferencesIds.getPortletId();
-		}
-		else {
+		if (_portletPreferencesIds == null) {
 			return null;
 		}
+
+		return _portletPreferencesIds.getPortletId();
 	}
 
 	/**
@@ -565,6 +565,16 @@ public class ServiceContext implements Cloneable, Serializable {
 
 	public HttpServletRequest getRequest() {
 		return _request;
+	}
+
+	public String getRootPortletId() {
+		String portletId = getPortletId();
+
+		if (portletId == null) {
+			return null;
+		}
+
+		return PortletConstants.getRootPortletId(portletId);
 	}
 
 	/**

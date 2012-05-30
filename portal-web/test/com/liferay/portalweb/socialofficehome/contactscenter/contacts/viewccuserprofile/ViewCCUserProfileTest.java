@@ -131,7 +131,7 @@ public class ViewCCUserProfileTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("About"),
 			selenium.getText(
 				"xPath=(//div[@class='user-information-title'])[1]"));
-		assertEquals(RuntimeVariables.replace("Expertise"),
+		assertEquals(RuntimeVariables.replace("Projects"),
 			selenium.getText(
 				"xPath=(//div[@class='user-information-title'])[2]"));
 	}

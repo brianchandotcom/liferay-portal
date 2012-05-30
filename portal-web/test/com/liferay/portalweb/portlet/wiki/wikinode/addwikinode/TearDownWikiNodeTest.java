@@ -70,11 +70,11 @@ public class TearDownWikiNodeTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]",
-					RuntimeVariables.replace("Actions"));
 				assertEquals(RuntimeVariables.replace("Actions"),
 					selenium.getText(
 						"xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]"));
+				selenium.clickAt("xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]",
+					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -101,7 +101,7 @@ public class TearDownWikiNodeTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
 				boolean wikiNode2Present = selenium.isElementPresent(
 						"xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]");
@@ -143,7 +143,7 @@ public class TearDownWikiNodeTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
 				boolean wikiNode3Present = selenium.isElementPresent(
 						"xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]");
@@ -185,7 +185,7 @@ public class TearDownWikiNodeTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
 				boolean wikiNode4Present = selenium.isElementPresent(
 						"xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]");
@@ -227,7 +227,7 @@ public class TearDownWikiNodeTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
 				boolean wikiNode5Present = selenium.isElementPresent(
 						"xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]");
@@ -269,7 +269,7 @@ public class TearDownWikiNodeTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
 			case 2:
 			case 3:
@@ -307,7 +307,7 @@ public class TearDownWikiNodeTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
 			case 100:
 				label = -1;

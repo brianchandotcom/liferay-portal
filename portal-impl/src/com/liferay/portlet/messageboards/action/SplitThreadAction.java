@@ -160,9 +160,7 @@ public class SplitThreadAction extends PortletAction {
 				layoutFullURL + "/-/message_boards/view_message/" +
 					message.getMessageId();
 
-			body = StringUtil.replace(
-				body, new String[] {"${newThreadURL}", "[url=]"},
-				new String[] {newThreadURL, "[url=" + newThreadURL + "]"});
+			body = StringUtil.replace(body, "${newThreadURL}", newThreadURL);
 
 			serviceContext.setAddGroupPermissions(true);
 			serviceContext.setAddGuestPermissions(true);

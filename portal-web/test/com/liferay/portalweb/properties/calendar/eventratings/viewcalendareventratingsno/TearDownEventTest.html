@@ -16,26 +16,21 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>link=Calendar Test Page</td>
-	<td></td>
+	<td>Calendar Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Calendar Test Page</td>
-	<td></td>
+	<td>Calendar Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Events</td>
-	<td></td>
+	<td>Events</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//span/input</td>
-	<td>Add Event Button</td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//td[6]/span/ul/li/strong/a'))</td>
+	<td>storeElementPresent</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
 	<td>event1Present</td>
 </tr>
 <tr>
@@ -49,48 +44,38 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//td[6]/span/ul/li/strong/a</td>
+	<td>assertText</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//td[6]/span/ul/li/strong/a</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a</td>
 	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a</td>
 	<td>Delete</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a</td>
 	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this?</td>
+	<td>Are you sure you want to delete this? It will be deleted immediately.</td>
 	<td></td>
 </tr>
 <tr>
-	<td>label</td>
-	<td>Event1NotPresent</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//span/input</td>
-	<td>Add Event Button</td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//td[6]/span/ul/li/strong/a'))</td>
+	<td>storeElementPresent</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
 	<td>event2Present</td>
 </tr>
 <tr>
@@ -99,48 +84,43 @@
 	<td>Event2NotPresent</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//td[6]/span/ul/li/strong/a</td>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//td[6]/span/ul/li/strong/a</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a</td>
 	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a</td>
 	<td>Delete</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a</td>
 	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this?</td>
+	<td>Are you sure you want to delete this? It will be deleted immediately.</td>
 	<td></td>
 </tr>
 <tr>
-	<td>label</td>
-	<td>Event2NotPresent</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//span/input</td>
-	<td>Add Event Button</td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//td[6]/span/ul/li/strong/a'))</td>
+	<td>storeElementPresent</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
 	<td>event3Present</td>
 </tr>
 <tr>
@@ -149,48 +129,43 @@
 	<td>Event3NotPresent</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//td[6]/span/ul/li/strong/a</td>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//td[6]/span/ul/li/strong/a</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a</td>
 	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a</td>
 	<td>Delete</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a</td>
 	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this?</td>
+	<td>Are you sure you want to delete this? It will be deleted immediately.</td>
 	<td></td>
 </tr>
 <tr>
-	<td>label</td>
-	<td>Event3NotPresent</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//span/input</td>
-	<td>Add Event Button</td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//td[6]/span/ul/li/strong/a'))</td>
+	<td>storeElementPresent</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
 	<td>event4Present</td>
 </tr>
 <tr>
@@ -199,48 +174,43 @@
 	<td>Event4NotPresent</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//td[6]/span/ul/li/strong/a</td>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//td[6]/span/ul/li/strong/a</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a</td>
 	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a</td>
 	<td>Delete</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a</td>
 	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this?</td>
+	<td>Are you sure you want to delete this? It will be deleted immediately.</td>
 	<td></td>
 </tr>
 <tr>
-	<td>label</td>
-	<td>Event4NotPresent</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//span/input</td>
-	<td>Add Event Button</td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>eval(selenium.isElementPresent('//td[6]/span/ul/li/strong/a'))</td>
+	<td>storeElementPresent</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
 	<td>event5Present</td>
 </tr>
 <tr>
@@ -249,33 +219,38 @@
 	<td>Event5NotPresent</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//td[6]/span/ul/li/strong/a</td>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//td[6]/span/ul/li/strong/a</td>
+	<td>//span[@title='Actions']/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a</td>
 	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a</td>
 	<td>Delete</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a</td>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a</td>
 	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete this?</td>
+	<td>Are you sure you want to delete this? It will be deleted immediately.</td>
 	<td></td>
 </tr>
 <tr>
@@ -283,7 +258,26 @@
 	<td>Event5NotPresent</td>
 	<td></td>
 </tr>
-
+<tr>
+	<td>label</td>
+	<td>Event4NotPresent</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>Event3NotPresent</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>Event2NotPresent</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>Event1NotPresent</td>
+	<td></td>
+</tr>
 </tbody></table>
 </body>
 </html>

@@ -52,43 +52,117 @@ public class TearDownPageCommentTest extends BaseTestCase {
 				loadRequiredJavaScriptModules();
 
 				boolean pageComment1Present = selenium.isElementPresent(
-						"//li[4]/span/a/span");
+						"//li[@class='lfr-discussion-delete']/span/a/span");
 
 				if (!pageComment1Present) {
-					label = 2;
+					label = 6;
 
 					continue;
 				}
 
 				assertEquals(RuntimeVariables.replace("Delete"),
-					selenium.getText("//li[4]/span/a/span"));
-				selenium.click("//li[4]/span/a/span");
-				Thread.sleep(5000);
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+					selenium.getText(
+						"//li[@class='lfr-discussion-delete']/span/a/span"));
+				selenium.clickAt("//li[@class='lfr-discussion-delete']/span/a/span",
+					RuntimeVariables.replace("Delete"));
 
-			case 2:
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if ("Are you sure you want to delete this? It will be deleted immediately.".equals(
+									selenium.getConfirmation())) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//div[@class='lfr-message-response portlet-msg-success']")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertEquals(RuntimeVariables.replace(
+						"Your request processed successfully."),
+					selenium.getText(
+						"//div[@class='lfr-message-response portlet-msg-success']"));
+				Thread.sleep(5000);
 
 				boolean pageComment2Present = selenium.isElementPresent(
-						"//li[4]/span/a/span");
+						"//li[@class='lfr-discussion-delete']/span/a/span");
 
 				if (!pageComment2Present) {
-					label = 3;
+					label = 5;
 
 					continue;
 				}
 
 				assertEquals(RuntimeVariables.replace("Delete"),
-					selenium.getText("//li[4]/span/a/span"));
-				selenium.click("//li[4]/span/a/span");
-				Thread.sleep(5000);
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+					selenium.getText(
+						"//li[@class='lfr-discussion-delete']/span/a/span"));
+				selenium.clickAt("//li[@class='lfr-discussion-delete']/span/a/span",
+					RuntimeVariables.replace("Delete"));
 
-			case 3:
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if ("Are you sure you want to delete this? It will be deleted immediately.".equals(
+									selenium.getConfirmation())) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//div[@class='lfr-message-response portlet-msg-success']")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertEquals(RuntimeVariables.replace(
+						"Your request processed successfully."),
+					selenium.getText(
+						"//div[@class='lfr-message-response portlet-msg-success']"));
+				Thread.sleep(5000);
 
 				boolean pageComment3Present = selenium.isElementPresent(
-						"//li[4]/span/a/span");
+						"//li[@class='lfr-discussion-delete']/span/a/span");
 
 				if (!pageComment3Present) {
 					label = 4;
@@ -97,48 +171,164 @@ public class TearDownPageCommentTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Delete"),
-					selenium.getText("//li[4]/span/a/span"));
-				selenium.click("//li[4]/span/a/span");
-				Thread.sleep(5000);
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+					selenium.getText(
+						"//li[@class='lfr-discussion-delete']/span/a/span"));
+				selenium.clickAt("//li[@class='lfr-discussion-delete']/span/a/span",
+					RuntimeVariables.replace("Delete"));
 
-			case 4:
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if ("Are you sure you want to delete this? It will be deleted immediately.".equals(
+									selenium.getConfirmation())) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//div[@class='lfr-message-response portlet-msg-success']")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertEquals(RuntimeVariables.replace(
+						"Your request processed successfully."),
+					selenium.getText(
+						"//div[@class='lfr-message-response portlet-msg-success']"));
+				Thread.sleep(5000);
 
 				boolean pageComment4Present = selenium.isElementPresent(
-						"//li[4]/span/a/span");
+						"//li[@class='lfr-discussion-delete']/span/a/span");
 
 				if (!pageComment4Present) {
-					label = 5;
+					label = 3;
 
 					continue;
 				}
 
 				assertEquals(RuntimeVariables.replace("Delete"),
-					selenium.getText("//li[4]/span/a/span"));
-				selenium.click("//li[4]/span/a/span");
-				Thread.sleep(5000);
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+					selenium.getText(
+						"//li[@class='lfr-discussion-delete']/span/a/span"));
+				selenium.click(
+					"//li[@class='lfr-discussion-delete']/span/a/span");
 
-			case 5:
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if ("Are you sure you want to delete this? It will be deleted immediately.".equals(
+									selenium.getConfirmation())) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//div[@class='lfr-message-response portlet-msg-success']")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertEquals(RuntimeVariables.replace(
+						"Your request processed successfully."),
+					selenium.getText(
+						"//div[@class='lfr-message-response portlet-msg-success']"));
+				Thread.sleep(5000);
 
 				boolean pageComment5Present = selenium.isElementPresent(
-						"//li[4]/span/a/span");
+						"//li[@class='lfr-discussion-delete']/span/a/span");
 
 				if (!pageComment5Present) {
-					label = 6;
+					label = 2;
 
 					continue;
 				}
 
 				assertEquals(RuntimeVariables.replace("Delete"),
-					selenium.getText("//li[4]/span/a/span"));
-				selenium.click("//li[4]/span/a/span");
-				Thread.sleep(5000);
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+					selenium.getText(
+						"//li[@class='lfr-discussion-delete']/span/a/span"));
+				selenium.click(
+					"//li[@class='lfr-discussion-delete']/span/a/span");
 
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if ("Are you sure you want to delete this? It will be deleted immediately.".equals(
+									selenium.getConfirmation())) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//div[@class='lfr-message-response portlet-msg-success']")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertEquals(RuntimeVariables.replace(
+						"Your request processed successfully."),
+					selenium.getText(
+						"//div[@class='lfr-message-response portlet-msg-success']"));
+
+			case 2:
+			case 3:
+			case 4:
+			case 5:
 			case 6:
 			case 100:
 				label = -1;

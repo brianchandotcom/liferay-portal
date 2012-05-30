@@ -15,7 +15,6 @@
 package com.liferay.portlet;
 
 import com.liferay.portal.kernel.portlet.LiferayPortletSession;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
@@ -85,6 +84,12 @@ public class PortletSessionImpl implements LiferayPortletSession {
 			Object value = _session.getAttribute(name);
 
 			if (scope == PortletSession.PORTLET_SCOPE) {
+				if ((name.length() <= (portletScopeLength + 1)) ||
+					!name.startsWith(_portletScope + StringPool.QUESTION)) {
+
+					continue;
+				}
+
 				name = name.substring(portletScopeLength + 1);
 			}
 
@@ -189,33 +194,33 @@ public class PortletSessionImpl implements LiferayPortletSession {
 	private Enumeration<String> _getAttributeNames(
 		int scope, boolean removePrefix) {
 
-		if (scope == PortletSession.PORTLET_SCOPE) {
-			List<String> attributeNames = new ArrayList<String>();
-
-			int portletScopeLength = _portletScope.length();
-
-			Enumeration<String> enu = _session.getAttributeNames();
-
-			while (enu.hasMoreElements()) {
-				String name = enu.nextElement();
-
-				if ((name.length() > (portletScopeLength + 1)) &&
-					(name.charAt(portletScopeLength) == CharPool.QUESTION) &&
-					name.startsWith(_portletScope)) {
-
-					if (removePrefix) {
-						name = name.substring(portletScopeLength + 1);
-					}
-
-					attributeNames.add(name);
-				}
-			}
-
-			return Collections.enumeration(attributeNames);
-		}
-		else {
+		if (scope != PortletSession.PORTLET_SCOPE) {
 			return _session.getAttributeNames();
 		}
+
+		List<String> attributeNames = new ArrayList<String>();
+
+		int portletScopeLength = _portletScope.length();
+
+		Enumeration<String> enu = _session.getAttributeNames();
+
+		while (enu.hasMoreElements()) {
+			String name = enu.nextElement();
+
+			if (removePrefix) {
+				if ((name.length() <= (portletScopeLength + 1)) ||
+					!name.startsWith(_portletScope + StringPool.QUESTION)) {
+
+					continue;
+				}
+
+				name = name.substring(portletScopeLength + 1);
+			}
+
+			attributeNames.add(name);
+		}
+
+		return Collections.enumeration(attributeNames);
 	}
 
 	private String _getPortletScope(String portletName, long plid) {

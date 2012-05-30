@@ -82,7 +82,7 @@ public interface PropsKeys {
 	public static final String ANNOUNCEMENTS_ENTRY_CHECK_INTERVAL = "announcements.entry.check.interval";
 
 	public static final String ANNOUNCEMENTS_ENTRY_TYPES = "announcements.entry.types";
-	
+
 	public static final String ANNOUNCEMENTS_PAGE_DELTA_VALUES = "announcements.page.delta.values";
 
 	public static final String APPLICATION_SHUTDOWN_EVENTS = "application.shutdown.events";

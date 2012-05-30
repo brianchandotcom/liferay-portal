@@ -21,7 +21,7 @@ AUI.add(
 
 		var TPL_CHECKED = ' checked="checked" ';
 
-		var TPL_INPUT = '<label title="{name}"><input data-categoryId="{categoryId}" type="checkbox" value="{name}" {checked} />{name} {path}</label>';
+		var TPL_INPUT = '<label title="{name}"><input data-categoryId="{categoryId}" type="checkbox" value="{name}" {checked} />{name} <span class="lfr-categories-selector-search-results-path">{path}</span></label>';
 
 		var TPL_MESSAGE = '<div class="lfr-categories-message">{0}</div>';
 

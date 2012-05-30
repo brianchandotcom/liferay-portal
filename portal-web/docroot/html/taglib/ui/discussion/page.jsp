@@ -455,7 +455,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 											<aui:button name='<%= randomNamespace + "editReplyButton" + i %>' onClick='<%= randomNamespace + "updateMessage(" + i + ");" %>' value="<%= publishButtonLabel %>" />
 
 											<%
-											String taglibCancel = "document.getElementById('" + randomNamespace + "editForm" + i + "').style.display = 'none'; document.getElementById('" + namespace + randomNamespace + "editReplyBody" + i + "').value = '" + message.getBody() + "'; void('');";
+											String taglibCancel = "document.getElementById('" + randomNamespace + "editForm" + i + "').style.display = 'none'; document.getElementById('" + namespace + randomNamespace + "editReplyBody" + i + "').value = '" + HtmlUtil.escapeJS(message.getBody()) + "'; void('');";
 											%>
 
 											<aui:button onClick="<%= taglibCancel %>" type="cancel" />

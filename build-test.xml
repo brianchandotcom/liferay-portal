@@ -1455,8 +1455,8 @@
 		</antcall>
 
 		<antcall target="build-test-ant-script">
-			<param name="test.ant.script.command" value="portal-web-document-library-display" />
-			<param name="test.ant.script.suite" value="PortalWebDocumentLibraryDisplayTestSuite" />
+			<param name="test.ant.script.command" value="portal-web-documents-and-media-display" />
+			<param name="test.ant.script.suite" value="PortalWebDocumentsAndMediaDisplayTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">

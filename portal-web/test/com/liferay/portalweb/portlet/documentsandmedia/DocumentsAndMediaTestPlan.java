@@ -15,14 +15,14 @@
 package com.liferay.portalweb.portlet.documentsandmedia;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portlet.documentsandmedia.dmbreadcrumb.BreadcrumbTestPlan;
-import com.liferay.portalweb.portlet.documentsandmedia.dmcomment.CommentTestPlan;
-import com.liferay.portalweb.portlet.documentsandmedia.dmdocument.DocumentTestPlan;
-import com.liferay.portalweb.portlet.documentsandmedia.dmdocumenttype.DocumentTypeTestPlan;
+import com.liferay.portalweb.portlet.documentsandmedia.dmbreadcrumb.DMBreadcrumbTestPlan;
+import com.liferay.portalweb.portlet.documentsandmedia.dmcomment.DMCommentTestPlan;
+import com.liferay.portalweb.portlet.documentsandmedia.dmdocument.DMDocumentTestPlan;
+import com.liferay.portalweb.portlet.documentsandmedia.dmdocumenttype.DMDocumentTypeTestPlan;
 import com.liferay.portalweb.portlet.documentsandmedia.dmdocumentversion.DMDocumentVersionTestPlan;
-import com.liferay.portalweb.portlet.documentsandmedia.dmfolder.FolderTestPlan;
-import com.liferay.portalweb.portlet.documentsandmedia.dmimage.ImageTestPlan;
-import com.liferay.portalweb.portlet.documentsandmedia.dmlar.LARTestPlan;
+import com.liferay.portalweb.portlet.documentsandmedia.dmfolder.DMFolderTestPlan;
+import com.liferay.portalweb.portlet.documentsandmedia.dmimage.DMImageTestPlan;
+import com.liferay.portalweb.portlet.documentsandmedia.dmlar.DMLARTestPlan;
 import com.liferay.portalweb.portlet.documentsandmedia.portlet.PortletTestPlan;
 
 import junit.framework.Test;
@@ -36,14 +36,14 @@ public class DocumentsAndMediaTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(BreadcrumbTestPlan.suite());
-		testSuite.addTest(CommentTestPlan.suite());
+		testSuite.addTest(DMBreadcrumbTestPlan.suite());
+		testSuite.addTest(DMCommentTestPlan.suite());
+		testSuite.addTest(DMDocumentTestPlan.suite());
+		testSuite.addTest(DMDocumentTypeTestPlan.suite());
 		testSuite.addTest(DMDocumentVersionTestPlan.suite());
-		testSuite.addTest(DocumentTestPlan.suite());
-		testSuite.addTest(DocumentTypeTestPlan.suite());
-		testSuite.addTest(FolderTestPlan.suite());
-		testSuite.addTest(ImageTestPlan.suite());
-		testSuite.addTest(LARTestPlan.suite());
+		testSuite.addTest(DMFolderTestPlan.suite());
+		testSuite.addTest(DMImageTestPlan.suite());
+		testSuite.addTest(DMLARTestPlan.suite());
 		testSuite.addTest(PortletTestPlan.suite());
 
 		return testSuite;

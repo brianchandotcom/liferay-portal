@@ -106,7 +106,7 @@ public class ImportDMLARTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_86_importFileName']",
 			RuntimeVariables.replace(
-				"E:\\Public\\trunk-build\\portal-web\\test\\com\\liferay\\portalweb\\portlet\\documentsandmedia\\dmdependencies\\Document_Library-Selenium.portlet.lar"));
+				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\portlet\\documentsandmedia\\dependencies\\Document_Library-Selenium.portlet.lar"));
 		selenium.check("//input[@id='_86_DELETE_PORTLET_DATACheckbox']");
 		selenium.check("//input[@id='_86_PORTLET_DATACheckbox']");
 		selenium.check("//input[@id='_86_PERMISSIONSCheckbox']");

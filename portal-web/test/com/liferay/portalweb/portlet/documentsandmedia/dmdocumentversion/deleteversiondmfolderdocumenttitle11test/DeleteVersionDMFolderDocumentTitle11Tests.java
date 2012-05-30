@@ -16,7 +16,9 @@ package com.liferay.portalweb.portlet.documentsandmedia.dmdocumentversion.delete
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
-import com.liferay.portalweb.portlet.documentsandmedia.dmdocument.adddmfolderdocument.TearDownDMDocumentTest;
+import com.liferay.portalweb.portlet.documentsandmedia.dmdocument.adddmfolderdocument.AddDMFolderDocumentTest;
+import com.liferay.portalweb.portlet.documentsandmedia.dmfolder.adddmfolder.AddDMFolderTest;
+import com.liferay.portalweb.portlet.documentsandmedia.dmfolder.adddmfolder.TearDownDMFolderTest;
 import com.liferay.portalweb.portlet.documentsandmedia.portlet.addportletdm.AddPageDMTest;
 import com.liferay.portalweb.portlet.documentsandmedia.portlet.addportletdm.AddPortletDMTest;
 
@@ -31,12 +33,12 @@ public class DeleteVersionDMFolderDocumentTitle11Tests extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddPageDMTest.class);
 		testSuite.addTestSuite(AddPortletDMTest.class);
-		testSuite.addTestSuite(AddFolderTest.class);
-		testSuite.addTestSuite(AddFolderDocumentTest.class);
+		testSuite.addTestSuite(AddDMFolderTest.class);
+		testSuite.addTestSuite(AddDMFolderDocumentTest.class);
 		testSuite.addTestSuite(EditDMFolderDocumentTitleTest.class);
 		testSuite.addTestSuite(DeleteVersionDMFolderDocumentTitle11Test.class);
 		testSuite.addTestSuite(ViewDeleteVersionDMFolderDocumentTitle11Test.class);
-		testSuite.addTestSuite(TearDownDMDocumentTest.class);
+		testSuite.addTestSuite(TearDownDMFolderTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

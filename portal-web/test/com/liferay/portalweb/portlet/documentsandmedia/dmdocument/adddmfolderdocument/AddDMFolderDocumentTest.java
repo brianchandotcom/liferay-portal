@@ -24,23 +24,6 @@ public class AddDMFolderDocumentTest extends BaseTestCase {
 	public void testAddDMFolderDocument() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Documents and Media Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -84,7 +67,7 @@ public class AddDMFolderDocumentTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Basic Document')]/a")) {
 					break;
 				}
 			}
@@ -96,8 +79,8 @@ public class AddDMFolderDocumentTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Basic Document"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a",
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Basic Document')]/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Basic Document')]/a",
 			RuntimeVariables.replace("Basic Document"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
@@ -105,8 +88,6 @@ public class AddDMFolderDocumentTest extends BaseTestCase {
 			RuntimeVariables.replace("Document_1.txt"));
 		selenium.type("//input[@id='_20_title']",
 			RuntimeVariables.replace("DM Folder Document Title"));
-		selenium.type("//textarea[@id='_20_description']",
-			RuntimeVariables.replace("DM Folder Document Description"));
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");

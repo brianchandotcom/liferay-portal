@@ -16,7 +16,7 @@ package com.liferay.portalweb.portlet.documentsandmedia.dmimage.movedmfolder1ima
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
-import com.liferay.portalweb.portlet.documentsandmedia.dmdocument.adddmfolderdocument.TearDownDMDocumentTest;
+import com.liferay.portalweb.portlet.documentsandmedia.dmfolder.adddmfolder.TearDownDMFolderTest;
 import com.liferay.portalweb.portlet.documentsandmedia.portlet.addportletdm.AddPageDMTest;
 import com.liferay.portalweb.portlet.documentsandmedia.portlet.addportletdm.AddPortletDMTest;
 
@@ -36,7 +36,7 @@ public class MoveDMFolder1ImageToFolder2Tests extends BaseTestSuite {
 		testSuite.addTestSuite(AddDMFolder2Test.class);
 		testSuite.addTestSuite(MoveDMFolder1ImageToFolder2Test.class);
 		testSuite.addTestSuite(ViewMoveDMFolder1ImageToFolder2Test.class);
-		testSuite.addTestSuite(TearDownDMDocumentTest.class);
+		testSuite.addTestSuite(TearDownDMFolderTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

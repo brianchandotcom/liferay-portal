@@ -73,7 +73,7 @@ public class SearchDMFolderImageFolderDetailsTest extends BaseTestCase {
 		selenium.type("//input[@id='_20_keywords']",
 			RuntimeVariables.replace("DM Folder Image Title"));
 		Thread.sleep(5000);
-		selenium.clickAt("//input[@class='aui-button-input aui-button-input-submit']",
+		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 
 		for (int second = 0;; second++) {

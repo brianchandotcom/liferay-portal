@@ -16,7 +16,7 @@ package com.liferay.portalweb.portlet.documentsandmedia.dmlar.importdmlar;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
-import com.liferay.portalweb.portlet.documentsandmedia.dmdocument.adddmfolderdocument.TearDownDMDocumentTest;
+import com.liferay.portalweb.portlet.documentsandmedia.dmfolder.adddmfolder.TearDownDMFolderTest;
 import com.liferay.portalweb.portlet.documentsandmedia.portlet.addportletdm.AddPageDMTest;
 import com.liferay.portalweb.portlet.documentsandmedia.portlet.addportletdm.AddPortletDMTest;
 
@@ -33,7 +33,7 @@ public class ImportDMLARTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddPortletDMTest.class);
 		testSuite.addTestSuite(ImportDMLARTest.class);
 		testSuite.addTestSuite(ViewImportDMLARTest.class);
-		testSuite.addTestSuite(TearDownDMDocumentTest.class);
+		testSuite.addTestSuite(TearDownDMFolderTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

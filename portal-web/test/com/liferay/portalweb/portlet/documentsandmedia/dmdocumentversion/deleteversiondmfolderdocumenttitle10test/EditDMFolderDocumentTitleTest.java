@@ -65,8 +65,6 @@ public class EditDMFolderDocumentTitleTest extends BaseTestCase {
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
 			selenium.getText("//h2[@class='document-title']"));
-		assertEquals(RuntimeVariables.replace("DM Folder Document Description"),
-			selenium.getText("//span[@class='document-description']"));
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText("//button[2]"));
 		selenium.clickAt("//button[2]", RuntimeVariables.replace("Edit"));

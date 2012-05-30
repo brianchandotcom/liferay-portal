@@ -16,10 +16,11 @@ package com.liferay.portalweb.portlet.documentsandmedia.portlet.configuredmportl
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
-import com.liferay.portalweb.portlet.documentsandmedia.dmdocument.adddmfolderdocument.TearDownDMDocumentTest;
-import com.liferay.portalweb.portlet.documentsandmedia.dmdocument.adddmfolderdocumentmultiple.AddDMFolderDocument1Test;
-import com.liferay.portalweb.portlet.documentsandmedia.dmdocument.adddmfolderdocumentmultiple.AddDMFolderDocument2Test;
-import com.liferay.portalweb.portlet.documentsandmedia.dmdocument.adddmfolderdocumentmultiple.AddDMFolderDocument3Test;
+import com.liferay.portalweb.portlet.documentsandmedia.dmdocument.adddmfolderdocument.AddDMFolderDocument1Test;
+import com.liferay.portalweb.portlet.documentsandmedia.dmdocument.adddmfolderdocument.AddDMFolderDocument2Test;
+import com.liferay.portalweb.portlet.documentsandmedia.dmdocument.adddmfolderdocument.AddDMFolderDocument3Test;
+import com.liferay.portalweb.portlet.documentsandmedia.dmfolder.adddmfolder.AddDMFolderTest;
+import com.liferay.portalweb.portlet.documentsandmedia.dmfolder.adddmfolder.TearDownDMFolderTest;
 import com.liferay.portalweb.portlet.documentsandmedia.portlet.addportletdm.AddPageDMTest;
 import com.liferay.portalweb.portlet.documentsandmedia.portlet.addportletdm.AddPortletDMTest;
 
@@ -46,7 +47,7 @@ public class ConfigureDMPortletDocumentsPerPage5Tests extends BaseTestSuite {
 		testSuite.addTestSuite(ConfigureDMPortletDocumentsPerPage5Test.class);
 		testSuite.addTestSuite(ViewDMPortletDocumentsPerPage20Test.class);
 		testSuite.addTestSuite(TearDownDMConfigurationTest.class);
-		testSuite.addTestSuite(TearDownDMDocumentTest.class);
+		testSuite.addTestSuite(TearDownDMFolderTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

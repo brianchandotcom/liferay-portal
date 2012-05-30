@@ -80,8 +80,6 @@ public class EditDMFolderDocumentTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
 			selenium.getText("//h2[@class='document-title']"));
-		assertEquals(RuntimeVariables.replace("DM Folder Document Description"),
-			selenium.getText("//span[@class='document-description']"));
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText("//button[2]"));
 		selenium.clickAt("//button[2]", RuntimeVariables.replace("Edit"));
@@ -89,8 +87,6 @@ public class EditDMFolderDocumentTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_20_title']",
 			RuntimeVariables.replace("DM Folder Document Title Edit"));
-		selenium.type("//textarea[@id='_20_description']",
-			RuntimeVariables.replace("DM Folder Document Description Edit"));
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
@@ -117,8 +113,5 @@ public class EditDMFolderDocumentTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("DM Folder Document Title Edit"),
 			selenium.getText("//h2[@class='document-title']"));
-		assertEquals(RuntimeVariables.replace(
-				"DM Folder Document Description Edit"),
-			selenium.getText("//span[@class='document-description']"));
 	}
 }

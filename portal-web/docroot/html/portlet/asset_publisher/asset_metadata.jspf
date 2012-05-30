@@ -61,9 +61,6 @@ for (int j = 0; j < metadataFields.length; j++) {
 	else if (metadataFields[j].equals("tags")) {
 		value = "tags";
 	}
-	else if (metadataFields[j].equals("ratings")) {
-		value = "ratings";
-	}
 
 	if (Validator.isNotNull(value)) {
 		boolean hasCategoriesOrTags = !(value.equals("categories") && assetEntry.getCategories().isEmpty()) && !(value.equals("tags") && assetEntry.getTags().isEmpty());
@@ -95,12 +92,6 @@ for (int j = 0; j < metadataFields.length; j++) {
 						className="<%= assetEntry.getClassName() %>"
 						classPK="<%= assetEntry.getClassPK () %>"
 						portletURL='<%= selectionStyle.equals("manual") ? null : renderResponse.createRenderURL() %>'
-					/>
-				</c:when>
-				<c:when test='<%= value.equals("ratings") %>' >
-					<liferay-ui:ratings
-						className="<%= assetEntry.getClassName() %>"
-						classPK="<%= assetEntry.getClassPK () %>"
 					/>
 				</c:when>
 				<c:otherwise>

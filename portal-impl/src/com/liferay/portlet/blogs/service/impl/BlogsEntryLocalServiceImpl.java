@@ -35,8 +35,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
-import com.liferay.portal.kernel.workflow.WorkflowInstance;
-import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
@@ -67,7 +65,6 @@ import com.liferay.portlet.trash.model.TrashEntry;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -752,6 +749,12 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		int oldStatus = entry.getStatus();
 
+		if (oldStatus == WorkflowConstants.STATUS_PENDING) {
+			entry.setStatus(WorkflowConstants.STATUS_DRAFT);
+
+			blogsEntryPersistence.update(entry, false);
+		}
+
 		updateStatus(
 			userId, entry.getEntryId(), WorkflowConstants.STATUS_IN_TRASH,
 			new ServiceContext());
@@ -767,7 +770,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		trashEntryLocalService.addTrashEntry(
 			userId, entry.getGroupId(), BlogsEntry.class.getName(),
-			entry.getEntryId(), oldStatus, null, null);
+			entry.getEntryId(), entry.getStatus(), null, null);
 
 		// Workflow
 
@@ -777,28 +780,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 					entry.getCompanyId(), entry.getGroupId(),
 					BlogsEntry.class.getName(), entry.getEntryId());
 
-			WorkflowInstance workflowInstance =
-				WorkflowInstanceManagerUtil.getWorkflowInstance(
-					entry.getCompanyId(),
-					workflowInstanceLink.getWorkflowInstanceId());
-
-			Map<String, Serializable> workflowContext =
-				workflowInstance.getWorkflowContext();
-
-			ServiceContext serviceContext = (ServiceContext)workflowContext.get(
-				WorkflowConstants.CONTEXT_SERVICE_CONTEXT);
-
-			boolean update = ParamUtil.getBoolean(serviceContext, "update");
-
-			if (update) {
-				entry.setStatus(WorkflowConstants.STATUS_DRAFT_FROM_APPROVED);
-			}
-			else {
-				entry.setStatus(WorkflowConstants.STATUS_DRAFT);
-			}
-
 			workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(
-				workflowInstanceLink.getWorkflowInstanceId());
+				workflowInstanceLink.getWorkflowInstanceLinkId());
 		}
 
 		return entry;

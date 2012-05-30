@@ -91,7 +91,7 @@ public class AddUserSOAdditionalEmailAddressTest extends BaseTestCase {
 		selenium.clickAt("//a[@id='_125_additionalEmailAddressesLink']",
 			RuntimeVariables.replace("Additional Email Addresses"));
 		selenium.type("//input[@id='_125_emailAddressAddress0']",
-			RuntimeVariables.replace("socialofficefriendea02@liferay.com"));
+			RuntimeVariables.replace("socialoffice02@liferay.com"));
 		selenium.select("//select[@id='_125_emailAddressTypeId0']",
 			RuntimeVariables.replace("label=Email Address"));
 		selenium.clickAt("//input[@id='_125_emailAddressPrimary0']",
@@ -120,7 +120,7 @@ public class AddUserSOAdditionalEmailAddressTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals("socialofficefriendea02@liferay.com",
+		assertEquals("socialoffice02@liferay.com",
 			selenium.getValue("//input[@id='_125_emailAddressAddress0']"));
 		assertEquals("Email Address",
 			selenium.getSelectedLabel(

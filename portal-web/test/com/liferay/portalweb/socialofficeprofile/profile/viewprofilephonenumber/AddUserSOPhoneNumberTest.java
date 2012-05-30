@@ -88,13 +88,13 @@ public class AddUserSOPhoneNumberTest extends BaseTestCase {
 				"Phone Numbers"));
 		selenium.clickAt("//a[@id='_125_phoneNumbersLink']",
 			RuntimeVariables.replace("Phone Numbers"));
-		selenium.type("//input[@id='_125_phoneNumber0']",
+		selenium.type("//input[contains(@id,'phoneNumber')]",
 			RuntimeVariables.replace("123-123-1234"));
-		selenium.type("//input[@id='_125_phoneExtension0']",
+		selenium.type("//input[contains(@id,'phoneExtension')]",
 			RuntimeVariables.replace("123"));
-		selenium.select("//select[@id='_125_phoneTypeId0']",
+		selenium.select("//select[contains(@id,'phoneType')]",
 			RuntimeVariables.replace("label=Business"));
-		selenium.clickAt("//input[@id='_125_phonePrimary0']",
+		selenium.clickAt("//input[contains(@id,'phonePrimary')]",
 			RuntimeVariables.replace("Primary Button"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
@@ -121,10 +121,10 @@ public class AddUserSOPhoneNumberTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals("123-123-1234",
-			selenium.getValue("//input[@id='_125_phoneNumber0']"));
+			selenium.getValue("//input[contains(@id,'phoneNumber')]"));
 		assertEquals("123",
-			selenium.getValue("//input[@id='_125_phoneExtension0']"));
+			selenium.getValue("//input[contains(@id,'phoneExtension')]"));
 		assertEquals("Business",
-			selenium.getSelectedLabel("//select[@id='_125_phoneTypeId0']"));
+			selenium.getSelectedLabel("//select[contains(@id,'phoneType')]"));
 	}
 }

@@ -88,11 +88,11 @@ public class AddUserSOWebsiteTest extends BaseTestCase {
 				"Websites"));
 		selenium.clickAt("//a[@id='_125_websitesLink']",
 			RuntimeVariables.replace("Websites"));
-		selenium.type("//input[@id='_125_websiteUrl0']",
+		selenium.type("//input[contains(@id,'websiteUrl')]",
 			RuntimeVariables.replace("http://www.socialoffice01.com"));
-		selenium.select("//select[@id='_125_websiteTypeId0']",
+		selenium.select("//select[contains(@id,'websiteType')]",
 			RuntimeVariables.replace("label=Personal"));
-		selenium.clickAt("//input[@id='_125_websitePrimary0']",
+		selenium.clickAt("//input[contains(@id,'websitePrimary')]",
 			RuntimeVariables.replace("Primary Button"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
@@ -119,9 +119,9 @@ public class AddUserSOWebsiteTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals("http://www.socialoffice01.com",
-			selenium.getValue("//input[@id='_125_websiteUrl0']"));
+			selenium.getValue("//input[contains(@id,'websiteUrl')]"));
 		assertEquals("Personal",
-			selenium.getSelectedLabel("//select[@id='_125_websiteTypeId0']"));
-		assertTrue(selenium.isChecked("//input[@id='_125_websitePrimary0']"));
+			selenium.getSelectedLabel("//select[contains(@id,'websiteType')]"));
+		assertTrue(selenium.isChecked("//input[contains(@id,'websitePrimary')]"));
 	}
 }

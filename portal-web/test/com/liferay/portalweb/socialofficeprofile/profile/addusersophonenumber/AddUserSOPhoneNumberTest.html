@@ -75,22 +75,22 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@id='_125_phoneNumber0']</td>
+	<td>//input[contains(@id,'phoneNumber')]</td>
 	<td>123-123-1234</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@id='_125_phoneExtension0']</td>
+	<td>//input[contains(@id,'phoneExtension')]</td>
 	<td>123</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>//select[@id='_125_phoneTypeId0']</td>
+	<td>//select[contains(@id,'phoneType')]</td>
 	<td>label=Business</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@id='_125_phonePrimary0']</td>
+	<td>//input[contains(@id,'phonePrimary')]</td>
 	<td>Primary Button</td>
 </tr>
 <tr>
@@ -110,20 +110,19 @@
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>//input[@id='_125_phoneNumber0']</td>
+	<td>//input[contains(@id,'phoneNumber')]</td>
 	<td>123-123-1234</td>
 </tr>
 <tr>
 	<td>assertValue</td>
-	<td>//input[@id='_125_phoneExtension0']</td>
+	<td>//input[contains(@id,'phoneExtension')]</td>
 	<td>123</td>
 </tr>
 <tr>
 	<td>assertSelectedLabel</td>
-	<td>//select[@id='_125_phoneTypeId0']</td>
+	<td>//select[contains(@id,'phoneType')]</td>
 	<td>Business</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

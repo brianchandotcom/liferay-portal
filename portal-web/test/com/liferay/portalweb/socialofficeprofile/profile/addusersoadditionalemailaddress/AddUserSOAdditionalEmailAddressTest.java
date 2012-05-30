@@ -22,7 +22,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddUserSOAdditionalEmailAddressTest extends BaseTestCase {
 	public void testAddUserSOAdditionalEmailAddress() throws Exception {
-		selenium.open("/user/joebloggs/home/");
+		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
@@ -49,17 +49,23 @@ public class AddUserSOAdditionalEmailAddressTest extends BaseTestCase {
 			RuntimeVariables.replace("Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.type("//input[@id='_125_keywords']",
-			RuntimeVariables.replace("socialofficefriend"));
+		selenium.clickAt("link=Search All Users",
+			RuntimeVariables.replace("Search All Users"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		selenium.type("//input[@id='_125_toggle_id_users_admin_user_searchkeywords']",
+			RuntimeVariables.replace("socialoffice01"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.clickAt("//td[2]/a", RuntimeVariables.replace("User Name"));
+		assertEquals(RuntimeVariables.replace("Social01"),
+			selenium.getText("//a[contains(.,'Social01')]"));
+		selenium.clickAt("//a[contains(.,'Social01')]",
+			RuntimeVariables.replace("Social01"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace(
-				"socialofficefriendfn socialofficefriendmn socialofficefriendln"),
+		assertEquals(RuntimeVariables.replace("Social01 Office01 User01"),
 			selenium.getText("//div[2]/h1/span"));
 
 		for (int second = 0;; second++) {
@@ -85,7 +91,7 @@ public class AddUserSOAdditionalEmailAddressTest extends BaseTestCase {
 		selenium.clickAt("//a[@id='_125_additionalEmailAddressesLink']",
 			RuntimeVariables.replace("Additional Email Addresses"));
 		selenium.type("//input[@id='_125_emailAddressAddress0']",
-			RuntimeVariables.replace("socialofficefriendea02@liferay.com"));
+			RuntimeVariables.replace("socialoffice02@liferay.com"));
 		selenium.select("//select[@id='_125_emailAddressTypeId0']",
 			RuntimeVariables.replace("label=Email Address"));
 		selenium.clickAt("//input[@id='_125_emailAddressPrimary0']",
@@ -114,7 +120,7 @@ public class AddUserSOAdditionalEmailAddressTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals("socialofficefriendea02@liferay.com",
+		assertEquals("socialoffice02@liferay.com",
 			selenium.getValue("//input[@id='_125_emailAddressAddress0']"));
 		assertEquals("Email Address",
 			selenium.getSelectedLabel(

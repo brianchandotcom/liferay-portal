@@ -54,7 +54,7 @@ public class ViewProfileAddressTest extends BaseTestCase {
 			selenium.getText(
 				"//div[@class='section field-group lfr-user-addresses']/h3"));
 		assertEquals(RuntimeVariables.replace(
-				"Personal 123 Liferay Ln., Ray of Light, 91234 (Mailing)"),
+				"Personal 123 Liferay Ln., Ray of Light, 91234, California, United States (Mailing)"),
 			selenium.getText(
 				"//div[@class='section field-group lfr-user-addresses']/ul/li"));
 	}

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.upgrade.v6_1_0;
 
+import com.liferay.portal.kernel.dao.jdbc.ConcurrentlyUpdatableConnection;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -369,12 +370,19 @@ public class UpgradeSocial extends UpgradeProcess {
 			sb.append(mbThreadClassNameId);
 			sb.append(")");
 
-			ps = con.prepareStatement(sb.toString());
+			ConcurrentlyUpdatableConnection concurrentConnection =
+				new ConcurrentlyUpdatableConnection(con);
+
+			ps = concurrentConnection.prepareStatement(sb.toString());
 
 			rs = ps.executeQuery();
 
-			while (rs.next()) {
+			boolean hasNext = rs.next();
+
+			while (hasNext) {
 				long groupId = rs.getLong("groupId");
+
+				hasNext = rs.next();
 
 				sb = new StringBundler(6);
 

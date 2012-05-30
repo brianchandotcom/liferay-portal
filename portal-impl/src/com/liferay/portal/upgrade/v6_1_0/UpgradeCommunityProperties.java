@@ -14,6 +14,7 @@
 
 package com.liferay.portal.upgrade.v6_1_0;
 
+import com.liferay.portal.kernel.dao.jdbc.ConcurrentlyUpdatableConnection;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -71,6 +72,9 @@ public class UpgradeCommunityProperties extends UpgradeProcess {
 		catch (Exception e) {
 			con = DataAccess.getConnection();
 
+			ConcurrentlyUpdatableConnection concurrentConnection =
+				new ConcurrentlyUpdatableConnection(con);
+
 			sb = new StringBundler(7);
 
 			sb.append("select ");
@@ -81,13 +85,17 @@ public class UpgradeCommunityProperties extends UpgradeProcess {
 			sb.append(oldValue);
 			sb.append("%'");
 
-			ps = con.prepareStatement(sb.toString());
+			ps = concurrentConnection.prepareStatement(sb.toString());
 
 			rs = ps.executeQuery();
 
-			while (rs.next()) {
+			boolean hasNext = rs.next();
+
+			while (hasNext) {
 				long primaryKey = rs.getLong(primaryKeyColumnName);
 				String preferences = rs.getString("preferences");
+
+				hasNext = rs.next();
 
 				updatePreferences(
 					tableName, primaryKeyColumnName, oldValue, newValue,

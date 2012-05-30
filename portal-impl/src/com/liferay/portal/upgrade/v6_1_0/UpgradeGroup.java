@@ -14,6 +14,7 @@
 
 package com.liferay.portal.upgrade.v6_1_0;
 
+import com.liferay.portal.kernel.dao.jdbc.ConcurrentlyUpdatableConnection;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -84,6 +85,9 @@ public class UpgradeGroup extends UpgradeProcess {
 		try {
 			con = DataAccess.getConnection();
 
+			ConcurrentlyUpdatableConnection concurrentConnection =
+				new ConcurrentlyUpdatableConnection(con);
+
 			StringBundler sb = new StringBundler(4);
 
 			sb.append("select Group_.groupId, Group_.classPK, ");
@@ -93,16 +97,20 @@ public class UpgradeGroup extends UpgradeProcess {
 
 			String sql = sb.toString();
 
-			ps = con.prepareStatement(sql);
+			ps = concurrentConnection.prepareStatement(sql);
 
 			ps.setLong(1, organizationClassNameId);
 
 			rs = ps.executeQuery();
 
-			while (rs.next()) {
+			boolean hasNext = rs.next();
+
+			while (hasNext) {
 				long groupId = rs.getLong("groupId");
 				long classPK = rs.getLong("classPK");
 				String name = rs.getString("name");
+
+				hasNext = rs.next();
 
 				updateName(groupId, classPK, name);
 			}
@@ -157,19 +165,26 @@ public class UpgradeGroup extends UpgradeProcess {
 		try {
 			con = DataAccess.getConnection();
 
+			ConcurrentlyUpdatableConnection concurrentConnection =
+				new ConcurrentlyUpdatableConnection(con);
+
 			String sql =
 				"select distinct Group_.groupId from Group_ inner join " +
 					"Layout on Layout.groupId = Group_.groupId where " +
 						"classNameId = ?";
 
-			ps = con.prepareStatement(sql);
+			ps = concurrentConnection.prepareStatement(sql);
 
 			ps.setLong(1, organizationClassNameId);
 
 			rs = ps.executeQuery();
 
-			while (rs.next()) {
+			boolean hasNext = rs.next();
+
+			while (hasNext) {
 				long groupId = rs.getLong("groupId");
+
+				hasNext = rs.next();
 
 				runSQL(
 					"update Group_ set site = TRUE where groupId = " + groupId);

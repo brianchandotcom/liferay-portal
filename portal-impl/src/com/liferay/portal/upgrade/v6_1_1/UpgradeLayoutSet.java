@@ -14,6 +14,7 @@
 
 package com.liferay.portal.upgrade.v6_1_1;
 
+import com.liferay.portal.kernel.dao.jdbc.ConcurrentlyUpdatableConnection;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -44,15 +45,22 @@ public class UpgradeLayoutSet extends UpgradeProcess {
 			sb.append("Group_ on (LayoutSet.groupId = Group_.groupId and ");
 			sb.append("Group_.liveGroupId > 0 and LayoutSet.logo = ?)");
 
-			ps = con.prepareStatement(sb.toString());
+			ConcurrentlyUpdatableConnection concurrentConnection =
+				new ConcurrentlyUpdatableConnection(con);
+
+			ps = concurrentConnection.prepareStatement(sb.toString());
 
 			ps.setBoolean(1, true);
 
 			rs = ps.executeQuery();
 
-			while (rs.next()) {
+			boolean hasNext = rs.next();
+
+			while (hasNext) {
 				long groupId = rs.getLong("Group_.groupId");
 				long layoutSetId = rs.getLong("LayoutSet.layoutSetId");
+
+				hasNext = rs.next();
 
 				runSQL(
 					"update LayoutSet set logoId = 0 where groupId = " +

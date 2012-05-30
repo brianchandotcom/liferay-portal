@@ -14,6 +14,7 @@
 
 package com.liferay.portal.upgrade.v6_1_0;
 
+import com.liferay.portal.kernel.dao.jdbc.ConcurrentlyUpdatableConnection;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -72,15 +73,22 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 		try {
 			con = DataAccess.getConnection();
 
-			ps = con.prepareStatement(
+			ConcurrentlyUpdatableConnection concurrentConnection =
+				new ConcurrentlyUpdatableConnection(con);
+
+			ps = concurrentConnection.prepareStatement(
 				"select messageId, body from MBMessage where (body like " +
 					"'%<3%') or (body like '%>_>%') or (body like '%<_<%')");
 
 			rs = ps.executeQuery();
 
-			while (rs.next()) {
+			boolean hasNext = rs.next();
+
+			while (hasNext) {
 				long messageId = rs.getLong("messageId");
 				String body = rs.getString("body");
+
+				hasNext = rs.next();
 
 				body = StringUtil.replace(
 					body, new String[] {"<3", ">_>", "<_<"},
@@ -105,12 +113,19 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 
 			String sql = sb.toString();
 
-			ps = con.prepareStatement(sql);
+			ConcurrentlyUpdatableConnection concurrentConnection =
+				new ConcurrentlyUpdatableConnection(con);
+
+			ps = concurrentConnection.prepareStatement(sql);
 
 			rs = ps.executeQuery();
 
-			while (rs.next()) {
+			boolean hasNext = rs.next();
+
+			while (hasNext) {
 				long messageId = rs.getLong("messageId");
+
+				hasNext = rs.next();
 
 				updateMessageAnswer(messageId, true);
 			}
@@ -171,17 +186,24 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 		try {
 			con = DataAccess.getConnection();
 
-			ps = con.prepareStatement(
+			ConcurrentlyUpdatableConnection concurrentConnection =
+				new ConcurrentlyUpdatableConnection(con);
+
+			ps = concurrentConnection.prepareStatement(
 				"select MBThread.threadId, MBMessage.companyId, " +
 					"MBMessage.userId from MBThread inner join MBMessage on " +
 						"MBThread.rootMessageId = MBMessage.messageId");
 
 			rs = ps.executeQuery();
 
-			while (rs.next()) {
+			boolean hasNext = rs.next();
+
+			while (hasNext) {
 				long threadId = rs.getLong("threadId");
 				long companyId = rs.getLong("companyId");
 				long userId = rs.getLong("userId");
+
+				hasNext = rs.next();
 
 				runSQL(
 					"update MBThread set companyId = " + companyId +

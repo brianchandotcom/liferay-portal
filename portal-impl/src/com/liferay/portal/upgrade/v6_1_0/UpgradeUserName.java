@@ -14,6 +14,7 @@
 
 package com.liferay.portal.upgrade.v6_1_0;
 
+import com.liferay.portal.kernel.dao.jdbc.ConcurrentlyUpdatableConnection;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -65,16 +66,23 @@ public class UpgradeUserName extends UpgradeProcess {
 
 			String sql = sb.toString();
 
-			ps = con.prepareStatement(sql);
+			ConcurrentlyUpdatableConnection concurrentConnection =
+				new ConcurrentlyUpdatableConnection(con);
+
+			ps = concurrentConnection.prepareStatement(sql);
 
 			rs = ps.executeQuery();
 
-			while (rs.next()) {
+			boolean hasNext = rs.next();
+
+			while (hasNext) {
 				long companyId = rs.getLong("companyId");
 				long userId = rs.getLong("userId");
 				String firstName = rs.getString("firstName");
 				String middleName = rs.getString("middleName");
 				String lastName = rs.getString("lastName");
+
+				hasNext = rs.next();
 
 				FullNameGenerator fullNameGenerator =
 					FullNameGeneratorFactory.getInstance();

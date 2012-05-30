@@ -1,12 +1,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>AddWCWebContentTest</title>
+<title>EditWCWebContentTest</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">AddWCWebContentTest</td></tr>
+<tr><td rowspan="1" colspan="3">EditWCWebContentTest</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -39,24 +39,24 @@
 	<td>Web Content</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>//span[@title='Add']/ul/li/strong/a/span</td>
-	<td>Add</td>
+	<td>assertText</td>
+	<td>//td[@id='_15_ocerSearchContainer_col-title_row-1']/a</td>
+	<td>WC WebContent Title</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>id=_15_kldx_menu_basic-web-content</td>
-	<td>Basic Web Content</td>
+	<td>clickAt</td>
+	<td>//a[@id='_15_ocerSearchContainer_1_menuButton']</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>id=_15_kldx_menu_basic-web-content</td>
-	<td>Basic Web Content</td>
+	<td>//a[@id='_15_ocerSearchContainer_1_menu_edit']</td>
+	<td>Edit</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//input[@id='_15_title_en_US']</td>
-	<td>WC WebContent Title</td>
+	<td>WC WebContent Title Edit</td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
@@ -86,7 +86,7 @@
 <tr>
 	<td>type</td>
 	<td>//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/textarea</td>
-	<td>WC WebContent Content</td>
+	<td>WC WebContent Content Edit</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -116,7 +116,7 @@
 <tr>
 	<td>waitForText</td>
 	<td>//body</td>
-	<td>WC WebContent Content</td>
+	<td>WC WebContent Content Edit</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
@@ -136,13 +136,14 @@
 <tr>
 	<td>assertText</td>
 	<td>//td[3]/a</td>
-	<td>WC WebContent Title</td>
+	<td>WC WebContent Title Edit</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//td[4]/a</td>
 	<td>Approved</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 </body>
 </html>

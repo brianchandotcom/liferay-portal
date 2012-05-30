@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontent;
+package com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.editwcwebcontent;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddWCWebContentTest extends BaseTestCase {
-	public void testAddWCWebContent() throws Exception {
+public class EditWCWebContentTest extends BaseTestCase {
+	public void testEditWCWebContent() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Go to"),
@@ -52,31 +52,17 @@ public class AddWCWebContentTest extends BaseTestCase {
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
-			RuntimeVariables.replace("Add"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("id=_15_kldx_menu_basic-web-content")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.clickAt("id=_15_kldx_menu_basic-web-content",
-			RuntimeVariables.replace("Basic Web Content"));
+		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
+			selenium.getText(
+				"//td[@id='_15_ocerSearchContainer_col-title_row-1']/a"));
+		selenium.clickAt("//a[@id='_15_ocerSearchContainer_1_menuButton']",
+			RuntimeVariables.replace("Actions"));
+		selenium.clickAt("//a[@id='_15_ocerSearchContainer_1_menu_edit']",
+			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_15_title_en_US']",
-			RuntimeVariables.replace("WC WebContent Title"));
+			RuntimeVariables.replace("WC WebContent Title Edit"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -134,7 +120,7 @@ public class AddWCWebContentTest extends BaseTestCase {
 		}
 
 		selenium.type("//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/textarea",
-			RuntimeVariables.replace("WC WebContent Content"));
+			RuntimeVariables.replace("WC WebContent Content Edit"));
 		assertEquals(RuntimeVariables.replace("Source"),
 			selenium.getText("//span[.='Source']"));
 		selenium.clickAt("//span[.='Source']",
@@ -183,7 +169,7 @@ public class AddWCWebContentTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("WC WebContent Content")
+				if (RuntimeVariables.replace("WC WebContent Content Edit")
 										.equals(selenium.getText("//body"))) {
 					break;
 				}
@@ -202,7 +188,7 @@ public class AddWCWebContentTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
+		assertEquals(RuntimeVariables.replace("WC WebContent Title Edit"),
 			selenium.getText("//td[3]/a"));
 		assertEquals(RuntimeVariables.replace("Approved"),
 			selenium.getText("//td[4]/a"));

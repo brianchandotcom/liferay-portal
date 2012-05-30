@@ -25,7 +25,7 @@
 		<table name="CyrusVirtual" />
 
 		<attributes>
-			<id name="emailAddress"/>
+			<id name="emailAddress" />
 			<basic name="userId" />
 		</attributes>
 	</entity>

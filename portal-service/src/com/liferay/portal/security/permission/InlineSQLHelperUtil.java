@@ -120,6 +120,15 @@ public class InlineSQLHelperUtil {
 			sql, className, classPKField, userIdField, bridgeJoin);
 	}
 
+	public static String replacePermissionCheck(
+		String sql, String className, String classPKField, String userIdField,
+		String groupIdField, long[] groupIds, String bridgeJoin) {
+
+		return getInlineSQLHelper().replacePermissionCheck(
+			sql, className, classPKField, userIdField, groupIdField, groupIds,
+			bridgeJoin);
+	}
+
 	public void setInlineSQLHelper(InlineSQLHelper inlineSQLPermission) {
 		_inlineSQLPermission = inlineSQLPermission;
 	}

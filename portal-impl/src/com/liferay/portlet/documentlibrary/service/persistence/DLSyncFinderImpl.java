@@ -52,7 +52,8 @@ public class DLSyncFinderImpl
 			String sql = CustomSQLUtil.get(FIND_BY_C_M_R_T);
 
 			sql = InlineSQLHelperUtil.replacePermissionCheck(
-				sql, DLFolder.class.getName(), "DLSync.fileId", repositoryId);
+				sql, DLFolder.class.getName(), "DLSync.fileId", null,
+				"DLSync.repositoryId", new long[] {repositoryId}, null);
 
 			StringBundler sb = new StringBundler(3);
 
@@ -62,8 +63,8 @@ public class DLSyncFinderImpl
 			sql = CustomSQLUtil.get(FIND_BY_C_M_R_T);
 
 			sql = InlineSQLHelperUtil.replacePermissionCheck(
-				sql, DLFileEntry.class.getName(), "DLSync.fileId",
-				repositoryId);
+				sql, DLFileEntry.class.getName(), "DLSync.fileId", null,
+				"DLSync.repositoryId", new long[] {repositoryId}, null);
 
 			sb.append(sql);
 

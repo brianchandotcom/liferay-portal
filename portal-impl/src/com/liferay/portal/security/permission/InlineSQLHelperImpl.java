@@ -167,6 +167,23 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		String sql, String className, String classPKField, String userIdField,
 		long[] groupIds, String bridgeJoin) {
 
+		return replacePermissionCheck(
+			sql, className, classPKField, userIdField, null, groupIds,
+			bridgeJoin);
+	}
+
+	public String replacePermissionCheck(
+		String sql, String className, String classPKField, String userIdField,
+		String bridgeJoin) {
+
+		return replacePermissionCheck(
+			sql, className, classPKField, userIdField, 0, bridgeJoin);
+	}
+
+	public String replacePermissionCheck(
+		String sql, String className, String classPKField, String userIdField,
+		String groupIdField, long[] groupIds, String bridgeJoin) {
+
 		if (!isEnabled(groupIds)) {
 			return sql;
 		}
@@ -186,17 +203,9 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		}
 		else {
 			return replacePermissionCheckJoin(
-				sql, className, classPKField, userIdField, groupIds,
-				bridgeJoin);
+				sql, className, classPKField, userIdField, groupIdField,
+				groupIds, bridgeJoin);
 		}
-	}
-
-	public String replacePermissionCheck(
-		String sql, String className, String classPKField, String userIdField,
-		String bridgeJoin) {
-
-		return replacePermissionCheck(
-			sql, className, classPKField, userIdField, 0, bridgeJoin);
 	}
 
 	protected Set<Long> getOwnerResourceBlockIds(
@@ -389,7 +398,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 	protected String replacePermissionCheckJoin(
 		String sql, String className, String classPKField, String userIdField,
-		long[] groupIds, String bridgeJoin) {
+		String groupIdField, long[] groupIds, String bridgeJoin) {
 
 		if (Validator.isNull(classPKField)) {
 			throw new IllegalArgumentException("classPKField is null");
@@ -446,10 +455,18 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 				hasPreviousViewableGroup = true;
 
 				sb.append("(");
-				sb.append(
-					classPKField.substring(
-						0, classPKField.lastIndexOf(CharPool.PERIOD)));
-				sb.append(".groupId = ");
+
+				if (Validator.isNull(groupIdField)) {
+					sb.append(
+						classPKField.substring(
+							0, classPKField.lastIndexOf(CharPool.PERIOD)));
+					sb.append(".groupId = ");
+				}
+				else {
+					sb.append(groupIdField);
+					sb.append(" = ");
+				}
+
 				sb.append(groupId);
 				sb.append(")");
 
@@ -499,10 +516,18 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		if (!viewableGroupIds.isEmpty()) {
 			for (Long viewableGroupId : viewableGroupIds) {
 				sb.append(" OR (");
-				sb.append(
-					classPKField.substring(
-						0, classPKField.lastIndexOf(CharPool.PERIOD)));
-				sb.append(".groupId = ");
+
+				if (Validator.isNull(groupIdField)) {
+					sb.append(
+						classPKField.substring(
+							0, classPKField.lastIndexOf(CharPool.PERIOD)));
+					sb.append(".groupId = ");
+				}
+				else {
+					sb.append(groupIdField);
+					sb.append(" = ");
+				}
+
 				sb.append(viewableGroupId);
 				sb.append(")");
 			}

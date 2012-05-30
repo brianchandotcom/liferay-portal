@@ -248,4 +248,28 @@ public interface InlineSQLHelper {
 		String sql, String className, String classPKField, String userIdField,
 		String bridgeJoin);
 
+	/**
+	 * Modifies the SQL query to only match resources that the user has
+	 * permission to view.
+	 *
+	 * @param  sql the SQL query
+	 * @param  className the fully qualified class name of the resources matched
+	 *         by the query
+	 * @param  classPKField the name of the column containing the resource's
+	 *         primary key
+	 * @param  userIdField the name of the column containing  the resource
+	 *         owner's primary key (optionally <code>null</code>)
+	 * @param  groupIdField the name of the column containing the resource's
+	 *         groupId
+	 *         (optionally <code>null</code>)
+	 * @param  groupIds the primary keys of the groups containing the resources
+	 *         (optionally <code>null</code>)
+	 * @param  bridgeJoin an additional join clause to insert before the
+	 *         permission join (optionally <code>null</code>)
+	 * @return the modified SQL query
+	 */
+	public String replacePermissionCheck(
+		String sql, String className, String classPKField, String userIdField,
+		String groupIdField, long[] groupIds, String bridgeJoin);
+
 }

@@ -241,7 +241,7 @@ if (!selectableTree) {
 
 			var limit = paginator.limit;
 
-			paginator.start = Math.ceil(children.length / limit) * limit - limit;
+			paginator.start = (Math.ceil(children.length / limit) * limit) - limit;
 
 			A.Array.each(children, TreeUtil.restoreNodeState);
 		},

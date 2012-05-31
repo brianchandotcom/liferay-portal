@@ -861,8 +861,9 @@ if ((layout.isTypePanel() || layout.isTypeControlPanel()) && !portletDisplay.get
 		}
 
 		PortletRequestProcessor portletReqProcessor = (PortletRequestProcessor)portletCtx.getAttribute(WebKeys.PORTLET_STRUTS_PROCESSOR);
+		boolean addNotAjaxablePortlet = !portlet.isAjaxable() && cmd.equals("add");
 
-		if (portletReqProcessor != null) {
+		if ((portletReqProcessor != null) && !addNotAjaxablePortlet) {
 			if (!access || portletException) {
 				ActionMapping actionMapping = portletReqProcessor.processMapping(request, response, (String)portlet.getInitParams().get("view-action"));
 
@@ -948,22 +949,13 @@ if ((layout.isTypePanel() || layout.isTypeControlPanel()) && !portletDisplay.get
 				portletContent = "/portal/portlet_error.jsp";
 			}
 
-			if (!portlet.isAjaxable() && cmd.equals("add")) {
-		%>
-
-				<liferay-util:buffer var="nonAjaxableContentMessage">
-					<div class="portlet-msg-info">
-						<liferay-ui:message key="this-change-will-only-be-shown-after-you-refresh-the-page" />
-					</div>
-				</liferay-util:buffer>
-
-		<%
-				renderRequestImpl.setAttribute(WebKeys.PORTLET_CONTENT, nonAjaxableContentMessage);
+			if (addNotAjaxablePortlet) {
+				portletContent = "/portal/portlet_not_ajaxable.jsp";
 			}
 		%>
 
 			<c:choose>
-				<c:when test="<%= useDefaultTemplate || portletException %>">
+				<c:when test="<%= useDefaultTemplate || portletException || addNotAjaxablePortlet %>">
 					<tiles:insert flush="false" template='<%= StrutsUtil.TEXT_HTML_DIR + "/common/themes/portlet.jsp" %>'>
 						<tiles:put name="portlet_content" value="<%= portletContent %>" />
 					</tiles:insert>

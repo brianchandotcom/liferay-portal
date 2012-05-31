@@ -2345,24 +2345,11 @@ public class JournalArticleLocalServiceImpl
 				userId, article.getGroupId(), JournalArticle.class.getName(),
 				article.getPrimaryKey(), article.getUuid(),
 				getClassTypeId(article), assetCategoryIds, assetTagNames, false,
-				null, null, article.getDisplayDate(),
-				article.getExpirationDate(), ContentTypes.TEXT_HTML,
-				article.getTitle(), article.getDescription(),
-				article.getDescription(), null, article.getLayoutUuid(), 0, 0,
-				null, false);
+				null, null, null, ContentTypes.TEXT_HTML, article.getTitle(),
+				article.getDescription(), article.getDescription(), null,
+				article.getLayoutUuid(), 0, 0, null, false);
 		}
 		else {
-
-			// Get the earliest display date and latest expiration date among
-			// all article versions
-
-			Date[] dateInterval = getDateInterval(
-				article.getGroupId(), article.getArticleId(),
-				article.getDisplayDate(), article.getExpirationDate());
-
-			Date displayDate = dateInterval[0];
-			Date expirationDate = dateInterval[1];
-
 			JournalArticleResource journalArticleResource =
 				journalArticleResourceLocalService.getArticleResource(
 					article.getResourcePrimKey());
@@ -2371,11 +2358,10 @@ public class JournalArticleLocalServiceImpl
 				userId, article.getGroupId(), JournalArticle.class.getName(),
 				journalArticleResource.getResourcePrimKey(),
 				journalArticleResource.getUuid(), getClassTypeId(article),
-				assetCategoryIds, assetTagNames, visible, null, null,
-				displayDate, expirationDate, ContentTypes.TEXT_HTML,
-				article.getTitle(), article.getDescription(),
-				article.getDescription(), null, article.getLayoutUuid(), 0, 0,
-				null, false);
+				assetCategoryIds, assetTagNames, visible, null, null, null,
+				ContentTypes.TEXT_HTML, article.getTitle(),
+				article.getDescription(), article.getDescription(), null,
+				article.getLayoutUuid(), 0, 0, null, false);
 		}
 
 		assetLinkLocalService.updateLinks(
@@ -2434,7 +2420,7 @@ public class JournalArticleLocalServiceImpl
 
 		journalArticlePersistence.update(article, false);
 
-		if (hasModifiedLatestApprovedVersion (
+		if (hasModifiedLatestApprovedVersion(
 				article.getGroupId(), article.getArticleId(),
 				article.getVersion())) {
 
@@ -2456,10 +2442,6 @@ public class JournalArticleLocalServiceImpl
 							JournalArticle.class.getName(),
 							article.getPrimaryKey());
 
-						Date displayDate = draftAssetEntry.getPublishDate();
-						Date expirationDate =
-							draftAssetEntry.getExpirationDate();
-
 						long[] assetCategoryIds =
 							draftAssetEntry.getCategoryIds();
 						String[] assetTagNames = draftAssetEntry.getTagNames();
@@ -2473,21 +2455,15 @@ public class JournalArticleLocalServiceImpl
 							ListUtil.toString(
 								assetLinks, AssetLink.ENTRY_ID2_ACCESSOR), 0L);
 
-						boolean visible = true;
-
-						if (article.getClassNameId() > 0) {
-							visible = false;
-						}
-
 						AssetEntry assetEntry =
 							assetEntryLocalService.updateEntry(
 								userId, article.getGroupId(),
 								JournalArticle.class.getName(),
 								article.getResourcePrimKey(), article.getUuid(),
 								getClassTypeId(article), assetCategoryIds,
-								assetTagNames, visible, null, null, displayDate,
-								expirationDate, ContentTypes.TEXT_HTML,
-								article.getTitle(), article.getDescription(),
+								assetTagNames, false, null, null, null,
+								ContentTypes.TEXT_HTML, article.getTitle(),
+								article.getDescription(),
 								article.getDescription(), null,
 								article.getLayoutUuid(), 0, 0, null, false);
 
@@ -2504,17 +2480,24 @@ public class JournalArticleLocalServiceImpl
 				}
 
 				if (article.getClassNameId() == 0) {
-					AssetEntry assetEntry =
-						assetEntryLocalService.updateVisible(
-							JournalArticle.class.getName(),
-							article.getResourcePrimKey(), true);
+					// Get the earliest display date and latest expiration date
+					// among all article versions
+
+					Date[] dateInterval = getDateInterval(
+						article.getGroupId(), article.getArticleId(),
+						article.getDisplayDate(), article.getExpirationDate());
+
+					Date displayDate = dateInterval[0];
+					Date expirationDate = dateInterval[1];
 
 					if (neverExpire) {
-						assetEntry.setExpirationDate(null);
-
-						assetEntryLocalService.updateAssetEntry(
-							assetEntry, false);
+						expirationDate = null;
 					}
+
+					assetEntryLocalService.updateEntry(
+						JournalArticle.class.getName(),
+						article.getResourcePrimKey(), displayDate,
+						expirationDate, true);
 				}
 
 				// Expando

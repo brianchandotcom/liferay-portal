@@ -47,22 +47,16 @@ boolean showAddArticleButton = JournalPermission.contains(permissionChecker, sco
 			JournalStructure structure = JournalStructureLocalServiceUtil.getStructure(scopeGroupId, displayTerms.getStructureId());
 			%>
 
-			<liferay-ui:message arguments="<%= structure.getName(locale) %>" key="showing-content-filtered-by-structure-x" /> (<a href="javascript:<portlet:namespace />addArticle();"><liferay-ui:message key="add-new-web-content" /></a>)
-		</div>
-	</c:if>
-</c:if>
+			<liferay-portlet:renderURL varImpl="addArticlesURL" windowState="<%= LiferayWindowState.MAXIMIZED.toString() %>">
+				<portlet:param name="struts_action" value="/journal/edit_article" />
+				<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="backURL" value="<%= currentURL %>" />
+				<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
+				<portlet:param name="structureId" value="<%= displayTerms.getStructureId() %>" />
+			</liferay-portlet:renderURL>
 
-<c:if test="<%= Validator.isNotNull(displayTerms.getTemplateId()) %>">
-	<aui:input name="<%= displayTerms.TEMPLATE_ID %>" type="hidden" value="<%= displayTerms.getTemplateId() %>" />
-
-	<c:if test="<%= showAddArticleButton %>">
-		<div class="portlet-msg-info">
-
-			<%
-			JournalTemplate template = JournalTemplateLocalServiceUtil.getTemplate(scopeGroupId, displayTerms.getTemplateId());
-			%>
-
-			<liferay-ui:message arguments="<%= template.getName(locale) %>" key="showing-content-filtered-by-template-x" /> (<a href="javascript:<portlet:namespace />addArticle();"><liferay-ui:message key="add-new-web-content" /></a>)
+			<liferay-ui:message arguments="<%= structure.getName(locale) %>" key="showing-content-filtered-by-structure-x" /> (<a href="<%= addArticlesURL.toString() %>"><liferay-ui:message arguments="<%= structure.getName(locale) %>" key="add-new-x" /></a>)
 		</div>
 	</c:if>
 </c:if>
@@ -98,6 +92,17 @@ int total = 0;
 				<%@ include file="/html/portlet/journal/article_search_results_database.jspf" %>
 			</c:otherwise>
 		</c:choose>
+	</c:when>
+	<c:when test="<%= Validator.isNotNull(displayTerms.getStructureId()) %>">
+
+		<%
+		results = JournalArticleServiceUtil.getArticlesByStructureId(scopeGroupId, displayTerms.getStructureId(), searchContainer.getStart(), searchContainer.getEnd(), null);
+		total = JournalArticleServiceUtil.getArticlesCountByStructureId(scopeGroupId, displayTerms.getStructureId());
+
+		searchContainer.setResults(results);
+		searchContainer.setTotal(total);
+		%>
+
 	</c:when>
 	<c:otherwise>
 

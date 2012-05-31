@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutBranch;
@@ -33,6 +34,7 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.util.SessionClicks;
 import com.liferay.portlet.sites.util.SitesUtil;
 
 import java.util.List;
@@ -45,19 +47,6 @@ import javax.servlet.http.HttpServletRequest;
  * @author Bruno Basto
  */
 public class LayoutsTreeUtil {
-
-	public static List<Layout> getLayouts(
-			HttpServletRequest request, long groupId, boolean privateLayout,
-			long parentLayoutId)
-		throws Exception {
-
-		boolean incomplete = ParamUtil.getBoolean(request, "incomplete", true);
-		int start = ParamUtil.getInteger(request, "start");
-		int end = start + PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN;
-
-		return LayoutLocalServiceUtil.getLayouts(
-			groupId, privateLayout, parentLayoutId, incomplete, start, end);
-	}
 
 	public static String getLayoutsJSON(
 			HttpServletRequest request, long groupId, boolean privateLayout,
@@ -76,6 +65,11 @@ public class LayoutsTreeUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		boolean incomplete = ParamUtil.getBoolean(request, "incomplete", true);
+		int start = ParamUtil.getInteger(request, "start");
+		int end = start + PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN;
+		String treeId = ParamUtil.getString(request, "treeId");
+
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		List<Layout> layoutAncestors = null;
@@ -86,10 +80,28 @@ public class LayoutsTreeUtil {
 			Layout selLayout = LayoutLocalServiceUtil.getLayout(selPlid);
 
 			layoutAncestors = selLayout.getAncestors();
+
+			String paginationJSON = SessionClicks.get(
+				request, treeId + "PaginationMap", StringPool.BLANK);
+
+			if (Validator.isNotNull(paginationJSON)) {
+				JSONObject paginationJSONObject =
+					JSONFactoryUtil.createJSONObject(paginationJSON);
+
+				String key = String.valueOf(parentLayoutId);
+
+				if (paginationJSONObject.has(key)) {
+					int paginationEnd = paginationJSONObject.getInt(key);
+
+					if (paginationEnd > end) {
+						end = paginationEnd;
+					}
+				}
+			}
 		}
 
-		List<Layout> layouts = getLayouts(
-			request, groupId, privateLayout, parentLayoutId);
+		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
+			groupId, privateLayout, parentLayoutId, incomplete, start, end);
 
 		for (Layout layout : layouts) {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();

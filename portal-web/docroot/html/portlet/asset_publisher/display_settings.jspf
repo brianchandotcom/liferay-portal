@@ -47,7 +47,7 @@ long assetPublisherDDMTemplateClassNameId = PortalUtil.getClassNameId(AssetEntry
 
 		</aui:select>
 
-		<liferay-ui:icon cssClass="manage-display-styles" id="selectDDMTemplate" image="configuration" label="<%= true %>" message="manage-display-styles" url="javascript:;" />
+		<liferay-ui:icon cssClass="manage-display-styles" id="selectDDMTemplate" image="configuration" label="<%= true %>" message="manage-application-display-styles" url="javascript:;" />
 	</div>
 
 	<aui:select cssClass="hidden-field abstract-length" helpMessage="abstract-length-key-help" name="preferences--abstractLength--">
@@ -276,7 +276,7 @@ long assetPublisherDDMTemplateClassNameId = PortalUtil.getClassNameId(AssetEntry
 						showGlobalScope: true,
 						showToolbar: true,
 						struts_action: '/dynamic_data_mapping/view_template',
-						title: '<%= UnicodeLanguageUtil.get(pageContext, "display-styles") %>'
+						title: '<%= UnicodeLanguageUtil.get(pageContext, "application-display-styles") %>'
 					},
 					function (ddmPortletWindow) {
 						ddmPortletWindow.once(

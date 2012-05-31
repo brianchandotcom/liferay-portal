@@ -101,11 +101,11 @@ long classPK = ParamUtil.getLong(request, "classPK");
 
 				<%
 				if (Validator.isNull(templateTypeValue)) {
-					message = "add-display-style";
+					message = "add-application-display-style";
 				}
 				%>
 
-				<span class="lfr-toolbar-button add-display-style <%= toolbarItem.equals("add-display-style") ? "current" : StringPool.BLANK %>">
+				<span class="lfr-toolbar-button add-display-style <%= toolbarItem.equals("add-application-display-style") ? "current" : StringPool.BLANK %>">
 					<a href="<%= addTemplateURL %>"><liferay-ui:message key="<%= message %>" /></a>
 				</span>
 			</c:if>

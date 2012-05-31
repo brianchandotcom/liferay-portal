@@ -99,7 +99,7 @@ if (Validator.isNotNull(structureAvailableFields)) {
 		title = template.getName(locale);
 	}
 	else {
-		title = LanguageUtil.get(pageContext, "new-display-style");
+		title = LanguageUtil.get(pageContext, "new-application-display-style");
 	}
 	%>
 

@@ -87,6 +87,10 @@
 	background-image: url(@theme_image_path@/common/add_template.png);
 }
 
+.lfr-portlet-toolbar .lfr-toolbar-button.add-display-style a {
+	background-image: url(@theme_image_path@/common/add_display_style.png);
+}
+
 .lfr-portlet-toolbar .lfr-toolbar-button.custom-attributes-button a {
 	background-image: url(@theme_image_path@/common/attributes.png);
 }

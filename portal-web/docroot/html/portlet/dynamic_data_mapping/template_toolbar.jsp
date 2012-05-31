@@ -82,7 +82,7 @@ long classPK = ParamUtil.getLong(request, "classPK");
 				}
 				%>
 
-				<span class="lfr-toolbar-button view-templates <%= toolbarItem.equals("add-list-template") ? "current" : StringPool.BLANK %>">
+				<span class="lfr-toolbar-button add-template <%= toolbarItem.equals("add-list-template") ? "current" : StringPool.BLANK %>">
 					<a href="<%= addTemplateURL %>"><liferay-ui:message key="<%= message %>" /></a>
 				</span>
 			</c:if>
@@ -105,7 +105,7 @@ long classPK = ParamUtil.getLong(request, "classPK");
 				}
 				%>
 
-				<span class="lfr-toolbar-button view-templates <%= toolbarItem.equals("add-display-style") ? "current" : StringPool.BLANK %>">
+				<span class="lfr-toolbar-button add-display-style <%= toolbarItem.equals("add-display-style") ? "current" : StringPool.BLANK %>">
 					<a href="<%= addTemplateURL %>"><liferay-ui:message key="<%= message %>" /></a>
 				</span>
 			</c:if>

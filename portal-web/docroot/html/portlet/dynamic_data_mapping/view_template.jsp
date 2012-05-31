@@ -39,22 +39,23 @@ portletURL.setParameter("tabs1", tabs1);
 portletURL.setParameter("backURL", backURL);
 portletURL.setParameter("classNameId", String.valueOf(classNameId));
 portletURL.setParameter("classPK", String.valueOf(classPK));
+
+String title = StringPool.BLANK;
+
+if (!portletName.equals(PortletKeys.DISPLAY_STYLES)){
+	if (structure != null){
+		title = LanguageUtil.format(pageContext, (Validator.isNull(templateHeaderTitle) ? "templates-for-structure-x" : templateHeaderTitle), structure.getName(locale), false);
+	}
+	else {
+		title = "application-display-styles";
+	}
+}
 %>
 
-<c:choose>
-	<c:when test="<%= (structure != null) %>">
-		<liferay-ui:header
-			backURL="<%= backURL %>"
-			title='<%= LanguageUtil.format(pageContext, (Validator.isNull(templateHeaderTitle) ? "templates-for-structure-x" : templateHeaderTitle), structure.getName(locale), false) %>'
-		/>
-	</c:when>
-	<c:otherwise>
-		<liferay-ui:header
-			backURL="<%= backURL %>"
-			title="display-styles"
-		/>
-	</c:otherwise>
-</c:choose>
+<liferay-ui:header
+	backURL="<%= backURL %>"
+	title='<%= title %>'
+/>
 
 <liferay-util:include page="/html/portlet/dynamic_data_mapping/template_toolbar.jsp">
 	<liferay-util:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />

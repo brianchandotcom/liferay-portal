@@ -458,6 +458,13 @@
 			<forward name="portlet.users_admin.error" path="portlet.directory.error" />
 		</action>
 
+		<!-- Display Styles -->
+
+		<action path="/display_styles/view" type="com.liferay.portlet.displaystyles.action.ViewAction" >
+			<forward name="portlet.display_styles.view" path="portlet.dynamic_data_mapping.view_template" />
+			<forward name="portlet.dynamic_data_mapping.error" path="portlet.dynamic_data_mapping.error" />
+		</action>
+
 		<!-- Dockbar -->
 
 		<action path="/dockbar/view" forward="portlet.dockbar.view" />

@@ -15,6 +15,7 @@
 package com.liferay.portlet.layoutsadmin.util;
 
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.staging.LayoutStagingUtil;
@@ -33,6 +34,7 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.util.SessionClicks;
 import com.liferay.portlet.sites.util.SitesUtil;
 
 import java.util.List;
@@ -45,19 +47,6 @@ import javax.servlet.http.HttpServletRequest;
  * @author Bruno Basto
  */
 public class LayoutsTreeUtil {
-
-	public static List<Layout> getLayouts(
-			HttpServletRequest request, long groupId, boolean privateLayout,
-			long parentLayoutId)
-		throws Exception {
-
-		boolean incomplete = ParamUtil.getBoolean(request, "incomplete", true);
-		int start = ParamUtil.getInteger(request, "start");
-		int end = start + PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN;
-
-		return LayoutLocalServiceUtil.getLayouts(
-			groupId, privateLayout, parentLayoutId, incomplete, start, end);
-	}
 
 	public static String getLayoutsJSON(
 			HttpServletRequest request, long groupId, boolean privateLayout,
@@ -76,6 +65,10 @@ public class LayoutsTreeUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		boolean incomplete = ParamUtil.getBoolean(request, "incomplete", true);
+		int start = ParamUtil.getInteger(request, "start");
+		int end = start + PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN;
+
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		List<Layout> layoutAncestors = null;
@@ -86,10 +79,12 @@ public class LayoutsTreeUtil {
 			Layout selLayout = LayoutLocalServiceUtil.getLayout(selPlid);
 
 			layoutAncestors = selLayout.getAncestors();
+
+			end = _normalizePaginationEnd(request, parentLayoutId, start, end);
 		}
 
-		List<Layout> layouts = getLayouts(
-			request, groupId, privateLayout, parentLayoutId);
+		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
+			groupId, privateLayout, parentLayoutId, incomplete, start, end);
 
 		for (Layout layout : layouts) {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -180,6 +175,34 @@ public class LayoutsTreeUtil {
 		}
 
 		return jsonArray.toString();
+	}
+
+	private static int _normalizePaginationEnd(
+		HttpServletRequest request, long layoutId, int start, int end) {
+
+		String treeId = ParamUtil.getString(request, "treeId");
+
+		String paginationJSON = SessionClicks.get(
+			request, treeId + "PaginationMap", StringPool.BLANK);
+
+		try {
+			JSONObject paginationJSONObject = JSONFactoryUtil.createJSONObject(
+				paginationJSON);
+
+			String key = String.valueOf(layoutId);
+
+			if (paginationJSONObject.has(key)) {
+				int paginationEnd = paginationJSONObject.getInt(key);
+
+				if (paginationEnd > end) {
+					end = paginationEnd;
+				}
+			}
+		}
+		catch (JSONException e) {
+		}
+
+		return end;
 	}
 
 }

@@ -283,14 +283,16 @@ if (!selectableTree) {
 			, updatePaginationMap: function(node) {
 				var paginationMap = {};
 
-				node.eachParent(function(parent) {
-					if (A.instanceOf(parent, A.TreeNodeIO)) {
-						var layoutId = TreeUtil.extractLayoutId(parent);
-						var children = parent.get('children');
+				node.eachParent(
+					function(parent) {
+						if (A.instanceOf(parent, A.TreeNodeIO)) {
+							var layoutId = TreeUtil.extractLayoutId(parent);
+							var children = parent.get('children');
 
-						paginationMap[layoutId] = Math.ceil(children.length / TreeUtil.PAGINATION_LIMIT) * TreeUtil.PAGINATION_LIMIT;
+							paginationMap[layoutId] = Math.ceil(children.length / TreeUtil.PAGINATION_LIMIT) * TreeUtil.PAGINATION_LIMIT;
+						}
 					}
-				});
+				);
 
 				Liferay.Store('<%= HtmlUtil.escape(treeId) %>PaginationMap', A.JSON.stringify(paginationMap));
 			},

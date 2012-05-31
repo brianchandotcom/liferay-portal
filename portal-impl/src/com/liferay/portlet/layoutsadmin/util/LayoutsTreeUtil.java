@@ -15,7 +15,6 @@
 package com.liferay.portlet.layoutsadmin.util;
 
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.staging.LayoutStagingUtil;
@@ -23,6 +22,7 @@ import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutBranch;
@@ -68,6 +68,7 @@ public class LayoutsTreeUtil {
 		boolean incomplete = ParamUtil.getBoolean(request, "incomplete", true);
 		int start = ParamUtil.getInteger(request, "start");
 		int end = start + PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN;
+		String treeId = ParamUtil.getString(request, "treeId");
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
@@ -80,7 +81,23 @@ public class LayoutsTreeUtil {
 
 			layoutAncestors = selLayout.getAncestors();
 
-			end = _normalizePaginationEnd(request, parentLayoutId, start, end);
+			String paginationJSON = SessionClicks.get(
+				request, treeId + "PaginationMap", StringPool.BLANK);
+
+			if (Validator.isNotNull(paginationJSON)) {
+				JSONObject paginationJSONObject =
+					JSONFactoryUtil.createJSONObject(paginationJSON);
+
+				String key = String.valueOf(parentLayoutId);
+
+				if (paginationJSONObject.has(key)) {
+					int paginationEnd = paginationJSONObject.getInt(key);
+
+					if (paginationEnd > end) {
+						end = paginationEnd;
+					}
+				}
+			}
 		}
 
 		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
@@ -175,34 +192,6 @@ public class LayoutsTreeUtil {
 		}
 
 		return jsonArray.toString();
-	}
-
-	private static int _normalizePaginationEnd(
-		HttpServletRequest request, long layoutId, int start, int end) {
-
-		String treeId = ParamUtil.getString(request, "treeId");
-
-		String paginationJSON = SessionClicks.get(
-			request, treeId + "PaginationMap", StringPool.BLANK);
-
-		try {
-			JSONObject paginationJSONObject = JSONFactoryUtil.createJSONObject(
-				paginationJSON);
-
-			String key = String.valueOf(layoutId);
-
-			if (paginationJSONObject.has(key)) {
-				int paginationEnd = paginationJSONObject.getInt(key);
-
-				if (paginationEnd > end) {
-					end = paginationEnd;
-				}
-			}
-		}
-		catch (JSONException e) {
-		}
-
-		return end;
 	}
 
 }

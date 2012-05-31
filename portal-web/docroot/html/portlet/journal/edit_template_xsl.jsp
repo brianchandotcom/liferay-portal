@@ -130,7 +130,14 @@ else if (langType.equals("xml") || langType.equals("xsl") || langType.equals("xs
 		var content = getEditorContent(editorType);
 
 		if (editorContentOutputElement) {
-			editorContentOutputElement.val(content);
+			var editorMode = '<%= editorMode %>';
+
+			if (editorMode == 'xml') {
+				editorContentOutputElement.val(content);
+			}
+			else {
+				editorContentOutputElement.val(encodeURIComponent(content));
+			}
 
 			var dialog = Liferay.Util.getWindow();
 

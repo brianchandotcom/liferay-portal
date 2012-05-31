@@ -1380,11 +1380,27 @@ them in ${app.server.parent.dir}. Then rerun this task.
 
 		<echo>Installing fix pack.</echo>
 
+		<if>
+			<available file="${app.server.websphere.dir}/UpdateInstaller/update.exe" />
+			<then>
+				<property name="update.command" value="update.exe"/>
+			</then>
+			<else>
+				<property name="update.command" value="update.bat"/>
+			</else>
+		</if>
+
 		<exec dir="${app.server.websphere.dir}/UpdateInstaller" executable="cmd.exe">
-			<arg line="/c update.bat -options liferay-responsefile.txt -silent" />
+			<arg line="/c ${update.command} -options liferay-responsefile.txt -silent" />
 		</exec>
 
 		<delete dir="${tstamp.value}" />
+
+		<replace file="${app.server.websphere.dir}/profiles/liferay/config/cells/liferay-cell/nodes/liferay-node/servers/server1/server.xml">
+			<replacetoken><![CDATA[disableJIT="false">]]></replacetoken>
+			<replacevalue><![CDATA[disableJIT="false" maximumHeapSize="1024">]]></replacevalue>
+		</replace>
+
 	</target>
 
 	<target name="zip-api">

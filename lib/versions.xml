@@ -2506,6 +2506,28 @@
 			</license>
 		</licenses>
 	</library>
+    <library>
+        <file-name>portal/oauth.jar</file-name>
+        <version>20100601</version>
+        <project-name>OAuth Core</project-name>
+        <project-url>http://code.google.com/p/oauth</project-url>
+        <licenses>
+            <license>
+                <license-name>Apache License 2.0</license-name>
+            </license>
+        </licenses>
+    </library>
+    <library>
+        <file-name>portal/oauth-provider.jar</file-name>
+        <version>20100601</version>
+        <project-name>OAuth Core: Provider</project-name>
+        <project-url>http://code.google.com/p/oauth</project-url>
+        <licenses>
+            <license>
+                <license-name>Apache License 2.0</license-name>
+            </license>
+        </licenses>
+    </library>
 	<library>
 		<file-name>portal/odmg.jar</file-name>
 		<version></version>

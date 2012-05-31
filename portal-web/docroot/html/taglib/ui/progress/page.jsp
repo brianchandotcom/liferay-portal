@@ -1,3 +1,5 @@
+<%@ page import="com.liferay.portal.upload.LiferayFileUpload" %>
+
 <%--
 /**
  * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
@@ -17,15 +19,20 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%
-Integer height = (Integer)request.getAttribute("liferay-ui:upload-progress:height");
-String id = (String)request.getAttribute("liferay-ui:upload-progress:id");
-String message = (String)request.getAttribute("liferay-ui:upload-progress:message");
+Integer height = (Integer)request.getAttribute("liferay-ui:progress:height");
+String id = (String)request.getAttribute("liferay-ui:progress:id");
+String message = (String)request.getAttribute("liferay-ui:progress:message");
+String sessionKey = (String)request.getAttribute("liferay-ui:progress:sessionKey");
+
+if (Validator.isNull(sessionKey)) {
+	sessionKey = LiferayFileUpload.PERCENT;
+}
 %>
 
 <div id="<%= id %>Bar"></div>
 
-<aui:script use="liferay-upload-progress">
-	A.config.win['<%= id %>'] = new Liferay.UploadProgressBar(
+<aui:script use="liferay-progress">
+	A.config.win['<%= id %>'] = new Liferay.ProcessProgress(
 		{
 			boundingBox: '#<%= id %>Bar',
 
@@ -34,7 +41,8 @@ String message = (String)request.getAttribute("liferay-ui:upload-progress:messag
 			</c:if>
 
 			id: '<%= id %>',
-			label: '<%= LanguageUtil.get(pageContext, message) %>'
+			label: '<%= LanguageUtil.get(pageContext, message) %>',
+			sessionKey: '<%= HtmlUtil.escapeJS(sessionKey) %>'
 		}
 	);
 </aui:script>

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.upgrade.v6_0_0;
 
+import com.liferay.portal.kernel.dao.jdbc.ConcurrentlyUpdatableConnection;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.model.Layout;
@@ -68,18 +69,25 @@ public class UpgradeGroup extends UpgradeProcess {
 		try {
 			con = DataAccess.getConnection();
 
+			ConcurrentlyUpdatableConnection concurrentConnection =
+				new ConcurrentlyUpdatableConnection(con);
+
 			long classNameId = PortalUtil.getClassNameId(
 				Layout.class.getName());
 
-			ps = con.prepareStatement(
+			ps = concurrentConnection.prepareStatement(
 				"select groupId, classPK from Group_ where classNameId = " +
 					classNameId);
 
 			rs = ps.executeQuery();
 
-			while (rs.next()) {
+			boolean hasNext = rs.next();
+
+			while (hasNext) {
 				long groupId = rs.getLong("groupId");
 				long classPK = rs.getLong("classPK");
+
+				hasNext = rs.next();
 
 				Object[] layout = getLayout(classPK);
 

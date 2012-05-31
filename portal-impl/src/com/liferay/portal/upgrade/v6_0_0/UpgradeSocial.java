@@ -14,6 +14,7 @@
 
 package com.liferay.portal.upgrade.v6_0_0;
 
+import com.liferay.portal.kernel.dao.jdbc.ConcurrentlyUpdatableConnection;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -144,14 +145,21 @@ public class UpgradeSocial extends UpgradeProcess {
 		try {
 			con = DataAccess.getConnection();
 
-			ps = con.prepareStatement(
+			ConcurrentlyUpdatableConnection concurrentConnection =
+				new ConcurrentlyUpdatableConnection(con);
+
+			ps = concurrentConnection.prepareStatement(
 				"select distinct(groupId) from SocialActivity where groupId " +
 					"> 0");
 
 			rs = ps.executeQuery();
 
-			while (rs.next()) {
+			boolean hasNext = rs.next();
+
+			while (hasNext) {
 				long groupId = rs.getLong("groupId");
+
+				hasNext = rs.next();
 
 				try {
 					updateGroupId(groupId);

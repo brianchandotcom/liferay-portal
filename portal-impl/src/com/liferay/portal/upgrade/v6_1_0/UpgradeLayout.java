@@ -14,6 +14,7 @@
 
 package com.liferay.portal.upgrade.v6_1_0;
 
+import com.liferay.portal.kernel.dao.jdbc.ConcurrentlyUpdatableConnection;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -45,16 +46,23 @@ public class UpgradeLayout extends UpgradeProcess {
 		try {
 			con = DataAccess.getConnection();
 
-			ps = con.prepareStatement(
+			ConcurrentlyUpdatableConnection concurrentConnection =
+				new ConcurrentlyUpdatableConnection(con);
+
+			ps = concurrentConnection.prepareStatement(
 				"select plid, name, title, typeSettings from Layout");
 
 			rs = ps.executeQuery();
 
-			while (rs.next()) {
+			boolean hasNext = rs.next();
+
+			while (hasNext) {
 				long plid = rs.getLong("plid");
 				String name = rs.getString("name");
 				String title = rs.getString("title");
 				String typeSettings = rs.getString("typeSettings");
+
+				hasNext = rs.next();
 
 				updateLayout(plid, name, title, typeSettings);
 			}

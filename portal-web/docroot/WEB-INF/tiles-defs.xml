@@ -97,7 +97,7 @@
 		<put name="content" value="/portal/update_reminder_query.jsp" />
 	</definition>
 
-	<definition name="portal.upload_progress_poller" path="/portal/upload_progress_poller.jsp" />
+	<definition name="portal.progress_poller" path="/portal/progress_poller.jsp" />
 
 	<definition name="portal.verify_email_address" extends="portal">
 		<put name="title" value="verify-email-address" />

@@ -107,7 +107,7 @@
 
 		<action path="/portal/update_terms_of_use" type="com.liferay.portal.action.UpdateTermsOfUseAction" />
 
-		<action path="/portal/upload_progress_poller" forward="portal.upload_progress_poller" />
+		<action path="/portal/progress_poller" forward="portal.progress_poller" />
 
 		<action path="/portal/verify_email_address" type="com.liferay.portal.action.VerifyEmailAddressAction">
 			<forward name="portal.verify_email_address" path="portal.verify_email_address" />

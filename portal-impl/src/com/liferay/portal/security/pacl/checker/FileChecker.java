@@ -92,7 +92,8 @@ public class FileChecker extends BaseChecker {
 			"${org.apache.geronimo.home.dir}",
 			"${plugin.servlet.context.name}",
 			"${release.info.version}",
-			"${weblogic.domain.dir}"
+			"${weblogic.domain.dir}",
+			"${websphere.profile.dir}"
 		};
 
 		String installedDir = StringPool.BLANK;
@@ -114,7 +115,8 @@ public class FileChecker extends BaseChecker {
 			System.getProperty("jetty.home"), System.getProperty("jonas.base"),
 			_portalDir, System.getProperty("org.apache.geronimo.home.dir"),
 			System.getProperty("resin.home"), getServletContextName(),
-			ReleaseInfo.getVersion(), System.getenv("DOMAIN_HOME")
+			ReleaseInfo.getVersion(), System.getenv("DOMAIN_HOME"),
+			System.getenv("USER_INSTALL_ROOT")
 		};
 
 		if (_log.isDebugEnabled()) {

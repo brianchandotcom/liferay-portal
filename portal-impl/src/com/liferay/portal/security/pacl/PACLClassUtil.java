@@ -17,6 +17,7 @@ package com.liferay.portal.security.pacl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
+import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
@@ -125,22 +126,35 @@ public class PACLClassUtil {
 			}
 		}
 
-		if (callerClassLoaderClassName.equals(
-				_ClASS_NAME_DYNAMIC_CLASS_LOADER) ||
-			callerClassLoaderClassName.equals(_ClASS_NAME_JASPER_LOADER)) {
-
+		if (callerClassLoaderClassName.equals(_ClASS_NAME_JASPER_LOADER)) {
 			callerClassLoader = callerClassLoader.getParent();
 		}
+		else if (ServerDetector.isResin()) {
+			if (callerClassLoaderClassName.equals(
+					_ClASS_NAME_DYNAMIC_CLASS_LOADER)) {
 
-		if (callerClassLoaderClassName.equals(_CLASS_NAME_JSP_CLASS_LOADER)) {
+				callerClassLoader = callerClassLoader.getParent();
+			}
+		}
+		else if (ServerDetector.isWebLogic()) {
+			if (callerClassLoaderClassName.equals(
+					_CLASS_NAME_JSP_CLASS_LOADER)) {
 
-			// weblogic.servlet.jsp.TagFileClassLoader
+				// weblogic.servlet.jsp.TagFileClassLoader
 
-			callerClassLoader = callerClassLoader.getParent();
+				callerClassLoader = callerClassLoader.getParent();
 
-			// weblogic.utils.classloaders.ChangeAwareClassLoader
+				// weblogic.utils.classloaders.ChangeAwareClassLoader
 
-			callerClassLoader = callerClassLoader.getParent();
+				callerClassLoader = callerClassLoader.getParent();
+			}
+		}
+		else if (ServerDetector.isWebSphere()) {
+			if (callerClassLoaderClassName.equals(
+					_CLASS_NAME_JSP_EXTENSION_CLASS_LOADER)) {
+
+				callerClassLoader = callerClassLoader.getParent();
+			}
 		}
 
 		return callerClassLoader;
@@ -246,6 +260,9 @@ public class PACLClassUtil {
 
 	private static final String _CLASS_NAME_JSP_CLASS_LOADER =
 		"weblogic.servlet.jsp.JspClassLoader";
+
+	private static final String _CLASS_NAME_JSP_EXTENSION_CLASS_LOADER =
+		"com.ibm.ws.jsp.webcontainerext.JSPExtensionClassLoader";
 
 	private static Log _log = LogFactoryUtil.getLog(PACLClassUtil.class);
 

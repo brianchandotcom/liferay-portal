@@ -160,6 +160,18 @@ public class RuntimeChecker extends BaseReflectChecker {
 
 				return true;
 			}
+
+			Class<?> callerClass10 = Reflection.getCallerClass(10);
+
+			String callerClassName10 = callerClass10.getName();
+
+			if (callerClassName10.startsWith(_CLASS_NAME_CLASS_DEFINER) &&
+				CheckerUtil.isAccessControllerDoPrivileged(11)) {
+
+				logCreateClassLoader(callerClass10, 10);
+
+				return true;
+			}
 		}
 		else if (JavaDetector.isJDK7()) {
 			Class<?> callerClass11 = Reflection.getCallerClass(11);
@@ -237,6 +249,15 @@ public class RuntimeChecker extends BaseReflectChecker {
 				isJBossServiceControllerImpl(callerClass7) ||
 				isJOnASModuleImpl(callerClass7) ||
 				isTomcatJdbcLeakPrevention(callerClass7)) {
+
+				logGetClassLoader(callerClass7, 7);
+
+				return true;
+			}
+
+			if (isWebSphereProtectionClassLoader(
+					callerClass7.getEnclosingClass()) &&
+				CheckerUtil.isAccessControllerDoPrivileged(8)) {
 
 				logGetClassLoader(callerClass7, 7);
 
@@ -343,6 +364,12 @@ public class RuntimeChecker extends BaseReflectChecker {
 			logGetEnv(callerClass7, 7, name);
 
 			return true;
+		}
+
+		if (ServerDetector.isWebSphere()) {
+			if (name.equals("USER_INSTALL_ROOT")) {
+				return true;
+			}
 		}
 
 		return false;
@@ -606,6 +633,26 @@ public class RuntimeChecker extends BaseReflectChecker {
 		return false;
 	}
 
+	protected boolean isWebSphereProtectionClassLoader(Class<?> clazz) {
+		if (!ServerDetector.isWebSphere()) {
+			return false;
+		}
+
+		if (clazz == null) {
+			return false;
+		}
+
+		String className = clazz.getName();
+
+		if (!className.equals(_CLASS_NAME_PROTECTION_CLASS_LOADER)) {
+			return false;
+		}
+
+		String classLocation = PACLClassUtil.getClassLocation(clazz);
+
+		return classLocation.startsWith("bundleresource://");
+	}
+
 	protected boolean isXercesSecuritySupport(Class<?> clazz) {
 		String className = clazz.getName();
 
@@ -693,6 +740,9 @@ public class RuntimeChecker extends BaseReflectChecker {
 
 	private static final String _CLASS_NAME_PROCESS_IMPL =
 		"java.lang.ProcessImpl$";
+
+	private static final String _CLASS_NAME_PROTECTION_CLASS_LOADER =
+		"com.ibm.ws.classloader.ProtectionClassLoader";
 
 	private static final String _CLASS_NAME_SERVICE_CONTROLLER_IMPL =
 		"org.jboss.msc.service.ServiceControllerImpl";

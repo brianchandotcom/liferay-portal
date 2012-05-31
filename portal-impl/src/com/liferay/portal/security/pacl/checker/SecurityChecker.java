@@ -68,6 +68,12 @@ public class SecurityChecker extends BaseChecker {
 			return true;
 		}
 
+		if (isWebSphereWASJSPExtensionServletWrapper(callerClass8)) {
+			logGetPolicy(callerClass8, 8);
+
+			return true;
+		}
+
 		return false;
 	}
 
@@ -152,6 +158,22 @@ public class SecurityChecker extends BaseChecker {
 		return classLocation.startsWith("bundle://");
 	}
 
+	protected boolean isWebSphereWASJSPExtensionServletWrapper(Class<?> clazz) {
+		if (!ServerDetector.isWebSphere()) {
+			return false;
+		}
+
+		String className = clazz.getName();
+
+		if (!className.equals(_CLASS_NAME_WAS_JSP_EXTENSION_SERVLET_WRAPPER)) {
+			return false;
+		}
+
+		String classLocation = PACLClassUtil.getClassLocation(clazz);
+
+		return classLocation.startsWith("bundleresource://");
+	}
+
 	protected void logGetPolicy(Class<?> callerClass, int frame) {
 		if (_log.isInfoEnabled()) {
 			_log.info(
@@ -176,6 +198,9 @@ public class SecurityChecker extends BaseChecker {
 
 	private static final String _CLASS_NAME_POLICY_CONTEXT_HANDLER_IMPL =
 		"com.sun.enterprise.security.authorize.PolicyContextHandlerImpl";
+
+	private static final String _CLASS_NAME_WAS_JSP_EXTENSION_SERVLET_WRAPPER =
+		"com.ibm.ws.jsp.webcontainerext.ws.WASJSPExtensionServletWrapper";
 
 	private static Log _log = LogFactoryUtil.getLog(SecurityChecker.class);
 

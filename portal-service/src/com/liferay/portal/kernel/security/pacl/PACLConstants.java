@@ -63,6 +63,9 @@ public interface PACLConstants {
 	public static final String PORTAL_RUNTIME_PERMISSION_GET_BEAN_PROPERTY =
 		"getBeanProperty";
 
+	public static final String PORTAL_RUNTIME_PERMISSION_SEARCH_ENGINE =
+		"searchEngine";
+
 	public static final String PORTAL_RUNTIME_PERMISSION_SET_BEAN_PROPERTY =
 		"setBeanProperty";
 

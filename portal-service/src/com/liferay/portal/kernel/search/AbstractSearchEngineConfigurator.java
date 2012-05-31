@@ -231,10 +231,8 @@ public abstract class AbstractSearchEngineConfigurator {
 
 		searchEngineRegistration.setSearchWriterDestinationName(searchEngineId);
 
-		Map<String, SearchEngine> searchEngines =
-			SearchEngineUtil.getSearchEngines();
-
-		SearchEngine originalSearchEngine = searchEngines.get(searchEngineId);
+		SearchEngine originalSearchEngine =
+			SearchEngineUtil.getSearchEngineQuiet(searchEngineId);
 
 		if (originalSearchEngine != null) {
 			searchEngineRegistration.setOverride(true);

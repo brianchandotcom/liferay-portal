@@ -48,7 +48,6 @@
 	padding-left: 0;
 }
 
-
 .lfr-asset-vocabulary-container .lfr-asset-category-message, .lfr-asset-vocabulary-container.no-matches .lfr-asset-category-list {
 	display: none;
 }
@@ -81,6 +80,30 @@
 	margin-left: 29px;
 }
 
+.lfr-categories-selector-category-name, .lfr-categories-selector-search-results-path {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.lfr-categories-selector-category-name {
+	float: left;
+	width: 50%;
+}
+
+.lfr-categories-selector-search-results-path {
+	float: right;
+	width: 49%;
+}
+
+.lfr-categories-selector-search-results label:after {
+	clear: both;
+	content: ".";
+	display: block;
+	height: 0;
+	visibility: hidden;
+}
+
 /* Skin */
 
 .lfr-asset-category-container legend {
@@ -98,4 +121,10 @@
 
 .lfr-asset-category-list a.selected {
 	background-color: #EEE;
+}
+
+.lfr-categories-selector-search-results-path {
+	color: #575757;
+	font-size: 0.9em;
+	text-align: right;
 }

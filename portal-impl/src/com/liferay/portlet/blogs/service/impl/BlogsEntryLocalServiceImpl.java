@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -852,9 +853,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		AssetEntry assetEntry = assetEntryLocalService.updateEntry(
 			userId, entry.getGroupId(), BlogsEntry.class.getName(),
 			entry.getEntryId(), entry.getUuid(), 0, assetCategoryIds,
-			assetTagNames, visible, null, null, entry.getDisplayDate(), null,
-			ContentTypes.TEXT_HTML, entry.getTitle(), null, summary, null, null,
-			0, 0, null, false);
+			assetTagNames, visible, null, null, null, ContentTypes.TEXT_HTML,
+			entry.getTitle(), null, summary, null, null, 0, 0, null, false);
 
 		assetLinkLocalService.updateLinks(
 			userId, assetEntry.getEntryId(), assetLinkEntryIds,
@@ -917,9 +917,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		if (entry.isPending() || entry.isDraft()) {
 		}
-		else if (entry.isApproved()) {
-			entry.setStatus(WorkflowConstants.STATUS_DRAFT_FROM_APPROVED);
-		}
 		else {
 			entry.setStatus(WorkflowConstants.STATUS_DRAFT);
 		}
@@ -959,10 +956,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		serviceContext.setAttribute(
 			"pingOldTrackbacks", String.valueOf(pingOldTrackbacks));
-
-		if (entry.getStatus() != WorkflowConstants.STATUS_DRAFT) {
-			serviceContext.setAttribute("update", Boolean.TRUE.toString());
-		}
 
 		if (Validator.isNotNull(trackbacks)) {
 			serviceContext.setAttribute("trackbacks", trackbacks);
@@ -1021,32 +1014,39 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			BlogsEntry.class);
 
 		if (status == WorkflowConstants.STATUS_APPROVED) {
-			if (oldStatus != WorkflowConstants.STATUS_APPROVED) {
 
-				// Asset
+			// Statistics
 
-				assetEntryLocalService.updateVisible(
-					BlogsEntry.class.getName(), entryId, true);
+			blogsStatsUserLocalService.updateStatsUser(
+				entry.getGroupId(), user.getUserId(), entry.getDisplayDate());
 
-				// Social
+			// Asset
 
-				if (oldStatus != WorkflowConstants.STATUS_IN_TRASH) {
-					boolean update = ParamUtil.getBoolean(
-						serviceContext, "update");
+			AssetEntry assetEntry = assetEntryLocalService.fetchEntry(
+				BlogsEntry.class.getName(), entryId);
 
-					if (update) {
-						socialActivityLocalService.addActivity(
-							user.getUserId(), entry.getGroupId(),
-							BlogsEntry.class.getName(), entryId,
-							BlogsActivityKeys.UPDATE_ENTRY, StringPool.BLANK,
-							0);
-					}
-					else {
-						socialActivityLocalService.addUniqueActivity(
-							user.getUserId(), entry.getGroupId(),
-							BlogsEntry.class.getName(), entryId,
-							BlogsActivityKeys.ADD_ENTRY, StringPool.BLANK, 0);
-					}
+			if ((assetEntry == null) || (assetEntry.getPublishDate() == null)) {
+				serviceContext.setCommand(Constants.ADD);
+			}
+
+			assetEntryLocalService.updateEntry(
+				BlogsEntry.class.getName(), entryId, entry.getDisplayDate(),
+				true);
+
+			// Social
+
+			if (oldStatus != WorkflowConstants.STATUS_IN_TRASH) {
+				if (serviceContext.isCommandUpdate()) {
+					socialActivityLocalService.addActivity(
+						user.getUserId(), entry.getGroupId(),
+						BlogsEntry.class.getName(), entryId,
+						BlogsActivityKeys.UPDATE_ENTRY, StringPool.BLANK, 0);
+				}
+				else {
+					socialActivityLocalService.addUniqueActivity(
+						user.getUserId(), entry.getGroupId(),
+						BlogsEntry.class.getName(), entryId,
+						BlogsActivityKeys.ADD_ENTRY, StringPool.BLANK, 0);
 				}
 			}
 
@@ -1207,7 +1207,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			BlogsUtil.getEmailEntryAddedEnabled(preferences)) {
 		}
 		else if (serviceContext.isCommandUpdate() &&
-				 BlogsUtil.getEmailEntryUpdatedEnabled(preferences)) {
+			BlogsUtil.getEmailEntryUpdatedEnabled(preferences)) {
 		}
 		else {
 			return;

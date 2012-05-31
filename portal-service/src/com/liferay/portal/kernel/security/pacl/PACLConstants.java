@@ -63,6 +63,9 @@ public interface PACLConstants {
 	public static final String PORTAL_RUNTIME_PERMISSION_GET_BEAN_PROPERTY =
 		"getBeanProperty";
 
+	public static final String PORTAL_RUNTIME_PERMISSION_SEARCH_ENGINE =
+		"searchEngine";
+
 	public static final String PORTAL_RUNTIME_PERMISSION_SET_BEAN_PROPERTY =
 		"setBeanProperty";
 
@@ -96,6 +99,9 @@ public interface PACLConstants {
 
 	public static final String RUNTIME_PERMISSION_SET_SECURITY_MANAGER =
 		"setSecurityManager";
+
+	public static final String PORTAL_RUNTIME_PERMISSION_THREAD_POOL_EXECUTOR =
+		"threadPoolExecutor";
 
 	public static final String RUNTIME_PERMISSION_WRITE_FILE_DESCRIPTOR =
 		"writeFileDescriptor";

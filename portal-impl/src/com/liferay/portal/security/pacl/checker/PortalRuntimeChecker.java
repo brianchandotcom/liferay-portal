@@ -38,7 +38,9 @@ public class PortalRuntimeChecker extends BaseChecker {
 	public void afterPropertiesSet() {
 		initExpandoBridgeClassNames();
 		initGetBeanPropertyClassNames();
+		initSearchEngineIds();
 		initSetBeanPropertyClassNames();
+		initThreadPoolExecutorNames();
 	}
 
 	public void checkPermission(Permission permission) {
@@ -74,6 +76,15 @@ public class PortalRuntimeChecker extends BaseChecker {
 				}
 			}
 		}
+		else if (name.equals(PORTAL_RUNTIME_PERMISSION_SEARCH_ENGINE)) {
+			String searchEngineId = (String)subject;
+
+			if (!_searchEngineIds.contains(searchEngineId)) {
+				throwSecurityException(
+					_log, "Attempted to perform an operation on search " +
+						"engine " + searchEngineId);
+			}
+		}
 		else if (name.equals(PORTAL_RUNTIME_PERMISSION_SET_BEAN_PROPERTY)) {
 			Class<?> clazz = (Class<?>)subject;
 
@@ -88,6 +99,15 @@ public class PortalRuntimeChecker extends BaseChecker {
 					throwSecurityException(
 						_log, "Attempted to set bean property on " + clazz);
 				}
+			}
+		}
+		else if (name.equals(PORTAL_RUNTIME_PERMISSION_THREAD_POOL_EXECUTOR)) {
+			String threadPoolExecutorName = (String)subject;
+
+			if (!_threadPoolExecutorNames.contains(threadPoolExecutorName)) {
+				throwSecurityException(
+					_log, "Attempted to modify Thread pool executor " +
+						threadPoolExecutorName);
 			}
 		}
 	}
@@ -164,6 +184,20 @@ public class PortalRuntimeChecker extends BaseChecker {
 		}
 	}
 
+	protected void initSearchEngineIds() {
+		_searchEngineIds = getPropertySet("security-manager-search-engine-ids");
+
+		if (_log.isDebugEnabled()) {
+			Set<String> searchEngineIds = new TreeSet<String>(
+				_searchEngineIds);
+
+			for (String searchEngineId : searchEngineIds) {
+				_log.debug(
+					"Allowing operations on search engine " + searchEngineId);
+			}
+		}
+	}
+
 	protected void initSetBeanPropertyClassNames() {
 		_setBeanPropertyClassNames = getPropertySet(
 			"security-manager-set-bean-property");
@@ -178,10 +212,27 @@ public class PortalRuntimeChecker extends BaseChecker {
 		}
 	}
 
+	protected void initThreadPoolExecutorNames() {
+		_threadPoolExecutorNames = getPropertySet(
+			"security-manager-thread-pool-executor-names");
+
+		if (_log.isDebugEnabled()) {
+			Set<String> threadPoolExecutorNames = new TreeSet<String>(
+				_threadPoolExecutorNames);
+
+			for (String threadPoolExecutorName : threadPoolExecutorNames) {
+				_log.debug(
+					"Allowing Thread pool executor " + threadPoolExecutorName);
+			}
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(PortalRuntimeChecker.class);
 
 	private Set<String> _expandoBridgeClassNames;
 	private Set<String> _getBeanPropertyClassNames;
+	private Set<String> _searchEngineIds;
 	private Set<String> _setBeanPropertyClassNames;
+	private Set<String> _threadPoolExecutorNames;
 
 }

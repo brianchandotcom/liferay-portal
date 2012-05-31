@@ -36,6 +36,7 @@ import java.util.Set;
 public class SocketChecker extends BaseChecker {
 
 	public void afterPropertiesSet() {
+		initAcceptHostsAndPorts();
 		initConnectHostsAndPorts();
 		initListenPorts();
 	}
@@ -66,9 +67,12 @@ public class SocketChecker extends BaseChecker {
 		}
 
 		if (actions.contains(SOCKET_PERMISSION_ACCEPT)) {
-
-			// TODO
-
+			if (!hasAccept(host, port)) {
+				throwSecurityException(
+					_log,
+					"Attempted to accept from host " + host + " on port " +
+						port);
+			}
 		}
 		else if (actions.contains(SOCKET_PERMISSION_CONNECT)) {
 			if (!hasConnect(host, port)) {
@@ -86,6 +90,16 @@ public class SocketChecker extends BaseChecker {
 		}
 	}
 
+	protected boolean hasAccept(String host, int port) {
+		Set<Integer> ports = _acceptHostsAndPorts.get(host);
+
+		if (ports == null) {
+			return false;
+		}
+
+		return ports.contains(port);
+	}
+
 	protected boolean hasConnect(String host, int port) {
 		Set<Integer> ports = _connectHostsAndPorts.get(host);
 
@@ -100,48 +114,64 @@ public class SocketChecker extends BaseChecker {
 		return _listenPorts.contains(port);
 	}
 
-	protected void initConnectHostsAndPorts() {
-		String[] connectParts = getPropertyArray(
-			"security-manager-sockets-connect");
+	protected void initAcceptHostsAndPorts() {
+		String[] networkParts = getPropertyArray(
+			"security-manager-sockets-accept");
 
-		for (String connectPart : connectParts) {
-			initConnectHostsAndPorts(connectPart);
+		for (String networkPart : networkParts) {
+			initHostsAndPorts(networkPart, true);
 		}
 	}
 
-	protected void initConnectHostsAndPorts(String connectPart) {
-		int pos = connectPart.indexOf(StringPool.COLON);
+	protected void initConnectHostsAndPorts() {
+		String[] networkParts = getPropertyArray(
+			"security-manager-sockets-connect");
+
+		for (String networkPart : networkParts) {
+			initHostsAndPorts(networkPart, false);
+		}
+	}
+
+	protected void initHostsAndPorts(String networkPart, boolean accept) {
+		String action = "accept";
+
+		if (!accept) {
+			action = "connect";
+		}
+
+		int pos = networkPart.indexOf(StringPool.COLON);
 
 		if (pos == -1) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to determine socket connect host and port from " +
-						connectPart +
+					"Unable to determine socket " + action +
+						" host and port from " + networkPart +
 							" because it is missing a colon delimeter");
 			}
 
 			return;
 		}
 
-		String host = connectPart.substring(0, pos);
+		String host = networkPart.substring(0, pos);
 
 		if (!Validator.isDomain(host)) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Socket connect host " + host + " is not a valid domain");
+					"Socket " + action + " host " + host +
+						" is not a valid domain");
 			}
 
 			return;
 		}
 
-		String portString = connectPart.substring(pos + 1);
+		String portString = networkPart.substring(pos + 1);
 
 		int port = GetterUtil.getInteger(portString);
 
 		if (port <= 0) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Socket connect port " + portString +
+					"Socket " + action + " port " + portString +
 						" is less than or equal to 0");
 			}
 
@@ -161,8 +191,14 @@ public class SocketChecker extends BaseChecker {
 			return;
 		}
 
+		Map<String, Set<Integer>> hostsAndPorts = _acceptHostsAndPorts;
+
+		if (!accept) {
+			hostsAndPorts = _connectHostsAndPorts;
+		}
+
 		for (InetAddress inetAddress : inetAddresses) {
-			Set<Integer> ports = _connectHostsAndPorts.get(
+			Set<Integer> ports = hostsAndPorts.get(
 				inetAddress.getHostAddress());
 
 			if (ports == null) {
@@ -170,11 +206,12 @@ public class SocketChecker extends BaseChecker {
 
 				if (_log.isDebugEnabled()) {
 					_log.debug(
-						"Allowing socket connect host " + host + " with IP " +
-							inetAddress.getHostAddress() + " on port " + port);
+						"Allowing socket " + action + " host " + host +
+							" with IP " + inetAddress.getHostAddress() +
+								" on port " + port);
 				}
 
-				_connectHostsAndPorts.put(inetAddress.getHostAddress(), ports);
+				hostsAndPorts.put(inetAddress.getHostAddress(), ports);
 			}
 
 			ports.add(port);
@@ -261,6 +298,8 @@ public class SocketChecker extends BaseChecker {
 
 	private static Log _log = LogFactoryUtil.getLog(SocketChecker.class);
 
+	private Map<String, Set<Integer>> _acceptHostsAndPorts =
+		new HashMap<String, Set<Integer>>();
 	private Map<String, Set<Integer>> _connectHostsAndPorts =
 		new HashMap<String, Set<Integer>>();
 	private Set<Integer> _listenPorts = new HashSet<Integer>();

@@ -20,11 +20,12 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 
 import java.io.InputStream;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.w3c.dom.Document;
@@ -88,9 +89,17 @@ public class PageCommandReceiver extends BaseCommandReceiver {
 
 		Group group = commandArgument.getCurrentGroup();
 
-		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-			group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+		List<Layout> layouts = new ArrayList<Layout>();
+
+		layouts.addAll(
+			LayoutServiceUtil.getLayouts(
+				group.getGroupId(), false,
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID));
+
+		layouts.addAll(
+			LayoutServiceUtil.getLayouts(
+				group.getGroupId(), true,
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID));
 
 		if (("/" + commandArgument.getCurrentGroupName() + "/").equals(
 				commandArgument.getCurrentFolder())) {
@@ -161,9 +170,17 @@ public class PageCommandReceiver extends BaseCommandReceiver {
 		else {
 			Group group = commandArgument.getCurrentGroup();
 
-			List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-				group.getGroupId(), false,
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+			List<Layout> layouts = new ArrayList<Layout>();
+
+			layouts.addAll(
+				LayoutServiceUtil.getLayouts(
+					group.getGroupId(), false,
+					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID));
+
+			layouts.addAll(
+				LayoutServiceUtil.getLayouts(
+					group.getGroupId(), true,
+					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID));
 
 			if (("/" + commandArgument.getCurrentGroupName() + "/").equals(
 					commandArgument.getCurrentFolder())) {

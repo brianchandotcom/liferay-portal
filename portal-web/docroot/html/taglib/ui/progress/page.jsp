@@ -1,5 +1,3 @@
-<%@ page import="com.liferay.portal.upload.LiferayFileUpload" %>
-
 <%--
 /**
  * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.

@@ -5,22 +5,9 @@ AUI.add(
 		var Lang = A.Lang;
 		var Poller = Liferay.Poller;
 
-		var ERROR_THRESHOLD = 10;
-
-		var MESSAGES = {
-			'an-unexpected-error-occurred-while-installing-xuggler': Liferay.Language.get('an-unexpected-error-occurred-while-installing-xuggler'),
-			'completed': Liferay.Language.get('completed'),
-			'copying-xuggler': Liferay.Language.get('copying-xuggler'),
-			'downloading-xuggler': Liferay.Language.get('downloading-xuggler')
-		};
-
 		var STR_CLICK = 'click';
 
-		var STR_DISABLED = 'disabled';
-
 		var STR_PORTLET_MSG_ERROR = 'portlet-msg-error';
-
-		var STR_PORTLET_MSG_PROGRESS = 'portlet-msg-progress';
 
 		var STR_PORTLET_MSG_SUCCESS = 'portlet-msg-success';
 

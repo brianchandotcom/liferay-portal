@@ -153,6 +153,7 @@ page import="com.liferay.portal.service.permission.PortletPermissionUtil" %><%@
 page import="com.liferay.portal.struts.StrutsUtil" %><%@
 page import="com.liferay.portal.theme.PortletDisplay" %><%@
 page import="com.liferay.portal.theme.ThemeDisplay" %><%@
+page import="com.liferay.portal.upload.LiferayFileUpload" %><%@
 page import="com.liferay.portal.util.CookieKeys" %><%@
 page import="com.liferay.portal.util.JavaScriptBundleUtil" %><%@
 page import="com.liferay.portal.util.Portal" %><%@

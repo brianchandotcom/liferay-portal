@@ -62,7 +62,7 @@ String ym = selContact.getYmSn();
 
 		<c:if test="<%= Validator.isNotNull(msn) %>">
 			<dt>
-				<liferay-ui:message key="msn" />
+				<liferay-ui:message key="windows-live-messenger" />
 			</dt>
 			<dd>
 				<%= HtmlUtil.escape(msn) %>
@@ -81,7 +81,7 @@ String ym = selContact.getYmSn();
 
 		<c:if test="<%= Validator.isNotNull(ym) %>">
 			<dt>
-				<liferay-ui:message key="ym" />
+				<liferay-ui:message key="yim" />
 			</dt>
 			<dd>
 				<%= HtmlUtil.escape(ym) %>

@@ -19,11 +19,10 @@ import com.liferay.taglib.util.IncludeTag;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Keith R. Davis
  * @author Iliyan Peychev
+ * @author Sergio González
  */
-public class UploadProgressTag extends IncludeTag {
+public class ProgressTag extends IncludeTag {
 
 	public void setHeight(int height) {
 		_height = height;
@@ -37,8 +36,8 @@ public class UploadProgressTag extends IncludeTag {
 		_message = message;
 	}
 
-	public void setRedirect(String redirect) {
-		_redirect = redirect;
+	public void setSessionKey(String sessionKey) {
+		_sessionKey = sessionKey;
 	}
 
 	public void setUpdatePeriod(Integer updatePeriod) {
@@ -50,7 +49,7 @@ public class UploadProgressTag extends IncludeTag {
 		_height = 25;
 		_id = null;
 		_message = null;
-		_redirect = null;
+		_sessionKey = null;
 		_updatePeriod = 1000;
 	}
 
@@ -64,7 +63,7 @@ public class UploadProgressTag extends IncludeTag {
 		request.setAttribute("liferay-ui:progress:id", _id);
 		request.setAttribute("liferay-ui:progress:height", _height);
 		request.setAttribute("liferay-ui:progress:message", _message);
-		request.setAttribute("liferay-ui:progress:redirect", _redirect);
+		request.setAttribute("liferay-ui:progress:sessionKey", _sessionKey);
 		request.setAttribute("liferay-ui:progress:updatePeriod", _updatePeriod);
 	}
 
@@ -73,7 +72,7 @@ public class UploadProgressTag extends IncludeTag {
 	private Integer _height;
 	private String _id;
 	private String _message;
-	private String _redirect;
+	private String _sessionKey;
 	private Integer _updatePeriod;
 
 }

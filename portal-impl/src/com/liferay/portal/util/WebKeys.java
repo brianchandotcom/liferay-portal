@@ -482,6 +482,4 @@ public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 
 	public static final String WSRP_PRODUCER = "WSRP_PRODUCER";
 
-	public static final String XUGGLER_INSTALL_STATUS = "XUGGLER_INSTALL_STATUS";
-
 }

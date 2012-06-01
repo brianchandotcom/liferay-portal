@@ -380,7 +380,7 @@ public class MediaWikiImporter implements WikiImporter {
 
 					percentage = Math.min(50 + (i * 50) / total, 99);
 
-					progressTracker.updateProgress(percentage);
+					progressTracker.setPercent(percentage);
 				}
 			}
 
@@ -443,7 +443,7 @@ public class MediaWikiImporter implements WikiImporter {
 				10 + (i * (maxPercentage - percentage)) / pageElements.size(),
 				maxPercentage);
 
-			progressTracker.updateProgress(percentage);
+			progressTracker.setPercent(percentage);
 
 			if (isSpecialMediaWikiPage(title, specialNamespaces)) {
 				continue;
@@ -554,7 +554,7 @@ public class MediaWikiImporter implements WikiImporter {
 			}
 
 			if ((i % 5) == 0) {
-				progressTracker.updateProgress((i * 10) / pageElements.size());
+				progressTracker.setPercent((i * 10) / pageElements.size());
 			}
 		}
 	}

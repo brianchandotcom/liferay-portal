@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ProgressTracker;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.util.servlet.ServletInputStreamWrapper;
 
@@ -78,12 +80,24 @@ public class LiferayInputStream extends ServletInputStreamWrapper {
 			_cachedBytes.write(b, off, bytesRead);
 		}
 
-		Integer curPercent = (Integer)_session.getAttribute(
-			LiferayFileUpload.PERCENT);
+		ProgressTracker progressTracker =
+			(ProgressTracker)_session.getAttribute(LiferayFileUpload.PERCENT);
+
+		Integer curPercent = null;
+
+		if (progressTracker != null) {
+			curPercent = progressTracker.getPercent();
+		}
 
 		if ((curPercent == null) || (percent - curPercent.intValue() >= 1)) {
-			_session.setAttribute(
-				LiferayFileUpload.PERCENT, new Integer(percent));
+			if (progressTracker == null) {
+				progressTracker = new ProgressTracker(
+					_session, StringPool.BLANK);
+
+				progressTracker.initialize();
+			}
+
+			progressTracker.setPercent(percent);
 		}
 
 		return bytesRead;

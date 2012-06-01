@@ -14,6 +14,9 @@
 
 package com.liferay.portal.kernel.util;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 
@@ -22,71 +25,101 @@ import javax.servlet.http.HttpSession;
 
 /**
  * @author Jorge Ferrer
+ * @author Sergio González
  */
 public class ProgressTracker {
 
 	public static final String PERCENT =
 		ProgressTracker.class.getName() + "_PERCENT";
 
+	public static void addProgress(int status, int percent, String message) {
+		Tuple tuple = new Tuple(percent, message);
+
+		_progress.put(status, tuple);
+	}
+
 	public ProgressTracker(HttpServletRequest request, String progressId) {
-		_request = request;
-		_progressId = progressId;
+		this(request.getSession(), progressId);
 	}
 
 	public ProgressTracker(PortletRequest portletRequest, String progressId) {
-		_portletRequest = portletRequest;
+		this(portletRequest.getPortletSession(), progressId);
+	}
+
+	public ProgressTracker(HttpSession session, String progressId) {
+		_session = session;
+		_progressId = progressId;
+	}
+
+	public ProgressTracker(PortletSession portletSession, String progressId) {
+		_portletSession = portletSession;
 		_progressId = progressId;
 	}
 
 	public void finish() {
-		if (_request != null) {
-			HttpSession session = _request.getSession();
-
-			session.removeAttribute(PERCENT + _progressId);
+		if (_session != null) {
+			_session.removeAttribute(PERCENT + _progressId);
 		}
 		else {
-			PortletSession portletSession = _portletRequest.getPortletSession();
-
-			portletSession.removeAttribute(
+			_portletSession.removeAttribute(
 				PERCENT + _progressId, PortletSession.APPLICATION_SCOPE);
 		}
 	}
 
-	public int getProgress() {
-		if (_request != null) {
-			HttpSession session = _request.getSession();
+	public String getMessage() {
+		Tuple tuple = _progress.get(_status);
 
-			return (Integer)session.getAttribute(PERCENT + _progressId);
+		String message = GetterUtil.getString(tuple.getObject(1));
+
+		return message;
+	}
+
+	public int getPercent() {
+		return _percent;
+	}
+
+	public int getStatus() {
+		return _status;
+	}
+
+	public void initialize() {
+		if (_session != null) {
+			_session.setAttribute(PERCENT + _progressId, this);
 		}
 		else {
-			PortletSession portletSession = _portletRequest.getPortletSession();
-
-			return (Integer)portletSession.getAttribute(PERCENT + _progressId);
+			_portletSession.setAttribute(
+				PERCENT + _progressId, this, PortletSession.APPLICATION_SCOPE);
 		}
+	}
+
+	public void setPercent(int percent) {
+		_percent = percent;
+	}
+
+	public void setStatus(int status) {
+		_status = status;
+
+		Tuple tuple = _progress.get(_status);
+
+		_percent = GetterUtil.getInteger(tuple.getObject(0));
 	}
 
 	public void start() {
-		updateProgress(1);
+		setPercent(1);
 	}
 
-	public void updateProgress(int percentage) {
-		if (_request != null) {
-			HttpSession session = _request.getSession();
+	private static Map<Integer, Tuple> _progress =
+		new HashMap<Integer, Tuple>();
 
-			session.setAttribute(
-				PERCENT + _progressId, new Integer(percentage));
-		}
-		else {
-			PortletSession portletSession = _portletRequest.getPortletSession();
-
-			portletSession.setAttribute(
-				PERCENT + _progressId, new Integer(percentage),
-				PortletSession.APPLICATION_SCOPE);
-		}
-	}
-
-	private PortletRequest _portletRequest;
+	private int _percent = 0;
+	private PortletSession _portletSession;
 	private String _progressId;
-	private HttpServletRequest _request;
+	private HttpSession _session;
+
+	private int _status = ProgressStatusConstants.PREPARED;
+
+	static {
+		addProgress(ProgressStatusConstants.PREPARED, 0, StringPool.BLANK);
+	}
 
 }

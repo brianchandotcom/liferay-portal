@@ -143,7 +143,7 @@ userGroupRoles.addAll(organizationRoles);
 	<liferay-ui:message key="this-user-does-not-belong-to-an-organization-to-which-an-organization-role-can-be-assigned" />
 </c:if>
 
-<c:if test="<%= !organizationRoles.isEmpty() %>">
+<c:if test="<%= !organizations.isEmpty() %>">
 	<liferay-ui:search-container
 		headerNames="title,organization,null"
 		id="organizationRolesSearchContainer"

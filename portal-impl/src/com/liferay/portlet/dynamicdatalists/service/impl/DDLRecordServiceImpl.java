@@ -42,7 +42,7 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 			getPermissionChecker(), recordSetId, ActionKeys.ADD_RECORD);
 
 		return ddlRecordLocalService.addRecord(
-			getUserId(), groupId, recordSetId, displayIndex, fields,
+			getGuestOrUserId(), groupId, recordSetId, displayIndex, fields,
 			serviceContext);
 	}
 
@@ -55,7 +55,7 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 			getPermissionChecker(), recordSetId, ActionKeys.ADD_RECORD);
 
 		return ddlRecordLocalService.addRecord(
-			getUserId(), groupId, recordSetId, displayIndex, fieldsMap,
+			getGuestOrUserId(), groupId, recordSetId, displayIndex, fieldsMap,
 			serviceContext);
 	}
 

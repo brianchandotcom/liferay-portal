@@ -172,6 +172,41 @@
 		}
 	}
 
+	.lfr-search-combobox {
+		.advanced-search-column-content {
+			border-right: 0;
+		}
+
+		.article-advanced-search-icon {
+			background: url("@theme_image_path@/portlet/header_bg.png") repeat-x scroll 0 0 #D4D4D4;
+			border-radius: 1px 4px 4px 1px;
+
+			&:hover {
+				background: url("@theme_image_path@/application/state_hover_bg.png") repeat-x scroll 0 0 #B9CED9;
+				border-color: #627782;
+				color: #336699;
+			}
+
+			input {
+				background: url("@theme_image_path@/arrows/05_down.png") no-repeat scroll 9px 60% transparent;
+				width: 28px;
+
+				&.close-advanced-search {
+					background-image: url(@theme_image_path@/arrows/05_up.png);
+					background-position: 8px 50%;
+				}
+			}
+		}
+
+		.aui-button {
+			margin-left: 0;
+		}
+
+		.search input {
+			border-radius: 1px;
+		}
+	}
+
 	.journal-article-container ul {
 		margin: 0;
 	}
@@ -346,6 +381,35 @@
 
 		&.dragging {
 			font-weight: bold;
+		}
+	}
+
+	.journal-container {
+		.search-info {
+			background-color: #D3E8F1;
+			min-height: 40px;
+			padding-left: 10px;
+			position: relative;
+
+			.keywords {
+				float: none;
+				font-size: 1.4em;
+				font-weight: bold;
+				position: absolute;
+				top: 7px;
+			}
+
+			.change-search-folder {
+				position: absolute;
+				right: 60px;
+				top: 7px;
+			}
+
+			.close-search {
+				position: absolute;
+				right: 20px;
+				top: 10px;
+			}
 		}
 	}
 

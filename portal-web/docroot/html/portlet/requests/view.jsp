@@ -62,14 +62,14 @@ List<SocialRequest> requests = (List<SocialRequest>)request.getAttribute(WebKeys
 							portletURL.setParameter("requestId", String.valueOf(socialRequest.getRequestId()));
 							%>
 
-							<div>
+							<div class="request-title">
 								<%= requestFeedEntry.getTitle() %>
 							</div>
 
 							<br />
 
 							<c:if test="<%= Validator.isNotNull(requestFeedEntry.getBody()) %>">
-								<div>
+								<div class="request-body">
 									<%= requestFeedEntry.getBody() %>
 								</div>
 

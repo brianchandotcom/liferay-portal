@@ -161,14 +161,14 @@ Liferay = window.Liferay || {};
 
 		var prefixedData = {};
 
-		A.each(
+		A.Object.each(
 			config.data,
-			function(value, key) {
-				if (Lang.isNull(value) && key.charAt(0) != PREFIX_PARAM_NULL_VALUE) {
-					key = PREFIX_PARAM_NULL_VALUE + key;
+			function(item, index, collection) {
+				if (Lang.isNull(item) && index.charAt(0) != PREFIX_PARAM_NULL_VALUE) {
+					index = PREFIX_PARAM_NULL_VALUE + index;
 				}
 
-				prefixedData[key] = value;
+				prefixedData[index] = item;
 			}
 		);
 

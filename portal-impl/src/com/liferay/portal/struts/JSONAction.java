@@ -131,11 +131,8 @@ public abstract class JSONAction extends Action {
 		if (PropsValues.AUTH_TOKEN_CHECK_ENABLED &&
 			PropsValues.JSON_SERVICE_AUTH_TOKEN_ENABLED) {
 
-			Set<String> whiteList = new HashSet<String>(Arrays.asList(
-				PropsValues.JSON_SERVICE_AUTH_TOKEN_WHITELIST_HOSTS));
-
-			if ((whiteList.size() > 0) &&
-				AuthSettingsUtil.isAccessAllowed(request, whiteList)) {
+			if ((_whiteList.size() > 0) &&
+				AuthSettingsUtil.isAccessAllowed(request, _whiteList)) {
 
 				return;
 			}
@@ -196,6 +193,9 @@ public abstract class JSONAction extends Action {
 
 		return true;
 	}
+
+	private static final Set<String> _whiteList = new HashSet<String>(
+		Arrays.asList(PropsValues.JSON_SERVICE_AUTH_TOKEN_WHITELIST_HOSTS));
 
 	private static Log _log = LogFactoryUtil.getLog(JSONAction.class);
 

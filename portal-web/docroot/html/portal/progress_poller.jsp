@@ -27,8 +27,6 @@ String sessionKey = ParamUtil.getString(request, "sessionKey");
 String message = StringPool.BLANK;
 Integer percent = null;
 
-boolean finished = false;
-
 ProgressTracker progressTracker = (ProgressTracker)session.getAttribute(sessionKey);
 
 if (progressTracker == null) {
@@ -38,12 +36,6 @@ if (progressTracker == null) {
 if (progressTracker != null) {
 	message = progressTracker.getMessage();
 	percent = progressTracker.getPercent();
-
-	if (progressTracker.isFinished()) {
-		finished = true;
-
-		progressTracker.finish();
-	}
 }
 else {
 	percent = 0;
@@ -64,7 +56,7 @@ else {
 			progressId.set('value', <%= percent %>);
 		}
 
-		<c:if test="<%= percent < 100 && !finished %>">
+		<c:if test="<%= percent < 100 %>">
 			setTimeout(
 				function() {
 					window.location.reload();

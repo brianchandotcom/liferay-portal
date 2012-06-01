@@ -105,6 +105,25 @@ AUI.add(
 						var instance = this;
 
 						var responseData = event.currentTarget.get('responseData');
+
+						var progressBar = instance.one('#xugglerProgressInfoBar');
+
+						progressBar.hide();
+
+						if (responseData.success) {
+							var xugglerProgressInfo = instance._xugglerProgressInfo;
+
+							xugglerProgressInfo.html(Liferay.Language.get('xuggler-has-been-installed-you-need-to-reboot-your-server-to-apply-changes'));
+
+							xugglerProgressInfo.addClass(STR_PORTLET_MSG_SUCCESS);
+						}
+						else {
+							var xugglerProgressInfo = instance._xugglerProgressInfo;
+
+							xugglerProgressInfo.html(Liferay.Language.get('an-unexpected-error-occurred-while-installing-xuggler') + ': ' + responseData.exception);
+
+							xugglerProgressInfo.addClass(STR_PORTLET_MSG_ERROR);
+						}
 					}
 				}
 			}

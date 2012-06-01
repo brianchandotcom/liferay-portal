@@ -246,7 +246,8 @@ AUI.add(
 								layoutRevisionId: layoutRevisionId,
 								layoutSetBranchId: layoutSetBranchId,
 								p_l_id: themeDisplay.getPlid(),
-								p_v_g_id: themeDisplay.getParentGroupId()
+								p_v_g_id: themeDisplay.getParentGroupId(),
+								p_auth: Liferay.securityPAuthToken
 							},
 							on: {
 								success: function(event, id, obj) {

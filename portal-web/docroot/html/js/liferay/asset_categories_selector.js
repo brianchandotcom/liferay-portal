@@ -242,6 +242,8 @@ AUI.add(
 							}
 						}
 
+						data.p_auth = Liferay.securityPAuthToken;
+
 						return data;
 					},
 

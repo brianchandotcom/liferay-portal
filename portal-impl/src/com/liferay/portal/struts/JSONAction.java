@@ -14,6 +14,10 @@
 
 package com.liferay.portal.struts;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -21,10 +25,18 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.auth.AuthSettingsUtil;
+import com.liferay.portal.security.auth.AuthTokenUtil;
+import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 
 import java.io.OutputStream;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -57,6 +69,8 @@ public abstract class JSONAction extends Action {
 		String json = null;
 
 		try {
+			checkAuthToken(request);
+
 			json = getJSON(mapping, form, request, response);
 
 			if (Validator.isNotNull(callback)) {
@@ -65,6 +79,10 @@ public abstract class JSONAction extends Action {
 			else if (Validator.isNotNull(instance)) {
 				json = "var " + instance + "=" + json + ";";
 			}
+		}
+		catch (PrincipalException e) {
+			_log.error(e);
+			json = JSONFactoryUtil.serializeException(e);
 		}
 		catch (Exception e) {
 			PortalUtil.sendError(
@@ -105,6 +123,22 @@ public abstract class JSONAction extends Action {
 
 	public void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;
+	}
+
+	protected void checkAuthToken(HttpServletRequest request)
+		throws PortalException {
+
+		if (PropsValues.AUTH_TOKEN_CHECK_ENABLED &&
+			PropsValues.JSON_SERVICE_AUTH_TOKEN_ENABLED) {
+
+			if ((_whiteList.size() > 0) &&
+				AuthSettingsUtil.isAccessAllowed(request, _whiteList)) {
+
+				return;
+			}
+
+			AuthTokenUtil.check(request);
+		}
 	}
 
 	protected String getReroutePath() {
@@ -159,6 +193,11 @@ public abstract class JSONAction extends Action {
 
 		return true;
 	}
+
+	private static final Set<String> _whiteList = new HashSet<String>(
+		Arrays.asList(PropsValues.JSON_SERVICE_AUTH_TOKEN_WHITELIST_HOSTS));
+
+	private static Log _log = LogFactoryUtil.getLog(JSONAction.class);
 
 	private ServletContext _servletContext;
 

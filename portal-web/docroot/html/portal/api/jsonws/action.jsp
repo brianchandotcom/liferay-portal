@@ -119,6 +119,27 @@ String signature = ParamUtil.getString(request, "signature");
 
 			<%
 			}
+
+			if(PropsValues.JSON_SERVICE_AUTH_TOKEN_ENABLED){
+			%>
+
+				<div class="lfr-api-param">
+						<span class="lfr-api-param-name">
+							p_auth
+						</span>
+
+						<span class="lfr-action-label lfr-api-param-type">
+							String
+						</span>
+
+
+						<p class="lfr-api-param-comment">
+							Authentication token, please see json.service.auth.token.enabled. For generating please use AuthTokenUtil.getToken(request)
+						</p>
+				</div>
+
+			<%
+			}
 			%>
 
 		</div>
@@ -308,6 +329,13 @@ String signature = ParamUtil.getString(request, "signature");
 
 				<%
 				}
+				if(PropsValues.JSON_SERVICE_AUTH_TOKEN_ENABLED){
+				%>
+
+				<aui:input id='<%= "field" + methodParameters.length %>' label="p_auth" name="p_auth" readonly="true" suffix="String" value="<%= AuthTokenUtil.getToken(request) %>" />
+
+				<%
+				}
 				%>
 
 				<aui:button type="submit" value="invoke" />
@@ -416,7 +444,41 @@ String signature = ParamUtil.getString(request, "signature");
 
 					curlTpl.render(tplData, curlExample);
 					scriptTpl.render(tplData, jsExample);
-					urlTpl.render(tplData, urlExample);
+
+					var urlTplData = {
+						data : [],
+						floatingData: []
+					};
+
+					var floatingFields = {
+						p_auth: true
+					};
+
+					formQueryString.replace(
+						REGEX_QUERY_STRING,
+						function(match, key, value) {
+							if (value && !ignoreFields[key]) {
+								if(floatingFields[key]){
+									urlTplData.floatingData.push(
+										{
+											key: key,
+											value: value
+										}
+									);
+								} else {
+									urlTplData.data.push(
+										{
+											key: key,
+											value: value
+										}
+									);
+
+								}
+							}
+						}
+					);
+
+					urlTpl.render(urlTplData, urlExample);
 
 					serviceResults.show();
 				}
@@ -444,7 +506,7 @@ curl <%= themeDisplay.getPortalURL() + themeDisplay.getPathContext() + jsonWebSe
 </textarea>
 
 <textarea class="aui-helper-hidden" id="urlTpl">
-<%= themeDisplay.getPortalURL() + themeDisplay.getPathContext() + jsonWebServiceActionMapping.getServletContextPath() %>/api/secure/jsonws<%= jsonWebServiceActionMapping.getPath() %><tpl if="data.length">/<tpl for="data">{key:this.toURIParam}/{value}<tpl if="!$last">/</tpl></tpl></tpl>
+<%= themeDisplay.getPortalURL() + themeDisplay.getPathContext() + jsonWebServiceActionMapping.getServletContextPath() %>/api/secure/jsonws<%= jsonWebServiceActionMapping.getPath() %><tpl if="data.length">/<tpl for="data">{key:this.toURIParam}/{value}<tpl if="!$last">/</tpl></tpl></tpl><tpl if="floatingData.length">?<tpl for="floatingData">{key:this.toURIParam}={value}<tpl if="!$last">&amp;</tpl></tpl></tpl>
 </textarea>
 	</c:when>
 	<c:otherwise>

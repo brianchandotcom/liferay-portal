@@ -116,52 +116,6 @@ ArticleDisplayTerms displayTerms = (ArticleDisplayTerms)searchContainer.getDispl
 	</aui:fieldset>
 </liferay-ui:search-toggle>
 
-<%
-boolean showPermissionsButton = false;
-boolean showSubscribeLink = false;
-
-if (portletName.equals(PortletKeys.JOURNAL)) {
-	showPermissionsButton = JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS);
-	showSubscribeLink = JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.SUBSCRIBE);
-}
-%>
-
-<c:if test="<%= showPermissionsButton %>">
-	<aui:button-row cssClass="add-permission-button-row">
-		<liferay-security:permissionsURL
-			modelResource="com.liferay.portlet.journal"
-			modelResourceDescription="<%= HtmlUtil.escape(themeDisplay.getScopeGroupName()) %>"
-			resourcePrimKey="<%= String.valueOf(scopeGroupId) %>"
-			var="permissionsURL"
-		/>
-
-		<aui:button href="<%= permissionsURL %>" value="permissions" />
-	</aui:button-row>
-</c:if>
-
-<c:if test="<%= showSubscribeLink %>">
-	<c:choose>
-		<c:when test="<%= SubscriptionLocalServiceUtil.isSubscribed(company.getCompanyId(), user.getUserId(), JournalArticle.class.getName(), scopeGroupId) %>">
-			<portlet:actionURL var="unsubscribeURL">
-				<portlet:param name="struts_action" value="/journal/edit_article" />
-				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-			</portlet:actionURL>
-
-			<liferay-ui:icon cssClass="subscribe-link" image="unsubscribe" label="<%= true %>" url="<%= unsubscribeURL %>" />
-		</c:when>
-		<c:otherwise>
-			<portlet:actionURL var="subscribeURL">
-				<portlet:param name="struts_action" value="/journal/edit_article" />
-				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-			</portlet:actionURL>
-
-			<liferay-ui:icon cssClass="subscribe-link" image="subscribe" label="<%= true %>" url="<%= subscribeURL %>" />
-		</c:otherwise>
-	</c:choose>
-</c:if>
-
 <aui:script>
 	<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>">
 		Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace /><%= displayTerms.ARTICLE_ID %>);

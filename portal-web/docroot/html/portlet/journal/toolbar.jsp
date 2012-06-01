@@ -16,6 +16,70 @@
 
 <%@ include file="/html/portlet/journal/init.jsp" %>
 
+<liferay-ui:icon-menu align="left" cssClass="actions-button" direction="down" icon="" id="actionsButtonContainer" message="actions" showExpanded="<%= false %>" showWhenSingleIcon="<%= true %>">
+
+	<%
+	String taglibUrl = "javascript:" + renderResponse.getNamespace() + "openPermissionsView()";
+	%>
+
+	<liferay-ui:icon
+		image="permissions"
+		message="permissions"
+		url="<%= taglibUrl %>"
+	/>
+
+	<c:choose>
+		<c:when test="<%= SubscriptionLocalServiceUtil.isSubscribed(company.getCompanyId(), user.getUserId(), JournalArticle.class.getName(), scopeGroupId) %>">
+			<portlet:actionURL var="unsubscribeURL">
+				<portlet:param name="struts_action" value="/journal/edit_article" />
+				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+			</portlet:actionURL>
+
+			<liferay-ui:icon
+				image="unsubscribe"
+				message="unsubscribe"
+				url="<%= unsubscribeURL %>"
+			/>
+		</c:when>
+		<c:otherwise>
+			<portlet:actionURL var="subscribeURL">
+				<portlet:param name="struts_action" value="/journal/edit_article" />
+				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+			</portlet:actionURL>
+
+			<liferay-ui:icon
+				image="subscribe"
+				message="subscribe"
+				url="<%= subscribeURL %>"
+			/>
+		</c:otherwise>
+	</c:choose>
+
+	<%
+	taglibUrl = "javascript:" + renderResponse.getNamespace() + "deleteArticles();";
+	%>
+
+	<liferay-ui:icon
+		cssClass="delete-articles-button"
+		image="delete"
+		message="delete"
+		url="<%= taglibUrl %>"
+	/>
+
+	<%
+	taglibUrl = "javascript:" + renderResponse.getNamespace() + "expireArticles();";
+	%>
+
+	<liferay-ui:icon
+		cssClass="expire-articles-button"
+		image="time"
+		message="expire"
+		url="<%= taglibUrl %>"
+	/>
+</liferay-ui:icon-menu>
+
 <span class="add-button" id="<portlet:namespace />addButtonContainer">
 	<liferay-util:include page="/html/portlet/journal/add_button.jsp" />
 </span>
@@ -68,6 +132,19 @@
 		);
 	}
 
+	function <portlet:namespace />openPermissionsView() {
+		Liferay.Util.openWindow(
+			{
+				dialog: {
+					width:820
+				},
+				id: '<portlet:namespace />openPermissionsView',
+				title: '<%= UnicodeLanguageUtil.get(pageContext, "permissions") %>',
+				uri: '<liferay-security:permissionsURL modelResource="com.liferay.portlet.journal" modelResourceDescription="<%= HtmlUtil.escape(themeDisplay.getScopeGroupName()) %>" resourcePrimKey="<%= String.valueOf(scopeGroupId) %>" windowState="<%= LiferayWindowState.POP_UP.toString() %>" />'
+			}
+		);
+	}
+
 	function <portlet:namespace />openStructuresView() {
 		Liferay.Util.openWindow(
 			{
@@ -92,5 +169,32 @@
 				uri: '<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/journal/view_templates" /></liferay-portlet:renderURL>'
 			}
 		);
+	}
+
+	var A = AUI();
+
+	var buttons = A.all('.delete-articles-button, .expire-articles-button');
+
+	if (buttons.size()) {
+		var resultsGrid = A.one('.results-grid');
+
+		if (resultsGrid) {
+			resultsGrid.delegate(
+				'click',
+				function(event) {
+					if ((resultsGrid.one(':checked') == null)) {
+						buttons.hide();
+					}
+					else {
+						buttons.show();
+					}
+				},
+				':checkbox'
+			);
+		}
+
+		if ((resultsGrid.one(':checked') == null)) {
+			buttons.hide();
+		}
 	}
 </aui:script>

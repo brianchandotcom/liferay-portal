@@ -117,18 +117,6 @@ int total = 0;
 	</c:otherwise>
 </c:choose>
 
-<div class="separator article-separator"><!-- --></div>
-
-<c:if test="<%= !results.isEmpty() %>">
-	<aui:button-row>
-		<aui:button cssClass="expire-articles-button" onClick='<%= renderResponse.getNamespace() + "expireArticles();" %>' value="expire" />
-
-		<aui:button cssClass="delete-articles-button" onClick='<%= renderResponse.getNamespace() + "deleteArticles();" %>' value="delete" />
-	</aui:button-row>
-
-	<br /><br />
-</c:if>
-
 <%
 List resultRows = searchContainer.getResultRows();
 

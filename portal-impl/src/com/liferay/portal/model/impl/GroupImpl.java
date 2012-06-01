@@ -136,7 +136,7 @@ public class GroupImpl extends GroupBaseImpl {
 		return 0;
 	}
 
-	public Group getParentGroup() throws SystemException, PortalException {
+	public Group getParentGroup() throws PortalException, SystemException {
 		long parentGroupId = getParentGroupId();
 
 		if (parentGroupId <= 0) {

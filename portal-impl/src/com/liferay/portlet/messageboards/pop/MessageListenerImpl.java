@@ -85,6 +85,12 @@ public class MessageListenerImpl implements MessageListener {
 				_log.debug("Check to see if user " + from + " exists");
 			}
 
+			if (PropsValues.MAIL_SESSION_MAIL_POP3_USER.equalsIgnoreCase(
+					from)) {
+
+				return false;
+			}
+
 			UserLocalServiceUtil.getUserByEmailAddress(
 				company.getCompanyId(), from);
 

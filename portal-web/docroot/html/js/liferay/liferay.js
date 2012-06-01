@@ -176,6 +176,7 @@ Liferay = window.Liferay || {};
 
 				options.serviceParameters = Service.getParameters(options);
 				options.doAsUserId = themeDisplay.getDoAsUserIdEncoded();
+				options.p_auth = Liferay.securityPAuthToken;
 
 				var config = {
 					cache: false,

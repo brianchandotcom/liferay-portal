@@ -811,7 +811,8 @@ AUI.add(
 					cmd: 'update_type_settings',
 					doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
 					p_l_id: themeDisplay.getPlid(),
-					p_v_g_id: themeDisplay.getParentGroupId()
+					p_v_g_id: themeDisplay.getParentGroupId(),
+					p_auth: Liferay.securityPAuthToken
 				};
 
 				var checkboxName = checkbox.attr('name');

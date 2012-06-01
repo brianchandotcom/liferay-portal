@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary.store;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
@@ -33,6 +34,7 @@ import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.Set;
 
+import com.liferay.portal.test.TransactionalExecutionTestListener;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -41,8 +43,13 @@ import org.junit.runner.RunWith;
  * @author Shuyang Zhou
  * @author Tina Tian
  */
-@ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
+@ExecutionTestListeners(
+	listeners = {
+		EnvironmentExecutionTestListener.class,
+		TransactionalExecutionTestListener.class
+	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
+@Transactional
 public class DBStoreTest {
 
 	@Test

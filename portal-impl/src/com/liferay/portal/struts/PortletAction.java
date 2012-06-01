@@ -35,6 +35,7 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 
 import java.io.IOException;
@@ -303,7 +304,9 @@ public class PortletAction extends Action {
 			Portlet portlet = PortletLocalServiceUtil.getPortletById(
 				themeDisplay.getCompanyId(), portletId);
 
-			if (hasPortletId || portlet.isAddDefaultResource()) {
+			if ((hasPortletId || portlet.isAddDefaultResource()) &&
+				!portletId.equals(PortletKeys.FAST_LOGIN)) {
+
 				addSuccessMessage(actionRequest, actionResponse);
 			}
 		}

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.expirewcwebcontent;
+package com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.expireeditwcwebcontentactions;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontent.AddWCWebContentTest;
@@ -25,13 +25,13 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ExpireWCWebContentTests extends BaseTestSuite {
+public class ExpireEditWCWebContentActionsTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddWCWebContentTest.class);
 		testSuite.addTestSuite(EditWCWebContentTest.class);
-		testSuite.addTestSuite(ExpireWCWebContentTest.class);
-		testSuite.addTestSuite(ViewExpireWCWebContentTest.class);
+		testSuite.addTestSuite(ExpireEditWCWebContentActionsTest.class);
+		testSuite.addTestSuite(ViewExpireEditWCWebContentActionsTest.class);
 		testSuite.addTestSuite(TearDownWCWebContentTest.class);
 
 		return testSuite;

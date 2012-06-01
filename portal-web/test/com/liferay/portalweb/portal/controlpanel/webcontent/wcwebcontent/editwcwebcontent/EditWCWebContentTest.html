@@ -14,6 +14,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//li[@id='_145_mySites']/a/span</td>
 	<td>Go to</td>
@@ -40,17 +50,27 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td[@id='_15_ocerSearchContainer_col-title_row-1']/a</td>
+	<td>//td[3]/a</td>
 	<td>WC WebContent Title</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//a[@id='_15_ocerSearchContainer_1_menuButton']</td>
+	<td>//a[contains(@id,'_1_menuButton')]</td>
 	<td>Actions</td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//a[contains(@id,'_1_menu_edit')]</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[contains(@id,'_1_menu_edit')]</td>
+	<td>Edit</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
-	<td>//a[@id='_15_ocerSearchContainer_1_menu_edit']</td>
+	<td>//a[contains(@id,'_1_menu_edit')]</td>
 	<td>Edit</td>
 </tr>
 <tr>
@@ -137,11 +157,6 @@
 	<td>assertText</td>
 	<td>//td[3]/a</td>
 	<td>WC WebContent Title Edit</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[4]/a</td>
-	<td>Approved</td>
 </tr>
 </tbody>
 </table>

@@ -24,6 +24,26 @@ public class EditWCWebContentTest extends BaseTestCase {
 	public void testEditWCWebContent() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -53,11 +73,29 @@ public class EditWCWebContentTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
-			selenium.getText(
-				"//td[@id='_15_ocerSearchContainer_col-title_row-1']/a"));
-		selenium.clickAt("//a[@id='_15_ocerSearchContainer_1_menuButton']",
+			selenium.getText("//td[3]/a"));
+		selenium.clickAt("//a[contains(@id,'_1_menuButton')]",
 			RuntimeVariables.replace("Actions"));
-		selenium.clickAt("//a[@id='_15_ocerSearchContainer_1_menu_edit']",
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//a[contains(@id,'_1_menu_edit')]")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("Edit"),
+			selenium.getText("//a[contains(@id,'_1_menu_edit')]"));
+		selenium.clickAt("//a[contains(@id,'_1_menu_edit')]",
 			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
@@ -190,7 +228,5 @@ public class EditWCWebContentTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("WC WebContent Title Edit"),
 			selenium.getText("//td[3]/a"));
-		assertEquals(RuntimeVariables.replace("Approved"),
-			selenium.getText("//td[4]/a"));
 	}
 }

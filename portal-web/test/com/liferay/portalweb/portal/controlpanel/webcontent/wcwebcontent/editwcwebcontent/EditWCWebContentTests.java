@@ -29,6 +29,7 @@ public class EditWCWebContentTests extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddWCWebContentTest.class);
 		testSuite.addTestSuite(EditWCWebContentTest.class);
+		testSuite.addTestSuite(ViewEditWCWebContentTest.class);
 		testSuite.addTestSuite(TearDownWCWebContentTest.class);
 
 		return testSuite;

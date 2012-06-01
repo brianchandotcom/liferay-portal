@@ -24,6 +24,26 @@ public class AddWCWebContentTest extends BaseTestCase {
 	public void testAddWCWebContent() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -61,7 +81,7 @@ public class AddWCWebContentTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("id=_15_kldx_menu_basic-web-content")) {
+				if (selenium.isVisible("//a[contains(@id,'basic-web-content')]")) {
 					break;
 				}
 			}
@@ -71,7 +91,9 @@ public class AddWCWebContentTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("id=_15_kldx_menu_basic-web-content",
+		assertEquals(RuntimeVariables.replace("Basic Web Content"),
+			selenium.getText("//a[contains(@id,'basic-web-content')]"));
+		selenium.clickAt("//a[contains(@id,'basic-web-content')]",
 			RuntimeVariables.replace("Basic Web Content"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();

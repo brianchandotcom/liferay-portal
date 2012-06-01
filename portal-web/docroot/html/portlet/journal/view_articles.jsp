@@ -93,6 +93,17 @@ int total = 0;
 			</c:otherwise>
 		</c:choose>
 	</c:when>
+	<c:when test="<%= displayTerms.getNavigation().equals("mine") %>">
+
+		<%
+		results = JournalArticleServiceUtil.getArticlesByUserId(scopeGroupId, themeDisplay.getUserId(), searchContainer.getStart(), searchContainer.getEnd(), null);
+		total = JournalArticleServiceUtil.getArticlesCountByUserId(scopeGroupId, themeDisplay.getUserId());
+
+		searchContainer.setResults(results);
+		searchContainer.setTotal(total);
+		%>
+
+	</c:when>
 	<c:when test="<%= Validator.isNotNull(displayTerms.getStructureId()) %>">
 
 		<%

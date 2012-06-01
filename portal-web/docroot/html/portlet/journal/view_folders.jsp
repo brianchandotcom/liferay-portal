@@ -140,6 +140,23 @@ request.setAttribute("view_folders.jsp-total", String.valueOf(total));
 							</a>
 						</li>
 
+						<c:if test="<%= themeDisplay.isSignedIn() %>">
+							<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" varImpl="viewMineArticlesURL">
+								<portlet:param name="struts_action" value="/journal/view" />
+								<portlet:param name="navigation" value="mine" />
+							</liferay-portlet:renderURL>
+
+							<li class="folder <%= navigation.equals("mine") && Validator.isNull(structureId) ? "selected" : StringPool.BLANK %>">
+								<a class="browse-folder" href="<%= viewMineArticlesURL.toString() %>">
+									<liferay-ui:icon image="../aui/person" message="" />
+
+									<span class="article-title">
+										<%= LanguageUtil.get(pageContext, "mine") %>
+									</span>
+								</a>
+							</li>
+						</c:if>
+
 						<%
 						List<JournalStructure> structures = JournalStructureLocalServiceUtil.getStructures(scopeGroupId);
 

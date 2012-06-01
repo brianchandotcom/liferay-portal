@@ -95,6 +95,8 @@ public class ArticleSearch extends SearchContainer<JournalArticle> {
 			ArticleDisplayTerms.GROUP_ID,
 			String.valueOf(displayTerms.getGroupId()));
 		iteratorURL.setParameter(
+			ArticleDisplayTerms.NAVIGATION, displayTerms.getNavigation());
+		iteratorURL.setParameter(
 			ArticleDisplayTerms.STATUS, displayTerms.getStatus());
 		iteratorURL.setParameter(
 			ArticleDisplayTerms.STRUCTURE_ID, displayTerms.getStructureId());

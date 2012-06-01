@@ -44,6 +44,8 @@ public class ArticleDisplayTerms extends DisplayTerms {
 
 	public static final String GROUP_ID = "groupId";
 
+	public static final String NAVIGATION = "navigation";
+
 	public static final String STATUS = "status";
 
 	public static final String STRUCTURE_ID = "structureId";
@@ -63,6 +65,7 @@ public class ArticleDisplayTerms extends DisplayTerms {
 		content = ParamUtil.getString(portletRequest, CONTENT);
 		description = ParamUtil.getString(portletRequest, DESCRIPTION);
 		folderId = ParamUtil.getLong(portletRequest, FOLDER_ID);
+		navigation = ParamUtil.getString(portletRequest, NAVIGATION);
 		status = ParamUtil.getString(portletRequest, STATUS);
 		structureId = ParamUtil.getString(portletRequest, STRUCTURE_ID);
 		templateId = ParamUtil.getString(portletRequest, TEMPLATE_ID);
@@ -99,6 +102,10 @@ public class ArticleDisplayTerms extends DisplayTerms {
 
 	public long getGroupId() {
 		return groupId;
+	}
+
+	public String getNavigation() {
+		return navigation;
 	}
 
 	public String getStatus() {
@@ -167,6 +174,7 @@ public class ArticleDisplayTerms extends DisplayTerms {
 	protected String description;
 	protected Date displayDateGT;
 	protected Date displayDateLT;
+	protected String navigation;
 	protected long folderId;
 	protected long groupId;
 	protected String status;

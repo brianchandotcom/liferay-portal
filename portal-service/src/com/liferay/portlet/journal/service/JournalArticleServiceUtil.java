@@ -257,6 +257,13 @@ public class JournalArticleServiceUtil {
 			obc);
 	}
 
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> getArticlesByUserId(
+		long groupId, long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getArticlesByUserId(groupId, userId, start, end, obc);
+	}
+
 	public static int getArticlesCount(long groupId, long folderId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getArticlesCount(groupId, folderId);
@@ -272,6 +279,11 @@ public class JournalArticleServiceUtil {
 		java.lang.String structureId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getArticlesCountByStructureId(groupId, structureId);
+	}
+
+	public static int getArticlesCountByUserId(long groupId, long userId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getArticlesCountByUserId(groupId, userId);
 	}
 
 	public static com.liferay.portlet.journal.model.JournalArticle getDisplayArticleByUrlTitle(

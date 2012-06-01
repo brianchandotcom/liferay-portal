@@ -15,8 +15,11 @@
 package com.liferay.portlet;
 
 import com.liferay.portal.kernel.portlet.Route;
-import com.liferay.portal.util.BaseTestCase;
-import com.liferay.portal.util.InitUtil;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,12 +27,10 @@ import java.util.Map;
 /**
  * @author Connor McKay
  */
-public class RouteImplTest extends BaseTestCase {
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class RouteImplTest {
 
-	public RouteImplTest() {
-		InitUtil.initWithSpring();
-	}
-
+	@Test
 	public void testNonMatchingRoute() {
 		Map<String, String> parameters = new HashMap<String, String>();
 
@@ -43,8 +44,8 @@ public class RouteImplTest extends BaseTestCase {
 
 		String url = route.parametersToUrl(parameters);
 
-		assertNull(url);
-		assertEquals(originalParameters, parameters);
+		Assert.assertNull(url);
+		Assert.assertEquals(originalParameters, parameters);
 	}
 
 }

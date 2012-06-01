@@ -5658,8 +5658,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			throw new UserEmailAddressException();
 		}
 
-		if (PropsValues.MAIL_SESSION_MAIL_POP3_USER.equalsIgnoreCase(
-				emailAddress)) {
+		if (emailAddress.equalsIgnoreCase(
+				PropsValues.MAIL_SESSION_MAIL_POP3_USER)) {
 
 			throw new ReservedUserEmailAddressException();
 		}

@@ -85,8 +85,8 @@ public class MessageListenerImpl implements MessageListener {
 				_log.debug("Check to see if user " + from + " exists");
 			}
 
-			if (PropsValues.MAIL_SESSION_MAIL_POP3_USER.equalsIgnoreCase(
-					from)) {
+			if (from.equalsIgnoreCase(
+					PropsValues.MAIL_SESSION_MAIL_POP3_USER)) {
 
 				return false;
 			}

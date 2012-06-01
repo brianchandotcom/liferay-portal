@@ -271,6 +271,16 @@ public class RSSAction extends PortletAction {
 
 		boolean anyAssetType = GetterUtil.getBoolean(
 			preferences.getValue("anyAssetType", Boolean.TRUE.toString()));
+		long[] classTypeIds = GetterUtil.getLongValues(
+			preferences.getValues("classTypeIds", null));
+		boolean enablePermissions = GetterUtil.getBoolean(
+			preferences.getValue(
+				"enablePermissions", Boolean.FALSE.toString()));
+		boolean excludeZeroViewCount = GetterUtil.getBoolean(
+			preferences.getValue("excludeZeroViewCount", "0"));
+		boolean showOnlyLayoutAssets = GetterUtil.getBoolean(
+			preferences.getValue(
+				"showOnlyLayoutAssets", Boolean.FALSE.toString()));
 		String assetLinkBehavior = preferences.getValue(
 			"assetLinkBehavior", "showFullContent");
 		String orderByColumn1 = GetterUtil.getString(
@@ -281,15 +291,6 @@ public class RSSAction extends PortletAction {
 			preferences.getValue("orderByType1", "DESC"));
 		String orderByType2 = GetterUtil.getString(
 			preferences.getValue("orderByType2", "ASC"));
-		boolean excludeZeroViewCount = GetterUtil.getBoolean(
-			preferences.getValue("excludeZeroViewCount", "0"));
-		boolean enablePermissions = GetterUtil.getBoolean(
-			preferences.getValue("enablePermissions", null));
-		long[] classTypeIds = GetterUtil.getLongValues(
-			preferences.getValues("classTypeIds", null));
-		boolean showOnlyLayoutAssets = GetterUtil.getBoolean(
-			preferences.getValue("showOnlyLayoutAssets", null));
-
 		int rssDelta = GetterUtil.getInteger(
 			preferences.getValue("rssDelta", "20"));
 		String rssDisplayStyle = preferences.getValue(
@@ -318,6 +319,7 @@ public class RSSAction extends PortletAction {
 		assetEntryQuery.setEnd(rssDelta);
 		assetEntryQuery.setExcludeZeroViewCount(excludeZeroViewCount);
 		assetEntryQuery.setGroupIds(groupIds);
+
 		if (showOnlyLayoutAssets) {
 			assetEntryQuery.setLayout(themeDisplay.getLayout());
 		}

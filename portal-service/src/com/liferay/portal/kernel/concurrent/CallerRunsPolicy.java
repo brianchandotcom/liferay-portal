@@ -15,10 +15,18 @@
 package com.liferay.portal.kernel.concurrent;
 
 /**
+ * Implements the same behavior as {@link
+ * java.util.concurrent.ThreadPoolExecutor.CallerRunsPolicy}.
+ *
  * @author Shuyang Zhou
+ * @see    java.util.concurrent.ThreadPoolExecutor.CallerRunsPolicy
  */
 public class CallerRunsPolicy implements RejectedExecutionHandler {
 
+	/**
+	 * @see java.util.concurrent.ThreadPoolExecutor.CallerRunsPolicy#rejectedExecution(
+	 *      Runnable, java.util.concurrent.ThreadPoolExecutor)
+	 */
 	public void rejectedExecution(
 		Runnable runnable, ThreadPoolExecutor threadPoolExecutor) {
 

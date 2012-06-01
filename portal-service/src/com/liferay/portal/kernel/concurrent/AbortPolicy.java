@@ -17,10 +17,18 @@ package com.liferay.portal.kernel.concurrent;
 import java.util.concurrent.RejectedExecutionException;
 
 /**
+ * Implements the same behavior as {@link
+ * java.util.concurrent.ThreadPoolExecutor.AbortPolicy}.
+ *
  * @author Shuyang Zhou
+ * @see    java.util.concurrent.ThreadPoolExecutor.AbortPolicy
  */
 public class AbortPolicy implements RejectedExecutionHandler {
 
+	/**
+	 * @see java.util.concurrent.ThreadPoolExecutor.AbortPolicy#rejectedExecution(
+	 *      Runnable, java.util.concurrent.ThreadPoolExecutor)
+	 */
 	public void rejectedExecution(
 		Runnable runnable, ThreadPoolExecutor threadPoolExecutor) {
 

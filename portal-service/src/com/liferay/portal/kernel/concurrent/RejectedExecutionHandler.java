@@ -15,10 +15,19 @@
 package com.liferay.portal.kernel.concurrent;
 
 /**
+ * Provides the same interface as {@link
+ * java.util.concurrent.ThreadPoolExecutor.RejectedExecutionHandler}.
+ *
  * @author Shuyang Zhou
+ * @see    java.util.concurrent.ThreadPoolExecutor.RejectedExecutionHandler
  */
 public interface RejectedExecutionHandler {
 
+
+	/**
+	 * @see java.util.concurrent.ThreadPoolExecutor.RejectedExecutionHandler#rejectedExecution(
+	 *      Runnable, java.util.concurrent.ThreadPoolExecutor)
+	 */
 	public void rejectedExecution(
 		Runnable runnable, ThreadPoolExecutor threadPoolExecutor);
 

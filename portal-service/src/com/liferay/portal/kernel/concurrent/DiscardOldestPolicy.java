@@ -15,10 +15,18 @@
 package com.liferay.portal.kernel.concurrent;
 
 /**
+ * Implements the same behavior as {@link
+ * java.util.concurrent.ThreadPoolExecutor.DiscardOldestPolicy}.
+ *
  * @author Shuyang Zhou
+ * @see    java.util.concurrent.ThreadPoolExecutor.DiscardOldestPolicy
  */
 public class DiscardOldestPolicy implements RejectedExecutionHandler {
 
+	/**
+	 * @see java.util.concurrent.ThreadPoolExecutor.DiscardOldestPolicy#rejectedExecution(
+	 *      Runnable, java.util.concurrent.ThreadPoolExecutor)
+	 */
 	public void rejectedExecution(
 		Runnable runnable, ThreadPoolExecutor threadPoolExecutor) {
 

@@ -44,7 +44,8 @@ boolean mergeWithParentFolderDisabled = ParamUtil.getBoolean(request, "mergeWith
 		title='<%= (folder == null) ? "new-folder" : folder.getName() %>'
 	/>
 
-	<liferay-ui:error exception="<%= DuplicateFolderNameException.class %>" message="please-enter-a-valid-name" />
+	<liferay-ui:error exception="<%= DuplicateFolderNameException.class %>" message="please-enter-a-unique-folder-name" />
+	<liferay-ui:error exception="<%= FolderNameException.class %>" message="please-enter-a-valid-name" />
 
 	<aui:model-context bean="<%= folder %>" model="<%= JournalFolder.class %>" />
 

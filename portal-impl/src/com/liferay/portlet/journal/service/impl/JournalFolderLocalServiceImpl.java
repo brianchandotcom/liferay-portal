@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
@@ -53,7 +52,7 @@ public class JournalFolderLocalServiceImpl
 		parentFolderId = getParentFolderId(groupId, parentFolderId);
 		Date now = new Date();
 
-		validate(name);
+		validateFolder(0, groupId, parentFolderId, name);
 
 		long folderId = counterLocalService.increment();
 
@@ -269,7 +268,7 @@ public class JournalFolderLocalServiceImpl
 
 		// Folder
 
-		validate(name);
+		validateFolder(folderId, folder.getGroupId(), parentFolderId, name);
 
 		folder.setModifiedDate(serviceContext.getModifiedDate(null));
 		folder.setParentFolderId(parentFolderId);
@@ -360,14 +359,6 @@ public class JournalFolderLocalServiceImpl
 		deleteFolder(fromFolder);
 	}
 
-	protected void validate(String name) throws PortalException {
-		if ((Validator.isNull(name)) || (name.indexOf("\\\\") != -1) ||
-			(name.indexOf("//") != -1)) {
-
-			throw new FolderNameException();
-		}
-	}
-
 	protected void validateFolder(
 			long folderId, long groupId, long parentFolderId, String name)
 		throws PortalException, SystemException {
@@ -384,6 +375,10 @@ public class JournalFolderLocalServiceImpl
 
 	protected void validateFolderName(String name) throws PortalException {
 		if (!AssetUtil.isValidWord(name)) {
+			throw new FolderNameException();
+		}
+
+		if ((name.indexOf("\\\\") != -1) || (name.indexOf("//") != -1)) {
 			throw new FolderNameException();
 		}
 	}

@@ -52,6 +52,7 @@ page import="com.liferay.portlet.journal.FeedIdException" %><%@
 page import="com.liferay.portlet.journal.FeedNameException" %><%@
 page import="com.liferay.portlet.journal.FeedTargetLayoutFriendlyUrlException" %><%@
 page import="com.liferay.portlet.journal.FeedTargetPortletIdException" %><%@
+page import="com.liferay.portlet.journal.FolderNameException" %><%@
 page import="com.liferay.portlet.journal.NoSuchArticleException" %><%@
 page import="com.liferay.portlet.journal.NoSuchFolderException" %><%@
 page import="com.liferay.portlet.journal.NoSuchStructureException" %><%@

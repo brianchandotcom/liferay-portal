@@ -16,6 +16,7 @@ package com.liferay.portal.verify;
 
 import com.liferay.portal.GroupFriendlyURLException;
 import com.liferay.portal.NoSuchShardException;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.shard.ShardUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -34,6 +35,10 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.RobotsUtil;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
 import java.util.List;
 
 /**
@@ -45,6 +50,7 @@ public class VerifyGroup extends VerifyProcess {
 	protected void doVerify() throws Exception {
 		verifyCompanyGroups();
 		verifyNullFriendlyURLGroups();
+		verifyOrganizationNames();
 		verifyRobots();
 		verifyStagedGroups();
 	}
@@ -138,6 +144,37 @@ public class VerifyGroup extends VerifyProcess {
 		}
 	}
 
+	protected void verifyOrganizationNames() throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getConnection();
+
+			ps = con.prepareStatement(
+				"select groupID, name from Group_ where name like ? and " +
+					"name not like ?");
+
+			ps.setString(1, "%LFR_ORGANIZATION%");
+			ps.setString(2, "%LFR_ORGANIZATION ");
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long groupId = rs.getLong("groupID");
+				String newName = rs.getString("name").replaceFirst(
+					"(.*)LFR_ORGANIZATION ", "") + " LFR_ORGANIZATION ";
+
+				updateOrganizationNames(groupId, newName);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
 	protected void verifyRobots() throws Exception {
 		List<Group> groups = GroupLocalServiceUtil.getLiveGroups();
 
@@ -189,6 +226,28 @@ public class VerifyGroup extends VerifyProcess {
 			}
 		}
 	}
+
+	private void updateOrganizationNames(long groupId, String newName)
+			throws Exception {
+
+			Connection con = null;
+			PreparedStatement ps = null;
+
+			try {
+				con = DataAccess.getConnection();
+
+				ps = con.prepareStatement(
+					"update Group_ set name = ? where groupID = ?");
+
+				ps.setString(1, newName);
+				ps.setLong(2, groupId);
+
+				ps.executeUpdate();
+			}
+			finally {
+				DataAccess.cleanUp(con, ps);
+			}
+		}
 
 	private static Log _log = LogFactoryUtil.getLog(VerifyGroup.class);
 

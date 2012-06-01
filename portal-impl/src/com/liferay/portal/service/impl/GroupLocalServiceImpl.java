@@ -2346,7 +2346,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	}
 
 	protected String getOrgGroupName(long classPK, String name) {
-		return classPK + _ORGANIZATION_NAME_DELIMETER + name;
+		return name + _ORGANIZATION_NAME_SUFFIX;
 	}
 
 	protected String getRealName(long companyId, String name)
@@ -2653,7 +2653,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		if (Validator.isNull(name) || Validator.isNumber(name) ||
 			(name.indexOf(CharPool.STAR) != -1) ||
-			(name.indexOf(_ORGANIZATION_NAME_DELIMETER) != -1)) {
+			(name.indexOf(_ORGANIZATION_NAME_SUFFIX) != -1)) {
 
 			throw new GroupNameException();
 		}
@@ -2679,7 +2679,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 	protected File publicLARFile;
 
-	private static final String _ORGANIZATION_NAME_DELIMETER =
+	private static final String _ORGANIZATION_NAME_SUFFIX =
 		" LFR_ORGANIZATION ";
 
 	private static Log _log = LogFactoryUtil.getLog(

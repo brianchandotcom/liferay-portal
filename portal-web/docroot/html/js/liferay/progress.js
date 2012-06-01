@@ -69,6 +69,8 @@ AUI.add(
 
 						instance.set(STR_VALUE, 0);
 
+						instance.get('boundingBox').addClass('lfr-progress-active');
+
 						setTimeout(
 							function() {
 								instance.updateProgress();
@@ -95,6 +97,9 @@ AUI.add(
 					_afterComplete: function(event) {
 						var instance = this;
 
+						instance.get('boundingBox').removeClass('lfr-progress-active');
+
+						instance.set('label', instance.get('strings.complete'));
 					},
 
 					_afterValueChange: function(event) {

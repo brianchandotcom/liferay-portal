@@ -175,7 +175,7 @@ body > .lfr-menu-list, body > .lfr-menu-list ul, .lfr-actions, .aui-dialog-conte
 	}
 }
 
-.aui-progress-bar-status {
+.lfr-progress-active .aui-progress-bar-status {
 	$transparent: rgba(255, 255, 255, 0);
 
 	@include background-image(linear-gradient(-45deg, rgba(255, 255, 255, 0.3) 25%, $transparent 25%, $transparent 50%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.3) 75%, $transparent 75%, $transparent));

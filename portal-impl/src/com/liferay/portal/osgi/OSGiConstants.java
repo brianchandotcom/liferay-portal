@@ -21,6 +21,14 @@ public class OSGiConstants {
 
 	public static final String BEAN_ID = "bean.id";
 
+	public static final String FELIX_FILEINSTALL_DIR = "felix.fileinstall.dir";
+
+	public static final String FELIX_FILEINSTALL_LOG_LEVEL =
+		"felix.fileinstall.log.level";
+
+	public static final String FELIX_FILEINSTALL_TMPDIR =
+		"felix.fileinstall.tmpdir";
+
 	public static final String ORIGINAL_BEAN = "original.bean";
 
 	public static final String OSGI_BUNDLE = "osgi-bundle";

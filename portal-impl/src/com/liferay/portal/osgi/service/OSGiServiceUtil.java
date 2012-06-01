@@ -15,6 +15,7 @@
 package com.liferay.portal.osgi.service;
 
 import aQute.libg.header.OSGiHeader;
+import aQute.libg.version.Version;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -37,6 +38,10 @@ import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.util.UniqueList;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.net.URL;
@@ -48,10 +53,12 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.jar.Attributes;
+import java.util.jar.JarInputStream;
 import java.util.jar.Manifest;
 
 import javax.servlet.ServletContext;
@@ -80,7 +87,7 @@ public class OSGiServiceUtil {
 	public static Object addBundle(String location, InputStream inputStream)
 		throws PortalException {
 
-		return _instance._addBundle(location, inputStream);
+		return _instance._addBundle(location, inputStream, true);
 	}
 
 	public static Framework getFramework() {
@@ -154,16 +161,27 @@ public class OSGiServiceUtil {
 	private OSGiServiceUtil() {
 	}
 
-	private Object _addBundle(String location, InputStream inputStream)
+	private Object _addBundle(
+			String location, InputStream inputStream, boolean checkPermissions)
 		throws PortalException {
 
-		_checkPermission();
+		if (checkPermissions) {
+			_checkPermission();
+		}
 
 		if (_framework == null) {
 			return null;
 		}
 
 		BundleContext bundleContext = _framework.getBundleContext();
+
+		if (inputStream != null) {
+			Bundle bundle = _getBundle(bundleContext, inputStream);
+
+			if (bundle != null) {
+				return bundle;
+			}
+		}
 
 		try {
 			return bundleContext.installBundle(location, inputStream);
@@ -191,6 +209,20 @@ public class OSGiServiceUtil {
 			Constants.FRAMEWORK_BUNDLE_PARENT_APP);
 		properties.put(
 			Constants.FRAMEWORK_STORAGE, PropsValues.OSGI_FRAMEWORK_STORAGE);
+
+		StringBundler sb = new StringBundler();
+
+		sb.append(PropsValues.OSGI_FRAMEWORK_LIB_DIR);
+		sb.append(StringPool.COMMA);
+		sb.append(PropsValues.OSGI_AUTO_DEPLOY_DIR);
+
+		properties.put(OSGiConstants.FELIX_FILEINSTALL_DIR, sb.toString());
+		properties.put(
+			OSGiConstants.FELIX_FILEINSTALL_LOG_LEVEL,
+			PropsValues.OSGI_AUTO_DEPLOY_LOG_LEVEL);
+		properties.put(
+			OSGiConstants.FELIX_FILEINSTALL_TMPDIR,
+			System.getProperty("java.io.tmpdir"));
 
 		UniqueList<String> packages = new UniqueList<String>();
 
@@ -230,6 +262,59 @@ public class OSGiServiceUtil {
 		BundleContext bundleContext = _framework.getBundleContext();
 
 		return bundleContext.getBundle(bundleId);
+	}
+
+	public static Bundle _getBundle(
+			BundleContext bundleContext, InputStream inputStream)
+		throws PortalException {
+
+		try {
+			inputStream.mark(0);
+
+			JarInputStream jarInputStream = new JarInputStream(inputStream);
+
+			Manifest manifest = jarInputStream.getManifest();
+
+			inputStream.reset();
+
+			Attributes attributes = manifest.getMainAttributes();
+
+			String bundleSymbolicNameAttribute = attributes.getValue(
+				Constants.BUNDLE_SYMBOLICNAME);
+
+			Map<String, Map<String, String>> bundleSymbolicNamesMap =
+				OSGiHeader.parseHeader(bundleSymbolicNameAttribute);
+
+			Set<String> bundleSymbolicNamesSet =
+				bundleSymbolicNamesMap.keySet();
+
+			Iterator<String> bundleSymbolicNamesIterator =
+				bundleSymbolicNamesSet.iterator();
+
+			String bundleSymbolicName = bundleSymbolicNamesIterator.next();
+
+			String bundleVersionAttribute = attributes.getValue(
+				Constants.BUNDLE_VERSION);
+
+			Version bundleVersion = Version.parseVersion(
+				bundleVersionAttribute);
+
+			for (Bundle bundle : bundleContext.getBundles()) {
+				Version curBundleVersion = Version.parseVersion(
+					bundle.getVersion().toString());
+
+				if (bundleSymbolicName.equals(bundle.getSymbolicName()) &&
+					bundleVersion.equals(curBundleVersion)) {
+
+					return bundle;
+				}
+			}
+
+			return null;
+		}
+		catch (IOException ioe) {
+			throw new PortalException(ioe);
+		}
 	}
 
 	private void _getBundleExportPackages(
@@ -389,6 +474,8 @@ public class OSGiServiceUtil {
 		bundleContext.addServiceListener(serviceListener);
 
 		_framework.start();
+
+		_setupFileInstall();
 	}
 
 	private void _registerApplicationContext(
@@ -487,6 +574,30 @@ public class OSGiServiceUtil {
 			BundleStartLevel.class);
 
 		bundleStartLevel.setStartLevel(startLevel);
+	}
+
+	private void _setupFileInstall() throws Exception {
+		String fileIntallPath = PropsValues.LIFERAY_LIB_PORTAL_DIR.concat(
+			"org.apache.felix.fileinstall.jar");
+
+		File fileInstallBundle = new File(fileIntallPath);
+
+		InputStream inputStream = new BufferedInputStream(
+			new FileInputStream(fileInstallBundle));
+
+		try {
+			Bundle bundle = (Bundle)_addBundle(
+				fileIntallPath, inputStream, false);
+
+			if ((bundle != null) && (bundle.getState() == Bundle.INSTALLED)) {
+				bundle.start();
+			}
+		}
+		finally {
+			if (inputStream != null) {
+				inputStream.close();
+			}
+		}
 	}
 
 	private void _start() throws Exception {

@@ -257,7 +257,7 @@ public class EditGroupAction extends PortletAction {
 	protected String updateCloseRedirect(
 			String closeRedirect, Group group, ThemeDisplay themeDisplay,
 			String oldFriendlyURL, String oldStagingFriendlyURL)
-		throws SystemException, PortalException {
+		throws PortalException, SystemException {
 
 		if (Validator.isNull(closeRedirect) || (group == null)) {
 			return closeRedirect;

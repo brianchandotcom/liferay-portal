@@ -809,7 +809,7 @@ public class PortletImporter {
 	protected void importAssetTag(
 			PortletDataContext portletDataContext, Map<Long, Long> assetTagPKs,
 			Element assetTagElement, AssetTag assetTag)
-		throws SystemException, PortalException {
+		throws PortalException, SystemException {
 
 		long userId = portletDataContext.getUserId(assetTag.getUserUuid());
 

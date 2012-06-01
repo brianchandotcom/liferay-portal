@@ -836,7 +836,7 @@ public class PortalImpl implements Portal {
 	}
 
 	public Locale[] getAlternateLocales(HttpServletRequest request)
-		throws SystemException, PortalException {
+		throws PortalException, SystemException {
 
 		Locale[] availableLocales = LanguageUtil.getAvailableLocales();
 

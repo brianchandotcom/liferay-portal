@@ -55,7 +55,7 @@ public class AddDefaultDDMTemplatesAction extends SimpleAction {
 	protected void addDDMTemplate(
 			long userId, long groupId, String templateKey, String name,
 			String description, String fileName, ServiceContext serviceContext)
-		throws SystemException, PortalException {
+		throws PortalException, SystemException {
 
 		DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(
 			groupId, templateKey);
@@ -85,7 +85,7 @@ public class AddDefaultDDMTemplatesAction extends SimpleAction {
 
 	protected void addDDMTemplates(
 			long userId, long groupId, ServiceContext serviceContext)
-		throws SystemException, PortalException {
+		throws PortalException, SystemException {
 
 		addDDMTemplate(
 			userId, groupId, DDMTemplateConstants.TEMPLATE_KEY_CUSTOM_ABSTRACTS,

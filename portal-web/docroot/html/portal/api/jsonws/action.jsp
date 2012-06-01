@@ -141,6 +141,7 @@ String signature = ParamUtil.getString(request, "signature");
 			<%
 			}
 			%>
+
 		</div>
 
 		<div class="lfr-api-return-type lfr-api-section">
@@ -330,7 +331,9 @@ String signature = ParamUtil.getString(request, "signature");
 				}
 				if(PropsValues.JSON_SERVICE_AUTH_TOKEN_ENABLED){
 				%>
-				<aui:input id='<%= "field" + methodParameters.length %>' label="p_auth" name="p_auth" suffix="String" value="<%= AuthTokenUtil.getToken(request) %>" readonly="true"/>
+
+				<aui:input id='<%= "field" + methodParameters.length %>' label="p_auth" name="p_auth" readonly="true" suffix="String" value="<%= AuthTokenUtil.getToken(request) %>" />
+
 				<%
 				}
 				%>

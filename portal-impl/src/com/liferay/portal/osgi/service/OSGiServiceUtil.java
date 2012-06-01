@@ -27,11 +27,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.osgi.BundleListener;
-import com.liferay.portal.osgi.FrameworkListener;
 import com.liferay.portal.osgi.OSGiConstants;
 import com.liferay.portal.osgi.OSGiException;
-import com.liferay.portal.osgi.ServiceListener;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
@@ -67,6 +64,7 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
 import org.osgi.framework.Constants;
+import org.osgi.framework.FrameworkListener;
 import org.osgi.framework.launch.Framework;
 import org.osgi.framework.launch.FrameworkFactory;
 import org.osgi.framework.startlevel.BundleStartLevel;
@@ -459,20 +457,6 @@ public class OSGiServiceUtil {
 
 		_framework.init();
 
-		BundleContext bundleContext = _framework.getBundleContext();
-
-		BundleListener bundleListener = new BundleListener();
-
-		bundleContext.addBundleListener(bundleListener);
-
-		FrameworkListener frameworkListener = new FrameworkListener();
-
-		bundleContext.addFrameworkListener(frameworkListener);
-
-		ServiceListener serviceListener = new ServiceListener();
-
-		bundleContext.addServiceListener(serviceListener);
-
 		_framework.start();
 
 		_setupFileInstall();
@@ -610,7 +594,7 @@ public class OSGiServiceUtil {
 
 		frameworkStartLevel.setStartLevel(
 			PropsValues.OSGI_FRAMEWORK_RUNTIME_START_LEVEL,
-			(FrameworkListener[])null);
+			(FrameworkListener)null);
 	}
 
 	private void _startBundle(long bundleId) throws PortalException {
@@ -711,7 +695,7 @@ public class OSGiServiceUtil {
 
 		frameworkStartLevel.setStartLevel(
 			PropsValues.OSGI_FRAMEWORK_BEGINNING_START_LEVEL,
-			(FrameworkListener[])null);
+			(FrameworkListener)null);
 	}
 
 	private void _uninstallBundle(long bundleId) throws PortalException {

@@ -12,19 +12,19 @@
  * details.
  */
 
-package com.liferay.portal.kernel.progress;
+package com.liferay.portal.kernel.util;
 
 /**
  * @author Sergio González
  */
-public interface InstallStatus {
+public class ProgressStatusConstants {
 
-	public static final int UNKNOWN = -1;
+	public static final int COPYING = 2;
 
-	public int getStatus();
+	public static final int DOWNLOADING = 1;
 
-	public String getStatusLabel();
+	public static final int ERROR = -1;
 
-	public void setStatus(int status);
+	public static final int PREPARED = 0;
 
 }

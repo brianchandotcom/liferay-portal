@@ -267,13 +267,13 @@ pageContext.setAttribute("portletURL", portletURL);
 			<c:if test="<%= PropsValues.LIVE_USERS_ENABLED %>">
 				<liferay-ui:search-container-column-text
 					name="online-now"
-					value='<%= LanguageUtil.get(pageContext, (group.isActive() ? "yes" : "no")) %>'
+					value="<%= String.valueOf(LiveUsers.getGroupUsersCount(company.getCompanyId(), group.getGroupId())) %>"
 				/>
 			</c:if>
 
 			<liferay-ui:search-container-column-text
 				name="active"
-				value="<%= String.valueOf(LiveUsers.getGroupUsersCount(company.getCompanyId(), group.getGroupId())) %>"
+				value='<%= LanguageUtil.get(pageContext, (group.isActive() ? "yes" : "no")) %>'
 			/>
 
 			<c:if test="<%= permissionChecker.isGroupAdmin(themeDisplay.getScopeGroupId()) %>">

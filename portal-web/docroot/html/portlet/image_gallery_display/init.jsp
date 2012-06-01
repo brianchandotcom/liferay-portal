@@ -83,6 +83,9 @@ boolean showAddFolderButton = false;
 boolean showFolderMenu = PrefsParamUtil.getBoolean(preferences, request, "showFolderMenu");
 boolean showTabs = PrefsParamUtil.getBoolean(preferences, request, "showTabs");
 
+boolean enableRatings = GetterUtil.getBoolean(preferences.getValue("enableRatings", null), true);
+boolean enableCommentRatings = GetterUtil.getBoolean(preferences.getValue("enableCommentRatings", null), true);
+
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 %>
 

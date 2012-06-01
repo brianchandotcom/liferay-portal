@@ -101,6 +101,11 @@ String redirect = ParamUtil.getString(request, "redirect");
 				</aui:field-wrapper>
 			</aui:fieldset>
 		</liferay-ui:panel>
+
+		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="imageGalleryImagesRatingsPanel" persistState="<%= true %>" title="ratings">
+			<aui:input name="preferences--enableRatings--" type="checkbox" value="<%= enableRatings %>" />
+			<aui:input name="preferences--enableCommentRatings--" type="checkbox" value="<%= enableCommentRatings %>" />
+		</liferay-ui:panel>
 	</liferay-ui:panel-container>
 
 	<aui:button-row>

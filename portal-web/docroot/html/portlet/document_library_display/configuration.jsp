@@ -162,6 +162,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 		</liferay-ui:panel>
 
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="documentLibraryDocumentsRatingsPanel" persistState="<%= true %>" title="ratings">
+			<aui:input name="preferences--enableRatings--" type="checkbox" value="<%= enableRatings %>" />
 			<aui:input name="preferences--enableCommentRatings--" type="checkbox" value="<%= enableCommentRatings %>" />
 		</liferay-ui:panel>
 	</liferay-ui:panel-container>

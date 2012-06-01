@@ -135,6 +135,7 @@ else if (!portletId.equals(PortletKeys.DOCUMENT_LIBRARY) && !ArrayUtil.contains(
 	fileEntryColumns = ArrayUtil.append(fileEntryColumns, "action");
 }
 
+boolean enableRatings = GetterUtil.getBoolean(preferences.getValue("enableRatings", null), true);
 boolean enableCommentRatings = GetterUtil.getBoolean(preferences.getValue("enableCommentRatings", null), true);
 
 boolean mergedView = false;

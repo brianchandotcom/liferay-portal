@@ -212,7 +212,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 							<liferay-ui:icon image="../document_library/add_document" label="<%= true %>" message='<%= LanguageUtil.format(pageContext, "uploaded-by-x-x", new Object[] {displayURL, HtmlUtil.escape(fileEntry.getUserName()), dateFormatDateTime.format(fileEntry.getCreateDate())}) %>' />
 						</span>
 
-						<c:if test="<%= fileEntry.isSupportsSocial() %>">
+						<c:if test="<%= enableRatings && fileEntry.isSupportsSocial() %>">
 							<span class="lfr-asset-ratings">
 								<liferay-ui:ratings
 									className="<%= DLFileEntryConstants.getClassName() %>"

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.process;
 
+import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedOutputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
@@ -35,12 +36,15 @@ import java.io.StreamCorruptedException;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicReference;
@@ -102,12 +106,27 @@ public class ProcessExecutor {
 			SubprocessReactor subprocessReactor = new SubprocessReactor(
 				process);
 
-			Future<ProcessCallable<? extends Serializable>>
-				futureResponseProcessCallable = executorService.submit(
-					subprocessReactor);
+			try {
+				Future<ProcessCallable<? extends Serializable>>
+					futureResponseProcessCallable = executorService.submit(
+						subprocessReactor);
 
-			return new ProcessExecutionFutureResult<T>(
-				futureResponseProcessCallable, process);
+				// Only consider the newly created process has been managed
+				// after the SubprocessReactor is taken by the ThreadPool.
+				_managedProcesses.add(process);
+
+				return new ProcessExecutionFutureResult<T>(
+					futureResponseProcessCallable, process);
+			}
+			catch (RejectedExecutionException ree) {
+				// Concurrent destroy detected, cancel the current execution
+
+				process.destroy();
+
+				throw new ProcessException(
+					"Execution has been cancelled, because of a concurrent " +
+						"destroy.", ree);
+			}
 		}
 		catch (IOException ioe) {
 			throw new ProcessException(ioe);
@@ -184,6 +203,27 @@ public class ProcessExecutor {
 		synchronized (ProcessExecutor.class) {
 			if (_executorService != null) {
 				_executorService.shutdownNow();
+
+				// At this point the ThreadPool will no longer take in any new
+				// SubprocessReactor, so we know the _managedProcesses is in a
+				// safe state.
+				// The worst case is this destroyer Thread and the ThreadPool
+				// Thread concurrently destroying the same Process, but this is
+				// JDK's job to ensure Process.destroy() thread safety.
+				Iterator<Process> iterator = _managedProcesses.iterator();
+
+				while (iterator.hasNext()) {
+					Process process = iterator.next();
+
+					process.destroy();
+
+					iterator.remove();
+				}
+
+				// Because the current Thread has a more comprehensive view of
+				// _managedProcesses than any ThreadPool thread, after the
+				// previous iteration, we are safe to clear _managedProcesses.
+				_managedProcesses.clear();
 
 				_executorService = null;
 			}
@@ -280,6 +320,9 @@ public class ProcessExecutor {
 	private static Log _log = LogFactoryUtil.getLog(ProcessExecutor.class);
 
 	private static volatile ExecutorService _executorService;
+
+	private static Set<Process> _managedProcesses =
+		new ConcurrentHashSet<Process>();
 
 	private static class HeartbeatThread extends Thread {
 
@@ -445,6 +488,8 @@ public class ProcessExecutor {
 		}
 
 		public ProcessCallable<? extends Serializable> call() throws Exception {
+			ProcessCallable<?> resultProcessCallable = null;
+
 			try {
 				ObjectInputStream objectInputStream = null;
 
@@ -495,12 +540,12 @@ public class ProcessExecutor {
 					ProcessCallable<?> processCallable =
 						(ProcessCallable<?>)objectInputStream.readObject();
 
-					if (processCallable instanceof ExceptionProcessCallable) {
-						return processCallable;
-					}
+					if ((processCallable instanceof ExceptionProcessCallable) ||
+						(processCallable instanceof ReturnProcessCallable<?>)) {
 
-					if (processCallable instanceof ReturnProcessCallable<?>) {
-						return processCallable;
+						resultProcessCallable = processCallable;
+
+						continue;
 					}
 
 					Serializable returnValue = processCallable.call();
@@ -531,6 +576,13 @@ public class ProcessExecutor {
 
 					throw new ProcessException(
 						"Forcibly killed subprocess on interruption", ie);
+				}
+
+				_managedProcesses.remove(_process);
+
+				if (resultProcessCallable != null) {
+					// Override previous ProcessException, if there is any.
+					return resultProcessCallable;
 				}
 			}
 		}

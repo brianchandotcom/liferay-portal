@@ -44,6 +44,8 @@ public class SOUs_RepostMicroblogsContentProfileTests extends BaseTestSuite {
 		testSuite.addTestSuite(SOUs_ViewRepostMicroblogsContentTest.class);
 		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SignInSOTest.class);
+		testSuite.addTestSuite(ViewReplyMicroblogsContentTest.class);
+		testSuite.addTestSuite(ViewReplyMicroblogsContentNotificationsTest.class);
 		testSuite.addTestSuite(TearDownWHEntryContentTest.class);
 		testSuite.addTestSuite(TearDownSOUserTest.class);
 

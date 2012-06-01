@@ -1165,8 +1165,8 @@
 		</licenses>
 	</library>
 	<library>
-		<file-name>portal/bnd.jar</file-name>
-		<version>1.44.0</version>
+		<file-name>portal/biz.aQute.bnd.jar</file-name>
+		<version>1.50.0</version>
 		<project-name>Bnd</project-name>
 		<project-url>http://www.aqute.biz/Bnd</project-url>
 		<licenses>
@@ -1664,17 +1664,6 @@
 		<version>1.4.0</version>
 		<project-name>Ehcache</project-name>
 		<project-url>http://ehcache.sourceforge.net</project-url>
-		<licenses>
-			<license>
-				<license-name>Apache License 2.0</license-name>
-			</license>
-		</licenses>
-	</library>
-	<library>
-		<file-name>portal/equinox.jar</file-name>
-		<version>3.7.0.v20110613</version>
-		<project-name>Eclipse OSGi Platform</project-name>
-		<project-url>http://www.eclipse.org/equinox</project-url>
 		<licenses>
 			<license>
 				<license-name>Apache License 2.0</license-name>
@@ -2549,6 +2538,28 @@
 			<license>
 				<license-name>Apache License 2.0</license-name>
 				<copyright-notice>Copyright (c) 2006-2008 Sxip Identity Corporation</copyright-notice>
+			</license>
+		</licenses>
+	</library>
+	<library>
+		<file-name>portal/org.apache.felix.fileinstall.jar</file-name>
+		<version>3.1.10</version>
+		<project-name>Apache Felix File Install</project-name>
+		<project-url>http://felix.apache.org/site/apache-felix-file-install.html</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
+		<file-name>portal/org.eclipse.osgi.jar</file-name>
+		<version>3.8.0.v20120522-1813</version>
+		<project-name>Eclipse OSGi Platform</project-name>
+		<project-url>http://www.eclipse.org/equinox</project-url>
+		<licenses>
+			<license>
+				<license-name>Eclipse Public License Version 1.0</license-name>
 			</license>
 		</licenses>
 	</library>

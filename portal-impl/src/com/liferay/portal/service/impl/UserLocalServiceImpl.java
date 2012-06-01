@@ -5658,6 +5658,12 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			throw new UserEmailAddressException();
 		}
 
+		if (emailAddress.equalsIgnoreCase(
+				PropsValues.MAIL_SESSION_MAIL_POP3_USER)) {
+
+			throw new ReservedUserEmailAddressException();
+		}
+
 		String[] reservedEmailAddresses = PrefsPropsUtil.getStringArray(
 			companyId, PropsKeys.ADMIN_RESERVED_EMAIL_ADDRESSES,
 			StringPool.NEW_LINE, PropsValues.ADMIN_RESERVED_EMAIL_ADDRESSES);

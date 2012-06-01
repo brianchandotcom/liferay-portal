@@ -118,7 +118,7 @@ public class POPNotificationsMessageListener
 		}
 	}
 
-	protected void nostifyMessageListeners(
+	protected void notifyMessageListeners(
 			List<MessageListener> messageListeners, Message message)
 		throws Exception {
 
@@ -143,7 +143,7 @@ public class POPNotificationsMessageListener
 		}
 	}
 
-	protected void nostifyMessageListeners(Message[] messages)
+	protected void notifyMessageListeners(Message[] messages)
 		throws Exception {
 
 		if (_log.isDebugEnabled()) {
@@ -159,7 +159,7 @@ public class POPNotificationsMessageListener
 				_log.debug("Message " + message);
 			}
 
-			nostifyMessageListeners(messageListeners, message);
+			notifyMessageListeners(messageListeners, message);
 		}
 	}
 
@@ -169,7 +169,7 @@ public class POPNotificationsMessageListener
 		Message[] messages = _inboxFolder.getMessages();
 
 		try {
-			nostifyMessageListeners(messages);
+			notifyMessageListeners(messages);
 		}
 		finally {
 			if (_log.isDebugEnabled()) {

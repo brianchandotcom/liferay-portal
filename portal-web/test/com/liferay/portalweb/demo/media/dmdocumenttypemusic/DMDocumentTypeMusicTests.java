@@ -16,9 +16,10 @@ package com.liferay.portalweb.demo.media.dmdocumenttypemusic;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
-import com.liferay.portalweb.portlet.documentlibrary.document.addfolderdocument.TearDownDLDocumentTest;
-import com.liferay.portalweb.portlet.documentlibrary.portlet.addportletdm.AddPageDMTest;
-import com.liferay.portalweb.portlet.documentlibrary.portlet.addportletdm.AddPortletDMTest;
+import com.liferay.portalweb.portlet.documentsandmedia.dmdocument.adddmdocument.TearDownDMDocumentTest;
+import com.liferay.portalweb.portlet.documentsandmedia.dmfolder.adddmfolder.TearDownDMFolderTest;
+import com.liferay.portalweb.portlet.documentsandmedia.portlet.addportletdm.AddPageDMTest;
+import com.liferay.portalweb.portlet.documentsandmedia.portlet.addportletdm.AddPortletDMTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -41,7 +42,8 @@ public class DMDocumentTypeMusicTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddDMFolderMusicTagMusicTest.class);
 		testSuite.addTestSuite(ViewDMFolderMusicTest.class);
 		testSuite.addTestSuite(SearchDMMusicTest.class);
-		testSuite.addTestSuite(TearDownDLDocumentTest.class);
+		testSuite.addTestSuite(TearDownDMFolderTest.class);
+		testSuite.addTestSuite(TearDownDMDocumentTest.class);
 		testSuite.addTestSuite(TearDownDMDocumentTypeTest.class);
 		testSuite.addTestSuite(TearDownDMMetadataSetTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);

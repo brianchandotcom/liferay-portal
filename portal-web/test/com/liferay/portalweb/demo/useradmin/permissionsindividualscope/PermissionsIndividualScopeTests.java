@@ -28,8 +28,8 @@ import com.liferay.portalweb.portal.controlpanel.users.user.signin.User1_SignOut
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.User2_SignInTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.User2_SignOutTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
-import com.liferay.portalweb.portlet.documentlibrary.portlet.addportletdm.AddPageDMTest;
-import com.liferay.portalweb.portlet.documentlibrary.portlet.addportletdm.AddPortletDMTest;
+import com.liferay.portalweb.portlet.documentsandmedia.portlet.addportletdm.AddPageDMTest;
+import com.liferay.portalweb.portlet.documentsandmedia.portlet.addportletdm.AddPortletDMTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

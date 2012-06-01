@@ -21,9 +21,9 @@ import com.liferay.portalweb.portal.controlpanel.users.user.edituserpassword.Edi
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignInTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
-import com.liferay.portalweb.portlet.documentlibrary.document.addfolderdocument.TearDownDLDocumentTest;
-import com.liferay.portalweb.portlet.documentlibrary.portlet.addportletdm.AddPageDMTest;
-import com.liferay.portalweb.portlet.documentlibrary.portlet.addportletdm.AddPortletDMTest;
+import com.liferay.portalweb.portlet.documentsandmedia.dmfolder.adddmfolder.TearDownDMFolderTest;
+import com.liferay.portalweb.portlet.documentsandmedia.portlet.addportletdm.AddPageDMTest;
+import com.liferay.portalweb.portlet.documentsandmedia.portlet.addportletdm.AddPortletDMTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -66,7 +66,7 @@ public class DMKaleo2WorkflowTests extends BaseTestSuite {
 		testSuite.addTestSuite(SignInTest.class);
 		testSuite.addTestSuite(TearDownDMHomeFolderTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);
-		testSuite.addTestSuite(TearDownDLDocumentTest.class);
+		testSuite.addTestSuite(TearDownDMFolderTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

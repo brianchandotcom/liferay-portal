@@ -18,9 +18,9 @@ import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignInTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
-import com.liferay.portalweb.portlet.documentlibrary.document.addfolderdocument.TearDownDLDocumentTest;
-import com.liferay.portalweb.portlet.documentlibrary.portlet.addportletdm.AddPageDMTest;
-import com.liferay.portalweb.portlet.documentlibrary.portlet.addportletdm.AddPortletDMTest;
+import com.liferay.portalweb.portlet.documentsandmedia.dmdocument.adddmdocument.TearDownDMDocumentTest;
+import com.liferay.portalweb.portlet.documentsandmedia.portlet.addportletdm.AddPageDMTest;
+import com.liferay.portalweb.portlet.documentsandmedia.portlet.addportletdm.AddPortletDMTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -42,7 +42,7 @@ public class DMCheckinCheckoutDocumentTests extends BaseTestSuite {
 		testSuite.addTestSuite(SaveAndCheckinDMDocumentTxtTest.class);
 		testSuite.addTestSuite(ViewSaveAndCheckinDMDocumentTxtTest.class);
 		testSuite.addTestSuite(CompareVersionsDMDocumentTxtTest.class);
-		testSuite.addTestSuite(TearDownDLDocumentTest.class);
+		testSuite.addTestSuite(TearDownDMDocumentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

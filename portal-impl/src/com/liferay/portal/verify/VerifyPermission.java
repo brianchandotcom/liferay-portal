@@ -27,6 +27,7 @@ import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Permission;
 import com.liferay.portal.model.Resource;
 import com.liferay.portal.model.ResourceCode;
+import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
@@ -182,6 +183,110 @@ public class VerifyPermission extends VerifyProcess {
 
 		checkPermissions();
 		fixOrganizationRolePermissions();
+		fixLayoutRolePermissions();
+	}
+
+	protected void fixLayoutRolePermissions() throws Exception {
+		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
+			fixLayoutRolePermissions_6();
+		}
+
+		PermissionCacheUtil.clearCache();
+	}
+
+	/**
+	 * Fixes missing owner role permissions for Layout entity. Issue can occur
+	 * when upgrading from permission algorithms less then 5 to algorithm 6.
+	 * Method will check for presence of owner role's resource permission for
+	 * Layout. If resource permission doesn't exist it will be created.
+	 * For both existing or newly created resource permission
+	 * default actionIds for owner role are checked. If owner permissions
+	 * for default actionId is missing, permission is given to owner.
+	 * @throws Exception
+	 */
+	protected void fixLayoutRolePermissions_6() throws Exception {
+		List<String> actionIds =
+				ResourceActionsUtil.getModelResourceActions(
+						Layout.class.getName());
+		
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			ResourcePermission.class);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq("name", Layout.class.getName()));
+
+		List<ResourcePermission> resourcePermissions =
+			ResourcePermissionLocalServiceUtil.dynamicQuery(dynamicQuery);
+
+		for (ResourcePermission resourcePermission : resourcePermissions) {
+			ResourcePermission layoutResourcePermission = null;
+
+			Role ownerRole = RoleLocalServiceUtil
+								.fetchRole(resourcePermission.getCompanyId(),
+										RoleConstants.OWNER);
+			try {
+				layoutResourcePermission =
+					ResourcePermissionLocalServiceUtil.getResourcePermission(
+						resourcePermission.getCompanyId(),
+						Layout.class.getName(),
+						ResourceConstants.SCOPE_INDIVIDUAL,
+						resourcePermission.getPrimKey(),
+						ownerRole.getRoleId());
+			}
+			catch (Exception e) {
+				ResourcePermissionLocalServiceUtil.setResourcePermissions(
+					resourcePermission.getCompanyId(), Layout.class.getName(),
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					resourcePermission.getPrimKey(),
+					ownerRole.getRoleId(),
+					ResourcePermissionLocalServiceImpl.EMPTY_ACTION_IDS);
+
+				layoutResourcePermission =
+					ResourcePermissionLocalServiceUtil.getResourcePermission(
+						resourcePermission.getCompanyId(),
+						Layout.class.getName(),
+						ResourceConstants.SCOPE_INDIVIDUAL,
+						resourcePermission.getPrimKey(),
+						ownerRole.getRoleId());
+			}
+			
+			/*
+			 * In cases I tested this will not make any changes to DB 
+			 */
+			_log.info("Checking permissions for owner. Total "
+					.concat(Integer.toString(actionIds.size()))
+					.concat(" permissions"));
+			for (String actionId : actionIds) {
+				if (ResourcePermissionLocalServiceUtil.hasResourcePermission(
+							resourcePermission.getCompanyId(),
+							Layout.class.getName(),
+							ResourceConstants.SCOPE_INDIVIDUAL,
+							resourcePermission.getPrimKey(),
+							ownerRole.getRoleId(), actionId)) {
+					try {
+						ResourcePermissionLocalServiceUtil
+							.addResourcePermission(
+								resourcePermission.getCompanyId(),
+								Layout.class.getName(),
+								ResourceConstants.SCOPE_INDIVIDUAL,
+								resourcePermission.getPrimKey(),
+								ownerRole.getRoleId(), actionId);
+					} catch (Exception e) {
+						_log.warn(
+							"Can't add resource permission for Layout "
+								.concat("for Owner role ")
+								.concat("individual scope and companyId (")
+								.concat(Long.toString(
+										resourcePermission.getCompanyId()))
+								.concat(") primKey (")
+								.concat(resourcePermission.getPrimKey())
+								.concat(") actionId (")
+								.concat(actionId)
+								.concat(")"));
+					}
+				}
+			}
+		}
 	}
 
 	protected void fixOrganizationRolePermissions() throws Exception {

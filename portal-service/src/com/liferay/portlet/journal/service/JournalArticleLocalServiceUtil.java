@@ -394,6 +394,13 @@ public class JournalArticleLocalServiceUtil {
 	}
 
 	public static void deleteArticle(
+		com.liferay.portlet.journal.model.JournalArticle article)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteArticle(article);
+	}
+
+	public static void deleteArticle(
 		com.liferay.portlet.journal.model.JournalArticle article,
 		java.lang.String articleURL,
 		com.liferay.portal.service.ServiceContext serviceContext)

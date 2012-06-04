@@ -266,6 +266,12 @@ public class JournalFolderPersistenceTest {
 
 		Assert.assertEquals(existingJournalFolderModelImpl.getGroupId(),
 			existingJournalFolderModelImpl.getOriginalGroupId());
+		Assert.assertTrue(Validator.equals(
+				existingJournalFolderModelImpl.getName(),
+				existingJournalFolderModelImpl.getOriginalName()));
+
+		Assert.assertEquals(existingJournalFolderModelImpl.getGroupId(),
+			existingJournalFolderModelImpl.getOriginalGroupId());
 		Assert.assertEquals(existingJournalFolderModelImpl.getParentFolderId(),
 			existingJournalFolderModelImpl.getOriginalParentFolderId());
 		Assert.assertTrue(Validator.equals(

@@ -225,6 +225,10 @@
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
 		</finder>
+		<finder name="G_N" return-type="JournalFolder">
+			<finder-column name="groupId" />
+			<finder-column name="name" />
+		</finder>
 		<finder name="G_P" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="parentFolderId" />

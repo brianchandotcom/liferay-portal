@@ -15,10 +15,13 @@
 package com.liferay.portlet.blogs.service.persistence;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
@@ -31,11 +34,15 @@ import com.liferay.portlet.blogs.NoSuchStatsUserException;
 import com.liferay.portlet.blogs.model.BlogsStatsUser;
 import com.liferay.portlet.blogs.model.impl.BlogsStatsUserModelImpl;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import org.junit.runner.RunWith;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 import java.util.List;
 
@@ -46,9 +53,26 @@ import java.util.List;
 	PersistenceExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class BlogsStatsUserPersistenceTest {
-	@Before
-	public void setUp() throws Exception {
-		_persistence = (BlogsStatsUserPersistence)PortalBeanLocatorUtil.locate(BlogsStatsUserPersistence.class.getName());
+	@AfterClass
+	public static void deleteAllData() throws Exception {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+
+		try {
+			connection = DataAccess.getConnection();
+
+			preparedStatement = connection.prepareStatement("delete from " +
+					BlogsStatsUserModelImpl.TABLE_NAME);
+
+			preparedStatement.executeUpdate();
+		}
+		catch (SQLException e) {
+			_log.error("Unexpected error while deleting the contents on " +
+				BlogsStatsUserModelImpl.TABLE_NAME + " table.");
+		}
+		finally {
+			DataAccess.cleanUp(connection, preparedStatement);
+		}
 	}
 
 	@Test
@@ -281,5 +305,6 @@ public class BlogsStatsUserPersistenceTest {
 		return blogsStatsUser;
 	}
 
-	private BlogsStatsUserPersistence _persistence;
+	private static Log _log = LogFactoryUtil.getLog(BlogsStatsUserPersistenceTest.class);
+	private BlogsStatsUserPersistence _persistence = (BlogsStatsUserPersistence)PortalBeanLocatorUtil.locate(BlogsStatsUserPersistence.class.getName());
 }

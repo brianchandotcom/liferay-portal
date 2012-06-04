@@ -15,10 +15,13 @@
 package com.liferay.portlet.shopping.service.persistence;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.ServiceTestUtil;
@@ -32,11 +35,15 @@ import com.liferay.portlet.shopping.NoSuchItemException;
 import com.liferay.portlet.shopping.model.ShoppingItem;
 import com.liferay.portlet.shopping.model.impl.ShoppingItemModelImpl;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import org.junit.runner.RunWith;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 import java.util.List;
 
@@ -47,9 +54,26 @@ import java.util.List;
 	PersistenceExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class ShoppingItemPersistenceTest {
-	@Before
-	public void setUp() throws Exception {
-		_persistence = (ShoppingItemPersistence)PortalBeanLocatorUtil.locate(ShoppingItemPersistence.class.getName());
+	@AfterClass
+	public static void deleteAllData() throws Exception {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+
+		try {
+			connection = DataAccess.getConnection();
+
+			preparedStatement = connection.prepareStatement("delete from " +
+					ShoppingItemModelImpl.TABLE_NAME);
+
+			preparedStatement.executeUpdate();
+		}
+		catch (SQLException e) {
+			_log.error("Unexpected error while deleting the contents on " +
+				ShoppingItemModelImpl.TABLE_NAME + " table.");
+		}
+		finally {
+			DataAccess.cleanUp(connection, preparedStatement);
+		}
 	}
 
 	@Test
@@ -443,5 +467,6 @@ public class ShoppingItemPersistenceTest {
 		return shoppingItem;
 	}
 
-	private ShoppingItemPersistence _persistence;
+	private static Log _log = LogFactoryUtil.getLog(ShoppingItemPersistenceTest.class);
+	private ShoppingItemPersistence _persistence = (ShoppingItemPersistence)PortalBeanLocatorUtil.locate(ShoppingItemPersistence.class.getName());
 }

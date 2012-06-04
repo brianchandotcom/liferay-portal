@@ -15,10 +15,13 @@
 package com.liferay.portlet.documentlibrary.service.persistence;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.ExecutionTestListeners;
@@ -29,11 +32,15 @@ import com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryMetadataModelImpl;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import org.junit.runner.RunWith;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 import java.util.List;
 
@@ -44,9 +51,26 @@ import java.util.List;
 	PersistenceExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class DLFileEntryMetadataPersistenceTest {
-	@Before
-	public void setUp() throws Exception {
-		_persistence = (DLFileEntryMetadataPersistence)PortalBeanLocatorUtil.locate(DLFileEntryMetadataPersistence.class.getName());
+	@AfterClass
+	public static void deleteAllData() throws Exception {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+
+		try {
+			connection = DataAccess.getConnection();
+
+			preparedStatement = connection.prepareStatement("delete from " +
+					DLFileEntryMetadataModelImpl.TABLE_NAME);
+
+			preparedStatement.executeUpdate();
+		}
+		catch (SQLException e) {
+			_log.error("Unexpected error while deleting the contents on " +
+				DLFileEntryMetadataModelImpl.TABLE_NAME + " table.");
+		}
+		finally {
+			DataAccess.cleanUp(connection, preparedStatement);
+		}
 	}
 
 	@Test
@@ -275,5 +299,6 @@ public class DLFileEntryMetadataPersistenceTest {
 		return dlFileEntryMetadata;
 	}
 
-	private DLFileEntryMetadataPersistence _persistence;
+	private static Log _log = LogFactoryUtil.getLog(DLFileEntryMetadataPersistenceTest.class);
+	private DLFileEntryMetadataPersistence _persistence = (DLFileEntryMetadataPersistence)PortalBeanLocatorUtil.locate(DLFileEntryMetadataPersistence.class.getName());
 }

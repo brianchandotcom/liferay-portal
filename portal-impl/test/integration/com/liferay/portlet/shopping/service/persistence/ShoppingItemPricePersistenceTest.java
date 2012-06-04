@@ -15,10 +15,13 @@
 package com.liferay.portlet.shopping.service.persistence;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.AssertUtils;
@@ -27,12 +30,17 @@ import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 
 import com.liferay.portlet.shopping.NoSuchItemPriceException;
 import com.liferay.portlet.shopping.model.ShoppingItemPrice;
+import com.liferay.portlet.shopping.model.impl.ShoppingItemPriceModelImpl;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import org.junit.runner.RunWith;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 import java.util.List;
 
@@ -43,9 +51,26 @@ import java.util.List;
 	PersistenceExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class ShoppingItemPricePersistenceTest {
-	@Before
-	public void setUp() throws Exception {
-		_persistence = (ShoppingItemPricePersistence)PortalBeanLocatorUtil.locate(ShoppingItemPricePersistence.class.getName());
+	@AfterClass
+	public static void deleteAllData() throws Exception {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+
+		try {
+			connection = DataAccess.getConnection();
+
+			preparedStatement = connection.prepareStatement("delete from " +
+					ShoppingItemPriceModelImpl.TABLE_NAME);
+
+			preparedStatement.executeUpdate();
+		}
+		catch (SQLException e) {
+			_log.error("Unexpected error while deleting the contents on " +
+				ShoppingItemPriceModelImpl.TABLE_NAME + " table.");
+		}
+		finally {
+			DataAccess.cleanUp(connection, preparedStatement);
+		}
 	}
 
 	@Test
@@ -266,5 +291,6 @@ public class ShoppingItemPricePersistenceTest {
 		return shoppingItemPrice;
 	}
 
-	private ShoppingItemPricePersistence _persistence;
+	private static Log _log = LogFactoryUtil.getLog(ShoppingItemPricePersistenceTest.class);
+	private ShoppingItemPricePersistence _persistence = (ShoppingItemPricePersistence)PortalBeanLocatorUtil.locate(ShoppingItemPricePersistence.class.getName());
 }

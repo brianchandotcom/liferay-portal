@@ -21,11 +21,14 @@ import ${packagePath}.model.${entity.name};
 import ${packagePath}.model.impl.${entity.name}ModelImpl;
 
 import ${beanLocatorUtil};
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.jdbc.OutputBlob;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
@@ -39,10 +42,14 @@ import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PropsValues;
 
 import java.sql.Blob;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -52,9 +59,24 @@ import org.junit.runner.RunWith;
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class ${entity.name}PersistenceTest {
 
-	@Before
-	public void setUp() throws Exception {
-		_persistence = (${entity.name}Persistence)${beanLocatorUtilShortName}.locate(${entity.name}Persistence.class.getName());
+	@AfterClass
+	public static void deleteAllData() throws Exception {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+
+		try {
+			connection = DataAccess.getConnection();
+
+			preparedStatement = connection.prepareStatement("delete from " + ${entity.name}ModelImpl.TABLE_NAME);
+
+			preparedStatement.executeUpdate();
+		}
+		catch (SQLException e) {
+			_log.error("Unexpected error while deleting the contents on " + ${entity.name}ModelImpl.TABLE_NAME + " table.");
+		}
+		finally {
+			DataAccess.cleanUp(connection, preparedStatement);
+		}
 	}
 
 	@Test
@@ -789,6 +811,8 @@ public class ${entity.name}PersistenceTest {
 		}
 	</#if>
 
-	private ${entity.name}Persistence _persistence;
+	private static Log _log = LogFactoryUtil.getLog(${entity.name}PersistenceTest.class);
+
+	private ${entity.name}Persistence _persistence = (${entity.name}Persistence)${beanLocatorUtilShortName}.locate(${entity.name}Persistence.class.getName());
 
 }

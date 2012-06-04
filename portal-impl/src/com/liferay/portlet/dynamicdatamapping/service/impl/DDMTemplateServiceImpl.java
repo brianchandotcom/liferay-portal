@@ -130,6 +130,9 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			classNameId, classPK, type, mode);
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public List<DDMTemplate> search(
 			long companyId, long groupId, long classNameId, long classPK,
 			String keywords, String type, String mode, int start, int end,
@@ -141,6 +144,9 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			start, end, orderByComparator);
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public List<DDMTemplate> search(
 			long companyId, long groupId, long classNameId, long classPK,
 			String name, String description, String type, String mode,
@@ -153,6 +159,32 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			mode, language, andOperator, start, end, orderByComparator);
 	}
 
+	public List<DDMTemplate> search(
+			long companyId, long groupId, long[] classNameIds, long classPK,
+			String keywords, String type, String mode, int start, int end,
+			OrderByComparator orderByComparator)
+		throws SystemException {
+
+		return ddmTemplateFinder.filterFindByKeywords(
+			companyId, groupId, classNameIds, classPK, keywords, type, mode,
+			start, end, orderByComparator);
+	}
+
+	public List<DDMTemplate> search(
+			long companyId, long groupId, long[] classNameIds, long classPK,
+			String name, String description, String type, String mode,
+			String language, boolean andOperator, int start, int end,
+			OrderByComparator orderByComparator)
+		throws SystemException {
+
+		return ddmTemplateFinder.filterFindByC_G_C_C_N_D_T_M_L(
+			companyId, groupId, classNameIds, classPK, name, description, type,
+			mode, language, andOperator, start, end, orderByComparator);
+	}
+
+	/**
+	 * @deprecated
+	 */
 	public int searchCount(
 			long companyId, long groupId, long classNameId, long classPK,
 			String keywords, String type, String mode)
@@ -162,6 +194,9 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			companyId, groupId, classNameId, classPK, keywords, type, mode);
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public int searchCount(
 			long companyId, long groupId, long classNameId, long classPK,
 			String name, String description, String type, String mode,
@@ -170,6 +205,26 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 
 		return ddmTemplateFinder.filterCountByC_G_C_C_N_D_T_M_L(
 			companyId, groupId, classNameId, classPK, name, description, type,
+			mode, language, andOperator);
+	}
+
+	public int searchCount(
+			long companyId, long groupId, long[] classNameIds, long classPK,
+			String keywords, String type, String mode)
+		throws SystemException {
+
+		return ddmTemplateFinder.filterCountByKeywords(
+			companyId, groupId, classNameIds, classPK, keywords, type, mode);
+	}
+
+	public int searchCount(
+			long companyId, long groupId, long[] classNameIds, long classPK,
+			String name, String description, String type, String mode,
+			String language, boolean andOperator)
+		throws SystemException {
+
+		return ddmTemplateFinder.filterCountByC_G_C_C_N_D_T_M_L(
+			companyId, groupId, classNameIds, classPK, name, description, type,
 			mode, language, andOperator);
 	}
 

@@ -95,6 +95,7 @@ public class InheritableMap<K, V> extends HashMap<K, V> {
 		_parentMap = (Map<K, V>)parentMap;
 	}
 
+	@Override
 	public String toString() {
 		String string = super.toString();
 

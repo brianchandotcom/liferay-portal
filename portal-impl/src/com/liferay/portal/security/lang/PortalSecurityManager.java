@@ -35,8 +35,8 @@ import javax.naming.spi.NamingManager;
 
 /**
  * This is the portal's implementation of a security manager. The goal is to
- * protect portal resources from plugins and prevent security issues by
- * forcing plugin developers to openly declare their requirements. Where a
+ * protect portal resources from plugins and prevent security issues by forcing
+ * plugin developers to openly declare their requirements. Where a
  * SecurityManager exists, we set that as the parent and delegate to it as a
  * fallback. This class will not delegate checks to super when there is no
  * parent so as to avoid forcing the need for a default policy.

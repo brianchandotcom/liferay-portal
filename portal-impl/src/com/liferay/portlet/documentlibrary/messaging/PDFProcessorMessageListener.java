@@ -22,6 +22,7 @@ import com.liferay.portlet.documentlibrary.util.PDFProcessorUtil;
  */
 public class PDFProcessorMessageListener extends BaseProcessorMessageListener {
 
+	@Override
 	protected void generate(
 			FileVersion sourceFileVersion, FileVersion destinationFileVersion)
 		throws Exception {

@@ -22,10 +22,25 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class Guest_AddUserJSONTest extends BaseTestCase {
 	public void testGuest_AddUserJSON() throws Exception {
-		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.open("/api/jsonws");
 		loadRequiredJavaScriptModules();
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//input[@id='serviceSearch']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.type("//input[@id='serviceSearch']",
 			RuntimeVariables.replace("add-user"));
 
@@ -36,7 +51,7 @@ public class Guest_AddUserJSONTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"xpath=(//li[@class='lfr-api-signature']/a)[2]")) {
+							"//div[@class='lfr-panel-content']/ul/li/a[contains(@href,'add-user-26')]")) {
 					break;
 				}
 			}
@@ -47,23 +62,24 @@ public class Guest_AddUserJSONTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("add-user"),
-			selenium.getText("xpath=(//li[@class='lfr-api-signature']/a)[2]"));
-		selenium.clickAt("xpath=(//li[@class='lfr-api-signature']/a)[2]",
+			selenium.getText(
+				"//div[@class='lfr-panel-content']/ul/li/a[contains(@href,'add-user-26')]"));
+		selenium.clickAt("//div[@class='lfr-panel-content']/ul/li/a[contains(@href,'add-user-26')]",
 			RuntimeVariables.replace("add-user"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.type("//input[@name='companyId']",
 			RuntimeVariables.replace("1"));
-		selenium.clickAt("//input[@id='fieldFalse1']",
-			RuntimeVariables.replace("false"));
+		selenium.clickAt("//input[@value='false' and @name='autoPassword']",
+			RuntimeVariables.replace("Auto Password False"));
 		selenium.type("//input[@name='password1']",
 			RuntimeVariables.replace("password"));
 		selenium.type("//input[@name='password2']",
 			RuntimeVariables.replace("password"));
-		selenium.clickAt("//input[@id='fieldFalse4']",
-			RuntimeVariables.replace("false"));
 		selenium.type("//input[@name='screenName']",
 			RuntimeVariables.replace("usersn"));
+		selenium.clickAt("//input[@value='false' and @name='autoScreenName']",
+			RuntimeVariables.replace("Auto Screen Name False"));
 		selenium.type("//input[@name='emailAddress']",
 			RuntimeVariables.replace("userea@liferay.com"));
 		selenium.type("//input[@name='facebookId']",
@@ -83,13 +99,51 @@ public class Guest_AddUserJSONTest extends BaseTestCase {
 		selenium.type("//input[@name='birthdayYear']",
 			RuntimeVariables.replace("1888"));
 		selenium.type("//input[@name='roleIds']", RuntimeVariables.replace("15"));
-		selenium.clickAt("//input[@id='fieldFalse24']",
-			RuntimeVariables.replace("False"));
+		selenium.clickAt("//input[@value='false' and @name='sendEmail']",
+			RuntimeVariables.replace("Send Email False"));
 		selenium.clickAt("//input[@value='Invoke']",
 			RuntimeVariables.replace("Invoke"));
-		Thread.sleep(5000);
-		assertEquals(RuntimeVariables.replace(
-				"{\n \"exception\": \"Public access denied\"\n}"),
-			selenium.getText("//pre[@id='serviceOutput']"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//ul/li[contains(@class,'tab-active')]/span/a[contains(.,'Result')]")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("Result"),
+			selenium.getText(
+				"//ul/li[contains(@class,'tab-active')]/span/a[contains(.,'Result')]"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//pre[@class='lfr-code-block']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertTrue(selenium.isPartialText("//pre[@class='lfr-code-block']", "{"));
+		assertTrue(selenium.isPartialText("//pre[@class='lfr-code-block']",
+				"\"exception\": \"Public access denied\""));
+		assertTrue(selenium.isPartialText("//pre[@class='lfr-code-block']", "}"));
 	}
 }

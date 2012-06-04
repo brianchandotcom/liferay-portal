@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ViewUserTest extends BaseTestCase {
-	public void testViewUser() throws Exception {
+public class ViewUser1NullTest extends BaseTestCase {
+	public void testViewUser1Null() throws Exception {
 		int label = 1;
 
 		while (label >= 1) {
@@ -91,32 +91,13 @@ public class ViewUserTest extends BaseTestCase {
 
 			case 2:
 				selenium.type("//input[@name='_125_keywords']",
-					RuntimeVariables.replace("usersn"));
+					RuntimeVariables.replace("userfn1"));
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
-				assertEquals(RuntimeVariables.replace("userfn"),
-					selenium.getText("//td[2]/a"));
-				assertEquals(RuntimeVariables.replace("userln"),
-					selenium.getText("//td[3]/a"));
-				assertEquals(RuntimeVariables.replace("usersn"),
-					selenium.getText("//td[4]/a"));
-				selenium.clickAt("//td[2]/a", RuntimeVariables.replace("userfn"));
-				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
-				assertEquals(RuntimeVariables.replace("userfn userln"),
-					selenium.getText("//div[2]/h1/span"));
-				assertEquals("usersn",
-					selenium.getValue("//input[@id='_125_screenName']"));
-				assertEquals("userea@liferay.com",
-					selenium.getValue("//input[@id='_125_emailAddress']"));
-				assertEquals("userfn",
-					selenium.getValue("//input[@id='_125_firstName']"));
-				assertEquals("userln",
-					selenium.getValue("//input[@id='_125_lastName']"));
-				assertEquals("1888",
-					selenium.getValue("//select[@id='_125_birthdayYear']"));
+				assertEquals(RuntimeVariables.replace("No users were found."),
+					selenium.getText("//div[@class='portlet-msg-info']"));
 
 			case 100:
 				label = -1;

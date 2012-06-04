@@ -164,7 +164,7 @@ public class ViewUserOrgRoleTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Organization"),
 					selenium.getText(
 						"//th[@id='_125_organizationRolesSearchContainer_col-organization']"));
-				assertEquals(RuntimeVariables.replace("Orgrole Name"),
+				assertEquals(RuntimeVariables.replace("Roles Orgrole Name"),
 					selenium.getText(
 						"//td[@id='_125_organizationRolesSearchContainer_col-title_row-1']"));
 				assertEquals(RuntimeVariables.replace("Organization Name"),

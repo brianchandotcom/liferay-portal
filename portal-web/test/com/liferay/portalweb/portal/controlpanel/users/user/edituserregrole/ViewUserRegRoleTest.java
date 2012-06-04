@@ -157,7 +157,7 @@ public class ViewUserRegRoleTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Title"),
 					selenium.getText(
 						"//th[@id='_125_rolesSearchContainer_col-title']"));
-				assertEquals(RuntimeVariables.replace("Regrole Name"),
+				assertEquals(RuntimeVariables.replace("Roles Regrole Name"),
 					selenium.getText(
 						"//td[@id='_125_rolesSearchContainer_col-title_row-2']"));
 				assertEquals(RuntimeVariables.replace("Remove"),

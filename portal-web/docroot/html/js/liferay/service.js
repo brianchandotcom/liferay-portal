@@ -974,8 +974,6 @@ Liferay.Service.register("Liferay.Service.DDM", "com.liferay.portlet.dynamicdata
 Liferay.Service.registerClass(
 	Liferay.Service.DDM, "DDMStructure",
 	{
-		getBeanIdentifier: true,
-		setBeanIdentifier: true,
 		addStructure: true,
 		copyStructure: true,
 		deleteStructure: true,
@@ -990,8 +988,6 @@ Liferay.Service.registerClass(
 Liferay.Service.registerClass(
 	Liferay.Service.DDM, "DDMTemplate",
 	{
-		getBeanIdentifier: true,
-		setBeanIdentifier: true,
 		addTemplate: true,
 		copyTemplates: true,
 		deleteTemplate: true,

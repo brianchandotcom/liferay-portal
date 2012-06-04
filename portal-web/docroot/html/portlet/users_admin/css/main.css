@@ -243,6 +243,10 @@
 	}
 }
 
+.aui-helper-clearfix.lfr-form-row {
+	overflow: visible;
+}
+
 .ie {
 	.portlet-users-admin {
 		.permission-scopes {

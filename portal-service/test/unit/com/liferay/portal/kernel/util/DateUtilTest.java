@@ -190,8 +190,6 @@ public class DateUtilTest extends PowerMockito {
 
 	private class TestSimpleDateFormat extends SimpleDateFormat {
 
-		private String _pattern;
-
 		public TestSimpleDateFormat(String pattern) {
 			super(pattern);
 
@@ -201,6 +199,8 @@ public class DateUtilTest extends PowerMockito {
 		public String getPattern() {
 			return _pattern;
 		}
+
+		private String _pattern;
 	}
 
 }

@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -107,6 +108,7 @@ import java.text.Format;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -639,6 +641,10 @@ public class WebServerServlet extends HttpServlet {
 		return false;
 	}
 
+	protected boolean isSupportsRangeHeader(String contentType) {
+		return _acceptRangesMimeTypes.contains(contentType);
+	}
+
 	protected void processPrincipalException(
 			Throwable t, User user, HttpServletRequest request,
 			HttpServletResponse response)
@@ -968,7 +974,50 @@ public class WebServerServlet extends HttpServlet {
 			contentType = fileVersion.getMimeType();
 		}
 
-		// Support range HTTP header
+		if (_log.isDebugEnabled()) {
+			_log.debug("Content type set to " + contentType);
+		}
+
+		// Send file
+
+		if (isSupportsRangeHeader(contentType)) {
+			sendFileWithRangeHeader(
+				request, response, fileName, inputStream, contentLength,
+				contentType);
+		}
+		else {
+			ServletResponseUtil.sendFile(
+				request, response, fileName, inputStream, contentLength,
+				contentType);
+		}
+	}
+
+	protected void sendFile(
+			HttpServletResponse response, User user, long groupId,
+			long folderId, String title)
+		throws Exception {
+
+		FileEntry fileEntry = DLAppServiceUtil.getFileEntry(
+			groupId, folderId, title);
+
+		String contentType = fileEntry.getMimeType();
+
+		response.setContentType(contentType);
+
+		InputStream inputStream = fileEntry.getContentStream();
+
+		ServletResponseUtil.write(response, inputStream);
+	}
+
+	protected void sendFileWithRangeHeader(
+			HttpServletRequest request, HttpServletResponse response,
+			String fileName, InputStream inputStream, long contentLength,
+			String contentType)
+		throws IOException {
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Accepting ranges for the file " + fileName);
+		}
 
 		response.setHeader(
 			HttpHeaders.ACCEPT_RANGES, HttpHeaders.ACCEPT_RANGES_BYTES_VALUE);
@@ -1009,23 +1058,6 @@ public class WebServerServlet extends HttpServlet {
 				request, response, fileName, ranges, inputStream, contentLength,
 				contentType);
 		}
-	}
-
-	protected void sendFile(
-			HttpServletResponse response, User user, long groupId,
-			long folderId, String title)
-		throws Exception {
-
-		FileEntry fileEntry = DLAppServiceUtil.getFileEntry(
-			groupId, folderId, title);
-
-		String contentType = fileEntry.getMimeType();
-
-		response.setContentType(contentType);
-
-		InputStream inputStream = fileEntry.getContentStream();
-
-		ServletResponseUtil.write(response, inputStream);
 	}
 
 	protected void sendGroups(
@@ -1243,6 +1275,9 @@ public class WebServerServlet extends HttpServlet {
 			"partial");
 
 	private static Log _log = LogFactoryUtil.getLog(WebServerServlet.class);
+
+	private static Set<String> _acceptRangesMimeTypes = SetUtil.fromArray(
+		PropsValues.WEB_SERVER_SERVLET_ACCEPT_RANGES_MIME_TYPES);
 
 	private static Format _dateFormat =
 		FastDateFormatFactoryUtil.getSimpleDateFormat(_DATE_FORMAT_PATTERN);

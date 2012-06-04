@@ -76,12 +76,17 @@ public abstract class BaseDLAppTestCase {
 			long folderId, String sourceFileName, String title)
 		throws Exception {
 
+		return addFileEntry(folderId, sourceFileName, title, null);
+	}
+
+	protected FileEntry addFileEntry(
+			long folderId, String sourceFileName, String title, byte[] bytes)
+		throws Exception {
+
 		String description = StringPool.BLANK;
 		String changeLog = StringPool.BLANK;
 
-		byte[] bytes = null;
-
-		if (Validator.isNotNull(sourceFileName)) {
+		if ((bytes == null) && Validator.isNotNull(sourceFileName)) {
 			bytes = CONTENT.getBytes();
 		}
 

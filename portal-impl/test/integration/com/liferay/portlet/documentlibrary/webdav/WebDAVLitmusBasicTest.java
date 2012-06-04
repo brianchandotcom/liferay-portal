@@ -152,7 +152,8 @@ public class WebDAVLitmusBasicTest extends BaseWebDAVTestCase {
 		Tuple tuple = serviceGet(fileName);
 
 		assertCode(HttpServletResponse.SC_OK, tuple);
-		assertBytes(_TEST_CONTENT.getBytes(), getResponseBody(tuple));
+		Assert.assertArrayEquals(
+			_TEST_CONTENT.getBytes(), getResponseBody(tuple));
 	}
 
 	private static final String _TEST_CONTENT =

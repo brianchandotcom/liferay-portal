@@ -358,6 +358,14 @@
 		<priority value="WARN" />
 	</category>
 
+	<category name="com.liferay.portal.kernel.servlet.ServletRequestUtil">
+		<priority value="INFO" />
+	</category>
+
+	<category name="com.liferay.portal.kernel.servlet.ServletResponseUtil">
+		<priority value="INFO" />
+	</category>
+
 	<category name="com.liferay.portal.lar">
 		<priority value="ERROR" />
 	</category>

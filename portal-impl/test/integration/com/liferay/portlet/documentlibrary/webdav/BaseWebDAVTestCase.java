@@ -38,36 +38,6 @@ import org.springframework.mock.web.MockHttpServletResponse;
  */
 public class BaseWebDAVTestCase {
 
-	public static void assertBytes(byte[] expected, byte[] actual) {
-		if ((expected == null) && (actual == null)) {
-			return;
-		}
-
-		if ((expected != null) && expected.equals(actual)) {
-			return;
-		}
-
-		if (expected.length == actual.length) {
-			boolean same = true;
-
-			for (int i = 0; i < expected.length; i++) {
-				if (expected[i] != actual[i]) {
-					same = false;
-
-					break;
-				}
-			}
-
-			if (same) {
-				return;
-			}
-		}
-
-		Assert.fail(
-			"Content does not match.  Expected " + expected + ", Actual " +
-				actual);
-	}
-
 	public static void assertCode(int statusCode, Tuple tuple) {
 		int returnedStatusCode = -1;
 

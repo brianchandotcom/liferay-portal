@@ -14,6 +14,9 @@
 
 package com.liferay.portal.kernel.servlet;
 
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+
 /**
  * @author Juan González
  */
@@ -45,6 +48,19 @@ public class Range {
 		}
 
 		return false;
+	}
+
+	public String getContentRange() {
+		StringBundler sb = new StringBundler(6);
+
+		sb.append("bytes ");
+		sb.append(getStart());
+		sb.append(StringPool.DASH);
+		sb.append(getEnd());
+		sb.append(StringPool.SLASH);
+		sb.append(getTotal());
+
+		return sb.toString();
 	}
 
 	public long getEnd() {

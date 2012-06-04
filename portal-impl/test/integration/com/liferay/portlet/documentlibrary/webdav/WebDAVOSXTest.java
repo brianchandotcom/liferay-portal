@@ -84,7 +84,7 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 			tuple = serviceGet(_TEST_FILE_NAME);
 
 			assertCode(HttpServletResponse.SC_OK, tuple);
-			assertBytes(_testFileBytes, getResponseBody(tuple));
+			Assert.assertArrayEquals(_testFileBytes, getResponseBody(tuple));
 
 			unlock(_TEST_FILE_NAME);
 		}
@@ -109,7 +109,7 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 			tuple = serviceGet(_TEST_META_NAME);
 
 			assertCode(HttpServletResponse.SC_OK, tuple);
-			assertBytes(_testMetaBytes, getResponseBody(tuple));
+			Assert.assertArrayEquals(_testMetaBytes, getResponseBody(tuple));
 
 			unlock(_TEST_META_NAME);
 
@@ -125,7 +125,8 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 				tuple = serviceGet(_TEST_META_NAME);
 
 				assertCode(HttpServletResponse.SC_OK, tuple);
-				assertBytes(_testMetaBytes, getResponseBody(tuple));
+				Assert.assertArrayEquals(
+					_testMetaBytes, getResponseBody(tuple));
 			}
 			else {
 				lock(HttpServletResponse.SC_CREATED, _TEST_META_NAME);
@@ -148,7 +149,8 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 				tuple = serviceGet(_TEST_META_NAME);
 
 				assertCode(HttpServletResponse.SC_OK, tuple);
-				assertBytes(_testMetaBytes, getResponseBody(tuple));
+				Assert.assertArrayEquals(
+					_testMetaBytes, getResponseBody(tuple));
 				assertCode(
 					WebDAVUtil.SC_MULTI_STATUS,
 					servicePropFind(_TEST_META_NAME));
@@ -170,7 +172,7 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 		tuple = serviceGet(_TEST_FILE_NAME);
 
 		assertCode(HttpServletResponse.SC_OK, tuple);
-		assertBytes(_testFileBytes, getResponseBody(tuple));
+		Assert.assertArrayEquals(_testFileBytes, getResponseBody(tuple));
 
 		unlock(_TEST_FILE_NAME);
 		lock(HttpServletResponse.SC_OK, _TEST_FILE_NAME);
@@ -178,7 +180,7 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 		tuple = serviceGet(_TEST_FILE_NAME);
 
 		assertCode(HttpServletResponse.SC_OK, tuple);
-		assertBytes(_testFileBytes, getResponseBody(tuple));
+		Assert.assertArrayEquals(_testFileBytes, getResponseBody(tuple));
 	}
 
 	@Test
@@ -235,7 +237,7 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 		tuple = serviceGet(_TEST_FILE_NAME);
 
 		assertCode(HttpServletResponse.SC_OK, tuple);
-		assertBytes(_testFileBytes, getResponseBody(tuple));
+		Assert.assertArrayEquals(_testFileBytes, getResponseBody(tuple));
 		assertCode(
 			HttpServletResponse.SC_NOT_FOUND,
 			servicePropFind("Backup of Test.docx"));
@@ -263,7 +265,7 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 			tuple = serviceGet(_TEMP_FILE_NAME_2);
 
 			assertCode(HttpServletResponse.SC_OK, tuple);
-			assertBytes(_testFileBytes, getResponseBody(tuple));
+			Assert.assertArrayEquals(_testFileBytes, getResponseBody(tuple));
 
 			unlock(_TEMP_FILE_NAME_2);
 		}
@@ -295,7 +297,7 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 			tuple = serviceGet(_TEST_FILE_NAME);
 
 			assertCode(HttpServletResponse.SC_OK, tuple);
-			assertBytes(_testDeltaBytes, getResponseBody(tuple));
+			Assert.assertArrayEquals(_testDeltaBytes, getResponseBody(tuple));
 
 			unlock(_TEST_FILE_NAME);
 		}

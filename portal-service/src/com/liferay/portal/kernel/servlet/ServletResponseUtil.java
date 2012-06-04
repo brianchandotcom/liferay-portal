@@ -22,11 +22,11 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.RandomAccessInputStream;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StreamUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -76,12 +76,21 @@ public class ServletResponseUtil {
 
 		List<Range> ranges = new ArrayList<Range>();
 
-		for (String part : StringUtil.split(rangeString.substring(6))) {
-			int index = part.indexOf(StringPool.DASH);
+		String[] rangeFields = StringUtil.split(rangeString.substring(6));
 
-			long start = GetterUtil.getLong(part.substring(0, index), -1);
+		if (rangeFields.length > _MAX_RANGE_FIELDS) {
+			throw new IOException(
+				"Request of " + rangeFields.length + " range fields has " +
+					"exceeded maximum allowance as specified by " +
+						PropsKeys.WEB_SERVER_SERVLET_MAX_RANGE_FIELDS);
+		}
+
+		for (String rangeField : rangeFields) {
+			int index = rangeField.indexOf(StringPool.DASH);
+
+			long start = GetterUtil.getLong(rangeField.substring(0, index), -1);
 			long end = GetterUtil.getLong(
-				part.substring(index + 1, part.length()), -1);
+				rangeField.substring(index + 1, rangeField.length()), -1);
 
 			if (start == -1) {
 				start = length - end;
@@ -208,12 +217,12 @@ public class ServletResponseUtil {
 			long fullLength, String contentType)
 		throws IOException {
 
-		Range fullRange = new Range(0, fullLength - 1, fullLength);
-
 		OutputStream outputStream = null;
 
 		try {
 			outputStream = response.getOutputStream();
+
+			Range fullRange = new Range(0, fullLength - 1, fullLength);
 
 			Range firstRange = null;
 
@@ -234,15 +243,9 @@ public class ServletResponseUtil {
 					inputStream, outputStream, fullRange.getStart(),
 					fullRange.getLength());
 			}
-			else if (ranges.size() >= 1) {
+			else if (ranges.size() == 1) {
 				if (_log.isDebugEnabled()) {
-					_log.debug("Attempting to write single or multiple range");
-				}
-
-				if (ranges.size() > 1 ) {
-					if (_log.isWarnEnabled()) {
-						_log.warn("Multiple range is not supported");
-					}
+					_log.debug("Attempting to write a single range");
 				}
 
 				Range range = ranges.get(0);
@@ -256,6 +259,49 @@ public class ServletResponseUtil {
 				copyRange(
 					inputStream, outputStream, range.getStart(),
 					range.getLength());
+			}
+			else if (ranges.size() > 1 ) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Attempting to write multiple ranges");
+				}
+
+				ServletOutputStream servletOutputStream =
+					(ServletOutputStream)outputStream;
+
+				String boundary =
+					"liferay-multipart-boundary-" + System.currentTimeMillis();
+
+				String multipartContentType =
+					"multipart/byteranges; boundary=" + boundary;
+
+				response.setContentType(multipartContentType);
+
+				setHeaders(
+					request, response, fileName, multipartContentType, null);
+
+				response.setStatus(HttpServletResponse.SC_PARTIAL_CONTENT);
+
+				for (int i = 0; i < ranges.size(); i++) {
+					Range range = ranges.get(i);
+
+					servletOutputStream.println();
+					servletOutputStream.println(
+						StringPool.DOUBLE_DASH + boundary);
+					servletOutputStream.println(
+						HttpHeaders.CONTENT_TYPE + ": " + contentType);
+					servletOutputStream.println(
+						HttpHeaders.CONTENT_RANGE + ": " +
+							range.getContentRange());
+					servletOutputStream.println();
+
+					copyRange(
+						inputStream, outputStream, range.getStart(),
+						range.getLength());
+				}
+
+				servletOutputStream.println();
+				servletOutputStream.println(
+					StringPool.DOUBLE_DASH + boundary + StringPool.DOUBLE_DASH);
 			}
 		}
 		finally {
@@ -564,23 +610,16 @@ public class ServletResponseUtil {
 				}
 			}
 
-			try {
-				if (!ascii) {
-					String encodedFileName = HttpUtil.encodeURL(fileName, true);
+			if (!ascii) {
+				String encodedFileName = HttpUtil.encodeURL(fileName, true);
 
-					if (BrowserSnifferUtil.isIe(request)) {
-						contentDisposition =
-							"attachment; filename=\"" + encodedFileName + "\"";
-					}
-					else {
-						contentDisposition =
-							"attachment; filename*=UTF-8''" + encodedFileName;
-					}
+				if (BrowserSnifferUtil.isIe(request)) {
+					contentDisposition =
+						"attachment; filename=\"" + encodedFileName + "\"";
 				}
-			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(e);
+				else {
+					contentDisposition =
+						"attachment; filename*=UTF-8''" + encodedFileName;
 				}
 			}
 
@@ -591,7 +630,7 @@ public class ServletResponseUtil {
 
 			try {
 				mimeTypesContentDispositionInline = PropsUtil.getArray(
-					"mime.types.content.disposition.inline");
+					PropsKeys.MIME_TYPES_CONTENT_DISPOSITION_INLINE);
 			}
 			catch (Exception e) {
 				mimeTypesContentDispositionInline = new String[0];
@@ -602,6 +641,11 @@ public class ServletResponseUtil {
 
 				contentDisposition = StringUtil.replace(
 					contentDisposition, "attachment; ", "inline; ");
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Setting content disposition header " + contentDisposition);
 			}
 
 			response.setHeader(
@@ -615,26 +659,21 @@ public class ServletResponseUtil {
 
 		setHeaders(request, response, fileName, contentType);
 
-		response.setHeader(
-			HttpHeaders.ACCEPT_RANGES, HttpHeaders.ACCEPT_RANGES_BYTES_VALUE);
+		if (range != null) {
+			response.setHeader(
+				HttpHeaders.CONTENT_RANGE, range.getContentRange());
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append("bytes ");
-		sb.append(range.getStart());
-		sb.append(StringPool.DASH);
-		sb.append(range.getEnd());
-		sb.append(StringPool.SLASH);
-		sb.append(range.getTotal());
-
-		response.setHeader(HttpHeaders.CONTENT_RANGE, sb.toString());
-
-		response.setHeader(
-			HttpHeaders.CONTENT_LENGTH, String.valueOf(range.getLength()));
+			response.setHeader(
+				HttpHeaders.CONTENT_LENGTH, String.valueOf(range.getLength()));
+		}
 	}
 
 	private static final String _CLIENT_ABORT_EXCEPTION =
 		"org.apache.catalina.connector.ClientAbortException";
+
+	private static final int _MAX_RANGE_FIELDS =
+		GetterUtil.getInteger(PropsUtil.get(
+			PropsKeys.WEB_SERVER_SERVLET_MAX_RANGE_FIELDS));
 
 	private static final String _RANGE_REGEX =
 		"^bytes=\\d*-\\d*(,\\s?\\d*-\\d*)*$";

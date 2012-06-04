@@ -310,6 +310,13 @@ public class JournalFolderLocalServiceWrapper
 		_journalFolderLocalService.deleteFolders(groupId);
 	}
 
+	public com.liferay.portlet.journal.model.JournalFolder fetchFolder(
+		long groupId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _journalFolderLocalService.fetchFolder(groupId, name);
+	}
+
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> getCompanyFolders(
 		long companyId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {

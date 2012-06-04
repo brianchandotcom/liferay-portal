@@ -65,25 +65,26 @@ boolean showAddArticleButton = JournalPermission.contains(permissionChecker, sco
 	<aui:input name="groupId" type="hidden" />
 </c:if>
 
-<liferay-ui:search-form
-	page="/html/portlet/journal/article_search.jsp"
-	searchContainer="<%= searchContainer %>"
-/>
-
 <%
 ArticleSearchTerms searchTerms = (ArticleSearchTerms)searchContainer.getSearchTerms();
 
 searchTerms.setFolderId(-1);
 searchTerms.setVersion(-1);
 
+if (folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+	searchTerms.setFolderId(folderId);
+}
+
 String search = ParamUtil.getString(request, displayTerms.ADVANCED_SEARCH, null);
+
+String keywords = ParamUtil.getString(request, "keywords");
 
 List results = null;
 int total = 0;
 %>
 
 <c:choose>
-	<c:when test="<%= (search != null) %>">
+	<c:when test="<%= (Validator.isNotNull(keywords) || (search != null)) %>">
 		<c:choose>
 			<c:when test="<%= PropsValues.JOURNAL_ARTICLES_SEARCH_WITH_INDEX %>">
 				<%@ include file="/html/portlet/journal/article_search_results_index.jspf" %>
@@ -232,28 +233,4 @@ for (int i = 0; i < results.size(); i++) {
 		},
 		['liferay-util-list-fields']
 	);
-</aui:script>
-
-<aui:script use="aui-base">
-	var buttons = A.all('.delete-articles-button, .expire-articles-button');
-
-	if (buttons.size()) {
-		var toggleDisabled = A.bind(Liferay.Util.toggleDisabled, Liferay.Util, ':button');
-
-		var resultsGrid = A.one('.results-grid');
-
-		if (resultsGrid) {
-			resultsGrid.delegate(
-				'click',
-				function(event) {
-					var disabled = (resultsGrid.one(':checked') == null);
-
-					toggleDisabled(disabled);
-				},
-				':checkbox'
-			);
-		}
-
-		toggleDisabled(true);
-	}
 </aui:script>

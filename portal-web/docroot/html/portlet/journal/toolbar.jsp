@@ -191,10 +191,10 @@
 				},
 				':checkbox'
 			);
-		}
 
-		if (resultsGrid.one(':checked') == null) {
-			buttons.hide();
+			if (resultsGrid.one(':checked') == null) {
+				buttons.hide();
+			}
 		}
 	}
 </aui:script>

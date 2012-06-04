@@ -720,8 +720,14 @@ input[type="text"], input[type="password"], select, textarea, .textarea, .aui-ta
 	@include box-shadow(0 1px 0 #FFF, 0 1px 2px #CCC inset);
 }
 
-.lfr-search-combobox .aui-field-input {
-	@include box-shadow(0 1px 2px #CCC inset);
+.lfr-search-combobox {
+	.article-advanced-search-icon {
+		@include border-radius(4px 4px 0 0);
+	}
+
+	.aui-field-input {
+		@include box-shadow(0 1px 2px #CCC inset);
+	}
 }
 
 input[type="text"], input[type="password"], select, textarea, .textarea, #breadcrumbs, .form-navigation, .lfr-panel.lfr-extended, .portlet-enterprise-admin .form-navigation, .lfr-asset-column-actions-content, .lfr-ctrl-panel-content .aui-column-content-center, .taglib-search-toggle, .portlet-communities .layout-breadcrumb ul, .portlet-enterprise-admin .layout-breadcrumb ul, .aui-textboxlistentry-holder, .aui-field-element {

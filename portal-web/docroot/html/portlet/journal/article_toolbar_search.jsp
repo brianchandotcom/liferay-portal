@@ -46,7 +46,7 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 				String taglibOnClick = renderResponse.getNamespace() + "openAdvancedSearch();";
 				%>
 
-				<aui:button cssClass="lfr-search-combobox-item article-advanced-search-icon" inputCssClass="<%= (search != null) ? "close-advanced-search" : "" %>" name="showAdvancedSearch" onClick="<%= taglibOnClick %>" type="button" />
+				<aui:button cssClass="lfr-search-combobox-item article-advanced-search-icon" inputCssClass='<%= (search != null) ? "close-advanced-search" : "" %>' name="showAdvancedSearch" onClick="<%= taglibOnClick %>" type="button" />
 			</aui:column>
 		</aui:layout>
 	</aui:form>
@@ -64,16 +64,11 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 			if (advancedSearch) {
 				var showAdvancedSearch = A.one('#<portlet:namespace/>showAdvancedSearch');
 
-				if (showAdvancedSearch.hasClass('close-advanced-search')) {
-					showAdvancedSearch.removeClass('close-advanced-search');
+				var advancedSearchClosed = !showAdvancedSearch.hasClass('close-advanced-search');
 
-					advancedSearch.hide();
-				}
-				else {
-					showAdvancedSearch.addClass('close-advanced-search');
+				showAdvancedSearch.toggleClass('close-advanced-search', advancedSearchClosed);
 
-					advancedSearch.show();
-				}
+				advancedSearch.toggle(advancedSearchClosed);
 			}
 		}
 	);

@@ -158,18 +158,18 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 			<span class="keywords">
 				<%=  message %>
+				<c:if test="<%= folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID %>">
+
+					<%
+					String taglibOnClick = renderResponse.getNamespace() + "changeSearchFolder()";
+					%>
+
+					<span class="change-search-folder">
+						(<aui:a href="javascript:;" label="search-everywhere" onClick="<%= taglibOnClick %>" title="search-everywhere" />)
+					</span>
+				</c:if>
 			</span>
 
-			<c:if test="<%= folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID %>">
-
-				<%
-				String taglibOnClick = renderResponse.getNamespace() + "changeSearchFolder()";
-				%>
-
-				<span class="change-search-folder">
-					<aui:button onClick="<%= taglibOnClick %>" value= "search-everywhere" />
-				</span>
-			</c:if>
 
 			<liferay-portlet:renderURL varImpl="closeSearchURL">
 				<portlet:param name="struts_action" value="/journal/view" />

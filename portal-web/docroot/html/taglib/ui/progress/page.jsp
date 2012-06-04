@@ -30,7 +30,7 @@ if (Validator.isNull(sessionKey)) {
 <div id="<%= id %>Bar"></div>
 
 <aui:script use="liferay-progress">
-	A.config.win['<%= id %>'] = new Liferay.ProcessProgress(
+	A.config.win['<%= id %>'] = new Liferay.Progress(
 		{
 			boundingBox: '#<%= id %>Bar',
 

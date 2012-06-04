@@ -242,6 +242,18 @@ public class CreateAnonymousAccountAction extends PortletAction {
 	}
 
 	@Override
+	protected void addSuccessMessage(
+		ActionRequest actionRequest, ActionResponse actionResponse) {
+
+		String portletId = (String)actionRequest.getAttribute(
+			WebKeys.PORTLET_ID);
+
+		if (!portletId.equals(PortletKeys.FAST_LOGIN)) {
+			super.addSuccessMessage(actionRequest, actionResponse);
+		}
+	}
+
+	@Override
 	protected boolean isCheckMethodOnProcessAction() {
 		return _CHECK_METHOD_ON_PROCESS_ACTION;
 	}

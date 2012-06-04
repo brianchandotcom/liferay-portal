@@ -604,6 +604,13 @@ public class LangBuilder {
 			return null;
 		}
 
+		if (key.equals("background-color") || key.equals("color") ||
+			key.equals("margin") || key.equals("windows-live-messenger") ||
+			key.equals("yim")) {
+
+			return null;
+		}
+
 		if (!_langTranslate) {
 			return null;
 		}

@@ -18,7 +18,9 @@ import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.struts.PortletAction;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.RenderRequestImpl;
+import com.liferay.portlet.asset.model.AssetEntry;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.RenderRequest;
@@ -43,6 +45,20 @@ public class ViewAction extends PortletAction {
 
 		DynamicServletRequest dynamicRequest =
 			(DynamicServletRequest)renderRequestImpl.getHttpServletRequest();
+
+		if (Validator.isNull(
+				ParamUtil.getString(renderRequest, "classNameId"))) {
+
+			dynamicRequest.setParameter(
+				"classNameId",
+				String.valueOf(PortalUtil.getClassNameId(AssetEntry.class)));
+		}
+
+		if (Validator.isNull(ParamUtil.getString(renderRequest, "classPK"))) {
+			dynamicRequest.setParameter(
+				"classPK",
+				String.valueOf(PortalUtil.getScopeGroupId(renderRequest)));
+		}
 
 		if (Validator.isNull(
 			ParamUtil.getString(renderRequest, "ddmResource"))) {

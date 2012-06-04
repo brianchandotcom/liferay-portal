@@ -24,6 +24,7 @@ import com.liferay.portlet.documentlibrary.util.AudioProcessorUtil;
 public class AudioProcessorMessageListener
 	extends BaseProcessorMessageListener {
 
+	@Override
 	protected void generate(
 			FileVersion sourceFileVersion, FileVersion destinationFileVersion)
 		throws Exception {

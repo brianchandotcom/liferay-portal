@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.ServerDetector;
  */
 public class JettyThreadLocalBinder extends DefaultThreadLocalBinder {
 
+	@Override
 	public void afterPropertiesSet() throws Exception {
 		if (!ServerDetector.isJetty()) {
 			return;

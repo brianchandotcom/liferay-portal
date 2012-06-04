@@ -67,6 +67,7 @@ public class ThemeDisplay
 		_portletDisplay.setThemeDisplay(this);
 	}
 
+	@Override
 	public Object clone() throws CloneNotSupportedException {
 		ThemeDisplay themeDisplay = (ThemeDisplay)super.clone();
 

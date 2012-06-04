@@ -23,6 +23,7 @@ import com.liferay.portlet.documentlibrary.util.ImageProcessorUtil;
 public class ImageProcessorMessageListener
 	extends BaseProcessorMessageListener {
 
+	@Override
 	protected void generate(
 			FileVersion sourceFileVersion, FileVersion destinationFileVersion)
 		throws Exception {

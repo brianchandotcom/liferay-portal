@@ -67,7 +67,8 @@ public class GroupPermissionImpl implements GroupPermission {
 
 			User user = UserLocalServiceUtil.getUserById(group.getClassPK());
 
-			if (UserPermissionUtil.contains(
+			if ((permissionChecker.getUserId() != user.getUserId()) &&
+				UserPermissionUtil.contains(
 					permissionChecker, user.getUserId(),
 					user.getOrganizationIds(), ActionKeys.UPDATE)) {
 

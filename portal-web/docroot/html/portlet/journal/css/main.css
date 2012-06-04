@@ -178,17 +178,16 @@
 		}
 
 		.article-advanced-search-icon {
-			background: url("@theme_image_path@/portlet/header_bg.png") repeat-x scroll 0 0 #D4D4D4;
-			border-radius: 1px 4px 4px 1px;
+			background: #D4D4D4 url(@theme_image_path@/portlet/header_bg.png) repeat-x scroll 0 0;
 
 			&:hover {
-				background: url("@theme_image_path@/application/state_hover_bg.png") repeat-x scroll 0 0 #B9CED9;
+				background: #B9CED9 url(@theme_image_path@/application/state_hover_bg.png) repeat-x scroll 0 0;
 				border-color: #627782;
-				color: #336699;
+				color: #369;
 			}
 
 			input {
-				background: url("@theme_image_path@/arrows/05_down.png") no-repeat scroll 9px 60% transparent;
+				background: url(@theme_image_path@/arrows/05_down.png) no-repeat scroll 9px 60% transparent;
 				width: 28px;
 
 				&.close-advanced-search {
@@ -387,28 +386,26 @@
 	.journal-container {
 		.search-info {
 			background-color: #D3E8F1;
-			min-height: 40px;
-			padding-left: 10px;
+			padding: 10px;
+			padding-right: 50px;
 			position: relative;
 
 			.keywords {
 				float: none;
 				font-size: 1.4em;
 				font-weight: bold;
-				position: absolute;
-				top: 7px;
 			}
 
 			.change-search-folder {
-				position: absolute;
-				right: 60px;
-				top: 7px;
+				font-size: 0.8em;
+				font-weight: normal;
 			}
 
 			.close-search {
+				margin-top: -8px;
 				position: absolute;
-				right: 20px;
-				top: 10px;
+				right: 15px;
+				top: 50%;
 			}
 		}
 	}

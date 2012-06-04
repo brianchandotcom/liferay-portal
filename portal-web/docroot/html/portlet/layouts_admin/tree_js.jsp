@@ -419,8 +419,9 @@ if (!selectableTree) {
 						return {
 							groupId: groupId,
 							incomplete: <%= incomplete %>,
-							privateLayout: <%= privateLayout %>,
+							p_auth: Liferay.authToken,
 							parentLayoutId: parentLayoutId,
+							privateLayout: <%= privateLayout %>,
 							selPlid: '<%= selPlid %>',
 							treeId: '<%= HtmlUtil.escape(treeId) %>'
 						};

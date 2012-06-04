@@ -71,24 +71,53 @@ if (filterManageableOrganizations) {
 					<%
 					String parentOrganizationName = LanguageUtil.get(pageContext, "users-and-organizations-home");
 
+					Boolean hasOrganizationPermission = false;
+
 					if (!organization.isRoot()) {
 						Organization parentOrganization = organization.getParentOrganization();
 
-						parentOrganizationName = parentOrganization.getName();
+						hasOrganizationPermission = OrganizationPermissionUtil.contains(permissionChecker, parentOrganization, ActionKeys.VIEW);
+
+						if(hasOrganizationPermission)
+							parentOrganizationName = parentOrganization.getName();
 					}
 					%>
 
-					<portlet:renderURL var="headerBackURL">
-						<portlet:param name="struts_action" value="/organization/view" />
-						<portlet:param name="organizationId" value="<%= String.valueOf(organization.getParentOrganizationId()) %>" />
-					</portlet:renderURL>
+					<c:choose>
+						<c:when test="<%= !organization.isRoot() %>">
+							<portlet:renderURL var="headerBackURL">
+								<portlet:param name="struts_action" value="/organization/view" />
+								<c:choose>
+									<c:when test="<%= hasOrganizationPermission %>">
+										<portlet:param name="organizationId" value="<%= String.valueOf(organization.getParentOrganizationId()) %>" />
+									</c:when>
+									<c:otherwise>
+										<portlet:param name="organizationId" value="<%= String.valueOf(0) %>" />
+									</c:otherwise>
+								</c:choose>
+							</portlet:renderURL>
 
-					<liferay-ui:header
-						backLabel="<%= parentOrganizationName %>"
-						backURL="<%= headerBackURL.toString() %>"
-						localizeTitle="<%= false %>"
-						title="<%= organization.getName() %>"
-					/>
+							<liferay-ui:header
+								backLabel="<%= parentOrganizationName %>"
+								backURL="<%= headerBackURL.toString() %>"
+								localizeTitle="<%= false %>"
+								title="<%= organization.getName() %>"
+							/>
+						</c:when>
+						<c:otherwise>
+							<portlet:renderURL var="headerBackURL">
+								<portlet:param name="struts_action" value="/organization/view" />
+								<portlet:param name="organizationId" value="<%= String.valueOf(0) %>" />
+							</portlet:renderURL>
+
+							<liferay-ui:header
+								backLabel="<%= parentOrganizationName %>"
+								backURL="<%= headerBackURL.toString() %>"
+								localizeTitle="<%= false %>"
+								title="<%= organization.getName() %>"
+							/>
+						</c:otherwise>
+					</c:choose>
 				</c:when>
 				<c:otherwise>
 					<span class="aui-search-bar">

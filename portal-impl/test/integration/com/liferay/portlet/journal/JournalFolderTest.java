@@ -17,6 +17,7 @@ package com.liferay.portlet.journal;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -41,8 +42,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * <a href="JournalFolderTest.java.html"><b><i>View Source</i></b></a>
- *
  * @author Juan Fernández
  */
 @ExecutionTestListeners(
@@ -68,7 +67,7 @@ public class JournalFolderTest {
 			group.getGroupId(), folder.getFolderId(), "Test Article",
 			"This is a test article.");
 
-		Assert.assertTrue(article.getFolderId() == folder.getFolderId());
+		Assert.assertEquals(article.getFolderId(), folder.getFolderId());
 
 		JournalFolderLocalServiceUtil.deleteFolder(folder);
 		GroupLocalServiceUtil.deleteGroup(group);
@@ -90,11 +89,11 @@ public class JournalFolderTest {
 		Assert.assertFalse(folder11.isRoot());
 		Assert.assertFalse(folder111.isRoot());
 
-		Assert.assertEquals(folder1.getFolderId(),
-			folder11.getParentFolderId());
+		Assert.assertEquals(
+			folder1.getFolderId(), folder11.getParentFolderId());
 
-		Assert.assertEquals(folder11.getFolderId(),
-			folder111.getParentFolderId());
+		Assert.assertEquals(
+			folder11.getFolderId(), folder111.getParentFolderId());
 	}
 
 	protected JournalArticle _addArticle(
@@ -120,10 +119,11 @@ public class JournalFolderTest {
 		sb.append("</static-content></root>");
 
 		return JournalArticleLocalServiceUtil.addArticle(
-			TestPropsValues.getUserId(), groupId, folderId, 0, 0, "", true, 1,
-			titleMap, descriptionMap, sb.toString(), "general", null, null,
-			null, 1, 1, 1965, 0, 0, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true,
-			false, false, null, null, null, null, serviceContext);
+			TestPropsValues.getUserId(), groupId, folderId, 0, 0,
+			StringPool.BLANK, true, 1, titleMap, descriptionMap, sb.toString(),
+			"general", null, null, null, 1, 1, 1965, 0, 0, 0, 0, 0, 0, 0, true,
+			0, 0, 0, 0, 0, true, false, false, null, null, null, null,
+			serviceContext);
 	}
 
 	protected JournalFolder _addFolder(

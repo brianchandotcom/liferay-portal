@@ -32,6 +32,12 @@ public class ProgressTracker {
 	public static final String PERCENT =
 		ProgressTracker.class.getName() + "_PERCENT";
 
+	public static void addProgress(int status, int percent, String message) {
+		Tuple tuple = new Tuple(percent, message);
+
+		_progress.put(status, tuple);
+	}
+
 	public ProgressTracker(HttpServletRequest request, String progressId) {
 		this(request.getSession(), progressId);
 	}
@@ -102,16 +108,11 @@ public class ProgressTracker {
 		setPercent(1);
 	}
 
-	public static void addProgress(int status, int percent, String message) {
-		Tuple tuple = new Tuple(percent, message);
-
-		_progress.put(status, tuple);
-	}
+	private static Map<Integer, Tuple> _progress =
+		new HashMap<Integer, Tuple>();
 
 	private int _percent = 0;
 	private PortletSession _portletSession;
-	private static Map<Integer, Tuple> _progress =
-		new HashMap<Integer, Tuple>();
 	private String _progressId;
 	private HttpSession _session;
 

@@ -24,23 +24,6 @@ public class AddUserJSONTest extends BaseTestCase {
 	public void testAddUserJSON() throws Exception {
 		selenium.open("/api/jsonws");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@id='serviceSearch']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.type("//input[@id='serviceSearch']",
 			RuntimeVariables.replace("add-user"));
 
@@ -93,11 +76,11 @@ public class AddUserJSONTest extends BaseTestCase {
 		selenium.type("//input[@name='prefixId']", RuntimeVariables.replace("0"));
 		selenium.type("//input[@name='suffixId']", RuntimeVariables.replace("0"));
 		selenium.type("//input[@name='birthdayMonth']",
-			RuntimeVariables.replace("7"));
+			RuntimeVariables.replace("0"));
 		selenium.type("//input[@name='birthdayDay']",
-			RuntimeVariables.replace("20"));
+			RuntimeVariables.replace("1"));
 		selenium.type("//input[@name='birthdayYear']",
-			RuntimeVariables.replace("1888"));
+			RuntimeVariables.replace("1970"));
 		selenium.type("//input[@name='roleIds']", RuntimeVariables.replace("15"));
 		selenium.clickAt("//input[@value='false' and @name='sendEmail']",
 			RuntimeVariables.replace("Send Email False"));
@@ -111,7 +94,7 @@ public class AddUserJSONTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//ul/li[contains(@class,'tab-active')]/span/a[contains(.,'Result')]")) {
+							"//li[contains(@class,'tab-active')]/span/a[contains(.,'Result')]")) {
 					break;
 				}
 			}
@@ -123,7 +106,7 @@ public class AddUserJSONTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Result"),
 			selenium.getText(
-				"//ul/li[contains(@class,'tab-active')]/span/a[contains(.,'Result')]"));
+				"//li[contains(@class,'tab-active')]/span/a[contains(.,'Result')]"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -141,6 +124,7 @@ public class AddUserJSONTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		assertTrue(selenium.isPartialText("//pre[@class='lfr-code-block']", "{"));
 		assertTrue(selenium.isPartialText("//pre[@class='lfr-code-block']",
 				"\"agreedToTermsOfUse\": false,"));
 		assertTrue(selenium.isPartialText("//pre[@class='lfr-code-block']",
@@ -155,5 +139,6 @@ public class AddUserJSONTest extends BaseTestCase {
 				"\"lastName\": \"userln\","));
 		assertTrue(selenium.isPartialText("//pre[@class='lfr-code-block']",
 				"\"screenName\": \"usersn\","));
+		assertTrue(selenium.isPartialText("//pre[@class='lfr-code-block']", "}"));
 	}
 }

@@ -24,23 +24,6 @@ public class Guest_AddUserJSONTest extends BaseTestCase {
 	public void testGuest_AddUserJSON() throws Exception {
 		selenium.open("/api/jsonws");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//input[@id='serviceSearch']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.type("//input[@id='serviceSearch']",
 			RuntimeVariables.replace("add-user"));
 
@@ -111,7 +94,7 @@ public class Guest_AddUserJSONTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//ul/li[contains(@class,'tab-active')]/span/a[contains(.,'Result')]")) {
+							"//li[contains(@class,'tab-active')]/span/a[contains(.,'Result')]")) {
 					break;
 				}
 			}
@@ -123,7 +106,7 @@ public class Guest_AddUserJSONTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Result"),
 			selenium.getText(
-				"//ul/li[contains(@class,'tab-active')]/span/a[contains(.,'Result')]"));
+				"//li[contains(@class,'tab-active')]/span/a[contains(.,'Result')]"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -143,7 +126,7 @@ public class Guest_AddUserJSONTest extends BaseTestCase {
 
 		assertTrue(selenium.isPartialText("//pre[@class='lfr-code-block']", "{"));
 		assertTrue(selenium.isPartialText("//pre[@class='lfr-code-block']",
-				"\"exception\": \"Public access denied\""));
+				"\"exception\": \"Please sign in to invoke this method\""));
 		assertTrue(selenium.isPartialText("//pre[@class='lfr-code-block']", "}"));
 	}
 }

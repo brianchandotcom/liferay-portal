@@ -135,12 +135,12 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//ul/li[contains(@class,'tab-active')]/span/a[contains(.,'Result')]</td>
+	<td>//li[contains(@class,'tab-active')]/span/a[contains(.,'Result')]</td>
 	<td>Result</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//ul/li[contains(@class,'tab-active')]/span/a[contains(.,'Result')]</td>
+	<td>//li[contains(@class,'tab-active')]/span/a[contains(.,'Result')]</td>
 	<td>Result</td>
 </tr>
 <tr>
@@ -149,9 +149,19 @@
 	<td>Code Block</td>
 </tr>
 <tr>
-	<td>assertText</td>
+	<td>assertPartialText</td>
 	<td>//pre[@class='lfr-code-block']</td>
-	<td>{<br /> "exception": "com.liferay.portal.security.auth.PrincipalException"<br />}</td>
+	<td>{</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//pre[@class='lfr-code-block']</td>
+	<td>"exception": "com.liferay.portal.security.auth.PrincipalException"</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//pre[@class='lfr-code-block']</td>
+	<td>}</td>
 </tr>
 </tbody>
 </table>

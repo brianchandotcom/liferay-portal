@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//input[@id='serviceSearch']</td>
-	<td>Service Search</td>
-</tr>
-<tr>
 	<td>type</td>
 	<td>//input[@id='serviceSearch']</td>
 	<td>add-user</td>
@@ -106,17 +101,17 @@
 <tr>
 	<td>type</td>
 	<td>//input[@name='birthdayMonth']</td>
-	<td>7</td>
+	<td>0</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//input[@name='birthdayDay']</td>
-	<td>20</td>
+	<td>1</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//input[@name='birthdayYear']</td>
-	<td>1888</td>
+	<td>1970</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -135,18 +130,23 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//ul/li[contains(@class,'tab-active')]/span/a[contains(.,'Result')]</td>
+	<td>//li[contains(@class,'tab-active')]/span/a[contains(.,'Result')]</td>
 	<td>Result</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//ul/li[contains(@class,'tab-active')]/span/a[contains(.,'Result')]</td>
+	<td>//li[contains(@class,'tab-active')]/span/a[contains(.,'Result')]</td>
 	<td>Result</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
 	<td>//pre[@class='lfr-code-block']</td>
 	<td>Code Block</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//pre[@class='lfr-code-block']</td>
+	<td>{</td>
 </tr>
 <tr>
 	<td>assertPartialText</td>
@@ -182,6 +182,11 @@
 	<td>assertPartialText</td>
 	<td>//pre[@class='lfr-code-block']</td>
 	<td>"screenName": "usersn",</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//pre[@class='lfr-code-block']</td>
+	<td>}</td>
 </tr>
 </tbody>
 </table>

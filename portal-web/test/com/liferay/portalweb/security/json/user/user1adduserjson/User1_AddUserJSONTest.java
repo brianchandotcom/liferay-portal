@@ -111,7 +111,7 @@ public class User1_AddUserJSONTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//ul/li[contains(@class,'tab-active')]/span/a[contains(.,'Result')]")) {
+							"//li[contains(@class,'tab-active')]/span/a[contains(.,'Result')]")) {
 					break;
 				}
 			}
@@ -123,7 +123,7 @@ public class User1_AddUserJSONTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Result"),
 			selenium.getText(
-				"//ul/li[contains(@class,'tab-active')]/span/a[contains(.,'Result')]"));
+				"//li[contains(@class,'tab-active')]/span/a[contains(.,'Result')]"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -141,8 +141,9 @@ public class User1_AddUserJSONTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace(
-				"{\n \"exception\": \"com.liferay.portal.security.auth.PrincipalException\"\n}"),
-			selenium.getText("//pre[@class='lfr-code-block']"));
+		assertTrue(selenium.isPartialText("//pre[@class='lfr-code-block']", "{"));
+		assertTrue(selenium.isPartialText("//pre[@class='lfr-code-block']",
+				"\"exception\": \"com.liferay.portal.security.auth.PrincipalException\""));
+		assertTrue(selenium.isPartialText("//pre[@class='lfr-code-block']", "}"));
 	}
 }

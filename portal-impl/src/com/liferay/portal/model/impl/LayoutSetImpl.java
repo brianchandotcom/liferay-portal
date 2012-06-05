@@ -149,32 +149,7 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 			return value;
 		}
 
-		Theme theme = null;
-
-		boolean controlPanel = false;
-
-		try {
-			Group group = getGroup();
-
-			controlPanel = group.isControlPanel();
-		}
-		catch (Exception e) {
-		}
-
-		if (controlPanel) {
-			String themeId = PrefsPropsUtil.getString(
-				getCompanyId(),
-				PropsKeys.CONTROL_PANEL_LAYOUT_REGULAR_THEME_ID);
-
-			theme = ThemeLocalServiceUtil.getTheme(
-				getCompanyId(), themeId, !device.equals("regular"));
-		}
-		else if (device.equals("regular")) {
-			theme = getTheme();
-		}
-		else {
-			theme = getWapTheme();
-		}
+		Theme theme = getTheme(device);
 
 		value = theme.getSetting(key);
 
@@ -231,6 +206,33 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 		_settingsProperties = settingsProperties;
 
 		super.setSettings(_settingsProperties.toString());
+	}
+
+	protected Theme getTheme(String device) throws SystemException {
+		boolean controlPanel = false;
+
+		try {
+			Group group = getGroup();
+
+			controlPanel = group.isControlPanel();
+		}
+		catch (Exception e) {
+		}
+
+		if (controlPanel) {
+			String themeId = PrefsPropsUtil.getString(
+				getCompanyId(),
+				PropsKeys.CONTROL_PANEL_LAYOUT_REGULAR_THEME_ID);
+
+			return ThemeLocalServiceUtil.getTheme(
+				getCompanyId(), themeId, !device.equals("regular"));
+		}
+		else if (device.equals("regular")) {
+			return getTheme();
+		}
+		else {
+			return getWapTheme();
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(LayoutSetImpl.class);

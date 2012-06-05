@@ -63,107 +63,159 @@ portletURL.setParameter("classPK", String.valueOf(classPK));
 </liferay-util:include>
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
-	<liferay-ui:search-form
-		page="/html/portlet/dynamic_data_mapping/template_search.jsp"
-	/>
-</aui:form>
+	<aui:input name="<%= Constants.CMD %>" type="hidden" />
+	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+	<aui:input name="deleteTemplateIds" type="hidden" />
 
-<div class="separator"></div>
-
-<liferay-ui:search-container
-	searchContainer="<%= new TemplateSearch(renderRequest, portletURL) %>"
->
-	<liferay-ui:search-container-results>
-		<%@ include file="/html/portlet/dynamic_data_mapping/template_search_results.jspf" %>
-	</liferay-ui:search-container-results>
-
-	<liferay-ui:search-container-row
-		className="com.liferay.portlet.dynamicdatamapping.model.DDMTemplate"
-		keyProperty="templateId"
-		modelVar="template"
+	<liferay-ui:search-container
+		rowChecker="<%= new RowChecker(renderResponse) %>"
+		searchContainer="<%= new TemplateSearch(renderRequest, portletURL) %>"
 	>
 
-		<%
-		String rowHREF = null;
-
-		if (Validator.isNotNull(chooseCallback)) {
-			StringBundler sb = new StringBundler(7);
-
-			sb.append("javascript:Liferay.Util.getOpener()['");
-			sb.append(HtmlUtil.escapeJS(chooseCallback));
-			sb.append("']('");
-			sb.append(template.getTemplateId());
-			sb.append("', '");
-			sb.append(HtmlUtil.escapeJS(template.getName(locale)));
-			sb.append("', Liferay.Util.getWindow());");
-
-			rowHREF = sb.toString();
-		}
-		else {
-			PortletURL rowURL = renderResponse.createRenderURL();
-
-			rowURL.setParameter("struts_action", "/dynamic_data_mapping/edit_template");
-			rowURL.setParameter("redirect", currentURL);
-			rowURL.setParameter("backURL", currentURL);
-			rowURL.setParameter("groupId", String.valueOf(template.getGroupId()));
-			rowURL.setParameter("templateId", String.valueOf(template.getTemplateId()));
-			rowURL.setParameter("classNameId", String.valueOf(classNameId));
-			rowURL.setParameter("classPK", String.valueOf(classPK));
-			rowURL.setParameter("type", template.getType());
-
-			rowHREF = rowURL.toString();
-		}
-		%>
-
-		<liferay-ui:search-container-column-text
-			href="<%= rowHREF %>"
-			name="id"
-			property="templateId"
+		<liferay-ui:search-form
+			page="/html/portlet/dynamic_data_mapping/template_search.jsp"
 		/>
 
-		<liferay-ui:search-container-column-text
-			href="<%= rowHREF %>"
-			name="name"
-			value="<%= LanguageUtil.get(pageContext, template.getName(locale)) %>"
-		/>
+		<liferay-ui:search-container-results>
+			<%@ include file="/html/portlet/dynamic_data_mapping/template_search_results.jspf" %>
+		</liferay-ui:search-container-results>
 
-		<c:if test="<%= Validator.isNull(templateTypeValue) %>">
-			<liferay-ui:search-container-column-text
-				href="<%= rowHREF %>"
-				name="type"
-				value="<%= LanguageUtil.get(pageContext, template.getType()) %>"
-			/>
-		</c:if>
-
-		<liferay-ui:search-container-column-text
-			href="<%= rowHREF %>"
-			name="mode"
-			value="<%= LanguageUtil.get(pageContext, template.getMode()) %>"
-		/>
-
-		<liferay-ui:search-container-column-text
-			href="<%= rowHREF %>"
-			name="language"
-			value="<%= LanguageUtil.get(pageContext, template.getLanguage()) %>"
-		/>
-
-		<liferay-ui:search-container-column-text
-			buffer="buffer"
-			href="<%= rowHREF %>"
-			name="modified-date"
+		<liferay-ui:search-container-row
+			className="com.liferay.portlet.dynamicdatamapping.model.DDMTemplate"
+			keyProperty="templateId"
+			modelVar="template"
 		>
 
 			<%
-			buffer.append(dateFormatDateTime.format(template.getModifiedDate()));
+			String rowHREF = null;
+
+			if (Validator.isNotNull(chooseCallback)) {
+				StringBundler sb = new StringBundler(7);
+
+				sb.append("javascript:Liferay.Util.getOpener()['");
+				sb.append(HtmlUtil.escapeJS(chooseCallback));
+				sb.append("']('");
+				sb.append(template.getTemplateId());
+				sb.append("', '");
+				sb.append(HtmlUtil.escapeJS(template.getName(locale)));
+				sb.append("', Liferay.Util.getWindow());");
+
+				rowHREF = sb.toString();
+			}
+			else {
+				PortletURL rowURL = renderResponse.createRenderURL();
+
+				rowURL.setParameter("struts_action", "/dynamic_data_mapping/edit_template");
+				rowURL.setParameter("redirect", currentURL);
+				rowURL.setParameter("backURL", currentURL);
+				rowURL.setParameter("groupId", String.valueOf(template.getGroupId()));
+				rowURL.setParameter("templateId", String.valueOf(template.getTemplateId()));
+				rowURL.setParameter("classNameId", String.valueOf(classNameId));
+				rowURL.setParameter("classPK", String.valueOf(classPK));
+				rowURL.setParameter("type", template.getType());
+
+				rowHREF = rowURL.toString();
+			}
 			%>
 
-		</liferay-ui:search-container-column-text>
+			<liferay-ui:search-container-column-text
+				href="<%= rowHREF %>"
+				name="id"
+				property="templateId"
+			/>
 
-		<liferay-ui:search-container-column-jsp
-			align="right"
-			path="/html/portlet/dynamic_data_mapping/template_action.jsp"
-		/>
-	</liferay-ui:search-container-row>
+			<liferay-ui:search-container-column-text
+				href="<%= rowHREF %>"
+				name="name"
+				value="<%= LanguageUtil.get(pageContext, template.getName(locale)) %>"
+			/>
 
-	<liferay-ui:search-iterator />
-</liferay-ui:search-container>
+			<c:if test="<%= Validator.isNull(templateTypeValue) %>">
+				<liferay-ui:search-container-column-text
+					href="<%= rowHREF %>"
+					name="type"
+					value="<%= LanguageUtil.get(pageContext, template.getType()) %>"
+				/>
+			</c:if>
+
+			<liferay-ui:search-container-column-text
+				href="<%= rowHREF %>"
+				name="mode"
+				value="<%= LanguageUtil.get(pageContext, template.getMode()) %>"
+			/>
+
+			<liferay-ui:search-container-column-text
+				href="<%= rowHREF %>"
+				name="language"
+				value="<%= LanguageUtil.get(pageContext, template.getLanguage()) %>"
+			/>
+
+			<liferay-ui:search-container-column-text
+				buffer="buffer"
+				href="<%= rowHREF %>"
+				name="modified-date"
+			>
+
+				<%
+				buffer.append(dateFormatDateTime.format(template.getModifiedDate()));
+				%>
+
+			</liferay-ui:search-container-column-text>
+
+			<liferay-ui:search-container-column-jsp
+				align="right"
+				path="/html/portlet/dynamic_data_mapping/template_action.jsp"
+			/>
+		</liferay-ui:search-container-row>
+
+		<c:if test="<%= total > 0 %>">
+			<aui:button-row>
+				<aui:button cssClass="delete-templates-button" onClick='<%= renderResponse.getNamespace() + "deleteTemplates();" %>' value="delete" />
+			</aui:button-row>
+
+			<div class="separator"><!-- --></div>
+		</c:if>
+
+		<liferay-ui:search-iterator />
+	</liferay-ui:search-container>
+</aui:form>
+
+<aui:script>
+	Liferay.provide(
+		window,
+		'<portlet:namespace />deleteTemplates',
+		function() {
+			if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-this") %>')) {
+				document.<portlet:namespace />fm.method = "post";
+				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.DELETE %>";
+				document.<portlet:namespace />fm.<portlet:namespace />deleteTemplateIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds");
+				submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" /></portlet:actionURL>");
+			}
+		},
+		['liferay-util-list-fields']
+	);
+</aui:script>
+
+<aui:script use="aui-base">
+	var buttons = A.all('.delete-templates-button');
+
+	if (buttons.size()) {
+		var toggleDisabled = A.bind(Liferay.Util.toggleDisabled, Liferay.Util, ':button');
+
+		var resultsGrid = A.one('.results-grid');
+
+		if (resultsGrid) {
+			resultsGrid.delegate(
+				'click',
+				function(event) {
+					var disabled = (resultsGrid.one(':checked') == null);
+
+					toggleDisabled(disabled);
+				},
+				':checkbox'
+			);
+		}
+
+		toggleDisabled(true);
+	}
+</aui:script>

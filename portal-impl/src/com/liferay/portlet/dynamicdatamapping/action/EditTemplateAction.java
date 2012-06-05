@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
@@ -72,7 +73,7 @@ public class EditTemplateAction extends PortletAction {
 				template = updateTemplate(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteTemplate(actionRequest);
+				deleteTemplates(actionRequest);
 			}
 
 			if (Validator.isNotNull(cmd)) {
@@ -140,13 +141,23 @@ public class EditTemplateAction extends PortletAction {
 				renderRequest, "portlet.dynamic_data_mapping.edit_template"));
 	}
 
-	protected void deleteTemplate(ActionRequest actionRequest)
+	protected void deleteTemplates(ActionRequest actionRequest)
 		throws Exception {
+
+		long[] deleteTemplateIds;
 
 		long templateId = ParamUtil.getLong(actionRequest, "templateId");
 
 		if (templateId > 0) {
-			DDMTemplateServiceUtil.deleteTemplate(templateId);
+			deleteTemplateIds = new long[] {templateId};
+		}
+		else {
+			deleteTemplateIds = StringUtil.split(
+				ParamUtil.getString(actionRequest, "deleteTemplateIds"), 0L);
+		}
+
+		for (long deleteTemplateId : deleteTemplateIds) {
+			DDMTemplateServiceUtil.deleteTemplate(deleteTemplateId);
 		}
 	}
 

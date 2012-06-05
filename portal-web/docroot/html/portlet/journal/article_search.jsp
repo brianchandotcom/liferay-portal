@@ -32,7 +32,7 @@ ArticleDisplayTerms displayTerms = (ArticleDisplayTerms)searchContainer.getDispl
 boolean advancedSearch = ParamUtil.getBoolean(request, displayTerms.ADVANCED_SEARCH, false);
 %>
 
-<div class='taglib-search-toggle taglib-search-toggle-advanced <%= advancedSearch ? "" :  "aui-helper-hidden" %>' id="<portlet:namespace />advancedSearch">
+<div class='taglib-search-toggle taglib-search-toggle-advanced <%= advancedSearch ? "" : "aui-helper-hidden" %>' id="<portlet:namespace />advancedSearch">
 	<aui:input name="<%= displayTerms.ADVANCED_SEARCH %>" type="hidden" value="<%= true %>" />
 
 	<liferay-util:buffer var="andOperator">
@@ -139,7 +139,7 @@ boolean advancedSearch = ParamUtil.getBoolean(request, displayTerms.ADVANCED_SEA
 String keywords = ParamUtil.getString(request, "keywords");
 %>
 
-<c:if test="<%= (Validator.isNotNull(keywords) || advancedSearch) %>" >
+<c:if test="<%= (Validator.isNotNull(keywords) || advancedSearch) %>">
 	<div id="<portlet:namespace />searchInfo">
 		<div class="search-info">
 
@@ -157,7 +157,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 			%>
 
 			<span class="keywords">
-				<%=  message %>
+				<%= message %>
 				<c:if test="<%= folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID %>">
 
 					<%

@@ -35,10 +35,10 @@ boolean advancedSearch = ParamUtil.getBoolean(request, DisplayTerms.ADVANCED_SEA
 %>
 
 <c:if test="<%= displayViews.length > 1 %>">
-	<aui:script use="aui-dialog,aui-dialog-iframe">
+	<aui:script use="aui-base,aui-toolbar">
 		var buttonRow = A.one('#<portlet:namespace />displayStyleToolbar');
 
-		function onButtonClick(displayStyle) {
+		var onButtonClick = function(displayStyle) {
 
 			<%
 			PortletURL iconURL = renderResponse.createRenderURL();
@@ -68,31 +68,35 @@ boolean advancedSearch = ParamUtil.getBoolean(request, DisplayTerms.ADVANCED_SEA
 			if (Validator.isNotNull(keywords)) {
 				iconURL.setParameter("keywords", HtmlUtil.escape(keywords));
 				iconURL.setParameter(DisplayTerms.ADVANCED_SEARCH, String.valueOf(advancedSearch));
+
 				descriptiveURL.setParameter("keywords", HtmlUtil.escape(keywords));
 				descriptiveURL.setParameter(DisplayTerms.ADVANCED_SEARCH, String.valueOf(advancedSearch));
+
 				listURL.setParameter("keywords", HtmlUtil.escape(keywords));
 				listURL.setParameter(DisplayTerms.ADVANCED_SEARCH, String.valueOf(advancedSearch));
 			}
 
 			if (Validator.isNotNull(structureId)) {
 				iconURL.setParameter("structureId", HtmlUtil.escape(structureId));
+
 				descriptiveURL.setParameter("structureId", HtmlUtil.escape(structureId));
+
 				listURL.setParameter("structureId", HtmlUtil.escape(structureId));
 			}
 			%>
 
-			if (displayStyle == 'icon') {
+			if (displayStyle === 'icon') {
 				updateDisplayStyle('<%= iconURL %>', displayStyle);
 			}
-			else if (displayStyle == 'descriptive') {
+			else if (displayStyle === 'descriptive') {
 				updateDisplayStyle('<%= descriptiveURL %>', displayStyle);
 			}
-			else if (displayStyle == 'list') {
+			else if (displayStyle === 'list') {
 				updateDisplayStyle('<%= listURL %>', displayStyle);
 			}
-		}
+		};
 
-		function updateDisplayStyle(url, displayStyle) {
+		var updateDisplayStyle = function(url, displayStyle) {
 
 			<%
 			for (int i = 0; i < displayViews.length; i++) {
@@ -105,7 +109,7 @@ boolean advancedSearch = ParamUtil.getBoolean(request, DisplayTerms.ADVANCED_SEA
 			%>
 
 			location.href = url;
-		}
+		};
 
 		var displayStyleToolbarChildren = [];
 

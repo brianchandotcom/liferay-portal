@@ -144,9 +144,9 @@ public class EditTemplateAction extends PortletAction {
 	protected void deleteTemplates(ActionRequest actionRequest)
 		throws Exception {
 
-		long[] deleteTemplateIds;
-
 		long templateId = ParamUtil.getLong(actionRequest, "templateId");
+
+		long[] deleteTemplateIds;
 
 		if (templateId > 0) {
 			deleteTemplateIds = new long[] {templateId};

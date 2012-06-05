@@ -162,11 +162,11 @@ public class EditStructureAction extends PortletAction {
 	}
 
 	protected void deleteStructures(ActionRequest actionRequest)
-			throws Exception {
-
-		long[] deleteStructureIds;
+		throws Exception {
 
 		long structureId = ParamUtil.getLong(actionRequest, "classPK");
+
+		long[] deleteStructureIds;
 
 		if (structureId > 0) {
 			deleteStructureIds = new long[] {structureId};

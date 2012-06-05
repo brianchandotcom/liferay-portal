@@ -22,7 +22,11 @@ JournalArticleDisplay articleDisplay = (JournalArticleDisplay)request.getAttribu
 
 boolean print = ParamUtil.getString(request, "viewMode").equals(Constants.PRINT);
 
-boolean hasViewPermission = JournalArticlePermission.contains(permissionChecker, article.getGroupId(), article.getArticleId(), ActionKeys.VIEW);
+boolean hasViewPermission = true;
+
+if (article != null) {
+	hasViewPermission = JournalArticlePermission.contains(permissionChecker, article.getGroupId(), article.getArticleId(), ActionKeys.VIEW);
+}
 
 String title = StringPool.BLANK;
 boolean approved = false;
@@ -51,7 +55,7 @@ boolean expired = true;
 	</c:when>
 	<c:when test="<%= !hasViewPermission %>">
 		<div class="portlet-msg-error">
-			<%= LanguageUtil.get(pageContext, "you-do-not-have-the-roles-required-to-access-this-content") %>
+			<%= LanguageUtil.get(pageContext, "you-do-not-have-the-required-permissions-to-access-this-content") %>
 		</div>
 	</c:when>
 	<c:otherwise>

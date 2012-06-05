@@ -1124,14 +1124,14 @@ public class ArrayUtil {
 	}
 
 	/**
-	 * @see {@link ListUtil#toString(List, String)}
+	 * @see ListUtil#toString(List, String)
 	 */
 	public static String toString(Object[] array, String param) {
 		return toString(array, param, StringPool.COMMA);
 	}
 
 	/**
-	 * @see {@link ListUtil#toString(List, String, String)}
+	 * @see ListUtil#toString(List, String, String)
 	 */
 	public static String toString(
 		Object[] array, String param, String delimiter) {
@@ -1160,14 +1160,14 @@ public class ArrayUtil {
 	}
 
 	/**
-	 * @see {@link ListUtil#toString(List, Accessor)}
+	 * @see ListUtil#toString(List, Accessor)
 	 */
 	public static <T, V> String toString(T[] list, Accessor<T, V> accessor) {
 		return toString(list, accessor, StringPool.COMMA);
 	}
 
 	/**
-	 * @see {@link ListUtil#toString(List, Accessor, String)}
+	 * @see ListUtil#toString(List, Accessor, String)
 	 */
 	public static <T, V> String toString(
 		T[] list, Accessor<T, V> accessor, String delimiter) {

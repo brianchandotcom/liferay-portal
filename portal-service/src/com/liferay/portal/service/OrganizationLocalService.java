@@ -677,8 +677,6 @@ public interface OrganizationLocalService extends BaseLocalService,
 	* @throws PortalException if an organization with the primary key could not
 	be found
 	* @throws SystemException if a system exception occurred
-	* @see com.liferay.portal.service.persistence.OrganizationPersistence#rebuildTree(
-	long, boolean)
 	*/
 	public void rebuildTree(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException,

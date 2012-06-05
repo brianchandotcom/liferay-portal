@@ -103,7 +103,7 @@ public class DLAppServiceUtil {
 
 	/**
 	* Adds a file entry and associated metadata. It is created based on a
-	* {@link File} object.
+	* {@link java.io.File} object.
 	*
 	* <p>
 	* This method takes two file names, the <code>sourceFileName</code> and the
@@ -149,7 +149,7 @@ public class DLAppServiceUtil {
 
 	/**
 	* Adds a file entry and associated metadata. It is created based on a
-	* {@link InputStream} object.
+	* {@link java.io.InputStream} object.
 	*
 	* <p>
 	* This method takes two file names, the <code>sourceFileName</code> and the
@@ -1945,7 +1945,7 @@ public class DLAppServiceUtil {
 	}
 
 	/**
-	* Updates a file entry and associated metadata based on a {@link File}
+	* Updates a file entry and associated metadata based on a {@link java.io.File}
 	* object. If the file data is <code>null</code>, then only the associated
 	* metadata (i.e., <code>title</code>, <code>description</code>, and
 	* parameters in the <code>serviceContext</code>) will be updated.
@@ -1993,7 +1993,7 @@ public class DLAppServiceUtil {
 	}
 
 	/**
-	* Updates a file entry and associated metadata based on an {@link
+	* Updates a file entry and associated metadata based on an {@link java.io.
 	* InputStream} object. If the file data is <code>null</code>, then only the
 	* associated metadata (i.e., <code>title</code>, <code>description</code>,
 	* and parameters in the <code>serviceContext</code>) will be updated.

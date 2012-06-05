@@ -284,7 +284,7 @@ public class LayoutSetPrototypeLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated {@link getLayoutSetPrototypeByUuidAndCompanyId(String, long)}
+	* @deprecated {@link #getLayoutSetPrototypeByUuidAndCompanyId(String, long)}
 	*/
 	public static com.liferay.portal.model.LayoutSetPrototype getLayoutSetPrototypeByUuid(
 		java.lang.String uuid)

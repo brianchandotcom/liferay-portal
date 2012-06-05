@@ -82,6 +82,32 @@ boolean showAddArticleButton = JournalPermission.contains(permissionChecker, sco
 	</c:if>
 </c:if>
 
+<c:if test="<%= Validator.isNotNull(displayTerms.getTemplateId()) %>">
+	<aui:input name="<%= displayTerms.TEMPLATE_ID %>" type="hidden" value="<%= displayTerms.getTemplateId() %>" />
+
+	<c:if test="<%= showAddArticleButton %>">
+		<div class="portlet-msg-info">
+
+			<%
+			JournalTemplate template = JournalTemplateLocalServiceUtil.getTemplate(scopeGroupId, displayTerms.getTemplateId());
+			JournalStructure structure = JournalStructureLocalServiceUtil.getStructure(scopeGroupId, template.getStructureId());
+			%>
+
+			<liferay-portlet:renderURL varImpl="addArticlesURL" windowState="<%= LiferayWindowState.MAXIMIZED.toString() %>">
+				<portlet:param name="struts_action" value="/journal/edit_article" />
+				<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="backURL" value="<%= currentURL %>" />
+				<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
+				<portlet:param name="structureId" value="<%= template.getStructureId() %>" />
+				<portlet:param name="templateId" value="<%= displayTerms.getTemplateId() %>" />
+			</liferay-portlet:renderURL>
+
+			<liferay-ui:message arguments="<%= template.getName(locale) %>" key="showing-content-filtered-by-template-x" /> (<a href="<%= addArticlesURL.toString() %>"><liferay-ui:message arguments="<%= structure.getName(locale) %>" key="add-new-x" /></a>)
+		</div>
+	</c:if>
+</c:if>
+
 <c:if test="<%= portletName.equals(PortletKeys.JOURNAL) && !((themeDisplay.getScopeGroupId() == themeDisplay.getCompanyGroupId()) && (Validator.isNotNull(displayTerms.getStructureId()) || Validator.isNotNull(displayTerms.getTemplateId()))) %>">
 	<aui:input name="groupId" type="hidden" />
 </c:if>

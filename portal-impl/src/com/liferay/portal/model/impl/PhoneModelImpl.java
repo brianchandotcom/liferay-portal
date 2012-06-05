@@ -498,15 +498,17 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-			Phone.class.getName(), getPrimaryKey());
+		if (_expandoBridge == null) {
+			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+					Phone.class.getName(), getPrimaryKey());
+		}
+
+		return _expandoBridge;
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		ExpandoBridge expandoBridge = getExpandoBridge();
-
-		expandoBridge.setAttributes(serviceContext);
+		getExpandoBridge().setAttributes(serviceContext);
 	}
 
 	@Override
@@ -784,6 +786,7 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 	private boolean _primary;
 	private boolean _originalPrimary;
 	private boolean _setOriginalPrimary;
+	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private Phone _escapedModelProxy;
 }

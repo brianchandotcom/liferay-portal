@@ -15,6 +15,7 @@
 package com.liferay.portal.service;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
@@ -316,6 +317,7 @@ public class ResourceBlockPermissionLocalServiceUtil {
 
 			ReferenceRegistry.registerReference(ResourceBlockPermissionLocalServiceUtil.class,
 				"_service");
+			MethodCache.remove(ResourceBlockPermissionLocalService.class);
 		}
 
 		return _service;

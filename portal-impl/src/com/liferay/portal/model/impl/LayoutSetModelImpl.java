@@ -559,15 +559,17 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-			LayoutSet.class.getName(), getPrimaryKey());
+		if (_expandoBridge == null) {
+			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+					LayoutSet.class.getName(), getPrimaryKey());
+		}
+
+		return _expandoBridge;
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		ExpandoBridge expandoBridge = getExpandoBridge();
-
-		expandoBridge.setAttributes(serviceContext);
+		getExpandoBridge().setAttributes(serviceContext);
 	}
 
 	@Override
@@ -906,6 +908,7 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 	private String _layoutSetPrototypeUuid;
 	private String _originalLayoutSetPrototypeUuid;
 	private boolean _layoutSetPrototypeLinkEnabled;
+	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private LayoutSet _escapedModelProxy;
 }

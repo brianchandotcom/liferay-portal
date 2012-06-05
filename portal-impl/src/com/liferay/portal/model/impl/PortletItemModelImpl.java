@@ -382,15 +382,17 @@ public class PortletItemModelImpl extends BaseModelImpl<PortletItem>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-			PortletItem.class.getName(), getPrimaryKey());
+		if (_expandoBridge == null) {
+			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+					PortletItem.class.getName(), getPrimaryKey());
+		}
+
+		return _expandoBridge;
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		ExpandoBridge expandoBridge = getExpandoBridge();
-
-		expandoBridge.setAttributes(serviceContext);
+		getExpandoBridge().setAttributes(serviceContext);
 	}
 
 	@Override
@@ -638,6 +640,7 @@ public class PortletItemModelImpl extends BaseModelImpl<PortletItem>
 	private long _classNameId;
 	private long _originalClassNameId;
 	private boolean _setOriginalClassNameId;
+	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private PortletItem _escapedModelProxy;
 }

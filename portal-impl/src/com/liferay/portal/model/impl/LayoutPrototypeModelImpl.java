@@ -425,15 +425,17 @@ public class LayoutPrototypeModelImpl extends BaseModelImpl<LayoutPrototype>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-			LayoutPrototype.class.getName(), getPrimaryKey());
+		if (_expandoBridge == null) {
+			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+					LayoutPrototype.class.getName(), getPrimaryKey());
+		}
+
+		return _expandoBridge;
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		ExpandoBridge expandoBridge = getExpandoBridge();
-
-		expandoBridge.setAttributes(serviceContext);
+		getExpandoBridge().setAttributes(serviceContext);
 	}
 
 	@Override
@@ -640,6 +642,7 @@ public class LayoutPrototypeModelImpl extends BaseModelImpl<LayoutPrototype>
 	private boolean _active;
 	private boolean _originalActive;
 	private boolean _setOriginalActive;
+	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private LayoutPrototype _escapedModelProxy;
 }

@@ -441,15 +441,17 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-			Organization.class.getName(), getPrimaryKey());
+		if (_expandoBridge == null) {
+			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+					Organization.class.getName(), getPrimaryKey());
+		}
+
+		return _expandoBridge;
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		ExpandoBridge expandoBridge = getExpandoBridge();
-
-		expandoBridge.setAttributes(serviceContext);
+		getExpandoBridge().setAttributes(serviceContext);
 	}
 
 	@Override
@@ -693,6 +695,7 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 	private long _countryId;
 	private int _statusId;
 	private String _comments;
+	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private Organization _escapedModelProxy;
 }

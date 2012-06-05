@@ -544,6 +544,45 @@ public class CompanyServiceHttp {
 		}
 	}
 
+	public static com.liferay.portal.model.Company updateLogo(
+		HttpPrincipal httpPrincipal, long companyId,
+		java.awt.image.RenderedImage renderedImage,
+		java.lang.String compressionFormat)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(CompanyServiceUtil.class.getName(),
+					"updateLogo", _updateLogoParameterTypes13);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					companyId, renderedImage, compressionFormat);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.portal.model.Company)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static void updatePreferences(HttpPrincipal httpPrincipal,
 		long companyId,
 		com.liferay.portal.kernel.util.UnicodeProperties properties)
@@ -551,7 +590,7 @@ public class CompanyServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(CompanyServiceUtil.class.getName(),
-					"updatePreferences", _updatePreferencesParameterTypes13);
+					"updatePreferences", _updatePreferencesParameterTypes14);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					companyId, properties);
@@ -586,7 +625,7 @@ public class CompanyServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(CompanyServiceUtil.class.getName(),
-					"updateSecurity", _updateSecurityParameterTypes14);
+					"updateSecurity", _updateSecurityParameterTypes15);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					companyId, authType, autoLogin, sendPassword, strangers,
@@ -670,10 +709,14 @@ public class CompanyServiceHttp {
 	private static final Class<?>[] _updateLogoParameterTypes12 = new Class[] {
 			long.class, java.io.InputStream.class
 		};
-	private static final Class<?>[] _updatePreferencesParameterTypes13 = new Class[] {
+	private static final Class<?>[] _updateLogoParameterTypes13 = new Class[] {
+			long.class, java.awt.image.RenderedImage.class,
+			java.lang.String.class
+		};
+	private static final Class<?>[] _updatePreferencesParameterTypes14 = new Class[] {
 			long.class, com.liferay.portal.kernel.util.UnicodeProperties.class
 		};
-	private static final Class<?>[] _updateSecurityParameterTypes14 = new Class[] {
+	private static final Class<?>[] _updateSecurityParameterTypes15 = new Class[] {
 			long.class, java.lang.String.class, boolean.class, boolean.class,
 			boolean.class, boolean.class, boolean.class, boolean.class
 		};

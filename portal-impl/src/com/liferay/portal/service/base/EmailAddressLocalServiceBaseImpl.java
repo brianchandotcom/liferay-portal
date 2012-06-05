@@ -290,10 +290,8 @@ public abstract class EmailAddressLocalServiceBaseImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
-		Class<?> clazz = getClass();
-
 		return DynamicQueryFactoryUtil.forClass(EmailAddress.class,
-			clazz.getClassLoader());
+			getClassLoader());
 	}
 
 	/**

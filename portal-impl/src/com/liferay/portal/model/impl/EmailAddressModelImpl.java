@@ -476,15 +476,17 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-			EmailAddress.class.getName(), getPrimaryKey());
+		if (_expandoBridge == null) {
+			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+					EmailAddress.class.getName(), getPrimaryKey());
+		}
+
+		return _expandoBridge;
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		ExpandoBridge expandoBridge = getExpandoBridge();
-
-		expandoBridge.setAttributes(serviceContext);
+		getExpandoBridge().setAttributes(serviceContext);
 	}
 
 	@Override
@@ -746,6 +748,7 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 	private boolean _primary;
 	private boolean _originalPrimary;
 	private boolean _setOriginalPrimary;
+	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private EmailAddress _escapedModelProxy;
 }

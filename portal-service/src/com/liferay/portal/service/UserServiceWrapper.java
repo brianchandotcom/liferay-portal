@@ -994,6 +994,44 @@ public class UserServiceWrapper implements UserService,
 	}
 
 	/**
+	* Updates the user's portrait image.
+	*
+	* @param userId the primary key of the user
+	* @param renderedImage the new portrait image
+	* @return the user
+	* @throws PortalException if a user with the primary key could not be found
+	or if the new portrait was invalid
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.User updatePortrait(long userId,
+		java.awt.image.RenderedImage renderedImage)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userService.updatePortrait(userId, renderedImage);
+	}
+
+	/**
+	* Updates the user's portrait image.
+	*
+	* @param userId the primary key of the user
+	* @param renderedImage the new portrait image
+	* @param compressionFormat the image format to use when compressing
+	the renderedImage
+	* @return the user
+	* @throws PortalException if a user with the primary key could not be found
+	or if the new portrait was invalid
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.User updatePortrait(long userId,
+		java.awt.image.RenderedImage renderedImage,
+		java.lang.String compressionFormat)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userService.updatePortrait(userId, renderedImage,
+			compressionFormat);
+	}
+
+	/**
 	* Updates the user's password reset question and answer.
 	*
 	* @param userId the primary key of the user

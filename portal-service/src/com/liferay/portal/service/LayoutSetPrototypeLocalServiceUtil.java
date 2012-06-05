@@ -15,6 +15,7 @@
 package com.liferay.portal.service;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
@@ -339,6 +340,7 @@ public class LayoutSetPrototypeLocalServiceUtil {
 
 			ReferenceRegistry.registerReference(LayoutSetPrototypeLocalServiceUtil.class,
 				"_service");
+			MethodCache.remove(LayoutSetPrototypeLocalService.class);
 		}
 
 		return _service;

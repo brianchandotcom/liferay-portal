@@ -419,15 +419,17 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-			MembershipRequest.class.getName(), getPrimaryKey());
+		if (_expandoBridge == null) {
+			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+					MembershipRequest.class.getName(), getPrimaryKey());
+		}
+
+		return _expandoBridge;
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		ExpandoBridge expandoBridge = getExpandoBridge();
-
-		expandoBridge.setAttributes(serviceContext);
+		getExpandoBridge().setAttributes(serviceContext);
 	}
 
 	@Override
@@ -671,6 +673,7 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 	private int _statusId;
 	private int _originalStatusId;
 	private boolean _setOriginalStatusId;
+	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private MembershipRequest _escapedModelProxy;
 }

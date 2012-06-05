@@ -15,6 +15,7 @@
 package com.liferay.portal.service;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
@@ -304,6 +305,7 @@ public class UserIdMapperLocalServiceUtil {
 
 			ReferenceRegistry.registerReference(UserIdMapperLocalServiceUtil.class,
 				"_service");
+			MethodCache.remove(UserIdMapperLocalService.class);
 		}
 
 		return _service;

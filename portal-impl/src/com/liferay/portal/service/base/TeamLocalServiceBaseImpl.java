@@ -287,10 +287,7 @@ public abstract class TeamLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
-		Class<?> clazz = getClass();
-
-		return DynamicQueryFactoryUtil.forClass(Team.class,
-			clazz.getClassLoader());
+		return DynamicQueryFactoryUtil.forClass(Team.class, getClassLoader());
 	}
 
 	/**

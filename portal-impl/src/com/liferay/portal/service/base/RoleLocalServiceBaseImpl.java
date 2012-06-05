@@ -287,10 +287,7 @@ public abstract class RoleLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
-		Class<?> clazz = getClass();
-
-		return DynamicQueryFactoryUtil.forClass(Role.class,
-			clazz.getClassLoader());
+		return DynamicQueryFactoryUtil.forClass(Role.class, getClassLoader());
 	}
 
 	/**

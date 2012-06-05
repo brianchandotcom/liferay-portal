@@ -620,15 +620,17 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-			Group.class.getName(), getPrimaryKey());
+		if (_expandoBridge == null) {
+			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+					Group.class.getName(), getPrimaryKey());
+		}
+
+		return _expandoBridge;
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		ExpandoBridge expandoBridge = getExpandoBridge();
-
-		expandoBridge.setAttributes(serviceContext);
+		getExpandoBridge().setAttributes(serviceContext);
 	}
 
 	@Override
@@ -936,6 +938,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	private boolean _active;
 	private boolean _originalActive;
 	private boolean _setOriginalActive;
+	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private Group _escapedModelProxy;
 }

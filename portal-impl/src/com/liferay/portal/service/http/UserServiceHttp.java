@@ -1555,6 +1555,83 @@ public class UserServiceHttp {
 		}
 	}
 
+	public static com.liferay.portal.model.User updatePortrait(
+		HttpPrincipal httpPrincipal, long userId,
+		java.awt.image.RenderedImage renderedImage)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(UserServiceUtil.class.getName(),
+					"updatePortrait", _updatePortraitParameterTypes40);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
+					renderedImage);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.portal.model.User)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.portal.model.User updatePortrait(
+		HttpPrincipal httpPrincipal, long userId,
+		java.awt.image.RenderedImage renderedImage,
+		java.lang.String compressionFormat)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(UserServiceUtil.class.getName(),
+					"updatePortrait", _updatePortraitParameterTypes41);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
+					renderedImage, compressionFormat);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.portal.model.User)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.portal.model.User updateReminderQuery(
 		HttpPrincipal httpPrincipal, long userId, java.lang.String question,
 		java.lang.String answer)
@@ -1562,7 +1639,7 @@ public class UserServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(UserServiceUtil.class.getName(),
-					"updateReminderQuery", _updateReminderQueryParameterTypes40);
+					"updateReminderQuery", _updateReminderQueryParameterTypes42);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
 					question, answer);
@@ -1599,7 +1676,7 @@ public class UserServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(UserServiceUtil.class.getName(),
-					"updateScreenName", _updateScreenNameParameterTypes41);
+					"updateScreenName", _updateScreenNameParameterTypes43);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
 					screenName);
@@ -1636,7 +1713,7 @@ public class UserServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(UserServiceUtil.class.getName(),
-					"updateStatus", _updateStatusParameterTypes42);
+					"updateStatus", _updateStatusParameterTypes44);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
 					status);
@@ -1697,7 +1774,7 @@ public class UserServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(UserServiceUtil.class.getName(),
-					"updateUser", _updateUserParameterTypes43);
+					"updateUser", _updateUserParameterTypes45);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
 					oldPassword, newPassword1, newPassword2, passwordReset,
@@ -1762,7 +1839,7 @@ public class UserServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(UserServiceUtil.class.getName(),
-					"updateUser", _updateUserParameterTypes44);
+					"updateUser", _updateUserParameterTypes46);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
 					oldPassword, newPassword1, newPassword2, passwordReset,
@@ -1969,16 +2046,23 @@ public class UserServiceHttp {
 	private static final Class<?>[] _updatePortraitParameterTypes39 = new Class[] {
 			long.class, byte[].class
 		};
-	private static final Class<?>[] _updateReminderQueryParameterTypes40 = new Class[] {
+	private static final Class<?>[] _updatePortraitParameterTypes40 = new Class[] {
+			long.class, java.awt.image.RenderedImage.class
+		};
+	private static final Class<?>[] _updatePortraitParameterTypes41 = new Class[] {
+			long.class, java.awt.image.RenderedImage.class,
+			java.lang.String.class
+		};
+	private static final Class<?>[] _updateReminderQueryParameterTypes42 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class
 		};
-	private static final Class<?>[] _updateScreenNameParameterTypes41 = new Class[] {
+	private static final Class<?>[] _updateScreenNameParameterTypes43 = new Class[] {
 			long.class, java.lang.String.class
 		};
-	private static final Class<?>[] _updateStatusParameterTypes42 = new Class[] {
+	private static final Class<?>[] _updateStatusParameterTypes44 = new Class[] {
 			long.class, int.class
 		};
-	private static final Class<?>[] _updateUserParameterTypes43 = new Class[] {
+	private static final Class<?>[] _updateUserParameterTypes45 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, boolean.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
@@ -1998,7 +2082,7 @@ public class UserServiceHttp {
 			java.util.List.class, java.util.List.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateUserParameterTypes44 = new Class[] {
+	private static final Class<?>[] _updateUserParameterTypes46 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, boolean.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,

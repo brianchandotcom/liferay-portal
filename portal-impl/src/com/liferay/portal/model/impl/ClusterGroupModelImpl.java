@@ -201,15 +201,17 @@ public class ClusterGroupModelImpl extends BaseModelImpl<ClusterGroup>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
-			ClusterGroup.class.getName(), getPrimaryKey());
+		if (_expandoBridge == null) {
+			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+					ClusterGroup.class.getName(), getPrimaryKey());
+		}
+
+		return _expandoBridge;
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		ExpandoBridge expandoBridge = getExpandoBridge();
-
-		expandoBridge.setAttributes(serviceContext);
+		getExpandoBridge().setAttributes(serviceContext);
 	}
 
 	@Override
@@ -355,5 +357,6 @@ public class ClusterGroupModelImpl extends BaseModelImpl<ClusterGroup>
 	private String _name;
 	private String _clusterNodeIds;
 	private boolean _wholeCluster;
+	private transient ExpandoBridge _expandoBridge;
 	private ClusterGroup _escapedModelProxy;
 }

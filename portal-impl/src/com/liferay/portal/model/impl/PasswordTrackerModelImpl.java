@@ -227,15 +227,17 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
-			PasswordTracker.class.getName(), getPrimaryKey());
+		if (_expandoBridge == null) {
+			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+					PasswordTracker.class.getName(), getPrimaryKey());
+		}
+
+		return _expandoBridge;
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		ExpandoBridge expandoBridge = getExpandoBridge();
-
-		expandoBridge.setAttributes(serviceContext);
+		getExpandoBridge().setAttributes(serviceContext);
 	}
 
 	@Override
@@ -409,6 +411,7 @@ public class PasswordTrackerModelImpl extends BaseModelImpl<PasswordTracker>
 	private boolean _setOriginalUserId;
 	private Date _createDate;
 	private String _password;
+	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private PasswordTracker _escapedModelProxy;
 }

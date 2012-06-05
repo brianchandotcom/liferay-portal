@@ -287,10 +287,7 @@ public abstract class ReleaseLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
-		Class<?> clazz = getClass();
-
-		return DynamicQueryFactoryUtil.forClass(Release.class,
-			clazz.getClassLoader());
+		return DynamicQueryFactoryUtil.forClass(Release.class, getClassLoader());
 	}
 
 	/**

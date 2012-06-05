@@ -254,15 +254,17 @@ public class ShardModelImpl extends BaseModelImpl<Shard> implements ShardModel {
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
-			Shard.class.getName(), getPrimaryKey());
+		if (_expandoBridge == null) {
+			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+					Shard.class.getName(), getPrimaryKey());
+		}
+
+		return _expandoBridge;
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		ExpandoBridge expandoBridge = getExpandoBridge();
-
-		expandoBridge.setAttributes(serviceContext);
+		getExpandoBridge().setAttributes(serviceContext);
 	}
 
 	@Override
@@ -420,6 +422,7 @@ public class ShardModelImpl extends BaseModelImpl<Shard> implements ShardModel {
 	private boolean _setOriginalClassPK;
 	private String _name;
 	private String _originalName;
+	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private Shard _escapedModelProxy;
 }

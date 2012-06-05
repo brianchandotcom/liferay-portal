@@ -15,6 +15,7 @@
 package com.liferay.portal.service;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
@@ -392,6 +393,7 @@ public class WorkflowDefinitionLinkLocalServiceUtil {
 
 			ReferenceRegistry.registerReference(WorkflowDefinitionLinkLocalServiceUtil.class,
 				"_service");
+			MethodCache.remove(WorkflowDefinitionLinkLocalService.class);
 		}
 
 		return _service;

@@ -326,15 +326,17 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-			PluginSetting.class.getName(), getPrimaryKey());
+		if (_expandoBridge == null) {
+			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+					PluginSetting.class.getName(), getPrimaryKey());
+		}
+
+		return _expandoBridge;
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		ExpandoBridge expandoBridge = getExpandoBridge();
-
-		expandoBridge.setAttributes(serviceContext);
+		getExpandoBridge().setAttributes(serviceContext);
 	}
 
 	@Override
@@ -521,6 +523,7 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 	private String _originalPluginType;
 	private String _roles;
 	private boolean _active;
+	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private PluginSetting _escapedModelProxy;
 }

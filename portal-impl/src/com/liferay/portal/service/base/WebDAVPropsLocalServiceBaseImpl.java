@@ -290,10 +290,8 @@ public abstract class WebDAVPropsLocalServiceBaseImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
-		Class<?> clazz = getClass();
-
 		return DynamicQueryFactoryUtil.forClass(WebDAVProps.class,
-			clazz.getClassLoader());
+			getClassLoader());
 	}
 
 	/**

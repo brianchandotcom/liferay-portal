@@ -1320,6 +1320,60 @@ public class UserServiceSoap {
 	}
 
 	/**
+	* Updates the user's portrait image.
+	*
+	* @param userId the primary key of the user
+	* @param renderedImage the new portrait image
+	* @return the user
+	* @throws PortalException if a user with the primary key could not be found
+	or if the new portrait was invalid
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.UserSoap updatePortrait(
+		long userId, java.awt.image.RenderedImage renderedImage)
+		throws RemoteException {
+		try {
+			com.liferay.portal.model.User returnValue = UserServiceUtil.updatePortrait(userId,
+					renderedImage);
+
+			return com.liferay.portal.model.UserSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* Updates the user's portrait image.
+	*
+	* @param userId the primary key of the user
+	* @param renderedImage the new portrait image
+	* @param compressionFormat the image format to use when compressing
+	the renderedImage
+	* @return the user
+	* @throws PortalException if a user with the primary key could not be found
+	or if the new portrait was invalid
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.UserSoap updatePortrait(
+		long userId, java.awt.image.RenderedImage renderedImage,
+		java.lang.String compressionFormat) throws RemoteException {
+		try {
+			com.liferay.portal.model.User returnValue = UserServiceUtil.updatePortrait(userId,
+					renderedImage, compressionFormat);
+
+			return com.liferay.portal.model.UserSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
 	* Updates the user's password reset question and answer.
 	*
 	* @param userId the primary key of the user

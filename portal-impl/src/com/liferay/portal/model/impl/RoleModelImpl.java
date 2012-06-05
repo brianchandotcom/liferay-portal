@@ -606,15 +606,17 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-			Role.class.getName(), getPrimaryKey());
+		if (_expandoBridge == null) {
+			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+					Role.class.getName(), getPrimaryKey());
+		}
+
+		return _expandoBridge;
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		ExpandoBridge expandoBridge = getExpandoBridge();
-
-		expandoBridge.setAttributes(serviceContext);
+		getExpandoBridge().setAttributes(serviceContext);
 	}
 
 	@Override
@@ -855,6 +857,7 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	private boolean _setOriginalType;
 	private String _subtype;
 	private String _originalSubtype;
+	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private Role _escapedModelProxy;
 }

@@ -15,6 +15,7 @@
 package com.liferay.portal.service;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
@@ -1286,6 +1287,7 @@ public class OrganizationLocalServiceUtil {
 
 			ReferenceRegistry.registerReference(OrganizationLocalServiceUtil.class,
 				"_service");
+			MethodCache.remove(OrganizationLocalService.class);
 		}
 
 		return _service;

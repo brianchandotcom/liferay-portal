@@ -317,15 +317,17 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
-			Image.class.getName(), getPrimaryKey());
+		if (_expandoBridge == null) {
+			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+					Image.class.getName(), getPrimaryKey());
+		}
+
+		return _expandoBridge;
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		ExpandoBridge expandoBridge = getExpandoBridge();
-
-		expandoBridge.setAttributes(serviceContext);
+		getExpandoBridge().setAttributes(serviceContext);
 	}
 
 	@Override
@@ -523,6 +525,7 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	private int _size;
 	private int _originalSize;
 	private boolean _setOriginalSize;
+	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private Image _escapedModelProxy;
 }

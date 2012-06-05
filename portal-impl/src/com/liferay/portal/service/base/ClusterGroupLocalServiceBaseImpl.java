@@ -290,10 +290,8 @@ public abstract class ClusterGroupLocalServiceBaseImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
-		Class<?> clazz = getClass();
-
 		return DynamicQueryFactoryUtil.forClass(ClusterGroup.class,
-			clazz.getClassLoader());
+			getClassLoader());
 	}
 
 	/**

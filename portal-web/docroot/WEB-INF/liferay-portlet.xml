@@ -1924,6 +1924,7 @@
 		<control-panel-entry-weight>30.0</control-panel-entry-weight>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>false</use-default-template>
+		<scopeable>true</scopeable>
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
 		<header-portlet-css>/html/portlet/document_library/css/main.css</header-portlet-css>

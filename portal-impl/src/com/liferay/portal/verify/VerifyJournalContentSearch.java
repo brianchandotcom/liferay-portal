@@ -36,15 +36,13 @@ public class VerifyJournalContentSearch extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		List<JournalContentSearch> journalContentSearches =
+		List<JournalContentSearch> contentSearches =
 			JournalContentSearchLocalServiceUtil.getArticleContentSearches();
 
 		Set<String> portletIds = new HashSet<String>();
 
-		for (JournalContentSearch journalContentSearch :
-				journalContentSearches) {
-
-			portletIds.add(journalContentSearch.getPortletId());
+		for (JournalContentSearch contentSearch : contentSearches) {
+			portletIds.add(contentSearch.getPortletId());
 		}
 
 		Connection con = null;
@@ -55,11 +53,11 @@ public class VerifyJournalContentSearch extends VerifyProcess {
 			con = DataAccess.getConnection();
 
 			for (String portletId : portletIds) {
-				journalContentSearches =
+				contentSearches =
 					JournalContentSearchLocalServiceUtil.
 						getArticleContentSearchesByPortletId(portletId);
 
-				if (journalContentSearches.size() <= 1) {
+				if (contentSearches.size() <= 1) {
 					continue;
 				}
 
@@ -80,21 +78,19 @@ public class VerifyJournalContentSearch extends VerifyProcess {
 					String articleId = portletPreferences.getValue(
 						"articleId", null);
 
-					JournalContentSearch journalContentSearch =
-						journalContentSearches.get(1);
+					JournalContentSearch contentSearch = contentSearches.get(1);
 
 					JournalContentSearchLocalServiceUtil.updateContentSearch(
-						journalContentSearch.getGroupId(),
-						journalContentSearch.isPrivateLayout(),
-						journalContentSearch.getLayoutId(),
-						journalContentSearch.getPortletId(), articleId, true);
+						contentSearch.getGroupId(),
+						contentSearch.isPrivateLayout(),
+						contentSearch.getLayoutId(),
+						contentSearch.getPortletId(), articleId, true);
 				}
 			}
 		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
 		}
-
 	}
 
 }

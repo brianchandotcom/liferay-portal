@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -170,6 +171,21 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		else {
 			return true;
 		}
+	}
+
+	public Map<Locale, String> getTitleMap() {
+		Locale defaultLocale = LocaleThreadLocal.getDefaultLocale();
+
+		Locale articleDefaultLocale = LocaleUtil.fromLanguageId(
+			getDefaultLocale());
+
+		LocaleThreadLocal.setDefaultLocale(articleDefaultLocale);
+
+		Map<Locale, String> titleMap = super.getTitleMap();
+
+		LocaleThreadLocal.setDefaultLocale(defaultLocale);
+
+		return titleMap;
 	}
 
 	public void setSmallImageType(String smallImageType) {

@@ -35,6 +35,8 @@ import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermiss
 import com.liferay.portlet.documentlibrary.service.permission.DLFileShortcutPermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Sergio González
  */
@@ -62,7 +64,8 @@ public class EntriesChecker extends RowChecker {
 
 	@Override
 	public String getRowCheckBox(
-		boolean checked, boolean disabled, String primaryKey) {
+		HttpServletRequest request, boolean checked, boolean disabled,
+		String primaryKey) {
 
 		DLFileShortcut dlFileShortcut = null;
 		FileEntry fileEntry = null;

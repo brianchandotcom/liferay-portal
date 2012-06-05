@@ -75,7 +75,7 @@ if (folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 	searchTerms.setFolderId(folderId);
 }
 
-String search = ParamUtil.getString(request, displayTerms.ADVANCED_SEARCH, null);
+boolean advancedSearch = ParamUtil.getBoolean(request, displayTerms.ADVANCED_SEARCH, false);
 
 String keywords = ParamUtil.getString(request, "keywords");
 
@@ -84,7 +84,7 @@ int total = 0;
 %>
 
 <c:choose>
-	<c:when test="<%= (Validator.isNotNull(keywords) || (search != null)) %>">
+	<c:when test="<%= (Validator.isNotNull(keywords) || advancedSearch) %>">
 		<c:choose>
 			<c:when test="<%= PropsValues.JOURNAL_ARTICLES_SEARCH_WITH_INDEX %>">
 				<%@ include file="/html/portlet/journal/article_search_results_index.jspf" %>

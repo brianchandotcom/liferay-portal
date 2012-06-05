@@ -19,7 +19,7 @@
 <%
 String keywords = ParamUtil.getString(request, "keywords");
 
-String search = ParamUtil.getString(request, ArticleDisplayTerms.ADVANCED_SEARCH, null);
+boolean advancedSearch = ParamUtil.getBoolean(request, ArticleDisplayTerms.ADVANCED_SEARCH, false);
 
 long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
 
@@ -46,7 +46,7 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 				String taglibOnClick = renderResponse.getNamespace() + "openAdvancedSearch();";
 				%>
 
-				<aui:button cssClass="lfr-search-combobox-item article-advanced-search-icon" inputCssClass='<%= (search != null) ? "close-advanced-search" : "" %>' name="showAdvancedSearch" onClick="<%= taglibOnClick %>" type="button" />
+				<aui:button cssClass="lfr-search-combobox-item article-advanced-search-icon" inputCssClass='<%= advancedSearch ? "close-advanced-search" : "" %>' name="showAdvancedSearch" onClick="<%= taglibOnClick %>" type="button" />
 			</aui:column>
 		</aui:layout>
 	</aui:form>

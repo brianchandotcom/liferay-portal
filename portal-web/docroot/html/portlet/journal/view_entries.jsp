@@ -23,6 +23,23 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/journal/view");
 
+String displayStyle = ParamUtil.getString(request, "displayStyle");
+
+if (Validator.isNull(displayStyle)) {
+	displayStyle = portalPreferences.getValue(PortletKeys.JOURNAL, "display-style", PropsValues.JOURNAL_DEFAULT_DISPLAY_VIEW);
+}
+else {
+	boolean saveDisplayStyle = ParamUtil.getBoolean(request, "saveDisplayStyle");
+
+	if (saveDisplayStyle && ArrayUtil.contains(displayViews, displayStyle)) {
+		portalPreferences.setValue(PortletKeys.JOURNAL, "display-style", displayStyle);
+	}
+}
+
+if (!ArrayUtil.contains(displayViews, displayStyle)) {
+	displayStyle = displayViews[0];
+}
+
 ArticleSearch searchContainer = new ArticleSearch(renderRequest, portletURL);
 
 List headerNames = searchContainer.getHeaderNames();
@@ -30,7 +47,11 @@ List headerNames = searchContainer.getHeaderNames();
 headerNames.add(2, "status");
 headerNames.add(StringPool.BLANK);
 
-searchContainer.setRowChecker(new RowChecker(renderResponse));
+EntriesChecker entriesChecker = new EntriesChecker(liferayPortletRequest, liferayPortletResponse);
+
+entriesChecker.setCssClass("article-selector");
+
+searchContainer.setRowChecker(entriesChecker);
 
 ArticleDisplayTerms displayTerms = (ArticleDisplayTerms)searchContainer.getDisplayTerms();
 
@@ -129,83 +150,210 @@ int total = 0;
 	</c:otherwise>
 </c:choose>
 
-<%
-List resultRows = searchContainer.getResultRows();
+<c:if test="<%= results.isEmpty() %>">
+	<div class="entries-empty portlet-msg-info">
+		<liferay-ui:message key="no-web-content-were-found" />
+	</div>
+</c:if>
 
-for (int i = 0; i < results.size(); i++) {
-	Object result = results.get(i);
-%>
+<div class="results-grid">
 
-	<%@ include file="/html/portlet/journal/cast_result.jspf" %>
+	<%
+	List resultRows = searchContainer.getResultRows();
 
-	<c:choose>
-		<c:when test="<%= curArticle != null %>">
+	for (int i = 0; i < results.size(); i++) {
+		Object result = results.get(i);
+	%>
 
-			<%
-			ResultRow row = new ResultRow(curArticle, curArticle.getArticleId(), i);
+		<%@ include file="/html/portlet/journal/cast_result.jspf" %>
 
-			PortletURL rowURL = renderResponse.createRenderURL();
+		<c:choose>
+			<c:when test="<%= curArticle != null %>">
+				<c:choose>
+					<c:when test='<%= !displayStyle.equals("list") %>'>
 
-			rowURL.setParameter("struts_action", "/journal/edit_article");
-			rowURL.setParameter("redirect", currentURL);
-			rowURL.setParameter("originalRedirect", currentURL);
-			rowURL.setParameter("groupId", String.valueOf(curArticle.getGroupId()));
-			rowURL.setParameter("folderId", String.valueOf(curArticle.getFolderId()));
-			rowURL.setParameter("articleId", curArticle.getArticleId());
-			%>
+						<%
+						PortletURL tempRowURL = renderResponse.createRenderURL();
 
-			<%@ include file="/html/portlet/journal/article_columns.jspf" %>
+						tempRowURL.setParameter("struts_action", "/journal/edit_article");
+						tempRowURL.setParameter("redirect", currentURL);
+						tempRowURL.setParameter("originalRedirect", currentURL);
+						tempRowURL.setParameter("groupId", String.valueOf(curArticle.getGroupId()));
+						tempRowURL.setParameter("folderId", String.valueOf(curArticle.getFolderId()));
+						tempRowURL.setParameter("articleId", curArticle.getArticleId());
 
-			<%
+						request.setAttribute("view_entries.jsp-article", curArticle);
 
-			// Add result row
+						request.setAttribute("view_entries.jsp-tempRowURL", tempRowURL);
+						%>
 
-			resultRows.add(row);
-			%>
+						<c:choose>
+							<c:when test='<%= displayStyle.equals("icon") %>'>
+								<liferay-util:include page="/html/portlet/journal/view_article_icon.jsp" />
+							</c:when>
+							<c:otherwise>
+								<liferay-util:include page="/html/portlet/journal/view_article_descriptive.jsp" />
+							</c:otherwise>
+						</c:choose>
+					</c:when>
+					<c:otherwise>
 
-		</c:when>
-		<c:when test="<%= curFolder != null %>">
+						<%
+						ResultRow row = new ResultRow(curArticle, curArticle.getArticleId(), i);
 
-			<%
-			int foldersCount = JournalFolderServiceUtil.getFoldersCount(scopeGroupId, curFolder.getFolderId());
-			int articlesCount = JournalArticleServiceUtil.getArticlesCount(scopeGroupId, curFolder.getFolderId());
+						PortletURL rowURL = renderResponse.createRenderURL();
 
-			String folderImage = "folder_empty";
+						rowURL.setParameter("struts_action", "/journal/edit_article");
+						rowURL.setParameter("redirect", currentURL);
+						rowURL.setParameter("originalRedirect", currentURL);
+						rowURL.setParameter("groupId", String.valueOf(curArticle.getGroupId()));
+						rowURL.setParameter("folderId", String.valueOf(curArticle.getFolderId()));
+						rowURL.setParameter("articleId", curArticle.getArticleId());
+						%>
 
-			if ((foldersCount + articlesCount) > 0) {
-				folderImage = "folder_full_document";
-			}
+						<%@ include file="/html/portlet/journal/article_columns.jspf" %>
 
-			ResultRow row = new ResultRow(curFolder, curFolder.getFolderId(), i);
+						<%
 
-			PortletURL rowURL = renderResponse.createRenderURL();
+						// Add result row
 
-			rowURL.setParameter("struts_action", "/journal/view");
-			rowURL.setParameter("redirect", currentURL);
-			rowURL.setParameter("originalRedirect", currentURL);
-			rowURL.setParameter("groupId", String.valueOf(curFolder.getGroupId()));
-			rowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
-			%>
+						resultRows.add(row);
+						%>
 
-			<%@ include file="/html/portlet/journal/folder_columns.jspf" %>
+					</c:otherwise>
+				</c:choose>
+			</c:when>
+			<c:when test="<%= curFolder != null %>">
 
-			<%
+				<%
+				int foldersCount = JournalFolderServiceUtil.getFoldersCount(scopeGroupId, curFolder.getFolderId());
+				int articlesCount = JournalArticleServiceUtil.getArticlesCount(scopeGroupId, curFolder.getFolderId());
 
-			// Add result row
+				String folderImage = "folder_empty";
 
-			resultRows.add(row);
-			%>
+				if ((foldersCount + articlesCount) > 0) {
+					folderImage = "folder_full_document";
+				}
+				%>
 
-		</c:when>
-	</c:choose>
+				<c:choose>
+					<c:when test='<%= !displayStyle.equals("list") %>'>
 
-<%
-}
-%>
+						<%
+						PortletURL tempRowURL = renderResponse.createRenderURL();
 
-<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
+						tempRowURL.setParameter("struts_action", "/journal/view");
+						tempRowURL.setParameter("redirect", currentURL);
+						tempRowURL.setParameter("originalRedirect", currentURL);
+						tempRowURL.setParameter("groupId", String.valueOf(curFolder.getGroupId()));
+						tempRowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
+
+						request.setAttribute("view_entries.jsp-folder", curFolder);
+
+						request.setAttribute("view_entries.jsp-folderImage", folderImage);
+
+						request.setAttribute("view_entries.jsp-tempRowURL", tempRowURL);
+						%>
+
+						<c:choose>
+							<c:when test='<%= displayStyle.equals("icon") %>'>
+								<liferay-util:include page="/html/portlet/journal/view_folder_icon.jsp" />
+							</c:when>
+							<c:otherwise>
+								<liferay-util:include page="/html/portlet/journal/view_folder_descriptive.jsp" />
+							</c:otherwise>
+						</c:choose>
+					</c:when>
+					<c:otherwise>
+
+						<%
+						ResultRow row = new ResultRow(curFolder, curFolder.getFolderId(), i);
+
+						PortletURL rowURL = renderResponse.createRenderURL();
+
+						rowURL.setParameter("struts_action", "/journal/view");
+						rowURL.setParameter("redirect", currentURL);
+						rowURL.setParameter("originalRedirect", currentURL);
+						rowURL.setParameter("groupId", String.valueOf(curFolder.getGroupId()));
+						rowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
+						%>
+
+						<%@ include file="/html/portlet/journal/folder_columns.jspf" %>
+
+						<%
+
+						// Add result row
+
+						resultRows.add(row);
+						%>
+
+					</c:otherwise>
+				</c:choose>
+			</c:when>
+		</c:choose>
+
+	<%
+	}
+	%>
+
+	<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
+</div>
 
 <aui:script>
+	var journalContainer = A.one('#<portlet:namespace />journalContainer');
+
+	journalContainer.delegate(
+		'change',
+		<portlet:namespace />onJournalContainerChange,
+		'.article-selector'
+	);
+
+	function <portlet:namespace />onJournalContainerChange(event) {
+
+		<%
+		if (!displayStyle.equals("list")) {
+		%>
+
+			event.currentTarget.ancestor('.article-display-style').toggleClass('selected');
+
+		<%
+		}
+		%>
+
+	}
+
+	var selectAllCheckbox = journalContainer.one('#<portlet:namespace />allRowIdsCheckbox');
+
+	selectAllCheckbox.on('click', <portlet:namespace />onSelectAllCheckboxChange);
+
+	function <portlet:namespace />onSelectAllCheckboxChange(event) {
+		<portlet:namespace />_toggleEntriesSelection();
+
+		debugger;
+
+		var buttons = A.all('.delete-articles-button, .expire-articles-button');
+
+		if (event.currentTarget.get('checked')) {
+			buttons.show();
+		}
+		else {
+			buttons.hide();
+		}
+	}
+
+	function <portlet:namespace />_toggleEntriesSelection() {
+		var journalContainer = A.one('#<portlet:namespace />journalContainer');
+
+		var selectAllCheckbox = journalContainer.one('#<portlet:namespace />allRowIdsCheckbox');
+
+		Liferay.Util.checkAll(journalContainer, '<portlet:namespace />rowIdsJournalFolderCheckbox', selectAllCheckbox, '.results-row');
+		Liferay.Util.checkAll(journalContainer, '<portlet:namespace />rowIdsJournalArticleCheckbox', selectAllCheckbox, '.results-row');
+
+		var documentDisplayStyle = A.all('.article-display-style.selectable');
+
+		documentDisplayStyle.toggleClass('selected', selectAllCheckbox.attr('checked'));
+	}
+
 	Liferay.provide(
 		window,
 		'<portlet:namespace />deleteArticles',

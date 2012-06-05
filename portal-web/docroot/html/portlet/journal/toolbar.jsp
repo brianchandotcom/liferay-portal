@@ -16,6 +16,10 @@
 
 <%@ include file="/html/portlet/journal/init.jsp" %>
 
+<c:if test="<%= !user.isDefaultUser() %>">
+	<aui:input cssClass="select-entries aui-state-default" inline="<%= true %>" label="" name='<%= RowChecker.ALL_ROW_IDS %>' type="checkbox" />
+</c:if>
+
 <liferay-ui:icon-menu align="left" cssClass="actions-button" direction="down" icon="" id="actionsButtonContainer" message="actions" showExpanded="<%= false %>" showWhenSingleIcon="<%= true %>">
 
 	<%
@@ -176,7 +180,9 @@
 	var buttons = A.all('.delete-articles-button, .expire-articles-button');
 
 	if (buttons.size()) {
-		var resultsGrid = A.one('.results-grid');
+		var journalContainer = A.one('#<portlet:namespace />journalContainer');
+
+		var resultsGrid = journalContainer.one('.results-grid');
 
 		if (resultsGrid) {
 			resultsGrid.delegate(

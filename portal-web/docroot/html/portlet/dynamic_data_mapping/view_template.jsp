@@ -39,6 +39,20 @@ portletURL.setParameter("tabs1", tabs1);
 portletURL.setParameter("backURL", backURL);
 portletURL.setParameter("classNameId", String.valueOf(classNameId));
 portletURL.setParameter("classPK", String.valueOf(classPK));
+
+String orderByCol = ParamUtil.getString(request, "orderByCol");
+String orderByType = ParamUtil.getString(request, "orderByType");
+
+if (Validator.isNotNull(orderByCol) && Validator.isNotNull(orderByType)) {
+	portalPreferences.setValue(PortletKeys.DYNAMIC_DATA_MAPPING, "entries-order-by-col", orderByCol);
+	portalPreferences.setValue(PortletKeys.DYNAMIC_DATA_MAPPING, "entries-order-by-type", orderByType);
+}
+else {
+	orderByCol = portalPreferences.getValue(PortletKeys.DYNAMIC_DATA_MAPPING, "entries-order-by-col", "name");
+	orderByType = portalPreferences.getValue(PortletKeys.DYNAMIC_DATA_MAPPING, "entries-order-by-type", "asc");
+}
+
+OrderByComparator orderByComparator = DDMTemplateUtil.getEntriesOrderByComparator(orderByCol, orderByType);
 %>
 
 <c:choose>
@@ -68,6 +82,9 @@ portletURL.setParameter("classPK", String.valueOf(classPK));
 	<aui:input name="deleteTemplateIds" type="hidden" />
 
 	<liferay-ui:search-container
+		orderByCol="<%= orderByCol %>"
+		orderByComparator="<%= orderByComparator %>"
+		orderByType="<%= orderByType %>"
 		rowChecker="<%= new RowChecker(renderResponse) %>"
 		searchContainer="<%= new TemplateSearch(renderRequest, portletURL) %>"
 	>
@@ -127,6 +144,8 @@ portletURL.setParameter("classPK", String.valueOf(classPK));
 			<liferay-ui:search-container-column-text
 				href="<%= rowHREF %>"
 				name="name"
+				orderable="<%= true %>"
+				orderableProperty="name"
 				value="<%= LanguageUtil.get(pageContext, template.getName(locale)) %>"
 			/>
 
@@ -154,6 +173,8 @@ portletURL.setParameter("classPK", String.valueOf(classPK));
 				buffer="buffer"
 				href="<%= rowHREF %>"
 				name="modified-date"
+				orderable="<%= true %>"
+				orderableProperty="modified-date"
 			>
 
 				<%

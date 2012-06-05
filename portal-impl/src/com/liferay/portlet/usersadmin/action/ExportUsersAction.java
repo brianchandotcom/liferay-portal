@@ -208,7 +208,7 @@ public class ExportUsersAction extends PortletAction {
 		int percentage = 10;
 		int total = users.size();
 
-		progressTracker.updateProgress(percentage);
+		progressTracker.setPercent(percentage);
 
 		if (total == 0) {
 			return StringPool.BLANK;
@@ -223,7 +223,7 @@ public class ExportUsersAction extends PortletAction {
 
 			percentage = Math.min(10 + (i * 90) / total, 99);
 
-			progressTracker.updateProgress(percentage);
+			progressTracker.setPercent(percentage);
 		}
 
 		progressTracker.finish();

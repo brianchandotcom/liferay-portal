@@ -19,11 +19,12 @@ import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.cluster.FutureClusterResponses;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.progress.InstallStatus;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
+import com.liferay.portal.kernel.util.ProgressStatusConstants;
+import com.liferay.portal.kernel.util.ProgressTracker;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
@@ -46,10 +47,10 @@ public class JarUtil {
 
 	public static void downloadAndInstallJar(
 			boolean globalClassPath, String url, String name,
-			InstallStatus installStatus)
+			ProgressTracker progressTracker)
 		throws Exception {
 
-		setInstallStatus(installStatus, 0);
+		setProgressStatus(progressTracker, ProgressStatusConstants.DOWNLOADING);
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Downloading " + url);
@@ -57,7 +58,7 @@ public class JarUtil {
 
 		byte[] bytes = HttpUtil.URLtoByteArray(url);
 
-		setInstallStatus(installStatus, 1);
+		setProgressStatus(progressTracker, ProgressStatusConstants.COPYING);
 
 		if (PropsValues.CLUSTER_LINK_ENABLED) {
 			try {
@@ -83,8 +84,6 @@ public class JarUtil {
 			}
 			finally {
 				try {
-					setInstallStatus(installStatus, 2);
-
 					DLStoreUtil.deleteFile(
 						_REPOSITORY, _REPOSITORY, _FILE_PATH + name);
 				}
@@ -93,11 +92,9 @@ public class JarUtil {
 			}
 		}
 		else {
-			setInstallStatus(installStatus, 1);
+			setProgressStatus(progressTracker, ProgressStatusConstants.COPYING);
 
 			installJar(bytes, globalClassPath, name);
-
-			setInstallStatus(installStatus, 2);
 		}
 	}
 
@@ -159,14 +156,14 @@ public class JarUtil {
 		addJarFileToClassLoader(file);
 	}
 
-	protected static void setInstallStatus(
-		InstallStatus installStatus, int status) {
+	protected static void setProgressStatus(
+		ProgressTracker progressTracker, int status) {
 
-		if (installStatus == null) {
+		if (progressTracker == null) {
 			return;
 		}
 
-		installStatus.setStatus(status);
+		progressTracker.setStatus(status);
 	}
 
 	private static final String _FILE_PATH = "jar_temp/";

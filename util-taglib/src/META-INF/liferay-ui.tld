@@ -2097,6 +2097,36 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>progress</name>
+		<tag-class>com.liferay.taglib.ui.ProgressTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>height</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>id</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>message</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>sessionKey</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>updatePeriod</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<name>ratings</name>
 		<tag-class>com.liferay.taglib.ui.RatingsTag</tag-class>
 		<body-content>JSP</body-content>
@@ -3066,7 +3096,7 @@
 		</attribute>
 		<attribute>
 			<name>redirect</name>
-			<required>true</required>
+			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>

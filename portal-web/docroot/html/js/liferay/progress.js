@@ -1,7 +1,9 @@
 AUI.add(
-	'liferay-upload-progress',
+	'liferay-progress',
 	function(A) {
 		var Lang = A.Lang;
+
+		var STR_EMPTY = '';
 
 		var STR_VALUE = 'value';
 
@@ -9,13 +11,21 @@ AUI.add(
 
 		var TPL_FRAME = '<iframe frameborder="0" height="0" id="{0}-poller" src="javascript:;" style="display:none" tabindex="-1" title="empty" width="0"></iframe>';
 
-		var TPL_URL_UPDATE = themeDisplay.getPathMain() + '/portal/upload_progress_poller?uploadProgressId={0}&updatePeriod={1}';
+		var TPL_URL_UPDATE = themeDisplay.getPathMain() + '/portal/progress_poller?progressId={0}&sessionKey={1}&updatePeriod={2}';
 
-		var WIN = A.config.win;
-
-		var UploadProgressBar = A.Component.create(
+		var Progress = A.Component.create(
 			{
 				ATTRS: {
+					message: {
+						validator: Lang.isString,
+						value: STR_EMPTY
+					},
+
+					sessionKey: {
+						validator: Lang.isString,
+						value: STR_EMPTY
+					},
+
 					updatePeriod: {
 						validator: Lang.isNumber,
 						value: 1000
@@ -24,13 +34,13 @@ AUI.add(
 
 				EXTENDS: A.ProgressBar,
 
-				NAME: 'uploadprogress',
+				NAME: 'progress',
 
 				prototype: {
 					renderUI: function() {
 						var instance = this;
 
-						UploadProgressBar.superclass.renderUI.call(instance, arguments);
+						Progress.superclass.renderUI.call(instance, arguments);
 
 						var tplFrame = Lang.sub(TPL_FRAME, [instance.get('id')]);
 
@@ -44,10 +54,12 @@ AUI.add(
 					bindUI: function() {
 						var instance = this;
 
-						UploadProgressBar.superclass.bindUI.call(instance, arguments);
+						Progress.superclass.bindUI.call(instance, arguments);
 
 						instance.after('complete', instance._afterComplete);
 						instance.after('valueChange', instance._afterValueChange);
+
+						instance._iframeLoadHandle = instance._frame.on('load', instance._onIframeLoad, instance);
 					},
 
 					startProgress: function() {
@@ -58,6 +70,8 @@ AUI.add(
 						}
 
 						instance.set(STR_VALUE, 0);
+
+						instance.get('boundingBox').addClass('lfr-progress-active');
 
 						setTimeout(
 							function() {
@@ -70,7 +84,14 @@ AUI.add(
 					updateProgress: function() {
 						var instance = this;
 
-						var url = Lang.sub(TPL_URL_UPDATE, [instance.get('id'), instance.get(STR_UPDATE_PERIOD)]);
+						var url = Lang.sub(
+							TPL_URL_UPDATE,
+							[
+								instance.get('id'),
+								instance.get('sessionKey'),
+								instance.get(STR_UPDATE_PERIOD)
+							]
+						);
 
 						instance._frame.set('src', url);
 					},
@@ -78,19 +99,40 @@ AUI.add(
 					_afterComplete: function(event) {
 						var instance = this;
 
+						instance.get('boundingBox').removeClass('lfr-progress-active');
+
 						instance.set('label', instance.get('strings.complete'));
+
+						instance._iframeLoadHandle.detach();
 					},
 
 					_afterValueChange: function(event) {
 						var instance = this;
 
-						instance.set('label', event.newVal + '%');
+						var label = instance.get('message');
+
+						if (!label) {
+							label = event.newVal + '%';
+						}
+
+						instance.set('label', label);
+					},
+
+					_onIframeLoad: function(event) {
+						var instance = this;
+
+						setTimeout(
+							function() {
+								instance._frame.get('contentWindow.location').reload();
+							},
+							instance.get(STR_UPDATE_PERIOD)
+						);
 					}
 				}
 			}
 		);
 
-		Liferay.UploadProgressBar = UploadProgressBar;
+		Liferay.Progress = Progress;
 	},
 	'',
 	{

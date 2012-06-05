@@ -16,6 +16,7 @@ package com.liferay.portal.upload;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ProgressTracker;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -62,9 +63,10 @@ public class ProgressInputStream extends InputStream {
 	}
 
 	public void initProgress() {
-		_portletSession.setAttribute(
-			_getPercentAttributeName(), new Integer(0),
-			PortletSession.APPLICATION_SCOPE);
+		ProgressTracker progressTracker = new ProgressTracker(
+			_portletSession, _progressId);
+
+		progressTracker.initialize();
 	}
 
 	@Override
@@ -144,13 +146,25 @@ public class ProgressInputStream extends InputStream {
 			_log.debug(_totalRead + "/" + _totalSize + "=" + percent);
 		}
 
-		Integer curPercent = (Integer)_portletSession.getAttribute(
-			_getPercentAttributeName(), PortletSession.APPLICATION_SCOPE);
+		ProgressTracker progressTracker =
+			(ProgressTracker)_portletSession.getAttribute(
+				_getPercentAttributeName(), PortletSession.APPLICATION_SCOPE);
+
+		Integer curPercent = null;
+
+		if (progressTracker != null) {
+			curPercent = progressTracker.getPercent();
+		}
 
 		if ((curPercent == null) || (percent - curPercent.intValue() >= 1)) {
-			_portletSession.setAttribute(
-				_getPercentAttributeName(), new Integer(percent),
-				PortletSession.APPLICATION_SCOPE);
+			if (progressTracker == null) {
+				progressTracker = new ProgressTracker(
+					_portletSession, _progressId);
+
+				progressTracker.initialize();
+			}
+
+			progressTracker.setPercent(percent);
 		}
 	}
 

@@ -5,24 +5,13 @@ AUI.add(
 		var Lang = A.Lang;
 		var Poller = Liferay.Poller;
 
-		var ERROR_THRESHOLD = 10;
+		var WIN = A.config.win;
 
 		var STR_CLICK = 'click';
 
-		var STR_DISABLED = 'disabled';
-
 		var STR_PORTLET_MSG_ERROR = 'portlet-msg-error';
 
-		var STR_PORTLET_MSG_PROGRESS = 'portlet-msg-progress';
-
 		var STR_PORTLET_MSG_SUCCESS = 'portlet-msg-success';
-
-		var MESSAGES = {
-			'downloading-xuggler': Liferay.Language.get('downloading-xuggler'),
-			'copying-xuggler': Liferay.Language.get('copying-xuggler'),
-			'completed': Liferay.Language.get('completed'),
-			'an-unexpected-error-occurred-while-installing-xuggler': Liferay.Language.get('an-unexpected-error-occurred-while-installing-xuggler')
-		};
 
 		var Admin = A.Component.create(
 			{
@@ -74,35 +63,10 @@ AUI.add(
 						Poller.removeListener(instance.ID);
 					},
 
-					_finishPoller: function(json) {
-						var instance = this;
-
-						var xugglerProgressInfo = instance._xugglerProgressInfo;
-
-						if (json.success) {
-							xugglerProgressInfo.html(Liferay.Language.get('xuggler-has-been-installed-you-need-to-reboot-your-server-to-apply-changes'));
-
-							xugglerProgressInfo.replaceClass(STR_PORTLET_MSG_PROGRESS, STR_PORTLET_MSG_SUCCESS);
-						}
-						else {
-							xugglerProgressInfo.html(Liferay.Language.get('an-unexpected-error-occurred-while-installing-xuggler') + ': ' + json.exception);
-
-							xugglerProgressInfo.replaceClass(STR_PORTLET_MSG_PROGRESS, STR_PORTLET_MSG_ERROR);
-						}
-
-						Poller.removeListener(instance.ID);
-
-						Liferay.Util.toggleDisabled(instance._installXugglerButton, false);
-					},
-
 					_installXuggler: function() {
 						var instance = this;
 
 						var xugglerProgressInfo = instance._xugglerProgressInfo;
-
-						xugglerProgressInfo.removeClass(STR_PORTLET_MSG_SUCCESS).removeClass(STR_PORTLET_MSG_ERROR);
-
-						xugglerProgressInfo.addClass(STR_PORTLET_MSG_PROGRESS);
 
 						Liferay.Util.toggleDisabled(instance._installXugglerButton, true);
 
@@ -121,7 +85,7 @@ AUI.add(
 
 						ioRequest.on(['failure', 'success'], instance._onIOResponse, instance);
 
-						instance._startMonitoring();
+						WIN[instance.ns('xugglerProgressInfo')].startProgress();
 
 						ioRequest.start();
 					},
@@ -131,42 +95,30 @@ AUI.add(
 
 						var responseData = event.currentTarget.get('responseData');
 
-						instance._finishPoller(responseData);
-					},
+						var progressBar = instance.one('#xugglerProgressInfoBar');
 
-					_onPollerUpdate: function(response, chunkId) {
-						var instance = this;
+						progressBar.hide();
+
+						WIN[instance.ns('xugglerProgressInfo')].fire('complete');
 
 						var xugglerProgressInfo = instance._xugglerProgressInfo;
 
-						if (response.status.success) {
-							instance._errorCount = 0;
+						var cssClass = STR_PORTLET_MSG_ERROR;
 
-							xugglerProgressInfo.html(MESSAGES[(response.status.status)]);
+						var message = '';
+
+						if (responseData.success) {
+							cssClass = STR_PORTLET_MSG_SUCCESS;
+
+							message = Liferay.Language.get('xuggler-has-been-installed-you-need-to-reboot-your-server-to-apply-changes');
 						}
 						else {
-							instance._errorCount++;
+							message = Liferay.Language.get('an-unexpected-error-occurred-while-installing-xuggler') + ': ' + responseData.exception;
 						}
 
-						if (instance._errorCount > ERROR_THRESHOLD) {
-							instance._finishPoller(
-								{
-									exception: MESSAGES['an-unexpected-error-occurred-while-installing-xuggler']
-								}
-							);
-						}
-					},
+						xugglerProgressInfo.html(message);
 
-					_startMonitoring: function() {
-						var instance = this;
-
-						Poller.addListener(instance.ID, instance._onPollerUpdate, instance);
-
-						var xugglerProgressInfo = instance._xugglerProgressInfo;
-
-						xugglerProgressInfo.html(Liferay.Language.get('starting-the-installation'));
-
-						xugglerProgressInfo.show();
+						xugglerProgressInfo.addClass(cssClass);
 					}
 				}
 			}

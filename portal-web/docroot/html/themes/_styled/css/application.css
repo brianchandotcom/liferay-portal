@@ -22,6 +22,10 @@
 	border-width: 0 1px;
 }
 
+.context-pane-content .results-grid {
+	border-width: 0;
+}
+
 .results-header {
 	background: #D1D6DC;
 

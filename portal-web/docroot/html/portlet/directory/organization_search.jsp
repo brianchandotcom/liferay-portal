@@ -17,8 +17,6 @@
 <%@ include file="/html/portlet/directory/init.jsp" %>
 
 <%
-themeDisplay.setIncludeServiceJs(true);
-
 OrganizationSearch searchContainer = (OrganizationSearch)request.getAttribute("liferay-ui:search:searchContainer");
 
 OrganizationDisplayTerms displayTerms = (OrganizationDisplayTerms)searchContainer.getDisplayTerms();

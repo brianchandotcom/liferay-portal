@@ -563,7 +563,6 @@ public class Creole10Parser]]></replacevalue>
 			<arg value="service.spring.file=${basedir}/src/META-INF/portal-spring.xml" />
 			<arg value="service.api.dir=${basedir}/../portal-service/src" />
 			<arg value="service.impl.dir=${basedir}/src" />
-			<arg value="service.json.file=${basedir}/../portal-web/docroot/html/js/liferay/service.js" />
 			<arg value="service.remoting.file=${basedir}/../portal-web/docroot/WEB-INF/remoting-servlet.xml" />
 			<arg value="service.sql.dir=${basedir}/../sql" />
 			<arg value="service.sql.file=portal-tables.sql" />

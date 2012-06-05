@@ -17,8 +17,6 @@
 <%@ include file="/html/taglib/ui/asset_tags_selector/init.jsp" %>
 
 <%
-themeDisplay.setIncludeServiceJs(true);
-
 String className = (String)request.getAttribute("liferay-ui:asset-tags-selector:className");
 long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-ui:asset-tags-selector:classPK"));
 String hiddenInput = (String)request.getAttribute("liferay-ui:asset-tags-selector:hiddenInput");

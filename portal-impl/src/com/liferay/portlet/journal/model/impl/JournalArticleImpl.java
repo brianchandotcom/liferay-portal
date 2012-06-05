@@ -176,17 +176,16 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	public Map<Locale, String> getTitleMap() {
 		Locale defaultLocale = LocaleThreadLocal.getDefaultLocale();
 
-		try {
-			Locale articleDefaultLocale = LocaleUtil.fromLanguageId(
-				getDefaultLocale());
+		Locale articleDefaultLocale = LocaleUtil.fromLanguageId(
+			getDefaultLocale());
 
-			LocaleThreadLocal.setDefaultLocale(articleDefaultLocale);
+		LocaleThreadLocal.setDefaultLocale(articleDefaultLocale);
 
-			return super.getTitleMap();
-		}
-		finally {
-			LocaleThreadLocal.setDefaultLocale(defaultLocale);
-		}
+		Map<Locale, String> titleMap = super.getTitleMap();
+
+		LocaleThreadLocal.setDefaultLocale(defaultLocale);
+
+		return titleMap;
 	}
 
 	public void setSmallImageType(String smallImageType) {

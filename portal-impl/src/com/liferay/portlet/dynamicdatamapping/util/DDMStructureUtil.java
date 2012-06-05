@@ -15,8 +15,8 @@
 package com.liferay.portlet.dynamicdatamapping.util;
 
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portlet.dynamicdatamapping.util.comparator.StructureModifiedDateComparator;
-import com.liferay.portlet.dynamicdatamapping.util.comparator.StructureNameComparator;
+import com.liferay.portlet.dynamicdatamapping.util.comparator.DDMStructureModifiedDateComparator;
+import com.liferay.portlet.dynamicdatamapping.util.comparator.DDMStructureNameComparator;
 
 /**
  * @author Eduardo Garcia
@@ -35,10 +35,11 @@ public class DDMStructureUtil {
 		OrderByComparator orderByComparator = null;
 
 		if (orderByCol.equals("modified-date")) {
-			orderByComparator = new StructureModifiedDateComparator(orderByAsc);
+			orderByComparator = new DDMStructureModifiedDateComparator(
+				orderByAsc);
 		}
 		else if (orderByCol.equals("name")) {
-			orderByComparator = new StructureNameComparator(orderByAsc);
+			orderByComparator = new DDMStructureNameComparator(orderByAsc);
 		}
 
 		return orderByComparator;

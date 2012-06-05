@@ -14,25 +14,26 @@
 
 package com.liferay.portlet.dynamicdatamapping.util.comparator;
 
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 
 /**
  * @author Eduardo Garcia
  */
-public class StructureNameComparator extends OrderByComparator {
+public class DDMStructureModifiedDateComparator extends OrderByComparator {
 
-	public static final String ORDER_BY_ASC = "DDMStructure.name ASC";
+	public static final String ORDER_BY_ASC = "DDMStructure.modifiedDate ASC";
 
-	public static final String ORDER_BY_DESC = "DDMStructure.name DESC";
+	public static final String ORDER_BY_DESC = "DDMStructure.modifiedDate DESC";
 
-	public static final String[] ORDER_BY_FIELDS = {"name"};
+	public static final String[] ORDER_BY_FIELDS = {"modifiedDate"};
 
-	public StructureNameComparator() {
+	public DDMStructureModifiedDateComparator() {
 		this(false);
 	}
 
-	public StructureNameComparator(boolean ascending) {
+	public DDMStructureModifiedDateComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 
@@ -41,8 +42,8 @@ public class StructureNameComparator extends OrderByComparator {
 		DDMStructure template1 = (DDMStructure)obj1;
 		DDMStructure template2 = (DDMStructure)obj2;
 
-		int value = template1.getName().toLowerCase().compareTo(
-				template2.getName().toLowerCase());
+		int value = DateUtil.compareTo(
+			template1.getModifiedDate(), template2.getModifiedDate());
 
 		if (_ascending) {
 			return value;

@@ -34,10 +34,11 @@ public class DDMTemplateUtil {
 		OrderByComparator orderByComparator = null;
 
 		if (orderByCol.equals("modified-date")) {
-			orderByComparator = new TemplateModifiedDateComparator(orderByAsc);
+			orderByComparator = new DDMTemplateModifiedDateComparator(
+				orderByAsc);
 		}
 		else if (orderByCol.equals("name")) {
-			orderByComparator = new TemplateNameComparator(orderByAsc);
+			orderByComparator = new DDMTemplateNameComparator(orderByAsc);
 		}
 
 		return orderByComparator;

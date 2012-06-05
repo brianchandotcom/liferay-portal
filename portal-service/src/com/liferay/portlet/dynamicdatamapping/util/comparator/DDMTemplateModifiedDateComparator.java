@@ -21,7 +21,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 /**
  * @author Eduardo Garcia
  */
-public class TemplateModifiedDateComparator extends OrderByComparator {
+public class DDMTemplateModifiedDateComparator extends OrderByComparator {
 
 	public static final String ORDER_BY_ASC = "DDMTemplate.modifiedDate ASC";
 
@@ -29,11 +29,11 @@ public class TemplateModifiedDateComparator extends OrderByComparator {
 
 	public static final String[] ORDER_BY_FIELDS = {"modifiedDate"};
 
-	public TemplateModifiedDateComparator() {
+	public DDMTemplateModifiedDateComparator() {
 		this(false);
 	}
 
-	public TemplateModifiedDateComparator(boolean ascending) {
+	public DDMTemplateModifiedDateComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 
@@ -43,7 +43,7 @@ public class TemplateModifiedDateComparator extends OrderByComparator {
 		DDMTemplate template2 = (DDMTemplate)obj2;
 
 		int value = DateUtil.compareTo(
-				template1.getModifiedDate(), template2.getModifiedDate());
+			template1.getModifiedDate(), template2.getModifiedDate());
 
 		if (_ascending) {
 			return value;

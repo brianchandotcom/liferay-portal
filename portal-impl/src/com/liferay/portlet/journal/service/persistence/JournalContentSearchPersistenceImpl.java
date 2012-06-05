@@ -100,6 +100,28 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByArticleId",
 			new String[] { String.class.getName() });
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_PORTLETID =
+		new FinderPath(JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
+			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED,
+			JournalContentSearchImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByPortletId",
+			new String[] {
+				String.class.getName(),
+				
+			"java.lang.Integer", "java.lang.Integer",
+				"com.liferay.portal.kernel.util.OrderByComparator"
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PORTLETID =
+		new FinderPath(JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
+			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED,
+			JournalContentSearchImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByPortletId",
+			new String[] { String.class.getName() },
+			JournalContentSearchModelImpl.PORTLETID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_PORTLETID = new FinderPath(JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
+			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByPortletId",
+			new String[] { String.class.getName() });
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_P = new FinderPath(JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
 			JournalContentSearchModelImpl.FINDER_CACHE_ENABLED,
 			JournalContentSearchImpl.class,
@@ -515,6 +537,25 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ARTICLEID,
 					args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ARTICLEID,
+					args);
+			}
+
+			if ((journalContentSearchModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PORTLETID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						journalContentSearchModelImpl.getOriginalPortletId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PORTLETID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PORTLETID,
+					args);
+
+				args = new Object[] { journalContentSearchModelImpl.getPortletId() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PORTLETID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PORTLETID,
 					args);
 			}
 
@@ -1166,6 +1207,382 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 
 		if (articleId != null) {
 			qPos.add(articleId);
+		}
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(journalContentSearch);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<JournalContentSearch> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the journal content searchs where portletId = &#63;.
+	 *
+	 * @param portletId the portlet ID
+	 * @return the matching journal content searchs
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<JournalContentSearch> findByPortletId(String portletId)
+		throws SystemException {
+		return findByPortletId(portletId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	/**
+	 * Returns a range of all the journal content searchs where portletId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param portletId the portlet ID
+	 * @param start the lower bound of the range of journal content searchs
+	 * @param end the upper bound of the range of journal content searchs (not inclusive)
+	 * @return the range of matching journal content searchs
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<JournalContentSearch> findByPortletId(String portletId,
+		int start, int end) throws SystemException {
+		return findByPortletId(portletId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the journal content searchs where portletId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param portletId the portlet ID
+	 * @param start the lower bound of the range of journal content searchs
+	 * @param end the upper bound of the range of journal content searchs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching journal content searchs
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<JournalContentSearch> findByPortletId(String portletId,
+		int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PORTLETID;
+			finderArgs = new Object[] { portletId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_PORTLETID;
+			finderArgs = new Object[] { portletId, start, end, orderByComparator };
+		}
+
+		List<JournalContentSearch> list = (List<JournalContentSearch>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (JournalContentSearch journalContentSearch : list) {
+				if (!Validator.equals(portletId,
+							journalContentSearch.getPortletId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(2);
+			}
+
+			query.append(_SQL_SELECT_JOURNALCONTENTSEARCH_WHERE);
+
+			if (portletId == null) {
+				query.append(_FINDER_COLUMN_PORTLETID_PORTLETID_1);
+			}
+			else {
+				if (portletId.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_PORTLETID_PORTLETID_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_PORTLETID_PORTLETID_2);
+				}
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (portletId != null) {
+					qPos.add(portletId);
+				}
+
+				list = (List<JournalContentSearch>)QueryUtil.list(q,
+						getDialect(), start, end);
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (list == null) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
+				else {
+					cacheResult(list);
+
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
+
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first journal content search in the ordered set where portletId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param portletId the portlet ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching journal content search
+	 * @throws com.liferay.portlet.journal.NoSuchContentSearchException if a matching journal content search could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public JournalContentSearch findByPortletId_First(String portletId,
+		OrderByComparator orderByComparator)
+		throws NoSuchContentSearchException, SystemException {
+		List<JournalContentSearch> list = findByPortletId(portletId, 0, 1,
+				orderByComparator);
+
+		if (list.isEmpty()) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("portletId=");
+			msg.append(portletId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			throw new NoSuchContentSearchException(msg.toString());
+		}
+		else {
+			return list.get(0);
+		}
+	}
+
+	/**
+	 * Returns the last journal content search in the ordered set where portletId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param portletId the portlet ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching journal content search
+	 * @throws com.liferay.portlet.journal.NoSuchContentSearchException if a matching journal content search could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public JournalContentSearch findByPortletId_Last(String portletId,
+		OrderByComparator orderByComparator)
+		throws NoSuchContentSearchException, SystemException {
+		int count = countByPortletId(portletId);
+
+		List<JournalContentSearch> list = findByPortletId(portletId, count - 1,
+				count, orderByComparator);
+
+		if (list.isEmpty()) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("portletId=");
+			msg.append(portletId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			throw new NoSuchContentSearchException(msg.toString());
+		}
+		else {
+			return list.get(0);
+		}
+	}
+
+	/**
+	 * Returns the journal content searchs before and after the current journal content search in the ordered set where portletId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param contentSearchId the primary key of the current journal content search
+	 * @param portletId the portlet ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next journal content search
+	 * @throws com.liferay.portlet.journal.NoSuchContentSearchException if a journal content search with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public JournalContentSearch[] findByPortletId_PrevAndNext(
+		long contentSearchId, String portletId,
+		OrderByComparator orderByComparator)
+		throws NoSuchContentSearchException, SystemException {
+		JournalContentSearch journalContentSearch = findByPrimaryKey(contentSearchId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			JournalContentSearch[] array = new JournalContentSearchImpl[3];
+
+			array[0] = getByPortletId_PrevAndNext(session,
+					journalContentSearch, portletId, orderByComparator, true);
+
+			array[1] = journalContentSearch;
+
+			array[2] = getByPortletId_PrevAndNext(session,
+					journalContentSearch, portletId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected JournalContentSearch getByPortletId_PrevAndNext(Session session,
+		JournalContentSearch journalContentSearch, String portletId,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_JOURNALCONTENTSEARCH_WHERE);
+
+		if (portletId == null) {
+			query.append(_FINDER_COLUMN_PORTLETID_PORTLETID_1);
+		}
+		else {
+			if (portletId.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_PORTLETID_PORTLETID_3);
+			}
+			else {
+				query.append(_FINDER_COLUMN_PORTLETID_PORTLETID_2);
+			}
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		if (portletId != null) {
+			qPos.add(portletId);
 		}
 
 		if (orderByComparator != null) {
@@ -3592,6 +4009,19 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 	}
 
 	/**
+	 * Removes all the journal content searchs where portletId = &#63; from the database.
+	 *
+	 * @param portletId the portlet ID
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void removeByPortletId(String portletId) throws SystemException {
+		for (JournalContentSearch journalContentSearch : findByPortletId(
+				portletId)) {
+			remove(journalContentSearch);
+		}
+	}
+
+	/**
 	 * Removes all the journal content searchs where groupId = &#63; and privateLayout = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -3757,6 +4187,71 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 				}
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_ARTICLEID,
+					finderArgs, count);
+
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of journal content searchs where portletId = &#63;.
+	 *
+	 * @param portletId the portlet ID
+	 * @return the number of matching journal content searchs
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByPortletId(String portletId) throws SystemException {
+		Object[] finderArgs = new Object[] { portletId };
+
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_PORTLETID,
+				finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_JOURNALCONTENTSEARCH_WHERE);
+
+			if (portletId == null) {
+				query.append(_FINDER_COLUMN_PORTLETID_PORTLETID_1);
+			}
+			else {
+				if (portletId.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_PORTLETID_PORTLETID_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_PORTLETID_PORTLETID_2);
+				}
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (portletId != null) {
+					qPos.add(portletId);
+				}
+
+				count = (Long)q.uniqueResult();
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (count == null) {
+					count = Long.valueOf(0);
+				}
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_PORTLETID,
 					finderArgs, count);
 
 				closeSession(session);
@@ -4320,6 +4815,9 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 	private static final String _FINDER_COLUMN_ARTICLEID_ARTICLEID_1 = "journalContentSearch.articleId IS NULL";
 	private static final String _FINDER_COLUMN_ARTICLEID_ARTICLEID_2 = "journalContentSearch.articleId = ?";
 	private static final String _FINDER_COLUMN_ARTICLEID_ARTICLEID_3 = "(journalContentSearch.articleId IS NULL OR journalContentSearch.articleId = ?)";
+	private static final String _FINDER_COLUMN_PORTLETID_PORTLETID_1 = "journalContentSearch.portletId IS NULL";
+	private static final String _FINDER_COLUMN_PORTLETID_PORTLETID_2 = "journalContentSearch.portletId = ?";
+	private static final String _FINDER_COLUMN_PORTLETID_PORTLETID_3 = "(journalContentSearch.portletId IS NULL OR journalContentSearch.portletId = ?)";
 	private static final String _FINDER_COLUMN_G_P_GROUPID_2 = "journalContentSearch.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_P_PRIVATELAYOUT_2 = "journalContentSearch.privateLayout = ?";
 	private static final String _FINDER_COLUMN_G_A_GROUPID_2 = "journalContentSearch.groupId = ? AND ";

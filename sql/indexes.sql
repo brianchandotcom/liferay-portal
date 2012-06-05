@@ -360,6 +360,7 @@ create index IX_7CC7D73E on JournalContentSearch (groupId, privateLayout, articl
 create index IX_B3B318DC on JournalContentSearch (groupId, privateLayout, layoutId);
 create index IX_7ACC74C9 on JournalContentSearch (groupId, privateLayout, layoutId, portletId);
 create unique index IX_C3AA93B8 on JournalContentSearch (groupId, privateLayout, layoutId, portletId, articleId);
+create index IX_8DAF8A35 on JournalContentSearch (portletId);
 
 create index IX_35A2DB2F on JournalFeed (groupId);
 create unique index IX_65576CBC on JournalFeed (groupId, feedId);

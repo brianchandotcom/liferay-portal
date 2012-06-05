@@ -4,17 +4,74 @@
 	<sql id="com.liferay.portal.security.permission.InlineSQLHelper.filterByResourceBlockId">
 		<![CDATA[
 			WHERE
-				(resourceBlockId IN ([$USER_RESOURCE_BLOCK_IDS$]))
+				(
+					resourceBlockId IN ( 
+						SELECT 
+							resourceBlock.resourceBlockId
+						FROM 
+							ResourceBlock resourceBlock
+						WHERE 
+							resourceBlock.resourceBlockId IN (
+								SELECT 
+									resourceBlockPermission.resourceBlockId
+								FROM
+									ResourceBlockPermission resourceBlockPermission
+								WHERE 
+									(resourceBlockPermission.roleId IN ([$USER_ROLE_IDS$]))
+							)
+							AND (resourceBlock.companyId = [$COMPANY_ID$]) 
+							AND (resourceBlock.groupId = [$GROUP_ID$]) 
+							AND (resourceBlock.name = '[$RESOURCE_BLOCK_NAME$]') 
+					)
+				)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.security.permission.InlineSQLHelper.filterByResourceBlockIdOwner">
 		<![CDATA[
 			WHERE
 				(
-					resourceBlockId IN ([$USER_RESOURCE_BLOCK_IDS$]) OR
+					resourceBlockId IN (
+						SELECT 
+							resourceBlock.resourceBlockId
+						FROM 
+							ResourceBlock resourceBlock
+						WHERE 
+							resourceBlock.resourceBlockId IN (
+								SELECT 
+									resourceBlockPermission.resourceBlockId
+								FROM
+									ResourceBlockPermission resourceBlockPermission
+								WHERE 
+									(resourceBlockPermission.roleId IN ([$USER_ROLE_IDS$]))
+							)
+							AND (resourceBlock.companyId = [$COMPANY_ID$]) 
+							AND (resourceBlock.groupId = [$GROUP_ID$]) 
+							AND (resourceBlock.name = '[$RESOURCE_BLOCK_NAME$]') 
+					) 
+					OR
 					(
-						([$USER_ID_FIELD$] = [$USER_ID$]) AND
-						(resourceBlockId IN ([$OWNER_RESOURCE_BLOCK_IDS$]))
+						([$USER_ID_FIELD$] = [$USER_ID$]) 
+						AND 
+						(
+							resourceBlockId IN (
+								SELECT 
+									resourceBlock.resourceBlockId
+								FROM 
+									ResourceBlock resourceBlock
+								WHERE 
+									resourceBlock.resourceBlockId IN (
+										SELECT 
+											resourceBlockPermission.resourceBlockId
+										FROM
+											ResourceBlockPermission resourceBlockPermission
+										WHERE 
+											(resourceBlockPermission.roleId IN ([$OWNER_ROLE_ID$]))
+									)
+									AND (resourceBlock.companyId = [$COMPANY_ID$]) 
+									AND (resourceBlock.groupId = [$GROUP_ID$]) 
+									AND (resourceBlock.name = '[$RESOURCE_BLOCK_NAME$]') 
+							)
+						)
 					)
 				)
 		]]>

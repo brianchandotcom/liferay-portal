@@ -302,6 +302,8 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		long[] roleIds = permissionChecker.getRoleIds(
 			getUserId(), checkGroupId);
 
+		long ownerRoleId = permissionChecker.getOwnerRoleId();
+
 		try {
 			for (long roleId : roleIds) {
 				if (ResourceTypePermissionLocalServiceUtil.
@@ -348,13 +350,15 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			permissionWhere = StringUtil.replace(
 				permissionWhere,
 				new String[] {
-					"[$OWNER_RESOURCE_BLOCK_IDS$]", "[$USER_ID$]",
-					"[$USER_ID_FIELD$]", "[$USER_RESOURCE_BLOCK_IDS$]"
+					"[$USER_ROLE_IDS$]", "[$COMPANY_ID$]", "[$GROUP_ID$]",
+					"[$RESOURCE_BLOCK_NAME$]", "[$USER_ID$]",
+					"[$USER_ID_FIELD$]", "[$OWNER_ROLE_ID$]"
 				},
 				new String[] {
-					StringUtil.merge(ownerResourceBlockIds),
-					String.valueOf(permissionChecker.getUserId()), userIdField,
-					StringUtil.merge(userResourceBlockIds)
+					StringUtil.merge(roleIds), String.valueOf(companyId),
+					String.valueOf(checkGroupId), className,
+					String.valueOf(permissionChecker.getUserId()),
+					userIdField, String.valueOf(ownerRoleId)
 				});
 		}
 		else {
@@ -362,8 +366,15 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 				CustomSQLUtil.get(FILTER_BY_RESOURCE_BLOCK_ID));
 
 			permissionWhere = StringUtil.replace(
-				permissionWhere, "[$USER_RESOURCE_BLOCK_IDS$]",
-				StringUtil.merge(userResourceBlockIds));
+				permissionWhere, 
+				new String[] {
+					"[$USER_ROLE_IDS$]", "[$COMPANY_ID$]", "[$GROUP_ID$]",
+					"[$RESOURCE_BLOCK_NAME$]"
+				}, 
+				new String[] {
+					StringUtil.merge(roleIds), String.valueOf(companyId),
+					String.valueOf(checkGroupId), className
+				});
 		}
 
 		int pos = sql.indexOf(_WHERE_CLAUSE);

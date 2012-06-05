@@ -570,8 +570,8 @@ public abstract class BaseStore implements Store {
 
 	/**
 	 * Update's a file version label. Similar to {@link #copyFileVersion(long,
-	 * long, String, String, String)} except that the old file version
-	 * is deleted.
+	 * long, String, String, String)} except that the old file version is
+	 * deleted.
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  repositoryId the primary key of the data repository (optionally

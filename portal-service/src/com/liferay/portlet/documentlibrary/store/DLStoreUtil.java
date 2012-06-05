@@ -36,8 +36,8 @@ import java.io.InputStream;
  * can be obtained by calling {@link
  * com.liferay.portlet.documentlibrary.model.DLFolderConstants#getDataRepositoryId(
  * long,long)}. For all other portlets, the <code>repositoryId</code> should be
- * set to {@link com.liferay.portal.model.CompanyConstants#SYSTEM}. These methods can be used in plugins
- * and other portlets, as shown below.
+ * set to {@link com.liferay.portal.model.CompanyConstants#SYSTEM}. These
+ * methods can be used in plugins and other portlets, as shown below.
  * </p>
  *
  * <pre>
@@ -394,7 +394,8 @@ public class DLStoreUtil {
 	 * @param  repositoryId the primary key of the data repository (optionally
 	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
 	 * @param  fileName the file's name
-	 * @return Returns the {@link java.io.InputStream} object with the file's name
+	 * @return Returns the {@link java.io.InputStream} object with the file's
+	 *         name
 	 * @throws PortalException if the file's information was invalid
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -413,7 +414,8 @@ public class DLStoreUtil {
 	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
 	 * @param  fileName the file's name
 	 * @param  versionLabel the file's version label
-	 * @return Returns the {@link java.io.InputStream} object with the file's name
+	 * @return Returns the {@link java.io.InputStream} object with the file's
+	 *         name
 	 * @throws PortalException if the file's information was invalid
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -649,8 +651,8 @@ public class DLStoreUtil {
 
 	/**
 	 * Update's a file version label. Similar to {@link #copyFileVersion(long,
-	 * long, String, String, String)} except that the old file version
-	 * is deleted.
+	 * long, String, String, String)} except that the old file version is
+	 * deleted.
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  repositoryId the primary key of the data repository (optionally

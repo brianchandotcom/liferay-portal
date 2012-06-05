@@ -43,7 +43,8 @@ public class LiferayLoggerAdapter
 			FormattingTuple formattingTuple = MessageFormatter.format(
 				format, argument);
 
-			_log.debug(formattingTuple.getMessage());
+			_log.debug(
+				formattingTuple.getMessage(), formattingTuple.getThrowable());
 		}
 	}
 

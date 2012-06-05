@@ -42,8 +42,8 @@ portletURL.setParameter("classPK", String.valueOf(classPK));
 
 String title = StringPool.BLANK;
 
-if (!portletName.equals(PortletKeys.DISPLAY_STYLES)){
-	if (structure != null){
+if (!portletName.equals(PortletKeys.DISPLAY_STYLES)) {
+	if (structure != null) {
 		title = LanguageUtil.format(pageContext, (Validator.isNull(templateHeaderTitle) ? "templates-for-structure-x" : templateHeaderTitle), structure.getName(locale), false);
 	}
 	else {

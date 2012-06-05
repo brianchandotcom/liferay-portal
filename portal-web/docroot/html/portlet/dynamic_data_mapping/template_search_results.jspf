@@ -20,11 +20,11 @@ TemplateSearchTerms searchTerms = (TemplateSearchTerms)searchContainer.getSearch
 long[] searchClassNameIds;
 long searchClassPK;
 
-if (portletName.equals(PortletKeys.DISPLAY_STYLES)){
+if (portletName.equals(PortletKeys.DISPLAY_STYLES)) {
 	searchClassNameIds = new long[] {PortalUtil.getClassNameId(AssetEntry.class)};
 	searchClassPK = -1;
 }
-else{
+else {
 	searchClassNameIds = new long[] {classNameId};
 	searchClassPK = classPK;
 }

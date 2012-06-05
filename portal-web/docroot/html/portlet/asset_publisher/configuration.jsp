@@ -685,7 +685,7 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 									<aui:option label="100" selected="<%= rssDelta == 100 %>" />
 								</aui:select>
 
-								<aui:select label="application-display-style" name="preferences--rssDisplayStyle--">
+								<aui:select label="display-style" name="preferences--rssDisplayStyle--">
 									<aui:option label="<%= RSSUtil.DISPLAY_STYLE_ABSTRACT %>" selected="<%= rssDisplayStyle.equals(RSSUtil.DISPLAY_STYLE_ABSTRACT) %>" />
 									<aui:option label="<%= RSSUtil.DISPLAY_STYLE_TITLE %>" selected="<%= rssDisplayStyle.equals(RSSUtil.DISPLAY_STYLE_TITLE) %>" />
 								</aui:select>

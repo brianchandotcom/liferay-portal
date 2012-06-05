@@ -233,9 +233,6 @@ public class DDMTemplateLocalServiceImpl
 			classNameId, classPK, type, mode);
 	}
 
-	/**
-	 * @deprecated
-	 */
 	public List<DDMTemplate> search(
 			long companyId, long groupId, long classNameId, long classPK,
 			String keywords, String type, String mode, int start, int end,
@@ -247,9 +244,6 @@ public class DDMTemplateLocalServiceImpl
 			start, end, orderByComparator);
 	}
 
-	/**
-	 * @deprecated
-	 */
 	public List<DDMTemplate> search(
 			long companyId, long groupId, long classNameId, long classPK,
 			String name, String description, String type, String mode,
@@ -285,9 +279,6 @@ public class DDMTemplateLocalServiceImpl
 			mode, language, andOperator, start, end, orderByComparator);
 	}
 
-	/**
-	 * @deprecated
-	 */
 	public int searchCount(
 			long companyId, long groupId, long classNameId, long classPK,
 			String keywords, String type, String mode)
@@ -297,9 +288,6 @@ public class DDMTemplateLocalServiceImpl
 			companyId, groupId, classNameId, classPK, keywords, type, mode);
 	}
 
-	/**
-	 * @deprecated
-	 */
 	public int searchCount(
 			long companyId, long groupId, long classNameId, long classPK,
 			String name, String description, String type, String mode,

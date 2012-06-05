@@ -47,9 +47,6 @@ public class DDMTemplateFinderImpl
 	public static final String FIND_BY_C_G_C_C_N_D_T_M_L =
 		DDMTemplateFinder.class.getName() + ".findByC_G_C_C_N_D_T_M_L";
 
-	/**
-	 * @deprecated
-	 */
 	public int countByKeywords(
 			long companyId, long groupId, long classNameId, long classPK,
 			String keywords, String type, String mode)
@@ -102,9 +99,6 @@ public class DDMTemplateFinderImpl
 			types, modes, languages, andOperator);
 	}
 
-	/**
-	 * @deprecated
-	 */
 	public int countByC_G_C_C_N_D_T_M_L(
 			long companyId, long groupId, long classNameId, long classPK,
 			String name, String description, String type, String mode,
@@ -122,9 +116,6 @@ public class DDMTemplateFinderImpl
 			types, modes, languages, andOperator);
 	}
 
-	/**
-	 * @deprecated
-	 */
 	public int countByC_G_C_C_N_D_T_M_L(
 			long companyId, long groupId, long classNameId, long classPK,
 			String[] names, String[] descriptions, String[] types,
@@ -166,9 +157,6 @@ public class DDMTemplateFinderImpl
 			types, modes, languages, andOperator, false) ;
 	}
 
-	/**
-	 * @deprecated
-	 */
 	public int filterCountByKeywords(
 			long companyId, long groupId, long classNameId, long classPK,
 			String keywords, String type, String mode)
@@ -221,9 +209,6 @@ public class DDMTemplateFinderImpl
 			types, modes, languages, andOperator);
 	}
 
-	/**
-	 * @deprecated
-	 */
 	public int filterCountByC_G_C_C_N_D_T_M_L(
 			long companyId, long groupId, long classNameId, long classPK,
 			String name, String description, String type, String mode,
@@ -241,9 +226,6 @@ public class DDMTemplateFinderImpl
 			types, modes, languages, andOperator);
 	}
 
-	/**
-	 * @deprecated
-	 */
 	public int filterCountByC_G_C_C_N_D_T_M_L(
 			long companyId, long groupId, long classNameId, long classPK,
 			String[] names, String[] descriptions, String[] types,
@@ -285,9 +267,6 @@ public class DDMTemplateFinderImpl
 			types, modes, languages, andOperator, true);
 	}
 
-	/**
-	 * @deprecated
-	 */
 	public List<DDMTemplate> filterFindByKeywords(
 			long companyId, long groupId, long classNameId, long classPK,
 			String keywords, String type, String mode, int start, int end,
@@ -344,9 +323,6 @@ public class DDMTemplateFinderImpl
 			orderByComparator);
 	}
 
-	/**
-	 * @deprecated
-	 */
 	public List<DDMTemplate> filterFindByC_G_C_C_N_D_T_M_L(
 			long companyId, long groupId, long classNameId, long classPK,
 			String name, String description, String type, String mode,
@@ -366,9 +342,6 @@ public class DDMTemplateFinderImpl
 			orderByComparator);
 	}
 
-	/**
-	 * @deprecated
-	 */
 	public List<DDMTemplate> filterFindByC_G_C_C_N_D_T_M_L(
 			long companyId, long groupId, long classNameId, long classPK,
 			String[] names, String[] descriptions, String[] types,
@@ -416,9 +389,6 @@ public class DDMTemplateFinderImpl
 			true);
 	}
 
-	/**
-	 * @deprecated
-	 */
 	public List<DDMTemplate> findByKeywords(
 			long companyId, long groupId, long classNameId, long classPK,
 			String keywords, String type, String mode, int start, int end,
@@ -475,9 +445,6 @@ public class DDMTemplateFinderImpl
 			orderByComparator);
 	}
 
-	/**
-	 * @deprecated
-	 */
 	public List<DDMTemplate> findByC_G_C_C_N_D_T_M_L(
 			long companyId, long groupId, long classNameId, long classPK,
 			String name, String description, String type, String mode,
@@ -497,9 +464,6 @@ public class DDMTemplateFinderImpl
 			orderByComparator);
 	}
 
-	/**
-	 * @deprecated
-	 */
 	public List<DDMTemplate> findByC_G_C_C_N_D_T_M_L(
 			long companyId, long groupId, long classNameId, long classPK,
 			String[] names, String[] descriptions, String[] types,

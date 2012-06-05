@@ -40,6 +40,7 @@ import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.ResourceConstants;
+import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.Team;
@@ -322,6 +323,14 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		}
 
 		// Resources
+
+		List<ResourcePermission> resourcePermissions =
+			resourcePermissionPersistence.findByRoleId(role.getRoleId());
+
+		for (ResourcePermission resourcePermission : resourcePermissions) {
+			resourcePermissionLocalService.deleteResourcePermission(
+				resourcePermission);
+		}
 
 		String className = role.getClassName();
 		long classNameId = role.getClassNameId();

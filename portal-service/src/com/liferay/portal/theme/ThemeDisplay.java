@@ -566,11 +566,6 @@ public class ThemeDisplay
 
 			return true;
 		}
-		else if (isIncludeServiceJs() &&
-				 js.startsWith(path + "/liferay/service.js")) {
-
-			return true;
-		}
 		else {
 			return false;
 		}
@@ -578,10 +573,6 @@ public class ThemeDisplay
 
 	public boolean isIncludePortletCssJs() {
 		return _includePortletCssJs;
-	}
-
-	public boolean isIncludeServiceJs() {
-		return _includeServiceJs;
 	}
 
 	public boolean isIsolated() {
@@ -718,7 +709,6 @@ public class ThemeDisplay
 		}
 
 		_includePortletCssJs = themeDisplay._includePortletCssJs;
-		_includeServiceJs = themeDisplay._includeServiceJs;
 
 		return this;
 	}
@@ -824,10 +814,6 @@ public class ThemeDisplay
 
 	public void setIncludePortletCssJs(boolean includePortletCssJs) {
 		_includePortletCssJs = includePortletCssJs;
-	}
-
-	public void setIncludeServiceJs(boolean includeServiceJs) {
-		_includeServiceJs = includeServiceJs;
 	}
 
 	public void setIsolated(boolean isolated) {
@@ -1315,7 +1301,6 @@ public class ThemeDisplay
 	private String _i18nLanguageId;
 	private String _i18nPath;
 	private boolean _includePortletCssJs;
-	private boolean _includeServiceJs;
 	private boolean _isolated;
 	private String _languageId;
 	private Layout _layout;

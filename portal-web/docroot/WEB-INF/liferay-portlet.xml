@@ -253,7 +253,6 @@
 		<render-weight>50</render-weight>
 		<header-portlet-css>/html/portlet/document_library/css/main.css</header-portlet-css>
 		<header-portlet-css>/html/portlet/dynamic_data_mapping/css/main.css</header-portlet-css>
-		<footer-portal-javascript>/html/js/liferay/service.js</footer-portal-javascript>
 		<footer-portlet-javascript>/html/portlet/dynamic_data_lists/js/main.js</footer-portlet-javascript>
 		<footer-portlet-javascript>/html/portlet/dynamic_data_mapping/js/main.js</footer-portlet-javascript>
 		<footer-portlet-javascript>/html/portlet/document_library/js/main.js</footer-portlet-javascript>
@@ -377,7 +376,6 @@
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>
 		<header-portlet-css>/html/portlet/image_gallery_display/css/main.css</header-portlet-css>
-		<footer-portal-javascript>/html/js/liferay/service.js</footer-portal-javascript>
 		<css-class-wrapper>portlet-image-gallery-display</css-class-wrapper>
 		<add-default-resource>true</add-default-resource>
 	</portlet>
@@ -822,7 +820,6 @@
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>
 		<header-portlet-css>/html/portlet/layouts_admin/css/main.css</header-portlet-css>
-		<footer-portal-javascript>/html/js/liferay/service.js</footer-portal-javascript>
 		<css-class-wrapper>portlet-communities</css-class-wrapper>
 		<add-default-resource>true</add-default-resource>
 		<system>true</system>
@@ -876,7 +873,6 @@
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>
 		<header-portlet-css>/html/portlet/asset_tag_admin/css/main.css</header-portlet-css>
-		<footer-portal-javascript>/html/js/liferay/service.js</footer-portal-javascript>
 		<footer-portlet-javascript>/html/portlet/asset_tag_admin/js/main.js</footer-portlet-javascript>
 		<css-class-wrapper>portlet-asset-tag-admin</css-class-wrapper>
 	</portlet>
@@ -1449,7 +1445,6 @@
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>
 		<header-portlet-css>/html/portlet/asset_category_admin/css/main.css</header-portlet-css>
-		<footer-portal-javascript>/html/js/liferay/service.js</footer-portal-javascript>
 		<footer-portlet-javascript>/html/portlet/asset_category_admin/js/main.js</footer-portlet-javascript>
 		<css-class-wrapper>portlet-asset-category-admin</css-class-wrapper>
 	</portlet>
@@ -1713,7 +1708,6 @@
 		<header-portlet-css>/html/portlet/dynamic_data_mapping/css/main.css</header-portlet-css>
 		<header-portlet-javascript>/html/portlet/dynamic_data_lists/js/main.js</header-portlet-javascript>
 		<header-portlet-javascript>/html/portlet/dynamic_data_mapping/js/main.js</header-portlet-javascript>
-		<footer-portal-javascript>/html/js/liferay/service.js</footer-portal-javascript>
 		<css-class-wrapper>portlet-dynamic-data-mapping</css-class-wrapper>
 		<add-default-resource>true</add-default-resource>
 	</portlet>
@@ -1735,7 +1729,6 @@
 		<render-weight>50</render-weight>
 		<header-portlet-css>/html/portlet/dynamic_data_lists/css/main.css</header-portlet-css>
 		<header-portlet-javascript>/html/portlet/dynamic_data_lists/js/main.js</header-portlet-javascript>
-		<footer-portal-javascript>/html/js/liferay/service.js</footer-portal-javascript>
 		<css-class-wrapper>portlet-dynamic-data-lists</css-class-wrapper>
 		<add-default-resource>true</add-default-resource>
 	</portlet>
@@ -1754,7 +1747,6 @@
 		<render-weight>50</render-weight>
 		<header-portlet-css>/html/portlet/dynamic_data_lists/css/main.css</header-portlet-css>
 		<header-portlet-javascript>/html/portlet/dynamic_data_lists/js/main.js</header-portlet-javascript>
-		<footer-portal-javascript>/html/js/liferay/service.js</footer-portal-javascript>
 		<css-class-wrapper>dynamic_data_list_display</css-class-wrapper>
 	</portlet>
 	<portlet>
@@ -1894,7 +1886,6 @@
 		<private-session-attributes>false</private-session-attributes>
 		<header-portlet-css>/html/portlet/social_activity/css/main.css</header-portlet-css>
 		<header-portlet-javascript>/html/portlet/social_activity/js/main.js</header-portlet-javascript>
-		<footer-portal-javascript>/html/js/liferay/service.js</footer-portal-javascript>
 		<css-class-wrapper>portlet-social-activity</css-class-wrapper>
 	</portlet>
 	<portlet>

@@ -17,8 +17,6 @@
 <%@ include file="/html/portlet/wiki/init.jsp" %>
 
 <%
-themeDisplay.setIncludeServiceJs(true);
-
 String redirect = ParamUtil.getString(request, "redirect");
 
 WikiNode node = (WikiNode)request.getAttribute(WebKeys.WIKI_NODE);
@@ -137,7 +135,7 @@ Ticket ticket = TicketLocalServiceUtil.addTicket(user.getCompanyId(), User.class
 			metadataExplanationContainer: '#<portlet:namespace />metadataExplanationContainer',
 			namespace: '<portlet:namespace />',
 			tempFileURL: {
-				method: Liferay.Service.Wiki.WikiPage.getTempPageAttachmentNames,
+				method:  A.bind(Liferay.Service, Liferay, '/wikipage/get-temp-page-attachment-names'),
 				params: {
 					nodeId: <%= node.getNodeId() %>,
 					tempFolderName: 'com.liferay.portlet.wiki.action.EditPageAttachmentAction'

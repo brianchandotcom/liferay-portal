@@ -17,8 +17,6 @@
 <%@ include file="/html/portlet/layouts_admin/init.jsp" %>
 
 <%
-themeDisplay.setIncludeServiceJs(true);
-
 LayoutSet selLayoutSet = ((LayoutSet)request.getAttribute("edit_pages.jsp-selLayoutSet"));
 
 long groupId = selLayoutSet.getGroupId();

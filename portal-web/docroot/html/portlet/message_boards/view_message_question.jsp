@@ -17,8 +17,6 @@
 <%@ include file="/html/portlet/message_boards/init.jsp" %>
 
 <%
-themeDisplay.setIncludeServiceJs(true);
-
 MBMessageDisplay messageDisplay = (MBMessageDisplay)request.getAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE);
 
 MBMessage message = messageDisplay.getMessage();

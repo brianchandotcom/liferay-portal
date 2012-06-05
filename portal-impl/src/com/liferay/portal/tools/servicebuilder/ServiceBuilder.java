@@ -169,7 +169,6 @@ public class ServiceBuilder {
 				"\tservice.spring.file=${basedir}/src/META-INF/portal-spring.xml\n" +
 				"\tservice.api.dir=${basedir}/../portal-service/src\n" +
 				"\tservice.impl.dir=${basedir}/src\n" +
-				"\tservice.json.file=${basedir}/../portal-web/docroot/html/js/liferay/service.js\n" +
 				"\tservice.remoting.file=${basedir}/../portal-web/docroot/WEB-INF/remoting-servlet.xml\n" +
 				"\tservice.sql.dir=${basedir}/../sql\n" +
 				"\tservice.sql.file=portal-tables.sql\n" +
@@ -749,8 +748,6 @@ public class ServiceBuilder {
 
 				_createServiceClpMessageListener();
 				_createServiceClpSerializer(exceptionList);
-
-				_createJsonJs();
 
 				if (Validator.isNotNull(_remotingFileName)) {
 					_createRemotingXml();
@@ -1988,129 +1985,6 @@ public class ServiceBuilder {
 
 		if (!oldContent.equals(newContent)) {
 			FileUtil.write(xmlFile, newContent);
-		}
-	}
-
-	private void _createJsonJs() throws Exception {
-		if (_packagePath.equals("com.liferay.counter")) {
-			return;
-		}
-
-		if (Validator.isNotNull(_pluginName)) {
-			boolean hasRemoteService = false;
-
-			for (int i = 0; i < _ejbList.size(); i++) {
-				Entity entity = _ejbList.get(i);
-
-				if (entity.hasRemoteService()) {
-					hasRemoteService = true;
-
-					break;
-				}
-			}
-
-			if (!hasRemoteService) {
-				return;
-			}
-		}
-
-		StringBundler sb = new StringBundler();
-
-		if (_ejbList.size() > 0) {
-			sb.append(_processTemplate(_tplJsonJs));
-		}
-
-		for (int i = 0; i < _ejbList.size(); i++) {
-			Entity entity = _ejbList.get(i);
-
-			if (entity.hasRemoteService()) {
-				JavaClass javaClass = _getJavaClass(
-					_serviceOutputPath + "/service/" + entity.getName() +
-						"Service.java");
-
-				JavaMethod[] methods = _getMethods(javaClass);
-
-				Set<String> jsonMethods = new LinkedHashSet<String>();
-
-				for (JavaMethod method : methods) {
-					String methodName = method.getName();
-
-					if (methodName.equals("getBeanIdentifier") ||
-						methodName.equals("invokeMethod") ||
-						methodName.equals("setBeanIdentifier")) {
-
-						continue;
-					}
-
-					String returnValue = getReturnType(method);
-
-					boolean badJsonType = false;
-
-					for (JavaParameter parameter : method.getParameters()) {
-						String parameterType = getParameterType(parameter);
-
-						if (_badJsonTypes.contains(parameterType)) {
-							badJsonType = true;
-						}
-					}
-
-					if (method.isPublic() &&
-						!_badJsonTypes.contains(returnValue) && !badJsonType) {
-
-						jsonMethods.add(methodName);
-					}
-				}
-
-				if (jsonMethods.size() > 0) {
-					Map<String, Object> context = _getContext();
-
-					context.put("entity", entity);
-					context.put("methods", jsonMethods);
-
-					sb.append("\n\n");
-					sb.append(_processTemplate(_tplJsonJsMethod, context));
-				}
-			}
-		}
-
-		File jsonFile = new File(_jsonFileName);
-
-		if (!jsonFile.exists()) {
-			FileUtil.write(jsonFile, "");
-		}
-
-		String oldContent = FileUtil.read(jsonFile);
-		String newContent = oldContent;
-
-		int oldBegin = oldContent.indexOf(
-			"Liferay.Service.register(\"Liferay.Service." + _portletShortName);
-
-		int oldEnd = oldContent.lastIndexOf(
-			"Liferay.Service." + _portletShortName);
-
-		oldEnd = oldContent.indexOf(");", oldEnd);
-
-		int newBegin = newContent.indexOf(
-			"Liferay.Service.register(\"Liferay.Service." + _portletShortName);
-
-		int newEnd = newContent.lastIndexOf(
-			"Liferay.Service." + _portletShortName);
-
-		newEnd = newContent.indexOf(");", newEnd);
-
-		if (newBegin == -1) {
-			newContent = oldContent + "\n\n" + sb.toString().trim();
-		}
-		else {
-			newContent =
-				newContent.substring(0, oldBegin) + sb.toString().trim() +
-					newContent.substring(oldEnd + 2);
-		}
-
-		newContent = newContent.trim();
-
-		if (!oldContent.equals(newContent)) {
-			FileUtil.write(jsonFile, newContent);
 		}
 	}
 

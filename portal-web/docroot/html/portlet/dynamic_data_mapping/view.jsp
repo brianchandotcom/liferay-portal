@@ -23,6 +23,20 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/dynamic_data_mapping/view");
 portletURL.setParameter("tabs1", tabs1);
+
+String orderByCol = ParamUtil.getString(request, "orderByCol");
+String orderByType = ParamUtil.getString(request, "orderByType");
+
+if (Validator.isNotNull(orderByCol) && Validator.isNotNull(orderByType)) {
+	portalPreferences.setValue(PortletKeys.DYNAMIC_DATA_MAPPING, "entries-order-by-col", orderByCol);
+	portalPreferences.setValue(PortletKeys.DYNAMIC_DATA_MAPPING, "entries-order-by-type", orderByType);
+}
+else {
+	orderByCol = portalPreferences.getValue(PortletKeys.DYNAMIC_DATA_MAPPING, "entries-order-by-col", "name");
+	orderByType = portalPreferences.getValue(PortletKeys.DYNAMIC_DATA_MAPPING, "entries-order-by-type", "asc");
+}
+
+OrderByComparator orderByComparator = DDMStructureUtil.getEntriesOrderByComparator(orderByCol, orderByType);
 %>
 
 <liferay-ui:error exception="<%= RequiredStructureException.class %>" message="required-structures-could-not-be-deleted" />
@@ -42,6 +56,9 @@ portletURL.setParameter("tabs1", tabs1);
 <div class="separator"></div>
 
 <liferay-ui:search-container
+	orderByCol="<%= orderByCol %>"
+	orderByComparator="<%= orderByComparator %>"
+	orderByType="<%= orderByType %>"
 	searchContainer="<%= new StructureSearch(renderRequest, portletURL) %>"
 >
 	<liferay-ui:search-container-results>
@@ -91,6 +108,8 @@ portletURL.setParameter("tabs1", tabs1);
 		<liferay-ui:search-container-column-text
 			href="<%= rowHREF %>"
 			name="name"
+			orderable="<%= true %>"
+			orderableProperty="name"
 			value="<%= HtmlUtil.escape(structure.getName(locale)) %>"
 		/>
 
@@ -120,6 +139,8 @@ portletURL.setParameter("tabs1", tabs1);
 			buffer="buffer"
 			href="<%= rowHREF %>"
 			name="modified-date"
+			orderable="<%= true %>"
+			orderableProperty="modified-date"
 		>
 
 			<%

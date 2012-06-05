@@ -32,6 +32,7 @@ import com.liferay.portlet.asset.model.AssetEntryDisplay;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.service.base.AssetEntryServiceBaseImpl;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
+import com.liferay.portlet.asset.service.permission.AssetEntryPermission;
 import com.liferay.portlet.asset.service.permission.AssetTagPermission;
 import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
 import com.liferay.portlet.social.model.SocialActivityConstants;
@@ -52,7 +53,24 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 			long companyId, int start, int end)
 		throws SystemException {
 
-		return assetEntryLocalService.getCompanyEntries(companyId, start, end);
+		List<AssetEntry> entries = new ArrayList<AssetEntry>();
+
+		List<AssetEntry> companyEntries =
+			assetEntryLocalService.getCompanyEntries(companyId, start, end);
+
+		for (AssetEntry entry : companyEntries) {
+			try {
+				if (AssetEntryPermission.contains(
+						getPermissionChecker(), entry, ActionKeys.VIEW)) {
+
+					entries.add(entry);
+				}
+			}
+			catch (Exception e) {
+			}
+		}
+
+		return entries;
 	}
 
 	public int getCompanyEntriesCount(long companyId) throws SystemException {
@@ -63,8 +81,29 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 			long companyId, int start, int end, String languageId)
 		throws SystemException {
 
-		return assetEntryLocalService.getCompanyEntryDisplays(
-			companyId, start, end, languageId);
+		List<AssetEntryDisplay> entryDisplays = new ArrayList<AssetEntryDisplay>();
+
+		AssetEntryDisplay[] companyEntryDisplays =
+			assetEntryLocalService.getCompanyEntryDisplays(
+				companyId, start, end, languageId);
+
+		for (AssetEntryDisplay entryDisplay : companyEntryDisplays) {
+			try {
+				if (AssetEntryPermission.contains(
+						getPermissionChecker(), entryDisplay.getClassName(),
+						entryDisplay.getClassPK(), ActionKeys.VIEW)) {
+
+					entryDisplays.add(entryDisplay);
+				}
+			}
+			catch (Exception e) {
+			}
+		}
+
+		return entryDisplays.toArray(new AssetEntryDisplay[entryDisplays.size()]);
+
+		/*return assetEntryLocalService.getCompanyEntryDisplays(
+			companyId, start, end, languageId);*/
 	}
 
 	public List<AssetEntry> getEntries(AssetEntryQuery entryQuery)
@@ -100,6 +139,9 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 	public AssetEntry getEntry(long entryId)
 		throws PortalException, SystemException {
 
+		AssetEntryPermission.check(
+			getPermissionChecker(), entryId, ActionKeys.VIEW);
+
 		return assetEntryLocalService.getEntry(entryId);
 	}
 
@@ -109,6 +151,9 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 		if (!PropsValues.ASSET_ENTRY_INCREMENT_VIEW_COUNTER_ENABLED) {
 			return null;
 		}
+
+		AssetEntryPermission.check(
+			getPermissionChecker(), className, classPK, ActionKeys.VIEW);
 
 		User user = getGuestOrUser();
 
@@ -153,6 +198,9 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 			String description, String summary, String url, String layoutUuid,
 			int height, int width, Integer priority, boolean sync)
 		throws PortalException, SystemException {
+
+		AssetEntryPermission.check(
+			getPermissionChecker(), className, classPK, ActionKeys.UPDATE);
 
 		return assetEntryLocalService.updateEntry(
 			getUserId(), groupId, className, classPK, classUuid, classTypeId,

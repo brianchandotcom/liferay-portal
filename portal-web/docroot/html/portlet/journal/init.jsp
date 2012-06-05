@@ -84,6 +84,7 @@ page import="com.liferay.portlet.journal.model.impl.JournalArticleImpl" %><%@
 page import="com.liferay.portlet.journal.search.ArticleDisplayTerms" %><%@
 page import="com.liferay.portlet.journal.search.ArticleSearch" %><%@
 page import="com.liferay.portlet.journal.search.ArticleSearchTerms" %><%@
+page import="com.liferay.portlet.journal.search.EntriesChecker" %><%@
 page import="com.liferay.portlet.journal.search.FeedDisplayTerms" %><%@
 page import="com.liferay.portlet.journal.search.FeedSearch" %><%@
 page import="com.liferay.portlet.journal.search.FeedSearchTerms" %><%@
@@ -117,6 +118,10 @@ page import="com.liferay.util.RSSUtil" %>
 
 <%
 PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(request);
+
+PortletPreferences preferences = renderRequest.getPreferences();
+
+String[] displayViews = StringUtil.split(PrefsParamUtil.getString(preferences, request, "displayViews", StringUtil.merge(PropsValues.JOURNAL_DISPLAY_VIEWS)));
 
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);

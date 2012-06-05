@@ -46,6 +46,8 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 		<aui:column columnWidth="80" cssClass="context-pane" last="<%= true %>">
 			<div class="lfr-header-row">
 				<div class="lfr-header-row-content">
+					<liferay-util:include page="/html/portlet/journal/article_toolbar_search.jsp" />
+
 					<div class="toolbar">
 						<liferay-util:include page="/html/portlet/journal/toolbar.jsp" />
 					</div>
@@ -53,8 +55,6 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 					<div class="display-style">
 						<span class="toolbar" id="<portlet:namespace />displayStyleToolbar"></span>
 					</div>
-
-					<liferay-util:include page="/html/portlet/journal/article_toolbar_search.jsp" />
 				</div>
 			</div>
 
@@ -91,3 +91,7 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 		</aui:column>
 	</aui:layout>
 </div>
+
+<span id="<portlet:namespace />displayStyleButtonsContainer">
+	<liferay-util:include page="/html/portlet/journal/display_style_buttons.jsp" />
+</span>

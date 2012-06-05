@@ -328,13 +328,7 @@ int total = 0;
 <aui:script>
 	var journalContainer = A.one('#<portlet:namespace />journalContainer');
 
-	journalContainer.delegate(
-		'change',
-		<portlet:namespace />onJournalContainerChange,
-		'.article-selector'
-	);
-
-	function <portlet:namespace />onJournalContainerChange(event) {
+	var <portlet:namespace />onJournalContainerChange = function(event) {
 
 		<%
 		if (!displayStyle.equals("list")) {
@@ -346,28 +340,15 @@ int total = 0;
 		}
 		%>
 
-	}
+	};
 
-	var selectAllCheckbox = journalContainer.one('#<portlet:namespace />allRowIdsCheckbox');
+	journalContainer.delegate(
+		'change',
+		<portlet:namespace />onJournalContainerChange,
+		'.article-selector'
+	);
 
-	selectAllCheckbox.on('click', <portlet:namespace />onSelectAllCheckboxChange);
-
-	function <portlet:namespace />onSelectAllCheckboxChange(event) {
-		<portlet:namespace />_toggleEntriesSelection();
-
-		debugger;
-
-		var buttons = A.all('.delete-articles-button, .expire-articles-button');
-
-		if (event.currentTarget.get('checked')) {
-			buttons.show();
-		}
-		else {
-			buttons.hide();
-		}
-	}
-
-	function <portlet:namespace />_toggleEntriesSelection() {
+	var <portlet:namespace />_toggleEntriesSelection = function() {
 		var journalContainer = A.one('#<portlet:namespace />journalContainer');
 
 		var selectAllCheckbox = journalContainer.one('#<portlet:namespace />allRowIdsCheckbox');
@@ -378,7 +359,24 @@ int total = 0;
 		var documentDisplayStyle = A.all('.article-display-style.selectable');
 
 		documentDisplayStyle.toggleClass('selected', selectAllCheckbox.attr('checked'));
-	}
+	};
+
+	var <portlet:namespace />onSelectAllCheckboxChange = function(event) {
+		<portlet:namespace />_toggleEntriesSelection();
+
+		var buttons = A.all('.delete-articles-button, .expire-articles-button');
+
+		if (event.currentTarget.get('checked')) {
+			buttons.show();
+		}
+		else {
+			buttons.hide();
+		}
+	};
+
+	var selectAllCheckbox = journalContainer.one('#<portlet:namespace />allRowIdsCheckbox');
+
+	selectAllCheckbox.on('click', <portlet:namespace />onSelectAllCheckboxChange);
 
 	Liferay.provide(
 		window,

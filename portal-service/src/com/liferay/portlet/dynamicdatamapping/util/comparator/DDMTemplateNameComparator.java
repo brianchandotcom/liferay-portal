@@ -14,36 +14,37 @@
 
 package com.liferay.portlet.dynamicdatamapping.util.comparator;
 
-import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 
 /**
  * @author Eduardo Garcia
  */
-public class StructureModifiedDateComparator extends OrderByComparator {
+public class DDMTemplateNameComparator extends OrderByComparator {
 
-	public static final String ORDER_BY_ASC = "DDMStructure.modifiedDate ASC";
+	public static final String ORDER_BY_ASC = "DDMTemplate.name ASC";
 
-	public static final String ORDER_BY_DESC = "DDMStructure.modifiedDate DESC";
+	public static final String ORDER_BY_DESC = "DDMTemplate.name DESC";
 
-	public static final String[] ORDER_BY_FIELDS = {"modifiedDate"};
+	public static final String[] ORDER_BY_FIELDS = {"name"};
 
-	public StructureModifiedDateComparator() {
+	public DDMTemplateNameComparator() {
 		this(false);
 	}
 
-	public StructureModifiedDateComparator(boolean ascending) {
+	public DDMTemplateNameComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 
 	@Override
 	public int compare(Object obj1, Object obj2) {
-		DDMStructure template1 = (DDMStructure)obj1;
-		DDMStructure template2 = (DDMStructure)obj2;
+		DDMTemplate template1 = (DDMTemplate)obj1;
+		DDMTemplate template2 = (DDMTemplate)obj2;
 
-		int value = DateUtil.compareTo(
-				template1.getModifiedDate(), template2.getModifiedDate());
+		String templateName1 = template1.getName().toLowerCase();
+		String templateName2 = template2.getName().toLowerCase();
+
+		int value = templateName1.compareTo(templateName2);
 
 		if (_ascending) {
 			return value;

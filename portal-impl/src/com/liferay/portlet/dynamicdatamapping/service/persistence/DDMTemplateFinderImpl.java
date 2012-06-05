@@ -171,7 +171,7 @@ public class DDMTemplateFinderImpl
 		if (Validator.isNotNull(keywords)) {
 			names = CustomSQLUtil.keywords(keywords);
 			descriptions = CustomSQLUtil.keywords(keywords, false);
-			languages = CustomSQLUtil.keywords(languages, false);
+			languages = CustomSQLUtil.keywords(keywords, false);
 		}
 		else {
 			andOperator = true;
@@ -231,7 +231,7 @@ public class DDMTemplateFinderImpl
 		if (Validator.isNotNull(keywords)) {
 			names = CustomSQLUtil.keywords(keywords);
 			descriptions = CustomSQLUtil.keywords(keywords, false);
-			languages = CustomSQLUtil.keywords(languages, false);
+			languages = CustomSQLUtil.keywords(keywords, false);
 		}
 		else {
 			andOperator = true;
@@ -323,7 +323,7 @@ public class DDMTemplateFinderImpl
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "mode", StringPool.LIKE, false, modes);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "language", StringPool.LIKE, false, languages);
+				sql, "language", StringPool.LIKE, true, languages);
 			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
 
 			SQLQuery q = session.createSQLQuery(sql);
@@ -421,7 +421,7 @@ public class DDMTemplateFinderImpl
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "mode", StringPool.LIKE, false, modes);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "language", StringPool.LIKE, false, languages);
+				sql, "language", StringPool.LIKE, true, languages);
 			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
 
 			if (orderByComparator != null) {

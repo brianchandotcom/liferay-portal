@@ -46,6 +46,8 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 		<aui:column columnWidth="80" cssClass="context-pane" last="<%= true %>">
 			<div class="lfr-header-row">
 				<div class="lfr-header-row-content">
+					<liferay-util:include page="/html/portlet/journal/article_toolbar_search.jsp" />
+
 					<div class="toolbar">
 						<liferay-util:include page="/html/portlet/journal/toolbar.jsp" />
 					</div>
@@ -64,6 +66,7 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 			PortletURL portletURL = renderResponse.createRenderURL();
 
 			portletURL.setParameter("struts_action", "/journal/view");
+			portletURL.setParameter("folderId", String.valueOf(folderId));
 			%>
 
 			<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
@@ -73,12 +76,14 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 				<aui:input name="expireArticleIds" type="hidden" />
 
 				<div class="journal-container" id="<portlet:namespace />journalContainer">
+					<liferay-util:include page="/html/portlet/journal/article_search.jsp" />
+
 					<c:choose>
 						<c:when test='<%= navigation.equals("recent") %>'>
 							<liferay-util:include page="/html/portlet/journal/view_recent.jsp" />
 						</c:when>
 						<c:otherwise>
-							<liferay-util:include page="/html/portlet/journal/view_articles.jsp" />
+							<liferay-util:include page="/html/portlet/journal/view_entries.jsp" />
 						</c:otherwise>
 					</c:choose>
 				</div>
@@ -86,3 +91,7 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 		</aui:column>
 	</aui:layout>
 </div>
+
+<span id="<portlet:namespace />displayStyleButtonsContainer">
+	<liferay-util:include page="/html/portlet/journal/display_style_buttons.jsp" />
+</span>

@@ -33,7 +33,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 %>
 
 <c:if test="<%= displayViews.length > 1 %>">
-	<aui:script use="aui-dialog,aui-dialog-iframe">
+	<aui:script use="aui-base,aui-toolbar">
 		var buttonRow = A.one('#<portlet:namespace />displayStyleToolbar');
 
 		function onButtonClick(displayStyle) {

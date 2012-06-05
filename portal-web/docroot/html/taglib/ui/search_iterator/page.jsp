@@ -270,7 +270,7 @@ int sortColumnIndex = -1;
 				textSearchEntry.setAlign(rowChecker.getAlign());
 				textSearchEntry.setColspan(rowChecker.getColspan());
 				textSearchEntry.setCssClass(rowChecker.getCssClass());
-				textSearchEntry.setName(rowChecker.getRowCheckBox(rowIsChecked, rowIsDisabled, row.getPrimaryKey()));
+				textSearchEntry.setName(rowChecker.getRowCheckBox(request, rowIsChecked, rowIsDisabled, row.getPrimaryKey()));
 				textSearchEntry.setValign(rowChecker.getValign());
 
 				row.addSearchEntry(0, textSearchEntry);

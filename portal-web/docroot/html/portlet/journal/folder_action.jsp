@@ -25,11 +25,11 @@ if (row != null) {
 	folder = (JournalFolder)row.getObject();
 }
 else {
-	folder = (JournalFolder)request.getAttribute("view_articles.jsp-folder");
+	folder = (JournalFolder)request.getAttribute("view_entries.jsp-folder");
 }
 %>
 
-<span class="overlay folder-action">
+<span class="overlay article-action">
 	<liferay-ui:icon-menu align="auto" direction="down" extended="<%= false %>" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 		<c:if test="<%= JournalFolderPermission.contains(permissionChecker, folder, ActionKeys.UPDATE) %>">
 			<portlet:renderURL var="editURL">

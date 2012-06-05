@@ -12,14 +12,11 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.search;
+package com.liferay.portlet.journal.search;
 
-import com.liferay.portal.NoSuchRepositoryEntryException;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -27,13 +24,13 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
-import com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
-import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
-import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
-import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
-import com.liferay.portlet.documentlibrary.service.permission.DLFileShortcutPermission;
-import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
+import com.liferay.portlet.journal.NoSuchArticleException;
+import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.journal.model.JournalFolder;
+import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
+import com.liferay.portlet.journal.service.JournalFolderServiceUtil;
+import com.liferay.portlet.journal.service.permission.JournalArticlePermission;
+import com.liferay.portlet.journal.service.permission.JournalFolderPermission;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -67,38 +64,28 @@ public class EntriesChecker extends RowChecker {
 		HttpServletRequest request, boolean checked, boolean disabled,
 		String primaryKey) {
 
-		DLFileShortcut dlFileShortcut = null;
-		FileEntry fileEntry = null;
-		Folder folder = null;
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-		long entryId = GetterUtil.getLong(primaryKey);
+		JournalArticle article = null;
+		JournalFolder folder = null;
+
+		String articleId = GetterUtil.getString(primaryKey);
 
 		try {
-			fileEntry = DLAppServiceUtil.getFileEntry(entryId);
+			article = JournalArticleServiceUtil.getArticle(
+				themeDisplay.getScopeGroupId(), articleId);
 		}
 		catch (Exception e1) {
-			if (e1 instanceof NoSuchFileEntryException ||
-				e1 instanceof NoSuchRepositoryEntryException) {
-
+			if (e1 instanceof NoSuchArticleException) {
 				try {
-					dlFileShortcut = DLAppServiceUtil.getFileShortcut(entryId);
+					long folderId = GetterUtil.getLong(primaryKey);
+
+					folder = JournalFolderServiceUtil.getFolder(folderId);
 				}
 				catch (Exception e2) {
-					if (e2 instanceof NoSuchFileShortcutException) {
-						try {
-							folder = DLAppServiceUtil.getFolder(entryId);
-						}
-						catch (Exception e3) {
-							return StringPool.BLANK;
-						}
-					}
-					else {
-						return StringPool.BLANK;
-					}
+					return StringPool.BLANK;
 				}
-			}
-			else {
-				return StringPool.BLANK;
 			}
 		}
 
@@ -106,28 +93,14 @@ public class EntriesChecker extends RowChecker {
 
 		String name = null;
 
-		if (fileEntry != null) {
-			name = FileEntry.class.getSimpleName();
+		if (article != null) {
+			name = JournalArticle.class.getSimpleName();
 
 			try {
-				if (DLFileEntryPermission.contains(
-						_permissionChecker, fileEntry, ActionKeys.DELETE) ||
-					DLFileEntryPermission.contains(
-						_permissionChecker, fileEntry, ActionKeys.UPDATE)) {
-
-					showInput = true;
-				}
-			}
-			catch (Exception e) {
-			}
-		}
-		else if (dlFileShortcut != null) {
-			name = DLFileShortcut.class.getSimpleName();
-
-			try {
-				if (DLFileShortcutPermission.contains(
-						_permissionChecker, dlFileShortcut,
-						ActionKeys.DELETE)) {
+				if (JournalArticlePermission.contains(
+						_permissionChecker, article, ActionKeys.DELETE) ||
+					JournalArticlePermission.contains(
+						_permissionChecker, article, ActionKeys.UPDATE)) {
 
 					showInput = true;
 				}
@@ -136,10 +109,10 @@ public class EntriesChecker extends RowChecker {
 			}
 		}
 		else if (folder != null) {
-			name = Folder.class.getSimpleName();
+			name = JournalFolder.class.getSimpleName();
 
 			try {
-				if (DLFolderPermission.contains(
+				if (JournalFolderPermission.contains(
 						_permissionChecker, folder, ActionKeys.DELETE)) {
 
 					showInput = true;
@@ -158,15 +131,11 @@ public class EntriesChecker extends RowChecker {
 		sb.append("['");
 		sb.append(_liferayPortletResponse.getNamespace());
 		sb.append(RowChecker.ROW_IDS);
-		sb.append(Folder.class.getSimpleName());
+		sb.append(JournalFolder.class.getSimpleName());
 		sb.append("Checkbox', '");
 		sb.append(_liferayPortletResponse.getNamespace());
 		sb.append(RowChecker.ROW_IDS);
-		sb.append(DLFileShortcut.class.getSimpleName());
-		sb.append("Checkbox', '");
-		sb.append(_liferayPortletResponse.getNamespace());
-		sb.append(RowChecker.ROW_IDS);
-		sb.append(FileEntry.class.getSimpleName());
+		sb.append(JournalArticle.class.getSimpleName());
 		sb.append("Checkbox']");
 
 		String checkBoxRowIds = sb.toString();
@@ -176,7 +145,7 @@ public class EntriesChecker extends RowChecker {
 			_liferayPortletResponse.getNamespace() + RowChecker.ROW_IDS +
 				name + "Checkbox",
 			primaryKey, checkBoxRowIds, "'#" + getAllRowIds() + "Checkbox'",
-			_liferayPortletResponse.getNamespace() + "toggleActionsButton();");
+			StringPool.BLANK);
 	}
 
 	private LiferayPortletResponse _liferayPortletResponse;

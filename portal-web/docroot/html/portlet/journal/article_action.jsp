@@ -19,10 +19,17 @@
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-JournalArticle article = (JournalArticle)row.getObject();
+JournalArticle article = null;
+
+if (row != null) {
+	article = (JournalArticle)row.getObject();
+}
+else {
+	article = (JournalArticle)request.getAttribute("view_entries.jsp-article");
+}
 %>
 
-<span class="overlay folder-action">
+<span class="overlay article-action">
 	<liferay-ui:icon-menu align="auto" direction="down" extended="<%= false %>" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 		<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.UPDATE) %>">
 			<portlet:renderURL var="editURL">

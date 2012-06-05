@@ -58,6 +58,8 @@ AUI.add(
 
 						instance.after('complete', instance._afterComplete);
 						instance.after('valueChange', instance._afterValueChange);
+
+						instance._iframeLoadHandle = instance._frame.on('load', instance._onIframeLoad, instance);
 					},
 
 					startProgress: function() {
@@ -100,6 +102,8 @@ AUI.add(
 						instance.get('boundingBox').removeClass('lfr-progress-active');
 
 						instance.set('label', instance.get('strings.complete'));
+
+						instance._iframeLoadHandle.detach();
 					},
 
 					_afterValueChange: function(event) {
@@ -112,6 +116,17 @@ AUI.add(
 						}
 
 						instance.set('label', label);
+					},
+
+					_onIframeLoad: function(event) {
+						var instance = this;
+
+						setTimeout(
+							function() {
+								instance._frame.get('contentWindow.location').reload();
+							},
+							instance.get(STR_UPDATE_PERIOD)
+						);
 					}
 				}
 			}

@@ -55,15 +55,6 @@ else {
 
 			progressId.set('value', <%= percent %>);
 		}
-
-		<c:if test="<%= percent < 100 %>">
-			setTimeout(
-				function() {
-					window.location.reload();
-				},
-				<%= updatePeriod %>
-			);
-		</c:if>
 	}());
 </script>
 

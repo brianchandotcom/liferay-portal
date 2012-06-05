@@ -16,25 +16,38 @@ package com.liferay.portal.verify;
 
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.ResourceLocalServiceUtil;
+import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.asset.NoSuchEntryException;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.journal.model.JournalContentSearch;
 import com.liferay.portlet.journal.model.JournalStructure;
 import com.liferay.portlet.journal.model.JournalTemplate;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalStructureLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalTemplateLocalServiceUtil;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import javax.portlet.PortletPreferences;
 
 /**
  * @author Alexander Chow
+ * @author Shinn Lok
  */
 public class VerifyJournal extends VerifyProcess {
 
@@ -144,6 +157,66 @@ public class VerifyJournal extends VerifyProcess {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Permissions and assets verified for articles");
+		}
+
+		verifyJournalContentSearch();
+	}
+
+	protected void verifyJournalContentSearch() throws Exception {
+		List<JournalContentSearch> contentSearches =
+			JournalContentSearchLocalServiceUtil.getArticleContentSearches();
+
+		Set<String> portletIds = new HashSet<String>();
+
+		for (JournalContentSearch contentSearch : contentSearches) {
+			portletIds.add(contentSearch.getPortletId());
+		}
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getConnection();
+
+			for (String portletId : portletIds) {
+				contentSearches =
+					JournalContentSearchLocalServiceUtil.
+						getArticleContentSearchesByPortletId(portletId);
+
+				if (contentSearches.size() <= 1) {
+					continue;
+				}
+
+				ps = con.prepareStatement(
+					"select preferences from PortletPreferences where " +
+						"portletId = ?");
+
+				ps.setString(1, portletId);
+
+				rs = ps.executeQuery();
+
+				while (rs.next()) {
+					String xml = rs.getString("preferences");
+
+					PortletPreferences portletPreferences =
+						PortletPreferencesFactoryUtil.fromDefaultXML(xml);
+
+					String articleId = portletPreferences.getValue(
+						"articleId", null);
+
+					JournalContentSearch contentSearch = contentSearches.get(1);
+
+					JournalContentSearchLocalServiceUtil.updateContentSearch(
+						contentSearch.getGroupId(),
+						contentSearch.isPrivateLayout(),
+						contentSearch.getLayoutId(),
+						contentSearch.getPortletId(), articleId, true);
+				}
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
 		}
 	}
 

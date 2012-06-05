@@ -164,6 +164,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		return _smallImageType;
 	}
 
+	@Override
 	public Map<Locale, String> getTitleMap() {
 		Locale defaultLocale = LocaleThreadLocal.getDefaultLocale();
 

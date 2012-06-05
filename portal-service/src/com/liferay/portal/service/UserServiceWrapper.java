@@ -1038,7 +1038,7 @@ public class UserServiceWrapper implements UserService,
 	* @return the user
 	* @throws PortalException if a user with the primary key could not be
 	found, if the current user was updating her own status to
-	anything but {@link WorkflowConstants.STATUS_APPROVED}, or if the
+	anything but {@link com.liferay.portal.kernel.workflow.WorkflowConstants#STATUS_APPROVED}, or if the
 	current user did not have permission to update the user's
 	workflow status.
 	* @throws SystemException if a system exception occurred

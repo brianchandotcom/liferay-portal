@@ -36,8 +36,8 @@ import java.io.InputStream;
  * can be obtained by calling {@link
  * com.liferay.portlet.documentlibrary.model.DLFolderConstants#getDataRepositoryId(
  * long,long)}. For all other portlets, the <code>repositoryId</code> should be
- * set to {@link CompanyConstants#SYSTEM}. These methods can be used in plugins
- * and other portlets, as shown below.
+ * set to {@link com.liferay.portal.model.CompanyConstants#SYSTEM}. These
+ * methods can be used in plugins and other portlets, as shown below.
  * </p>
  *
  * <pre>
@@ -68,7 +68,7 @@ public class DLStoreUtil {
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link CompanyConstants#SYSTEM})
+	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
 	 * @param  dirName the directory's name
 	 * @throws PortalException if the directory's information was invalid
 	 * @throws SystemException if a system exception occurred
@@ -85,7 +85,7 @@ public class DLStoreUtil {
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link CompanyConstants#SYSTEM})
+	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
 	 * @param  fileName the file name
 	 * @param  validateFileExtension whether to validate the file's extension
 	 * @param  bytes the files's data
@@ -107,7 +107,7 @@ public class DLStoreUtil {
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link CompanyConstants#SYSTEM})
+	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
 	 * @param  fileName the file name
 	 * @param  validateFileExtension whether to validate the file's extension
 	 * @param  file Name the file name
@@ -129,7 +129,7 @@ public class DLStoreUtil {
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link CompanyConstants#SYSTEM})
+	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
 	 * @param  fileName the file name
 	 * @param  validateFileExtension whether to validate the file's extension
 	 * @param  is the files's data
@@ -152,7 +152,7 @@ public class DLStoreUtil {
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link CompanyConstants#SYSTEM})
+	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
 	 * @param  fileName the file name
 	 * @param  bytes the files's data
 	 * @throws PortalException if the file's information was invalid or is found
@@ -172,7 +172,7 @@ public class DLStoreUtil {
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link CompanyConstants#SYSTEM})
+	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
 	 * @param  fileName the file name
 	 * @param  file Name the file name
 	 * @throws PortalException if the file's information was invalid or is found
@@ -192,7 +192,7 @@ public class DLStoreUtil {
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link CompanyConstants#SYSTEM})
+	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
 	 * @param  fileName the file name
 	 * @param  is the files's data
 	 * @throws PortalException if the file's information was invalid or is found
@@ -222,7 +222,7 @@ public class DLStoreUtil {
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link CompanyConstants#SYSTEM})
+	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
 	 * @param  fileName the original's file name
 	 * @param  fromVersionLabel the original file's version label
 	 * @param  toVersionLabel the new version label
@@ -244,7 +244,7 @@ public class DLStoreUtil {
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link CompanyConstants#SYSTEM})
+	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
 	 * @param  dirName the directory's name
 	 * @throws PortalException if the directory's information was invalid
 	 * @throws SystemException if a system exception occurred
@@ -262,7 +262,7 @@ public class DLStoreUtil {
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link CompanyConstants#SYSTEM})
+	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
 	 * @param  fileName the file's name
 	 * @throws PortalException if the file's information was invalid
 	 * @throws SystemException if a system exception occurred
@@ -279,7 +279,7 @@ public class DLStoreUtil {
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link CompanyConstants#SYSTEM})
+	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
 	 * @param  fileName the file's name
 	 * @param  versionLabel the file's version label
 	 * @throws PortalException if the file's information was invalid
@@ -306,7 +306,7 @@ public class DLStoreUtil {
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link CompanyConstants#SYSTEM})
+	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
 	 * @param  fileName the file's name
 	 * @return Returns the {@link File} object with the file's name
 	 * @throws PortalException if the file's information was invalid
@@ -332,7 +332,7 @@ public class DLStoreUtil {
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link CompanyConstants#SYSTEM})
+	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
 	 * @param  fileName the file's name
 	 * @param  versionLabel the file's version label
 	 * @return Returns the {@link File} object with the file's name
@@ -353,7 +353,7 @@ public class DLStoreUtil {
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link CompanyConstants#SYSTEM})
+	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
 	 * @param  fileName the file's name
 	 * @return Returns the byte array with the file's name
 	 * @throws PortalException if the file's information was invalid
@@ -371,7 +371,7 @@ public class DLStoreUtil {
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link CompanyConstants#SYSTEM})
+	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
 	 * @param  fileName the file's name
 	 * @param  versionLabel the file's version label
 	 * @return Returns the byte array with the file's name
@@ -388,13 +388,14 @@ public class DLStoreUtil {
 	}
 
 	/**
-	 * Returns the file as an {@link InputStream} object.
+	 * Returns the file as an {@link java.io.InputStream} object.
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link CompanyConstants#SYSTEM})
+	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
 	 * @param  fileName the file's name
-	 * @return Returns the {@link InputStream} object with the file's name
+	 * @return Returns the {@link java.io.InputStream} object with the file's
+	 *         name
 	 * @throws PortalException if the file's information was invalid
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -406,14 +407,15 @@ public class DLStoreUtil {
 	}
 
 	/**
-	 * Returns the file as an {@link InputStream} object.
+	 * Returns the file as an {@link java.io.InputStream} object.
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link CompanyConstants#SYSTEM})
+	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
 	 * @param  fileName the file's name
 	 * @param  versionLabel the file's version label
-	 * @return Returns the {@link InputStream} object with the file's name
+	 * @return Returns the {@link java.io.InputStream} object with the file's
+	 *         name
 	 * @throws PortalException if the file's information was invalid
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -431,7 +433,7 @@ public class DLStoreUtil {
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link CompanyConstants#SYSTEM})
+	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
 	 * @param  dirName the directory's name
 	 * @return Returns all files of the directory
 	 * @throws PortalException if the directory's information was invalid
@@ -449,7 +451,7 @@ public class DLStoreUtil {
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link CompanyConstants#SYSTEM})
+	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
 	 * @param  fileName the file's name
 	 * @return Returns the size of the file
 	 * @throws PortalException if the file's information was invalid
@@ -486,7 +488,7 @@ public class DLStoreUtil {
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link CompanyConstants#SYSTEM})
+	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
 	 * @param  dirName the directory's name
 	 * @return <code>true</code> if the directory exists; <code>false</code>
 	 *         otherwise
@@ -505,7 +507,7 @@ public class DLStoreUtil {
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link CompanyConstants#SYSTEM})
+	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
 	 * @param  fileName the file's name
 	 * @return <code>true</code> if the file exists; <code>false</code>
 	 *         otherwise
@@ -524,7 +526,7 @@ public class DLStoreUtil {
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link CompanyConstants#SYSTEM})
+	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
 	 * @param  fileName the file's name
 	 * @param  versionLabel the file's version label
 	 * @return <code>true</code> if the file exists; <code>false</code>
@@ -579,7 +581,7 @@ public class DLStoreUtil {
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link CompanyConstants#SYSTEM})
+	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
 	 * @param  fileName the file's name
 	 * @param  newFileName the file's new name
 	 * @throws PortalException if the file's information was invalid
@@ -598,7 +600,7 @@ public class DLStoreUtil {
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link CompanyConstants#SYSTEM})
+	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
 	 * @param  fileName the file name
 	 * @param  fileExtension the file's extension
 	 * @param  validateFileExtension whether to validate the file's extension
@@ -625,7 +627,7 @@ public class DLStoreUtil {
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link CompanyConstants#SYSTEM})
+	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
 	 * @param  fileName the file name
 	 * @param  fileExtension the file's extension
 	 * @param  validateFileExtension whether to validate the file's extension
@@ -649,12 +651,12 @@ public class DLStoreUtil {
 
 	/**
 	 * Update's a file version label. Similar to {@link #copyFileVersion(long,
-	 * long, String, String, String, String)} except that the old file version
-	 * is deleted.
+	 * long, String, String, String)} except that the old file version is
+	 * deleted.
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  repositoryId the primary key of the data repository (optionally
-	 *         {@link CompanyConstants#SYSTEM})
+	 *         {@link com.liferay.portal.model.CompanyConstants#SYSTEM})
 	 * @param  fileName the file's name
 	 * @param  fromVersionLabel the file's version label
 	 * @param  toVersionLabel the file's new version label

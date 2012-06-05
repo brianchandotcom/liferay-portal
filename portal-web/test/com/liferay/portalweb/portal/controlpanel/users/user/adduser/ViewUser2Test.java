@@ -97,11 +97,51 @@ public class ViewUser2Test extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("userfn2"),
-					selenium.getText("//td[2]/a"));
+					selenium.getText(
+						"//tr[contains(.,'userfn2')]/td[@headers='_125_usersSearchContainer_col-first-name']/a"));
 				assertEquals(RuntimeVariables.replace("userln2"),
-					selenium.getText("//td[3]/a"));
+					selenium.getText(
+						"//tr[contains(.,'userln2')]/td[@headers='_125_usersSearchContainer_col-last-name']/a"));
 				assertEquals(RuntimeVariables.replace("usersn2"),
-					selenium.getText("//td[4]/a"));
+					selenium.getText(
+						"//tr[contains(.,'usersn2')]/td[@headers='_125_usersSearchContainer_col-screen-name']/a"));
+				selenium.clickAt("//tr[contains(.,'userfn2')]/td[@headers='_125_usersSearchContainer_col-first-name']/a",
+					RuntimeVariables.replace("userfn2"));
+				selenium.waitForPageToLoad("30000");
+				loadRequiredJavaScriptModules();
+				assertEquals(RuntimeVariables.replace("userfn2 userln2"),
+					selenium.getText("//h1[@class='header-title']"));
+				assertEquals(RuntimeVariables.replace("\u00ab Back"),
+					selenium.getText("//a[@id='_125_TabsBack']"));
+				assertEquals(RuntimeVariables.replace("Details"),
+					selenium.getText("//div[@id='_125_details']/h3"));
+				assertEquals("",
+					selenium.getValue("//select[@id='_125_prefixId']"));
+				assertEquals("usersn2",
+					selenium.getValue("//input[@id='_125_screenName']"));
+				assertEquals("userea2@liferay.com",
+					selenium.getValue("//input[@id='_125_emailAddress']"));
+				assertEquals("userfn2",
+					selenium.getValue("//input[@id='_125_firstName']"));
+				assertEquals("",
+					selenium.getValue("//input[@id='_125_middleName']"));
+				assertEquals("userln2",
+					selenium.getValue("//input[@id='_125_lastName']"));
+				assertTrue(selenium.isVisible("//img[@class='avatar']"));
+				assertEquals(RuntimeVariables.replace("Change"),
+					selenium.getText("//span[@class='edit-logo-link']/a/span"));
+				assertEquals("0",
+					selenium.getValue("//select[@id='_125_birthdayMonth']"));
+				assertEquals("1",
+					selenium.getValue("//select[@id='_125_birthdayDay']"));
+				assertEquals("1970",
+					selenium.getValue("//select[@id='_125_birthdayYear']"));
+				assertEquals("true",
+					selenium.getValue("//select[@id='_125_male']"));
+				assertEquals("",
+					selenium.getValue("//input[@id='_125_jobTitle']"));
+				assertEquals(RuntimeVariables.replace("userfn2 userln2"),
+					selenium.getText("//span[@class='user-name']"));
 
 			case 100:
 				label = -1;

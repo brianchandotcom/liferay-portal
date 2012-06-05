@@ -52,10 +52,11 @@ public class DLFileEntryAssetRenderer
 	extends BaseAssetRenderer implements TrashRenderer {
 
 	public DLFileEntryAssetRenderer(
-		FileEntry fileEntry, FileVersion fileVersion) {
+		FileEntry fileEntry, FileVersion fileVersion, int typeLatest) {
 
 		_fileEntry = fileEntry;
 		_fileVersion = fileVersion;
+		_typeLatest = typeLatest;
 	}
 
 	public String getAssetRendererFactoryClassName() {
@@ -220,8 +221,11 @@ public class DLFileEntryAssetRenderer
 
 			renderRequest.setAttribute(
 				WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY, _fileEntry);
-			renderRequest.setAttribute(
-				WebKeys.DOCUMENT_LIBRARY_FILE_VERSION, _fileVersion);
+
+			if (_typeLatest == AssetRendererFactory.TYPE_LATEST) {
+				renderRequest.setAttribute(
+					WebKeys.DOCUMENT_LIBRARY_FILE_VERSION, _fileVersion);
+			}
 
 			return "/html/portlet/document_library/asset/" + template + ".jsp";
 		}
@@ -232,5 +236,6 @@ public class DLFileEntryAssetRenderer
 
 	private FileEntry _fileEntry;
 	private FileVersion _fileVersion;
+	private int _typeLatest;
 
 }

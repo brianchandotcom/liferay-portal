@@ -1,3 +1,5 @@
+<%@ page import="com.liferay.portlet.trash.model.TrashEntry" %>
+<%@ page import="com.liferay.portlet.trash.model.TrashVersion" %>
 <%--
 /**
  * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
@@ -47,6 +49,10 @@ else {
 	fileVersion = fileEntry.getFileVersion();
 }
 
+if (versionSpecific && portletName.equals(PortletKeys.TRASH)) {
+	showHeader = true;
+}
+
 long fileVersionId = fileVersion.getFileVersionId();
 
 long fileEntryTypeId = 0;
@@ -67,7 +73,7 @@ if (PrefsPropsUtil.getBoolean(PropsKeys.OPENOFFICE_SERVER_ENABLED, PropsValues.O
 
 long assetClassPK = 0;
 
-if (!fileVersion.isApproved() && !fileVersion.getVersion().equals(DLFileEntryConstants.VERSION_DEFAULT)) {
+if (!fileVersion.isApproved() && !fileVersion.getVersion().equals(DLFileEntryConstants.VERSION_DEFAULT) && !(fileVersion.getStatus() == WorkflowConstants.STATUS_IN_TRASH)) {
 	assetClassPK = fileVersion.getFileVersionId();
 	title = fileVersion.getTitle();
 	extension = fileVersion.getExtension();
@@ -630,6 +636,8 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 									showNonApprovedDocuments = true;
 								}
 
+								boolean showStatusColum = showNonApprovedDocuments && !portletId.equals(PortletKeys.TRASH);
+
 								SearchContainer searchContainer = new SearchContainer();
 
 								List<String> headerNames = new ArrayList<String>();
@@ -638,7 +646,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 								headerNames.add("date");
 								headerNames.add("size");
 
-								if (showNonApprovedDocuments) {
+								if (showStatusColum) {
 									headerNames.add("status");
 								}
 
@@ -684,7 +692,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 
 									// Status
 
-									if (showNonApprovedDocuments) {
+									if (showStatusColum) {
 										row.addText(LanguageUtil.get(pageContext, WorkflowConstants.toLabel(curFileVersion.getStatus())));
 									}
 

@@ -1874,6 +1874,11 @@
 			<forward name="portlet.trash.view" path="portlet.trash.view" />
 		</action>
 
+		<action path="/trash/view_file_entry" type="com.liferay.portlet.documentlibrary.action.EditFileEntryAction">
+			<forward name="portlet.document_library.edit_file_entry" path="portlet.document_library.view_file_entry" />
+			<forward name="portlet.document_library.error" path="portlet.document_library.error" />
+		</action>
+
 		<action path="/trash/view" forward="portlet.trash.view" />
 
 		<action path="/trash/view_content" forward="portlet.trash.view_content" />

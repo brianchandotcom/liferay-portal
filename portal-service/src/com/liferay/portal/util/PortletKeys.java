@@ -216,6 +216,8 @@ public class PortletKeys {
 
 	public static final String TRANSLATOR = "26";
 
+	public static final String TRASH = "182";
+
 	public static final String UNIT_CONVERTER = "27";
 
 	public static final String UPDATE_MANAGER = "104";

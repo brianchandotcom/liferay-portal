@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
@@ -72,7 +73,7 @@ public class EditStructureAction extends PortletAction {
 				structure = updateStructure(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteStructure(actionRequest);
+				deleteStructures(actionRequest);
 			}
 
 			if (Validator.isNotNull(cmd)) {
@@ -160,12 +161,24 @@ public class EditStructureAction extends PortletAction {
 				renderRequest, "portlet.dynamic_data_mapping.edit_structure"));
 	}
 
-	protected void deleteStructure(ActionRequest actionRequest)
-		throws Exception {
+	protected void deleteStructures(ActionRequest actionRequest)
+			throws Exception {
 
-		long classPK = ParamUtil.getLong(actionRequest, "classPK");
+		long[] deleteStructureIds;
 
-		DDMStructureServiceUtil.deleteStructure(classPK);
+		long structureId = ParamUtil.getLong(actionRequest, "classPK");
+
+		if (structureId > 0) {
+			deleteStructureIds = new long[] {structureId};
+		}
+		else {
+			deleteStructureIds = StringUtil.split(
+				ParamUtil.getString(actionRequest, "deleteStructureIds"), 0L);
+		}
+
+		for (long deleteStructureId : deleteStructureIds) {
+			DDMStructureServiceUtil.deleteStructure(deleteStructureId);
+		}
 	}
 
 	protected String getSaveAndContinueRedirect(

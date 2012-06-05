@@ -168,6 +168,13 @@ public class JournalContentSearchLocalServiceImpl
 		return journalContentSearchPersistence.findByArticleId(articleId);
 	}
 
+	public List<JournalContentSearch> getArticleContentSearchesByPortletId(
+			String portletId)
+		throws SystemException {
+
+		return journalContentSearchPersistence.findByPortletId(portletId);
+	}
+
 	public List<Long> getLayoutIds(
 			long groupId, boolean privateLayout, String articleId)
 		throws SystemException {

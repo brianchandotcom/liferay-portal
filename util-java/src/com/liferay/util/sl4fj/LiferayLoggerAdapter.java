@@ -59,7 +59,7 @@ public class LiferayLoggerAdapter
 
 	public void debug(String format, Object[] arguments) {
 		if (isDebugEnabled()) {
-			FormattingTuple formattingTuple = MessageFormatter.format(
+			FormattingTuple formattingTuple = MessageFormatter.arrayFormat(
 				format, arguments);
 
 			_log.debug(
@@ -97,7 +97,7 @@ public class LiferayLoggerAdapter
 
 	public void error(String format, Object[] arguments) {
 		if (isErrorEnabled()) {
-			FormattingTuple formattingTuple = MessageFormatter.format(
+			FormattingTuple formattingTuple = MessageFormatter.arrayFormat(
 				format, arguments);
 
 			_log.error(
@@ -135,7 +135,7 @@ public class LiferayLoggerAdapter
 
 	public void info(String format, Object[] arguments) {
 		if (isInfoEnabled()) {
-			FormattingTuple formattingTuple = MessageFormatter.format(
+			FormattingTuple formattingTuple = MessageFormatter.arrayFormat(
 				format, arguments);
 
 			_log.info(
@@ -171,7 +171,7 @@ public class LiferayLoggerAdapter
 		Marker marker, String fqcn, int level, String message,
 		Object[] arguments, Throwable t) {
 
-		FormattingTuple formattingTuple = MessageFormatter.format(
+		FormattingTuple formattingTuple = MessageFormatter.arrayFormat(
 			message, arguments);
 
 		switch (level) {
@@ -231,7 +231,7 @@ public class LiferayLoggerAdapter
 
 	public void trace(String format, Object[] arguments) {
 		if (isTraceEnabled()) {
-			FormattingTuple formattingTuple = MessageFormatter.format(
+			FormattingTuple formattingTuple = MessageFormatter.arrayFormat(
 				format, arguments);
 
 			_log.trace(
@@ -269,7 +269,7 @@ public class LiferayLoggerAdapter
 
 	public void warn(String format, Object[] arguments) {
 		if (isWarnEnabled()) {
-			FormattingTuple formattingTuple = MessageFormatter.format(
+			FormattingTuple formattingTuple = MessageFormatter.arrayFormat(
 				format, arguments);
 
 			_log.warn(

@@ -29,10 +29,10 @@ ArticleSearch searchContainer = new ArticleSearch(renderRequest, portletURL);
 
 ArticleDisplayTerms displayTerms = (ArticleDisplayTerms)searchContainer.getDisplayTerms();
 
-String search = ParamUtil.getString(request, displayTerms.ADVANCED_SEARCH, null);
+boolean advancedSearch = ParamUtil.getBoolean(request, displayTerms.ADVANCED_SEARCH, false);
 %>
 
-<div class='taglib-search-toggle taglib-search-toggle-advanced <%= (search != null) ? "" :  "aui-helper-hidden" %>' id="<portlet:namespace />advancedSearch">
+<div class='taglib-search-toggle taglib-search-toggle-advanced <%= advancedSearch ? "" :  "aui-helper-hidden" %>' id="<portlet:namespace />advancedSearch">
 	<aui:input name="<%= displayTerms.ADVANCED_SEARCH %>" type="hidden" value="<%= true %>" />
 
 	<liferay-util:buffer var="andOperator">
@@ -139,14 +139,14 @@ String search = ParamUtil.getString(request, displayTerms.ADVANCED_SEARCH, null)
 String keywords = ParamUtil.getString(request, "keywords");
 %>
 
-<c:if test="<%= (Validator.isNotNull(keywords) || (search != null)) %>" >
+<c:if test="<%= (Validator.isNotNull(keywords) || advancedSearch) %>" >
 	<div id="<portlet:namespace />searchInfo">
 		<div class="search-info">
 
 			<%
 			String message = LanguageUtil.get(pageContext, "advanced-search");
 
-			if (search == null) {
+			if (advancedSearch) {
 				if (folder != null) {
 					message = LanguageUtil.format(pageContext, "searched-for-x-in-x", new Object[] {HtmlUtil.escape(keywords), folder.getName()});
 				}
@@ -194,7 +194,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 			</liferay-portlet:renderURL>
 
 			<c:choose>
-				<c:when test="<%= (search != null) %>">
+				<c:when test="<%= advancedSearch %>">
 					submitForm(document.<portlet:namespace />fm, '<%= changeSearchFolderURL.toString() %>');
 				</c:when>
 				<c:otherwise>

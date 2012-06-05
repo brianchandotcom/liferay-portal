@@ -656,7 +656,7 @@ public class StringUtil {
 	 * @param  s the string to convert
 	 * @return the string, converted to lowercase, or <code>null</code> if the
 	 *         string is <code>null</code>
-	 * @see    {@link String#toLowerCase()}
+	 * @see    String#toLowerCase()
 	 */
 	public static String lowerCase(String s) {
 		if (s == null) {
@@ -3060,7 +3060,7 @@ public class StringUtil {
 	 * @param  s the string to convert
 	 * @return the string, converted to upper-case, or <code>null</code> if the
 	 *         string is <code>null</code>
-	 * @see    {@link String#toUpperCase()}
+	 * @see    String#toUpperCase()
 	 */
 	public static String upperCase(String s) {
 		if (s == null) {
@@ -3092,7 +3092,7 @@ public class StringUtil {
 	 *
 	 * @param  obj the object whose string value is to be returned
 	 * @return the string value of the object
-	 * @see    {@link String#valueOf(Object obj)}
+	 * @see    String#valueOf(Object obj)
 	 */
 	public static String valueOf(Object obj) {
 		return String.valueOf(obj);

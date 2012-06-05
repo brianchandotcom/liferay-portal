@@ -611,6 +611,7 @@ AUI.add(
 						groupId: themeDisplay.getParentGroupId(),
 						layoutId: tab._LFR_layoutId,
 						layoutSetBranchId: instance.get('layoutSetBranchId'),
+						p_auth: Liferay.authToken,
 						privateLayout: themeDisplay.isPrivateLayout()
 					};
 
@@ -672,6 +673,7 @@ AUI.add(
 								languageId: themeDisplay.getLanguageId(),
 								layoutId: themeDisplay.getLayoutId(),
 								name: pageTitle,
+								p_auth: Liferay.authToken,
 								privateLayout: themeDisplay.isPrivateLayout()
 							};
 
@@ -711,6 +713,7 @@ AUI.add(
 							layoutPrototypeId: layoutPrototypeId,
 							mainPath: themeDisplay.getPathMain(),
 							name: pageTitle,
+							p_auth: Liferay.authToken,
 							parentLayoutId: themeDisplay.getParentLayoutId(),
 							privateLayout: themeDisplay.isPrivateLayout()
 						};
@@ -797,6 +800,7 @@ AUI.add(
 					doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
 					groupId: themeDisplay.getParentGroupId(),
 					layoutId: node._LFR_layoutId,
+					p_auth: Liferay.authToken,
 					priority: priority,
 					privateLayout: themeDisplay.isPrivateLayout()
 				};

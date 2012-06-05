@@ -69,55 +69,30 @@ if (filterManageableOrganizations) {
 				<c:when test="<%= (organization != null) && (organization.getOrganizationId() != OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID) %>">
 
 					<%
+					long parentOrganizationId = 0;
 					String parentOrganizationName = LanguageUtil.get(pageContext, "users-and-organizations-home");
-
-					Boolean hasOrganizationPermission = false;
 
 					if (!organization.isRoot()) {
 						Organization parentOrganization = organization.getParentOrganization();
 
-						hasOrganizationPermission = OrganizationPermissionUtil.contains(permissionChecker, parentOrganization, ActionKeys.VIEW);
-
-						if(hasOrganizationPermission)
+						if (OrganizationPermissionUtil.contains(permissionChecker, parentOrganization, ActionKeys.VIEW)) {
+							parentOrganizationId = parentOrganization.getOrganizationId();
 							parentOrganizationName = parentOrganization.getName();
+						}
 					}
 					%>
 
-					<c:choose>
-						<c:when test="<%= !organization.isRoot() %>">
-							<portlet:renderURL var="headerBackURL">
-								<portlet:param name="struts_action" value="/organization/view" />
-								<c:choose>
-									<c:when test="<%= hasOrganizationPermission %>">
-										<portlet:param name="organizationId" value="<%= String.valueOf(organization.getParentOrganizationId()) %>" />
-									</c:when>
-									<c:otherwise>
-										<portlet:param name="organizationId" value="<%= String.valueOf(0) %>" />
-									</c:otherwise>
-								</c:choose>
-							</portlet:renderURL>
+					<portlet:renderURL var="headerBackURL">
+						<portlet:param name="struts_action" value="/organization/view" />
+						<portlet:param name="organizationId" value="<%= String.valueOf(parentOrganizationId) %>" />
+					</portlet:renderURL>
 
-							<liferay-ui:header
-								backLabel="<%= parentOrganizationName %>"
-								backURL="<%= headerBackURL.toString() %>"
-								localizeTitle="<%= false %>"
-								title="<%= organization.getName() %>"
-							/>
-						</c:when>
-						<c:otherwise>
-							<portlet:renderURL var="headerBackURL">
-								<portlet:param name="struts_action" value="/organization/view" />
-								<portlet:param name="organizationId" value="<%= String.valueOf(0) %>" />
-							</portlet:renderURL>
-
-							<liferay-ui:header
-								backLabel="<%= parentOrganizationName %>"
-								backURL="<%= headerBackURL.toString() %>"
-								localizeTitle="<%= false %>"
-								title="<%= organization.getName() %>"
-							/>
-						</c:otherwise>
-					</c:choose>
+					<liferay-ui:header
+						backLabel="<%= parentOrganizationName %>"
+						backURL="<%= headerBackURL.toString() %>"
+						localizeTitle="<%= false %>"
+						title="<%= organization.getName() %>"
+					/>
 				</c:when>
 				<c:otherwise>
 					<span class="aui-search-bar">

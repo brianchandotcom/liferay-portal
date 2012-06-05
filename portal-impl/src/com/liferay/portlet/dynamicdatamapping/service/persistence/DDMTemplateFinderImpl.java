@@ -425,11 +425,7 @@ public class DDMTemplateFinderImpl
 			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
 
 			if (orderByComparator != null) {
-				String orderByFields = StringUtil.merge(
-					orderByComparator.getOrderByFields(), StringPool.COMMA);
-
-				sql = StringUtil.replace(
-					sql, "templateId DESC", orderByFields.concat(" DESC"));
+				sql = CustomSQLUtil.replaceOrderBy(sql, orderByComparator);
 			}
 
 			SQLQuery q = session.createSQLQuery(sql);

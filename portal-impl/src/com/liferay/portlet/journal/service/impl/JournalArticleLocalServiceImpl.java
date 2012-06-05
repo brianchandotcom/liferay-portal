@@ -209,6 +209,10 @@ public class JournalArticleLocalServiceImpl
 		String defaultLanguageId = ParamUtil.getString(
 			serviceContext, "defaultLanguageId");
 
+		if (Validator.isNull(defaultLanguageId)) {
+			defaultLanguageId = LocalizationUtil.getDefaultLocale(content);
+		}
+
 		if (Validator.isNotNull(defaultLanguageId)) {
 			locale = LocaleUtil.fromLanguageId(defaultLanguageId);
 		}
@@ -2080,6 +2084,10 @@ public class JournalArticleLocalServiceImpl
 
 		String defaultLanguageId = ParamUtil.getString(
 			serviceContext, "defaultLanguageId");
+
+		if (Validator.isNull(defaultLanguageId)) {
+			defaultLanguageId = LocalizationUtil.getDefaultLocale(content);
+		}
 
 		if (Validator.isNotNull(defaultLanguageId)) {
 			locale = LocaleUtil.fromLanguageId(defaultLanguageId);

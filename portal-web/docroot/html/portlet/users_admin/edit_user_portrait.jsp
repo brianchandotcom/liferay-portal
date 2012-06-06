@@ -64,96 +64,20 @@ User selUser = PortalUtil.getSelectedUser(request);
 			</aui:fieldset>
 		</aui:form>
 
-		<aui:script use="aui-io,json,aui-image-cropper,aui-loading-mask">
-			<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
+		<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
+			<aui:script>
 				Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />fileName);
-			</c:if>
+			</aui:script>
+		</c:if>
 
-			var imageCropper;
-
-			var cropRegionNode = A.one('#<portlet:namespace />cropRegion');
-			var fileNameNode = A.one('#<portlet:namespace />fileName');
-			var formNode = A.one('#<portlet:namespace />fm');
-			var portraitPreview = A.one('#<portlet:namespace />portraitPreview');
-			var portraitPreviewImg = A.one('#<portlet:namespace />portraitPreviewImg');
-			var submitButton = A.one('#<portlet:namespace />submitButton');
-
-			var imageLoadHandler = function(event) {
-				if (portraitPreviewImg.attr('src').indexOf('spacer.png') == -1) {
-					if (imageCropper) {
-						imageCropper.enable();
-
-						imageCropper.syncImageUI();
-
-						imageCropper.setAttrs(
-							{
-								cropHeight: Math.max(portraitPreviewImg.height() * 0.3, 50),
-								cropWidth: Math.max(portraitPreviewImg.width() * 0.3, 50),
-								x: 0,
-								y: 0
-							}
-						);
-					} else {
-						imageCropper = new A.ImageCropper(
-							{
-								srcNode: portraitPreviewImg
-							}
-						).render();
-					}
-
-					submitButton.attr('disabled', false);
-					submitButton.ancestor('.aui-button').removeClass('aui-button-disabled');
+		<aui:script use="liferay-logo-editor">
+			new Liferay.LogoEditor(
+				{
+					namespace: '<portlet:namespace />',
+					previewURL: '<portlet:resourceURL><portlet:param name="struts_action" value="/users_admin/edit_user_portrait" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.GET_TEMP %>" /></portlet:resourceURL>',
+					uploadURL: '<portlet:actionURL><portlet:param name="struts_action" value="/users_admin/edit_user_portrait" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" /></portlet:actionURL>'
 				}
-			};
-
-			var fileNameChangeHandler = function(event) {
-				var previewURL = '<portlet:resourceURL><portlet:param name="struts_action" value="/users_admin/edit_user_portrait" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.GET_TEMP %>" /></portlet:resourceURL>';
-
-				var uploadURL = '<portlet:actionURL><portlet:param name="struts_action" value="/users_admin/edit_user_portrait" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" /></portlet:actionURL>';
-
-				portraitPreviewImg.addClass('loading');
-
-				portraitPreviewImg.attr('src', '<%= themeDisplay.getPathThemeImages() %>/spacer.png');
-
-				if (imageCropper) {
-					imageCropper.disable();
-				}
-
-				A.io.request(
-					uploadURL,
-					{
-						method: 'post',
-						form: {
-							id: '<portlet:namespace />fm',
-							upload: true
-						},
-						on: {
-							complete: function(event) {
-								previewURL = Liferay.Util.addParams('ts=' + A.Lang.now(), previewURL);
-
-								portraitPreviewImg.attr('src', previewURL);
-
-								portraitPreviewImg.removeClass('loading');
-							},
-							start: function() {
-								submitButton.attr('disabled', true);
-
-								submitButton.ancestor('.aui-button').addClass('aui-button-disabled');
-							}
-						}
-					}
-				);
-			};
-
-			var submitHandler = function(event) {
-				if (imageCropper) {
-					cropRegionNode.val(A.JSON.stringify(imageCropper.get('region')));
-				}
-			};
-
-			fileNameNode.on('change', fileNameChangeHandler);
-			formNode.on('submit', submitHandler);
-			portraitPreviewImg.on('load', imageLoadHandler);
+			);
 		</aui:script>
 	</c:otherwise>
 </c:choose>

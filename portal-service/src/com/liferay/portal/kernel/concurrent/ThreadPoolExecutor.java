@@ -433,7 +433,11 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
 					((runState == _SHUTDOWN) && (poolSize == 0) &&
 					 !_taskQueue.isEmpty())) {
 
-					_doAddWorkerThread(_taskQueue.poll());
+					Runnable runnable = _taskQueue.poll();
+
+					if (runnable != null) {
+						_doAddWorkerThread(runnable);
+					}
 				}
 			}
 			finally {

@@ -1291,6 +1291,15 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 		}
 	}
 
+	public boolean isInTrash() {
+		if (getStatus() == WorkflowConstants.STATUS_IN_TRASH) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	public boolean isPending() {
 		if (getStatus() == WorkflowConstants.STATUS_PENDING) {
 			return true;

@@ -745,6 +745,15 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	}
 
 	/**
+	* Returns <code>true</code> if this document library file version is in the Recycle Bin.
+	*
+	* @return <code>true</code> if this document library file version is in the Recycle Bin; <code>false</code> otherwise
+	*/
+	public boolean isInTrash() {
+		return _dlFileVersion.isInTrash();
+	}
+
+	/**
 	* Returns <code>true</code> if this document library file version is pending.
 	*
 	* @return <code>true</code> if this document library file version is pending; <code>false</code> otherwise

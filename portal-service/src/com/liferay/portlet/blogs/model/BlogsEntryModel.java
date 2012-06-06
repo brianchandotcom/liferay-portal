@@ -472,6 +472,13 @@ public interface BlogsEntryModel extends BaseModel<BlogsEntry>, GroupedModel,
 	public boolean isExpired();
 
 	/**
+	 * Returns <code>true</code> if this blogs entry is in the Recycle Bin.
+	 *
+	 * @return <code>true</code> if this blogs entry is in the Recycle Bin; <code>false</code> otherwise
+	 */
+	public boolean isInTrash();
+
+	/**
 	 * Returns <code>true</code> if this blogs entry is pending.
 	 *
 	 * @return <code>true</code> if this blogs entry is pending; <code>false</code> otherwise

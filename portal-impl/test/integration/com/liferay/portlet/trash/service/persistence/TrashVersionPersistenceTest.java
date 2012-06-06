@@ -19,32 +19,56 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.ExecutionTestListeners;
-import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.TransactionalPersistenceAdvice;
 
 import com.liferay.portlet.trash.NoSuchVersionException;
 import com.liferay.portlet.trash.model.TrashVersion;
 
+import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import org.junit.runner.RunWith;
 
+import java.io.Serializable;
+
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @ExecutionTestListeners(listeners =  {
 	PersistenceExecutionTestListener.class})
-@RunWith(LiferayIntegrationJUnitTestRunner.class)
+@RunWith(LiferayPersistenceIntegrationJUnitTestRunner.class)
 public class TrashVersionPersistenceTest {
-	@Before
-	public void setUp() throws Exception {
-		_persistence = (TrashVersionPersistence)PortalBeanLocatorUtil.locate(TrashVersionPersistence.class.getName());
+	@After
+	public void tearDown() throws Exception {
+		Map<Serializable, BasePersistence<?>> persistedEntities = _transactionalPersistenceAdvice.getPersistedEntities();
+
+		Set<Serializable> entityKeys = persistedEntities.keySet();
+
+		for (Serializable entitiKey : entityKeys) {
+			BasePersistence<?> persistence = persistedEntities.get(entitiKey);
+
+			try {
+				persistence.remove(entitiKey);
+			}
+			catch (Exception e) {
+				_log.debug("The entity " + entitiKey +
+					" has been already deleted");
+			}
+		}
+
+		_transactionalPersistenceAdvice.reset();
 	}
 
 	@Test
@@ -234,5 +258,7 @@ public class TrashVersionPersistenceTest {
 		return trashVersion;
 	}
 
-	private TrashVersionPersistence _persistence;
+	private static Log _log = LogFactoryUtil.getLog(TrashVersionPersistenceTest.class);
+	private TrashVersionPersistence _persistence = (TrashVersionPersistence)PortalBeanLocatorUtil.locate(TrashVersionPersistence.class.getName());
+	private TransactionalPersistenceAdvice _transactionalPersistenceAdvice = (TransactionalPersistenceAdvice)PortalBeanLocatorUtil.locate(TransactionalPersistenceAdvice.class.getName());
 }

@@ -21,40 +21,69 @@ import ${packagePath}.model.${entity.name};
 import ${packagePath}.model.impl.${entity.name}ModelImpl;
 
 import ${beanLocatorUtil};
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.jdbc.OutputBlob;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
+import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.AssertUtils;
 import com.liferay.portal.test.EnvironmentConfigTestListener;
 import com.liferay.portal.test.ExecutionTestListeners;
-import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.TransactionalPersistenceAdvice;
 import com.liferay.portal.util.PropsValues;
 
 import java.sql.Blob;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import java.io.Serializable;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.Test;
 
 @ExecutionTestListeners(listeners = {PersistenceExecutionTestListener.class})
-@RunWith(LiferayIntegrationJUnitTestRunner.class)
+@RunWith(LiferayPersistenceIntegrationJUnitTestRunner.class)
 public class ${entity.name}PersistenceTest {
 
-	@Before
-	public void setUp() throws Exception {
-		_persistence = (${entity.name}Persistence)${beanLocatorUtilShortName}.locate(${entity.name}Persistence.class.getName());
+	@After
+	public void tearDown() throws Exception {
+		Map<Serializable, BasePersistence<?>> persistedEntities = _transactionalPersistenceAdvice.getPersistedEntities();
+
+		Set<Serializable> entityKeys = persistedEntities.keySet();
+
+		for (Serializable entitiKey : entityKeys) {
+			BasePersistence<?> persistence = persistedEntities.get(entitiKey);
+
+			try {
+				persistence.remove(entitiKey);
+			}
+			catch (Exception e) {
+				_log.debug("The entity " + entitiKey + " has been already deleted");
+			}
+		}
+
+		_transactionalPersistenceAdvice.reset();
 	}
 
 	@Test
@@ -789,6 +818,10 @@ public class ${entity.name}PersistenceTest {
 		}
 	</#if>
 
-	private ${entity.name}Persistence _persistence;
+	private static Log _log = LogFactoryUtil.getLog(${entity.name}PersistenceTest.class);
+
+	private ${entity.name}Persistence _persistence = (${entity.name}Persistence)${beanLocatorUtilShortName}.locate(${entity.name}Persistence.class.getName());
+
+	private TransactionalPersistenceAdvice _transactionalPersistenceAdvice = (TransactionalPersistenceAdvice) ${beanLocatorUtilShortName}.locate(TransactionalPersistenceAdvice.class.getName());
 
 }

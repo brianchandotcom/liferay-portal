@@ -35,9 +35,13 @@ public class LiferayIntegrationJUnitTestRunner extends BlockJUnit4ClassRunner {
 			System.setProperty("external-properties", "portal-test.properties");
 		}
 
-		InitUtil.initWithSpring();
+		loadSpringContext();
 
 		_testContextHandler = new TestContextHandler(clazz);
+	}
+
+	protected void loadSpringContext() {
+		InitUtil.initWithSpring();
 	}
 
 	@Override

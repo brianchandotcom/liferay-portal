@@ -14,9 +14,13 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.test.TestCase;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.StringWriter;
 
 /**
@@ -278,6 +282,43 @@ public class StringBundlerTest extends TestCase {
 		assertEquals(1, sb.index());
 		assertEquals("bb", sb.stringAt(0));
 		assertEquals(5, sb.capacity());
+	}
+
+	public void testSerialization() throws Exception {
+		StringBundler sb = new StringBundler();
+
+		sb.append("test1");
+		sb.append("test2");
+		sb.append("test3");
+
+		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+			new UnsyncByteArrayOutputStream();
+
+		ObjectOutputStream objectOutputStream = new ObjectOutputStream(
+			unsyncByteArrayOutputStream);
+
+		objectOutputStream.writeObject(sb);
+
+		objectOutputStream.close();
+
+		byte[] data = unsyncByteArrayOutputStream.toByteArray();
+
+		UnsyncByteArrayInputStream unsyncByteArrayInputStream =
+			new UnsyncByteArrayInputStream(data);
+
+		ObjectInputStream objectInputStream = new ObjectInputStream(
+			unsyncByteArrayInputStream);
+
+		StringBundler cloneSB = (StringBundler)objectInputStream.readObject();
+
+		objectInputStream.close();
+
+		assertEquals(sb.capacity(), cloneSB.capacity());
+		assertEquals(sb.index(), cloneSB.index());
+
+		for (int i = 0; i < sb.index(); i++) {
+			assertEquals(sb.stringAt(i), cloneSB.stringAt(i));
+		}
 	}
 
 	public void testSetIndex() {

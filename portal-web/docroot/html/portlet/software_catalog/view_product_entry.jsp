@@ -54,8 +54,9 @@ viewProductEntryURL.setParameter("productEntryId", String.valueOf(productEntryId
 
 <liferay-ui:header
 	backURL="<%= redirect %>"
+	escapeXml="<%= false %>"
 	localizeTitle="<%= false %>"
-	title='<%= productEntry.getName() + " " + ((latestProductVersion == null) ? "" : latestProductVersion.getVersion()) %>'
+	title='<%= productEntry.getName() + " " + ((latestProductVersion == null) ? "" : HtmlUtil.escape(latestProductVersion.getVersion())) %>'
 />
 
 <table class="lfr-table">
@@ -80,7 +81,7 @@ viewProductEntryURL.setParameter("productEntryId", String.valueOf(productEntryId
 			SCLicense license = productEntryLicenses.get(i);
 		%>
 
-			<aui:a href="<%= license.getUrl() %>" target="_blank"><%= license.getName() %></aui:a><c:if test="<%= i < productEntryLicenses.size() - 1 %>">, </c:if>
+			<aui:a href="<%= license.getUrl() %>" target="_blank"><%= HtmlUtil.escape(license.getName()) %></aui:a><c:if test="<%= i < productEntryLicenses.size() - 1 %>">, </c:if>
 
 		<%
 		}
@@ -156,7 +157,7 @@ viewProductEntryURL.setParameter("productEntryId", String.valueOf(productEntryId
 				<liferay-ui:message key="change-log" />:
 			</td>
 			<td>
-				<%= latestProductVersion.getChangeLog() %>
+				<%= HtmlUtil.escape(latestProductVersion.getChangeLog()) %>
 			</td>
 		</tr>
 		<tr>

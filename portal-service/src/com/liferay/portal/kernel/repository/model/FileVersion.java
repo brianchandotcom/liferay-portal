@@ -90,6 +90,8 @@ public interface FileVersion extends RepositoryModel<FileVersion> {
 
 	public boolean isExpired();
 
+	public boolean isInTrash();
+
 	public boolean isPending();
 
 }

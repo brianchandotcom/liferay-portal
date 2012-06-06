@@ -279,6 +279,10 @@ public class CMISFileVersion extends CMISModel implements FileVersion {
 		return false;
 	}
 
+	public boolean isInTrash() {
+		return false;
+	}
+
 	public boolean isPending() {
 		return false;
 	}

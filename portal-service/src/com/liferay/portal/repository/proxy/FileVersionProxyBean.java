@@ -203,6 +203,10 @@ public class FileVersionProxyBean
 		return _fileVersion.isExpired();
 	}
 
+	public boolean isInTrash() {
+		return _fileVersion.isInTrash();
+	}
+
 	public boolean isPending() {
 		return _fileVersion.isPending();
 	}

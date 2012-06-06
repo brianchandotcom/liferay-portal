@@ -224,6 +224,10 @@ public class LiferayFileVersion extends LiferayModel implements FileVersion {
 		return _dlFileVersion.isExpired();
 	}
 
+	public boolean isInTrash() {
+		return _dlFileVersion.isInTrash();
+	}
+
 	public boolean isPending() {
 		return _dlFileVersion.isPending();
 	}

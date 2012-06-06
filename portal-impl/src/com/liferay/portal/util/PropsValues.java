@@ -1022,6 +1022,10 @@ public class PropsValues {
 
 	public static final String MESSAGE_BOARDS_THREAD_VIEWS_DEFAULT = PropsUtil.get(PropsKeys.MESSAGE_BOARDS_THREAD_VIEWS_DEFAULT);
 
+	public static final String MICROSOFT_TRANSLATOR_CLIENT_ID = PropsUtil.get(PropsKeys.MICROSOFT_TRANSLATOR_CLIENT_ID);
+
+	public static final String MICROSOFT_TRANSLATOR_CLIENT_SECRET = PropsUtil.get(PropsKeys.MICROSOFT_TRANSLATOR_CLIENT_SECRET);
+
 	public static final String[] MIME_TYPES_CONTENT_DISPOSITION_INLINE = PropsUtil.getArray(PropsKeys.MIME_TYPES_CONTENT_DISPOSITION_INLINE);
 
 	public static final int MINIFIER_INLINE_CONTENT_CACHE_SIZE = GetterUtil.getInteger(PropsUtil.get(PropsKeys.MINIFIER_INLINE_CONTENT_CACHE_SIZE));

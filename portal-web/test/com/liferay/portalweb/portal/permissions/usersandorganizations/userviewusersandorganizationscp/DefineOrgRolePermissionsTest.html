@@ -1,0 +1,109 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>DefineOrgRolePermissionsTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">DefineOrgRolePermissionsTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/web/guest/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>link=Control Panel</td>
+	<td>Control Panel</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Control Panel</td>
+	<td>Control Panel</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Roles</td>
+	<td>Roles</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[10]/td[4]/span/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//tr[10]/td[4]/span/ul/li/strong/a/img</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//a[@id='_128_ocerSearchContainer_8_menu_define_permissions']</td>
+	<td>Define Permissions</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//a[@id='_128_ocerSearchContainer_8_menu_define_permissions']</td>
+	<td>Define Permissions</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//select[@id='_128_add-permissions']</td>
+	<td>Organization Administration Announcements Asset Publisher Blogs Bookmarks Calendar Categories (Control Panel) Custom Fields Documents and Media Documents and Media Display Dynamic Data Lists Dynamic Data Mapping Media Gallery Message Boards Mobile Device Rules Page Templates Polls Shopping Site Templates Software Catalog Tags (Control Panel) Web Content Wiki Activities Alerts Amazon Rankings Announcements Asset Publisher Blogs Blogs Aggregator Bookmarks Breadcrumb Calendar Categories Navigation Currency Converter Dictionary Directory Documents and Media Documents and Media Display Dynamic Data List Display Group Statistics Hello Velocity Hello World IFrame Invitation Language Loan Calculator Media Gallery Message Boards My Sites Navigation Nested Portlets Network Utilities Page Comments Page Flags Page Ratings Password Generator Polls Display Quick Note RSS Recent Bloggers Recent Downloads Related Assets Requests Search Shopping Sign In Site Map Software Catalog Tag Cloud Tags Navigation Translator Unit Converter User Statistics Web Content Display Web Content List Web Content Search Web Proxy Wiki Wiki Display XSL Content Blogs (Control Panel) Bookmarks Calendar Categories (Control Panel) Documents and Media Dynamic Data Lists Message Boards (Control Panel) Mobile Device Rules (Control Panel) Polls Recent Content Recycle Bin Site Memberships Site Pages Site Settings Social Activity Software Catalog Tags (Control Panel) Web Content Wiki (Control Panel) Workflow Configuration</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>//select[@id='_128_add-permissions']</td>
+	<td>Organization Administration</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[8]/td[2]</td>
+	<td>Manage Users</td>
+</tr>
+<tr>
+	<td>verifyValue</td>
+	<td>//tr[8]/td/input</td>
+	<td>off</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//tr[8]/td/input</td>
+	<td>Manage Users</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Save']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td/a</td>
+	<td>Users and Organizations</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[3]/td[3]</td>
+	<td>Manage Users</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -889,6 +889,11 @@
 		</antcall>
 
 		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="permissions-users-and-organizations" />
+			<param name="test.ant.script.suite" value="PermissionsUsersAndOrganizationsTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="permissions-web-content" />
 			<param name="test.ant.script.suite" value="PermissionsWebContentTestSuite" />
 		</antcall>

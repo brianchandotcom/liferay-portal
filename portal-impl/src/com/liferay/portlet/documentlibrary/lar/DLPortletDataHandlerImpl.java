@@ -109,9 +109,7 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		FileVersion fileVersion = fileEntry.getFileVersion();
 
-		if ((fileVersion.getStatus() != WorkflowConstants.STATUS_APPROVED ) &&
-			(fileVersion.getStatus() != WorkflowConstants.STATUS_IN_TRASH)) {
-
+		if (!fileVersion.isApproved() && !fileVersion.isInTrash()) {
 			return;
 		}
 
@@ -374,9 +372,7 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 					fileEntry.getDescription(), null, is, fileEntry.getSize(),
 					serviceContext);
 
-				if (fileVersion.getStatus() ==
-						WorkflowConstants.STATUS_IN_TRASH) {
-
+				if (fileVersion.isInTrash()) {
 					importedFileEntry = DLAppServiceUtil.moveFileEntryToTrash(
 						importedFileEntry.getFileEntryId());
 				}

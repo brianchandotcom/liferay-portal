@@ -979,7 +979,7 @@ public class DLAppHelperLocalServiceImpl
 			else if (object instanceof DLFolder) {
 				DLFolder dlFolder = (DLFolder)object;
 
-				if (dlFolder.getStatus() == WorkflowConstants.STATUS_IN_TRASH) {
+				if (dlFolder.isInTrash()) {
 					continue;
 				}
 

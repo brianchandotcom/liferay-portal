@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutBranch;
@@ -34,7 +33,6 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portal.util.SessionClicks;
 import com.liferay.portlet.sites.util.SitesUtil;
 
 import java.util.List;
@@ -65,13 +63,15 @@ public class LayoutsTreeUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		boolean incomplete = ParamUtil.getBoolean(request, "incomplete", true);
 		int start = ParamUtil.getInteger(request, "start");
 		int end = start + PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN;
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		List<Layout> layoutAncestors = null;
+
+		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
+			groupId, privateLayout, parentLayoutId);
 
 		long selPlid = ParamUtil.getLong(request, "selPlid");
 
@@ -80,31 +80,23 @@ public class LayoutsTreeUtil {
 
 			layoutAncestors = selLayout.getAncestors();
 
-			String treeId = ParamUtil.getString(request, "treeId");
+			layoutAncestors.add(selLayout);
 
-			String paginationJSON = SessionClicks.get(
-				request, treeId + "PaginationMap", StringPool.BLANK);
+			for (Layout layoutAncestor : layoutAncestors) {
+				int index = layouts.indexOf(layoutAncestor);
 
-			if (Validator.isNotNull(paginationJSON)) {
-				JSONObject paginationJSONObject =
-					JSONFactoryUtil.createJSONObject(paginationJSON);
+				if (index >= end) {
+					end = index + 1;
 
-				String key = String.valueOf(parentLayoutId);
-
-				if (paginationJSONObject.has(key)) {
-					int paginationEnd = paginationJSONObject.getInt(key);
-
-					if (paginationEnd > end) {
-						end = paginationEnd;
-					}
+					break;
 				}
 			}
 		}
 
-		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-			groupId, privateLayout, parentLayoutId, incomplete, start, end);
+		start = Math.min(start, layouts.size());
+		end = Math.min(end, layouts.size());
 
-		for (Layout layout : layouts) {
+		for (Layout layout : layouts.subList(start, end)) {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 			if ((layoutAncestors != null) && layoutAncestors.contains(layout) ||

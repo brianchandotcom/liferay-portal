@@ -241,7 +241,7 @@ if (!selectableTree) {
 
 			var limit = paginator.limit;
 
-			paginator.start = (Math.ceil(children.length / limit) * limit) - limit;
+			paginator.start = Math.max(children.length - limit, 0);
 
 			A.Array.each(children, TreeUtil.restoreNodeState);
 		},
@@ -285,24 +285,7 @@ if (!selectableTree) {
 		}
 
 		<c:if test="<%= saveState %>">
-			, updatePaginationMap: function(node) {
-				var paginationMap = {};
-
-				node.eachParent(
-					function(parent) {
-						if (A.instanceOf(parent, A.TreeNodeIO)) {
-							var layoutId = TreeUtil.extractLayoutId(parent);
-							var children = parent.get('children');
-
-							paginationMap[layoutId] = Math.ceil(children.length / TreeUtil.PAGINATION_LIMIT) * TreeUtil.PAGINATION_LIMIT;
-						}
-					}
-				);
-
-				Liferay.Store('<%= HtmlUtil.escape(treeId) %>PaginationMap', A.JSON.stringify(paginationMap));
-			},
-
-			updateSessionTreeCheckedState: function(treeId, nodeId, state) {
+			, updateSessionTreeCheckedState: function(treeId, nodeId, state) {
 				var data = {
 					cmd: state ? 'layoutCheck' : 'layoutUncheck',
 					plid: nodeId
@@ -512,8 +495,6 @@ if (!selectableTree) {
 							'<portlet:namespace />selPlid': plid
 						}
 					);
-
-					TreeUtil.updatePaginationMap(node);
 				}
 			}
 		);

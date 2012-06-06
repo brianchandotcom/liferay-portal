@@ -170,6 +170,7 @@
 			display: block;
 			font-weight: bold;
 			padding-left: 18px;
+			padding-right: 5px;
 			
 			&:after {
 				clear: both;
@@ -214,6 +215,9 @@
 
 		.category-path {
 			float: right;
+			font-weight: normal;
+			font-size: 0.8em;
+			text-align: right;
 			width: 49%;
 		}
 	}

@@ -14,19 +14,16 @@
 
 package com.liferay.portlet.translator.util;
 
-import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.microsofttranslator.MicrosoftTranslatorFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.webcache.WebCacheException;
 import com.liferay.portal.kernel.webcache.WebCacheItem;
 import com.liferay.portlet.translator.model.Translation;
 
-import java.net.URL;
-
 /**
  * @author Brian Wing Shun Chan
+ * @author Hugo Huijser
  */
 public class TranslationWebCacheItem implements WebCacheItem {
 
@@ -39,28 +36,17 @@ public class TranslationWebCacheItem implements WebCacheItem {
 		Translation translation = new Translation(_translationId, _fromText);
 
 		try {
-			StringBundler sb = new StringBundler(6);
+			int x = _translationId.indexOf(StringPool.UNDERLINE);
 
-			sb.append("http://babelfish.yahoo.com/translate_txt?");
-			sb.append("ei=UTF-8&doit=done&fr=bf-res&intl=1&tt=urltext");
-			sb.append("&trtext=");
-			sb.append(HttpUtil.encodeURL(_fromText));
-			sb.append("&lp=");
-			sb.append(_translationId);
+			if ((x == -1) || ((x + 1) == _translationId.length())) {
+				throw new WebCacheException("invalid translationId");
+			}
 
-			String text = HttpUtil.URLtoString(new URL(sb.toString()));
+			String fromLanguage = _translationId.substring(0, x);
+			String toLanguage = _translationId.substring(x + 1);
 
-			int x = text.indexOf("<div id=\"result\">");
-
-			x = text.indexOf(">", x) + 1;
-			x = text.indexOf(">", x) + 1;
-
-			int y = text.indexOf("</div>", x);
-
-			String toText = text.substring(x, y).trim();
-
-			toText = StringUtil.replace(
-				toText, CharPool.NEW_LINE, CharPool.SPACE);
+			String toText = MicrosoftTranslatorFactoryUtil.translate(
+				fromLanguage, toLanguage, _fromText);
 
 			translation.setToText(toText);
 		}

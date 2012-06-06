@@ -573,6 +573,7 @@ public class Creole10Parser]]></replacevalue>
 			<arg value="service.bean.locator.util=com.liferay.portal.kernel.bean.PortalBeanLocatorUtil" />
 			<arg value="service.props.util=com.liferay.portal.util.PropsUtil" />
 			<arg value="service.test.dir=${basedir}/test/integration" />
+			<arg value="service.target.entity=${service.target.entity}" />
 		</java>
 
 		<delete file="ServiceBuilder.temp" />

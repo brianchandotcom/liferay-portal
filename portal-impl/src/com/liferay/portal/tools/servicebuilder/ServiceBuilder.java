@@ -143,6 +143,10 @@ public class ServiceBuilder {
 		String propsUtil = arguments.get("service.props.util");
 		String pluginName = arguments.get("service.plugin.name");
 		String testDir = arguments.get("service.test.dir");
+		String targetEntityName = arguments.get("service.target.entity");
+		if (targetEntityName.startsWith("${")) {
+			targetEntityName = null;
+		}
 
 		try {
 			new ServiceBuilder(
@@ -153,7 +157,7 @@ public class ServiceBuilder {
 				apiDir, implDir, jsonFileName, remotingFileName, sqlDir,
 				sqlFileName, sqlIndexesFileName, sqlIndexesPropertiesFileName,
 				sqlSequencesFileName, autoNamespaceTables, beanLocatorUtil,
-				propsUtil, pluginName, testDir);
+				propsUtil, pluginName, testDir, targetEntityName);
 		}
 		catch (RuntimeException re) {
 			System.out.println(
@@ -421,7 +425,7 @@ public class ServiceBuilder {
 		String sqlFileName, String sqlIndexesFileName,
 		String sqlIndexesPropertiesFileName, String sqlSequencesFileName,
 		boolean autoNamespaceTables, String beanLocatorUtil, String propsUtil,
-		String pluginName, String testDir) {
+		String pluginName, String testDir, String targetEntityName) {
 
 		this(
 			fileName, hbmFileName, ormFileName, modelHintsFileName,
@@ -431,7 +435,7 @@ public class ServiceBuilder {
 			implDir, jsonFileName, remotingFileName, sqlDir, sqlFileName,
 			sqlIndexesFileName, sqlIndexesPropertiesFileName,
 			sqlSequencesFileName, autoNamespaceTables, beanLocatorUtil,
-			propsUtil, pluginName, testDir, true);
+			propsUtil, pluginName, testDir, true, targetEntityName);
 	}
 
 	public ServiceBuilder(
@@ -445,7 +449,8 @@ public class ServiceBuilder {
 		String sqlFileName, String sqlIndexesFileName,
 		String sqlIndexesPropertiesFileName, String sqlSequencesFileName,
 		boolean autoNamespaceTables, String beanLocatorUtil, String propsUtil,
-		String pluginName, String testDir, boolean build) {
+		String pluginName, String testDir, boolean build,
+		String targetEntityName) {
 
 		_tplBadAliasNames = _getTplProperty(
 			"bad_alias_names", _tplBadAliasNames);
@@ -644,11 +649,16 @@ public class ServiceBuilder {
 				for (int x = 0; x < _ejbList.size(); x++) {
 					Entity entity = _ejbList.get(x);
 
-					System.out.println("Building " + entity.getName());
+					String entityName = entity.getName();
 
-					if (true) {/* ||
-						entity.getName().equals("EmailAddress") ||
-						entity.getName().equals("User")) {*/
+					if ((targetEntityName == null) ||
+						entityName.equals(targetEntityName)) {
+
+//					if (true) {/* ||
+//						entity.getName().equals("EmailAddress") ||
+//						entity.getName().equals("User")) {*/
+
+						System.out.println("Building " + entityName);
 
 						if (entity.hasColumns()) {
 							_createHbm(entity);
@@ -928,7 +938,7 @@ public class ServiceBuilder {
 				_sqlFileName, _sqlIndexesFileName,
 				_sqlIndexesPropertiesFileName, _sqlSequencesFileName,
 				_autoNamespaceTables, _beanLocatorUtil, _propsUtil, _pluginName,
-				_testDir, false);
+				_testDir, false, null);
 
 			entity = serviceBuilder.getEntity(refEntity);
 

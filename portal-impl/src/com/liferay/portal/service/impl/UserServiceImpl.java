@@ -633,6 +633,21 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		userLocalService.deleteUser(userId);
 	}
 
+	public List<User> getCompanyUsers(long companyId, int start, int end)
+		throws SystemException {
+
+		// todo add permission
+
+		return userLocalService.getCompanyUsers(companyId, start, end);
+	}
+
+	public int getCompanyUsersCount(long companyId) throws SystemException {
+
+		// todo add permission
+
+		return userLocalService.getCompanyUsersCount(companyId);
+	}
+
 	/**
 	 * Returns the primary keys of all the users belonging to the group.
 	 *
@@ -652,6 +667,24 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	}
 
 	/**
+	 * Returns all the users belonging to the group.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @return the users belonging to the group
+	 * @throws PortalException if the current user did not have permission to
+	 *         view group assignments
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<User> getGroupUsers(long groupId)
+		throws PortalException, SystemException {
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), groupId, ActionKeys.VIEW_MEMBERS);
+
+		return userLocalService.getGroupUsers(groupId);
+	}
+
+	/**
 	 * Returns the primary keys of all the users belonging to the organization.
 	 *
 	 * @param  organizationId the primary key of the organization
@@ -667,6 +700,24 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			getPermissionChecker(), organizationId, ActionKeys.VIEW_MEMBERS);
 
 		return userLocalService.getOrganizationUserIds(organizationId);
+	}
+
+	/**
+	 * Returns all the users belonging to the organization.
+	 *
+	 * @param  organizationId the primary key of the organization
+	 * @return users belonging to the organization
+	 * @throws PortalException if the current user did not have permission to
+	 *         view organization assignments
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<User> getOrganizationUsers(long organizationId)
+		throws PortalException, SystemException {
+
+		OrganizationPermissionUtil.check(
+			getPermissionChecker(), organizationId, ActionKeys.VIEW_MEMBERS);
+
+		return userLocalService.getOrganizationUsers(organizationId);
 	}
 
 	/**
@@ -749,6 +800,15 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			getPermissionChecker(), user.getUserId(), ActionKeys.VIEW);
 
 		return user;
+	}
+
+	public List<User> getUserGroupUsers(long groupId)
+		throws PortalException, SystemException {
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), groupId, ActionKeys.VIEW_MEMBERS);
+
+		return userLocalService.getUserGroupUsers(groupId);
 	}
 
 	/**

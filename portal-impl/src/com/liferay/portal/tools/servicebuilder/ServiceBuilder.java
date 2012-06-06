@@ -519,6 +519,8 @@ public class ServiceBuilder {
 			"spring_shard_data_source_xml", _tplSpringShardDataSourceXml);
 		_tplSpringXml = _getTplProperty("spring_xml", _tplSpringXml);
 
+		_targetEntityName = targetEntityName;
+
 		try {
 			_badTableNames = _readLines(_tplBadTableNames);
 			_badAliasNames = _readLines(_tplBadAliasNames);
@@ -649,16 +651,9 @@ public class ServiceBuilder {
 				for (int x = 0; x < _ejbList.size(); x++) {
 					Entity entity = _ejbList.get(x);
 
-					String entityName = entity.getName();
+					if (_acceptEntity(entity)) {
 
-					if ((targetEntityName == null) ||
-						entityName.equals(targetEntityName)) {
-
-//					if (true) {/* ||
-//						entity.getName().equals("EmailAddress") ||
-//						entity.getName().equals("User")) {*/
-
-						System.out.println("Building " + entityName);
+						System.out.println("Building " + entity.getName());
 
 						if (entity.hasColumns()) {
 							_createHbm(entity);
@@ -738,6 +733,13 @@ public class ServiceBuilder {
 							}
 
 							_createServiceSoap(entity);
+						}
+					}
+					else {
+						if (entity.hasColumns()) {
+							entity.setTransients(_getTransients(entity, false));
+							entity.setParentTransients(
+								_getTransients(entity, true));
 						}
 					}
 				}
@@ -1584,6 +1586,21 @@ public class ServiceBuilder {
 		return false;
 	}
 
+	private boolean _acceptEntity(Entity entity) {
+		if (_targetEntityName == null) {
+			return true;
+		}
+
+		String entityName = entity.getName();
+
+		if (entityName.equals(_targetEntityName)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	private static String _getPackagePath(File file) {
 		String fileName = StringUtil.replace(file.toString(), "\\", "/");
 
@@ -1668,6 +1685,10 @@ public class ServiceBuilder {
 	private void _createExceptions(List<String> exceptions) throws Exception {
 		for (int i = 0; i < _ejbList.size(); i++) {
 			Entity entity = _ejbList.get(i);
+
+			if (!_acceptEntity(entity)) {
+				continue;
+			}
 
 			if (entity.hasColumns()) {
 				exceptions.add(getNoSuchEntityException(entity));
@@ -3367,6 +3388,10 @@ public class ServiceBuilder {
 		for (int i = 0; i < _ejbList.size(); i++) {
 			Entity entity = _ejbList.get(i);
 
+			if (!_acceptEntity(entity)) {
+				continue;
+			}
+
 			if (!entity.isDefaultDataSource()) {
 				continue;
 			}
@@ -3587,6 +3612,10 @@ public class ServiceBuilder {
 		for (int i = 0; i < _ejbList.size(); i++) {
 			Entity entity = _ejbList.get(i);
 
+			if (!_acceptEntity(entity)) {
+				continue;
+			}
+
 			if (!entity.isDefaultDataSource()) {
 				continue;
 			}
@@ -3643,6 +3672,10 @@ public class ServiceBuilder {
 
 		for (int i = 0; i < _ejbList.size(); i++) {
 			Entity entity = _ejbList.get(i);
+
+			if (!_acceptEntity(entity)) {
+				continue;
+			}
 
 			if (!entity.isDefaultDataSource()) {
 				continue;
@@ -5029,6 +5062,7 @@ public class ServiceBuilder {
 	private String _sqlIndexesFileName;
 	private String _sqlIndexesPropertiesFileName;
 	private String _sqlSequencesFileName;
+	private String _targetEntityName;
 	private String _testDir;
 	private String _testOutputPath;
 	private String _tplBadAliasNames = _TPL_ROOT + "bad_alias_names.txt";

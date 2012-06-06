@@ -124,9 +124,6 @@ public class Entity {
 		_referenceList = referenceList;
 		_txRequiredList = txRequiredList;
 
-		_parentTransients = Collections.emptyList();
-		_transients = Collections.emptyList();
-
 		if (_finderList != null) {
 			Set<EntityColumn> finderColumns = new HashSet<EntityColumn>();
 

@@ -25,7 +25,22 @@ portletURL.setParameter("struts_action", "/dynamic_data_mapping/view");
 portletURL.setParameter("tabs1", tabs1);
 %>
 
-<liferay-ui:error exception="<%= RequiredStructureException.class %>" message="required-structures-could-not-be-deleted" />
+<liferay-ui:error exception="<%= RequiredStructureException.class %>">
+	<liferay-ui:message key="required-structures-could-not-be-deleted" />
+
+	<%
+		RequiredStructureException rse = (RequiredStructureException)errorException;
+	%>
+
+	<c:if test="<%= rse.getType() == RequiredStructureException.REFERENCED_OBJECT %>">
+		<liferay-ui:message key="they-are-referenced-by-other-objects" />
+	</c:if>
+
+	<c:if test="<%= rse.getType() == RequiredStructureException.REFERENCED_TEMPLATE %>">
+		<liferay-ui:message key="they-are-referenced-by-templates" />
+	</c:if>
+
+</liferay-ui:error>
 
 <c:if test="<%= showToolbar %>">
 	<liferay-util:include page="/html/portlet/dynamic_data_mapping/toolbar.jsp">

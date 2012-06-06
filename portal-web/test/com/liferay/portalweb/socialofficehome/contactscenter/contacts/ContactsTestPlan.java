@@ -15,7 +15,7 @@
 package com.liferay.portalweb.socialofficehome.contactscenter.contacts;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.socialofficehome.contactscenter.contacts.blockccconnection.BlockCCConnectionTests;
+import com.liferay.portalweb.socialofficehome.contactscenter.contacts.addcontactcc.AddContactCCTests;
 import com.liferay.portalweb.socialofficehome.contactscenter.contacts.blockccuser.BlockCCUserTests;
 import com.liferay.portalweb.socialofficehome.contactscenter.contacts.searchconnectiondropdownconnectionscc.SearchConnectionDropDownConnectionsCCTests;
 import com.liferay.portalweb.socialofficehome.contactscenter.contacts.searchfollowingdropdownfollowingcc.SearchFollowingDropDownFollowingCCTests;
@@ -26,6 +26,7 @@ import com.liferay.portalweb.socialofficehome.contactscenter.contacts.sousremove
 import com.liferay.portalweb.socialofficehome.contactscenter.contacts.sousunfollowccuser.SOUs_UnfollowCCUserTests;
 import com.liferay.portalweb.socialofficehome.contactscenter.contacts.unblockccuser.UnblockCCUserTests;
 import com.liferay.portalweb.socialofficehome.contactscenter.contacts.viewccuserprofile.ViewCCUserProfileTests;
+import com.liferay.portalweb.socialofficehome.contactscenter.contacts.viewcontactcc.ViewContactCCTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -38,7 +39,7 @@ public class ContactsTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(BlockCCConnectionTests.suite());
+		testSuite.addTest(AddContactCCTests.suite());
 		testSuite.addTest(BlockCCUserTests.suite());
 		testSuite.addTest(SearchConnectionDropDownConnectionsCCTests.suite());
 		testSuite.addTest(SearchFollowingDropDownFollowingCCTests.suite());
@@ -49,6 +50,7 @@ public class ContactsTestPlan extends BaseTestSuite {
 		testSuite.addTest(SOUs_UnfollowCCUserTests.suite());
 		testSuite.addTest(UnblockCCUserTests.suite());
 		testSuite.addTest(ViewCCUserProfileTests.suite());
+		testSuite.addTest(ViewContactCCTests.suite());
 
 		return testSuite;
 	}

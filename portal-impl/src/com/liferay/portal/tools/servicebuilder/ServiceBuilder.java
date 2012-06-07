@@ -131,7 +131,6 @@ public class ServiceBuilder {
 		String springShardDataSourceFileName = arguments.get("service.spring.shard.data.source.file");
 		String apiDir = arguments.get("service.api.dir");
 		String implDir = arguments.get("service.impl.dir");
-		String jsonFileName = arguments.get("service.json.file");
 		String remotingFileName = arguments.get("service.remoting.file");
 		String sqlDir = arguments.get("service.sql.dir");
 		String sqlFileName = arguments.get("service.sql.file");
@@ -152,7 +151,7 @@ public class ServiceBuilder {
 				springFileName, springBaseFileName, springClusterFileName,
 				springDynamicDataSourceFileName, springHibernateFileName,
 				springInfrastructureFileName, springShardDataSourceFileName,
-				apiDir, implDir, jsonFileName, remotingFileName, sqlDir,
+				apiDir, implDir, remotingFileName, sqlDir,
 				sqlFileName, sqlIndexesFileName, sqlIndexesPropertiesFileName,
 				sqlSequencesFileName, autoNamespaceTables, beanLocatorUtil,
 				propsUtil, pluginName, testDir, true, buildNumber,
@@ -421,21 +420,21 @@ public class ServiceBuilder {
 		String springDynamicDataSourceFileName, String springHibernateFileName,
 		String springInfrastructureFileName,
 		String springShardDataSourceFileName, String apiDir, String implDir,
-		String jsonFileName, String remotingFileName, String sqlDir,
-		String sqlFileName, String sqlIndexesFileName,
-		String sqlIndexesPropertiesFileName, String sqlSequencesFileName,
-		boolean autoNamespaceTables, String beanLocatorUtil, String propsUtil,
-		String pluginName, String testDir) {
+		String remotingFileName, String sqlDir, String sqlFileName,
+		String sqlIndexesFileName, String sqlIndexesPropertiesFileName,
+		String sqlSequencesFileName, boolean autoNamespaceTables,
+		String beanLocatorUtil, String propsUtil, String pluginName,
+		String testDir) {
 
 		this(
 			fileName, hbmFileName, ormFileName, modelHintsFileName,
 			springFileName, springBaseFileName, springClusterFileName,
 			springDynamicDataSourceFileName, springHibernateFileName,
 			springInfrastructureFileName, springShardDataSourceFileName, apiDir,
-			implDir, jsonFileName, remotingFileName, sqlDir, sqlFileName,
-			sqlIndexesFileName, sqlIndexesPropertiesFileName,
-			sqlSequencesFileName, autoNamespaceTables, beanLocatorUtil,
-			propsUtil, pluginName, testDir, true, 1, true);
+			implDir, remotingFileName, sqlDir, sqlFileName, sqlIndexesFileName,
+			sqlIndexesPropertiesFileName, sqlSequencesFileName,
+			autoNamespaceTables, beanLocatorUtil, propsUtil, pluginName,
+			testDir, true, 1, true);
 	}
 
 	public ServiceBuilder(
@@ -445,10 +444,10 @@ public class ServiceBuilder {
 		String springDynamicDataSourceFileName, String springHibernateFileName,
 		String springInfrastructureFileName,
 		String springShardDataSourceFileName, String apiDir, String implDir,
-		String jsonFileName, String remotingFileName, String sqlDir,
-		String sqlFileName, String sqlIndexesFileName,
-		String sqlIndexesPropertiesFileName, String sqlSequencesFileName,
-		boolean autoNamespaceTables, String beanLocatorUtil, String propsUtil,
+		String remotingFileName, String sqlDir, String sqlFileName,
+		String sqlIndexesFileName, String sqlIndexesPropertiesFileName,
+		String sqlSequencesFileName, boolean autoNamespaceTables,
+		String beanLocatorUtil, String propsUtil,
 		String pluginName, String testDir, boolean build, long buildNumber,
 		boolean buildNumberIncrement) {
 
@@ -536,7 +535,6 @@ public class ServiceBuilder {
 			_springShardDataSourceFileName = springShardDataSourceFileName;
 			_apiDir = apiDir;
 			_implDir = implDir;
-			_jsonFileName = jsonFileName;
 			_remotingFileName = remotingFileName;
 			_sqlDir = sqlDir;
 			_sqlFileName = sqlFileName;
@@ -929,11 +927,11 @@ public class ServiceBuilder {
 				_springFileName, _springBaseFileName, _springClusterFileName,
 				_springDynamicDataSourceFileName, _springHibernateFileName,
 				_springInfrastructureFileName, _springShardDataSourceFileName,
-				_apiDir, _implDir, _jsonFileName, _remotingFileName, _sqlDir,
-				_sqlFileName, _sqlIndexesFileName,
-				_sqlIndexesPropertiesFileName, _sqlSequencesFileName,
-				_autoNamespaceTables, _beanLocatorUtil, _propsUtil, _pluginName,
-				_testDir, false, _buildNumber, _buildNumberIncrement);
+				_apiDir, _implDir, _remotingFileName, _sqlDir, _sqlFileName,
+				_sqlIndexesFileName, _sqlIndexesPropertiesFileName,
+				_sqlSequencesFileName, _autoNamespaceTables, _beanLocatorUtil,
+				_propsUtil, _pluginName, _testDir, false, _buildNumber,
+				_buildNumberIncrement);
 
 			entity = serviceBuilder.getEntity(refEntity);
 
@@ -3895,7 +3893,6 @@ public class ServiceBuilder {
 			"springInfrastructureFileName", _springInfrastructureFileName);
 		context.put("apiDir", _apiDir);
 		context.put("implDir", _implDir);
-		context.put("jsonFileName", _jsonFileName);
 		context.put("sqlDir", _sqlDir);
 		context.put("sqlFileName", _sqlFileName);
 		context.put("beanLocatorUtil", _beanLocatorUtil);
@@ -4893,7 +4890,6 @@ public class ServiceBuilder {
 	private String _implDir;
 	private Map<String, JavaClass> _javaClasses =
 		new HashMap<String, JavaClass>();
-	private String _jsonFileName;
 	private String _modelHintsFileName;
 	private String _ormFileName;
 	private String _outputPath;

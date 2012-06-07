@@ -2025,27 +2025,31 @@ public class StringUtil {
 			return null;
 		}
 
-		if (s.length() > length) {
-			int curLength = length;
-
-			for (int j = (curLength - suffix.length()); j >= 0; j--) {
-				if (Character.isWhitespace(s.charAt(j))) {
-					curLength = j;
-
-					break;
-				}
-			}
-
-			if (curLength == length) {
-				curLength = length - suffix.length();
-			}
-
-			String temp = s.substring(0, curLength);
-
-			s = temp.concat(suffix);
+		if (s.length() <= length) {
+			return s;
 		}
 
-		return s;
+		if (length < suffix.length()) {
+			return s.substring(0, length);
+		}
+
+		int curLength = length;
+
+		for (int j = (curLength - suffix.length()); j >= 0; j--) {
+			if (Character.isWhitespace(s.charAt(j))) {
+				curLength = j;
+
+				break;
+			}
+		}
+
+		if (curLength == length) {
+			curLength = length - suffix.length();
+		}
+
+		String temp = s.substring(0, curLength);
+
+		return temp.concat(suffix);
 	}
 
 	/**

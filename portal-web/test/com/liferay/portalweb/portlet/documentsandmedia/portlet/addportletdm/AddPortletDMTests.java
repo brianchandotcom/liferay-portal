@@ -28,6 +28,7 @@ public class AddPortletDMTests extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddPageDMTest.class);
 		testSuite.addTestSuite(AddPortletDMTest.class);
+		testSuite.addTestSuite(ViewDMBreadcrumbTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

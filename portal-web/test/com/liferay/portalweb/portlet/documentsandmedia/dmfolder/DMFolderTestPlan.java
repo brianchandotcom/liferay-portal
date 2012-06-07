@@ -22,15 +22,14 @@ import com.liferay.portalweb.portlet.documentsandmedia.dmfolder.adddmfoldernames
 import com.liferay.portalweb.portlet.documentsandmedia.dmfolder.adddmfoldernamesymbol.AddDMFolderNameSymbolTests;
 import com.liferay.portalweb.portlet.documentsandmedia.dmfolder.adddmfolders.AddDMFoldersTests;
 import com.liferay.portalweb.portlet.documentsandmedia.dmfolder.adddmsubfolder.AddDMSubfolderTests;
-import com.liferay.portalweb.portlet.documentsandmedia.dmfolder.adddmsubfoldermultiple.AddDMSubfolderMultipleTests;
 import com.liferay.portalweb.portlet.documentsandmedia.dmfolder.adddmsubfoldernamedocumentname.AddDMSubfolderNameDocumentNameTests;
 import com.liferay.portalweb.portlet.documentsandmedia.dmfolder.adddmsubfoldernameimagename.AddDMSubfolderNameImageNameTests;
+import com.liferay.portalweb.portlet.documentsandmedia.dmfolder.adddmsubfolders.AddDMSubfoldersTests;
 import com.liferay.portalweb.portlet.documentsandmedia.dmfolder.deletedmfolder.DeleteDMFolderTests;
 import com.liferay.portalweb.portlet.documentsandmedia.dmfolder.deletedmsubfolder.DeleteDMSubfolderTests;
 import com.liferay.portalweb.portlet.documentsandmedia.dmfolder.editdmfolder.EditDMFolderTests;
 import com.liferay.portalweb.portlet.documentsandmedia.dmfolder.editdmsubfolder.EditDMSubfolderTests;
 import com.liferay.portalweb.portlet.documentsandmedia.dmfolder.movedmsubfoldertofolder2.MoveDMSubfolderToFolder2Tests;
-import com.liferay.portalweb.portlet.documentsandmedia.dmfolder.viewdmfolderactions.ViewDMFolderActionsTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -43,7 +42,6 @@ public class DMFolderTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(AddDMSubfolderNameImageNameTests.suite());
 		testSuite.addTest(AddDMFolderTests.suite());
 		testSuite.addTest(AddDMFolderNameDuplicateTests.suite());
 		testSuite.addTest(AddDMFolderNameNullTests.suite());
@@ -51,14 +49,14 @@ public class DMFolderTestPlan extends BaseTestSuite {
 		testSuite.addTest(AddDMFolderNameSymbolTests.suite());
 		testSuite.addTest(AddDMFoldersTests.suite());
 		testSuite.addTest(AddDMSubfolderTests.suite());
-		testSuite.addTest(AddDMSubfolderMultipleTests.suite());
 		testSuite.addTest(AddDMSubfolderNameDocumentNameTests.suite());
+		testSuite.addTest(AddDMSubfolderNameImageNameTests.suite());
+		testSuite.addTest(AddDMSubfoldersTests.suite());
 		testSuite.addTest(DeleteDMFolderTests.suite());
 		testSuite.addTest(DeleteDMSubfolderTests.suite());
 		testSuite.addTest(EditDMFolderTests.suite());
 		testSuite.addTest(EditDMSubfolderTests.suite());
 		testSuite.addTest(MoveDMSubfolderToFolder2Tests.suite());
-		testSuite.addTest(ViewDMFolderActionsTests.suite());
 
 		return testSuite;
 	}

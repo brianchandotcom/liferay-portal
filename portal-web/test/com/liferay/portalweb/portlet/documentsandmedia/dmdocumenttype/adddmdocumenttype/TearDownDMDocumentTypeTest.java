@@ -29,24 +29,6 @@ public class TearDownDMDocumentTypeTest extends BaseTestCase {
 			case 1:
 				selenium.open("/web/guest/home/");
 				loadRequiredJavaScriptModules();
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"link=Documents and Media Test Page")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
 				selenium.clickAt("link=Documents and Media Test Page",
 					RuntimeVariables.replace("Documents and Media Test Page"));
 				selenium.waitForPageToLoad("30000");
@@ -86,7 +68,8 @@ public class TearDownDMDocumentTypeTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("//iframe")) {
+						if (selenium.isVisible(
+									"//iframe[@id='_20_openFileEntryTypeView']")) {
 							break;
 						}
 					}
@@ -96,7 +79,8 @@ public class TearDownDMDocumentTypeTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.selectFrame("//iframe");
+				selenium.selectFrame(
+					"//iframe[@id='_20_openFileEntryTypeView']");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -104,7 +88,8 @@ public class TearDownDMDocumentTypeTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("//input[@id='_20_keywords']")) {
+						if (selenium.isVisible(
+									"//input[@title='Search Entries']")) {
 							break;
 						}
 					}
@@ -114,7 +99,7 @@ public class TearDownDMDocumentTypeTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.type("//input[@id='_20_keywords']",
+				selenium.type("//input[@title='Search Entries']",
 					RuntimeVariables.replace("Name"));
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
@@ -341,8 +326,6 @@ public class TearDownDMDocumentTypeTest extends BaseTestCase {
 			case 4:
 			case 5:
 			case 6:
-				assertEquals(RuntimeVariables.replace("There are no results."),
-					selenium.getText("//div[@class='portlet-msg-info']"));
 				selenium.selectFrame("relative=top");
 
 			case 100:

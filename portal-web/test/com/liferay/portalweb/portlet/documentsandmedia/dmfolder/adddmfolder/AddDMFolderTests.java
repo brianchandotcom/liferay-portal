@@ -33,6 +33,9 @@ public class AddDMFolderTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddPortletDMTest.class);
 		testSuite.addTestSuite(AddDMFolderTest.class);
 		testSuite.addTestSuite(ViewDMFolderTest.class);
+		testSuite.addTestSuite(ViewDMFolderActionsNavigationTest.class);
+		testSuite.addTestSuite(ViewDMFolderActionsThumbnailTest.class);
+		testSuite.addTestSuite(ViewDMFolderBreadcrumbTest.class);
 		testSuite.addTestSuite(TearDownDMFolderTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

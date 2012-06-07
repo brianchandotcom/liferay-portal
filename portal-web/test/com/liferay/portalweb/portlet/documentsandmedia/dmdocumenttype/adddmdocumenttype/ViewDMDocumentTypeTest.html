@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Documents and Media Test Page</td>
-	<td>Documents and Media Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Documents and Media Test Page</td>
 	<td>Documents and Media Test Page</td>
@@ -40,13 +35,13 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[10]/a</td>
-	<td>DM Document Type Name</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'DM DocumentType Name')]</td>
+	<td>DM DocumentType Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[10]/a</td>
-	<td>DM Document Type Name</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'DM DocumentType Name')]</td>
+	<td>DM DocumentType Name</td>
 </tr>
 <tr>
 	<td>open</td>
@@ -54,11 +49,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Documents and Media Test Page</td>
-	<td>Documents and Media Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Documents and Media Test Page</td>
 	<td>Documents and Media Test Page</td>
@@ -80,27 +70,27 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Document Types')]</td>
 	<td>Document Types</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Document Types')]</td>
 	<td>Document Types</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Document Types')]</td>
 	<td>Document Types</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//iframe</td>
+	<td>//iframe[@id='_20_openFileEntryTypeView']</td>
 	<td>Document Types</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
-	<td>//iframe</td>
+	<td>//iframe[@id='_20_openFileEntryTypeView']</td>
 	<td>Document Types</td>
 </tr>
 <tr>
@@ -115,18 +105,18 @@
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//input[@class='aui-button-input aui-button-input-submit']</td>
+	<td>//input[@value='Search']</td>
 	<td>Search</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//tr[@class='portlet-section-body results-row last']/td</td>
-	<td>DM Document Type Name</td>
+	<td>//tr[contains(.,'DM DocumentType Name')]/td[1]</td>
+	<td>DM DocumentType Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[@class='portlet-section-body results-row last']/td</td>
-	<td>DM Document Type Name</td>
+	<td>//tr[contains(.,'DM DocumentType Name')]/td[1]</td>
+	<td>DM DocumentType Name</td>
 </tr>
 <tr>
 	<td>selectFrame</td>

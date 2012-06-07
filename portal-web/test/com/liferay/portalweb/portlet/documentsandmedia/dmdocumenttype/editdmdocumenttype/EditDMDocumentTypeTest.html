@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Documents and Media Test Page</td>
-	<td>Documents and Media Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Documents and Media Test Page</td>
 	<td>Documents and Media Test Page</td>
@@ -49,18 +44,18 @@
 	<td>Document Types</td>
 </tr>
 <tr>
-	<td>clickAt</td>
+	<td>click</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a</td>
 	<td>Document Types</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//iframe</td>
+	<td>//iframe[@id='_20_openFileEntryTypeView']</td>
 	<td>Document Types</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
-	<td>//iframe</td>
+	<td>//iframe[@id='_20_openFileEntryTypeView']</td>
 	<td>Document Types</td>
 </tr>
 <tr>
@@ -74,8 +69,8 @@
 	<td>Name</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>//input[@class='aui-button-input aui-button-input-submit']</td>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Search']</td>
 	<td>Search</td>
 </tr>
 <tr>
@@ -85,12 +80,17 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>//tr[contains(.,'DM DocumentType Name')]/td[1]</td>
+	<td>DM DocumentType Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'DM DocumentType Name')]/td/span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
+	<td>//tr[contains(.,'DM DocumentType Name')]/td/span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -109,14 +109,9 @@
 	<td>Edit</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
 	<td>type</td>
 	<td>//input[@id='_20_name']</td>
-	<td>DM Document Type Name Edit</td>
+	<td>DM DocumentType Name Edit</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -127,6 +122,11 @@
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'DM DocumentType Name Edit')]/td[1]</td>
+	<td>DM DocumentType Name Edit</td>
 </tr>
 <tr>
 	<td>selectFrame</td>

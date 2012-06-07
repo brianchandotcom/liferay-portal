@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Documents and Media Test Page</td>
-	<td>Documents and Media Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Documents and Media Test Page</td>
 	<td>Documents and Media Test Page</td>
@@ -55,6 +50,16 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
+	<td>//iframe[@id='_20_openFileEntryTypeView']</td>
+	<td>Document Types</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[@id='_20_openFileEntryTypeView']</td>
+	<td>Document Types</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>//span[contains(@class,'add-button')]/a</td>
 	<td>Add</td>
 </tr>
@@ -76,7 +81,7 @@
 <tr>
 	<td>type</td>
 	<td>//input[@id='_20_name']</td>
-	<td>DM Document Type Name</td>
+	<td>DM DocumentType Name</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -107,6 +112,16 @@
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'DM DocumentType Name')]/td[1]</td>
+	<td>DM DocumentType Name</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
 </tr>
 </tbody></table>
 </body>

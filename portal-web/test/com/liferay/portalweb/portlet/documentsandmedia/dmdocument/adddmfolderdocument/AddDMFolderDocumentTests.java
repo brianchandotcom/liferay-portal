@@ -35,6 +35,10 @@ public class AddDMFolderDocumentTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddDMFolderTest.class);
 		testSuite.addTestSuite(AddDMFolderDocumentTest.class);
 		testSuite.addTestSuite(ViewDMFolderDocumentTest.class);
+		testSuite.addTestSuite(ViewDMFolderDocumentActionsDetailsTest.class);
+		testSuite.addTestSuite(ViewDMFolderDocumentActionsThumbnailTest.class);
+		testSuite.addTestSuite(ViewDMFolderDocumentMyDocumentsTest.class);
+		testSuite.addTestSuite(ViewDMFolderDocumentRecentDocumentsTest.class);
 		testSuite.addTestSuite(TearDownDMFolderTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

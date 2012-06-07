@@ -24,23 +24,6 @@ public class EditDMDocumentTypeTest extends BaseTestCase {
 	public void testEditDMDocumentType() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Documents and Media Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -71,8 +54,7 @@ public class EditDMDocumentTypeTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Document Types"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a",
-			RuntimeVariables.replace("Document Types"));
+		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -80,7 +62,8 @@ public class EditDMDocumentTypeTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//iframe")) {
+				if (selenium.isVisible(
+							"//iframe[@id='_20_openFileEntryTypeView']")) {
 					break;
 				}
 			}
@@ -90,7 +73,7 @@ public class EditDMDocumentTypeTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.selectFrame("//iframe");
+		selenium.selectFrame("//iframe[@id='_20_openFileEntryTypeView']");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -110,12 +93,17 @@ public class EditDMDocumentTypeTest extends BaseTestCase {
 
 		selenium.type("//input[@title='Search Entries']",
 			RuntimeVariables.replace("Name"));
-		selenium.clickAt("//input[@class='aui-button-input aui-button-input-submit']",
+		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
 		Thread.sleep(5000);
+		assertEquals(RuntimeVariables.replace("DM DocumentType Name"),
+			selenium.getText("//tr[contains(.,'DM DocumentType Name')]/td[1]"));
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
-		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+			selenium.getText(
+				"//tr[contains(.,'DM DocumentType Name')]/td/span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//tr[contains(.,'DM DocumentType Name')]/td/span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
@@ -142,9 +130,8 @@ public class EditDMDocumentTypeTest extends BaseTestCase {
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		Thread.sleep(5000);
 		selenium.type("//input[@id='_20_name']",
-			RuntimeVariables.replace("DM Document Type Name Edit"));
+			RuntimeVariables.replace("DM DocumentType Name Edit"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
@@ -152,6 +139,9 @@ public class EditDMDocumentTypeTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("DM DocumentType Name Edit"),
+			selenium.getText(
+				"//tr[contains(.,'DM DocumentType Name Edit')]/td[1]"));
 		selenium.selectFrame("relative=top");
 	}
 }

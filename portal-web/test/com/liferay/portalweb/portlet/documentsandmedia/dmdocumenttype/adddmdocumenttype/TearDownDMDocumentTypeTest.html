@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Documents and Media Test Page</td>
-	<td>Documents and Media Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Documents and Media Test Page</td>
 	<td>Documents and Media Test Page</td>
@@ -55,22 +50,22 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//iframe</td>
+	<td>//iframe[@id='_20_openFileEntryTypeView']</td>
 	<td>Document Types</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
-	<td>//iframe</td>
+	<td>//iframe[@id='_20_openFileEntryTypeView']</td>
 	<td>Document Types</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//input[@id='_20_keywords']</td>
+	<td>//input[@title='Search Entries']</td>
 	<td>Search</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@id='_20_keywords']</td>
+	<td>//input[@title='Search Entries']</td>
 	<td>Name</td>
 </tr>
 <tr>
@@ -327,11 +322,6 @@
 	<td>label</td>
 	<td>DocumentType5NotPresent</td>
 	<td></td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='portlet-msg-info']</td>
-	<td>There are no results.</td>
 </tr>
 <tr>
 	<td>selectFrame</td>

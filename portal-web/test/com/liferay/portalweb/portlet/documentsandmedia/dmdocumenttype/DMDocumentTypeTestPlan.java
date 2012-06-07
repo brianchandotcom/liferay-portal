@@ -16,7 +16,7 @@ package com.liferay.portalweb.portlet.documentsandmedia.dmdocumenttype;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portlet.documentsandmedia.dmdocumenttype.adddmdocumenttype.AddDMDocumentTypeTests;
-import com.liferay.portalweb.portlet.documentsandmedia.dmdocumenttype.adddmdocumenttypemultiple.AddDMDocumentTypeMultipleTests;
+import com.liferay.portalweb.portlet.documentsandmedia.dmdocumenttype.adddmdocumenttypes.AddDMDocumentTypesTests;
 import com.liferay.portalweb.portlet.documentsandmedia.dmdocumenttype.deletedmdocumenttype.DeleteDMDocumentTypeTests;
 import com.liferay.portalweb.portlet.documentsandmedia.dmdocumenttype.editdmdocumenttype.EditDMDocumentTypeTests;
 
@@ -32,7 +32,7 @@ public class DMDocumentTypeTestPlan extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(AddDMDocumentTypeTests.suite());
-		testSuite.addTest(AddDMDocumentTypeMultipleTests.suite());
+		testSuite.addTest(AddDMDocumentTypesTests.suite());
 		testSuite.addTest(DeleteDMDocumentTypeTests.suite());
 		testSuite.addTest(EditDMDocumentTypeTests.suite());
 

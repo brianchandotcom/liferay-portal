@@ -17,7 +17,7 @@ package com.liferay.portalweb.portlet.documentsandmedia.dmimage;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portlet.documentsandmedia.dmimage.adddmfolderimage.AddDMFolderImageTests;
 import com.liferay.portalweb.portlet.documentsandmedia.dmimage.adddmfolderimagefilenull.AddDMFolderImageFileNullTests;
-import com.liferay.portalweb.portlet.documentsandmedia.dmimage.adddmfolderimagemultiple.AddDMFolderImageMultipleTests;
+import com.liferay.portalweb.portlet.documentsandmedia.dmimage.adddmfolderimages.AddDMFolderImagesTests;
 import com.liferay.portalweb.portlet.documentsandmedia.dmimage.adddmfolderimagetitleduplicate.AddDMFolderImageTitleDuplicateTests;
 import com.liferay.portalweb.portlet.documentsandmedia.dmimage.adddmfolderimagetitlenull.AddDMFolderImageTitleNullTests;
 import com.liferay.portalweb.portlet.documentsandmedia.dmimage.adddmsubfolderimage.AddDMSubfolderImageTests;
@@ -42,7 +42,7 @@ public class DMImageTestPlan extends BaseTestSuite {
 
 		testSuite.addTest(AddDMFolderImageTests.suite());
 		testSuite.addTest(AddDMFolderImageFileNullTests.suite());
-		testSuite.addTest(AddDMFolderImageMultipleTests.suite());
+		testSuite.addTest(AddDMFolderImagesTests.suite());
 		testSuite.addTest(AddDMFolderImageTitleDuplicateTests.suite());
 		testSuite.addTest(AddDMFolderImageTitleNullTests.suite());
 		testSuite.addTest(AddDMSubfolderImageTests.suite());

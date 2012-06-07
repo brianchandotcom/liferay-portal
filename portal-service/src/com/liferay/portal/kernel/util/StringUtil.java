@@ -1924,8 +1924,8 @@ public class StringUtil {
 	}
 
 	/**
-	 * Returns a string representing the original string appended with suffix "..."
-	 * and then shortened to 20 characters.
+	 * Returns a string representing the original string appended with suffix
+	 *  "..." and then shortened to 20 characters.
 	 *
 	 * <p>
 	 * The suffix is only added if the original string exceeds 20 characters. If
@@ -2036,8 +2036,8 @@ public class StringUtil {
 				}
 			}
 
-			if ((curLength + suffix.length()) > length) {
-				curLength = curLength - suffix.length();
+			if (curLength == length) {
+				curLength = length - suffix.length();
 			}
 
 			String temp = s.substring(0, curLength);

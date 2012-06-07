@@ -3813,7 +3813,6 @@
 			<transient name="defaultPluginSetting" />
 			<transient name="defaultPreferences" />
 			<transient name="displayName" />
-			<transient name="displayStyleHandlerClass" />
 			<transient name="expCache" />
 			<transient name="facebookIntegration" />
 			<transient name="footerPortalCss" />
@@ -3845,6 +3844,7 @@
 			<transient name="portletApp" />
 			<transient name="portletClass" />
 			<transient name="portletDataHandlerClass" />
+			<transient name="portletDisplayTemplateHandlerClass" />
 			<transient name="portletFilters" />
 			<transient name="portletInfo" />
 			<transient name="portletLayoutListenerClass" />

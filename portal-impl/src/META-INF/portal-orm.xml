@@ -3813,6 +3813,7 @@
 			<transient name="defaultPluginSetting" />
 			<transient name="defaultPreferences" />
 			<transient name="displayName" />
+			<transient name="displayStyleHandlerClass" />
 			<transient name="expCache" />
 			<transient name="facebookIntegration" />
 			<transient name="footerPortalCss" />

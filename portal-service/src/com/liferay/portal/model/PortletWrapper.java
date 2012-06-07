@@ -967,6 +967,24 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	}
 
 	/**
+	* Returns the name of the portlet display style class of the portlet.
+	*
+	* @return the name of the portlet display style class of the portlet
+	*/
+	public java.lang.String getDisplayStyleHandlerClass() {
+		return _portlet.getDisplayStyleHandlerClass();
+	}
+
+	/**
+	* Returns the portlet display style instance of the portlet.
+	*
+	* @return the portlet display style instance of the portlet
+	*/
+	public com.liferay.portal.kernel.displaystyles.DisplayStyleHandler getDisplayStyleHandlerInstance() {
+		return _portlet.getDisplayStyleHandlerInstance();
+	}
+
+	/**
 	* Returns the filters of the portlet.
 	*
 	* @return filters of the portlet
@@ -2417,6 +2435,17 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	public void setPortletDataHandlerClass(
 		java.lang.String portletDataHandlerClass) {
 		_portlet.setPortletDataHandlerClass(portletDataHandlerClass);
+	}
+
+	/**
+	* Sets the name of the portlet display style class of the portlet.
+	*
+	* @param displayStyleHandlerClass the name of display style handler class
+	of the portlet
+	*/
+	public void setDisplayStyleHandlerClass(
+		java.lang.String displayStyleHandlerClass) {
+		_portlet.setDisplayStyleHandlerClass(displayStyleHandlerClass);
 	}
 
 	/**

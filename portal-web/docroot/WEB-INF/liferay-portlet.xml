@@ -1933,7 +1933,6 @@
 	<portlet>
 		<portlet-name>183</portlet-name>
 		<icon>/html/icons/display_styles.png</icon>
-		<struts-path>display_styles</struts-path>
 		<parent-struts-path>dynamic_data_mapping</parent-struts-path>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<control-panel-entry-category>content</control-panel-entry-category>

@@ -3280,16 +3280,8 @@
 		<display-name>Application Display Styles</display-name>
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
 		<init-param>
-			<name>ddm-resource</name>
-			<value>com.liferay.portlet.assetpublisher</value>
-		</init-param>
-		<init-param>
-			<name>ddm-resource-action-id</name>
-			<value>ADD_DISPLAY_STYLE</value>
-		</init-param>
-		<init-param>
 			<name>view-action</name>
-			<value>/display_styles/view</value>
+			<value>/dynamic_data_mapping/view_template</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>

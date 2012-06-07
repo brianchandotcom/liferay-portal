@@ -630,6 +630,8 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 									showNonApprovedDocuments = true;
 								}
 
+								boolean showStatusColum = showNonApprovedDocuments && !portletId.equals(PortletKeys.TRASH);
+
 								SearchContainer searchContainer = new SearchContainer();
 
 								List<String> headerNames = new ArrayList<String>();
@@ -638,7 +640,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 								headerNames.add("date");
 								headerNames.add("size");
 
-								if (showNonApprovedDocuments) {
+								if (showStatusColum) {
 									headerNames.add("status");
 								}
 
@@ -684,7 +686,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 
 									// Status
 
-									if (showNonApprovedDocuments) {
+									if (showStatusColum) {
 										row.addText(LanguageUtil.get(pageContext, WorkflowConstants.toLabel(curFileVersion.getStatus())));
 									}
 

@@ -34,7 +34,17 @@ FileVersion fileVersion = (FileVersion)objArray[1];
 	/>
 
 	<portlet:renderURL var="viewFileVersionURL">
-		<portlet:param name="struts_action" value="/document_library/view_file_entry" />
+		<c:choose>
+			<c:when test="<%= portletName.equals(PortletKeys.TRASH) %>">
+				<portlet:param name="struts_action" value="/trash/view_content" />
+				<portlet:param name="className" value="<%= DLFileEntryConstants.getClassName() %>" />
+				<portlet:param name="classPK" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
+			</c:when>
+			<c:otherwise>
+				<portlet:param name="struts_action" value="/document_library/view_file_entry" />
+			</c:otherwise>
+		</c:choose>
+
 		<portlet:param name="redirect" value="<%= redirect %>" />
 		<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
 		<portlet:param name="version" value="<%= fileVersion.getVersion() %>" />
@@ -51,7 +61,7 @@ FileVersion fileVersion = (FileVersion)objArray[1];
 		<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
 	</portlet:renderURL>
 
-	<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) && (fileVersion.getStatus() == WorkflowConstants.STATUS_APPROVED) && (fileEntry.getLatestFileVersion().getVersion() != fileVersion.getVersion()) %>">
+	<c:if test="<%= (fileVersion.getStatus() != WorkflowConstants.STATUS_IN_TRASH) && DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) && (fileVersion.getStatus() == WorkflowConstants.STATUS_APPROVED) && (fileEntry.getLatestFileVersion().getVersion() != fileVersion.getVersion()) %>">
 		<portlet:actionURL var="revertURL">
 			<portlet:param name="struts_action" value="/document_library/edit_file_entry" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.REVERT %>" />
@@ -67,7 +77,7 @@ FileVersion fileVersion = (FileVersion)objArray[1];
 		/>
 	</c:if>
 
-	<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE) && (fileVersion.getStatus() == WorkflowConstants.STATUS_APPROVED) && (fileEntry.getModel() instanceof DLFileEntry) && (((DLFileEntry)fileEntry.getModel()).getFileVersionsCount(WorkflowConstants.STATUS_APPROVED) > 1) %>">
+	<c:if test="<%= (fileVersion.getStatus() != WorkflowConstants.STATUS_IN_TRASH) && DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE) && (fileVersion.getStatus() == WorkflowConstants.STATUS_APPROVED) && (fileEntry.getModel() instanceof DLFileEntry) && (((DLFileEntry)fileEntry.getModel()).getFileVersionsCount(WorkflowConstants.STATUS_APPROVED) > 1) %>">
 		<portlet:actionURL var="deleteURL">
 			<portlet:param name="struts_action" value="/document_library/edit_file_entry" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />

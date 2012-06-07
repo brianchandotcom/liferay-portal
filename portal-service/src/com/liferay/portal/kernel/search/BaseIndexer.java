@@ -948,6 +948,14 @@ public abstract class BaseIndexer implements Indexer {
 			String portletId, BaseModel<?> baseModel)
 		throws SystemException {
 
+		return getBaseModelDocument(portletId, baseModel, baseModel);
+	}
+
+	protected Document getBaseModelDocument(
+			String portletId, BaseModel<?> baseModel,
+			BaseModel<?> workflowBaseModel)
+		throws SystemException {
+
 		Document document = new DocumentImpl();
 
 		String className = baseModel.getModelClassName();
@@ -1025,8 +1033,9 @@ public abstract class BaseIndexer implements Indexer {
 				Field.SCOPE_GROUP_ID, groupedModel.getGroupId());
 		}
 
-		if (baseModel instanceof WorkflowedModel) {
-			WorkflowedModel workflowedModel = (WorkflowedModel)baseModel;
+		if (workflowBaseModel instanceof WorkflowedModel) {
+			WorkflowedModel workflowedModel =
+				(WorkflowedModel)workflowBaseModel;
 
 			document.addKeyword(Field.STATUS, workflowedModel.getStatus());
 		}

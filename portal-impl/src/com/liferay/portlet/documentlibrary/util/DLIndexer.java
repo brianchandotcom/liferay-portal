@@ -344,8 +344,11 @@ public class DLIndexer extends BaseIndexer {
 			return null;
 		}
 
+		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
+
 		try {
-			Document document = getBaseModelDocument(PORTLET_ID, dlFileEntry);
+			Document document = getBaseModelDocument(
+				PORTLET_ID, dlFileEntry, dlFileVersion);
 
 			if (indexContent) {
 				try {
@@ -361,8 +364,6 @@ public class DLIndexer extends BaseIndexer {
 			document.addKeyword(Field.FOLDER_ID, dlFileEntry.getFolderId());
 			document.addText(
 				Field.PROPERTIES, dlFileEntry.getLuceneProperties());
-
-			DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
 
 			document.addText(Field.TITLE, dlFileEntry.getTitle());
 			document.addKeyword(

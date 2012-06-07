@@ -49,6 +49,21 @@ else {
 			/>
 		</c:if>
 
+		<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.UPDATE) %>">
+			<portlet:renderURL var="moveURL">
+				<portlet:param name="struts_action" value="/journal/move_article" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="originalRedirect" value="<%= currentURL %>" />
+				<portlet:param name="backURL" value="<%= currentURL %>" />
+				<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
+			</portlet:renderURL>
+
+			<liferay-ui:icon
+				image="submit"
+				message="move"
+				url="<%= moveURL %>"
+				/>
+		</c:if>
 		<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.PERMISSIONS) %>">
 			<liferay-security:permissionsURL
 				modelResource="<%= JournalArticle.class.getName() %>"
@@ -107,7 +122,7 @@ else {
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPIRE %>" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
-				<portlet:param name="expireArticleIds" value="<%= article.getArticleId() %>" />
+				<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
 			</portlet:actionURL>
 
 			<liferay-ui:icon image="time" message="expire" url="<%= expireURL %>" />
@@ -119,7 +134,7 @@ else {
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
-				<portlet:param name="deleteArticleIds" value="<%= article.getArticleId() %>" />
+				<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
 			</portlet:actionURL>
 
 			<liferay-ui:icon-delete url="<%= deleteURL %>" />

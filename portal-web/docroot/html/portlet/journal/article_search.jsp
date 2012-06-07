@@ -17,19 +17,19 @@
 <%@ include file="/html/portlet/journal/init.jsp" %>
 
 <%
-JournalFolder folder = (JournalFolder)request.getAttribute("view.jsp-folder");
+JournalFolder folder = (JournalFolder)liferayPortletRequest.getAttribute("view.jsp-folder");
 
-long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
+long folderId = GetterUtil.getLong((String)liferayPortletRequest.getAttribute("view.jsp-folderId"));
 
-PortletURL portletURL = renderResponse.createRenderURL();
+PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/journal/view");
 
-ArticleSearch searchContainer = new ArticleSearch(renderRequest, portletURL);
+ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, portletURL);
 
 ArticleDisplayTerms displayTerms = (ArticleDisplayTerms)searchContainer.getDisplayTerms();
 
-boolean advancedSearch = ParamUtil.getBoolean(request, displayTerms.ADVANCED_SEARCH, false);
+boolean advancedSearch = ParamUtil.getBoolean(liferayPortletRequest, displayTerms.ADVANCED_SEARCH, false);
 %>
 
 <div class='taglib-search-toggle taglib-search-toggle-advanced <%= advancedSearch ? "" : "aui-helper-hidden" %>' id="<portlet:namespace />advancedSearch">
@@ -136,7 +136,7 @@ boolean advancedSearch = ParamUtil.getBoolean(request, displayTerms.ADVANCED_SEA
 </div>
 
 <%
-String keywords = ParamUtil.getString(request, "keywords");
+String keywords = ParamUtil.getString(liferayPortletRequest, "keywords");
 %>
 
 <c:if test="<%= (Validator.isNotNull(keywords) || advancedSearch) %>">
@@ -161,7 +161,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 				<c:if test="<%= folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID %>">
 
 					<%
-					String taglibOnClick = renderResponse.getNamespace() + "changeSearchFolder()";
+					String taglibOnClick = liferayPortletResponse.getNamespace() + "changeSearchFolder()";
 					%>
 
 					<span class="change-search-folder">

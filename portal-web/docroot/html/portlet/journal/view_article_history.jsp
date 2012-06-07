@@ -42,7 +42,6 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 		portletURL.setParameter("tabs1", tabs1);
 		portletURL.setParameter("redirect", redirect);
 		portletURL.setParameter("originalRedirect", originalRedirect);
-		portletURL.setParameter("groupId", String.valueOf(article.getGroupId()));
 		portletURL.setParameter("articleId", article.getArticleId());
 		%>
 
@@ -51,9 +50,8 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 		<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
 			<aui:input name="<%= Constants.CMD %>" type="hidden" />
 			<aui:input name="originalRedirect" type="hidden" value="<%= originalRedirect %>" />
-			<aui:input name="groupId" type="hidden" />
-			<aui:input name="articleId" type="hidden" />
-			<aui:input name="deleteArticleIds" type="hidden" />
+			<aui:input name="articleId" type="hidden" value="<%= article.getArticleId() %>" />
+			<aui:input name="articleIds" type="hidden" />
 			<aui:input name="expireArticleIds" type="hidden" />
 
 			<%
@@ -89,14 +87,24 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 			searchContainer.setTotal(total);
 			%>
 
+
 			<c:if test="<%= !results.isEmpty() %>">
 				<aui:button-row>
+
+					<%
+					String taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "editArticle', {action: '" + Constants.EXPIRE + "'});";
+					%>
+
 					<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.EXPIRE) %>">
-						<aui:button onClick='<%= renderResponse.getNamespace() + "expireArticles();" %>' value="expire" />
+						<aui:button onClick="<%= taglibOnClick %>" value="expire" />
 					</c:if>
 
+					<%
+					taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "editArticle', {action: '" + Constants.DELETE_VERSIONS + "'});";
+					%>
+
 					<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.DELETE) %>">
-						<aui:button onClick='<%= renderResponse.getNamespace() + "deleteArticles();" %>' value="delete" />
+						<aui:button onClick="<%= taglibOnClick %>" value="delete" />
 					</c:if>
 				</aui:button-row>
 			</c:if>
@@ -155,40 +163,5 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 
 			<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
 		</aui:form>
-
-		<aui:script>
-			<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.DELETE) %>">
-				Liferay.provide(
-					window,
-					'<portlet:namespace />deleteArticles',
-					function() {
-						if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-the-selected-version") %>')) {
-							document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.DELETE_VERSIONS %>";
-							document.<portlet:namespace />fm.<portlet:namespace />groupId.value = "<%= scopeGroupId %>";
-							document.<portlet:namespace />fm.<portlet:namespace />articleId.value = "<%= article.getArticleId() %>";
-							document.<portlet:namespace />fm.<portlet:namespace />deleteArticleIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds");
-							submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/journal/edit_article" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>");
-						}
-					},
-					['liferay-util-list-fields']
-				);
-			</c:if>
-
-			<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.EXPIRE) %>">
-				Liferay.provide(
-					window,
-					'<portlet:namespace />expireArticles',
-					function() {
-						if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-expire-the-selected-version") %>')) {
-							document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.EXPIRE %>";
-							document.<portlet:namespace />fm.<portlet:namespace />groupId.value = "<%= scopeGroupId %>";
-							document.<portlet:namespace />fm.<portlet:namespace />expireArticleIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds");
-							submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/journal/edit_article" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>");
-						}
-					},
-					['liferay-util-list-fields']
-				);
-			</c:if>
-		</aui:script>
 	</c:otherwise>
 </c:choose>

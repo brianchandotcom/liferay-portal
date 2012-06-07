@@ -24,7 +24,7 @@ PortletURL tempRowURL = (PortletURL)request.getAttribute("view_entries.jsp-tempR
 boolean showCheckBox = JournalArticlePermission.contains(permissionChecker, article, ActionKeys.DELETE) || JournalArticlePermission.contains(permissionChecker, article, ActionKeys.UPDATE);
 %>
 
-<div class="article-display-style display-icon <%= showCheckBox ? "selectable" : StringPool.BLANK %>">
+<div class="article-display-style display-icon <%= showCheckBox ? "selectable" : StringPool.BLANK %>" data-draggable="<%= showCheckBox ? Boolean.TRUE.toString() : Boolean.FALSE.toString() %>" data-title="<%= StringUtil.shorten(article.getTitle(locale), 60) %>">
 	<c:if test="<%= showCheckBox %>">
 
 		<%
@@ -41,7 +41,7 @@ boolean showCheckBox = JournalArticlePermission.contains(permissionChecker, arti
 
 	<liferay-util:include page="/html/portlet/journal/article_action.jsp" />
 
-	<a class="article-link" href="<%= tempRowURL.toString() %>" title="<%= HtmlUtil.escapeAttribute(HtmlUtil.unescape(article.getTitle(locale)) + " - " + HtmlUtil.unescape(article.getDescription())) %>">
+	<a class="article-link" data-folder="<%= Boolean.FALSE.toString() %>" href="<%= tempRowURL.toString() %>" title="<%= HtmlUtil.escapeAttribute(HtmlUtil.unescape(article.getTitle(locale)) + " - " + HtmlUtil.unescape(article.getDescription())) %>">
 		<div class="article-thumbnail" style="height: 136px; width: 136px;">
 			<img alt="" border="no" src="<%= themeDisplay.getPathThemeImages() + "/file_system/large/default.png" %>" style="max-height: 128px; max-width: 128px;" />
 		</div>

@@ -17,86 +17,55 @@
 <%@ include file="/html/portlet/journal/init.jsp" %>
 
 <%
-String navigation = ParamUtil.getString(request, "navigation", "home");
+String navigation = ParamUtil.getString(liferayPortletRequest, "navigation", "home");
 
-long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
+long folderId = GetterUtil.getLong((String)liferayPortletRequest.getAttribute("view.jsp-folderId"));
 
-String structureId = ParamUtil.getString(request, "structureId");
+String structureId = ParamUtil.getString(liferayPortletRequest, "structureId");
 
-String displayStyle = ParamUtil.getString(request, "displayStyle");
+String displayStyle = ParamUtil.getString(liferayPortletRequest, "displayStyle");
 
 if (Validator.isNull(displayStyle)) {
 	displayStyle = portalPreferences.getValue(PortletKeys.JOURNAL, "display-style", PropsValues.JOURNAL_DEFAULT_DISPLAY_VIEW);
 }
 
-String keywords = ParamUtil.getString(request, "keywords");
+String keywords = ParamUtil.getString(liferayPortletRequest, "keywords");
 
-boolean advancedSearch = ParamUtil.getBoolean(request, DisplayTerms.ADVANCED_SEARCH, false);
+boolean advancedSearch = ParamUtil.getBoolean(liferayPortletRequest, DisplayTerms.ADVANCED_SEARCH, false);
 %>
 
 <c:if test="<%= displayViews.length > 1 %>">
 	<aui:script use="aui-base,aui-toolbar">
 		var buttonRow = A.one('#<portlet:namespace />displayStyleToolbar');
 
-		var onButtonClick = function(displayStyle) {
+		function onButtonClick(displayStyle) {
+			var config = {
+				'<portlet:namespace />struts_action': '/journal/view',
+				'<portlet:namespace />navigation': '<%= HtmlUtil.escapeJS(navigation) %>',
+				'<portlet:namespace />folderId': '<%= folderId %>',
+				'<portlet:namespace />displayStyle': displayStyle,
+				'<portlet:namespace />viewEntries': <%= Boolean.FALSE.toString() %>,
+				'<portlet:namespace />viewEntriesPage': <%= Boolean.TRUE.toString() %>,
+				'<portlet:namespace />viewFolders': <%= Boolean.FALSE.toString() %>,
+				'<portlet:namespace />saveDisplayStyle': <%= Boolean.TRUE.toString() %>
+			};
 
-			<%
-			PortletURL iconURL = renderResponse.createRenderURL();
-
-			iconURL.setParameter("struts_action", "/journal/view");
-			iconURL.setParameter("displayStyle", "icon");
-			iconURL.setParameter("saveDisplayStyle", Boolean.TRUE.toString());
-			iconURL.setParameter("folderId", String.valueOf(folderId));
-			iconURL.setParameter("navigation", String.valueOf(navigation));
-
-			PortletURL descriptiveURL = renderResponse.createRenderURL();
-
-			descriptiveURL.setParameter("struts_action", "/journal/view");
-			descriptiveURL.setParameter("displayStyle", "descriptive");
-			descriptiveURL.setParameter("saveDisplayStyle", Boolean.TRUE.toString());
-			descriptiveURL.setParameter("folderId", String.valueOf(folderId));
-			descriptiveURL.setParameter("navigation", String.valueOf(navigation));
-
-			PortletURL listURL = renderResponse.createRenderURL();
-
-			listURL.setParameter("struts_action", "/journal/view");
-			listURL.setParameter("displayStyle", "list");
-			listURL.setParameter("saveDisplayStyle", Boolean.TRUE.toString());
-			listURL.setParameter("folderId", String.valueOf(folderId));
-			listURL.setParameter("navigation", String.valueOf(navigation));
-
-			if (Validator.isNotNull(keywords)) {
-				iconURL.setParameter("keywords", HtmlUtil.escape(keywords));
-				iconURL.setParameter(DisplayTerms.ADVANCED_SEARCH, String.valueOf(advancedSearch));
-
-				descriptiveURL.setParameter("keywords", HtmlUtil.escape(keywords));
-				descriptiveURL.setParameter(DisplayTerms.ADVANCED_SEARCH, String.valueOf(advancedSearch));
-
-				listURL.setParameter("keywords", HtmlUtil.escape(keywords));
-				listURL.setParameter(DisplayTerms.ADVANCED_SEARCH, String.valueOf(advancedSearch));
+			if (<%= Validator.isNull(keywords) %>) {
+				config['<portlet:namespace />viewEntries'] = <%= Boolean.TRUE.toString() %>;
+			}
+			else {
+				config['<portlet:namespace />keywords'] = '<%= HtmlUtil.escapeJS(keywords) %>';
 			}
 
-			if (Validator.isNotNull(structureId)) {
-				iconURL.setParameter("structureId", HtmlUtil.escape(structureId));
-
-				descriptiveURL.setParameter("structureId", HtmlUtil.escape(structureId));
-
-				listURL.setParameter("structureId", HtmlUtil.escape(structureId));
+			if (<%= !structureId.equals("0") %>) {
+				config['<portlet:namespace />structureId'] = '<%= HtmlUtil.escapeJS(structureId) %>';
 			}
-			%>
 
-			if (displayStyle === 'icon') {
-				updateDisplayStyle('<%= iconURL %>', displayStyle);
-			}
-			else if (displayStyle === 'descriptive') {
-				updateDisplayStyle('<%= descriptiveURL %>', displayStyle);
-			}
-			else if (displayStyle === 'list') {
-				updateDisplayStyle('<%= listURL %>', displayStyle);
-			}
-		};
+			updateDisplayStyle(config);
+		}
 
-		var updateDisplayStyle = function(url, displayStyle) {
+		function updateDisplayStyle(config) {
+			var displayStyle = config['<portlet:namespace />displayStyle'];
 
 			<%
 			for (int i = 0; i < displayViews.length; i++) {
@@ -108,7 +77,13 @@ boolean advancedSearch = ParamUtil.getBoolean(request, DisplayTerms.ADVANCED_SEA
 			}
 			%>
 
-			location.href = url;
+			Liferay.fire(
+				'<portlet:namespace />dataRequest',
+				{
+					requestParams: config,
+					src: Liferay.JOURNAL_ENTRIES_PAGINATOR
+				}
+			);
 		};
 
 		var displayStyleToolbarChildren = [];

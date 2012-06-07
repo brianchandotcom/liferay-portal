@@ -62,25 +62,39 @@
 	</c:choose>
 
 	<%
-	taglibURL = "javascript:" + renderResponse.getNamespace() + "deleteArticles();";
+	String taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "editArticle', {action: '" + Constants.DELETE + "'});";
 	%>
 
 	<liferay-ui:icon
 		cssClass="delete-articles-button"
 		image="delete"
 		message="delete"
-		url="<%= taglibURL %>"
+		onClick="<%= taglibOnClick %>"
+		url="javascript:;"
 	/>
 
 	<%
-	taglibURL = "javascript:" + renderResponse.getNamespace() + "expireArticles();";
+	taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "editArticle', {action: '" + Constants.EXPIRE + "'});";
 	%>
 
 	<liferay-ui:icon
 		cssClass="expire-articles-button"
 		image="time"
 		message="expire"
-		url="<%= taglibURL %>"
+		onClick="<%= taglibOnClick %>"
+		url="javascript:;"
+	/>
+
+	<%
+	taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "editArticle', {action: '" + Constants.MOVE + "'});";
+	%>
+
+	<liferay-ui:icon
+		cssClass="move-articles-button"
+		image="submit"
+		message="move"
+		onClick="<%= taglibOnClick %>"
+		url="javascript:;"
 	/>
 </liferay-ui:icon-menu>
 

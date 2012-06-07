@@ -676,6 +676,14 @@
 		<put name="portlet_content" value="/portlet/journal/error.jsp" />
 	</definition>
 
+	<definition name="portlet.journal.move_article" extends="portlet.journal">
+		<put name="portlet_content" value="/portlet/journal/move_article.jsp" />
+	</definition>
+
+	<definition name="portlet.journal.move_entries" extends="portlet.journal">
+		<put name="portlet_content" value="/portlet/journal/move_entries.jsp" />
+	</definition>
+
 	<definition name="portlet.journal.move_folder" extends="portlet.journal">
 		<put name="portlet_content" value="/portlet/journal/move_folder.jsp" />
 	</definition>

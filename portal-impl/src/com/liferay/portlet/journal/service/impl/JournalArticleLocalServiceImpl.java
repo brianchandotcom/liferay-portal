@@ -1616,6 +1616,20 @@ public class JournalArticleLocalServiceImpl
 		}
 	}
 
+	public void moveArticle(long groupId, String articleId, long newFolderId)
+		throws PortalException, SystemException {
+
+		List<JournalArticle> articles = journalArticlePersistence.findByG_A(
+			groupId, articleId);
+
+		for (JournalArticle article : articles) {
+			article.setFolderId(newFolderId);
+
+			journalArticlePersistence.update(article, false);
+		}
+
+	}
+
 	public JournalArticle removeArticleLocale(
 			long groupId, String articleId, double version, String languageId)
 		throws PortalException, SystemException {

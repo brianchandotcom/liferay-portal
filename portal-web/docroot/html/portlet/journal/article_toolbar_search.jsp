@@ -41,35 +41,8 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 			</aui:column>
 
 			<aui:column cssClass="advanced-search-column">
-
-				<%
-				String taglibOnClick = renderResponse.getNamespace() + "openAdvancedSearch();";
-				%>
-
-				<aui:button cssClass="lfr-search-combobox-item article-advanced-search-icon" inputCssClass='<%= advancedSearch ? "close-advanced-search" : "" %>' name="showAdvancedSearch" onClick="<%= taglibOnClick %>" type="button" />
+				<aui:button cssClass="lfr-search-combobox-item article-advanced-search-icon" inputCssClass='<%= advancedSearch ? "close-advanced-search" : "" %>' name="showAdvancedSearch" type="button" />
 			</aui:column>
 		</aui:layout>
 	</aui:form>
 </div>
-
-<aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />openAdvancedSearch',
-		function() {
-			var A = AUI();
-
-			var advancedSearch = A.one('#<portlet:namespace/>advancedSearch');
-
-			if (advancedSearch) {
-				var showAdvancedSearch = A.one('#<portlet:namespace/>showAdvancedSearch');
-
-				var advancedSearchClosed = !showAdvancedSearch.hasClass('close-advanced-search');
-
-				showAdvancedSearch.toggleClass('close-advanced-search', advancedSearchClosed);
-
-				advancedSearch.toggle(advancedSearchClosed);
-			}
-		}
-	);
-</aui:script>

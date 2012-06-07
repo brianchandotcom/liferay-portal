@@ -1,3 +1,5 @@
+<%@ page import="com.liferay.portlet.documentlibrary.model.DLFolderConstants" %>
+
 <%--
 /**
  * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
@@ -17,13 +19,13 @@
 <%@ include file="/html/portlet/journal/init.jsp" %>
 
 <%
-JournalFolder folder = (JournalFolder)request.getAttribute("view.jsp-folder");
+JournalFolder folder = (JournalFolder)liferayPortletRequest.getAttribute("view.jsp-folder");
 
-long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
+long folderId = GetterUtil.getLong((String)liferayPortletRequest.getAttribute("view.jsp-folderId"));
 
 long parentFolderId = JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 
-boolean expandFolder = ParamUtil.getBoolean(request, "expandFolder");
+boolean expandFolder = ParamUtil.getBoolean(liferayPortletRequest, "expandFolder");
 
 if (folder != null) {
 	parentFolderId = folder.getParentFolderId();
@@ -42,8 +44,11 @@ if (folder != null) {
 	}
 }
 
-int folderStart = ParamUtil.getInteger(request, "folderStart");
-int folderEnd = ParamUtil.getInteger(request, "folderEnd", SearchContainer.DEFAULT_DELTA);
+int entryStart = ParamUtil.getInteger(liferayPortletRequest, "entryStart");
+int entryEnd = ParamUtil.getInteger(liferayPortletRequest, "entryEnd", SearchContainer.DEFAULT_DELTA);
+
+int folderStart = ParamUtil.getInteger(liferayPortletRequest, "folderStart");
+int folderEnd = ParamUtil.getInteger(liferayPortletRequest, "folderEnd", SearchContainer.DEFAULT_DELTA);
 
 List<JournalFolder> folders = JournalFolderServiceUtil.getFolders(scopeGroupId, parentFolderId, folderStart, folderEnd);
 
@@ -53,7 +58,7 @@ if (folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 	total = JournalFolderServiceUtil.getFoldersCount(scopeGroupId, parentFolderId);
 }
 
-request.setAttribute("view_folders.jsp-total", String.valueOf(total));
+liferayPortletRequest.setAttribute("view_folders.jsp-total", String.valueOf(total));
 %>
 
 <div class="lfr-header-row">
@@ -91,31 +96,33 @@ request.setAttribute("view_folders.jsp-total", String.valueOf(total));
 						int foldersCount = JournalFolderServiceUtil.getFoldersCount(scopeGroupId, folderId);
 						%>
 
-						<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" varImpl="viewArticlesHomeURL">
+						<liferay-portlet:renderURL varImpl="viewArticlesHomeURL">
 							<portlet:param name="struts_action" value="/journal/view" />
 							<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
-						</liferay-portlet:renderURL>
-
-						<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" varImpl="expandArticlesHomeURL">
-							<portlet:param name="struts_action" value="/journal/view" />
-							<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
-							<portlet:param name="expandFolder" value="<%= Boolean.TRUE.toString() %>" />
+							<portlet:param name="entryStart" value="0" />
+							<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
+							<portlet:param name="folderStart" value="0" />
+							<portlet:param name="folderEnd" value="<%= String.valueOf(folderEnd - folderStart) %>" />
 						</liferay-portlet:renderURL>
 
 						<%
-						String navigation = ParamUtil.getString(request, "navigation", "home");
+						PortletURL expandArticlesHomeURL = PortletURLUtil.clone(viewArticlesHomeURL, liferayPortletResponse);
 
-						String structureId = ParamUtil.getString(request, "structureId");
+						expandArticlesHomeURL.setParameter("expandFolder", Boolean.TRUE.toString());
+
+						String navigation = ParamUtil.getString(liferayPortletRequest, "navigation", "home");
+
+						String structureId = ParamUtil.getString(liferayPortletRequest, "structureId");
 						%>
 
 						<li class="folder <%= (navigation.equals("home") && (folderId == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID)) && Validator.isNull(structureId) ? "selected" : StringPool.BLANK %>">
 							<c:if test="<%= (foldersCount > 0) %>">
-								<a class="expand-folder" href="<%= expandArticlesHomeURL.toString() %>">
+								<a class="expand-folder" data-expand-folder="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID %>" data-view-entries="<%= Boolean.FALSE.toString() %>" href="<%= expandArticlesHomeURL.toString() %>">
 									<liferay-ui:icon cssClass="expand-folder-arrow" image="../aui/carat-1-r" message="expand" />
 								</a>
 							</c:if>
 
-							<a class="browse-folder" href="<%= viewArticlesHomeURL.toString() %>">
+							<a class="browse-folder" data-folder="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= DLFolderConstants.DEFAULT_PARENT_FOLDER_ID %>" data-navigation="home" data-title="<%= LanguageUtil.get(pageContext, "home") %>" data-view-folders="<%= Boolean.FALSE.toString() %>" href="<%= viewArticlesHomeURL.toString() %>">
 								<liferay-ui:icon image="../aui/home" message="" />
 
 								<span class="article-title">
@@ -124,14 +131,14 @@ request.setAttribute("view_folders.jsp-total", String.valueOf(total));
 							</a>
 						</li>
 
-						<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" varImpl="viewRecentArticlesURL">
+						<liferay-portlet:renderURL varImpl="viewRecentArticlesURL">
 							<portlet:param name="struts_action" value="/journal/view" />
 							<portlet:param name="navigation" value="recent" />
 							<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
 						</liferay-portlet:renderURL>
 
 						<li class="folder <%= navigation.equals("recent") && Validator.isNull(structureId) ? "selected" : StringPool.BLANK %>">
-							<a class="browse-folder" href="<%= viewRecentArticlesURL.toString() %>">
+							<a class="browse-folder" data-navigation="recent" data-view-folders="<%= Boolean.FALSE.toString() %>" href="<%= viewRecentArticlesURL.toString() %>">
 								<liferay-ui:icon image="../aui/clock" message="" />
 
 								<span class="article-title">
@@ -141,13 +148,17 @@ request.setAttribute("view_folders.jsp-total", String.valueOf(total));
 						</li>
 
 						<c:if test="<%= themeDisplay.isSignedIn() %>">
-							<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" varImpl="viewMineArticlesURL">
+							<liferay-portlet:renderURL varImpl="viewMyArticlesURL">
 								<portlet:param name="struts_action" value="/journal/view" />
 								<portlet:param name="navigation" value="mine" />
+								<portlet:param name="entryStart" value="0" />
+								<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
+								<portlet:param name="folderStart" value="0" />
+								<portlet:param name="folderEnd" value="<%= String.valueOf(folderEnd - folderStart) %>" />
 							</liferay-portlet:renderURL>
 
 							<li class="folder <%= navigation.equals("mine") && Validator.isNull(structureId) ? "selected" : StringPool.BLANK %>">
-								<a class="browse-folder" href="<%= viewMineArticlesURL.toString() %>">
+								<a class="browse-folder" data-navigation="mine" data-view-folders="<%= Boolean.FALSE.toString() %>" href="<%= viewMyArticlesURL.toString() %>">
 									<liferay-ui:icon image="../aui/person" message="" />
 
 									<span class="article-title">
@@ -159,18 +170,45 @@ request.setAttribute("view_folders.jsp-total", String.valueOf(total));
 
 						<%
 						List<JournalStructure> structures = JournalStructureLocalServiceUtil.getStructures(scopeGroupId);
+						%>
 
+						<c:if test="<%= !structures.isEmpty() %>">
+							<liferay-portlet:renderURL varImpl="viewBasicJournalStructureArticlesURL">
+								<portlet:param name="struts_action" value="/journal/view" />
+								<portlet:param name="structureId" value="0" />
+								<portlet:param name="entryStart" value="0" />
+								<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
+								<portlet:param name="folderStart" value="0" />
+								<portlet:param name="folderEnd" value="<%= String.valueOf(folderEnd - folderStart) %>" />
+							</liferay-portlet:renderURL>
+
+							<li class="folder structure <%= (structureId == "0") ? "selected" : StringPool.BLANK %>">
+								<a class="browse-folder" data-structure-id="<%= String.valueOf(0) %>" data-view-folders="<%= Boolean.FALSE.toString() %>" href="<%= viewBasicJournalStructureArticlesURL.toString() %>">
+									<liferay-ui:icon image="history" message="" />
+
+										<span class="entry-title">
+											<%= LanguageUtil.get(pageContext, "basic-web-content") %>
+										</span>
+								</a>
+							</li>
+						</c:if>
+
+						<%
 						for (JournalStructure structure : structures) {
 						%>
 
-							<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" varImpl="viewJournalStructureArticlesURL">
+							<liferay-portlet:renderURL varImpl="viewJournalStructureArticlesURL">
 								<portlet:param name="struts_action" value="/journal/view" />
 								<portlet:param name="structureId" value="<%= structure.getStructureId() %>" />
+								<portlet:param name="entryStart" value="0" />
+								<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
+								<portlet:param name="folderStart" value="0" />
+								<portlet:param name="folderEnd" value="<%= String.valueOf(folderEnd - folderStart) %>" />
 							</liferay-portlet:renderURL>
 
-							<li class="folder <%= structureId.equals(structure.getStructureId()) ? "selected" : StringPool.BLANK %>">
-								<a class="browse-folder" href="<%= viewJournalStructureArticlesURL.toString() %>">
-									<liferay-ui:icon image="copy" message="" />
+							<li class="folder structure <%= structureId.equals(structure.getStructureId()) ? "selected" : StringPool.BLANK %>">
+								<a class="browse-folder" data-structure-id="<%= structure.getStructureId() %>" data-view-folders="<%= Boolean.FALSE.toString() %>" href="<%= viewJournalStructureArticlesURL.toString() %>">
+									<liferay-ui:icon image="history" message="" />
 
 									<span class="article-title">
 										<%= structure.getName(locale) %>
@@ -184,17 +222,27 @@ request.setAttribute("view_folders.jsp-total", String.valueOf(total));
 
 					</c:when>
 					<c:otherwise>
-						<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" varImpl="viewURL">
+						<liferay-portlet:renderURL varImpl="viewURL">
 							<portlet:param name="struts_action" value="/journal/view" />
 							<portlet:param name="folderId" value="<%= String.valueOf(parentFolderId) %>" />
+							<portlet:param name="entryStart" value="0" />
+							<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
+							<portlet:param name="folderStart" value="0" />
+							<portlet:param name="folderEnd" value="<%= String.valueOf(folderEnd - folderStart) %>" />
 						</liferay-portlet:renderURL>
 
+						<%
+						PortletURL expandViewURL = PortletURLUtil.clone(viewURL, liferayPortletResponse);
+
+						expandViewURL.setParameter("expandFolder", Boolean.TRUE.toString());
+						%>
+
 						<li class="folder">
-							<a class="expand-folder" href="<%= viewURL.toString() %>">
+							<a class="expand-folder" data-direction-right="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= String.valueOf(parentFolderId) %>" data-view-entries="<%= Boolean.FALSE.toString() %>" href="<%= expandViewURL.toString() %>">
 								<liferay-ui:icon cssClass="expand-folder-arrow" image="../aui/carat-1-l" message="collapse" />
 							</a>
 
-							<a class="browse-folder" href="<%= viewURL.toString() %>">
+							<a class="browse-folder" data-direction-right="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= String.valueOf(parentFolderId) %>" href="<%= viewURL.toString() %>">
 								<liferay-ui:icon message="up" src='<%= themeDisplay.getPathThemeImages() + "/arrows/01_up.png" %>' />
 
 								<%= LanguageUtil.get(pageContext, "up") %>
@@ -206,32 +254,36 @@ request.setAttribute("view_folders.jsp-total", String.valueOf(total));
 							int foldersCount = JournalFolderServiceUtil.getFoldersCount(scopeGroupId, curFolder.getFolderId());
 							int articlesCount = JournalArticleServiceUtil.getArticlesCount(scopeGroupId, curFolder.getFolderId());
 
-							request.setAttribute("view_entries.jsp-folder", curFolder);
-							request.setAttribute("view_entries.jsp-folderId", String.valueOf(curFolder.getFolderId()));
-							request.setAttribute("view_entries.jsp-folderSelected", String.valueOf(folderId == curFolder.getFolderId()));
+							liferayPortletRequest.setAttribute("view_entries.jsp-folder", curFolder);
+							liferayPortletRequest.setAttribute("view_entries.jsp-folderId", String.valueOf(curFolder.getFolderId()));
+							liferayPortletRequest.setAttribute("view_entries.jsp-folderSelected", String.valueOf(folderId == curFolder.getFolderId()));
 						%>
 
-							<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" varImpl="viewURL">
+							<liferay-portlet:renderURL varImpl="viewURL">
 								<portlet:param name="struts_action" value="/journal/view" />
 								<portlet:param name="folderId" value="<%= String.valueOf(curFolder.getFolderId()) %>" />
+								<portlet:param name="entryStart" value="0" />
+								<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
+								<portlet:param name="folderStart" value="0" />
+								<portlet:param name="folderEnd" value="<%= String.valueOf(folderEnd - folderStart) %>" />
 							</liferay-portlet:renderURL>
 
-							<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" varImpl="expandURL">
-								<portlet:param name="struts_action" value="/journal/view" />
-								<portlet:param name="folderId" value="<%= String.valueOf(curFolder.getFolderId()) %>" />
-								<portlet:param name="expandFolder" value="<%= String.valueOf(Boolean.TRUE.toString()) %>" />
-							</liferay-portlet:renderURL>
+							<%
+							expandViewURL = PortletURLUtil.clone(viewURL, liferayPortletResponse);
+
+							expandViewURL.setParameter("expandFolder", Boolean.TRUE.toString());
+							%>
 
 							<li class="folder <%= (curFolder.getFolderId() == folderId) ? "selected" : StringPool.BLANK %>">
 								<liferay-util:include page="/html/portlet/journal/folder_action.jsp" />
 
 								<c:if test="<%= foldersCount > 0 %>">
-									<a class="expand-folder" href="<%= expandURL.toString() %>">
+									<a class="expand-folder" data-expand-folder="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= String.valueOf(curFolder.getFolderId()) %>" data-view-entries="<%= Boolean.FALSE.toString() %>" href="<%= expandViewURL.toString() %>">
 										<liferay-ui:icon cssClass="expand-folder-arrow" image="../aui/carat-1-r" message="expand" />
 									</a>
 								</c:if>
 
-								<a class="browse-folder" href="<%= viewURL.toString() %>">
+								<a class="browse-folder" data-folder="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= String.valueOf(curFolder.getFolderId()) %>" data-title="<%= curFolder.getName() %>" data-view-folders="<%= Boolean.FALSE.toString() %>" href="<%= viewURL.toString() %>">
 									<c:choose>
 										<c:when test="<%= (foldersCount + articlesCount) > 0 %>">
 											<liferay-ui:icon image="folder_full_document" />
@@ -254,6 +306,22 @@ request.setAttribute("view_folders.jsp-total", String.valueOf(total));
 					</c:otherwise>
 				</c:choose>
 			</ul>
+
+			<aui:script>
+				Liferay.fire(
+					'<portlet:namespace />pageLoaded',
+					{
+						paginator: {
+							name: 'folderPaginator',
+							state: {
+								page: <%= folderEnd / (folderEnd - folderStart) %>,
+								rowsPerPage: <%= (folderEnd - folderStart) %>,
+								total: <%= total %>
+							}
+						}
+					}
+				);
+			</aui:script>
 		</div>
 	</div>
 </div>

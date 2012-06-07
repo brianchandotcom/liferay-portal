@@ -30,7 +30,7 @@
 		<column name="folderId" type="long" />
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
-		<column name="articleId" type="String" />
+		<column name="articleId" type="String" accessor="true"/>
 		<column name="version" type="double" />
 		<column name="title" type="String" localized="true" />
 		<column name="urlTitle" type="String" />
@@ -190,7 +190,7 @@
 
 		<!-- PK fields -->
 
-		<column name="folderId" type="long" primary="true" />
+		<column name="folderId" type="long" primary="true" accessor="true"/>
 
 		<!-- Group instance -->
 

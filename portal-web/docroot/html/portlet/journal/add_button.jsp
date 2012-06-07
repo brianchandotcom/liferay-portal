@@ -17,9 +17,9 @@
 <%@ include file="/html/portlet/journal/init.jsp" %>
 
 <%
-JournalFolder folder = (JournalFolder)request.getAttribute("view.jsp-folder");
+JournalFolder folder = (JournalFolder)liferayPortletRequest.getAttribute("view.jsp-folder");
 
-long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
+long folderId = GetterUtil.getLong((String)liferayPortletRequest.getAttribute("view.jsp-folderId"));
 
 Map<String, PortletURL> addArticleURLs = getAddArticleURLs(liferayPortletRequest, liferayPortletResponse, folderId);
 %>
@@ -46,11 +46,7 @@ Map<String, PortletURL> addArticleURLs = getAddArticleURLs(liferayPortletRequest
 
 			if (pos != -1) {
 				message = className.substring(pos + _CLASSNAME_SEPARATOR.length());
-
-				className = className.substring(0, pos);
 			}
-
-			AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
 
 			PortletURL addArticleURL = entry.getValue();
 
@@ -59,7 +55,7 @@ Map<String, PortletURL> addArticleURLs = getAddArticleURLs(liferayPortletRequest
 
 			<liferay-ui:icon
 				message="<%= message %>"
-				src="<%= assetRendererFactory.getIconPath(renderRequest) %>"
+				src='<%= themeDisplay.getPathThemeImages() + "/common/history.png" %>'
 				url="<%= addArticleURL.toString() %>"
 			/>
 

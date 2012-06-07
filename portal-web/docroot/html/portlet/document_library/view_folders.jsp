@@ -59,8 +59,6 @@ if (folder != null) {
 	}
 }
 
-long fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
-
 int entryStart = ParamUtil.getInteger(request, "entryStart");
 int entryEnd = ParamUtil.getInteger(request, "entryEnd", entriesPerPage);
 
@@ -77,12 +75,6 @@ if (folderId != rootFolderId) {
 }
 
 request.setAttribute("view_folders.jsp-total", String.valueOf(total));
-
-List<Folder> ancestorFolders = new ArrayList<Folder>();
-
-if (folder != null) {
-	ancestorFolders = folder.getAncestors();
-}
 %>
 
 <div class="lfr-header-row">
@@ -130,7 +122,13 @@ if (folder != null) {
 						</liferay-portlet:renderURL>
 
 						<%
+						PortletURL expandViewDocumentsHomeURL = PortletURLUtil.clone(viewDocumentsHomeURL, liferayPortletResponse);
+
+						expandViewDocumentsHomeURL.setParameter("expandFolder", Boolean.TRUE.toString());
+
 						String navigation = ParamUtil.getString(request, "navigation", "home");
+
+						long fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
 
 						request.setAttribute("view_entries.jsp-folder", folder);
 						request.setAttribute("view_entries.jsp-folderId", String.valueOf(folderId));
@@ -141,7 +139,7 @@ if (folder != null) {
 							<liferay-util:include page="/html/portlet/document_library/folder_action.jsp" />
 
 							<c:if test="<%= (foldersCount > 0) %>">
-								<a class="expand-folder" data-expand-folder="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= rootFolderId %>" data-view-entries="<%= Boolean.FALSE.toString() %>" href="<%= viewDocumentsHomeURL.toString() %>">
+								<a class="expand-folder" data-expand-folder="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= rootFolderId %>" data-view-entries="<%= Boolean.FALSE.toString() %>" href="<%= expandViewDocumentsHomeURL.toString() %>">
 									<liferay-ui:icon cssClass="expand-folder-arrow" image="../aui/carat-1-r" message="expand" />
 								</a>
 							</c:if>
@@ -269,11 +267,17 @@ if (folder != null) {
 										<portlet:param name="folderEnd" value="<%= String.valueOf(folderEnd - folderStart) %>" />
 									</liferay-portlet:renderURL>
 
+									<%
+									PortletURL expandViewURL = PortletURLUtil.clone(viewURL, liferayPortletResponse);
+
+									expandViewURL.setParameter("expandFolder", Boolean.TRUE.toString());
+									%>
+
 									<li class="folder <%= (mountFolder.getFolderId() == folderId) ? "selected" : StringPool.BLANK %>">
 										<liferay-util:include page="/html/portlet/document_library/folder_action.jsp" />
 
 										<c:if test="<%= mountFoldersCount > 0 %>">
-											<a class="expand-folder" data-expand-folder="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= String.valueOf(mountFolder.getFolderId()) %>" data-view-entries="<%= Boolean.FALSE.toString() %>" href="<%= viewURL.toString() %>">
+											<a class="expand-folder" data-expand-folder="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= String.valueOf(mountFolder.getFolderId()) %>" data-view-entries="<%= Boolean.FALSE.toString() %>" href="<%= expandViewURL.toString() %>">
 												<liferay-ui:icon cssClass="expand-folder-arrow" image="../aui/carat-1-r" message="expand" />
 											</a>
 										</c:if>
@@ -321,8 +325,14 @@ if (folder != null) {
 							<portlet:param name="folderEnd" value="<%= String.valueOf(folderEnd - folderStart) %>" />
 						</liferay-portlet:renderURL>
 
+						<%
+						PortletURL expandViewURL = PortletURLUtil.clone(viewURL, liferayPortletResponse);
+
+						expandViewURL.setParameter("expandFolder", Boolean.TRUE.toString());
+						%>
+
 						<li class="folder">
-							<a class="expand-folder" data-direction-right="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= String.valueOf(parentFolderId) %>" data-view-entries="<%= Boolean.FALSE.toString() %>" href="<%= viewURL.toString() %>">
+							<a class="expand-folder" data-direction-right="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= String.valueOf(parentFolderId) %>" data-view-entries="<%= Boolean.FALSE.toString() %>" href="<%= expandViewURL.toString() %>">
 								<liferay-ui:icon cssClass="expand-folder-arrow" image="../aui/carat-1-l" message="collapse" />
 							</a>
 
@@ -353,16 +363,22 @@ if (folder != null) {
 								<portlet:param name="folderEnd" value="<%= String.valueOf(folderEnd - folderStart) %>" />
 							</liferay-portlet:renderURL>
 
+							<%
+							expandViewURL = PortletURLUtil.clone(viewURL, liferayPortletResponse);
+
+							expandViewURL.setParameter("expandFolder", Boolean.TRUE.toString());
+							%>
+
 							<li class="folder <%= (curFolder.getFolderId() == folderId) ? "selected" : StringPool.BLANK %>">
 								<liferay-util:include page="/html/portlet/document_library/folder_action.jsp" />
 
 								<c:if test="<%= foldersCount > 0 %>">
-									<a class="expand-folder" data-expand-folder="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= String.valueOf(curFolder.getFolderId()) %>" data-view-entries="<%= Boolean.FALSE.toString() %>" href="<%= viewURL.toString() %>">
+									<a class="expand-folder" data-expand-folder="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= String.valueOf(curFolder.getFolderId()) %>" data-view-entries="<%= Boolean.FALSE.toString() %>" href="<%= expandViewURL.toString() %>">
 										<liferay-ui:icon cssClass="expand-folder-arrow" image="../aui/carat-1-r" message="expand" />
 									</a>
 								</c:if>
 
-								<a class="browse-folder" data-folder="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= String.valueOf(curFolder.getFolderId()) %>" data-repository-id="<%= folder.getRepositoryId() %>" data-title="<%= curFolder.getName() %>" data-view-folders="<%= Boolean.FALSE.toString() %>" href="<%= viewURL.toString() %>">
+								<a class="browse-folder" data-folder="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= String.valueOf(curFolder.getFolderId()) %>" data-repository-id="<%= curFolder.getRepositoryId() %>" data-title="<%= curFolder.getName() %>" data-view-folders="<%= Boolean.FALSE.toString() %>" href="<%= viewURL.toString() %>">
 									<c:choose>
 										<c:when test="<%= (foldersCount + fileEntriesCount) > 0 %>">
 											<liferay-ui:icon image="folder_full_document" />

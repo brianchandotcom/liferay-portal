@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/journal/init.jsp" %>
 
 <%
-ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+ResultRow row = (ResultRow)liferayPortletRequest.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 JournalFolder folder = null;
 
@@ -25,7 +25,7 @@ if (row != null) {
 	folder = (JournalFolder)row.getObject();
 }
 else {
-	folder = (JournalFolder)request.getAttribute("view_entries.jsp-folder");
+	folder = (JournalFolder)liferayPortletRequest.getAttribute("view_entries.jsp-folder");
 }
 %>
 

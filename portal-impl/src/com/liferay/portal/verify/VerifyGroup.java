@@ -15,6 +15,7 @@
 package com.liferay.portal.verify;
 
 import com.liferay.portal.GroupFriendlyURLException;
+import com.liferay.portal.NoSuchOrganizationException;
 import com.liferay.portal.NoSuchShardException;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.shard.ShardUtil;
@@ -26,10 +27,12 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.LayoutSet;
+import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Shard;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.ShardLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PropsValues;
@@ -145,7 +148,6 @@ public class VerifyGroup extends VerifyProcess {
 	}
 
 	protected void verifyOrganizationNames() throws Exception {
-
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -154,20 +156,26 @@ public class VerifyGroup extends VerifyProcess {
 			con = DataAccess.getConnection();
 
 			ps = con.prepareStatement(
-				"select groupID, name from Group_ where name like ? and " +
-					"name not like ?");
-
-			ps.setString(1, "%LFR_ORGANIZATION%");
-			ps.setString(2, "%LFR_ORGANIZATION ");
+				"select groupId, classPK from Group_ where name like " +
+					"'%LFR_ORGANIZATION%' and name not like " +
+						"'%LFR_ORGANIZATION'");
 
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				long groupId = rs.getLong("groupID");
-				String newName = rs.getString("name").replaceFirst(
-					"(.*)LFR_ORGANIZATION ", "") + " LFR_ORGANIZATION ";
+				long groupId = rs.getLong("groupId");
+				long classPK = rs.getLong("classPK");
 
-				updateOrganizationNames(groupId, newName);
+				try {
+					Organization organization =
+						OrganizationLocalServiceUtil.getOrganization(classPK);
+
+					String name = organization.getName() + " LFR_ORGANIZATION";
+
+					updateOrganizationName(groupId, name);
+				}
+				catch (NoSuchOrganizationException nsoe) {
+				}
 			}
 		}
 		finally {
@@ -227,27 +235,26 @@ public class VerifyGroup extends VerifyProcess {
 		}
 	}
 
-	private void updateOrganizationNames(long groupId, String newName)
-			throws Exception {
+	private void updateOrganizationName(long groupId, String name)
+		throws Exception {
 
-			Connection con = null;
-			PreparedStatement ps = null;
+		Connection con = null;
+		PreparedStatement ps = null;
 
-			try {
-				con = DataAccess.getConnection();
+		try {
+			con = DataAccess.getConnection();
 
-				ps = con.prepareStatement(
-					"update Group_ set name = ? where groupID = ?");
+			ps = con.prepareStatement(
+				"update Group_ set name = ? where groupId= " + groupId);
 
-				ps.setString(1, newName);
-				ps.setLong(2, groupId);
+			ps.setString(1, name);
 
-				ps.executeUpdate();
-			}
-			finally {
-				DataAccess.cleanUp(con, ps);
-			}
+			ps.executeUpdate();
 		}
+		finally {
+			DataAccess.cleanUp(con, ps);
+		}
+	}
 
 	private static Log _log = LogFactoryUtil.getLog(VerifyGroup.class);
 

@@ -2250,7 +2250,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		FileEntry fileEntry = repository.getFileEntry(fileEntryId);
 
 		DLFileEntryPermission.check(
-			getPermissionChecker(), fileEntry, ActionKeys.UPDATE);
+			getPermissionChecker(), fileEntry, ActionKeys.DELETE);
 
 		dlAppHelperLocalService.restoreFileEntryFromTrash(
 			getUserId(), fileEntry);

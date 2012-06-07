@@ -5,23 +5,23 @@
 		<![CDATA[
 			WHERE
 				(
-					resourceBlockId IN ( 
-						SELECT 
+					resourceBlockId IN (
+						SELECT
 							resourceBlock.resourceBlockId
-						FROM 
+						FROM
 							ResourceBlock resourceBlock
-						WHERE 
-							resourceBlock.resourceBlockId IN (
-								SELECT 
+						WHERE
+							resourceBlock.resourceBlockId IN(
+								SELECT
 									resourceBlockPermission.resourceBlockId
 								FROM
 									ResourceBlockPermission resourceBlockPermission
 								WHERE 
 									(resourceBlockPermission.roleId IN ([$USER_ROLE_IDS$]))
 							)
-							AND (resourceBlock.companyId = [$COMPANY_ID$]) 
-							AND (resourceBlock.groupId = [$GROUP_ID$]) 
-							AND (resourceBlock.name = '[$RESOURCE_BLOCK_NAME$]') 
+							AND (resourceBlock.companyId = [$COMPANY_ID$])
+							AND (resourceBlock.groupId = [$GROUP_ID$])
+							AND (resourceBlock.name = '[$RESOURCE_BLOCK_NAME$]')
 					)
 				)
 		]]>
@@ -31,45 +31,45 @@
 			WHERE
 				(
 					resourceBlockId IN (
-						SELECT 
+						SELECT
 							resourceBlock.resourceBlockId
-						FROM 
+						FROM
 							ResourceBlock resourceBlock
-						WHERE 
+						WHERE
 							resourceBlock.resourceBlockId IN (
-								SELECT 
+								SELECT
 									resourceBlockPermission.resourceBlockId
 								FROM
 									ResourceBlockPermission resourceBlockPermission
-								WHERE 
+								WHERE
 									(resourceBlockPermission.roleId IN ([$USER_ROLE_IDS$]))
 							)
-							AND (resourceBlock.companyId = [$COMPANY_ID$]) 
-							AND (resourceBlock.groupId = [$GROUP_ID$]) 
-							AND (resourceBlock.name = '[$RESOURCE_BLOCK_NAME$]') 
-					) 
+							AND (resourceBlock.companyId = [$COMPANY_ID$])
+							AND (resourceBlock.groupId = [$GROUP_ID$])
+							AND (resourceBlock.name = '[$RESOURCE_BLOCK_NAME$]')
+					)
 					OR
 					(
-						([$USER_ID_FIELD$] = [$USER_ID$]) 
+						([$USER_ID_FIELD$] = [$USER_ID$])
 						AND 
 						(
 							resourceBlockId IN (
-								SELECT 
+								SELECT
 									resourceBlock.resourceBlockId
-								FROM 
+								FROM
 									ResourceBlock resourceBlock
-								WHERE 
+								WHERE
 									resourceBlock.resourceBlockId IN (
-										SELECT 
+										SELECT
 											resourceBlockPermission.resourceBlockId
 										FROM
 											ResourceBlockPermission resourceBlockPermission
-										WHERE 
+										WHERE
 											(resourceBlockPermission.roleId IN ([$OWNER_ROLE_ID$]))
 									)
-									AND (resourceBlock.companyId = [$COMPANY_ID$]) 
-									AND (resourceBlock.groupId = [$GROUP_ID$]) 
-									AND (resourceBlock.name = '[$RESOURCE_BLOCK_NAME$]') 
+									AND (resourceBlock.companyId = [$COMPANY_ID$])
+									AND (resourceBlock.groupId = [$GROUP_ID$])
+									AND (resourceBlock.name = '[$RESOURCE_BLOCK_NAME$]')
 							)
 						)
 					)

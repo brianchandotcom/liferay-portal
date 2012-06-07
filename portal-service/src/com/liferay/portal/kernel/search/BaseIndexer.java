@@ -273,8 +273,8 @@ public abstract class BaseIndexer implements Indexer {
 	}
 
 	public boolean hasPermission(
-			PermissionChecker permissionChecker, long entryClassPK,
-			String actionId)
+			PermissionChecker permissionChecker, String entryClassName,
+			long entryClassPK, String actionId)
 		throws Exception {
 
 		return true;
@@ -900,7 +900,8 @@ public abstract class BaseIndexer implements Indexer {
 
 				if ((indexer.isFilterSearch() &&
 					 indexer.hasPermission(
-						 permissionChecker, entryClassPK, ActionKeys.VIEW)) ||
+						 permissionChecker, entryClassName, entryClassPK,
+						 ActionKeys.VIEW)) ||
 					!indexer.isFilterSearch() ||
 					!indexer.isPermissionAware()) {
 

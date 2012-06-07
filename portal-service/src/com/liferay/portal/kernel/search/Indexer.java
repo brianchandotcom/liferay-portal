@@ -58,8 +58,8 @@ public interface Indexer {
 		throws SearchException;
 
 	public boolean hasPermission(
-			PermissionChecker permissionChecker, long entryClassPK,
-			String actionId)
+			PermissionChecker permissionChecker, String entryClassName,
+			long entryClassPK, String actionId)
 		throws Exception;
 
 	public boolean isFilterSearch();

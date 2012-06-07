@@ -83,12 +83,12 @@ public class IndexerWrapper implements Indexer {
 	}
 
 	public boolean hasPermission(
-			PermissionChecker permissionChecker, long entryClassPK,
-			String actionId)
+			PermissionChecker permissionChecker, String entryClassName,
+			long entryClassPK, String actionId)
 		throws Exception {
 
 		return _indexer.hasPermission(
-			permissionChecker, entryClassPK, actionId);
+			permissionChecker, entryClassName, entryClassPK, actionId);
 	}
 
 	public boolean isFilterSearch() {

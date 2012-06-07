@@ -74,8 +74,8 @@ public class DummyIndexer implements Indexer {
 	}
 
 	public boolean hasPermission(
-		PermissionChecker permissionChecker, long entryClassPK,
-		String actionId) {
+		PermissionChecker permissionChecker, String entryClassName,
+		long entryClassPK, String actionId) {
 
 		return false;
 	}

@@ -92,8 +92,8 @@ public class MBIndexer extends BaseIndexer {
 
 	@Override
 	public boolean hasPermission(
-			PermissionChecker permissionChecker, long entryClassPK,
-			String actionId)
+			PermissionChecker permissionChecker, String entryClassName,
+			long entryClassPK, String actionId)
 		throws Exception {
 
 		return MBMessagePermission.contains(

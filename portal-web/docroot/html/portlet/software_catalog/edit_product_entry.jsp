@@ -107,7 +107,7 @@ int screenshotsCount = ParamUtil.getInteger(request, "screenshotsCount", product
 				for (SCLicense license : SCLicenseLocalServiceUtil.getLicenses(true, true)) {
 				%>
 
-					<option <%= licenseIds.contains(license.getLicenseId()) ? "selected" : "" %> value="<%= license.getLicenseId() %>"><%= license.getName() %></option>
+					<option <%= licenseIds.contains(license.getLicenseId()) ? "selected" : "" %> value="<%= license.getLicenseId() %>"><%= HtmlUtil.escape(license.getName()) %></option>
 
 				<%
 				}

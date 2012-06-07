@@ -103,7 +103,7 @@ editProductEntryURL.setParameter("productEntryId", String.valueOf(productEntryId
 				for (SCFrameworkVersion frameworkVersion : SCFrameworkVersionServiceUtil.getFrameworkVersions(scopeGroupId, true)) {
 				%>
 
-					<option <%= (frameworkVersionIds.contains(frameworkVersion.getFrameworkVersionId())) ? "selected" : "" %> value="<%= frameworkVersion.getFrameworkVersionId() %>"><%= frameworkVersion.getName() %></option>
+					<option <%= (frameworkVersionIds.contains(frameworkVersion.getFrameworkVersionId())) ? "selected" : "" %> value="<%= frameworkVersion.getFrameworkVersionId() %>"><%= HtmlUtil.escape(frameworkVersion.getName()) %></option>
 
 				<%
 				}

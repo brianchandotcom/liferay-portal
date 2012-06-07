@@ -35,6 +35,8 @@ public interface WorkflowedModel {
 
 	public boolean isExpired();
 
+	public boolean isInTrash();
+
 	public boolean isPending();
 
 	public void setStatus(int status);

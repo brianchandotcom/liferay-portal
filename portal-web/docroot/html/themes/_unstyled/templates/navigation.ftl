@@ -11,7 +11,7 @@
 				<li>
 			</#if>
 
-				<a href="${nav_item.getURL()}" ${nav_item.getTarget()}><span>${nav_item.icon()} ${nav_item.getName()}</span></a>
+				<a href="${nav_item.getURL()}" ${nav_item.getTarget()}><span>${theme.layoutIcon(${nav_item.getLayout()})} ${nav_item.getName()}</span></a>
 
 				<#if nav_item.hasChildren()>
 					<ul class="child-menu">

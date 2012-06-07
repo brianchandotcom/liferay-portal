@@ -17,6 +17,8 @@ package com.liferay.portlet;
 import com.liferay.portal.dao.shard.ShardPollerProcessorWrapper;
 import com.liferay.portal.kernel.atom.AtomCollectionAdapter;
 import com.liferay.portal.kernel.atom.AtomCollectionAdapterRegistryUtil;
+import com.liferay.portal.kernel.displaystyles.DisplayStyleHandler;
+import com.liferay.portal.kernel.displaystyles.DisplayStyleHandlerRegistryUtil;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -230,6 +232,14 @@ public class PortletBagFactory {
 		PermissionPropagator permissionPropagatorInstance =
 			newPermissionPropagator(portlet);
 
+		DisplayStyleHandler displayStyleHandlerInstance =
+			newDisplayStyleHandler(portlet);
+
+		if (displayStyleHandlerInstance != null) {
+			DisplayStyleHandlerRegistryUtil.register(
+				displayStyleHandlerInstance);
+		}
+
 		List<TrashHandler> trashHandlerInstances =
 			new ArrayList<TrashHandler>();
 
@@ -314,9 +324,9 @@ public class PortletBagFactory {
 			webDAVStorageInstance, xmlRpcMethodInstance,
 			controlPanelEntryInstance, assetRendererFactoryInstances,
 			atomCollectionAdapterInstances, customAttributesDisplayInstances,
-			permissionPropagatorInstance, trashHandlerInstances,
-			workflowHandlerInstances, preferencesValidatorInstance,
-			resourceBundles);
+			permissionPropagatorInstance, displayStyleHandlerInstance,
+			trashHandlerInstances, workflowHandlerInstances,
+			preferencesValidatorInstance, resourceBundles);
 
 		PortletBagPool.put(portlet.getRootPortletId(), portletBag);
 
@@ -642,6 +652,17 @@ public class PortletBagFactory {
 
 		return (ConfigurationAction)newInstance(
 			ConfigurationAction.class, portlet.getConfigurationActionClass());
+	}
+
+	protected DisplayStyleHandler newDisplayStyleHandler(Portlet portlet)
+		throws Exception {
+
+		if (Validator.isNull(portlet.getDisplayStyleHandlerClass())) {
+			return null;
+		}
+
+		return (DisplayStyleHandler)newInstance(
+			DisplayStyleHandler.class, portlet.getDisplayStyleHandlerClass());
 	}
 
 	protected FriendlyURLMapper newFriendlyURLMapper(Portlet portlet)

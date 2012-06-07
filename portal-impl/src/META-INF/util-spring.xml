@@ -144,6 +144,11 @@
 			<bean class="com.liferay.portal.deploy.hot.HotDeployImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.displaystyles.DisplayStyleHandlerRegistryUtil" class="com.liferay.portal.kernel.displaystyles.DisplayStyleHandlerRegistryUtil">
+		<property name="displayStyleHandlerRegistry">
+			<bean class="com.liferay.portal.displaystyles.DisplayStyleHandlerRegistryImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.kernel.facebook.FacebookConnectUtil" class="com.liferay.portal.kernel.facebook.FacebookConnectUtil">
 		<property name="facebookConnect">
 			<bean class="com.liferay.portal.facebook.FacebookConnectImpl" />

@@ -296,7 +296,7 @@ public class DLAppHelperLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated {@Link #getFileShortcuts(long, long, int, boolean)}
+	 * @deprecated #getFileShortcuts(long, long, int, boolean)
 	 */
 	public List<DLFileShortcut> getFileShortcuts(
 			long groupId, long folderId, int status)
@@ -314,7 +314,7 @@ public class DLAppHelperLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated {@Link #getFileShortcutsCount(long, long, int, boolean)}
+	 * @deprecated #getFileShortcutsCount(long, long, int, boolean)
 	 */
 	public int getFileShortcutsCount(long groupId, long folderId, int status)
 		throws SystemException {

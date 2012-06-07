@@ -862,6 +862,13 @@ public class JournalArticleLocalServiceWrapper
 			version, status);
 	}
 
+	public void moveArticle(long groupId, java.lang.String articleId,
+		long newFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_journalArticleLocalService.moveArticle(groupId, articleId, newFolderId);
+	}
+
 	public com.liferay.portlet.journal.model.JournalArticle removeArticleLocale(
 		long groupId, java.lang.String articleId, double version,
 		java.lang.String languageId)

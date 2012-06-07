@@ -99,7 +99,20 @@ if (Validator.isNotNull(structureAvailableFields)) {
 		title = template.getName(locale);
 	}
 	else {
-		title = LanguageUtil.get(pageContext, "new-application-display-style");
+		if (classNameId > 0) {
+			DisplayStyleHandler displayStyleHandler = DisplayStyleHandlerRegistryUtil.getDisplayStyleHandler(classNameId);
+
+			StringBundler sb = new StringBundler();
+
+			sb.append(LanguageUtil.get(pageContext, "new"));
+			sb.append(StringPool.SPACE);
+			sb.append(displayStyleHandler.getName(locale));
+
+			title = sb.toString();
+		}
+		else {
+			title = LanguageUtil.get(pageContext, "new-application-display-style");
+		}
 	}
 	%>
 

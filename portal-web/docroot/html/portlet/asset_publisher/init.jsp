@@ -17,6 +17,8 @@
 <%@ include file="/html/portlet/init.jsp" %>
 
 <%@ page import="com.liferay.portal.NoSuchModelException" %><%@
+page import="com.liferay.portal.kernel.displaystyles.DisplayStyleHandler" %><%@
+page import="com.liferay.portal.kernel.displaystyles.DisplayStyleHandlerRegistryUtil" %><%@
 page import="com.liferay.portal.kernel.repository.model.FileEntry" %><%@
 page import="com.liferay.portal.kernel.search.Hits" %><%@
 page import="com.liferay.portal.kernel.xml.Document" %><%@

@@ -21,7 +21,7 @@ long[] searchClassNameIds;
 long searchClassPK;
 
 if (portletName.equals(PortletKeys.DISPLAY_STYLES)) {
-	searchClassNameIds = new long[] {PortalUtil.getClassNameId(AssetEntry.class)};
+	searchClassNameIds = getDisplayStylesClassNameIds();
 	searchClassPK = -1;
 }
 else {
@@ -40,4 +40,21 @@ else {
 
 pageContext.setAttribute("results", results);
 pageContext.setAttribute("total", total);
+%>
+
+<%!
+private long[] getDisplayStylesClassNameIds() {
+	List<DisplayStyleHandler> displayStyleHandlers = DisplayStyleHandlerRegistryUtil.getDisplayStyleHandlers();
+
+	long[] searchClassNameIds = new long[displayStyleHandlers.size()];
+
+	int index = 0;
+
+	for (DisplayStyleHandler displayStyleHandler : displayStyleHandlers) {
+		searchClassNameIds[index] = PortalUtil.getClassNameId(displayStyleHandler.getClassName());
+		index++;
+	}
+
+	return searchClassNameIds;
+}
 %>

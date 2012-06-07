@@ -15,7 +15,8 @@
 --%>
 
 <%
-long assetPublisherDDMTemplateClassNameId = PortalUtil.getClassNameId(AssetEntry.class);
+DisplayStyleHandler displayStyleHandler = DisplayStyleHandlerRegistryUtil.getDisplayStyleHandler(AssetEntry.class.getName());
+long displayStyleClassNameId = PortalUtil.getClassNameId(displayStyleHandler.getClassName());
 %>
 
 <aui:fieldset cssClass="general-display-settings">
@@ -31,15 +32,15 @@ long assetPublisherDDMTemplateClassNameId = PortalUtil.getClassNameId(AssetEntry
 			<%
 			}
 
-			List<DDMTemplate> assetPublisherDDMTemplates = DDMTemplateLocalServiceUtil.getTemplates(scopeGroupId, assetPublisherDDMTemplateClassNameId, scopeGroupId);
+			List<DDMTemplate> assetPublisherDisplayStyles = DDMTemplateLocalServiceUtil.getTemplates(scopeGroupId, displayStyleClassNameId, 0);
 
-			for (DDMTemplate curAssetPublisherDDMTemplate : assetPublisherDDMTemplates) {
-				if (!DDMTemplatePermission.contains(permissionChecker, curAssetPublisherDDMTemplate, ActionKeys.VIEW)) {
+			for (DDMTemplate assetPublisherDisplayStyle : assetPublisherDisplayStyles) {
+				if (!DDMTemplatePermission.contains(permissionChecker, assetPublisherDisplayStyle, ActionKeys.VIEW)) {
 					continue;
 				}
 			%>
 
-				<aui:option label="<%= curAssetPublisherDDMTemplate.getName(locale) %>" selected="<%= (assetPublisherDDMTemplate != null) && (curAssetPublisherDDMTemplate.getTemplateId() == assetPublisherDDMTemplate.getTemplateId()) %>" value='<%= "ddmTemplate_" + curAssetPublisherDDMTemplate.getTemplateId() %>' />
+				<aui:option label="<%= assetPublisherDisplayStyle.getName(locale) %>" selected="<%= (assetPublisherDDMTemplate != null) && (assetPublisherDisplayStyle.getTemplateId() == assetPublisherDDMTemplate.getTemplateId()) %>" value='<%= "ddmTemplate_" + assetPublisherDisplayStyle.getTemplateId() %>' />
 
 			<%
 			}
@@ -265,16 +266,13 @@ long assetPublisherDDMTemplateClassNameId = PortalUtil.getClassNameId(AssetEntry
 			function (event) {
 				Liferay.Util.openDDMPortlet(
 					{
-						classNameId: '<%= String.valueOf(assetPublisherDDMTemplateClassNameId) %>',
-						classPK:'<%= String.valueOf(scopeGroupId) %>',
-						ddmResource: 'com.liferay.portlet.assetpublisher',
-						ddmResourceActionId: '<%= ActionKeys.ADD_DISPLAY_STYLE %>',
+						classNameId: '<%= String.valueOf(displayStyleClassNameId) %>',
+						ddmResource: '<%= displayStyleHandler.getResourceName() %>',
 						dialog: {
 							width:680
 						},
 						id: windowId,
 						showGlobalScope: true,
-						showToolbar: true,
 						struts_action: '/dynamic_data_mapping/view_template',
 						title: '<%= UnicodeLanguageUtil.get(pageContext, "application-display-styles") %>'
 					},

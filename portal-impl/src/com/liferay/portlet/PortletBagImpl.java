@@ -15,6 +15,7 @@
 package com.liferay.portlet;
 
 import com.liferay.portal.kernel.atom.AtomCollectionAdapter;
+import com.liferay.portal.kernel.displaystyles.DisplayStyleHandler;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.poller.PollerProcessor;
 import com.liferay.portal.kernel.pop.MessageListener;
@@ -71,6 +72,7 @@ public class PortletBagImpl implements PortletBag {
 		List<AtomCollectionAdapter<?>> atomCollectionAdapters,
 		List<CustomAttributesDisplay> customAttributesDisplayInstances,
 		PermissionPropagator permissionPropagatorInstance,
+		DisplayStyleHandler displayStyleHandlerInstance,
 		List<TrashHandler> trashHandlerInstances,
 		List<WorkflowHandler> workflowHandlerInstances,
 		PreferencesValidator preferencesValidatorInstance,
@@ -97,6 +99,7 @@ public class PortletBagImpl implements PortletBag {
 		_atomCollectionAdapterInstances = atomCollectionAdapters;
 		_customAttributesDisplayInstances = customAttributesDisplayInstances;
 		_permissionPropagatorInstance = permissionPropagatorInstance;
+		_displayStyleHandlerInstance = displayStyleHandlerInstance;
 		_trashHandlerInstances = trashHandlerInstances;
 		_workflowHandlerInstances = workflowHandlerInstances;
 		_preferencesValidatorInstance = preferencesValidatorInstance;
@@ -118,9 +121,9 @@ public class PortletBagImpl implements PortletBag {
 			getAssetRendererFactoryInstances(),
 			getAtomCollectionAdapterInstances(),
 			getCustomAttributesDisplayInstances(),
-			getPermissionPropagatorInstance(), getTrashHandlerInstances(),
-			getWorkflowHandlerInstances(), getPreferencesValidatorInstance(),
-			getResourceBundles());
+			getPermissionPropagatorInstance(), getDisplayStyleHandlerInstance(),
+			getTrashHandlerInstances(), getWorkflowHandlerInstances(),
+			getPreferencesValidatorInstance(), getResourceBundles());
 	}
 
 	public List<AssetRendererFactory> getAssetRendererFactoryInstances() {
@@ -141,6 +144,10 @@ public class PortletBagImpl implements PortletBag {
 
 	public List<CustomAttributesDisplay> getCustomAttributesDisplayInstances() {
 		return _customAttributesDisplayInstances;
+	}
+
+	public DisplayStyleHandler getDisplayStyleHandlerInstance() {
+		return _displayStyleHandlerInstance;
 	}
 
 	public FriendlyURLMapper getFriendlyURLMapperInstance() {
@@ -252,6 +259,7 @@ public class PortletBagImpl implements PortletBag {
 	private ConfigurationAction _configurationActionInstance;
 	private ControlPanelEntry _controlPanelEntryInstance;
 	private List<CustomAttributesDisplay> _customAttributesDisplayInstances;
+	private DisplayStyleHandler _displayStyleHandlerInstance;
 	private FriendlyURLMapper _friendlyURLMapperInstance;
 	private List<Indexer> _indexerInstances;
 	private OpenSearch _openSearchInstance;

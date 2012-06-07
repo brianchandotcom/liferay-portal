@@ -607,6 +607,20 @@ public interface Portlet extends PortletModel, PersistedModel {
 	public com.liferay.portal.kernel.lar.PortletDataHandler getPortletDataHandlerInstance();
 
 	/**
+	* Returns the name of the portlet display style class of the portlet.
+	*
+	* @return the name of the portlet display style class of the portlet
+	*/
+	public java.lang.String getDisplayStyleHandlerClass();
+
+	/**
+	* Returns the portlet display style instance of the portlet.
+	*
+	* @return the portlet display style instance of the portlet
+	*/
+	public com.liferay.portal.kernel.displaystyles.DisplayStyleHandler getDisplayStyleHandlerInstance();
+
+	/**
 	* Returns the filters of the portlet.
 	*
 	* @return filters of the portlet
@@ -1776,6 +1790,15 @@ public interface Portlet extends PortletModel, PersistedModel {
 	*/
 	public void setPortletDataHandlerClass(
 		java.lang.String portletDataHandlerClass);
+
+	/**
+	* Sets the name of the portlet display style class of the portlet.
+	*
+	* @param displayStyleHandlerClass the name of display style handler class
+	of the portlet
+	*/
+	public void setDisplayStyleHandlerClass(
+		java.lang.String displayStyleHandlerClass);
 
 	/**
 	* Sets the filters of the portlet.

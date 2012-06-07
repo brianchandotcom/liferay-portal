@@ -15,6 +15,7 @@
 package com.liferay.portal.model.impl;
 
 import com.liferay.portal.kernel.atom.AtomCollectionAdapter;
+import com.liferay.portal.kernel.displaystyles.DisplayStyleHandler;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -153,15 +154,16 @@ public class PortletImpl extends PortletBaseImpl {
 		String controlPanelClass, List<String> assetRendererFactoryClasses,
 		List<String> atomCollectionAdapterClasses,
 		List<String> customAttributesDisplayClasses,
-		String permissionPropagatorClass, List<String> trashHandlerClasses,
-		List<String> workflowHandlerClasses, String defaultPreferences,
-		String preferencesValidator, boolean preferencesCompanyWide,
-		boolean preferencesUniquePerLayout, boolean preferencesOwnedByGroup,
-		boolean useDefaultTemplate, boolean showPortletAccessDenied,
-		boolean showPortletInactive, boolean actionURLRedirect,
-		boolean restoreCurrentView, boolean maximizeEdit, boolean maximizeHelp,
-		boolean popUpPrint, boolean layoutCacheable, boolean instanceable,
-		boolean remoteable, boolean scopeable, String userPrincipalStrategy,
+		String permissionPropagatorClass, String displayStyleHandlerClass,
+		List<String> trashHandlerClasses, List<String> workflowHandlerClasses,
+		String defaultPreferences, String preferencesValidator,
+		boolean preferencesCompanyWide, boolean preferencesUniquePerLayout,
+		boolean preferencesOwnedByGroup, boolean useDefaultTemplate,
+		boolean showPortletAccessDenied, boolean showPortletInactive,
+		boolean actionURLRedirect, boolean restoreCurrentView,
+		boolean maximizeEdit, boolean maximizeHelp, boolean popUpPrint,
+		boolean layoutCacheable, boolean instanceable, boolean remoteable,
+		boolean scopeable, String userPrincipalStrategy,
 		boolean privateRequestAttributes, boolean privateSessionAttributes,
 		Set<String> autopropagatedParameters, int actionTimeout,
 		int renderTimeout, int renderWeight, boolean ajaxable,
@@ -220,6 +222,7 @@ public class PortletImpl extends PortletBaseImpl {
 		_atomCollectionAdapterClasses = atomCollectionAdapterClasses;
 		_customAttributesDisplayClasses = customAttributesDisplayClasses;
 		_permissionPropagatorClass = permissionPropagatorClass;
+		_displayStyleHandlerClass = displayStyleHandlerClass;
 		_trashHandlerClasses = trashHandlerClasses;
 		_workflowHandlerClasses = workflowHandlerClasses;
 		_defaultPreferences = defaultPreferences;
@@ -354,18 +357,19 @@ public class PortletImpl extends PortletBaseImpl {
 			getControlPanelEntryClass(), getAssetRendererFactoryClasses(),
 			getAtomCollectionAdapterClasses(),
 			getCustomAttributesDisplayClasses(), getPermissionPropagatorClass(),
-			getTrashHandlerClasses(), getWorkflowHandlerClasses(),
-			getDefaultPreferences(), getPreferencesValidator(),
-			isPreferencesCompanyWide(), isPreferencesUniquePerLayout(),
-			isPreferencesOwnedByGroup(), isUseDefaultTemplate(),
-			isShowPortletAccessDenied(), isShowPortletInactive(),
-			isActionURLRedirect(), isRestoreCurrentView(), isMaximizeEdit(),
-			isMaximizeHelp(), isPopUpPrint(), isLayoutCacheable(),
-			isInstanceable(), isRemoteable(), isScopeable(),
-			getUserPrincipalStrategy(), isPrivateRequestAttributes(),
-			isPrivateSessionAttributes(), getAutopropagatedParameters(),
-			getActionTimeout(), getRenderTimeout(), getRenderWeight(),
-			isAjaxable(), getHeaderPortalCss(), getHeaderPortletCss(),
+			getDisplayStyleHandlerClass(), getTrashHandlerClasses(),
+			getWorkflowHandlerClasses(), getDefaultPreferences(),
+			getPreferencesValidator(), isPreferencesCompanyWide(),
+			isPreferencesUniquePerLayout(), isPreferencesOwnedByGroup(),
+			isUseDefaultTemplate(), isShowPortletAccessDenied(),
+			isShowPortletInactive(), isActionURLRedirect(),
+			isRestoreCurrentView(), isMaximizeEdit(), isMaximizeHelp(),
+			isPopUpPrint(), isLayoutCacheable(), isInstanceable(),
+			isRemoteable(), isScopeable(), getUserPrincipalStrategy(),
+			isPrivateRequestAttributes(), isPrivateSessionAttributes(),
+			getAutopropagatedParameters(), getActionTimeout(),
+			getRenderTimeout(), getRenderWeight(), isAjaxable(),
+			getHeaderPortalCss(), getHeaderPortletCss(),
 			getHeaderPortalJavaScript(), getHeaderPortletJavaScript(),
 			getFooterPortalCss(), getFooterPortletCss(),
 			getFooterPortalJavaScript(), getFooterPortletJavaScript(),
@@ -729,6 +733,30 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	public String getDisplayName() {
 		return _displayName;
+	}
+
+	/**
+	 * Returns the name of the portlet display style class of the portlet.
+	 *
+	 * @return the name of the portlet display style class of the portlet
+	 */
+	public String getDisplayStyleHandlerClass() {
+		return _displayStyleHandlerClass;
+	}
+
+	/**
+	 * Returns the portlet display style instance of the portlet.
+	 *
+	 * @return the portlet display style instance of the portlet
+	 */
+	public DisplayStyleHandler getDisplayStyleHandlerInstance() {
+		if (Validator.isNull(getDisplayStyleHandlerClass())) {
+			return null;
+		}
+
+		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
+
+		return portletBag.getDisplayStyleHandlerInstance();
 	}
 
 	/**
@@ -2457,6 +2485,16 @@ public class PortletImpl extends PortletBaseImpl {
 	}
 
 	/**
+	 * Sets the name of the portlet display style class of the portlet.
+	 *
+	 * @param displayStyleHandlerClass the name of display style handler class
+	 * of the portlet
+	 */
+	public void setDisplayStyleHandlerClass(String displayStyleHandlerClass) {
+		_displayStyleHandlerClass = displayStyleHandlerClass;
+	}
+
+	/**
 	 * Sets expiration cache of the portlet.
 	 *
 	 * @param expCache expiration cache of the portlet
@@ -3393,6 +3431,11 @@ public class PortletImpl extends PortletBaseImpl {
 	 * The display name of the portlet.
 	 */
 	private String _displayName;
+
+	/**
+	 * The name of the display style handler class of the portlet.
+	 */
+	private String _displayStyleHandlerClass;
 
 	/**
 	 * The expiration cache of the portlet.

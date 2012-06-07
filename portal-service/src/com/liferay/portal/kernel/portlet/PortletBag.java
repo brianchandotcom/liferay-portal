@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.portlet;
 
 import com.liferay.portal.kernel.atom.AtomCollectionAdapter;
+import com.liferay.portal.kernel.displaystyles.DisplayStyleHandler;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.poller.PollerProcessor;
 import com.liferay.portal.kernel.pop.MessageListener;
@@ -58,6 +59,8 @@ public interface PortletBag extends Cloneable {
 	public ControlPanelEntry getControlPanelEntryInstance();
 
 	public List<CustomAttributesDisplay> getCustomAttributesDisplayInstances();
+
+	public DisplayStyleHandler getDisplayStyleHandlerInstance();
 
 	public FriendlyURLMapper getFriendlyURLMapperInstance();
 

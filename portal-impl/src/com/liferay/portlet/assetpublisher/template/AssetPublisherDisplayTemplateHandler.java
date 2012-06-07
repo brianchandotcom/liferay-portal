@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portlet.assetpublisher.displaystyles;
+package com.liferay.portlet.assetpublisher.template;
 
-import com.liferay.portal.kernel.displaystyles.DisplayStyleHandler;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.template.PortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -29,7 +29,8 @@ import java.util.Locale;
 /**
  * @author Juan Fernández
  */
-public class AssetPublisherDisplayStyleHandler implements DisplayStyleHandler {
+public class AssetPublisherDisplayTemplateHandler implements
+	PortletDisplayTemplateHandler {
 
 	public String getClassName() {
 		return AssetEntry.class.getName();

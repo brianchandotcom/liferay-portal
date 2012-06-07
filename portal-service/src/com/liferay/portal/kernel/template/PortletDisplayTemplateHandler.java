@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.kernel.displaystyles;
+package com.liferay.portal.kernel.template;
 
 import java.util.Locale;
 
 /**
  * @author Juan Fernández
  */
-public interface DisplayStyleHandler {
+public interface PortletDisplayTemplateHandler {
 
 	/**
 	 * Returns the class name of the display style

@@ -90,14 +90,14 @@ long classPK = ParamUtil.getLong(request, "classPK");
 		<c:otherwise>
 
 			<%
-				List<DisplayStyleHandler> displayStyleHandlers = getDisplayStyleHandlers(permissionChecker, scopeGroupId);
+				List<PortletDisplayTemplateHandler> portletDisplayTemplateHandlers = getPortletDisplayTemplateHandlers(permissionChecker, scopeGroupId);
 
-				if (displayStyleHandlers.size() > 0) {
+				if (portletDisplayTemplateHandlers.size() > 0) {
 			%>
 
 				<liferay-ui:icon-menu align="left" cssClass='<%= "lfr-toolbar-button add-button " + (toolbarItem.equals("add") ? "current" : StringPool.BLANK) %>' direction="down" extended="<%= false %>" icon='<%= themeDisplay.getPathThemeImages() + "/common/add.png" %>' message="add" showWhenSingleIcon="<%= true %>">
 
-					<liferay-portlet:renderURL varImpl="addDisplayStyleURL">
+					<liferay-portlet:renderURL varImpl="addPortletDisplayTemplateURL">
 						<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
 						<portlet:param name="redirect" value="<%= viewTemplatesURL %>" />
 						<portlet:param name="backURL" value="<%= viewTemplatesURL %>" />
@@ -106,18 +106,18 @@ long classPK = ParamUtil.getLong(request, "classPK");
 					</liferay-portlet:renderURL>
 
 					<%
-					for (DisplayStyleHandler displayStyleHandler : displayStyleHandlers) {
+					for (PortletDisplayTemplateHandler portletDisplayTemplateHandler : portletDisplayTemplateHandlers) {
 
-						addDisplayStyleURL.setParameter("classNameId", String.valueOf(PortalUtil.getClassNameId(displayStyleHandler.getClassName())));
-						addDisplayStyleURL.setParameter("classPK", String.valueOf(0));
-						addDisplayStyleURL.setParameter("ddmResource", displayStyleHandler.getResourceName());
+						addPortletDisplayTemplateURL.setParameter("classNameId", String.valueOf(PortalUtil.getClassNameId(portletDisplayTemplateHandler.getClassName())));
+						addPortletDisplayTemplateURL.setParameter("classPK", String.valueOf(0));
+						addPortletDisplayTemplateURL.setParameter("ddmResource", portletDisplayTemplateHandler.getResourceName());
 					%>
 
 						<liferay-ui:icon
 							image="add_display_style"
-							message="<%= displayStyleHandler.getName(locale) %>"
+							message="<%= portletDisplayTemplateHandler.getName(locale) %>"
 							method="get"
-							url="<%= addDisplayStyleURL.toString() %>"
+							url="<%= addPortletDisplayTemplateURL.toString() %>"
 						/>
 
 					<%
@@ -135,16 +135,16 @@ long classPK = ParamUtil.getLong(request, "classPK");
 </div>
 
 <%!
-public List<DisplayStyleHandler> getDisplayStyleHandlers(PermissionChecker permissionChecker, long scopeGroupId) {
-	List<DisplayStyleHandler> displayStyleHandlers = DisplayStyleHandlerRegistryUtil.getDisplayStyleHandlers();
-	List<DisplayStyleHandler> allowedDisplayStyleHandlers = new ArrayList<DisplayStyleHandler>();
+public List<PortletDisplayTemplateHandler> getPortletDisplayTemplateHandlers(PermissionChecker permissionChecker, long scopeGroupId) {
+	List<PortletDisplayTemplateHandler> portletDisplayTemplateHandlers = PortletDisplayTemplateHandlerRegistryUtil.getPortletDisplayTemplateHandlers();
+	List<PortletDisplayTemplateHandler> allowedPortletDisplayTemplateHandlers = new ArrayList<PortletDisplayTemplateHandler>();
 
-	for (DisplayStyleHandler displayStyleHandler : displayStyleHandlers) {
-		if (DDMPermission.contains(permissionChecker, scopeGroupId, displayStyleHandler.getResourceName(), ActionKeys.ADD_TEMPLATE)) {
-			allowedDisplayStyleHandlers.add(displayStyleHandler);
+	for (PortletDisplayTemplateHandler portletDisplayTemplateHandler : portletDisplayTemplateHandlers) {
+		if (DDMPermission.contains(permissionChecker, scopeGroupId, portletDisplayTemplateHandler.getResourceName(), ActionKeys.ADD_TEMPLATE)) {
+			allowedPortletDisplayTemplateHandlers.add(portletDisplayTemplateHandler);
 		}
 	}
 
-	return allowedDisplayStyleHandlers;
+	return allowedPortletDisplayTemplateHandlers;
 }
 %>

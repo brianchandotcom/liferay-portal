@@ -100,18 +100,18 @@ if (Validator.isNotNull(structureAvailableFields)) {
 	}
 	else {
 		if (classNameId > 0) {
-			DisplayStyleHandler displayStyleHandler = DisplayStyleHandlerRegistryUtil.getDisplayStyleHandler(classNameId);
+			PortletDisplayTemplateHandler portletDisplayTemplateHandler = PortletDisplayTemplateHandlerRegistryUtil.getPortletDisplayTemplateHandler(classNameId);
 
 			StringBundler sb = new StringBundler();
 
 			sb.append(LanguageUtil.get(pageContext, "new"));
 			sb.append(StringPool.SPACE);
-			sb.append(displayStyleHandler.getName(locale));
+			sb.append(portletDisplayTemplateHandler.getName(locale));
 
 			title = sb.toString();
 		}
 		else {
-			title = LanguageUtil.get(pageContext, "new-application-display-style");
+			title = LanguageUtil.get(pageContext, "new-application-display-template");
 		}
 	}
 	%>

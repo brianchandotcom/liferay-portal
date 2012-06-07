@@ -21,7 +21,7 @@ long[] searchClassNameIds;
 long searchClassPK;
 
 if (portletName.equals(PortletKeys.DISPLAY_STYLES)) {
-	searchClassNameIds = getDisplayStylesClassNameIds();
+	searchClassNameIds = getPortletDisplayTemplateClassNameIds();
 	searchClassPK = -1;
 }
 else {
@@ -43,15 +43,15 @@ pageContext.setAttribute("total", total);
 %>
 
 <%!
-private long[] getDisplayStylesClassNameIds() {
-	List<DisplayStyleHandler> displayStyleHandlers = DisplayStyleHandlerRegistryUtil.getDisplayStyleHandlers();
+private long[] getPortletDisplayTemplateClassNameIds() {
+	List<PortletDisplayTemplateHandler> portletDisplayTemplateHandlers = PortletDisplayTemplateHandlerRegistryUtil.getPortletDisplayTemplateHandlers();
 
-	long[] searchClassNameIds = new long[displayStyleHandlers.size()];
+	long[] searchClassNameIds = new long[portletDisplayTemplateHandlers.size()];
 
 	int index = 0;
 
-	for (DisplayStyleHandler displayStyleHandler : displayStyleHandlers) {
-		searchClassNameIds[index] = PortalUtil.getClassNameId(displayStyleHandler.getClassName());
+	for (PortletDisplayTemplateHandler portletDisplayTemplateHandler : portletDisplayTemplateHandlers) {
+		searchClassNameIds[index] = PortalUtil.getClassNameId(portletDisplayTemplateHandler.getClassName());
 		index++;
 	}
 

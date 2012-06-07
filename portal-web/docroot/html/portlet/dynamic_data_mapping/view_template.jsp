@@ -47,7 +47,7 @@ if (!portletName.equals(PortletKeys.DISPLAY_STYLES)) {
 		title = LanguageUtil.format(pageContext, (Validator.isNull(templateHeaderTitle) ? "templates-for-structure-x" : templateHeaderTitle), structure.getName(locale), false);
 	}
 	else {
-		title = "application-display-styles";
+		title = "application-display-templates";
 	}
 }
 %>

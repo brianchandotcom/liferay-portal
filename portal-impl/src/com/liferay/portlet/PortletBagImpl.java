@@ -15,7 +15,6 @@
 package com.liferay.portlet;
 
 import com.liferay.portal.kernel.atom.AtomCollectionAdapter;
-import com.liferay.portal.kernel.displaystyles.DisplayStyleHandler;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.poller.PollerProcessor;
 import com.liferay.portal.kernel.pop.MessageListener;
@@ -26,6 +25,7 @@ import com.liferay.portal.kernel.portlet.PortletLayoutListener;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.OpenSearch;
 import com.liferay.portal.kernel.servlet.URLEncoder;
+import com.liferay.portal.kernel.template.PortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.webdav.WebDAVStorage;
@@ -72,7 +72,7 @@ public class PortletBagImpl implements PortletBag {
 		List<AtomCollectionAdapter<?>> atomCollectionAdapters,
 		List<CustomAttributesDisplay> customAttributesDisplayInstances,
 		PermissionPropagator permissionPropagatorInstance,
-		DisplayStyleHandler displayStyleHandlerInstance,
+		PortletDisplayTemplateHandler portletDisplayTemplateHandlerInstance,
 		List<TrashHandler> trashHandlerInstances,
 		List<WorkflowHandler> workflowHandlerInstances,
 		PreferencesValidator preferencesValidatorInstance,
@@ -99,7 +99,8 @@ public class PortletBagImpl implements PortletBag {
 		_atomCollectionAdapterInstances = atomCollectionAdapters;
 		_customAttributesDisplayInstances = customAttributesDisplayInstances;
 		_permissionPropagatorInstance = permissionPropagatorInstance;
-		_displayStyleHandlerInstance = displayStyleHandlerInstance;
+		_portletDisplayTemplateHandlerInstance =
+			portletDisplayTemplateHandlerInstance;
 		_trashHandlerInstances = trashHandlerInstances;
 		_workflowHandlerInstances = workflowHandlerInstances;
 		_preferencesValidatorInstance = preferencesValidatorInstance;
@@ -121,7 +122,8 @@ public class PortletBagImpl implements PortletBag {
 			getAssetRendererFactoryInstances(),
 			getAtomCollectionAdapterInstances(),
 			getCustomAttributesDisplayInstances(),
-			getPermissionPropagatorInstance(), getDisplayStyleHandlerInstance(),
+			getPermissionPropagatorInstance(),
+			getPortletDisplayTemplateHandlerInstance(),
 			getTrashHandlerInstances(), getWorkflowHandlerInstances(),
 			getPreferencesValidatorInstance(), getResourceBundles());
 	}
@@ -146,8 +148,10 @@ public class PortletBagImpl implements PortletBag {
 		return _customAttributesDisplayInstances;
 	}
 
-	public DisplayStyleHandler getDisplayStyleHandlerInstance() {
-		return _displayStyleHandlerInstance;
+	public PortletDisplayTemplateHandler
+		getPortletDisplayTemplateHandlerInstance() {
+
+		return _portletDisplayTemplateHandlerInstance;
 	}
 
 	public FriendlyURLMapper getFriendlyURLMapperInstance() {
@@ -259,7 +263,8 @@ public class PortletBagImpl implements PortletBag {
 	private ConfigurationAction _configurationActionInstance;
 	private ControlPanelEntry _controlPanelEntryInstance;
 	private List<CustomAttributesDisplay> _customAttributesDisplayInstances;
-	private DisplayStyleHandler _displayStyleHandlerInstance;
+	private PortletDisplayTemplateHandler
+		_portletDisplayTemplateHandlerInstance;
 	private FriendlyURLMapper _friendlyURLMapperInstance;
 	private List<Indexer> _indexerInstances;
 	private OpenSearch _openSearchInstance;

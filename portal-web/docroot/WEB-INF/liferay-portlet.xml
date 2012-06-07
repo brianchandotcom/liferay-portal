@@ -901,7 +901,7 @@
 		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
 		<friendly-url-mapping>asset_publisher</friendly-url-mapping>
 		<friendly-url-routes>com/liferay/portlet/assetpublisher/asset-publisher-friendly-url-routes.xml</friendly-url-routes>
-		<display-style-handler>com.liferay.portlet.assetpublisher.displaystyles.AssetPublisherDisplayStyleHandler</display-style-handler>
+		<portlet-display-template-handler>com.liferay.portlet.assetpublisher.template.AssetPublisherDisplayTemplateHandler</portlet-display-template-handler>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>false</use-default-template>
 		<layout-cacheable>true</layout-cacheable>

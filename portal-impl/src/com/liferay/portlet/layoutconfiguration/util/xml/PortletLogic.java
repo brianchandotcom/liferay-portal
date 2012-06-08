@@ -34,6 +34,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Douglas Wong
  */
 public class PortletLogic extends RuntimeLogic {
 
@@ -46,36 +47,37 @@ public class PortletLogic extends RuntimeLogic {
 	public static String getRuntimePortletIds(String content) throws Exception {
 		StringBundler sb = new StringBundler();
 
-		int index = 0;
-
-		while (index != -1) {
+		for (int index = 0;;) {
 			index = content.indexOf(OPEN_TAG, index);
 
-			if (index != -1) {
-				int close1 = content.indexOf(CLOSE_1_TAG, index);
-				int close2 = content.indexOf(CLOSE_2_TAG, index);
-
-				int closeIndex;
-
-				if ((close2 == -1) || ((close1 != -1) && (close1 < close2))) {
-					closeIndex = close1 + CLOSE_1_TAG.length();
-				}
-				else {
-					closeIndex = close2 + CLOSE_2_TAG.length();
-				}
-
-				if (closeIndex != -1) {
-					if (sb.length() > 0) {
-						sb.append(StringPool.COMMA);
-					}
-
-					sb.append(
-						getRuntimePortletId(
-							content.substring(index, closeIndex)));
-				}
-
-				index = closeIndex;
+			if (index == -1) {
+				break;
 			}
+
+			int close1 = content.indexOf(CLOSE_1_TAG, index);
+			int close2 = content.indexOf(CLOSE_2_TAG, index);
+
+			int closeIndex = -1;
+
+			if ((close2 == -1) || ((close1 != -1) && (close1 < close2))) {
+				closeIndex = close1 + CLOSE_1_TAG.length();
+			}
+			else {
+				closeIndex = close2 + CLOSE_2_TAG.length();
+			}
+
+			if (closeIndex == -1) {
+				break;
+			}
+
+			if (sb.length() > 0) {
+				sb.append(StringPool.COMMA);
+			}
+
+			sb.append(
+				getRuntimePortletId(content.substring(index, closeIndex)));
+
+			index = closeIndex;
 		}
 
 		if (sb.length() == 0) {
@@ -140,10 +142,8 @@ public class PortletLogic extends RuntimeLogic {
 
 		Element rootElement = document.getRootElement();
 
-		String rootPortletId = rootElement.attributeValue("name");
 		String instanceId = rootElement.attributeValue("instance");
-
-		String portletId = rootPortletId;
+		String portletId = rootElement.attributeValue("name");
 
 		if (Validator.isNotNull(instanceId)) {
 			portletId += PortletConstants.INSTANCE_SEPARATOR + instanceId;

@@ -17,7 +17,6 @@ package com.liferay.portlet.journalcontent.action;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
@@ -43,6 +42,7 @@ import javax.portlet.PortletConfig;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Douglas Wong
  */
 public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
@@ -91,65 +91,65 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		String articleId = getParameter(
 			actionRequest, "articleId").toUpperCase();
 
-		if (Validator.isNotNull(articleId)) {
-			Layout layout = themeDisplay.getLayout();
-			LayoutTypePortlet layoutTypePortlet =
-				themeDisplay.getLayoutTypePortlet();
+		if (Validator.isNull(articleId)) {
+			return;
+		}
 
-			String portletResource = ParamUtil.getString(
-				actionRequest, "portletResource");
+		LayoutTypePortlet layoutTypePortlet =
+			themeDisplay.getLayoutTypePortlet();
 
-			String portletIds = StringPool.BLANK;
+		String portletResource = ParamUtil.getString(
+			actionRequest, "portletResource");
 
-			JournalArticle journalArticle;
+		JournalArticle journalArticle = null;
 
-			Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
-				themeDisplay.getCompanyId());
+		Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
+			themeDisplay.getCompanyId());
+
+		try {
+			journalArticle =
+				JournalArticleLocalServiceUtil.getDisplayArticle(
+					themeDisplay.getScopeGroupId(), articleId);
+		}
+		catch (NoSuchArticleException nsae) {
+			journalArticle =
+				JournalArticleLocalServiceUtil.getDisplayArticle(
+					companyGroup.getGroupId(), articleId);
+		}
+
+		String portletIds = PortletLogic.getRuntimePortletIds(
+			journalArticle.getContent());
+
+		if (Validator.isNotNull(journalArticle.getTemplateId())) {
+			JournalTemplate journalTemplate;
 
 			try {
-				journalArticle =
-					JournalArticleLocalServiceUtil.getDisplayArticle(
-						themeDisplay.getScopeGroupId(), articleId);
+				journalTemplate =
+					JournalTemplateLocalServiceUtil.getTemplate(
+						themeDisplay.getScopeGroupId(),
+						journalArticle.getTemplateId());
 			}
-			catch (NoSuchArticleException nsae) {
-				journalArticle =
-					JournalArticleLocalServiceUtil.getDisplayArticle(
-						companyGroup.getGroupId(), articleId);
-			}
-
-			portletIds = PortletLogic.getRuntimePortletIds(
-				journalArticle.getContent());
-
-			if (Validator.isNotNull(journalArticle.getTemplateId())) {
-				JournalTemplate journalTemplate;
-
-				try {
-					journalTemplate =
-						JournalTemplateLocalServiceUtil.getTemplate(
-							themeDisplay.getScopeGroupId(),
-							journalArticle.getTemplateId());
-				}
-				catch (NoSuchTemplateException nste) {
-					journalTemplate =
-						JournalTemplateLocalServiceUtil.getTemplate(
-							companyGroup.getGroupId(),
-							journalArticle.getTemplateId());
-				}
-
-				portletIds = StringUtil.add(
-					portletIds,
-					PortletLogic.getRuntimePortletIds(
-						journalTemplate.getXsl()));
+			catch (NoSuchTemplateException nste) {
+				journalTemplate =
+					JournalTemplateLocalServiceUtil.getTemplate(
+						companyGroup.getGroupId(),
+						journalArticle.getTemplateId());
 			}
 
-			layoutTypePortlet.setPortletIds(
-				LayoutTypePortletConstants.RUNTIME_PORTLET_NAMESPACE +
-					portletResource, portletIds);
-
-			LayoutLocalServiceUtil.updateLayout(
-				layout.getGroupId(), layout.isPrivateLayout(),
-				layout.getLayoutId(), layout.getTypeSettings());
+			portletIds = StringUtil.add(
+				portletIds,
+				PortletLogic.getRuntimePortletIds(journalTemplate.getXsl()));
 		}
+
+		layoutTypePortlet.setPortletIds(
+			LayoutTypePortletConstants.RUNTIME_PORTLET_NAMESPACE +
+				portletResource, portletIds);
+
+		Layout layout = themeDisplay.getLayout();
+
+		LayoutLocalServiceUtil.updateLayout(
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			layout.getTypeSettings());
 	}
 
 }

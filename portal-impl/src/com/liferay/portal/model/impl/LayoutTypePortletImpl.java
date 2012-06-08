@@ -1169,30 +1169,28 @@ public class LayoutTypePortletImpl
 	public void setPortletIds(String columnId, String portletIds) {
 		setTypeSettingsProperty(columnId, portletIds);
 
-		if (columnId.startsWith(
+		if (!columnId.startsWith(
 				LayoutTypePortletConstants.RUNTIME_PORTLET_NAMESPACE)) {
 
-			String runtimePortlets = getTypeSettingsProperty(
-				LayoutTypePortletConstants.RUNTIME_PORTLETS, StringPool.BLANK);
+			return;
+		}
 
-			if ((runtimePortlets.indexOf(columnId) == -1) &&
-				Validator.isNotNull(portletIds)) {
+		String runtimePortlets = getTypeSettingsProperty(
+			LayoutTypePortletConstants.RUNTIME_PORTLETS, StringPool.BLANK);
 
-				runtimePortlets = StringUtil.add(runtimePortlets, columnId);
+		int pos = runtimePortlets.indexOf(columnId);
 
-				setTypeSettingsProperty(
-					LayoutTypePortletConstants.RUNTIME_PORTLETS,
-					runtimePortlets);
-			}
-			else if ((runtimePortlets.indexOf(columnId) > -1) &&
-				Validator.isNull(portletIds)) {
+		if ((pos == -1) && Validator.isNotNull(portletIds)) {
+			runtimePortlets = StringUtil.add(runtimePortlets, columnId);
 
-				runtimePortlets = StringUtil.remove(runtimePortlets, columnId);
+			setTypeSettingsProperty(
+				LayoutTypePortletConstants.RUNTIME_PORTLETS, runtimePortlets);
+		}
+		else if ((pos != -1) && Validator.isNull(portletIds)) {
+			runtimePortlets = StringUtil.remove(runtimePortlets, columnId);
 
-				setTypeSettingsProperty(
-					LayoutTypePortletConstants.RUNTIME_PORTLETS,
-					runtimePortlets);
-			}
+			setTypeSettingsProperty(
+				LayoutTypePortletConstants.RUNTIME_PORTLETS, runtimePortlets);
 		}
 	}
 

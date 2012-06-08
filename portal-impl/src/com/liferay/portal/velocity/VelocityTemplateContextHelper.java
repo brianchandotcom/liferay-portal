@@ -14,6 +14,8 @@
 
 package com.liferay.portal.velocity;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.templateparser.TemplateContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -84,8 +86,13 @@ public class VelocityTemplateContextHelper extends TemplateContextHelper {
 
 		// Permissions
 
-		velocityContext.put(
-			"rolePermission", RolePermissionUtil.getRolePermission());
+		try {
+			velocityContext.put(
+				"rolePermission", RolePermissionUtil.getRolePermission());
+		}
+		catch (SecurityException se) {
+			_log.error(se, se);
+		}
 
 		return velocityContext;
 	}
@@ -158,5 +165,8 @@ public class VelocityTemplateContextHelper extends TemplateContextHelper {
 			}
 		}
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		VelocityTemplateContextHelper.class);
 
 }

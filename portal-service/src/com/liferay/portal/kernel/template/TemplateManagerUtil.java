@@ -56,6 +56,14 @@ public class TemplateManagerUtil {
 		templateManagers.clear();
 	}
 
+	public static void destroy(ClassLoader classLoader) {
+		Map<String, TemplateManager> templateManagers = _getTemplateManagers();
+
+		for (TemplateManager templateManager : templateManagers.values()) {
+			templateManager.destroy(classLoader);
+		}
+	}
+
 	public static Template getTemplate(
 			String templateManagerName, String templateId,
 			String templateContent, String errorTemplateId,

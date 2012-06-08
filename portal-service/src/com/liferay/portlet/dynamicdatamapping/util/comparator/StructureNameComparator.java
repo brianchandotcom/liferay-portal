@@ -38,11 +38,13 @@ public class StructureNameComparator extends OrderByComparator {
 
 	@Override
 	public int compare(Object obj1, Object obj2) {
-		DDMStructure template1 = (DDMStructure)obj1;
-		DDMStructure template2 = (DDMStructure)obj2;
+		DDMStructure structure1 = (DDMStructure)obj1;
+		DDMStructure structure2 = (DDMStructure)obj2;
 
-		int value = template1.getName().toLowerCase().compareTo(
-				template2.getName().toLowerCase());
+		String structureName1 = structure1.getName().toLowerCase();
+		String structureName2 = structure2.getName().toLowerCase();
+
+		int value = structureName1.compareTo(structureName2);
 
 		if (_ascending) {
 			return value;

@@ -41,8 +41,10 @@ public class TemplateNameComparator extends OrderByComparator {
 		DDMTemplate template1 = (DDMTemplate)obj1;
 		DDMTemplate template2 = (DDMTemplate)obj2;
 
-		int value = template1.getName().toLowerCase().compareTo(
-				template2.getName().toLowerCase());
+		String templateName1 = template1.getName().toLowerCase();
+		String templateName2 = template2.getName().toLowerCase();
+
+		int value = templateName1.compareTo(templateName2);
 
 		if (_ascending) {
 			return value;

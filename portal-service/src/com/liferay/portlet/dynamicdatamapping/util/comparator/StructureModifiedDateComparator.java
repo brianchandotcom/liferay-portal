@@ -43,7 +43,7 @@ public class StructureModifiedDateComparator extends OrderByComparator {
 		DDMStructure template2 = (DDMStructure)obj2;
 
 		int value = DateUtil.compareTo(
-				template1.getModifiedDate(), template2.getModifiedDate());
+			template1.getModifiedDate(), template2.getModifiedDate());
 
 		if (_ascending) {
 			return value;

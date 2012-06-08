@@ -172,7 +172,7 @@
 	<sql id="com.liferay.portlet.social.service.persistence.SocialActivityFinder.countByRelationType">
 		<![CDATA[
 			SELECT
-				COUNT(DISTINCT SocialActivity.activityId) AS COUNT_VALUE
+				COUNT(SocialActivity.activityId) AS COUNT_VALUE
 			FROM
 				SocialActivity
 			INNER JOIN
@@ -359,7 +359,7 @@
 	<sql id="com.liferay.portlet.social.service.persistence.SocialActivityFinder.findByRelationType">
 		<![CDATA[
 			SELECT
-				DISTINCT {SocialActivity.*}
+				{SocialActivity.*}
 			FROM
 				SocialActivity
 			INNER JOIN

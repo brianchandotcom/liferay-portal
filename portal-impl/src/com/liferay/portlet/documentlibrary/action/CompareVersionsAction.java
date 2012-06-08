@@ -88,45 +88,57 @@ public class CompareVersionsAction extends PortletAction {
 
 		FileEntry fileEntry = DLAppServiceUtil.getFileEntry(fileEntryId);
 
-		String extension = fileEntry.getExtension();
-
 		FileVersion sourceFileVersion = fileEntry.getFileVersion(sourceVersion);
+
+		String sourceExtension = sourceFileVersion.getExtension();
 
 		String sourceTitle = sourceFileVersion.getTitle();
 
 		FileVersion targetFileVersion = fileEntry.getFileVersion(targetVersion);
+
+		String targetExtension = targetFileVersion.getExtension();
 
 		String targetTitle = targetFileVersion.getTitle();
 
 		InputStream sourceIs = fileEntry.getContentStream(sourceVersion);
 		InputStream targetIs = fileEntry.getContentStream(targetVersion);
 
-		if (extension.equals("htm") || extension.equals("html") ||
-			extension.equals("xml")) {
+		if (sourceExtension.equals("htm") || sourceExtension.equals("html") ||
+			sourceExtension.equals("xml")) {
 
 			String escapedSource = HtmlUtil.escape(StringUtil.read(sourceIs));
-			String escapedTarget = HtmlUtil.escape(StringUtil.read(targetIs));
 
 			sourceIs = new UnsyncByteArrayInputStream(
 				escapedSource.getBytes(StringPool.UTF8));
+		}
+
+		if (sourceExtension.equals("htm") || sourceExtension.equals("html") ||
+			sourceExtension.equals("xml")) {
+
+			String escapedTarget = HtmlUtil.escape(StringUtil.read(targetIs));
+
 			targetIs = new UnsyncByteArrayInputStream(
 				escapedTarget.getBytes(StringPool.UTF8));
 		}
 
-		if (DocumentConversionUtil.isEnabled() &&
-			DocumentConversionUtil.isConvertBeforeCompare(extension)) {
+		if (DocumentConversionUtil.isEnabled()) {
+			if (DocumentConversionUtil.isConvertBeforeCompare(sourceExtension)) {
+				String sourceTempFileId = DLUtil.getTempFileId(
+						fileEntryId, sourceVersion);
 
-			String sourceTempFileId = DLUtil.getTempFileId(
-				fileEntryId, sourceVersion);
-			String targetTempFileId = DLUtil.getTempFileId(
-				fileEntryId, targetVersion);
+				sourceIs = new FileInputStream(
+						DocumentConversionUtil.convert(
+							sourceTempFileId, sourceIs, sourceExtension, "txt"));
+			}
 
-			sourceIs = new FileInputStream(
-				DocumentConversionUtil.convert(
-					sourceTempFileId, sourceIs, extension, "txt"));
-			targetIs = new FileInputStream(
-				DocumentConversionUtil.convert(
-					targetTempFileId, targetIs, extension, "txt"));
+			if (DocumentConversionUtil.isConvertBeforeCompare(targetExtension)) {
+				String targetTempFileId = DLUtil.getTempFileId(
+						fileEntryId, targetVersion);
+
+					targetIs = new FileInputStream(
+						DocumentConversionUtil.convert(
+							targetTempFileId, targetIs, targetExtension, "txt"));
+			}
 		}
 
 		List<DiffResult>[] diffResults = DiffUtil.diff(

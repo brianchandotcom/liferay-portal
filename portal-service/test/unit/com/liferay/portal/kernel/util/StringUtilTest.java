@@ -186,6 +186,50 @@ public class StringUtilTest extends TestCase {
 		assertEquals(expected, actual);
 	}
 
+	public void testShortenString() {
+		String original = "Hello World HELLO WORLD Hello World";
+		String expected = "Hello World HELLO...";
+
+		String actual = StringUtil.shorten(original);
+
+		assertEquals(expected, actual);
+
+		original = "Hi Hello";
+		expected = "Hi Hello";
+
+		actual = StringUtil.shorten(original, 8);
+
+		assertEquals(expected, actual);
+
+		original = "Hello World";
+		expected = "Hello...";
+
+		actual = StringUtil.shorten(original, 8);
+
+		assertEquals(expected, actual);
+
+		original = "Hi Hello World";
+		expected = "Hi...";
+
+		actual = StringUtil.shorten(original, 8);
+
+		assertEquals(expected, actual);
+
+		original = " Hello World";
+		expected = "...";
+
+		actual = StringUtil.shorten(original, 8);
+
+		assertEquals(expected, actual);
+
+		original = "HelloWorldHelloWorldHelloWorldHelloWorldHelloWorldHello";
+		expected = "HelloWorldHe... etc.";
+
+		actual = StringUtil.shorten(original, 20, "... etc.");
+
+		assertEquals(expected, actual);
+	}
+
 	public void testSplitLines() {
 		String singleLine = "abcdefg";
 

@@ -33,6 +33,7 @@ import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.ExecutionTestListeners;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
+import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
@@ -190,6 +191,8 @@ public class BlogsEntryTrashHandlerTest {
 			Assert.assertEquals(
 				initialBlogsEntriesSearchCount + 1,
 				searchBlogsEntriesCount(group.getGroupId()));
+
+			Thread.sleep(1000 * TestPropsValues.JUNIT_DELAY_FACTOR);
 		}
 		else {
 			Assert.assertFalse(isAssetEntryVisible(blogsEntry.getEntryId()));

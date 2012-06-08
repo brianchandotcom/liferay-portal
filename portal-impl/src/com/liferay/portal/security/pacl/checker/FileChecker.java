@@ -85,6 +85,7 @@ public class FileChecker extends BaseChecker {
 			"${catalina.base}",
 			"${com.sun.aas.instanceRoot}",
 			"${com.sun.aas.installRoot}",
+			"${java.io.tmpdir}",
 			"${jboss.home.dir}",
 			"${jetty.home}",
 			"${jonas.base}",
@@ -94,7 +95,8 @@ public class FileChecker extends BaseChecker {
 			"${plugin.servlet.context.name}",
 			"${release.info.version}",
 			"${weblogic.domain.dir}",
-			"${websphere.profile.dir}"
+			"${websphere.profile.dir}",
+			StringPool.DOUBLE_SLASH
 		};
 
 		String installedDir = StringPool.BLANK;
@@ -112,12 +114,14 @@ public class FileChecker extends BaseChecker {
 			installedDir, System.getProperty("catalina.base"),
 			System.getProperty("com.sun.aas.instanceRoot"),
 			System.getProperty("com.sun.aas.installRoot"),
+			System.getProperty("java.io.tmpdir"),
 			System.getProperty("jboss.home.dir"),
 			System.getProperty("jetty.home"), System.getProperty("jonas.base"),
 			_portalDir, System.getProperty("org.apache.geronimo.home.dir"),
 			System.getProperty("resin.home"), getServletContextName(),
 			ReleaseInfo.getVersion(), System.getenv("DOMAIN_HOME"),
-			System.getenv("USER_INSTALL_ROOT")
+			System.getenv("USER_INSTALL_ROOT"),
+			StringPool.SLASH
 		};
 
 		if (_log.isDebugEnabled()) {

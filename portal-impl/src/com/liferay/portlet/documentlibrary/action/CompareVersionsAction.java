@@ -64,7 +64,7 @@ public class CompareVersionsAction extends PortletAction {
 			if (e instanceof NoSuchFileEntryException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(renderRequest, e.getClass());
+				SessionErrors.add(renderRequest, e.getClass().getName());
 
 				setForward(renderRequest, "portlet.document_library.error");
 			}
@@ -90,18 +90,9 @@ public class CompareVersionsAction extends PortletAction {
 
 		FileVersion sourceFileVersion = fileEntry.getFileVersion(sourceVersion);
 
+		InputStream sourceIs = sourceFileVersion.getContentStream(false);
+
 		String sourceExtension = sourceFileVersion.getExtension();
-
-		String sourceTitle = sourceFileVersion.getTitle();
-
-		FileVersion targetFileVersion = fileEntry.getFileVersion(targetVersion);
-
-		String targetExtension = targetFileVersion.getExtension();
-
-		String targetTitle = targetFileVersion.getTitle();
-
-		InputStream sourceIs = fileEntry.getContentStream(sourceVersion);
-		InputStream targetIs = fileEntry.getContentStream(targetVersion);
 
 		if (sourceExtension.equals("htm") || sourceExtension.equals("html") ||
 			sourceExtension.equals("xml")) {
@@ -112,8 +103,14 @@ public class CompareVersionsAction extends PortletAction {
 				escapedSource.getBytes(StringPool.UTF8));
 		}
 
-		if (sourceExtension.equals("htm") || sourceExtension.equals("html") ||
-			sourceExtension.equals("xml")) {
+		FileVersion targetFileVersion = fileEntry.getFileVersion(targetVersion);
+
+		InputStream targetIs = targetFileVersion.getContentStream(false);
+
+		String targetExtension = targetFileVersion.getExtension();
+
+		if (targetExtension.equals("htm") || targetExtension.equals("html") ||
+			targetExtension.equals("xml")) {
 
 			String escapedTarget = HtmlUtil.escape(StringUtil.read(targetIs));
 
@@ -122,22 +119,26 @@ public class CompareVersionsAction extends PortletAction {
 		}
 
 		if (DocumentConversionUtil.isEnabled()) {
-			if (DocumentConversionUtil.isConvertBeforeCompare(sourceExtension)) {
+			if (DocumentConversionUtil.isConvertBeforeCompare(
+					sourceExtension)) {
+
 				String sourceTempFileId = DLUtil.getTempFileId(
-						fileEntryId, sourceVersion);
+					fileEntryId, sourceVersion);
 
 				sourceIs = new FileInputStream(
-						DocumentConversionUtil.convert(
-							sourceTempFileId, sourceIs, sourceExtension, "txt"));
+					DocumentConversionUtil.convert(
+						sourceTempFileId, sourceIs, sourceExtension, "txt"));
 			}
 
-			if (DocumentConversionUtil.isConvertBeforeCompare(targetExtension)) {
-				String targetTempFileId = DLUtil.getTempFileId(
-						fileEntryId, targetVersion);
+			if (DocumentConversionUtil.isConvertBeforeCompare(
+					targetExtension)) {
 
-					targetIs = new FileInputStream(
-						DocumentConversionUtil.convert(
-							targetTempFileId, targetIs, targetExtension, "txt"));
+				String targetTempFileId = DLUtil.getTempFileId(
+					fileEntryId, targetVersion);
+
+				targetIs = new FileInputStream(
+					DocumentConversionUtil.convert(
+						targetTempFileId, targetIs, targetExtension, "txt"));
 			}
 		}
 
@@ -146,10 +147,10 @@ public class CompareVersionsAction extends PortletAction {
 
 		renderRequest.setAttribute(
 			WebKeys.SOURCE_NAME,
-			sourceTitle + StringPool.SPACE + sourceVersion);
+			sourceFileVersion.getTitle() + StringPool.SPACE + sourceVersion);
 		renderRequest.setAttribute(
 			WebKeys.TARGET_NAME,
-			targetTitle + StringPool.SPACE + targetVersion);
+			targetFileVersion.getTitle() + StringPool.SPACE + targetVersion);
 		renderRequest.setAttribute(WebKeys.DIFF_RESULTS, diffResults);
 	}
 

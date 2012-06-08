@@ -32,14 +32,9 @@ portletURL.setParameter("tabs1", tabs1);
 		RequiredStructureException rse = (RequiredStructureException)errorException;
 	%>
 
-	<c:if test="<%= rse.getType() == RequiredStructureException.REFERENCED_OBJECT %>">
-		<liferay-ui:message key="they-are-referenced-by-other-objects" />
-	</c:if>
-
 	<c:if test="<%= rse.getType() == RequiredStructureException.REFERENCED_TEMPLATE %>">
 		<liferay-ui:message key="they-are-referenced-by-templates" />
 	</c:if>
-
 </liferay-ui:error>
 
 <c:if test="<%= showToolbar %>">

@@ -16,7 +16,7 @@ package com.liferay.portlet.journal.lar;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.util.PropsValues;
 
 /**
@@ -31,7 +31,8 @@ public class JournalCreationStrategyFactory {
 					"Instantiate " + PropsValues.JOURNAL_LAR_CREATION_STRATEGY);
 			}
 
-			ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
+			ClassLoader classLoader =
+				PACLClassLoaderUtil.getPortalClassLoader();
 
 			try {
 				_journalCreationStrategy =

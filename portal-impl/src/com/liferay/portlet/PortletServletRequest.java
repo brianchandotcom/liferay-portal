@@ -19,9 +19,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.util.servlet.GenericServletInputStream;
 
 import java.io.BufferedReader;
@@ -498,7 +498,7 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 		// This must be called through reflection because Resin tries to load
 		// org/mortbay/jetty/servlet/AbstractSessionManager$SessionIf
 
-		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
+		ClassLoader classLoader = PACLClassLoaderUtil.getPortalClassLoader();
 
 		Class<?> jettyHttpSessionWrapperClass = classLoader.loadClass(
 			"com.liferay.portal.servlet.JettyHttpSessionWrapper");

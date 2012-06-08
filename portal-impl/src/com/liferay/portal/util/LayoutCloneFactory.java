@@ -16,8 +16,8 @@ package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 
 /**
  * @author Brian Wing Shun Chan
@@ -32,7 +32,7 @@ public class LayoutCloneFactory {
 				}
 
 				ClassLoader classLoader =
-					PortalClassLoaderUtil.getClassLoader();
+					PACLClassLoaderUtil.getPortalClassLoader();
 
 				try {
 					_layoutClone = (LayoutClone)classLoader.loadClass(

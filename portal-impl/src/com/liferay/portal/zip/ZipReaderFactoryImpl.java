@@ -14,9 +14,9 @@
 
 package com.liferay.portal.zip;
 
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactory;
+import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,43 +28,43 @@ import java.io.InputStream;
 public class ZipReaderFactoryImpl implements ZipReaderFactory {
 
 	public ZipReader getZipReader(File file) {
-		ClassLoader portalClassLoader = PortalClassLoaderUtil.getClassLoader();
+		ClassLoader portalClassLoader =
+			PACLClassLoaderUtil.getPortalClassLoader();
 
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+		ClassLoader contextClassLoader =
+			PACLClassLoaderUtil.getContextClassLoader();
 
 		try {
 			if (contextClassLoader != portalClassLoader) {
-				currentThread.setContextClassLoader(portalClassLoader);
+				PACLClassLoaderUtil.setContextClassLoader(portalClassLoader);
 			}
 
 			return new ZipReaderImpl(file);
 		}
 		finally {
 			if (contextClassLoader != portalClassLoader) {
-				currentThread.setContextClassLoader(contextClassLoader);
+				PACLClassLoaderUtil.setContextClassLoader(contextClassLoader);
 			}
 		}
 	}
 
 	public ZipReader getZipReader(InputStream inputStream) throws IOException {
-		ClassLoader portalClassLoader = PortalClassLoaderUtil.getClassLoader();
+		ClassLoader portalClassLoader =
+			PACLClassLoaderUtil.getPortalClassLoader();
 
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+		ClassLoader contextClassLoader =
+			PACLClassLoaderUtil.getContextClassLoader();
 
 		try {
 			if (contextClassLoader != portalClassLoader) {
-				currentThread.setContextClassLoader(portalClassLoader);
+				PACLClassLoaderUtil.setContextClassLoader(portalClassLoader);
 			}
 
 			return new ZipReaderImpl(inputStream);
 		}
 		finally {
 			if (contextClassLoader != portalClassLoader) {
-				currentThread.setContextClassLoader(contextClassLoader);
+				PACLClassLoaderUtil.setContextClassLoader(contextClassLoader);
 			}
 		}
 	}

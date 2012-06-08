@@ -16,7 +16,7 @@ package com.liferay.mail.util;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.util.PropsValues;
 
 /**
@@ -30,7 +30,8 @@ public class HookFactory {
 				_log.debug("Instantiate " + PropsValues.MAIL_HOOK_IMPL);
 			}
 
-			ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
+			ClassLoader classLoader =
+				PACLClassLoaderUtil.getPortalClassLoader();
 
 			try {
 				_hook = (Hook)classLoader.loadClass(

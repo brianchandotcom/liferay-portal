@@ -59,9 +59,8 @@ public class PACLRequestDispatcherWrapper implements RequestDispatcher {
 			boolean include)
 		throws ServletException, IOException {
 
-		Thread thread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = thread.getContextClassLoader();
+		ClassLoader contextClassLoader =
+			PACLClassLoaderUtil.getContextClassLoader();
 
 		ClassLoader pluginClassLoader =
 			(ClassLoader)_servletContext.getAttribute(
@@ -74,7 +73,7 @@ public class PACLRequestDispatcherWrapper implements RequestDispatcher {
 			if (pluginClassLoader == null) {
 				PortalSecurityManagerThreadLocal.setPACLPolicy(null);
 
-				thread.setContextClassLoader(
+				PACLClassLoaderUtil.setContextClassLoader(
 					PACLClassLoaderUtil.getPortalClassLoader());
 			}
 			else {
@@ -84,7 +83,7 @@ public class PACLRequestDispatcherWrapper implements RequestDispatcher {
 				PortalSecurityManagerThreadLocal.setPACLPolicy(
 					pluginPACLPolicy);
 
-				thread.setContextClassLoader(pluginClassLoader);
+				PACLClassLoaderUtil.setContextClassLoader(pluginClassLoader);
 			}
 
 			if (include) {
@@ -95,7 +94,7 @@ public class PACLRequestDispatcherWrapper implements RequestDispatcher {
 			}
 		}
 		finally {
-			thread.setContextClassLoader(contextClassLoader);
+			PACLClassLoaderUtil.setContextClassLoader(contextClassLoader);
 
 			PortalSecurityManagerThreadLocal.setPACLPolicy(paclPolicy);
 		}

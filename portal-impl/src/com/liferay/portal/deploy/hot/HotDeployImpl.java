@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.BasePortalLifecycle;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalLifecycle;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
@@ -174,7 +173,8 @@ public class HotDeployImpl implements HotDeploy {
 			ClassLoader contextClassLoader = getContextClassLoader();
 
 			try {
-				setContextClassLoader(PortalClassLoaderUtil.getClassLoader());
+				setContextClassLoader(
+					PACLClassLoaderUtil.getPortalClassLoader());
 
 				List<HotDeployEvent> dependentEvents =
 					new ArrayList<HotDeployEvent>(_dependentHotDeployEvents);

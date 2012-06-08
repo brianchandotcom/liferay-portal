@@ -35,10 +35,10 @@ import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
@@ -267,7 +267,7 @@ public class WikiIndexer extends BaseIndexer {
 
 	protected void reindexNodes(long companyId) throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			WikiNode.class, PortalClassLoaderUtil.getClassLoader());
+			WikiNode.class, PACLClassLoaderUtil.getPortalClassLoader());
 
 		Projection minNodeIdProjection = ProjectionFactoryUtil.min("nodeId");
 		Projection maxNodeIdProjection = ProjectionFactoryUtil.max("nodeId");
@@ -309,7 +309,7 @@ public class WikiIndexer extends BaseIndexer {
 		throws Exception {
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			WikiNode.class, PortalClassLoaderUtil.getClassLoader());
+			WikiNode.class, PACLClassLoaderUtil.getPortalClassLoader());
 
 		Property property = PropertyFactoryUtil.forName("nodeId");
 
@@ -333,7 +333,7 @@ public class WikiIndexer extends BaseIndexer {
 		throws Exception {
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			WikiPage.class, PortalClassLoaderUtil.getClassLoader());
+			WikiPage.class, PACLClassLoaderUtil.getPortalClassLoader());
 
 		Projection minPageIdProjection = ProjectionFactoryUtil.min("pageId");
 		Projection maxPageIdProjection = ProjectionFactoryUtil.max("pageId");
@@ -376,7 +376,7 @@ public class WikiIndexer extends BaseIndexer {
 		throws Exception {
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			WikiPage.class, PortalClassLoaderUtil.getClassLoader());
+			WikiPage.class, PACLClassLoaderUtil.getPortalClassLoader());
 
 		Property property = PropertyFactoryUtil.forName("pageId");
 

@@ -18,10 +18,10 @@ import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.spring.util.SpringFactory;
 import com.liferay.portal.kernel.spring.util.SpringFactoryException;
 import com.liferay.portal.kernel.util.InstanceFactory;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
+import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -78,7 +78,7 @@ public class SpringFactoryImpl implements SpringFactory {
 			PortalSecurityManagerThreadLocal.setEnabled(false);
 
 			Object bean = InstanceFactory.newInstance(
-				PortalClassLoaderUtil.getClassLoader(), className);
+				PACLClassLoaderUtil.getPortalClassLoader(), className);
 
 			if (properties == null) {
 				return bean;

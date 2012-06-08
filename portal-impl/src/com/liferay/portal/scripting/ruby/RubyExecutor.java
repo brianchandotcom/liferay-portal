@@ -17,8 +17,8 @@ package com.liferay.portal.scripting.ruby;
 import com.liferay.portal.kernel.scripting.BaseScriptingExecutor;
 import com.liferay.portal.kernel.scripting.ExecutionException;
 import com.liferay.portal.kernel.scripting.ScriptingException;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -57,7 +57,8 @@ public class RubyExecutor extends BaseScriptingExecutor {
 		RubyInstanceConfig rubyInstanceConfig =
 			localContextProvider.getRubyInstanceConfig();
 
-		rubyInstanceConfig.setLoader(PortalClassLoaderUtil.getClassLoader());
+		rubyInstanceConfig.setLoader(
+			PACLClassLoaderUtil.getPortalClassLoader());
 
 		if (PropsValues.SCRIPTING_JRUBY_COMPILE_MODE.equals(
 				_COMPILE_MODE_FORCE)) {

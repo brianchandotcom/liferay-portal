@@ -21,10 +21,10 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PreloadClassLoader;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
+import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.security.pacl.PACLPolicyManager;
 import com.liferay.portal.spring.util.FilterClassLoader;
 
@@ -75,7 +75,7 @@ public class PortletApplicationContext extends XmlWebApplicationContext {
 			AggregateClassLoader.getAggregateClassLoader(
 				new ClassLoader[] {
 					PortletClassLoaderUtil.getClassLoader(),
-					PortalClassLoaderUtil.getClassLoader()
+					PACLClassLoaderUtil.getPortalClassLoader()
 				});
 
 		return new FilterClassLoader(beanClassLoader);

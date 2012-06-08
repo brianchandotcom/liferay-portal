@@ -16,10 +16,10 @@ package com.liferay.portlet.documentlibrary.store;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -79,7 +79,8 @@ public class StoreFactory {
 				_log.debug("Instantiate " + PropsValues.DL_STORE_IMPL);
 			}
 
-			ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
+			ClassLoader classLoader =
+				PACLClassLoaderUtil.getPortalClassLoader();
 
 			try {
 				_store = (Store)classLoader.loadClass(

@@ -19,7 +19,6 @@ import aQute.libg.header.OSGiHeader;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.ServiceLoader;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -32,6 +31,7 @@ import com.liferay.portal.osgi.OSGiConstants;
 import com.liferay.portal.osgi.OSGiException;
 import com.liferay.portal.osgi.ServiceListener;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.util.PropsValues;
@@ -236,7 +236,7 @@ public class OSGiServiceUtil {
 			String[] bundleSymbolicNames, List<String> packages)
 		throws Exception {
 
-		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
+		ClassLoader classLoader = PACLClassLoaderUtil.getPortalClassLoader();
 
 		Enumeration<URL> enu = classLoader.getResources("META-INF/MANIFEST.MF");
 

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.xml.QName;
 import com.liferay.portal.kernel.xml.SAXReader;
 import com.liferay.portal.kernel.xml.Text;
 import com.liferay.portal.kernel.xml.XPath;
+import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.util.EntityResolver;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.util.xml.XMLSafeReader;
@@ -320,13 +321,12 @@ public class SAXReaderImpl implements SAXReader {
 	public Document read(File file, boolean validate) throws DocumentException {
 		ClassLoader classLoader = getClass().getClassLoader();
 
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+		ClassLoader contextClassLoader =
+			PACLClassLoaderUtil.getContextClassLoader();
 
 		try {
 			if (contextClassLoader != classLoader) {
-				currentThread.setContextClassLoader(classLoader);
+				PACLClassLoaderUtil.setContextClassLoader(classLoader);
 			}
 
 			org.dom4j.io.SAXReader saxReader = getSAXReader(validate);
@@ -338,7 +338,7 @@ public class SAXReaderImpl implements SAXReader {
 		}
 		finally {
 			if (contextClassLoader != classLoader) {
-				currentThread.setContextClassLoader(contextClassLoader);
+				PACLClassLoaderUtil.setContextClassLoader(contextClassLoader);
 			}
 		}
 	}
@@ -352,13 +352,12 @@ public class SAXReaderImpl implements SAXReader {
 
 		ClassLoader classLoader = getClass().getClassLoader();
 
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+		ClassLoader contextClassLoader =
+			PACLClassLoaderUtil.getContextClassLoader();
 
 		try {
 			if (contextClassLoader != classLoader) {
-				currentThread.setContextClassLoader(classLoader);
+				PACLClassLoaderUtil.setContextClassLoader(classLoader);
 			}
 
 			org.dom4j.io.SAXReader saxReader = getSAXReader(validate);
@@ -370,7 +369,7 @@ public class SAXReaderImpl implements SAXReader {
 		}
 		finally {
 			if (contextClassLoader != classLoader) {
-				currentThread.setContextClassLoader(contextClassLoader);
+				PACLClassLoaderUtil.setContextClassLoader(contextClassLoader);
 			}
 		}
 	}
@@ -384,13 +383,12 @@ public class SAXReaderImpl implements SAXReader {
 
 		ClassLoader classLoader = getClass().getClassLoader();
 
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+		ClassLoader contextClassLoader =
+			PACLClassLoaderUtil.getContextClassLoader();
 
 		try {
 			if (contextClassLoader != classLoader) {
-				currentThread.setContextClassLoader(classLoader);
+				PACLClassLoaderUtil.setContextClassLoader(classLoader);
 			}
 
 			org.dom4j.io.SAXReader saxReader = getSAXReader(validate);
@@ -402,7 +400,7 @@ public class SAXReaderImpl implements SAXReader {
 		}
 		finally {
 			if (contextClassLoader != classLoader) {
-				currentThread.setContextClassLoader(contextClassLoader);
+				PACLClassLoaderUtil.setContextClassLoader(contextClassLoader);
 			}
 		}
 	}
@@ -424,13 +422,12 @@ public class SAXReaderImpl implements SAXReader {
 	public Document read(URL url, boolean validate) throws DocumentException {
 		ClassLoader classLoader = getClass().getClassLoader();
 
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+		ClassLoader contextClassLoader =
+			PACLClassLoaderUtil.getContextClassLoader();
 
 		try {
 			if (contextClassLoader != classLoader) {
-				currentThread.setContextClassLoader(classLoader);
+				PACLClassLoaderUtil.setContextClassLoader(classLoader);
 			}
 
 			org.dom4j.io.SAXReader saxReader = getSAXReader(validate);
@@ -442,7 +439,7 @@ public class SAXReaderImpl implements SAXReader {
 		}
 		finally {
 			if (contextClassLoader != classLoader) {
-				currentThread.setContextClassLoader(contextClassLoader);
+				PACLClassLoaderUtil.setContextClassLoader(contextClassLoader);
 			}
 		}
 	}

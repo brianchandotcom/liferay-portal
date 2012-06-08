@@ -41,13 +41,13 @@ import com.liferay.portal.kernel.scheduler.TriggerType;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerEventMessageListenerWrapper;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.scheduler.job.MessageSenderJob;
+import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.service.QuartzLocalService;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -911,7 +911,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		ClassLoader classLoader = null;
 
 		if (Validator.isNull(portletId)) {
-			classLoader = PortalClassLoaderUtil.getClassLoader();
+			classLoader = PACLClassLoaderUtil.getPortalClassLoader();
 		}
 		else {
 			classLoader = PortletClassLoaderUtil.getClassLoader(portletId);

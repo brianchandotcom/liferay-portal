@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
@@ -196,7 +197,7 @@ public class BookmarksIndexer extends BaseIndexer {
 		throws Exception {
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			BookmarksEntry.class, PortalClassLoaderUtil.getClassLoader());
+			BookmarksEntry.class, PACLClassLoaderUtil.getPortalClassLoader());
 
 		Projection minEntryIdProjection = ProjectionFactoryUtil.min("entryId");
 		Projection maxEntryIdProjection = ProjectionFactoryUtil.max("entryId");
@@ -240,7 +241,7 @@ public class BookmarksIndexer extends BaseIndexer {
 		throws Exception {
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			BookmarksEntry.class, PortalClassLoaderUtil.getClassLoader());
+			BookmarksEntry.class, PACLClassLoaderUtil.getPortalClassLoader());
 
 		Property property = PropertyFactoryUtil.forName("entryId");
 
@@ -271,7 +272,7 @@ public class BookmarksIndexer extends BaseIndexer {
 
 	protected void reindexFolders(long companyId) throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			BookmarksFolder.class, PortalClassLoaderUtil.getClassLoader());
+			BookmarksFolder.class, PACLClassLoaderUtil.getPortalClassLoader());
 
 		Projection minFolderIdProjection = ProjectionFactoryUtil.min(
 			"folderId");
@@ -317,7 +318,7 @@ public class BookmarksIndexer extends BaseIndexer {
 		throws Exception {
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			BookmarksFolder.class, PortalClassLoaderUtil.getClassLoader());
+			BookmarksFolder.class, PACLClassLoaderUtil.getPortalClassLoader());
 
 		Property property = PropertyFactoryUtil.forName("folderId");
 
@@ -339,7 +340,7 @@ public class BookmarksIndexer extends BaseIndexer {
 
 	protected void reindexRoot(long companyId) throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			Group.class, PortalClassLoaderUtil.getClassLoader());
+			Group.class, PACLClassLoaderUtil.getPortalClassLoader());
 
 		Projection minGroupIdProjection = ProjectionFactoryUtil.min("groupId");
 		Projection maxGroupIdProjection = ProjectionFactoryUtil.max("groupId");
@@ -381,7 +382,7 @@ public class BookmarksIndexer extends BaseIndexer {
 		throws Exception {
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			Group.class, PortalClassLoaderUtil.getClassLoader());
+			Group.class, PACLClassLoaderUtil.getPortalClassLoader());
 
 		Property property = PropertyFactoryUtil.forName("groupId");
 

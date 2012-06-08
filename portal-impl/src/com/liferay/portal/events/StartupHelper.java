@@ -21,11 +21,11 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.upgrade.UpgradeProcessUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.verify.VerifyException;
@@ -130,7 +130,7 @@ public class StartupHelper {
 
 		_upgraded = UpgradeProcessUtil.upgradeProcess(
 			buildNumber, upgradeProcessClassNames,
-			PortalClassLoaderUtil.getClassLoader());
+			PACLClassLoaderUtil.getPortalClassLoader());
 	}
 
 	public void verifyProcess(boolean verified) throws VerifyException {

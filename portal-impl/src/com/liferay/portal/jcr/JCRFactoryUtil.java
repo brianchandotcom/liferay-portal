@@ -17,8 +17,8 @@ package com.liferay.portal.jcr;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.memory.FinalizeManager;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.HashMap;
@@ -71,7 +71,7 @@ public class JCRFactoryUtil {
 			new JCRSessionInvocationHandler(jcrSession);
 
 		Object sessionProxy = ProxyUtil.newProxyInstance(
-			PortalClassLoaderUtil.getClassLoader(),
+			PACLClassLoaderUtil.getPortalClassLoader(),
 			new Class<?>[] {Map.class, Session.class},
 			jcrSessionInvocationHandler);
 

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.servlet.PluginContextListener;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
@@ -50,18 +51,16 @@ public class AxisServlet extends com.liferay.util.axis.AxisServlet {
 			super.init(servletConfig);
 		}
 		else {
-			Thread currentThread = Thread.currentThread();
-
 			ClassLoader contextClassLoader =
-				currentThread.getContextClassLoader();
+				PACLClassLoaderUtil.getContextClassLoader();
 
 			try {
-				currentThread.setContextClassLoader(_pluginClassLoader);
+				PACLClassLoaderUtil.setContextClassLoader(_pluginClassLoader);
 
 				super.init(servletConfig);
 			}
 			finally {
-				currentThread.setContextClassLoader(contextClassLoader);
+				PACLClassLoaderUtil.setContextClassLoader(contextClassLoader);
 			}
 		}
 	}
@@ -97,18 +96,16 @@ public class AxisServlet extends com.liferay.util.axis.AxisServlet {
 				super.service(request, response);
 			}
 			else {
-				Thread currentThread = Thread.currentThread();
-
 				ClassLoader contextClassLoader =
-					currentThread.getContextClassLoader();
+					PACLClassLoaderUtil.getContextClassLoader();
 
 				try {
-					currentThread.setContextClassLoader(_pluginClassLoader);
+					PACLClassLoaderUtil.setContextClassLoader(_pluginClassLoader);
 
 					super.service(request, response);
 				}
 				finally {
-					currentThread.setContextClassLoader(contextClassLoader);
+					PACLClassLoaderUtil.setContextClassLoader(contextClassLoader);
 				}
 			}
 		}

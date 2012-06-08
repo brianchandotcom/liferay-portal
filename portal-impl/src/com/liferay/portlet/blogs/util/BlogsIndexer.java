@@ -30,10 +30,10 @@ import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PortletKeys;
@@ -192,7 +192,7 @@ public class BlogsIndexer extends BaseIndexer {
 
 	protected void reindexEntries(long companyId) throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			BlogsEntry.class, PortalClassLoaderUtil.getClassLoader());
+			BlogsEntry.class, PACLClassLoaderUtil.getPortalClassLoader());
 
 		Projection minEntryIdProjection = ProjectionFactoryUtil.min("entryId");
 		Projection maxEntryIdProjection = ProjectionFactoryUtil.max("entryId");
@@ -234,7 +234,7 @@ public class BlogsIndexer extends BaseIndexer {
 		throws Exception {
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			BlogsEntry.class, PortalClassLoaderUtil.getClassLoader());
+			BlogsEntry.class, PACLClassLoaderUtil.getPortalClassLoader());
 
 		Property property = PropertyFactoryUtil.forName("entryId");
 

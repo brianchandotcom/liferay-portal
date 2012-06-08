@@ -43,13 +43,13 @@ public class PACLAdvice extends ChainableMethodAdvice {
 			}
 		}
 
+		Object thisObject = methodInvocation.getThis();
 		Method method = methodInvocation.getMethod();
+		Object[] arguments = methodInvocation.getArguments();
 
 		boolean debug = false;
 
 		if (_log.isDebugEnabled()) {
-			Object thisObject = methodInvocation.getThis();
-
 			Class<?> clazz = thisObject.getClass();
 
 			String className = clazz.getName();
@@ -65,6 +65,26 @@ public class PACLAdvice extends ChainableMethodAdvice {
 			}
 		}
 
+		if (method.getDeclaringClass() == Object.class) {
+			String methodName = method.getName();
+
+			if (methodName.equals("equals")) {
+				if (thisObject == arguments[0]) {
+					return true;
+				}
+				else {
+					return false;
+				}
+			}
+			else if (methodName.equals("toString")) {
+				return method.invoke(thisObject, arguments);
+			}
+		}
+
+		if (!PACLPolicyManager.isActive()) {
+			return method.invoke(thisObject, arguments);
+		}
+
 		PACLPolicy paclPolicy = PACLClassUtil.getPACLPolicy(false, debug);
 
 		if (debug) {
@@ -76,26 +96,16 @@ public class PACLAdvice extends ChainableMethodAdvice {
 		}
 
 		if (paclPolicy == null) {
-			try {
-				return methodInvocation.proceed();
-			}
-			catch (Throwable throwable) {
-				throw throwable;
-			}
+			return methodInvocation.proceed();
 		}
 
-		if (!paclPolicy.hasPortalService(
-				methodInvocation.getThis(), method,
-				methodInvocation.getArguments())) {
-
+		if (!paclPolicy.hasPortalService(thisObject, method, arguments)) {
 			throw new SecurityException("Attempted to invoke " + method);
 		}
 
 		boolean checkSQL = PortalSecurityManagerThreadLocal.isCheckSQL();
 
 		try {
-			Object thisObject = methodInvocation.getThis();
-
 			Class<?> thisObjectClass = thisObject.getClass();
 
 			if (paclPolicy.getClassLoader() !=
@@ -109,9 +119,6 @@ public class PACLAdvice extends ChainableMethodAdvice {
 			}
 
 			return methodInvocation.proceed();
-		}
-		catch (Throwable throwable) {
-			throw throwable;
 		}
 		finally {
 			PortalSecurityManagerThreadLocal.setCheckSQL(checkSQL);

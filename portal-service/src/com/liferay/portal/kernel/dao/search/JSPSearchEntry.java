@@ -15,7 +15,7 @@
 package com.liferay.portal.kernel.dao.search;
 
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
-import com.liferay.portal.kernel.servlet.DirectRequestDispatcherUtil;
+import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 
 import javax.servlet.RequestDispatcher;
@@ -58,7 +58,7 @@ public class JSPSearchEntry extends SearchEntry {
 	public void print(PageContext pageContext) throws Exception {
 		if (_servletContext != null) {
 			RequestDispatcher requestDispatcher =
-				DirectRequestDispatcherUtil.getRequestDispatcher(
+				DirectRequestDispatcherFactoryUtil.getRequestDispatcher(
 					_servletContext, _path);
 
 			requestDispatcher.include(

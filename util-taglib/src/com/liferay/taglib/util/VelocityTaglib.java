@@ -14,7 +14,7 @@
 
 package com.liferay.taglib.util;
 
-import com.liferay.portal.kernel.servlet.DirectRequestDispatcherUtil;
+import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
 import com.liferay.portal.kernel.servlet.PipingPageContext;
 import com.liferay.portal.kernel.servlet.taglib.TagSupport;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -367,7 +367,7 @@ public class VelocityTaglib {
 
 	public void include(String page) throws Exception {
 		RequestDispatcher requestDispatcher =
-			DirectRequestDispatcherUtil.getRequestDispatcher(
+			DirectRequestDispatcherFactoryUtil.getRequestDispatcher(
 				_servletContext, page);
 
 		requestDispatcher.include(_request, _response);

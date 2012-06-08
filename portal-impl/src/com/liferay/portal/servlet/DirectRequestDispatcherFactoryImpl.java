@@ -12,16 +12,16 @@
  * details.
  */
 
-package com.liferay.portal.kernel.servlet;
+package com.liferay.portal.servlet;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactory;
+import com.liferay.portal.kernel.servlet.DirectServletRegistryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContextPathUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.PropsValues;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.Servlet;
@@ -29,14 +29,40 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
 
 /**
- * @author Shuyang Zhou
+ * @author Raymond Augé
  */
-public class DirectRequestDispatcherUtil {
+public class DirectRequestDispatcherFactoryImpl
+	implements DirectRequestDispatcherFactory {
 
-	public static RequestDispatcher getRequestDispatcher(
+	public RequestDispatcher getRequestDispatcher(
 		ServletContext servletContext, String path) {
 
-		if (!_DIRECT_SERVLET_CONTEXT_ENABLED) {
+		return new PACLRequestDispatcherWrapper(
+			servletContext, doGetRequestDispatcher(servletContext, path));
+	}
+
+	public RequestDispatcher getRequestDispatcher(
+		ServletRequest servletRequest, String path) {
+
+		if (!PropsValues.DIRECT_SERVLET_CONTEXT_ENABLED) {
+			return servletRequest.getRequestDispatcher(path);
+		}
+
+		ServletContext servletContext =
+			(ServletContext)servletRequest.getAttribute(WebKeys.CTX);
+
+		if (servletContext == null) {
+			throw new IllegalStateException(
+				"Cannot find servlet context in request attributes");
+		}
+
+		return getRequestDispatcher(servletContext, path);
+	}
+
+	private RequestDispatcher doGetRequestDispatcher(
+		ServletContext servletContext, String path) {
+
+		if (!PropsValues.DIRECT_SERVLET_CONTEXT_ENABLED) {
 			return servletContext.getRequestDispatcher(path);
 		}
 
@@ -84,29 +110,7 @@ public class DirectRequestDispatcherUtil {
 		}
 	}
 
-	public static RequestDispatcher getRequestDispatcher(
-		ServletRequest servletRequest, String path) {
-
-		if (!_DIRECT_SERVLET_CONTEXT_ENABLED) {
-			return servletRequest.getRequestDispatcher(path);
-		}
-
-		ServletContext servletContext =
-			(ServletContext)servletRequest.getAttribute(WebKeys.CTX);
-
-		if (servletContext == null) {
-			throw new IllegalStateException(
-				"Cannot find servlet context in request attributes");
-		}
-
-		return getRequestDispatcher(servletContext, path);
-	}
-
-	private static final boolean _DIRECT_SERVLET_CONTEXT_ENABLED =
-		GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.DIRECT_SERVLET_CONTEXT_ENABLED));
-
 	private static Log _log = LogFactoryUtil.getLog(
-		DirectRequestDispatcherUtil.class);
+		DirectRequestDispatcherFactoryImpl.class);
 
 }

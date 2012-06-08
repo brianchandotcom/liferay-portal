@@ -554,6 +554,15 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	}
 
 	/**
+	* Returns <code>true</code> if this document library file shortcut is in the Recycle Bin.
+	*
+	* @return <code>true</code> if this document library file shortcut is in the Recycle Bin; <code>false</code> otherwise
+	*/
+	public boolean isInTrash() {
+		return _dlFileShortcut.isInTrash();
+	}
+
+	/**
 	* Returns <code>true</code> if this document library file shortcut is pending.
 	*
 	* @return <code>true</code> if this document library file shortcut is pending; <code>false</code> otherwise

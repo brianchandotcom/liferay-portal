@@ -654,6 +654,15 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 			}
 		}
 
+		public boolean isInTrash() {
+			if (getStatus() == WorkflowConstants.STATUS_IN_TRASH) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+
 		public boolean isPending() {
 			if (getStatus() == WorkflowConstants.STATUS_PENDING) {
 				return true;

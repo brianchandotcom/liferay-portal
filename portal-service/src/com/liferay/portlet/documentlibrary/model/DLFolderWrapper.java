@@ -664,6 +664,15 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	}
 
 	/**
+	* Returns <code>true</code> if this document library folder is in the Recycle Bin.
+	*
+	* @return <code>true</code> if this document library folder is in the Recycle Bin; <code>false</code> otherwise
+	*/
+	public boolean isInTrash() {
+		return _dlFolder.isInTrash();
+	}
+
+	/**
 	* Returns <code>true</code> if this document library folder is pending.
 	*
 	* @return <code>true</code> if this document library folder is pending; <code>false</code> otherwise

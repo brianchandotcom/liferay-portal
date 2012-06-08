@@ -791,6 +791,13 @@ public interface JournalArticleModel extends AttachedModel,
 	public boolean isExpired();
 
 	/**
+	 * Returns <code>true</code> if this journal article is in the Recycle Bin.
+	 *
+	 * @return <code>true</code> if this journal article is in the Recycle Bin; <code>false</code> otherwise
+	 */
+	public boolean isInTrash();
+
+	/**
 	 * Returns <code>true</code> if this journal article is pending.
 	 *
 	 * @return <code>true</code> if this journal article is pending; <code>false</code> otherwise

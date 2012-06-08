@@ -843,6 +843,15 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	}
 
 	/**
+	* Returns <code>true</code> if this message-boards message is in the Recycle Bin.
+	*
+	* @return <code>true</code> if this message-boards message is in the Recycle Bin; <code>false</code> otherwise
+	*/
+	public boolean isInTrash() {
+		return _mbMessage.isInTrash();
+	}
+
+	/**
 	* Returns <code>true</code> if this message-boards message is pending.
 	*
 	* @return <code>true</code> if this message-boards message is pending; <code>false</code> otherwise

@@ -354,6 +354,13 @@ public interface DLFileShortcutModel extends BaseModel<DLFileShortcut>,
 	public boolean isExpired();
 
 	/**
+	 * Returns <code>true</code> if this document library file shortcut is in the Recycle Bin.
+	 *
+	 * @return <code>true</code> if this document library file shortcut is in the Recycle Bin; <code>false</code> otherwise
+	 */
+	public boolean isInTrash();
+
+	/**
 	 * Returns <code>true</code> if this document library file shortcut is pending.
 	 *
 	 * @return <code>true</code> if this document library file shortcut is pending; <code>false</code> otherwise

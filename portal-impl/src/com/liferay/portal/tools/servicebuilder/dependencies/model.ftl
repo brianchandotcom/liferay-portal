@@ -280,6 +280,13 @@ public interface ${entity.name}Model extends
 		public boolean isExpired();
 
 		/**
+		 * Returns <code>true</code> if this ${entity.humanName} is in the Recycle Bin.
+		 *
+		 * @return <code>true</code> if this ${entity.humanName} is in the Recycle Bin; <code>false</code> otherwise
+		 */
+		public boolean isInTrash();
+
+		/**
 		 * Returns <code>true</code> if this ${entity.humanName} is pending.
 		 *
 		 * @return <code>true</code> if this ${entity.humanName} is pending; <code>false</code> otherwise

@@ -741,6 +741,15 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	}
 
 	/**
+	* Returns <code>true</code> if this wiki page is in the Recycle Bin.
+	*
+	* @return <code>true</code> if this wiki page is in the Recycle Bin; <code>false</code> otherwise
+	*/
+	public boolean isInTrash() {
+		return _wikiPage.isInTrash();
+	}
+
+	/**
 	* Returns <code>true</code> if this wiki page is pending.
 	*
 	* @return <code>true</code> if this wiki page is pending; <code>false</code> otherwise

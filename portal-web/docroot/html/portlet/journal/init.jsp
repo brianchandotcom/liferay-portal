@@ -77,6 +77,7 @@ page import="com.liferay.portlet.journal.model.JournalFeed" %><%@
 page import="com.liferay.portlet.journal.model.JournalFeedConstants" %><%@
 page import="com.liferay.portlet.journal.model.JournalFolder" %><%@
 page import="com.liferay.portlet.journal.model.JournalFolderConstants" %><%@
+page import="com.liferay.portlet.journal.model.JournalSearchConstants" %><%@
 page import="com.liferay.portlet.journal.model.JournalStructure" %><%@
 page import="com.liferay.portlet.journal.model.JournalTemplate" %><%@
 page import="com.liferay.portlet.journal.model.JournalTemplateConstants" %><%@

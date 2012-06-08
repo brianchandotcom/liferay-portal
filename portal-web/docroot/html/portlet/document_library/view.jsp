@@ -113,7 +113,7 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 			</div>
 
 			<div class="document-library-breadcrumb" id="<portlet:namespace />breadcrumbContainer">
-				<liferay-util:include page="/html/portlet/document_library/breadcrumb.jsp" />
+				<liferay-util:include page="/html/portlet/journal/breadcrumb.jsp" />
 			</div>
 
 			<div class="aui-helper-hidden" id="<portlet:namespace />syncNotification">

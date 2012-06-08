@@ -127,6 +127,27 @@ int foldersTotal = GetterUtil.getInteger((String)request.getAttribute("view_fold
 	<liferay-util:include page="/html/portlet/journal/display_style_buttons.jsp" />
 </span>
 
+<aui:script>
+	Liferay.provide(
+		window,
+		'<portlet:namespace />toggleActionsButton',
+		function() {
+			var A = AUI();
+
+			var actionsButton = A.one('#<portlet:namespace />actionsButtonContainer');
+
+			var hide = (Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace /><%= RowChecker.ALL_ROW_IDS %>Checkbox').length == 0);
+
+			if (actionsButton) {
+				actionsButton.toggle(!hide);
+			}
+		},
+		['liferay-util-list-fields']
+	);
+
+	<portlet:namespace />toggleActionsButton();
+</aui:script>
+
 <aui:script use="liferay-journal-navigation">
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" varImpl="mainURL" />
 
@@ -138,6 +159,7 @@ int foldersTotal = GetterUtil.getInteger((String)request.getAttribute("view_fold
 				EXPIRE: '<%= Constants.EXPIRE %>',
 				MOVE: '<%= Constants.MOVE %>'
 			},
+			advancedSearch: '<%= DisplayTerms.ADVANCED_SEARCH %>',
 			allRowIds: '<%= RowChecker.ALL_ROW_IDS %>',
 			defaultParams: {
 				p_p_id: <%= portletId %>,

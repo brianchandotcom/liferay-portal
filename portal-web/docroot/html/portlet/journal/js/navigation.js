@@ -58,6 +58,8 @@ AUI.add(
 
 		var SEARCH_TYPE = 'searchType';
 
+		var SEARCH_TYPE_SINGLE = 1;
+
 		var STR_ACTIVE = 'active';
 
 		var STR_AJAX_REQUEST = 'ajax';
@@ -219,7 +221,7 @@ AUI.add(
 
 						folderPaginator.on('changeRequest', instance._onFolderPaginatorChangeRequest, instance);
 
-						A.one('.portlet-journal').delegate(
+						journalContainer.delegate(
 							STR_CLICK,
 							A.bind(instance._onOpenAdvancedSearch, instance),
 							'.article-advanced-search-icon'
@@ -746,7 +748,7 @@ AUI.add(
 						};
 
 						if (event.searchEverywhere) {
-							searchData[STR_SEARCH_FOLDER_ID] = DEFAULT_FOLDER_ID;
+							searchData[STR_SEARCH_FOLDER_ID] = -1;
 						}
 						else {
 							searchData[STR_SEARCH_FOLDER_ID] = selectedFolder.id;
@@ -765,6 +767,7 @@ AUI.add(
 						var content = A.Node.create(responseData);
 
 						if (content) {
+debugger;
 							instance._setBreadcrumb(content);
 							instance._setButtons(content);
 							instance._setEntries(content);
@@ -1092,15 +1095,6 @@ AUI.add(
 						var instance = this;
 
 						instance._toggleEntriesSelection();
-
-						var buttons = A.all('.delete-articles-button, .expire-articles-button, .move-articles-button');
-
-						if (instance._selectAllCheckbox.attr(ATTR_CHECKED)) {
-							buttons.show();
-						}
-						else {
-							buttons.hide();
-						}
 					},
 
 					_processDefaultParams: function(event) {
@@ -1200,9 +1194,10 @@ AUI.add(
 
 						var requestParams = {};
 
-						requestParams[instance.ns(STRUTS_ACTION)] = '/journal/view';
+						requestParams[instance.ns(STRUTS_ACTION)] = '/journal/search';
 						requestParams[instance.ns(STR_FOLDER_ID)] = searchData.folderId;
 						requestParams[instance.ns(STR_SEARCH_FOLDER_ID)] = searchData.searchFolderId;
+						requestParams[instance.ns(SEARCH_TYPE)] = SEARCH_TYPE_SINGLE;
 						requestParams[instance.ns(STR_KEYWORDS)] = searchData.keywords;
 						requestParams[instance.ns(STR_SHOW_SEARCH_INFO)] = searchData.showSearchInfo;
 
@@ -1366,11 +1361,9 @@ AUI.add(
 							}
 						}
 
-						searchResults = instance.one('.local-search-results', content);
+						var searchResultsContainer = instance.one('#' + STR_SEARCH_RESULTS_CONTAINER, content);
 
-						if (searchResults) {
-							var searchResultsContainer = instance.one('#' + STR_SEARCH_RESULTS_CONTAINER, content);
-
+						if (searchResultsContainer) {
 							if (!searchInfo) {
 								entriesContainer.empty();
 							}

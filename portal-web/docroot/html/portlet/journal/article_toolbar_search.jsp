@@ -30,7 +30,7 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 %>
 
 <div class="lfr-search-combobox search-button-container" id="<portlet:namespace />articlesSearchContainer">
-	<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
+	<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1" onSubmit="event.preventDefault();">
 		<aui:layout>
 			<aui:column>
 				<aui:input cssClass="keywords lfr-search-combobox-item" id="keywords" label="" name="keywords" type="text" value="<%= keywords %>" />

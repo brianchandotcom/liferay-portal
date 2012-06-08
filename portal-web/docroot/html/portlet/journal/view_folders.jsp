@@ -116,6 +116,8 @@ liferayPortletRequest.setAttribute("view_folders.jsp-total", String.valueOf(tota
 						%>
 
 						<li class="folder <%= (navigation.equals("home") && (folderId == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID)) && Validator.isNull(structureId) ? "selected" : StringPool.BLANK %>">
+							<liferay-util:include page="/html/portlet/journal/folder_action.jsp" />
+
 							<c:if test="<%= (foldersCount > 0) %>">
 								<a class="expand-folder" data-expand-folder="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID %>" data-view-entries="<%= Boolean.FALSE.toString() %>" href="<%= expandArticlesHomeURL.toString() %>">
 									<liferay-ui:icon cssClass="expand-folder-arrow" image="../aui/carat-1-r" message="expand" />

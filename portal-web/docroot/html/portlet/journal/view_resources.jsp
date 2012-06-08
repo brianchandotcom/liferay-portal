@@ -44,7 +44,7 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 
 		<%
 		PortalUtil.addPortletBreadcrumbEntry(request, themeDisplay.getScopeGroup().getDescriptiveName(), null);
-		PortalUtil.addPortletBreadcrumbEntry(request, "Journal", liferayPortletResponse.createRenderURL().toString());
+		PortalUtil.addPortletBreadcrumbEntry(request, "Web Content", liferayPortletResponse.createRenderURL().toString());
 		%>
 
 		<div id="<portlet:namespace />entries">
@@ -59,6 +59,16 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 
 		<span id="<portlet:namespace />displayStyleButtons">
 			<liferay-util:include page="/html/portlet/journal/display_style_buttons.jsp" />
+		</span>
+
+		<span id="<portlet:namespace />breadcrumb">
+			<div class="portlet-breadcrumb">
+				<liferay-util:include page="/html/portlet/journal/breadcrumb.jsp" />
+			</div>
+
+			<div class="portal-breadcrumb">
+				<liferay-ui:breadcrumb showCurrentGroup="<%= layout.isTypeControlPanel() %>" showCurrentPortlet="<%= layout.isTypeControlPanel() %>" showGuestGroup="<%= !layout.isTypeControlPanel() %>" showLayout="<%= true %>" showParentGroups="<%= false %>" showPortletBreadcrumb="<%= true %>" />
+			</div>
 		</span>
 	</c:if>
 

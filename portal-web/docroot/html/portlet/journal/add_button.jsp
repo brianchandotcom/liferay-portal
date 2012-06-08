@@ -51,6 +51,8 @@ Map<String, PortletURL> addArticleURLs = getAddArticleURLs(liferayPortletRequest
 			PortletURL addArticleURL = entry.getValue();
 
 			addArticleURL.setParameter("groupId", String.valueOf(scopeGroupId));
+			addArticleURL.setParameter("redirect", currentURL);
+			addArticleURL.setParameter("backURL", currentURL);
 	%>
 
 			<liferay-ui:icon
@@ -73,11 +75,6 @@ public PortletURL getAddArticleURL(LiferayPortletRequest liferayPortletRequest, 
 	addArticleURL.setWindowState(LiferayWindowState.MAXIMIZED);
 
 	addArticleURL.setParameter("struts_action", "/journal/edit_article");
-
-	String currentURL = PortalUtil.getCurrentURL(liferayPortletRequest);
-
-	addArticleURL.setParameter("redirect", currentURL);
-	addArticleURL.setParameter("backURL", currentURL);
 	addArticleURL.setParameter("folderId", String.valueOf(folderId));
 
 	if (Validator.isNotNull(structureId)) {

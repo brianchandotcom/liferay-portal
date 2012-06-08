@@ -40,14 +40,15 @@ boolean advancedSearch = ParamUtil.getBoolean(liferayPortletRequest, DisplayTerm
 
 		function onButtonClick(displayStyle) {
 			var config = {
-				'<portlet:namespace />struts_action': '/journal/view',
+				'<portlet:namespace />struts_action': '<%= Validator.isNull(keywords) ? "/journal/view" : "/journal/search" %>',
 				'<portlet:namespace />navigation': '<%= HtmlUtil.escapeJS(navigation) %>',
 				'<portlet:namespace />folderId': '<%= folderId %>',
 				'<portlet:namespace />displayStyle': displayStyle,
 				'<portlet:namespace />viewEntries': <%= Boolean.FALSE.toString() %>,
 				'<portlet:namespace />viewEntriesPage': <%= Boolean.TRUE.toString() %>,
 				'<portlet:namespace />viewFolders': <%= Boolean.FALSE.toString() %>,
-				'<portlet:namespace />saveDisplayStyle': <%= Boolean.TRUE.toString() %>
+				'<portlet:namespace />saveDisplayStyle': <%= Boolean.TRUE.toString() %>,
+				'<portlet:namespace />searchType': <%= JournalSearchConstants.FRAGMENT %>
 			};
 
 			if (<%= Validator.isNull(keywords) %>) {

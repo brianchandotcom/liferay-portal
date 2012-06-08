@@ -23,45 +23,6 @@
 <liferay-ui:icon-menu align="left" cssClass="actions-button" direction="down" icon="" id="actionsButtonContainer" message="actions" showExpanded="<%= false %>" showWhenSingleIcon="<%= true %>">
 
 	<%
-	String taglibURL = "javascript:" + renderResponse.getNamespace() + "openPermissionsView()";
-	%>
-
-	<liferay-ui:icon
-		image="permissions"
-		message="permissions"
-		url="<%= taglibURL %>"
-	/>
-
-	<c:choose>
-		<c:when test="<%= SubscriptionLocalServiceUtil.isSubscribed(company.getCompanyId(), user.getUserId(), JournalArticle.class.getName(), scopeGroupId) %>">
-			<portlet:actionURL var="unsubscribeURL">
-				<portlet:param name="struts_action" value="/journal/edit_article" />
-				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-			</portlet:actionURL>
-
-			<liferay-ui:icon
-				image="unsubscribe"
-				message="unsubscribe"
-				url="<%= unsubscribeURL %>"
-			/>
-		</c:when>
-		<c:otherwise>
-			<portlet:actionURL var="subscribeURL">
-				<portlet:param name="struts_action" value="/journal/edit_article" />
-				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-			</portlet:actionURL>
-
-			<liferay-ui:icon
-				image="subscribe"
-				message="subscribe"
-				url="<%= subscribeURL %>"
-			/>
-		</c:otherwise>
-	</c:choose>
-
-	<%
 	String taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "editArticle', {action: '" + Constants.DELETE + "'});";
 	%>
 
@@ -150,19 +111,6 @@
 		);
 	}
 
-	function <portlet:namespace />openPermissionsView() {
-		Liferay.Util.openWindow(
-			{
-				dialog: {
-					width: 820
-				},
-				id: '<portlet:namespace />openPermissionsView',
-				title: '<%= UnicodeLanguageUtil.get(pageContext, "permissions") %>',
-				uri: '<liferay-security:permissionsURL modelResource="com.liferay.portlet.journal" modelResourceDescription="<%= HtmlUtil.escape(themeDisplay.getScopeGroupName()) %>" resourcePrimKey="<%= String.valueOf(scopeGroupId) %>" windowState="<%= LiferayWindowState.POP_UP.toString() %>" />'
-			}
-		);
-	}
-
 	function <portlet:namespace />openStructuresView() {
 		Liferay.Util.openWindow(
 			{
@@ -187,34 +135,5 @@
 				uri: '<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/journal/view_templates" /></liferay-portlet:renderURL>'
 			}
 		);
-	}
-</aui:script>
-
-<aui:script use="aui-base">
-	var buttons = A.all('.delete-articles-button, .expire-articles-button');
-
-	if (buttons.size()) {
-		var journalContainer = A.one('#<portlet:namespace />journalContainer');
-
-		var resultsGrid = journalContainer.one('.results-grid');
-
-		if (resultsGrid) {
-			resultsGrid.delegate(
-				'click',
-				function(event) {
-					if (resultsGrid.one(':checked') == null) {
-						buttons.hide();
-					}
-					else {
-						buttons.show();
-					}
-				},
-				':checkbox'
-			);
-
-			if (resultsGrid.one(':checked') == null) {
-				buttons.hide();
-			}
-		}
 	}
 </aui:script>

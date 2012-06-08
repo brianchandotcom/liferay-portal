@@ -185,24 +185,6 @@ String keywords = ParamUtil.getString(liferayPortletRequest, "keywords");
 			</aui:script>
 		</c:if>
 	</div>
-
-	<aui:script>
-		function <portlet:namespace />changeSearchFolder() {
-			<liferay-portlet:renderURL varImpl="changeSearchFolderURL">
-				<portlet:param name="struts_action" value="/journal/view" />
-				<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
-			</liferay-portlet:renderURL>
-
-			<c:choose>
-				<c:when test="<%= advancedSearch %>">
-					submitForm(document.<portlet:namespace />fm, '<%= changeSearchFolderURL.toString() %>');
-				</c:when>
-				<c:otherwise>
-					submitForm(document.<portlet:namespace />fm1, '<%= changeSearchFolderURL.toString() %>');
-				</c:otherwise>
-			</c:choose>
-		}
-	</aui:script>
 </c:if>
 
 <aui:script>

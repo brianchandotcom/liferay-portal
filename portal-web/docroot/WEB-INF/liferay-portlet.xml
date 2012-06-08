@@ -1723,6 +1723,7 @@
 		<struts-path>dynamic_data_lists</struts-path>
 		<indexer-class>com.liferay.portlet.dynamicdatalists.util.DDLIndexer</indexer-class>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
+        <portlet-data-handler-class>com.liferay.portlet.dynamicdatalists.lar.DDLPortletDataHandlerImpl</portlet-data-handler-class>
 		<control-panel-entry-category>content</control-panel-entry-category>
 		<control-panel-entry-weight>24.0</control-panel-entry-weight>
 		<asset-renderer-factory>com.liferay.portlet.dynamicdatalists.asset.DDLRecordAssetRendererFactory</asset-renderer-factory>
@@ -1743,6 +1744,7 @@
 		<struts-path>dynamic_data_list_display</struts-path>
 		<configuration-action-class>com.liferay.portal.kernel.portlet.DefaultConfigurationAction</configuration-action-class>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
+        <portlet-data-handler-class>com.liferay.portlet.dynamicdatalists.lar.DDLDisplayPortletDataHandlerImpl</portlet-data-handler-class>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>false</use-default-template>
 		<instanceable>true</instanceable>

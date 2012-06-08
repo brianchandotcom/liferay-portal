@@ -273,7 +273,6 @@
 				<entry key="com.liferay.portal.messaging.async.AsyncAdvice" value="defaultDestinationName,nextMethodInterceptor" />
 				<entry key="com.liferay.portal.monitoring.statistics.service.ServiceMonitorAdvice" value="monitoringDestinationName,nextMethodInterceptor" />
 				<entry key="com.liferay.portal.search.IndexableAdvice" value="nextMethodInterceptor" />
-				<entry key="com.liferay.portal.security.pacl.PACLAdvice" value="nextMethodInterceptor" />
 				<entry key="com.liferay.portal.spring.aop.ServiceBeanAutoProxyCreator" value="methodInterceptor" />
 				<entry key="com.liferay.portal.spring.bean.BeanReferenceAnnotationBeanPostProcessor" value="" />
 				<entry key="com.liferay.portal.spring.context.PortletBeanFactoryCleaner" value="" />
@@ -393,7 +392,7 @@
 			<bean class="com.liferay.portal.util.LocalizationImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.kernel.util.MethodParametersResolverUtil" class="com.liferay.portal.kernel.util.MethodParametersResolverUtil">
+	<bean id="com.liferay.portal.kernel.util.MethodParameterNamesResolverUtil" class="com.liferay.portal.kernel.util.MethodParametersResolverUtil">
 		<property name="methodParametersResolver">
 			<bean class="com.liferay.portal.util.MethodParametersResolverImpl" />
 		</property>
@@ -701,6 +700,11 @@
 			</map>
 		</property>
 	</bean>
+    <bean id="com.liferay.portlet.dynamicdatalists.lar.DDLPortletDataHandlerUtil" class="com.liferay.portlet.dynamicdatalists.lar.DDLPortletDataHandlerUtil">
+        <property name="DDLPortletDataHandler">
+            <bean class="com.liferay.portlet.dynamicdatalists.lar.DDLPortletDataHandlerImpl" />
+        </property>
+    </bean>
 	<bean id="com.liferay.portlet.dynamicdatalists.util.DDLUtil" class="com.liferay.portlet.dynamicdatalists.util.DDLUtil">
 		<property name="DDL">
 			<bean class="com.liferay.portlet.dynamicdatalists.util.DDLImpl" />
@@ -799,7 +803,7 @@
 		</property>
 	</bean>
 	<bean id="com.liferay.portlet.layoutconfiguration.util.RuntimePage" class="com.liferay.portlet.layoutconfiguration.util.RuntimePageImpl" />
-	<bean id="com.liferay.portlet.layoutconfiguration.util.RuntimePageUtil" class="com.liferay.portlet.layoutconfiguration.util.RuntimePageUtil">
+	<bean id="com.liferay.portlet.layoutconfiguration.util.RuntimePagetUtil" class="com.liferay.portlet.layoutconfiguration.util.RuntimePageUtil">
 		<property name="runtimePage" ref="com.liferay.portlet.layoutconfiguration.util.RuntimePage" />
 	</bean>
 	<bean id="com.liferay.portlet.layoutsadmin.util.SitemapUtil" class="com.liferay.portlet.layoutsadmin.util.SitemapUtil">

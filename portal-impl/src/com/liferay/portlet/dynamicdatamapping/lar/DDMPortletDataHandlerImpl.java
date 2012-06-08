@@ -18,12 +18,14 @@ import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -56,8 +58,33 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		Element structureElement = structuresElement.addElement("structure");
 
+		long defaultUserId = UserLocalServiceUtil.getDefaultUserId(
+			structure.getCompanyId());
+
+		if (defaultUserId == structure.getUserId()) {
+
+			structureElement.addAttribute("preloaded", "true");
+		}
+
 		portletDataContext.addClassedModel(
 			structureElement, path, structure, _NAMESPACE);
+	}
+
+	public static void exportTemplate(
+			PortletDataContext portletDataContext, Element templatesElement,
+			DDMTemplate template)
+		throws Exception {
+
+		String path = getTemplatePath(portletDataContext, template);
+
+		if (!portletDataContext.isPathNotProcessed(path)) {
+			return;
+		}
+
+		Element templateElement = templatesElement.addElement("template");
+
+		portletDataContext.addClassedModel(
+			templateElement, path, template, _NAMESPACE);
 	}
 
 	public static void importStructure(
@@ -85,8 +112,20 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 		DDMStructure importedStructure = null;
 
 		if (portletDataContext.isDataStrategyMirror()) {
-			DDMStructure existingStructure = DDMStructureUtil.fetchByUUID_G(
-				structure.getUuid(), portletDataContext.getScopeGroupId());
+			boolean preloaded = GetterUtil.getBoolean(
+				structureElement.attributeValue("preloaded"), false);
+
+			DDMStructure existingStructure = null;
+
+			if (!preloaded) {
+				existingStructure = DDMStructureUtil.fetchByUUID_G(
+					structure.getUuid(), portletDataContext.getScopeGroupId());
+			}
+			else {
+				existingStructure = DDMStructureUtil.fetchByG_S(
+					portletDataContext.getScopeGroupId(),
+					structure.getStructureKey());
+			}
 
 			if (existingStructure == null) {
 				serviceContext.setUuid(structure.getUuid());
@@ -122,69 +161,7 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 			structure.getStructureId(), importedStructure.getStructureId());
 	}
 
-	@Override
-	public PortletDataHandlerControl[] getExportControls() {
-		return new PortletDataHandlerControl[] {_structures, _templates};
-	}
-
-	@Override
-	public PortletDataHandlerControl[] getImportControls() {
-		return new PortletDataHandlerControl[] {_structures, _templates};
-	}
-
-	@Override
-	public boolean isAlwaysExportable() {
-		return _ALWAYS_EXPORTABLE;
-	}
-
-	protected static void exportTemplate(
-			PortletDataContext portletDataContext, Element templatesElement,
-			DDMTemplate template)
-		throws Exception {
-
-		String path = getTemplatePath(portletDataContext, template);
-
-		if (!portletDataContext.isPathNotProcessed(path)) {
-			return;
-		}
-
-		Element templateElement = templatesElement.addElement("template");
-
-		portletDataContext.addClassedModel(
-			templateElement, path, template, _NAMESPACE);
-	}
-
-	protected static String getStructurePath(
-		PortletDataContext portletDataContext, DDMStructure structure) {
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(
-			portletDataContext.getPortletPath(
-				PortletKeys.DYNAMIC_DATA_MAPPING));
-		sb.append("/structures/");
-		sb.append(structure.getStructureId());
-		sb.append(".xml");
-
-		return sb.toString();
-	}
-
-	protected static String getTemplatePath(
-		PortletDataContext portletDataContext, DDMTemplate template) {
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(
-			portletDataContext.getPortletPath(
-				PortletKeys.DYNAMIC_DATA_MAPPING));
-		sb.append("/templates/");
-		sb.append(template.getTemplateId());
-		sb.append(".xml");
-
-		return sb.toString();
-	}
-
-	protected static void importTemplate(
+	public static void importTemplate(
 			PortletDataContext portletDataContext, Element templateElement)
 		throws Exception {
 
@@ -251,6 +228,51 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		portletDataContext.importClassedModel(
 			template, importedTemplate, _NAMESPACE);
+	}
+
+	@Override
+	public PortletDataHandlerControl[] getExportControls() {
+		return new PortletDataHandlerControl[] {_structures, _templates};
+	}
+
+	@Override
+	public PortletDataHandlerControl[] getImportControls() {
+		return new PortletDataHandlerControl[] {_structures, _templates};
+	}
+
+	@Override
+	public boolean isAlwaysExportable() {
+		return _ALWAYS_EXPORTABLE;
+	}
+
+	protected static String getStructurePath(
+		PortletDataContext portletDataContext, DDMStructure structure) {
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(
+			portletDataContext.getPortletPath(
+				PortletKeys.DYNAMIC_DATA_MAPPING));
+		sb.append("/structures/");
+		sb.append(structure.getStructureId());
+		sb.append(".xml");
+
+		return sb.toString();
+	}
+
+	protected static String getTemplatePath(
+		PortletDataContext portletDataContext, DDMTemplate template) {
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(
+			portletDataContext.getPortletPath(
+				PortletKeys.DYNAMIC_DATA_MAPPING));
+		sb.append("/templates/");
+		sb.append(template.getTemplateId());
+		sb.append(".xml");
+
+		return sb.toString();
 	}
 
 	@Override

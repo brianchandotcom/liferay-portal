@@ -31,6 +31,8 @@ public class ThemeHelper {
 
 	public static final String TEMPLATE_EXTENSION_FTL = "ftl";
 
+	public static final String TEMPLATE_EXTENSION_JSP = "jsp";
+
 	public static final String TEMPLATE_EXTENSION_VM = "vm";
 
 	public static String getResourcePath(

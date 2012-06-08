@@ -281,7 +281,7 @@ String[] socialBookmarksTypesArray = StringUtil.split(preferences.getValue("soci
 					for (int pageDeltaValue : PropsValues.BLOGS_ENTRY_PAGE_DELTA_VALUES) {
 					%>
 
-						<aui:option label="<%= pageDelta %>" selected="<%= pageDelta == pageDeltaValue %>" />
+						<aui:option label="<%= pageDeltaValue %>" selected="<%= pageDelta == pageDelta %>" />
 
 					<%
 					}

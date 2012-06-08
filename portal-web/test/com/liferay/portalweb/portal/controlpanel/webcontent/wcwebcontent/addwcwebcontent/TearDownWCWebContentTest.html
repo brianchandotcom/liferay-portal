@@ -40,48 +40,258 @@
 </tr>
 <tr>
 	<td>storeElementPresent</td>
-	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
-	<td>webContentPresent</td>
+	<td>//input[@name='_15_rowIds']</td>
+	<td>webContent1Present</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${webContentPresent}</td>
-	<td>WebContentNotPresent</td>
+	<td>!${webContent1Present}</td>
+	<td>WebContent1NotPresent</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
-	<td>//input[@name='_15_allRowIds']</td>
-	<td>Select All</td>
+	<td>assertVisible</td>
+	<td>//a[contains(@id,'_1_menuButton')]</td>
+	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@name='_15_allRowIds']</td>
-	<td>Select All</td>
+	<td>//a[contains(@id,'_1_menuButton')]</td>
+	<td>Actions</td>
 </tr>
 <tr>
-	<td>assertChecked</td>
-	<td>//input[@name='_15_allRowIds']</td>
-	<td>Select All</td>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]</td>
+	<td>Delete</td>
 </tr>
 <tr>
-	<td>waitForElementNotPresent</td>
-	<td>//span[contains(@class,'aui-button-disabled')]/span/input[@value='Delete']</td>
-	<td>Disabled Delete Button</td>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]</td>
+	<td>Delete</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>//input[@value='Delete']</td>
+	<td>clickAtAndWait</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]</td>
 	<td>Delete</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete the selected web content?</td>
+	<td>Are you sure you want to delete this? It will be deleted immediately.</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>storeElementPresent</td>
+	<td>//input[@name='_15_rowIds']</td>
+	<td>webContent2Present</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${webContent2Present}</td>
+	<td>WebContent2NotPresent</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//a[contains(@id,'_1_menuButton')]</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//a[contains(@id,'_1_menuButton')]</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//a[contains(@id,'_1_menu_delete')]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[contains(@id,'_1_menu_delete')]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//a[contains(@id,'_1_menu_delete')]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertConfirmation</td>
+	<td>Are you sure you want to delete this? It will be deleted immediately.</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>storeElementPresent</td>
+	<td>//input[@name='_15_rowIds']</td>
+	<td>webContent3Present</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${webContent3Present}</td>
+	<td>WebContent3NotPresent</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//a[contains(@id,'_1_menuButton')]</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//a[contains(@id,'_1_menuButton')]</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//a[contains(@id,'_1_menu_delete')]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[contains(@id,'_1_menu_delete')]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//a[contains(@id,'_1_menu_delete')]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertConfirmation</td>
+	<td>Are you sure you want to delete this? It will be deleted immediately.</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>storeElementPresent</td>
+	<td>//input[@name='_15_rowIds']</td>
+	<td>webContent4Present</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${webContent4Present}</td>
+	<td>WebContent4NotPresent</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//a[contains(@id,'_1_menuButton')]</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//a[contains(@id,'_1_menuButton')]</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//a[contains(@id,'_1_menu_delete')]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[contains(@id,'_1_menu_delete')]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//a[contains(@id,'_1_menu_delete')]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertConfirmation</td>
+	<td>Are you sure you want to delete this? It will be deleted immediately.</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>storeElementPresent</td>
+	<td>//input[@name='_15_rowIds']</td>
+	<td>webContent5Present</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${webContent5Present}</td>
+	<td>WebContent5NotPresent</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//a[contains(@id,'_1_menuButton')]</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//a[contains(@id,'_1_menuButton')]</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//a[contains(@id,'_1_menu_delete')]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[contains(@id,'_1_menu_delete')]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//a[contains(@id,'_1_menu_delete')]</td>
+	<td>Delete</td>
+</tr>
+<tr>
+	<td>assertConfirmation</td>
+	<td>Are you sure you want to delete this? It will be deleted immediately.</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>WebContent1NotPresent</td>
 	<td></td>
 </tr>
 <tr>
 	<td>label</td>
-	<td>WebContentNotPresent</td>
+	<td>WebContent2NotPresent</td>
 	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>WebContent3NotPresent</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>WebContent4NotPresent</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>WebContent5NotPresent</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>No Web Content was found.</td>
 </tr>
 </tbody></table>
 </body>

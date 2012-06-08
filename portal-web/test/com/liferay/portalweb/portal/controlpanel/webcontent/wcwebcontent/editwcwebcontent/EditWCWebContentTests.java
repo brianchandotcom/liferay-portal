@@ -12,9 +12,11 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontent;
+package com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.editwcwebcontent;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontent.AddWCWebContentTest;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontent.TearDownWCWebContentTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -22,11 +24,12 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddWCWebContentTests extends BaseTestSuite {
+public class EditWCWebContentTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddWCWebContentTest.class);
-		testSuite.addTestSuite(ViewWCWebContentTest.class);
+		testSuite.addTestSuite(EditWCWebContentTest.class);
+		testSuite.addTestSuite(ViewEditWCWebContentTest.class);
 		testSuite.addTestSuite(TearDownWCWebContentTest.class);
 
 		return testSuite;

@@ -508,12 +508,14 @@ public class UserServiceUtil {
 
 	public static java.util.List<com.liferay.portal.model.User> getCompanyUsers(
 		long companyId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getCompanyUsers(companyId, start, end);
 	}
 
 	public static int getCompanyUsersCount(long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getCompanyUsersCount(companyId);
 	}
 

@@ -497,12 +497,14 @@ public class UserServiceWrapper implements UserService,
 
 	public java.util.List<com.liferay.portal.model.User> getCompanyUsers(
 		long companyId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return _userService.getCompanyUsers(companyId, start, end);
 	}
 
 	public int getCompanyUsersCount(long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return _userService.getCompanyUsersCount(companyId);
 	}
 

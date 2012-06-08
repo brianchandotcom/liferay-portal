@@ -36,6 +36,7 @@ import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Phone;
 import com.liferay.portal.model.Role;
+import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.UserGroupRole;
@@ -634,16 +635,25 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	}
 
 	public List<User> getCompanyUsers(long companyId, int start, int end)
-		throws SystemException {
+		throws PortalException, SystemException {
 
-		// todo add permission
+		if (!roleLocalService.hasUserRole(
+				getUserId(), companyId, RoleConstants.ADMINISTRATOR, true)) {
+
+			throw new PrincipalException();
+		}
 
 		return userLocalService.getCompanyUsers(companyId, start, end);
 	}
 
-	public int getCompanyUsersCount(long companyId) throws SystemException {
+	public int getCompanyUsersCount(long companyId)
+			throws PortalException, SystemException {
 
-		// todo add permission
+		if (!roleLocalService.hasUserRole(
+				getUserId(), companyId, RoleConstants.ADMINISTRATOR, true)) {
+
+			throw new PrincipalException();
+		}
 
 		return userLocalService.getCompanyUsersCount(companyId);
 	}

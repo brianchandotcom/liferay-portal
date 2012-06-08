@@ -495,6 +495,10 @@ public class FileChecker extends BaseChecker {
 
 	private static Log _log = LogFactoryUtil.getLog(FileChecker.class);
 
+	static {
+		_log.debug("Loading " + FileAvailabilityUtil.class.getName());
+	}
+
 	private String[] _defaultReadPathsFromArray;
 	private String[] _defaultReadPathsToArray;
 	private List<Permission> _deletePermissions;

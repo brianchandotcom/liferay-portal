@@ -19,6 +19,7 @@ import com.liferay.portal.json.serializer.dependencies.PrimitiveArraysSerializab
 import com.liferay.portal.json.serializer.dependencies.Primitives;
 import com.liferay.portal.json.serializer.dependencies.PrimitivesSerializable;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.test.AssertUtils;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 
 import org.junit.Assert;
@@ -28,13 +29,12 @@ import org.junit.runner.RunWith;
 /**
  * @author Sergio Sánchez
  */
-
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class JSONFactoryUtilTest {
-	
+
 	public static final double[] DOUBLE_ARRAY = {1.2345, 2.3456, 5.6789};
-	public static final double DOUBLE_VALUE = 3.1425927;
 	public static final String DOUBLE_ARRAY_STRING = "[1.2345,2.3456,5.6789]";
+	public static final double DOUBLE_VALUE = 3.1425927;
 	public static final int[] INTEGER_ARRAY = {1, 2, 3, 4, 5};
 	public static final String INTEGER_ARRAY_STRING = "[1,2,3,4,5]";
 	public static final int INTEGER_VALUE = 5;
@@ -43,7 +43,7 @@ public class JSONFactoryUtilTest {
 	public static final String LONG_ARRAY_STRING =
 		"[10000000000000,20000000000000,30000000000000]";
 	public static final long LONG_VALUE = 50000000000000L;
-	
+
 	@Test
 	public void testDeserializePrimitiveArrays() {
 		String json = buildPrimitiveArraysJson();
@@ -86,7 +86,7 @@ public class JSONFactoryUtilTest {
 		Object primitivesSerializable = JSONFactoryUtil.deserialize(json);
 
 		Assert.assertTrue(
-				primitivesSerializable instanceof PrimitivesSerializable);
+			primitivesSerializable instanceof PrimitivesSerializable);
 
 		checkPrimitives((PrimitivesSerializable)primitivesSerializable);
 	}
@@ -149,7 +149,7 @@ public class JSONFactoryUtilTest {
 
 	protected String buildPrimitiveArraysSerializableJson() {
 		PrimitiveArraysSerializable primitiveArraysSerializable =
-				new PrimitiveArraysSerializable();
+			new PrimitiveArraysSerializable();
 
 		initializePrimitiveArrays(primitiveArraysSerializable);
 
@@ -183,7 +183,7 @@ public class JSONFactoryUtilTest {
 
 	protected String buildPrimitivesSerializableJson() {
 		PrimitivesSerializable primitivesSerializable =
-				new PrimitivesSerializable();
+			new PrimitivesSerializable();
 
 		initializePrimitives(primitivesSerializable);
 
@@ -193,7 +193,7 @@ public class JSONFactoryUtilTest {
 			json = JSONFactoryUtil.serialize(primitivesSerializable);
 		} catch(IllegalArgumentException iae) {
 			Assert.fail(
-					"Cannot serialize " + primitivesSerializable + " object");
+				"Cannot serialize " + primitivesSerializable + " object");
 		}
 
 		return json;
@@ -201,20 +201,16 @@ public class JSONFactoryUtilTest {
 
 	protected void checkJsonPrimitiveArrays(String json) {
 		Assert.assertTrue(json.contains(
-				"\"doubleArray\":" + DOUBLE_ARRAY_STRING));
+			"\"doubleArray\":" + DOUBLE_ARRAY_STRING));
+		Assert.assertTrue(json.contains("\"longArray\":" + LONG_ARRAY_STRING));
 		Assert.assertTrue(json.contains(
-				"\"longArray\":" + LONG_ARRAY_STRING));
-		Assert.assertTrue(json.contains(
-				"\"integerArray\":" + INTEGER_ARRAY_STRING));
+			"\"integerArray\":" + INTEGER_ARRAY_STRING));
 	}
 
 	protected void checkJsonPrimitives(String json) {
-		Assert.assertTrue(json.contains(
-				"\"longValue\":" + LONG_VALUE));
-		Assert.assertTrue(json.contains(
-				"\"integerValue\":" + INTEGER_VALUE));
-		Assert.assertTrue(json.contains(
-				"\"doubleValue\":" + DOUBLE_VALUE));
+		Assert.assertTrue(json.contains("\"longValue\":" + LONG_VALUE));
+		Assert.assertTrue(json.contains("\"integerValue\":" + INTEGER_VALUE));
+		Assert.assertTrue(json.contains("\"doubleValue\":" + DOUBLE_VALUE));
 	}
 
 	protected void checkJsonSerializableArgument(String json) {
@@ -222,32 +218,29 @@ public class JSONFactoryUtilTest {
 	}
 
 	protected void checkPrimitiveArrays(PrimitiveArrays primitiveArrays) {
-		Assert.assertTrue(primitiveArrays.getIntegerArray().equals(
-				primitiveArrays.getIntegerArray()));
-		Assert.assertTrue(primitiveArrays.getLongArray().equals(
-				primitiveArrays.getLongArray()));
-		Assert.assertTrue(primitiveArrays.getDoubleArray().equals(
-				primitiveArrays.getDoubleArray()));
+		AssertUtils.assertArrayEquals(
+			DOUBLE_ARRAY, primitiveArrays.getDoubleArray());
+		Assert.assertArrayEquals(
+			INTEGER_ARRAY, primitiveArrays.getIntegerArray());
+		Assert.assertArrayEquals(LONG_ARRAY, primitiveArrays.getLongArray());
 	}
 
 	protected void checkPrimitives(Primitives primitives) {
-		Assert.assertTrue(
-				primitives.getIntegerValue() == INTEGER_VALUE);
-		Assert.assertTrue(primitives.getLongValue() == LONG_VALUE);
-		Assert.assertTrue(
-				primitives.getDoubleValue() == DOUBLE_VALUE);
+		Assert.assertEquals(INTEGER_VALUE, primitives.getIntegerValue());
+		Assert.assertEquals(LONG_VALUE, primitives.getLongValue());
+		AssertUtils.assertEquals(DOUBLE_VALUE, primitives.getDoubleValue());
 	}
-	
+
 	protected void initializePrimitiveArrays(PrimitiveArrays primitiveArrays) {
+		primitiveArrays.setDoubleArray(DOUBLE_ARRAY);
 		primitiveArrays.setIntegerArray(INTEGER_ARRAY);
 		primitiveArrays.setLongArray(LONG_ARRAY);
-		primitiveArrays.setDoubleArray(DOUBLE_ARRAY);
 	}
-	
+
 	protected void initializePrimitives(Primitives primitives) {
+		primitives.setDoubleValue(DOUBLE_VALUE);
 		primitives.setIntegerValue(INTEGER_VALUE);
 		primitives.setLongValue(LONG_VALUE);
-		primitives.setDoubleValue(DOUBLE_VALUE);
 	}
 
 }

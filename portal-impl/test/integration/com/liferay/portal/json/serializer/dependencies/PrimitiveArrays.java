@@ -18,6 +18,9 @@ import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.Arrays;
 
+/**
+ * @author Miguel Pastor
+ */
 public class PrimitiveArrays {
 
 	public double[] getDoubleArray() {

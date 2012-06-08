@@ -16,6 +16,9 @@ package com.liferay.portal.json.serializer.dependencies;
 
 import com.liferay.portal.kernel.util.StringBundler;
 
+/**
+ * @author Miguel Pastor
+ */
 public class Primitives {
 
 	public double getDoubleValue() {

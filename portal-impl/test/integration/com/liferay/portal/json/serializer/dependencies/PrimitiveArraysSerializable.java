@@ -16,9 +16,13 @@ package com.liferay.portal.json.serializer.dependencies;
 
 import java.io.Serializable;
 
+/**
+ * @author Miguel Pastor
+ */
 public class PrimitiveArraysSerializable extends PrimitiveArrays
 	implements Serializable {
 
-	public PrimitiveArraysSerializable(){}
+	public PrimitiveArraysSerializable() {
+	}
 
 }

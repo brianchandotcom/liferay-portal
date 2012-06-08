@@ -62,7 +62,7 @@ public class SOUs_ReplyMicroblogsContentMentionsProfileTest extends BaseTestCase
 			}
 
 			try {
-				if (selenium.isVisible("//span[@class='placeholder-text']")) {
+				if (selenium.isVisible("//div[@class='autocomplete textarea']")) {
 					break;
 				}
 			}
@@ -73,7 +73,7 @@ public class SOUs_ReplyMicroblogsContentMentionsProfileTest extends BaseTestCase
 		}
 
 		Thread.sleep(5000);
-		selenium.clickAt("//span[@class='placeholder-text']",
+		selenium.clickAt("//div[@class='autocomplete textarea']",
 			RuntimeVariables.replace("Leave a comment..."));
 
 		for (int second = 0;; second++) {

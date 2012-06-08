@@ -96,6 +96,7 @@ public class AddMicroblogsContent1ViewableByConnectionsTest extends BaseTestCase
 			selenium.getText("//span[@class='microblogs-countdown']"));
 		selenium.select("//select[@id='_1_WAR_microblogsportlet_socialRelationType']",
 			RuntimeVariables.replace("Connections"));
+		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Post']",
 			RuntimeVariables.replace("Post"));
 

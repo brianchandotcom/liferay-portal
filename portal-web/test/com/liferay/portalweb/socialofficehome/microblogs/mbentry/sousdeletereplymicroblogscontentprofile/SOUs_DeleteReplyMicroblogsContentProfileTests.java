@@ -45,6 +45,8 @@ public class SOUs_DeleteReplyMicroblogsContentProfileTests extends BaseTestSuite
 		testSuite.addTestSuite(SOUs_ViewDeleteReplyMicroblogsContentTest.class);
 		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SignInSOTest.class);
+		testSuite.addTestSuite(ViewDeleteReplyMicroblogsContentTest.class);
+		testSuite.addTestSuite(ViewDeleteReplyMicroblogsContentNotificationsTest.class);
 		testSuite.addTestSuite(TearDownWHEntryContentTest.class);
 		testSuite.addTestSuite(TearDownSOUserTest.class);
 

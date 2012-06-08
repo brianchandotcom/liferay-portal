@@ -140,6 +140,7 @@ if (fileEntryTypeId >= 0) {
 
 	searchContext.setEnd(entryEnd);
 	searchContext.setStart(entryStart);
+	searchContext.setAttribute("paginationType", "none");
 
 	Hits hits = indexer.search(searchContext);
 

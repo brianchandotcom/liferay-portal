@@ -532,6 +532,17 @@ public class JournalArticleServiceUtil {
 		return getService().updateContent(groupId, articleId, version, content);
 	}
 
+	public static com.liferay.portlet.journal.model.JournalArticle updateStatus(
+		long userId, long groupId, java.lang.String articleId, double version,
+		int status, java.lang.String articleURL,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateStatus(userId, groupId, articleId, version, status,
+			articleURL, serviceContext);
+	}
+
 	public static JournalArticleService getService() {
 		if (_service == null) {
 			_service = (JournalArticleService)PortalBeanLocatorUtil.locate(JournalArticleService.class.getName());

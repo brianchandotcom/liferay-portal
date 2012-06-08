@@ -608,4 +608,17 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			groupId, articleId, version, content);
 	}
 
+	public JournalArticle updateStatus(
+			long userId, long groupId, String articleId, double version,
+			int status, String articleURL, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		JournalArticlePermission.check(
+			getPermissionChecker(), groupId, articleId, version,
+			ActionKeys.UPDATE);
+
+		return journalArticleLocalService.updateStatus(
+			userId, groupId, articleId, version, status, articleURL,
+			serviceContext);
+	}
 }

@@ -20,34 +20,58 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.PortletItem;
 import com.liferay.portal.model.impl.PortletItemModelImpl;
 import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.ExecutionTestListeners;
-import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
+import com.liferay.portal.test.persistence.TransactionalPersistenceAdvice;
 import com.liferay.portal.util.PropsValues;
 
+import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import org.junit.runner.RunWith;
 
+import java.io.Serializable;
+
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @ExecutionTestListeners(listeners =  {
 	PersistenceExecutionTestListener.class})
-@RunWith(LiferayIntegrationJUnitTestRunner.class)
+@RunWith(LiferayPersistenceIntegrationJUnitTestRunner.class)
 public class PortletItemPersistenceTest {
-	@Before
-	public void setUp() throws Exception {
-		_persistence = (PortletItemPersistence)PortalBeanLocatorUtil.locate(PortletItemPersistence.class.getName());
+	@After
+	public void tearDown() throws Exception {
+		Map<Serializable, BasePersistence<?>> persistedEntities = _transactionalPersistenceAdvice.getPersistedEntities();
+
+		Set<Serializable> entityKeys = persistedEntities.keySet();
+
+		for (Serializable entitiKey : entityKeys) {
+			BasePersistence<?> persistence = persistedEntities.get(entitiKey);
+
+			try {
+				persistence.remove(entitiKey);
+			}
+			catch (Exception e) {
+				_log.debug("The entity " + entitiKey +
+					" has been already deleted");
+			}
+		}
+
+		_transactionalPersistenceAdvice.reset();
 	}
 
 	@Test
@@ -296,5 +320,7 @@ public class PortletItemPersistenceTest {
 		return portletItem;
 	}
 
-	private PortletItemPersistence _persistence;
+	private static Log _log = LogFactoryUtil.getLog(PortletItemPersistenceTest.class);
+	private PortletItemPersistence _persistence = (PortletItemPersistence)PortalBeanLocatorUtil.locate(PortletItemPersistence.class.getName());
+	private TransactionalPersistenceAdvice _transactionalPersistenceAdvice = (TransactionalPersistenceAdvice)PortalBeanLocatorUtil.locate(TransactionalPersistenceAdvice.class.getName());
 }

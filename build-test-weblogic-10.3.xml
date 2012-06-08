@@ -4,17 +4,23 @@
 	<import file="build-test.xml" />
 
 	<target name="run-selenium-weblogic-10.3">
-		<antcall target="prepare-vm-server">
-			<param name="vm.vmdk.suffix" value="weblogic-10.3.2" />
-		</antcall>
-
-		<exec executable="${plink.executable}">
-			<arg line="-pw ${vm.password} ${vm.username}@${vm.host} cmd.exe /c C:\oracle\middleware\user_projects\domains\base_domain\bin\stopWebLogic.cmd" />
-		</exec>
-
 		<tstamp>
 			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
 		</tstamp>
+
+		<echo file="app.server.${user.name}.properties">app.server.type=weblogic</echo>
+
+		<if>
+			<not>
+				<isset property="build.app.server" />
+			</not>
+			<then>
+				<ant antfile="build-dist.xml" target="unzip-weblogic" />
+				<ant target="all" />
+			</then>
+		</if>
+
+		<ant antfile="build-dist.xml" target="zip-portal-dependencies" />
 
 		<unzip src="dist/liferay-portal-dependencies-${lp.version}.zip" dest="${tstamp.value}">
 			<mapper type="flatten" />
@@ -42,64 +48,6 @@
 				</copy>
 			</then>
 		</if>
-
-		<antcall target="install-vm-java" />
-
-		<exec executable="${pscp.executable}">
-			<arg line="-pw ${vm.password} ${tstamp.value}\*.jar ${vm.username}@${vm.host}:/oracle/middleware/user_projects/domains/base_domain/lib" />
-		</exec>
-
-		<exec executable="${plink.executable}">
-			<arg line="-pw ${vm.password} ${vm.username}@${vm.host} cmd.exe /c mkdir C:\Java\jdk-1.6.0_23\jre\lib\endorsed" />
-		</exec>
-
-		<exec executable="${plink.executable}">
-			<arg line="-pw ${vm.password} ${vm.username}@${vm.host} cmd.exe /c move C:\oracle\middleware\user_projects\domains\base_domain\lib\serializer.jar C:\Java\jdk-1.6.0_23\jre\lib\endorsed" />
-		</exec>
-
-		<exec executable="${plink.executable}">
-			<arg line="-pw ${vm.password} ${vm.username}@${vm.host} cmd.exe /c move C:\oracle\middleware\user_projects\domains\base_domain\lib\xalan.jar C:\Java\jdk-1.6.0_23\jre\lib\endorsed" />
-		</exec>
-
-		<delete dir="${tstamp.value}" />
-
-		<exec executable="${pscp.executable}">
-			<arg line="-pw ${vm.password} ${vm.username}@${vm.host}:/oracle/middleware/user_projects/domains/base_domain/bin/setDomainEnv.cmd setDomainEnv.cmd" />
-		</exec>
-
-		<replace file="setDomainEnv.cmd">
-			<replacefilter token="set JAVA_PROPERTIES=%JAVA_PROPERTIES% %EXTRA_JAVA_PROPERTIES%" value="set JAVA_PROPERTIES=-Dfile.encoding=UTF8 %JAVA_PROPERTIES% %EXTRA_JAVA_PROPERTIES%" />
-			<replacefilter token="set MEM_MAX_PERM_SIZE_32BIT=-XX:MaxPermSize=128m" value="set MEM_MAX_PERM_SIZE_32BIT=-XX:MaxPermSize=256m" />
-			<replacefilter token="set WLS_MEM_ARGS_32BIT=-Xms256m -Xmx512m" value="set WLS_MEM_ARGS_32BIT=-Xms256m -Xmx1024m" />
-			<replacefilter token="set SUN_JAVA_HOME=C:\Oracle\Middleware\jdk160_14_R27.6.5-32" value="set SUN_JAVA_HOME=C:\Java\jdk-1.6.0_23" />
-			<replacefilter token="set JAVA_HOME=C:\Oracle\Middleware\jdk160_14_R27.6.5-32" value="set JAVA_HOME=C:\Java\jdk-1.6.0_23" />
-		</replace>
-
-		<exec executable="${pscp.executable}">
-			<arg line="-pw ${vm.password} setDomainEnv.cmd ${vm.username}@${vm.host}:/oracle/middleware/user_projects/domains/base_domain/bin/setDomainEnv.cmd" />
-		</exec>
-
-		<delete file="setDomainEnv.cmd" />
-
-		<parallel>
-			<exec executable="${plink.executable}">
-				<arg line="-pw ${vm.password} ${vm.username}@${vm.host} cmd.exe /c C:\oracle\middleware\user_projects\domains\base_domain\bin\startWebLogic.cmd" />
-			</exec>
-
-			<sequential>
-				<waitfor>
-					<http url="http://${vm.host}:7001/console" />
-				</waitfor>
-
-				<exec executable="${plink.executable}">
-					<arg line="-pw ${vm.password} ${vm.username}@${vm.host} C:\Java\jdk-1.6.0_23\bin\java.exe -cp C:\Oracle\Middleware\wlserver_10.3\server\lib\weblogic.jar -Xmx1024m weblogic.Deployer -adminurl t3://localhost:7001 -user system -password password1 -deploy -upload C:\liferay-portal-${lp.version}.war" />
-				</exec>
-
-				<exec executable="${plink.executable}">
-					<arg line="-pw ${vm.password} ${vm.username}@${vm.host} cmd.exe /c C:\oracle\middleware\user_projects\domains\base_domain\bin\stopWebLogic.cmd" />
-				</exec>
-			</sequential>
-		</parallel>
 
 		<if>
 			<isset property="hook.plugins.includes" />
@@ -174,18 +122,6 @@
 
 		<antcall target="revert-test-properties" />
 
-		<replace
-			file="portal-impl/test/test-portal-impl.properties"
-			token="localhost:8080"
-			value="${vm.host}:7001"
-		/>
-
-		<replace
-			file="portal-web/test/test-portal-web.properties"
-			token="localhost:8080"
-			value="${vm.host}:7001"
-		/>
-
 		<antcall target="prepare-selenium" />
 
 		<antcall target="start-selenium" />
@@ -202,32 +138,26 @@
 
 		<antcall target="evaluate-logs" />
 
-		<antcall target="stop-selenium" />
+		<delete dir="${tstamp.value}" />
 
-		<exec dir="${vm.drive}/${vm.host}" executable="${vmware-cmd.executable}">
-			<arg line="${vm.drive}\${vm.host}\${vm.host}.vmx stop hard" />
-		</exec>
+		<antcall target="stop-selenium" />
 	</target>
 
 	<target name="run-weblogic-10.3">
-		<antcall target="rebuild-database" inheritAll="false" />
+		<antcall target="run-simple-server">
+			<param name="simple.server.dir" value="${app.server.weblogic.dir}" />
+			<param name="simple.server.bin.dir" value="${app.server.weblogic.bin.dir}" />
+			<param name="simple.server.deploy.dir" value="${app.server.weblogic.deploy.dir}" />
+			<param name="simple.server.lib.global.dir" value="${app.server.weblogic.lib.global.dir}" />
+			<param name="simple.server.portal.dir" value="${app.server.weblogic.portal.dir}" />
+			<param name="simple.server.start.executable" value="../run.bat" />
+			<param name="simple.server.start.executable.arg.line" value="" />
+			<param name="simple.server.stop.executable" value="stopWebLogic.cmd" />
+			<param name="simple.server.stop.executable.arg.line" value="" />
+		</antcall>
 
-		<parallel>
-			<exec executable="${plink.executable}">
-				<arg line="-pw ${vm.password} ${vm.username}@${vm.host} cmd.exe /c C:\oracle\middleware\user_projects\domains\base_domain\bin\startWebLogic.cmd" />
-			</exec>
+		<record action="stop" name="log" />
 
-			<sequential>
-				<waitfor>
-					<http url="http://${vm.host}:7001/console" />
-				</waitfor>
-
-				<antcall target="run-selenium-test" />
-
-				<exec executable="${plink.executable}">
-					<arg line="-pw ${vm.password} ${vm.username}@${vm.host} cmd.exe /c C:\oracle\middleware\user_projects\domains\base_domain\bin\stopWebLogic.cmd" />
-				</exec>
-			</sequential>
-		</parallel>
+		<antcall target="evaluate-logs" />
 	</target>
 </project>

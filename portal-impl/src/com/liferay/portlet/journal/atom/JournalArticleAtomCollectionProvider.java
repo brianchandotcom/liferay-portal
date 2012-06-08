@@ -28,7 +28,6 @@ import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
 import com.liferay.portlet.journal.util.comparator.ArticleVersionComparator;
 
@@ -139,7 +138,7 @@ public class JournalArticleAtomCollectionProvider
 
 		OrderByComparator obc = new ArticleVersionComparator();
 
-		int count = JournalArticleLocalServiceUtil.searchCount(
+		int count = JournalArticleServiceUtil.searchCount(
 			companyId, groupId, folderId, classNameId, keywords, version, type,
 			structureId, templateId, displayDateGT, displayDateLT, status,
 			reviewDate);
@@ -148,7 +147,7 @@ public class JournalArticleAtomCollectionProvider
 
 		AtomUtil.saveAtomPagerInRequest(atomRequestContext, atomPager);
 
-		journalArticles = JournalArticleLocalServiceUtil.search(
+		journalArticles = JournalArticleServiceUtil.search(
 			companyId, groupId, folderId, classNameId, keywords, version, type,
 			structureId, templateId, displayDateGT, displayDateLT, status,
 			reviewDate, atomPager.getStart(), atomPager.getEnd() + 1, obc);
@@ -228,7 +227,7 @@ public class JournalArticleAtomCollectionProvider
 		double version = journalArticle.getVersion();
 		int status = WorkflowConstants.STATUS_APPROVED;
 
-		journalArticle = JournalArticleLocalServiceUtil.updateStatus(
+		journalArticle = JournalArticleServiceUtil.updateStatus(
 			user.getUserId(), groupId, journalArticle.getArticleId(), version,
 			status, articleURL, serviceContext);
 
@@ -258,7 +257,7 @@ public class JournalArticleAtomCollectionProvider
 		int status = WorkflowConstants.STATUS_APPROVED;
 		String articleURL = StringPool.BLANK;
 
-		JournalArticleLocalServiceUtil.updateStatus(
+		JournalArticleServiceUtil.updateStatus(
 			user.getUserId(), groupId, journalArticle.getArticleId(),
 			journalArticle.getVersion(), status, articleURL, serviceContext);
 	}

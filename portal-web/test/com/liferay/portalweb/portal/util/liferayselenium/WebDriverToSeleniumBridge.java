@@ -163,8 +163,7 @@ public class WebDriverToSeleniumBridge
 			int x = GetterUtil.getInteger(coords[0]);
 			int y = GetterUtil.getInteger(coords[1]);
 
-			actions.moveToElement(webElement, x, y)
-				.click();
+			actions.moveToElement(webElement, x, y).click();
 
 			Action action = actions.build();
 
@@ -243,8 +242,7 @@ public class WebDriverToSeleniumBridge
 			int x = GetterUtil.getInteger(coords[0]);
 			int y = GetterUtil.getInteger(coords[1]);
 
-			actions.moveToElement(webElement, x, y)
-				.doubleClick();
+			actions.moveToElement(webElement, x, y).doubleClick();
 		}
 		else {
 			actions.doubleClick(webElement);
@@ -632,8 +630,7 @@ public class WebDriverToSeleniumBridge
 			} else {
 				Keys keys = _keysArray[index];
 
-				actions.keyDown(webElement, keys)
-					.keyUp(webElement, keys);
+				actions.keyDown(webElement, keys).keyUp(webElement, keys);
 
 				Action action = actions.build();
 
@@ -674,8 +671,7 @@ public class WebDriverToSeleniumBridge
 
 		Actions actions = new Actions(webDriver);
 
-		actions.moveToElement(webElement)
-			.clickAndHold(webElement);
+		actions.moveToElement(webElement).clickAndHold(webElement);
 
 		Action action = actions.build();
 
@@ -703,8 +699,7 @@ public class WebDriverToSeleniumBridge
 
 		Actions actions = new Actions(webDriver);
 
-		actions.moveToElement(webElement)
-			.clickAndHold(webElement);
+		actions.moveToElement(webElement).clickAndHold(webElement);
 
 		Action action = actions.build();
 
@@ -726,8 +721,7 @@ public class WebDriverToSeleniumBridge
 			int x = GetterUtil.getInteger(coords[0]);
 			int y = GetterUtil.getInteger(coords[1]);
 
-			actions.moveToElement(webElement, x, y)
-				.clickAndHold(webElement);
+			actions.moveToElement(webElement, x, y).clickAndHold(webElement);
 		}
 		else {
 			actions.moveToElement(webElement)
@@ -748,8 +742,7 @@ public class WebDriverToSeleniumBridge
 
 		Actions actions = new Actions(webDriver);
 
-		actions.moveToElement(webElement)
-			.moveByOffset(10, 10);
+		actions.moveToElement(webElement).moveByOffset(10, 10);
 
 		Action action = actions.build();
 
@@ -1066,8 +1059,7 @@ public class WebDriverToSeleniumBridge
 		else if (locator.startsWith("tag=")) {
 			return findElement(By.tagName(locator.substring(4)));
 		}
-		else if (locator.startsWith("xpath=")
-				|| locator.startsWith("xPath=")) {
+		else if (locator.startsWith("xpath=") || locator.startsWith("xPath=")) {
 			return findElement(By.xpath(locator.substring(6)));
 		}
 		else {
@@ -1094,8 +1086,7 @@ public class WebDriverToSeleniumBridge
 		else if (locator.startsWith("tag=")) {
 			return findElements(By.tagName(locator.substring(4)));
 		}
-		else if (locator.startsWith("xpath=")
-				|| locator.startsWith("xPath=")) {
+		else if (locator.startsWith("xpath=") || locator.startsWith("xPath=")) {
 			return findElements(By.xpath(locator.substring(6)));
 		}
 		else {

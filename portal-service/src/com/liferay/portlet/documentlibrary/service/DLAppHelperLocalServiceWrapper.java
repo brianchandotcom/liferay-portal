@@ -106,7 +106,7 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 	}
 
 	/**
-	* @deprecated {@Link #getFileShortcuts(long, long, int, boolean)}
+	* @deprecated {@link #getFileShortcuts(long, long, boolean, int)}
 	*/
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> getFileShortcuts(
 		long groupId, long folderId, int status)
@@ -123,7 +123,7 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 	}
 
 	/**
-	* @deprecated {@Link #getFileShortcutsCount(long, long, int, boolean)}
+	* @deprecated {@link #getFileShortcutsCount(long, long, boolean, int)}
 	*/
 	public int getFileShortcutsCount(long groupId, long folderId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {

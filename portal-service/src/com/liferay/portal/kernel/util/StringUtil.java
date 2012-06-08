@@ -1925,7 +1925,7 @@ public class StringUtil {
 
 	/**
 	 * Returns a string representing the original string appended with suffix
-	 *  "..." and then shortened to 20 characters.
+	 * "..." and then shortened to 20 characters.
 	 *
 	 * <p>
 	 * The suffix is only added if the original string exceeds 20 characters. If

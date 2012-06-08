@@ -31,6 +31,7 @@ public class AddBlogsEntryTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddPageBlogsTest.class);
 		testSuite.addTestSuite(AddPortletBlogsTest.class);
 		testSuite.addTestSuite(AddBlogsEntryTest.class);
+		testSuite.addTestSuite(ViewBlogsEntryTest.class);
 		testSuite.addTestSuite(TearDownBlogsEntryTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

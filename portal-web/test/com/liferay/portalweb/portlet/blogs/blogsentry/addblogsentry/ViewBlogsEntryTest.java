@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.blogs.blogsentry.viewblogsentry;
+package com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentry;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -24,41 +24,47 @@ public class ViewBlogsEntryTest extends BaseTestCase {
 	public void testViewBlogsEntry() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Blogs Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
+		assertTrue(selenium.isVisible("//input[@id='_33_keywords']"));
+		assertTrue(selenium.isVisible("//input[@value='Search']"));
+		assertTrue(selenium.isVisible("//input[@value='Add Blog Entry']"));
+		assertTrue(selenium.isVisible("//input[@value='Permissions']"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
 			selenium.getText("//div[@class='entry-title']/h2/a"));
+		assertTrue(selenium.isVisible("//div[@class='entry-date']"));
+		assertEquals(RuntimeVariables.replace("Edit"),
+			selenium.getText("//td[contains(.,'Edit')]/span/a/span"));
+		assertEquals(RuntimeVariables.replace("Permissions"),
+			selenium.getText("//td[contains(.,'Permissions')]/span/a/span"));
+		assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
+			selenium.getText(
+				"//td[contains(.,'Move to the Recycle Bin')]/span/a/span"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),
 			selenium.getText("//div[@class='entry-body']/p"));
 		assertEquals(RuntimeVariables.replace("By Joe Bloggs"),
 			selenium.getText("//div[@class='entry-author']"));
 		assertEquals(RuntimeVariables.replace("0 Comments"),
 			selenium.getText("//span[@class='comments']/a"));
-		assertEquals(RuntimeVariables.replace("Your Rating"),
-			selenium.getText(
-				"xPath=(//div[@class='aui-rating-label-element'])[1]"));
+		assertEquals(RuntimeVariables.replace("Flag"),
+			selenium.getText("//div[@class='taglib-flags']/span/a/span"));
+		assertTrue(selenium.isVisible(
+				"//li[@class='taglib-social-bookmark-twitter']"));
+		assertTrue(selenium.isVisible(
+				"//li[@class='taglib-social-bookmark-facebook']"));
+		assertTrue(selenium.isVisible(
+				"//li[@class='taglib-social-bookmark-plusone']"));
+		assertTrue(selenium.isPartialText(
+				"//div[contains(@id,'ratingStar')]/div", "Your Rating"));
 		assertEquals(RuntimeVariables.replace("Average (0 Votes)"),
-			selenium.getText(
-				"xPath=(//div[@class='aui-rating-label-element'])[2]"));
+			selenium.getText("//div[contains(@id,'ratingScore')]/div"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class='subscribe']/span/a[contains(@href,'rss')]", "RSS"));
+		assertTrue(selenium.isPartialText(
+				"//div[@class='subscribe']/span/a[contains(@href,'subscribe')]",
+				"Subscribe"));
 		assertEquals(RuntimeVariables.replace("Showing 1 result."),
 			selenium.getText("//div[@class='search-results']"));
 	}

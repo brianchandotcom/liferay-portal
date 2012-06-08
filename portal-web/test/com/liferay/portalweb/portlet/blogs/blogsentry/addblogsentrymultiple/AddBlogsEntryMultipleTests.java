@@ -20,6 +20,9 @@ import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentry.AddBlogsEntr
 import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentry.AddBlogsEntry2Test;
 import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentry.AddBlogsEntry3Test;
 import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentry.TearDownBlogsEntryTest;
+import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentry.ViewBlogsEntry1Test;
+import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentry.ViewBlogsEntry2Test;
+import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentry.ViewBlogsEntry3Test;
 import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPageBlogsTest;
 import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPortletBlogsTest;
 
@@ -35,8 +38,11 @@ public class AddBlogsEntryMultipleTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddPageBlogsTest.class);
 		testSuite.addTestSuite(AddPortletBlogsTest.class);
 		testSuite.addTestSuite(AddBlogsEntry1Test.class);
+		testSuite.addTestSuite(ViewBlogsEntry1Test.class);
 		testSuite.addTestSuite(AddBlogsEntry2Test.class);
+		testSuite.addTestSuite(ViewBlogsEntry2Test.class);
 		testSuite.addTestSuite(AddBlogsEntry3Test.class);
+		testSuite.addTestSuite(ViewBlogsEntry3Test.class);
 		testSuite.addTestSuite(TearDownBlogsEntryTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

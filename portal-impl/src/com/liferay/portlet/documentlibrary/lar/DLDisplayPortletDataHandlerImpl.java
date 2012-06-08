@@ -26,8 +26,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.model.RepositoryEntry;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -118,6 +120,9 @@ public class DLDisplayPortletDataHandlerImpl extends BasePortletDataHandler {
 		Element fileEntriesElement = rootElement.addElement("file-entries");
 		Element fileShortcutsElement = rootElement.addElement("file-shortcuts");
 		Element fileRanksElement = rootElement.addElement("file-ranks");
+		Element repositoriesElement = rootElement.addElement("repositories");
+		Element repositoryEntriesElement = rootElement.addElement(
+	        "repository-entries");
 
 		if (rootFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			List<Folder> folders = FolderUtil.findByRepositoryId(
@@ -127,7 +132,8 @@ public class DLDisplayPortletDataHandlerImpl extends BasePortletDataHandler {
 				DLPortletDataHandlerImpl.exportFolder(
 					portletDataContext, fileEntryTypesElement, foldersElement,
 					fileEntriesElement, fileShortcutsElement, fileRanksElement,
-					folder, false);
+					repositoriesElement, repositoryEntriesElement, folder,
+					false);
 			}
 
 			List<FileEntry> fileEntries = FileEntryUtil.findByR_F(
@@ -137,19 +143,23 @@ public class DLDisplayPortletDataHandlerImpl extends BasePortletDataHandler {
 			for (FileEntry fileEntry : fileEntries) {
 				DLPortletDataHandlerImpl.exportFileEntry(
 					portletDataContext, fileEntryTypesElement, foldersElement,
-					fileEntriesElement, fileRanksElement, fileEntry, true);
+					fileEntriesElement, fileRanksElement, repositoriesElement,
+					repositoryEntriesElement, fileEntry, true);
 			}
 		}
 		else {
-			Folder folder = FolderUtil.findByPrimaryKey(rootFolderId);
+			Folder folder = DLAppLocalServiceUtil.getFolder(rootFolderId);
 
 			rootElement.addAttribute(
 				"root-folder-id", String.valueOf(folder.getFolderId()));
+			rootElement.addAttribute(
+				"default-repository",
+					String.valueOf(folder.isDefaultRepository()));
 
 			DLPortletDataHandlerImpl.exportFolder(
 				portletDataContext, fileEntryTypesElement, foldersElement,
 				fileEntriesElement, fileShortcutsElement, fileRanksElement,
-				folder, true);
+				repositoriesElement, repositoryEntriesElement, folder, true);
 		}
 
 		return document.formattedString();
@@ -223,11 +233,22 @@ public class DLDisplayPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		long rootFolderId = GetterUtil.getLong(
 			rootElement.attributeValue("root-folder-id"));
+		boolean defaultRepository = GetterUtil.getBoolean(
+			rootElement.attributeValue("default-repository"), true);
 
 		if (rootFolderId > 0) {
-			Map<Long, Long> folderIds =
-				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-					Folder.class);
+			Map<Long, Long> folderIds = null;
+
+			if (defaultRepository) {
+				folderIds =
+					(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+						Folder.class);
+			}
+			else {
+				folderIds =
+					(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+						RepositoryEntry.class);
+			}
 
 			rootFolderId = MapUtil.getLong(
 				folderIds, rootFolderId, rootFolderId);

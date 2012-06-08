@@ -68,6 +68,7 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 
 		Repository repository = repositoryPersistence.create(repositoryId);
 
+		repository.setUuid(serviceContext.getUuid());
 		repository.setGroupId(groupId);
 		repository.setCompanyId(user.getCompanyId());
 		repository.setUserId(user.getUserId());

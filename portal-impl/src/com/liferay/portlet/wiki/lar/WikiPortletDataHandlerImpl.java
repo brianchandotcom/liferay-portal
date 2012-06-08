@@ -83,6 +83,10 @@ public class WikiPortletDataHandlerImpl extends BasePortletDataHandler {
 		Element dlFileEntriesElement = pagesElement.addElement(
 			"dl-file-entries");
 		Element dlFileRanksElement = pagesElement.addElement("dl-file-ranks");
+		Element dlRepositoriesElement = pagesElement.addElement(
+			"dl-repositories");
+		Element dlRepositoryEntriesElement = pagesElement.addElement(
+	        "dl-repository-entries");
 
 		List<WikiPage> pages = WikiPageUtil.findByN_S(
 			node.getNodeId(), WorkflowConstants.STATUS_APPROVED,
@@ -93,7 +97,8 @@ public class WikiPortletDataHandlerImpl extends BasePortletDataHandler {
 			exportPage(
 				portletDataContext, nodesElement, pagesElement,
 				dlFileEntryTypesElement, dlFoldersElement, dlFileEntriesElement,
-				dlFileRanksElement, page, true);
+				dlFileRanksElement, dlRepositoriesElement,
+				dlRepositoryEntriesElement, page, true);
 		}
 	}
 
@@ -328,7 +333,9 @@ public class WikiPortletDataHandlerImpl extends BasePortletDataHandler {
 			PortletDataContext portletDataContext, Element nodesElement,
 			Element pagesElement, Element dlFileEntryTypesElement,
 			Element dlFoldersElement, Element dlFileEntriesElement,
-			Element dlFileRanksElement, WikiPage page, boolean checkDateRange)
+			Element dlFileRanksElement, Element dlRepositoriesElement,
+			Element dlRepositoryEntriesElement, WikiPage page,
+			boolean checkDateRange)
 		throws Exception {
 
 		if (!portletDataContext.isWithinDateRange(page.getModifiedDate())) {
@@ -354,6 +361,7 @@ public class WikiPortletDataHandlerImpl extends BasePortletDataHandler {
 				JournalPortletDataHandlerImpl.exportReferencedContent(
 					portletDataContext, dlFileEntryTypesElement,
 					dlFoldersElement, dlFileEntriesElement, dlFileRanksElement,
+					dlRepositoriesElement, dlRepositoryEntriesElement,
 					pageElement, page.getContent());
 
 			page.setContent(content);

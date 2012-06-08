@@ -30,6 +30,7 @@ import java.lang.reflect.Proxy;
 
 import java.security.Permission;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -261,6 +262,6 @@ public class PortalServiceChecker extends BaseChecker {
 
 	private Map<String, Set<String>> _pluginServices =
 		new HashMap<String, Set<String>>();
-	private Set<String> _portalServices;
+	private Set<String> _portalServices = Collections.emptySet();
 
 }

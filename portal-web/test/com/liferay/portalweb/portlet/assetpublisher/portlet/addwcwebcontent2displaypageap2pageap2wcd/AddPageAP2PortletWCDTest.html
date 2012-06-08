@@ -1,12 +1,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>AddPortletAPTest</title>
+<title>AddPageAP2PortletWCDTest</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">AddPortletAPTest</td></tr>
+<tr><td rowspan="1" colspan="3">AddPageAP2PortletWCDTest</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -15,8 +15,8 @@
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Asset Publisher Test Page1</td>
-	<td>Asset Publisher Test Page1</td>
+	<td>link=Asset Publisher Test Page2</td>
+	<td>Asset Publisher Test Page2</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -66,7 +66,7 @@
 <tr>
 	<td>type</td>
 	<td>//input[@id='layout_configuration_content']</td>
-	<td>a</td>
+	<td>w</td>
 </tr>
 <tr>
 	<td>keyDown</td>
@@ -80,12 +80,12 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@title='Asset Publisher']/p/a</td>
+	<td>//div[@title='Web Content Display']/p/a</td>
 	<td>Add</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[@title='Asset Publisher']/p/a</td>
+	<td>//div[@title='Web Content Display']/p/a</td>
 	<td>Add</td>
 </tr>
 <tr>
@@ -98,6 +98,17 @@
 	<td>//section</td>
 	<td>Portlet</td>
 </tr>
-</tbody></table>
+<tr>
+	<td>waitForText</td>
+	<td>//h1/span[2]</td>
+	<td>Web Content Display</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h1/span[2]</td>
+	<td>Web Content Display</td>
+</tr>
+</tbody>
+</table>
 </body>
 </html>

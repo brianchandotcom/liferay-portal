@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletfilterdisplaypage;
+package com.liferay.portalweb.portlet.assetpublisher.portlet.addportletap;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,29 +20,12 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddPageAP2PortletWCDTest extends BaseTestCase {
-	public void testAddPageAP2PortletWCD() throws Exception {
+public class AddPageAP1PortletAPTest extends BaseTestCase {
+	public void testAddPageAP1PortletAP() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Asset Publisher Test Page 2")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.clickAt("link=Asset Publisher Test Page 2",
-			RuntimeVariables.replace("Asset Publisher Test Page 2"));
+		selenium.clickAt("link=Asset Publisher Test Page1",
+			RuntimeVariables.replace("Asset Publisher Test Page1"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div[@id='dockbar']",
@@ -125,7 +108,7 @@ public class AddPageAP2PortletWCDTest extends BaseTestCase {
 		}
 
 		selenium.type("//input[@id='layout_configuration_content']",
-			RuntimeVariables.replace("w"));
+			RuntimeVariables.replace("a"));
 		selenium.keyDown("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("\\13"));
 		selenium.keyUp("//input[@id='layout_configuration_content']",
@@ -137,8 +120,7 @@ public class AddPageAP2PortletWCDTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible(
-							"//div[@title='Web Content Display']/p/a")) {
+				if (selenium.isVisible("//div[@title='Asset Publisher']/p/a")) {
 					break;
 				}
 			}
@@ -148,7 +130,7 @@ public class AddPageAP2PortletWCDTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("//div[@title='Web Content Display']/p/a",
+		selenium.clickAt("//div[@title='Asset Publisher']/p/a",
 			RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {
@@ -168,25 +150,5 @@ public class AddPageAP2PortletWCDTest extends BaseTestCase {
 		}
 
 		assertTrue(selenium.isVisible("//section"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace("Web Content Display")
-										.equals(selenium.getText("//h1/span[2]"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		assertEquals(RuntimeVariables.replace("Web Content Display"),
-			selenium.getText("//h1/span[2]"));
 	}
 }

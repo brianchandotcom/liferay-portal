@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletfilterdisplaypage;
+package com.liferay.portalweb.portlet.assetpublisher.portlet.addwcwebcontent2displaypageap2pageap2wcd;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,29 +20,13 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ConfigurePortletDefaultTest extends BaseTestCase {
-	public void testConfigurePortletDefault() throws Exception {
+public class ConfigurePageAP1PortletAPSetAsDefaultTest extends BaseTestCase {
+	public void testConfigurePageAP1PortletAPSetAsDefault()
+		throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Asset Publisher Test Page 2")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.clickAt("link=Asset Publisher Test Page 2",
-			RuntimeVariables.replace("Asset Publisher Test Page 2"));
+		selenium.clickAt("link=Asset Publisher Test Page1",
+			RuntimeVariables.replace("Asset Publisher Test Page1"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		Thread.sleep(5000);
@@ -80,7 +64,7 @@ public class ConfigurePortletDefaultTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("id=_86_defaultAssetPublisherCheckbox")) {
+				if (selenium.isVisible("//iframe")) {
 					break;
 				}
 			}
@@ -90,9 +74,30 @@ public class ConfigurePortletDefaultTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("id=_86_defaultAssetPublisherCheckbox",
+		selenium.selectFrame("//iframe");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//input[@id='_86_defaultAssetPublisherCheckbox']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertFalse(selenium.isChecked(
+				"//input[@id='_86_defaultAssetPublisherCheckbox']"));
+		selenium.clickAt("//input[@id='_86_defaultAssetPublisherCheckbox']",
 			RuntimeVariables.replace(
-				"Set as Default Asset Publisher for This Page"));
+				"Set as the Default Asset Publisher for This Page"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
@@ -100,5 +105,8 @@ public class ConfigurePortletDefaultTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertTrue(selenium.isChecked(
+				"//input[@id='_86_defaultAssetPublisherCheckbox']"));
+		selenium.selectFrame("relative=top");
 	}
 }

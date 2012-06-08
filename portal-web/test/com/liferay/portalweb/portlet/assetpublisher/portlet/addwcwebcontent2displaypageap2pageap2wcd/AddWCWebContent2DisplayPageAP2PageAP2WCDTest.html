@@ -1,12 +1,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>AddPageAP2PortletWCDContentTest</title>
+<title>AddWCWebContent2DisplayPageAP2PageAP2WCDTest</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">AddPageAP2PortletWCDContentTest</td></tr>
+<tr><td rowspan="1" colspan="3">AddWCWebContent2DisplayPageAP2PageAP2WCDTest</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -15,8 +15,8 @@
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>link=Asset Publisher Test Page 2</td>
-	<td>Asset Publisher Test Page 2</td>
+	<td>link=Asset Publisher Test Page2</td>
+	<td>Asset Publisher Test Page2</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -26,7 +26,7 @@
 <tr>
 	<td>type</td>
 	<td>//input[@id='_15_title_en_US']</td>
-	<td>WC WebContent Title</td>
+	<td>WC WebContent2 Title</td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
@@ -56,7 +56,7 @@
 <tr>
 	<td>type</td>
 	<td>//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/textarea</td>
-	<td>WC WebContent Content</td>
+	<td>WC WebContent2 Content</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -86,7 +86,7 @@
 <tr>
 	<td>waitForText</td>
 	<td>//body</td>
-	<td>WC WebContent Content</td>
+	<td>WC WebContent2 Content</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
@@ -95,33 +95,48 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>id=_15_displayPageLink</td>
+	<td>//a[@id='_15_displayPageLink']</td>
+	<td>Display Page (Modified)</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[@id='_15_displayPageLink']</td>
 	<td>Display Page (Modified)</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>id=_15_displayPageLink</td>
+	<td>//a[@id='_15_displayPageLink']</td>
 	<td>Display Page (Modified)</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>id=_15_chooseDisplayPage</td>
+	<td>//button[@id='_15_chooseDisplayPage']</td>
+	<td>Select</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//button[@id='_15_chooseDisplayPage']</td>
 	<td>Select</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>id=_15_chooseDisplayPage</td>
+	<td>//button[@id='_15_chooseDisplayPage']</td>
 	<td>Select</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>id=treeContainerPublicPages_layout_asset-publisher-test-page</td>
-	<td>Asset Publisher Test Page</td>
+	<td>//a[@id='treeContainerPublicPages_layout_asset-publisher-test-page2']</td>
+	<td>Asset Publisher Test Page2</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[@id='treeContainerPublicPages_layout_asset-publisher-test-page2']</td>
+	<td>Asset Publisher Test Page2</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>id=treeContainerPublicPages_layout_asset-publisher-test-page</td>
-	<td>Asset Publisher Test Page</td>
+	<td>//a[@id='treeContainerPublicPages_layout_asset-publisher-test-page2']</td>
+	<td>Asset Publisher Test Page2</td>
 </tr>
 <tr>
 	<td>waitForElementNotPresent</td>
@@ -139,6 +154,11 @@
 	<td>OK</td>
 </tr>
 <tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
+</tr>
+<tr>
 	<td>waitForVisible</td>
 	<td>//input[@value='Publish']</td>
 	<td>Publish</td>
@@ -151,9 +171,8 @@
 <tr>
 	<td>assertText</td>
 	<td>//div[@class='journal-content-article']/p</td>
-	<td>WC WebContent Content</td>
+	<td>WC WebContent2 Content</td>
 </tr>
-
 </tbody>
 </table>
 </body>

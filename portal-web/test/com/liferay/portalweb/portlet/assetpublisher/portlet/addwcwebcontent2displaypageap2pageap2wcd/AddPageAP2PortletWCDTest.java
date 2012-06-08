@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.assetpublisher.portlet.addportletap;
+package com.liferay.portalweb.portlet.assetpublisher.portlet.addwcwebcontent2displaypageap2pageap2wcd;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddPageAP2PortletAPTest extends BaseTestCase {
-	public void testAddPageAP2PortletAP() throws Exception {
+public class AddPageAP2PortletWCDTest extends BaseTestCase {
+	public void testAddPageAP2PortletWCD() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Asset Publisher Test Page2",
@@ -108,7 +108,7 @@ public class AddPageAP2PortletAPTest extends BaseTestCase {
 		}
 
 		selenium.type("//input[@id='layout_configuration_content']",
-			RuntimeVariables.replace("a"));
+			RuntimeVariables.replace("w"));
 		selenium.keyDown("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("\\13"));
 		selenium.keyUp("//input[@id='layout_configuration_content']",
@@ -120,7 +120,8 @@ public class AddPageAP2PortletAPTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[@title='Asset Publisher']/p/a")) {
+				if (selenium.isVisible(
+							"//div[@title='Web Content Display']/p/a")) {
 					break;
 				}
 			}
@@ -130,7 +131,7 @@ public class AddPageAP2PortletAPTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("//div[@title='Asset Publisher']/p/a",
+		selenium.clickAt("//div[@title='Web Content Display']/p/a",
 			RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {
@@ -150,5 +151,25 @@ public class AddPageAP2PortletAPTest extends BaseTestCase {
 		}
 
 		assertTrue(selenium.isVisible("//section"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (RuntimeVariables.replace("Web Content Display")
+										.equals(selenium.getText("//h1/span[2]"))) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("Web Content Display"),
+			selenium.getText("//h1/span[2]"));
 	}
 }

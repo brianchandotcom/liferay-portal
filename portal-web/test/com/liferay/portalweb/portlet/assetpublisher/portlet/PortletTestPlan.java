@@ -17,6 +17,7 @@ package com.liferay.portalweb.portlet.assetpublisher.portlet;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portlet.assetpublisher.portlet.addportletap.AddPortletAPTests;
 import com.liferay.portalweb.portlet.assetpublisher.portlet.addportletmultipleap.AddPortletMultipleAPTests;
+import com.liferay.portalweb.portlet.assetpublisher.portlet.addwcwebcontent2displaypageap2pageap2wcd.AddWCWebContent2DisplayPageAP2PageAPp2WCDTests;
 import com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletassetselectiondynamic.ConfigurePortletAssetSelectionDynamicTests;
 import com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletassetselectionmanual.ConfigurePortletAssetSelectionManualTests;
 import com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletavailableblogsentry.ConfigurePortletAvailableBlogsEntryTests;
@@ -35,7 +36,6 @@ import com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletdisp
 import com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletdisplaystylefullcontent.ConfigurePortletDisplayStyleFullContentTests;
 import com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletdisplaystyletable.ConfigurePortletDisplayStyleTableTests;
 import com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletdisplaystyletitlelist.ConfigurePortletDisplayStyleTitleListTests;
-import com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletfilterdisplaypage.ConfigurePortletFilterDisplayPageTests;
 import com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletmaximumitemstodisplay2.ConfigurePortletMaximumItemsToDisplay2Tests;
 import com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletmaximumitemstodisplay5.ConfigurePortletMaximumItemsToDisplay5Tests;
 import com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletpaginationtyperegular.ConfigurePortletPaginationTypeRegularTests;
@@ -54,6 +54,7 @@ public class PortletTestPlan extends BaseTestSuite {
 
 		testSuite.addTest(AddPortletAPTests.suite());
 		testSuite.addTest(AddPortletMultipleAPTests.suite());
+		testSuite.addTest(AddWCWebContent2DisplayPageAP2PageAPp2WCDTests.suite());
 		testSuite.addTest(ConfigurePortletAssetSelectionDynamicTests.suite());
 		testSuite.addTest(ConfigurePortletAssetSelectionManualTests.suite());
 		testSuite.addTest(ConfigurePortletAvailableBlogsEntryTests.suite());
@@ -73,7 +74,6 @@ public class PortletTestPlan extends BaseTestSuite {
 		testSuite.addTest(ConfigurePortletDisplayStyleTableTests.suite());
 		testSuite.addTest(ConfigurePortletDisplayStyleTitleListTests.suite());
 		testSuite.addTest(ConfigurePortletDisplayStyleTitleListTests.suite());
-		testSuite.addTest(ConfigurePortletFilterDisplayPageTests.suite());
 		testSuite.addTest(ConfigurePortletMaximumItemsToDisplay2Tests.suite());
 		testSuite.addTest(ConfigurePortletMaximumItemsToDisplay5Tests.suite());
 		testSuite.addTest(ConfigurePortletPaginationTypeRegularTests.suite());

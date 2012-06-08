@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddPageAP2Test extends BaseTestCase {
-	public void testAddPageAP2() throws Exception {
+public class AddPageAP1Test extends BaseTestCase {
+	public void testAddPageAP1() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div[@id='dockbar']",
@@ -85,7 +85,7 @@ public class AddPageAP2Test extends BaseTestCase {
 		}
 
 		selenium.type("//input[@type='text']",
-			RuntimeVariables.replace("Asset Publisher Test Page2"));
+			RuntimeVariables.replace("Asset Publisher Test Page1"));
 		selenium.clickAt("//button[@id='save']",
 			RuntimeVariables.replace("Save"));
 
@@ -95,7 +95,7 @@ public class AddPageAP2Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Asset Publisher Test Page2")) {
+				if (selenium.isVisible("link=Asset Publisher Test Page1")) {
 					break;
 				}
 			}
@@ -105,8 +105,8 @@ public class AddPageAP2Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Asset Publisher Test Page2",
-			RuntimeVariables.replace("Asset Publisher Test Page2"));
+		selenium.clickAt("link=Asset Publisher Test Page1",
+			RuntimeVariables.replace("Asset Publisher Test Page1"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 	}

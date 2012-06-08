@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletfilterdisplaypage;
+package com.liferay.portalweb.portlet.assetpublisher.portlet.addwcwebcontent2displaypageap2pageap2wcd;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontent.TearDownWCWebContentTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.assetpublisher.portlet.addportletap.AddPageAP1PortletAPTest;
+import com.liferay.portalweb.portlet.assetpublisher.portlet.addportletap.AddPageAP1Test;
 import com.liferay.portalweb.portlet.assetpublisher.portlet.addportletap.AddPageAP2PortletAPTest;
 import com.liferay.portalweb.portlet.assetpublisher.portlet.addportletap.AddPageAP2Test;
-import com.liferay.portalweb.portlet.assetpublisher.portlet.addportletap.AddPageAPTest;
-import com.liferay.portalweb.portlet.assetpublisher.portlet.addportletap.AddPortletAPTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -28,20 +28,22 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ConfigurePortletFilterDisplayPageTests extends BaseTestSuite {
+public class AddWCWebContent2DisplayPageAP2PageAPp2WCDTests
+	extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(AddPageAPTest.class);
-		testSuite.addTestSuite(AddPortletAPTest.class);
-		testSuite.addTestSuite(ConfigurePortletFilterDisplayPageTest.class);
+		testSuite.addTestSuite(AddPageAP1Test.class);
 		testSuite.addTestSuite(AddPageAP2Test.class);
+		testSuite.addTestSuite(AddPageAP1PortletAPTest.class);
 		testSuite.addTestSuite(AddPageAP2PortletAPTest.class);
-		testSuite.addTestSuite(ConfigurePortletDefaultTest.class);
 		testSuite.addTestSuite(AddPageAP2PortletWCDTest.class);
-		testSuite.addTestSuite(AddPageAP2PortletWCDContentTest.class);
-		testSuite.addTestSuite(ViewPageAP2PortletWCDContentTest.class);
-		testSuite.addTestSuite(AddPageAP2PortletWCDContent2Test.class);
-		testSuite.addTestSuite(ViewPageAP2PortletWCDContent2Test.class);
+		testSuite.addTestSuite(ConfigurePageAP1PortletAPDisplayPageTest.class);
+		testSuite.addTestSuite(ConfigurePageAP1PortletAPSetAsDefaultTest.class);
+		testSuite.addTestSuite(ConfigurePageAP2PortletAPSetAsDefaultTest.class);
+		testSuite.addTestSuite(AddWCWebContent1DisplayPageAP1PageAP2WCDTest.class);
+		testSuite.addTestSuite(ViewWCWebContent1DisplayPageAP1PageAP2WCDTest.class);
+		testSuite.addTestSuite(AddWCWebContent2DisplayPageAP2PageAP2WCDTest.class);
+		testSuite.addTestSuite(ViewWCWebContent2DisplayPageAP2PageAp2WCDTest.class);
 		testSuite.addTestSuite(TearDownWCWebContentTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

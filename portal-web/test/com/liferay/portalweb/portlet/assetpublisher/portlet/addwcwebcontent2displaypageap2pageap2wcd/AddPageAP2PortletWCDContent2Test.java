@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletfilterdisplaypage;
+package com.liferay.portalweb.portlet.assetpublisher.portlet.addwcwebcontent2displaypageap2pageap2wcd;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -33,7 +33,7 @@ public class AddPageAP2PortletWCDContent2Test extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_15_title_en_US']",
-			RuntimeVariables.replace("WC WebContent Title2"));
+			RuntimeVariables.replace("WC WebContent2 Title"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -91,7 +91,7 @@ public class AddPageAP2PortletWCDContent2Test extends BaseTestCase {
 		}
 
 		selenium.type("//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/textarea",
-			RuntimeVariables.replace("WC WebContent Content2"));
+			RuntimeVariables.replace("WC WebContent2 Content"));
 		assertEquals(RuntimeVariables.replace("Source"),
 			selenium.getText("//span[.='Source']"));
 		selenium.clickAt("//span[.='Source']",
@@ -140,7 +140,7 @@ public class AddPageAP2PortletWCDContent2Test extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("WC WebContent Content2")
+				if (RuntimeVariables.replace("WC WebContent2 Content")
 										.equals(selenium.getText("//body"))) {
 					break;
 				}
@@ -253,7 +253,7 @@ public class AddPageAP2PortletWCDContent2Test extends BaseTestCase {
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("WC WebContent Content2"),
+		assertEquals(RuntimeVariables.replace("WC WebContent2 Content"),
 			selenium.getText("//div[@class='journal-content-article']/p"));
 	}
 }

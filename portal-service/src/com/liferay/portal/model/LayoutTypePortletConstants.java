@@ -43,6 +43,10 @@ public class LayoutTypePortletConstants {
 
 	public static final String NESTED_COLUMN_IDS = "nested-column-ids";
 
+	public static final String RUNTIME_PORTLET_NAMESPACE = "_RUNTIME_";
+
+	public static final String RUNTIME_PORTLETS = "runtime-portlets";
+
 	public static final String STATE_MAX = "state-max";
 
 	public static final String STATE_MIN = "state-min";

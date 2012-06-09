@@ -136,11 +136,10 @@ public class DDMTemplateLocalServiceImpl
 		for (DDMTemplate oldTemplate : oldTemplates) {
 			DDMTemplate newTemplate = addTemplate(
 				userId, oldTemplate.getGroupId(), oldTemplate.getClassNameId(),
-				newClassPK, oldTemplate.getTemplateKey(),
-				oldTemplate.getNameMap(), oldTemplate.getDescriptionMap(),
-				oldTemplate.getType(), oldTemplate.getMode(),
-				oldTemplate.getLanguage(), oldTemplate.getScript(),
-				serviceContext);
+				newClassPK, null, oldTemplate.getNameMap(),
+				oldTemplate.getDescriptionMap(), oldTemplate.getType(),
+				oldTemplate.getMode(), oldTemplate.getLanguage(),
+				oldTemplate.getScript(), serviceContext);
 
 			newTemplates.add(newTemplate);
 		}

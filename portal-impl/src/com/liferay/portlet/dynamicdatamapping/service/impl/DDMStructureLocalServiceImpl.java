@@ -173,6 +173,16 @@ public class DDMStructureLocalServiceImpl
 			throw new RequiredStructureException();
 		}
 
+		long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
+
+		if (ddmTemplatePersistence.countByG_C_C(
+				structure.getGroupId(), classNameId,
+				structure.getPrimaryKey()) > 0) {
+
+			throw new RequiredStructureException(
+				RequiredStructureException.REFERENCED_TEMPLATE);
+		}
+
 		// Structure
 
 		ddmStructurePersistence.remove(structure);

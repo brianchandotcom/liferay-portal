@@ -143,6 +143,10 @@ public class ServiceBuilder {
 		String propsUtil = arguments.get("service.props.util");
 		String pluginName = arguments.get("service.plugin.name");
 		String testDir = arguments.get("service.test.dir");
+		String targetEntityName = arguments.get("service.target.entity");
+		if (targetEntityName.startsWith("${")) {
+			targetEntityName = null;
+		}
 
 		try {
 			new ServiceBuilder(
@@ -153,7 +157,7 @@ public class ServiceBuilder {
 				apiDir, implDir, jsonFileName, remotingFileName, sqlDir,
 				sqlFileName, sqlIndexesFileName, sqlIndexesPropertiesFileName,
 				sqlSequencesFileName, autoNamespaceTables, beanLocatorUtil,
-				propsUtil, pluginName, testDir);
+				propsUtil, pluginName, testDir, targetEntityName);
 		}
 		catch (RuntimeException re) {
 			System.out.println(
@@ -421,7 +425,7 @@ public class ServiceBuilder {
 		String sqlFileName, String sqlIndexesFileName,
 		String sqlIndexesPropertiesFileName, String sqlSequencesFileName,
 		boolean autoNamespaceTables, String beanLocatorUtil, String propsUtil,
-		String pluginName, String testDir) {
+		String pluginName, String testDir, String targetEntityName) {
 
 		this(
 			fileName, hbmFileName, ormFileName, modelHintsFileName,
@@ -431,7 +435,7 @@ public class ServiceBuilder {
 			implDir, jsonFileName, remotingFileName, sqlDir, sqlFileName,
 			sqlIndexesFileName, sqlIndexesPropertiesFileName,
 			sqlSequencesFileName, autoNamespaceTables, beanLocatorUtil,
-			propsUtil, pluginName, testDir, true);
+			propsUtil, pluginName, testDir, true, targetEntityName);
 	}
 
 	public ServiceBuilder(
@@ -445,7 +449,8 @@ public class ServiceBuilder {
 		String sqlFileName, String sqlIndexesFileName,
 		String sqlIndexesPropertiesFileName, String sqlSequencesFileName,
 		boolean autoNamespaceTables, String beanLocatorUtil, String propsUtil,
-		String pluginName, String testDir, boolean build) {
+		String pluginName, String testDir, boolean build,
+		String targetEntityName) {
 
 		_tplBadAliasNames = _getTplProperty(
 			"bad_alias_names", _tplBadAliasNames);
@@ -513,6 +518,8 @@ public class ServiceBuilder {
 		_tplSpringShardDataSourceXml = _getTplProperty(
 			"spring_shard_data_source_xml", _tplSpringShardDataSourceXml);
 		_tplSpringXml = _getTplProperty("spring_xml", _tplSpringXml);
+
+		_targetEntityName = targetEntityName;
 
 		try {
 			_badTableNames = _readLines(_tplBadTableNames);
@@ -644,11 +651,9 @@ public class ServiceBuilder {
 				for (int x = 0; x < _ejbList.size(); x++) {
 					Entity entity = _ejbList.get(x);
 
-					System.out.println("Building " + entity.getName());
+					if (_acceptEntity(entity)) {
 
-					if (true) {/* ||
-						entity.getName().equals("EmailAddress") ||
-						entity.getName().equals("User")) {*/
+						System.out.println("Building " + entity.getName());
 
 						if (entity.hasColumns()) {
 							_createHbm(entity);
@@ -728,6 +733,13 @@ public class ServiceBuilder {
 							}
 
 							_createServiceSoap(entity);
+						}
+					}
+					else {
+						if (entity.hasColumns()) {
+							entity.setTransients(_getTransients(entity, false));
+							entity.setParentTransients(
+								_getTransients(entity, true));
 						}
 					}
 				}
@@ -928,7 +940,7 @@ public class ServiceBuilder {
 				_sqlFileName, _sqlIndexesFileName,
 				_sqlIndexesPropertiesFileName, _sqlSequencesFileName,
 				_autoNamespaceTables, _beanLocatorUtil, _propsUtil, _pluginName,
-				_testDir, false);
+				_testDir, false, null);
 
 			entity = serviceBuilder.getEntity(refEntity);
 
@@ -1574,6 +1586,21 @@ public class ServiceBuilder {
 		return false;
 	}
 
+	private boolean _acceptEntity(Entity entity) {
+		if (_targetEntityName == null) {
+			return true;
+		}
+
+		String entityName = entity.getName();
+
+		if (entityName.equals(_targetEntityName)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	private static String _getPackagePath(File file) {
 		String fileName = StringUtil.replace(file.toString(), "\\", "/");
 
@@ -1658,6 +1685,10 @@ public class ServiceBuilder {
 	private void _createExceptions(List<String> exceptions) throws Exception {
 		for (int i = 0; i < _ejbList.size(); i++) {
 			Entity entity = _ejbList.get(i);
+
+			if (!_acceptEntity(entity)) {
+				continue;
+			}
 
 			if (entity.hasColumns()) {
 				exceptions.add(getNoSuchEntityException(entity));
@@ -3357,6 +3388,10 @@ public class ServiceBuilder {
 		for (int i = 0; i < _ejbList.size(); i++) {
 			Entity entity = _ejbList.get(i);
 
+			if (!_acceptEntity(entity)) {
+				continue;
+			}
+
 			if (!entity.isDefaultDataSource()) {
 				continue;
 			}
@@ -3577,6 +3612,10 @@ public class ServiceBuilder {
 		for (int i = 0; i < _ejbList.size(); i++) {
 			Entity entity = _ejbList.get(i);
 
+			if (!_acceptEntity(entity)) {
+				continue;
+			}
+
 			if (!entity.isDefaultDataSource()) {
 				continue;
 			}
@@ -3633,6 +3672,10 @@ public class ServiceBuilder {
 
 		for (int i = 0; i < _ejbList.size(); i++) {
 			Entity entity = _ejbList.get(i);
+
+			if (!_acceptEntity(entity)) {
+				continue;
+			}
 
 			if (!entity.isDefaultDataSource()) {
 				continue;
@@ -5019,6 +5062,7 @@ public class ServiceBuilder {
 	private String _sqlIndexesFileName;
 	private String _sqlIndexesPropertiesFileName;
 	private String _sqlSequencesFileName;
+	private String _targetEntityName;
 	private String _testDir;
 	private String _testOutputPath;
 	private String _tplBadAliasNames = _TPL_ROOT + "bad_alias_names.txt";

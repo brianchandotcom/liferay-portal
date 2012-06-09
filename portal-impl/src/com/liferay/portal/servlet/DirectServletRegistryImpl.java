@@ -125,9 +125,7 @@ public class DirectServletRegistryImpl implements DirectServletRegistry {
 
 			Collection<String> dependants = null;
 
-			String jasperVersion = JasperVersionDetector.getJasperVersion();
-
-			if (jasperVersion.contains("7.0")) {
+			if (JasperVersionDetector.getJspServletUsesDependantsMap()) {
 				Map<String, ?> dependantsMap = (Map<String, ?>)method.invoke(
 					servlet);
 

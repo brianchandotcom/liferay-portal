@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -26,6 +27,9 @@ import java.io.File;
 import java.net.URI;
 import java.net.URL;
 
+import java.lang.reflect.Method;
+
+import java.util.Map;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
@@ -40,7 +44,16 @@ public class JasperVersionDetector {
 		return _instance._jasperVersion;
 	}
 
+	public static boolean getJspServletUsesDependantsMap() {
+		return _instance._jspServletUsesDependantsMap;
+	}
+
 	private JasperVersionDetector() {
+		initializeJasperVersion();
+		initializeJspServletUsesDependantsMap();
+	}
+
+	private void initializeJasperVersion() {
 		try {
 			Class<?> clazz = getClass();
 
@@ -106,6 +119,24 @@ public class JasperVersionDetector {
 		}
 	}
 
+	private void initializeJspServletUsesDependantsMap() {
+		try {
+			Class<?> clazz = Class.forName(
+				"org.apache.jasper.servlet.JspServletWrapper");
+
+			Method method = ReflectionUtil.getDeclaredMethod(
+				clazz, "getDependants");
+
+			Class<?> returnType = method.getReturnType();
+
+			_jspServletUsesDependantsMap = Map.class.isAssignableFrom(
+				returnType);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+	}
+
 	private boolean _isValidJasperVersion(String jasperVersion) {
 		if (Validator.isNull(jasperVersion) ||
 			!Validator.isDigit(jasperVersion.charAt(0))) {
@@ -124,5 +155,6 @@ public class JasperVersionDetector {
 		new JasperVersionDetector();
 
 	private String _jasperVersion = StringPool.BLANK;
+	private boolean _jspServletUsesDependantsMap = false;
 
 }

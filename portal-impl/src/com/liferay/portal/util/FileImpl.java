@@ -433,13 +433,10 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 	}
 
 	public String getPath(String fullFileName) {
-		int pos = fullFileName.lastIndexOf(CharPool.SLASH);
+		int x = fullFileName.lastIndexOf(CharPool.SLASH);
+		int y = fullFileName.lastIndexOf(CharPool.BACK_SLASH);
 
-		if (pos == -1) {
-			pos = fullFileName.lastIndexOf(CharPool.BACK_SLASH);
-		}
-
-		String shortFileName = fullFileName.substring(0, pos);
+		String shortFileName = fullFileName.substring(0, Math.max(x, y));
 
 		if (Validator.isNull(shortFileName)) {
 			return StringPool.SLASH;
@@ -449,13 +446,10 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 	}
 
 	public String getShortFileName(String fullFileName) {
-		int pos = fullFileName.lastIndexOf(CharPool.SLASH);
+		int x = fullFileName.lastIndexOf(CharPool.SLASH);
+		int y = fullFileName.lastIndexOf(CharPool.BACK_SLASH);
 
-		if (pos == -1) {
-			pos = fullFileName.lastIndexOf(CharPool.BACK_SLASH);
-		}
-
-		String shortFileName = fullFileName.substring(pos + 1);
+		String shortFileName = fullFileName.substring(Math.max(x, y) + 1);
 
 		return shortFileName;
 	}

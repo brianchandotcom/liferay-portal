@@ -14,37 +14,36 @@
 
 package com.liferay.portlet.dynamicdatamapping.util.comparator;
 
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 
 /**
- * @author Miguel Pastor
+ * @author Eduardo Garcia
  */
-public class StructureStructureKeyComparator extends OrderByComparator {
+public class StructureModifiedDateComparator extends OrderByComparator {
 
-	public static final String ORDER_BY_ASC = "DDMStructure.structureKey ASC";
+	public static final String ORDER_BY_ASC = "DDMStructure.modifiedDate ASC";
 
-	public static final String ORDER_BY_DESC = "DDMStructure.structureKey DESC";
+	public static final String ORDER_BY_DESC = "DDMStructure.modifiedDate DESC";
 
-	public static final String[] ORDER_BY_FIELDS = {"structureKey"};
+	public static final String[] ORDER_BY_FIELDS = {"modifiedDate"};
 
-	public StructureStructureKeyComparator() {
+	public StructureModifiedDateComparator() {
 		this(false);
 	}
 
-	public StructureStructureKeyComparator(boolean ascending) {
+	public StructureModifiedDateComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 
 	@Override
 	public int compare(Object obj1, Object obj2) {
-		DDMStructure structure1 = (DDMStructure)obj1;
-		DDMStructure structure2 = (DDMStructure)obj2;
+		DDMStructure template1 = (DDMStructure)obj1;
+		DDMStructure template2 = (DDMStructure)obj2;
 
-		String structureKey1 = structure1.getStructureKey().toLowerCase();
-		String structureKey2 = structure2.getStructureKey().toLowerCase();
-
-		int value = structureKey1.compareTo(structureKey2);
+		int value = DateUtil.compareTo(
+			template1.getModifiedDate(), template2.getModifiedDate());
 
 		if (_ascending) {
 			return value;

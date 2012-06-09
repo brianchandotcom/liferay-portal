@@ -15,36 +15,36 @@
 package com.liferay.portlet.dynamicdatamapping.util.comparator;
 
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 
 /**
- * @author Miguel Pastor
+ * @author Eduardo Garcia
  */
-public class StructureStructureKeyComparator extends OrderByComparator {
+public class TemplateNameComparator extends OrderByComparator {
 
-	public static final String ORDER_BY_ASC = "DDMStructure.structureKey ASC";
+	public static final String ORDER_BY_ASC = "DDMTemplate.name ASC";
 
-	public static final String ORDER_BY_DESC = "DDMStructure.structureKey DESC";
+	public static final String ORDER_BY_DESC = "DDMTemplate.name DESC";
 
-	public static final String[] ORDER_BY_FIELDS = {"structureKey"};
+	public static final String[] ORDER_BY_FIELDS = {"name"};
 
-	public StructureStructureKeyComparator() {
+	public TemplateNameComparator() {
 		this(false);
 	}
 
-	public StructureStructureKeyComparator(boolean ascending) {
+	public TemplateNameComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 
 	@Override
 	public int compare(Object obj1, Object obj2) {
-		DDMStructure structure1 = (DDMStructure)obj1;
-		DDMStructure structure2 = (DDMStructure)obj2;
+		DDMTemplate template1 = (DDMTemplate)obj1;
+		DDMTemplate template2 = (DDMTemplate)obj2;
 
-		String structureKey1 = structure1.getStructureKey().toLowerCase();
-		String structureKey2 = structure2.getStructureKey().toLowerCase();
+		String templateName1 = template1.getName().toLowerCase();
+		String templateName2 = template2.getName().toLowerCase();
 
-		int value = structureKey1.compareTo(structureKey2);
+		int value = templateName1.compareTo(templateName2);
 
 		if (_ascending) {
 			return value;

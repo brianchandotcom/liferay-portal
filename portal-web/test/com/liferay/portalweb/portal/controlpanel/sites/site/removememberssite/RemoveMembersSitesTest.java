@@ -92,7 +92,9 @@ public class RemoveMembersSitesTest extends BaseTestCase {
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Memberships')]/a"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
-				selenium.clickAt("//li[2]/span/a",
+				assertEquals(RuntimeVariables.replace("Users"),
+					selenium.getText("//a[contains(text(),'Users')]"));
+				selenium.clickAt("//a[contains(text(),'Users')]",
 					RuntimeVariables.replace("Users"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();

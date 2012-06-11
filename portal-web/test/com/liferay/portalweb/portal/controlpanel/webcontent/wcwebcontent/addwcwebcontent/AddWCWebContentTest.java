@@ -72,6 +72,8 @@ public class AddWCWebContentTest extends BaseTestCase {
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Add"));
 
@@ -81,7 +83,8 @@ public class AddWCWebContentTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//a[contains(@id,'basic-web-content')]")) {
+				if (selenium.isVisible(
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Basic Web Content')]/a")) {
 					break;
 				}
 			}
@@ -92,9 +95,10 @@ public class AddWCWebContentTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("Basic Web Content"),
-			selenium.getText("//a[contains(@id,'basic-web-content')]"));
-		selenium.clickAt("//a[contains(@id,'basic-web-content')]",
-			RuntimeVariables.replace("Basic Web Content"));
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Basic Web Content')]/a"));
+		selenium.click(RuntimeVariables.replace(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Basic Web Content')]/a"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_15_title_en_US']",

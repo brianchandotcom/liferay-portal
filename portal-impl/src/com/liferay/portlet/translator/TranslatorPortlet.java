@@ -14,8 +14,11 @@
 
 package com.liferay.portlet.translator;
 
+import com.liferay.portal.kernel.microsofttranslator.MicrosoftTranslatorException;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.webcache.WebCacheException;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.translator.model.Translation;
 import com.liferay.portlet.translator.util.TranslatorUtil;
@@ -45,6 +48,14 @@ public class TranslatorPortlet extends MVCPortlet {
 
 				actionRequest.setAttribute(
 					WebKeys.TRANSLATOR_TRANSLATION, translation);
+			}
+		}
+		catch (WebCacheException wce) {
+			Throwable cause = wce.getCause();
+
+			if (cause instanceof MicrosoftTranslatorException) {
+				SessionErrors.add(
+					actionRequest, cause.getClass().getName(), cause);
 			}
 		}
 		catch (Exception e) {

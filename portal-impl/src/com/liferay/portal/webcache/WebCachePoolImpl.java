@@ -36,7 +36,7 @@ public class WebCachePoolImpl implements WebCachePool {
 		_portalCache.removeAll();
 	}
 
-	public Object get(String key, WebCacheItem wci) {
+	public Object get(String key, WebCacheItem wci) throws WebCacheException {
 		Object obj = _portalCache.get(key);
 
 		if (obj == null) {
@@ -58,6 +58,8 @@ public class WebCachePoolImpl implements WebCachePool {
 						_log.warn(wce, wce);
 					}
 				}
+
+				throw wce;
 			}
 		}
 

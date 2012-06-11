@@ -16,6 +16,7 @@ package com.liferay.portlet.rss.util;
 
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.webcache.WebCacheException;
 import com.liferay.portal.kernel.webcache.WebCacheItem;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
 
@@ -29,10 +30,16 @@ public class RSSUtil {
 	public static ObjectValuePair<String, SyndFeed> getFeed(String url) {
 		WebCacheItem wci = new RSSWebCacheItem(url);
 
-		return new ObjectValuePair<String, SyndFeed>(
-			url,
-			(SyndFeed)WebCachePoolUtil.get(
-				RSSUtil.class.getName() + StringPool.PERIOD + url, wci));
+		SyndFeed syndFeed = null;
+
+		try {
+			syndFeed = (SyndFeed)WebCachePoolUtil.get(
+				RSSUtil.class.getName() + StringPool.PERIOD + url, wci);
+		}
+		catch (WebCacheException wce) {
+		}
+
+		return new ObjectValuePair<String, SyndFeed>(url, syndFeed);
 	}
 
 }

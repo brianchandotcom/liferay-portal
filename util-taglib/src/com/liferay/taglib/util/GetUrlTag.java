@@ -17,6 +17,7 @@ package com.liferay.taglib.util;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.webcache.WebCacheException;
 import com.liferay.portal.kernel.webcache.WebCacheItem;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
 
@@ -31,12 +32,18 @@ public class GetUrlTag extends TagSupport {
 
 	@Override
 	public int doEndTag() throws JspException {
+		WebCacheItem wci = new GetUrlWebCacheItem(_url, _expires);
+
+		String content = null;
+
 		try {
-			WebCacheItem wci = new GetUrlWebCacheItem(_url, _expires);
-
-			String content = (String)WebCachePoolUtil.get(
+			content = (String)WebCachePoolUtil.get(
 				GetUrlTag.class.getName() + StringPool.PERIOD + _url, wci);
+		}
+		catch (WebCacheException wce) {
+		}
 
+		try {
 			if (Validator.isNotNull(_var)) {
 				pageContext.setAttribute(_var, content);
 			}

@@ -25,7 +25,7 @@ import com.liferay.portlet.translator.model.Translation;
 public class TranslatorUtil {
 
 	public static Translation getTranslation(
-		String translationId, String fromText) {
+		String translationId, String fromText) throws Exception {
 
 		WebCacheItem wci = new TranslationWebCacheItem(translationId, fromText);
 

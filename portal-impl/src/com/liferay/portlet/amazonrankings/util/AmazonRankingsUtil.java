@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.webcache.WebCacheException;
 import com.liferay.portal.kernel.webcache.WebCacheItem;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
 import com.liferay.portal.util.PropsValues;
@@ -47,8 +48,14 @@ public class AmazonRankingsUtil {
 
 		WebCacheItem wci = new AmazonRankingsWebCacheItem(isbn);
 
-		return (AmazonRankings)WebCachePoolUtil.get(
-			AmazonRankingsUtil.class.getName() + StringPool.PERIOD + isbn, wci);
+		try {
+			return (AmazonRankings)WebCachePoolUtil.get(
+				AmazonRankingsUtil.class.getName() + StringPool.PERIOD + isbn,
+				wci);
+		}
+		catch (WebCacheException wce) {
+			return null;
+		}
 	}
 
 	public static String getAmazonSecretAccessKey() {

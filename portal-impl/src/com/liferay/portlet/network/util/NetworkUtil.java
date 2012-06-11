@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.network.util;
 
+import com.liferay.portal.kernel.webcache.WebCacheException;
 import com.liferay.portal.kernel.webcache.WebCacheItem;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
 import com.liferay.portlet.network.model.DNSLookup;
@@ -27,15 +28,25 @@ public class NetworkUtil {
 	public static DNSLookup getDNSLookup(String domain) {
 		WebCacheItem wci = new DNSLookupWebCacheItem(domain);
 
-		return (DNSLookup)WebCachePoolUtil.get(
-			NetworkUtil.class.getName() + ".dnslookup." + domain, wci);
+		try {
+			return (DNSLookup)WebCachePoolUtil.get(
+				NetworkUtil.class.getName() + ".dnslookup." + domain, wci);
+		}
+		catch (WebCacheException wce) {
+			return null;
+		}
 	}
 
 	public static Whois getWhois(String domain) {
 		WebCacheItem wci = new WhoisWebCacheItem(domain);
 
-		return (Whois)WebCachePoolUtil.get(
-			NetworkUtil.class.getName() + ".whois." + domain, wci);
+		try {
+			return (Whois)WebCachePoolUtil.get(
+				NetworkUtil.class.getName() + ".whois." + domain, wci);
+		}
+		catch (WebCacheException wce) {
+			return null;
+		}
 	}
 
 }

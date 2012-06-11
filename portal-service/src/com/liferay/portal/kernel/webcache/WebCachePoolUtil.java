@@ -25,7 +25,9 @@ public class WebCachePoolUtil {
 		getWebCachePool().clear();
 	}
 
-	public static Object get(String key, WebCacheItem wci) {
+	public static Object get(String key, WebCacheItem wci)
+		throws WebCacheException{
+
 		return getWebCachePool().get(key, wci);
 	}
 

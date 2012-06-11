@@ -767,7 +767,6 @@ AUI.add(
 						var content = A.Node.create(responseData);
 
 						if (content) {
-debugger;
 							instance._setBreadcrumb(content);
 							instance._setButtons(content);
 							instance._setEntries(content);

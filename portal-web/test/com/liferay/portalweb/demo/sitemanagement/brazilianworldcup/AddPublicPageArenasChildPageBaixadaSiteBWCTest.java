@@ -184,7 +184,8 @@ public class AddPublicPageArenasChildPageBaixadaSiteBWCTest extends BaseTestCase
 					}
 
 					try {
-						if (selenium.isVisible("//input[@id='_156_name_en_US']")) {
+						if (selenium.isVisible(
+									"//input[@id='_156_addLayoutName_en_US']")) {
 							break;
 						}
 					}
@@ -194,7 +195,7 @@ public class AddPublicPageArenasChildPageBaixadaSiteBWCTest extends BaseTestCase
 					Thread.sleep(1000);
 				}
 
-				selenium.type("//input[@id='_156_name_en_US']",
+				selenium.type("//input[@id='_156_addLayoutName_en_US']",
 					RuntimeVariables.replace("Arena da Baixada"));
 				selenium.clickAt("//input[@value='Add Page']",
 					RuntimeVariables.replace("Add Page"));

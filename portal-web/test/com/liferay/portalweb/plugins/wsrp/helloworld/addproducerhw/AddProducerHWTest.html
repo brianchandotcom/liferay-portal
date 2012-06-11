@@ -14,38 +14,48 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Control Panel</td>
-	<td></td>
+	<td>Control Panel</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=WSRP</td>
-	<td></td>
+	<td>WSRP</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>link=Producers</td>
-	<td></td>
+	<td>Producers</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Add Producer']</td>
-	<td></td>
+	<td>Add Producer</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>_1_WAR_wsrpportlet_name</td>
+	<td>//input[@id='_1_WAR_wsrpportlet_name']</td>
 	<td>Hello World Producer Name</td>
 </tr>
 <tr>
 	<td>addSelection</td>
-	<td>_1_WAR_wsrpportlet_availablePortletIds</td>
+	<td>//select[@id='_1_WAR_wsrpportlet_availablePortletIds']</td>
 	<td>label=Hello World</td>
 </tr>
 <tr>
@@ -55,22 +65,22 @@
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>_1_WAR_wsrpportlet_currentPortletIds</td>
+	<td>//select[@id='_1_WAR_wsrpportlet_currentPortletIds']</td>
 	<td>Hello World</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>_1_WAR_wsrpportlet_currentPortletIds</td>
+	<td>//select[@id='_1_WAR_wsrpportlet_currentPortletIds']</td>
 	<td>Hello World</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
-	<td></td>
+	<td>Save</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//section/div/div/div/div[1]</td>
+	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>

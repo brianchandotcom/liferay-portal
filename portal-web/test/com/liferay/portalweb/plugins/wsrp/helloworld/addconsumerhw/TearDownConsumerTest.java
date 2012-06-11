@@ -29,6 +29,9 @@ public class TearDownConsumerTest extends BaseTestCase {
 			case 1:
 				selenium.open("/web/guest/home/");
 				loadRequiredJavaScriptModules();
+				assertEquals(RuntimeVariables.replace("Go to"),
+					selenium.getText("//li[@id='_145_mySites']/a/span"));
+				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -36,7 +39,7 @@ public class TearDownConsumerTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent("link=Control Panel")) {
+						if (selenium.isVisible("link=Control Panel")) {
 							break;
 						}
 					}
@@ -47,26 +50,31 @@ public class TearDownConsumerTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("link=Control Panel",
-					RuntimeVariables.replace(""));
+					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
-				selenium.clickAt("link=WSRP", RuntimeVariables.replace(""));
+				selenium.clickAt("link=WSRP", RuntimeVariables.replace("WSRP"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
-				selenium.clickAt("link=Consumers", RuntimeVariables.replace(""));
+				selenium.clickAt("link=Consumers",
+					RuntimeVariables.replace("Consumers"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 
 				boolean consumer1Present = selenium.isElementPresent(
-						"//td[2]/span/ul/li/strong/a");
+						"//span[@title='Actions']/ul/li/strong/a/span");
 
 				if (!consumer1Present) {
-					label = 2;
+					label = 6;
 
 					continue;
 				}
 
-				selenium.clickAt("//td[2]/span/ul/li/strong/a",
+				Thread.sleep(5000);
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -75,8 +83,8 @@ public class TearDownConsumerTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a")) {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]")) {
 							break;
 						}
 					}
@@ -86,25 +94,30 @@ public class TearDownConsumerTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-
-			case 2:
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
 				boolean consumer2Present = selenium.isElementPresent(
-						"//td[2]/span/ul/li/strong/a");
+						"//span[@title='Actions']/ul/li/strong/a/span");
 
 				if (!consumer2Present) {
-					label = 3;
+					label = 5;
 
 					continue;
 				}
 
-				selenium.clickAt("//td[2]/span/ul/li/strong/a",
+				Thread.sleep(5000);
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -113,8 +126,8 @@ public class TearDownConsumerTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a")) {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]")) {
 							break;
 						}
 					}
@@ -124,17 +137,18 @@ public class TearDownConsumerTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-
-			case 3:
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
 				boolean consumer3Present = selenium.isElementPresent(
-						"//td[2]/span/ul/li/strong/a");
+						"//span[@title='Actions']/ul/li/strong/a/span");
 
 				if (!consumer3Present) {
 					label = 4;
@@ -142,7 +156,11 @@ public class TearDownConsumerTest extends BaseTestCase {
 					continue;
 				}
 
-				selenium.clickAt("//td[2]/span/ul/li/strong/a",
+				Thread.sleep(5000);
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -151,8 +169,8 @@ public class TearDownConsumerTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a")) {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]")) {
 							break;
 						}
 					}
@@ -162,25 +180,30 @@ public class TearDownConsumerTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-
-			case 4:
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
 				boolean consumer4Present = selenium.isElementPresent(
-						"//td[2]/span/ul/li/strong/a");
+						"//span[@title='Actions']/ul/li/strong/a/span");
 
 				if (!consumer4Present) {
-					label = 5;
+					label = 3;
 
 					continue;
 				}
 
-				selenium.clickAt("//td[2]/span/ul/li/strong/a",
+				Thread.sleep(5000);
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -189,8 +212,8 @@ public class TearDownConsumerTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a")) {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]")) {
 							break;
 						}
 					}
@@ -200,25 +223,30 @@ public class TearDownConsumerTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-
-			case 5:
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
 				boolean consumer5Present = selenium.isElementPresent(
-						"//td[2]/span/ul/li/strong/a");
+						"//span[@title='Actions']/ul/li/strong/a/span");
 
 				if (!consumer5Present) {
-					label = 6;
+					label = 2;
 
 					continue;
 				}
 
-				selenium.clickAt("//td[2]/span/ul/li/strong/a",
+				Thread.sleep(5000);
+				assertEquals(RuntimeVariables.replace("Actions"),
+					selenium.getText(
+						"//span[@title='Actions']/ul/li/strong/a/span"));
+				selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 					RuntimeVariables.replace("Actions"));
 
 				for (int second = 0;; second++) {
@@ -227,8 +255,8 @@ public class TearDownConsumerTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isElementPresent(
-									"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a")) {
+						if (selenium.isVisible(
+									"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]")) {
 							break;
 						}
 					}
@@ -238,13 +266,20 @@ public class TearDownConsumerTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
+				assertEquals(RuntimeVariables.replace("Delete"),
+					selenium.getText(
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
 				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
+						"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 
+			case 2:
+			case 3:
+			case 4:
+			case 5:
 			case 6:
 			case 100:
 				label = -1;

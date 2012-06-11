@@ -940,6 +940,10 @@ public class PortletExporter {
 			Element parentElement)
 		throws Exception {
 
+		if (portlet == null) {
+			return;
+		}
+
 		PortletDataHandler portletDataHandler =
 			portlet.getPortletDataHandlerInstance();
 

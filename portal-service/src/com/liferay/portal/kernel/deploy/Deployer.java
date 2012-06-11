@@ -59,9 +59,6 @@ public interface Deployer {
 			File srcFile, String displayName, PluginPackage pluginPackage)
 		throws Exception;
 
-	public void deployFile(File srcFile, String specifiedContext)
-		throws Exception;
-
 	public Map<String, String> processPluginPackageProperties(
 			File srcFile, String displayName, PluginPackage pluginPackage)
 		throws Exception;

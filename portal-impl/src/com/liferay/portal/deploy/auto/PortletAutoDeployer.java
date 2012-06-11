@@ -15,8 +15,6 @@
 package com.liferay.portal.deploy.auto;
 
 import com.liferay.portal.deploy.DeployUtil;
-import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
-import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -25,8 +23,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.tools.deploy.PortletDeployer;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
-
-import java.io.File;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,25 +77,6 @@ public class PortletAutoDeployer
 		}
 		catch (Exception e) {
 			_log.error(e);
-		}
-	}
-
-	public void autoDeploy(AutoDeploymentContext autoDeploymentContext)
-		throws AutoDeployException {
-
-		File deploymentFile = autoDeploymentContext.getFileToDeploy();
-
-		List<String> wars = new ArrayList<String>();
-
-		wars.add(deploymentFile.getName());
-
-		this.wars = wars;
-
-		try {
-			deployFile(autoDeploymentContext);
-		}
-		catch (Exception e) {
-			throw new AutoDeployException(e);
 		}
 	}
 

@@ -15,8 +15,6 @@
 package com.liferay.portal.deploy.auto;
 
 import com.liferay.portal.deploy.DeployUtil;
-import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
-import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -25,8 +23,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.tools.deploy.ExtDeployer;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
-
-import java.io.File;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,25 +60,6 @@ public class ExtAutoDeployer extends ExtDeployer implements AutoDeployer {
 		}
 		catch (Exception e) {
 			_log.error(e);
-		}
-	}
-
-	public void autoDeploy(AutoDeploymentContext autoDeploymentContext)
-		throws AutoDeployException {
-
-		List<String> wars = new ArrayList<String>();
-
-		File file = autoDeploymentContext.getFileToDeploy();
-
-		wars.add(file.getName());
-
-		this.wars = wars;
-
-		try {
-			deployFile(autoDeploymentContext);
-		}
-		catch (Exception e) {
-			throw new AutoDeployException(e);
 		}
 	}
 

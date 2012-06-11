@@ -17,7 +17,7 @@ package com.liferay.portal.kernel.deploy.auto.context;
 import java.io.File;
 
 /**
- * This artifact allows to shar infor among all the auto deployers in a
+ * This artifact allows to share information among all the auto deployers in a
  * thread safe manner
  *
  * @author Miguel Pastor

@@ -27,20 +27,47 @@ try {
 
 	<c:choose>
 		<c:when test="<%= (recordSet != null) %>">
+			<c:choose>
+			<c:when test="<%= listDDMTemplateId > 0 %>">
+				<liferay-ui:header
+					localizeTitle="<%= false %>"
+					title="<%= recordSet.getName(locale) %>"
+				/>
+				<portlet:actionURL var="editRecordSetURL">
+		            <portlet:param name="struts_action" value="/dynamic_data_lists/edit_record_set" />
+		        </portlet:actionURL>
 
-			<%
-			portletDisplay.setTitle(recordSet.getName(locale));
+		        <aui:form action="<%= editRecordSetURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveRecordSet();" %>'>
+		        <c:if test="<%= DDLRecordSetPermission.contains(permissionChecker, recordSet.getRecordSetId(), ActionKeys.ADD_RECORD) && editable%>">
+		            <aui:button onClick='<%= renderResponse.getNamespace() + "addRecord();" %>' value="add-record" />
 
-			renderRequest.setAttribute(WebKeys.DYNAMIC_DATA_LISTS_RECORD_SET, recordSet);
-			%>
+		            <div class="separator"><!-- --></div>
+		        </c:if>
+				<%= DDLUtil.getTemplateContent(listDDMTemplateId, recordSet, themeDisplay, renderRequest, renderResponse) %>
+		        </aui:form>
 
-			<liferay-util:include page="/html/portlet/dynamic_data_lists/view_record_set.jsp">
-				<liferay-util:param name="detailDDMTemplateId" value="<%= String.valueOf(detailDDMTemplateId) %>" />
-				<liferay-util:param name="listDDMTemplateId" value="<%= String.valueOf(listDDMTemplateId) %>" />
-				<liferay-util:param name="editable" value="<%= String.valueOf(editable) %>" />
-				<liferay-util:param name="spreadsheet" value="<%= String.valueOf(spreadsheet) %>" />
-			</liferay-util:include>
+		        <aui:script>
+		            function <portlet:namespace />addRecord() {
+		            submitForm(document.<portlet:namespace />fm, '<liferay-portlet:renderURL windowState="<%= WindowState.MAXIMIZED.toString() %>"><portlet:param name="struts_action" value="/dynamic_data_lists/edit_record" /><portlet:param name="redirect" value="<%= currentURL %>" /><portlet:param name="backURL" value="<%= currentURL %>" /><portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" /><portlet:param name="detailDDMTemplateId" value="<%= String.valueOf(detailDDMTemplateId) %>" /></liferay-portlet:renderURL>');
+		            }
+		        </aui:script>
+			</c:when>
+			<c:otherwise>
 
+				<%
+				portletDisplay.setTitle(recordSet.getName(locale));
+
+				renderRequest.setAttribute(WebKeys.DYNAMIC_DATA_LISTS_RECORD_SET, recordSet);
+				%>
+
+				<liferay-util:include page="/html/portlet/dynamic_data_lists/view_record_set.jsp">
+					<liferay-util:param name="detailDDMTemplateId" value="<%= String.valueOf(detailDDMTemplateId) %>" />
+					<liferay-util:param name="listDDMTemplateId" value="<%= String.valueOf(listDDMTemplateId) %>" />
+					<liferay-util:param name="editable" value="<%= String.valueOf(editable) %>" />
+					<liferay-util:param name="spreadsheet" value="<%= String.valueOf(spreadsheet) %>" />
+				</liferay-util:include>
+			</c:otherwise>
+			</c:choose>
 		</c:when>
 		<c:otherwise>
 

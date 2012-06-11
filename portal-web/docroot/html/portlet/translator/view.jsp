@@ -26,6 +26,24 @@ if (translation == null) {
 
 <portlet:actionURL var="portletURL" />
 
+<liferay-ui:error exception="<%= MicrosoftTranslatorException.class %>">
+
+	<%
+	MicrosoftTranslatorException mte = (MicrosoftTranslatorException)errorException;
+
+	String message = mte.getMessage();
+
+	if (message.startsWith("ACS50012") || message.startsWith("ACS70002") || message.startsWith("ACS90011")) {
+	%>
+
+		<liferay-ui:message key="please-configure-a-valid-microsoft-translator-license" />
+
+	<%
+	}
+	%>
+
+</liferay-ui:error>
+
 <aui:form accept-charset="UTF-8" action="<%= portletURL %>" method="post" name="fm">
 	<c:if test="<%= Validator.isNotNull(translation.getToText()) %>">
 		<%= HtmlUtil.escape(translation.getToText()) %>

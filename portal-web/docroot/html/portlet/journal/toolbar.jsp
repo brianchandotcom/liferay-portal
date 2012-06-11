@@ -118,7 +118,7 @@
 	</c:if>
 </span>
 
-<aui:script use="aui-base">
+<aui:script>
 	function <portlet:namespace />openFeedsView() {
 		Liferay.Util.openWindow(
 			{
@@ -170,7 +170,9 @@
 			}
 		);
 	}
+</aui:script>
 
+<aui:script use="aui-base">
 	var buttons = A.all('.delete-articles-button, .expire-articles-button');
 
 	if (buttons.size()) {

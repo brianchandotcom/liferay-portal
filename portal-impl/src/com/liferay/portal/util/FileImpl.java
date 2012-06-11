@@ -436,11 +436,11 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 		int x = fullFileName.lastIndexOf(CharPool.SLASH);
 		int y = fullFileName.lastIndexOf(CharPool.BACK_SLASH);
 
-		String shortFileName = fullFileName.substring(0, Math.max(x, y));
-
-		if (Validator.isNull(shortFileName)) {
+		if ((x == -1) && (y == -1)) {
 			return StringPool.SLASH;
 		}
+
+		String shortFileName = fullFileName.substring(0, Math.max(x, y));
 
 		return shortFileName;
 	}

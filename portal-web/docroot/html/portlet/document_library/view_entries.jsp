@@ -138,9 +138,9 @@ if (fileEntryTypeId >= 0) {
 
 	SearchContext searchContext = SearchContextFactory.getInstance(request);
 
+	searchContext.setAttribute("paginationType", "none");
 	searchContext.setEnd(entryEnd);
 	searchContext.setStart(entryStart);
-	searchContext.setAttribute("paginationType", "none");
 
 	Hits hits = indexer.search(searchContext);
 

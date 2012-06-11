@@ -20,7 +20,7 @@ AUI.add(
 
 		var DRAG_NODE = 'dragNode';
 
-		var EVENT_CLICK  = 'click';
+		var EVENT_CLICK = 'click';
 
 		var EVENT_SUBMIT = 'submit';
 

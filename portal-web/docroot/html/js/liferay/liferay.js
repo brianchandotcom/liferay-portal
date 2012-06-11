@@ -3,6 +3,8 @@ Liferay = window.Liferay || {};
 ;(function(A, Liferay) {
 	var Lang = A.Lang;
 
+	var owns = A.Object.owns;
+
 	var CONTEXT = themeDisplay.getPathContext();
 
 	var PREFIX_PARAM_NULL_VALUE = '-';
@@ -68,7 +70,7 @@ Liferay = window.Liferay || {};
 				}
 
 				for (var i in serviceConfig) {
-					if (A.Object.owns(serviceConfig, i)) {
+					if (owns(serviceConfig, i)) {
 						service = i;
 						serviceData = serviceConfig[i];
 
@@ -229,6 +231,16 @@ Liferay = window.Liferay || {};
 				}
 			},
 
+			bind: function() {
+				var instance = this;
+
+				var args = A.Array(arguments, 0, true);
+
+				args.unshift(Liferay.Service, Liferay);
+
+				return A.bind.apply(A, args);
+			},
+
 			getParameters: function(options) {
 				var instance = this;
 
@@ -339,7 +351,8 @@ Liferay = window.Liferay || {};
 					);
 				}
 			}
-		}
+		},
+		true
 	);
 
 	A.each(

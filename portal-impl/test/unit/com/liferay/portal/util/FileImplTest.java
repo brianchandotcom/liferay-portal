@@ -15,7 +15,9 @@
 package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.test.TestCase;
+import com.liferay.portal.kernel.util.StringPool;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -24,11 +26,39 @@ import org.junit.Test;
 public class FileImplTest extends TestCase {
 
 	@Test
-	public void testGetPath() {
+	public void testGetPathBackSlashForwardSlash() {
+		Assert.assertEquals(
+			"aaa\\bbb/ccc\\ddd",
+			_fileImpl.getPath("aaa\\bbb/ccc\\ddd/eee.fff"));
 	}
 
 	@Test
-	public void testGetShortFileName() {
+	public void testGetPathForwardSlashBackSlash() {
+		Assert.assertEquals(
+			"aaa/bbb\\ccc/ddd",
+			_fileImpl.getPath("aaa/bbb\\ccc/ddd\\eee.fff"));
+	}
+
+	@Test
+	public void testGetPathNoPath() {
+		Assert.assertEquals(StringPool.SLASH, _fileImpl.getPath("aaa.bbb"));
+	}
+
+	@Test
+	public void testGetShortFileNameBackSlashForwardSlash() {
+		Assert.assertEquals(
+			"eee.fff", _fileImpl.getShortFileName("aaa\\bbb/ccc\\ddd/eee.fff"));
+	}
+
+	@Test
+	public void testGetShortFileNameForwardSlashBackSlash() {
+		Assert.assertEquals(
+			"eee.fff", _fileImpl.getShortFileName("aaa/bbb\\ccc/ddd\\eee.fff"));
+	}
+
+	@Test
+	public void testGetShortFileNameNoPath() {
+		Assert.assertEquals("aaa.bbb", _fileImpl.getShortFileName("aaa.bbb"));
 	}
 
 	private FileImpl _fileImpl = new FileImpl();

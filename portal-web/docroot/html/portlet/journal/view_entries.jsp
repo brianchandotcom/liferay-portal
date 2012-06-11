@@ -47,6 +47,35 @@ List headerNames = searchContainer.getHeaderNames();
 headerNames.add(2, "status");
 headerNames.add(StringPool.BLANK);
 
+Map<String, String> orderableHeaders = new HashMap<String, String>();
+
+orderableHeaders.put("display-date", "display-date");
+orderableHeaders.put("modified-date", "modified-date");
+
+String orderByCol = ParamUtil.getString(liferayPortletRequest, "orderByCol");
+String orderByType = ParamUtil.getString(liferayPortletRequest, "orderByType");
+
+if (Validator.isNull(orderByCol)) {
+	orderByCol = portalPreferences.getValue(PortletKeys.JOURNAL, "order-by-col", StringPool.BLANK);
+	orderByType = portalPreferences.getValue(PortletKeys.JOURNAL, "order-by-type", "asc");
+}
+else {
+	boolean saveOrderBy = ParamUtil.getBoolean(liferayPortletRequest, "saveOrderBy");
+
+	if (saveOrderBy) {
+		portalPreferences.setValue(PortletKeys.JOURNAL, "order-by-col", orderByCol);
+		portalPreferences.setValue(PortletKeys.JOURNAL, "order-by-type", orderByType);
+	}
+}
+
+OrderByComparator orderByComparator = JournalUtil.getArticleOrderByComparator(orderByCol, orderByType);
+
+searchContainer.setOrderableHeaders(orderableHeaders);
+searchContainer.setOrderByComparator(orderByComparator);
+searchContainer.setOrderByCol(orderByCol);
+searchContainer.setOrderByJS("javascript:" + liferayPortletResponse.getNamespace() + "sortEntries('" + folderId + "', 'orderKey', 'orderByType');");
+searchContainer.setOrderByType(orderByType);
+
 EntriesChecker entriesChecker = new EntriesChecker(liferayPortletRequest, liferayPortletResponse);
 
 entriesChecker.setCssClass("article-selector");
@@ -122,6 +151,10 @@ if (folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 	searchTerms.setFolderId(folderId);
 }
 
+if (Validator.isNotNull(displayTerms.getStructureId())) {
+	searchTerms.setStructureId(displayTerms.getStructureId());
+}
+
 boolean advancedSearch = ParamUtil.getBoolean(liferayPortletRequest, displayTerms.ADVANCED_SEARCH, false);
 
 String keywords = ParamUtil.getString(liferayPortletRequest, "keywords");
@@ -147,7 +180,7 @@ int total = 0;
 	<c:when test='<%= displayTerms.getNavigation().equals("mine") %>'>
 
 		<%
-		results = JournalArticleServiceUtil.getArticlesByUserId(scopeGroupId, themeDisplay.getUserId(), entryStart, entryEnd, null);
+		results = JournalArticleServiceUtil.getArticlesByUserId(scopeGroupId, themeDisplay.getUserId(), entryStart, entryEnd, searchContainer.getOrderByComparator());
 		total = JournalArticleServiceUtil.getArticlesCountByUserId(scopeGroupId, themeDisplay.getUserId());
 
 		searchContainer.setResults(results);
@@ -169,7 +202,7 @@ int total = 0;
 	<c:otherwise>
 
 		<%
-		results = JournalFolderServiceUtil.getFoldersAndArticles(scopeGroupId, folderId, entryStart, entryEnd, null);
+		results = JournalFolderServiceUtil.getFoldersAndArticles(scopeGroupId, folderId, entryStart, entryEnd, searchContainer.getOrderByComparator());
 		total = JournalFolderServiceUtil.getFoldersAndArticlesCount(scopeGroupId, folderId);
 
 		searchContainer.setResults(results);

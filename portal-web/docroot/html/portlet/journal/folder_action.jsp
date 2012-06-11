@@ -107,6 +107,21 @@ else {
 				</c:if>
 			</c:when>
 			<c:otherwise>
+				<c:if test="<%= JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_FOLDER) %>">
+					<portlet:renderURL var="addFolderURL">
+						<portlet:param name="struts_action" value="/journal/edit_folder" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+						<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
+						<portlet:param name="parentFolderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
+					</portlet:renderURL>
+
+					<liferay-ui:icon
+						image="add_folder"
+						message='<%= (folder != null) ? "add-subfolder" : "add-folder" %>'
+						url="<%= addFolderURL %>"
+					/>
+				</c:if>
+
 				<c:if test="<%= JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.SUBSCRIBE) %>">
 					<c:choose>
 						<c:when test="<%= SubscriptionLocalServiceUtil.isSubscribed(company.getCompanyId(), user.getUserId(), JournalArticle.class.getName(), scopeGroupId) %>">

@@ -35,6 +35,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
+import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.User;
@@ -144,6 +145,18 @@ public class ServiceTestUtil {
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, name, null, description,
 			LayoutConstants.TYPE_PORTLET, false, friendlyURL,
 			getServiceContext());
+	}
+
+	public static LayoutPrototype addLayoutPrototype(String name)
+		throws Exception {
+
+		HashMap<Locale, String> nameMap = new HashMap<Locale, String>();
+
+		nameMap.put(Locale.getDefault(), name);
+
+		return LayoutPrototypeLocalServiceUtil.addLayoutPrototype(
+			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
+			nameMap, null, true);
 	}
 
 	public static LayoutSetPrototype addLayoutSetPrototype(String name)

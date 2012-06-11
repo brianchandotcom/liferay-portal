@@ -1130,9 +1130,15 @@ public class PropsValues {
 
 	public static String[] ORGANIZATIONS_TYPES = PropsUtil.getArray(PropsKeys.ORGANIZATIONS_TYPES);
 
+	public static final String OSGI_AUTO_DEPLOY_DIR = PropsUtil.get(PropsKeys.OSGI_AUTO_DEPLOY_DIR);
+
+	public static final String OSGI_AUTO_DEPLOY_LOG_LEVEL = PropsUtil.get(PropsKeys.OSGI_AUTO_DEPLOY_LOG_LEVEL);
+
 	public static final boolean OSGI_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.OSGI_ENABLED));
 
 	public static final int OSGI_FRAMEWORK_BEGINNING_START_LEVEL = GetterUtil.getInteger(PropsUtil.get(PropsKeys.OSGI_FRAMEWORK_BEGINNING_START_LEVEL));
+
+	public static final String OSGI_FRAMEWORK_LIB_DIR = PropsUtil.get(PropsKeys.OSGI_FRAMEWORK_LIB_DIR);
 
 	public static final int OSGI_FRAMEWORK_RUNTIME_START_LEVEL = GetterUtil.getInteger(PropsUtil.get(PropsKeys.OSGI_FRAMEWORK_RUNTIME_START_LEVEL));
 

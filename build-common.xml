@@ -41,6 +41,7 @@
 
 	<path id="lib.classpath">
 		<fileset dir="${project.dir}/lib/development" includes="*.jar" />
+		<fileset dir="${project.dir}/lib/framework" includes="org.eclipse.osgi.services.jar,org.eclipse.osgi.util.jar" />
 		<fileset dir="${project.dir}/lib/global" includes="*.jar" />
 		<fileset dir="${project.dir}/lib/portal" includes="*.jar" />
 	</path>
@@ -69,6 +70,7 @@
 	<taskdef classpathref="lib.classpath" resource="ise/antelope/tasks/antlib.xml" uri="antlib:ise.antelope.tasks" />
 	<taskdef classpathref="lib.classpath" resource="com/orangevolt/tools/ant/taskdefs.properties" />
 	<taskdef classpathref="lib.classpath" resource="tasks.properties" />
+	<taskdef classpathref="lib.classpath" resource="aQute/bnd/ant/taskdef.properties" />
 
 	<taskdef classname="com.tonicsystems.jarjar.JarJarTask" classpath="${project.dir}/lib/development/jarjar.jar" name="jarjar" />
 
@@ -154,6 +156,8 @@
 			<var name="dir.location.windows" unset="true" />
 		</sequential>
 	</for>
+
+	<property name="liferay.framework.lib.dir" value="${liferay.home}/data/framework/lib" />
 
 	<antelope:stringutil string="${basedir}" property="basedir.unix">
 		<antelope:replace regex="\\" replacement="/" />

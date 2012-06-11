@@ -213,6 +213,10 @@ ${app.server.tomcat.dir}, then run "ant -buildfile build-dist.xml unzip-tomcat".
 			<fileset dir="lib/portal" />
 		</copy>
 
+		<copy todir="${liferay.framework.lib.dir}">
+			<fileset dir="lib/framework" />
+		</copy>
+
 		<if>
 			<equals arg1="${app.server.type}" arg2="glassfish" />
 			<then>

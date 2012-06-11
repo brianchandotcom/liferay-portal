@@ -1571,9 +1571,15 @@ public interface PropsKeys {
 
 	public static final String ORGANIZATIONS_TYPES = "organizations.types";
 
+	public static final String OSGI_AUTO_DEPLOY_DIR = "osgi.auto.deploy.dir";
+
+	public static final String OSGI_AUTO_DEPLOY_LOG_LEVEL = "osgi.auto.deploy.log.level";
+
 	public static final String OSGI_ENABLED = "osgi.enabled";
 
 	public static final String OSGI_FRAMEWORK_BEGINNING_START_LEVEL = "osgi.framework.beginning.start.level";
+
+	public static final String OSGI_FRAMEWORK_LIB_DIR = "osgi.framework.lib.dir";
 
 	public static final String OSGI_FRAMEWORK_RUNTIME_START_LEVEL = "osgi.framework.runtime.start.level";
 

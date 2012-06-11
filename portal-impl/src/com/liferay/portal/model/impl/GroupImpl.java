@@ -474,14 +474,12 @@ public class GroupImpl extends GroupBaseImpl {
 
 	protected long getDefaultPlid(boolean privateLayout) {
 		try {
-			List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
+			Layout firstLayout = LayoutLocalServiceUtil.fetchFirstLayout(
 				getGroupId(), privateLayout,
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, true, 0, 1);
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
-			if (layouts.size() > 0) {
-				Layout layout = layouts.get(0);
-
-				return layout.getPlid();
+			if (firstLayout != null) {
+				return firstLayout.getPlid();
 			}
 		}
 		catch (Exception e) {

@@ -97,7 +97,7 @@ List<Group> mySites = user.getMySites(true, max);
 			Layout defaultPublicLayout = null;
 
 			if (mySite.getDefaultPublicPlid() > 0) {
-				defaultPublicLayout = LayoutLocalServiceUtil.getLayout(mySite.getDefaultPublicPlid());
+				defaultPublicLayout = LayoutLocalServiceUtil.fetchFirstLayout(mySite.getGroupId(), false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 			}
 
 			if (mySite.getPublicLayoutsPageCount() == 0) {
@@ -121,7 +121,7 @@ List<Group> mySites = user.getMySites(true, max);
 			Layout defaultPrivateLayout = null;
 
 			if (mySite.getDefaultPrivatePlid() > 0) {
-				defaultPrivateLayout = LayoutLocalServiceUtil.getLayout(mySite.getDefaultPrivatePlid());
+				defaultPrivateLayout = LayoutLocalServiceUtil.fetchFirstLayout(mySite.getGroupId(), true, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 			}
 
 			if (mySite.getPrivateLayoutsPageCount() == 0) {

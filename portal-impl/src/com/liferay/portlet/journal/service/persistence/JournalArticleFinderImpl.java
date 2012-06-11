@@ -678,19 +678,15 @@ public class JournalArticleFinderImpl
 				sql, "description", StringPool.LIKE, false, descriptions);
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "content", StringPool.LIKE, false, contents);
-			sql = CustomSQLUtil.replaceKeywords(
-				sql, "structureId", StringPool.LIKE, false, structureIds);
-			sql = CustomSQLUtil.replaceKeywords(
-				sql, "templateId", StringPool.LIKE, false, templateIds);
 
 			if (status == WorkflowConstants.STATUS_ANY) {
 				sql = StringUtil.replace(
 					sql, "(status = ?) AND", StringPool.BLANK);
 			}
 
-			if (Validator.isNull(type)) {
-				sql = StringUtil.replace(sql, _TYPE_SQL, StringPool.BLANK);
-			}
+			sql = StringUtil.replace(
+				sql, "[$WHERE_CLAUSE$]",
+				getWhereClause(type, structureIds, templateIds));
 
 			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
 
@@ -762,8 +758,13 @@ public class JournalArticleFinderImpl
 				qPos.add(type);
 			}
 
-			qPos.add(structureIds, 2);
-			qPos.add(templateIds, 2);
+			if (!isArrayNull(structureIds)) {
+				qPos.add(structureIds, 2);
+			}
+
+			if (!isArrayNull(templateIds)) {
+				qPos.add(templateIds, 2);
+			}
 
 			Iterator<Long> itr = q.iterate();
 
@@ -837,19 +838,15 @@ public class JournalArticleFinderImpl
 				sql, "description", StringPool.LIKE, false, descriptions);
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "content", StringPool.LIKE, false, contents);
-			sql = CustomSQLUtil.replaceKeywords(
-				sql, "structureId", StringPool.LIKE, false, structureIds);
-			sql = CustomSQLUtil.replaceKeywords(
-				sql, "templateId", StringPool.LIKE, false, templateIds);
 
 			if (status == WorkflowConstants.STATUS_ANY) {
 				sql = StringUtil.replace(
 					sql, "(status = ?) AND", StringPool.BLANK);
 			}
 
-			if (Validator.isNull(type)) {
-				sql = StringUtil.replace(sql, _TYPE_SQL, StringPool.BLANK);
-			}
+			sql = StringUtil.replace(
+				sql, "[$WHERE_CLAUSE$]",
+				getWhereClause(type, structureIds, templateIds));
 
 			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
 
@@ -923,8 +920,13 @@ public class JournalArticleFinderImpl
 				qPos.add(type);
 			}
 
-			qPos.add(structureIds, 2);
-			qPos.add(templateIds, 2);
+			if (!isArrayNull(structureIds)) {
+				qPos.add(structureIds, 2);
+			}
+
+			if (!isArrayNull(templateIds)) {
+				qPos.add(templateIds, 2);
+			}
 
 			return (List<JournalArticle>)QueryUtil.list(
 				q, getDialect(), start, end);
@@ -977,7 +979,71 @@ public class JournalArticleFinderImpl
 		return articles.get(0);
 	}
 
-	private static final String _TYPE_SQL =
-		"(type_ = ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]";
+	protected String getWhereClause(
+		String type, String[] structureIds, String[] templateIds) {
+
+		boolean isNullStructureIds = isArrayNull(structureIds);
+		boolean isNullTemplateIds = isArrayNull(templateIds);
+
+		if (Validator.isNull(type) && isNullStructureIds && isNullTemplateIds) {
+			return StringPool.BLANK;
+		}
+
+		StringBundler sb = new StringBundler();
+
+		sb.append("WHERE");
+		sb.append(StringPool.SPACE);
+
+		if (!Validator.isNull(type)) {
+			sb.append(_TYPE_SQL);
+			sb.append(StringPool.SPACE);
+
+			if (!isNullStructureIds || !isNullTemplateIds) {
+				sb.append(_AND_OR_CONNECTORS);
+				sb.append(StringPool.SPACE);
+			}
+		}
+
+		if (!isNullStructureIds) {
+			sb.append(_STRUCTUREID_SQL);
+			sb.append(StringPool.SPACE);
+
+			if (!isNullTemplateIds) {
+				sb.append(_AND_OR_CONNECTORS);
+				sb.append(StringPool.SPACE);
+			}
+		}
+
+		if (!isNullTemplateIds) {
+			sb.append(_TEMPLATEID_SQL);
+			sb.append(StringPool.SPACE);
+		}
+
+		return sb.toString();
+	}
+
+	protected boolean isArrayNull(Object[] array) {
+		if (Validator.isNull(array)) {
+			return true;
+		}
+
+		for (Object obj : array) {
+			if (Validator.isNotNull(obj)) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	private static final String _AND_OR_CONNECTORS = "[$AND_OR_CONNECTOR$]";
+
+	private static final String _STRUCTUREID_SQL =
+		"(structureId LIKE ? [$AND_OR_NULL_CHECK$])";
+
+	private static final String _TEMPLATEID_SQL =
+		"(templateId LIKE ? [$AND_OR_NULL_CHECK$])";
+
+	private static final String _TYPE_SQL = "(type_ = ? [$AND_OR_NULL_CHECK$])";
 
 }

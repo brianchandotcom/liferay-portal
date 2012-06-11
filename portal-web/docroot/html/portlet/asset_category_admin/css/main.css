@@ -163,7 +163,63 @@
 	}
 
 	.vocabulary-categories {
-		overflow: auto;
+		.category-item {
+			background-color: #F5F5F5;
+			color: #5C85AD;
+			cursor: pointer;
+			display: block;
+			font-weight: bold;
+			padding-left: 18px;
+			padding-right: 5px;
+			
+			&:after {
+				clear: both;
+				content: ".";
+				display: block;
+				height: 0;
+				visibility: hidden;
+			}
+
+			&:hover {
+				background: #D3DADD;
+			}
+
+			&.selected {
+				background-color: #6F7D83;
+				color: #FFF;
+
+				&:hover {
+					background-color: #6F7D83;
+					color: #FFB683;
+				}
+			}
+		}
+
+		.category-name, .category-path {
+			overflow: hidden;
+			padding-bottom: 8px;
+			padding-top: 8px;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+
+		.category-name {
+			float: left;
+			width: 50%;
+
+			.category-item-check {
+				margin-right: 3px;
+				vertical-align: middle;
+			}
+		}
+
+		.category-path {
+			float: right;
+			font-weight: normal;
+			font-size: 0.8em;
+			text-align: right;
+			width: 49%;
+		}
 	}
 
 	.vocabulary-edit-category .category-view {
@@ -190,7 +246,7 @@
 			cursor: pointer;
 
 			&:hover {
-				color: #06c;
+				color: #06C;
 			}
 		}
 
@@ -309,6 +365,12 @@
 
 		.vocabulary-item-actions-trigger {
 			cursor: pointer;
+		}
+
+		.vocabulary-categories {
+			.category-item {
+				zoom: 1;
+			}
 		}
 	}
 }

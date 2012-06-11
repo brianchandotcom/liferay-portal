@@ -78,6 +78,8 @@
 					<liferay-ui:message key="vocabularies" />
 				</div>
 
+				<div class="vocabulary-message lfr-component"></div>
+
 				<div class="vocabulary-list lfr-component"></div>
 
 				<div class="vocabularies-paginator"></div>

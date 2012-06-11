@@ -161,7 +161,11 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		int page = end / (end - start);
+		int page = 0;
+
+		if (end > 0 && start > 0) {
+			page = end / (end - start);
+		}
 
 		jsonObject.put("page", page);
 
@@ -180,13 +184,31 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 			total = getVocabularyCategoriesCount(groupId, vocabularyId);
 		}
 
-		String categoriesJSON = JSONFactoryUtil.looseSerialize(categories);
-
-		JSONArray categoriesJSONArray = JSONFactoryUtil.createJSONArray(
-			categoriesJSON);
+		JSONArray categoriesJSONArray = toJSONArray(categories);
 
 		jsonObject.put("categories", categoriesJSONArray);
+		jsonObject.put("total", total);
 
+		return jsonObject;
+	}
+
+	public JSONObject getJSONVocabularyCategories(
+		long vocabularyId, int start, int end, OrderByComparator obc)
+		throws PortalException, SystemException {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		int total = 0;
+
+		List<AssetCategory> categories = filterCategories(
+			assetCategoryLocalService.getVocabularyCategories(
+				vocabularyId, start, end, obc));
+
+		total = categories.size();
+
+		JSONArray categoriesJSONArray = toJSONArray(categories);
+
+		jsonObject.put("categories", categoriesJSONArray);
 		jsonObject.put("total", total);
 
 		return jsonObject;

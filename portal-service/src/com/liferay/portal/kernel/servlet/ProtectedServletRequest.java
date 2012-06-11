@@ -27,6 +27,12 @@ public class ProtectedServletRequest extends HttpServletRequestWrapper {
 	public ProtectedServletRequest(
 		HttpServletRequest request, String remoteUser) {
 
+		this(request, remoteUser, null);
+	}
+
+	public ProtectedServletRequest(
+		HttpServletRequest request, String remoteUser, String authType) {
+
 		super(request);
 
 		_remoteUser = remoteUser;
@@ -34,6 +40,17 @@ public class ProtectedServletRequest extends HttpServletRequestWrapper {
 		if (remoteUser != null) {
 			_userPrincipal = new ProtectedPrincipal(remoteUser);
 		}
+
+		_authType = authType;
+	}
+
+	@Override
+	public String getAuthType() {
+		if (_authType == null) {
+			return super.getAuthType();
+		}
+
+		return _authType;
 	}
 
 	@Override
@@ -56,6 +73,7 @@ public class ProtectedServletRequest extends HttpServletRequestWrapper {
 		}
 	}
 
+	private String _authType;
 	private String _remoteUser;
 	private Principal _userPrincipal;
 

@@ -24,6 +24,8 @@ import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.service.persistence.LayoutSetPrototypeUtil;
 
+import java.util.Date;
+
 /**
  * @author Raymond Augé
  */
@@ -32,20 +34,22 @@ public class LayoutSetPrototypeLayoutSetListener
 
 	@Override
 	public void onAfterCreate(LayoutSet layoutSet) {
-		updateLayoutSetPrototype(layoutSet);
+		updateLayoutSetPrototype(layoutSet, layoutSet.getModifiedDate());
 	}
 
 	@Override
 	public void onAfterRemove(LayoutSet layoutSet) {
-		updateLayoutSetPrototype(layoutSet);
+		updateLayoutSetPrototype(layoutSet, new Date());
 	}
 
 	@Override
 	public void onAfterUpdate(LayoutSet layoutSet) {
-		updateLayoutSetPrototype(layoutSet);
+		updateLayoutSetPrototype(layoutSet, layoutSet.getModifiedDate());
 	}
 
-	protected void updateLayoutSetPrototype(LayoutSet layoutSet) {
+	protected void updateLayoutSetPrototype(
+		LayoutSet layoutSet, Date modifiedDate) {
+
 		try {
 			Group group = layoutSet.getGroup();
 
@@ -57,7 +61,7 @@ public class LayoutSetPrototypeLayoutSetListener
 				LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototype(
 					group.getClassPK());
 
-			layoutSetPrototype.setModifiedDate(layoutSet.getModifiedDate());
+			layoutSetPrototype.setModifiedDate(modifiedDate);
 
 			UnicodeProperties settingsProperties =
 				layoutSet.getSettingsProperties();

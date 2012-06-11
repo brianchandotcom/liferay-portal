@@ -14,14 +14,16 @@
 
 package com.liferay.portal.kernel.deploy.auto;
 
-import java.io.File;
+import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
 
 /**
  * @author Ivica Cardic
  * @author Brian Wing Shun Chan
+ * @author Miguel Pastor
  */
 public interface AutoDeployListener {
 
-	public void deploy(File file, String context) throws AutoDeployException;
+	public void deploy(AutoDeploymentContext autoDeploymentContext)
+		throws AutoDeployException ;
 
 }

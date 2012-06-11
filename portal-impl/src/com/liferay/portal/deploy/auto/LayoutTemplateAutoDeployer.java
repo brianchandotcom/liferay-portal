@@ -16,6 +16,7 @@ package com.liferay.portal.deploy.auto;
 
 import com.liferay.portal.deploy.DeployUtil;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
+import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -68,17 +69,19 @@ public class LayoutTemplateAutoDeployer
 		}
 	}
 
-	public void autoDeploy(File file, String context)
+	public void autoDeploy(AutoDeploymentContext autoDeploymentContext)
 		throws AutoDeployException {
 
 		List<String> wars = new ArrayList<String>();
+
+		File file = autoDeploymentContext.getFileToDeploy();
 
 		wars.add(file.getName());
 
 		this.wars = wars;
 
 		try {
-			deployFile(file, context);
+			deployFile(file, autoDeploymentContext.getContext());
 		}
 		catch (Exception e) {
 			throw new AutoDeployException(e);

@@ -17,6 +17,7 @@ package com.liferay.portal.tools.deploy;
 import com.liferay.portal.deploy.DeployUtil;
 import com.liferay.portal.kernel.deploy.Deployer;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
+import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.plugin.License;
@@ -893,6 +894,159 @@ public class BaseDeployer implements Deployer {
 
 			throw e;
 		}
+	}
+
+	public AutoDeploymentContext deployFile(
+			AutoDeploymentContext autoDeploymentContext)
+		throws Exception {
+
+		File srcFile = autoDeploymentContext.getFileToDeploy();
+
+		PluginPackage pluginPackage = readPluginPackage(srcFile);
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Deploying " + srcFile.getName());
+		}
+
+		String specifiedContext = autoDeploymentContext.getContext();
+
+		String deployDir = null;
+		String displayName = specifiedContext;
+		boolean overwrite = false;
+		String preliminaryContext = specifiedContext;
+
+		// The order of priority of the context is: 1.) the specified context,
+		// 2.) if the file name starts with DEPLOY_TO_PREFIX, use the file name
+		// after the prefix, or 3.) the recommended deployment context as
+		// specified in liferay-plugin-package.properties, or 4.) the file name.
+
+		if (Validator.isNull(specifiedContext) &&
+			srcFile.getName().startsWith(DEPLOY_TO_PREFIX)) {
+
+			displayName = srcFile.getName().substring(
+				DEPLOY_TO_PREFIX.length(), srcFile.getName().length() - 4);
+
+			overwrite = true;
+			preliminaryContext = displayName;
+		}
+
+		if (preliminaryContext == null) {
+			preliminaryContext = getDisplayName(srcFile);
+		}
+
+		if (pluginPackage != null) {
+			if (!PluginPackageUtil.isCurrentVersionSupported(
+				pluginPackage.getLiferayVersions())) {
+
+				throw new AutoDeployException(
+					srcFile.getName() +
+					" does not support this version of Liferay");
+			}
+
+			if (displayName == null) {
+				displayName = pluginPackage.getRecommendedDeploymentContext();
+			}
+
+			if (Validator.isNull(displayName)) {
+				displayName = getDisplayName(srcFile);
+			}
+
+			pluginPackage.setContext(displayName);
+
+			PluginPackageUtil.updateInstallingPluginPackage(
+				preliminaryContext, pluginPackage);
+		}
+
+		if (Validator.isNotNull(displayName)) {
+			deployDir = displayName + ".war";
+		}
+		else {
+			deployDir = srcFile.getName();
+			displayName = getDisplayName(srcFile);
+		}
+
+		if (appServerType.equals(ServerDetector.JBOSS_ID)) {
+			deployDir = jbossPrefix + deployDir;
+		}
+		else if (appServerType.equals(ServerDetector.JETTY_ID) ||
+				 appServerType.equals(ServerDetector.OC4J_ID) ||
+				 appServerType.equals(ServerDetector.RESIN_ID) ||
+				 appServerType.equals(ServerDetector.TOMCAT_ID)) {
+
+			if (unpackWar) {
+				deployDir = deployDir.substring(0, deployDir.length() - 4);
+			}
+		}
+
+		if (autoDeploymentContext.getDestDir() != null) {
+			destDir = autoDeploymentContext.getDestDir();
+		}
+
+		deployDir = destDir + "/" + deployDir;
+
+		File deployDirFile = new File(deployDir);
+
+		try {
+			PluginPackage previousPluginPackage = readPluginPackage(
+				deployDirFile);
+
+			if ((pluginPackage != null) && (previousPluginPackage != null)) {
+				if (_log.isInfoEnabled()) {
+					String name = pluginPackage.getName();
+					String previousVersion = previousPluginPackage.getVersion();
+					String version = pluginPackage.getVersion();
+
+					_log.info(
+						"Updating " + name + " from version " +
+						previousVersion + " to version " + version);
+				}
+
+				if (pluginPackage.isLaterVersionThan(previousPluginPackage)) {
+					overwrite = true;
+				}
+			}
+
+			File mergeDirFile = new File(
+				srcFile.getParent() + "/merge/" + srcFile.getName());
+
+			if (srcFile.isDirectory()) {
+				deployDirectory(
+					srcFile, mergeDirFile, deployDirFile, displayName,
+					overwrite, pluginPackage);
+			}
+			else {
+				boolean deployed = deployFile(
+					srcFile, mergeDirFile, deployDirFile, displayName,
+					overwrite, pluginPackage);
+
+				if (!deployed) {
+					String context = preliminaryContext;
+
+					if (pluginPackage != null) {
+						context = pluginPackage.getContext();
+					}
+
+					PluginPackageUtil.endPluginPackageInstallation(context);
+				}
+				else {
+					if (appServerType.equals(ServerDetector.JBOSS_ID)) {
+						File doDeployFile = new File(deployDir + ".dodeploy");
+
+						FileUtil.write(doDeployFile, StringPool.BLANK);
+					}
+				}
+			}
+		}
+		catch (Exception e) {
+			if (pluginPackage != null) {
+				PluginPackageUtil.endPluginPackageInstallation(
+					pluginPackage.getContext());
+			}
+
+			throw e;
+		}
+
+		return autoDeploymentContext;
 	}
 
 	public String downloadJar(String jar) throws Exception {

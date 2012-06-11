@@ -16,6 +16,7 @@ package com.liferay.portal.deploy.auto.exploded.tomcat;
 
 import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployListener;
+import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -57,7 +58,11 @@ public abstract class BaseExplodedTomcatListener implements AutoDeployListener {
 		}
 	}
 
-	public void deploy(File file, String context) throws AutoDeployException {
+	public void deploy(AutoDeploymentContext autoDeploymentContext)
+		throws AutoDeployException {
+
+		File file = autoDeploymentContext.getFileToDeploy();
+
 		deploy(file);
 	}
 

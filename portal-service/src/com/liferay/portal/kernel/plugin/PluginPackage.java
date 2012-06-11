@@ -62,6 +62,8 @@ public interface PluginPackage {
 
 	public String getRepositoryURL();
 
+	List<String> getRequiredDeploymentContext();
+
 	public List<Screenshot> getScreenshots();
 
 	public String getShortDescription();
@@ -103,6 +105,9 @@ public interface PluginPackage {
 	public void setRecommendedDeploymentContext(String deploymentContext);
 
 	public void setRepository(RemotePluginPackageRepository repository);
+
+	public void setRequiredDeploymentContexts(
+		List<String> requiredDeploymentContexts);
 
 	public void setScreenshots(List<Screenshot> screenshots);
 

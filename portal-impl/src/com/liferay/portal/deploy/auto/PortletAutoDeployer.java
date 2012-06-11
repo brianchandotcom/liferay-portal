@@ -16,6 +16,7 @@ package com.liferay.portal.deploy.auto;
 
 import com.liferay.portal.deploy.DeployUtil;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
+import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -83,17 +84,19 @@ public class PortletAutoDeployer
 		}
 	}
 
-	public void autoDeploy(File file, String context)
+	public void autoDeploy(AutoDeploymentContext autoDeploymentContext)
 		throws AutoDeployException {
+
+		File deploymentFile = autoDeploymentContext.getFileToDeploy();
 
 		List<String> wars = new ArrayList<String>();
 
-		wars.add(file.getName());
+		wars.add(deploymentFile.getName());
 
 		this.wars = wars;
 
 		try {
-			deployFile(file, context);
+			deployFile(autoDeploymentContext);
 		}
 		catch (Exception e) {
 			throw new AutoDeployException(e);

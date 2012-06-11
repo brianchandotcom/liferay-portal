@@ -988,6 +988,15 @@ public class PluginPackageUtil {
 		String downloadURL = GetterUtil.getString(
 			properties.getProperty("download-url"));
 
+		List<String> requiredDeploymentContexts = new ArrayList<String>();
+
+		String[] requiredDeploymentContextsArray = StringUtil.split(
+			properties.getProperty("required-deployment-contexts"));
+
+		for (String reqDeploymentContext : requiredDeploymentContextsArray) {
+			requiredDeploymentContexts.add(reqDeploymentContext);
+		}
+
 		PluginPackage pluginPackage = new PluginPackageImpl(moduleId);
 
 		pluginPackage.setName(pluginName);
@@ -1005,6 +1014,7 @@ public class PluginPackageUtil {
 		pluginPackage.setPageURL(pageURL);
 		pluginPackage.setDownloadURL(downloadURL);
 		//pluginPackage.setDeploymentSettings(null);
+		pluginPackage.setRequiredDeploymentContexts(requiredDeploymentContexts);
 
 		return pluginPackage;
 	}

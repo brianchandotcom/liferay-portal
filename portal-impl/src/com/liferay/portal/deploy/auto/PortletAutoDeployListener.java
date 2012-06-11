@@ -16,6 +16,7 @@ package com.liferay.portal.deploy.auto;
 
 import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
 import com.liferay.portal.kernel.deploy.auto.BaseAutoDeployListener;
+import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.util.Portal;
@@ -26,6 +27,7 @@ import java.io.File;
  * @author Ivica Cardic
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
+ * @author Miguel Pastor
  */
 public class PortletAutoDeployListener extends BaseAutoDeployListener {
 
@@ -33,7 +35,11 @@ public class PortletAutoDeployListener extends BaseAutoDeployListener {
 		_autoDeployer = new PortletAutoDeployer();
 	}
 
-	public void deploy(File file, String context) throws AutoDeployException {
+	public void deploy(AutoDeploymentContext autoDeploymentContext)
+		throws AutoDeployException {
+
+		File file = autoDeploymentContext.getFileToDeploy();
+
 		if (_log.isDebugEnabled()) {
 			_log.debug("Invoking deploy for " + file.getPath());
 		}
@@ -75,7 +81,7 @@ public class PortletAutoDeployListener extends BaseAutoDeployListener {
 			_log.debug("Using deployer " + deployer.getClass().getName());
 		}
 
-		deployer.autoDeploy(file, context);
+		deployer.autoDeploy(autoDeploymentContext);
 
 		if (_log.isInfoEnabled()) {
 			_log.info(

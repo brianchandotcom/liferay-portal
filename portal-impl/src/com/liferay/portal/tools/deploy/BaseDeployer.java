@@ -15,8 +15,10 @@
 package com.liferay.portal.tools.deploy;
 
 import com.liferay.portal.deploy.DeployUtil;
+import com.liferay.portal.deploy.auto.AutoDeployer;
 import com.liferay.portal.kernel.deploy.Deployer;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
+import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.plugin.License;
@@ -79,7 +81,7 @@ import org.apache.oro.io.GlobFilenameFilter;
  * @author Brian Wing Shun Chan
  * @author Sandeep Soni
  */
-public class BaseDeployer implements Deployer {
+public class BaseDeployer implements AutoDeployer, Deployer {
 
 	public static final String DEPLOY_TO_PREFIX = "DEPLOY_TO__";
 
@@ -179,6 +181,25 @@ public class BaseDeployer implements Deployer {
 		}
 
 		jars.add(path);
+	}
+
+	public void autoDeploy(AutoDeploymentContext autoDeploymentContext)
+		throws AutoDeployException {
+
+		File file = autoDeploymentContext.getFileToDeploy();
+
+		List<String> wars = new ArrayList<String>();
+
+		wars.add(file.getName());
+
+		this.wars = wars;
+
+		try {
+			deployFile(autoDeploymentContext);
+		}
+		catch (Exception e) {
+			throw new AutoDeployException(e);
+		}
 	}
 
 	public void checkArguments() {
@@ -499,7 +520,13 @@ public class BaseDeployer implements Deployer {
 				}
 
 				if (deploy) {
-					deployFile(srcFile, context);
+					AutoDeploymentContext autoDeploymentContext =
+						new AutoDeploymentContext();
+
+					autoDeploymentContext.setFileToDeploy(srcFile);
+					autoDeploymentContext.setContext(context);
+
+					deployFile(autoDeploymentContext);
 				}
 			}
 		}
@@ -755,8 +782,12 @@ public class BaseDeployer implements Deployer {
 		return true;
 	}
 
-	public void deployFile(File srcFile, String specifiedContext)
+	public void deployFile(AutoDeploymentContext autoDeploymentContext)
 		throws Exception {
+
+		File srcFile = autoDeploymentContext.getFileToDeploy();
+
+		String specifiedContext = autoDeploymentContext.getContext();
 
 		PluginPackage pluginPackage = readPluginPackage(srcFile);
 
@@ -836,7 +867,13 @@ public class BaseDeployer implements Deployer {
 			}
 		}
 
-		File deployDirFile = new File(destDir + "/" + deployDir);
+		if (autoDeploymentContext.getDestDir() != null) {
+			destDir = autoDeploymentContext.getDestDir();
+		}
+
+		deployDir = destDir + "/" + deployDir;
+
+		File deployDirFile = new File(deployDir);
 
 		try {
 			PluginPackage previousPluginPackage = readPluginPackage(

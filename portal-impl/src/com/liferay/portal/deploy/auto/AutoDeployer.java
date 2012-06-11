@@ -15,6 +15,7 @@
 package com.liferay.portal.deploy.auto;
 
 import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
+import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
 
 import java.io.File;
 
@@ -24,7 +25,7 @@ import java.io.File;
  */
 public interface AutoDeployer {
 
-	public void autoDeploy(File file, String context)
+	public void autoDeploy(AutoDeploymentContext autoDeploymentContext)
 		throws AutoDeployException;
 
 }

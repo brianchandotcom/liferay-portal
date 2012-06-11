@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.deploy.auto;
 
+import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.IntegerWrapper;
@@ -130,6 +131,15 @@ public class AutoDeployDir {
 		_autoDeployListeners.remove(autoDeployListener);
 	}
 
+	protected AutoDeploymentContext buildAutoDeploymentContext(File file) {
+		AutoDeploymentContext autoDeploymentContext =
+			new AutoDeploymentContext();
+
+		autoDeploymentContext.setFileToDeploy(file);
+
+		return autoDeploymentContext;
+	}
+
 	protected void processFile(File file) {
 		String fileName = file.getName();
 
@@ -176,8 +186,11 @@ public class AutoDeployDir {
 		}
 
 		try {
+			AutoDeploymentContext autoDeploymentContext =
+				buildAutoDeploymentContext(file);
+
 			for (AutoDeployListener autoDeployListener : _autoDeployListeners) {
-				autoDeployListener.deploy(file, null);
+				autoDeployListener.deploy(autoDeploymentContext);
 			}
 
 			if (file.delete()) {

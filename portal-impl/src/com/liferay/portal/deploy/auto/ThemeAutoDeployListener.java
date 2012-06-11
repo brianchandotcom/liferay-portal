@@ -16,6 +16,7 @@ package com.liferay.portal.deploy.auto;
 
 import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
 import com.liferay.portal.kernel.deploy.auto.BaseAutoDeployListener;
+import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -31,7 +32,11 @@ public class ThemeAutoDeployListener extends BaseAutoDeployListener {
 		_autoDeployer = new ThemeAutoDeployer();
 	}
 
-	public void deploy(File file, String context) throws AutoDeployException {
+	public void deploy(AutoDeploymentContext autoDeploymentContext)
+		throws AutoDeployException {
+
+		File file = autoDeploymentContext.getFileToDeploy();
+
 		if (_log.isDebugEnabled()) {
 			_log.debug("Invoking deploy for " + file.getPath());
 		}
@@ -44,7 +49,7 @@ public class ThemeAutoDeployListener extends BaseAutoDeployListener {
 			_log.info("Copying themes for " + file.getPath());
 		}
 
-		_autoDeployer.autoDeploy(file, context);
+		_autoDeployer.autoDeploy(autoDeploymentContext);
 
 		if (_log.isInfoEnabled()) {
 			_log.info(

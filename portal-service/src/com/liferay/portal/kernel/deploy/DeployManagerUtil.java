@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.deploy;
 
+import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
@@ -29,12 +30,10 @@ import java.util.Properties;
  */
 public class DeployManagerUtil {
 
-	public static void deploy(File file) throws Exception {
-		getDeployManager().deploy(file);
-	}
+	public static void deploy(AutoDeploymentContext autoDeploymentContext)
+		throws Exception {
 
-	public static void deploy(File file, String context) throws Exception {
-		getDeployManager().deploy(file, context);
+		getDeployManager().deploy(autoDeploymentContext);
 	}
 
 	public static String getDeployDir() throws Exception {

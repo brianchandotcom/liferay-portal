@@ -82,33 +82,69 @@ long classPK = ParamUtil.getLong(request, "classPK");
 				}
 				%>
 
-				<span class="lfr-toolbar-button view-templates <%= toolbarItem.equals("add-list-template") ? "current" : StringPool.BLANK %>">
+				<span class="lfr-toolbar-button add-template <%= toolbarItem.equals("add-list-template") ? "current" : StringPool.BLANK %>">
 					<a href="<%= addTemplateURL %>"><liferay-ui:message key="<%= message %>" /></a>
 				</span>
 			</c:if>
 		</c:when>
 		<c:otherwise>
-			<c:if test="<%= DDMPermission.contains(permissionChecker, scopeGroupId, ddmResource, ddmResourceActionId) %>">
-				<portlet:renderURL var="addTemplateURL">
-					<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
-					<portlet:param name="redirect" value="<%= viewTemplatesURL %>" />
-					<portlet:param name="backURL" value="<%= viewTemplatesURL %>" />
-					<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
-					<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
-					<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
-					<portlet:param name="type" value="list" />
-				</portlet:renderURL>
+
+			<%
+				List<PortletDisplayTemplateHandler> portletDisplayTemplateHandlers = getPortletDisplayTemplateHandlers(permissionChecker, scopeGroupId);
+
+				if (portletDisplayTemplateHandlers.size() > 0) {
+			%>
+
+				<liferay-ui:icon-menu align="left" cssClass='<%= "lfr-toolbar-button add-button " + (toolbarItem.equals("add") ? "current" : StringPool.BLANK) %>' direction="down" extended="<%= false %>" icon='<%= themeDisplay.getPathThemeImages() + "/common/add.png" %>' message="add" showWhenSingleIcon="<%= true %>">
+
+					<liferay-portlet:renderURL varImpl="addPortletDisplayTemplateURL">
+						<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
+						<portlet:param name="redirect" value="<%= viewTemplatesURL %>" />
+						<portlet:param name="backURL" value="<%= viewTemplatesURL %>" />
+						<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
+						<portlet:param name="type" value="list" />
+					</liferay-portlet:renderURL>
+
+					<%
+					for (PortletDisplayTemplateHandler portletDisplayTemplateHandler : portletDisplayTemplateHandlers) {
+
+						addPortletDisplayTemplateURL.setParameter("classNameId", String.valueOf(PortalUtil.getClassNameId(portletDisplayTemplateHandler.getClassName())));
+						addPortletDisplayTemplateURL.setParameter("classPK", String.valueOf(0));
+						addPortletDisplayTemplateURL.setParameter("ddmResource", portletDisplayTemplateHandler.getResourceName());
+					%>
+
+						<liferay-ui:icon
+							image="add_display_style"
+							message="<%= portletDisplayTemplateHandler.getName(locale) %>"
+							method="get"
+							url="<%= addPortletDisplayTemplateURL.toString() %>"
+						/>
+
+					<%
+					}
+					%>
+
+				</liferay-ui:icon-menu>
 
 				<%
-				if (Validator.isNull(templateTypeValue)) {
-					message = "add-display-style";
 				}
 				%>
 
-				<span class="lfr-toolbar-button view-templates <%= toolbarItem.equals("add-display-style") ? "current" : StringPool.BLANK %>">
-					<a href="<%= addTemplateURL %>"><liferay-ui:message key="<%= message %>" /></a>
-				</span>
-			</c:if>
 		</c:otherwise>
 	</c:choose>
 </div>
+
+<%!
+public List<PortletDisplayTemplateHandler> getPortletDisplayTemplateHandlers(PermissionChecker permissionChecker, long scopeGroupId) {
+	List<PortletDisplayTemplateHandler> portletDisplayTemplateHandlers = PortletDisplayTemplateHandlerRegistryUtil.getPortletDisplayTemplateHandlers();
+	List<PortletDisplayTemplateHandler> allowedPortletDisplayTemplateHandlers = new ArrayList<PortletDisplayTemplateHandler>();
+
+	for (PortletDisplayTemplateHandler portletDisplayTemplateHandler : portletDisplayTemplateHandlers) {
+		if (DDMPermission.contains(permissionChecker, scopeGroupId, portletDisplayTemplateHandler.getResourceName(), ActionKeys.ADD_TEMPLATE)) {
+			allowedPortletDisplayTemplateHandlers.add(portletDisplayTemplateHandler);
+		}
+	}
+
+	return allowedPortletDisplayTemplateHandlers;
+}
+%>

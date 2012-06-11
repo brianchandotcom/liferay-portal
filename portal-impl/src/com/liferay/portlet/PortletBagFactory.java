@@ -38,6 +38,8 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.OpenSearch;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.servlet.URLEncoder;
+import com.liferay.portal.kernel.template.PortletDisplayTemplateHandler;
+import com.liferay.portal.kernel.template.PortletDisplayTemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -230,6 +232,14 @@ public class PortletBagFactory {
 		PermissionPropagator permissionPropagatorInstance =
 			newPermissionPropagator(portlet);
 
+		PortletDisplayTemplateHandler portletDisplayTemplateHandlerInstance =
+			newPortletDisplayTemplateHandler(portlet);
+
+		if (portletDisplayTemplateHandlerInstance != null) {
+			PortletDisplayTemplateHandlerRegistryUtil.register(
+				portletDisplayTemplateHandlerInstance);
+		}
+
 		List<TrashHandler> trashHandlerInstances =
 			new ArrayList<TrashHandler>();
 
@@ -314,9 +324,9 @@ public class PortletBagFactory {
 			webDAVStorageInstance, xmlRpcMethodInstance,
 			controlPanelEntryInstance, assetRendererFactoryInstances,
 			atomCollectionAdapterInstances, customAttributesDisplayInstances,
-			permissionPropagatorInstance, trashHandlerInstances,
-			workflowHandlerInstances, preferencesValidatorInstance,
-			resourceBundles);
+			permissionPropagatorInstance, portletDisplayTemplateHandlerInstance,
+			trashHandlerInstances, workflowHandlerInstances,
+			preferencesValidatorInstance, resourceBundles);
 
 		PortletBagPool.put(portlet.getRootPortletId(), portletBag);
 
@@ -822,6 +832,19 @@ public class PortletBagFactory {
 
 		return (PortletDataHandler)newInstance(
 			PortletDataHandler.class, portlet.getPortletDataHandlerClass());
+	}
+
+	protected PortletDisplayTemplateHandler newPortletDisplayTemplateHandler(
+			Portlet portlet)
+		throws Exception {
+
+		if (Validator.isNull(portlet.getPortletDisplayTemplateHandlerClass())) {
+			return null;
+		}
+
+		return (PortletDisplayTemplateHandler)newInstance(
+			PortletDisplayTemplateHandler.class,
+			portlet.getPortletDisplayTemplateHandlerClass());
 	}
 
 	protected PortletLayoutListener newPortletLayoutListener(Portlet portlet)

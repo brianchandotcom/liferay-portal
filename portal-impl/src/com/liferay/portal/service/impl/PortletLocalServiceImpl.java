@@ -1357,6 +1357,11 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 				portletElement.elementText("permission-propagator"),
 				portletModel.getPermissionPropagatorClass()));
 
+		portletModel.setPortletDisplayTemplateHandlerClass(
+			GetterUtil.getString(
+				portletElement.elementText("portlet-display-template-handler"),
+				portletModel.getPortletDisplayTemplateHandlerClass()));
+
 		List<String> trashHandlerClasses =
 			portletModel.getTrashHandlerClasses();
 

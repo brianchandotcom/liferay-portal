@@ -155,12 +155,12 @@
 		</portlet-ref>
 		<permissions>
 			<supports>
-				<action-key>ADD_DISPLAY_STYLE</action-key>
+				<action-key>ADD_TEMPLATE</action-key>
 			</supports>
 			<site-member-defaults />
 			<guest-defaults />
 			<guest-unsupported>
-				<action-key>ADD_DISPLAY_STYLE</action-key>
+				<action-key>ADD_TEMPLATE</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>

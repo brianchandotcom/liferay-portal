@@ -99,7 +99,20 @@ if (Validator.isNotNull(structureAvailableFields)) {
 		title = template.getName(locale);
 	}
 	else {
-		title = LanguageUtil.get(pageContext, "new-display-style");
+		if (classNameId > 0) {
+			PortletDisplayTemplateHandler portletDisplayTemplateHandler = PortletDisplayTemplateHandlerRegistryUtil.getPortletDisplayTemplateHandler(classNameId);
+
+			StringBundler sb = new StringBundler();
+
+			sb.append(LanguageUtil.get(pageContext, "new"));
+			sb.append(StringPool.SPACE);
+			sb.append(portletDisplayTemplateHandler.getName(locale));
+
+			title = sb.toString();
+		}
+		else {
+			title = LanguageUtil.get(pageContext, "new-application-display-template");
+		}
 	}
 	%>
 

@@ -222,6 +222,9 @@ public class DDMTemplateServiceSoap {
 		}
 	}
 
+	/**
+	* @deprecated
+	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplateSoap[] search(
 		long companyId, long groupId, long classNameId, long classPK,
 		java.lang.String keywords, java.lang.String type,
@@ -242,6 +245,9 @@ public class DDMTemplateServiceSoap {
 		}
 	}
 
+	/**
+	* @deprecated
+	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplateSoap[] search(
 		long companyId, long groupId, long classNameId, long classPK,
 		java.lang.String name, java.lang.String description,
@@ -264,6 +270,51 @@ public class DDMTemplateServiceSoap {
 		}
 	}
 
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplateSoap[] search(
+		long companyId, long groupId, long[] classNameIds, long classPK,
+		java.lang.String keywords, java.lang.String type,
+		java.lang.String mode, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> returnValue =
+				DDMTemplateServiceUtil.search(companyId, groupId, classNameIds,
+					classPK, keywords, type, mode, start, end, orderByComparator);
+
+			return com.liferay.portlet.dynamicdatamapping.model.DDMTemplateSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplateSoap[] search(
+		long companyId, long groupId, long[] classNameIds, long classPK,
+		java.lang.String name, java.lang.String description,
+		java.lang.String type, java.lang.String mode,
+		java.lang.String language, boolean andOperator, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> returnValue =
+				DDMTemplateServiceUtil.search(companyId, groupId, classNameIds,
+					classPK, name, description, type, mode, language,
+					andOperator, start, end, orderByComparator);
+
+			return com.liferay.portlet.dynamicdatamapping.model.DDMTemplateSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* @deprecated
+	*/
 	public static int searchCount(long companyId, long groupId,
 		long classNameId, long classPK, java.lang.String keywords,
 		java.lang.String type, java.lang.String mode) throws RemoteException {
@@ -280,6 +331,9 @@ public class DDMTemplateServiceSoap {
 		}
 	}
 
+	/**
+	* @deprecated
+	*/
 	public static int searchCount(long companyId, long groupId,
 		long classNameId, long classPK, java.lang.String name,
 		java.lang.String description, java.lang.String type,
@@ -288,6 +342,41 @@ public class DDMTemplateServiceSoap {
 		try {
 			int returnValue = DDMTemplateServiceUtil.searchCount(companyId,
 					groupId, classNameId, classPK, name, description, type,
+					mode, language, andOperator);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int searchCount(long companyId, long groupId,
+		long[] classNameIds, long classPK, java.lang.String keywords,
+		java.lang.String type, java.lang.String mode) throws RemoteException {
+		try {
+			int returnValue = DDMTemplateServiceUtil.searchCount(companyId,
+					groupId, classNameIds, classPK, keywords, type, mode);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int searchCount(long companyId, long groupId,
+		long[] classNameIds, long classPK, java.lang.String name,
+		java.lang.String description, java.lang.String type,
+		java.lang.String mode, java.lang.String language, boolean andOperator)
+		throws RemoteException {
+		try {
+			int returnValue = DDMTemplateServiceUtil.searchCount(companyId,
+					groupId, classNameIds, classPK, name, description, type,
 					mode, language, andOperator);
 
 			return returnValue;

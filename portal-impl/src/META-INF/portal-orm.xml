@@ -3844,6 +3844,7 @@
 			<transient name="portletApp" />
 			<transient name="portletClass" />
 			<transient name="portletDataHandlerClass" />
+			<transient name="portletDisplayTemplateHandlerClass" />
 			<transient name="portletFilters" />
 			<transient name="portletInfo" />
 			<transient name="portletLayoutListenerClass" />

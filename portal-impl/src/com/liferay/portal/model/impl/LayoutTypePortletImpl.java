@@ -1168,6 +1168,30 @@ public class LayoutTypePortletImpl
 
 	public void setPortletIds(String columnId, String portletIds) {
 		setTypeSettingsProperty(columnId, portletIds);
+
+		if (!columnId.startsWith(
+				LayoutTypePortletConstants.RUNTIME_PORTLET_NAMESPACE)) {
+
+			return;
+		}
+
+		String runtimePortlets = getTypeSettingsProperty(
+			LayoutTypePortletConstants.RUNTIME_PORTLETS, StringPool.BLANK);
+
+		int pos = runtimePortlets.indexOf(columnId);
+
+		if ((pos == -1) && Validator.isNotNull(portletIds)) {
+			runtimePortlets = StringUtil.add(runtimePortlets, columnId);
+
+			setTypeSettingsProperty(
+				LayoutTypePortletConstants.RUNTIME_PORTLETS, runtimePortlets);
+		}
+		else if ((pos != -1) && Validator.isNull(portletIds)) {
+			runtimePortlets = StringUtil.remove(runtimePortlets, columnId);
+
+			setTypeSettingsProperty(
+				LayoutTypePortletConstants.RUNTIME_PORTLETS, runtimePortlets);
+		}
 	}
 
 	public void setStateMax(String stateMax) {
@@ -1275,6 +1299,7 @@ public class LayoutTypePortletImpl
 
 		columns.addAll(layoutTemplate.getColumns());
 		columns.addAll(getNestedColumns());
+		columns.addAll(getRuntimePortlets());
 
 		return columns;
 	}
@@ -1323,6 +1348,13 @@ public class LayoutTypePortletImpl
 		Layout layout = getLayout();
 
 		return layout.getPlid();
+	}
+
+	protected List<String> getRuntimePortlets() {
+		String runtimePortlets = getTypeSettingsProperty(
+			LayoutTypePortletConstants.RUNTIME_PORTLETS);
+
+		return ListUtil.fromArray(StringUtil.split(runtimePortlets));
 	}
 
 	protected String[] getStaticPortletIds(String position)
@@ -1632,6 +1664,7 @@ public class LayoutTypePortletImpl
 	private static Log _log = LogFactoryUtil.getLog(
 		LayoutTypePortletImpl.class);
 
+	private static String _journalContentNamespace;
 	private static String _nestedPortletsNamespace;
 
 	private boolean _customizedView;

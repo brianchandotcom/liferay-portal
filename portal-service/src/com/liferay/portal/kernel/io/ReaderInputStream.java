@@ -79,13 +79,17 @@ public class ReaderInputStream extends InputStream {
 
 	@Override
 	public void close() throws IOException {
-		_inputBuffer.clear();
+		if (_inputBuffer != null) {
+			_inputBuffer.clear();
 
-		_inputBuffer = null;
+			_inputBuffer = null;
+		}
 
-		_outputBuffer.clear();
+		if (_outputBuffer != null) {
+			_outputBuffer.clear();
 
-		_outputBuffer = null;
+			_outputBuffer = null;
+		}
 
 		_reader.close();
 	}

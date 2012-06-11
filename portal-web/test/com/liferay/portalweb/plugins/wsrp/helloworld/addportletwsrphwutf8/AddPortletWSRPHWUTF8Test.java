@@ -24,23 +24,6 @@ public class AddPortletWSRPHWUTF8Test extends BaseTestCase {
 	public void testAddPortletWSRPHWUTF8() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=WSRP Hello World Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.clickAt("link=WSRP Hello World Test Page",
 			RuntimeVariables.replace("WSRP Hello World Test Page"));
 		selenium.waitForPageToLoad("30000");

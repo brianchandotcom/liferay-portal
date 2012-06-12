@@ -642,7 +642,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 						</#if>
 						) {
 
-						<#if !finder.hasDateComparator() >
+						<#if !finder.hasDateComparator()>
 							Object[] args = new Object[] {
 								<#list finderColsList as finderCol>
 									<#if finderCol.isPrimitiveType()>

@@ -37,15 +37,20 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Address;
 import com.liferay.portal.model.EmailAddress;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.OrgLabor;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.OrganizationConstants;
 import com.liferay.portal.model.Phone;
 import com.liferay.portal.model.Website;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.OrganizationServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
+import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.sites.util.SitesUtil;
@@ -263,10 +268,21 @@ public class EditOrganizationAction extends PortletAction {
 			actionRequest, "privateLayoutSetPrototypeLinkEnabled",
 			(privateLayoutSetPrototypeId > 0));
 
-		SitesUtil.updateLayoutSetPrototypesLinks(
-			organization.getGroup(), publicLayoutSetPrototypeId,
-			privateLayoutSetPrototypeId, publicLayoutSetPrototypeLinkEnabled,
-			privateLayoutSetPrototypeLinkEnabled);
+		Group organizationGroup = organization.getGroup();
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (GroupPermissionUtil.contains(
+				permissionChecker, organizationGroup.getGroupId(),
+				ActionKeys.UPDATE)) {
+
+			SitesUtil.updateLayoutSetPrototypesLinks(
+				organizationGroup, publicLayoutSetPrototypeId,
+				privateLayoutSetPrototypeId,
+				publicLayoutSetPrototypeLinkEnabled,
+				privateLayoutSetPrototypeLinkEnabled);
+		}
 
 		// Reminder queries
 

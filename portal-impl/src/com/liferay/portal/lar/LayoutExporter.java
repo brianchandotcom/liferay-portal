@@ -619,11 +619,16 @@ public class LayoutExporter {
 		Element dlFoldersElement = layoutElement.addElement("dl-folders");
 		Element dlFilesElement = layoutElement.addElement("dl-file-entries");
 		Element dlFileRanksElement = layoutElement.addElement("dl-file-ranks");
+		Element dlRepositoriesElement = layoutElement.addElement(
+			"dl-repositories");
+		Element dlRepositoryEntriesElement = layoutElement.addElement(
+	        "dl-repository-entries");
 
 		JournalPortletDataHandlerImpl.exportArticle(
 			portletDataContext, layoutElement, layoutElement, layoutElement,
 			dlFileEntryTypesElement, dlFoldersElement, dlFilesElement,
-			dlFileRanksElement, article, null, false);
+			dlFileRanksElement, dlRepositoriesElement,
+			dlRepositoryEntriesElement, article, null, false);
 	}
 
 	protected void exportLayout(

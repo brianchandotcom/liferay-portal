@@ -212,6 +212,10 @@ public class RSSPortletDataHandlerImpl extends JournalPortletDataHandlerImpl {
 		Element dlFoldersElement = rootElement.addElement("dl-folders");
 		Element dlFilesElement = rootElement.addElement("dl-file-entries");
 		Element dlFileRanksElement = rootElement.addElement("dl-file-ranks");
+		Element dlRepositoriesElement = rootElement.addElement(
+			"dl-repositories");
+        Element dlRepositoryEntriesElement = rootElement.addElement(
+	        "dl-repository-entries");
 
 		for (JournalArticle article : articles) {
 			String path = JournalPortletDataHandlerImpl.getArticlePath(
@@ -231,7 +235,8 @@ public class RSSPortletDataHandlerImpl extends JournalPortletDataHandlerImpl {
 			JournalPortletDataHandlerImpl.exportArticle(
 				portletDataContext, rootElement, rootElement, rootElement,
 				dlFileEntryTypesElement, dlFoldersElement, dlFilesElement,
-				dlFileRanksElement, article, null, false);
+				dlFileRanksElement, dlRepositoriesElement,
+				dlRepositoryEntriesElement, article, null, false);
 		}
 
 		return document.formattedString();

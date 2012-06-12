@@ -132,6 +132,10 @@ public class BlogsPortletDataHandlerImpl extends BasePortletDataHandler {
 		Element dlFileEntriesElement = entriesElement.addElement(
 			"dl-file-entries");
 		Element dlFileRanksElement = entriesElement.addElement("dl-file-ranks");
+		Element dlRepositoriesElement = entriesElement.addElement(
+			"dl-repositories");
+		Element dlRepositoryEntriesElement = entriesElement.addElement(
+	        "dl-repository-entries");
 
 		List<BlogsEntry> entries = BlogsEntryUtil.findByGroupId(
 			portletDataContext.getScopeGroupId());
@@ -140,7 +144,7 @@ public class BlogsPortletDataHandlerImpl extends BasePortletDataHandler {
 			exportEntry(
 				portletDataContext, entriesElement, dlFileEntryTypesElement,
 				dlFoldersElement, dlFileEntriesElement, dlFileRanksElement,
-				entry);
+				dlRepositoriesElement, dlRepositoryEntriesElement, entry);
 		}
 
 		return document.formattedString();
@@ -194,6 +198,7 @@ public class BlogsPortletDataHandlerImpl extends BasePortletDataHandler {
 			PortletDataContext portletDataContext, Element entriesElement,
 			Element dlFileEntryTypesElement, Element dlFoldersElement,
 			Element dlFileEntriesElement, Element dlFileRanksElement,
+			Element dlRepositoriesElement, Element dlRepositoryEntriesElement,
 			BlogsEntry entry)
 		throws Exception {
 
@@ -225,8 +230,8 @@ public class BlogsPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		String content = JournalPortletDataHandlerImpl.exportReferencedContent(
 			portletDataContext, dlFileEntryTypesElement, dlFoldersElement,
-			dlFileEntriesElement, dlFileRanksElement, entryElement,
-			entry.getContent());
+			dlFileEntriesElement, dlFileRanksElement, dlRepositoriesElement,
+			dlRepositoryEntriesElement, entryElement, entry.getContent());
 
 		entry.setContent(content);
 

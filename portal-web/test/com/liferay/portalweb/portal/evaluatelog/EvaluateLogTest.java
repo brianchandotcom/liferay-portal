@@ -17,6 +17,7 @@ package com.liferay.portalweb.portal.evaluatelog;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.FileUtil;
+
 import com.liferay.portalweb.portal.BaseTestCase;
 
 /**

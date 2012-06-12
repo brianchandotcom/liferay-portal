@@ -155,6 +155,11 @@ if (Validator.isNotNull(displayTerms.getStructureId())) {
 	searchTerms.setStructureId(displayTerms.getStructureId());
 }
 
+if (displayTerms.getNavigation().equals("recent")) {
+	searchContainer.setOrderByCol("create-date");
+	searchContainer.setOrderByType(orderByType);
+}
+
 boolean advancedSearch = ParamUtil.getBoolean(liferayPortletRequest, displayTerms.ADVANCED_SEARCH, false);
 
 String keywords = ParamUtil.getString(liferayPortletRequest, "keywords");
@@ -188,7 +193,7 @@ int total = 0;
 		%>
 
 	</c:when>
-	<c:when test="<%= Validator.isNotNull(displayTerms.getStructureId()) %>">
+	<c:when test="<%= Validator.isNotNull(displayTerms.getStructureId()) || Validator.isNotNull(displayTerms.getTemplateId()) || displayTerms.getNavigation().equals("recent") %>">
 
 		<%
 		results = JournalArticleServiceUtil.search(company.getCompanyId(), searchTerms.getGroupId(), searchTerms.getFolderId(), 0, searchTerms.getKeywords(), searchTerms.getVersionObj(), null, searchTerms.getStructureId(), searchTerms.getTemplateId(), searchTerms.getDisplayDateGT(), searchTerms.getDisplayDateLT(), searchTerms.getStatusCode(), searchTerms.getReviewDate(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());

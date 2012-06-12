@@ -102,14 +102,7 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 				<div class="journal-container" id="<portlet:namespace />entriesContainer">
 					<liferay-util:include page="/html/portlet/journal/article_search.jsp" />
 
-					<c:choose>
-						<c:when test='<%= navigation.equals("recent") %>'>
-							<liferay-util:include page="/html/portlet/journal/view_recent.jsp" />
-						</c:when>
-						<c:otherwise>
-							<liferay-util:include page="/html/portlet/journal/view_entries.jsp" />
-						</c:otherwise>
-					</c:choose>
+					<liferay-util:include page="/html/portlet/journal/view_entries.jsp" />
 				</div>
 
 				<div class="article-entries-paginator"></div>

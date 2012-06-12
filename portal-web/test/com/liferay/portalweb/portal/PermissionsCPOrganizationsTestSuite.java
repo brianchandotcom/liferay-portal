@@ -14,7 +14,7 @@
 
 package com.liferay.portalweb.portal;
 
-import com.liferay.portalweb.permissionscp.organizations.vieworganization.ViewOrganizationTestPlan;
+import com.liferay.portalweb.permissionscp.organizations.organization.vieworganization.ViewOrganizationTestPlan;
 import com.liferay.portalweb.portal.login.LoginTests;
 
 import junit.framework.Test;

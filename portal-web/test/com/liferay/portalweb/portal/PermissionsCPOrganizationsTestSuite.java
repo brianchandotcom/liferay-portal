@@ -14,8 +14,8 @@
 
 package com.liferay.portalweb.portal;
 
+import com.liferay.portalweb.permissionscp.organizations.vieworganization.ViewOrganizationTestPlan;
 import com.liferay.portalweb.portal.login.LoginTests;
-import com.liferay.portalweb.portal.permissions.usersandorganizations.UsersAndOrganizationsTestPlan;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -23,13 +23,13 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class PermissionsUsersAndOrganizationsTestSuite extends BaseTestSuite {
+public class PermissionsCPOrganizationsTestSuite extends BaseTestSuite {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(LoginTests.suite());
-		testSuite.addTest(UsersAndOrganizationsTestPlan.suite());
+		testSuite.addTest(ViewOrganizationTestPlan.suite());
 
 		testSuite.addTestSuite(StopSeleniumTest.class);
 

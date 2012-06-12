@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.permissions.usersandorganizations.userviewusersandorganizationscp;
+package com.liferay.portalweb.permissionscp.organizations.vieworganization.orgrole;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.organizations.organization.addorganization.AddOrganizationTest;
@@ -34,19 +34,24 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class User_ViewUsersAndOrganizationsCPTests extends BaseTestSuite {
+public class OrgRoleViewOrganizationTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddUserTest.class);
 		testSuite.addTestSuite(EditUserPasswordTest.class);
 		testSuite.addTestSuite(AddOrganizationTest.class);
-		testSuite.addTestSuite(AddOrgRoleTest.class);
-		testSuite.addTestSuite(DefineOrgRolePermissionsTest.class);
 		testSuite.addTestSuite(AssignMembersOrganizationUserTest.class);
+		testSuite.addTestSuite(AddOrgRoleTest.class);
 		testSuite.addTestSuite(AssignMembersOrgRoleUserTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(User_SignInTest.class);
-		testSuite.addTestSuite(User_ViewUsersAndOrganizationsCPTest.class);
+		testSuite.addTestSuite(User_ViewOrganizationNoTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SignInTest.class);
+		testSuite.addTestSuite(DefineOrgRoleOrganizationsManageUsersTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(User_SignInTest.class);
+		testSuite.addTestSuite(User_ViewOrganizationTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(SignInTest.class);
 		testSuite.addTestSuite(TearDownRoleTest.class);

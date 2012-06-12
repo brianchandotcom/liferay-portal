@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.permissions.usersandorganizations.userviewusersandorganizationscp;
+package com.liferay.portalweb.permissionscp.organizations.vieworganization.orgrole;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class DefineOrgRolePermissionsTest extends BaseTestCase {
-	public void testDefineOrgRolePermissions() throws Exception {
+public class DefineOrgRoleOrganizationsManageUsersTest extends BaseTestCase {
+	public void testDefineOrgRoleOrganizationsManageUsers()
+		throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Go to"),
@@ -51,9 +52,15 @@ public class DefineOrgRolePermissionsTest extends BaseTestCase {
 		selenium.clickAt("link=Roles", RuntimeVariables.replace("Roles"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
+		selenium.type("//input[@name='_128_keywords']",
+			RuntimeVariables.replace("Orgrole"));
+		selenium.clickAt("//input[@value='Search']",
+			RuntimeVariables.replace("Search"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Actions"),
-			selenium.getText("//tr[10]/td[4]/span/ul/li/strong/a/span"));
-		selenium.clickAt("//tr[10]/td[4]/span/ul/li/strong/a/img",
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
@@ -63,7 +70,7 @@ public class DefineOrgRolePermissionsTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//a[@id='_128_ocerSearchContainer_8_menu_define_permissions']")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Define Permissions')]")) {
 					break;
 				}
 			}
@@ -73,25 +80,53 @@ public class DefineOrgRolePermissionsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("//a[@id='_128_ocerSearchContainer_8_menu_define_permissions']",
+		assertEquals(RuntimeVariables.replace("Define Permissions"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Define Permissions')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Define Permissions')]",
 			RuntimeVariables.replace("Define Permissions"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace(
-				"Organization Administration Announcements Asset Publisher Blogs Bookmarks Calendar Categories (Control Panel) Custom Fields Documents and Media Documents and Media Display Dynamic Data Lists Dynamic Data Mapping Media Gallery Message Boards Mobile Device Rules Page Templates Polls Shopping Site Templates Software Catalog Tags (Control Panel) Web Content Wiki Activities Alerts Amazon Rankings Announcements Asset Publisher Blogs Blogs Aggregator Bookmarks Breadcrumb Calendar Categories Navigation Currency Converter Dictionary Directory Documents and Media Documents and Media Display Dynamic Data List Display Group Statistics Hello Velocity Hello World IFrame Invitation Language Loan Calculator Media Gallery Message Boards My Sites Navigation Nested Portlets Network Utilities Page Comments Page Flags Page Ratings Password Generator Polls Display Quick Note RSS Recent Bloggers Recent Downloads Related Assets Requests Search Shopping Sign In Site Map Software Catalog Tag Cloud Tags Navigation Translator Unit Converter User Statistics Web Content Display Web Content List Web Content Search Web Proxy Wiki Wiki Display XSL Content Blogs (Control Panel) Bookmarks Calendar Categories (Control Panel) Documents and Media Dynamic Data Lists Message Boards (Control Panel) Mobile Device Rules (Control Panel) Polls Recent Content Recycle Bin Site Memberships Site Pages Site Settings Social Activity Software Catalog Tags (Control Panel) Web Content Wiki (Control Panel) Workflow Configuration"),
-			selenium.getText("//select[@id='_128_add-permissions']"));
+		assertEquals(RuntimeVariables.replace("Roles Orgrole Name"),
+			selenium.getText(
+				"//section[@id='portlet_128']/div/div/div/div[2]/h1/span"));
 		selenium.select("//select[@id='_128_add-permissions']",
 			RuntimeVariables.replace("Organization Administration"));
-		Thread.sleep(5000);
-		assertEquals(RuntimeVariables.replace("Manage Users"),
-			selenium.getText("//tr[8]/td[2]"));
-		selenium.clickAt("//tr[8]/td/input",
-			RuntimeVariables.replace("Manage Users"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//form[@id='_128_fm']/h3")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("Organization"),
+			selenium.getText("//form[@id='_128_fm']/h3"));
+		assertFalse(selenium.isChecked(
+				"//input[@value='com.liferay.portal.model.OrganizationMANAGE_USERS']"));
+		selenium.check(
+			"//input[@value='com.liferay.portal.model.OrganizationMANAGE_USERS']");
+		assertTrue(selenium.isChecked(
+				"//input[@value='com.liferay.portal.model.OrganizationMANAGE_USERS']"));
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace(
+				"The role permissions were updated."),
+			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Users and Organizations"),
 			selenium.getText("//td/a"));
+		assertEquals(RuntimeVariables.replace("Organization"),
+			selenium.getText("//tr[3]/td[2]"));
 		assertEquals(RuntimeVariables.replace("Manage Users"),
 			selenium.getText("//tr[3]/td[3]"));
 	}

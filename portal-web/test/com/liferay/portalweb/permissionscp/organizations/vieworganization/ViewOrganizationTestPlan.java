@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.permissions.usersandorganizations;
+package com.liferay.portalweb.permissionscp.organizations.vieworganization;
 
+import com.liferay.portalweb.permissionscp.organizations.vieworganization.orgrole.OrgRoleViewOrganizationTests;
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portal.permissions.usersandorganizations.userviewusersandorganizationscp.User_ViewUsersAndOrganizationsCPTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -23,12 +23,12 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class UsersAndOrganizationsTestPlan extends BaseTestSuite {
+public class ViewOrganizationTestPlan extends BaseTestSuite {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(User_ViewUsersAndOrganizationsCPTests.suite());
+		testSuite.addTest(OrgRoleViewOrganizationTests.suite());
 
 		return testSuite;
 	}

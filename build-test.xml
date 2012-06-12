@@ -889,8 +889,8 @@
 		</antcall>
 
 		<antcall target="build-test-ant-script">
-			<param name="test.ant.script.command" value="permissions-users-and-organizations" />
-			<param name="test.ant.script.suite" value="PermissionsUsersAndOrganizationsTestSuite" />
+			<param name="test.ant.script.command" value="permissions-cp-organizations" />
+			<param name="test.ant.script.suite" value="PermissionsCPOrganizationsTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">

@@ -133,24 +133,26 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 			GroupModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByLiveGroupId",
 			new String[] { Long.class.getName() });
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_P = new FinderPath(GroupModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_CHILDRENSITES =
+		new FinderPath(GroupModelImpl.ENTITY_CACHE_ENABLED,
 			GroupModelImpl.FINDER_CACHE_ENABLED, GroupImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_P",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByChildrenSites",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				
 			"java.lang.Integer", "java.lang.Integer",
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_P = new FinderPath(GroupModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CHILDRENSITES =
+		new FinderPath(GroupModelImpl.ENTITY_CACHE_ENABLED,
 			GroupModelImpl.FINDER_CACHE_ENABLED, GroupImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_P",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByChildrenSites",
 			new String[] { Long.class.getName(), Long.class.getName() },
 			GroupModelImpl.COMPANYID_COLUMN_BITMASK |
 			GroupModelImpl.PARENTGROUPID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_C_P = new FinderPath(GroupModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_COUNT_BY_CHILDRENSITES = new FinderPath(GroupModelImpl.ENTITY_CACHE_ENABLED,
 			GroupModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_P",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByChildrenSites",
 			new String[] { Long.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_N = new FinderPath(GroupModelImpl.ENTITY_CACHE_ENABLED,
 			GroupModelImpl.FINDER_CACHE_ENABLED, GroupImpl.class,
@@ -590,14 +592,15 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 			}
 
 			if ((groupModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_P.getColumnBitmask()) != 0) {
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CHILDRENSITES.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(groupModelImpl.getOriginalCompanyId()),
 						Long.valueOf(groupModelImpl.getOriginalParentGroupId())
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_P, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_P,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CHILDRENSITES,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CHILDRENSITES,
 					args);
 
 				args = new Object[] {
@@ -605,8 +608,9 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 						Long.valueOf(groupModelImpl.getParentGroupId())
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_P, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_P,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CHILDRENSITES,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CHILDRENSITES,
 					args);
 			}
 
@@ -1420,9 +1424,9 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	 * @return the matching groups
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<Group> findByC_P(long companyId, long parentGroupId)
+	public List<Group> findByChildrenSites(long companyId, long parentGroupId)
 		throws SystemException {
-		return findByC_P(companyId, parentGroupId, QueryUtil.ALL_POS,
+		return findByChildrenSites(companyId, parentGroupId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
@@ -1440,9 +1444,9 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	 * @return the range of matching groups
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<Group> findByC_P(long companyId, long parentGroupId, int start,
-		int end) throws SystemException {
-		return findByC_P(companyId, parentGroupId, start, end, null);
+	public List<Group> findByChildrenSites(long companyId, long parentGroupId,
+		int start, int end) throws SystemException {
+		return findByChildrenSites(companyId, parentGroupId, start, end, null);
 	}
 
 	/**
@@ -1460,18 +1464,19 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	 * @return the ordered range of matching groups
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<Group> findByC_P(long companyId, long parentGroupId, int start,
-		int end, OrderByComparator orderByComparator) throws SystemException {
+	public List<Group> findByChildrenSites(long companyId, long parentGroupId,
+		int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_P;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CHILDRENSITES;
 			finderArgs = new Object[] { companyId, parentGroupId };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_P;
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_CHILDRENSITES;
 			finderArgs = new Object[] {
 					companyId, parentGroupId,
 					
@@ -1506,9 +1511,9 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 
 			query.append(_SQL_SELECT_GROUP__WHERE);
 
-			query.append(_FINDER_COLUMN_C_P_COMPANYID_2);
+			query.append(_FINDER_COLUMN_CHILDRENSITES_COMPANYID_2);
 
-			query.append(_FINDER_COLUMN_C_P_PARENTGROUPID_2);
+			query.append(_FINDER_COLUMN_CHILDRENSITES_PARENTGROUPID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -1570,10 +1575,10 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	 * @throws com.liferay.portal.NoSuchGroupException if a matching group could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Group findByC_P_First(long companyId, long parentGroupId,
+	public Group findByChildrenSites_First(long companyId, long parentGroupId,
 		OrderByComparator orderByComparator)
 		throws NoSuchGroupException, SystemException {
-		List<Group> list = findByC_P(companyId, parentGroupId, 0, 1,
+		List<Group> list = findByChildrenSites(companyId, parentGroupId, 0, 1,
 				orderByComparator);
 
 		if (list.isEmpty()) {
@@ -1610,13 +1615,13 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	 * @throws com.liferay.portal.NoSuchGroupException if a matching group could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Group findByC_P_Last(long companyId, long parentGroupId,
+	public Group findByChildrenSites_Last(long companyId, long parentGroupId,
 		OrderByComparator orderByComparator)
 		throws NoSuchGroupException, SystemException {
-		int count = countByC_P(companyId, parentGroupId);
+		int count = countByChildrenSites(companyId, parentGroupId);
 
-		List<Group> list = findByC_P(companyId, parentGroupId, count - 1,
-				count, orderByComparator);
+		List<Group> list = findByChildrenSites(companyId, parentGroupId,
+				count - 1, count, orderByComparator);
 
 		if (list.isEmpty()) {
 			StringBundler msg = new StringBundler(6);
@@ -1653,8 +1658,8 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	 * @throws com.liferay.portal.NoSuchGroupException if a group with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public Group[] findByC_P_PrevAndNext(long groupId, long companyId,
-		long parentGroupId, OrderByComparator orderByComparator)
+	public Group[] findByChildrenSites_PrevAndNext(long groupId,
+		long companyId, long parentGroupId, OrderByComparator orderByComparator)
 		throws NoSuchGroupException, SystemException {
 		Group group = findByPrimaryKey(groupId);
 
@@ -1665,13 +1670,13 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 
 			Group[] array = new GroupImpl[3];
 
-			array[0] = getByC_P_PrevAndNext(session, group, companyId,
-					parentGroupId, orderByComparator, true);
+			array[0] = getByChildrenSites_PrevAndNext(session, group,
+					companyId, parentGroupId, orderByComparator, true);
 
 			array[1] = group;
 
-			array[2] = getByC_P_PrevAndNext(session, group, companyId,
-					parentGroupId, orderByComparator, false);
+			array[2] = getByChildrenSites_PrevAndNext(session, group,
+					companyId, parentGroupId, orderByComparator, false);
 
 			return array;
 		}
@@ -1683,8 +1688,8 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		}
 	}
 
-	protected Group getByC_P_PrevAndNext(Session session, Group group,
-		long companyId, long parentGroupId,
+	protected Group getByChildrenSites_PrevAndNext(Session session,
+		Group group, long companyId, long parentGroupId,
 		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
@@ -1698,9 +1703,9 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 
 		query.append(_SQL_SELECT_GROUP__WHERE);
 
-		query.append(_FINDER_COLUMN_C_P_COMPANYID_2);
+		query.append(_FINDER_COLUMN_CHILDRENSITES_COMPANYID_2);
 
-		query.append(_FINDER_COLUMN_C_P_PARENTGROUPID_2);
+		query.append(_FINDER_COLUMN_CHILDRENSITES_PARENTGROUPID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -3173,9 +3178,9 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	 * @param parentGroupId the parent group ID
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByC_P(long companyId, long parentGroupId)
+	public void removeByChildrenSites(long companyId, long parentGroupId)
 		throws SystemException {
-		for (Group group : findByC_P(companyId, parentGroupId)) {
+		for (Group group : findByChildrenSites(companyId, parentGroupId)) {
 			remove(group);
 		}
 	}
@@ -3398,11 +3403,11 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	 * @return the number of matching groups
 	 * @throws SystemException if a system exception occurred
 	 */
-	public int countByC_P(long companyId, long parentGroupId)
+	public int countByChildrenSites(long companyId, long parentGroupId)
 		throws SystemException {
 		Object[] finderArgs = new Object[] { companyId, parentGroupId };
 
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_C_P,
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_CHILDRENSITES,
 				finderArgs, this);
 
 		if (count == null) {
@@ -3410,9 +3415,9 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 
 			query.append(_SQL_COUNT_GROUP__WHERE);
 
-			query.append(_FINDER_COLUMN_C_P_COMPANYID_2);
+			query.append(_FINDER_COLUMN_CHILDRENSITES_COMPANYID_2);
 
-			query.append(_FINDER_COLUMN_C_P_PARENTGROUPID_2);
+			query.append(_FINDER_COLUMN_CHILDRENSITES_PARENTGROUPID_2);
 
 			String sql = query.toString();
 
@@ -3439,8 +3444,8 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_P, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_CHILDRENSITES,
+					finderArgs, count);
 
 				closeSession(session);
 			}
@@ -6711,8 +6716,8 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	private static final String _SQL_CONTAINSUSER = "SELECT COUNT(*) AS COUNT_VALUE FROM Users_Groups WHERE groupId = ? AND userId = ?";
 	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 = "group_.companyId = ?";
 	private static final String _FINDER_COLUMN_LIVEGROUPID_LIVEGROUPID_2 = "group_.liveGroupId = ?";
-	private static final String _FINDER_COLUMN_C_P_COMPANYID_2 = "group_.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_P_PARENTGROUPID_2 = "group_.parentGroupId = ?";
+	private static final String _FINDER_COLUMN_CHILDRENSITES_COMPANYID_2 = "group_.companyId = ? AND ";
+	private static final String _FINDER_COLUMN_CHILDRENSITES_PARENTGROUPID_2 = "group_.parentGroupId = ? AND group_.site = [$TRUE$]";
 	private static final String _FINDER_COLUMN_C_N_COMPANYID_2 = "group_.companyId = ? AND ";
 	private static final String _FINDER_COLUMN_C_N_NAME_1 = "group_.name IS NULL";
 	private static final String _FINDER_COLUMN_C_N_NAME_2 = "group_.name = ?";

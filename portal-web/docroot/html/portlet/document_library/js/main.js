@@ -988,14 +988,20 @@ AUI.add(
 
 						var dropTarget = event.drop.get('node');
 
-						var folderId = dropTarget.attr(DATA_FOLDER_ID);
+						var dd = instance._ddHandler.dd;
 
-						var folderContainer = dropTarget.ancestor('.document-display-style');
+						var selectedItemsCount = dd.get(STR_DATA).selectedItemsCount;
 
-						var selectedItems = instance._ddHandler.dd.get(STR_DATA).selectedItems;
+						if (selectedItemsCount != 0) {
+							var folderId = dropTarget.attr(DATA_FOLDER_ID);
 
-						if (selectedItems.indexOf(folderContainer) == -1) {
-							instance._moveEntries(folderId);
+							var folderContainer = dropTarget.ancestor('.document-display-style');
+
+							var selectedItems = instance._ddHandler.dd.get(STR_DATA).selectedItems;
+
+							if (selectedItems.indexOf(folderContainer) == -1) {
+								instance._moveEntries(folderId);
+							}
 						}
 					},
 
@@ -1008,19 +1014,21 @@ AUI.add(
 						dropTarget = dropTarget.ancestor(CSS_DOCUMENT_DISPLAY_STYLE) || dropTarget;
 
 						if (!dragNode.compareTo(dropTarget)) {
-							dropTarget.addClass(CSS_ACTIVE_AREA);
-
-							var proxyNode = event.target.get(STR_DRAG_NODE);
-
 							var dd = instance._ddHandler.dd;
 
 							var selectedItemsCount = dd.get(STR_DATA).selectedItemsCount;
 
-							var moveText = instance._getMoveText(selectedItemsCount, true);
+							if (selectedItemsCount != 0) {
+								dropTarget.addClass(CSS_ACTIVE_AREA);
 
-							var itemTitle = Lang.trim(dropTarget.attr('data-title'));
+								var proxyNode = event.target.get(STR_DRAG_NODE);
 
-							proxyNode.html(Lang.sub(moveText, [selectedItemsCount, itemTitle]));
+								var moveText = instance._getMoveText(selectedItemsCount, true);
+
+								var itemTitle = Lang.trim(dropTarget.attr('data-title'));
+
+								proxyNode.html(Lang.sub(moveText, [selectedItemsCount, itemTitle]));
+							}
 						}
 					},
 
@@ -1033,13 +1041,15 @@ AUI.add(
 
 						dropTarget.removeClass(CSS_ACTIVE_AREA);
 
-						var proxyNode = event.target.get(STR_DRAG_NODE);
-
 						var selectedItemsCount = instance._ddHandler.dd.get(STR_DATA).selectedItemsCount;
 
-						var moveText = instance._getMoveText(selectedItemsCount);
+						if (selectedItemsCount != 0) {
+							var proxyNode = event.target.get(STR_DRAG_NODE);
 
-						proxyNode.html(Lang.sub(moveText, [selectedItemsCount]));
+							var moveText = instance._getMoveText(selectedItemsCount);
+
+							proxyNode.html(Lang.sub(moveText, [selectedItemsCount]));
+						}
 					},
 
 					_onDragStart: function(event) {
@@ -1056,7 +1066,9 @@ AUI.add(
 						if (!node.hasClass(CSS_SELECTED)) {
 							instance._unselectAllEntries();
 
-							instance._toggleSelected(node);
+							if (node.one('.document-selector :checkbox')) {
+								instance._toggleSelected(node);
+							}
 						}
 
 						var proxyNode = target.get(STR_DRAG_NODE);

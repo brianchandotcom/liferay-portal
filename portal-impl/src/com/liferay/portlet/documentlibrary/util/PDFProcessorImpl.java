@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
@@ -141,28 +140,6 @@ public class PDFProcessorImpl
 
 	public boolean isDocumentSupported(String mimeType) {
 		return Initializer._initializedInstance.isSupported(mimeType);
-	}
-
-	public boolean isImageMagickEnabled() throws Exception {
-		if (ImageMagickUtil.isEnabled()) {
-			return true;
-		}
-
-		if (!_warned) {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append("Liferay is not configured to use ImageMagick for ");
-			sb.append("generating Documents and Media previews and will ");
-			sb.append("default to PDFBox. For better quality previews, ");
-			sb.append("install ImageMagick and enable it in ");
-			sb.append("portal-ext.properties.");
-
-			_log.warn(sb.toString());
-
-			_warned = true;
-		}
-
-		return false;
 	}
 
 	public boolean isSupported(String mimeType) {
@@ -342,7 +319,7 @@ public class PDFProcessorImpl
 	private void _generateImages(FileVersion fileVersion, File file)
 		throws Exception {
 
-		if (isImageMagickEnabled()) {
+		if (ImageMagickUtil.isEnabled()) {
 			_generateImagesIM(fileVersion, file);
 		}
 		else {
@@ -415,7 +392,7 @@ public class PDFProcessorImpl
 			FileVersion fileVersion, InputStream inputStream)
 		throws Exception {
 
-		if (isImageMagickEnabled()) {
+		if (ImageMagickUtil.isEnabled()) {
 			_generateImagesIM(fileVersion, inputStream);
 		}
 		else {
@@ -760,7 +737,6 @@ public class PDFProcessorImpl
 	}
 
 	private List<Long> _fileVersionIds = new Vector<Long>();
-	private boolean _warned;
 
 	private static class Initializer {
 

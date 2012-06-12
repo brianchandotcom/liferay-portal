@@ -14,24 +14,16 @@
 
 package com.liferay.portal.sharepoint;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.User;
 import com.liferay.portal.sharepoint.methods.Method;
 import com.liferay.portal.sharepoint.methods.MethodFactory;
 import com.liferay.portal.util.WebKeys;
-
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -45,6 +37,12 @@ public class SharepointServlet extends HttpServlet {
 	@Override
 	public void doGet(
 		HttpServletRequest request, HttpServletResponse response) {
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				request.getHeader(HttpHeaders.USER_AGENT) + " " +
+					request.getMethod() + " " + request.getRequestURI());
+		}
 
 		try {
 			String uri = request.getRequestURI();
@@ -74,8 +72,6 @@ public class SharepointServlet extends HttpServlet {
 				SharepointRequest sharepointRequest = new SharepointRequest(
 					request, response, user);
 
-				addParams(request, sharepointRequest);
-
 				Method method = MethodFactory.create(sharepointRequest);
 
 				String rootPath = method.getRootPath(sharepointRequest);
@@ -104,61 +100,25 @@ public class SharepointServlet extends HttpServlet {
 
 				sharepointRequest.setSharepointStorage(storage);
 
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						request.getHeader(HttpHeaders.USER_AGENT) + " [" +
+							method.getMethodName() + "] " + uri + " " +
+								rootPath);
+				}
+
 				method.process(sharepointRequest);
+			}
+			else {
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						request.getHeader(HttpHeaders.USER_AGENT) + " " +
+							request.getMethod() + " " + uri);
+				}
 			}
 		}
 		catch (SharepointException se) {
 			_log.error(se, se);
-		}
-	}
-
-	protected void addParams(
-			HttpServletRequest request, SharepointRequest sharepointRequest)
-		throws SharepointException {
-
-		String contentType = request.getContentType();
-
-		if (!contentType.equals(SharepointUtil.VEERMER_URLENCODED)) {
-			return;
-		}
-
-		try {
-			InputStream is = request.getInputStream();
-
-			UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
-				new UnsyncByteArrayOutputStream();
-
-			StreamUtil.transfer(is, unsyncByteArrayOutputStream);
-
-			byte[] bytes = unsyncByteArrayOutputStream.toByteArray();
-
-			UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(
-					new InputStreamReader(new ByteArrayInputStream(bytes)));
-
-			String url = unsyncBufferedReader.readLine();
-
-			String[] params = url.split(StringPool.AMPERSAND);
-
-			for (String param : params) {
-				String[] kvp = param.split(StringPool.EQUAL);
-
-				String key = HttpUtil.decodeURL(kvp[0]);
-				String value = StringPool.BLANK;
-
-				if (kvp.length > 1) {
-					value = HttpUtil.decodeURL(kvp[1]);
-				}
-
-				sharepointRequest.addParam(key, value);
-			}
-
-			bytes = ArrayUtil.subset(bytes, url.length() + 1, bytes.length);
-
-			sharepointRequest.setBytes(bytes);
-		}
-		catch (Exception e) {
-			throw new SharepointException(e);
 		}
 	}
 

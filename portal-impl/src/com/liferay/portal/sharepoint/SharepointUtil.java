@@ -43,23 +43,6 @@ public class SharepointUtil {
 
 	public static final String VERSION = "6.0.2.8117";
 
-	public static void addBottom(StringBuilder sb) {
-		sb.append("</body>");
-		sb.append(StringPool.NEW_LINE);
-		sb.append("</html>");
-	}
-
-	public static void addTop(StringBuilder sb, String methodName) {
-		sb.append("<html><head><title>vermeer RPC packet</title></head>");
-		sb.append(StringPool.NEW_LINE);
-		sb.append("<body>");
-		sb.append(StringPool.NEW_LINE);
-
-		Property method = new Property("method", methodName + ":" + VERSION);
-
-		sb.append(method.parse());
-	}
-
 	public static long getGroupId(String path) {
 		long groupId = 0;
 
@@ -112,6 +95,11 @@ public class SharepointUtil {
 		}
 		else if (pathArray.length >= 2) {
 			storageClass = getStorageClass(pathArray[1]);
+		}
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"Storage class is for path " + path + " is " + storageClass);
 		}
 
 		return (SharepointStorage)InstancePool.get(storageClass);

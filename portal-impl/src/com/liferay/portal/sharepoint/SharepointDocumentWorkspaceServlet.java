@@ -16,6 +16,7 @@ package com.liferay.portal.sharepoint;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -51,6 +52,12 @@ public class SharepointDocumentWorkspaceServlet extends HttpServlet {
 	@Override
 	protected void doPost(
 		HttpServletRequest request, HttpServletResponse response) {
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				request.getHeader(HttpHeaders.USER_AGENT) + " " +
+					request.getMethod() + " " + request.getRequestURI());
+		}
 
 		try {
 			getDwsMetaDataResponse(request, response);

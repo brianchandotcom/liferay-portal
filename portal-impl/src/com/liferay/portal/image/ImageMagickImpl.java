@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.process.ProcessExecutor;
 import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.SystemEnv;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.log.Log4jLogFactoryImpl;
@@ -140,14 +141,31 @@ public class ImageMagickImpl implements ImageMagick {
 	}
 
 	public boolean isEnabled() {
+		boolean enabled = false;
+
 		try {
-			return PrefsPropsUtil.getBoolean(PropsKeys.IMAGEMAGICK_ENABLED);
+			enabled = PrefsPropsUtil.getBoolean(PropsKeys.IMAGEMAGICK_ENABLED);
 		}
 		catch (Exception e) {
 			_log.warn(e, e);
 		}
 
-		return false;
+		if (!enabled && !_warned) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append("Liferay is not configured to use ImageMagick. For ");
+			sb.append("better quality document and image previews, install ");
+			sb.append("ImageMagick and enable it in portal-ext.properties or ");
+			sb.append("in the Server Administration control panel at: ");
+			sb.append("http://<server>/group/control_panel/manage/-/server/");
+			sb.append("external-services");
+
+			_log.warn(sb.toString());
+
+			_warned = true;
+		}
+
+		return enabled;
 	}
 
 	public void reset() {
@@ -191,6 +209,7 @@ public class ImageMagickImpl implements ImageMagick {
 
 	private String _globalSearchPath;
 	private Properties _resourceLimitsProperties;
+	private boolean _warned;
 
 	private static class ImageMagickProcessCallable
 		implements ProcessCallable<String[]> {

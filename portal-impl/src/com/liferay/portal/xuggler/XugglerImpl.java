@@ -114,11 +114,12 @@ public class XugglerImpl implements Xuggler {
 
 		_informAdministrator = false;
 
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(6);
 
 		sb.append("Liferay does not have the Xuggler native libraries ");
 		sb.append("installed. In order to generate video and audio previews, ");
-		sb.append("please follow the instructions for Xuggler at: ");
+		sb.append("please follow the instructions for Xuggler in the Server ");
+		sb.append("Administration control panel at: ");
 		sb.append("http://<server>/group/control_panel/manage/-/server/");
 		sb.append("external-services");
 

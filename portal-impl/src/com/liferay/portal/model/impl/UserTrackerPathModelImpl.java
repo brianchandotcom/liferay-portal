@@ -212,15 +212,17 @@ public class UserTrackerPathModelImpl extends BaseModelImpl<UserTrackerPath>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
-			UserTrackerPath.class.getName(), getPrimaryKey());
+		if (_expandoBridge == null) {
+			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+					UserTrackerPath.class.getName(), getPrimaryKey());
+		}
+
+		return _expandoBridge;
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		ExpandoBridge expandoBridge = getExpandoBridge();
-
-		expandoBridge.setAttributes(serviceContext);
+		getExpandoBridge().setAttributes(serviceContext);
 	}
 
 	@Override
@@ -376,6 +378,7 @@ public class UserTrackerPathModelImpl extends BaseModelImpl<UserTrackerPath>
 	private boolean _setOriginalUserTrackerId;
 	private String _path;
 	private Date _pathDate;
+	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private UserTrackerPath _escapedModelProxy;
 }

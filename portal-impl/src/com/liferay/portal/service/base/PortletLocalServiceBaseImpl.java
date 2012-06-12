@@ -287,10 +287,7 @@ public abstract class PortletLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
-		Class<?> clazz = getClass();
-
-		return DynamicQueryFactoryUtil.forClass(Portlet.class,
-			clazz.getClassLoader());
+		return DynamicQueryFactoryUtil.forClass(Portlet.class, getClassLoader());
 	}
 
 	/**

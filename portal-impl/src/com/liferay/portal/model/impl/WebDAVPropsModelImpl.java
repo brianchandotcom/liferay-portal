@@ -293,15 +293,17 @@ public class WebDAVPropsModelImpl extends BaseModelImpl<WebDAVProps>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-			WebDAVProps.class.getName(), getPrimaryKey());
+		if (_expandoBridge == null) {
+			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+					WebDAVProps.class.getName(), getPrimaryKey());
+		}
+
+		return _expandoBridge;
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		ExpandoBridge expandoBridge = getExpandoBridge();
-
-		expandoBridge.setAttributes(serviceContext);
+		getExpandoBridge().setAttributes(serviceContext);
 	}
 
 	@Override
@@ -500,6 +502,7 @@ public class WebDAVPropsModelImpl extends BaseModelImpl<WebDAVProps>
 	private long _originalClassPK;
 	private boolean _setOriginalClassPK;
 	private String _props;
+	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private WebDAVProps _escapedModelProxy;
 }

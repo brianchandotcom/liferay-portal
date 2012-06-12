@@ -324,6 +324,25 @@ public interface CompanyService extends BaseService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Updates the company's logo.
+	*
+	* @param companyId the primary key of the company
+	* @param renderedImage the image to use as the new company logo
+	* @param compressionFormat the type of compression to use when storing
+	renderedImage in the database
+	* @return the company with the primary key
+	* @throws PortalException if the company's logo ID could not be found or if
+	the logo's image was corrupted or if the user was an
+	administrator
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.Company updateLogo(long companyId,
+		java.awt.image.RenderedImage renderedImage,
+		java.lang.String compressionFormat)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Updates the company's preferences. The company's default properties are
 	* found in portal.properties.
 	*

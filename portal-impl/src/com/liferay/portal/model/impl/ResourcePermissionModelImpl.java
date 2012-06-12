@@ -406,15 +406,17 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-			ResourcePermission.class.getName(), getPrimaryKey());
+		if (_expandoBridge == null) {
+			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+					ResourcePermission.class.getName(), getPrimaryKey());
+		}
+
+		return _expandoBridge;
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		ExpandoBridge expandoBridge = getExpandoBridge();
-
-		expandoBridge.setAttributes(serviceContext);
+		getExpandoBridge().setAttributes(serviceContext);
 	}
 
 	@Override
@@ -639,6 +641,7 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 	private long _actionIds;
 	private long _originalActionIds;
 	private boolean _setOriginalActionIds;
+	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private ResourcePermission _escapedModelProxy;
 }

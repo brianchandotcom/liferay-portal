@@ -229,15 +229,17 @@ public class ResourceActionModelImpl extends BaseModelImpl<ResourceAction>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
-			ResourceAction.class.getName(), getPrimaryKey());
+		if (_expandoBridge == null) {
+			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+					ResourceAction.class.getName(), getPrimaryKey());
+		}
+
+		return _expandoBridge;
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		ExpandoBridge expandoBridge = getExpandoBridge();
-
-		expandoBridge.setAttributes(serviceContext);
+		getExpandoBridge().setAttributes(serviceContext);
 	}
 
 	@Override
@@ -404,6 +406,7 @@ public class ResourceActionModelImpl extends BaseModelImpl<ResourceAction>
 	private String _actionId;
 	private String _originalActionId;
 	private long _bitwiseValue;
+	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private ResourceAction _escapedModelProxy;
 }

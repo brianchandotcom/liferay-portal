@@ -15,6 +15,7 @@
 package com.liferay.portal.service;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
@@ -372,6 +373,7 @@ public class ImageLocalServiceUtil {
 
 			ReferenceRegistry.registerReference(ImageLocalServiceUtil.class,
 				"_service");
+			MethodCache.remove(ImageLocalService.class);
 		}
 
 		return _service;

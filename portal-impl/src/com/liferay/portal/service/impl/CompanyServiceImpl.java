@@ -30,6 +30,8 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.base.CompanyServiceBaseImpl;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
+import java.awt.image.RenderedImage;
+
 import java.io.InputStream;
 
 import java.util.List;
@@ -384,6 +386,35 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 		}
 
 		return companyLocalService.updateLogo(companyId, inputStream);
+	}
+
+	/**
+	 * Updates the company's logo.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  renderedImage the image to use as the new company logo
+	 * @param  compressionFormat the type of compression to use when storing
+	 *         renderedImage in the database
+	 * @return the company with the primary key
+	 * @throws PortalException if the company's logo ID could not be found or if
+	 *         the logo's image was corrupted or if the user was an
+	 *         administrator
+	 * @throws SystemException if a system exception occurred
+	 */
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	public Company updateLogo(
+			long companyId, RenderedImage renderedImage,
+			String compressionFormat)
+		throws PortalException, SystemException {
+
+		if (!roleLocalService.hasUserRole(
+				getUserId(), companyId, RoleConstants.ADMINISTRATOR, true)) {
+
+			throw new PrincipalException();
+		}
+
+		return companyLocalService.updateLogo(
+			companyId, renderedImage, compressionFormat);
 	}
 
 	/**

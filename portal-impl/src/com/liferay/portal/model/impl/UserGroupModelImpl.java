@@ -349,15 +349,17 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
-			UserGroup.class.getName(), getPrimaryKey());
+		if (_expandoBridge == null) {
+			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
+					UserGroup.class.getName(), getPrimaryKey());
+		}
+
+		return _expandoBridge;
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		ExpandoBridge expandoBridge = getExpandoBridge();
-
-		expandoBridge.setAttributes(serviceContext);
+		getExpandoBridge().setAttributes(serviceContext);
 	}
 
 	@Override
@@ -539,6 +541,7 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 	private String _originalName;
 	private String _description;
 	private boolean _addedByLDAPImport;
+	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private UserGroup _escapedModelProxy;
 }

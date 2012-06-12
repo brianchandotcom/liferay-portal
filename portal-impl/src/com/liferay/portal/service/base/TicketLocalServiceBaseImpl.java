@@ -287,10 +287,7 @@ public abstract class TicketLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
-		Class<?> clazz = getClass();
-
-		return DynamicQueryFactoryUtil.forClass(Ticket.class,
-			clazz.getClassLoader());
+		return DynamicQueryFactoryUtil.forClass(Ticket.class, getClassLoader());
 	}
 
 	/**

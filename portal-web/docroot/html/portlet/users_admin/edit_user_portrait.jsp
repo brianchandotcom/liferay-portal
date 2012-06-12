@@ -23,8 +23,8 @@ User selUser = PortalUtil.getSelectedUser(request);
 <c:choose>
 	<c:when test='<%= SessionMessages.contains(renderRequest, "request_processed") %>'>
 		<aui:script>
-			window.close();
 			opener.<portlet:namespace />changeLogo('<%= selUser.getPortraitURL(themeDisplay) %>');
+			window.close();
 		</aui:script>
 	</c:when>
 	<c:otherwise>
@@ -33,6 +33,7 @@ User selUser = PortalUtil.getSelectedUser(request);
 		</portlet:actionURL>
 
 		<aui:form action="<%= editUserPortraitURL %>" enctype="multipart/form-data" method="post" name="fm">
+			<aui:input name="cropRegion" type="hidden" />
 			<aui:input name="p_u_i_d" type="hidden" value="<%= selUser.getUserId() %>" />
 
 			<liferay-ui:error exception="<%= UploadException.class %>" message="an-unexpected-error-occurred-while-uploading-your-file" />
@@ -49,10 +50,14 @@ User selUser = PortalUtil.getSelectedUser(request);
 			<liferay-ui:error exception="<%= UserPortraitTypeException.class %>" message="please-enter-a-file-with-a-valid-file-type" />
 
 			<aui:fieldset>
-				<aui:input label='<%= LanguageUtil.format(pageContext, "upload-a-gif-or-jpeg-that-is-x-pixels-tall-and-x-pixels-wide", new Object[] {"120", "100"}, false) %>' name="fileName" size="50" type="file" />
+				<aui:input label='<%= LanguageUtil.format(pageContext, "upload-images-no-larger-than-x-k", PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE)/1024, false) %>' name="fileName" size="50" type="file" />
+
+				<div class="lfr-change-logo portrait-preview" id="<portlet:namespace />portraitPreview">
+					<img class="portrait-preview-img" id="<portlet:namespace />portraitPreviewImg" src="<%= HtmlUtil.escape(selUser.getPortraitURL(themeDisplay)) %>" />
+				</div>
 
 				<aui:button-row>
-					<aui:button type="submit" />
+					<aui:button name="submitButton" type="submit" />
 
 					<aui:button onClick="window.close();" type="cancel" value="close" />
 				</aui:button-row>
@@ -64,5 +69,15 @@ User selUser = PortalUtil.getSelectedUser(request);
 				Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />fileName);
 			</aui:script>
 		</c:if>
+
+		<aui:script use="liferay-logo-editor">
+			new Liferay.LogoEditor(
+				{
+					namespace: '<portlet:namespace />',
+					previewURL: '<portlet:resourceURL><portlet:param name="struts_action" value="/users_admin/edit_user_portrait" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.GET_TEMP %>" /></portlet:resourceURL>',
+					uploadURL: '<portlet:actionURL><portlet:param name="struts_action" value="/users_admin/edit_user_portrait" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" /></portlet:actionURL>'
+				}
+			);
+		</aui:script>
 	</c:otherwise>
 </c:choose>

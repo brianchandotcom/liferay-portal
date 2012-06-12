@@ -15,6 +15,7 @@
 package com.liferay.portal.service;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
@@ -311,6 +312,7 @@ public class PortletItemLocalServiceUtil {
 
 			ReferenceRegistry.registerReference(PortletItemLocalServiceUtil.class,
 				"_service");
+			MethodCache.remove(PortletItemLocalService.class);
 		}
 
 		return _service;

@@ -16,6 +16,11 @@
 
 <%@ include file="/html/portlet/portal_settings/init.jsp" %>
 
+<%
+long companyLogoId = company.getLogoId();
+String logoURL = themeDisplay.getPathImage() + "/company_logo?img_id=" + companyLogoId + "&t=" + WebServerServletTokenUtil.getToken(companyLogoId);
+%>
+
 <liferay-ui:error exception="<%= ImageTypeException.class %>" message="please-enter-a-file-with-a-valid-file-type" />
 
 <c:choose>
@@ -31,23 +36,115 @@
 		</portlet:actionURL>
 
 		<aui:form action="<%= editCompanyLogoURL %>" enctype="multipart/form-data" method="post" name="fm">
+			<aui:input name="cropRegion" type="hidden" />
+
 			<liferay-ui:error exception="<%= UploadException.class %>" message="an-unexpected-error-occurred-while-uploading-your-file" />
 
 			<aui:fieldset>
 				<aui:input label="" name="fileName" size="50" type="file" />
 
+				<div class="lfr-change-logo portrait-preview" id="<portlet:namespace />portraitPreview">
+					<img class="portrait-preview-img" id="<portlet:namespace />portraitPreviewImg" src="<%= HtmlUtil.escape(logoURL) %>" />
+				</div>
+
 				<aui:button-row>
-					<aui:button type="submit" />
+					<aui:button name="submitButton" type="submit" />
 
 					<aui:button onClick="window.close();" type="cancel" value="close" />
 				</aui:button-row>
 			</aui:fieldset>
 		</aui:form>
 
-		<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
-			<aui:script>
+		<aui:script use="aui-io,json,aui-image-cropper,aui-loading-mask">
+			<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
 				Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />fileName);
-			</aui:script>
-		</c:if>
+			</c:if>
+
+			var imageCropper;
+
+			var cropRegionNode = A.one('#<portlet:namespace />cropRegion');
+			var fileNameNode = A.one('#<portlet:namespace />fileName');
+			var formNode = A.one('#<portlet:namespace />fm');
+			var portraitPreview = A.one('#<portlet:namespace />portraitPreview');
+			var portraitPreviewImg = A.one('#<portlet:namespace />portraitPreviewImg');
+			var submitButton = A.one('#<portlet:namespace />submitButton');
+
+			var imageLoadHandler = function(event) {
+				if (portraitPreviewImg.attr('src').indexOf('spacer.png') == -1) {
+					if (imageCropper) {
+						imageCropper.enable();
+
+						imageCropper.syncImageUI();
+
+						imageCropper.setAttrs(
+							{
+								cropHeight: Math.max(portraitPreviewImg.height() * 0.3, 50),
+								cropWidth: Math.max(portraitPreviewImg.width() * 0.3, 50),
+								x: 0,
+								y: 0
+							}
+						);
+					} else {
+						imageCropper = new A.ImageCropper(
+							{
+								srcNode: portraitPreviewImg
+							}
+						).render();
+					}
+
+					submitButton.attr('disabled', false);
+					submitButton.ancestor('.aui-button').removeClass('aui-button-disabled');
+				}
+			};
+
+			var fileNameChangeHandler = function(event) {
+				var previewURL = '<portlet:resourceURL><portlet:param name="struts_action" value="/portal_settings/edit_company_logo" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.GET_TEMP %>" /></portlet:resourceURL>';
+
+				var uploadURL = '<portlet:actionURL><portlet:param name="struts_action" value="/portal_settings/edit_company_logo" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" /></portlet:actionURL>';
+
+				portraitPreviewImg.addClass('loading');
+
+				portraitPreviewImg.attr('src', '<%= themeDisplay.getPathThemeImages() %>/spacer.png');
+
+				if (imageCropper) {
+					imageCropper.disable();
+				}
+
+				A.io.request(
+					uploadURL,
+					{
+						method: 'post',
+						form: {
+							id: '<portlet:namespace />fm',
+							upload: true
+						},
+						on: {
+							complete: function(event) {
+								previewURL = Liferay.Util.addParams('ts=' + A.Lang.now(), previewURL);
+
+								portraitPreviewImg.attr('src', previewURL);
+
+								portraitPreviewImg.removeClass('loading');
+							},
+							start: function() {
+								submitButton.attr('disabled', true);
+
+								submitButton.ancestor('.aui-button').addClass('aui-button-disabled');
+							}
+						}
+					}
+				);
+			};
+
+			var submitHandler = function(event) {
+				if (imageCropper) {
+					cropRegionNode.val(A.JSON.stringify(imageCropper.get('region')));
+				}
+			};
+
+			fileNameNode.on('change', fileNameChangeHandler);
+			formNode.on('submit', submitHandler);
+			portraitPreviewImg.on('load', imageLoadHandler);
+		</aui:script>
 	</c:otherwise>
 </c:choose>

@@ -299,15 +299,17 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
-			Release.class.getName(), getPrimaryKey());
+		if (_expandoBridge == null) {
+			_expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+					Release.class.getName(), getPrimaryKey());
+		}
+
+		return _expandoBridge;
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
-		ExpandoBridge expandoBridge = getExpandoBridge();
-
-		expandoBridge.setAttributes(serviceContext);
+		getExpandoBridge().setAttributes(serviceContext);
 	}
 
 	@Override
@@ -530,6 +532,7 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 	private boolean _verified;
 	private int _state;
 	private String _testString;
+	private transient ExpandoBridge _expandoBridge;
 	private long _columnBitmask;
 	private Release _escapedModelProxy;
 }

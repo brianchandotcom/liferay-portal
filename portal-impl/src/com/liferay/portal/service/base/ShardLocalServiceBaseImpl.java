@@ -287,10 +287,7 @@ public abstract class ShardLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
-		Class<?> clazz = getClass();
-
-		return DynamicQueryFactoryUtil.forClass(Shard.class,
-			clazz.getClassLoader());
+		return DynamicQueryFactoryUtil.forClass(Shard.class, getClassLoader());
 	}
 
 	/**

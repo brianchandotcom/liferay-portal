@@ -46,6 +46,7 @@ import com.liferay.portal.UserSmsException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.image.ImageBag;
+import com.liferay.portal.kernel.image.ImageTool;
 import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -4443,7 +4444,66 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	public User updatePortrait(long userId, byte[] bytes)
 		throws PortalException, SystemException {
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		try {
+			ImageBag imageBag = ImageToolUtil.read(bytes);
+
+			RenderedImage renderedImage = imageBag.getRenderedImage();
+
+			if (renderedImage == null) {
+				throw new UserPortraitTypeException();
+			}
+
+			return updatePortrait(userId, renderedImage, imageBag.getType());
+		}
+		catch (IOException ioe) {
+			throw new ImageSizeException(ioe);
+		}
+	}
+
+	/**
+	 * Updates the user's portrait image.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  renderedImage the new portrait image
+	 * @return the user
+	 * @throws PortalException if a user with the primary key could not be found
+	 *         or if the new portrait was invalid
+	 * @throws SystemException if a system exception occurred
+	 */
+	public User updatePortrait(long userId, RenderedImage renderedImage)
+		throws PortalException, SystemException {
+
+		return updatePortrait(userId, renderedImage, ImageTool.TYPE_PNG);
+	}
+
+	/**
+	 * Updates the user's portrait image.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  renderedImage the new portrait image
+	 * @param  compressionFormat the image format to use when compressing
+	 *         the renderedImage
+	 * @return the user
+	 * @throws PortalException if a user with the primary key could not be found
+	 *         or if the new portrait was invalid
+	 * @throws SystemException if a system exception occurred
+	 */
+	public User updatePortrait(
+			long userId, RenderedImage renderedImage, String compressionFormat)
+		throws PortalException, SystemException {
+
+		renderedImage = ImageToolUtil.scale(
+			renderedImage, PropsValues.USERS_IMAGE_MAX_HEIGHT,
+			PropsValues.USERS_IMAGE_MAX_WIDTH);
+
+		byte[] bytes;
+
+		try {
+			bytes = ImageToolUtil.getBytes(renderedImage, compressionFormat);
+		}
+		catch (IOException ioe) {
+			throw new ImageSizeException(ioe);
+		}
 
 		long imageMaxSize = PrefsPropsUtil.getLong(
 			PropsKeys.USERS_IMAGE_MAX_SIZE);
@@ -4454,6 +4514,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			throw new UserPortraitSizeException();
 		}
 
+		User user = userPersistence.findByPrimaryKey(userId);
+
 		long portraitId = user.getPortraitId();
 
 		if (portraitId <= 0) {
@@ -4462,28 +4524,11 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			user.setPortraitId(portraitId);
 		}
 
-		try {
-			ImageBag imageBag = ImageToolUtil.read(bytes);
+		imageLocalService.updateImage(portraitId, bytes);
 
-			RenderedImage renderedImage = imageBag.getRenderedImage();
-
-			if (renderedImage == null) {
-				throw new UserPortraitTypeException();
-			}
-
-			renderedImage = ImageToolUtil.scale(
-				renderedImage, PropsValues.USERS_IMAGE_MAX_HEIGHT,
-				PropsValues.USERS_IMAGE_MAX_WIDTH);
-
-			String contentType = imageBag.getType();
-
-			imageLocalService.updateImage(
-				portraitId,
-				ImageToolUtil.getBytes(renderedImage, contentType));
-		}
-		catch (IOException ioe) {
-			throw new ImageSizeException(ioe);
-		}
+		imageLocalService.updateImage(
+			portraitId, bytes, compressionFormat, renderedImage.getHeight(),
+			renderedImage.getWidth(), bytes.length);
 
 		userPersistence.update(user, false);
 

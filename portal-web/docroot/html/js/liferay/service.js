@@ -32,6 +32,7 @@ Liferay.Service.registerClass(
 		removePreferences: true,
 		updateCompany: true,
 		updateDisplay: true,
+		updateLogo: true,
 		updatePreferences: true,
 		updateSecurity: true
 	}
@@ -422,6 +423,7 @@ Liferay.Service.registerClass(
 		updateOpenId: true,
 		updateOrganizations: true,
 		updatePassword: true,
+		updatePortrait: true,
 		updateReminderQuery: true,
 		updateScreenName: true,
 		updateStatus: true,

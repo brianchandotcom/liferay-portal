@@ -290,10 +290,8 @@ public abstract class UserTrackerPathLocalServiceBaseImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
-		Class<?> clazz = getClass();
-
 		return DynamicQueryFactoryUtil.forClass(UserTrackerPath.class,
-			clazz.getClassLoader());
+			getClassLoader());
 	}
 
 	/**

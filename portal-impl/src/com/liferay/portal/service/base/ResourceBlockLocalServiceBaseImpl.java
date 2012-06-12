@@ -290,10 +290,8 @@ public abstract class ResourceBlockLocalServiceBaseImpl
 	}
 
 	public DynamicQuery dynamicQuery() {
-		Class<?> clazz = getClass();
-
 		return DynamicQueryFactoryUtil.forClass(ResourceBlock.class,
-			clazz.getClassLoader());
+			getClassLoader());
 	}
 
 	/**

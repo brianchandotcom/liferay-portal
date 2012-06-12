@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.blogs.blogsentry.viewblogsentryviewcountdetails;
+package com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentry;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;

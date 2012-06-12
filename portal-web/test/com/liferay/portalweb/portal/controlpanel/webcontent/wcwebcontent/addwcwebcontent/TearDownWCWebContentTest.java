@@ -29,6 +29,26 @@ public class TearDownWCWebContentTest extends BaseTestCase {
 			case 1:
 				selenium.open("/web/guest/home/");
 				loadRequiredJavaScriptModules();
+				selenium.clickAt("//div[@id='dockbar']",
+					RuntimeVariables.replace("Dockbar"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isElementPresent(
+									"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
 				assertEquals(RuntimeVariables.replace("Go to"),
 					selenium.getText("//li[@id='_145_mySites']/a/span"));
 				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -59,7 +79,7 @@ public class TearDownWCWebContentTest extends BaseTestCase {
 				loadRequiredJavaScriptModules();
 
 				boolean webContentPresent = selenium.isElementPresent(
-						"//span[@title='Actions']/ul/li/strong/a/span");
+						"//input[@name='_15_rowIds']");
 
 				if (!webContentPresent) {
 					label = 2;
@@ -78,8 +98,8 @@ public class TearDownWCWebContentTest extends BaseTestCase {
 					}
 
 					try {
-						if (!selenium.isElementPresent(
-									"//span[contains(@class,'aui-button-disabled')]/span/input[@value='Delete']")) {
+						if (selenium.isElementPresent(
+									"//tr[contains(@class,'results-row selected')]")) {
 							break;
 						}
 					}
@@ -115,17 +135,17 @@ public class TearDownWCWebContentTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
-				selenium.click(RuntimeVariables.replace(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a",
+					RuntimeVariables.replace("Delete"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected web content[\\s\\S]$"));
-
-			case 2:
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
+
+			case 2:
 				assertEquals(RuntimeVariables.replace(
 						"No Web Content was found."),
 					selenium.getText("//div[@class='portlet-msg-info']"));

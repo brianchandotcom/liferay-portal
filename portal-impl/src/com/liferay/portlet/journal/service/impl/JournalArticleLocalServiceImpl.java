@@ -132,6 +132,28 @@ public class JournalArticleLocalServiceImpl
 	extends JournalArticleLocalServiceBaseImpl {
 
 	public JournalArticle addArticle(
+			long userId, long groupId, long folderId,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			String content, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		Calendar now = CalendarFactoryUtil.getCalendar();
+
+		int displayDateMonth = now.get(Calendar.MONTH);
+		int displayDateDay = now.get(Calendar.DAY_OF_MONTH);
+		int displayDateYear = now.get(Calendar.YEAR);
+
+		int displayDateHour = now.get(Calendar.HOUR_OF_DAY);
+		int displayDateMinute = now.get(Calendar.MINUTE);
+
+		return addArticle(userId, groupId, folderId, 0, 0, StringPool.BLANK,
+			true, 1, titleMap, descriptionMap, content, "general", null, null,
+			null, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, 0, 0, 0, 0, 0, true, 0, 0, 0, 0,
+			0, true, true, false, null, null, null, null, serviceContext);
+	}
+
+	public JournalArticle addArticle(
 			long userId, long groupId, long folderId, long classNameId,
 			long classPK, String articleId, boolean autoArticleId,
 			double version, Map<Locale, String> titleMap,
@@ -1796,7 +1818,10 @@ public class JournalArticleLocalServiceImpl
 
 			searchContext.setQueryConfig(queryConfig);
 
-			searchContext.setSorts(new Sort[] {sort});
+			if (sort != null) {
+				searchContext.setSorts(new Sort[] {sort});
+			}
+
 			searchContext.setStart(start);
 
 			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(

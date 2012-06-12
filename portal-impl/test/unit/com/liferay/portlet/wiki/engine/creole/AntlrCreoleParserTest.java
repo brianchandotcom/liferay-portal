@@ -48,7 +48,7 @@ import org.junit.Test;
 /**
  * @author Miguel Pastor
  */
-public class AntlrCreoleParserTests extends AbstractWikiParserTests {
+public class AntlrCreoleParserTest extends AbstractWikiParserTests {
 
 	@Test
 	public void testParseCorrectlyBoldContentInListItems() {

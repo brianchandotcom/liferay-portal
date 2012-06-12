@@ -35,6 +35,8 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
+import com.liferay.portal.model.LayoutPrototype;
+import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.PortletImpl;
@@ -115,6 +117,13 @@ public class ServiceTestUtil {
 	}
 
 	public static Layout addLayout(long groupId, String name) throws Exception {
+		return addLayout(groupId, name, false);
+	}
+
+	public static Layout addLayout(
+			long groupId, String name, boolean privateLayout)
+		throws Exception {
+
 		String friendlyURL =
 			StringPool.SLASH + FriendlyURLNormalizerUtil.normalize(name);
 
@@ -132,10 +141,34 @@ public class ServiceTestUtil {
 		String description = "This is a test page.";
 
 		return LayoutLocalServiceUtil.addLayout(
-			TestPropsValues.getUserId(), groupId, false,
+			TestPropsValues.getUserId(), groupId, privateLayout,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, name, null, description,
 			LayoutConstants.TYPE_PORTLET, false, friendlyURL,
 			getServiceContext());
+	}
+
+	public static LayoutPrototype addLayoutPrototype(String name)
+		throws Exception {
+
+		HashMap<Locale, String> nameMap = new HashMap<Locale, String>();
+
+		nameMap.put(Locale.getDefault(), name);
+
+		return LayoutPrototypeLocalServiceUtil.addLayoutPrototype(
+			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
+			nameMap, null, true);
+	}
+
+	public static LayoutSetPrototype addLayoutSetPrototype(String name)
+		throws Exception {
+
+		HashMap<Locale, String> nameMap = new HashMap<Locale, String>();
+
+		nameMap.put(Locale.getDefault(), name);
+
+		return LayoutSetPrototypeLocalServiceUtil.addLayoutSetPrototype(
+			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
+			nameMap, null, true, true, getServiceContext());
 	}
 
 	public static User addUser(

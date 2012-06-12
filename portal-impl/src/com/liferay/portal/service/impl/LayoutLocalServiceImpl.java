@@ -54,6 +54,7 @@ import com.liferay.portal.lar.PortletImporter;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
+import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.model.LayoutReference;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetPrototype;
@@ -76,6 +77,7 @@ import com.liferay.portal.util.comparator.LayoutComparator;
 import com.liferay.portal.util.comparator.LayoutPriorityComparator;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
+import com.liferay.portlet.sites.util.SitesUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -261,6 +263,23 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		}
 
 		layoutPersistence.update(layout, false);
+
+		if (Validator.isNotNull(layoutPrototypeUuid) &&
+			!layoutPrototypeLinkEnabled) {
+
+			LayoutPrototype layoutPrototype =
+				layoutPrototypeLocalService.
+					getLayoutPrototypeByUuidAndCompanyId(
+						layoutPrototypeUuid, layout.getCompanyId());
+
+			try {
+				SitesUtil.applyLayoutPrototype(
+					layoutPrototype, layout, layoutPrototypeLinkEnabled);
+			}
+			catch (Exception e) {
+				throw new SystemException(e.getMessage());
+			}
+		}
 
 		// Resources
 

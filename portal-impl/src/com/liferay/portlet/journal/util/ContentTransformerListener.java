@@ -137,7 +137,6 @@ public class ContentTransformerListener extends BaseTransformerListener {
 			if (dynamicContent != null) {
 				String text = dynamicContent.getText();
 
-				text = HtmlUtil.escape(text);
 				text = HtmlUtil.stripComments(text);
 				text = HtmlUtil.stripHtml(text);
 				text = text.trim();
@@ -172,16 +171,6 @@ public class ContentTransformerListener extends BaseTransformerListener {
 						 text.startsWith("/image/journal/article?img_id")) {
 
 					dynamicContent.setText("@cdn_host@@root_path@" + text);
-				}
-				else {
-					String type = GetterUtil.getString(
-						el.attributeValue("type"));
-
-					if (type.equals("text_box")) {
-						text = text.replaceAll("\\n", "<br />");
-					}
-
-					dynamicContent.setText(text);
 				}
 			}
 

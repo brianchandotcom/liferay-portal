@@ -2185,7 +2185,7 @@
 	</library>
 	<library>
 		<file-name>portal/jodd.jar</file-name>
-		<version>3.3.3</version>
+		<version>3.3.4</version>
 		<project-name>Jodd</project-name>
 		<project-url>http://jodd.org</project-url>
 		<licenses>
@@ -2196,7 +2196,7 @@
 	</library>
 	<library>
 		<file-name>portal/jodd-wot.jar</file-name>
-		<version>3.3.3</version>
+		<version>3.3.4</version>
 		<project-name>Jodd</project-name>
 		<project-url>http://jodd.org</project-url>
 		<licenses>

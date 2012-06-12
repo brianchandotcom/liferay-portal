@@ -58,6 +58,10 @@ public class MultiVMKeyPoolPortalCache implements PortalCache {
 		return _localPortalCache.get(key);
 	}
 
+	public List getKeys() {
+		return _clusterPortalCache.getKeys();
+	}
+
 	public String getName() {
 		return _clusterPortalCache.getName();
 	}

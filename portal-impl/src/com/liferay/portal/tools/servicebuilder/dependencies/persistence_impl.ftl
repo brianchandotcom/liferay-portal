@@ -642,47 +642,52 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 						</#if>
 						) {
 
-						Object[] args = new Object[] {
-							<#list finderColsList as finderCol>
-								<#if finderCol.isPrimitiveType()>
-									${serviceBuilder.getPrimitiveObj("${finderCol.type}")}.valueOf(
-								</#if>
+						<#if !finder.hasDateComparator()>
+							Object[] args = new Object[] {
+								<#list finderColsList as finderCol>
+									<#if finderCol.isPrimitiveType()>
+										${serviceBuilder.getPrimitiveObj("${finderCol.type}")}.valueOf(
+									</#if>
 
-								${entity.varName}ModelImpl.getOriginal${finderCol.methodName}()
+									${entity.varName}ModelImpl.getOriginal${finderCol.methodName}()
 
-								<#if finderCol.isPrimitiveType()>
-									)
-								</#if>
+									<#if finderCol.isPrimitiveType()>
+										)
+									</#if>
 
-								<#if finderCol_has_next>
-									,
-								</#if>
-							</#list>
-						};
+									<#if finderCol_has_next>
+										,
+									</#if>
+								</#list>
+							};
 
-						FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_${finder.name?upper_case}, args);
-						FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_${finder.name?upper_case}, args);
+							FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_${finder.name?upper_case}, args);
+							FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_${finder.name?upper_case}, args);
 
-						args = new Object[] {
-							<#list finderColsList as finderCol>
-								<#if finderCol.isPrimitiveType()>
-									${serviceBuilder.getPrimitiveObj("${finderCol.type}")}.valueOf(
-								</#if>
+							args = new Object[] {
+								<#list finderColsList as finderCol>
+									<#if finderCol.isPrimitiveType()>
+										${serviceBuilder.getPrimitiveObj("${finderCol.type}")}.valueOf(
+									</#if>
 
-								${entity.varName}ModelImpl.get${finderCol.methodName}()
+									${entity.varName}ModelImpl.get${finderCol.methodName}()
 
-								<#if finderCol.isPrimitiveType()>
-									)
-								</#if>
+									<#if finderCol.isPrimitiveType()>
+										)
+									</#if>
 
-								<#if finderCol_has_next>
-									,
-								</#if>
-							</#list>
-						};
+									<#if finderCol_has_next>
+										,
+									</#if>
+								</#list>
+							};
 
-						FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_${finder.name?upper_case}, args);
-						FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_${finder.name?upper_case}, args);
+							FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_${finder.name?upper_case}, args);
+							FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_${finder.name?upper_case}, args);
+						<#else>
+							FinderCacheUtil.removeResults(FINDER_PATH_COUNT_BY_${finder.name?upper_case});
+							FinderCacheUtil.removeResults(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_${finder.name?upper_case});
+						</#if>
 					}
 				</#list>
 			}

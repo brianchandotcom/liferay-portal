@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.cache.CacheListener;
 import com.liferay.portal.kernel.cache.CacheListenerScope;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.io.Serializable;
 
@@ -60,6 +61,10 @@ public class MemoryPortalCache implements PortalCache {
 
 	public Object get(Serializable key) {
 		return _map.get(key);
+	}
+
+	public List getKeys() {
+		return ListUtil.fromMapKeys(_map);
 	}
 
 	public String getName() {

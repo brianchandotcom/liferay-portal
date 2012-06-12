@@ -434,21 +434,8 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 			if ((lockModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LTEXPIRATIONDATE.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						lockModelImpl.getOriginalExpirationDate()
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_LTEXPIRATIONDATE,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LTEXPIRATIONDATE,
-					args);
-
-				args = new Object[] { lockModelImpl.getExpirationDate() };
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_LTEXPIRATIONDATE,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LTEXPIRATIONDATE,
-					args);
+				FinderCacheUtil.removeResults(FINDER_PATH_COUNT_BY_LTEXPIRATIONDATE);
+				FinderCacheUtil.removeResults(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LTEXPIRATIONDATE);
 			}
 		}
 

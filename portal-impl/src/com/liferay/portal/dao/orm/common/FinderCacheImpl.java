@@ -188,6 +188,34 @@ public class FinderCacheImpl implements CacheRegistryItem, FinderCache {
 		portalCache.remove(cacheKey);
 	}
 
+	public void removeResults(FinderPath finderPath) {
+		if (!PropsValues.VALUE_OBJECT_FINDER_CACHE_ENABLED ||
+			!finderPath.isFinderCacheEnabled() ||
+			!CacheRegistryUtil.isActive()) {
+
+			return;
+		}
+
+		PortalCache portalCache = _getPortalCache(
+			finderPath.getCacheName(), true);
+
+		for (Object portalCacheKey : portalCache.getKeys()) {
+			String portalCacheKeyString = portalCacheKey.toString();
+
+			if (!portalCacheKeyString.contains(finderPath.getMethodName())) {
+				continue;
+			}
+
+			if (_localCacheAvailable) {
+				Map<Serializable, Object> localCache = _localCache.get();
+
+				localCache.remove(portalCacheKey);
+			}
+
+			portalCache.remove((Serializable)portalCacheKey);
+		}
+	}
+
 	public void setMultiVMPool(MultiVMPool multiVMPool) {
 		_multiVMPool = multiVMPool;
 	}

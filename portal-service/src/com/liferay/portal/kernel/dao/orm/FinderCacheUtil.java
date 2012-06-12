@@ -91,6 +91,10 @@ public class FinderCacheUtil {
 		getFinderCache().removeResult(finderPath, args);
 	}
 
+	public static void removeResults(FinderPath finderPath) {
+		getFinderCache().removeResults(finderPath);
+	}
+
 	public void setFinderCache(FinderCache finderCache) {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 

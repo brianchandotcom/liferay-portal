@@ -65,6 +65,10 @@ public class TransactionalPortalCache implements PortalCache {
 		return result;
 	}
 
+	public List getKeys() {
+		return _portalCache.getKeys();
+	}
+
 	public String getName() {
 		return _portalCache.getName();
 	}

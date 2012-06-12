@@ -208,6 +208,15 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 		}
 	}
 
+	public boolean hasDateComparator() {
+		if (_type.equals("Date") && !_comparator.equals("=")) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	@Override
 	public int hashCode() {
 		return _name.hashCode();

@@ -100,6 +100,16 @@ public class EntityFinder {
 		return Entity.hasColumn(name, _columns);
 	}
 
+	public boolean hasDateComparator() {
+		for (EntityColumn column : _columns) {
+			if (column.hasDateComparator()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	public boolean isCollection() {
 		if ((_returnType != null) && _returnType.equals("Collection")) {
 			return true;

@@ -67,6 +67,10 @@ public class EhcachePortalCache implements PortalCache {
 		}
 	}
 
+	public List getKeys() {
+		return _ehcache.getKeys();
+	}
+
 	public String getName() {
 		return _ehcache.getName();
 	}

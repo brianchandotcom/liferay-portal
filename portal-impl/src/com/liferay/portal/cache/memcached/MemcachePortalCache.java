@@ -120,6 +120,10 @@ public class MemcachePortalCache implements PortalCache {
 		return value;
 	}
 
+	public List getKeys() {
+		return null;
+	}
+
 	public String getName() {
 		return _name;
 	}

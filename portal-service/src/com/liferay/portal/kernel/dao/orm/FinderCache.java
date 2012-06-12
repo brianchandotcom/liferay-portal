@@ -36,4 +36,6 @@ public interface FinderCache {
 
 	public void removeResult(FinderPath finderPath, Object[] args);
 
+	public void removeResults(FinderPath finderPath);
+
 }

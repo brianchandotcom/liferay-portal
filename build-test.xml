@@ -874,6 +874,11 @@
 		</antcall>
 
 		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="permissions-cp-organizations" />
+			<param name="test.ant.script.suite" value="PermissionsCPOrganizationsTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="permissions-document-library" />
 			<param name="test.ant.script.suite" value="PermissionsDocumentLibraryTestSuite" />
 		</antcall>
@@ -886,11 +891,6 @@
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="permissions-message-boards" />
 			<param name="test.ant.script.suite" value="PermissionsMessageBoardsTestSuite" />
-		</antcall>
-
-		<antcall target="build-test-ant-script">
-			<param name="test.ant.script.command" value="permissions-cp-organizations" />
-			<param name="test.ant.script.suite" value="PermissionsCPOrganizationsTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">

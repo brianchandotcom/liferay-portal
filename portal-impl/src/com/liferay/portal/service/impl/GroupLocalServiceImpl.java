@@ -571,7 +571,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				RequiredGroupException.SYSTEM_GROUP);
 		}
 
-		if (groupPersistence.countByC_P(
+		if (groupPersistence.countByChildrenSites(
 				group.getCompanyId(), group.getGroupId()) > 0) {
 
 			throw new RequiredGroupException(

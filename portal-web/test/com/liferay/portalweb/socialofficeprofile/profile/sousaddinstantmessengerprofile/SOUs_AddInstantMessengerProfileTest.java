@@ -120,12 +120,12 @@ public class SOUs_AddInstantMessengerProfileTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("socialofficesn"),
 			selenium.getText(
 				"//div[@data-title='Instant Messenger']/ul/li[contains(.,'Jabber')]/span[2]"));
-		assertEquals(RuntimeVariables.replace("MSN"),
+		assertEquals(RuntimeVariables.replace("msn"),
 			selenium.getText(
-				"//div[@data-title='Instant Messenger']/ul/li[contains(.,'MSN')]/span"));
+				"//div[@data-title='Instant Messenger']/ul/li[contains(.,'msn')]/span"));
 		assertEquals(RuntimeVariables.replace("socialofficesn"),
 			selenium.getText(
-				"//div[@data-title='Instant Messenger']/ul/li[contains(.,'MSN')]/span[2]"));
+				"//div[@data-title='Instant Messenger']/ul/li[contains(.,'msn')]/span[2]"));
 		assertEquals(RuntimeVariables.replace("Skype"),
 			selenium.getText(
 				"//div[@data-title='Instant Messenger']/ul/li[contains(.,'Skype')]/span"));

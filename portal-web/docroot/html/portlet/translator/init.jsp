@@ -16,6 +16,7 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.translator.model.Translation" %>
+<%@ page import="com.liferay.portal.kernel.microsofttranslator.MicrosoftTranslatorException" %><%@
+page import="com.liferay.portlet.translator.model.Translation" %>
 
 <%@ include file="/html/portlet/translator/init-ext.jsp" %>

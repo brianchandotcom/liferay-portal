@@ -678,10 +678,6 @@ public class JournalArticleFinderImpl
 				sql, "description", StringPool.LIKE, false, descriptions);
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "content", StringPool.LIKE, false, contents);
-			sql = CustomSQLUtil.replaceKeywords(
-				sql, "structureId", StringPool.LIKE, false, structureIds);
-			sql = CustomSQLUtil.replaceKeywords(
-				sql, "templateId", StringPool.LIKE, false, templateIds);
 
 			if (status == WorkflowConstants.STATUS_ANY) {
 				sql = StringUtil.replace(
@@ -690,6 +686,24 @@ public class JournalArticleFinderImpl
 
 			if (Validator.isNull(type)) {
 				sql = StringUtil.replace(sql, _TYPE_SQL, StringPool.BLANK);
+			}
+
+			if (isArrayNull(structureIds)) {
+				sql = StringUtil.replace(
+					sql, _STRUCTURE_ID_SQL, StringPool.BLANK);
+			}
+			else {
+				sql = CustomSQLUtil.replaceKeywords(
+					sql, "structureId", StringPool.LIKE, false, structureIds);
+			}
+
+			if (isArrayNull(templateIds)) {
+				sql = StringUtil.replace(
+					sql, _TEMPLATE_ID_SQL, StringPool.BLANK);
+			}
+			else {
+				sql = CustomSQLUtil.replaceKeywords(
+					sql, "templateId", StringPool.LIKE, false, templateIds);
 			}
 
 			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
@@ -762,8 +776,15 @@ public class JournalArticleFinderImpl
 				qPos.add(type);
 			}
 
-			qPos.add(structureIds, 2);
-			qPos.add(templateIds, 2);
+			if (!isArrayNull(structureIds)) {
+				qPos.add(structureIds, 2);
+			}
+
+			if (!isArrayNull(templateIds)) {
+				qPos.add(templateIds, 2);
+			}
+
+			qPos.add(companyId);
 
 			Iterator<Long> itr = q.iterate();
 
@@ -837,10 +858,6 @@ public class JournalArticleFinderImpl
 				sql, "description", StringPool.LIKE, false, descriptions);
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "content", StringPool.LIKE, false, contents);
-			sql = CustomSQLUtil.replaceKeywords(
-				sql, "structureId", StringPool.LIKE, false, structureIds);
-			sql = CustomSQLUtil.replaceKeywords(
-				sql, "templateId", StringPool.LIKE, false, templateIds);
 
 			if (status == WorkflowConstants.STATUS_ANY) {
 				sql = StringUtil.replace(
@@ -849,6 +866,24 @@ public class JournalArticleFinderImpl
 
 			if (Validator.isNull(type)) {
 				sql = StringUtil.replace(sql, _TYPE_SQL, StringPool.BLANK);
+			}
+
+			if (isArrayNull(structureIds)) {
+				sql = StringUtil.replace(
+					sql, _STRUCTURE_ID_SQL, StringPool.BLANK);
+			}
+			else {
+				sql = CustomSQLUtil.replaceKeywords(
+					sql, "structureId", StringPool.LIKE, false, structureIds);
+			}
+
+			if (isArrayNull(templateIds)) {
+				sql = StringUtil.replace(
+					sql, _TEMPLATE_ID_SQL, StringPool.BLANK);
+			}
+			else {
+				sql = CustomSQLUtil.replaceKeywords(
+					sql, "templateId", StringPool.LIKE, false, templateIds);
 			}
 
 			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
@@ -923,8 +958,15 @@ public class JournalArticleFinderImpl
 				qPos.add(type);
 			}
 
-			qPos.add(structureIds, 2);
-			qPos.add(templateIds, 2);
+			if (!isArrayNull(structureIds)) {
+				qPos.add(structureIds, 2);
+			}
+
+			if (!isArrayNull(templateIds)) {
+				qPos.add(templateIds, 2);
+			}
+
+			qPos.add(companyId);
 
 			return (List<JournalArticle>)QueryUtil.list(
 				q, getDialect(), start, end);
@@ -976,6 +1018,26 @@ public class JournalArticleFinderImpl
 
 		return articles.get(0);
 	}
+
+	protected boolean isArrayNull(Object[] array) {
+		if (Validator.isNull(array)) {
+			return true;
+		}
+
+		for (Object obj : array) {
+			if (Validator.isNotNull(obj)) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	private static final String _STRUCTURE_ID_SQL =
+		"(structureId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]";
+
+	private static final String _TEMPLATE_ID_SQL =
+		"(templateId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]";
 
 	private static final String _TYPE_SQL =
 		"(type_ = ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]";

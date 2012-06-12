@@ -62,7 +62,8 @@
 			WHERE
 				(type_ = ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 				(structureId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-				(templateId LIKE ? [$AND_OR_NULL_CHECK$])
+				(templateId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+				(companyId = ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.findByExpirationDate">
@@ -142,7 +143,8 @@
 			WHERE
 				(type_ = ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 				(structureId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-				(templateId LIKE ? [$AND_OR_NULL_CHECK$])
+				(templateId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+				(companyId = ?)
 			ORDER BY
 				id_ ASC
 		]]>

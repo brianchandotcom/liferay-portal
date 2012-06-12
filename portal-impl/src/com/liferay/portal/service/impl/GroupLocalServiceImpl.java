@@ -244,7 +244,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			classPK = groupId;
 		}
 		else if (className.equals(Organization.class.getName())) {
-			name = getOrgGroupName(classPK, name);
+			name = getOrgGroupName(name);
 		}
 		else if (!GroupConstants.USER_PERSONAL_SITE.equals(name)) {
 			name = String.valueOf(classPK);
@@ -2052,7 +2052,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			Organization organization =
 				organizationPersistence.findByPrimaryKey(classPK);
 
-			name = getOrgGroupName(classPK, organization.getName());
+			name = getOrgGroupName(organization.getName());
 		}
 		else if (!GroupConstants.USER_PERSONAL_SITE.equals(name)) {
 			name = String.valueOf(classPK);
@@ -2345,8 +2345,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		return FriendlyURLNormalizerUtil.normalize(friendlyURL);
 	}
 
-	protected String getOrgGroupName(long classPK, String name) {
-		return classPK + _ORGANIZATION_NAME_DELIMETER + name;
+	protected String getOrgGroupName(String name) {
+		return name + _ORGANIZATION_NAME_SUFFIX;
 	}
 
 	protected String getRealName(long companyId, String name)
@@ -2653,7 +2653,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		if (Validator.isNull(name) || Validator.isNumber(name) ||
 			(name.indexOf(CharPool.STAR) != -1) ||
-			(name.indexOf(_ORGANIZATION_NAME_DELIMETER) != -1)) {
+			(name.indexOf(_ORGANIZATION_NAME_SUFFIX) != -1)) {
 
 			throw new GroupNameException();
 		}
@@ -2679,8 +2679,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 	protected File publicLARFile;
 
-	private static final String _ORGANIZATION_NAME_DELIMETER =
-		" LFR_ORGANIZATION ";
+	private static final String _ORGANIZATION_NAME_SUFFIX = " LFR_ORGANIZATION";
 
 	private static Log _log = LogFactoryUtil.getLog(
 		GroupLocalServiceImpl.class);

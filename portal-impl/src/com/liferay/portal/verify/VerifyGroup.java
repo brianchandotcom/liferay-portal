@@ -15,7 +15,9 @@
 package com.liferay.portal.verify;
 
 import com.liferay.portal.GroupFriendlyURLException;
+import com.liferay.portal.NoSuchOrganizationException;
 import com.liferay.portal.NoSuchShardException;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.shard.ShardUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -25,14 +27,20 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.LayoutSet;
+import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Shard;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.ShardLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.RobotsUtil;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import java.util.List;
 
@@ -45,6 +53,7 @@ public class VerifyGroup extends VerifyProcess {
 	protected void doVerify() throws Exception {
 		verifyCompanyGroups();
 		verifyNullFriendlyURLGroups();
+		verifyOrganizationNames();
 		verifyRobots();
 		verifyStagedGroups();
 	}
@@ -138,6 +147,42 @@ public class VerifyGroup extends VerifyProcess {
 		}
 	}
 
+	protected void verifyOrganizationNames() throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getConnection();
+
+			ps = con.prepareStatement(
+				"select groupId, classPK from Group_ where name like " +
+					"'%LFR_ORGANIZATION%' and name not like " +
+						"'%LFR_ORGANIZATION'");
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long groupId = rs.getLong("groupId");
+				long classPK = rs.getLong("classPK");
+
+				try {
+					Organization organization =
+						OrganizationLocalServiceUtil.getOrganization(classPK);
+
+					String name = organization.getName() + " LFR_ORGANIZATION";
+
+					updateOrganizationName(groupId, name);
+				}
+				catch (NoSuchOrganizationException nsoe) {
+				}
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
 	protected void verifyRobots() throws Exception {
 		List<Group> groups = GroupLocalServiceUtil.getLiveGroups();
 
@@ -187,6 +232,27 @@ public class VerifyGroup extends VerifyProcess {
 
 				GroupLocalServiceUtil.updateGroup(stagingGroup);
 			}
+		}
+	}
+
+	private void updateOrganizationName(long groupId, String name)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			con = DataAccess.getConnection();
+
+			ps = con.prepareStatement(
+				"update Group_ set name = ? where groupId= " + groupId);
+
+			ps.setString(1, name);
+
+			ps.executeUpdate();
+		}
+		finally {
+			DataAccess.cleanUp(con, ps);
 		}
 	}
 

@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
@@ -43,49 +42,16 @@ public class SharepointUtil {
 
 	public static final String VERSION = "6.0.2.8117";
 
-	public static void addBottom(StringBuilder sb) {
-		sb.append("</body>");
-		sb.append(StringPool.NEW_LINE);
-		sb.append("</html>");
-	}
-
-	public static void addTop(StringBuilder sb, String methodName) {
-		sb.append("<html><head><title>vermeer RPC packet</title></head>");
-		sb.append(StringPool.NEW_LINE);
-		sb.append("<body>");
-		sb.append(StringPool.NEW_LINE);
-
-		Property method = new Property("method", methodName + ":" + VERSION);
-
-		sb.append(method.parse());
-	}
-
 	public static long getGroupId(String path) {
 		long groupId = 0;
 
-		String[] pathArray = getPathArray(path);
+		long companyId = CompanyThreadLocal.getCompanyId();
 
-		String groupFolderName = pathArray[0];
-
-		if (groupFolderName != null) {
-			int pos = groupFolderName.lastIndexOf(CharPool.OPEN_BRACKET);
-
-			if (pos != -1) {
-				 groupId = GetterUtil.getLong(
-					groupFolderName.substring(
-						pos, groupFolderName.length() - 1));
-			}
-			else {
-				long companyId = CompanyThreadLocal.getCompanyId();
-
-				try {
-					groupId = WebDAVUtil.getGroupId(companyId, path);
-				}
-				catch (WebDAVException wde) {
-					_log.warn("Unable to get groupId for path " + path);
-				}
-			}
-
+		try {
+			groupId = WebDAVUtil.getGroupId(companyId, path);
+		}
+		catch (WebDAVException wde) {
+			_log.warn("Unable to get groupId for path " + path);
 		}
 
 		return groupId;
@@ -112,6 +78,11 @@ public class SharepointUtil {
 		}
 		else if (pathArray.length >= 2) {
 			storageClass = getStorageClass(pathArray[1]);
+		}
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"Storage class is for path " + path + " is " + storageClass);
 		}
 
 		return (SharepointStorage)InstancePool.get(storageClass);

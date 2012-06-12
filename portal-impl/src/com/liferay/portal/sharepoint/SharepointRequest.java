@@ -14,9 +14,18 @@
 
 package com.liferay.portal.sharepoint;
 
+import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.User;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,13 +43,16 @@ public class SharepointRequest {
 	}
 
 	public SharepointRequest(
-		HttpServletRequest request, HttpServletResponse response, User user) {
+			HttpServletRequest request, HttpServletResponse response, User user)
+		throws SharepointException {
 
 		_request = request;
 		_response = response;
 		_user = user;
 
 		_params.putAll(request.getParameterMap());
+
+		addParams();
 	}
 
 	public void addParam(String key, String value) {
@@ -100,6 +112,53 @@ public class SharepointRequest {
 
 	public void setSharepointStorage(SharepointStorage storage) {
 		_storage = storage;
+	}
+
+	protected void addParams() throws SharepointException {
+		String contentType = _request.getContentType();
+
+		if (!contentType.equals(SharepointUtil.VEERMER_URLENCODED)) {
+			return;
+		}
+
+		try {
+			InputStream is = _request.getInputStream();
+
+			UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+				new UnsyncByteArrayOutputStream();
+
+			StreamUtil.transfer(is, unsyncByteArrayOutputStream);
+
+			byte[] bytes = unsyncByteArrayOutputStream.toByteArray();
+
+			UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(
+					new InputStreamReader(new ByteArrayInputStream(bytes)));
+
+			String url = unsyncBufferedReader.readLine();
+
+			String[] params = url.split(StringPool.AMPERSAND);
+
+			for (String param : params) {
+				String[] kvp = param.split(StringPool.EQUAL);
+
+				String key = HttpUtil.decodeURL(kvp[0]);
+				String value = StringPool.BLANK;
+
+				if (kvp.length > 1) {
+					value = HttpUtil.decodeURL(kvp[1]);
+				}
+
+				addParam(key, value);
+			}
+
+			bytes = ArrayUtil.subset(bytes, url.length() + 1, bytes.length);
+
+			setBytes(bytes);
+		}
+		catch (Exception e) {
+			throw new SharepointException(e);
+		}
 	}
 
 	private byte[] _bytes;

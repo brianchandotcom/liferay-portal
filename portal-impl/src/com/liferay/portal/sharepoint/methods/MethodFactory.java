@@ -14,8 +14,6 @@
 
 package com.liferay.portal.sharepoint.methods;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.StringPool;
@@ -96,22 +94,11 @@ public class MethodFactory {
 
 		method = method.split(StringPool.COLON)[0];
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Get method " + method);
-		}
-
 		Method methodImpl = (Method)_methods.get(method);
 
 		if (methodImpl == null) {
 			throw new SharepointException(
 				"Method " + method + " is not implemented");
-		}
-		else {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Method " + method + " is mapped to " +
-						methodImpl.getClass().getName());
-			}
 		}
 
 		return methodImpl;
@@ -178,8 +165,6 @@ public class MethodFactory {
 		GetterUtil.getString(
 			PropsUtil.get(MethodFactory.class.getName() + ".URL_TO_WEB_URL"),
 			UrlToWebUrlMethodImpl.class.getName());
-
-	private static Log _log = LogFactoryUtil.getLog(MethodFactory.class);
 
 	private static MethodFactory _instance = new MethodFactory();
 

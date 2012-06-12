@@ -14,8 +14,11 @@
 
 package com.liferay.portal.sharepoint.methods;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.sharepoint.Property;
 import com.liferay.portal.sharepoint.ResponseElement;
 import com.liferay.portal.sharepoint.SharepointException;
 import com.liferay.portal.sharepoint.SharepointRequest;
@@ -48,20 +51,28 @@ public abstract class BaseMethodImpl implements Method {
 
 		ServletResponseUtil.write(
 			sharepointRequest.getHttpServletResponse(),
-			getResponseBuffer(sharepointRequest).toString());
+			getResponse(sharepointRequest, false));
 	}
 
 	protected abstract List<ResponseElement> getElements(
 			SharepointRequest sharepointRequest)
 		throws Exception;
 
-	protected StringBuilder getResponseBuffer(
-			SharepointRequest sharepointRequest)
+	protected String getResponse(
+			SharepointRequest sharepointRequest, boolean appendNewline)
 		throws Exception {
 
 		StringBuilder sb = new StringBuilder();
 
-		SharepointUtil.addTop(sb, getMethodName());
+		sb.append("<html><head><title>vermeer RPC packet</title></head>");
+		sb.append(StringPool.NEW_LINE);
+		sb.append("<body>");
+		sb.append(StringPool.NEW_LINE);
+
+		Property method = new Property(
+			"method", getMethodName() + ":" + SharepointUtil.VERSION);
+
+		sb.append(method.parse());
 
 		List<ResponseElement> elements = getElements(sharepointRequest);
 
@@ -69,9 +80,23 @@ public abstract class BaseMethodImpl implements Method {
 			sb.append(element.parse());
 		}
 
-		SharepointUtil.addBottom(sb);
+		sb.append("</body>");
+		sb.append(StringPool.NEW_LINE);
+		sb.append("</html>");
 
-		return sb;
+		if (appendNewline) {
+			sb.append(StringPool.NEW_LINE);
+		}
+
+		String html = sb.toString();
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Response HTML\n" + html);
+		}
+
+		return html;
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(BaseMethodImpl.class);
 
 }

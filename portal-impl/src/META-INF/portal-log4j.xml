@@ -363,7 +363,7 @@
 	</category>
 
 	<category name="com.liferay.portal.kernel.servlet.ServletResponseUtil">
-		<priority value="INFO" />
+		<priority value="ERROR" />
 	</category>
 
 	<category name="com.liferay.portal.lar">
@@ -714,6 +714,10 @@
 		<priority value="ERROR" />
 	</category>
 
+	<category name="com.liferay.portal.sharepoint">
+		<priority value="ERROR" />
+	</category>
+
 	<category name="com.liferay.portal.spring">
 		<priority value="ERROR" />
 	</category>
@@ -942,6 +946,10 @@
 		<priority value="ERROR" />
 	</category>
 
+	<category name="com.liferay.portlet.documentlibrary.sharepoint">
+		<priority value="WARN" />
+	</category>
+
 	<category name="com.liferay.portlet.documentlibrary.webdav">
 		<priority value="WARN" />
 	</category>
@@ -1068,14 +1076,6 @@
 
 	<category name="com.liferay.util.portlet.PortletRequestUtil">
 		<priority value="INFO" />
-	</category>
-
-	<category name="com.liferay.util.servlet.ServletRequestUtil">
-		<priority value="INFO" />
-	</category>
-
-	<category name="com.liferay.util.servlet.ServletResponseUtil">
-		<priority value="ERROR" />
 	</category>
 
 	<category name="com.mchange">

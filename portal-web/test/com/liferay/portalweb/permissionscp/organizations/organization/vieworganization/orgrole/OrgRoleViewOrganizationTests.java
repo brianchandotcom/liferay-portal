@@ -54,6 +54,12 @@ public class OrgRoleViewOrganizationTests extends BaseTestSuite {
 		testSuite.addTestSuite(User_ViewOrganizationTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(SignInTest.class);
+		testSuite.addTestSuite(RemoveOrgRoleOrganizationsManageUsersTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(User_SignInTest.class);
+		testSuite.addTestSuite(User_ViewOrganizationNoTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(SignInTest.class);
 		testSuite.addTestSuite(TearDownRoleTest.class);
 		testSuite.addTestSuite(TearDownOrganizationTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);

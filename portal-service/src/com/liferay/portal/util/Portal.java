@@ -923,6 +923,10 @@ public interface Portal {
 
 	public String[] getSystemSiteRoles();
 
+	public String getUniqueId(HttpServletRequest request, String id);
+
+	public String getUniqueId(PortletRequest request, String id);
+
 	public UploadPortletRequest getUploadPortletRequest(
 		PortletRequest portletRequest);
 

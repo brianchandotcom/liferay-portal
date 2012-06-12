@@ -242,7 +242,7 @@ public interface GroupPersistence extends BasePersistence<Group> {
 	* @return the matching groups
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portal.model.Group> findByC_P(
+	public java.util.List<com.liferay.portal.model.Group> findByChildrenSites(
 		long companyId, long parentGroupId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -260,7 +260,7 @@ public interface GroupPersistence extends BasePersistence<Group> {
 	* @return the range of matching groups
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portal.model.Group> findByC_P(
+	public java.util.List<com.liferay.portal.model.Group> findByChildrenSites(
 		long companyId, long parentGroupId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -279,7 +279,7 @@ public interface GroupPersistence extends BasePersistence<Group> {
 	* @return the ordered range of matching groups
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portal.model.Group> findByC_P(
+	public java.util.List<com.liferay.portal.model.Group> findByChildrenSites(
 		long companyId, long parentGroupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -298,8 +298,8 @@ public interface GroupPersistence extends BasePersistence<Group> {
 	* @throws com.liferay.portal.NoSuchGroupException if a matching group could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portal.model.Group findByC_P_First(long companyId,
-		long parentGroupId,
+	public com.liferay.portal.model.Group findByChildrenSites_First(
+		long companyId, long parentGroupId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchGroupException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -318,8 +318,8 @@ public interface GroupPersistence extends BasePersistence<Group> {
 	* @throws com.liferay.portal.NoSuchGroupException if a matching group could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portal.model.Group findByC_P_Last(long companyId,
-		long parentGroupId,
+	public com.liferay.portal.model.Group findByChildrenSites_Last(
+		long companyId, long parentGroupId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchGroupException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -339,7 +339,7 @@ public interface GroupPersistence extends BasePersistence<Group> {
 	* @throws com.liferay.portal.NoSuchGroupException if a group with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portal.model.Group[] findByC_P_PrevAndNext(
+	public com.liferay.portal.model.Group[] findByChildrenSites_PrevAndNext(
 		long groupId, long companyId, long parentGroupId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchGroupException,
@@ -733,7 +733,7 @@ public interface GroupPersistence extends BasePersistence<Group> {
 	* @param parentGroupId the parent group ID
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByC_P(long companyId, long parentGroupId)
+	public void removeByChildrenSites(long companyId, long parentGroupId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -851,7 +851,7 @@ public interface GroupPersistence extends BasePersistence<Group> {
 	* @return the number of matching groups
 	* @throws SystemException if a system exception occurred
 	*/
-	public int countByC_P(long companyId, long parentGroupId)
+	public int countByChildrenSites(long companyId, long parentGroupId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

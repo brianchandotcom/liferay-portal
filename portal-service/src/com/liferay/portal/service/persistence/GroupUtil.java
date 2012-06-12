@@ -356,10 +356,10 @@ public class GroupUtil {
 	* @return the matching groups
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portal.model.Group> findByC_P(
+	public static java.util.List<com.liferay.portal.model.Group> findByChildrenSites(
 		long companyId, long parentGroupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByC_P(companyId, parentGroupId);
+		return getPersistence().findByChildrenSites(companyId, parentGroupId);
 	}
 
 	/**
@@ -376,10 +376,11 @@ public class GroupUtil {
 	* @return the range of matching groups
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portal.model.Group> findByC_P(
+	public static java.util.List<com.liferay.portal.model.Group> findByChildrenSites(
 		long companyId, long parentGroupId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByC_P(companyId, parentGroupId, start, end);
+		return getPersistence()
+				   .findByChildrenSites(companyId, parentGroupId, start, end);
 	}
 
 	/**
@@ -397,12 +398,12 @@ public class GroupUtil {
 	* @return the ordered range of matching groups
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portal.model.Group> findByC_P(
+	public static java.util.List<com.liferay.portal.model.Group> findByChildrenSites(
 		long companyId, long parentGroupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .findByC_P(companyId, parentGroupId, start, end,
+				   .findByChildrenSites(companyId, parentGroupId, start, end,
 			orderByComparator);
 	}
 
@@ -420,13 +421,14 @@ public class GroupUtil {
 	* @throws com.liferay.portal.NoSuchGroupException if a matching group could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.Group findByC_P_First(
+	public static com.liferay.portal.model.Group findByChildrenSites_First(
 		long companyId, long parentGroupId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchGroupException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .findByC_P_First(companyId, parentGroupId, orderByComparator);
+				   .findByChildrenSites_First(companyId, parentGroupId,
+			orderByComparator);
 	}
 
 	/**
@@ -443,13 +445,14 @@ public class GroupUtil {
 	* @throws com.liferay.portal.NoSuchGroupException if a matching group could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.Group findByC_P_Last(
+	public static com.liferay.portal.model.Group findByChildrenSites_Last(
 		long companyId, long parentGroupId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchGroupException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .findByC_P_Last(companyId, parentGroupId, orderByComparator);
+				   .findByChildrenSites_Last(companyId, parentGroupId,
+			orderByComparator);
 	}
 
 	/**
@@ -467,14 +470,14 @@ public class GroupUtil {
 	* @throws com.liferay.portal.NoSuchGroupException if a group with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.Group[] findByC_P_PrevAndNext(
+	public static com.liferay.portal.model.Group[] findByChildrenSites_PrevAndNext(
 		long groupId, long companyId, long parentGroupId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.NoSuchGroupException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .findByC_P_PrevAndNext(groupId, companyId, parentGroupId,
-			orderByComparator);
+				   .findByChildrenSites_PrevAndNext(groupId, companyId,
+			parentGroupId, orderByComparator);
 	}
 
 	/**
@@ -931,9 +934,9 @@ public class GroupUtil {
 	* @param parentGroupId the parent group ID
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByC_P(long companyId, long parentGroupId)
+	public static void removeByChildrenSites(long companyId, long parentGroupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByC_P(companyId, parentGroupId);
+		getPersistence().removeByChildrenSites(companyId, parentGroupId);
 	}
 
 	/**
@@ -1071,9 +1074,9 @@ public class GroupUtil {
 	* @return the number of matching groups
 	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByC_P(long companyId, long parentGroupId)
+	public static int countByChildrenSites(long companyId, long parentGroupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByC_P(companyId, parentGroupId);
+		return getPersistence().countByChildrenSites(companyId, parentGroupId);
 	}
 
 	/**

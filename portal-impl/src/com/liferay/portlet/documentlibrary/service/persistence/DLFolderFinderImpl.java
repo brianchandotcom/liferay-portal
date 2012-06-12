@@ -638,6 +638,8 @@ public class DLFolderFinderImpl
 			}
 			else {
 				sql = CustomSQLUtil.get(FIND_FE_BY_G_F_S);
+
+				sql = replaceExcludeStatus(sql, queryDefinition);
 			}
 
 			if (inlineSQLHelper) {

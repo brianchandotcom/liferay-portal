@@ -17,8 +17,6 @@
 <%@ include file="/html/portlet/message_boards/init.jsp" %>
 
 <%
-themeDisplay.setIncludeServiceJs(true);
-
 MBMessageDisplay messageDisplay = (MBMessageDisplay)request.getAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE);
 
 MBMessage message = messageDisplay.getMessage();
@@ -106,7 +104,8 @@ MBThread thread = messageDisplay.getThread();
 		function(messageId) {
 			var A = AUI();
 
-			Liferay.Service.MB.MBMessage.updateAnswer(
+			Liferay.Service(
+				'/mbmessage/update-answer',
 				{
 					messageId: messageId,
 					answer: true,
@@ -159,7 +158,8 @@ MBThread thread = messageDisplay.getThread();
 		function(messageId) {
 			var A = AUI();
 
-			Liferay.Service.MB.MBMessage.updateAnswer(
+			Liferay.Service(
+				'/mbmessage/update-answer',
 				{
 					messageId: messageId,
 					answer: false,

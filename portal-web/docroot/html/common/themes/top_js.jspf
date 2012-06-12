@@ -346,10 +346,6 @@
 	</c:otherwise>
 </c:choose>
 
-<c:if test="<%= themeDisplay.isIncludeServiceJs() %>">
-	<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + themeDisplay.getPathJavaScript() + "/liferay/service.js", javaScriptLastModified)) %>" type="text/javascript"></script>
-</c:if>
-
 <script type="text/javascript">
 	// <![CDATA[
 		<c:if test="<%= (layoutTypePortlet != null) %>">

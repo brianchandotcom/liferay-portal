@@ -86,7 +86,13 @@ hasResults = hasResults || (total > 0);
 		function(entry, entryId) {
 			var A = AUI();
 
-			Liferay.Service.Announcements.AnnouncementsFlag.addFlag({entryId : entryId, flag: <%= AnnouncementsFlagConstants.HIDDEN %>});
+			Liferay.Service(
+				'/announcementsflag/add-flag',
+				{
+					entryId : entryId,
+					value: <%= AnnouncementsFlagConstants.HIDDEN %>
+				}
+			);
 
 			Liferay.Portlet.refresh('#p_p_id<portlet:namespace />');
 		},

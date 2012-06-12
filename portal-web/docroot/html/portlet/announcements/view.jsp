@@ -17,8 +17,6 @@
 <%@ include file="/html/portlet/announcements/init.jsp" %>
 
 <%
-themeDisplay.setIncludeServiceJs(true);
-
 String tabs1 = ParamUtil.getString(request, "tabs1", "entries");
 
 PortletURL portletURL = renderResponse.createRenderURL();

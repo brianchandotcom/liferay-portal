@@ -273,7 +273,8 @@ AUI.add(
 
 						groupIds.push(themeDisplay.getCompanyGroupId());
 
-						Liferay.Service.Asset.AssetTag.getGroupsTags(
+						Liferay.Service(
+							'/assettag/get-groups-tags',
 							{
 								groupIds: groupIds
 							},
@@ -284,7 +285,7 @@ AUI.add(
 					_getTagsDataSource: function() {
 						var instance = this;
 
-						var AssetTagSearch = Liferay.Service.Asset.AssetTag.search;
+						var AssetTagSearch = Liferay.Service.bind('/assettag/search');
 
 						AssetTagSearch._serviceQueryCache = {};
 
@@ -307,8 +308,8 @@ AUI.add(
 											serviceQueryObj = {
 												groupId: themeDisplay.getParentGroupId(),
 												name: '%' + term + '%',
-												properties: STR_BLANK,
-												begin: 0,
+												tagProperties: STR_BLANK,
+												start: 0,
 												end: 20
 											};
 

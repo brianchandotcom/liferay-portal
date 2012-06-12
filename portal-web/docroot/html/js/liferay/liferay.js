@@ -3,7 +3,11 @@ Liferay = window.Liferay || {};
 ;(function(A, Liferay) {
 	var Lang = A.Lang;
 
+	var owns = A.Object.owns;
+
 	var CONTEXT = themeDisplay.getPathContext();
+
+	var PREFIX_PARAM_NULL_VALUE = '-';
 
 	var REGEX_SELECTOR_ID = /^#/;
 
@@ -66,7 +70,7 @@ Liferay = window.Liferay || {};
 				}
 
 				for (var i in serviceConfig) {
-					if (A.Object.owns(serviceConfig, i)) {
+					if (owns(serviceConfig, i)) {
 						service = i;
 						serviceData = serviceConfig[i];
 
@@ -157,6 +161,21 @@ Liferay = window.Liferay || {};
 
 		config.method = method;
 
+		var prefixedData = {};
+
+		A.Object.each(
+			config.data,
+			function(item, index, collection) {
+				if (Lang.isNull(item) && index.charAt(0) != PREFIX_PARAM_NULL_VALUE) {
+					index = PREFIX_PARAM_NULL_VALUE + index;
+				}
+
+				prefixedData[index] = item;
+			}
+		);
+
+		config.data = prefixedData;
+
 		return Service._ioRequest(url, config);
 	};
 
@@ -210,6 +229,16 @@ Liferay = window.Liferay || {};
 				if (xHR) {
 					return eval('(' + xHR.responseText + ')');
 				}
+			},
+
+			bind: function() {
+				var instance = this;
+
+				var args = A.Array(arguments, 0, true);
+
+				args.unshift(Liferay.Service, Liferay);
+
+				return A.bind.apply(A, args);
 			},
 
 			getParameters: function(options) {
@@ -304,6 +333,12 @@ Liferay = window.Liferay || {};
 			_ioRequest: function(uri, config) {
 				var instance = this;
 
+				var data = config.data;
+
+				if (!A.Object.owns(data, 'p_auth')) {
+					data.p_auth = Liferay.authToken;
+				}
+
 				if (A.io && A.io.request) {
 					A.io.request(uri, config);
 				}
@@ -316,7 +351,8 @@ Liferay = window.Liferay || {};
 					);
 				}
 			}
-		}
+		},
+		true
 	);
 
 	A.each(

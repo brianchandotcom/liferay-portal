@@ -200,10 +200,10 @@ public class LangBuilder {
 			translationId = "en_pt";
 		}
 		else if (translationId.equals("en_zh_CN")) {
-			translationId = "en_zh-CHS";
+			translationId = "en_zh";
 		}
 		else if (translationId.equals("en_zh_TW")) {
-			translationId = "en_zh-CHT";
+			translationId = "en_zt";
 		}
 		else if (translationId.equals("en_hi_IN")) {
 			translationId = "en_hi";

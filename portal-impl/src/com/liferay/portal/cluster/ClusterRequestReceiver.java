@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 
 import java.io.Serializable;
 
@@ -206,16 +207,15 @@ public class ClusterRequestReceiver extends BaseReceiver {
 			}
 		}
 
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+		ClassLoader contextClassLoader =
+			PACLClassLoaderUtil.getContextClassLoader();
 
 		try {
 			ClassLoader classLoader =
 				(ClassLoader)PortletBeanLocatorUtil.locate(
 					servletContextName, "portletClassLoader");
 
-			currentThread.setContextClassLoader(classLoader);
+			PACLClassLoaderUtil.setContextClassLoader(classLoader);
 
 			if (Validator.isNull(beanIdentifier)) {
 				return methodHandler.invoke(true);
@@ -228,7 +228,7 @@ public class ClusterRequestReceiver extends BaseReceiver {
 			}
 		}
 		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
+			PACLClassLoaderUtil.setContextClassLoader(contextClassLoader);
 		}
 	}
 

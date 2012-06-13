@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.log.LogUtil;
 import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletBagPool;
-import com.liferay.portal.kernel.servlet.DirectRequestDispatcherUtil;
+import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.servlet.TrackedServletRequest;
 import com.liferay.portal.kernel.servlet.taglib.FileAvailabilityUtil;
@@ -281,7 +281,7 @@ public class IncludeTag extends AttributesTagSupport {
 
 	protected void include(String page) throws Exception {
 		RequestDispatcher requestDispatcher =
-			DirectRequestDispatcherUtil.getRequestDispatcher(
+			DirectRequestDispatcherFactoryUtil.getRequestDispatcher(
 				servletContext, page);
 
 		request.setAttribute(

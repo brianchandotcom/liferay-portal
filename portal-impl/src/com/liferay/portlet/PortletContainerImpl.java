@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.portlet.PortletContainer;
 import com.liferay.portal.kernel.portlet.PortletContainerException;
 import com.liferay.portal.kernel.portlet.PortletModeFactory;
 import com.liferay.portal.kernel.portlet.WindowStateFactory;
-import com.liferay.portal.kernel.servlet.DirectRequestDispatcherUtil;
+import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.StringServletResponse;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
@@ -731,7 +731,8 @@ public class PortletContainerImpl implements PortletContainer {
 		}
 
 		RequestDispatcher requestDispatcher =
-			DirectRequestDispatcherUtil.getRequestDispatcher(request, path);
+			DirectRequestDispatcherFactoryUtil.getRequestDispatcher(
+				request, path);
 
 		StringServletResponse stringServletResponse = null;
 

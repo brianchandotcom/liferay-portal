@@ -12,13 +12,21 @@
  * details.
  */
 
-package com.liferay.portal.kernel.template;
+package com.liferay.portal.kernel.servlet;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletRequest;
 
 /**
- * @author Tina Tian
+ * @author Raymond Augé
  */
-public enum TemplateContextType {
+public interface DirectRequestDispatcherFactory {
 
-	CLASSLOADER, EMPTY, RESTRICTED, STANDARD,
+	public RequestDispatcher getRequestDispatcher(
+		ServletContext servletContext, String path);
+
+	public RequestDispatcher getRequestDispatcher(
+		ServletRequest servletRequest, String path);
 
 }

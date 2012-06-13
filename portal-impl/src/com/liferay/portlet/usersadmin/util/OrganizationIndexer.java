@@ -31,9 +31,9 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Organization;
+import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
@@ -291,7 +291,7 @@ public class OrganizationIndexer extends BaseIndexer {
 
 	protected void reindexOrganizations(long companyId) throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			Organization.class, PortalClassLoaderUtil.getClassLoader());
+			Organization.class, PACLClassLoaderUtil.getPortalClassLoader());
 
 		Projection minOrganizationIdProjection = ProjectionFactoryUtil.min(
 			"organizationId");
@@ -338,7 +338,7 @@ public class OrganizationIndexer extends BaseIndexer {
 		throws Exception {
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			Organization.class, PortalClassLoaderUtil.getClassLoader());
+			Organization.class, PACLClassLoaderUtil.getPortalClassLoader());
 
 		Property property = PropertyFactoryUtil.forName("organizationId");
 

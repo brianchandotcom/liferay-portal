@@ -16,8 +16,8 @@ package com.liferay.portal.spring.transaction;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.SortedProperties;
+import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -42,7 +42,7 @@ public class TransactionManagerFactory {
 			DataSource dataSource, SessionFactory sessionFactory)
 		throws Exception {
 
-		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
+		ClassLoader classLoader = PACLClassLoaderUtil.getPortalClassLoader();
 
 		AbstractPlatformTransactionManager abstractPlatformTransactionManager =
 			(AbstractPlatformTransactionManager)classLoader.loadClass(

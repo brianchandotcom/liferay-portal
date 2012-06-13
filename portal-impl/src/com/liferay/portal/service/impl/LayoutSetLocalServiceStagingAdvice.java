@@ -17,7 +17,6 @@ package com.liferay.portal.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.staging.LayoutStagingUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
@@ -26,6 +25,7 @@ import com.liferay.portal.model.LayoutSetBranch;
 import com.liferay.portal.model.LayoutSetStagingHandler;
 import com.liferay.portal.model.impl.ColorSchemeImpl;
 import com.liferay.portal.model.impl.ThemeImpl;
+import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 
 import java.io.InputStream;
 
@@ -305,7 +305,7 @@ public class LayoutSetLocalServiceStagingAdvice
 		}
 
 		return (LayoutSet)ProxyUtil.newProxyInstance(
-			PortalClassLoaderUtil.getClassLoader(),
+			PACLClassLoaderUtil.getPortalClassLoader(),
 			new Class[] {LayoutSet.class},
 			new LayoutSetStagingHandler(layoutSet));
 	}

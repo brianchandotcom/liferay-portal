@@ -32,11 +32,11 @@ import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.softwarecatalog.model.SCProductEntry;
@@ -223,7 +223,7 @@ public class SCIndexer extends BaseIndexer {
 
 	protected void reindexProductEntries(long companyId) throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			SCProductEntry.class, PortalClassLoaderUtil.getClassLoader());
+			SCProductEntry.class, PACLClassLoaderUtil.getPortalClassLoader());
 
 		Projection minProductEntryIdProjection = ProjectionFactoryUtil.min(
 			"productEntryId");
@@ -270,7 +270,7 @@ public class SCIndexer extends BaseIndexer {
 		throws Exception {
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			SCProductEntry.class, PortalClassLoaderUtil.getClassLoader());
+			SCProductEntry.class, PACLClassLoaderUtil.getPortalClassLoader());
 
 		Property property = PropertyFactoryUtil.forName("productEntryId");
 

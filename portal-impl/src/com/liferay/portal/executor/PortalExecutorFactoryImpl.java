@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 import com.liferay.portal.kernel.concurrent.ThreadPoolHandler;
 import com.liferay.portal.kernel.executor.PortalExecutorFactory;
 import com.liferay.portal.kernel.util.NamedThreadFactory;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
@@ -71,7 +71,7 @@ public class PortalExecutorFactoryImpl implements PortalExecutorFactory {
 	public ThreadPoolExecutor createPortalExecutor(String executorName) {
 		ThreadFactory threadFactory = new NamedThreadFactory(
 			executorName, Thread.NORM_PRIORITY,
-			PortalClassLoaderUtil.getClassLoader());
+			PACLClassLoaderUtil.getPortalClassLoader());
 
 		return new ThreadPoolExecutor(
 			_corePoolSize, _maxPoolSize, _keepAliveTime, _timeUnit,

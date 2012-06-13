@@ -28,8 +28,6 @@ import com.liferay.portal.util.WebKeys;
 
 import freemarker.ext.beans.BeansWrapper;
 
-import freemarker.template.utility.ObjectConstructor;
-
 import java.util.Map;
 import java.util.Set;
 
@@ -52,7 +50,7 @@ public class FreeMarkerTemplateContextHelper extends TemplateContextHelper {
 
 		// Object util
 
-		helperUtilities.put("objectUtil", new ObjectConstructor());
+		helperUtilities.put("objectUtil", new LiferayObjectConstructor());
 
 		// Portlet preferences
 

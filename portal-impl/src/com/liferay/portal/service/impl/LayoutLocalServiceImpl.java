@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -68,6 +67,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.impl.LayoutImpl;
 import com.liferay.portal.model.impl.PortletPreferencesImpl;
+import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.LayoutLocalServiceBaseImpl;
 import com.liferay.portal.util.PortalUtil;
@@ -2148,13 +2148,13 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		DynamicQuery portletPreferencesDynamicQuery =
 			DynamicQueryFactoryUtil.forClass(
 				PortletPreferences.class, PortletPreferencesImpl.TABLE_NAME,
-				PortalClassLoaderUtil.getClassLoader());
+				PACLClassLoaderUtil.getPortalClassLoader());
 
 		Property plidProperty = PropertyFactoryUtil.forName("plid");
 
 		DynamicQuery layoutDynamicQuery = DynamicQueryFactoryUtil.forClass(
 			Layout.class, LayoutImpl.TABLE_NAME,
-			PortalClassLoaderUtil.getClassLoader());
+			PACLClassLoaderUtil.getPortalClassLoader());
 
 		Projection plidProjection = ProjectionFactoryUtil.property("plid");
 

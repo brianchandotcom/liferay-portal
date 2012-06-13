@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.pacl;
 
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 
 /**
@@ -46,6 +47,21 @@ public class PACLClassLoaderUtil {
 			Thread thread = Thread.currentThread();
 
 			return thread.getContextClassLoader();
+		}
+		finally {
+			PortalSecurityManagerThreadLocal.setCheckGetClassLoader(
+				checkGetClassLoader);
+		}
+	}
+
+	public static ClassLoader getPortalClassLoader() {
+		boolean checkGetClassLoader =
+			PortalSecurityManagerThreadLocal.isCheckGetClassLoader();
+
+		try {
+			PortalSecurityManagerThreadLocal.setCheckGetClassLoader(false);
+
+			return PortalClassLoaderUtil.getClassLoader();
 		}
 		finally {
 			PortalSecurityManagerThreadLocal.setCheckGetClassLoader(

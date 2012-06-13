@@ -20,7 +20,6 @@ import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 import com.liferay.portal.service.persistence.GroupPersistenceImpl;
 import com.liferay.portal.service.persistence.UserPersistenceImpl;
 
-import java.lang.Object;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -56,23 +55,6 @@ public class PACLBeanHandler implements InvocationHandler {
 	protected Object doInvoke(Object proxy, Method method, Object[] arguments)
 		throws Throwable {
 
-		if (method.getDeclaringClass() == Object.class) {
-			String methodName = method.getName();
-
-			if (methodName.equals("equals")) {
-				if (proxy == arguments[0]) {
-					return true;
-				}
-				else {
-					return false;
-				}
-			}
-		}
-
-		if (!PACLPolicyManager.isActive()) {
-			return method.invoke(_bean, arguments);
-		}
-
 		boolean debug = false;
 
 		if (_log.isDebugEnabled()) {
@@ -88,6 +70,26 @@ public class PACLBeanHandler implements InvocationHandler {
 				_log.debug(
 					"Intercepting " + className + "#" + method.getName());
 			}
+		}
+
+		if (method.getDeclaringClass() == Object.class) {
+			String methodName = method.getName();
+
+			if (methodName.equals("equals")) {
+				if (proxy == arguments[0]) {
+					return true;
+				}
+				else {
+					return false;
+				}
+			}
+			else if (methodName.equals("toString")) {
+				return method.invoke(_bean, arguments);
+			}
+		}
+
+		if (!PACLPolicyManager.isActive()) {
+			return method.invoke(_bean, arguments);
 		}
 
 		PACLPolicy paclPolicy = PACLClassUtil.getPACLPolicy(false, debug);
@@ -113,7 +115,8 @@ public class PACLBeanHandler implements InvocationHandler {
 		try {
 			Class<?> beanClass = _bean.getClass();
 
-			if (paclPolicy.getClassLoader() != beanClass.getClassLoader()) {
+			if (paclPolicy.getClassLoader() !=
+					PACLClassLoaderUtil.getClassLoader(beanClass)) {
 
 				// Disable the portal security manager so that PACLDataSource
 				// does not try to check access to tables that can be accessed

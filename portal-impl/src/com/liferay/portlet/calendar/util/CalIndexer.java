@@ -29,9 +29,9 @@ import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.calendar.model.CalEvent;
 import com.liferay.portlet.calendar.service.CalEventLocalServiceUtil;
@@ -145,7 +145,7 @@ public class CalIndexer extends BaseIndexer {
 
 	protected void reindexEvents(long companyId) throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			CalEvent.class, PortalClassLoaderUtil.getClassLoader());
+			CalEvent.class, PACLClassLoaderUtil.getPortalClassLoader());
 
 		Projection minEventIdProjection = ProjectionFactoryUtil.min("eventId");
 		Projection maxEventIdProjection = ProjectionFactoryUtil.max("eventId");
@@ -187,7 +187,7 @@ public class CalIndexer extends BaseIndexer {
 		throws Exception {
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			CalEvent.class, PortalClassLoaderUtil.getClassLoader());
+			CalEvent.class, PACLClassLoaderUtil.getPortalClassLoader());
 
 		Property property = PropertyFactoryUtil.forName("eventId");
 

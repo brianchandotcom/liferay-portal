@@ -29,6 +29,8 @@ public interface TemplateManager {
 
 	public void destroy();
 
+	public void destroy(ClassLoader classLoader);
+
 	public Template getTemplate(
 		String templateId, String templateContent, String errorTemplateId,
 		String errorTemplateContent, TemplateContextType templateContextType);

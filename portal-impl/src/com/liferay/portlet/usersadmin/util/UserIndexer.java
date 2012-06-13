@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Contact;
@@ -42,6 +41,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.ContactImpl;
 import com.liferay.portal.security.auth.FullNameGenerator;
 import com.liferay.portal.security.auth.FullNameGeneratorFactory;
+import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortletKeys;
@@ -420,7 +420,7 @@ public class UserIndexer extends BaseIndexer {
 
 	protected void reindexUsers(long companyId) throws Exception {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			User.class, PortalClassLoaderUtil.getClassLoader());
+			User.class, PACLClassLoaderUtil.getPortalClassLoader());
 
 		Projection minUserIdProjection = ProjectionFactoryUtil.min("userId");
 		Projection maxUserIdProjection = ProjectionFactoryUtil.max("userId");
@@ -462,7 +462,7 @@ public class UserIndexer extends BaseIndexer {
 		throws Exception {
 
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			User.class, PortalClassLoaderUtil.getClassLoader());
+			User.class, PACLClassLoaderUtil.getPortalClassLoader());
 
 		Property property = PropertyFactoryUtil.forName("userId");
 

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.servlet.PluginContextListener;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
@@ -64,18 +65,18 @@ public class JSONServlet extends HttpServlet {
 				_jsonAction.execute(null, null, request, response);
 			}
 			else {
-				Thread currentThread = Thread.currentThread();
-
 				ClassLoader contextClassLoader =
-					currentThread.getContextClassLoader();
+					PACLClassLoaderUtil.getContextClassLoader();
 
 				try {
-					currentThread.setContextClassLoader(_pluginClassLoader);
+					PACLClassLoaderUtil.setContextClassLoader(
+						_pluginClassLoader);
 
 					_jsonAction.execute(null, null, request, response);
 				}
 				finally {
-					currentThread.setContextClassLoader(contextClassLoader);
+					PACLClassLoaderUtil.setContextClassLoader(
+						contextClassLoader);
 				}
 			}
 		}

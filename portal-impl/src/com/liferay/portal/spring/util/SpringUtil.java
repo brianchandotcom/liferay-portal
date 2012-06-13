@@ -18,8 +18,8 @@ import com.liferay.portal.bean.BeanLocatorImpl;
 import com.liferay.portal.kernel.bean.BeanLocator;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.spring.context.ArrayApplicationContext;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -72,7 +72,7 @@ public class SpringUtil {
 				configLocations.toArray(new String[configLocations.size()]));
 
 		BeanLocator beanLocator = new BeanLocatorImpl(
-			PortalClassLoaderUtil.getClassLoader(), applicationContext);
+			PACLClassLoaderUtil.getPortalClassLoader(), applicationContext);
 
 		PortalBeanLocatorUtil.setBeanLocator(beanLocator);
 	}

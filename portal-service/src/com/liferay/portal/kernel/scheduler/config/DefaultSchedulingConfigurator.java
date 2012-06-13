@@ -18,7 +18,7 @@ package com.liferay.portal.kernel.scheduler.config;
  * @author Shuyang Zhou
  */
 public class DefaultSchedulingConfigurator
-	extends AbstractSchedulingConfigurator{
+	extends AbstractSchedulingConfigurator {
 
 	@Override
 	protected ClassLoader getOperatingClassloader() {

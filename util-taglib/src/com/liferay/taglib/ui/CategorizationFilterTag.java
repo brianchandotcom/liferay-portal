@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Julio Camarero
  */
-public class CategorizationFilterTag extends IncludeTag{
+public class CategorizationFilterTag extends IncludeTag {
 
 	public void setAssetType(String assetType) {
 		_assetType = assetType;

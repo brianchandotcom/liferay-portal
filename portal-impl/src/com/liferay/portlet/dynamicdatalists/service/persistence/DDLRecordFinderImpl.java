@@ -51,7 +51,7 @@ public class DDLRecordFinderImpl extends BasePersistenceImpl<DDLRecord>
 	public static final String FIND_BY_C_S_S =
 		DDLRecordFinder.class.getName() + ".findByC_S_S";
 
-	public int countByR_S(long recordSetId, int status) throws SystemException{
+	public int countByR_S(long recordSetId, int status) throws SystemException {
 		Session session = null;
 
 		try {
@@ -97,7 +97,7 @@ public class DDLRecordFinderImpl extends BasePersistenceImpl<DDLRecord>
 	}
 
 	public int countByC_S_S(long companyId, int status, int scope)
-		throws SystemException{
+		throws SystemException {
 
 		Session session = null;
 

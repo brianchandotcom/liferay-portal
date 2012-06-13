@@ -128,7 +128,7 @@ public class NtlmManager {
 	}
 
 	protected byte[] getAVPairBytes(int avId, String value)
-		throws UnsupportedEncodingException{
+		throws UnsupportedEncodingException {
 
 		byte[] valueBytes = value.getBytes("UTF-16LE");
 		byte[] avPairBytes = new byte[4 + valueBytes.length];
@@ -141,7 +141,9 @@ public class NtlmManager {
 		return avPairBytes;
 	}
 
-	protected byte[] getTargetInformation() throws UnsupportedEncodingException{
+	protected byte[] getTargetInformation()
+		throws UnsupportedEncodingException {
+
 		byte[] computerName = getAVPairBytes(
 			1, _ntlmServiceAccount.getComputerName());
 		byte[] domainName = getAVPairBytes(2, _domain);

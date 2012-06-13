@@ -103,7 +103,7 @@ public class UpgradeExpando extends UpgradeProcess {
 	}
 
 	protected boolean hasRow(long companyId, long tableId, long classPK)
-		throws Exception{
+		throws Exception {
 
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -139,7 +139,7 @@ public class UpgradeExpando extends UpgradeProcess {
 
 	protected boolean hasValue(
 			long companyId, long tableId, long columnId, long rowId)
-		throws Exception{
+		throws Exception {
 
 		Connection con = null;
 		PreparedStatement ps = null;

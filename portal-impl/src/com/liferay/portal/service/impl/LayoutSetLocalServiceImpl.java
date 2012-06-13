@@ -297,7 +297,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		InputStream is = null;
 
 		if (logo) {
-			try{
+			try {
 				is = new FileInputStream(file);
 			}
 			catch (IOException ioe) {

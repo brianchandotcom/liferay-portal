@@ -21,7 +21,7 @@ import com.liferay.portal.security.ldap.PortalLDAPImporterUtil;
 /**
  * @author Shuyang Zhou
  */
-public class LDAPImportMessageListener extends BaseMessageListener{
+public class LDAPImportMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {

@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.test.BaseTestCase;
  */
 public class WeakValueConcurrentHashMapTest extends BaseTestCase {
 
-	public void testAutoRemove() throws Exception{
+	public void testAutoRemove() throws Exception {
 		WeakValueConcurrentHashMap<String, Object> weakValueConcurrentHashMap =
 			new WeakValueConcurrentHashMap<String, Object>();
 

@@ -282,7 +282,7 @@ public class JournalFeedLocalServiceImpl
 			String orderByType, String targetLayoutFriendlyUrl,
 			String targetPortletId, String contentField, String feedType,
 			double feedVersion, ServiceContext serviceContext)
-		throws PortalException, SystemException{
+		throws PortalException, SystemException {
 
 		// Feed
 

@@ -136,7 +136,7 @@ public class ConcurrentLRUCacheTest extends TestCase {
 		ConcurrentLRUCache<String, String> concurrentLRUCache =
 			new ConcurrentLRUCache<String, String>(2, 0.5F);
 
-		try{
+		try {
 			concurrentLRUCache.put(null, "value");
 
 			fail();

@@ -68,7 +68,7 @@ public class PortletURLWrapper implements PortletURL {
 	}
 
 	public void setPortletMode(PortletMode portletMode)
-		throws PortletModeException{
+		throws PortletModeException {
 
 		_portletURL.setPortletMode(portletMode);
 	}

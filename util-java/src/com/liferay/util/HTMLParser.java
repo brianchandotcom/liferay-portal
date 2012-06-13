@@ -55,7 +55,7 @@ public class HTMLParser {
 
 	}
 
-	private class HTMLCallback extends HTMLEditorKit.ParserCallback{
+	private class HTMLCallback extends HTMLEditorKit.ParserCallback {
 
 		@Override
 		public void handleText(char[] data, int pos) {

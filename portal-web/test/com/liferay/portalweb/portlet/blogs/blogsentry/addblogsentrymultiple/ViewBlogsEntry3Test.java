@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentry;
+package com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentrymultiple;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ViewBlogsEntry2Test extends BaseTestCase {
-	public void testViewBlogsEntry2() throws Exception {
+public class ViewBlogsEntry3Test extends BaseTestCase {
+	public void testViewBlogsEntry3() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Blogs Test Page",
@@ -32,7 +32,7 @@ public class ViewBlogsEntry2Test extends BaseTestCase {
 		assertTrue(selenium.isVisible("//input[@value='Search']"));
 		assertTrue(selenium.isVisible("//input[@value='Add Blog Entry']"));
 		assertTrue(selenium.isVisible("//input[@value='Permissions']"));
-		assertEquals(RuntimeVariables.replace("Blogs Entry2 Title"),
+		assertEquals(RuntimeVariables.replace("Blogs Entry3 Title"),
 			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertTrue(selenium.isVisible("//div[@class='entry-date']"));
 		assertEquals(RuntimeVariables.replace("Edit"),
@@ -42,7 +42,7 @@ public class ViewBlogsEntry2Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
 			selenium.getText(
 				"//td[contains(.,'Move to the Recycle Bin')]/span/a/span"));
-		assertEquals(RuntimeVariables.replace("Blogs Entry2 Content"),
+		assertEquals(RuntimeVariables.replace("Blogs Entry3 Content"),
 			selenium.getText("//div[@class='entry-body']/p"));
 		assertEquals(RuntimeVariables.replace("By Joe Bloggs"),
 			selenium.getText("//div[@class='entry-author']"));
@@ -65,7 +65,7 @@ public class ViewBlogsEntry2Test extends BaseTestCase {
 		assertTrue(selenium.isPartialText(
 				"//div[@class='subscribe']/span/a[contains(@href,'subscribe')]",
 				"Subscribe"));
-		assertEquals(RuntimeVariables.replace("Showing 2 results."),
+		assertEquals(RuntimeVariables.replace("Showing 3 results."),
 			selenium.getText("//div[@class='search-results']"));
 	}
 }

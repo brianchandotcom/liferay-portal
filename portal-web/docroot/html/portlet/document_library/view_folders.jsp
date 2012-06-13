@@ -278,7 +278,7 @@ if (folder != null) {
 											</a>
 										</c:if>
 
-										<a class="browse-folder" data-folder="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= String.valueOf(mountFolder.getFolderId()) %>" data-repository-id="<%= mountFolder.getRepositoryId() %>" data-title="<%= mountFolder.getName() %>" href="<%= viewURL.toString() %>">
+										<a class="browse-folder" data-folder="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= String.valueOf(mountFolder.getFolderId()) %>" data-repository-id="<%= mountFolder.getRepositoryId() %>" data-title="<%= mountFolder.getName() %>" data-view-folders="<%= Boolean.FALSE.toString() %>" href="<%= viewURL.toString() %>">
 											<liferay-ui:icon image="drive" />
 
 											<span class="entry-title">

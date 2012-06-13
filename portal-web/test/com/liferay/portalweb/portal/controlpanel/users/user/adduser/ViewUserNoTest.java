@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ViewUser2NullTest extends BaseTestCase {
-	public void testViewUser2Null() throws Exception {
+public class ViewUserNoTest extends BaseTestCase {
+	public void testViewUserNo() throws Exception {
 		int label = 1;
 
 		while (label >= 1) {
@@ -91,7 +91,7 @@ public class ViewUser2NullTest extends BaseTestCase {
 
 			case 2:
 				selenium.type("//input[@name='_125_keywords']",
-					RuntimeVariables.replace("userfn2"));
+					RuntimeVariables.replace("userfn*"));
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");

@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ViewUser1NullTest extends BaseTestCase {
-	public void testViewUser1Null() throws Exception {
+public class ViewUser1NoTest extends BaseTestCase {
+	public void testViewUser1No() throws Exception {
 		int label = 1;
 
 		while (label >= 1) {

@@ -53,12 +53,6 @@ public class AddUserJSONTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		selenium.type("//input[@name='companyId']",
 			RuntimeVariables.replace("1"));
-		selenium.clickAt("//input[@value='false' and @name='autoPassword']",
-			RuntimeVariables.replace("Auto Password False"));
-		selenium.type("//input[@name='password1']",
-			RuntimeVariables.replace("password"));
-		selenium.type("//input[@name='password2']",
-			RuntimeVariables.replace("password"));
 		selenium.type("//input[@name='screenName']",
 			RuntimeVariables.replace("usersn"));
 		selenium.clickAt("//input[@value='false' and @name='autoScreenName']",
@@ -126,19 +120,19 @@ public class AddUserJSONTest extends BaseTestCase {
 
 		assertTrue(selenium.isPartialText("//pre[@class='lfr-code-block']", "{"));
 		assertTrue(selenium.isPartialText("//pre[@class='lfr-code-block']",
-				"\"agreedToTermsOfUse\": false,"));
+				"\"agreedToTermsOfUse\":false,"));
 		assertTrue(selenium.isPartialText("//pre[@class='lfr-code-block']",
-				"\"companyId\": 1,"));
+				"\"companyId\":1,"));
 		assertTrue(selenium.isPartialText("//pre[@class='lfr-code-block']",
-				"\"facebookId\": 0,"));
+				"\"facebookId\":0,"));
 		assertTrue(selenium.isPartialText("//pre[@class='lfr-code-block']",
-				"\"firstName\": \"userfn\","));
+				"\"firstName\":\"userfn\","));
 		assertTrue(selenium.isPartialText("//pre[@class='lfr-code-block']",
-				"\"greeting\": \"Welcome userfn userln!\","));
+				"\"greeting\":\"Welcome userfn userln!\","));
 		assertTrue(selenium.isPartialText("//pre[@class='lfr-code-block']",
-				"\"lastName\": \"userln\","));
+				"\"lastName\":\"userln\","));
 		assertTrue(selenium.isPartialText("//pre[@class='lfr-code-block']",
-				"\"screenName\": \"usersn\","));
+				"\"screenName\":\"usersn\","));
 		assertTrue(selenium.isPartialText("//pre[@class='lfr-code-block']", "}"));
 	}
 }

@@ -17,7 +17,7 @@ package com.liferay.portalweb.security.json.user;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.security.json.user.adduserjson.AddUserJSONTests;
 import com.liferay.portalweb.security.json.user.guestadduserjson.Guest_AddUserJSONTests;
-import com.liferay.portalweb.security.json.user.user1adduserjson.User1_AddUserJSONTests;
+import com.liferay.portalweb.security.json.user.user1adduser2json.User1_AddUser2JSONTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -32,7 +32,7 @@ public class UserTestPlan extends BaseTestSuite {
 
 		testSuite.addTest(AddUserJSONTests.suite());
 		testSuite.addTest(Guest_AddUserJSONTests.suite());
-		testSuite.addTest(User1_AddUserJSONTests.suite());
+		testSuite.addTest(User1_AddUser2JSONTests.suite());
 
 		return testSuite;
 	}

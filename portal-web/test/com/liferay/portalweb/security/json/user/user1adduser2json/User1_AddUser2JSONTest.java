@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.security.json.user.user1adduserjson;
+package com.liferay.portalweb.security.json.user.user1adduser2json;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class User1_AddUserJSONTest extends BaseTestCase {
-	public void testUser1_AddUserJSON() throws Exception {
+public class User1_AddUser2JSONTest extends BaseTestCase {
+	public void testUser1_AddUser2JSON() throws Exception {
 		selenium.open("/api/jsonws");
 		loadRequiredJavaScriptModules();
 
@@ -70,12 +70,6 @@ public class User1_AddUserJSONTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		selenium.type("//input[@name='companyId']",
 			RuntimeVariables.replace("1"));
-		selenium.clickAt("//input[@value='false' and @name='autoPassword']",
-			RuntimeVariables.replace("Auto Password False"));
-		selenium.type("//input[@name='password1']",
-			RuntimeVariables.replace("password"));
-		selenium.type("//input[@name='password2']",
-			RuntimeVariables.replace("password"));
 		selenium.type("//input[@name='screenName']",
 			RuntimeVariables.replace("usersn2"));
 		selenium.clickAt("//input[@value='false' and @name='autoScreenName']",
@@ -143,7 +137,7 @@ public class User1_AddUserJSONTest extends BaseTestCase {
 
 		assertTrue(selenium.isPartialText("//pre[@class='lfr-code-block']", "{"));
 		assertTrue(selenium.isPartialText("//pre[@class='lfr-code-block']",
-				"\"exception\": \"com.liferay.portal.security.auth.PrincipalException\""));
+				"\"exception\":\"com.liferay.portal.security.auth.PrincipalException\""));
 		assertTrue(selenium.isPartialText("//pre[@class='lfr-code-block']", "}"));
 	}
 }

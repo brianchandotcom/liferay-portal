@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.portalweb.security.json.user.user1adduserjson;
+package com.liferay.portalweb.security.json.user.user1adduser2json;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.AddUser1Test;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.TearDownUserTest;
-import com.liferay.portalweb.portal.controlpanel.users.user.adduser.ViewUser2NullTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.adduser.ViewUser2NoTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.edituserpassword.EditUser1PasswordTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignInTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
@@ -30,17 +30,17 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class User1_AddUserJSONTests extends BaseTestSuite {
+public class User1_AddUser2JSONTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddUser1Test.class);
 		testSuite.addTestSuite(EditUser1PasswordTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(User1_SignInTest.class);
-		testSuite.addTestSuite(User1_AddUserJSONTest.class);
+		testSuite.addTestSuite(User1_AddUser2JSONTest.class);
 		testSuite.addTestSuite(User1_SignOutTest.class);
 		testSuite.addTestSuite(SignInTest.class);
-		testSuite.addTestSuite(ViewUser2NullTest.class);
+		testSuite.addTestSuite(ViewUser2NoTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);
 
 		return testSuite;

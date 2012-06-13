@@ -19,6 +19,12 @@ import com.liferay.portalweb.portal.controlpanel.users.user.adduser.AddUser1Test
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.AddUser2Test;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.AddUser3Test;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.TearDownUserTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.adduser.ViewUser1NoTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.adduser.ViewUser1Test;
+import com.liferay.portalweb.portal.controlpanel.users.user.adduser.ViewUser2NoTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.adduser.ViewUser2Test;
+import com.liferay.portalweb.portal.controlpanel.users.user.adduser.ViewUser3NoTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.adduser.ViewUser3Test;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -32,7 +38,13 @@ public class AddUserMultipleTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddUser1Test.class);
 		testSuite.addTestSuite(AddUser2Test.class);
 		testSuite.addTestSuite(AddUser3Test.class);
+		testSuite.addTestSuite(ViewUser1Test.class);
+		testSuite.addTestSuite(ViewUser2Test.class);
+		testSuite.addTestSuite(ViewUser3Test.class);
 		testSuite.addTestSuite(TearDownUserTest.class);
+		testSuite.addTestSuite(ViewUser1NoTest.class);
+		testSuite.addTestSuite(ViewUser2NoTest.class);
+		testSuite.addTestSuite(ViewUser3NoTest.class);
 
 		return testSuite;
 	}

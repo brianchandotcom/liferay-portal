@@ -53,12 +53,6 @@ public class Guest_AddUserJSONTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		selenium.type("//input[@name='companyId']",
 			RuntimeVariables.replace("1"));
-		selenium.clickAt("//input[@value='false' and @name='autoPassword']",
-			RuntimeVariables.replace("Auto Password False"));
-		selenium.type("//input[@name='password1']",
-			RuntimeVariables.replace("password"));
-		selenium.type("//input[@name='password2']",
-			RuntimeVariables.replace("password"));
 		selenium.type("//input[@name='screenName']",
 			RuntimeVariables.replace("usersn"));
 		selenium.clickAt("//input[@value='false' and @name='autoScreenName']",
@@ -126,7 +120,7 @@ public class Guest_AddUserJSONTest extends BaseTestCase {
 
 		assertTrue(selenium.isPartialText("//pre[@class='lfr-code-block']", "{"));
 		assertTrue(selenium.isPartialText("//pre[@class='lfr-code-block']",
-				"\"exception\": \"Please sign in to invoke this method\""));
+				"\"exception\":\"Please sign in to invoke this method\""));
 		assertTrue(selenium.isPartialText("//pre[@class='lfr-code-block']", "}"));
 	}
 }

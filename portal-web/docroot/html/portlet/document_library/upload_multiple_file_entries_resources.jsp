@@ -181,6 +181,30 @@ long assetClassPK = 0;
 									event.currentTarget.attr('href'),
 									{
 										where: 'outer'
+									},
+									function() {
+										var totalFiles = A.all('input[name=<portlet:namespace />selectUploadedFileCheckbox]');
+
+										var totalFilesCount = totalFiles.size();
+
+										var selectedFiles = totalFiles.filter(':checked');
+
+										var selectedFilesCount = selectedFiles.size();
+
+										var selectedFilesText = selectedFiles.item(0).attr('data-fileName');
+
+										if (selectedFilesCount == totalFilesCount) {
+											selectedFilesText = '<%= UnicodeLanguageUtil.get(pageContext, "all-files-selected") %>';
+										}
+										else if (selectedFilesCount > 1) {
+											selectedFilesText = A.Lang.sub('<%= UnicodeLanguageUtil.get(pageContext, "x-files-selected") %>', [selectedFilesCount]);
+										}
+
+										var selectedFilesCountContainer = A.one('.selected-files-count');
+
+										selectedFilesCountContainer.setContent(selectedFilesText);
+				
+										selectedFilesCountContainer.attr('title', selectedFilesText);
 									}
 								);
 							},

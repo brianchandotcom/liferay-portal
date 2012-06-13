@@ -1030,11 +1030,11 @@ AUI.add(
 						if (selectedFilesCount == 1) {
 							selectedFilesText = selectedFileName;
 						}
-						else if (selectedFilesCount > 1) {
-							selectedFilesText = instance._filesSelectedText.replace('{0}', selectedFilesCount);
-						}
 						else if (selectedFilesCount == totalFilesCount) {
 							selectedFilesText = instance._allFilesSelectedText;
+						}
+						else if (selectedFilesCount > 1) {
+							selectedFilesText = instance._filesSelectedText.replace('{0}', selectedFilesCount);
 						}
 
 						var selectedFilesCountContainer = metadataContainer.one('.selected-files-count');

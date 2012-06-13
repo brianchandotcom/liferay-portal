@@ -48,7 +48,7 @@ public class DDLRecordSetFinderImpl extends BasePersistenceImpl<DDLRecordSet>
 
 	public int countByKeywords(
 			long companyId, long groupId, String keywords, int scope)
-		throws SystemException{
+		throws SystemException {
 
 		String[] names = null;
 		String[] descriptions = null;

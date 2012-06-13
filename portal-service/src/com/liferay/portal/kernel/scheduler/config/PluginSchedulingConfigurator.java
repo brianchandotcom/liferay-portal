@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
  * @author Shuyang Zhou
  */
 public class PluginSchedulingConfigurator
-	extends AbstractSchedulingConfigurator{
+	extends AbstractSchedulingConfigurator {
 
 	@Override
 	protected ClassLoader getOperatingClassloader() {

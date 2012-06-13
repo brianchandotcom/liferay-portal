@@ -611,7 +611,7 @@ public class ResourceLocalServiceImpl extends ResourceLocalServiceBaseImpl {
 	protected void deleteResource(
 			long companyId, String name, int scope, String primKey,
 			PermissionedModel permissionedModel)
-		throws PortalException, SystemException{
+		throws PortalException, SystemException {
 
 		if (resourceBlockLocalService.isSupported(name)) {
 			if (permissionedModel == null) {

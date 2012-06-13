@@ -158,7 +158,7 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 	public int getWorkflowDefinitionLinksCount(
 			long companyId, String workflowDefinitionName,
 			int workflowDefinitionVersion)
-		throws SystemException{
+		throws SystemException {
 
 		if (!WorkflowEngineManagerUtil.isDeployed()) {
 			return 0;

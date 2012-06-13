@@ -189,7 +189,7 @@ public abstract class AbstractMessagingConfigurator
 				catch (Exception e) {
 				}
 
-				try{
+				try {
 					Method setMessageBusMethod =
 						messageListenerClass.getDeclaredMethod(
 							"setMessageBus", MessageBus.class);

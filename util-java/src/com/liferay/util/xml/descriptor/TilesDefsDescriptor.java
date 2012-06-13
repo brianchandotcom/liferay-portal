@@ -52,7 +52,7 @@ public class TilesDefsDescriptor extends SimpleXMLDescriptor {
 		new ElementIdentifier("definition", "name")
 	};
 
-	private static final String[] _ROOT_CHILDREN_ORDER ={
+	private static final String[] _ROOT_CHILDREN_ORDER = {
 		"definition"
 	};
 

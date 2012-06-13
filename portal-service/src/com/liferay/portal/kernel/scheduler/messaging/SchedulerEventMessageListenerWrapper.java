@@ -69,7 +69,7 @@ public class SchedulerEventMessageListenerWrapper implements MessageListener {
 			}
 		}
 
-		try{
+		try {
 			_messageListener.receive(message);
 		}
 		catch (Exception e) {

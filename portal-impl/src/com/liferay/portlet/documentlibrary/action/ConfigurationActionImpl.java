@@ -52,7 +52,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 	}
 
 	protected void validateDisplayStyleViews(ActionRequest actionRequest)
-		throws Exception{
+		throws Exception {
 
 		String displayViews = GetterUtil.getString(
 			getParameter(actionRequest, "displayViews"));
@@ -63,7 +63,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 	}
 
 	protected void validateRootFolder(ActionRequest actionRequest)
-		throws Exception{
+		throws Exception {
 
 		long rootFolderId = GetterUtil.getLong(
 			getParameter(actionRequest, "rootFolderId"));

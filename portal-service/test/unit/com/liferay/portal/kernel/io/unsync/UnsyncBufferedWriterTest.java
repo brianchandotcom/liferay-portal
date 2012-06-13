@@ -124,7 +124,7 @@ public class UnsyncBufferedWriterTest extends TestCase {
 		assertEquals(0, unsyncBufferedWriter.count);
 	}
 
-	public void testNewLine() throws IOException{
+	public void testNewLine() throws IOException {
 		StringWriter stringWriter = new StringWriter();
 
 		UnsyncBufferedWriter unsyncBufferedWriter = new UnsyncBufferedWriter(

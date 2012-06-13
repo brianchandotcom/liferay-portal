@@ -247,7 +247,7 @@ public class PortalUtil {
 
 	public static String getCanonicalURL(
 			String completeURL, ThemeDisplay themeDisplay, Layout layout)
-		throws PortalException, SystemException{
+		throws PortalException, SystemException {
 
 		return getPortal().getCanonicalURL(completeURL, themeDisplay, layout);
 	}
@@ -465,7 +465,7 @@ public class PortalUtil {
 	public static Serializable getExpandoValue(
 			PortletRequest portletRequest, String name, int type,
 			String displayType)
-		throws PortalException, SystemException{
+		throws PortalException, SystemException {
 
 		return getPortal().getExpandoValue(
 			portletRequest, name, type, displayType);

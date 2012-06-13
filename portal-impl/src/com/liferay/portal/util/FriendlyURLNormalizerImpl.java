@@ -29,7 +29,7 @@ import java.util.Arrays;
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
  */
-public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer{
+public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 
 	public String normalize(String friendlyURL) {
 		return normalize(friendlyURL, null);

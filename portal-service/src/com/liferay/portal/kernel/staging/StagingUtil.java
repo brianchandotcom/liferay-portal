@@ -171,7 +171,7 @@ public class StagingUtil {
 
 	public static long getRecentLayoutRevisionId(
 			HttpServletRequest request, long layoutSetBranchId, long plid)
-		throws PortalException, SystemException{
+		throws PortalException, SystemException {
 
 		return getStaging().getRecentLayoutRevisionId(
 			request, layoutSetBranchId, plid);

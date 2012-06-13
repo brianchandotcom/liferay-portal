@@ -209,7 +209,7 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 
 		<c:choose>
 			<c:when test='<%= Validator.isNotNull(successMessage) && !successMessage.equals("request_processed") %>'>
-				<%= successMessage %>
+				<%= HtmlUtil.escape(successMessage) %>
 			</c:when>
 			<c:otherwise>
 				<liferay-ui:message key="your-request-completed-successfully" />

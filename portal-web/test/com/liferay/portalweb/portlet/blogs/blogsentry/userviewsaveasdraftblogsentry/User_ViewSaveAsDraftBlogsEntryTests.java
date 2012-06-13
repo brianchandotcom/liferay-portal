@@ -24,6 +24,7 @@ import com.liferay.portalweb.portal.controlpanel.users.user.signin.User_SignInTe
 import com.liferay.portalweb.portal.controlpanel.users.user.signin.User_SignOutTest;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentry.TearDownBlogsEntryTest;
+import com.liferay.portalweb.portlet.blogs.blogsentry.saveasdraftblogsentrydetails.SaveAsDraftBlogsEntryDetailsTest;
 import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPageBlogsTest;
 import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPortletBlogsTest;
 

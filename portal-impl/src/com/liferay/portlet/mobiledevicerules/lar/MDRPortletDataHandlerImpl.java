@@ -14,17 +14,21 @@
 
 package com.liferay.portlet.mobiledevicerules.lar;
 
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.mobile.device.rulegroup.action.impl.SiteRedirectActionHandler;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
@@ -206,6 +210,30 @@ public class MDRPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		Element actionElement = actionsElement.addElement("action");
 
+		if (SiteRedirectActionHandler.class.getName().equals(
+			action.getType())) {
+
+			try {
+				long targetPlid = GetterUtil.getLong(
+					action.getTypeSettingsProperties().getProperty("plid"));
+
+				Layout targetLayout = LayoutLocalServiceUtil.getLayout(
+					targetPlid);
+
+				actionElement.addAttribute(
+					"layout-uuid", targetLayout.getUuid());
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to export uuid of target layout: " +
+						action + ", no layout uuid will be exported and site " +
+						"redirect may not match after import.",
+						e);
+				}
+			}
+		}
+
 		portletDataContext.addClassedModel(
 			actionElement, path, action, _NAMESPACE);
 	}
@@ -278,6 +306,10 @@ public class MDRPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		Element ruleGroupInstanceElement = ruleGroupInstancesElement.addElement(
 			"rule-group-instance");
+
+		String ruleGroupUuid = ruleGroupInstance.getRuleGroup().getUuid();
+
+		ruleGroupInstanceElement.addAttribute("rule-group-uuid", ruleGroupUuid);
 
 		String className = ruleGroupInstance.getClassName();
 
@@ -373,6 +405,8 @@ public class MDRPortletDataHandlerImpl extends BasePortletDataHandler {
 			actionElement, action, _NAMESPACE);
 
 		serviceContext.setUserId(userId);
+
+		validateTargetLayoutPlid(actionElement, action);
 
 		MDRAction importedAction = null;
 
@@ -525,7 +559,29 @@ public class MDRPortletDataHandlerImpl extends BasePortletDataHandler {
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				MDRRuleGroup.class);
 
-		long ruleGroupId = ruleGroupIds.get(ruleGroupInstance.getRuleGroupId());
+		Long ruleGroupId = ruleGroupIds.get(ruleGroupInstance.getRuleGroupId());
+
+		if (ruleGroupId == null) {
+			try {
+				String ruleGroupUuid = ruleGroupInstanceElement.attributeValue(
+					"rule-group-uuid");
+
+				MDRRuleGroup ruleGroup = MDRRuleGroupUtil.fetchByUUID_G(
+					ruleGroupUuid, portletDataContext.getScopeGroupId());
+
+				ruleGroupId = ruleGroup.getRuleGroupId();
+			}
+			catch (SystemException e) {
+				if (_log.isErrorEnabled()) {
+					_log.warn(
+						"Unable to import rule group instance: " +
+							ruleGroupInstance,
+						e);
+				}
+
+				return;
+			}
+		}
 
 		long classPK = 0;
 
@@ -623,6 +679,49 @@ public class MDRPortletDataHandlerImpl extends BasePortletDataHandler {
 			importAction(
 				portletDataContext, actionElement, importedRuleGroupInstance,
 				action);
+		}
+	}
+
+	protected void validateTargetLayoutPlid(
+		Element actionElement, MDRAction action) {
+
+		if (!SiteRedirectActionHandler.class.getName().equals(
+			action.getType())) {
+
+			return;
+		}
+
+		String targetLayoutUuid = actionElement.attributeValue(
+			"layout-uuid");
+
+		UnicodeProperties typeSettingsProperties =
+			action.getTypeSettingsProperties();
+
+		long targetGroupId = GetterUtil.getLong(
+			typeSettingsProperties.getProperty("groupId"));
+
+		try {
+			if (Validator.isNotNull(targetLayoutUuid)) {
+				Layout targetLayout =
+					LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
+						targetLayoutUuid, targetGroupId);
+
+				long newTargetLayoutPlid = targetLayout.getPlid();
+
+				typeSettingsProperties.setProperty(
+					"plid", String.valueOf(newTargetLayoutPlid));
+			}
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to find desired SiteRedirect layout " +
+					"for uuid: " + targetLayoutUuid + " in group: " +
+					targetGroupId + ", plid will be left " +
+					"unchanged and may not match the wanted " +
+					"target Layout.",
+					e);
+			}
 		}
 	}
 

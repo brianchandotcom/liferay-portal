@@ -12,34 +12,34 @@
  * details.
  */
 
-package com.liferay.portal.servlet;
+package com.liferay.portal.test;
 
-import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.servlet.MainServlet;
 
 import java.io.File;
 
-import junit.extensions.TestSetup;
-
-import junit.framework.Test;
+import javax.servlet.ServletException;
 
 import org.springframework.core.io.FileSystemResourceLoader;
 import org.springframework.mock.web.MockServletConfig;
 import org.springframework.mock.web.MockServletContext;
 
 /**
- * @author Raymond Augé
- * @author Brian Wing Shun Chan
+ * @author Miguel Pastor
  */
-public class MainServletTestSetup extends TestSetup {
+public class MainServletExecutionTestListener
+	extends EnvironmentExecutionTestListener {
 
-	public MainServletTestSetup(Test test) {
-		super(test);
+	@Override
+	public void runAfterClass(TestContext testContext) {
+		super.runAfterClass(testContext);
+
+		_mainServlet.destroy();
 	}
 
 	@Override
-	public void setUp() throws Exception {
-		ServiceTestUtil.initServices();
-		ServiceTestUtil.initPermissions();
+	public void runBeforeClass(TestContext testContext) {
+		super.runBeforeClass(testContext);
 
 		MockServletContext mockServletContext = new MockServletContext(
 			getResourceBasePath(), new FileSystemResourceLoader());
@@ -49,20 +49,18 @@ public class MainServletTestSetup extends TestSetup {
 
 		_mainServlet = new MainServlet();
 
-		_mainServlet.init(mockServletConfig);
-	}
-
-	@Override
-	public void tearDown() throws Exception {
-		_mainServlet.destroy();
-
-		ServiceTestUtil.destroyServices();
+		try {
+			_mainServlet.init(mockServletConfig);
+		}
+		catch (ServletException e) {
+			throw new RuntimeException("The main servlet could not be started");
+		}
 	}
 
 	protected String getResourceBasePath() {
-		File file = new File("portal-web");
+		File file = new File("portal-web/docroot");
 
-		return file.getAbsolutePath();
+		return "file://" + file.getAbsolutePath();
 	}
 
 	private MainServlet _mainServlet;

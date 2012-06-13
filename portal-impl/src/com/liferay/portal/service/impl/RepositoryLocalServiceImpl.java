@@ -57,7 +57,7 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 	public long addRepository(
 			long userId, long groupId, long classNameId, long parentFolderId,
 			String name, String description, String portletId,
-			UnicodeProperties typeSettingsProperties,
+			UnicodeProperties typeSettingsProperties, boolean initRepository,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
@@ -89,7 +89,7 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 
 		if (classNameId != getDefaultClassNameId()) {
 			try {
-				createRepositoryImpl(repositoryId, classNameId);
+				createRepositoryImpl(repositoryId, classNameId, initRepository);
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
@@ -101,6 +101,18 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 		}
 
 		return repositoryId;
+	}
+
+	public long addRepository(
+			long userId, long groupId, long classNameId, long parentFolderId,
+			String name, String description, String portletId,
+			UnicodeProperties typeSettingsProperties,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return addRepository(
+			userId, groupId, classNameId, parentFolderId, name, description,
+			portletId, typeSettingsProperties, true, serviceContext);
 	}
 
 	public void checkRepository(long repositoryId) throws SystemException {
@@ -351,6 +363,13 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 			long repositoryId, long classNameId)
 		throws PortalException, SystemException {
 
+		return createRepositoryImpl(repositoryId, classNameId, true);
+	}
+
+	protected BaseRepository createRepositoryImpl(
+			long repositoryId, long classNameId, boolean initRepository)
+		throws PortalException, SystemException {
+
 		BaseRepository baseRepository = null;
 
 		Repository repository = null;
@@ -402,7 +421,9 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 
 		setupRepository(repositoryId, repository, baseRepository);
 
-		baseRepository.initRepository();
+		if (initRepository) {
+			baseRepository.initRepository();
+		}
 
 		return baseRepository;
 	}

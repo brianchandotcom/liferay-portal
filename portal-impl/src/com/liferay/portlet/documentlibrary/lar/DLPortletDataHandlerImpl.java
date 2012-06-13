@@ -574,7 +574,7 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 							DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 							repository.getName(), repository.getDescription(),
 							repository.getPortletId(),
-							repository.getTypeSettingsProperties(),
+							repository.getTypeSettingsProperties(), false,
 							serviceContext);
 				}
 				else {
@@ -591,7 +591,8 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 					repository.getName(), repository.getDescription(),
 					repository.getPortletId(),
-					repository.getTypeSettingsProperties(), serviceContext);
+					repository.getTypeSettingsProperties(), false,
+					serviceContext);
 			}
 		}
 		catch (Exception e) {

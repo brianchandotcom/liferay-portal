@@ -3338,9 +3338,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		String passwordResetURL = StringPool.BLANK;
 
 		if (company.isSendPasswordResetLink()) {
-			Date expirationDate = new Date(
-				System.currentTimeMillis() +
-					(passwordPolicy.getResetTicketMaxAge() * 1000));
+			Date expirationDate = null;
+
+			if (passwordPolicy.getResetTicketMaxAge() > 0) {
+				expirationDate = new Date(
+					System.currentTimeMillis() +
+						(passwordPolicy.getResetTicketMaxAge() * 1000));
+			}
 
 			Ticket ticket = ticketLocalService.addTicket(
 				companyId, User.class.getName(), user.getUserId(),

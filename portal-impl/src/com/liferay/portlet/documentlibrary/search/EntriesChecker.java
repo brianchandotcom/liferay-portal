@@ -124,7 +124,10 @@ public class EntriesChecker extends RowChecker {
 			try {
 				if (DLFileShortcutPermission.contains(
 						_permissionChecker, dlFileShortcut,
-						ActionKeys.DELETE)) {
+						ActionKeys.DELETE) ||
+					DLFileShortcutPermission.contains(
+						_permissionChecker, dlFileShortcut,
+						ActionKeys.UPDATE)) {
 
 					showInput = true;
 				}
@@ -137,7 +140,9 @@ public class EntriesChecker extends RowChecker {
 
 			try {
 				if (DLFolderPermission.contains(
-						_permissionChecker, folder, ActionKeys.DELETE)) {
+						_permissionChecker, folder, ActionKeys.DELETE) ||
+					DLFolderPermission.contains(
+						_permissionChecker, folder, ActionKeys.UPDATE)) {
 
 					showInput = true;
 				}

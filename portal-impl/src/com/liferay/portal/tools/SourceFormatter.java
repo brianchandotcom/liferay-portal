@@ -1337,6 +1337,12 @@ public class SourceFormatter {
 
 			String trimmedLine = StringUtil.trimLeading(line);
 
+			if (!trimmedLine.equals("{") && line.endsWith("{") &&
+				!line.endsWith(" {")) {
+
+				line = StringUtil.replaceLast(line, "{", " {");
+			}
+
 			if (trimmedLine.startsWith("if (") ||
 				trimmedLine.startsWith("else if (") ||
 				trimmedLine.startsWith("while (") ||

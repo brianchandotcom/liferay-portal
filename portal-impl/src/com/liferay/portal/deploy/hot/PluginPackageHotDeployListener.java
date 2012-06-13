@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.deploy.hot.HotDeployException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.plugin.PluginPackage;
+import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -92,6 +93,11 @@ public class PluginPackageHotDeployListener extends BaseHotDeployListener {
 			_log.debug("Invoking deploy for " + servletContextName);
 		}
 
+		ClassLoader classLoader = hotDeployEvent.getContextClassLoader();
+
+		PortletClassLoaderUtil.setClassLoader(classLoader);
+		PortletClassLoaderUtil.setServletContextName(servletContextName);
+
 		PluginPackage pluginPackage =
 			PluginPackageUtil.readPluginPackageServletContext(servletContext);
 
@@ -112,8 +118,6 @@ public class PluginPackageHotDeployListener extends BaseHotDeployListener {
 		hotDeployEvent.setPluginPackage(pluginPackage);
 
 		PluginPackageUtil.registerInstalledPluginPackage(pluginPackage);
-
-		ClassLoader classLoader = hotDeployEvent.getContextClassLoader();
 
 		initServiceComponent(servletContext, classLoader);
 

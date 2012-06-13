@@ -207,7 +207,9 @@ public class CMISRepository extends BaseCmisRepository {
 		}
 	}
 
-	public void cancelCheckOut(long fileEntryId) {
+	public FileVersion cancelCheckOut(long fileEntryId) throws SystemException {
+		Document draftDocument = null;
+
 		try {
 			Session session = getSession();
 
@@ -221,10 +223,10 @@ public class CMISRepository extends BaseCmisRepository {
 				document.getVersionSeriesCheckedOutId();
 
 			if (Validator.isNotNull(versionSeriesCheckedOutId)) {
-				document = (Document)session.getObject(
+				draftDocument = (Document)session.getObject(
 					versionSeriesCheckedOutId);
 
-				document.cancelCheckOut();
+				draftDocument.cancelCheckOut();
 
 				document = (Document)session.getObject(versionSeriesId);
 
@@ -236,6 +238,13 @@ public class CMISRepository extends BaseCmisRepository {
 				"Unable to cancel checkout for file entry with {fileEntryId=" +
 					fileEntryId + "}",
 				e);
+		}
+
+		if (draftDocument != null) {
+			return toFileVersion(draftDocument);
+		}
+		else {
+			return null;
 		}
 	}
 

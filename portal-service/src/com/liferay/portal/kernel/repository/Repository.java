@@ -54,7 +54,7 @@ public interface Repository {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException;
 
-	public void cancelCheckOut(long fileEntryId)
+	public FileVersion cancelCheckOut(long fileEntryId)
 		throws PortalException, SystemException;
 
 	public void checkInFileEntry(

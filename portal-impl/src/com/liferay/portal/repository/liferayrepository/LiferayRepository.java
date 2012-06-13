@@ -168,10 +168,18 @@ public class LiferayRepository
 		return new LiferayFolder(dlFolder);
 	}
 
-	public void cancelCheckOut(long fileEntryId)
+	public FileVersion cancelCheckOut(long fileEntryId)
 		throws PortalException, SystemException {
 
-		dlFileEntryService.cancelCheckOut(fileEntryId);
+		DLFileVersion dlFileVersion = dlFileEntryService.cancelCheckOut(
+			fileEntryId);
+
+		if (dlFileVersion != null) {
+			return new LiferayFileVersion(dlFileVersion);
+		}
+		else {
+			return null;
+		}
 	}
 
 	public void checkInFileEntry(

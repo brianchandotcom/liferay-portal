@@ -91,10 +91,10 @@ public class BaseRepositoryProxyBean
 		return newFolderProxyBean(folder);
 	}
 
-	public void cancelCheckOut(long fileEntryId)
+	public FileVersion cancelCheckOut(long fileEntryId)
 		throws PortalException, SystemException {
 
-		_baseRepository.cancelCheckOut(fileEntryId);
+		return _baseRepository.cancelCheckOut(fileEntryId);
 	}
 
 	public void checkInFileEntry(

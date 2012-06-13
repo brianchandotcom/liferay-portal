@@ -47,8 +47,8 @@ public class TranslationWebCacheItem implements WebCacheItem {
 					"Invalid translation ID " + _translationId);
 			}
 
-			String fromLanguage = _translationId.substring(0, x);
-			String toLanguage = _translationId.substring(x + 1);
+			String fromLanguage = getLanguage(_translationId.substring(0, x));
+			String toLanguage = getLanguage(_translationId.substring(x + 1));
 
 			String toText = microsoftTranslator.translate(
 				fromLanguage, toLanguage, _fromText);
@@ -64,6 +64,17 @@ public class TranslationWebCacheItem implements WebCacheItem {
 
 	public long getRefreshTime() {
 		return _REFRESH_TIME;
+	}
+
+	protected String getLanguage(String babelFishLanguageId) {
+		if (babelFishLanguageId.equals("zh")) {
+			return "zh-CHS";
+		}
+		else if (babelFishLanguageId.equals("zt")) {
+			return "zh-CHT";
+		}
+
+		return babelFishLanguageId;
 	}
 
 	private static final long _REFRESH_TIME = Time.DAY * 90;

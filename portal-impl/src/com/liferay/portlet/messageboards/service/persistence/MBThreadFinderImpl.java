@@ -165,11 +165,11 @@ public class MBThreadFinderImpl
 
 			qPos.add(groupId);
 
+			qPos.add(modifiedDate);
+
 			if (userId > 0) {
 				qPos.add(userId);
 			}
-
-			qPos.add(modifiedDate);
 
 			if (status != WorkflowConstants.STATUS_ANY) {
 				qPos.add(status);
@@ -471,11 +471,11 @@ public class MBThreadFinderImpl
 
 			qPos.add(groupId);
 
+			qPos.add(modifiedDate);
+
 			if (userId > 0) {
 				qPos.add(userId);
 			}
-
-			qPos.add(modifiedDate);
 
 			if (status != WorkflowConstants.STATUS_ANY) {
 				qPos.add(status);

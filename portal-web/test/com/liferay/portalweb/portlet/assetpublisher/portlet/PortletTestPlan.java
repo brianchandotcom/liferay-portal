@@ -17,6 +17,8 @@ package com.liferay.portalweb.portlet.assetpublisher.portlet;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portlet.assetpublisher.portlet.addportletap.AddPortletAPTests;
 import com.liferay.portalweb.portlet.assetpublisher.portlet.addportletmultipleap.AddPortletMultipleAPTests;
+import com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletapdisplaypage.ConfigurePortletAPDisplayPageTests;
+import com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletapsetasdefault.ConfigurePortletAPSetAsDefaultTests;
 import com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletassetselectiondynamic.ConfigurePortletAssetSelectionDynamicTests;
 import com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletassetselectionmanual.ConfigurePortletAssetSelectionManualTests;
 import com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletavailableblogsentry.ConfigurePortletAvailableBlogsEntryTests;
@@ -53,6 +55,8 @@ public class PortletTestPlan extends BaseTestSuite {
 
 		testSuite.addTest(AddPortletAPTests.suite());
 		testSuite.addTest(AddPortletMultipleAPTests.suite());
+		testSuite.addTest(ConfigurePortletAPDisplayPageTests.suite());
+		testSuite.addTest(ConfigurePortletAPSetAsDefaultTests.suite());
 		testSuite.addTest(ConfigurePortletAssetSelectionDynamicTests.suite());
 		testSuite.addTest(ConfigurePortletAssetSelectionManualTests.suite());
 		testSuite.addTest(ConfigurePortletAvailableBlogsEntryTests.suite());

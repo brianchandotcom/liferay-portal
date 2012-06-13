@@ -139,7 +139,7 @@ public class AddPortletAP2Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[1]/div/section")) {
+				if (selenium.isVisible("//div[1]/section")) {
 					break;
 				}
 			}
@@ -149,7 +149,7 @@ public class AddPortletAP2Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertTrue(selenium.isVisible("//div[1]/div/section"));
+		assertTrue(selenium.isVisible("//div[1]/section"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -157,7 +157,7 @@ public class AddPortletAP2Test extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[2]/div/section")) {
+				if (selenium.isVisible("//div[2]/section")) {
 					break;
 				}
 			}
@@ -167,6 +167,6 @@ public class AddPortletAP2Test extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertTrue(selenium.isVisible("//div[2]/div/section"));
+		assertTrue(selenium.isVisible("//div[2]/section"));
 	}
 }

@@ -16,6 +16,8 @@ package com.liferay.portalweb.portlet.assetpublisher.wcwebcontent;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portlet.assetpublisher.wcwebcontent.addnewwcwebcontentapactions.AddNewWCWebContentAPActionsTests;
+import com.liferay.portalweb.portlet.assetpublisher.wcwebcontent.addwcwebcontent2displaypageap.AddWCWebContent2DisplayPageAPTests;
+import com.liferay.portalweb.portlet.assetpublisher.wcwebcontent.addwcwebcontent2displaypageap2.AddWCWebContent2DisplayPageAP2Tests;
 import com.liferay.portalweb.portlet.assetpublisher.wcwebcontent.deletewcwebcontentap.DeleteWCWebContentAPTests;
 import com.liferay.portalweb.portlet.assetpublisher.wcwebcontent.ratewcwebcontentap.RateWCWebContentAPTests;
 import com.liferay.portalweb.portlet.assetpublisher.wcwebcontent.selectexistingwcwebcontentapactions.SelectExistingWCWebContentAPActionsTests;
@@ -39,6 +41,8 @@ public class WCWebContentTestPlan extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(AddNewWCWebContentAPActionsTests.suite());
+		testSuite.addTest(AddWCWebContent2DisplayPageAPTests.suite());
+		testSuite.addTest(AddWCWebContent2DisplayPageAP2Tests.suite());
 		testSuite.addTest(DeleteWCWebContentAPTests.suite());
 		testSuite.addTest(RateWCWebContentAPTests.suite());
 		testSuite.addTest(SelectExistingWCWebContentAPActionsTests.suite());

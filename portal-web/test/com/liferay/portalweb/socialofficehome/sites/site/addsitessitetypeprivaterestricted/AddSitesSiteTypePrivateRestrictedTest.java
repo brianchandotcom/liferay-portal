@@ -139,6 +139,9 @@ public class AddSitesSiteTypePrivateRestrictedTest extends BaseTestCase {
 				"//div[2]/div/div/div/div/div/div[contains(.,'Wiki')]/input"));
 		assertTrue(selenium.isChecked(
 				"//div[2]/div/div/div/div/div/div[contains(.,'Members')]/input"));
+		assertEquals(RuntimeVariables.replace(
+				"Private restricted sites are listed, pages are private, and users must request to join and collaborate."),
+			selenium.getText("//div[@class='message']"));
 		assertEquals("Save", selenium.getValue("//input[@value='Save']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));

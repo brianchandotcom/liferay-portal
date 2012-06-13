@@ -96,6 +96,8 @@ public class SOUs_SearchSitesSiteTypePrivateRestrictedTest extends BaseTestCase 
 
 		assertEquals(RuntimeVariables.replace("Directory"),
 			selenium.getText("xPath=(//h1[@class='header-title']/span)[1]"));
+		selenium.select("//span[@class='sites-tabs']/span/span/span/select",
+			RuntimeVariables.replace("All Sites"));
 		assertTrue(selenium.isVisible(
 				"//input[@id='_5_WAR_soportlet_dialogKeywords']"));
 		selenium.type("//input[@id='_5_WAR_soportlet_dialogKeywords']",

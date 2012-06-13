@@ -138,6 +138,9 @@ public class AddSitesSite3TypePrivateTest extends BaseTestCase {
 				"//div[2]/div/div/div/div/div/div[contains(.,'Wiki')]/input"));
 		assertTrue(selenium.isChecked(
 				"//div[2]/div/div/div/div/div/div[contains(.,'Members')]/input"));
+		assertEquals(RuntimeVariables.replace(
+				"Private sites are not listed, pages are private, and users must be invited to collaborate."),
+			selenium.getText("//div[@class='message']"));
 		assertEquals("Save", selenium.getValue("//input[@value='Save']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));

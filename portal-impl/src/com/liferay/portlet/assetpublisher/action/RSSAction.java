@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.PortletDisplay;
@@ -309,7 +310,8 @@ public class RSSAction extends PortletAction {
 			(LiferayPortletRequest)portletRequest,
 			(LiferayPortletResponse)portletResponse, null);
 
-		if (!viewInContextURL.startsWith(Http.HTTP_WITH_SLASH) &&
+		if (Validator.isNotNull(viewInContextURL) &&
+			!viewInContextURL.startsWith(Http.HTTP_WITH_SLASH) &&
 			!viewInContextURL.startsWith(Http.HTTPS_WITH_SLASH)) {
 
 			ThemeDisplay themeDisplay =

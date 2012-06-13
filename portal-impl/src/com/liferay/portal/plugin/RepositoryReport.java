@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.io.Serializable;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -25,7 +26,7 @@ import java.util.TreeMap;
 /**
  * @author Jorge Ferrer
  */
-public class RepositoryReport {
+public class RepositoryReport implements Serializable {
 
 	public static final String SUCCESS = "success";
 

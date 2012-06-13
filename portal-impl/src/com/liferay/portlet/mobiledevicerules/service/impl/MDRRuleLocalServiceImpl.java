@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException;
 import com.liferay.portlet.mobiledevicerules.model.MDRRule;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup;
 import com.liferay.portlet.mobiledevicerules.service.base.MDRRuleLocalServiceBaseImpl;
@@ -62,7 +63,12 @@ public class MDRRuleLocalServiceImpl extends MDRRuleLocalServiceBaseImpl {
 		rule.setType(type);
 		rule.setTypeSettings(typeSettings);
 
-		return updateMDRRule(rule, false);
+		rule = updateMDRRule(rule, false);
+
+		ruleGroup.setModifiedDate(now);
+		mdrRuleGroupPersistence.update(ruleGroup, false);
+
+		return rule;
 	}
 
 	public MDRRule addRule(
@@ -111,6 +117,19 @@ public class MDRRuleLocalServiceImpl extends MDRRuleLocalServiceBaseImpl {
 
 	public void deleteRule(MDRRule rule) throws SystemException {
 		mdrRulePersistence.remove(rule);
+
+		try {
+			Date now = new Date();
+
+			MDRRuleGroup ruleGroup = mdrRuleGroupPersistence.findByPrimaryKey(
+				rule.getRuleGroupId());
+
+			ruleGroup.setModifiedDate(now);
+
+			mdrRuleGroupPersistence.update(ruleGroup, false);
+		}
+		catch (NoSuchRuleGroupException e) {
+		}
 	}
 
 	public void deleteRules(long ruleGroupId) throws SystemException {
@@ -160,6 +179,13 @@ public class MDRRuleLocalServiceImpl extends MDRRuleLocalServiceBaseImpl {
 		rule.setTypeSettings(typeSettings);
 
 		mdrRulePersistence.update(rule, false);
+
+		MDRRuleGroup ruleGroup = mdrRuleGroupPersistence.findByPrimaryKey(
+			rule.getRuleGroupId());
+
+		ruleGroup.setModifiedDate(serviceContext.getModifiedDate(null));
+
+		mdrRuleGroupPersistence.update(ruleGroup, false);
 
 		return rule;
 	}

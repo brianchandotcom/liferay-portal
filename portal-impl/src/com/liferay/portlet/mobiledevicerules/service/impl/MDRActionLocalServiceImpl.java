@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupInstanceException;
 import com.liferay.portlet.mobiledevicerules.model.MDRAction;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
 import com.liferay.portlet.mobiledevicerules.service.base.MDRActionLocalServiceBaseImpl;
@@ -65,7 +66,12 @@ public class MDRActionLocalServiceImpl extends MDRActionLocalServiceBaseImpl {
 		action.setType(type);
 		action.setTypeSettings(typeSettings);
 
-		return updateMDRAction(action, false);
+		action = updateMDRAction(action, false);
+
+		ruleGroupInstance.setModifiedDate(now);
+		mdrRuleGroupInstancePersistence.update(ruleGroupInstance, false);
+
+		return action;
 	}
 
 	public MDRAction addAction(
@@ -90,6 +96,20 @@ public class MDRActionLocalServiceImpl extends MDRActionLocalServiceBaseImpl {
 
 	public void deleteAction(MDRAction action) throws SystemException {
 		mdrActionPersistence.remove(action);
+
+		try {
+			Date now = new Date();
+
+			MDRRuleGroupInstance ruleGroupInstance =
+				mdrRuleGroupInstancePersistence.findByPrimaryKey(
+					action.getRuleGroupInstanceId());
+
+			ruleGroupInstance.setModifiedDate(now);
+
+			mdrRuleGroupInstancePersistence.update(ruleGroupInstance, false);
+		}
+		catch (NoSuchRuleGroupInstanceException e) {
+		}
 	}
 
 	public void deleteActions(long ruleGroupInstanceId) throws SystemException {
@@ -148,6 +168,14 @@ public class MDRActionLocalServiceImpl extends MDRActionLocalServiceBaseImpl {
 		action.setTypeSettings(typeSettings);
 
 		mdrActionPersistence.update(action, false);
+
+		MDRRuleGroupInstance ruleGroupInstance =
+			mdrRuleGroupInstancePersistence.findByPrimaryKey(
+				action.getRuleGroupInstanceId());
+
+		ruleGroupInstance.setModifiedDate(serviceContext.getModifiedDate(null));
+
+		mdrRuleGroupInstancePersistence.update(ruleGroupInstance, false);
 
 		return action;
 	}

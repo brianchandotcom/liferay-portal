@@ -12,19 +12,17 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.controlpanel.users.user.addusermultiple;
+package com.liferay.portalweb.security.json.user.user1adduser2json;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.AddUser1Test;
-import com.liferay.portalweb.portal.controlpanel.users.user.adduser.AddUser2Test;
-import com.liferay.portalweb.portal.controlpanel.users.user.adduser.AddUser3Test;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.TearDownUserTest;
-import com.liferay.portalweb.portal.controlpanel.users.user.adduser.ViewUser1NoTest;
-import com.liferay.portalweb.portal.controlpanel.users.user.adduser.ViewUser1Test;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.ViewUser2NoTest;
-import com.liferay.portalweb.portal.controlpanel.users.user.adduser.ViewUser2Test;
-import com.liferay.portalweb.portal.controlpanel.users.user.adduser.ViewUser3NoTest;
-import com.liferay.portalweb.portal.controlpanel.users.user.adduser.ViewUser3Test;
+import com.liferay.portalweb.portal.controlpanel.users.user.edituserpassword.EditUser1PasswordTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignInTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.signin.SignOutTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.signin.User1_SignInTest;
+import com.liferay.portalweb.portal.controlpanel.users.user.signin.User1_SignOutTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -32,19 +30,18 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddUserMultipleTests extends BaseTestSuite {
+public class User1_AddUser2JSONTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddUser1Test.class);
-		testSuite.addTestSuite(AddUser2Test.class);
-		testSuite.addTestSuite(AddUser3Test.class);
-		testSuite.addTestSuite(ViewUser1Test.class);
-		testSuite.addTestSuite(ViewUser2Test.class);
-		testSuite.addTestSuite(ViewUser3Test.class);
-		testSuite.addTestSuite(TearDownUserTest.class);
-		testSuite.addTestSuite(ViewUser1NoTest.class);
+		testSuite.addTestSuite(EditUser1PasswordTest.class);
+		testSuite.addTestSuite(SignOutTest.class);
+		testSuite.addTestSuite(User1_SignInTest.class);
+		testSuite.addTestSuite(User1_AddUser2JSONTest.class);
+		testSuite.addTestSuite(User1_SignOutTest.class);
+		testSuite.addTestSuite(SignInTest.class);
 		testSuite.addTestSuite(ViewUser2NoTest.class);
-		testSuite.addTestSuite(ViewUser3NoTest.class);
+		testSuite.addTestSuite(TearDownUserTest.class);
 
 		return testSuite;
 	}

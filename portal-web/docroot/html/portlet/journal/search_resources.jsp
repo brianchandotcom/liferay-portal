@@ -77,13 +77,36 @@ else if ((searchType == JournalSearchConstants.SINGLE) && !ajaxRequest) {
 }
 
 int total = 0;
+
+boolean advancedSearch = ParamUtil.getBoolean(liferayPortletRequest, ArticleDisplayTerms.ADVANCED_SEARCH, false);
 %>
 
 <c:if test="<%= showSearchInfo %>">
 	<liferay-util:buffer var="searchInfo">
 		<div class="search-info">
 			<span class="keywords">
-				<%= (folder != null) ? LanguageUtil.format(pageContext, "searched-for-x-in-x", new Object[] {HtmlUtil.escape(keywords), folder.getName()}) : LanguageUtil.format(pageContext, "searched-for-x-everywhere", HtmlUtil.escape(keywords)) %>
+				<%
+				String message = StringPool.BLANK;
+
+				if (advancedSearch) {
+					if (folder != null) {
+						message = LanguageUtil.format(pageContext, "advanced-search-in-x", new Object[] {folder.getName()});
+					}
+					else {
+						message = LanguageUtil.get(pageContext, "advanced-search-everywhere");
+					}
+				}
+				else {
+					if (folder != null) {
+						message = LanguageUtil.format(pageContext, "searched-for-x-in-x", new Object[] {HtmlUtil.escape(keywords), folder.getName()});
+					}
+					else {
+						message = LanguageUtil.format(pageContext, "searched-for-x-everywhere", HtmlUtil.escape(keywords));
+					}
+				}
+				%>
+
+				<%= message %>
 			</span>
 
 			<c:if test="<%= folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID %>">
@@ -329,7 +352,14 @@ int total = 0;
 
 				<c:if test="<%= results.isEmpty() %>">
 					<div class="portlet-msg-info">
-						<%= LanguageUtil.format(pageContext, "no-articles-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>") %>
+						<%
+						String msgInfo = LanguageUtil.get(pageContext, "no-articles-were-found-that-matched-with-the-filters");
+
+						if (!advancedSearch) {
+							msgInfo = LanguageUtil.format(pageContext, "no-articles-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>");
+						}
+						%>
+						<%= msgInfo %>
 					</div>
 				</c:if>
 
@@ -359,7 +389,7 @@ int total = 0;
 						total: <%= total %>
 					}
 				},
-				src: Liferay.DL_SEARCH
+				src: Liferay.JOURNAL_SEARCH
 			}
 		);
 	</aui:script>

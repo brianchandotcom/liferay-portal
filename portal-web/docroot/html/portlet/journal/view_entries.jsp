@@ -94,7 +94,17 @@ boolean showAddArticleButton = JournalPermission.contains(permissionChecker, sco
 		<div class="portlet-msg-info">
 
 			<%
-			JournalStructure structure = JournalStructureLocalServiceUtil.getStructure(scopeGroupId, displayTerms.getStructureId());
+			String name = LanguageUtil.get(pageContext, "basic-web-content");
+
+			String structureId = StringPool.BLANK;
+
+			if (!displayTerms.getStructureId().equals("0")) {
+				JournalStructure structure = JournalStructureLocalServiceUtil.getStructure(scopeGroupId, displayTerms.getStructureId());
+
+				name = structure.getName(locale);
+
+				structureId = displayTerms.getStructureId();
+			}
 			%>
 
 			<liferay-portlet:renderURL varImpl="addArticlesURL" windowState="<%= LiferayWindowState.MAXIMIZED.toString() %>">
@@ -103,10 +113,10 @@ boolean showAddArticleButton = JournalPermission.contains(permissionChecker, sco
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="backURL" value="<%= currentURL %>" />
 				<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
-				<portlet:param name="structureId" value="<%= displayTerms.getStructureId() %>" />
+				<portlet:param name="structureId" value="<%= structureId %>" />
 			</liferay-portlet:renderURL>
 
-			<liferay-ui:message arguments="<%= structure.getName(locale) %>" key="showing-content-filtered-by-structure-x" /> (<a href="<%= addArticlesURL.toString() %>"><liferay-ui:message arguments="<%= structure.getName(locale) %>" key="add-new-x" /></a>)
+			<liferay-ui:message arguments="<%= name %>" key="showing-content-filtered-by-structure-x" /> (<a href="<%= addArticlesURL.toString() %>"><liferay-ui:message arguments="<%= name %>" key="add-new-x" /></a>)
 		</div>
 	</c:if>
 </c:if>

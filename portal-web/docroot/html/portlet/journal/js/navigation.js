@@ -60,6 +60,10 @@ AUI.add(
 
 		var SEARCH_TYPE_SINGLE = 1;
 
+		var STR_ADVANCED_SEARCH = 'advancedSearch';
+
+		var STR_AND_OPERATOR = 'andOperator';
+
 		var STR_ACTIVE = 'active';
 
 		var STR_AJAX_REQUEST = 'ajax';
@@ -68,7 +72,11 @@ AUI.add(
 
 		var STR_CLICK = 'click';
 
+		var STR_CONTENT = 'content';
+
 		var STR_DATA = 'data';
+
+		var STR_DESCRIPTION = 'description';
 
 		var STR_DRAG_NODE = 'dragNode';
 
@@ -88,17 +96,25 @@ AUI.add(
 
 		var STR_KEYWORDS = 'keywords';
 
-		var STR_TOGGLE_ACTIONS_BUTTON = 'toggleActionsButton';
-
 		var STR_ROW_IDS_JOURNAL_FOLDER_CHECKBOX = 'rowIdsJournalFolderCheckbox';
 
 		var STR_ROW_IDS_JOURNAL_ARTICLE_CHECKBOX = 'rowIdsJournalArticleCheckbox';
+
+		var STR_SEARCH_ARTICLE_ID = 'searchArticleId';
 
 		var STR_SEARCH_FOLDER_ID = 'searchFolderId';
 
 		var STR_SEARCH_RESULTS_CONTAINER = 'searchResultsContainer';
 
 		var STR_SHOW_SEARCH_INFO = 'showSearchInfo';
+
+		var STR_STATUS = 'status';
+
+		var STR_TITLE = 'title';
+
+		var STR_TOGGLE_ACTIONS_BUTTON = 'toggleActionsButton';
+
+		var STR_TYPE = 'type';
 
 		var STRUTS_ACTION = 'struts_action';
 
@@ -165,6 +181,8 @@ AUI.add(
 						instance._displayStyleToolbarNode = instance.byId(DISPLAY_STYLE_TOOLBAR);
 						instance._entriesContainer = instance.byId('entriesContainer');
 
+						instance._advanceSearchContainer = instance.byId('advanceSearchContainer');
+
 						instance._selectAllCheckbox = instance.byId('allRowIdsCheckbox');
 
 						instance._portletMessageContainer = A.Node.create(TPL_MESSAGE_RESPONSE);
@@ -172,7 +190,14 @@ AUI.add(
 						instance._displayStyle = instance.ns('displayStyle');
 						instance._folderId = instance.ns(STR_FOLDER_ID);
 
+						instance._andOperatorNode = instance.byId(STR_AND_OPERATOR);
+						instance._contentNode = instance.byId(STR_CONTENT);
+						instance._descriptionNode = instance.byId(STR_DESCRIPTION);
 						instance._keywordsNode = instance.byId(STR_KEYWORDS);
+						instance._searchArticleIdNode = instance.byId(STR_SEARCH_ARTICLE_ID);
+						instance._statusNode = instance.byId(STR_STATUS);
+						instance._titleNode = instance.byId(STR_TITLE);
+						instance._typeNode = instance.byId(STR_TYPE);
 
 						var entryPage = 0;
 
@@ -292,6 +317,12 @@ AUI.add(
 
 						if (searchFormNode) {
 							searchFormNode.on('submit', instance._onSearchFormSubmit, instance);
+						}
+
+						var advanceSearchFormNode = instance.one('#fmAdvancedSearch');
+
+						if (advanceSearchFormNode) {
+							advanceSearchFormNode.on('submit', instance._onAdvanceSearchFormSubmit, instance);
 						}
 
 						instance._restoreState();
@@ -741,10 +772,21 @@ AUI.add(
 
 						var selectedFolder = instance._getSelectedFolder();
 
+						var showAdvancedSearch = instance.byId('showAdvancedSearch');
+
 						var searchData = {
+							advancedSearch: showAdvancedSearch.hasClass('close-advanced-search'),
+							andOperator: instance._andOperatorNode.get('value'),
 							folderId: selectedFolder.id,
-							keywords: instance._keywordsNode.get('value'),
-							showSearchInfo: true
+							content: instance._contentNode.get('value'),
+							description: instance._descriptionNode.get('value'),
+							keywords: '',
+							searchArticleId: instance._searchArticleIdNode.get('value'),
+							searchFolderId: selectedFolder.id,
+							showSearchInfo: true,
+							status: instance._statusNode.get('value'),
+							title: instance._titleNode.get('value'),
+							type: instance._typeNode.get('value')
 						};
 
 						if (event.searchEverywhere) {
@@ -1071,6 +1113,33 @@ AUI.add(
 						}
 					},
 
+					_onAdvanceSearchFormSubmit: function(event) {
+						var instance = this;
+
+						event.preventDefault();
+
+						var selectedFolder = instance._getSelectedFolder();
+
+						var showTabs = (selectedFolder.id == DEFAULT_FOLDER_ID);
+
+						var searchData = {
+							advancedSearch: true,
+							andOperator: instance._andOperatorNode.get('value'),
+							folderId: selectedFolder.id,
+							content: instance._contentNode.get('value'),
+							description: instance._descriptionNode.get('value'),
+							keywords: '',
+							searchArticleId: instance._searchArticleIdNode.get('value'),
+							searchFolderId: selectedFolder.id,
+							showSearchInfo: true,
+							status: instance._statusNode.get('value'),
+							title: instance._titleNode.get('value'),
+							type: instance._typeNode.get('value')
+						};
+
+						instance._searchArticle(searchData);
+					},
+
 					_onSearchFormSubmit: function(event) {
 						var instance = this;
 
@@ -1081,10 +1150,18 @@ AUI.add(
 						var showTabs = (selectedFolder.id == DEFAULT_FOLDER_ID);
 
 						var searchData = {
+							advancedSearch: false,
+							andOperator: '',
 							folderId: selectedFolder.id,
+							content: '',
+							description: '',
 							keywords: instance._keywordsNode.get('value'),
+							searchArticleId: '',
 							searchFolderId: selectedFolder.id,
-							showSearchInfo: true
+							showSearchInfo: true,
+							status: '',
+							title: '',
+							type: ''
 						};
 
 						instance._searchArticle(searchData);
@@ -1194,8 +1271,16 @@ AUI.add(
 						var requestParams = {};
 
 						requestParams[instance.ns(STRUTS_ACTION)] = '/journal/search';
+						requestParams[instance.ns(STR_ADVANCED_SEARCH)] = searchData.advancedSearch;
+						requestParams[instance.ns(STR_AND_OPERATOR)] = searchData.andOperator;
+						requestParams[instance.ns(STR_CONTENT)] = searchData.content;
+						requestParams[instance.ns(STR_DESCRIPTION)] = searchData.description;
 						requestParams[instance.ns(STR_FOLDER_ID)] = searchData.folderId;
 						requestParams[instance.ns(STR_SEARCH_FOLDER_ID)] = searchData.searchFolderId;
+						requestParams[instance.ns(STR_SEARCH_ARTICLE_ID)] = searchData.searchArticleId;
+						requestParams[instance.ns(STR_STATUS)] = searchData.status;
+						requestParams[instance.ns(STR_TITLE)] = searchData.title;
+						requestParams[instance.ns(STR_TYPE)] = searchData.type;
 						requestParams[instance.ns(SEARCH_TYPE)] = SEARCH_TYPE_SINGLE;
 						requestParams[instance.ns(STR_KEYWORDS)] = searchData.keywords;
 						requestParams[instance.ns(STR_SHOW_SEARCH_INFO)] = searchData.showSearchInfo;

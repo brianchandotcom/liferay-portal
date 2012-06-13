@@ -176,7 +176,7 @@ AUI.add(
 			'</div>' +
 		'</li>';
 
-		var TPL_VOCABULARY_OPTION = '<option {vocabularySelected}>{titleCurrentValue}</option>';
+		var TPL_VOCABULARY_OPTION = '<option {selected} value="{vocabularyId}">{titleCurrentValue}</option>';
 
 		var TPL_CATEGORIES_TREE_CONTAINER = '<div class="categories-treeview-container" id="categoriesTreeContainer"></div>';
 
@@ -1581,7 +1581,11 @@ AUI.add(
 								A.each(
 									vocabularies,
 									function(item, index, collection) {
-										item.vocabularySelected = (item.vocabularyId == selectedVocabularyId);
+										item[STR_SELECTED] = STR_EMPTY;
+
+										if (item.vocabularyId == selectedVocabularyId) {
+											item[STR_SELECTED] = STR_SELECTED;
+										}
 
 										buffer.push(Lang.sub(TPL_VOCABULARY_OPTION, item));
 									}

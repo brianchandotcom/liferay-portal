@@ -41,6 +41,7 @@ import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
+import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.security.auth.ScreenNameGenerator;
 import com.liferay.portal.security.auth.ScreenNameGeneratorFactory;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
@@ -120,7 +121,13 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 			PortalLDAPImporterImpl.class.getName(), false,
 			PropsValues.LDAP_IMPORT_LOCK_EXPIRATION_TIME);
 
+		long curThreadCompanyId = CompanyThreadLocal.getCompanyId();
+
 		try {
+			if (curThreadCompanyId == CompanyConstants.SYSTEM) {
+				CompanyThreadLocal.setCompanyId(companyId);
+			}
+
 			long[] ldapServerIds = StringUtil.split(
 				PrefsPropsUtil.getString(companyId, "ldap.server.ids"), 0L);
 
@@ -143,6 +150,8 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 			}
 		}
 		finally {
+			CompanyThreadLocal.setCompanyId(curThreadCompanyId);
+
 			LockLocalServiceUtil.unlock(
 				PortalLDAPImporterUtil.class.getName(), companyId);
 		}

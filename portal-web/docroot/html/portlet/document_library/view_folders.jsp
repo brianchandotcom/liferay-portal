@@ -136,6 +136,11 @@ request.setAttribute("view_folders.jsp-total", String.valueOf(total));
 						%>
 
 						<li class="folder <%= (navigation.equals("home") && (folderId == rootFolderId) && (fileEntryTypeId == -1)) ? "selected" : StringPool.BLANK %>">
+
+							<%
+							request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+							%>
+
 							<liferay-util:include page="/html/portlet/document_library/folder_action.jsp" />
 
 							<c:if test="<%= (foldersCount > 0) %>">
@@ -274,6 +279,11 @@ request.setAttribute("view_folders.jsp-total", String.valueOf(total));
 									%>
 
 									<li class="folder <%= (mountFolder.getFolderId() == folderId) ? "selected" : StringPool.BLANK %>">
+
+										<%
+										request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+										%>
+
 										<liferay-util:include page="/html/portlet/document_library/folder_action.jsp" />
 
 										<c:if test="<%= mountFoldersCount > 0 %>">
@@ -297,6 +307,11 @@ request.setAttribute("view_folders.jsp-total", String.valueOf(total));
 							%>
 
 									<li class="folder error" title="<%= LanguageUtil.get(pageContext, "an-unexpected-error-occurred-while-connecting-to-the-repository") %>">
+
+										<%
+										request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+										%>
+
 										<liferay-util:include page="/html/portlet/document_library/folder_action.jsp" />
 
 										<span class="browse-folder">
@@ -370,6 +385,11 @@ request.setAttribute("view_folders.jsp-total", String.valueOf(total));
 							%>
 
 							<li class="folder <%= (curFolder.getFolderId() == folderId) ? "selected" : StringPool.BLANK %>">
+
+								<%
+								request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+								%>
+
 								<liferay-util:include page="/html/portlet/document_library/folder_action.jsp" />
 
 								<c:if test="<%= foldersCount > 0 %>">

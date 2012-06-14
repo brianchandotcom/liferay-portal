@@ -34,6 +34,8 @@ public class Field implements Serializable {
 	 */
 	public static final String ASSET_CATEGORY_NAMES = "assetCategoryNames";
 
+	public static final String ARTICLE_ID = "articleId";
+
 	public static final String ASSET_CATEGORY_TITLES = "assetCategoryTitles";
 
 	public static final String ASSET_TAG_NAMES = "assetTagNames";

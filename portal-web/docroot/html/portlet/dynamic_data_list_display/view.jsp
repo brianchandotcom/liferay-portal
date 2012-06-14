@@ -40,7 +40,6 @@ try {
 				<liferay-util:param name="editable" value="<%= String.valueOf(editable) %>" />
 				<liferay-util:param name="spreadsheet" value="<%= String.valueOf(spreadsheet) %>" />
 			</liferay-util:include>
-
 		</c:when>
 		<c:otherwise>
 

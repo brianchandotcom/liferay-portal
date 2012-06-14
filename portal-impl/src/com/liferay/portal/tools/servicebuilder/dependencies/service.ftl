@@ -10,6 +10,7 @@ import com.liferay.portal.service.Base${sessionTypeName}Service;
 import com.liferay.portal.service.Invokable${sessionTypeName}Service;
 import com.liferay.portal.service.PermissionedModelLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
+import com.liferay.portal.security.MethodSecurity;
 
 <#if sessionTypeName == "Local">
 /**

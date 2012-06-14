@@ -20,17 +20,22 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.verifier.AuthVerifier;
+import com.liferay.portal.security.auth.verifier.VerificationResult;
 import com.liferay.portal.security.pwd.PwdEncryptor;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
+
+import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Minhchau Dang
+ * @author Tomas Polesovsky
  */
-public class ParameterAutoLogin implements AutoLogin {
+public class ParameterAutoLogin implements AutoLogin, AuthVerifier {
 
 	public String[] login(
 			HttpServletRequest request, HttpServletResponse response)
@@ -97,6 +102,31 @@ public class ParameterAutoLogin implements AutoLogin {
 		catch (Exception e) {
 			throw new AutoLoginException(e);
 		}
+	}
+
+	public VerificationResult verify(
+			AuthenticationContext authenticationContext,
+			Properties configuration)
+		throws AuthException {
+
+		VerificationResult result = new VerificationResult();
+
+		try {
+			String[] loginResult = login(
+				authenticationContext.getHttpServletRequest(),
+				authenticationContext.getHttpServletResponse());
+
+			if (loginResult != null) {
+				result.setState(VerificationResult.State.SUCCESS);
+				result.setUserId(Long.valueOf(loginResult[0]));
+				result.setPassword(loginResult[1]);
+			}
+		}
+		catch (AutoLoginException e) {
+			throw new AuthException(e);
+		}
+
+		return result;
 	}
 
 	protected String getLoginParam() {

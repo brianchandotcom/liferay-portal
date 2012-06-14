@@ -24,27 +24,38 @@ import java.io.UnsupportedEncodingException;
  */
 public class Translation implements Serializable {
 
-	public Translation(String translationId, String fromText) {
-		_translationId = translationId;
+	public Translation(
+		String fromLanguage, String toLanguage, String fromText) {
+
+		_fromLanguage = fromLanguage;
+		_toLanguage = toLanguage;
 		setFromText(fromText);
 	}
 
-	public Translation(String translationId, String fromText, String toText) {
-		_translationId = translationId;
+	public Translation(
+		String fromLanguage, String toLanguage, String fromText,
+		String toText) {
+
+		_fromLanguage = fromLanguage;
+		_toLanguage = toLanguage;
 		setFromText(fromText);
 		setToText(toText);
+	}
+
+	public String getFromLanguage() {
+		return _fromLanguage;
 	}
 
 	public String getFromText() {
 		return _fromText;
 	}
 
-	public String getToText() {
-		return _toText;
+	public String getToLanguage() {
+		return _toLanguage;
 	}
 
-	public String getTranslationId() {
-		return _translationId;
+	public String getToText() {
+		return _toText;
 	}
 
 	public void setFromText(String fromText) {
@@ -63,8 +74,9 @@ public class Translation implements Serializable {
 		}
 	}
 
+	private String _fromLanguage;
 	private String _fromText;
+	private String _toLanguage;
 	private String _toText;
-	private String _translationId;
 
 }

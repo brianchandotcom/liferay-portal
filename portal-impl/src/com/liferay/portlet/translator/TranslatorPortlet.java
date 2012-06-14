@@ -39,12 +39,15 @@ public class TranslatorPortlet extends MVCPortlet {
 		throws PortletException {
 
 		try {
-			String translationId = ParamUtil.getString(actionRequest, "id");
+			String fromLanguage = ParamUtil.getString(
+				actionRequest, "fromLanguage");
 			String fromText = ParamUtil.getString(actionRequest, "text");
+			String toLanguage = ParamUtil.getString(
+				actionRequest, "toLanguage");
 
 			if (Validator.isNotNull(fromText)) {
 				Translation translation = TranslatorUtil.getTranslation(
-					translationId, fromText);
+					fromLanguage, toLanguage, fromText);
 
 				actionRequest.setAttribute(
 					WebKeys.TRANSLATOR_TRANSLATION, translation);

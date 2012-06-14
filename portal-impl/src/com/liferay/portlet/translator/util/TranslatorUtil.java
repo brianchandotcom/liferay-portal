@@ -14,20 +14,56 @@
 
 package com.liferay.portlet.translator.util;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.webcache.WebCacheException;
 import com.liferay.portal.kernel.webcache.WebCacheItem;
 import com.liferay.portlet.translator.model.Translation;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Hugo Huijser
  */
 public class TranslatorUtil {
 
+	public static String[] getFromAndToLanguageIds(
+		String translationId, String[] allLanguageIds) {
+
+		try {
+			int x = translationId.indexOf(StringPool.UNDERLINE);
+
+			String fromLanguage = translationId.substring(0, x);
+
+			if (!ArrayUtil.contains(allLanguageIds, fromLanguage)) {
+				x = translationId.indexOf(StringPool.UNDERLINE, x + 1);
+
+				fromLanguage = translationId.substring(0, x);
+
+				if (!ArrayUtil.contains(allLanguageIds, fromLanguage)) {
+					return null;
+				}
+			}
+
+			String toLanguage = translationId.substring(x + 1);
+
+			if (!ArrayUtil.contains(allLanguageIds, toLanguage)) {
+				return null;
+			}
+
+			return new String[] {fromLanguage, toLanguage};
+		}
+		catch (Exception e) {
+		}
+
+		return null;
+	}
+
 	public static Translation getTranslation(
-			String translationId, String fromText)
+			String fromLanguage, String toLanguage, String fromText)
 		throws WebCacheException {
 
-		WebCacheItem wci = new TranslationWebCacheItem(translationId, fromText);
+		WebCacheItem wci = new TranslationWebCacheItem(
+			fromLanguage, toLanguage, fromText);
 
 		return (Translation)wci.convert("");
 	}

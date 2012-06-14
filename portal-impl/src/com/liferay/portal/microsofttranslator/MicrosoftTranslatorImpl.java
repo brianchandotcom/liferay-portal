@@ -45,11 +45,11 @@ public class MicrosoftTranslatorImpl implements MicrosoftTranslator {
 	}
 
 	public String translate(
-			String fromLanguage, String toLanguage, String fromText)
+			String fromLanguageId, String toLanguageId, String fromText)
 		throws MicrosoftTranslatorException {
 
 		try {
-			return doTranslate(fromLanguage, toLanguage, fromText);
+			return doTranslate(fromLanguageId, toLanguageId, fromText);
 		}
 		catch (MicrosoftTranslatorException mte) {
 			throw mte;
@@ -60,11 +60,11 @@ public class MicrosoftTranslatorImpl implements MicrosoftTranslator {
 	}
 
 	protected String doTranslate(
-			String fromLanguage, String toLanguage, String fromText)
+			String fromLanguageId, String toLanguageId, String fromText)
 		throws Exception {
 
-		fromLanguage = getMicrosoftLanguageCode(fromLanguage);
-		toLanguage = getMicrosoftLanguageCode(toLanguage);
+		fromLanguageId = getMicrosoftLanguageId(fromLanguageId);
+		toLanguageId = getMicrosoftLanguageId(toLanguageId);
 
 		Http.Options options = new Http.Options();
 
@@ -74,9 +74,9 @@ public class MicrosoftTranslatorImpl implements MicrosoftTranslator {
 		sb.append("text=");
 		sb.append(HttpUtil.encodeURL(fromText));
 		sb.append("&from=");
-		sb.append(fromLanguage);
+		sb.append(fromLanguageId);
 		sb.append("&to=");
-		sb.append(toLanguage);
+		sb.append(toLanguageId);
 
 		options.setLocation(sb.toString());
 
@@ -112,7 +112,7 @@ public class MicrosoftTranslatorImpl implements MicrosoftTranslator {
 		return StringUtil.replace(toText, CharPool.NEW_LINE, CharPool.SPACE);
 	}
 
-	protected String getMicrosoftLanguageCode(String languageId) {
+	protected String getMicrosoftLanguageId(String languageId) {
 		if (languageId.equals("pt_BR") || languageId.equals("pt_PT")) {
 			return "pt";
 		}

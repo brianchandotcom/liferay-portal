@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.microsofttranslator.MicrosoftTranslatorExceptio
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -191,8 +192,6 @@ public class LangBuilder {
 			}
 		}
 
-		String translationId = "en_" + languageId;
-
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new UnsyncStringReader(content));
 		UnsyncBufferedWriter unsyncBufferedWriter = new UnsyncBufferedWriter(
@@ -220,7 +219,8 @@ public class LangBuilder {
 					((state == 5) && !key.startsWith("action.")) ||
 					((state == 7) && !key.startsWith("country.")) ||
 					((state == 8) && !key.startsWith("currency.")) ||
-					((state != 8) && key.startsWith("currency."))) {
+					((state == 9) && !key.startsWith("language.")) ||
+					((state != 9) && key.startsWith("language."))) {
 
 					throw new RuntimeException(
 						"File " + languageId + " with state " + state +
@@ -279,42 +279,38 @@ public class LangBuilder {
 					else if (key.equals("lang.line.end")) {
 						translatedText = "right";
 					}
-					else if (translationId.equals("en_el") &&
+					else if (languageId.equals("el") &&
 							 (key.equals("enabled") || key.equals("on") ||
 							  key.equals("on-date"))) {
 
 						translatedText = "";
 					}
-					else if (translationId.equals("en_es") &&
-							 key.equals("am")) {
-
+					else if (languageId.equals("es") && key.equals("am")) {
 						translatedText = "";
 					}
-					else if (translationId.equals("en_it") &&
-							 key.equals("am")) {
-
+					else if (languageId.equals("it") && key.equals("am")) {
 						translatedText = "";
 					}
-					else if (translationId.equals("en_ja") &&
+					else if (languageId.equals("ja") &&
 							 (key.equals("any") || key.equals("anytime") ||
 							  key.equals("down") || key.equals("on") ||
 							  key.equals("on-date") || key.equals("the"))) {
 
 						translatedText = "";
 					}
-					else if (translationId.equals("en_ko") &&
-							 key.equals("the")) {
-
+					else if (languageId.equals("ko") && key.equals("the")) {
 						translatedText = "";
 					}
 					else {
 						translatedText = _translate(
-							translationId, key, value, 0);
+							"en", languageId, key, value, 0);
 
 						if (Validator.isNull(translatedText)) {
 							translatedText = value + AUTOMATIC_COPY;
 						}
-						else if (!key.startsWith("country.")) {
+						else if (!key.startsWith("country.") &&
+								 !key.startsWith("language.")) {
+
 							translatedText =
 								translatedText + AUTOMATIC_TRANSLATION;
 						}
@@ -402,6 +398,13 @@ public class LangBuilder {
 					}
 
 					state = 8;
+				}
+				else if (line.startsWith("## Language")) {
+					if (state == 9) {
+						throw new RuntimeException(languageId);
+					}
+
+					state = 9;
 				}
 
 				if (firstLine) {
@@ -544,41 +547,42 @@ public class LangBuilder {
 	}
 
 	private String _translate(
-		String translationId, String key, String fromText, int limit) {
+		String fromLanguageId, String toLanguageId, String key, String fromText,
+		int limit) {
 
-		if (translationId.equals("en_ar") ||
-			translationId.equals("en_eu") ||
-			translationId.equals("en_bg") ||
-			translationId.equals("en_ca") ||
-			translationId.equals("en_hr") ||
-			translationId.equals("en_cs") ||
-			translationId.equals("en_da") ||
-			translationId.equals("en_et") ||
-			translationId.equals("en_fi") ||
-			translationId.equals("en_gl") ||
+		if (toLanguageId.equals("ar") ||
+			toLanguageId.equals("eu") ||
+			toLanguageId.equals("bg") ||
+			toLanguageId.equals("ca") ||
+			toLanguageId.equals("hr") ||
+			toLanguageId.equals("cs") ||
+			toLanguageId.equals("da") ||
+			toLanguageId.equals("et") ||
+			toLanguageId.equals("fi") ||
+			toLanguageId.equals("gl") ||
 
 			// LPS-26741
 
-			translationId.equals("en_de") ||
+			toLanguageId.equals("de") ||
 
-			translationId.equals("en_iw") ||
-			translationId.equals("en_hi") ||
-			translationId.equals("en_hu") ||
-			translationId.equals("en_in") ||
-			translationId.equals("en_lo") ||
-			translationId.equals("en_nb") ||
-			translationId.equals("en_fa") ||
-			translationId.equals("en_pl") ||
-			translationId.equals("en_ro") ||
-			translationId.equals("en_ru") ||
-			translationId.equals("en_sr_RS") ||
-			translationId.equals("en_sr_RS_latin") ||
-			translationId.equals("en_sk") ||
-			translationId.equals("en_sl") ||
-			translationId.equals("en_sv") ||
-			translationId.equals("en_tr") ||
-			translationId.equals("en_uk") ||
-			translationId.equals("en_vi")) {
+			toLanguageId.equals("iw") ||
+			toLanguageId.equals("hi") ||
+			toLanguageId.equals("hu") ||
+			toLanguageId.equals("in") ||
+			toLanguageId.equals("lo") ||
+			toLanguageId.equals("nb") ||
+			toLanguageId.equals("fa") ||
+			toLanguageId.equals("pl") ||
+			toLanguageId.equals("ro") ||
+			toLanguageId.equals("ru") ||
+			toLanguageId.equals("sr_RS") ||
+			toLanguageId.equals("sr_RS_latin") ||
+			toLanguageId.equals("sk") ||
+			toLanguageId.equals("sl") ||
+			toLanguageId.equals("sv") ||
+			toLanguageId.equals("tr") ||
+			toLanguageId.equals("uk") ||
+			toLanguageId.equals("vi")) {
 
 			// Automatic translator does not support Arabic, Basque, Bulgarian,
 			// Catalan, Croatian, Czech, Danish, Estonian, Finnish, Galician,
@@ -602,11 +606,21 @@ public class LangBuilder {
 		String toText = null;
 
 		try {
-			System.out.println(
-				"Translating " + translationId + " " + key + " " + fromText);
+			StringBundler sb = new StringBundler(8);
+
+			sb.append("Translating ");
+			sb.append(fromLanguageId);
+			sb.append("_");
+			sb.append(toLanguageId);
+			sb.append(" ");
+			sb.append(key);
+			sb.append(" ");
+			sb.append(fromText);
+
+			System.out.println(sb.toString());
 
 			WebCacheItem wci = new TranslationWebCacheItem(
-				translationId, fromText);
+				fromLanguageId, toLanguageId, fromText);
 
 			Translation translation = (Translation)wci.convert("");
 
@@ -627,7 +641,8 @@ public class LangBuilder {
 		// Keep trying
 
 		if (toText == null) {
-			return _translate(translationId, key, fromText, ++limit);
+			return _translate(
+				fromLanguageId, toLanguageId, key, fromText, ++limit);
 		}
 
 		return toText;

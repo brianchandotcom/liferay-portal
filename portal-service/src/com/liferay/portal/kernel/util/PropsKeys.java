@@ -2117,6 +2117,8 @@ public interface PropsKeys {
 
 	public static final String TRANSLATOR_DEFAULT_LANGUAGES = "translator.default.languages";
 
+	public static final String TRANSLATOR_LANGUAGES = "translator.languages";
+
 	public static final String TRASH_SEARCH_LIMIT = "trash.search.limit";
 
 	public static final String UPGRADE_PROCESSES = "upgrade.processes";

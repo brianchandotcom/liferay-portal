@@ -164,7 +164,6 @@ public class MBThreadFinderImpl
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(groupId);
-
 			qPos.add(modifiedDate);
 
 			if (userId > 0) {
@@ -470,7 +469,6 @@ public class MBThreadFinderImpl
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(groupId);
-
 			qPos.add(modifiedDate);
 
 			if (userId > 0) {

@@ -537,42 +537,42 @@ public class LangBuilder {
 	}
 
 	private String _translate(
-		String fromLanguage, String toLanguage, String key, String fromText,
+		String fromLanguageId, String toLanguageId, String key, String fromText,
 		int limit) {
 
-		if (toLanguage.equals("ar") ||
-			toLanguage.equals("eu") ||
-			toLanguage.equals("bg") ||
-			toLanguage.equals("ca") ||
-			toLanguage.equals("hr") ||
-			toLanguage.equals("cs") ||
-			toLanguage.equals("da") ||
-			toLanguage.equals("et") ||
-			toLanguage.equals("fi") ||
-			toLanguage.equals("gl") ||
+		if (toLanguageId.equals("ar") ||
+			toLanguageId.equals("eu") ||
+			toLanguageId.equals("bg") ||
+			toLanguageId.equals("ca") ||
+			toLanguageId.equals("hr") ||
+			toLanguageId.equals("cs") ||
+			toLanguageId.equals("da") ||
+			toLanguageId.equals("et") ||
+			toLanguageId.equals("fi") ||
+			toLanguageId.equals("gl") ||
 
 			// LPS-26741
 
-			toLanguage.equals("de") ||
+			toLanguageId.equals("de") ||
 
-			toLanguage.equals("iw") ||
-			toLanguage.equals("hi") ||
-			toLanguage.equals("hu") ||
-			toLanguage.equals("in") ||
-			toLanguage.equals("lo") ||
-			toLanguage.equals("nb") ||
-			toLanguage.equals("fa") ||
-			toLanguage.equals("pl") ||
-			toLanguage.equals("ro") ||
-			toLanguage.equals("ru") ||
-			toLanguage.equals("sr_RS") ||
-			toLanguage.equals("sr_RS_latin") ||
-			toLanguage.equals("sk") ||
-			toLanguage.equals("sl") ||
-			toLanguage.equals("sv") ||
-			toLanguage.equals("tr") ||
-			toLanguage.equals("uk") ||
-			toLanguage.equals("vi")) {
+			toLanguageId.equals("iw") ||
+			toLanguageId.equals("hi") ||
+			toLanguageId.equals("hu") ||
+			toLanguageId.equals("in") ||
+			toLanguageId.equals("lo") ||
+			toLanguageId.equals("nb") ||
+			toLanguageId.equals("fa") ||
+			toLanguageId.equals("pl") ||
+			toLanguageId.equals("ro") ||
+			toLanguageId.equals("ru") ||
+			toLanguageId.equals("sr_RS") ||
+			toLanguageId.equals("sr_RS_latin") ||
+			toLanguageId.equals("sk") ||
+			toLanguageId.equals("sl") ||
+			toLanguageId.equals("sv") ||
+			toLanguageId.equals("tr") ||
+			toLanguageId.equals("uk") ||
+			toLanguageId.equals("vi")) {
 
 			// Automatic translator does not support Arabic, Basque, Bulgarian,
 			// Catalan, Croatian, Czech, Danish, Estonian, Finnish, Galician,
@@ -599,9 +599,9 @@ public class LangBuilder {
 			StringBundler sb = new StringBundler(8);
 
 			sb.append("Translating ");
-			sb.append(fromLanguage);
+			sb.append(fromLanguageId);
 			sb.append("_");
-			sb.append(toLanguage);
+			sb.append(toLanguageId);
 			sb.append(" ");
 			sb.append(key);
 			sb.append(" ");
@@ -610,7 +610,7 @@ public class LangBuilder {
 			System.out.println(sb.toString());
 
 			WebCacheItem wci = new TranslationWebCacheItem(
-				fromLanguage, toLanguage, fromText);
+				fromLanguageId, toLanguageId, fromText);
 
 			Translation translation = (Translation)wci.convert("");
 
@@ -631,7 +631,8 @@ public class LangBuilder {
 		// Keep trying
 
 		if (toText == null) {
-			return _translate(fromLanguage, toLanguage, key, fromText, ++limit);
+			return _translate(
+				fromLanguageId, toLanguageId, key, fromText, ++limit);
 		}
 
 		return toText;

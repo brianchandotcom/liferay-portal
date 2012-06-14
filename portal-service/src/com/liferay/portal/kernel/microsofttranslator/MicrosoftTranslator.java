@@ -20,7 +20,7 @@ package com.liferay.portal.kernel.microsofttranslator;
 public interface MicrosoftTranslator {
 
 	public String translate(
-			String fromLanguage, String toLanguage, String fromText)
+			String fromLanguageId, String toLanguageId, String fromText)
 		throws MicrosoftTranslatorException;
 
 }

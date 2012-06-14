@@ -28,23 +28,23 @@ import com.liferay.portlet.translator.model.Translation;
 public class TranslationWebCacheItem implements WebCacheItem {
 
 	public TranslationWebCacheItem(
-		String fromLanguage, String toLanguage, String fromText) {
+		String fromLanguageId, String toLanguageId, String fromText) {
 
-		_fromLanguage = fromLanguage;
-		_toLanguage = toLanguage;
+		_fromLanguageId = fromLanguageId;
+		_toLanguageId = toLanguageId;
 		_fromText = fromText;
 	}
 
 	public Object convert(String key) throws WebCacheException {
 		Translation translation = new Translation(
-			_fromLanguage, _toLanguage, _fromText);
+			_fromLanguageId, _toLanguageId, _fromText);
 
 		try {
 			MicrosoftTranslator microsoftTranslator =
 				MicrosoftTranslatorFactoryUtil.getMicrosoftTranslator();
 
 			String toText = microsoftTranslator.translate(
-				_fromLanguage, _toLanguage, _fromText);
+				_fromLanguageId, _toLanguageId, _fromText);
 
 			translation.setToText(toText);
 		}
@@ -61,8 +61,8 @@ public class TranslationWebCacheItem implements WebCacheItem {
 
 	private static final long _REFRESH_TIME = Time.DAY * 90;
 
-	private String _fromLanguage;
+	private String _fromLanguageId;
 	private String _fromText;
-	private String _toLanguage;
+	private String _toLanguageId;
 
 }

@@ -27,10 +27,10 @@ if (translation == null) {
 	String[] languageIds = TranslatorUtil.getFromAndToLanguageIds(translationId, allLanguageIds);
 
 	if (languageIds != null) {
-		String fromLanguage = languageIds[0];
-		String toLanguage = languageIds[1];
+		String fromLanguageId = languageIds[0];
+		String toLanguageId = languageIds[1];
 
-		translation = new Translation(fromLanguage, toLanguage, StringPool.BLANK, StringPool.BLANK);
+		translation = new Translation(fromLanguageId, toLanguageId, StringPool.BLANK, StringPool.BLANK);
 	}
 }
 %>
@@ -70,13 +70,13 @@ if (translation == null) {
 			<aui:fieldset>
 				<aui:input cssClass="lfr-textarea-container" label="" name="text" type="textarea" value="<%= translation.getFromText() %>" wrap="soft" />
 
-				<aui:select label="language-from" name="fromLanguage">
+				<aui:select label="language-from" name="fromLanguageId">
 
 					<%
 					for (String languageId : allLanguageIds) {
 					%>
 
-						<aui:option label='<%= "language." + languageId %>' selected="<%= translation.getFromLanguage().equals(languageId) %>" value="<%= languageId %>" />
+						<aui:option label='<%= "language." + languageId %>' selected="<%= translation.getFromLanguageId().equals(languageId) %>" value="<%= languageId %>" />
 
 					<%
 					}
@@ -84,13 +84,13 @@ if (translation == null) {
 
 				</aui:select>
 
-				<aui:select label="language-to" name="toLanguage">
+				<aui:select label="language-to" name="toLanguageId">
 
 					<%
 					for (String languageId : allLanguageIds) {
 					%>
 
-						<aui:option label='<%= "language." + languageId %>' selected="<%= translation.getToLanguage().equals(languageId) %>" value="<%= languageId %>" />
+						<aui:option label='<%= "language." + languageId %>' selected="<%= translation.getToLanguageId().equals(languageId) %>" value="<%= languageId %>" />
 
 					<%
 					}

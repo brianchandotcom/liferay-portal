@@ -32,25 +32,25 @@ public class TranslatorUtil {
 		try {
 			int x = translationId.indexOf(StringPool.UNDERLINE);
 
-			String fromLanguage = translationId.substring(0, x);
+			String fromLanguageId = translationId.substring(0, x);
 
-			if (!ArrayUtil.contains(allLanguageIds, fromLanguage)) {
+			if (!ArrayUtil.contains(allLanguageIds, fromLanguageId)) {
 				x = translationId.indexOf(StringPool.UNDERLINE, x + 1);
 
-				fromLanguage = translationId.substring(0, x);
+				fromLanguageId = translationId.substring(0, x);
 
-				if (!ArrayUtil.contains(allLanguageIds, fromLanguage)) {
+				if (!ArrayUtil.contains(allLanguageIds, fromLanguageId)) {
 					return null;
 				}
 			}
 
-			String toLanguage = translationId.substring(x + 1);
+			String toLanguageId = translationId.substring(x + 1);
 
-			if (!ArrayUtil.contains(allLanguageIds, toLanguage)) {
+			if (!ArrayUtil.contains(allLanguageIds, toLanguageId)) {
 				return null;
 			}
 
-			return new String[] {fromLanguage, toLanguage};
+			return new String[] {fromLanguageId, toLanguageId};
 		}
 		catch (Exception e) {
 		}
@@ -59,11 +59,11 @@ public class TranslatorUtil {
 	}
 
 	public static Translation getTranslation(
-			String fromLanguage, String toLanguage, String fromText)
+			String fromLanguageId, String toLanguageId, String fromText)
 		throws WebCacheException {
 
 		WebCacheItem wci = new TranslationWebCacheItem(
-			fromLanguage, toLanguage, fromText);
+			fromLanguageId, toLanguageId, fromText);
 
 		return (Translation)wci.convert("");
 	}

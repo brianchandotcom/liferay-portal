@@ -132,9 +132,21 @@ public class JournalArticleLocalServiceImpl
 	extends JournalArticleLocalServiceBaseImpl {
 
 	public JournalArticle addArticle(
+		long userId, long groupId, long folderId,
+		Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+		String content, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return addArticle(
+			userId, groupId, folderId, titleMap, descriptionMap, content, null,
+			null, serviceContext);
+	}
+
+	public JournalArticle addArticle(
 			long userId, long groupId, long folderId,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			String content, ServiceContext serviceContext)
+			String content, String structureId, String templateId,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		Calendar now = CalendarFactoryUtil.getCalendar();
@@ -147,8 +159,8 @@ public class JournalArticleLocalServiceImpl
 		int displayDateMinute = now.get(Calendar.MINUTE);
 
 		return addArticle(userId, groupId, folderId, 0, 0, StringPool.BLANK,
-			true, 1, titleMap, descriptionMap, content, "general", null, null,
-			null, displayDateMonth, displayDateDay, displayDateYear,
+			true, 1, titleMap, descriptionMap, content, "general", structureId,
+			templateId, null, displayDateMonth, displayDateDay, displayDateYear,
 			displayDateHour, displayDateMinute, 0, 0, 0, 0, 0, true, 0, 0, 0, 0,
 			0, true, true, false, null, null, null, null, serviceContext);
 	}

@@ -27,26 +27,19 @@ try {
 
 	<c:choose>
 		<c:when test="<%= (recordSet != null) %>">
-			<c:choose>
-			<c:when test="<%= listDDMTemplateId > 0 %>">
-				<liferay-util:include page="/html/portlet/dynamic_data_list_display/view_templated_record_set.jsp" />
-			</c:when>
-			<c:otherwise>
 
-				<%
-				portletDisplay.setTitle(recordSet.getName(locale));
+			<%
+			portletDisplay.setTitle(recordSet.getName(locale));
 
-				renderRequest.setAttribute(WebKeys.DYNAMIC_DATA_LISTS_RECORD_SET, recordSet);
-				%>
+			renderRequest.setAttribute(WebKeys.DYNAMIC_DATA_LISTS_RECORD_SET, recordSet);
+			%>
 
-				<liferay-util:include page="/html/portlet/dynamic_data_lists/view_record_set.jsp">
-					<liferay-util:param name="detailDDMTemplateId" value="<%= String.valueOf(detailDDMTemplateId) %>" />
-					<liferay-util:param name="listDDMTemplateId" value="<%= String.valueOf(listDDMTemplateId) %>" />
-					<liferay-util:param name="editable" value="<%= String.valueOf(editable) %>" />
-					<liferay-util:param name="spreadsheet" value="<%= String.valueOf(spreadsheet) %>" />
-				</liferay-util:include>
-			</c:otherwise>
-			</c:choose>
+			<liferay-util:include page="/html/portlet/dynamic_data_lists/view_record_set.jsp">
+				<liferay-util:param name="detailDDMTemplateId" value="<%= String.valueOf(detailDDMTemplateId) %>" />
+				<liferay-util:param name="listDDMTemplateId" value="<%= String.valueOf(listDDMTemplateId) %>" />
+				<liferay-util:param name="editable" value="<%= String.valueOf(editable) %>" />
+				<liferay-util:param name="spreadsheet" value="<%= String.valueOf(spreadsheet) %>" />
+			</liferay-util:include>
 		</c:when>
 		<c:otherwise>
 

@@ -101,8 +101,6 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 			return;
 		}
 
-		long curThreadCompanyId = CompanyThreadLocal.getCompanyId();
-
 		long defaultUserId = UserLocalServiceUtil.getDefaultUserId(companyId);
 
 		if (LockLocalServiceUtil.hasLock(
@@ -122,6 +120,8 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 			defaultUserId, PortalLDAPImporterUtil.class.getName(), companyId,
 			PortalLDAPImporterImpl.class.getName(), false,
 			PropsValues.LDAP_IMPORT_LOCK_EXPIRATION_TIME);
+
+		long curThreadCompanyId = CompanyThreadLocal.getCompanyId();
 
 		try {
 			if (curThreadCompanyId == CompanyConstants.SYSTEM) {

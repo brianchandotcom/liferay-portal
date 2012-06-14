@@ -184,10 +184,19 @@ public class ConcurrentLRUCache<K, V> {
 		while ((cleanUpSize-- > 0) && itr.hasNext()) {
 			Entry<K, ValueWrapper> entry = itr.next();
 
-			_cache.remove(entry.getKey());
+			K key = entry.getKey();
+
+			V value = entry.getValue()._value;
+
+			_cache.remove(key);
+
+			onRemove(key, value);
 
 			itr.remove();
 		}
+	}
+
+	protected void onRemove(K key, V value) {
 	}
 
 	private Map<K, ValueWrapper> _cache = new HashMap<K, ValueWrapper>();

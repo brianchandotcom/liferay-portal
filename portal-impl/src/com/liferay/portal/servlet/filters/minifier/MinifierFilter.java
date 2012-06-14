@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 import com.liferay.portal.servlet.filters.dynamiccss.DynamicCSSUtil;
 import com.liferay.portal.util.JavaScriptBundleUtil;
+import com.liferay.portal.util.LimitedFilesCache;
 import com.liferay.portal.util.MinifierUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -171,6 +172,8 @@ public class MinifierFilter extends BasePortalFilter {
 		if (Validator.isNull(_servletContextName)) {
 			_tempDir += "/portal";
 		}
+
+		_limitedFilesCache = new LimitedFilesCache<String>(1000);
 	}
 
 	protected String getCacheFileName(HttpServletRequest request) {
@@ -223,6 +226,8 @@ public class MinifierFilter extends BasePortalFilter {
 			minifierBundleId);
 
 		File cacheFile = new File(cacheFileName);
+
+		_limitedFilesCache.put(cacheFileName);
 
 		if (cacheFile.exists()) {
 			boolean staleCache = false;
@@ -503,6 +508,7 @@ public class MinifierFilter extends BasePortalFilter {
 	private static Pattern _pattern = Pattern.compile(
 		"^(\\.ie|\\.js\\.ie)([^}]*)}", Pattern.MULTILINE);
 
+	private LimitedFilesCache<String> _limitedFilesCache;
 	private ServletContext _servletContext;
 	private String _servletContextName;
 	private String _tempDir = _TEMP_DIR;

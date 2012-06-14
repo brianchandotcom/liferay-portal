@@ -219,7 +219,8 @@ public class LangBuilder {
 					((state == 5) && !key.startsWith("action.")) ||
 					((state == 7) && !key.startsWith("country.")) ||
 					((state == 8) && !key.startsWith("currency.")) ||
-					((state != 8) && key.startsWith("currency."))) {
+					((state == 9) && !key.startsWith("language.")) ||
+					((state != 9) && key.startsWith("language."))) {
 
 					throw new RuntimeException(
 						"File " + languageId + " with state " + state +
@@ -307,7 +308,9 @@ public class LangBuilder {
 						if (Validator.isNull(translatedText)) {
 							translatedText = value + AUTOMATIC_COPY;
 						}
-						else if (!key.startsWith("country.")) {
+						else if (!key.startsWith("country.") &&
+								 !key.startsWith("language.")) {
+
 							translatedText =
 								translatedText + AUTOMATIC_TRANSLATION;
 						}
@@ -395,6 +398,13 @@ public class LangBuilder {
 					}
 
 					state = 8;
+				}
+				else if (line.startsWith("## Language")) {
+					if (state == 9) {
+						throw new RuntimeException(languageId);
+					}
+
+					state = 9;
 				}
 
 				if (firstLine) {

@@ -385,6 +385,10 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		// A SQL syntax error occurs if there is not at least one resource block
 		// ID.
 
+		if (ownerResourceBlockIds.isEmpty()) {
+			ownerResourceBlockIds.add(_NO_RESOURCE_BLOCKS_ID);
+		}
+
 		if (userResourceBlockIds.isEmpty()) {
 			userResourceBlockIds.add(_NO_RESOURCE_BLOCKS_ID);
 		}

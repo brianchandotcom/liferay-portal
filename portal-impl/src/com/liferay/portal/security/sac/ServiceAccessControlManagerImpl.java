@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
@@ -14,12 +14,24 @@
 
 package com.liferay.portal.security.sac;
 
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.MethodSecurity;
+import com.liferay.portal.security.auth.PortalAAManager;
+import com.liferay.portal.security.auth.PortalAAManagerImpl;
 import com.liferay.portal.security.RemoteMethodAccessType;
+import com.liferay.portal.security.auth.AuthSettingsUtil;
+import com.liferay.portal.security.auth.AuthenticationContext;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 
 import java.lang.reflect.Method;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Tomas Polesovsky
@@ -29,6 +41,8 @@ import java.lang.reflect.Method;
 public class ServiceAccessControlManagerImpl {
 	public void accept(Method method, MethodSecurity methodSecurity)
 		throws SecurityException {
+
+		checkAllowedHosts();
 
 		RemoteMethodAccessType remoteMethodAccessType =
 			methodSecurity.remoteMethodAccessType();
@@ -42,6 +56,41 @@ public class ServiceAccessControlManagerImpl {
 
 				throw new SecurityException("Authenticated access required.");
 			}
+		}
+	}
+
+	protected void checkAllowedHosts() {
+		PortalAAManager portalAAManager =
+			PortalAAManagerImpl.getInstance();
+
+		AuthenticationContext authenticationContext =
+			portalAAManager.getAuthenticationContext();
+
+		if (authenticationContext == null) {
+			// TODO: AuthVerificationFilter is not mapped to all URLs!!!!
+			return;
+		}
+
+		Map<String, Object> properties = authenticationContext.getSettings();
+
+		String hostsAllowedSetting = (String) properties.get("hosts.allowed");
+		if(hostsAllowedSetting == null){
+			return;
+		}
+
+		String[] hostsAllowed = StringUtil.split(hostsAllowedSetting);
+
+		Set<String> hostsAllowedSet = new HashSet(Arrays.asList(hostsAllowed));
+
+		HttpServletRequest httpServletRequest =
+			authenticationContext.getHttpServletRequest();
+
+		boolean accessAllowed = AuthSettingsUtil.isAccessAllowed(
+			httpServletRequest, hostsAllowedSet);
+
+		if (!accessAllowed) {
+			throw new SecurityException(
+				"Access denied for " + httpServletRequest.getRemoteAddr());
 		}
 	}
 

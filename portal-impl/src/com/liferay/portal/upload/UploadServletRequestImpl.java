@@ -184,29 +184,30 @@ public class UploadServletRequestImpl
 
 		FileItem[] liferayFileItems = _fileParams.get(name);
 
-		File file = null;
+		if ((liferayFileItems == null) || (liferayFileItems.length == 0)) {
+			return null;
+		}
 
-		if ((liferayFileItems != null) && (liferayFileItems.length > 0)) {
-			FileItem liferayFileItem = liferayFileItems[0];
+		FileItem liferayFileItem = liferayFileItems[0];
 
-			if (liferayFileItem.getSize() <=
+		if (liferayFileItem.getSize() <=
 				liferayFileItem.getSizeThreshold()) {
-					forceCreate = true;
+
+			forceCreate = true;
+		}
+
+		File file = liferayFileItem.getStoreLocation();
+
+		if (liferayFileItem.isInMemory() && forceCreate) {
+			try {
+				FileUtil.write(file, liferayFileItem.getInputStream());
 			}
-
-			file = liferayFileItem.getStoreLocation();
-
-			if (liferayFileItem.isInMemory() && forceCreate) {
-				try {
-					FileUtil.write(file, liferayFileItem.getInputStream());
-				}
-				catch (IOException ioe) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Unable to write temporary file " +
-								file.getAbsolutePath(),
-							ioe);
-					}
+			catch (IOException ioe) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to write temporary file " +
+							file.getAbsolutePath(),
+						ioe);
 				}
 			}
 		}

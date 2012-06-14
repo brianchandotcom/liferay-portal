@@ -63,6 +63,9 @@ public class MicrosoftTranslatorImpl implements MicrosoftTranslator {
 			String fromLanguage, String toLanguage, String fromText)
 		throws Exception {
 
+		fromLanguage = getMicrosoftLanguageCode(fromLanguage);
+		toLanguage = getMicrosoftLanguageCode(toLanguage);
+
 		Http.Options options = new Http.Options();
 
 		StringBundler sb = new StringBundler(7);
@@ -107,6 +110,23 @@ public class MicrosoftTranslatorImpl implements MicrosoftTranslator {
 		toText = toText.trim();
 
 		return StringUtil.replace(toText, CharPool.NEW_LINE, CharPool.SPACE);
+	}
+
+	protected String getMicrosoftLanguageCode(String languageId) {
+		if (languageId.equals("pt_BR") || languageId.equals("pt_PT")) {
+			return "pt";
+		}
+		else if (languageId.equals("hi_IN")) {
+			return "hi";
+		}
+		else if (languageId.equals("zh_CN")) {
+			return "zh-CHS";
+		}
+		else if (languageId.equals("zh_TW")) {
+			return "zh-CHT";
+		}
+
+		return languageId;
 	}
 
 	private MicrosoftTranslatorAuthenticator _microsoftTranslatorAuthenticator;

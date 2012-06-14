@@ -193,22 +193,6 @@ public class LangBuilder {
 
 		String translationId = "en_" + languageId;
 
-		if (translationId.equals("en_pt_BR")) {
-			translationId = "en_pt";
-		}
-		else if (translationId.equals("en_pt_PT")) {
-			translationId = "en_pt";
-		}
-		else if (translationId.equals("en_zh_CN")) {
-			translationId = "en_zh";
-		}
-		else if (translationId.equals("en_zh_TW")) {
-			translationId = "en_zt";
-		}
-		else if (translationId.equals("en_hi_IN")) {
-			translationId = "en_hi";
-		}
-
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new UnsyncStringReader(content));
 		UnsyncBufferedWriter unsyncBufferedWriter = new UnsyncBufferedWriter(

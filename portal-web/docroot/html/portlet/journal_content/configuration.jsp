@@ -65,9 +65,9 @@ type = ParamUtil.getString(request, "type", type);
 
 		<%
 		String structureId = article.getStructureId();
-		
+
 		JournalStructure structure = null;
-		
+
 		long structureGroupId = groupId;
 
 		if (Validator.isNotNull(structureId)) {
@@ -78,15 +78,15 @@ type = ParamUtil.getString(request, "type", type);
 			}
 			catch (NoSuchStructureException nsse) {
 			}
-			
+
 			List<JournalTemplate> templates = new ArrayList<JournalTemplate>();
-			
+
 			templates.addAll(JournalTemplateLocalServiceUtil.getStructureTemplates(structureGroupId, structureId));
-			
+
 			if (groupId != structureGroupId) {
 				templates.addAll(JournalTemplateLocalServiceUtil.getStructureTemplates(groupId, structureId));
 			}
-			
+
 			if (!templates.isEmpty()) {
 				if (Validator.isNull(templateId)) {
 					templateId = article.getTemplateId();

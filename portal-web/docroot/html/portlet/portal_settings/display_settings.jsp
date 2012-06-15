@@ -111,7 +111,7 @@ boolean deployed = false;
 		</c:if>
 	</aui:select>
 
-	<aui:select helpMessage="mobile-theme-would-only-be-delivered-to-a-WAP-device" label="default-mobile-theme" name='<%= "settings--" + PropsKeys.DEFAULT_REGULAR_THEME_ID + "--" %>'>
+	<aui:select helpMessage="mobile-themes-only-apply-to-wap-devices" label="default-mobile-theme" name='<%= "settings--" + PropsKeys.DEFAULT_REGULAR_THEME_ID + "--" %>'>
 
 		<%
 		themes = ThemeLocalServiceUtil.getThemes(company.getCompanyId(), 0, user.getUserId(), true);

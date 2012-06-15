@@ -172,8 +172,7 @@ public class JarUtil {
 
 	private static Log _log = LogFactoryUtil.getLog(JarUtil.class);
 
-	private static MethodKey _installJarKey =
-		new MethodKey(
-			JarUtil.class.getName(), "installJar", boolean.class, String.class);
+	private static MethodKey _installJarKey = new MethodKey(
+		JarUtil.class.getName(), "installJar", boolean.class, String.class);
 
 }

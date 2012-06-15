@@ -152,9 +152,8 @@ public class ForgotPasswordAction extends PortletAction {
 		actionRequest.setAttribute(WebKeys.FORGOT_PASSWORD_REMINDER_USER, user);
 
 		if (step == 2) {
-			Integer reminderAttempts =
-				(Integer)portletSession.getAttribute(
-					WebKeys.FORGOT_PASSWORD_REMINDER_ATTEMPTS);
+			Integer reminderAttempts = (Integer)portletSession.getAttribute(
+				WebKeys.FORGOT_PASSWORD_REMINDER_ATTEMPTS);
 
 			if (reminderAttempts == null) {
 				reminderAttempts = 0;

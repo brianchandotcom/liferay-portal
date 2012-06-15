@@ -593,9 +593,8 @@ public class RuntimeChecker extends BaseReflectChecker {
 
 		String actualClassLocation = PACLClassUtil.getClassLocation(clazz);
 
-		String expectedClassLocation =
-			PathUtil.toUnixPath(
-				System.getProperty("catalina.base") + "/lib/catalina.jar!/");
+		String expectedClassLocation = PathUtil.toUnixPath(
+			System.getProperty("catalina.base") + "/lib/catalina.jar!/");
 
 		expectedClassLocation += StringUtil.replace(
 			className, StringPool.PERIOD, StringPool.SLASH);

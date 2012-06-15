@@ -474,11 +474,9 @@ public class PortletContainerImpl implements PortletContainer {
 				AuthTokenUtil.check(request);
 			}
 
-			ActionRequestImpl actionRequestImpl =
-				ActionRequestFactory.create(
-					request, portlet, invokerPortlet, portletContext,
-					windowState, portletMode, portletPreferences,
-					layout.getPlid());
+			ActionRequestImpl actionRequestImpl = ActionRequestFactory.create(
+				request, portlet, invokerPortlet, portletContext, windowState,
+				portletMode, portletPreferences, layout.getPlid());
 
 			User user = PortalUtil.getUser(request);
 
@@ -876,10 +874,9 @@ public class PortletContainerImpl implements PortletContainer {
 			portletDisplay.setWebDAVEnabled(false);
 		}
 
-		ResourceRequestImpl resourceRequestImpl =
-			ResourceRequestFactory.create(
-				request, portlet, invokerPortlet, portletContext, windowState,
-				portletMode, portletPreferences, layout.getPlid());
+		ResourceRequestImpl resourceRequestImpl = ResourceRequestFactory.create(
+			request, portlet, invokerPortlet, portletContext, windowState,
+			portletMode, portletPreferences, layout.getPlid());
 
 		long companyId = PortalUtil.getCompanyId(request);
 

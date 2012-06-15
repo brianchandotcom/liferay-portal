@@ -831,9 +831,8 @@ public class JournalUtil {
 				TransformerListener listener = null;
 
 				try {
-					listener =
-						(TransformerListener)Class.forName(
-							listeners[i]).newInstance();
+					listener = (TransformerListener)Class.forName(
+						listeners[i]).newInstance();
 
 					listener.setTemplateDriven(true);
 					listener.setLanguageId(languageId);

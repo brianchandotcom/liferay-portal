@@ -144,10 +144,9 @@ public class LuceneIndexSearcherImpl implements IndexSearcher {
 						}
 					}
 
-					RangeFacetHandler rangeFacetHandler =
-						new RangeFacetHandler(
-							facetConfiguration.getFieldName(),
-							facetConfiguration.getFieldName(), ranges);
+					RangeFacetHandler rangeFacetHandler = new RangeFacetHandler(
+						facetConfiguration.getFieldName(),
+						facetConfiguration.getFieldName(), ranges);
 
 					rangeFacetHandler.setTermCountSize(TermCountSize.large);
 

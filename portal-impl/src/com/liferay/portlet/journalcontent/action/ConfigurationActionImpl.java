@@ -146,14 +146,12 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 			themeDisplay.getCompanyId());
 
 		try {
-			journalArticle =
-				JournalArticleLocalServiceUtil.getDisplayArticle(
-					themeDisplay.getScopeGroupId(), articleId);
+			journalArticle = JournalArticleLocalServiceUtil.getDisplayArticle(
+				themeDisplay.getScopeGroupId(), articleId);
 		}
 		catch (NoSuchArticleException nsae) {
-			journalArticle =
-				JournalArticleLocalServiceUtil.getDisplayArticle(
-					companyGroup.getGroupId(), articleId);
+			journalArticle = JournalArticleLocalServiceUtil.getDisplayArticle(
+				companyGroup.getGroupId(), articleId);
 		}
 
 		String portletIds = getRuntimePortletIds(journalArticle.getContent());

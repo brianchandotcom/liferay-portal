@@ -234,9 +234,8 @@ public class PortletBagFactory {
 			new ArrayList<TrashHandler>();
 
 		for (String trashHandlerClass : portlet.getTrashHandlerClasses()) {
-			TrashHandler trashHandlerInstance =
-				(TrashHandler)newInstance(
-					TrashHandler.class, trashHandlerClass);
+			TrashHandler trashHandlerInstance = (TrashHandler)newInstance(
+				TrashHandler.class, trashHandlerClass);
 
 			trashHandlerInstances.add(trashHandlerInstance);
 
@@ -544,9 +543,8 @@ public class PortletBagFactory {
 				SocialActivityInterpreter.class,
 				portlet.getSocialActivityInterpreterClass());
 
-		socialActivityInterpreterInstance =
-			new SocialActivityInterpreterImpl(
-				portlet.getPortletId(), socialActivityInterpreterInstance);
+		socialActivityInterpreterInstance = new SocialActivityInterpreterImpl(
+			portlet.getPortletId(), socialActivityInterpreterInstance);
 
 		SocialActivityInterpreterLocalServiceUtil.addActivityInterpreter(
 			socialActivityInterpreterInstance);

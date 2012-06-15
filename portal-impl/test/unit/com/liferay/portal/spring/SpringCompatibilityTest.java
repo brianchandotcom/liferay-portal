@@ -14,19 +14,21 @@
 
 package com.liferay.portal.spring;
 
-import com.liferay.portal.util.BaseTestCase;
-
 import java.lang.reflect.Field;
 
 import java.util.Map;
+
+import org.junit.Assert;
+import org.junit.Test;
 
 import org.springframework.aop.framework.AdvisedSupport;
 
 /**
  * @author Shuyang Zhou
  */
-public class SpringCompatibilityTest extends BaseTestCase {
+public class SpringCompatibilityTest {
 
+	@Test
 	public void testAbstractAutowireCapableBeanFactory() {
 		Class<?> AbstractAutowireCapableBeanFactoryClass = null;
 
@@ -36,7 +38,7 @@ public class SpringCompatibilityTest extends BaseTestCase {
 				+ "AbstractAutowireCapableBeanFactory");
 		}
 		catch (Exception e) {
-			fail(e.getMessage());
+			Assert.fail(e.getMessage());
 		}
 
 		Field filteredPropertyDescriptorsCacheField = null;
@@ -47,7 +49,7 @@ public class SpringCompatibilityTest extends BaseTestCase {
 					"filteredPropertyDescriptorsCache");
 		}
 		catch (Exception e) {
-			fail(e.getMessage());
+			Assert.fail(e.getMessage());
 		}
 
 		Class<?> filteredPropertyDescriptorsCacheClass =
@@ -55,12 +57,13 @@ public class SpringCompatibilityTest extends BaseTestCase {
 
 		if (!Map.class.isAssignableFrom(
 			filteredPropertyDescriptorsCacheClass)) {
-			fail(
+			Assert.fail(
 				filteredPropertyDescriptorsCacheClass.getClass().getName() +
 				" is not " + Map.class.getName());
 		}
 	}
 
+	@Test
 	public void testAspectJExpressionPointcut() {
 		Class<?> aspectJExpressionPointcutClass = null;
 
@@ -69,7 +72,7 @@ public class SpringCompatibilityTest extends BaseTestCase {
 				"org.springframework.aop.aspectj.AspectJExpressionPointcut");
 		}
 		catch (Exception e) {
-			fail(e.getMessage());
+			Assert.fail(e.getMessage());
 		}
 
 		Field shadowMatchCacheField = null;
@@ -80,18 +83,19 @@ public class SpringCompatibilityTest extends BaseTestCase {
 					"shadowMatchCache");
 		}
 		catch (Exception e) {
-			fail(e.getMessage());
+			Assert.fail(e.getMessage());
 		}
 
 		Class<?> shadowMatchCacheClass = shadowMatchCacheField.getType();
 
 		if (!Map.class.isAssignableFrom(shadowMatchCacheClass)) {
-			fail(
+			Assert.fail(
 				shadowMatchCacheClass.getClass().getName() + " is not " +
-					Map.class.getName());
+				Map.class.getName());
 		}
 	}
 
+	@Test
 	public void testJdkDynamicAopProxy() {
 		Class<?> jdkDynamicAopProxyClass = null;
 
@@ -100,7 +104,7 @@ public class SpringCompatibilityTest extends BaseTestCase {
 				"org.springframework.aop.framework.JdkDynamicAopProxy");
 		}
 		catch (Exception e) {
-			fail(e.getMessage());
+			Assert.fail(e.getMessage());
 		}
 
 		Field advisedField = null;
@@ -109,15 +113,15 @@ public class SpringCompatibilityTest extends BaseTestCase {
 			advisedField = jdkDynamicAopProxyClass.getDeclaredField("advised");
 		}
 		catch (Exception e) {
-			fail(e.getMessage());
+			Assert.fail(e.getMessage());
 		}
 
 		Class<?> advisedSupportClass = advisedField.getType();
 
 		if (!advisedSupportClass.equals(AdvisedSupport.class)) {
-			fail(
+			Assert.fail(
 				advisedSupportClass.getClass().getName() + " is not " +
-					AdvisedSupport.class.getName());
+				AdvisedSupport.class.getName());
 		}
 	}
 

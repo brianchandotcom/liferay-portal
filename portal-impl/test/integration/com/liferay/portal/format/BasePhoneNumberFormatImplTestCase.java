@@ -15,14 +15,17 @@
 package com.liferay.portal.format;
 
 import com.liferay.portal.kernel.format.PhoneNumberFormat;
-import com.liferay.portal.util.BaseTestCase;
+
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Manuel de la Peña
  */
-public abstract class BasePhoneNumberFormatImplTestCase extends BaseTestCase {
+public abstract class BasePhoneNumberFormatImplTestCase {
 
+	@Test
 	public void testInvalidPhoneNumbers() {
 		PhoneNumberFormat phoneNumberFormat = getPhoneNumberFormat();
 
@@ -30,11 +33,12 @@ public abstract class BasePhoneNumberFormatImplTestCase extends BaseTestCase {
 
 		for (String phoneNumber : phoneNumbers) {
 			if (phoneNumberFormat.validate(phoneNumber)) {
-				fail(phoneNumber);
+				Assert.fail(phoneNumber);
 			}
 		}
 	}
 
+	@Test
 	public void testValidPhoneNumbers() {
 		PhoneNumberFormat phoneNumberFormat = getPhoneNumberFormat();
 
@@ -42,7 +46,7 @@ public abstract class BasePhoneNumberFormatImplTestCase extends BaseTestCase {
 
 		for (String phoneNumber : phoneNumbers) {
 			if (!phoneNumberFormat.validate(phoneNumber)) {
-				fail(phoneNumber);
+				Assert.fail(phoneNumber);
 			}
 		}
 	}

@@ -315,7 +315,7 @@ definePermissionsURL.setParameter(Constants.CMD, Constants.VIEW);
 				<liferay-ui:search-container-column-text
 					href="<%= definePermissionsHREF %>"
 					name="role"
-					value="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
+					value="<%= HtmlUtil.unescape(role.getTitle(locale)) %>"
 				/>
 
 				<%

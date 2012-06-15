@@ -132,20 +132,10 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 			"java.lang.Integer", "java.lang.Integer",
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_R_LIKEP =
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_COUNT_BY_C_R_LIKEP =
 		new FinderPath(DLContentModelImpl.ENTITY_CACHE_ENABLED,
-			DLContentModelImpl.FINDER_CACHE_ENABLED, DLContentImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_R_LikeP",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			DLContentModelImpl.COMPANYID_COLUMN_BITMASK |
-			DLContentModelImpl.REPOSITORYID_COLUMN_BITMASK |
-			DLContentModelImpl.PATH_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_C_R_LIKEP = new FinderPath(DLContentModelImpl.ENTITY_CACHE_ENABLED,
 			DLContentModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_R_LikeP",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_R_LikeP",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
@@ -452,33 +442,6 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_R_P, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_R_P,
-					args);
-			}
-
-			if ((dlContentModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_R_LIKEP.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						Long.valueOf(dlContentModelImpl.getOriginalCompanyId()),
-						Long.valueOf(dlContentModelImpl.getOriginalRepositoryId()),
-						
-						dlContentModelImpl.getOriginalPath()
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_R_LIKEP,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_R_LIKEP,
-					args);
-
-				args = new Object[] {
-						Long.valueOf(dlContentModelImpl.getCompanyId()),
-						Long.valueOf(dlContentModelImpl.getRepositoryId()),
-						
-						dlContentModelImpl.getPath()
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_R_LIKEP,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_R_LIKEP,
 					args);
 			}
 		}
@@ -1518,19 +1481,12 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_R_LIKEP;
-			finderArgs = new Object[] { companyId, repositoryId, path };
-		}
-		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_R_LIKEP;
-			finderArgs = new Object[] {
-					companyId, repositoryId, path,
-					
-					start, end, orderByComparator
-				};
-		}
+		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_R_LIKEP;
+		finderArgs = new Object[] {
+				companyId, repositoryId, path,
+				
+				start, end, orderByComparator
+			};
 
 		List<DLContent> list = (List<DLContent>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
@@ -2432,7 +2388,7 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 		throws SystemException {
 		Object[] finderArgs = new Object[] { companyId, repositoryId, path };
 
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_C_R_LIKEP,
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_C_R_LIKEP,
 				finderArgs, this);
 
 		if (count == null) {
@@ -2485,7 +2441,7 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_R_LIKEP,
+				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_C_R_LIKEP,
 					finderArgs, count);
 
 				closeSession(session);

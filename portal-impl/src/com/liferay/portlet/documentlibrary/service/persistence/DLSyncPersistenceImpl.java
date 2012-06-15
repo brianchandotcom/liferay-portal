@@ -96,18 +96,9 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 			"java.lang.Integer", "java.lang.Integer",
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_M_R = new FinderPath(DLSyncModelImpl.ENTITY_CACHE_ENABLED,
-			DLSyncModelImpl.FINDER_CACHE_ENABLED, DLSyncImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_M_R",
-			new String[] {
-				Long.class.getName(), Date.class.getName(), Long.class.getName()
-			},
-			DLSyncModelImpl.COMPANYID_COLUMN_BITMASK |
-			DLSyncModelImpl.MODIFIEDDATE_COLUMN_BITMASK |
-			DLSyncModelImpl.REPOSITORYID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_C_M_R = new FinderPath(DLSyncModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_COUNT_BY_C_M_R = new FinderPath(DLSyncModelImpl.ENTITY_CACHE_ENABLED,
 			DLSyncModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_M_R",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_M_R",
 			new String[] {
 				Long.class.getName(), Date.class.getName(), Long.class.getName()
 			});
@@ -331,32 +322,6 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 
 		if (isNew || !DLSyncModelImpl.COLUMN_BITMASK_ENABLED) {
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else {
-			if ((dlSyncModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_M_R.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						Long.valueOf(dlSyncModelImpl.getOriginalCompanyId()),
-						
-						dlSyncModelImpl.getOriginalModifiedDate(),
-						Long.valueOf(dlSyncModelImpl.getOriginalRepositoryId())
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_M_R, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_M_R,
-					args);
-
-				args = new Object[] {
-						Long.valueOf(dlSyncModelImpl.getCompanyId()),
-						
-						dlSyncModelImpl.getModifiedDate(),
-						Long.valueOf(dlSyncModelImpl.getRepositoryId())
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_M_R, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_M_R,
-					args);
-			}
 		}
 
 		EntityCacheUtil.putResult(DLSyncModelImpl.ENTITY_CACHE_ENABLED,
@@ -704,19 +669,12 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_M_R;
-			finderArgs = new Object[] { companyId, modifiedDate, repositoryId };
-		}
-		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_M_R;
-			finderArgs = new Object[] {
-					companyId, modifiedDate, repositoryId,
-					
-					start, end, orderByComparator
-				};
-		}
+		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_M_R;
+		finderArgs = new Object[] {
+				companyId, modifiedDate, repositoryId,
+				
+				start, end, orderByComparator
+			};
 
 		List<DLSync> list = (List<DLSync>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
@@ -1285,7 +1243,7 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 		throws SystemException {
 		Object[] finderArgs = new Object[] { companyId, modifiedDate, repositoryId };
 
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_C_M_R,
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_C_M_R,
 				finderArgs, this);
 
 		if (count == null) {
@@ -1333,7 +1291,7 @@ public class DLSyncPersistenceImpl extends BasePersistenceImpl<DLSync>
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_M_R,
+				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_C_M_R,
 					finderArgs, count);
 
 				closeSession(session);

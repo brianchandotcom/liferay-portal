@@ -123,16 +123,11 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 			"java.lang.Integer", "java.lang.Integer",
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LTEXPIRATIONDATE =
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_COUNT_BY_LTEXPIRATIONDATE =
 		new FinderPath(LockModelImpl.ENTITY_CACHE_ENABLED,
-			LockModelImpl.FINDER_CACHE_ENABLED, LockImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByLtExpirationDate", new String[] { Date.class.getName() },
-			LockModelImpl.EXPIRATIONDATE_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_LTEXPIRATIONDATE = new FinderPath(LockModelImpl.ENTITY_CACHE_ENABLED,
 			LockModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByLtExpirationDate", new String[] { Date.class.getName() });
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLtExpirationDate",
+			new String[] { Date.class.getName() });
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_K = new FinderPath(LockModelImpl.ENTITY_CACHE_ENABLED,
 			LockModelImpl.FINDER_CACHE_ENABLED, LockImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_K",
@@ -429,25 +424,6 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
-					args);
-			}
-
-			if ((lockModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LTEXPIRATIONDATE.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						lockModelImpl.getOriginalExpirationDate()
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_LTEXPIRATIONDATE,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LTEXPIRATIONDATE,
-					args);
-
-				args = new Object[] { lockModelImpl.getExpirationDate() };
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_LTEXPIRATIONDATE,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LTEXPIRATIONDATE,
 					args);
 			}
 		}
@@ -1440,19 +1416,8 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LTEXPIRATIONDATE;
-			finderArgs = new Object[] { expirationDate };
-		}
-		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_LTEXPIRATIONDATE;
-			finderArgs = new Object[] {
-					expirationDate,
-					
-					start, end, orderByComparator
-				};
-		}
+		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_LTEXPIRATIONDATE;
+		finderArgs = new Object[] { expirationDate, start, end, orderByComparator };
 
 		List<Lock> list = (List<Lock>)FinderCacheUtil.getResult(finderPath,
 				finderArgs, this);
@@ -2471,7 +2436,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 		throws SystemException {
 		Object[] finderArgs = new Object[] { expirationDate };
 
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_LTEXPIRATIONDATE,
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_LTEXPIRATIONDATE,
 				finderArgs, this);
 
 		if (count == null) {
@@ -2511,7 +2476,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_LTEXPIRATIONDATE,
+				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_LTEXPIRATIONDATE,
 					finderArgs, count);
 
 				closeSession(session);

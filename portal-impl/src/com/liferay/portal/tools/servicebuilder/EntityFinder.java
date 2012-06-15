@@ -100,6 +100,16 @@ public class EntityFinder {
 		return Entity.hasColumn(name, _columns);
 	}
 
+	public boolean hasUnequalComparator() {
+		for (EntityColumn column : _columns) {
+			if (!column.getComparator().equals("=")) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	public boolean isCollection() {
 		if ((_returnType != null) && _returnType.equals("Collection")) {
 			return true;

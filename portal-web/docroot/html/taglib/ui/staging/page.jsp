@@ -66,180 +66,236 @@ else if (group.isStaged()) {
 		stagingGroup = group.getStagingGroup();
 	}
 }
+else if (group.isCompany()) {
+	stagingGroup = group;
+}
 
 if (groupId <= 0) {
 	privateLayout = layout.isPrivateLayout();
 }
 
-layoutSetBranches = LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(stagingGroup.getGroupId(), privateLayout);
-
-if (group.isStaged() && group.isStagedRemotely()) {
-	if ((layoutSetBranchId > 0) && (layoutSetBranches.size() > 1)) {
-		publishNowDialogTitle = "publish-x-to-remote-live-now";
-		publishScheduleDialogTitle = "schedule-publication-of-x-to-remote-live";
-	}
-	else {
-		publishNowDialogTitle = "publish-to-remote-live-now";
-		publishScheduleDialogTitle = "schedule-publication-to-remote-live";
-	}
+if (group.isCompany()) {
+	publishNowDialogTitle = "publish-to-remote-live-now";
+	publishScheduleDialogTitle = "schedule-publication-to-remote-live";
 }
 else {
-	if ((layoutSetBranchId > 0) && (layoutSetBranches.size() > 1)) {
-		publishNowDialogTitle = "publish-x-to-live-now";
-		publishScheduleDialogTitle = "schedule-publication-of-x-to-live";
+	layoutSetBranches = LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(stagingGroup.getGroupId(), privateLayout);
+
+	if (group.isStaged() && group.isStagedRemotely()) {
+		if ((layoutSetBranchId > 0) && (layoutSetBranches.size() > 1)) {
+			publishNowDialogTitle = "publish-x-to-remote-live-now";
+			publishScheduleDialogTitle = "schedule-publication-of-x-to-remote-live";
+		}
+		else {
+			publishNowDialogTitle = "publish-to-remote-live-now";
+			publishScheduleDialogTitle = "schedule-publication-to-remote-live";
+		}
 	}
 	else {
-		publishNowDialogTitle = "publish-to-live-now";
-		publishScheduleDialogTitle = "schedule-publication-to-live";
+		if ((layoutSetBranchId > 0) && (layoutSetBranches.size() > 1)) {
+			publishNowDialogTitle = "publish-x-to-live-now";
+			publishScheduleDialogTitle = "schedule-publication-of-x-to-live";
+		}
+		else {
+			publishNowDialogTitle = "publish-to-live-now";
+			publishScheduleDialogTitle = "schedule-publication-to-live";
+		}
 	}
 }
+
+String publishNowMessage = LanguageUtil.get(pageContext, publishNowDialogTitle);
+String publishScheduleMessage = LanguageUtil.get(pageContext, publishScheduleDialogTitle);
 %>
+
+<liferay-portlet:renderURL plid="<%= plid %>" portletMode="<%= PortletMode.VIEW.toString() %>" portletName="<%= PortletKeys.LAYOUTS_ADMIN %>" varImpl="publishRenderUrl" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+	<liferay-portlet:param name="struts_action" value="/layouts_admin/publish_layouts" />
+	<liferay-portlet:param name="<%= Constants.CMD %>" value='<%= (group.isCompany()) ? "publish_to_remote" : "publish_to_live" %>' />
+	<liferay-portlet:param name="tabs1" value='<%= (privateLayout) ? "private-pages" : "public-pages" %>' />
+	<liferay-portlet:param name="pagesRedirect" value="<%= currentURL %>" />
+	<liferay-portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+	<liferay-portlet:param name="selPlid" value="<%= String.valueOf(selPlid) %>" />
+</liferay-portlet:renderURL>
 
 <c:if test="<%= stagingGroup != null %>">
 	<span class="staging-icon-menu-container">
 		<liferay-ui:icon-menu align="auto" cssClass="<%= cssClass %>" direction="down" extended="<%= extended %>" icon='<%= extended ? icon : StringPool.BLANK %>' message='<%= extended ? message : StringPool.BLANK %>' showWhenSingleIcon="<%= true %>">
-			<c:if test="<%= (stagingGroup.isStagedRemotely() || GroupPermissionUtil.contains(permissionChecker, liveGroup.getGroupId(), ActionKeys.PUBLISH_STAGING)) %>">
+			<c:choose>
+				<c:when test="<%= group.isCompany() && GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.PUBLISH_STAGING) %>">
+					<liferay-ui:icon id='<%= groupId + "publishGlobalNowLink" %>' image="maximize" message='<%= publishNowDialogTitle %>' url="<%= publishRenderUrl.toString() %>" />
 
-				<%
-				PortletURL publishToLiveURL = null;
+					<%
+					publishRenderUrl.setParameter("schedule", String.valueOf(true));
+					%>
 
-				if (groupId > 0) {
-					publishToLiveURL = new PortletURLImpl(request, PortletKeys.LAYOUTS_ADMIN, plid, PortletRequest.RENDER_PHASE);
+					<liferay-ui:icon id='<%= groupId + "publishGlobalScheduleLink" %>' image="time" message="<%= publishScheduleMessage %>" url="<%= publishRenderUrl.toString() %>" />
 
-					publishToLiveURL.setWindowState(LiferayWindowState.EXCLUSIVE);
-					publishToLiveURL.setPortletMode(PortletMode.VIEW);
+					<aui:script use="aui-base">
+						var publishGlobalNowLink = A.one('#<portlet:namespace /><%= groupId + "publishGlobalNowLink" %>');
 
-					publishToLiveURL.setParameter("struts_action", "/layouts_admin/publish_layouts");
-					publishToLiveURL.setParameter(Constants.CMD, "publish_to_live");
-					publishToLiveURL.setParameter("tabs1", (privateLayout) ? "private-pages" : "public-pages");
-					publishToLiveURL.setParameter("pagesRedirect", currentURL);
-					publishToLiveURL.setParameter("groupId", String.valueOf(groupId));
-					publishToLiveURL.setParameter("selPlid", String.valueOf(selPlid));
-				}
-				else {
-					publishToLiveURL = themeDisplay.getURLPublishToLive();
-				}
+						if (publishGlobalNowLink) {
+							publishGlobalNowLink.detach('click');
 
-				String publishNowMessage = null;
-				String publishScheduleMessage = null;
+							publishGlobalNowLink.on(
+								'click',
+								function(event) {
+									event.preventDefault();
 
-				if ((layoutSetBranchId > 0) && (layoutSetBranches.size() > 1)) {
-					layoutSetBranch = LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(layoutSetBranchId);
+									Liferay.LayoutExporter.publishToLive(
+										{
+											title: '<%= UnicodeFormatter.toString(publishNowMessage) %>',
+											url: event.currentTarget.attr('href')
+									});
 
-					publishToLiveURL.setParameter("layoutSetBranchId", String.valueOf(layoutSetBranchId));
-					publishToLiveURL.setParameter("layoutSetBranchName", layoutSetBranch.getName());
+								}
+							);
+						}
 
-					publishNowMessage = LanguageUtil.format(pageContext, publishNowDialogTitle, layoutSetBranch.getName());
-					publishScheduleMessage = LanguageUtil.format(pageContext, publishScheduleDialogTitle, layoutSetBranch.getName());
-				}
-				else {
-					if (layoutSetBranches.size() == 1) {
-						layoutSetBranch = layoutSetBranches.get(0);
+						var publishGlobalScheduleLink = A.one('#<portlet:namespace /><%= groupId + "publishGlobalScheduleLink" %>');
 
-						publishToLiveURL.setParameter("layoutSetBranchId", String.valueOf(layoutSetBranch.getLayoutSetBranchId()));
-					}
+						if (publishGlobalScheduleLink) {
+							publishGlobalScheduleLink.detach('click');
 
-					publishNowMessage = LanguageUtil.get(pageContext, publishNowDialogTitle);
-					publishScheduleMessage = LanguageUtil.get(pageContext, publishScheduleDialogTitle);
-				}
+							publishGlobalScheduleLink.on(
+								'click',
+								function(event) {
+									event.preventDefault();
 
-				String publishLayoutSetBranchToLiveURL = publishToLiveURL.toString();
-				%>
+									Liferay.LayoutExporter.publishToLive(
+										{
+											title: '<%= UnicodeFormatter.toString(publishScheduleMessage) %>',
+											url: event.currentTarget.attr('href')
+									});
+								}
+							);
+						}
+					</aui:script>
+				</c:when>
+				<c:otherwise>
+					<c:if test="<%= (stagingGroup.isStagedRemotely() || GroupPermissionUtil.contains(permissionChecker, liveGroup.getGroupId(), ActionKeys.PUBLISH_STAGING)) %>">
+						<c:choose>
+							<c:when test="<%= (layoutSetBranchId > 0) && (layoutSetBranches.size() > 1) %>">
 
-				<liferay-ui:icon id='<%= layoutSetBranchId + "publishNowLink" %>' image="maximize" message="<%= publishNowMessage %>" url="<%= publishLayoutSetBranchToLiveURL %>" />
+								<%
+								layoutSetBranch = LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(layoutSetBranchId);
 
-				<%
-				publishLayoutSetBranchToLiveURL = HttpUtil.addParameter(publishLayoutSetBranchToLiveURL, "schedule", String.valueOf(true));
-				%>
+								publishRenderUrl.setParameter("layoutSetBranchId", String.valueOf(layoutSetBranchId));
+								publishRenderUrl.setParameter("layoutSetBranchName", layoutSetBranch.getName());
 
-				<liferay-ui:icon id='<%= layoutSetBranchId + "publishScheduleLink" %>' image="time" message="<%= publishScheduleMessage %>" url="<%= publishLayoutSetBranchToLiveURL.toString() %>" />
+								publishNowMessage = LanguageUtil.format(pageContext, publishNowDialogTitle, layoutSetBranch.getName());
+								publishScheduleMessage = LanguageUtil.format(pageContext, publishScheduleDialogTitle, layoutSetBranch.getName());
+								%>
 
-				<aui:script use="aui-base">
-					var publishnowLink = A.one('#<portlet:namespace /><%= layoutSetBranchId + "publishNowLink" %>');
+							</c:when>
+							<c:otherwise>
+								<c:if test="<%= layoutSetBranches.size() == 1 %>">
 
-					if (publishnowLink) {
-						publishnowLink.detach('click');
+									<%
+									layoutSetBranch = layoutSetBranches.get(0);
 
-						publishnowLink.on(
-							'click',
-							function(event) {
-								event.preventDefault();
+									publishRenderUrl.setParameter("layoutSetBranchId", String.valueOf(layoutSetBranch.getLayoutSetBranchId()));
+									%>
 
-								Liferay.LayoutExporter.publishToLive(
-									{
-									title: '<%= UnicodeFormatter.toString(publishNowMessage) %>',
-									url: event.currentTarget.attr('href')
-								});
+								</c:if>
+							</c:otherwise>
+						</c:choose>
 
-							}
-						);
-					}
+						<liferay-ui:icon id='<%= layoutSetBranchId + "publishNowLink" %>' image="maximize" message="<%= publishNowMessage %>" url="<%= publishRenderUrl.toString() %>" />
 
-					var publishScheduleLink = A.one('#<portlet:namespace /><%= layoutSetBranchId + "publishScheduleLink" %>');
+						<%
+						publishRenderUrl.setParameter("schedule", String.valueOf(true));
+						%>
 
-					if (publishScheduleLink) {
-						publishScheduleLink.detach('click');
+						<liferay-ui:icon id='<%= layoutSetBranchId + "publishScheduleLink" %>' image="time" message="<%= publishScheduleMessage %>" url="<%= publishRenderUrl.toString() %>" />
 
-						publishScheduleLink.on(
-							'click',
-							function(event) {
-								event.preventDefault();
+						<aui:script use="aui-base">
+							var publishnowLink = A.one('#<portlet:namespace /><%= layoutSetBranchId + "publishNowLink" %>');
 
-								Liferay.LayoutExporter.publishToLive(
-									{
-									title: '<%= UnicodeFormatter.toString(publishScheduleMessage) %>',
-									url: event.currentTarget.attr('href')
-								});
-							}
-						);
-					}
-				</aui:script>
-			</c:if>
+							if (publishnowLink) {
+								publishnowLink.detach('click');
 
-			<c:if test="<%= showManageBranches && !layoutSetBranches.isEmpty() %>">
-				<portlet:renderURL var="layoutSetBranchesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-					<portlet:param name="struts_action" value="/staging_bar/view_layout_set_branches" />
-					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-					<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-					<portlet:param name="selPlid" value="<%= String.valueOf(selPlid) %>" />
-				</portlet:renderURL>
+								publishnowLink.on(
+									'click',
+									function(event) {
+										event.preventDefault();
 
-				<liferay-ui:icon
-					cssClass="manage-layout-set-branches"
-					id="manageLayoutSetBranches"
-					image="configuration"
-					label="<%= true %>"
-					message="manage-site-pages-variations"
-					url="<%= layoutSetBranchesURL %>"
-				/>
-
-				<aui:script use="aui-base">
-					var layoutSetBranchesLink = A.one('#<portlet:namespace />manageLayoutSetBranches');
-
-					if (layoutSetBranchesLink) {
-						layoutSetBranchesLink.detach('click');
-
-						layoutSetBranchesLink.on(
-							'click',
-							function(event) {
-								event.preventDefault();
-
-								Liferay.Util.openWindow(
-									{
-										dialog:
+										Liferay.LayoutExporter.publishToLive(
 											{
-												width: 820
-											},
-										id: '<portlet:namespace />layoutSetBranches',
-										title: '<%= UnicodeLanguageUtil.get(pageContext, "manage-site-pages-variations") %>',
-										uri: event.currentTarget.attr('href')
+												title: '<%= UnicodeFormatter.toString(publishNowMessage) %>',
+												url: event.currentTarget.attr('href')
+										});
+
 									}
 								);
 							}
-						);
-					}
-				</aui:script>
-			</c:if>
+
+							var publishScheduleLink = A.one('#<portlet:namespace /><%= layoutSetBranchId + "publishScheduleLink" %>');
+
+							if (publishScheduleLink) {
+								publishScheduleLink.detach('click');
+
+								publishScheduleLink.on(
+									'click',
+									function(event) {
+										event.preventDefault();
+
+										Liferay.LayoutExporter.publishToLive(
+											{
+												title: '<%= UnicodeFormatter.toString(publishScheduleMessage) %>',
+												url: event.currentTarget.attr('href')
+										});
+									}
+								);
+							}
+						</aui:script>
+
+					</c:if>
+
+					<c:if test="<%= showManageBranches && !layoutSetBranches.isEmpty() %>">
+						<portlet:renderURL var="layoutSetBranchesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+							<portlet:param name="struts_action" value="/staging_bar/view_layout_set_branches" />
+							<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+							<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+							<portlet:param name="selPlid" value="<%= String.valueOf(selPlid) %>" />
+						</portlet:renderURL>
+
+						<liferay-ui:icon
+							cssClass="manage-layout-set-branches"
+							id="manageLayoutSetBranches"
+							image="configuration"
+							label="<%= true %>"
+							message="manage-site-pages-variations"
+							url="<%= layoutSetBranchesURL %>"
+						/>
+
+						<aui:script use="aui-base">
+							var layoutSetBranchesLink = A.one('#<portlet:namespace />manageLayoutSetBranches');
+
+							if (layoutSetBranchesLink) {
+								layoutSetBranchesLink.detach('click');
+
+								layoutSetBranchesLink.on(
+									'click',
+									function(event) {
+										event.preventDefault();
+
+										Liferay.Util.openWindow(
+											{
+												dialog:
+													{
+														width: 820
+													},
+												id: '<portlet:namespace />layoutSetBranches',
+												title: '<%= UnicodeLanguageUtil.get(pageContext, "manage-site-pages-variations") %>',
+												uri: event.currentTarget.attr('href')
+											}
+										);
+									}
+								);
+							}
+						</aui:script>
+					</c:if>
+				</c:otherwise>
+			</c:choose>
 		</liferay-ui:icon-menu>
 	</span>
 </c:if>

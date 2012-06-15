@@ -144,7 +144,8 @@ String publishScheduleMessage = LanguageUtil.get(pageContext, publishScheduleDia
 										{
 											title: '<%= UnicodeFormatter.toString(publishNowMessage) %>',
 											url: event.currentTarget.attr('href')
-									});
+										}
+									);
 
 								}
 							);
@@ -164,7 +165,8 @@ String publishScheduleMessage = LanguageUtil.get(pageContext, publishScheduleDia
 										{
 											title: '<%= UnicodeFormatter.toString(publishScheduleMessage) %>',
 											url: event.currentTarget.attr('href')
-									});
+										}
+									);
 								}
 							);
 						}
@@ -208,12 +210,12 @@ String publishScheduleMessage = LanguageUtil.get(pageContext, publishScheduleDia
 						<liferay-ui:icon id='<%= layoutSetBranchId + "publishScheduleLink" %>' image="time" message="<%= publishScheduleMessage %>" url="<%= publishRenderUrl.toString() %>" />
 
 						<aui:script use="aui-base">
-							var publishnowLink = A.one('#<portlet:namespace /><%= layoutSetBranchId + "publishNowLink" %>');
+							var publishNowLink = A.one('#<portlet:namespace /><%= layoutSetBranchId + "publishNowLink" %>');
 
-							if (publishnowLink) {
-								publishnowLink.detach('click');
+							if (publishNowLink) {
+								publishNowLink.detach('click');
 
-								publishnowLink.on(
+								publishNowLink.on(
 									'click',
 									function(event) {
 										event.preventDefault();
@@ -222,7 +224,8 @@ String publishScheduleMessage = LanguageUtil.get(pageContext, publishScheduleDia
 											{
 												title: '<%= UnicodeFormatter.toString(publishNowMessage) %>',
 												url: event.currentTarget.attr('href')
-										});
+											}
+										);
 
 									}
 								);
@@ -242,7 +245,8 @@ String publishScheduleMessage = LanguageUtil.get(pageContext, publishScheduleDia
 											{
 												title: '<%= UnicodeFormatter.toString(publishScheduleMessage) %>',
 												url: event.currentTarget.attr('href')
-										});
+											}
+										);
 									}
 								);
 							}
@@ -279,10 +283,9 @@ String publishScheduleMessage = LanguageUtil.get(pageContext, publishScheduleDia
 
 										Liferay.Util.openWindow(
 											{
-												dialog:
-													{
-														width: 820
-													},
+												dialog: {
+													width: 820
+												},
 												id: '<portlet:namespace />layoutSetBranches',
 												title: '<%= UnicodeLanguageUtil.get(pageContext, "manage-site-pages-variations") %>',
 												uri: event.currentTarget.attr('href')

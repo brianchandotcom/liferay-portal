@@ -23,7 +23,6 @@ portletURL.setParameter("struts_action", "/layouts_admin/edit_layouts");
 portletURL.setParameter("selPlid", String.valueOf(selPlid));
 portletURL.setParameter("className", className);
 portletURL.setParameter("classPK", String.valueOf(classPK));
-portletURL.setParameter("historyKey", "mobileRuleGroups");
 
 String redirect = portletURL.toString();
 %>

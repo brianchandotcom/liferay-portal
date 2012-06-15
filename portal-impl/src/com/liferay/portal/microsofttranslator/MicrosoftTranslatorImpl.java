@@ -119,6 +119,15 @@ public class MicrosoftTranslatorImpl implements MicrosoftTranslator {
 		else if (languageId.equals("hi_IN")) {
 			return "hi";
 		}
+		else if (languageId.equals("in")) {
+			return "id";
+		}
+		else if (languageId.equals("iw")) {
+			return "he";
+		}
+		else if (languageId.equals("nb")) {
+			return "no";
+		}
 		else if (languageId.equals("zh_CN")) {
 			return "zh-CHS";
 		}

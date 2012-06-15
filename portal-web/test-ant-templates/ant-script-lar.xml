@@ -330,7 +330,7 @@
 		<antcall target="prepare-vm-server">
 			<param name="build.war" value="false" />
 			<param name="skip.prepare-bundle" value="true" />
-			<param name="vm.vmdk.suffix" value="oracle-10.2.0.1.0" />
+			<param name="vm.vmdk.suffix" value="oracle-11.2.0.1.0" />
 			<param name="vm.host" value="${vm.db.host}" />
 		</antcall>
 
@@ -406,7 +406,7 @@
 		<antcall target="prepare-vm-server">
 			<param name="build.war" value="false" />
 			<param name="skip.prepare-bundle" value="true" />
-			<param name="vm.vmdk.suffix" value="postgresql-8.4.2-1" />
+			<param name="vm.vmdk.suffix" value="postgresql-9.0.4-1" />
 			<param name="vm.host" value="${vm.db.host}" />
 		</antcall>
 
@@ -477,7 +477,7 @@
 		<antcall target="prepare-vm-server">
 			<param name="build.war" value="false" />
 			<param name="skip.prepare-bundle" value="true" />
-			<param name="vm.vmdk.suffix" value="sql-server-2005-sp2" />
+			<param name="vm.vmdk.suffix" value="sql-server-2008-r2" />
 			<param name="vm.host" value="${vm.db.host}" />
 		</antcall>
 

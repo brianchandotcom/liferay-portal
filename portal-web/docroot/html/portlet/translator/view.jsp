@@ -19,16 +19,16 @@
 <%
 Translation translation = (Translation)request.getAttribute(WebKeys.TRANSLATOR_TRANSLATION);
 
-String[] allLanguageIds = PrefsPropsUtil.getStringArray(PropsKeys.TRANSLATOR_LANGUAGES, StringPool.COMMA);
+Map<String, String> languageIdsMap = TranslatorUtil.getLanguageIdsMap(locale);
 
 if (translation == null) {
 	String translationId = PropsUtil.get(PropsKeys.TRANSLATOR_DEFAULT_LANGUAGES);
 
-	String[] languageIds = TranslatorUtil.getFromAndToLanguageIds(translationId, allLanguageIds);
+	String[] fromAndTolanguageIds = TranslatorUtil.getFromAndToLanguageIds(translationId, languageIdsMap);
 
-	if (languageIds != null) {
-		String fromLanguageId = languageIds[0];
-		String toLanguageId = languageIds[1];
+	if (fromAndTolanguageIds != null) {
+		String fromLanguageId = fromAndTolanguageIds[0];
+		String toLanguageId = fromAndTolanguageIds[1];
 
 		translation = new Translation(fromLanguageId, toLanguageId, StringPool.BLANK, StringPool.BLANK);
 	}
@@ -73,10 +73,12 @@ if (translation == null) {
 				<aui:select label="language-from" name="fromLanguageId">
 
 					<%
-					for (String languageId : allLanguageIds) {
+					for (Map.Entry<String, String> entry : languageIdsMap.entrySet()) {
+						String languageId = entry.getKey();
+						String languageName = entry.getValue();
 					%>
 
-						<aui:option label='<%= "language." + languageId %>' selected="<%= translation.getFromLanguageId().equals(languageId) %>" value="<%= languageId %>" />
+						<aui:option label='<%= languageName %>' selected="<%= translation.getFromLanguageId().equals(languageId) %>" value="<%= languageId %>" />
 
 					<%
 					}
@@ -87,10 +89,12 @@ if (translation == null) {
 				<aui:select label="language-to" name="toLanguageId">
 
 					<%
-					for (String languageId : allLanguageIds) {
+					for (Map.Entry<String, String> entry : languageIdsMap.entrySet()) {
+						String languageId = entry.getKey();
+						String languageName = entry.getValue();
 					%>
 
-						<aui:option label='<%= "language." + languageId %>' selected="<%= translation.getToLanguageId().equals(languageId) %>" value="<%= languageId %>" />
+						<aui:option label='<%= languageName %>' selected="<%= translation.getToLanguageId().equals(languageId) %>" value="<%= languageId %>" />
 
 					<%
 					}

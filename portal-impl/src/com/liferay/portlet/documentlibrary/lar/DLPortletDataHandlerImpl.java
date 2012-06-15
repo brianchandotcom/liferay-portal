@@ -143,8 +143,6 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 		}
 
 		if (!portletDataContext.isPerformDirectBinaryImport()) {
-			String binPath = getFileEntryBinPath(portletDataContext, fileEntry);
-
 			InputStream is = null;
 
 			try {
@@ -166,6 +164,9 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 			}
 
 			try {
+				String binPath = getFileEntryBinPath(
+					portletDataContext, fileEntry);
+
 				portletDataContext.addZipEntry(binPath, is);
 
 				fileEntryElement.addAttribute("bin-path", binPath);
@@ -320,8 +321,6 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 					"No file found for file entry " +
 						fileEntry.getFileEntryId());
 			}
-
-			fileEntryElement.detach();
 
 			return;
 		}

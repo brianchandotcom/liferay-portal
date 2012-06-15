@@ -16,7 +16,6 @@ package com.liferay.portal.json.jabsorb.serializer;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.io.Serializable;
 
@@ -334,7 +333,7 @@ public class LiferaySerializer extends AbstractSerializer {
 
 					try {
 						value = ser.unmarshall(
-							serializerState, null,
+							serializerState, field.getType(),
 							serializableJSONObject.get(fieldName));
 					}
 					catch (Exception e) {
@@ -342,8 +341,6 @@ public class LiferaySerializer extends AbstractSerializer {
 
 					if (value != null) {
 						try {
-							value = getValue(field, value);
-
 							field.set(javaClassInstance, value);
 						}
 						catch (Exception e) {
@@ -361,47 +358,6 @@ public class LiferaySerializer extends AbstractSerializer {
 		}
 
 		return javaClassInstance;
-	}
-
-	protected Object getValue(Field field, Object value) {
-		Class<?> type = field.getType();
-
-		if (!type.isArray()) {
-			return value;
-		}
-
-		Class<?> componentType = type.getComponentType();
-
-		if (!componentType.isPrimitive()) {
-			return value;
-		}
-
-		if (type.isAssignableFrom(boolean[].class)) {
-			value = ArrayUtil.toArray((Boolean[])value);
-		}
-		else if (type.isAssignableFrom(byte[].class)) {
-			value = ArrayUtil.toArray((Byte[])value);
-		}
-		else if (type.isAssignableFrom(char[].class)) {
-			value = ArrayUtil.toArray((Character[])value);
-		}
-		else if (type.isAssignableFrom(double[].class)) {
-			value = ArrayUtil.toArray((Double[])value);
-		}
-		else if (type.isAssignableFrom(float[].class)) {
-			value = ArrayUtil.toArray((Float[])value);
-		}
-		else if (type.isAssignableFrom(int[].class)) {
-			value = ArrayUtil.toArray((Integer[])value);
-		}
-		else if (type.isAssignableFrom(long[].class)) {
-			value = ArrayUtil.toArray((Long[])value);
-		}
-		else if (type.isAssignableFrom(short[].class)) {
-			value = ArrayUtil.toArray((Short[])value);
-		}
-
-		return value;
 	}
 
 	private static final Class<?>[] _JSON_CLASSES = {JSONObject.class};

@@ -31,6 +31,12 @@ import org.junit.Assert;
  */
 public class AssertUtils {
 
+	public static void assertArrayEquals(
+		double[] expectedArray, double[] actualArray) {
+
+		Assert.assertArrayEquals(expectedArray, actualArray, 0);
+	}
+
 	public static void assertEquals(Blob expectedBlob, Blob actualBlob)
 		throws Exception {
 

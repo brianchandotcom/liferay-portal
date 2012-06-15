@@ -749,6 +749,7 @@ public class PortletExporter {
 
 		if (layout != null) {
 			layoutId = layout.getLayoutId();
+
 			plid = layout.getPlid();
 		}
 
@@ -918,9 +919,7 @@ public class PortletExporter {
 		Element element = parentElement.addElement("portlet");
 
 		element.addAttribute("portlet-id", portletId);
-
 		element.addAttribute("layout-id", String.valueOf(layoutId));
-
 		element.addAttribute("path", path);
 
 		if (portletDataContext.isPathNotProcessed(path)) {

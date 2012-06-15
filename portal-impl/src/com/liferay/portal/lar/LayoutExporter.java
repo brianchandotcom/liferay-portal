@@ -477,12 +477,9 @@ public class LayoutExporter {
 				scopeLayoutUuid = (String)portletIdsEntry.getValue()[4];
 			}
 
-			Layout layout = null;
+			Layout layout = LayoutLocalServiceUtil.fetchLayout(plid);
 
-			try {
-				layout = LayoutLocalServiceUtil.getLayout(plid);
-			}
-			catch (NoSuchLayoutException nsle) {
+			if (layout == null) {
 				if (!globalScopeExport &&
 					(plid <= LayoutConstants.DEFAULT_PLID)) {
 

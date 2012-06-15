@@ -637,13 +637,6 @@ public class LayoutImporter {
 			String portletId = portletElement.attributeValue("portlet-id");
 			long layoutId = GetterUtil.getLong(
 				portletElement.attributeValue("layout-id"));
-
-			long plid = LayoutConstants.DEFAULT_PLID;
-
-			if (newLayoutsMap.containsKey(layoutId)) {
-				plid = newLayoutsMap.get(layoutId).getPlid();
-			}
-
 			long oldPlid = GetterUtil.getLong(
 				portletElement.attributeValue("old-plid"));
 
@@ -654,15 +647,18 @@ public class LayoutImporter {
 				continue;
 			}
 
-			Layout layout = null;
+			Layout layout = newLayoutsMap.get(layoutId);
 
-			try {
-				layout = LayoutUtil.findByPrimaryKey(plid);
+			long plid = LayoutConstants.DEFAULT_PLID;
+
+			if (layout != null) {
+				plid = layout.getPlid();
 			}
-			catch (NoSuchLayoutException nsle) {
-				if (!globalScopeImport) {
-					continue;
-				}
+
+			layout = LayoutUtil.fetchByPrimaryKey(plid);
+
+			if ((layout == null) && !globalScopeImport) {
+				continue;
 			}
 
 			portletDataContext.setPlid(plid);

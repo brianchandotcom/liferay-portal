@@ -247,7 +247,6 @@ String publishScheduleMessage = LanguageUtil.get(pageContext, publishScheduleDia
 								);
 							}
 						</aui:script>
-
 					</c:if>
 
 					<c:if test="<%= showManageBranches && !layoutSetBranches.isEmpty() %>">

@@ -281,6 +281,11 @@ public class DLFileVersionLocalServiceWrapper
 		_dlFileVersionLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
+	public void deleteFileVersionsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_dlFileVersionLocalService.deleteFileVersionsByCompany(companyId);
+	}
+
 	public com.liferay.portlet.documentlibrary.model.DLFileVersion getFileVersion(
 		long fileVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException,

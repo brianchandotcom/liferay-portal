@@ -134,6 +134,12 @@ public class SCProductVersionLocalServiceImpl
 		}
 	}
 
+	public void deleteProductVersionsByCompany(long companyId)
+		throws SystemException {
+
+		scProductVersionPersistence.removeByCompanyId(companyId);
+	}
+
 	public SCProductVersion getProductVersion(long productVersionId)
 		throws PortalException, SystemException {
 

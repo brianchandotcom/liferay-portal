@@ -41,6 +41,7 @@ import com.liferay.portlet.asset.util.AssetUtil;
 import com.liferay.portlet.social.util.SocialCounterPeriodUtil;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -222,6 +223,20 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 		AssetTag tag = assetTagPersistence.findByPrimaryKey(tagId);
 
 		deleteTag(tag);
+	}
+
+	public void deleteTags(Collection<AssetTag> tags)
+		throws PortalException, SystemException {
+
+		for (AssetTag tag : tags) {
+			deleteTag(tag);
+		}
+	}
+
+	public void deleteTagsByCompany(long companyId)
+		throws PortalException, SystemException {
+
+		deleteTags(assetTagPersistence.findByCompanyId(companyId));
 	}
 
 	public List<AssetTag> getEntryTags(long entryId) throws SystemException {

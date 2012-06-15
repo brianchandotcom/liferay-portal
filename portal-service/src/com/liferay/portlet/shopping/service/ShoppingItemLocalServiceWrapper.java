@@ -338,10 +338,23 @@ public class ShoppingItemLocalServiceWrapper implements ShoppingItemLocalService
 		_shoppingItemLocalService.deleteItem(item);
 	}
 
+	public void deleteItems(
+		java.util.Collection<com.liferay.portlet.shopping.model.ShoppingItem> items)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_shoppingItemLocalService.deleteItems(items);
+	}
+
 	public void deleteItems(long groupId, long categoryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_shoppingItemLocalService.deleteItems(groupId, categoryId);
+	}
+
+	public void deleteItemsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_shoppingItemLocalService.deleteItemsByCompany(companyId);
 	}
 
 	public int getCategoriesItemsCount(long groupId,

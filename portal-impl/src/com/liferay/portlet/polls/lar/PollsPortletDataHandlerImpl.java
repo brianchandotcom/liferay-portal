@@ -342,6 +342,18 @@ public class PollsPortletDataHandlerImpl extends BasePortletDataHandler {
 	}
 
 	@Override
+	protected PortletPreferences doDeleteData(
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences, long companyId)
+		throws Exception {
+
+		PollsQuestionLocalServiceUtil.deleteQuestionsByCompany(companyId);
+		PollsVoteLocalServiceUtil.deletePollsVotesByCompany(companyId);
+
+		return null;
+	}
+
+	@Override
 	protected String doExportData(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)

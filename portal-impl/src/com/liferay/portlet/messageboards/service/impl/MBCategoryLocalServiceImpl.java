@@ -34,6 +34,7 @@ import com.liferay.portlet.messageboards.model.impl.MBCategoryImpl;
 import com.liferay.portlet.messageboards.service.base.MBCategoryLocalServiceBaseImpl;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -172,6 +173,14 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 			category.getCategoryId(), groupPermissions, guestPermissions);
 	}
 
+	public void deleteCategories(Collection<MBCategory> categories)
+		throws PortalException, SystemException {
+
+		for (MBCategory category : categories) {
+			deleteCategory(category);
+		}
+	}
+
 	public void deleteCategories(long groupId)
 		throws PortalException, SystemException {
 
@@ -181,6 +190,12 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		for (MBCategory category : categories) {
 			deleteCategory(category);
 		}
+	}
+
+	public void deleteCategoriesByCompany(long companyId)
+		throws PortalException, SystemException {
+
+		deleteCategories(mbCategoryPersistence.findByCompanyId(companyId));
 	}
 
 	public void deleteCategory(long categoryId)

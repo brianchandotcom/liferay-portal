@@ -314,10 +314,23 @@ public class SCProductEntryLocalServiceWrapper
 			groupPermissions, guestPermissions);
 	}
 
+	public void deleteProductEntries(
+		java.util.Collection<com.liferay.portlet.softwarecatalog.model.SCProductEntry> productEntries)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_scProductEntryLocalService.deleteProductEntries(productEntries);
+	}
+
 	public void deleteProductEntries(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_scProductEntryLocalService.deleteProductEntries(groupId);
+	}
+
+	public void deleteProductEntriesByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_scProductEntryLocalService.deleteProductEntriesByCompany(companyId);
 	}
 
 	public com.liferay.portlet.softwarecatalog.model.SCProductEntry deleteProductEntry(

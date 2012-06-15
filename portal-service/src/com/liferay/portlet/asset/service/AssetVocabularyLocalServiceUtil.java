@@ -332,10 +332,23 @@ public class AssetVocabularyLocalServiceUtil {
 			guestPermissions);
 	}
 
+	public static void deleteVocabularies(
+		java.util.Collection<com.liferay.portlet.asset.model.AssetVocabulary> vocabularies)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteVocabularies(vocabularies);
+	}
+
 	public static void deleteVocabularies(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().deleteVocabularies(groupId);
+	}
+
+	public static void deleteVocabulariesByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteVocabulariesByCompany(companyId);
 	}
 
 	public static void deleteVocabulary(

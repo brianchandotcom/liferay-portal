@@ -35,6 +35,20 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		}
 	}
 
+	public PortletPreferences deleteData(
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences, long companyId)
+		throws PortletDataException {
+
+		try {
+			return doDeleteData(
+				portletDataContext, portletId, portletPreferences, companyId);
+		}
+		catch (Exception e) {
+			throw new PortletDataException(e);
+		}
+	}
+
 	public String exportData(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)
@@ -94,6 +108,14 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 	protected PortletPreferences doDeleteData(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)
+		throws Exception {
+
+		return null;
+	}
+
+	protected PortletPreferences doDeleteData(
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences, long companyId)
 		throws Exception {
 
 		return null;

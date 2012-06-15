@@ -283,6 +283,12 @@ public class WorkflowDefinitionLinkLocalServiceWrapper
 			groupId, className, classPK, typePK);
 	}
 
+	public void deleteWorkflowDefinitionLinksByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLinksByCompany(companyId);
+	}
+
 	public com.liferay.portal.model.WorkflowDefinitionLink getDefaultWorkflowDefinitionLink(
 		long companyId, java.lang.String className, long classPK, long typePK)
 		throws com.liferay.portal.kernel.exception.PortalException,

@@ -209,6 +209,35 @@ public class ResourcePermissionLocalServiceImpl
 	}
 
 	/**
+	 * Deletes the resource permission. This method should not be confused with
+	 * any of the <code>removeResourcePermission</code> methods, as its purpose
+	 * is very different. This method should only be used for deleting a
+	 * resource permission that refers to a resource when that resource is
+	 * deleted. For example this method could be used to delete a permission to
+	 * a blog post when it is deleted.
+	 *
+	 * @param  resourcePermissionId the primary key of the resource permission
+	 * @throws PortalException if a portal exceptional occurred
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public ResourcePermission deleteResourcePermission(
+			long resourcePermissionId)
+		throws PortalException, SystemException {
+
+		return resourcePermissionPersistence.remove(resourcePermissionId);
+	}
+
+	public void deleteResourcePermissions(
+			Collection<ResourcePermission> resourcePermissions)
+		throws PortalException, SystemException {
+
+		for (ResourcePermission resourcePermission : resourcePermissions) {
+			deleteResourcePermission(resourcePermission);
+		}
+	}
+
+	/**
 	 * Deletes all resource permissions at the scope to resources of the type.
 	 * This method should not be confused with any of the
 	 * <code>removeResourcePermission</code> methods, as its purpose is very
@@ -266,14 +295,16 @@ public class ResourcePermissionLocalServiceImpl
 			long companyId, String name, int scope, String primKey)
 		throws PortalException, SystemException {
 
-		List<ResourcePermission> resourcePermissions =
+		deleteResourcePermissions(
 			resourcePermissionPersistence.findByC_N_S_P(
-				companyId, name, scope, primKey);
+				companyId, name, scope, primKey));
+	}
 
-		for (ResourcePermission resourcePermission : resourcePermissions) {
-			deleteResourcePermission(
-				resourcePermission.getResourcePermissionId());
-		}
+	public void deleteResourcePermissionsByCompany(long companyId)
+		throws PortalException, SystemException {
+
+		deleteResourcePermissions(
+			resourcePermissionPersistence.findByCompanyId(companyId));
 	}
 
 	/**

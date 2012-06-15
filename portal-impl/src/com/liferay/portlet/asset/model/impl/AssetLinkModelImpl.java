@@ -86,9 +86,10 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.column.bitmask.enabled.com.liferay.portlet.asset.model.AssetLink"),
 			true);
-	public static long ENTRYID1_COLUMN_BITMASK = 1L;
-	public static long ENTRYID2_COLUMN_BITMASK = 2L;
-	public static long TYPE_COLUMN_BITMASK = 4L;
+	public static long COMPANYID_COLUMN_BITMASK = 1L;
+	public static long ENTRYID1_COLUMN_BITMASK = 2L;
+	public static long ENTRYID2_COLUMN_BITMASK = 4L;
+	public static long TYPE_COLUMN_BITMASK = 8L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.asset.model.AssetLink"));
 
@@ -206,7 +207,19 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	public long getUserId() {
@@ -417,6 +430,10 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 	public void resetOriginalValues() {
 		AssetLinkModelImpl assetLinkModelImpl = this;
 
+		assetLinkModelImpl._originalCompanyId = assetLinkModelImpl._companyId;
+
+		assetLinkModelImpl._setOriginalCompanyId = false;
+
 		assetLinkModelImpl._originalEntryId1 = assetLinkModelImpl._entryId1;
 
 		assetLinkModelImpl._setOriginalEntryId1 = false;
@@ -552,6 +569,8 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 		};
 	private long _linkId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userUuid;
 	private String _userName;

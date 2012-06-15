@@ -314,10 +314,23 @@ public class ShoppingCategoryLocalServiceUtil {
 			.addCategoryResources(category, groupPermissions, guestPermissions);
 	}
 
+	public static void deleteCategories(
+		java.util.Collection<com.liferay.portlet.shopping.model.ShoppingCategory> categories)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteCategories(categories);
+	}
+
 	public static void deleteCategories(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().deleteCategories(groupId);
+	}
+
+	public static void deleteCategoriesByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteCategoriesByCompany(companyId);
 	}
 
 	public static void deleteCategory(long categoryId)

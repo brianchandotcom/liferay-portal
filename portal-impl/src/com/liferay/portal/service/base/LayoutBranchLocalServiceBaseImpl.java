@@ -281,11 +281,12 @@ public abstract class LayoutBranchLocalServiceBaseImpl
 	 *
 	 * @param layoutBranch the layout branch
 	 * @return the layout branch that was removed
+	 * @throws PortalException
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	public LayoutBranch deleteLayoutBranch(LayoutBranch layoutBranch)
-		throws SystemException {
+		throws PortalException, SystemException {
 		return layoutBranchPersistence.remove(layoutBranch);
 	}
 

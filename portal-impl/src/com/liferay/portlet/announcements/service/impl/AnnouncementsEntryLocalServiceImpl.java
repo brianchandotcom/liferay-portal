@@ -49,6 +49,7 @@ import com.liferay.portlet.announcements.service.base.AnnouncementsEntryLocalSer
 import com.liferay.util.ContentUtil;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -136,6 +137,20 @@ public class AnnouncementsEntryLocalServiceImpl
 		for (AnnouncementsEntry entry : entries) {
 			notifyUsers(entry);
 		}
+	}
+
+	public void deleteEntries(Collection<AnnouncementsEntry> entries)
+		throws PortalException, SystemException {
+
+		for (AnnouncementsEntry entry : entries) {
+			deleteEntry(entry);
+		}
+	}
+
+	public void deleteEntriesByCompany(long companyId)
+		throws PortalException, SystemException {
+
+		deleteEntries(announcementsEntryPersistence.findByCompanyId(companyId));
 	}
 
 	public void deleteEntry(AnnouncementsEntry entry)

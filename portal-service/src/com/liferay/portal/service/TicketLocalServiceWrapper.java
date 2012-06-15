@@ -263,6 +263,11 @@ public class TicketLocalServiceWrapper implements TicketLocalService,
 			type, extraInfo, expirationDate, serviceContext);
 	}
 
+	public void deleteTicketsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_ticketLocalService.deleteTicketsByCompany(companyId);
+	}
+
 	public com.liferay.portal.model.Ticket fetchTicket(java.lang.String key)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _ticketLocalService.fetchTicket(key);

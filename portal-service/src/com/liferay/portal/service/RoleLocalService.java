@@ -332,6 +332,21 @@ public interface RoleLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public com.liferay.portal.model.Role deleteRole(
+		com.liferay.portal.model.Role role, boolean allowSystemRoleDeletion)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void deleteRoles(
+		java.util.Collection<com.liferay.portal.model.Role> roles,
+		boolean allowSystemRoleDeletion)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void deleteRolesByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* Returns the role with the name in the company.
 	*

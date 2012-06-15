@@ -92,6 +92,12 @@ public class MembershipRequestLocalServiceImpl
 		}
 	}
 
+	public void deleteMembershipRequestsByCompany(long companyId)
+		throws SystemException {
+
+		membershipRequestPersistence.removeByCompanyId(companyId);
+	}
+
 	public void deleteMembershipRequestsByUserId(long userId)
 		throws SystemException {
 

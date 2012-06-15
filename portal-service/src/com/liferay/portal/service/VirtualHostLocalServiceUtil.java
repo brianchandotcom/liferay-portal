@@ -266,6 +266,11 @@ public class VirtualHostLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
+	public static void deleteVirtualHostsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteVirtualHostsByCompany(companyId);
+	}
+
 	public static com.liferay.portal.model.VirtualHost fetchVirtualHost(
 		long companyId, long layoutSetId)
 		throws com.liferay.portal.kernel.exception.SystemException {

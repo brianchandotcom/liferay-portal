@@ -134,11 +134,12 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.column.bitmask.enabled.com.liferay.portlet.shopping.model.ShoppingOrder"),
 			true);
-	public static long GROUPID_COLUMN_BITMASK = 1L;
-	public static long NUMBER_COLUMN_BITMASK = 2L;
-	public static long PPPAYMENTSTATUS_COLUMN_BITMASK = 4L;
-	public static long PPTXNID_COLUMN_BITMASK = 8L;
-	public static long USERID_COLUMN_BITMASK = 16L;
+	public static long COMPANYID_COLUMN_BITMASK = 1L;
+	public static long GROUPID_COLUMN_BITMASK = 2L;
+	public static long NUMBER_COLUMN_BITMASK = 4L;
+	public static long PPPAYMENTSTATUS_COLUMN_BITMASK = 8L;
+	public static long PPTXNID_COLUMN_BITMASK = 16L;
+	public static long USERID_COLUMN_BITMASK = 32L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -656,7 +657,19 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -1470,6 +1483,10 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 		shoppingOrderModelImpl._setOriginalGroupId = false;
 
+		shoppingOrderModelImpl._originalCompanyId = shoppingOrderModelImpl._companyId;
+
+		shoppingOrderModelImpl._setOriginalCompanyId = false;
+
 		shoppingOrderModelImpl._originalUserId = shoppingOrderModelImpl._userId;
 
 		shoppingOrderModelImpl._setOriginalUserId = false;
@@ -2143,6 +2160,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userUuid;
 	private long _originalUserId;

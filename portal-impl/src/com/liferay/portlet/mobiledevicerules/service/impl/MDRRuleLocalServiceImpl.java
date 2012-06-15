@@ -136,6 +136,10 @@ public class MDRRuleLocalServiceImpl extends MDRRuleLocalServiceBaseImpl {
 		}
 	}
 
+	public void deleteRulesByCompany(long companyId) throws SystemException {
+		mdrRulePersistence.removeByCompanyId(companyId);
+	}
+
 	public MDRRule fetchRule(long ruleId) throws SystemException {
 		return mdrRulePersistence.fetchByPrimaryKey(ruleId);
 	}

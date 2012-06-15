@@ -27,6 +27,7 @@ import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.base.DLFileShortcutLocalServiceBaseImpl;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -191,6 +192,14 @@ public class DLFileShortcutLocalServiceImpl
 		deleteFileShortcut(fileShortcut);
 	}
 
+	public void deleteFileShortcuts(Collection<DLFileShortcut> fileShortcuts)
+		throws PortalException, SystemException {
+
+		for (DLFileShortcut fileShortcut : fileShortcuts) {
+			deleteFileShortcut(fileShortcut);
+		}
+	}
+
 	public void deleteFileShortcuts(long toFileEntryId)
 		throws PortalException, SystemException {
 
@@ -200,6 +209,13 @@ public class DLFileShortcutLocalServiceImpl
 		for (DLFileShortcut fileShortcut : fileShortcuts) {
 			deleteFileShortcut(fileShortcut);
 		}
+	}
+
+	public void deleteFileShortcutsByCompany(long companyId)
+		throws PortalException, SystemException {
+
+		deleteFileShortcuts(
+			dlFileShortcutPersistence.findByCompanyId(companyId));
 	}
 
 	public void disableFileShortcuts(long toFileEntryId)

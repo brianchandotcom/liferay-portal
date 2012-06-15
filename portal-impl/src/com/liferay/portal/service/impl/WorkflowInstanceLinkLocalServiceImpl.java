@@ -132,6 +132,12 @@ public class WorkflowInstanceLinkLocalServiceImpl
 		}
 	}
 
+	public void deleteWorkflowInstanceLinksByCompany(long companyId)
+		throws SystemException {
+
+		workflowInstanceLinkPersistence.removeByCompanyId(companyId);
+	}
+
 	public WorkflowInstanceLink fetchWorkflowInstanceLink(
 			long companyId, long groupId, String className, long classPK)
 		throws SystemException {

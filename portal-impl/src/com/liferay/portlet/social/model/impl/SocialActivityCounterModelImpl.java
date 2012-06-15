@@ -89,11 +89,12 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 			true);
 	public static long CLASSNAMEID_COLUMN_BITMASK = 1L;
 	public static long CLASSPK_COLUMN_BITMASK = 2L;
-	public static long ENDPERIOD_COLUMN_BITMASK = 4L;
-	public static long GROUPID_COLUMN_BITMASK = 8L;
-	public static long NAME_COLUMN_BITMASK = 16L;
-	public static long OWNERTYPE_COLUMN_BITMASK = 32L;
-	public static long STARTPERIOD_COLUMN_BITMASK = 64L;
+	public static long COMPANYID_COLUMN_BITMASK = 4L;
+	public static long ENDPERIOD_COLUMN_BITMASK = 8L;
+	public static long GROUPID_COLUMN_BITMASK = 16L;
+	public static long NAME_COLUMN_BITMASK = 32L;
+	public static long OWNERTYPE_COLUMN_BITMASK = 64L;
+	public static long STARTPERIOD_COLUMN_BITMASK = 128L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.social.model.SocialActivityCounter"));
 
@@ -259,7 +260,19 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	public String getClassName() {
@@ -542,6 +555,10 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 
 		socialActivityCounterModelImpl._setOriginalGroupId = false;
 
+		socialActivityCounterModelImpl._originalCompanyId = socialActivityCounterModelImpl._companyId;
+
+		socialActivityCounterModelImpl._setOriginalCompanyId = false;
+
 		socialActivityCounterModelImpl._originalClassNameId = socialActivityCounterModelImpl._classNameId;
 
 		socialActivityCounterModelImpl._setOriginalClassNameId = false;
@@ -715,6 +732,8 @@ public class SocialActivityCounterModelImpl extends BaseModelImpl<SocialActivity
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _classNameId;
 	private long _originalClassNameId;
 	private boolean _setOriginalClassNameId;

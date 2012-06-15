@@ -19,9 +19,11 @@ import com.liferay.portal.CompanyVirtualHostException;
 import com.liferay.portal.CompanyWebIdException;
 import com.liferay.portal.NoSuchCompanyException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.CompanyServiceUtil;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.util.PortalInstances;
@@ -51,8 +53,15 @@ public class EditInstanceAction extends PortletAction {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+
 		try {
-			updateInstance(actionRequest);
+			if (cmd.equals(Constants.DELETE)) {
+				deleteCompanies(actionRequest);
+			}
+			else {
+				updateInstance(actionRequest);
+			}
 
 			sendRedirect(actionRequest, actionResponse);
 		}
@@ -100,6 +109,15 @@ public class EditInstanceAction extends PortletAction {
 
 		return mapping.findForward(
 			getForward(renderRequest, "portlet.admin.edit_instance"));
+	}
+
+	protected void deleteCompanies(ActionRequest actionRequest)
+		throws Exception {
+
+		long[] deleteCompanyIds = ParamUtil.getLongValues(
+			actionRequest, "deleteCompanyIds");
+
+		CompanyLocalServiceUtil.deleteCompanies(deleteCompanyIds);
 	}
 
 	protected void updateInstance(ActionRequest actionRequest)

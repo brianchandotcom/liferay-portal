@@ -277,6 +277,17 @@ public class UserTrackerLocalServiceUtil {
 			remoteAddr, remoteHost, userAgent, userTrackerPaths);
 	}
 
+	public static void deleteUserTrackers(
+		java.util.Collection<com.liferay.portal.model.UserTracker> userTrackers)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteUserTrackers(userTrackers);
+	}
+
+	public static void deleteUserTrackersByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteUserTrackersByCompany(companyId);
+	}
+
 	public static java.util.List<com.liferay.portal.model.UserTracker> getUserTrackers(
 		long companyId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {

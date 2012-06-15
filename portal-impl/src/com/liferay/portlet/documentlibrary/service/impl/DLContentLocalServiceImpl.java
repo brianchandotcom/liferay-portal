@@ -103,6 +103,10 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 			companyId, repositoryId, path, version);
 	}
 
+	public void deleteContentByCompany(long companyId) throws SystemException {
+		dlContentPersistence.removeByCompanyId(companyId);
+	}
+
 	public void deleteContents(long companyId, long repositoryId, String path)
 		throws SystemException {
 

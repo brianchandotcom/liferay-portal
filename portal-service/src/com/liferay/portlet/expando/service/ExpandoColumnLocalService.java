@@ -275,6 +275,10 @@ public interface ExpandoColumnLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public void deleteColumns(
+		java.util.Collection<com.liferay.portlet.expando.model.ExpandoColumn> columns)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public void deleteColumns(long tableId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -287,6 +291,9 @@ public interface ExpandoColumnLocalService extends BaseLocalService,
 		java.lang.String tableName)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
+
+	public void deleteColumnsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.expando.model.ExpandoColumn getColumn(

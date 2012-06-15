@@ -483,6 +483,128 @@ public class MDRActionUtil {
 	}
 
 	/**
+	* Returns all the m d r actions where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the matching m d r actions
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRAction> findByCompanyId(
+		long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByCompanyId(companyId);
+	}
+
+	/**
+	* Returns a range of all the m d r actions where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of m d r actions
+	* @param end the upper bound of the range of m d r actions (not inclusive)
+	* @return the range of matching m d r actions
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRAction> findByCompanyId(
+		long companyId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByCompanyId(companyId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the m d r actions where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of m d r actions
+	* @param end the upper bound of the range of m d r actions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching m d r actions
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRAction> findByCompanyId(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByCompanyId(companyId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the first m d r action in the ordered set where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching m d r action
+	* @throws com.liferay.portlet.mobiledevicerules.NoSuchActionException if a matching m d r action could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.mobiledevicerules.model.MDRAction findByCompanyId_First(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.mobiledevicerules.NoSuchActionException {
+		return getPersistence()
+				   .findByCompanyId_First(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the last m d r action in the ordered set where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching m d r action
+	* @throws com.liferay.portlet.mobiledevicerules.NoSuchActionException if a matching m d r action could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.mobiledevicerules.model.MDRAction findByCompanyId_Last(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.mobiledevicerules.NoSuchActionException {
+		return getPersistence()
+				   .findByCompanyId_Last(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the m d r actions before and after the current m d r action in the ordered set where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param actionId the primary key of the current m d r action
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next m d r action
+	* @throws com.liferay.portlet.mobiledevicerules.NoSuchActionException if a m d r action with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.mobiledevicerules.model.MDRAction[] findByCompanyId_PrevAndNext(
+		long actionId, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.mobiledevicerules.NoSuchActionException {
+		return getPersistence()
+				   .findByCompanyId_PrevAndNext(actionId, companyId,
+			orderByComparator);
+	}
+
+	/**
 	* Returns all the m d r actions where ruleGroupInstanceId = &#63;.
 	*
 	* @param ruleGroupInstanceId the rule group instance ID
@@ -696,6 +818,17 @@ public class MDRActionUtil {
 	}
 
 	/**
+	* Removes all the m d r actions where companyId = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByCompanyId(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByCompanyId(companyId);
+	}
+
+	/**
 	* Removes all the m d r actions where ruleGroupInstanceId = &#63; from the database.
 	*
 	* @param ruleGroupInstanceId the rule group instance ID
@@ -752,6 +885,18 @@ public class MDRActionUtil {
 	public static int countByUuid_C(java.lang.String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().countByUuid_C(uuid, companyId);
+	}
+
+	/**
+	* Returns the number of m d r actions where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the number of matching m d r actions
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByCompanyId(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByCompanyId(companyId);
 	}
 
 	/**

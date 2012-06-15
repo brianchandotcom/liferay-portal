@@ -272,6 +272,11 @@ public class TicketLocalServiceUtil {
 			expirationDate, serviceContext);
 	}
 
+	public static void deleteTicketsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteTicketsByCompany(companyId);
+	}
+
 	public static com.liferay.portal.model.Ticket fetchTicket(
 		java.lang.String key)
 		throws com.liferay.portal.kernel.exception.SystemException {

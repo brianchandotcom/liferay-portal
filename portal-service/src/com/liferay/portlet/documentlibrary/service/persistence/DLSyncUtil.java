@@ -189,6 +189,128 @@ public class DLSyncUtil {
 	}
 
 	/**
+	* Returns all the d l syncs where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the matching d l syncs
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLSync> findByCompanyId(
+		long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByCompanyId(companyId);
+	}
+
+	/**
+	* Returns a range of all the d l syncs where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of d l syncs
+	* @param end the upper bound of the range of d l syncs (not inclusive)
+	* @return the range of matching d l syncs
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLSync> findByCompanyId(
+		long companyId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByCompanyId(companyId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the d l syncs where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of d l syncs
+	* @param end the upper bound of the range of d l syncs (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching d l syncs
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLSync> findByCompanyId(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByCompanyId(companyId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the first d l sync in the ordered set where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching d l sync
+	* @throws com.liferay.portlet.documentlibrary.NoSuchSyncException if a matching d l sync could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.documentlibrary.model.DLSync findByCompanyId_First(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.documentlibrary.NoSuchSyncException {
+		return getPersistence()
+				   .findByCompanyId_First(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the last d l sync in the ordered set where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching d l sync
+	* @throws com.liferay.portlet.documentlibrary.NoSuchSyncException if a matching d l sync could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.documentlibrary.model.DLSync findByCompanyId_Last(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.documentlibrary.NoSuchSyncException {
+		return getPersistence()
+				   .findByCompanyId_Last(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the d l syncs before and after the current d l sync in the ordered set where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param syncId the primary key of the current d l sync
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next d l sync
+	* @throws com.liferay.portlet.documentlibrary.NoSuchSyncException if a d l sync with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.documentlibrary.model.DLSync[] findByCompanyId_PrevAndNext(
+		long syncId, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.documentlibrary.NoSuchSyncException {
+		return getPersistence()
+				   .findByCompanyId_PrevAndNext(syncId, companyId,
+			orderByComparator);
+	}
+
+	/**
 	* Returns the d l sync where fileId = &#63; or throws a {@link com.liferay.portlet.documentlibrary.NoSuchSyncException} if it could not be found.
 	*
 	* @param fileId the file ID
@@ -422,6 +544,17 @@ public class DLSyncUtil {
 	}
 
 	/**
+	* Removes all the d l syncs where companyId = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByCompanyId(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByCompanyId(companyId);
+	}
+
+	/**
 	* Removes the d l sync where fileId = &#63; from the database.
 	*
 	* @param fileId the file ID
@@ -457,6 +590,18 @@ public class DLSyncUtil {
 	public static void removeAll()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getPersistence().removeAll();
+	}
+
+	/**
+	* Returns the number of d l syncs where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the number of matching d l syncs
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByCompanyId(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByCompanyId(companyId);
 	}
 
 	/**

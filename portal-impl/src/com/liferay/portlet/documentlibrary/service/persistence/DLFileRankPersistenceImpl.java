@@ -75,6 +75,26 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_COMPANYID =
+		new FinderPath(DLFileRankModelImpl.ENTITY_CACHE_ENABLED,
+			DLFileRankModelImpl.FINDER_CACHE_ENABLED, DLFileRankImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+			new String[] {
+				Long.class.getName(),
+				
+			"java.lang.Integer", "java.lang.Integer",
+				"com.liferay.portal.kernel.util.OrderByComparator"
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID =
+		new FinderPath(DLFileRankModelImpl.ENTITY_CACHE_ENABLED,
+			DLFileRankModelImpl.FINDER_CACHE_ENABLED, DLFileRankImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
+			new String[] { Long.class.getName() },
+			DLFileRankModelImpl.COMPANYID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_COMPANYID = new FinderPath(DLFileRankModelImpl.ENTITY_CACHE_ENABLED,
+			DLFileRankModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
+			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_USERID = new FinderPath(DLFileRankModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileRankModelImpl.FINDER_CACHE_ENABLED, DLFileRankImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
@@ -408,6 +428,27 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 		}
 		else {
 			if ((dlFileRankModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(dlFileRankModelImpl.getOriginalCompanyId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(dlFileRankModelImpl.getCompanyId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+					args);
+			}
+
+			if ((dlFileRankModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(dlFileRankModelImpl.getOriginalUserId())
@@ -645,6 +686,363 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 		}
 
 		return dlFileRank;
+	}
+
+	/**
+	 * Returns all the document library file ranks where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the matching document library file ranks
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<DLFileRank> findByCompanyId(long companyId)
+		throws SystemException {
+		return findByCompanyId(companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	/**
+	 * Returns a range of all the document library file ranks where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of document library file ranks
+	 * @param end the upper bound of the range of document library file ranks (not inclusive)
+	 * @return the range of matching document library file ranks
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<DLFileRank> findByCompanyId(long companyId, int start, int end)
+		throws SystemException {
+		return findByCompanyId(companyId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the document library file ranks where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of document library file ranks
+	 * @param end the upper bound of the range of document library file ranks (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching document library file ranks
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<DLFileRank> findByCompanyId(long companyId, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID;
+			finderArgs = new Object[] { companyId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_COMPANYID;
+			finderArgs = new Object[] { companyId, start, end, orderByComparator };
+		}
+
+		List<DLFileRank> list = (List<DLFileRank>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (DLFileRank dlFileRank : list) {
+				if ((companyId != dlFileRank.getCompanyId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_DLFILERANK_WHERE);
+
+			query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+
+			else {
+				query.append(DLFileRankModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				list = (List<DLFileRank>)QueryUtil.list(q, getDialect(), start,
+						end);
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (list == null) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
+				else {
+					cacheResult(list);
+
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
+
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first document library file rank in the ordered set where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching document library file rank
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileRankException if a matching document library file rank could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLFileRank findByCompanyId_First(long companyId,
+		OrderByComparator orderByComparator)
+		throws NoSuchFileRankException, SystemException {
+		List<DLFileRank> list = findByCompanyId(companyId, 0, 1,
+				orderByComparator);
+
+		if (list.isEmpty()) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("companyId=");
+			msg.append(companyId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			throw new NoSuchFileRankException(msg.toString());
+		}
+		else {
+			return list.get(0);
+		}
+	}
+
+	/**
+	 * Returns the last document library file rank in the ordered set where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching document library file rank
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileRankException if a matching document library file rank could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLFileRank findByCompanyId_Last(long companyId,
+		OrderByComparator orderByComparator)
+		throws NoSuchFileRankException, SystemException {
+		int count = countByCompanyId(companyId);
+
+		List<DLFileRank> list = findByCompanyId(companyId, count - 1, count,
+				orderByComparator);
+
+		if (list.isEmpty()) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("companyId=");
+			msg.append(companyId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			throw new NoSuchFileRankException(msg.toString());
+		}
+		else {
+			return list.get(0);
+		}
+	}
+
+	/**
+	 * Returns the document library file ranks before and after the current document library file rank in the ordered set where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param fileRankId the primary key of the current document library file rank
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next document library file rank
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileRankException if a document library file rank with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLFileRank[] findByCompanyId_PrevAndNext(long fileRankId,
+		long companyId, OrderByComparator orderByComparator)
+		throws NoSuchFileRankException, SystemException {
+		DLFileRank dlFileRank = findByPrimaryKey(fileRankId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			DLFileRank[] array = new DLFileRankImpl[3];
+
+			array[0] = getByCompanyId_PrevAndNext(session, dlFileRank,
+					companyId, orderByComparator, true);
+
+			array[1] = dlFileRank;
+
+			array[2] = getByCompanyId_PrevAndNext(session, dlFileRank,
+					companyId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected DLFileRank getByCompanyId_PrevAndNext(Session session,
+		DLFileRank dlFileRank, long companyId,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_DLFILERANK_WHERE);
+
+		query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+
+		else {
+			query.append(DLFileRankModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(companyId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(dlFileRank);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<DLFileRank> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
 	}
 
 	/**
@@ -2422,6 +2820,18 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 	}
 
 	/**
+	 * Removes all the document library file ranks where companyId = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void removeByCompanyId(long companyId) throws SystemException {
+		for (DLFileRank dlFileRank : findByCompanyId(companyId)) {
+			remove(dlFileRank);
+		}
+	}
+
+	/**
 	 * Removes all the document library file ranks where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
@@ -2499,6 +2909,59 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 		for (DLFileRank dlFileRank : findAll()) {
 			remove(dlFileRank);
 		}
+	}
+
+	/**
+	 * Returns the number of document library file ranks where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the number of matching document library file ranks
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByCompanyId(long companyId) throws SystemException {
+		Object[] finderArgs = new Object[] { companyId };
+
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_COMPANYID,
+				finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_DLFILERANK_WHERE);
+
+			query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				count = (Long)q.uniqueResult();
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (count == null) {
+					count = Long.valueOf(0);
+				}
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_COMPANYID,
+					finderArgs, count);
+
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
 	}
 
 	/**
@@ -2888,6 +3351,7 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 	private static final String _SQL_SELECT_DLFILERANK_WHERE = "SELECT dlFileRank FROM DLFileRank dlFileRank WHERE ";
 	private static final String _SQL_COUNT_DLFILERANK = "SELECT COUNT(dlFileRank) FROM DLFileRank dlFileRank";
 	private static final String _SQL_COUNT_DLFILERANK_WHERE = "SELECT COUNT(dlFileRank) FROM DLFileRank dlFileRank WHERE ";
+	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 = "dlFileRank.companyId = ?";
 	private static final String _FINDER_COLUMN_USERID_USERID_2 = "dlFileRank.userId = ?";
 	private static final String _FINDER_COLUMN_FILEENTRYID_FILEENTRYID_2 = "dlFileRank.fileEntryId = ?";
 	private static final String _FINDER_COLUMN_G_U_GROUPID_2 = "dlFileRank.groupId = ? AND ";

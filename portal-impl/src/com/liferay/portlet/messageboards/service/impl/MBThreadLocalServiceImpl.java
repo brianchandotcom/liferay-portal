@@ -49,6 +49,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -223,6 +224,14 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		mbThreadPersistence.remove(thread);
 	}
 
+	public void deleteThreads(Collection<MBThread> threads)
+		throws PortalException, SystemException {
+
+		for (MBThread thread : threads) {
+			deleteThread(thread);
+		}
+	}
+
 	public void deleteThreads(long groupId, long categoryId)
 		throws PortalException, SystemException {
 
@@ -232,6 +241,12 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		for (MBThread thread : threads) {
 			deleteThread(thread);
 		}
+	}
+
+	public void deleteThreadsByCompany(long companyId)
+		throws PortalException, SystemException {
+
+		deleteThreads(mbThreadPersistence.findByCompanyId(companyId));
 	}
 
 	public MBThread fetchThread(long threadId) throws SystemException {

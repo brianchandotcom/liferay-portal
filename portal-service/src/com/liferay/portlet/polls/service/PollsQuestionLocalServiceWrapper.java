@@ -344,10 +344,23 @@ public class PollsQuestionLocalServiceWrapper
 		_pollsQuestionLocalService.deleteQuestion(question);
 	}
 
+	public void deleteQuestions(
+		java.util.Collection<com.liferay.portlet.polls.model.PollsQuestion> questions)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_pollsQuestionLocalService.deleteQuestions(questions);
+	}
+
 	public void deleteQuestions(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_pollsQuestionLocalService.deleteQuestions(groupId);
+	}
+
+	public void deleteQuestionsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_pollsQuestionLocalService.deleteQuestionsByCompany(companyId);
 	}
 
 	public com.liferay.portlet.polls.model.PollsQuestion getQuestion(

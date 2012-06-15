@@ -1031,6 +1031,14 @@ public class ExpandoValueLocalServiceImpl
 			companyId, classNameId, tableName, columnName, classPK);
 	}
 
+	public void deleteValues(Collection<ExpandoValue> values)
+		throws SystemException {
+
+		for (ExpandoValue value : values) {
+			deleteValue(value);
+		}
+	}
+
 	public void deleteValues(long classNameId, long classPK)
 		throws SystemException {
 
@@ -1048,6 +1056,10 @@ public class ExpandoValueLocalServiceImpl
 		long classNameId = PortalUtil.getClassNameId(className);
 
 		expandoValueLocalService.deleteValues(classNameId, classPK);
+	}
+
+	public void deleteValuesByCompany(long companyId) throws SystemException {
+		deleteValues(expandoValuePersistence.findByCompanyId(companyId));
 	}
 
 	public List<ExpandoValue> getColumnValues(long columnId, int start, int end)

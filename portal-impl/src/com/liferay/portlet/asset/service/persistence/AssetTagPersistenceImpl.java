@@ -84,6 +84,26 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_COMPANYID =
+		new FinderPath(AssetTagModelImpl.ENTITY_CACHE_ENABLED,
+			AssetTagModelImpl.FINDER_CACHE_ENABLED, AssetTagImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+			new String[] {
+				Long.class.getName(),
+				
+			"java.lang.Integer", "java.lang.Integer",
+				"com.liferay.portal.kernel.util.OrderByComparator"
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID =
+		new FinderPath(AssetTagModelImpl.ENTITY_CACHE_ENABLED,
+			AssetTagModelImpl.FINDER_CACHE_ENABLED, AssetTagImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
+			new String[] { Long.class.getName() },
+			AssetTagModelImpl.COMPANYID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_COMPANYID = new FinderPath(AssetTagModelImpl.ENTITY_CACHE_ENABLED,
+			AssetTagModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
+			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_GROUPID = new FinderPath(AssetTagModelImpl.ENTITY_CACHE_ENABLED,
 			AssetTagModelImpl.FINDER_CACHE_ENABLED, AssetTagImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
@@ -348,6 +368,27 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 		}
 		else {
 			if ((assetTagModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(assetTagModelImpl.getOriginalCompanyId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(assetTagModelImpl.getCompanyId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+					args);
+			}
+
+			if ((assetTagModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(assetTagModelImpl.getOriginalGroupId())
@@ -519,6 +560,362 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 		}
 
 		return assetTag;
+	}
+
+	/**
+	 * Returns all the asset tags where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the matching asset tags
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<AssetTag> findByCompanyId(long companyId)
+		throws SystemException {
+		return findByCompanyId(companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	/**
+	 * Returns a range of all the asset tags where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of asset tags
+	 * @param end the upper bound of the range of asset tags (not inclusive)
+	 * @return the range of matching asset tags
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<AssetTag> findByCompanyId(long companyId, int start, int end)
+		throws SystemException {
+		return findByCompanyId(companyId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset tags where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of asset tags
+	 * @param end the upper bound of the range of asset tags (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching asset tags
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<AssetTag> findByCompanyId(long companyId, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID;
+			finderArgs = new Object[] { companyId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_COMPANYID;
+			finderArgs = new Object[] { companyId, start, end, orderByComparator };
+		}
+
+		List<AssetTag> list = (List<AssetTag>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (AssetTag assetTag : list) {
+				if ((companyId != assetTag.getCompanyId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_ASSETTAG_WHERE);
+
+			query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+
+			else {
+				query.append(AssetTagModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				list = (List<AssetTag>)QueryUtil.list(q, getDialect(), start,
+						end);
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (list == null) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
+				else {
+					cacheResult(list);
+
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
+
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first asset tag in the ordered set where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching asset tag
+	 * @throws com.liferay.portlet.asset.NoSuchTagException if a matching asset tag could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public AssetTag findByCompanyId_First(long companyId,
+		OrderByComparator orderByComparator)
+		throws NoSuchTagException, SystemException {
+		List<AssetTag> list = findByCompanyId(companyId, 0, 1, orderByComparator);
+
+		if (list.isEmpty()) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("companyId=");
+			msg.append(companyId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			throw new NoSuchTagException(msg.toString());
+		}
+		else {
+			return list.get(0);
+		}
+	}
+
+	/**
+	 * Returns the last asset tag in the ordered set where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching asset tag
+	 * @throws com.liferay.portlet.asset.NoSuchTagException if a matching asset tag could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public AssetTag findByCompanyId_Last(long companyId,
+		OrderByComparator orderByComparator)
+		throws NoSuchTagException, SystemException {
+		int count = countByCompanyId(companyId);
+
+		List<AssetTag> list = findByCompanyId(companyId, count - 1, count,
+				orderByComparator);
+
+		if (list.isEmpty()) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("companyId=");
+			msg.append(companyId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			throw new NoSuchTagException(msg.toString());
+		}
+		else {
+			return list.get(0);
+		}
+	}
+
+	/**
+	 * Returns the asset tags before and after the current asset tag in the ordered set where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param tagId the primary key of the current asset tag
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next asset tag
+	 * @throws com.liferay.portlet.asset.NoSuchTagException if a asset tag with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public AssetTag[] findByCompanyId_PrevAndNext(long tagId, long companyId,
+		OrderByComparator orderByComparator)
+		throws NoSuchTagException, SystemException {
+		AssetTag assetTag = findByPrimaryKey(tagId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			AssetTag[] array = new AssetTagImpl[3];
+
+			array[0] = getByCompanyId_PrevAndNext(session, assetTag, companyId,
+					orderByComparator, true);
+
+			array[1] = assetTag;
+
+			array[2] = getByCompanyId_PrevAndNext(session, assetTag, companyId,
+					orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected AssetTag getByCompanyId_PrevAndNext(Session session,
+		AssetTag assetTag, long companyId, OrderByComparator orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_ASSETTAG_WHERE);
+
+		query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+
+		else {
+			query.append(AssetTagModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(companyId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(assetTag);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<AssetTag> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
 	}
 
 	/**
@@ -1464,6 +1861,18 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	}
 
 	/**
+	 * Removes all the asset tags where companyId = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void removeByCompanyId(long companyId) throws SystemException {
+		for (AssetTag assetTag : findByCompanyId(companyId)) {
+			remove(assetTag);
+		}
+	}
+
+	/**
 	 * Removes all the asset tags where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -1499,6 +1908,59 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 		for (AssetTag assetTag : findAll()) {
 			remove(assetTag);
 		}
+	}
+
+	/**
+	 * Returns the number of asset tags where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the number of matching asset tags
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByCompanyId(long companyId) throws SystemException {
+		Object[] finderArgs = new Object[] { companyId };
+
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_COMPANYID,
+				finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_ASSETTAG_WHERE);
+
+			query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				count = (Long)q.uniqueResult();
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (count == null) {
+					count = Long.valueOf(0);
+				}
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_COMPANYID,
+					finderArgs, count);
+
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
 	}
 
 	/**
@@ -2426,6 +2888,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	private static final String _SQL_GETASSETENTRIES = "SELECT {AssetEntry.*} FROM AssetEntry INNER JOIN AssetEntries_AssetTags ON (AssetEntries_AssetTags.entryId = AssetEntry.entryId) WHERE (AssetEntries_AssetTags.tagId = ?)";
 	private static final String _SQL_GETASSETENTRIESSIZE = "SELECT COUNT(*) AS COUNT_VALUE FROM AssetEntries_AssetTags WHERE tagId = ?";
 	private static final String _SQL_CONTAINSASSETENTRY = "SELECT COUNT(*) AS COUNT_VALUE FROM AssetEntries_AssetTags WHERE tagId = ? AND entryId = ?";
+	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 = "assetTag.companyId = ?";
 	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 = "assetTag.groupId = ?";
 	private static final String _FINDER_COLUMN_G_N_GROUPID_2 = "assetTag.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_N_NAME_1 = "assetTag.name IS NULL";

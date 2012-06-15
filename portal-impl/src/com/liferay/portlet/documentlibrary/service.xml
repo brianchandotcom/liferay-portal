@@ -69,6 +69,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
 		<finder name="C_R" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="repositoryId" />
@@ -261,6 +264,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" arrayable-operator="OR" />
 		</finder>
@@ -304,6 +310,9 @@
 
 		<!-- Finders -->
 
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
 		<finder name="UserId" return-type="Collection">
 			<finder-column name="userId" />
 		</finder>
@@ -360,6 +369,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
 		<finder name="ToFileEntryId" return-type="Collection">
 			<finder-column name="toFileEntryId" />
 		</finder>
@@ -427,6 +439,9 @@
 
 		<!-- Finders -->
 
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
 		<finder name="FileEntryId" return-type="Collection">
 			<finder-column name="fileEntryId" />
 		</finder>
@@ -572,6 +587,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
 		<finder name="FileId" return-type="DLSync" unique="true">
 			<finder-column name="fileId" />
 		</finder>

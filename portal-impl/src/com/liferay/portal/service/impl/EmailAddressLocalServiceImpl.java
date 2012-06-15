@@ -82,6 +82,12 @@ public class EmailAddressLocalServiceImpl
 		}
 	}
 
+	public void deleteEmailAddressesByCompany(long companyId)
+		throws SystemException {
+
+		emailAddressPersistence.removeByCompanyId(companyId);
+	}
+
 	public List<EmailAddress> getEmailAddresses() throws SystemException {
 		return emailAddressPersistence.findAll();
 	}

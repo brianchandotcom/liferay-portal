@@ -268,6 +268,11 @@ public class PortletItemLocalServiceWrapper implements PortletItemLocalService,
 			portletId, className);
 	}
 
+	public void deletePortletItemsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_portletItemLocalService.deletePortletItemsByCompany(companyId);
+	}
+
 	public com.liferay.portal.model.PortletItem getPortletItem(long groupId,
 		java.lang.String name, java.lang.String portletId,
 		java.lang.String className)

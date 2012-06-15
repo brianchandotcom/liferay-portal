@@ -92,7 +92,10 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.com.liferay.portal.model.Account"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+				"value.object.column.bitmask.enabled.com.liferay.portal.model.Account"),
+			true);
+	public static long COMPANYID_COLUMN_BITMASK = 1L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -307,7 +310,19 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -494,6 +509,10 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 		_size = size;
 	}
 
+	public long getColumnBitmask() {
+		return _columnBitmask;
+	}
+
 	@Override
 	public Account toEscapedModel() {
 		if (_escapedModelProxy == null) {
@@ -590,6 +609,13 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 
 	@Override
 	public void resetOriginalValues() {
+		AccountModelImpl accountModelImpl = this;
+
+		accountModelImpl._originalCompanyId = accountModelImpl._companyId;
+
+		accountModelImpl._setOriginalCompanyId = false;
+
+		accountModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -829,6 +855,8 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 		};
 	private long _accountId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userUuid;
 	private String _userName;
@@ -844,5 +872,6 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 	private String _industry;
 	private String _type;
 	private String _size;
+	private long _columnBitmask;
 	private Account _escapedModelProxy;
 }

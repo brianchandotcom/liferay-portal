@@ -351,6 +351,21 @@ public interface GroupLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public com.liferay.portal.model.Group deleteGroup(
+		com.liferay.portal.model.Group group, boolean allowSystemGroupDeletion)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void deleteGroups(
+		java.util.Collection<com.liferay.portal.model.Group> groups,
+		boolean allowSystemGroupDeletion)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void deleteGroupsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* Returns the group with the matching friendly URL.
 	*

@@ -354,6 +354,11 @@ public class SocialRequestLocalServiceUtil {
 		getService().deleteRequest(request);
 	}
 
+	public static void deleteRequestsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteRequestsByCompany(companyId);
+	}
+
 	/**
 	* Removes all the social requests for the requesting user.
 	*

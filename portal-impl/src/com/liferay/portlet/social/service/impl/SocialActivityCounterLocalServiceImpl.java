@@ -577,6 +577,12 @@ public class SocialActivityCounterLocalServiceImpl
 		clearFinderCache();
 	}
 
+	public void deleteActivityCountersByCompany(long companyId)
+		throws SystemException {
+
+		socialActivityCounterPersistence.removeByCompanyId(companyId);
+	}
+
 	/**
 	 * Disables all the counters of an asset identified by the class name ID and
 	 * class primary key.

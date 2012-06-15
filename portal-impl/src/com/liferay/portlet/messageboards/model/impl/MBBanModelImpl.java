@@ -88,8 +88,9 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 				"value.object.column.bitmask.enabled.com.liferay.portlet.messageboards.model.MBBan"),
 			true);
 	public static long BANUSERID_COLUMN_BITMASK = 1L;
-	public static long GROUPID_COLUMN_BITMASK = 2L;
-	public static long USERID_COLUMN_BITMASK = 4L;
+	public static long COMPANYID_COLUMN_BITMASK = 2L;
+	public static long GROUPID_COLUMN_BITMASK = 4L;
+	public static long USERID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -261,7 +262,19 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -452,6 +465,10 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 
 		mbBanModelImpl._setOriginalGroupId = false;
 
+		mbBanModelImpl._originalCompanyId = mbBanModelImpl._companyId;
+
+		mbBanModelImpl._setOriginalCompanyId = false;
+
 		mbBanModelImpl._originalUserId = mbBanModelImpl._userId;
 
 		mbBanModelImpl._setOriginalUserId = false;
@@ -585,6 +602,8 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userUuid;
 	private long _originalUserId;

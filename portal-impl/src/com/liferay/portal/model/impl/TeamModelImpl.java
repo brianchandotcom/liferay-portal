@@ -89,8 +89,9 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.column.bitmask.enabled.com.liferay.portal.model.Team"),
 			true);
-	public static long GROUPID_COLUMN_BITMASK = 1L;
-	public static long NAME_COLUMN_BITMASK = 2L;
+	public static long COMPANYID_COLUMN_BITMASK = 1L;
+	public static long GROUPID_COLUMN_BITMASK = 2L;
+	public static long NAME_COLUMN_BITMASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -265,7 +266,19 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -469,6 +482,10 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 	public void resetOriginalValues() {
 		TeamModelImpl teamModelImpl = this;
 
+		teamModelImpl._originalCompanyId = teamModelImpl._companyId;
+
+		teamModelImpl._setOriginalCompanyId = false;
+
 		teamModelImpl._originalGroupId = teamModelImpl._groupId;
 
 		teamModelImpl._setOriginalGroupId = false;
@@ -617,6 +634,8 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		};
 	private long _teamId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userUuid;
 	private String _userName;

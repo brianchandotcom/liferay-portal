@@ -43,6 +43,7 @@ import com.liferay.portal.util.PropsValues;
 import java.io.File;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -313,6 +314,20 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		PermissionCacheUtil.clearCache();
 
 		return userGroup;
+	}
+
+	public void deleteUserGroups(Collection<UserGroup> userGroups)
+		throws PortalException, SystemException {
+
+		for (UserGroup userGroup : userGroups) {
+			deleteUserGroup(userGroup);
+		}
+	}
+
+	public void deleteUserGroupsByCompany(long companyId)
+		throws PortalException, SystemException {
+
+		deleteUserGroups(userGroupPersistence.findByCompanyId(companyId));
 	}
 
 	/**

@@ -529,6 +529,11 @@
 			<bean class="com.liferay.portal.service.permission.CommonPermissionImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.service.permission.CompanyPermissionUtil" class="com.liferay.portal.service.permission.CompanyPermissionUtil">
+		<property name="companyPermission">
+			<bean class="com.liferay.portal.service.permission.CompanyPermissionImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.service.permission.GroupPermissionUtil" class="com.liferay.portal.service.permission.GroupPermissionUtil">
 		<property name="groupPermission">
 			<bean class="com.liferay.portal.service.permission.GroupPermissionImpl" />

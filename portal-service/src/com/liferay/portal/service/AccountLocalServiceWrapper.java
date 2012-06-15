@@ -254,6 +254,11 @@ public class AccountLocalServiceWrapper implements AccountLocalService,
 		_accountLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
+	public void deleteAccountsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_accountLocalService.deleteAccountsByCompany(companyId);
+	}
+
 	public com.liferay.portal.model.Account getAccount(long companyId,
 		long accountId)
 		throws com.liferay.portal.kernel.exception.PortalException,

@@ -426,6 +426,13 @@ public class JournalArticleLocalServiceUtil {
 		getService().deleteArticle(groupId, articleId, serviceContext);
 	}
 
+	public static void deleteArticles(
+		java.util.Collection<com.liferay.portlet.journal.model.JournalArticle> articles)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteArticles(articles);
+	}
+
 	public static void deleteArticles(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -436,6 +443,12 @@ public class JournalArticleLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().deleteArticles(groupId, folderId);
+	}
+
+	public static void deleteArticlesByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteArticlesByCompany(companyId);
 	}
 
 	public static void deleteLayoutArticleReferences(long groupId,

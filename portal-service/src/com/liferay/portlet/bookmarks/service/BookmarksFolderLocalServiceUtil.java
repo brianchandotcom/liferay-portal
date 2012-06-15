@@ -307,10 +307,23 @@ public class BookmarksFolderLocalServiceUtil {
 		getService().deleteFolder(folderId);
 	}
 
+	public static void deleteFolders(
+		java.util.Collection<com.liferay.portlet.bookmarks.model.BookmarksFolder> folders)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteFolders(folders);
+	}
+
 	public static void deleteFolders(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().deleteFolders(groupId);
+	}
+
+	public static void deleteFoldersByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteFoldersByCompany(companyId);
 	}
 
 	public static java.util.List<com.liferay.portlet.bookmarks.model.BookmarksFolder> getCompanyFolders(

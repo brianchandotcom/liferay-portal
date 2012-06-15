@@ -314,10 +314,23 @@ public class DLFileEntryTypeLocalServiceUtil {
 		getService().deleteFileEntryType(fileEntryTypeId);
 	}
 
+	public static void deleteFileEntryTypes(
+		java.util.Collection<com.liferay.portlet.documentlibrary.model.DLFileEntryType> fileEntryTypes)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteFileEntryTypes(fileEntryTypes);
+	}
+
 	public static void deleteFileEntryTypes(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().deleteFileEntryTypes(groupId);
+	}
+
+	public static void deleteFileEntryTypesByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteFileEntryTypesByCompany(companyId);
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntryType fetchFileEntryType(

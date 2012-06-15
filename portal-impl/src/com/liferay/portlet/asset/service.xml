@@ -43,6 +43,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
@@ -235,6 +238,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
 		<finder name="E1" return-type="Collection">
 			<finder-column name="entryId1" />
 		</finder>
@@ -295,6 +301,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>

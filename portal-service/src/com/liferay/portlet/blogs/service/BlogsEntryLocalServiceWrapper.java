@@ -330,10 +330,23 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 			guestPermissions);
 	}
 
+	public void deleteEntries(
+		java.util.Collection<com.liferay.portlet.blogs.model.BlogsEntry> entries)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_blogsEntryLocalService.deleteEntries(entries);
+	}
+
 	public void deleteEntries(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_blogsEntryLocalService.deleteEntries(groupId);
+	}
+
+	public void deleteEntriesByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_blogsEntryLocalService.deleteEntriesByCompany(companyId);
 	}
 
 	public void deleteEntry(com.liferay.portlet.blogs.model.BlogsEntry entry)

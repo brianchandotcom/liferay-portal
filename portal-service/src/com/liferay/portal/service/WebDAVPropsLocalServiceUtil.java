@@ -272,6 +272,11 @@ public class WebDAVPropsLocalServiceUtil {
 		getService().deleteWebDAVProps(className, classPK);
 	}
 
+	public static void deleteWebDAVPropsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteWebDAVPropsByCompany(companyId);
+	}
+
 	public static com.liferay.portal.model.WebDAVProps getWebDAVProps(
 		long companyId, java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException {

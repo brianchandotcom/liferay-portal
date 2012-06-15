@@ -258,6 +258,22 @@ public interface PasswordPolicyLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public void deletePasswordPolicies(
+		java.util.Collection<com.liferay.portal.model.PasswordPolicy> passwordPolicies,
+		boolean allowDefaultPolicyDeletion)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void deletePasswordPoliciesByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.portal.model.PasswordPolicy deletePasswordPolicy(
+		com.liferay.portal.model.PasswordPolicy passwordPolicy,
+		boolean allowDefaultPolicyDeletion)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PasswordPolicy getDefaultPasswordPolicy(
 		long companyId)

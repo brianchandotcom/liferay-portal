@@ -375,6 +375,19 @@ public class OrganizationLocalServiceUtil {
 		getService().deleteLogo(organizationId);
 	}
 
+	public static void deleteOrganizations(
+		java.util.Collection<com.liferay.portal.model.Organization> organizations)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteOrganizations(organizations);
+	}
+
+	public static void deleteOrganizationsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteOrganizationsByCompany(companyId);
+	}
+
 	/**
 	* Returns all the organizations belonging to the group.
 	*

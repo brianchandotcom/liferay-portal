@@ -264,6 +264,11 @@ public class WebDAVPropsLocalServiceWrapper implements WebDAVPropsLocalService,
 		_webDAVPropsLocalService.deleteWebDAVProps(className, classPK);
 	}
 
+	public void deleteWebDAVPropsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_webDAVPropsLocalService.deleteWebDAVPropsByCompany(companyId);
+	}
+
 	public com.liferay.portal.model.WebDAVProps getWebDAVProps(long companyId,
 		java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException {

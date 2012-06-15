@@ -26,6 +26,7 @@ import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.base.DLFileRankLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.util.comparator.FileRankCreateDateComparator;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -108,6 +109,20 @@ public class DLFileRankLocalServiceImpl extends DLFileRankLocalServiceBaseImpl {
 			fileRankId);
 
 		deleteFileRank(dlFileRank);
+	}
+
+	public void deleteFileRanks(Collection<DLFileRank> fileRanks)
+		throws SystemException {
+
+		for (DLFileRank fileRank : fileRanks) {
+			deleteFileRank(fileRank);
+		}
+	}
+
+	public void deleteFileRanksByCompany(long companyId)
+		throws SystemException {
+
+		deleteFileRanks(dlFileRankPersistence.findByCompanyId(companyId));
 	}
 
 	public void deleteFileRanksByFileEntryId(long fileEntryId)

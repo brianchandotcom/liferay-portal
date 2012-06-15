@@ -311,10 +311,23 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 		_ddlRecordLocalService.deleteRecord(recordId);
 	}
 
+	public void deleteRecords(
+		java.util.Collection<com.liferay.portlet.dynamicdatalists.model.DDLRecord> records)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_ddlRecordLocalService.deleteRecords(records);
+	}
+
 	public void deleteRecords(long recordSetId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_ddlRecordLocalService.deleteRecords(recordSetId);
+	}
+
+	public void deleteRecordsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_ddlRecordLocalService.deleteRecordsByCompany(companyId);
 	}
 
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecord fetchRecord(

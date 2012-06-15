@@ -330,6 +330,13 @@ public class SocialRelationLocalServiceWrapper
 		_socialRelationLocalService.deleteRelation(relation);
 	}
 
+	public void deleteRelations(
+		java.util.Collection<com.liferay.portlet.social.model.SocialRelation> relations)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_socialRelationLocalService.deleteRelations(relations);
+	}
+
 	/**
 	* Removes all relations involving the user from the database.
 	*
@@ -353,6 +360,12 @@ public class SocialRelationLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_socialRelationLocalService.deleteRelations(userId1, userId2);
+	}
+
+	public void deleteRelationsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_socialRelationLocalService.deleteRelationsByCompany(companyId);
 	}
 
 	/**

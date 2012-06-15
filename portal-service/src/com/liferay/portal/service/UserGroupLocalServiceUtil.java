@@ -382,6 +382,19 @@ public class UserGroupLocalServiceUtil {
 		getService().copyUserGroupLayouts(userGroupId, userId);
 	}
 
+	public static void deleteUserGroups(
+		java.util.Collection<com.liferay.portal.model.UserGroup> userGroups)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteUserGroups(userGroups);
+	}
+
+	public static void deleteUserGroupsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteUserGroupsByCompany(companyId);
+	}
+
 	/**
 	* Returns the user group with the name.
 	*

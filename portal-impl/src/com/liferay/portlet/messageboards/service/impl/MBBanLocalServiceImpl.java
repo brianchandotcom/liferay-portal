@@ -29,6 +29,7 @@ import com.liferay.portlet.messageboards.model.MBBan;
 import com.liferay.portlet.messageboards.service.base.MBBanLocalServiceBaseImpl;
 import com.liferay.portlet.messageboards.util.MBUtil;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -100,12 +101,22 @@ public class MBBanLocalServiceImpl extends MBBanLocalServiceBaseImpl {
 		mbBanPersistence.remove(ban);
 	}
 
+	public void deleteBans(Collection<MBBan> bans) throws SystemException {
+		for (MBBan ban : bans) {
+			deleteBan(ban);
+		}
+	}
+
 	public void deleteBansByBanUserId(long banUserId) throws SystemException {
 		List<MBBan> bans = mbBanPersistence.findByBanUserId(banUserId);
 
 		for (MBBan ban : bans) {
 			deleteBan(ban);
 		}
+	}
+
+	public void deleteBansByCompany(long companyId) throws SystemException {
+		deleteBans(mbBanPersistence.findByCompanyId(companyId));
 	}
 
 	public void deleteBansByGroupId(long groupId) throws SystemException {

@@ -194,6 +194,128 @@ public class ResourceTypePermissionUtil {
 	}
 
 	/**
+	* Returns all the resource type permissions where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the matching resource type permissions
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.model.ResourceTypePermission> findByCompanyId(
+		long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByCompanyId(companyId);
+	}
+
+	/**
+	* Returns a range of all the resource type permissions where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of resource type permissions
+	* @param end the upper bound of the range of resource type permissions (not inclusive)
+	* @return the range of matching resource type permissions
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.model.ResourceTypePermission> findByCompanyId(
+		long companyId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByCompanyId(companyId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the resource type permissions where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of resource type permissions
+	* @param end the upper bound of the range of resource type permissions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching resource type permissions
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.model.ResourceTypePermission> findByCompanyId(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByCompanyId(companyId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the first resource type permission in the ordered set where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching resource type permission
+	* @throws com.liferay.portal.NoSuchResourceTypePermissionException if a matching resource type permission could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.ResourceTypePermission findByCompanyId_First(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchResourceTypePermissionException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByCompanyId_First(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the last resource type permission in the ordered set where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching resource type permission
+	* @throws com.liferay.portal.NoSuchResourceTypePermissionException if a matching resource type permission could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.ResourceTypePermission findByCompanyId_Last(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchResourceTypePermissionException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByCompanyId_Last(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the resource type permissions before and after the current resource type permission in the ordered set where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param resourceTypePermissionId the primary key of the current resource type permission
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next resource type permission
+	* @throws com.liferay.portal.NoSuchResourceTypePermissionException if a resource type permission with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.ResourceTypePermission[] findByCompanyId_PrevAndNext(
+		long resourceTypePermissionId, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchResourceTypePermissionException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByCompanyId_PrevAndNext(resourceTypePermissionId,
+			companyId, orderByComparator);
+	}
+
+	/**
 	* Returns all the resource type permissions where roleId = &#63;.
 	*
 	* @param roleId the role ID
@@ -552,6 +674,17 @@ public class ResourceTypePermissionUtil {
 	}
 
 	/**
+	* Removes all the resource type permissions where companyId = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByCompanyId(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByCompanyId(companyId);
+	}
+
+	/**
 	* Removes all the resource type permissions where roleId = &#63; from the database.
 	*
 	* @param roleId the role ID
@@ -600,6 +733,18 @@ public class ResourceTypePermissionUtil {
 	public static void removeAll()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getPersistence().removeAll();
+	}
+
+	/**
+	* Returns the number of resource type permissions where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the number of matching resource type permissions
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByCompanyId(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByCompanyId(companyId);
 	}
 
 	/**

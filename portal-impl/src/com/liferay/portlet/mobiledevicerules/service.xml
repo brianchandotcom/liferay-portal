@@ -34,6 +34,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
 		<finder name="RuleGroupInstanceId" return-type="Collection">
 			<finder-column name="ruleGroupInstanceId" />
 		</finder>
@@ -66,6 +69,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
 		<finder name="RuleGroupId" return-type="Collection">
 			<finder-column name="ruleGroupId" />
 		</finder>
@@ -95,6 +101,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
@@ -130,6 +139,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>

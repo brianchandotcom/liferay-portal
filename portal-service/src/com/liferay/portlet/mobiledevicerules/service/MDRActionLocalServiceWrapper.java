@@ -319,6 +319,11 @@ public class MDRActionLocalServiceWrapper implements MDRActionLocalService,
 		_mdrActionLocalService.deleteActions(ruleGroupInstanceId);
 	}
 
+	public void deleteActionsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_mdrActionLocalService.deleteActionsByCompany(companyId);
+	}
+
 	public com.liferay.portlet.mobiledevicerules.model.MDRAction fetchAction(
 		long actionId)
 		throws com.liferay.portal.kernel.exception.SystemException {

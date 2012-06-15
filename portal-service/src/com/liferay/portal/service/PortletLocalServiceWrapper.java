@@ -291,6 +291,17 @@ public class PortletLocalServiceWrapper implements PortletLocalService,
 		return _portletLocalService.clonePortlet(portletId);
 	}
 
+	public void deletePortlets(
+		java.util.Collection<com.liferay.portal.model.Portlet> portlets)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_portletLocalService.deletePortlets(portlets);
+	}
+
+	public void deletePortletsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_portletLocalService.deletePortletsByCompany(companyId);
+	}
+
 	public com.liferay.portal.model.Portlet deployRemotePortlet(
 		com.liferay.portal.model.Portlet portlet, java.lang.String categoryName)
 		throws com.liferay.portal.kernel.exception.PortalException,

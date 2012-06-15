@@ -833,6 +833,11 @@ public interface UserLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public com.liferay.portal.model.User deleteUser(
+		com.liferay.portal.model.User user, boolean allowRequiredUserDeletion)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* Removes the user from the user group.
 	*
@@ -842,6 +847,16 @@ public interface UserLocalService extends BaseLocalService,
 	* @throws SystemException if a system exception occurred
 	*/
 	public void deleteUserGroupUser(long userGroupId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void deleteUsers(
+		java.util.Collection<com.liferay.portal.model.User> users,
+		boolean allowRequiredUserDeletion)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void deleteUsersByCompany(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

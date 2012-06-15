@@ -296,10 +296,23 @@ public class ShoppingOrderLocalServiceWrapper
 		_shoppingOrderLocalService.deleteOrder(order);
 	}
 
+	public void deleteOrders(
+		java.util.Collection<com.liferay.portlet.shopping.model.ShoppingOrder> orders)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_shoppingOrderLocalService.deleteOrders(orders);
+	}
+
 	public void deleteOrders(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_shoppingOrderLocalService.deleteOrders(groupId);
+	}
+
+	public void deleteOrdersByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_shoppingOrderLocalService.deleteOrdersByCompany(companyId);
 	}
 
 	public com.liferay.portlet.shopping.model.ShoppingOrder getLatestOrder(

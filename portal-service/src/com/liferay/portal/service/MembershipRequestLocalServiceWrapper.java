@@ -283,6 +283,11 @@ public class MembershipRequestLocalServiceWrapper
 			statusId);
 	}
 
+	public void deleteMembershipRequestsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_membershipRequestLocalService.deleteMembershipRequestsByCompany(companyId);
+	}
+
 	public void deleteMembershipRequestsByUserId(long userId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_membershipRequestLocalService.deleteMembershipRequestsByUserId(userId);

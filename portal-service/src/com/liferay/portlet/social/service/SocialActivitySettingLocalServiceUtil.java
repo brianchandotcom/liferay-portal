@@ -279,6 +279,11 @@ public class SocialActivitySettingLocalServiceUtil {
 		getService().deleteActivitySettings(groupId);
 	}
 
+	public static void deleteActivitySettingsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteActivitySettingsByCompany(companyId);
+	}
+
 	public static com.liferay.portlet.social.model.SocialActivityDefinition getActivityDefinition(
 		long groupId, java.lang.String className, int activityType)
 		throws com.liferay.portal.kernel.exception.SystemException {

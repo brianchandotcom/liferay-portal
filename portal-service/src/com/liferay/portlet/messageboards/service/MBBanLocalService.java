@@ -258,7 +258,14 @@ public interface MBBanLocalService extends BaseLocalService,
 	public void deleteBan(com.liferay.portlet.messageboards.model.MBBan ban)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public void deleteBans(
+		java.util.Collection<com.liferay.portlet.messageboards.model.MBBan> bans)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public void deleteBansByBanUserId(long banUserId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public void deleteBansByCompany(long companyId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public void deleteBansByGroupId(long groupId)

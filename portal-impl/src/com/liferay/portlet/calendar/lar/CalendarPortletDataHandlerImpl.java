@@ -100,6 +100,17 @@ public class CalendarPortletDataHandlerImpl extends BasePortletDataHandler {
 	}
 
 	@Override
+	protected PortletPreferences doDeleteData(
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences, long companyId)
+		throws Exception {
+
+		CalEventLocalServiceUtil.deleteEventsByCompany(companyId);
+
+		return null;
+	}
+
+	@Override
 	protected String doExportData(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)

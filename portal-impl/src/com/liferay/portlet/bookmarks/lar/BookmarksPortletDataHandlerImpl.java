@@ -107,6 +107,18 @@ public class BookmarksPortletDataHandlerImpl extends BasePortletDataHandler {
 	}
 
 	@Override
+	protected PortletPreferences doDeleteData(
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences, long companyId)
+		throws Exception {
+
+		BookmarksEntryLocalServiceUtil.deleteEntriesByCompany(companyId);
+		BookmarksFolderLocalServiceUtil.deleteFoldersByCompany(companyId);
+
+		return null;
+	}
+
+	@Override
 	protected String doExportData(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)

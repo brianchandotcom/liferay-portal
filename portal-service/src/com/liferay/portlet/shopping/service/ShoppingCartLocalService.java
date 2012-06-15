@@ -245,6 +245,9 @@ public interface ShoppingCartLocalService extends BaseLocalService,
 	public void deleteGroupCarts(long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public void deleteShoppingCartsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public void deleteUserCarts(long userId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portlet.softwarecatalog.model.SCProductScreenshot;
 import com.liferay.portlet.softwarecatalog.service.base.SCProductScreenshotLocalServiceBaseImpl;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -40,6 +41,15 @@ public class SCProductScreenshotLocalServiceImpl
 		imageLocalService.deleteImage(productScreenshot.getFullImageId());
 	}
 
+	public void deleteProductScreenshots(
+			Collection<SCProductScreenshot> productScreenshots)
+		throws PortalException, SystemException {
+
+		for (SCProductScreenshot productScreenshot : productScreenshots) {
+			deleteProductScreenshot(productScreenshot);
+		}
+	}
+
 	public void deleteProductScreenshots(long productEntryId)
 		throws PortalException, SystemException {
 
@@ -49,6 +59,13 @@ public class SCProductScreenshotLocalServiceImpl
 		for (SCProductScreenshot productScreenshot : productScreenshots) {
 			deleteProductScreenshot(productScreenshot);
 		}
+	}
+
+	public void deleteProductScreenshotsByCompany(long companyId)
+		throws PortalException, SystemException {
+
+		deleteProductScreenshots(
+			scProductScreenshotPersistence.findByCompanyId(companyId));
 	}
 
 	public SCProductScreenshot getProductScreenshot(

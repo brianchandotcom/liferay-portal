@@ -301,6 +301,19 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 		_dlFolderLocalService.deleteFolder(folderId);
 	}
 
+	public void deleteFolders(
+		java.util.Collection<com.liferay.portlet.documentlibrary.model.DLFolder> folders)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_dlFolderLocalService.deleteFolders(folders);
+	}
+
+	public void deleteFoldersByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_dlFolderLocalService.deleteFoldersByCompany(companyId);
+	}
+
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getCompanyFolders(
 		long companyId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {

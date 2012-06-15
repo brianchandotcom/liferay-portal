@@ -350,6 +350,17 @@ public class ResourceBlockLocalServiceWrapper
 			name, permissionsHash, resourceBlockPermissionsContainer);
 	}
 
+	public void deleteResourceBlocks(
+		java.util.Collection<com.liferay.portal.model.ResourceBlock> resourceBlocks)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_resourceBlockLocalService.deleteResourceBlocks(resourceBlocks);
+	}
+
+	public void deleteResourceBlocksByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_resourceBlockLocalService.deleteResourceBlocksByCompany(companyId);
+	}
+
 	public long getActionId(java.lang.String name, java.lang.String actionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _resourceBlockLocalService.getActionId(name, actionId);

@@ -236,6 +236,9 @@ public interface AccountLocalService extends BaseLocalService,
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
+	public void deleteAccountsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Account getAccount(long companyId,
 		long accountId)

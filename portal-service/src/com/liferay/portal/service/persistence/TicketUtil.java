@@ -186,6 +186,128 @@ public class TicketUtil {
 	}
 
 	/**
+	* Returns all the tickets where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the matching tickets
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.model.Ticket> findByCompanyId(
+		long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByCompanyId(companyId);
+	}
+
+	/**
+	* Returns a range of all the tickets where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of tickets
+	* @param end the upper bound of the range of tickets (not inclusive)
+	* @return the range of matching tickets
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.model.Ticket> findByCompanyId(
+		long companyId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByCompanyId(companyId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the tickets where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of tickets
+	* @param end the upper bound of the range of tickets (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching tickets
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.model.Ticket> findByCompanyId(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByCompanyId(companyId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the first ticket in the ordered set where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching ticket
+	* @throws com.liferay.portal.NoSuchTicketException if a matching ticket could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Ticket findByCompanyId_First(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchTicketException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByCompanyId_First(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the last ticket in the ordered set where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching ticket
+	* @throws com.liferay.portal.NoSuchTicketException if a matching ticket could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Ticket findByCompanyId_Last(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchTicketException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByCompanyId_Last(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the tickets before and after the current ticket in the ordered set where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param ticketId the primary key of the current ticket
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next ticket
+	* @throws com.liferay.portal.NoSuchTicketException if a ticket with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Ticket[] findByCompanyId_PrevAndNext(
+		long ticketId, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchTicketException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByCompanyId_PrevAndNext(ticketId, companyId,
+			orderByComparator);
+	}
+
+	/**
 	* Returns the ticket where key = &#63; or throws a {@link com.liferay.portal.NoSuchTicketException} if it could not be found.
 	*
 	* @param key the key
@@ -277,6 +399,17 @@ public class TicketUtil {
 	}
 
 	/**
+	* Removes all the tickets where companyId = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByCompanyId(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByCompanyId(companyId);
+	}
+
+	/**
 	* Removes the ticket where key = &#63; from the database.
 	*
 	* @param key the key
@@ -298,6 +431,18 @@ public class TicketUtil {
 	public static void removeAll()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getPersistence().removeAll();
+	}
+
+	/**
+	* Returns the number of tickets where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the number of matching tickets
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByCompanyId(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByCompanyId(companyId);
 	}
 
 	/**

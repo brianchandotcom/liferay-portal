@@ -281,6 +281,11 @@ public class AssetCategoryPropertyLocalServiceUtil {
 		getService().deleteCategoryProperties(entryId);
 	}
 
+	public static void deleteCategoryPropertiesByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteCategoryPropertiesByCompany(companyId);
+	}
+
 	public static void deleteCategoryProperty(
 		com.liferay.portlet.asset.model.AssetCategoryProperty categoryProperty)
 		throws com.liferay.portal.kernel.exception.SystemException {

@@ -195,6 +195,128 @@ public class AnnouncementsDeliveryUtil {
 	}
 
 	/**
+	* Returns all the announcements deliveries where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the matching announcements deliveries
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.announcements.model.AnnouncementsDelivery> findByCompanyId(
+		long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByCompanyId(companyId);
+	}
+
+	/**
+	* Returns a range of all the announcements deliveries where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of announcements deliveries
+	* @param end the upper bound of the range of announcements deliveries (not inclusive)
+	* @return the range of matching announcements deliveries
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.announcements.model.AnnouncementsDelivery> findByCompanyId(
+		long companyId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByCompanyId(companyId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the announcements deliveries where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of announcements deliveries
+	* @param end the upper bound of the range of announcements deliveries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching announcements deliveries
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.announcements.model.AnnouncementsDelivery> findByCompanyId(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByCompanyId(companyId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the first announcements delivery in the ordered set where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching announcements delivery
+	* @throws com.liferay.portlet.announcements.NoSuchDeliveryException if a matching announcements delivery could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.announcements.model.AnnouncementsDelivery findByCompanyId_First(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.announcements.NoSuchDeliveryException {
+		return getPersistence()
+				   .findByCompanyId_First(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the last announcements delivery in the ordered set where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching announcements delivery
+	* @throws com.liferay.portlet.announcements.NoSuchDeliveryException if a matching announcements delivery could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.announcements.model.AnnouncementsDelivery findByCompanyId_Last(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.announcements.NoSuchDeliveryException {
+		return getPersistence()
+				   .findByCompanyId_Last(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the announcements deliveries before and after the current announcements delivery in the ordered set where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param deliveryId the primary key of the current announcements delivery
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next announcements delivery
+	* @throws com.liferay.portlet.announcements.NoSuchDeliveryException if a announcements delivery with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.announcements.model.AnnouncementsDelivery[] findByCompanyId_PrevAndNext(
+		long deliveryId, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.announcements.NoSuchDeliveryException {
+		return getPersistence()
+				   .findByCompanyId_PrevAndNext(deliveryId, companyId,
+			orderByComparator);
+	}
+
+	/**
 	* Returns all the announcements deliveries where userId = &#63;.
 	*
 	* @param userId the user ID
@@ -408,6 +530,17 @@ public class AnnouncementsDeliveryUtil {
 	}
 
 	/**
+	* Removes all the announcements deliveries where companyId = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByCompanyId(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByCompanyId(companyId);
+	}
+
+	/**
 	* Removes all the announcements deliveries where userId = &#63; from the database.
 	*
 	* @param userId the user ID
@@ -441,6 +574,18 @@ public class AnnouncementsDeliveryUtil {
 	public static void removeAll()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getPersistence().removeAll();
+	}
+
+	/**
+	* Returns the number of announcements deliveries where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the number of matching announcements deliveries
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByCompanyId(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByCompanyId(companyId);
 	}
 
 	/**

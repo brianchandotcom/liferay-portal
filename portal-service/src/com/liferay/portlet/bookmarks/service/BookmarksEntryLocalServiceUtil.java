@@ -294,10 +294,23 @@ public class BookmarksEntryLocalServiceUtil {
 			serviceContext);
 	}
 
+	public static void deleteEntries(
+		java.util.Collection<com.liferay.portlet.bookmarks.model.BookmarksEntry> entries)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteEntries(entries);
+	}
+
 	public static void deleteEntries(long groupId, long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().deleteEntries(groupId, folderId);
+	}
+
+	public static void deleteEntriesByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteEntriesByCompany(companyId);
 	}
 
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry deleteEntry(

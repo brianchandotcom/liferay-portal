@@ -342,6 +342,13 @@ public class ResourcePermissionLocalServiceUtil {
 			resourceActionBitwiseValue);
 	}
 
+	public static void deleteResourcePermissions(
+		java.util.Collection<com.liferay.portal.model.ResourcePermission> resourcePermissions)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteResourcePermissions(resourcePermissions);
+	}
+
 	/**
 	* Deletes all resource permissions at the scope to resources of the type.
 	* This method should not be confused with any of the
@@ -400,6 +407,12 @@ public class ResourcePermissionLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().deleteResourcePermissions(companyId, name, scope, primKey);
+	}
+
+	public static void deleteResourcePermissionsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteResourcePermissionsByCompany(companyId);
 	}
 
 	/**

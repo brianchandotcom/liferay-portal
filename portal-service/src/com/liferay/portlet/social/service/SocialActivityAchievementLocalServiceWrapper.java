@@ -274,6 +274,11 @@ public class SocialActivityAchievementLocalServiceWrapper
 			groupId, achievement);
 	}
 
+	public void deleteActivityAchievementsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_socialActivityAchievementLocalService.deleteActivityAchievementsByCompany(companyId);
+	}
+
 	public com.liferay.portlet.social.model.SocialActivityAchievement fetchUserAchievement(
 		long userId, long groupId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException {

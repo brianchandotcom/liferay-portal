@@ -289,6 +289,19 @@ public class AnnouncementsEntryLocalServiceWrapper
 		_announcementsEntryLocalService.checkEntries();
 	}
 
+	public void deleteEntries(
+		java.util.Collection<com.liferay.portlet.announcements.model.AnnouncementsEntry> entries)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_announcementsEntryLocalService.deleteEntries(entries);
+	}
+
+	public void deleteEntriesByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_announcementsEntryLocalService.deleteEntriesByCompany(companyId);
+	}
+
 	public void deleteEntry(
 		com.liferay.portlet.announcements.model.AnnouncementsEntry entry)
 		throws com.liferay.portal.kernel.exception.PortalException,

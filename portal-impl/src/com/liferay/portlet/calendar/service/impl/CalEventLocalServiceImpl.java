@@ -81,6 +81,7 @@ import java.text.Format;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -420,6 +421,14 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 		return event;
 	}
 
+	public void deleteEvents(Collection<CalEvent> events)
+		throws PortalException, SystemException {
+
+		for (CalEvent event : events) {
+			deleteEvent(event);
+		}
+	}
+
 	public void deleteEvents(long groupId)
 		throws PortalException, SystemException {
 
@@ -428,6 +437,12 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 		for (CalEvent event : events) {
 			calEventLocalService.deleteEvent(event);
 		}
+	}
+
+	public void deleteEventsByCompany(long companyId)
+		throws PortalException, SystemException {
+
+		deleteEvents(calEventPersistence.findByCompanyId(companyId));
 	}
 
 	public File exportEvent(long userId, long eventId)

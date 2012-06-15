@@ -268,6 +268,11 @@ public class PollsVoteLocalServiceWrapper implements PollsVoteLocalService,
 			serviceContext);
 	}
 
+	public void deletePollsVotesByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_pollsVoteLocalService.deletePollsVotesByCompany(companyId);
+	}
+
 	public java.util.List<com.liferay.portlet.polls.model.PollsVote> getChoiceVotes(
 		long choiceId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {

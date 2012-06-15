@@ -948,6 +948,13 @@ public class UserLocalServiceUtil {
 		getService().deleteRoleUser(roleId, userId);
 	}
 
+	public static com.liferay.portal.model.User deleteUser(
+		com.liferay.portal.model.User user, boolean allowRequiredUserDeletion)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().deleteUser(user, allowRequiredUserDeletion);
+	}
+
 	/**
 	* Removes the user from the user group.
 	*
@@ -960,6 +967,20 @@ public class UserLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().deleteUserGroupUser(userGroupId, userId);
+	}
+
+	public static void deleteUsers(
+		java.util.Collection<com.liferay.portal.model.User> users,
+		boolean allowRequiredUserDeletion)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteUsers(users, allowRequiredUserDeletion);
+	}
+
+	public static void deleteUsersByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteUsersByCompany(companyId);
 	}
 
 	/**

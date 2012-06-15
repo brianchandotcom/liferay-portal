@@ -504,6 +504,18 @@ public class WikiPortletDataHandlerImpl extends BasePortletDataHandler {
 	}
 
 	@Override
+	protected PortletPreferences doDeleteData(
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences, long companyId)
+		throws Exception {
+
+		WikiNodeLocalServiceUtil.deleteNodesByCompany(companyId);
+		WikiPageLocalServiceUtil.deletePagesByCompany(companyId);
+
+		return null;
+	}
+
+	@Override
 	protected String doExportData(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)

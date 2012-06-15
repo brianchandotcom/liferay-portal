@@ -94,6 +94,12 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 		}
 	}
 
+	public void deleteWorkflowDefinitionLinksByCompany(long companyId)
+		throws PortalException, SystemException {
+
+		workflowDefinitionLinkPersistence.removeByCompanyId(companyId);
+	}
+
 	public WorkflowDefinitionLink getDefaultWorkflowDefinitionLink(
 			long companyId, String className, long classPK, long typePK)
 		throws PortalException, SystemException {

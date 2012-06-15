@@ -260,6 +260,9 @@ public interface DLSyncLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public void deleteSyncsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* @deprecated {@link #updateSync(long, long, String, String, String,
 	String)}

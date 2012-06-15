@@ -272,6 +272,11 @@ public class PluginSettingLocalServiceUtil {
 		getService().checkPermission(userId, pluginId, pluginType);
 	}
 
+	public static void deletePluginSettingsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deletePluginSettingsByCompany(companyId);
+	}
+
 	public static com.liferay.portal.model.PluginSetting getDefaultPluginSetting() {
 		return getService().getDefaultPluginSetting();
 	}

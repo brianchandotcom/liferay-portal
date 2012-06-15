@@ -247,6 +247,13 @@ public interface UserTrackerLocalService extends BaseLocalService,
 		java.util.List<com.liferay.portal.model.UserTrackerPath> userTrackerPaths)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public void deleteUserTrackers(
+		java.util.Collection<com.liferay.portal.model.UserTracker> userTrackers)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public void deleteUserTrackersByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.UserTracker> getUserTrackers(
 		long companyId, int start, int end)

@@ -344,10 +344,23 @@ public class DLFileShortcutLocalServiceUtil {
 		getService().deleteFileShortcut(fileShortcutId);
 	}
 
+	public static void deleteFileShortcuts(
+		java.util.Collection<com.liferay.portlet.documentlibrary.model.DLFileShortcut> fileShortcuts)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteFileShortcuts(fileShortcuts);
+	}
+
 	public static void deleteFileShortcuts(long toFileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().deleteFileShortcuts(toFileEntryId);
+	}
+
+	public static void deleteFileShortcutsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteFileShortcutsByCompany(companyId);
 	}
 
 	public static void disableFileShortcuts(long toFileEntryId)

@@ -83,6 +83,7 @@ public class WebDAVPropsModelImpl extends BaseModelImpl<WebDAVProps>
 			true);
 	public static long CLASSNAMEID_COLUMN_BITMASK = 1L;
 	public static long CLASSPK_COLUMN_BITMASK = 2L;
+	public static long COMPANYID_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.WebDAVProps"));
 
@@ -186,7 +187,19 @@ public class WebDAVPropsModelImpl extends BaseModelImpl<WebDAVProps>
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	public Date getCreateDate() {
@@ -369,6 +382,10 @@ public class WebDAVPropsModelImpl extends BaseModelImpl<WebDAVProps>
 	public void resetOriginalValues() {
 		WebDAVPropsModelImpl webDAVPropsModelImpl = this;
 
+		webDAVPropsModelImpl._originalCompanyId = webDAVPropsModelImpl._companyId;
+
+		webDAVPropsModelImpl._setOriginalCompanyId = false;
+
 		webDAVPropsModelImpl._originalClassNameId = webDAVPropsModelImpl._classNameId;
 
 		webDAVPropsModelImpl._setOriginalClassNameId = false;
@@ -491,6 +508,8 @@ public class WebDAVPropsModelImpl extends BaseModelImpl<WebDAVProps>
 		};
 	private long _webDavPropsId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _classNameId;

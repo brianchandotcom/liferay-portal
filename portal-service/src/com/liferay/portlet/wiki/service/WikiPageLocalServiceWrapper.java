@@ -407,10 +407,23 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 		_wikiPageLocalService.deletePageAttachment(nodeId, title, fileName);
 	}
 
+	public void deletePages(
+		java.util.Collection<com.liferay.portlet.wiki.model.WikiPage> pages)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_wikiPageLocalService.deletePages(pages);
+	}
+
 	public void deletePages(long nodeId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_wikiPageLocalService.deletePages(nodeId);
+	}
+
+	public void deletePagesByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_wikiPageLocalService.deletePagesByCompany(companyId);
 	}
 
 	public void deleteTempPageAttachment(long userId,

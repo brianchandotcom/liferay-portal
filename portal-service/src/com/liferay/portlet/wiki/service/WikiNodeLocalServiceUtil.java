@@ -340,10 +340,23 @@ public class WikiNodeLocalServiceUtil {
 		getService().deleteNode(node);
 	}
 
+	public static void deleteNodes(
+		java.util.Collection<com.liferay.portlet.wiki.model.WikiNode> nodes)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteNodes(nodes);
+	}
+
 	public static void deleteNodes(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().deleteNodes(groupId);
+	}
+
+	public static void deleteNodesByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteNodesByCompany(companyId);
 	}
 
 	public static java.util.List<com.liferay.portlet.wiki.model.WikiNode> getCompanyNodes(

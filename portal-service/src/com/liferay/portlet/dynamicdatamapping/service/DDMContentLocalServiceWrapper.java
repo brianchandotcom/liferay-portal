@@ -295,6 +295,11 @@ public class DDMContentLocalServiceWrapper implements DDMContentLocalService,
 		_ddmContentLocalService.deleteContent(content);
 	}
 
+	public void deleteContentByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_ddmContentLocalService.deleteContentByCompany(companyId);
+	}
+
 	public void deleteContents(long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_ddmContentLocalService.deleteContents(groupId);

@@ -345,6 +345,20 @@ public class CompanyLocalServiceUtil {
 	}
 
 	/**
+	* Deletes the company.
+	*
+	* @param companyId the primary key of the company
+	* @throws PortalException if the company with the primary key could not be
+	found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void deleteCompanies(long[] companyIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteCompanies(companyIds);
+	}
+
+	/**
 	* Deletes the company's logo.
 	*
 	* @param companyId the primary key of the company

@@ -78,6 +78,10 @@ public class DLSyncLocalServiceImpl extends DLSyncLocalServiceBaseImpl {
 		return dlSync;
 	}
 
+	public void deleteSyncsByCompany(long companyId) throws SystemException {
+		dlSyncPersistence.removeByCompanyId(companyId);
+	}
+
 	/**
 	 * @deprecated {@link #updateSync(long, long, String, String, String,
 	 *             String)}

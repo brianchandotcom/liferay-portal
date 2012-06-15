@@ -118,12 +118,13 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.column.bitmask.enabled.com.liferay.portal.model.LayoutRevision"),
 			true);
-	public static long HEAD_COLUMN_BITMASK = 1L;
-	public static long LAYOUTBRANCHID_COLUMN_BITMASK = 2L;
-	public static long LAYOUTSETBRANCHID_COLUMN_BITMASK = 4L;
-	public static long PARENTLAYOUTREVISIONID_COLUMN_BITMASK = 8L;
-	public static long PLID_COLUMN_BITMASK = 16L;
-	public static long STATUS_COLUMN_BITMASK = 32L;
+	public static long COMPANYID_COLUMN_BITMASK = 1L;
+	public static long HEAD_COLUMN_BITMASK = 2L;
+	public static long LAYOUTBRANCHID_COLUMN_BITMASK = 4L;
+	public static long LAYOUTSETBRANCHID_COLUMN_BITMASK = 8L;
+	public static long PARENTLAYOUTREVISIONID_COLUMN_BITMASK = 16L;
+	public static long PLID_COLUMN_BITMASK = 32L;
+	public static long STATUS_COLUMN_BITMASK = 64L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -468,7 +469,19 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -1427,6 +1440,10 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	public void resetOriginalValues() {
 		LayoutRevisionModelImpl layoutRevisionModelImpl = this;
 
+		layoutRevisionModelImpl._originalCompanyId = layoutRevisionModelImpl._companyId;
+
+		layoutRevisionModelImpl._setOriginalCompanyId = false;
+
 		layoutRevisionModelImpl._originalLayoutSetBranchId = layoutRevisionModelImpl._layoutSetBranchId;
 
 		layoutRevisionModelImpl._setOriginalLayoutSetBranchId = false;
@@ -1837,6 +1854,8 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	private long _layoutRevisionId;
 	private long _groupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userUuid;
 	private String _userName;

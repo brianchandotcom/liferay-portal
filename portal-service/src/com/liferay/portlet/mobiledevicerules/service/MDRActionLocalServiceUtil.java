@@ -326,6 +326,11 @@ public class MDRActionLocalServiceUtil {
 		getService().deleteActions(ruleGroupInstanceId);
 	}
 
+	public static void deleteActionsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteActionsByCompany(companyId);
+	}
+
 	public static com.liferay.portlet.mobiledevicerules.model.MDRAction fetchAction(
 		long actionId)
 		throws com.liferay.portal.kernel.exception.SystemException {

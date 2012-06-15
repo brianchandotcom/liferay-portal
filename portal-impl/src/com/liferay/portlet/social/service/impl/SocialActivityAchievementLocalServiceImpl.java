@@ -69,6 +69,12 @@ public class SocialActivityAchievementLocalServiceImpl
 			userId, groupId);
 	}
 
+	public void deleteActivityAchievementsByCompany(long companyId)
+		throws SystemException {
+
+		socialActivityAchievementPersistence.removeByCompanyId(companyId);
+	}
+
 	public SocialActivityAchievement fetchUserAchievement(
 			long userId, long groupId, String name)
 		throws SystemException {

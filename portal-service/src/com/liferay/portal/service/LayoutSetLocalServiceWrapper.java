@@ -72,11 +72,13 @@ public class LayoutSetLocalServiceWrapper implements LayoutSetLocalService,
 	*
 	* @param layoutSet the layout set
 	* @return the layout set that was removed
+	* @throws PortalException
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.LayoutSet deleteLayoutSet(
 		com.liferay.portal.model.LayoutSet layoutSet)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return _layoutSetLocalService.deleteLayoutSet(layoutSet);
 	}
 
@@ -268,6 +270,19 @@ public class LayoutSetLocalServiceWrapper implements LayoutSetLocalService,
 			com.liferay.portal.kernel.exception.SystemException {
 		_layoutSetLocalService.deleteLayoutSet(groupId, privateLayout,
 			serviceContext);
+	}
+
+	public void deleteLayoutSets(
+		java.util.Collection<com.liferay.portal.model.LayoutSet> layoutSets)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_layoutSetLocalService.deleteLayoutSets(layoutSets);
+	}
+
+	public void deleteLayoutSetsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_layoutSetLocalService.deleteLayoutSetsByCompany(companyId);
 	}
 
 	public com.liferay.portal.model.LayoutSet fetchLayoutSet(

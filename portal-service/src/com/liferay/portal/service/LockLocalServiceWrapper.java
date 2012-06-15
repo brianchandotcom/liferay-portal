@@ -258,6 +258,11 @@ public class LockLocalServiceWrapper implements LockLocalService,
 		_lockLocalService.clear();
 	}
 
+	public void deleteLocksByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_lockLocalService.deleteLocksByCompany(companyId);
+	}
+
 	public com.liferay.portal.model.Lock getLock(java.lang.String className,
 		long key)
 		throws com.liferay.portal.kernel.exception.PortalException,

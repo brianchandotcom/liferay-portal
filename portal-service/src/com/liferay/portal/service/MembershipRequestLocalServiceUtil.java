@@ -287,6 +287,11 @@ public class MembershipRequestLocalServiceUtil {
 		getService().deleteMembershipRequests(groupId, statusId);
 	}
 
+	public static void deleteMembershipRequestsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteMembershipRequestsByCompany(companyId);
+	}
+
 	public static void deleteMembershipRequestsByUserId(long userId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getService().deleteMembershipRequestsByUserId(userId);

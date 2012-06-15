@@ -289,6 +289,30 @@ public class PasswordPolicyLocalServiceWrapper
 		_passwordPolicyLocalService.checkDefaultPasswordPolicy(companyId);
 	}
 
+	public void deletePasswordPolicies(
+		java.util.Collection<com.liferay.portal.model.PasswordPolicy> passwordPolicies,
+		boolean allowDefaultPolicyDeletion)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_passwordPolicyLocalService.deletePasswordPolicies(passwordPolicies,
+			allowDefaultPolicyDeletion);
+	}
+
+	public void deletePasswordPoliciesByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_passwordPolicyLocalService.deletePasswordPoliciesByCompany(companyId);
+	}
+
+	public com.liferay.portal.model.PasswordPolicy deletePasswordPolicy(
+		com.liferay.portal.model.PasswordPolicy passwordPolicy,
+		boolean allowDefaultPolicyDeletion)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _passwordPolicyLocalService.deletePasswordPolicy(passwordPolicy,
+			allowDefaultPolicyDeletion);
+	}
+
 	public com.liferay.portal.model.PasswordPolicy getDefaultPasswordPolicy(
 		long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException,

@@ -271,6 +271,11 @@ public class ShoppingCartLocalServiceUtil {
 		getService().deleteGroupCarts(groupId);
 	}
 
+	public static void deleteShoppingCartsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteShoppingCartsByCompany(companyId);
+	}
+
 	public static void deleteUserCarts(long userId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getService().deleteUserCarts(userId);

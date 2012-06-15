@@ -399,6 +399,19 @@ public class MBMessageLocalServiceUtil {
 		return getService().deleteMessage(message);
 	}
 
+	public static void deleteMessages(
+		java.util.Collection<com.liferay.portlet.messageboards.model.MBMessage> messages)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteMessages(messages);
+	}
+
+	public static void deleteMessagesByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteMessagesByCompany(companyId);
+	}
+
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getCategoryMessages(
 		long groupId, long categoryId, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {

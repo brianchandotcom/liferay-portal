@@ -79,6 +79,10 @@ public class DDMContentLocalServiceImpl extends DDMContentLocalServiceBaseImpl {
 		ddmContentPersistence.remove(content);
 	}
 
+	public void deleteContentByCompany(long companyId) throws SystemException {
+		ddmContentPersistence.removeByCompanyId(companyId);
+	}
+
 	public void deleteContents(long groupId) throws SystemException {
 		List<DDMContent> contents = ddmContentPersistence.findByGroupId(
 			groupId);

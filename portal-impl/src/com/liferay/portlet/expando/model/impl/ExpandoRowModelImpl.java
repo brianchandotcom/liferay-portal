@@ -73,7 +73,8 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 				"value.object.column.bitmask.enabled.com.liferay.portlet.expando.model.ExpandoRow"),
 			true);
 	public static long CLASSPK_COLUMN_BITMASK = 1L;
-	public static long TABLEID_COLUMN_BITMASK = 2L;
+	public static long COMPANYID_COLUMN_BITMASK = 2L;
+	public static long TABLEID_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.expando.model.ExpandoRow"));
 
@@ -156,7 +157,19 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	public long getTableId() {
@@ -276,6 +289,10 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 	public void resetOriginalValues() {
 		ExpandoRowModelImpl expandoRowModelImpl = this;
 
+		expandoRowModelImpl._originalCompanyId = expandoRowModelImpl._companyId;
+
+		expandoRowModelImpl._setOriginalCompanyId = false;
+
 		expandoRowModelImpl._originalTableId = expandoRowModelImpl._tableId;
 
 		expandoRowModelImpl._setOriginalTableId = false;
@@ -354,6 +371,8 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 		};
 	private long _rowId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _tableId;
 	private long _originalTableId;
 	private boolean _setOriginalTableId;

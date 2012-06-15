@@ -102,6 +102,12 @@ public class PollsVoteLocalServiceImpl extends PollsVoteLocalServiceBaseImpl {
 		return vote;
 	}
 
+	public void deletePollsVotesByCompany(long companyId)
+		throws SystemException {
+
+		pollsVotePersistence.removeByCompanyId(companyId);
+	}
+
 	public List<PollsVote> getChoiceVotes(long choiceId, int start, int end)
 		throws SystemException {
 

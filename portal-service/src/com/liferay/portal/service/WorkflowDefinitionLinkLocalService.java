@@ -253,6 +253,10 @@ public interface WorkflowDefinitionLinkLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public void deleteWorkflowDefinitionLinksByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.WorkflowDefinitionLink getDefaultWorkflowDefinitionLink(
 		long companyId, java.lang.String className, long classPK, long typePK)

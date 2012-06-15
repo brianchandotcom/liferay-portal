@@ -38,6 +38,7 @@ import com.liferay.portlet.messageboards.model.MBMailingList;
 import com.liferay.portlet.messageboards.service.base.MBMailingListLocalServiceBaseImpl;
 
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 
 /**
@@ -131,6 +132,20 @@ public class MBMailingListLocalServiceImpl
 		unscheduleMailingList(mailingList);
 
 		mbMailingListPersistence.remove(mailingList);
+	}
+
+	public void deleteMailingLists(Collection<MBMailingList> mailingLists)
+		throws PortalException, SystemException {
+
+		for (MBMailingList mailingList : mailingLists) {
+			deleteMailingList(mailingList);
+		}
+	}
+
+	public void deleteMailingListsByCompany(long companyId)
+		throws PortalException, SystemException {
+
+		deleteMailingLists(mbMailingListPersistence.findByCompanyId(companyId));
 	}
 
 	public MBMailingList getCategoryMailingList(long groupId, long categoryId)

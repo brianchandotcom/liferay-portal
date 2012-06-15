@@ -33,6 +33,12 @@ import java.util.List;
 public class DLFileVersionLocalServiceImpl
 	extends DLFileVersionLocalServiceBaseImpl {
 
+	public void deleteFileVersionsByCompany(long companyId)
+		throws SystemException {
+
+		dlFileVersionPersistence.removeByCompanyId(companyId);
+	}
+
 	public DLFileVersion getFileVersion(long fileVersionId)
 		throws PortalException, SystemException {
 

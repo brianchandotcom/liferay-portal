@@ -105,6 +105,111 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns all the document library contents where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the matching document library contents
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLContent> findByCompanyId(
+		long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the document library contents where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of document library contents
+	* @param end the upper bound of the range of document library contents (not inclusive)
+	* @return the range of matching document library contents
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLContent> findByCompanyId(
+		long companyId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the document library contents where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of document library contents
+	* @param end the upper bound of the range of document library contents (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching document library contents
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLContent> findByCompanyId(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first document library content in the ordered set where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching document library content
+	* @throws com.liferay.portlet.documentlibrary.NoSuchContentException if a matching document library content could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.documentlibrary.model.DLContent findByCompanyId_First(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.documentlibrary.NoSuchContentException;
+
+	/**
+	* Returns the last document library content in the ordered set where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching document library content
+	* @throws com.liferay.portlet.documentlibrary.NoSuchContentException if a matching document library content could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.documentlibrary.model.DLContent findByCompanyId_Last(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.documentlibrary.NoSuchContentException;
+
+	/**
+	* Returns the document library contents before and after the current document library content in the ordered set where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param contentId the primary key of the current document library content
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next document library content
+	* @throws com.liferay.portlet.documentlibrary.NoSuchContentException if a document library content with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.documentlibrary.model.DLContent[] findByCompanyId_PrevAndNext(
+		long contentId, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.documentlibrary.NoSuchContentException;
+
+	/**
 	* Returns all the document library contents where companyId = &#63; and repositoryId = &#63;.
 	*
 	* @param companyId the company ID
@@ -545,6 +650,15 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Removes all the document library contents where companyId = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByCompanyId(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Removes all the document library contents where companyId = &#63; and repositoryId = &#63; from the database.
 	*
 	* @param companyId the company ID
@@ -600,6 +714,16 @@ public interface DLContentPersistence extends BasePersistence<DLContent> {
 	* @throws SystemException if a system exception occurred
 	*/
 	public void removeAll()
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of document library contents where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the number of matching document library contents
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByCompanyId(long companyId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

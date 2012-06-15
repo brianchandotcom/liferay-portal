@@ -25,6 +25,7 @@ import com.liferay.portlet.expando.model.ExpandoTable;
 import com.liferay.portlet.expando.model.ExpandoTableConstants;
 import com.liferay.portlet.expando.service.base.ExpandoTableLocalServiceBaseImpl;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -148,6 +149,14 @@ public class ExpandoTableLocalServiceImpl
 		deleteTable(companyId, classNameId, name);
 	}
 
+	public void deleteTables(Collection<ExpandoTable> tables)
+		throws SystemException {
+
+		for (ExpandoTable table : tables) {
+			deleteTable(table);
+		}
+	}
+
 	public void deleteTables(long companyId, long classNameId)
 		throws SystemException {
 
@@ -165,6 +174,10 @@ public class ExpandoTableLocalServiceImpl
 		long classNameId = PortalUtil.getClassNameId(className);
 
 		deleteTables(companyId, classNameId);
+	}
+
+	public void deleteTablesByCompany(long companyId) throws SystemException {
+		deleteTables(expandoTablePersistence.findByCompanyId(companyId));
 	}
 
 	public ExpandoTable fetchDefaultTable(long companyId, long classNameId)

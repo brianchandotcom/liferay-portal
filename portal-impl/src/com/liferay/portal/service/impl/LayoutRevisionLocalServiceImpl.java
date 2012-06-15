@@ -35,6 +35,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.LayoutRevisionLocalServiceBaseImpl;
 import com.liferay.portal.util.comparator.LayoutRevisionCreateDateComparator;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -174,6 +175,15 @@ public class LayoutRevisionLocalServiceImpl
 		return deleteLayoutRevision(layoutRevision);
 	}
 
+	public void deleteLayoutRevisions(
+			Collection<LayoutRevision> layoutRevisions)
+		throws PortalException, SystemException {
+
+		for (LayoutRevision layoutRevision : layoutRevisions) {
+			deleteLayoutRevision(layoutRevision);
+		}
+	}
+
 	public void deleteLayoutRevisions(long layoutSetBranchId, long plid)
 		throws PortalException, SystemException {
 
@@ -195,6 +205,13 @@ public class LayoutRevisionLocalServiceImpl
 		for (LayoutRevision layoutRevision : layoutRevisions) {
 			layoutRevisionLocalService.deleteLayoutRevision(layoutRevision);
 		}
+	}
+
+	public void deleteLayoutRevisionsByCompany(long companyId)
+		throws PortalException, SystemException {
+
+		deleteLayoutRevisions(
+			layoutRevisionPersistence.findByCompanyId(companyId));
 	}
 
 	public void deleteLayoutSetBranchLayoutRevisions(long layoutSetBranchId)

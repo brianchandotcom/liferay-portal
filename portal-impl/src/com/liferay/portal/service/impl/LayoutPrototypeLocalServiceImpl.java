@@ -28,6 +28,7 @@ import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.LayoutPrototypeLocalServiceBaseImpl;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -133,6 +134,22 @@ public class LayoutPrototypeLocalServiceImpl
 			layoutPrototypePersistence.findByPrimaryKey(layoutPrototypeId);
 
 		return deleteLayoutPrototype(layoutPrototype);
+	}
+
+	public void deleteLayoutPrototypes(
+			Collection<LayoutPrototype> layoutPrototypes)
+		throws PortalException, SystemException {
+
+		for (LayoutPrototype layoutPrototype : layoutPrototypes) {
+			deleteLayoutPrototype(layoutPrototype);
+		}
+	}
+
+	public void deleteLayoutPrototypesByCompany(long companyId)
+		throws PortalException, SystemException {
+
+		deleteLayoutPrototypes(
+			layoutPrototypePersistence.findByCompanyId(companyId));
 	}
 
 	/**

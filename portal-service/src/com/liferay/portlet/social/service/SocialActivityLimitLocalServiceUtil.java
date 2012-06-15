@@ -277,6 +277,12 @@ public class SocialActivityLimitLocalServiceUtil {
 			activityType, activityCounterName, limitPeriod);
 	}
 
+	public static void deleteActivityLimitsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteActivityLimitsByCompany(companyId);
+	}
+
 	public static com.liferay.portlet.social.model.SocialActivityLimit fetchActivityLimit(
 		long groupId, long userId, long classNameId, long classPK,
 		int activityType, java.lang.String activityCounterName)

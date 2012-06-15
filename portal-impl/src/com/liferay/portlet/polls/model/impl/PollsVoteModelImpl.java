@@ -90,8 +90,9 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 				"value.object.column.bitmask.enabled.com.liferay.portlet.polls.model.PollsVote"),
 			true);
 	public static long CHOICEID_COLUMN_BITMASK = 1L;
-	public static long QUESTIONID_COLUMN_BITMASK = 2L;
-	public static long USERID_COLUMN_BITMASK = 4L;
+	public static long COMPANYID_COLUMN_BITMASK = 2L;
+	public static long QUESTIONID_COLUMN_BITMASK = 4L;
+	public static long USERID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -250,7 +251,19 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -460,6 +473,10 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 	public void resetOriginalValues() {
 		PollsVoteModelImpl pollsVoteModelImpl = this;
 
+		pollsVoteModelImpl._originalCompanyId = pollsVoteModelImpl._companyId;
+
+		pollsVoteModelImpl._setOriginalCompanyId = false;
+
 		pollsVoteModelImpl._originalUserId = pollsVoteModelImpl._userId;
 
 		pollsVoteModelImpl._setOriginalUserId = false;
@@ -609,6 +626,8 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 		};
 	private long _voteId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userUuid;
 	private long _originalUserId;

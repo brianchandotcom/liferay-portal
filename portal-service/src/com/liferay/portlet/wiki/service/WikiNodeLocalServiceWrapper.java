@@ -333,10 +333,23 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 		_wikiNodeLocalService.deleteNode(node);
 	}
 
+	public void deleteNodes(
+		java.util.Collection<com.liferay.portlet.wiki.model.WikiNode> nodes)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_wikiNodeLocalService.deleteNodes(nodes);
+	}
+
 	public void deleteNodes(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_wikiNodeLocalService.deleteNodes(groupId);
+	}
+
+	public void deleteNodesByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_wikiNodeLocalService.deleteNodesByCompany(companyId);
 	}
 
 	public java.util.List<com.liferay.portlet.wiki.model.WikiNode> getCompanyNodes(

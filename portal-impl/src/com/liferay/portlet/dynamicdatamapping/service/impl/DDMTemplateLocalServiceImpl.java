@@ -29,6 +29,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.base.DDMTemplateLocalServiceBaseImpl;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -170,15 +171,24 @@ public class DDMTemplateLocalServiceImpl
 		deleteTemplate(template);
 	}
 
-	public void deleteTemplates(long groupId)
+	public void deleteTemplates(Collection<DDMTemplate> templates)
 		throws PortalException, SystemException {
-
-		List<DDMTemplate> templates = ddmTemplatePersistence.findByGroupId(
-			groupId);
 
 		for (DDMTemplate template : templates) {
 			deleteTemplate(template);
 		}
+	}
+
+	public void deleteTemplates(long groupId)
+		throws PortalException, SystemException {
+
+		deleteTemplates(ddmTemplatePersistence.findByGroupId(groupId));
+	}
+
+	public void deleteTemplatesByCompany(long companyId)
+		throws PortalException, SystemException {
+
+		deleteTemplates(ddmTemplatePersistence.findByCompanyId(companyId));
 	}
 
 	public DDMTemplate fetchTemplate(long groupId, String templateKey)

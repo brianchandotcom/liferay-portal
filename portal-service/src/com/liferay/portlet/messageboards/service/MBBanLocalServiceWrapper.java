@@ -286,9 +286,20 @@ public class MBBanLocalServiceWrapper implements MBBanLocalService,
 		_mbBanLocalService.deleteBan(ban);
 	}
 
+	public void deleteBans(
+		java.util.Collection<com.liferay.portlet.messageboards.model.MBBan> bans)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_mbBanLocalService.deleteBans(bans);
+	}
+
 	public void deleteBansByBanUserId(long banUserId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_mbBanLocalService.deleteBansByBanUserId(banUserId);
+	}
+
+	public void deleteBansByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_mbBanLocalService.deleteBansByCompany(companyId);
 	}
 
 	public void deleteBansByGroupId(long groupId)

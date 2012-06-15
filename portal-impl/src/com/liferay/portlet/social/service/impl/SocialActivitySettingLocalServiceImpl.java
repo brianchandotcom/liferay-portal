@@ -64,6 +64,12 @@ public class SocialActivitySettingLocalServiceImpl
 		socialActivitySettingPersistence.removeByGroupId(groupId);
 	}
 
+	public void deleteActivitySettingsByCompany(long companyId)
+		throws SystemException {
+
+		socialActivitySettingPersistence.removeByCompanyId(companyId);
+	}
+
 	public SocialActivityDefinition getActivityDefinition(
 			long groupId, String className, int activityType)
 		throws SystemException {

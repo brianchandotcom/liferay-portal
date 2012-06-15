@@ -62,6 +62,7 @@ import com.liferay.portlet.shopping.util.comparator.OrderDateComparator;
 import com.liferay.util.CreditCard;
 import com.liferay.util.PwdGenerator;
 
+import java.util.Collection;
 import java.util.Currency;
 import java.util.Date;
 import java.util.List;
@@ -255,6 +256,14 @@ public class ShoppingOrderLocalServiceImpl
 			ShoppingOrder.class.getName(), order.getOrderId());
 	}
 
+	public void deleteOrders(Collection<ShoppingOrder> orders)
+		throws PortalException, SystemException {
+
+		for (ShoppingOrder order : orders) {
+			deleteOrder(order);
+		}
+	}
+
 	public void deleteOrders(long groupId)
 		throws PortalException, SystemException {
 
@@ -264,6 +273,12 @@ public class ShoppingOrderLocalServiceImpl
 		for (ShoppingOrder order : orders) {
 			deleteOrder(order);
 		}
+	}
+
+	public void deleteOrdersByCompany(long companyId)
+		throws PortalException, SystemException {
+
+		deleteOrders(shoppingOrderPersistence.findByCompanyId(companyId));
 	}
 
 	public ShoppingOrder getLatestOrder(long userId, long groupId)

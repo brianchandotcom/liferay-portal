@@ -283,6 +283,11 @@ public class DLFileVersionLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
+	public static void deleteFileVersionsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteFileVersionsByCompany(companyId);
+	}
+
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersion getFileVersion(
 		long fileVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException,

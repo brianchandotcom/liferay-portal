@@ -41,6 +41,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -122,6 +123,24 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		return layoutSet;
 	}
 
+	public LayoutSet deleteLayoutSet(LayoutSet layoutSet)
+		throws PortalException, SystemException {
+
+		deleteLayoutSet(
+			layoutSet.getGroupId(), layoutSet.isPrivateLayout(), null);
+
+		return layoutSet;
+	}
+
+	public LayoutSet deleteLayoutSet(long layoutSetId)
+		throws PortalException, SystemException {
+
+		LayoutSet layoutSet = layoutSetPersistence.findByPrimaryKey(
+			layoutSetId);
+
+		return deleteLayoutSet(layoutSet);
+	}
+
 	public void deleteLayoutSet(
 			long groupId, boolean privateLayout, ServiceContext serviceContext)
 		throws PortalException, SystemException {
@@ -172,6 +191,20 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		}
 		catch (NoSuchVirtualHostException nsvhe) {
 		}
+	}
+
+	public void deleteLayoutSets(Collection<LayoutSet> layoutSets)
+		throws PortalException, SystemException {
+
+		for (LayoutSet layoutSet : layoutSets) {
+			deleteLayoutSet(layoutSet);
+		}
+	}
+
+	public void deleteLayoutSetsByCompany(long companyId)
+		throws PortalException, SystemException {
+
+		deleteLayoutSets(layoutSetPersistence.findByCompanyId(companyId));
 	}
 
 	public LayoutSet fetchLayoutSet(String virtualHostname)

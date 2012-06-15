@@ -240,6 +240,9 @@ public interface VirtualHostLocalService extends BaseLocalService,
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
+	public void deleteVirtualHostsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.VirtualHost fetchVirtualHost(
 		long companyId, long layoutSetId)

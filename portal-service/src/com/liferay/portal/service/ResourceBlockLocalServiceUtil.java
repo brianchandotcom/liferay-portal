@@ -361,6 +361,17 @@ public class ResourceBlockLocalServiceUtil {
 			resourceBlockPermissionsContainer);
 	}
 
+	public static void deleteResourceBlocks(
+		java.util.Collection<com.liferay.portal.model.ResourceBlock> resourceBlocks)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteResourceBlocks(resourceBlocks);
+	}
+
+	public static void deleteResourceBlocksByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteResourceBlocksByCompany(companyId);
+	}
+
 	public static long getActionId(java.lang.String name,
 		java.lang.String actionId)
 		throws com.liferay.portal.kernel.exception.PortalException {

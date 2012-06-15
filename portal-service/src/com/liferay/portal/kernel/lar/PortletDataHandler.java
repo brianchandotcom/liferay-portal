@@ -48,6 +48,25 @@ public interface PortletDataHandler {
 		throws PortletDataException;
 
 	/**
+	 * Deletes the data created by the portlet associated with the given
+	 * company. Can optionally return a modified version of
+	 * <code>preferences</code> if it contains reference to data that does not
+	 * exist anymore.
+	 *
+	 * @param  portletDataContext the context of the data deletion
+	 * @param  portletId the portlet ID of the portlet
+	 * @param  portletPreferences the portlet preferences of the portlet
+	 * @return A modified version of portlet preferences that should be saved.
+	 *         <code>Null</code> if the portlet preferences were unmodified by
+	 *         this data handler.
+	 * @throws PortletDataException if a portlet data exception occurred
+	 */
+	public PortletPreferences deleteData(
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences, long companyId)
+		throws PortletDataException;
+
+	/**
 	 * Returns a string of data to be placed in the &lt;portlet-data&gt; section
 	 * of the LAR file. This data will be passed as the <code>data</code>
 	 * parameter of <code>importData()</code>.

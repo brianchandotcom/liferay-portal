@@ -300,6 +300,11 @@ public class DDMContentLocalServiceUtil {
 		getService().deleteContent(content);
 	}
 
+	public static void deleteContentByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteContentByCompany(companyId);
+	}
+
 	public static void deleteContents(long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getService().deleteContents(groupId);

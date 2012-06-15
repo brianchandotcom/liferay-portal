@@ -283,6 +283,9 @@ public interface SCFrameworkVersionLocalService extends BaseLocalService,
 	public void deleteFrameworkVersions(long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public void deleteFrameworkVersionsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion getFrameworkVersion(
 		long frameworkVersionId)

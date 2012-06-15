@@ -414,6 +414,12 @@ public class SocialActivityLocalServiceWrapper
 		_socialActivityLocalService.deleteActivities(assetEntry);
 	}
 
+	public void deleteActivities(
+		java.util.Collection<com.liferay.portlet.social.model.SocialActivity> activities)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_socialActivityLocalService.deleteActivities(activities);
+	}
+
 	/**
 	* Removes stored activities for the asset identified by the class name and
 	* class primary key.
@@ -425,6 +431,11 @@ public class SocialActivityLocalServiceWrapper
 	public void deleteActivities(java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_socialActivityLocalService.deleteActivities(className, classPK);
+	}
+
+	public void deleteActivitiesByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_socialActivityLocalService.deleteActivitiesByCompany(companyId);
 	}
 
 	/**

@@ -274,6 +274,17 @@ public class ContactLocalServiceWrapper implements ContactLocalService,
 			ymSn, jobTitle);
 	}
 
+	public void deleteContacts(
+		java.util.Collection<com.liferay.portal.model.Contact> contacts)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_contactLocalService.deleteContacts(contacts);
+	}
+
+	public void deleteContactsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_contactLocalService.deleteContactsByCompany(companyId);
+	}
+
 	public java.util.List<com.liferay.portal.model.Contact> getContacts(
 		long classNameId, long classPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)

@@ -87,6 +87,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -547,6 +548,14 @@ public class DLFileEntryLocalServiceImpl
 			toFileVersionId, fieldsMap, serviceContext);
 	}
 
+	public void deleteFileEntries(Collection<DLFileEntry> fileEntries)
+		throws PortalException, SystemException {
+
+		for (DLFileEntry fileEntry : fileEntries) {
+			deleteFileEntry(fileEntry);
+		}
+	}
+
 	public void deleteFileEntries(long groupId, long folderId)
 		throws PortalException, SystemException {
 
@@ -568,6 +577,12 @@ public class DLFileEntryLocalServiceImpl
 				dlFileEntryLocalService.deleteFileEntry(dlFileEntry);
 			}
 		}
+	}
+
+	public void deleteFileEntriesByCompany(long companyId)
+		throws PortalException, SystemException {
+
+		deleteFileEntries(dlFileEntryPersistence.findByCompanyId(companyId));
 	}
 
 	@Indexable(type = IndexableType.DELETE)

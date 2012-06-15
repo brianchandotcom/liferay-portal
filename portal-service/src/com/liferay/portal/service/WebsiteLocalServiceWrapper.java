@@ -269,6 +269,11 @@ public class WebsiteLocalServiceWrapper implements WebsiteLocalService,
 		_websiteLocalService.deleteWebsites(companyId, className, classPK);
 	}
 
+	public void deleteWebsitesByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_websiteLocalService.deleteWebsitesByCompany(companyId);
+	}
+
 	public java.util.List<com.liferay.portal.model.Website> getWebsites()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _websiteLocalService.getWebsites();

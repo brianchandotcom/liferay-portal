@@ -89,9 +89,10 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 	public static long CLASSNAMEID_COLUMN_BITMASK = 1L;
 	public static long CLASSPK_COLUMN_BITMASK = 2L;
 	public static long COLUMNID_COLUMN_BITMASK = 4L;
-	public static long DATA_COLUMN_BITMASK = 8L;
-	public static long ROWID_COLUMN_BITMASK = 16L;
-	public static long TABLEID_COLUMN_BITMASK = 32L;
+	public static long COMPANYID_COLUMN_BITMASK = 8L;
+	public static long DATA_COLUMN_BITMASK = 16L;
+	public static long ROWID_COLUMN_BITMASK = 32L;
+	public static long TABLEID_COLUMN_BITMASK = 64L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -242,7 +243,19 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -507,6 +520,10 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 	public void resetOriginalValues() {
 		ExpandoValueModelImpl expandoValueModelImpl = this;
 
+		expandoValueModelImpl._originalCompanyId = expandoValueModelImpl._companyId;
+
+		expandoValueModelImpl._setOriginalCompanyId = false;
+
 		expandoValueModelImpl._originalTableId = expandoValueModelImpl._tableId;
 
 		expandoValueModelImpl._setOriginalTableId = false;
@@ -637,6 +654,8 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 		};
 	private long _valueId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _tableId;
 	private long _originalTableId;
 	private boolean _setOriginalTableId;

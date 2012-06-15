@@ -21,6 +21,7 @@ import com.liferay.portal.model.UserTrackerPath;
 import com.liferay.portal.service.base.UserTrackerLocalServiceBaseImpl;
 import com.liferay.portal.util.PropsValues;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -92,6 +93,20 @@ public class UserTrackerLocalServiceImpl
 		// User tracker
 
 		return userTrackerPersistence.remove(userTracker);
+	}
+
+	public void deleteUserTrackers(Collection<UserTracker> userTrackers)
+		throws SystemException {
+
+		for (UserTracker userTracker : userTrackers) {
+			deleteUserTracker(userTracker);
+		}
+	}
+
+	public void deleteUserTrackersByCompany(long companyId)
+		throws SystemException {
+
+		deleteUserTrackers(userTrackerPersistence.findByCompanyId(companyId));
 	}
 
 	public List<UserTracker> getUserTrackers(long companyId, int start, int end)

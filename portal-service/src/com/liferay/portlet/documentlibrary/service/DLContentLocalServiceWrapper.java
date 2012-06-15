@@ -292,6 +292,11 @@ public class DLContentLocalServiceWrapper implements DLContentLocalService,
 			version);
 	}
 
+	public void deleteContentByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_dlContentLocalService.deleteContentByCompany(companyId);
+	}
+
 	public void deleteContents(long companyId, long repositoryId,
 		java.lang.String path)
 		throws com.liferay.portal.kernel.exception.SystemException {

@@ -81,11 +81,13 @@ public interface RepositoryLocalService extends BaseLocalService,
 	*
 	* @param repository the repository
 	* @return the repository that was removed
+	* @throws PortalException
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.Repository deleteRepository(
 		com.liferay.portal.model.Repository repository)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -265,7 +267,16 @@ public interface RepositoryLocalService extends BaseLocalService,
 	public void checkRepository(long repositoryId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public void deleteRepositories(
+		java.util.Collection<com.liferay.portal.model.Repository> repositories)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public void deleteRepositories(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void deleteRepositoriesByCompany(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

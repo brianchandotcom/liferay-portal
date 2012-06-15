@@ -283,6 +283,10 @@ public interface AssetLinkLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public void deleteLinks(
+		java.util.Collection<com.liferay.portlet.asset.model.AssetLink> links)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* Deletes all links associated with the asset entry.
 	*
@@ -300,6 +304,9 @@ public interface AssetLinkLocalService extends BaseLocalService,
 	* @throws SystemException if a system exception occurred
 	*/
 	public void deleteLinks(long entryId1, long entryId2)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public void deleteLinksByCompany(long companyId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

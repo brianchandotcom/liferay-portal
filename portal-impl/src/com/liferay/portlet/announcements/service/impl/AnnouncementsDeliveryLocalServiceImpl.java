@@ -80,6 +80,12 @@ public class AnnouncementsDeliveryLocalServiceImpl
 		}
 	}
 
+	public void deleteDeliveriesByCompany(long companyId)
+		throws SystemException {
+
+		announcementsDeliveryPersistence.removeByCompanyId(companyId);
+	}
+
 	public void deleteDelivery(AnnouncementsDelivery delivery)
 		throws SystemException {
 

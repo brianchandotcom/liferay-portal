@@ -282,6 +282,11 @@ public class EmailAddressLocalServiceUtil {
 		getService().deleteEmailAddresses(companyId, className, classPK);
 	}
 
+	public static void deleteEmailAddressesByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteEmailAddressesByCompany(companyId);
+	}
+
 	public static java.util.List<com.liferay.portal.model.EmailAddress> getEmailAddresses()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getEmailAddresses();

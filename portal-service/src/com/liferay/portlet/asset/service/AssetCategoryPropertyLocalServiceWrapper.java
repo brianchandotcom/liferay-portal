@@ -280,6 +280,11 @@ public class AssetCategoryPropertyLocalServiceWrapper
 		_assetCategoryPropertyLocalService.deleteCategoryProperties(entryId);
 	}
 
+	public void deleteCategoryPropertiesByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_assetCategoryPropertyLocalService.deleteCategoryPropertiesByCompany(companyId);
+	}
+
 	public void deleteCategoryProperty(
 		com.liferay.portlet.asset.model.AssetCategoryProperty categoryProperty)
 		throws com.liferay.portal.kernel.exception.SystemException {

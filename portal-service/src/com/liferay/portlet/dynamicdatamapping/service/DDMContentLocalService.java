@@ -269,6 +269,9 @@ public interface DDMContentLocalService extends BaseLocalService,
 		com.liferay.portlet.dynamicdatamapping.model.DDMContent content)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public void deleteContentByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public void deleteContents(long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

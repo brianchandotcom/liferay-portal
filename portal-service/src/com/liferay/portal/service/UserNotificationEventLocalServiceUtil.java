@@ -307,6 +307,11 @@ public class UserNotificationEventLocalServiceUtil {
 		getService().deleteUserNotificationEvents(uuids, companyId);
 	}
 
+	public static void deleteUserNotificationEventsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteUserNotificationEventsByCompany(companyId);
+	}
+
 	public static java.util.List<com.liferay.portal.model.UserNotificationEvent> getUserNotificationEvents(
 		long userId) throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getUserNotificationEvents(userId);

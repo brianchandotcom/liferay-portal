@@ -319,9 +319,20 @@ public class MDRRuleGroupLocalServiceWrapper implements MDRRuleGroupLocalService
 		_mdrRuleGroupLocalService.deleteRuleGroup(ruleGroup);
 	}
 
+	public void deleteRuleGroups(
+		java.util.Collection<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> ruleGroups)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_mdrRuleGroupLocalService.deleteRuleGroups(ruleGroups);
+	}
+
 	public void deleteRuleGroups(long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_mdrRuleGroupLocalService.deleteRuleGroups(groupId);
+	}
+
+	public void deleteRuleGroupsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_mdrRuleGroupLocalService.deleteRuleGroupsByCompany(companyId);
 	}
 
 	public com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup fetchRuleGroup(

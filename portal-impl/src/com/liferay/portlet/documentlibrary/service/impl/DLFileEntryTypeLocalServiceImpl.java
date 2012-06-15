@@ -43,6 +43,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -169,6 +170,14 @@ public class DLFileEntryTypeLocalServiceImpl
 		deleteFileEntryType(dlFileEntryType);
 	}
 
+	public void deleteFileEntryTypes(Collection<DLFileEntryType> fileEntryTypes)
+		throws PortalException, SystemException {
+
+		for (DLFileEntryType fileEntryType : fileEntryTypes) {
+			deleteFileEntryType(fileEntryType);
+		}
+	}
+
 	public void deleteFileEntryTypes(long groupId)
 		throws PortalException, SystemException {
 
@@ -178,6 +187,13 @@ public class DLFileEntryTypeLocalServiceImpl
 		for (DLFileEntryType dlFileEntryType : dlFileEntryTypes) {
 			deleteFileEntryType(dlFileEntryType);
 		}
+	}
+
+	public void deleteFileEntryTypesByCompany(long companyId)
+		throws PortalException, SystemException {
+
+		deleteFileEntryTypes(
+			dlFileEntryTypePersistence.findByCompanyId(companyId));
 	}
 
 	public DLFileEntryType fetchFileEntryType(long fileEntryTypeId)

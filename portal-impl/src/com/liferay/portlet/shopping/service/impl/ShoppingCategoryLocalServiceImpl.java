@@ -27,6 +27,7 @@ import com.liferay.portlet.shopping.model.ShoppingItem;
 import com.liferay.portlet.shopping.service.base.ShoppingCategoryLocalServiceBaseImpl;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -132,6 +133,14 @@ public class ShoppingCategoryLocalServiceImpl
 			category.getCategoryId(), groupPermissions, guestPermissions);
 	}
 
+	public void deleteCategories(Collection<ShoppingCategory> categories)
+		throws PortalException, SystemException {
+
+		for (ShoppingCategory category : categories) {
+			deleteCategory(category);
+		}
+	}
+
 	public void deleteCategories(long groupId)
 		throws PortalException, SystemException {
 
@@ -141,6 +150,13 @@ public class ShoppingCategoryLocalServiceImpl
 		for (ShoppingCategory category : categories) {
 			deleteCategory(category);
 		}
+	}
+
+	public void deleteCategoriesByCompany(long companyId)
+		throws PortalException, SystemException {
+
+		deleteCategories(
+			shoppingCategoryPersistence.findByCompanyId(companyId));
 	}
 
 	public void deleteCategory(long categoryId)

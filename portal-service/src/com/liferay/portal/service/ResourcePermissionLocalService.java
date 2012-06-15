@@ -308,6 +308,11 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 		java.lang.String roleName, int scope, long resourceActionBitwiseValue)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public void deleteResourcePermissions(
+		java.util.Collection<com.liferay.portal.model.ResourcePermission> resourcePermissions)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* Deletes all resource permissions at the scope to resources of the type.
 	* This method should not be confused with any of the
@@ -361,6 +366,10 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 	*/
 	public void deleteResourcePermissions(long companyId,
 		java.lang.String name, int scope, java.lang.String primKey)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void deleteResourcePermissionsByCompany(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

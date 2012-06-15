@@ -342,10 +342,23 @@ public class DDMTemplateLocalServiceUtil {
 		getService().deleteTemplate(templateId);
 	}
 
+	public static void deleteTemplates(
+		java.util.Collection<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> templates)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteTemplates(templates);
+	}
+
 	public static void deleteTemplates(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().deleteTemplates(groupId);
+	}
+
+	public static void deleteTemplatesByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteTemplatesByCompany(companyId);
 	}
 
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchTemplate(

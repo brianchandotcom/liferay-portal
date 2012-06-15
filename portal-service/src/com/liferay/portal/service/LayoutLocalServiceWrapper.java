@@ -462,6 +462,13 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 		_layoutLocalService.deleteLayout(plid, serviceContext);
 	}
 
+	public void deleteLayouts(
+		java.util.Collection<com.liferay.portal.model.Layout> layouts)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_layoutLocalService.deleteLayouts(layouts);
+	}
+
 	/**
 	* Deletes the group's private or non-private layouts, also deleting the
 	* layouts' child layouts, and associated resources.
@@ -479,6 +486,12 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_layoutLocalService.deleteLayouts(groupId, privateLayout, serviceContext);
+	}
+
+	public void deleteLayoutsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_layoutLocalService.deleteLayoutsByCompany(companyId);
 	}
 
 	/**

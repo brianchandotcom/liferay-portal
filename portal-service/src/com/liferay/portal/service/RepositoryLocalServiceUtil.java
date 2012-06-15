@@ -81,11 +81,13 @@ public class RepositoryLocalServiceUtil {
 	*
 	* @param repository the repository
 	* @return the repository that was removed
+	* @throws PortalException
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Repository deleteRepository(
 		com.liferay.portal.model.Repository repository)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return getService().deleteRepository(repository);
 	}
 
@@ -299,10 +301,23 @@ public class RepositoryLocalServiceUtil {
 		getService().checkRepository(repositoryId);
 	}
 
+	public static void deleteRepositories(
+		java.util.Collection<com.liferay.portal.model.Repository> repositories)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteRepositories(repositories);
+	}
+
 	public static void deleteRepositories(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().deleteRepositories(groupId);
+	}
+
+	public static void deleteRepositoriesByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteRepositoriesByCompany(companyId);
 	}
 
 	public static com.liferay.portal.kernel.repository.LocalRepository getLocalRepositoryImpl(

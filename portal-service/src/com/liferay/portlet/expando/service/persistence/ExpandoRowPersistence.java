@@ -101,6 +101,111 @@ public interface ExpandoRowPersistence extends BasePersistence<ExpandoRow> {
 		long rowId) throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns all the expando rows where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the matching expando rows
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portlet.expando.model.ExpandoRow> findByCompanyId(
+		long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the expando rows where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of expando rows
+	* @param end the upper bound of the range of expando rows (not inclusive)
+	* @return the range of matching expando rows
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portlet.expando.model.ExpandoRow> findByCompanyId(
+		long companyId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the expando rows where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of expando rows
+	* @param end the upper bound of the range of expando rows (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching expando rows
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portlet.expando.model.ExpandoRow> findByCompanyId(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first expando row in the ordered set where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching expando row
+	* @throws com.liferay.portlet.expando.NoSuchRowException if a matching expando row could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.expando.model.ExpandoRow findByCompanyId_First(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.expando.NoSuchRowException;
+
+	/**
+	* Returns the last expando row in the ordered set where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching expando row
+	* @throws com.liferay.portlet.expando.NoSuchRowException if a matching expando row could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.expando.model.ExpandoRow findByCompanyId_Last(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.expando.NoSuchRowException;
+
+	/**
+	* Returns the expando rows before and after the current expando row in the ordered set where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param rowId the primary key of the current expando row
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next expando row
+	* @throws com.liferay.portlet.expando.NoSuchRowException if a expando row with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.expando.model.ExpandoRow[] findByCompanyId_PrevAndNext(
+		long rowId, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.expando.NoSuchRowException;
+
+	/**
 	* Returns all the expando rows where tableId = &#63;.
 	*
 	* @param tableId the table ID
@@ -288,6 +393,15 @@ public interface ExpandoRowPersistence extends BasePersistence<ExpandoRow> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Removes all the expando rows where companyId = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByCompanyId(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Removes all the expando rows where tableId = &#63; from the database.
 	*
 	* @param tableId the table ID
@@ -315,6 +429,16 @@ public interface ExpandoRowPersistence extends BasePersistence<ExpandoRow> {
 	* @throws SystemException if a system exception occurred
 	*/
 	public void removeAll()
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of expando rows where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the number of matching expando rows
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByCompanyId(long companyId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

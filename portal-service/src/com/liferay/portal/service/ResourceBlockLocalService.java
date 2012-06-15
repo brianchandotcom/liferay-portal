@@ -302,6 +302,13 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 		com.liferay.portal.model.ResourceBlockPermissionsContainer resourceBlockPermissionsContainer)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public void deleteResourceBlocks(
+		java.util.Collection<com.liferay.portal.model.ResourceBlock> resourceBlocks)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public void deleteResourceBlocksByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getActionId(java.lang.String name, java.lang.String actionId)
 		throws com.liferay.portal.kernel.exception.PortalException;

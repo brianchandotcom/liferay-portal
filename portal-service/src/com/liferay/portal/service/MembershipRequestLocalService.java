@@ -253,6 +253,9 @@ public interface MembershipRequestLocalService extends BaseLocalService,
 	public void deleteMembershipRequests(long groupId, int statusId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public void deleteMembershipRequestsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public void deleteMembershipRequestsByUserId(long userId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

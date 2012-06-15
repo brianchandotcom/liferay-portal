@@ -28,6 +28,7 @@ import com.liferay.portlet.mobiledevicerules.model.MDRRule;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup;
 import com.liferay.portlet.mobiledevicerules.service.base.MDRRuleGroupLocalServiceBaseImpl;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -140,6 +141,14 @@ public class MDRRuleGroupLocalServiceImpl
 			ruleGroup.getRuleGroupId());
 	}
 
+	public void deleteRuleGroups(Collection<MDRRuleGroup> ruleGroups)
+		throws SystemException {
+
+		for (MDRRuleGroup ruleGroup : ruleGroups) {
+			deleteRuleGroup(ruleGroup);
+		}
+	}
+
 	public void deleteRuleGroups(long groupId) throws SystemException {
 		List<MDRRuleGroup> ruleGroups = mdrRuleGroupPersistence.findByGroupId(
 			groupId);
@@ -147,6 +156,12 @@ public class MDRRuleGroupLocalServiceImpl
 		for (MDRRuleGroup ruleGroup : ruleGroups) {
 			deleteRuleGroup(ruleGroup);
 		}
+	}
+
+	public void deleteRuleGroupsByCompany(long companyId)
+		throws SystemException {
+
+		deleteRuleGroups(mdrRuleGroupPersistence.findByCompanyId(companyId));
 	}
 
 	public MDRRuleGroup fetchRuleGroup(long ruleGroupId)

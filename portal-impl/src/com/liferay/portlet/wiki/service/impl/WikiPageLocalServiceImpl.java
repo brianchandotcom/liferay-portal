@@ -81,6 +81,7 @@ import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -567,6 +568,14 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		}
 	}
 
+	public void deletePages(Collection<WikiPage> pages)
+		throws PortalException, SystemException {
+
+		for (WikiPage page : pages) {
+			deletePage(page);
+		}
+	}
+
 	public void deletePages(long nodeId)
 		throws PortalException, SystemException {
 
@@ -583,6 +592,12 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		for (WikiPage page : pages) {
 			deletePage(page);
 		}
+	}
+
+	public void deletePagesByCompany(long companyId)
+		throws PortalException, SystemException {
+
+		deletePages(wikiPagePersistence.findByCompanyId(companyId));
 	}
 
 	public void deleteTempPageAttachment(

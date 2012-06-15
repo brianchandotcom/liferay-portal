@@ -95,8 +95,9 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.column.bitmask.enabled.com.liferay.portlet.softwarecatalog.model.SCProductVersion"),
 			true);
-	public static long DIRECTDOWNLOADURL_COLUMN_BITMASK = 1L;
-	public static long PRODUCTENTRYID_COLUMN_BITMASK = 2L;
+	public static long COMPANYID_COLUMN_BITMASK = 1L;
+	public static long DIRECTDOWNLOADURL_COLUMN_BITMASK = 2L;
+	public static long PRODUCTENTRYID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -293,7 +294,19 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -546,6 +559,10 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 	public void resetOriginalValues() {
 		SCProductVersionModelImpl scProductVersionModelImpl = this;
 
+		scProductVersionModelImpl._originalCompanyId = scProductVersionModelImpl._companyId;
+
+		scProductVersionModelImpl._setOriginalCompanyId = false;
+
 		scProductVersionModelImpl._originalProductEntryId = scProductVersionModelImpl._productEntryId;
 
 		scProductVersionModelImpl._setOriginalProductEntryId = false;
@@ -730,6 +747,8 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 		};
 	private long _productVersionId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userUuid;
 	private String _userName;

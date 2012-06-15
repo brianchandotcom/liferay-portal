@@ -422,6 +422,7 @@
 		<icon>/html/icons/shopping.png</icon>
 		<struts-path>shopping</struts-path>
 		<configuration-action-class>com.liferay.portlet.shopping.action.ConfigurationActionImpl</configuration-action-class>
+		<portlet-data-handler-class>com.liferay.portlet.shopping.lar.ShoppingPortletDataHandlerImpl</portlet-data-handler-class>
 		<preferences-unique-per-layout>false</preferences-unique-per-layout>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>false</use-default-template>
@@ -757,6 +758,7 @@
 			</trigger>
 		</scheduler-entry>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
+		<portlet-data-handler-class>com.liferay.portlet.announcements.lar.AnnouncementsPortletDataHandlerImpl</portlet-data-handler-class>
 		<preferences-company-wide>true</preferences-company-wide>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>false</use-default-template>
@@ -814,6 +816,7 @@
 		<icon>/html/icons/default.png</icon>
 		<struts-path>layouts_admin</struts-path>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
+		<portlet-data-handler-class>com.liferay.portlet.layoutsadmin.lar.LayoutsAdminPortletDataHandlerImpl</portlet-data-handler-class>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>false</use-default-template>
 		<private-request-attributes>false</private-request-attributes>
@@ -851,6 +854,7 @@
 		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
 		<friendly-url-mapping>software_catalog</friendly-url-mapping>
 		<friendly-url-routes>com/liferay/portlet/softwarecatalog/software-catalog-friendly-url-routes.xml</friendly-url-routes>
+		<portlet-data-handler-class>com.liferay.portlet.softwarecatalog.lar.SCPortletDataHandlerImpl</portlet-data-handler-class>
 		<control-panel-entry-category>content</control-panel-entry-category>
 		<control-panel-entry-weight>19.0</control-panel-entry-weight>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
@@ -1087,6 +1091,7 @@
 		<portlet-name>119</portlet-name>
 		<icon>/html/icons/default.png</icon>
 		<struts-path>asset</struts-path>
+		<portlet-data-handler-class>com.liferay.portlet.asset.lar.AssetPortletDataHandlerImpl</portlet-data-handler-class>
 		<use-default-template>false</use-default-template>
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
@@ -1120,6 +1125,7 @@
 		<portlet-name>124</portlet-name>
 		<icon>/html/icons/default.png</icon>
 		<struts-path>social</struts-path>
+		<portlet-data-handler-class>com.liferay.portlet.social.lar.SocialPortletDataHandlerImpl</portlet-data-handler-class>
 		<social-activity-interpreter-class>com.liferay.portlet.social.util.PortalActivityInterpreter</social-activity-interpreter-class>
 		<social-request-interpreter-class>com.liferay.portlet.social.util.PortalRequestInterpreter</social-request-interpreter-class>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
@@ -1133,6 +1139,7 @@
 		<indexer-class>com.liferay.portlet.usersadmin.util.OrganizationIndexer</indexer-class>
 		<indexer-class>com.liferay.portlet.usersadmin.util.UserIndexer</indexer-class>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
+		<portlet-data-handler-class>com.liferay.portlet.usersadmin.lar.UsersAdminPortletDataHandlerImpl</portlet-data-handler-class>
 		<control-panel-entry-category>portal</control-panel-entry-category>
 		<control-panel-entry-weight>1.0</control-panel-entry-weight>
 		<control-panel-entry-class>com.liferay.portlet.usersadmin.UsersControlPanelEntry</control-panel-entry-class>
@@ -1169,6 +1176,7 @@
 		<icon>/html/icons/roles_admin.png</icon>
 		<struts-path>roles_admin</struts-path>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
+		<portlet-data-handler-class>com.liferay.portlet.rolesadmin.lar.RolesAdminPortletDataHandlerImpl</portlet-data-handler-class>
 		<control-panel-entry-category>portal</control-panel-entry-category>
 		<control-panel-entry-weight>5.0</control-panel-entry-weight>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
@@ -1231,6 +1239,7 @@
 		<icon>/html/icons/plugins_admin.png</icon>
 		<struts-path>plugins_admin</struts-path>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
+		<portlet-data-handler-class>com.liferay.portlet.pluginsadmin.lar.PluginsAdminPortletDataHandlerImpl</portlet-data-handler-class>
 		<control-panel-entry-category>portal</control-panel-entry-category>
 		<control-panel-entry-weight>10.0</control-panel-entry-weight>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
@@ -1257,6 +1266,7 @@
 		<icon>/html/icons/sites_admin.png</icon>
 		<struts-path>sites_admin</struts-path>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
+		<portlet-data-handler-class>com.liferay.portlet.sitesadmin.lar.SitesAdminPortletDataHandlerImpl</portlet-data-handler-class>
 		<control-panel-entry-category>portal</control-panel-entry-category>
 		<control-panel-entry-weight>2.0</control-panel-entry-weight>
 		<control-panel-entry-class>com.liferay.portlet.sitesadmin.SitesControlPanelEntry</control-panel-entry-class>
@@ -1276,6 +1286,7 @@
 		<icon>/html/icons/admin_instances.png</icon>
 		<struts-path>admin_instances</struts-path>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
+		<portlet-data-handler-class>com.liferay.portlet.admin.lar.AdminInstancesPortletDataHandlerImpl</portlet-data-handler-class>
 		<control-panel-entry-category>server</control-panel-entry-category>
 		<control-panel-entry-weight>2.0</control-panel-entry-weight>
 		<control-panel-entry-class>com.liferay.portlet.admin.OmniadminControlPanelEntry</control-panel-entry-class>
@@ -1324,6 +1335,7 @@
 		<portlet-name>139</portlet-name>
 		<icon>/html/icons/expando.png</icon>
 		<struts-path>expando</struts-path>
+		<portlet-data-handler-class>com.liferay.portlet.expando.lar.ExpandoPortletDataHandlerImpl</portlet-data-handler-class>
 		<control-panel-entry-category>portal</control-panel-entry-category>
 		<control-panel-entry-weight>8.0</control-panel-entry-weight>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
@@ -1394,6 +1406,7 @@
 		<portlet-name>144</portlet-name>
 		<icon>/html/icons/ratings.png</icon>
 		<struts-path>ratings</struts-path>
+		<portlet-data-handler-class>com.liferay.portlet.ratings.lar.RatingsPortletDataHandlerImpl</portlet-data-handler-class>
 		<use-default-template>false</use-default-template>
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
@@ -1515,6 +1528,7 @@
 		<icon>/html/icons/workflow_definition_links.png</icon>
 		<struts-path>workflow_definition_links</struts-path>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
+		<portlet-data-handler-class>com.liferay.portlet.workflowdefinitionlinks.lar.WorkflowDefinitionLinksPortletDataHandlerImpl</portlet-data-handler-class>
 		<control-panel-entry-category>content</control-panel-entry-category>
 		<control-panel-entry-weight>25.0</control-panel-entry-weight>
 		<control-panel-entry-class>com.liferay.portal.workflow.WorkflowControlPanelEntry</control-panel-entry-class>
@@ -1587,6 +1601,7 @@
 		<icon>/html/icons/workflow_instances.png</icon>
 		<struts-path>workflow_instances</struts-path>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
+		<portlet-data-handler-class>com.liferay.portlet.workflowinstances.lar.WorkflowInstancesPortletDataHandlerImpl</portlet-data-handler-class>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>false</use-default-template>
 		<private-request-attributes>false</private-request-attributes>
@@ -1848,6 +1863,7 @@
 		<icon>/html/icons/default.png</icon>
 		<struts-path>mobile_device_rules</struts-path>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
+		<portlet-data-handler-class>com.liferay.portlet.mobiledevicerules.lar.MDRPortletDataHandlerImpl</portlet-data-handler-class>
 		<control-panel-entry-category>portal</control-panel-entry-category>
 		<control-panel-entry-weight>13.0</control-panel-entry-weight>
 		<use-default-template>false</use-default-template>

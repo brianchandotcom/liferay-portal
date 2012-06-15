@@ -22,6 +22,7 @@ import com.liferay.portlet.social.model.SocialRelation;
 import com.liferay.portlet.social.model.SocialRelationConstants;
 import com.liferay.portlet.social.service.base.SocialRelationLocalServiceBaseImpl;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -183,6 +184,14 @@ public class SocialRelationLocalServiceImpl
 		}
 	}
 
+	public void deleteRelations(Collection<SocialRelation> relations)
+		throws PortalException, SystemException {
+
+		for (SocialRelation relation : relations) {
+			deleteRelation(relation);
+		}
+	}
+
 	/**
 	 * Removes all relations involving the user from the database.
 	 *
@@ -211,6 +220,12 @@ public class SocialRelationLocalServiceImpl
 		for (SocialRelation relation : relations) {
 			deleteRelation(relation);
 		}
+	}
+
+	public void deleteRelationsByCompany(long companyId)
+		throws PortalException, SystemException {
+
+		deleteRelations(socialRelationPersistence.findByCompanyId(companyId));
 	}
 
 	/**

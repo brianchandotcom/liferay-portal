@@ -249,6 +249,15 @@ public interface LayoutPrototypeLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public void deleteLayoutPrototypes(
+		java.util.Collection<com.liferay.portal.model.LayoutPrototype> layoutPrototypes)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void deleteLayoutPrototypesByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* @deprecated {@link #getLayoutPrototypeByUuidAndCompanyId(String, long)}
 	*/

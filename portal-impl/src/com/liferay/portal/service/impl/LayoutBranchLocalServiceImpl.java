@@ -28,6 +28,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.LayoutBranchLocalServiceBaseImpl;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -98,17 +99,39 @@ public class LayoutBranchLocalServiceImpl
 	}
 
 	@Override
+	public LayoutBranch deleteLayoutBranch(LayoutBranch layoutBranch)
+		throws PortalException, SystemException {
+
+		layoutRevisionLocalService.deleteLayoutRevisions(
+			layoutBranch.getLayoutSetBranchId(),
+			layoutBranch.getLayoutBranchId(), layoutBranch.getPlid());
+
+		return layoutBranchLocalService.deleteLayoutBranch(layoutBranch);
+	}
+
+	@Override
 	public LayoutBranch deleteLayoutBranch(long layoutBranchId)
 		throws PortalException, SystemException {
 
 		LayoutBranch layoutBranch = layoutBranchPersistence.findByPrimaryKey(
 			layoutBranchId);
 
-		layoutRevisionLocalService.deleteLayoutRevisions(
-			layoutBranch.getLayoutSetBranchId(), layoutBranchId,
-			layoutBranch.getPlid());
+		return deleteLayoutBranch(layoutBranch);
+	}
 
-		return layoutBranchLocalService.deleteLayoutBranch(layoutBranch);
+	public void deleteLayoutBranches(Collection<LayoutBranch> layoutBranches)
+		throws PortalException, SystemException {
+
+		for (LayoutBranch layoutBranch : layoutBranches) {
+			deleteLayoutBranch(layoutBranch);
+		}
+	}
+
+	public void deleteLayoutBranchesByCompany(long companyId)
+		throws PortalException, SystemException {
+
+		deleteLayoutBranches(
+			layoutBranchPersistence.findByCompanyId(companyId));
 	}
 
 	public void deleteLayoutSetBranchLayoutBranches(long layoutSetBranchId)

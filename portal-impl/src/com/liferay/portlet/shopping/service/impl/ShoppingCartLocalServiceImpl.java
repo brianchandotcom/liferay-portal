@@ -56,6 +56,28 @@ public class ShoppingCartLocalServiceImpl
 		}
 	}
 
+	@Override
+	public ShoppingCart deleteShoppingCart(long cartId)
+		throws PortalException, SystemException {
+
+		ShoppingCart cart = shoppingCartPersistence.findByPrimaryKey(cartId);
+
+		return deleteShoppingCart(cart);
+	}
+
+	@Override
+	public ShoppingCart deleteShoppingCart(ShoppingCart cart)
+		throws SystemException {
+
+		return shoppingCartPersistence.remove(cart);
+	}
+
+	public void deleteShoppingCartsByCompany(long companyId)
+		throws SystemException {
+
+		shoppingCartPersistence.removeByCompanyId(companyId);
+	}
+
 	public void deleteUserCarts(long userId) throws SystemException {
 		List<ShoppingCart> shoppingCarts = shoppingCartPersistence.findByUserId(
 			userId);

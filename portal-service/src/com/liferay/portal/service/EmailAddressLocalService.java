@@ -250,6 +250,9 @@ public interface EmailAddressLocalService extends BaseLocalService,
 		java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public void deleteEmailAddressesByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.EmailAddress> getEmailAddresses()
 		throws com.liferay.portal.kernel.exception.SystemException;

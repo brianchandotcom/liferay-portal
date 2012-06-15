@@ -64,6 +64,19 @@ public class PortletItemLocalServiceImpl
 		return portletItem;
 	}
 
+	public void deletePortletItemsByCompany(long companyId)
+		throws SystemException {
+
+		portletItemPersistence.removeByCompanyId(companyId);
+	}
+
+	@Override
+	public PortletItem getPortletItem(long portletItemId)
+		throws PortalException, SystemException {
+
+		return portletItemPersistence.findByPrimaryKey(portletItemId);
+	}
+
 	public PortletItem getPortletItem(
 			long groupId, String name, String portletId, String className)
 		throws PortalException, SystemException {

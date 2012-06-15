@@ -279,6 +279,15 @@ public interface AssetCategoryLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public void deleteCategories(
+		java.util.Collection<com.liferay.portlet.asset.model.AssetCategory> categories)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void deleteCategoriesByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public void deleteCategory(
 		com.liferay.portlet.asset.model.AssetCategory category)
 		throws com.liferay.portal.kernel.exception.PortalException,

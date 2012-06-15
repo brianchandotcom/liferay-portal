@@ -133,6 +133,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -1689,7 +1690,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 */
 	@Override
 	public User deleteUser(User user) throws PortalException, SystemException {
-		if (!PropsValues.USERS_DELETE) {
+		return deleteUser(user, false);
+	}
+
+	public User deleteUser(User user, boolean allowRequiredUserDeletion)
+		throws PortalException, SystemException {
+
+		if (!allowRequiredUserDeletion && !PropsValues.USERS_DELETE) {
 			throw new RequiredUserException();
 		}
 
@@ -1699,10 +1706,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		// Group
 
-		Group group = user.getGroup();
+		try {
+			Group group = user.getGroup();
 
-		if (group != null) {
-			groupLocalService.deleteGroup(group);
+			if (group != null) {
+				groupLocalService.deleteGroup(group);
+			}
+		} catch (NoSuchGroupException e) {
 		}
 
 		// Portrait
@@ -1826,6 +1836,21 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		indexer.reindex(userId);
 
 		PermissionCacheUtil.clearCache();
+	}
+
+	public void deleteUsers(
+			Collection<User> users, boolean allowRequiredUserDeletion)
+		throws PortalException, SystemException {
+
+		for (User user : users) {
+			deleteUser(user, allowRequiredUserDeletion);
+		}
+	}
+
+	public void deleteUsersByCompany(long companyId)
+		throws PortalException, SystemException {
+
+		deleteUsers(userPersistence.findByCompanyId(companyId), true);
 	}
 
 	/**

@@ -24,6 +24,10 @@ import com.liferay.portal.service.base.AccountLocalServiceBaseImpl;
  */
 public class AccountLocalServiceImpl extends AccountLocalServiceBaseImpl {
 
+	public void deleteAccountsByCompany(long companyId) throws SystemException {
+		accountPersistence.removeByCompanyId(companyId);
+	}
+
 	public Account getAccount(long companyId, long accountId)
 		throws PortalException, SystemException {
 

@@ -279,6 +279,19 @@ public class LayoutPrototypeLocalServiceUtil {
 			active);
 	}
 
+	public static void deleteLayoutPrototypes(
+		java.util.Collection<com.liferay.portal.model.LayoutPrototype> layoutPrototypes)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteLayoutPrototypes(layoutPrototypes);
+	}
+
+	public static void deleteLayoutPrototypesByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteLayoutPrototypesByCompany(companyId);
+	}
+
 	/**
 	* @deprecated {@link #getLayoutPrototypeByUuidAndCompanyId(String, long)}
 	*/

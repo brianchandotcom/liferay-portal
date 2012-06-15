@@ -421,6 +421,12 @@ public class SocialActivityLocalServiceUtil {
 		getService().deleteActivities(assetEntry);
 	}
 
+	public static void deleteActivities(
+		java.util.Collection<com.liferay.portlet.social.model.SocialActivity> activities)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteActivities(activities);
+	}
+
 	/**
 	* Removes stored activities for the asset identified by the class name and
 	* class primary key.
@@ -432,6 +438,11 @@ public class SocialActivityLocalServiceUtil {
 	public static void deleteActivities(java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getService().deleteActivities(className, classPK);
+	}
+
+	public static void deleteActivitiesByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteActivitiesByCompany(companyId);
 	}
 
 	/**

@@ -85,7 +85,8 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.column.bitmask.enabled.com.liferay.portal.model.Ticket"),
 			true);
-	public static long KEY_COLUMN_BITMASK = 1L;
+	public static long COMPANYID_COLUMN_BITMASK = 1L;
+	public static long KEY_COLUMN_BITMASK = 2L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.Ticket"));
 
@@ -205,7 +206,19 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	public Date getCreateDate() {
@@ -403,6 +416,10 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 	public void resetOriginalValues() {
 		TicketModelImpl ticketModelImpl = this;
 
+		ticketModelImpl._originalCompanyId = ticketModelImpl._companyId;
+
+		ticketModelImpl._setOriginalCompanyId = false;
+
 		ticketModelImpl._originalKey = ticketModelImpl._key;
 
 		ticketModelImpl._columnBitmask = 0;
@@ -541,6 +558,8 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 		};
 	private long _ticketId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private Date _createDate;
 	private long _classNameId;
 	private long _classPK;

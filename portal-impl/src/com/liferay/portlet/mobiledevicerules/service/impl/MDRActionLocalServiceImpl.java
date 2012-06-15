@@ -117,6 +117,10 @@ public class MDRActionLocalServiceImpl extends MDRActionLocalServiceBaseImpl {
 		}
 	}
 
+	public void deleteActionsByCompany(long companyId) throws SystemException {
+		mdrActionPersistence.removeByCompanyId(companyId);
+	}
+
 	public MDRAction fetchAction(long actionId) throws SystemException {
 		return mdrActionPersistence.fetchByPrimaryKey(actionId);
 	}

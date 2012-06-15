@@ -67,6 +67,7 @@ import com.liferay.portlet.wiki.model.WikiPage;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -78,6 +79,20 @@ import java.util.Map;
  * @author Zsolt Berentey
  */
 public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
+
+	public void deleteEntries(Collection<AssetEntry> entries)
+		throws PortalException, SystemException {
+
+		for (AssetEntry entry : entries) {
+			deleteEntry(entry);
+		}
+	}
+
+	public void deleteEntriesByCompany(long companyId)
+		throws PortalException, SystemException {
+
+		deleteEntries(assetEntryPersistence.findByCompanyId(companyId));
+	}
 
 	public void deleteEntry(AssetEntry entry)
 		throws PortalException, SystemException {

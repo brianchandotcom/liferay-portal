@@ -348,10 +348,23 @@ public class DDMStructureLocalServiceUtil {
 		getService().deleteStructure(groupId, structureKey);
 	}
 
+	public static void deleteStructures(
+		java.util.Collection<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> structures)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteStructures(structures);
+	}
+
 	public static void deleteStructures(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().deleteStructures(groupId);
+	}
+
+	public static void deleteStructuresByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteStructuresByCompany(companyId);
 	}
 
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMStructure fetchStructure(

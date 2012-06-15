@@ -29,6 +29,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
 		<finder name="TableId" return-type="Collection">
 			<finder-column name="tableId" />
 		</finder>
@@ -54,6 +57,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
 		<finder name="TableId" return-type="Collection">
 			<finder-column name="tableId" />
 		</finder>
@@ -79,6 +85,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
 		<finder name="C_C" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="classNameId" />
@@ -118,6 +127,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
 		<finder name="TableId" return-type="Collection">
 			<finder-column name="tableId" />
 		</finder>

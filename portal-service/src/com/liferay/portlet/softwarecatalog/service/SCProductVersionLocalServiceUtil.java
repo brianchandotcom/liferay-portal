@@ -299,6 +299,11 @@ public class SCProductVersionLocalServiceUtil {
 		getService().deleteProductVersions(productEntryId);
 	}
 
+	public static void deleteProductVersionsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteProductVersionsByCompany(companyId);
+	}
+
 	public static com.liferay.portlet.softwarecatalog.model.SCProductVersion getProductVersion(
 		long productVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException,

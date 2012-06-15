@@ -105,6 +105,111 @@ public interface SCProductVersionPersistence extends BasePersistence<SCProductVe
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns all the s c product versions where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the matching s c product versions
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductVersion> findByCompanyId(
+		long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the s c product versions where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of s c product versions
+	* @param end the upper bound of the range of s c product versions (not inclusive)
+	* @return the range of matching s c product versions
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductVersion> findByCompanyId(
+		long companyId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the s c product versions where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of s c product versions
+	* @param end the upper bound of the range of s c product versions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching s c product versions
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductVersion> findByCompanyId(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first s c product version in the ordered set where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching s c product version
+	* @throws com.liferay.portlet.softwarecatalog.NoSuchProductVersionException if a matching s c product version could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.softwarecatalog.model.SCProductVersion findByCompanyId_First(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.softwarecatalog.NoSuchProductVersionException;
+
+	/**
+	* Returns the last s c product version in the ordered set where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching s c product version
+	* @throws com.liferay.portlet.softwarecatalog.NoSuchProductVersionException if a matching s c product version could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.softwarecatalog.model.SCProductVersion findByCompanyId_Last(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.softwarecatalog.NoSuchProductVersionException;
+
+	/**
+	* Returns the s c product versions before and after the current s c product version in the ordered set where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param productVersionId the primary key of the current s c product version
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next s c product version
+	* @throws com.liferay.portlet.softwarecatalog.NoSuchProductVersionException if a s c product version with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.softwarecatalog.model.SCProductVersion[] findByCompanyId_PrevAndNext(
+		long productVersionId, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.softwarecatalog.NoSuchProductVersionException;
+
+	/**
 	* Returns all the s c product versions where productEntryId = &#63;.
 	*
 	* @param productEntryId the product entry ID
@@ -289,6 +394,15 @@ public interface SCProductVersionPersistence extends BasePersistence<SCProductVe
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Removes all the s c product versions where companyId = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByCompanyId(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Removes all the s c product versions where productEntryId = &#63; from the database.
 	*
 	* @param productEntryId the product entry ID
@@ -315,6 +429,16 @@ public interface SCProductVersionPersistence extends BasePersistence<SCProductVe
 	* @throws SystemException if a system exception occurred
 	*/
 	public void removeAll()
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of s c product versions where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the number of matching s c product versions
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByCompanyId(long companyId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

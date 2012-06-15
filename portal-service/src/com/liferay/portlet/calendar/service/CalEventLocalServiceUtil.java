@@ -356,10 +356,23 @@ public class CalEventLocalServiceUtil {
 		return getService().deleteEvent(eventId);
 	}
 
+	public static void deleteEvents(
+		java.util.Collection<com.liferay.portlet.calendar.model.CalEvent> events)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteEvents(events);
+	}
+
 	public static void deleteEvents(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().deleteEvents(groupId);
+	}
+
+	public static void deleteEventsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteEventsByCompany(companyId);
 	}
 
 	public static java.io.File exportEvent(long userId, long eventId)

@@ -86,6 +86,26 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		".List1";
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
 		".List2";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_COMPANYID =
+		new FinderPath(MBThreadModelImpl.ENTITY_CACHE_ENABLED,
+			MBThreadModelImpl.FINDER_CACHE_ENABLED, MBThreadImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+			new String[] {
+				Long.class.getName(),
+				
+			"java.lang.Integer", "java.lang.Integer",
+				"com.liferay.portal.kernel.util.OrderByComparator"
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID =
+		new FinderPath(MBThreadModelImpl.ENTITY_CACHE_ENABLED,
+			MBThreadModelImpl.FINDER_CACHE_ENABLED, MBThreadImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
+			new String[] { Long.class.getName() },
+			MBThreadModelImpl.COMPANYID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_COMPANYID = new FinderPath(MBThreadModelImpl.ENTITY_CACHE_ENABLED,
+			MBThreadModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
+			new String[] { Long.class.getName() });
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_GROUPID = new FinderPath(MBThreadModelImpl.ENTITY_CACHE_ENABLED,
 			MBThreadModelImpl.FINDER_CACHE_ENABLED, MBThreadImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
@@ -524,6 +544,27 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		}
 		else {
 			if ((mbThreadModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(mbThreadModelImpl.getOriginalCompanyId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(mbThreadModelImpl.getCompanyId())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+					args);
+			}
+
+			if ((mbThreadModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						Long.valueOf(mbThreadModelImpl.getOriginalGroupId())
@@ -872,6 +913,362 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		}
 
 		return mbThread;
+	}
+
+	/**
+	 * Returns all the message boards threads where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the matching message boards threads
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<MBThread> findByCompanyId(long companyId)
+		throws SystemException {
+		return findByCompanyId(companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	/**
+	 * Returns a range of all the message boards threads where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of message boards threads
+	 * @param end the upper bound of the range of message boards threads (not inclusive)
+	 * @return the range of matching message boards threads
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<MBThread> findByCompanyId(long companyId, int start, int end)
+		throws SystemException {
+		return findByCompanyId(companyId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the message boards threads where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of message boards threads
+	 * @param end the upper bound of the range of message boards threads (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching message boards threads
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<MBThread> findByCompanyId(long companyId, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID;
+			finderArgs = new Object[] { companyId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_COMPANYID;
+			finderArgs = new Object[] { companyId, start, end, orderByComparator };
+		}
+
+		List<MBThread> list = (List<MBThread>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (MBThread mbThread : list) {
+				if ((companyId != mbThread.getCompanyId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_MBTHREAD_WHERE);
+
+			query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+
+			else {
+				query.append(MBThreadModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				list = (List<MBThread>)QueryUtil.list(q, getDialect(), start,
+						end);
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (list == null) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
+				else {
+					cacheResult(list);
+
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
+
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first message boards thread in the ordered set where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching message boards thread
+	 * @throws com.liferay.portlet.messageboards.NoSuchThreadException if a matching message boards thread could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MBThread findByCompanyId_First(long companyId,
+		OrderByComparator orderByComparator)
+		throws NoSuchThreadException, SystemException {
+		List<MBThread> list = findByCompanyId(companyId, 0, 1, orderByComparator);
+
+		if (list.isEmpty()) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("companyId=");
+			msg.append(companyId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			throw new NoSuchThreadException(msg.toString());
+		}
+		else {
+			return list.get(0);
+		}
+	}
+
+	/**
+	 * Returns the last message boards thread in the ordered set where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching message boards thread
+	 * @throws com.liferay.portlet.messageboards.NoSuchThreadException if a matching message boards thread could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MBThread findByCompanyId_Last(long companyId,
+		OrderByComparator orderByComparator)
+		throws NoSuchThreadException, SystemException {
+		int count = countByCompanyId(companyId);
+
+		List<MBThread> list = findByCompanyId(companyId, count - 1, count,
+				orderByComparator);
+
+		if (list.isEmpty()) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("companyId=");
+			msg.append(companyId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			throw new NoSuchThreadException(msg.toString());
+		}
+		else {
+			return list.get(0);
+		}
+	}
+
+	/**
+	 * Returns the message boards threads before and after the current message boards thread in the ordered set where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param threadId the primary key of the current message boards thread
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next message boards thread
+	 * @throws com.liferay.portlet.messageboards.NoSuchThreadException if a message boards thread with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MBThread[] findByCompanyId_PrevAndNext(long threadId,
+		long companyId, OrderByComparator orderByComparator)
+		throws NoSuchThreadException, SystemException {
+		MBThread mbThread = findByPrimaryKey(threadId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			MBThread[] array = new MBThreadImpl[3];
+
+			array[0] = getByCompanyId_PrevAndNext(session, mbThread, companyId,
+					orderByComparator, true);
+
+			array[1] = mbThread;
+
+			array[2] = getByCompanyId_PrevAndNext(session, mbThread, companyId,
+					orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected MBThread getByCompanyId_PrevAndNext(Session session,
+		MBThread mbThread, long companyId, OrderByComparator orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_MBTHREAD_WHERE);
+
+		query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+
+		else {
+			query.append(MBThreadModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(companyId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(mbThread);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<MBThread> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
 	}
 
 	/**
@@ -7630,6 +8027,18 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	}
 
 	/**
+	 * Removes all the message boards threads where companyId = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void removeByCompanyId(long companyId) throws SystemException {
+		for (MBThread mbThread : findByCompanyId(companyId)) {
+			remove(mbThread);
+		}
+	}
+
+	/**
 	 * Removes all the message boards threads where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -7778,6 +8187,59 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		for (MBThread mbThread : findAll()) {
 			remove(mbThread);
 		}
+	}
+
+	/**
+	 * Returns the number of message boards threads where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the number of matching message boards threads
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByCompanyId(long companyId) throws SystemException {
+		Object[] finderArgs = new Object[] { companyId };
+
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_COMPANYID,
+				finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_MBTHREAD_WHERE);
+
+			query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				count = (Long)q.uniqueResult();
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (count == null) {
+					count = Long.valueOf(0);
+				}
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_COMPANYID,
+					finderArgs, count);
+
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
 	}
 
 	/**
@@ -9248,6 +9710,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	private static final String _SQL_SELECT_MBTHREAD_WHERE = "SELECT mbThread FROM MBThread mbThread WHERE ";
 	private static final String _SQL_COUNT_MBTHREAD = "SELECT COUNT(mbThread) FROM MBThread mbThread";
 	private static final String _SQL_COUNT_MBTHREAD_WHERE = "SELECT COUNT(mbThread) FROM MBThread mbThread WHERE ";
+	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 = "mbThread.companyId = ?";
 	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 = "mbThread.groupId = ? AND mbThread.categoryId != -1";
 	private static final String _FINDER_COLUMN_ROOTMESSAGEID_ROOTMESSAGEID_2 = "mbThread.rootMessageId = ?";
 	private static final String _FINDER_COLUMN_G_C_GROUPID_2 = "mbThread.groupId = ? AND ";

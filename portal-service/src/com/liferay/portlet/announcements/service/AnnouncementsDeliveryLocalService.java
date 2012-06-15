@@ -251,6 +251,9 @@ public interface AnnouncementsDeliveryLocalService extends BaseLocalService,
 	public void deleteDeliveries(long userId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public void deleteDeliveriesByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public void deleteDelivery(
 		com.liferay.portlet.announcements.model.AnnouncementsDelivery delivery)
 		throws com.liferay.portal.kernel.exception.SystemException;

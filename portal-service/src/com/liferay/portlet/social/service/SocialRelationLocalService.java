@@ -301,6 +301,11 @@ public interface SocialRelationLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public void deleteRelations(
+		java.util.Collection<com.liferay.portlet.social.model.SocialRelation> relations)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* Removes all relations involving the user from the database.
 	*
@@ -319,6 +324,10 @@ public interface SocialRelationLocalService extends BaseLocalService,
 	* @throws SystemException if a system exception occurred
 	*/
 	public void deleteRelations(long userId1, long userId2)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void deleteRelationsByCompany(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

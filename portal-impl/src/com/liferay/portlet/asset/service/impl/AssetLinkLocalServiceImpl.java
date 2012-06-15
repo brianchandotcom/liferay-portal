@@ -24,6 +24,7 @@ import com.liferay.portlet.asset.model.AssetLinkConstants;
 import com.liferay.portlet.asset.service.base.AssetLinkLocalServiceBaseImpl;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -133,6 +134,14 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 		deleteLink(link);
 	}
 
+	public void deleteLinks(Collection<AssetLink> links)
+		throws SystemException {
+
+		for (AssetLink link : links) {
+			deleteLink(link);
+		}
+	}
+
 	/**
 	 * Deletes all links associated with the asset entry.
 	 *
@@ -165,6 +174,10 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 		for (AssetLink link : links) {
 			deleteLink(link);
 		}
+	}
+
+	public void deleteLinksByCompany(long companyId) throws SystemException {
+		deleteLinks(assetLinkPersistence.findByCompanyId(companyId));
 	}
 
 	/**

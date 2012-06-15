@@ -322,6 +322,19 @@ public class MBMailingListLocalServiceUtil {
 		getService().deleteMailingList(mailingList);
 	}
 
+	public static void deleteMailingLists(
+		java.util.Collection<com.liferay.portlet.messageboards.model.MBMailingList> mailingLists)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteMailingLists(mailingLists);
+	}
+
+	public static void deleteMailingListsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteMailingListsByCompany(companyId);
+	}
+
 	public static com.liferay.portlet.messageboards.model.MBMailingList getCategoryMailingList(
 		long groupId, long categoryId)
 		throws com.liferay.portal.kernel.exception.PortalException,

@@ -135,6 +135,111 @@ public interface VirtualHostPersistence extends BasePersistence<VirtualHost> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns all the virtual hosts where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the matching virtual hosts
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.VirtualHost> findByCompanyId(
+		long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the virtual hosts where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of virtual hosts
+	* @param end the upper bound of the range of virtual hosts (not inclusive)
+	* @return the range of matching virtual hosts
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.VirtualHost> findByCompanyId(
+		long companyId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the virtual hosts where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of virtual hosts
+	* @param end the upper bound of the range of virtual hosts (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching virtual hosts
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.VirtualHost> findByCompanyId(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first virtual host in the ordered set where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching virtual host
+	* @throws com.liferay.portal.NoSuchVirtualHostException if a matching virtual host could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.VirtualHost findByCompanyId_First(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchVirtualHostException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last virtual host in the ordered set where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching virtual host
+	* @throws com.liferay.portal.NoSuchVirtualHostException if a matching virtual host could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.VirtualHost findByCompanyId_Last(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchVirtualHostException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the virtual hosts before and after the current virtual host in the ordered set where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param virtualHostId the primary key of the current virtual host
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next virtual host
+	* @throws com.liferay.portal.NoSuchVirtualHostException if a virtual host with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.VirtualHost[] findByCompanyId_PrevAndNext(
+		long virtualHostId, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchVirtualHostException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns the virtual host where companyId = &#63; and layoutSetId = &#63; or throws a {@link com.liferay.portal.NoSuchVirtualHostException} if it could not be found.
 	*
 	* @param companyId the company ID
@@ -229,6 +334,15 @@ public interface VirtualHostPersistence extends BasePersistence<VirtualHost> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Removes all the virtual hosts where companyId = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByCompanyId(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Removes the virtual host where companyId = &#63; and layoutSetId = &#63; from the database.
 	*
 	* @param companyId the company ID
@@ -257,6 +371,16 @@ public interface VirtualHostPersistence extends BasePersistence<VirtualHost> {
 	* @throws SystemException if a system exception occurred
 	*/
 	public int countByHostname(java.lang.String hostname)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of virtual hosts where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the number of matching virtual hosts
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByCompanyId(long companyId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

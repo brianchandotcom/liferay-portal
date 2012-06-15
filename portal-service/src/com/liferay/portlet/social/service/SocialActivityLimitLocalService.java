@@ -249,6 +249,10 @@ public interface SocialActivityLimitLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public void deleteActivityLimitsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.social.model.SocialActivityLimit fetchActivityLimit(
 		long groupId, long userId, long classNameId, long classPK,

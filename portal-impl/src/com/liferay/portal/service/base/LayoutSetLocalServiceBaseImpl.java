@@ -280,11 +280,12 @@ public abstract class LayoutSetLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param layoutSet the layout set
 	 * @return the layout set that was removed
+	 * @throws PortalException
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	public LayoutSet deleteLayoutSet(LayoutSet layoutSet)
-		throws SystemException {
+		throws PortalException, SystemException {
 		return layoutSetPersistence.remove(layoutSet);
 	}
 

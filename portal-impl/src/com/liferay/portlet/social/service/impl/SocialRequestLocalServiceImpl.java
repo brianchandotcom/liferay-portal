@@ -150,6 +150,10 @@ public class SocialRequestLocalServiceImpl
 		socialRequestPersistence.remove(request);
 	}
 
+	public void deleteRequestsByCompany(long companyId) throws SystemException {
+		socialRequestPersistence.removeByCompanyId(companyId);
+	}
+
 	/**
 	 * Removes all the social requests for the requesting user.
 	 *

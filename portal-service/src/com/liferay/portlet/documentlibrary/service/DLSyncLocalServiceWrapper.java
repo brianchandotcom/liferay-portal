@@ -284,6 +284,11 @@ public class DLSyncLocalServiceWrapper implements DLSyncLocalService,
 			repositoryId, parentFolderId, name, description, type, version);
 	}
 
+	public void deleteSyncsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_dlSyncLocalService.deleteSyncsByCompany(companyId);
+	}
+
 	/**
 	* @deprecated {@link #updateSync(long, long, String, String, String,
 	String)}

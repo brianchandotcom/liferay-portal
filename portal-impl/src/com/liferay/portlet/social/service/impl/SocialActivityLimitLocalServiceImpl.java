@@ -57,6 +57,12 @@ public class SocialActivityLimitLocalServiceImpl
 		return activityLimit;
 	}
 
+	public void deleteActivityLimitsByCompany(long companyId)
+		throws PortalException, SystemException {
+
+		socialActivityLimitPersistence.removeByCompanyId(companyId);
+	}
+
 	public SocialActivityLimit fetchActivityLimit(
 			long groupId, long userId, long classNameId, long classPK,
 			int activityType, String activityCounterName)

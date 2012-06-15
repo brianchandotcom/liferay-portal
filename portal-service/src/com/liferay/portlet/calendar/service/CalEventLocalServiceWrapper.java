@@ -349,10 +349,23 @@ public class CalEventLocalServiceWrapper implements CalEventLocalService,
 		return _calEventLocalService.deleteEvent(eventId);
 	}
 
+	public void deleteEvents(
+		java.util.Collection<com.liferay.portlet.calendar.model.CalEvent> events)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_calEventLocalService.deleteEvents(events);
+	}
+
 	public void deleteEvents(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_calEventLocalService.deleteEvents(groupId);
+	}
+
+	public void deleteEventsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_calEventLocalService.deleteEventsByCompany(companyId);
 	}
 
 	public java.io.File exportEvent(long userId, long eventId)

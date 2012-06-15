@@ -94,6 +94,12 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 		}
 	}
 
+	public void deleteAddressesByCompany(long companyId)
+		throws SystemException {
+
+		addressPersistence.removeByCompanyId(companyId);
+	}
+
 	public List<Address> getAddresses() throws SystemException {
 		return addressPersistence.findAll();
 	}

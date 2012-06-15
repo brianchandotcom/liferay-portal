@@ -86,9 +86,10 @@ public class PortletItemModelImpl extends BaseModelImpl<PortletItem>
 				"value.object.column.bitmask.enabled.com.liferay.portal.model.PortletItem"),
 			true);
 	public static long CLASSNAMEID_COLUMN_BITMASK = 1L;
-	public static long GROUPID_COLUMN_BITMASK = 2L;
-	public static long NAME_COLUMN_BITMASK = 4L;
-	public static long PORTLETID_COLUMN_BITMASK = 8L;
+	public static long COMPANYID_COLUMN_BITMASK = 2L;
+	public static long GROUPID_COLUMN_BITMASK = 4L;
+	public static long NAME_COLUMN_BITMASK = 8L;
+	public static long PORTLETID_COLUMN_BITMASK = 16L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.PortletItem"));
 
@@ -233,7 +234,19 @@ public class PortletItemModelImpl extends BaseModelImpl<PortletItem>
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	public long getUserId() {
@@ -465,6 +478,10 @@ public class PortletItemModelImpl extends BaseModelImpl<PortletItem>
 
 		portletItemModelImpl._setOriginalGroupId = false;
 
+		portletItemModelImpl._originalCompanyId = portletItemModelImpl._companyId;
+
+		portletItemModelImpl._setOriginalCompanyId = false;
+
 		portletItemModelImpl._originalName = portletItemModelImpl._name;
 
 		portletItemModelImpl._originalPortletId = portletItemModelImpl._portletId;
@@ -626,6 +643,8 @@ public class PortletItemModelImpl extends BaseModelImpl<PortletItem>
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userUuid;
 	private String _userName;

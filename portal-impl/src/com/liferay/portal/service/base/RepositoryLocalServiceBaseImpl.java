@@ -301,11 +301,12 @@ public abstract class RepositoryLocalServiceBaseImpl
 	 *
 	 * @param repository the repository
 	 * @return the repository that was removed
+	 * @throws PortalException
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	public Repository deleteRepository(Repository repository)
-		throws SystemException {
+		throws PortalException, SystemException {
 		return repositoryPersistence.remove(repository);
 	}
 

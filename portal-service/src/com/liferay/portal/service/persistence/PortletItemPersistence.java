@@ -99,6 +99,111 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns all the portlet items where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the matching portlet items
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.PortletItem> findByCompanyId(
+		long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the portlet items where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of portlet items
+	* @param end the upper bound of the range of portlet items (not inclusive)
+	* @return the range of matching portlet items
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.PortletItem> findByCompanyId(
+		long companyId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the portlet items where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of portlet items
+	* @param end the upper bound of the range of portlet items (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching portlet items
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.PortletItem> findByCompanyId(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first portlet item in the ordered set where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching portlet item
+	* @throws com.liferay.portal.NoSuchPortletItemException if a matching portlet item could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.PortletItem findByCompanyId_First(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchPortletItemException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last portlet item in the ordered set where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching portlet item
+	* @throws com.liferay.portal.NoSuchPortletItemException if a matching portlet item could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.PortletItem findByCompanyId_Last(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchPortletItemException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the portlet items before and after the current portlet item in the ordered set where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param portletItemId the primary key of the current portlet item
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next portlet item
+	* @throws com.liferay.portal.NoSuchPortletItemException if a portlet item with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.PortletItem[] findByCompanyId_PrevAndNext(
+		long portletItemId, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.NoSuchPortletItemException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the portlet items where groupId = &#63; and classNameId = &#63;.
 	*
 	* @param groupId the group ID
@@ -418,6 +523,15 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Removes all the portlet items where companyId = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByCompanyId(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Removes all the portlet items where groupId = &#63; and classNameId = &#63; from the database.
 	*
 	* @param groupId the group ID
@@ -460,6 +574,16 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 	* @throws SystemException if a system exception occurred
 	*/
 	public void removeAll()
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of portlet items where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the number of matching portlet items
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByCompanyId(long companyId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

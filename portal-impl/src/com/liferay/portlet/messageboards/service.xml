@@ -27,6 +27,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
@@ -164,6 +167,9 @@
 
 		<finder name="Active" return-type="Collection">
 			<finder-column name="active" />
+		</finder>
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
 		</finder>
 		<finder name="G_C" return-type="MBMailingList" unique="true">
 			<finder-column name="groupId" />
@@ -426,6 +432,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
 		<finder name="GroupId" return-type="Collection" where="categoryId != -1">
 			<finder-column name="groupId" />
 		</finder>

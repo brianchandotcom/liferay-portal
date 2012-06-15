@@ -377,6 +377,10 @@ public interface SocialActivityLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public void deleteActivities(
+		java.util.Collection<com.liferay.portlet.social.model.SocialActivity> activities)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* Removes stored activities for the asset identified by the class name and
 	* class primary key.
@@ -386,6 +390,9 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	* @throws SystemException if a system exception occurred
 	*/
 	public void deleteActivities(java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public void deleteActivitiesByCompany(long companyId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

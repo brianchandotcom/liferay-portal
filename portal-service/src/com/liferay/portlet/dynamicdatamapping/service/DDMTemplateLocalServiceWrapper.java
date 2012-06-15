@@ -335,10 +335,23 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 		_ddmTemplateLocalService.deleteTemplate(templateId);
 	}
 
+	public void deleteTemplates(
+		java.util.Collection<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> templates)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_ddmTemplateLocalService.deleteTemplates(templates);
+	}
+
 	public void deleteTemplates(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_ddmTemplateLocalService.deleteTemplates(groupId);
+	}
+
+	public void deleteTemplatesByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_ddmTemplateLocalService.deleteTemplatesByCompany(companyId);
 	}
 
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchTemplate(

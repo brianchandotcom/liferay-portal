@@ -282,10 +282,23 @@ public class MBThreadLocalServiceWrapper implements MBThreadLocalService,
 		_mbThreadLocalService.deleteThread(thread);
 	}
 
+	public void deleteThreads(
+		java.util.Collection<com.liferay.portlet.messageboards.model.MBThread> threads)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_mbThreadLocalService.deleteThreads(threads);
+	}
+
 	public void deleteThreads(long groupId, long categoryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_mbThreadLocalService.deleteThreads(groupId, categoryId);
+	}
+
+	public void deleteThreadsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_mbThreadLocalService.deleteThreadsByCompany(companyId);
 	}
 
 	public com.liferay.portlet.messageboards.model.MBThread fetchThread(

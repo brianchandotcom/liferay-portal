@@ -278,6 +278,11 @@ public class PhoneLocalServiceUtil {
 		getService().deletePhones(companyId, className, classPK);
 	}
 
+	public static void deletePhonesByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deletePhonesByCompany(companyId);
+	}
+
 	public static java.util.List<com.liferay.portal.model.Phone> getPhones()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getPhones();

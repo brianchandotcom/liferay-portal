@@ -101,11 +101,12 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 				"value.object.column.bitmask.enabled.com.liferay.portlet.messageboards.model.MBThread"),
 			true);
 	public static long CATEGORYID_COLUMN_BITMASK = 1L;
-	public static long GROUPID_COLUMN_BITMASK = 2L;
-	public static long LASTPOSTDATE_COLUMN_BITMASK = 4L;
-	public static long PRIORITY_COLUMN_BITMASK = 8L;
-	public static long ROOTMESSAGEID_COLUMN_BITMASK = 16L;
-	public static long STATUS_COLUMN_BITMASK = 32L;
+	public static long COMPANYID_COLUMN_BITMASK = 2L;
+	public static long GROUPID_COLUMN_BITMASK = 4L;
+	public static long LASTPOSTDATE_COLUMN_BITMASK = 8L;
+	public static long PRIORITY_COLUMN_BITMASK = 16L;
+	public static long ROOTMESSAGEID_COLUMN_BITMASK = 32L;
+	public static long STATUS_COLUMN_BITMASK = 64L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -341,7 +342,19 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -730,6 +743,10 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 
 		mbThreadModelImpl._setOriginalGroupId = false;
 
+		mbThreadModelImpl._originalCompanyId = mbThreadModelImpl._companyId;
+
+		mbThreadModelImpl._setOriginalCompanyId = false;
+
 		mbThreadModelImpl._originalCategoryId = mbThreadModelImpl._categoryId;
 
 		mbThreadModelImpl._setOriginalCategoryId = false;
@@ -937,6 +954,8 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _categoryId;
 	private long _originalCategoryId;
 	private boolean _setOriginalCategoryId;

@@ -53,8 +53,10 @@ import java.util.Map;
 import javax.portlet.PortletPreferences;
 
 /**
+<<<<<<< HEAD
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
+ * @author Jonathan Potter
  */
 public class MDRPortletDataHandlerImpl extends BasePortletDataHandler {
 
@@ -95,6 +97,21 @@ public class MDRPortletDataHandlerImpl extends BasePortletDataHandler {
 			MDRRuleGroupLocalServiceUtil.deleteRuleGroups(
 				portletDataContext.getGroupId());
 		}
+
+		return null;
+	}
+	
+	@Override
+	protected PortletPreferences doDeleteData(
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences, long companyId)
+		throws Exception {
+
+		MDRActionLocalServiceUtil.deleteActionsByCompany(companyId);
+		MDRRuleLocalServiceUtil.deleteRulesByCompany(companyId);
+		MDRRuleGroupLocalServiceUtil.deleteRuleGroupsByCompany(companyId);
+		MDRRuleGroupInstanceLocalServiceUtil.deleteRuleGroupInstancesByCompany(
+			companyId);
 
 		return null;
 	}

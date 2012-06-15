@@ -29,6 +29,7 @@ import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityDefinition;
 import com.liferay.portlet.social.service.base.SocialActivityLocalServiceBaseImpl;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -341,6 +342,14 @@ public class SocialActivityLocalServiceImpl
 		socialActivityCounterLocalService.deleteActivityCounters(assetEntry);
 	}
 
+	public void deleteActivities(Collection<SocialActivity> activities)
+		throws SystemException {
+
+		for (SocialActivity activity : activities) {
+			deleteActivity(activity);
+		}
+	}
+
 	/**
 	 * Removes stored activities for the asset identified by the class name and
 	 * class primary key.
@@ -355,6 +364,12 @@ public class SocialActivityLocalServiceImpl
 		long classNameId = PortalUtil.getClassNameId(className);
 
 		socialActivityPersistence.removeByC_C(classNameId, classPK);
+	}
+
+	public void deleteActivitiesByCompany(long companyId)
+		throws SystemException {
+
+		deleteActivities(socialActivityPersistence.findByCompanyId(companyId));
 	}
 
 	/**

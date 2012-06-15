@@ -43,6 +43,7 @@ import com.liferay.portal.service.base.LayoutSetBranchLocalServiceBaseImpl;
 
 import java.text.Format;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -298,6 +299,15 @@ public class LayoutSetBranchLocalServiceImpl
 		return deleteLayoutSetBranch(layoutSetBranch, false);
 	}
 
+	public void deleteLayoutSetBranches(
+			Collection<LayoutSetBranch> layoutSetBranches)
+		throws PortalException, SystemException {
+
+		for (LayoutSetBranch layoutSetBranch : layoutSetBranches) {
+			deleteLayoutSetBranch(layoutSetBranch);
+		}
+	}
+
 	public void deleteLayoutSetBranches(long groupId, boolean privateLayout)
 		throws PortalException, SystemException {
 
@@ -314,6 +324,13 @@ public class LayoutSetBranchLocalServiceImpl
 		for (LayoutSetBranch layoutSetBranch : layoutSetBranches) {
 			deleteLayoutSetBranch(layoutSetBranch, includeMaster);
 		}
+	}
+
+	public void deleteLayoutSetBranchesByCompany(long companyId)
+		throws PortalException, SystemException {
+
+		deleteLayoutSetBranches(
+			layoutSetBranchPersistence.findByCompanyId(companyId));
 	}
 
 	public LayoutSetBranch getLayoutSetBranch(

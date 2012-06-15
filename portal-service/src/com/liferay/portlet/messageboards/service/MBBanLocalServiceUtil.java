@@ -297,9 +297,20 @@ public class MBBanLocalServiceUtil {
 		getService().deleteBan(ban);
 	}
 
+	public static void deleteBans(
+		java.util.Collection<com.liferay.portlet.messageboards.model.MBBan> bans)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteBans(bans);
+	}
+
 	public static void deleteBansByBanUserId(long banUserId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getService().deleteBansByBanUserId(banUserId);
+	}
+
+	public static void deleteBansByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteBansByCompany(companyId);
 	}
 
 	public static void deleteBansByGroupId(long groupId)

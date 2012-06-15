@@ -280,6 +280,11 @@ public class AnnouncementsDeliveryLocalServiceUtil {
 		getService().deleteDeliveries(userId);
 	}
 
+	public static void deleteDeliveriesByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteDeliveriesByCompany(companyId);
+	}
+
 	public static void deleteDelivery(
 		com.liferay.portlet.announcements.model.AnnouncementsDelivery delivery)
 		throws com.liferay.portal.kernel.exception.SystemException {

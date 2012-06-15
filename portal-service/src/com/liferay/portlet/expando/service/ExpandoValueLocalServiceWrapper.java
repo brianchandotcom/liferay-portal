@@ -732,6 +732,12 @@ public class ExpandoValueLocalServiceWrapper implements ExpandoValueLocalService
 			columnName, classPK);
 	}
 
+	public void deleteValues(
+		java.util.Collection<com.liferay.portlet.expando.model.ExpandoValue> values)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_expandoValueLocalService.deleteValues(values);
+	}
+
 	public void deleteValues(long classNameId, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_expandoValueLocalService.deleteValues(classNameId, classPK);
@@ -740,6 +746,11 @@ public class ExpandoValueLocalServiceWrapper implements ExpandoValueLocalService
 	public void deleteValues(java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_expandoValueLocalService.deleteValues(className, classPK);
+	}
+
+	public void deleteValuesByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_expandoValueLocalService.deleteValuesByCompany(companyId);
 	}
 
 	public java.util.List<com.liferay.portlet.expando.model.ExpandoValue> getColumnValues(

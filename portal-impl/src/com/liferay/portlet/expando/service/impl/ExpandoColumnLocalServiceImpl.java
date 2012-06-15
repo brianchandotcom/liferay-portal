@@ -126,6 +126,14 @@ public class ExpandoColumnLocalServiceImpl
 		deleteColumn(companyId, classNameId, tableName, name);
 	}
 
+	public void deleteColumns(Collection<ExpandoColumn> columns)
+		throws SystemException {
+
+		for (ExpandoColumn column : columns) {
+			deleteColumn(column);
+		}
+	}
+
 	public void deleteColumns(long tableId) throws SystemException {
 		List<ExpandoColumn> columns = expandoColumnPersistence.findByTableId(
 			tableId);
@@ -152,6 +160,10 @@ public class ExpandoColumnLocalServiceImpl
 		long classNameId = PortalUtil.getClassNameId(className);
 
 		deleteColumns(companyId, classNameId, tableName);
+	}
+
+	public void deleteColumnsByCompany(long companyId) throws SystemException {
+		deleteColumns(expandoColumnPersistence.findByCompanyId(companyId));
 	}
 
 	public ExpandoColumn getColumn(long columnId)

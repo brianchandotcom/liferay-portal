@@ -25,6 +25,12 @@ import com.liferay.portal.service.base.VirtualHostLocalServiceBaseImpl;
 public class VirtualHostLocalServiceImpl
 	extends VirtualHostLocalServiceBaseImpl {
 
+	public void deleteVirtualHostsByCompany(long companyId)
+		throws SystemException {
+
+		virtualHostPersistence.removeByCompanyId(companyId);
+	}
+
 	public VirtualHost fetchVirtualHost(long companyId, long layoutSetId)
 		throws SystemException {
 

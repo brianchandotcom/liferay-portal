@@ -366,6 +366,19 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 		_organizationLocalService.deleteLogo(organizationId);
 	}
 
+	public void deleteOrganizations(
+		java.util.Collection<com.liferay.portal.model.Organization> organizations)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_organizationLocalService.deleteOrganizations(organizations);
+	}
+
+	public void deleteOrganizationsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_organizationLocalService.deleteOrganizationsByCompany(companyId);
+	}
+
 	/**
 	* Returns all the organizations belonging to the group.
 	*

@@ -527,6 +527,11 @@ public class SocialActivityCounterLocalServiceUtil {
 		getService().deleteActivityCounters(className, classPK);
 	}
 
+	public static void deleteActivityCountersByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteActivityCountersByCompany(companyId);
+	}
+
 	/**
 	* Disables all the counters of an asset identified by the class name ID and
 	* class primary key.

@@ -242,6 +242,9 @@ public interface TicketLocalService extends BaseLocalService,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public void deleteTicketsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Ticket fetchTicket(java.lang.String key)
 		throws com.liferay.portal.kernel.exception.SystemException;

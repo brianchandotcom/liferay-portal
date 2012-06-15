@@ -309,6 +309,12 @@ public class AssetLinkLocalServiceWrapper implements AssetLinkLocalService,
 		_assetLinkLocalService.deleteLink(linkId);
 	}
 
+	public void deleteLinks(
+		java.util.Collection<com.liferay.portlet.asset.model.AssetLink> links)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_assetLinkLocalService.deleteLinks(links);
+	}
+
 	/**
 	* Deletes all links associated with the asset entry.
 	*
@@ -330,6 +336,11 @@ public class AssetLinkLocalServiceWrapper implements AssetLinkLocalService,
 	public void deleteLinks(long entryId1, long entryId2)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_assetLinkLocalService.deleteLinks(entryId1, entryId2);
+	}
+
+	public void deleteLinksByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_assetLinkLocalService.deleteLinksByCompany(companyId);
 	}
 
 	/**

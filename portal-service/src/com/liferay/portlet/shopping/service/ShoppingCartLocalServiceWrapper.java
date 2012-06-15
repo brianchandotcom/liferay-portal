@@ -266,6 +266,11 @@ public class ShoppingCartLocalServiceWrapper implements ShoppingCartLocalService
 		_shoppingCartLocalService.deleteGroupCarts(groupId);
 	}
 
+	public void deleteShoppingCartsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_shoppingCartLocalService.deleteShoppingCartsByCompany(companyId);
+	}
+
 	public void deleteUserCarts(long userId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_shoppingCartLocalService.deleteUserCarts(userId);

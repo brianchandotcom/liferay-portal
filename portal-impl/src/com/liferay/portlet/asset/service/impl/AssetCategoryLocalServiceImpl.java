@@ -39,6 +39,7 @@ import com.liferay.portlet.asset.model.AssetCategoryProperty;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.base.AssetCategoryLocalServiceBaseImpl;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -161,6 +162,20 @@ public class AssetCategoryLocalServiceImpl
 			category.getCompanyId(), category.getGroupId(),
 			category.getUserId(), AssetCategory.class.getName(),
 			category.getCategoryId(), groupPermissions, guestPermissions);
+	}
+
+	public void deleteCategories(Collection<AssetCategory> categories)
+		throws PortalException, SystemException {
+
+		for (AssetCategory category : categories) {
+			deleteCategory(category);
+		}
+	}
+
+	public void deleteCategoriesByCompany(long companyId)
+		throws PortalException, SystemException {
+
+		deleteCategories(assetCategoryPersistence.findByCompanyId(companyId));
 	}
 
 	public void deleteCategory(AssetCategory category)

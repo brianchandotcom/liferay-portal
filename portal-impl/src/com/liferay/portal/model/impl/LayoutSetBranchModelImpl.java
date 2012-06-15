@@ -102,9 +102,10 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.column.bitmask.enabled.com.liferay.portal.model.LayoutSetBranch"),
 			true);
-	public static long GROUPID_COLUMN_BITMASK = 1L;
-	public static long NAME_COLUMN_BITMASK = 2L;
-	public static long PRIVATELAYOUT_COLUMN_BITMASK = 4L;
+	public static long COMPANYID_COLUMN_BITMASK = 1L;
+	public static long GROUPID_COLUMN_BITMASK = 2L;
+	public static long NAME_COLUMN_BITMASK = 4L;
+	public static long PRIVATELAYOUT_COLUMN_BITMASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -384,7 +385,19 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -755,6 +768,10 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 
 		layoutSetBranchModelImpl._setOriginalGroupId = false;
 
+		layoutSetBranchModelImpl._originalCompanyId = layoutSetBranchModelImpl._companyId;
+
+		layoutSetBranchModelImpl._setOriginalCompanyId = false;
+
 		layoutSetBranchModelImpl._originalPrivateLayout = layoutSetBranchModelImpl._privateLayout;
 
 		layoutSetBranchModelImpl._setOriginalPrivateLayout = false;
@@ -1045,6 +1062,8 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userUuid;
 	private String _userName;

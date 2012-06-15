@@ -403,10 +403,23 @@ public class DLFileEntryLocalServiceUtil {
 			fromFileVersionId, toFileVersionId, serviceContext);
 	}
 
+	public static void deleteFileEntries(
+		java.util.Collection<com.liferay.portlet.documentlibrary.model.DLFileEntry> fileEntries)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteFileEntries(fileEntries);
+	}
+
 	public static void deleteFileEntries(long groupId, long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().deleteFileEntries(groupId, folderId);
+	}
+
+	public static void deleteFileEntriesByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteFileEntriesByCompany(companyId);
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntry deleteFileEntry(

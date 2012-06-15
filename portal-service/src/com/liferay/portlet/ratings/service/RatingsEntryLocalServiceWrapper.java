@@ -262,11 +262,31 @@ public class RatingsEntryLocalServiceWrapper implements RatingsEntryLocalService
 		_ratingsEntryLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
+	public void deleteEntries(
+		java.util.Collection<com.liferay.portlet.ratings.model.RatingsEntry> ratingsEntries)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_ratingsEntryLocalService.deleteEntries(ratingsEntries);
+	}
+
+	public void deleteEntriesByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_ratingsEntryLocalService.deleteEntriesByCompany(companyId);
+	}
+
 	public void deleteEntry(long userId, java.lang.String className,
 		long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_ratingsEntryLocalService.deleteEntry(userId, className, classPK);
+	}
+
+	public void deleteEntry(
+		com.liferay.portlet.ratings.model.RatingsEntry ratingsEntry)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_ratingsEntryLocalService.deleteEntry(ratingsEntry);
 	}
 
 	public com.liferay.portlet.ratings.model.RatingsEntry fetchEntry(

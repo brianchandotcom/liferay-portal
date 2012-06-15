@@ -297,6 +297,11 @@ public class AssetTagPropertyLocalServiceUtil {
 		getService().deleteTagProperties(tagId);
 	}
 
+	public static void deleteTagPropertiesByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteTagPropertiesByCompany(companyId);
+	}
+
 	/**
 	* Deletes the asset tag property instance.
 	*

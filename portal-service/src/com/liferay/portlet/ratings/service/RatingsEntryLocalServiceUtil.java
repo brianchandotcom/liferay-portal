@@ -267,11 +267,31 @@ public class RatingsEntryLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
+	public static void deleteEntries(
+		java.util.Collection<com.liferay.portlet.ratings.model.RatingsEntry> ratingsEntries)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteEntries(ratingsEntries);
+	}
+
+	public static void deleteEntriesByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteEntriesByCompany(companyId);
+	}
+
 	public static void deleteEntry(long userId, java.lang.String className,
 		long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().deleteEntry(userId, className, classPK);
+	}
+
+	public static void deleteEntry(
+		com.liferay.portlet.ratings.model.RatingsEntry ratingsEntry)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteEntry(ratingsEntry);
 	}
 
 	public static com.liferay.portlet.ratings.model.RatingsEntry fetchEntry(

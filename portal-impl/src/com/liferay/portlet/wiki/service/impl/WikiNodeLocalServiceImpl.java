@@ -41,6 +41,7 @@ import com.liferay.portlet.wiki.service.base.WikiNodeLocalServiceBaseImpl;
 import java.io.InputStream;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -203,6 +204,14 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		wikiNodePersistence.remove(node);
 	}
 
+	public void deleteNodes(Collection<WikiNode> nodes)
+		throws PortalException, SystemException {
+
+		for (WikiNode node : nodes) {
+			deleteNode(node);
+		}
+	}
+
 	public void deleteNodes(long groupId)
 		throws PortalException, SystemException {
 
@@ -211,6 +220,12 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		for (WikiNode node : nodes) {
 			deleteNode(node);
 		}
+	}
+
+	public void deleteNodesByCompany(long companyId)
+		throws PortalException, SystemException {
+
+		deleteNodes(wikiNodePersistence.findByCompanyId(companyId));
 	}
 
 	public List<WikiNode> getCompanyNodes(long companyId, int start, int end)

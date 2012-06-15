@@ -475,6 +475,9 @@ public interface SocialActivityCounterLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public void deleteActivityCountersByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* Disables all the counters of an asset identified by the class name ID and
 	* class primary key.

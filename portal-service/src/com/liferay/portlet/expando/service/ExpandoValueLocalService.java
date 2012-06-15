@@ -575,10 +575,17 @@ public interface ExpandoValueLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public void deleteValues(
+		java.util.Collection<com.liferay.portlet.expando.model.ExpandoValue> values)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public void deleteValues(long classNameId, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public void deleteValues(java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public void deleteValuesByCompany(long companyId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

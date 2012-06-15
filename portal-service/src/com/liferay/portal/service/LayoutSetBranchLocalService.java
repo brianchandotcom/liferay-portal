@@ -256,12 +256,21 @@ public interface LayoutSetBranchLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public void deleteLayoutSetBranches(
+		java.util.Collection<com.liferay.portal.model.LayoutSetBranch> layoutSetBranches)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public void deleteLayoutSetBranches(long groupId, boolean privateLayout)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public void deleteLayoutSetBranches(long groupId, boolean privateLayout,
 		boolean includeMaster)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void deleteLayoutSetBranchesByCompany(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

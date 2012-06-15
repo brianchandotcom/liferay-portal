@@ -142,6 +142,10 @@ public class ShoppingCouponLocalServiceImpl
 		}
 	}
 
+	public void deleteCouponsByCompany(long companyId) throws SystemException {
+		shoppingCouponPersistence.removeByCompanyId(companyId);
+	}
+
 	public ShoppingCoupon getCoupon(long couponId)
 		throws PortalException, SystemException {
 

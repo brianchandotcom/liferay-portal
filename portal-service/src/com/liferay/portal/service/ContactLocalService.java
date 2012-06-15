@@ -250,6 +250,13 @@ public interface ContactLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public void deleteContacts(
+		java.util.Collection<com.liferay.portal.model.Contact> contacts)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public void deleteContactsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Contact> getContacts(
 		long classNameId, long classPK, int start, int end,

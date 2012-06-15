@@ -88,8 +88,9 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 	public static long ACTIVITYTYPE_COLUMN_BITMASK = 2L;
 	public static long CLASSNAMEID_COLUMN_BITMASK = 4L;
 	public static long CLASSPK_COLUMN_BITMASK = 8L;
-	public static long GROUPID_COLUMN_BITMASK = 16L;
-	public static long USERID_COLUMN_BITMASK = 32L;
+	public static long COMPANYID_COLUMN_BITMASK = 16L;
+	public static long GROUPID_COLUMN_BITMASK = 32L;
+	public static long USERID_COLUMN_BITMASK = 64L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.social.model.SocialActivityLimit"));
 
@@ -228,7 +229,19 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	public long getUserId() {
@@ -472,6 +485,10 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 
 		socialActivityLimitModelImpl._setOriginalGroupId = false;
 
+		socialActivityLimitModelImpl._originalCompanyId = socialActivityLimitModelImpl._companyId;
+
+		socialActivityLimitModelImpl._setOriginalCompanyId = false;
+
 		socialActivityLimitModelImpl._originalUserId = socialActivityLimitModelImpl._userId;
 
 		socialActivityLimitModelImpl._setOriginalUserId = false;
@@ -616,6 +633,8 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userUuid;
 	private long _originalUserId;

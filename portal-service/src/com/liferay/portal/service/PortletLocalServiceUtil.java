@@ -300,6 +300,17 @@ public class PortletLocalServiceUtil {
 		return getService().clonePortlet(portletId);
 	}
 
+	public static void deletePortlets(
+		java.util.Collection<com.liferay.portal.model.Portlet> portlets)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deletePortlets(portlets);
+	}
+
+	public static void deletePortletsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deletePortletsByCompany(companyId);
+	}
+
 	public static com.liferay.portal.model.Portlet deployRemotePortlet(
 		com.liferay.portal.model.Portlet portlet, java.lang.String categoryName)
 		throws com.liferay.portal.kernel.exception.PortalException,

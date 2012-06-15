@@ -26,6 +26,7 @@ import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
 import com.liferay.portlet.mobiledevicerules.service.base.MDRRuleGroupInstanceLocalServiceBaseImpl;
 import com.liferay.portlet.mobiledevicerules.util.RuleGroupInstancePriorityComparator;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -124,6 +125,15 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 			ruleGroupInstance.getRuleGroupInstanceId());
 	}
 
+	public void deleteRuleGroupInstances(
+			Collection<MDRRuleGroupInstance> ruleGroupInstances)
+		throws SystemException {
+
+		for (MDRRuleGroupInstance ruleGroupInstance : ruleGroupInstances) {
+			deleteRuleGroupInstance(ruleGroupInstance);
+		}
+	}
+
 	public void deleteRuleGroupInstances(long ruleGroupId)
 		throws SystemException {
 
@@ -133,6 +143,13 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 		for (MDRRuleGroupInstance ruleGroupInstance : ruleGroupInstances) {
 			deleteRuleGroupInstance(ruleGroupInstance);
 		}
+	}
+
+	public void deleteRuleGroupInstancesByCompany(long companyId)
+		throws SystemException {
+
+		deleteRuleGroupInstances(
+			mdrRuleGroupInstancePersistence.findByCompanyId(companyId));
 	}
 
 	public MDRRuleGroupInstance fetchRuleGroupInstance(long ruleGroupInstanceId)

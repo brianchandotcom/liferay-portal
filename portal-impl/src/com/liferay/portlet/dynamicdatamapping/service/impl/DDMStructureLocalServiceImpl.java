@@ -48,6 +48,7 @@ import com.liferay.portlet.dynamicdatamapping.util.DDMTemplateHelperUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -213,15 +214,24 @@ public class DDMStructureLocalServiceImpl
 		deleteStructure(structure);
 	}
 
-	public void deleteStructures(long groupId)
+	public void deleteStructures(Collection<DDMStructure> structures)
 		throws PortalException, SystemException {
-
-		List<DDMStructure> structures = ddmStructurePersistence.findByGroupId(
-			groupId);
 
 		for (DDMStructure structure : structures) {
 			deleteStructure(structure);
 		}
+	}
+
+	public void deleteStructures(long groupId)
+		throws PortalException, SystemException {
+
+		deleteStructures(ddmStructurePersistence.findByGroupId(groupId));
+	}
+
+	public void deleteStructuresByCompany(long companyId)
+		throws PortalException, SystemException {
+
+		deleteStructures(ddmStructurePersistence.findByCompanyId(companyId));
 	}
 
 	public DDMStructure fetchStructure(long structureId)

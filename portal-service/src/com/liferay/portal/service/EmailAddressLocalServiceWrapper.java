@@ -275,6 +275,11 @@ public class EmailAddressLocalServiceWrapper implements EmailAddressLocalService
 			classPK);
 	}
 
+	public void deleteEmailAddressesByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_emailAddressLocalService.deleteEmailAddressesByCompany(companyId);
+	}
+
 	public java.util.List<com.liferay.portal.model.EmailAddress> getEmailAddresses()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _emailAddressLocalService.getEmailAddresses();

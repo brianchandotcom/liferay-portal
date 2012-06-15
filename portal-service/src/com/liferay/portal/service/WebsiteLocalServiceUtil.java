@@ -277,6 +277,11 @@ public class WebsiteLocalServiceUtil {
 		getService().deleteWebsites(companyId, className, classPK);
 	}
 
+	public static void deleteWebsitesByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteWebsitesByCompany(companyId);
+	}
+
 	public static java.util.List<com.liferay.portal.model.Website> getWebsites()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getWebsites();

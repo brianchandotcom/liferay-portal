@@ -243,6 +243,9 @@ public interface WebDAVPropsLocalService extends BaseLocalService,
 	public void deleteWebDAVProps(java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public void deleteWebDAVPropsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.WebDAVProps getWebDAVProps(long companyId,
 		java.lang.String className, long classPK)

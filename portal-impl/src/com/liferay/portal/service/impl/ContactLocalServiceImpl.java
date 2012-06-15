@@ -27,6 +27,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.base.ContactLocalServiceBaseImpl;
 import com.liferay.portal.util.PortalUtil;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -134,6 +135,18 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 		}
 
 		return contact;
+	}
+
+	public void deleteContacts(Collection<Contact> contacts)
+		throws SystemException {
+
+		for (Contact contact : contacts) {
+			deleteContact(contact);
+		}
+	}
+
+	public void deleteContactsByCompany(long companyId) throws SystemException {
+		deleteContacts(contactPersistence.findByCompanyId(companyId));
 	}
 
 	public List<Contact> getContacts(

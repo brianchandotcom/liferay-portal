@@ -282,7 +282,14 @@ public interface MDRRuleGroupInstanceLocalService extends BaseLocalService,
 		com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance ruleGroupInstance)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public void deleteRuleGroupInstances(
+		java.util.Collection<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance> ruleGroupInstances)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public void deleteRuleGroupInstances(long ruleGroupId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public void deleteRuleGroupInstancesByCompany(long companyId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

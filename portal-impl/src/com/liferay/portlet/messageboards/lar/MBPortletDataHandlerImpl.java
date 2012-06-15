@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.service.persistence.UserUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
@@ -47,6 +48,7 @@ import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.model.MBThreadFlag;
 import com.liferay.portlet.messageboards.service.MBBanLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBMailingListLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadFlagLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
@@ -128,6 +130,22 @@ public class MBPortletDataHandlerImpl extends BasePortletDataHandler {
 				portletDataContext.getScopeGroupId(),
 				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
 		}
+
+		return null;
+	}
+
+	@Override
+	protected PortletPreferences doDeleteData(
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences, long companyId)
+		throws Exception {
+
+		MBBanLocalServiceUtil.deleteBansByCompany(companyId);
+		MBCategoryLocalServiceUtil.deleteCategoriesByCompany(companyId);
+		MBMailingListLocalServiceUtil.deleteMailingListsByCompany(companyId);
+		MBMessageLocalServiceUtil.deleteMessagesByCompany(companyId);
+		MBThreadLocalServiceUtil.deleteThreadsByCompany(companyId);
+		SubscriptionLocalServiceUtil.deleteSubscriptionsByCompany(companyId);
 
 		return null;
 	}

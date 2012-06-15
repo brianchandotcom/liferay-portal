@@ -25,6 +25,7 @@ import com.liferay.portal.NoSuchVirtualHostException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.FacetedSearcher;
@@ -51,6 +52,7 @@ import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.ContactConstants;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
@@ -425,6 +427,57 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 			companyPersistence.update(company, false);
 		}
+	}
+
+	/**
+	 * Deletes the company.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @throws PortalException if the company with the primary key could not be
+	 *         found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteCompanies(long[] companyIds)
+		throws PortalException, SystemException {
+
+		for (long companyId : companyIds) {
+			deleteCompany(companyId);
+		}
+	}
+
+	/**
+	 * Deletes the company.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @throws PortalException if the company with the primary key could not be
+	 *         found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Company deleteCompany(long companyId)
+		throws PortalException, SystemException {
+
+		// Remove all data associated with the company
+
+		List<Portlet> portlets = portletLocalService.getPortlets();
+
+		for (Portlet portlet : portlets) {
+			PortletDataHandler portletDataHandler =
+				portlet.getPortletDataHandlerInstance();
+
+			if (portletDataHandler != null) {
+				portletDataHandler.deleteData(null, null, null, companyId);
+			}
+		}
+
+		// Remove these last because the previous deletions may require this
+		// information
+
+		groupLocalService.deleteGroupsByCompany(companyId);
+		lockLocalService.deleteLocksByCompany(companyId);
+
+		// Remove the company itself
+
+		return companyPersistence.remove(companyId);
 	}
 
 	/**

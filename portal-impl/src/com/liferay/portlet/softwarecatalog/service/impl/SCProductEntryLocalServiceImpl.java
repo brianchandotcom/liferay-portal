@@ -50,6 +50,7 @@ import com.liferay.portlet.softwarecatalog.model.SCProductVersion;
 import com.liferay.portlet.softwarecatalog.service.base.SCProductEntryLocalServiceBaseImpl;
 import com.liferay.util.xml.DocUtil;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -191,6 +192,14 @@ public class SCProductEntryLocalServiceImpl
 			guestPermissions);
 	}
 
+	public void deleteProductEntries(Collection<SCProductEntry> productEntries)
+		throws PortalException, SystemException {
+
+		for (SCProductEntry productEntry : productEntries) {
+			deleteProductEntry(productEntry);
+		}
+	}
+
 	public void deleteProductEntries(long groupId)
 		throws PortalException, SystemException {
 
@@ -200,6 +209,13 @@ public class SCProductEntryLocalServiceImpl
 		for (SCProductEntry productEntry : productEntries) {
 			scProductEntryLocalService.deleteProductEntry(productEntry);
 		}
+	}
+
+	public void deleteProductEntriesByCompany(long companyId)
+		throws PortalException, SystemException {
+
+		deleteProductEntries(
+			scProductEntryPersistence.findByCompanyId(companyId));
 	}
 
 	@Indexable(type = IndexableType.DELETE)

@@ -35,6 +35,7 @@ import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.base.AssetVocabularyLocalServiceBaseImpl;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -147,6 +148,14 @@ public class AssetVocabularyLocalServiceImpl
 			vocabulary.getVocabularyId(), groupPermissions, guestPermissions);
 	}
 
+	public void deleteVocabularies(Collection<AssetVocabulary> vocabularies)
+		throws PortalException, SystemException {
+
+		for (AssetVocabulary vocabulary : vocabularies) {
+			deleteVocabulary(vocabulary);
+		}
+	}
+
 	public void deleteVocabularies(long groupId)
 		throws PortalException, SystemException {
 
@@ -156,6 +165,13 @@ public class AssetVocabularyLocalServiceImpl
 		for (AssetVocabulary vocabulary : vocabularies) {
 			deleteVocabulary(vocabulary);
 		}
+	}
+
+	public void deleteVocabulariesByCompany(long companyId)
+		throws PortalException, SystemException {
+
+		deleteVocabularies(
+			assetVocabularyPersistence.findByCompanyId(companyId));
 	}
 
 	public void deleteVocabulary(AssetVocabulary vocabulary)

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
+import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordSetLocalServiceUtil;
 import com.liferay.portlet.dynamicdatalists.service.persistence.DDLRecordSetUtil;
 import com.liferay.portlet.dynamicdatamapping.lar.DDMPortletDataHandlerImpl;
@@ -37,6 +38,7 @@ import javax.portlet.PortletPreferences;
 
 /**
  * @author Michael C. Han
+ * @author Jonathan Potter 
  */
 public class DDLPortletDataHandlerImpl
 	extends BasePortletDataHandler implements DDLPortletDataHandler {
@@ -170,6 +172,18 @@ public class DDLPortletDataHandlerImpl
 		}
 
 		return portletPreferences;
+	}
+	
+	@Override
+	protected PortletPreferences doDeleteData(
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences, long companyId)
+		throws Exception {
+
+		DDLRecordLocalServiceUtil.deleteRecordsByCompany(companyId);
+		DDLRecordSetLocalServiceUtil.deleteRecordSetsByCompany(companyId);
+
+		return null;
 	}
 
 	@Override

@@ -92,8 +92,9 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 			true);
 	public static long CLASSNAMEID_COLUMN_BITMASK = 1L;
 	public static long CLASSPK_COLUMN_BITMASK = 2L;
-	public static long SCORE_COLUMN_BITMASK = 4L;
-	public static long USERID_COLUMN_BITMASK = 8L;
+	public static long COMPANYID_COLUMN_BITMASK = 4L;
+	public static long SCORE_COLUMN_BITMASK = 8L;
+	public static long USERID_COLUMN_BITMASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -252,7 +253,19 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -492,6 +505,10 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 	public void resetOriginalValues() {
 		RatingsEntryModelImpl ratingsEntryModelImpl = this;
 
+		ratingsEntryModelImpl._originalCompanyId = ratingsEntryModelImpl._companyId;
+
+		ratingsEntryModelImpl._setOriginalCompanyId = false;
+
 		ratingsEntryModelImpl._originalUserId = ratingsEntryModelImpl._userId;
 
 		ratingsEntryModelImpl._setOriginalUserId = false;
@@ -638,6 +655,8 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 		};
 	private long _entryId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userUuid;
 	private long _originalUserId;

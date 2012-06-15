@@ -55,6 +55,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -298,6 +299,14 @@ public class ShoppingItemLocalServiceImpl
 		shoppingItemPricePersistence.removeByItemId(item.getItemId());
 	}
 
+	public void deleteItems(Collection<ShoppingItem> items)
+		throws PortalException, SystemException {
+
+		for (ShoppingItem item : items) {
+			deleteItem(item);
+		}
+	}
+
 	public void deleteItems(long groupId, long categoryId)
 		throws PortalException, SystemException {
 
@@ -307,6 +316,12 @@ public class ShoppingItemLocalServiceImpl
 		for (ShoppingItem item : items) {
 			deleteItem(item);
 		}
+	}
+
+	public void deleteItemsByCompany(long companyId)
+		throws PortalException, SystemException {
+
+		deleteItems(shoppingItemPersistence.findByCompanyId(companyId));
 	}
 
 	public int getCategoriesItemsCount(long groupId, List<Long> categoryIds)

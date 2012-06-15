@@ -53,6 +53,7 @@ import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 
 import java.io.Serializable;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -198,6 +199,14 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 		deleteRecord(record);
 	}
 
+	public void deleteRecords(Collection<DDLRecord> records)
+		throws PortalException, SystemException {
+
+		for (DDLRecord record : records) {
+			deleteRecord(record);
+		}
+	}
+
 	public void deleteRecords(long recordSetId)
 		throws PortalException, SystemException {
 
@@ -207,6 +216,12 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 		for (DDLRecord record : records) {
 			deleteRecord(record);
 		}
+	}
+
+	public void deleteRecordsByCompany(long companyId)
+		throws PortalException, SystemException {
+
+		deleteRecords(ddlRecordPersistence.findByCompanyId(companyId));
 	}
 
 	public DDLRecord fetchRecord(long recordId) throws SystemException {

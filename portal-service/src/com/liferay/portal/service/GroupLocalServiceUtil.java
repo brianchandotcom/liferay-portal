@@ -395,6 +395,27 @@ public class GroupLocalServiceUtil {
 		getService().checkSystemGroups(companyId);
 	}
 
+	public static com.liferay.portal.model.Group deleteGroup(
+		com.liferay.portal.model.Group group, boolean allowSystemGroupDeletion)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().deleteGroup(group, allowSystemGroupDeletion);
+	}
+
+	public static void deleteGroups(
+		java.util.Collection<com.liferay.portal.model.Group> groups,
+		boolean allowSystemGroupDeletion)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteGroups(groups, allowSystemGroupDeletion);
+	}
+
+	public static void deleteGroupsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteGroupsByCompany(companyId);
+	}
+
 	/**
 	* Returns the group with the matching friendly URL.
 	*

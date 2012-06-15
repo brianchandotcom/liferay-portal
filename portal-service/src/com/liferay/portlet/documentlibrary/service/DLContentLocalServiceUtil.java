@@ -297,6 +297,11 @@ public class DLContentLocalServiceUtil {
 		getService().deleteContent(companyId, repositoryId, path, version);
 	}
 
+	public static void deleteContentByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteContentByCompany(companyId);
+	}
+
 	public static void deleteContents(long companyId, long repositoryId,
 		java.lang.String path)
 		throws com.liferay.portal.kernel.exception.SystemException {

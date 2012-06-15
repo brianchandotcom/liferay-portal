@@ -62,10 +62,16 @@ import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLContentLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileRankLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileShortcutLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLSyncLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryTypeUtil;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileRankUtil;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileShortcutUtil;
@@ -1717,6 +1723,25 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 			DLAppLocalServiceUtil.deleteAll(
 				portletDataContext.getScopeGroupId());
 		}
+
+		return null;
+	}
+
+	@Override
+	protected PortletPreferences doDeleteData(
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences, long companyId)
+		throws Exception {
+
+		DLContentLocalServiceUtil.deleteContentByCompany(companyId);
+		DLFileEntryLocalServiceUtil.deleteFileEntriesByCompany(companyId);
+		DLFileEntryTypeLocalServiceUtil.deleteFileEntryTypesByCompany(
+			companyId);
+		DLFileRankLocalServiceUtil.deleteFileRanksByCompany(companyId);
+		DLFileShortcutLocalServiceUtil.deleteFileShortcutsByCompany(companyId);
+		DLFileVersionLocalServiceUtil.deleteFileVersionsByCompany(companyId);
+		DLFolderLocalServiceUtil.deleteFoldersByCompany(companyId);
+		DLSyncLocalServiceUtil.deleteSyncsByCompany(companyId);
 
 		return null;
 	}

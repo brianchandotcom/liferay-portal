@@ -283,6 +283,17 @@ public class ContactLocalServiceUtil {
 			jobTitle);
 	}
 
+	public static void deleteContacts(
+		java.util.Collection<com.liferay.portal.model.Contact> contacts)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteContacts(contacts);
+	}
+
+	public static void deleteContactsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteContactsByCompany(companyId);
+	}
+
 	public static java.util.List<com.liferay.portal.model.Contact> getContacts(
 		long classNameId, long classPK, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)

@@ -181,6 +181,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
 		<finder name="ProductEntryId" return-type="Collection">
 			<finder-column name="productEntryId" />
 		</finder>
@@ -234,6 +237,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
 		<finder name="ProductEntryId" return-type="Collection">
 			<finder-column name="productEntryId" />
 		</finder>

@@ -30,6 +30,7 @@ import com.liferay.portlet.polls.model.PollsChoice;
 import com.liferay.portlet.polls.model.PollsQuestion;
 import com.liferay.portlet.polls.service.base.PollsQuestionLocalServiceBaseImpl;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -191,6 +192,14 @@ public class PollsQuestionLocalServiceImpl
 		pollsVotePersistence.removeByQuestionId(question.getQuestionId());
 	}
 
+	public void deleteQuestions(Collection<PollsQuestion> questions)
+		throws PortalException, SystemException {
+
+		for (PollsQuestion question : questions) {
+			deleteQuestion(question);
+		}
+	}
+
 	public void deleteQuestions(long groupId)
 		throws PortalException, SystemException {
 
@@ -199,6 +208,12 @@ public class PollsQuestionLocalServiceImpl
 
 			deleteQuestion(question);
 		}
+	}
+
+	public void deleteQuestionsByCompany(long companyId)
+		throws PortalException, SystemException {
+
+		deleteQuestions(pollsQuestionPersistence.findByCompanyId(companyId));
 	}
 
 	public PollsQuestion getQuestion(long questionId)

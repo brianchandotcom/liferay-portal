@@ -362,6 +362,27 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 		_roleLocalService.checkSystemRoles(companyId);
 	}
 
+	public com.liferay.portal.model.Role deleteRole(
+		com.liferay.portal.model.Role role, boolean allowSystemRoleDeletion)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _roleLocalService.deleteRole(role, allowSystemRoleDeletion);
+	}
+
+	public void deleteRoles(
+		java.util.Collection<com.liferay.portal.model.Role> roles,
+		boolean allowSystemRoleDeletion)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_roleLocalService.deleteRoles(roles, allowSystemRoleDeletion);
+	}
+
+	public void deleteRolesByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_roleLocalService.deleteRolesByCompany(companyId);
+	}
+
 	/**
 	* Returns the role with the name in the company.
 	*

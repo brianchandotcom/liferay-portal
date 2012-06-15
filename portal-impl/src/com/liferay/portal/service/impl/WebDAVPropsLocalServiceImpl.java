@@ -42,6 +42,12 @@ public class WebDAVPropsLocalServiceImpl
 		}
 	}
 
+	public void deleteWebDAVPropsByCompany(long companyId)
+		throws SystemException {
+
+		webDAVPropsPersistence.removeByCompanyId(companyId);
+	}
+
 	public WebDAVProps getWebDAVProps(
 			long companyId, String className, long classPK)
 		throws SystemException {

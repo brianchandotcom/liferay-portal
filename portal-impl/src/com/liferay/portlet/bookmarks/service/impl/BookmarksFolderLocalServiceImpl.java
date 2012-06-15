@@ -29,6 +29,7 @@ import com.liferay.portlet.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.portlet.bookmarks.service.base.BookmarksFolderLocalServiceBaseImpl;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -119,6 +120,14 @@ public class BookmarksFolderLocalServiceImpl
 		deleteFolder(folder);
 	}
 
+	public void deleteFolders(Collection<BookmarksFolder> folders)
+		throws PortalException, SystemException {
+
+		for (BookmarksFolder folder : folders) {
+			deleteFolder(folder);
+		}
+	}
+
 	public void deleteFolders(long groupId)
 		throws PortalException, SystemException {
 
@@ -128,6 +137,12 @@ public class BookmarksFolderLocalServiceImpl
 		for (BookmarksFolder folder : folders) {
 			deleteFolder(folder);
 		}
+	}
+
+	public void deleteFoldersByCompany(long companyId)
+		throws PortalException, SystemException {
+
+		deleteFolders(bookmarksFolderPersistence.findByCompanyId(companyId));
 	}
 
 	public List<BookmarksFolder> getCompanyFolders(

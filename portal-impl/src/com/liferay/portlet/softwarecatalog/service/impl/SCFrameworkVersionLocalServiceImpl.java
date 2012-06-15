@@ -154,6 +154,12 @@ public class SCFrameworkVersionLocalServiceImpl
 		}
 	}
 
+	public void deleteFrameworkVersionsByCompany(long companyId)
+		throws SystemException {
+
+		scFrameworkVersionPersistence.removeByCompanyId(companyId);
+	}
+
 	public SCFrameworkVersion getFrameworkVersion(long frameworkVersionId)
 		throws PortalException, SystemException {
 

@@ -271,10 +271,23 @@ public class TeamLocalServiceUtil {
 		return getService().addTeam(userId, groupId, name, description);
 	}
 
+	public static void deleteTeams(
+		java.util.Collection<com.liferay.portal.model.Team> teams)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteTeams(teams);
+	}
+
 	public static void deleteTeams(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().deleteTeams(groupId);
+	}
+
+	public static void deleteTeamsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteTeamsByCompany(companyId);
 	}
 
 	public static java.util.List<com.liferay.portal.model.Team> getGroupTeams(

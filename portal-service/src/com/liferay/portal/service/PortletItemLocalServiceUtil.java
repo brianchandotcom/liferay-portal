@@ -275,6 +275,11 @@ public class PortletItemLocalServiceUtil {
 				   .addPortletItem(userId, groupId, name, portletId, className);
 	}
 
+	public static void deletePortletItemsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deletePortletItemsByCompany(companyId);
+	}
+
 	public static com.liferay.portal.model.PortletItem getPortletItem(
 		long groupId, java.lang.String name, java.lang.String portletId,
 		java.lang.String className)

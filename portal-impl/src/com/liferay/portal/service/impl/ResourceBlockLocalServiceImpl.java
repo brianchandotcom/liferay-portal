@@ -42,6 +42,7 @@ import com.liferay.portal.service.base.ResourceBlockLocalServiceBaseImpl;
 import java.nio.ByteBuffer;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
@@ -197,6 +198,21 @@ public class ResourceBlockLocalServiceImpl
 			resourceBlock.getPrimaryKey());
 
 		return resourceBlockPersistence.remove(resourceBlock);
+	}
+
+	public void deleteResourceBlocks(Collection<ResourceBlock> resourceBlocks)
+		throws SystemException {
+
+		for (ResourceBlock resourceBlock : resourceBlocks) {
+			deleteResourceBlock(resourceBlock);
+		}
+	}
+
+	public void deleteResourceBlocksByCompany(long companyId)
+		throws SystemException {
+
+		deleteResourceBlocks(
+			resourceBlockPersistence.findByCompanyId(companyId));
 	}
 
 	public long getActionId(String name, String actionId)

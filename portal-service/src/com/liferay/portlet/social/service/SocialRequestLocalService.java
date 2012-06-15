@@ -319,6 +319,9 @@ public interface SocialRequestLocalService extends BaseLocalService,
 		com.liferay.portlet.social.model.SocialRequest request)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public void deleteRequestsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* Removes all the social requests for the requesting user.
 	*

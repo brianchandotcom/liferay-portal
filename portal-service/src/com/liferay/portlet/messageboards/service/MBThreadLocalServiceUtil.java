@@ -287,10 +287,23 @@ public class MBThreadLocalServiceUtil {
 		getService().deleteThread(thread);
 	}
 
+	public static void deleteThreads(
+		java.util.Collection<com.liferay.portlet.messageboards.model.MBThread> threads)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteThreads(threads);
+	}
+
 	public static void deleteThreads(long groupId, long categoryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().deleteThreads(groupId, categoryId);
+	}
+
+	public static void deleteThreadsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteThreadsByCompany(companyId);
 	}
 
 	public static com.liferay.portlet.messageboards.model.MBThread fetchThread(

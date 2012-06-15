@@ -315,6 +315,19 @@ public class AssetCategoryLocalServiceUtil {
 			.addCategoryResources(category, groupPermissions, guestPermissions);
 	}
 
+	public static void deleteCategories(
+		java.util.Collection<com.liferay.portlet.asset.model.AssetCategory> categories)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteCategories(categories);
+	}
+
+	public static void deleteCategoriesByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteCategoriesByCompany(companyId);
+	}
+
 	public static void deleteCategory(
 		com.liferay.portlet.asset.model.AssetCategory category)
 		throws com.liferay.portal.kernel.exception.PortalException,

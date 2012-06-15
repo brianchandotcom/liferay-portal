@@ -23,6 +23,7 @@ import com.liferay.portlet.expando.model.ExpandoTable;
 import com.liferay.portlet.expando.model.ExpandoTableConstants;
 import com.liferay.portlet.expando.service.base.ExpandoRowLocalServiceBaseImpl;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -93,6 +94,16 @@ public class ExpandoRowLocalServiceImpl extends ExpandoRowLocalServiceBaseImpl {
 
 		expandoRowLocalService.deleteRow(
 			companyId, classNameId, tableName, classPK);
+	}
+
+	public void deleteRows(Collection<ExpandoRow> rows) throws SystemException {
+		for (ExpandoRow row : rows) {
+			deleteRow(row);
+		}
+	}
+
+	public void deleteRowsByCompany(long companyId) throws SystemException {
+		deleteRows(expandoRowPersistence.findByCompanyId(companyId));
 	}
 
 	public List<ExpandoRow> getDefaultTableRows(

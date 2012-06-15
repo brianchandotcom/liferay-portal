@@ -280,6 +280,11 @@ public class AddressLocalServiceUtil {
 		getService().deleteAddresses(companyId, className, classPK);
 	}
 
+	public static void deleteAddressesByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteAddressesByCompany(companyId);
+	}
+
 	public static java.util.List<com.liferay.portal.model.Address> getAddresses()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getAddresses();

@@ -291,6 +291,11 @@ public class WorkflowInstanceLinkLocalServiceWrapper
 			groupId, className, classPK);
 	}
 
+	public void deleteWorkflowInstanceLinksByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_workflowInstanceLinkLocalService.deleteWorkflowInstanceLinksByCompany(companyId);
+	}
+
 	public com.liferay.portal.model.WorkflowInstanceLink fetchWorkflowInstanceLink(
 		long companyId, long groupId, java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException {

@@ -267,6 +267,11 @@ public class LockLocalServiceUtil {
 		getService().clear();
 	}
 
+	public static void deleteLocksByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteLocksByCompany(companyId);
+	}
+
 	public static com.liferay.portal.model.Lock getLock(
 		java.lang.String className, long key)
 		throws com.liferay.portal.kernel.exception.PortalException,

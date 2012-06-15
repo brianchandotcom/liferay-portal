@@ -88,8 +88,9 @@ public class SocialActivitySettingModelImpl extends BaseModelImpl<SocialActivity
 			true);
 	public static long ACTIVITYTYPE_COLUMN_BITMASK = 1L;
 	public static long CLASSNAMEID_COLUMN_BITMASK = 2L;
-	public static long GROUPID_COLUMN_BITMASK = 4L;
-	public static long NAME_COLUMN_BITMASK = 8L;
+	public static long COMPANYID_COLUMN_BITMASK = 4L;
+	public static long GROUPID_COLUMN_BITMASK = 8L;
+	public static long NAME_COLUMN_BITMASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -255,7 +256,19 @@ public class SocialActivitySettingModelImpl extends BaseModelImpl<SocialActivity
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	public String getClassName() {
@@ -453,6 +466,10 @@ public class SocialActivitySettingModelImpl extends BaseModelImpl<SocialActivity
 
 		socialActivitySettingModelImpl._setOriginalGroupId = false;
 
+		socialActivitySettingModelImpl._originalCompanyId = socialActivitySettingModelImpl._companyId;
+
+		socialActivitySettingModelImpl._setOriginalCompanyId = false;
+
 		socialActivitySettingModelImpl._originalClassNameId = socialActivitySettingModelImpl._classNameId;
 
 		socialActivitySettingModelImpl._setOriginalClassNameId = false;
@@ -572,6 +589,8 @@ public class SocialActivitySettingModelImpl extends BaseModelImpl<SocialActivity
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _classNameId;
 	private long _originalClassNameId;
 	private boolean _setOriginalClassNameId;

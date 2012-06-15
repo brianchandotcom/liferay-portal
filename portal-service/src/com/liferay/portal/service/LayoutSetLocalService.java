@@ -79,11 +79,13 @@ public interface LayoutSetLocalService extends BaseLocalService,
 	*
 	* @param layoutSet the layout set
 	* @return the layout set that was removed
+	* @throws PortalException
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.LayoutSet deleteLayoutSet(
 		com.liferay.portal.model.LayoutSet layoutSet)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -243,6 +245,15 @@ public interface LayoutSetLocalService extends BaseLocalService,
 
 	public void deleteLayoutSet(long groupId, boolean privateLayout,
 		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void deleteLayoutSets(
+		java.util.Collection<com.liferay.portal.model.LayoutSet> layoutSets)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void deleteLayoutSetsByCompany(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

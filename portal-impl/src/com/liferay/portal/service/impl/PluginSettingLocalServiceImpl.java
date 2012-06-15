@@ -41,6 +41,12 @@ public class PluginSettingLocalServiceImpl
 		}
 	}
 
+	public void deletePluginSettingsByCompany(long companyId)
+		throws SystemException {
+
+		pluginSettingPersistence.removeByCompanyId(companyId);
+	}
+
 	public PluginSetting getDefaultPluginSetting() {
 		PluginSettingImpl pluginSetting = new PluginSettingImpl();
 

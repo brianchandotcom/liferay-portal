@@ -69,6 +69,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -249,12 +250,26 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		addEntryResources(entry, groupPermissions, guestPermissions);
 	}
 
+	public void deleteEntries(Collection<BlogsEntry> entries)
+		throws PortalException, SystemException {
+
+		for (BlogsEntry entry : entries) {
+			deleteEntry(entry);
+		}
+	}
+
 	public void deleteEntries(long groupId)
 		throws PortalException, SystemException {
 
 		for (BlogsEntry entry : blogsEntryPersistence.findByGroupId(groupId)) {
 			deleteEntry(entry);
 		}
+	}
+
+	public void deleteEntriesByCompany(long companyId)
+		throws PortalException, SystemException {
+
+		deleteEntries(blogsEntryPersistence.findByCompanyId(companyId));
 	}
 
 	public void deleteEntry(BlogsEntry entry)

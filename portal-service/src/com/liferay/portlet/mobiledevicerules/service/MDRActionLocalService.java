@@ -287,6 +287,9 @@ public interface MDRActionLocalService extends BaseLocalService,
 	public void deleteActions(long ruleGroupInstanceId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public void deleteActionsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.mobiledevicerules.model.MDRAction fetchAction(
 		long actionId)

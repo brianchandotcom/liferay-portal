@@ -928,6 +928,13 @@ public class UserLocalServiceWrapper implements UserLocalService,
 		_userLocalService.deleteRoleUser(roleId, userId);
 	}
 
+	public com.liferay.portal.model.User deleteUser(
+		com.liferay.portal.model.User user, boolean allowRequiredUserDeletion)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userLocalService.deleteUser(user, allowRequiredUserDeletion);
+	}
+
 	/**
 	* Removes the user from the user group.
 	*
@@ -940,6 +947,20 @@ public class UserLocalServiceWrapper implements UserLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_userLocalService.deleteUserGroupUser(userGroupId, userId);
+	}
+
+	public void deleteUsers(
+		java.util.Collection<com.liferay.portal.model.User> users,
+		boolean allowRequiredUserDeletion)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_userLocalService.deleteUsers(users, allowRequiredUserDeletion);
+	}
+
+	public void deleteUsersByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_userLocalService.deleteUsersByCompany(companyId);
 	}
 
 	/**

@@ -81,11 +81,13 @@ public interface LayoutBranchLocalService extends BaseLocalService,
 	*
 	* @param layoutBranch the layout branch
 	* @return the layout branch that was removed
+	* @throws PortalException
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.LayoutBranch deleteLayoutBranch(
 		com.liferay.portal.model.LayoutBranch layoutBranch)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -251,6 +253,15 @@ public interface LayoutBranchLocalService extends BaseLocalService,
 		long layoutRevisionId, java.lang.String name,
 		java.lang.String description, boolean master,
 		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void deleteLayoutBranches(
+		java.util.Collection<com.liferay.portal.model.LayoutBranch> layoutBranches)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void deleteLayoutBranchesByCompany(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

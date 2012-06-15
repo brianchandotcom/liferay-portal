@@ -326,6 +326,11 @@ public class SCFrameworkVersionLocalServiceWrapper
 		_scFrameworkVersionLocalService.deleteFrameworkVersions(groupId);
 	}
 
+	public void deleteFrameworkVersionsByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_scFrameworkVersionLocalService.deleteFrameworkVersionsByCompany(companyId);
+	}
+
 	public com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion getFrameworkVersion(
 		long frameworkVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException,

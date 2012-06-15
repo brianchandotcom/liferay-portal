@@ -102,7 +102,8 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 				"value.object.column.bitmask.enabled.com.liferay.portlet.shopping.model.ShoppingCoupon"),
 			true);
 	public static long CODE_COLUMN_BITMASK = 1L;
-	public static long GROUPID_COLUMN_BITMASK = 2L;
+	public static long COMPANYID_COLUMN_BITMASK = 2L;
+	public static long GROUPID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -354,7 +355,19 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 	}
 
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -658,6 +671,10 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 
 		shoppingCouponModelImpl._setOriginalGroupId = false;
 
+		shoppingCouponModelImpl._originalCompanyId = shoppingCouponModelImpl._companyId;
+
+		shoppingCouponModelImpl._setOriginalCompanyId = false;
+
 		shoppingCouponModelImpl._originalCode = shoppingCouponModelImpl._code;
 
 		shoppingCouponModelImpl._columnBitmask = 0;
@@ -915,6 +932,8 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userUuid;
 	private String _userName;

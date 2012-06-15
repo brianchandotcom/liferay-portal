@@ -341,10 +341,23 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 		_ddmStructureLocalService.deleteStructure(groupId, structureKey);
 	}
 
+	public void deleteStructures(
+		java.util.Collection<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> structures)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_ddmStructureLocalService.deleteStructures(structures);
+	}
+
 	public void deleteStructures(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_ddmStructureLocalService.deleteStructures(groupId);
+	}
+
+	public void deleteStructuresByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_ddmStructureLocalService.deleteStructuresByCompany(companyId);
 	}
 
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure fetchStructure(

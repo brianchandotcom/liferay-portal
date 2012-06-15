@@ -270,6 +270,17 @@ public class UserTrackerLocalServiceWrapper implements UserTrackerLocalService,
 			userTrackerPaths);
 	}
 
+	public void deleteUserTrackers(
+		java.util.Collection<com.liferay.portal.model.UserTracker> userTrackers)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_userTrackerLocalService.deleteUserTrackers(userTrackers);
+	}
+
+	public void deleteUserTrackersByCompany(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_userTrackerLocalService.deleteUserTrackersByCompany(companyId);
+	}
+
 	public java.util.List<com.liferay.portal.model.UserTracker> getUserTrackers(
 		long companyId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {

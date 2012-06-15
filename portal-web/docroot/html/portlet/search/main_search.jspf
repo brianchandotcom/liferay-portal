@@ -25,6 +25,12 @@ searchContext.setStart(mainSearchSearchContainer.getStart());
 
 Facet assetEntriesFacet = new AssetEntriesFacet(searchContext);
 
+String[] entryClassNames = searchContext.getEntryClassNames();
+
+if (entryClassNames.length == 1) {
+	portletURL.setParameter("entryClassName", entryClassNames[0]);
+}
+
 assetEntriesFacet.setStatic(true);
 
 searchContext.addFacet(assetEntriesFacet);

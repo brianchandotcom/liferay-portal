@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.Portlet;
@@ -743,6 +744,14 @@ public class PortletExporter {
 			boolean exportPortletSetup, boolean exportPortletUserPreferences)
 		throws Exception {
 
+		long layoutId = LayoutConstants.DEFAULT_PARENT_LAYOUT_ID;
+		long plid = PortletKeys.PREFS_OWNER_ID_DEFAULT;
+
+		if (layout != null) {
+			layoutId = layout.getLayoutId();
+			plid = layout.getPlid();
+		}
+
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
 			portletDataContext.getCompanyId(), portletId);
 
@@ -770,8 +779,7 @@ public class PortletExporter {
 		portletElement.addAttribute("portlet-id", portletId);
 		portletElement.addAttribute(
 			"root-portlet-id", PortletConstants.getRootPortletId(portletId));
-		portletElement.addAttribute(
-			"old-plid", String.valueOf(layout.getPlid()));
+		portletElement.addAttribute("old-plid", String.valueOf(plid));
 		portletElement.addAttribute(
 			"scope-layout-type", portletDataContext.getScopeType());
 		portletElement.addAttribute(
@@ -811,12 +819,6 @@ public class PortletExporter {
 		}
 
 		// Portlet preferences
-
-		long plid = PortletKeys.PREFS_OWNER_ID_DEFAULT;
-
-		if (layout != null) {
-			plid = layout.getPlid();
-		}
 
 		if (exportPortletSetup) {
 			exportPortletPreferences(
@@ -908,7 +910,7 @@ public class PortletExporter {
 
 		sb.append(portletDataContext.getPortletPath(portletId));
 		sb.append(StringPool.SLASH);
-		sb.append(layout.getPlid());
+		sb.append(plid);
 		sb.append("/portlet.xml");
 
 		String path = sb.toString();
@@ -916,7 +918,9 @@ public class PortletExporter {
 		Element element = parentElement.addElement("portlet");
 
 		element.addAttribute("portlet-id", portletId);
-		element.addAttribute("layout-id", String.valueOf(layout.getLayoutId()));
+
+		element.addAttribute("layout-id", String.valueOf(layoutId));
+
 		element.addAttribute("path", path);
 
 		if (portletDataContext.isPathNotProcessed(path)) {

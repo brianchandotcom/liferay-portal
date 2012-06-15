@@ -55,6 +55,7 @@ import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.Theme;
+import com.liferay.portal.model.impl.LayoutImpl;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
@@ -105,6 +106,7 @@ import org.apache.commons.lang.time.StopWatch;
  * @author Karthik Sudarshan
  * @author Zsigmond Rab
  * @author Douglas Wong
+ * @author Mate Thurzo
  */
 public class LayoutExporter {
 
@@ -237,6 +239,10 @@ public class LayoutExporter {
 		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 			groupId, privateLayout);
 
+		Group group = layoutSet.getGroup();
+
+		boolean globalScopeExport = group.isCompany();
+
 		long companyId = layoutSet.getCompanyId();
 		long defaultUserId = UserLocalServiceUtil.getDefaultUserId(companyId);
 
@@ -312,8 +318,6 @@ public class LayoutExporter {
 		headerElement.addAttribute(
 			"private-layout", String.valueOf(privateLayout));
 
-		Group group = layoutSet.getGroup();
-
 		String type = "layout-set";
 
 		if (group.isLayoutPrototype()) {
@@ -386,30 +390,36 @@ public class LayoutExporter {
 
 		List<Portlet> portlets = getAlwaysExportablePortlets(companyId);
 
+		long plid = LayoutConstants.DEFAULT_PLID;
+
+		// Populate portletIds with always exportable portlets
+
 		if (!layouts.isEmpty()) {
 			Layout firstLayout = layouts.get(0);
 
-			if (group.isStagingGroup()) {
-				group = group.getLiveGroup();
+			plid = firstLayout.getPlid();
+		}
+
+		if (group.isStagingGroup()) {
+			group = group.getLiveGroup();
+		}
+
+		for (Portlet portlet : portlets) {
+			String portletId = portlet.getRootPortletId();
+
+			if (!group.isStagedPortlet(portletId)) {
+				continue;
 			}
 
-			for (Portlet portlet : portlets) {
-				String portletId = portlet.getRootPortletId();
+			String key = PortletPermissionUtil.getPrimaryKey(0, portletId);
 
-				if (!group.isStagedPortlet(portletId)) {
-					continue;
-				}
-
-				String key = PortletPermissionUtil.getPrimaryKey(0, portletId);
-
-				if (portletIds.get(key) == null) {
-					portletIds.put(
-						key,
-						new Object[] {
-							portletId, firstLayout.getPlid(), groupId,
-							StringPool.BLANK, StringPool.BLANK
-						});
-				}
+			if (portletIds.get(key) == null) {
+				portletIds.put(
+					key,
+					new Object[] {
+						portletId, plid, groupId, StringPool.BLANK,
+						StringPool.BLANK
+					});
 			}
 		}
 
@@ -448,7 +458,7 @@ public class LayoutExporter {
 			Object[] portletObjects = portletIdsEntry.getValue();
 
 			String portletId = null;
-			long plid = 0;
+			plid = LayoutConstants.DEFAULT_PLID;
 			long scopeGroupId = 0;
 			String scopeType = StringPool.BLANK;
 			String scopeLayoutUuid = null;
@@ -467,10 +477,31 @@ public class LayoutExporter {
 				scopeLayoutUuid = (String)portletIdsEntry.getValue()[4];
 			}
 
-			Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+			Layout layout = null;
 
-			portletDataContext.setPlid(layout.getPlid());
-			portletDataContext.setOldPlid(layout.getPlid());
+			try {
+				layout = LayoutLocalServiceUtil.getLayout(plid);
+			}
+			catch (NoSuchLayoutException nsle) {
+				if (!globalScopeExport &&
+					(plid <= LayoutConstants.DEFAULT_PLID)) {
+
+					continue;
+				}
+
+				if (_log.isWarnEnabled()) {
+					_log.warn("No Layout has been found, " +
+						"assuming global scope");
+				}
+
+				layout = new LayoutImpl();
+
+				layout.setCompanyId(companyId);
+				layout.setGroupId(groupId);
+			}
+
+			portletDataContext.setPlid(plid);
+			portletDataContext.setOldPlid(plid);
 			portletDataContext.setScopeGroupId(scopeGroupId);
 			portletDataContext.setScopeType(scopeType);
 			portletDataContext.setScopeLayoutUuid(scopeLayoutUuid);
@@ -487,7 +518,7 @@ public class LayoutExporter {
 
 		portletDataContext.setScopeGroupId(previousScopeGroupId);
 
-		if (exportCategories) {
+		if (exportCategories || globalScopeExport) {
 			exportAssetCategories(portletDataContext);
 		}
 

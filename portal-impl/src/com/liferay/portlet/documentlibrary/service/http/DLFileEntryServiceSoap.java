@@ -66,10 +66,12 @@ import java.rmi.RemoteException;
  * @generated
  */
 public class DLFileEntryServiceSoap {
-	public static void cancelCheckOut(long fileEntryId)
-		throws RemoteException {
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersionSoap cancelCheckOut(
+		long fileEntryId) throws RemoteException {
 		try {
-			DLFileEntryServiceUtil.cancelCheckOut(fileEntryId);
+			com.liferay.portlet.documentlibrary.model.DLFileVersion returnValue = DLFileEntryServiceUtil.cancelCheckOut(fileEntryId);
+
+			return com.liferay.portlet.documentlibrary.model.DLFileVersionSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

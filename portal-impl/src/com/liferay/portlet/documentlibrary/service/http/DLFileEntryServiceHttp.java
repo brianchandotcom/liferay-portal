@@ -100,8 +100,8 @@ public class DLFileEntryServiceHttp {
 		}
 	}
 
-	public static void cancelCheckOut(HttpPrincipal httpPrincipal,
-		long fileEntryId)
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion cancelCheckOut(
+		HttpPrincipal httpPrincipal, long fileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -111,8 +111,10 @@ public class DLFileEntryServiceHttp {
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					fileEntryId);
 
+			Object returnObj = null;
+
 			try {
-				TunnelUtil.invoke(httpPrincipal, methodHandler);
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
 				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
@@ -125,6 +127,8 @@ public class DLFileEntryServiceHttp {
 
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
+
+			return (com.liferay.portlet.documentlibrary.model.DLFileVersion)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);

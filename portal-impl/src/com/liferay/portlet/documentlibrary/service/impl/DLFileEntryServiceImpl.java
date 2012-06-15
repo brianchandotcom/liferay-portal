@@ -66,7 +66,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			file, is, size, serviceContext);
 	}
 
-	public void cancelCheckOut(long fileEntryId)
+	public DLFileVersion cancelCheckOut(long fileEntryId)
 		throws PortalException, SystemException {
 
 		try {
@@ -76,7 +76,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		catch (NoSuchFileEntryException nsfee) {
 		}
 
-		dlFileEntryLocalService.cancelCheckOut(getUserId(), fileEntryId);
+		return dlFileEntryLocalService.cancelCheckOut(getUserId(), fileEntryId);
 	}
 
 	public void checkInFileEntry(

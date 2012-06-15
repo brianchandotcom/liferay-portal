@@ -64,10 +64,11 @@ public class DLFileEntryServiceWrapper implements DLFileEntryService,
 			fileEntryTypeId, fieldsMap, file, is, size, serviceContext);
 	}
 
-	public void cancelCheckOut(long fileEntryId)
+	public com.liferay.portlet.documentlibrary.model.DLFileVersion cancelCheckOut(
+		long fileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_dlFileEntryService.cancelCheckOut(fileEntryId);
+		return _dlFileEntryService.cancelCheckOut(fileEntryId);
 	}
 
 	public void checkInFileEntry(long fileEntryId, boolean major,

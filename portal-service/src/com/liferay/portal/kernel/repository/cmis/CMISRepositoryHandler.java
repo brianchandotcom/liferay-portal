@@ -65,10 +65,10 @@ public abstract class CMISRepositoryHandler extends BaseRepositoryImpl {
 			parentFolderId, title, description, serviceContext);
 	}
 
-	public void cancelCheckOut(long fileEntryId)
+	public FileVersion cancelCheckOut(long fileEntryId)
 		throws PortalException, SystemException {
 
-		_baseCmisRepository.cancelCheckOut(fileEntryId);
+		return _baseCmisRepository.cancelCheckOut(fileEntryId);
 	}
 
 	public void checkInFileEntry(

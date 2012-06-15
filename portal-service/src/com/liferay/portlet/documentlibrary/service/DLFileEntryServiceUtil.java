@@ -71,10 +71,11 @@ public class DLFileEntryServiceUtil {
 			fileEntryTypeId, fieldsMap, file, is, size, serviceContext);
 	}
 
-	public static void cancelCheckOut(long fileEntryId)
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersion cancelCheckOut(
+		long fileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().cancelCheckOut(fileEntryId);
+		return getService().cancelCheckOut(fileEntryId);
 	}
 
 	public static void checkInFileEntry(long fileEntryId, boolean major,

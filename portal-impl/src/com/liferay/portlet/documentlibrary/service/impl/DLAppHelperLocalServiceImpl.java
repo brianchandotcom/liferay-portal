@@ -120,6 +120,33 @@ public class DLAppHelperLocalServiceImpl
 		}
 	}
 
+	public void cancelCheckOut(
+			long userId, FileEntry fileEntry, FileVersion sourceFileVersion,
+			FileVersion destinationFileVersion, ServiceContext serviceContext,
+			FileVersion draftFileVersion)
+		throws PortalException, SystemException {
+
+		updateFileEntry(
+			userId, fileEntry, sourceFileVersion, destinationFileVersion,
+			serviceContext);
+
+		if (draftFileVersion == null) {
+			return;
+		}
+
+		AssetEntry draftAssetEntry = null;
+
+		try {
+			draftAssetEntry = assetEntryLocalService.getEntry(
+				DLFileEntryConstants.getClassName(),
+				draftFileVersion.getPrimaryKey());
+
+			assetEntryLocalService.deleteEntry(draftAssetEntry.getEntryId());
+		}
+		catch (NoSuchEntryException nsee) {
+		}
+	}
+
 	public void checkAssetEntry(
 			long userId, FileEntry fileEntry, FileVersion fileVersion)
 		throws PortalException, SystemException {

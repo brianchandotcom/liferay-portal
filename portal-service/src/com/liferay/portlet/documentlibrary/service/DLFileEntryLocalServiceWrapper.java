@@ -313,10 +313,11 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 			groupPermissions, guestPermissions);
 	}
 
-	public void cancelCheckOut(long userId, long fileEntryId)
+	public com.liferay.portlet.documentlibrary.model.DLFileVersion cancelCheckOut(
+		long userId, long fileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_dlFileEntryLocalService.cancelCheckOut(userId, fileEntryId);
+		return _dlFileEntryLocalService.cancelCheckOut(userId, fileEntryId);
 	}
 
 	public void checkInFileEntry(long userId, long fileEntryId,

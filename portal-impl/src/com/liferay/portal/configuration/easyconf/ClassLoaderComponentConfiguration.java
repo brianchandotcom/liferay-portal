@@ -151,9 +151,8 @@ public class ClassLoaderComponentConfiguration extends ComponentConfiguration {
 
 	static {
 		try {
-			_constructor =
-				ComponentProperties.class.getDeclaredConstructor(
-					AggregatedProperties.class);
+			_constructor = ComponentProperties.class.getDeclaredConstructor(
+				AggregatedProperties.class);
 
 			_constructor.setAccessible(true);
 		}

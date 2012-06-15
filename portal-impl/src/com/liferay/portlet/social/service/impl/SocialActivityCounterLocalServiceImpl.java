@@ -433,9 +433,8 @@ public class SocialActivityCounterLocalServiceImpl
 		SocialActivityCounter activityCounter = null;
 
 		if (previousActivityCounterId != 0) {
-			activityCounter =
-				socialActivityCounterPersistence.findByPrimaryKey(
-					previousActivityCounterId);
+			activityCounter = socialActivityCounterPersistence.findByPrimaryKey(
+				previousActivityCounterId);
 
 			if (periodLength ==
 					SocialActivityCounterConstants.PERIOD_LENGTH_SYSTEM) {
@@ -451,10 +450,8 @@ public class SocialActivityCounterLocalServiceImpl
 			socialActivityCounterPersistence.update(activityCounter, false);
 		}
 
-		activityCounter =
-			socialActivityCounterPersistence.fetchByG_C_C_N_O_E(
-				groupId, classNameId, classPK, name, ownerType, endPeriod,
-				false);
+		activityCounter = socialActivityCounterPersistence.fetchByG_C_C_N_O_E(
+			groupId, classNameId, classPK, name, ownerType, endPeriod, false);
 
 		if (activityCounter != null) {
 			return activityCounter;

@@ -58,11 +58,9 @@ public class DBLoader {
 				if (line.endsWith(";")) {
 					String sql = sb.toString();
 
-					sql =
-						StringUtil.replace(
-							sql,
-							new String[] {"\\\"", "\\\\", "\\n", "\\r"},
-							new String[] {"\"", "\\", "\\u000a", "\\u000a"});
+					sql = StringUtil.replace(
+						sql, new String[] {"\\\"", "\\\\", "\\n", "\\r"},
+						new String[] {"\"", "\\", "\\u000a", "\\u000a"});
 
 					sb.setIndex(0);
 
@@ -165,11 +163,9 @@ public class DBLoader {
 				if (line.endsWith(";")) {
 					String sql = sb.toString();
 
-					sql =
-						StringUtil.replace(
-							sql,
-							new String[] {"\\'", "\\\"", "\\\\", "\\n", "\\r"},
-							new String[] {"''", "\"", "\\", "\n", "\r"});
+					sql = StringUtil.replace(
+						sql, new String[] {"\\'", "\\\"", "\\\\", "\\n", "\\r"},
+						new String[] {"''", "\"", "\\", "\n", "\r"});
 
 					sql = sql.substring(0, sql.length() - 1);
 

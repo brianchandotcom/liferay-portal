@@ -427,13 +427,11 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 
 					serviceContext.setUuid(fileVersion.getUuid());
 
-					importedFileEntry =
-						DLAppLocalServiceUtil.updateFileEntry(
-							userId, existingFileEntry.getFileEntryId(),
-							fileEntry.getTitle(), fileEntry.getMimeType(),
-							fileEntry.getTitle(), fileEntry.getDescription(),
-							null, false, is, fileEntry.getSize(),
-							serviceContext);
+					importedFileEntry = DLAppLocalServiceUtil.updateFileEntry(
+						userId, existingFileEntry.getFileEntryId(),
+						fileEntry.getTitle(), fileEntry.getMimeType(),
+						fileEntry.getTitle(), fileEntry.getDescription(), null,
+						false, is, fileEntry.getSize(), serviceContext);
 				}
 				else {
 					DLAppLocalServiceUtil.updateAsset(

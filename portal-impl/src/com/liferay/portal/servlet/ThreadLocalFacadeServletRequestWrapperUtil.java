@@ -65,9 +65,8 @@ public class ThreadLocalFacadeServletRequestWrapperUtil {
 					(HttpServletRequest)currentServletRequest);
 		}
 		else {
-			servletRequestWrapper =
-				new ThreadLocalFacadeServletRequestWrapper(
-					previousServletRequestWrapper, currentServletRequest);
+			servletRequestWrapper = new ThreadLocalFacadeServletRequestWrapper(
+				previousServletRequestWrapper, currentServletRequest);
 		}
 
 		if (previousServletRequestWrapper != null) {

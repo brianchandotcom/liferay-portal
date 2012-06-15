@@ -124,13 +124,12 @@ public class DDLPortletDataHandlerImpl
 			if (existingRecordSet == null) {
 				serviceContext.setUuid(recordSet.getUuid());
 
-				importedRecordSet =
-					DDLRecordSetLocalServiceUtil.addRecordSet(
-						userId, portletDataContext.getScopeGroupId(),
-						structureId, recordSet.getRecordSetKey(),
-						recordSet.getNameMap(), recordSet.getDescriptionMap(),
-						recordSet.getMinDisplayRows(), recordSet.getScope(),
-						serviceContext);
+				importedRecordSet = DDLRecordSetLocalServiceUtil.addRecordSet(
+					userId, portletDataContext.getScopeGroupId(), structureId,
+					recordSet.getRecordSetKey(), recordSet.getNameMap(),
+					recordSet.getDescriptionMap(),
+					recordSet.getMinDisplayRows(), recordSet.getScope(),
+					serviceContext);
 			}
 			else {
 				importedRecordSet =

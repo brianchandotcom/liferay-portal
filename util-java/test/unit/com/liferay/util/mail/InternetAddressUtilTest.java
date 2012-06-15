@@ -61,9 +61,8 @@ public class InternetAddressUtilTest {
 
 	@Test
 	public void testRemoveExistingEmailAddress() {
-		InternetAddress[] internetAddresses =
-			InternetAddressUtil.removeEntry(
-				_internetAddresses, "1@liferay.com");
+		InternetAddress[] internetAddresses = InternetAddressUtil.removeEntry(
+			_internetAddresses, "1@liferay.com");
 
 		Assert.assertEquals(10, internetAddresses.length);
 	}

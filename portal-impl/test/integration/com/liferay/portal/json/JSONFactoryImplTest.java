@@ -17,43 +17,51 @@ package com.liferay.portal.json;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.util.BaseTestCase;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Igor Spasic
  */
-public class JSONFactoryImplTest extends BaseTestCase {
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class JSONFactoryImplTest {
 
+	@Test
 	public void testAnnotations() {
 		FooBean fooBean = new FooBean();
 
 		String json = _removeQuotationMarks(
 			JSONFactoryUtil.looseSerialize(fooBean));
 
-		assertEquals(
+		Assert.assertEquals(
 			"{class:com.liferay.portal.json.FooBean,name:bar,value:173}",
 			json);
 	}
 
+	@Test
 	public void testCollection() {
 		FooBean1 fooBean1 = new FooBean1();
 
 		String json = _removeQuotationMarks(
 			JSONFactoryUtil.looseSerialize(fooBean1));
 
-		assertEquals(
+		Assert.assertEquals(
 			"{class:com.liferay.portal.json.FooBean1,collection:[element]," +
-				"value:173}",
+			"value:173}",
 			json);
 	}
 
+	@Test
 	public void testStrictMode() {
 		FooBean2 fooBean2 = new FooBean2();
 
 		String json = _removeQuotationMarks(
 			JSONFactoryUtil.looseSerialize(fooBean2));
 
-		assertEquals("{value:173}", json);
+		Assert.assertEquals("{value:173}", json);
 	}
 
 	private String _removeQuotationMarks(String string) {

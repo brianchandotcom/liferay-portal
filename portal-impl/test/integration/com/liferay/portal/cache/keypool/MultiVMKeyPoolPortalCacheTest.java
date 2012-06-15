@@ -16,13 +16,19 @@ package com.liferay.portal.cache.keypool;
 
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
-import com.liferay.portal.util.BaseTestCase;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Shuyang Zhou
  */
-public class MultiVMKeyPoolPortalCacheTest extends BaseTestCase {
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class MultiVMKeyPoolPortalCacheTest {
 
+	@Test
 	public void testPutAndGet() {
 		PortalCache clusterPortalCache = SingleVMPoolUtil.getCache(
 			"ClusterPortalCache");
@@ -37,7 +43,7 @@ public class MultiVMKeyPoolPortalCacheTest extends BaseTestCase {
 
 		multiVMKeyPoolPortalCache.put(testKey, testValue);
 
-		assertEquals(testValue, multiVMKeyPoolPortalCache.get(testKey));
+		Assert.assertEquals(testValue, multiVMKeyPoolPortalCache.get(testKey));
 	}
 
 }

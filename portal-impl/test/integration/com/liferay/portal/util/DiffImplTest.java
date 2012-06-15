@@ -24,11 +24,19 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
 /**
  * @author Bruno Farache
  */
-public class DiffImplTest extends BaseTestCase {
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class DiffImplTest {
 
+	@Test
 	public void testOne() {
 		Reader reader1 = new UnsyncStringReader("liferay");
 		Reader reader2 = new UnsyncStringReader("liferay");
@@ -38,10 +46,11 @@ public class DiffImplTest extends BaseTestCase {
 
 		List<DiffResult>[] actual = DiffUtil.diff(reader1, reader2);
 
-		assertEquals(expectedSource, actual[0]);
-		assertEquals(expectedTarget, actual[1]);
+		Assert.assertEquals(expectedSource, actual[0]);
+		Assert.assertEquals(expectedTarget, actual[1]);
 	}
 
+	@Test
 	public void testTwo() {
 		Reader reader1 = new UnsyncStringReader("liferay");
 		Reader reader2 = new UnsyncStringReader("LifeRay");
@@ -67,10 +76,11 @@ public class DiffImplTest extends BaseTestCase {
 
 		List<DiffResult>[] actual = DiffUtil.diff(reader1, reader2);
 
-		assertEquals(expectedSource, actual[0]);
-		assertEquals(expectedTarget, actual[1]);
+		Assert.assertEquals(expectedSource, actual[0]);
+		Assert.assertEquals(expectedTarget, actual[1]);
 	}
 
+	@Test
 	public void testThree() {
 		Reader reader1 = new UnsyncStringReader("aaa");
 		Reader reader2 = new UnsyncStringReader("bbb");
@@ -90,10 +100,11 @@ public class DiffImplTest extends BaseTestCase {
 
 		List<DiffResult>[] actual = DiffUtil.diff(reader1, reader2);
 
-		assertEquals(expectedSource, actual[0]);
-		assertEquals(expectedTarget, actual[1]);
+		Assert.assertEquals(expectedSource, actual[0]);
+		Assert.assertEquals(expectedTarget, actual[1]);
 	}
 
+	@Test
 	public void testFour() {
 		Reader reader1 = new UnsyncStringReader("rahab");
 		Reader reader2 = new UnsyncStringReader("boaz");
@@ -113,10 +124,11 @@ public class DiffImplTest extends BaseTestCase {
 
 		List<DiffResult>[] actual = DiffUtil.diff(reader1, reader2);
 
-		assertEquals(expectedSource, actual[0]);
-		assertEquals(expectedTarget, actual[1]);
+		Assert.assertEquals(expectedSource, actual[0]);
+		Assert.assertEquals(expectedTarget, actual[1]);
 	}
 
+	@Test
 	public void testFive() {
 		Reader reader1 = new UnsyncStringReader("aaa\nbbb");
 		Reader reader2 = new UnsyncStringReader("ccc\naaa");
@@ -145,10 +157,11 @@ public class DiffImplTest extends BaseTestCase {
 
 		List<DiffResult>[] actual = DiffUtil.diff(reader1, reader2);
 
-		assertEquals(expectedSource, actual[0]);
-		assertEquals(expectedTarget, actual[1]);
+		Assert.assertEquals(expectedSource, actual[0]);
+		Assert.assertEquals(expectedTarget, actual[1]);
 	}
 
+	@Test
 	public void testSix() {
 		Reader reader1 = new UnsyncStringReader("ccc\naaa");
 		Reader reader2 = new UnsyncStringReader("aaa\nbbb");
@@ -177,10 +190,11 @@ public class DiffImplTest extends BaseTestCase {
 
 		List<DiffResult>[] actual = DiffUtil.diff(reader1, reader2);
 
-		assertEquals(expectedSource, actual[0]);
-		assertEquals(expectedTarget, actual[1]);
+		Assert.assertEquals(expectedSource, actual[0]);
+		Assert.assertEquals(expectedTarget, actual[1]);
 	}
 
+	@Test
 	public void testSeven() {
 		Reader reader1 = new UnsyncStringReader("ccc\naaa\nbbe");
 		Reader reader2 = new UnsyncStringReader("aaa\nbbb");
@@ -207,10 +221,11 @@ public class DiffImplTest extends BaseTestCase {
 
 		List<DiffResult>[] actual = DiffUtil.diff(reader1, reader2);
 
-		assertEquals(expectedSource, actual[0]);
-		assertEquals(expectedTarget, actual[1]);
+		Assert.assertEquals(expectedSource, actual[0]);
+		Assert.assertEquals(expectedTarget, actual[1]);
 	}
 
+	@Test
 	public void testEight() {
 		Reader reader1 = new UnsyncStringReader("add\nbbb\nccc");
 		Reader reader2 = new UnsyncStringReader("bbb\nccc\naee");
@@ -239,10 +254,11 @@ public class DiffImplTest extends BaseTestCase {
 
 		List<DiffResult>[] actual = DiffUtil.diff(reader1, reader2);
 
-		assertEquals(expectedSource, actual[0]);
-		assertEquals(expectedTarget, actual[1]);
+		Assert.assertEquals(expectedSource, actual[0]);
+		Assert.assertEquals(expectedTarget, actual[1]);
 	}
 
+	@Test
 	public void testNine() {
 		Reader reader1 = new UnsyncStringReader("abcd");
 		Reader reader2 = new UnsyncStringReader("abcdee");
@@ -257,10 +273,11 @@ public class DiffImplTest extends BaseTestCase {
 
 		List<DiffResult>[] actual = DiffUtil.diff(reader1, reader2);
 
-		assertEquals(expectedSource, actual[0]);
-		assertEquals(expectedTarget, actual[1]);
+		Assert.assertEquals(expectedSource, actual[0]);
+		Assert.assertEquals(expectedTarget, actual[1]);
 	}
 
+	@Test
 	public void testTen() {
 		Reader reader1 = new UnsyncStringReader("abcd");
 		Reader reader2 = new UnsyncStringReader("abcdeee");
@@ -280,10 +297,11 @@ public class DiffImplTest extends BaseTestCase {
 
 		List<DiffResult>[] actual = DiffUtil.diff(reader1, reader2);
 
-		assertEquals(expectedSource, actual[0]);
-		assertEquals(expectedTarget, actual[1]);
+		Assert.assertEquals(expectedSource, actual[0]);
+		Assert.assertEquals(expectedTarget, actual[1]);
 	}
 
+	@Test
 	public void testEleven() {
 		Reader reader1 = new UnsyncStringReader("aaa\nbbb\nfff");
 		Reader reader2 = new UnsyncStringReader("ccc\nada\nbeb");
@@ -319,10 +337,11 @@ public class DiffImplTest extends BaseTestCase {
 
 		List<DiffResult>[] actual = DiffUtil.diff(reader1, reader2);
 
-		assertEquals(expectedSource, actual[0]);
-		assertEquals(expectedTarget, actual[1]);
+		Assert.assertEquals(expectedSource, actual[0]);
+		Assert.assertEquals(expectedTarget, actual[1]);
 	}
 
+	@Test
 	public void testTwelve() {
 		Reader reader1 = new UnsyncStringReader("ada");
 		Reader reader2 = new UnsyncStringReader("aaa\nccc");
@@ -345,8 +364,8 @@ public class DiffImplTest extends BaseTestCase {
 
 		List<DiffResult>[] actual = DiffUtil.diff(reader1, reader2);
 
-		assertEquals(expectedSource, actual[0]);
-		assertEquals(expectedTarget, actual[1]);
+		Assert.assertEquals(expectedSource, actual[0]);
+		Assert.assertEquals(expectedTarget, actual[1]);
 	}
 
 }

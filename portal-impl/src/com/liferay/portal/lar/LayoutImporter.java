@@ -245,6 +245,8 @@ public class LayoutImporter {
 			layoutSetPrototypeLinkEnabled = false;
 		}
 
+		boolean globalScopeImport = group.isCompany();
+
 		//boolean publishToRemote = MapUtil.getBoolean(
 		//	parameterMap, PortletDataHandlerKeys.PUBLISH_TO_REMOTE);
 		String layoutsImportMode = MapUtil.getString(
@@ -527,7 +529,7 @@ public class LayoutImporter {
 			_permissionImporter.readPortletDataPermissions(portletDataContext);
 		}
 
-		if (importCategories) {
+		if (importCategories || globalScopeImport) {
 			_portletImporter.readAssetCategories(portletDataContext);
 		}
 
@@ -635,7 +637,6 @@ public class LayoutImporter {
 			String portletId = portletElement.attributeValue("portlet-id");
 			long layoutId = GetterUtil.getLong(
 				portletElement.attributeValue("layout-id"));
-			long plid = newLayoutsMap.get(layoutId).getPlid();
 			long oldPlid = GetterUtil.getLong(
 				portletElement.attributeValue("old-plid"));
 
@@ -646,12 +647,17 @@ public class LayoutImporter {
 				continue;
 			}
 
-			Layout layout = null;
+			Layout layout = newLayoutsMap.get(layoutId);
 
-			try {
-				layout = LayoutUtil.findByPrimaryKey(plid);
+			long plid = LayoutConstants.DEFAULT_PLID;
+
+			if (layout != null) {
+				plid = layout.getPlid();
 			}
-			catch (NoSuchLayoutException nsle) {
+
+			layout = LayoutUtil.fetchByPrimaryKey(plid);
+
+			if ((layout == null) && !globalScopeImport) {
 				continue;
 			}
 
@@ -671,15 +677,21 @@ public class LayoutImporter {
 			_portletImporter.setPortletScope(
 				portletDataContext, portletElement);
 
+			long prefsGroupId = groupId;
+
 			try {
+
+				if ((layout != null) && !globalScopeImport) {
+					prefsGroupId = layout.getGroupId();
+				}
 
 				// Portlet preferences
 
 				_portletImporter.importPortletPreferences(
-					portletDataContext, layoutSet.getCompanyId(),
-					layout.getGroupId(), layout, null, portletElement,
-					importPortletSetup, importPortletArchivedSetups,
-					importPortletUserPreferences, false);
+					portletDataContext, layoutSet.getCompanyId(), prefsGroupId,
+					layout, null, portletElement, importPortletSetup,
+					importPortletArchivedSetups, importPortletUserPreferences,
+					false);
 
 				// Portlet data
 
@@ -694,7 +706,7 @@ public class LayoutImporter {
 			}
 			finally {
 				_portletImporter.resetPortletScope(
-					portletDataContext, layout.getGroupId());
+					portletDataContext, prefsGroupId);
 			}
 
 			// Portlet permissions

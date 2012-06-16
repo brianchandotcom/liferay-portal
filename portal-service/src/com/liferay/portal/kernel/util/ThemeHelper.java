@@ -15,7 +15,7 @@
 package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.template.TemplateManager;
-import com.liferay.portal.kernel.template.TemplateManagerUtil;
+import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.Theme;
 import com.liferay.portal.util.PortalUtil;
@@ -165,11 +165,11 @@ public class ThemeHelper {
 		String extension = theme.getTemplateExtension();
 
 		if (extension.equals(TEMPLATE_EXTENSION_FTL)) {
-			return TemplateManagerUtil.hasTemplate(
+			return TemplateResourceLoaderUtil.hasTemplateResource(
 				TemplateManager.FREEMARKER, resourcePath);
 		}
 		else if (extension.equals(TEMPLATE_EXTENSION_VM)) {
-			return TemplateManagerUtil.hasTemplate(
+			return TemplateResourceLoaderUtil.hasTemplateResource(
 				TemplateManager.VELOCITY, resourcePath);
 		}
 		else {

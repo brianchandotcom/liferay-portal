@@ -16,6 +16,8 @@
 
 <%@ include file="/html/portlet/layouts_admin/init.jsp" %>
 
+<%@ page import="com.liferay.portal.template.StringTemplateResource" %>
+
 <%
 Layout selLayout = (Layout)request.getAttribute("edit_pages.jsp-selLayout");
 
@@ -87,8 +89,8 @@ if (selLayout != null) {
 <div class="customization-settings">
 
 	<%
-	if (velocityTemplateId != null) {
-		RuntimePageUtil.processCustomizationSettings(pageContext, velocityTemplateId, velocityTemplateContent);
+	if (Validator.isNotNull(velocityTemplateId) && Validator.isNotNull(velocityTemplateContent)) {
+		RuntimePageUtil.processCustomizationSettings(pageContext, new StringTemplateResource(velocityTemplateId, velocityTemplateContent));
 	}
 	%>
 

@@ -16,6 +16,8 @@
 
 <%@ include file="/html/portlet/nested_portlets/init.jsp" %>
 
+<%@ page import="com.liferay.portal.template.StringTemplateResource" %>
+
 <c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.UPDATE) %>">
 	<div class="aui-helper-hidden portlet-msg-info" id="<portlet:namespace />nested-portlets-msg">
 		<liferay-ui:message key="drag-portlets-below-to-nest-them" />
@@ -41,7 +43,9 @@ try {
 	String velocityTemplateId = (String)request.getAttribute(WebKeys.NESTED_PORTLET_VELOCITY_TEMPLATE_ID);
 	String velocityTemplateContent = (String)request.getAttribute(WebKeys.NESTED_PORTLET_VELOCITY_TEMPLATE_CONTENT);
 
-	RuntimePageUtil.processTemplate(pageContext, velocityTemplateId, velocityTemplateContent);
+	if (Validator.isNotNull(velocityTemplateId) && Validator.isNotNull(velocityTemplateContent)) {
+		RuntimePageUtil.processTemplate(pageContext, new StringTemplateResource(velocityTemplateId, velocityTemplateContent));
+	}
 }
 catch (Exception e) {
 	_log.error("Cannot render Nested Portlets portlet", e);

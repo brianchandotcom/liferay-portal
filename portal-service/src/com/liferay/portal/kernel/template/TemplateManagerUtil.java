@@ -28,24 +28,6 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class TemplateManagerUtil {
 
-	public static void clearCache(String templateManagerName)
-		throws TemplateException {
-
-		TemplateManager templateManager = _getTemplateManager(
-			templateManagerName);
-
-		templateManager.clearCache();
-	}
-
-	public static void clearCache(String templateManagerName, String templateId)
-		throws TemplateException {
-
-		TemplateManager templateManager = _getTemplateManager(
-			templateManagerName);
-
-		templateManager.clearCache(templateId);
-	}
-
 	public static void destroy() {
 		Map<String, TemplateManager> templateManagers = _getTemplateManagers();
 
@@ -65,9 +47,7 @@ public class TemplateManagerUtil {
 	}
 
 	public static Template getTemplate(
-			String templateManagerName, String templateId,
-			String templateContent, String errorTemplateId,
-			String errorTemplateContent,
+			String templateManagerName, TemplateResource templateResource,
 			TemplateContextType templateContextType)
 		throws TemplateException {
 
@@ -75,13 +55,12 @@ public class TemplateManagerUtil {
 			templateManagerName);
 
 		return templateManager.getTemplate(
-			templateId, templateContent, errorTemplateId, errorTemplateContent,
-			templateContextType);
+			templateResource, templateContextType);
 	}
 
 	public static Template getTemplate(
-			String templateManagerName, String templateId,
-			String templateContent, String errorTemplateId,
+			String templateManagerName, TemplateResource templateResource,
+			TemplateResource errorTemplateResource,
 			TemplateContextType templateContextType)
 		throws TemplateException {
 
@@ -89,30 +68,7 @@ public class TemplateManagerUtil {
 			templateManagerName);
 
 		return templateManager.getTemplate(
-			templateId, templateContent, errorTemplateId, templateContextType);
-	}
-
-	public static Template getTemplate(
-			String templateManagerName, String templateId,
-			String templateContent, TemplateContextType templateContextType)
-		throws TemplateException {
-
-		TemplateManager templateManager = _getTemplateManager(
-			templateManagerName);
-
-		return templateManager.getTemplate(
-			templateId, templateContent, templateContextType);
-	}
-
-	public static Template getTemplate(
-			String templateManagerName, String templateId,
-			TemplateContextType templateContextType)
-		throws TemplateException {
-
-		TemplateManager templateManager = _getTemplateManager(
-			templateManagerName);
-
-		return templateManager.getTemplate(templateId, templateContextType);
+			templateResource, errorTemplateResource, templateContextType);
 	}
 
 	public static TemplateManager getTemplateManager(
@@ -133,16 +89,6 @@ public class TemplateManagerUtil {
 
 	public static Map<String, TemplateManager> getTemplateManagers() {
 		return Collections.unmodifiableMap(_getTemplateManagers());
-	}
-
-	public static boolean hasTemplate(
-			String templateManagerName, String templateId)
-		throws TemplateException {
-
-		TemplateManager templateManager = _getTemplateManager(
-			templateManagerName);
-
-		return templateManager.hasTemplate(templateId);
 	}
 
 	public static boolean hasTemplateManager(String templateManagerName) {

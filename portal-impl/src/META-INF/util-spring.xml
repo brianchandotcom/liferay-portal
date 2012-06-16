@@ -328,6 +328,14 @@
 			</list>
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.template.TemplateResourceLoaderUtil" class="com.liferay.portal.kernel.template.TemplateResourceLoaderUtil">
+		<property name="templateResourceLoaders">
+			<list>
+				<bean class="com.liferay.portal.freemarker.FreeMarkerTemplateResourceLoader" />
+				<bean class="com.liferay.portal.velocity.VelocityTemplateResourceLoader" />
+			</list>
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil" class="com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil">
 		<property name="trashHandlerRegistry">
 			<bean class="com.liferay.portal.trash.TrashHandlerRegistryImpl" />

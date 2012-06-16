@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.template.StringTemplateResource;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
@@ -139,7 +140,8 @@ public class RendererImpl implements Renderer {
 
 		try {
 			Template template = TemplateManagerUtil.getTemplate(
-				TemplateManager.VELOCITY, className, velocityTemplateContent,
+				TemplateManager.VELOCITY,
+				new StringTemplateResource(className, velocityTemplateContent),
 				TemplateContextType.STANDARD);
 
 			template.prepare(request);

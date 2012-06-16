@@ -15,6 +15,7 @@
 package com.liferay.portal.velocity;
 
 import com.liferay.portal.kernel.template.TemplateException;
+import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 import com.liferay.portal.security.pacl.PACLPolicy;
 import com.liferay.portal.template.TemplateContextHelper;
@@ -30,14 +31,14 @@ import org.apache.velocity.app.VelocityEngine;
 public class PACLVelocityTemplate extends VelocityTemplate {
 
 	public PACLVelocityTemplate(
-		String templateId, String templateContent, String errorTemplateId,
-		String errorTemplateContent, VelocityContext velocityContext,
+		TemplateResource templateResource,
+		TemplateResource errorTemplateResource, VelocityContext velocityContext,
 		VelocityEngine velocityEngine,
 		TemplateContextHelper templateContextHelper, PACLPolicy paclPolicy) {
 
 		super(
-			templateId, templateContent, errorTemplateId, errorTemplateContent,
-			velocityContext, velocityEngine, templateContextHelper);
+			templateResource, errorTemplateResource, velocityContext,
+			velocityEngine, templateContextHelper);
 
 		_paclPolicy = paclPolicy;
 	}

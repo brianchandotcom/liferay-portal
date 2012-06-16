@@ -14,6 +14,8 @@
  */
 --%>
 
+<%@ page import="com.liferay.portal.template.StringTemplateResource" %>
+
 <%
 if (!denyAccess && (themeDisplay.isStatePopUp() || (layoutTypePortlet.hasStateMax() && (portlet != null)) || Validator.isNotNull(controlPanelCategory))) {
 	String velocityTemplateId = null;
@@ -55,7 +57,9 @@ if (!denyAccess && (themeDisplay.isStatePopUp() || (layoutTypePortlet.hasStateMa
 		runtimePortletIds.add(ppid);
 	}
 
-	RuntimePageUtil.processTemplate(pageContext, ppid, velocityTemplateId, content);
+	if (Validator.isNotNull(velocityTemplateId) && Validator.isNotNull(content)) {
+		RuntimePageUtil.processTemplate(pageContext, ppid, new StringTemplateResource(velocityTemplateId, content));
+	}
 }
 else {
 	String description = StringPool.BLANK;

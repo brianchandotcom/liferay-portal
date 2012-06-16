@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateContextType;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
+import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -78,32 +79,25 @@ import org.apache.commons.lang.time.StopWatch;
 public class RuntimePageImpl implements RuntimePage {
 
 	public void processCustomizationSettings(
-			PageContext pageContext, String velocityTemplateId,
-			String velocityTemplateContent)
+			PageContext pageContext, TemplateResource templateResource)
 		throws Exception {
 
-		doDispatch(
-			pageContext, null, velocityTemplateId, velocityTemplateContent,
-			false);
-	}
-
-	public void processTemplate(
-			PageContext pageContext, String velocityTemplateId,
-			String velocityTemplateContent)
-		throws Exception {
-
-		processTemplate(
-			pageContext, null, velocityTemplateId, velocityTemplateContent);
+		doDispatch(pageContext, null, templateResource, false);
 	}
 
 	public void processTemplate(
 			PageContext pageContext, String portletId,
-			String velocityTemplateId, String velocityTemplateContent)
+			TemplateResource templateResource)
 		throws Exception {
 
-		doDispatch(
-			pageContext, portletId, velocityTemplateId, velocityTemplateContent,
-			true);
+		doDispatch(pageContext, portletId, templateResource, true);
+	}
+
+	public void processTemplate(
+			PageContext pageContext, TemplateResource templateResource)
+		throws Exception {
+
+		processTemplate(pageContext, null, templateResource);
 	}
 
 	public String processXML(
@@ -204,16 +198,12 @@ public class RuntimePageImpl implements RuntimePage {
 	}
 
 	protected void doDispatch(
-			PageContext pageContext, String portletId,
-			String velocityTemplateId, String velocityTemplateContent,
-			boolean processTemplate)
-		throws Exception {
+					PageContext pageContext, String portletId,
+					TemplateResource templateResource, boolean processTemplate)
+			throws Exception {
 
-		if (Validator.isNull(velocityTemplateContent)) {
-			return;
-		}
-
-		LayoutTemplate layoutTemplate = getLayoutTemlpate(velocityTemplateId);
+		LayoutTemplate layoutTemplate = getLayoutTemlpate(
+			templateResource.getTemplateId());
 
 		String pluginServletContextName = GetterUtil.getString(
 			layoutTemplate.getServletContextName());
@@ -242,13 +232,12 @@ public class RuntimePageImpl implements RuntimePage {
 
 			if (processTemplate) {
 				doProcessTemplate(
-					pageContext, portletId, velocityTemplateId,
-					velocityTemplateContent, templateContextType);
+					pageContext, portletId, templateResource,
+									templateContextType);
 			}
 			else {
 				doProcessCustomizationSettings(
-					pageContext, velocityTemplateId, velocityTemplateContent,
-					templateContextType);
+					pageContext, templateResource, templateContextType);
 			}
 		}
 		finally {
@@ -261,8 +250,7 @@ public class RuntimePageImpl implements RuntimePage {
 	}
 
 	protected void doProcessCustomizationSettings(
-			PageContext pageContext, String velocityTemplateId,
-			String velocityTemplateContent,
+			PageContext pageContext, TemplateResource templateResource,
 			TemplateContextType templateContextType)
 		throws Exception {
 
@@ -275,8 +263,8 @@ public class RuntimePageImpl implements RuntimePage {
 			new CustomizationSettingsProcessor(pageContext);
 
 		Template template = TemplateManagerUtil.getTemplate(
-			TemplateManager.VELOCITY, velocityTemplateId,
-			velocityTemplateContent, templateContextType);
+			TemplateManager.VELOCITY, templateResource,
+			TemplateContextType.STANDARD);
 
 		template.put("processor", processor);
 
@@ -303,10 +291,10 @@ public class RuntimePageImpl implements RuntimePage {
 	}
 
 	protected void doProcessTemplate(
-			PageContext pageContext, String portletId,
-			String velocityTemplateId, String velocityTemplateContent,
-			TemplateContextType templateContextType)
-		throws Exception {
+				PageContext pageContext, String portletId,
+				TemplateResource templateResource,
+				TemplateContextType templateContextType)
+			throws Exception {
 
 		HttpServletRequest request =
 			(HttpServletRequest)pageContext.getRequest();
@@ -317,8 +305,7 @@ public class RuntimePageImpl implements RuntimePage {
 			request, response, portletId);
 
 		Template template = TemplateManagerUtil.getTemplate(
-			TemplateManager.VELOCITY, velocityTemplateId,
-			velocityTemplateContent, templateContextType);
+			TemplateManager.VELOCITY, templateResource, templateContextType);
 
 		template.put("processor", processor);
 

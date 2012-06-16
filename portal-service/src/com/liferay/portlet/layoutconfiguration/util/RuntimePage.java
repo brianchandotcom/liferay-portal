@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.layoutconfiguration.util;
 
+import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portlet.layoutconfiguration.util.xml.RuntimeLogic;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,18 +28,16 @@ import javax.servlet.jsp.PageContext;
 public interface RuntimePage {
 
 	public void processCustomizationSettings(
-			PageContext pageContext, String velocityTemplateId,
-			String velocityTemplateContent)
-		throws Exception;
-
-	public void processTemplate(
-			PageContext pageContext, String velocityTemplateId,
-			String velocityTemplateContent)
+			PageContext pageContext, TemplateResource templateResource)
 		throws Exception;
 
 	public void processTemplate(
 			PageContext pageContext, String portletId,
-			String velocityTemplateId, String velocityTemplateContent)
+			TemplateResource templateResource)
+		throws Exception;
+
+	public void processTemplate(
+			PageContext pageContext, TemplateResource templateResource)
 		throws Exception;
 
 	public String processXML(

@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateContextType;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
+import com.liferay.portal.kernel.template.TemplateResource;
+import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -173,14 +175,18 @@ public class DDMXSDImpl implements DDMXSD {
 
 			String resource = resourcePath.toString();
 
-			if (!TemplateManagerUtil.hasTemplate(
+			if (!TemplateResourceLoaderUtil.hasTemplateResource(
 					TemplateManager.FREEMARKER, resource)) {
 
 				resource = defaultResourcePath;
 			}
 
+			TemplateResource templateResource =
+				TemplateResourceLoaderUtil.getTemplateResource(
+					TemplateManager.FREEMARKER, resource);
+
 			Template template = TemplateManagerUtil.getTemplate(
-				TemplateManager.FREEMARKER, resource,
+				TemplateManager.FREEMARKER, templateResource,
 				TemplateContextType.STANDARD);
 
 			for (Map.Entry<String, Object> entry :

@@ -483,8 +483,7 @@ AUI.add(
 							if (focusManager) {
 								focusManager.refresh();
 							}
-						},
-						instance
+						}
 					);
 
 					menu._liveSearch = liveSearch;

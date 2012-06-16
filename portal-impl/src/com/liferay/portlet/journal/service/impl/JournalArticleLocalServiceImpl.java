@@ -3573,6 +3573,9 @@ public class JournalArticleLocalServiceImpl
 
 	protected void validateContent(String content) throws PortalException {
 		if (Validator.isNull(content)) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Content was empty, we can't save an empty article");
+			}
 			throw new ArticleContentException();
 		}
 
@@ -3580,6 +3583,12 @@ public class JournalArticleLocalServiceImpl
 			SAXReaderUtil.read(content);
 		}
 		catch (DocumentException de) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Content failed XML validation, the content " +
+						"we tried was: ");
+				_log.debug(content);
+				_log.debug("The error was: " + de);
+			}
 			throw new ArticleContentException();
 		}
 	}

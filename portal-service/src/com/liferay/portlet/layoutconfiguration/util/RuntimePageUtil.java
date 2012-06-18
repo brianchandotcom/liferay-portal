@@ -15,6 +15,7 @@
 package com.liferay.portlet.layoutconfiguration.util;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portlet.layoutconfiguration.util.xml.RuntimeLogic;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,37 +35,33 @@ public class RuntimePageUtil {
 	}
 
 	public static void processCustomizationSettings(
-			PageContext pageContext, String velocityTemplateId,
-			String velocityTemplateContent)
-		throws Exception {
+				PageContext pageContext, TemplateResource templateResource)
+			throws Exception {
 
 		getRuntimePage().processCustomizationSettings(
-			pageContext, velocityTemplateId, velocityTemplateContent);
+			pageContext, templateResource);
 	}
 
 	public static void processTemplate(
-			PageContext pageContext, String velocityTemplateId,
-			String velocityTemplateContent)
-		throws Exception {
+				PageContext pageContext, String portletId,
+				TemplateResource templateResource)
+			throws Exception {
 
-		getRuntimePage().processTemplate(
-			pageContext, velocityTemplateId, velocityTemplateContent);
+			getRuntimePage().processTemplate(
+				pageContext, portletId, templateResource);
 	}
 
 	public static void processTemplate(
-			PageContext pageContext, String portletId,
-			String velocityTemplateId, String velocityTemplateContent)
-		throws Exception {
+				PageContext pageContext, TemplateResource templateResource)
+			throws Exception {
 
-		getRuntimePage().processTemplate(
-			pageContext, portletId, velocityTemplateId,
-			velocityTemplateContent);
+		getRuntimePage().processTemplate(pageContext, templateResource);
 	}
 
 	public static String processXML(
-			HttpServletRequest request, String content,
-			RuntimeLogic runtimeLogic)
-		throws Exception {
+				HttpServletRequest request, String content,
+				RuntimeLogic runtimeLogic)
+			throws Exception {
 
 		return getRuntimePage().processXML(request, content, runtimeLogic);
 	}

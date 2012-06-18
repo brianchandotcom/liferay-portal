@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.template.URLResourceParser;
 import com.liferay.portal.util.PortalUtil;
 
 import java.io.IOException;
@@ -31,7 +32,7 @@ import javax.servlet.ServletContext;
 /**
  * @author Mika Koivisto
  */
-public class ServletTemplateLoader extends URLTemplateLoader {
+public class FreeMarkerServletResourceParser extends URLResourceParser {
 
 	@Override
 	public URL getURL(String name) throws IOException {
@@ -97,6 +98,6 @@ public class ServletTemplateLoader extends URLTemplateLoader {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
-		ServletTemplateLoader.class);
+		FreeMarkerServletResourceParser.class);
 
 }

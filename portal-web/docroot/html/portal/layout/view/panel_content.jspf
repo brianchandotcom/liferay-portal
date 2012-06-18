@@ -55,7 +55,9 @@ if (!denyAccess && (themeDisplay.isStatePopUp() || (layoutTypePortlet.hasStateMa
 		runtimePortletIds.add(ppid);
 	}
 
-	RuntimePageUtil.processTemplate(pageContext, ppid, velocityTemplateId, content);
+	if (Validator.isNotNull(velocityTemplateId) && Validator.isNotNull(content)) {
+		RuntimePageUtil.processTemplate(pageContext, ppid, new StringTemplateResource(velocityTemplateId, content));
+	}
 }
 else {
 	String description = StringPool.BLANK;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.velocity;
+package com.liferay.portal.template;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -20,69 +20,56 @@ import com.liferay.portal.theme.ThemeLoader;
 import com.liferay.portal.theme.ThemeLoaderFactory;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
+import java.io.IOException;
 
-import org.apache.velocity.exception.ResourceNotFoundException;
+import java.net.URL;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Tina Tian
  */
-public class ThemeLoaderVelocityResourceListener
-	extends VelocityResourceListener {
+public class ThemeResourceParser extends URLResourceParser {
 
 	@Override
-	public InputStream getResourceStream(String source)
-		throws ResourceNotFoundException {
-
-		try {
-			return doGetResourceStream(source);
-		}
-		catch (Exception e) {
-			throw new ResourceNotFoundException(source);
-		}
-	}
-
-	protected InputStream doGetResourceStream(String source) throws Exception {
-		int pos = source.indexOf(THEME_LOADER_SEPARATOR);
+	public URL getURL(String templateId) throws IOException {
+		int pos = templateId.indexOf(THEME_LOADER_SEPARATOR);
 
 		if (pos == -1) {
 			return null;
 		}
 
-		String servletContextName = source.substring(0, pos);
+		String servletContextName = templateId.substring(0, pos);
 
 		ThemeLoader themeLoader = ThemeLoaderFactory.getThemeLoader(
 			servletContextName);
 
 		if (themeLoader == null) {
 			_log.error(
-				source + " is not valid because " + servletContextName +
+				templateId + " is not valid because " + servletContextName +
 					" does not map to a theme loader");
 
 			return null;
 		}
 
-		String name = source.substring(pos + THEME_LOADER_SEPARATOR.length());
+		String templateName = templateId.substring(
+			pos + THEME_LOADER_SEPARATOR.length());
 
 		String themesPath = themeLoader.getThemesPath();
 
-		if (name.startsWith(themesPath)) {
-			name = name.substring(themesPath.length());
+		if (templateName.startsWith(themesPath)) {
+			templateId = templateName.substring(themesPath.length());
 		}
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				name + " is associated with the theme loader " +
+				templateId + " is associated with the theme loader " +
 					servletContextName + " " + themeLoader);
 		}
 
 		File fileStorage = themeLoader.getFileStorage();
 
-		return new FileInputStream(fileStorage.getPath() + name);
+		return new File(fileStorage, templateId).toURI().toURL();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
-		ThemeLoaderVelocityResourceListener.class);
+	private static Log _log = LogFactoryUtil.getLog(ThemeResourceParser.class);
 
 }

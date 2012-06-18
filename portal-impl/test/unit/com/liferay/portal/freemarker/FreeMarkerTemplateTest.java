@@ -17,13 +17,10 @@ package com.liferay.portal.freemarker;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateException;
+import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.templateparser.TemplateContext;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.template.StringTemplateResource;
 import com.liferay.portal.template.TemplateContextHelper;
-
-import freemarker.cache.ClassTemplateLoader;
-import freemarker.cache.MultiTemplateLoader;
-import freemarker.cache.TemplateLoader;
 
 import freemarker.core.ParseException;
 
@@ -54,24 +51,12 @@ public class FreeMarkerTemplateTest extends TestCase {
 		_configuration.setLocalizedLookup(false);
 
 		_templateContextHelper = new MockTemplateContextHelper();
-
-		_stringTemplateLoader = new StringTemplateLoader();
-
-		MultiTemplateLoader multiTemplateLoader =
-			new MultiTemplateLoader(
-				new TemplateLoader[] {
-					new ClassTemplateLoader(
-						FreeMarkerTemplateTest.class, StringPool.SLASH),
-					_stringTemplateLoader, new MockTemplateLoader()
-				});
-
-		_configuration.setTemplateLoader(multiTemplateLoader);
 	}
 
 	public void testGet() throws Exception {
 		Template template = new FreeMarkerTemplate(
-			_TEMPLATE_FILE_NAME, null, null, null, null, _configuration,
-			_templateContextHelper, _stringTemplateLoader);
+			new MockTemplateResource(_TEMPLATE_FILE_NAME), null, null,
+			_configuration, _templateContextHelper, null);
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -88,8 +73,8 @@ public class FreeMarkerTemplateTest extends TestCase {
 
 	public void testPrepare() throws Exception {
 		Template template = new FreeMarkerTemplate(
-			_TEMPLATE_FILE_NAME, null, null, null, null, _configuration,
-			_templateContextHelper, _stringTemplateLoader);
+			new MockTemplateResource(_TEMPLATE_FILE_NAME), null, null,
+			_configuration, _templateContextHelper, null);
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -108,8 +93,8 @@ public class FreeMarkerTemplateTest extends TestCase {
 
 	public void testProcessTemplate1() throws Exception {
 		Template template = new FreeMarkerTemplate(
-			_TEMPLATE_FILE_NAME, null, null, null, null, _configuration,
-			_templateContextHelper, _stringTemplateLoader);
+			new MockTemplateResource(_TEMPLATE_FILE_NAME), null, null,
+			_configuration, _templateContextHelper, null);
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -124,8 +109,8 @@ public class FreeMarkerTemplateTest extends TestCase {
 
 	public void testProcessTemplate2() throws Exception {
 		Template template = new FreeMarkerTemplate(
-			_WRONG_TEMPLATE_ID, null, null, null, null, _configuration,
-			_templateContextHelper, _stringTemplateLoader);
+			new MockTemplateResource(_WRONG_TEMPLATE_ID), null, null,
+			_configuration, _templateContextHelper, null);
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -151,8 +136,9 @@ public class FreeMarkerTemplateTest extends TestCase {
 
 	public void testProcessTemplate3() throws Exception {
 		Template template = new FreeMarkerTemplate(
-			_WRONG_TEMPLATE_ID, _TEST_TEMPLATE_CONTENT, null, null, null,
-			_configuration, _templateContextHelper, _stringTemplateLoader);
+			new StringTemplateResource(
+				_WRONG_TEMPLATE_ID, _TEST_TEMPLATE_CONTENT), null, null,
+			_configuration, _templateContextHelper, null);
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -167,8 +153,9 @@ public class FreeMarkerTemplateTest extends TestCase {
 
 	public void testProcessTemplate4() throws Exception {
 		Template template = new FreeMarkerTemplate(
-			_TEMPLATE_FILE_NAME, null, _WRONG_ERROR_TEMPLATE_ID, null, null,
-			_configuration, _templateContextHelper, _stringTemplateLoader);
+			new MockTemplateResource(_TEMPLATE_FILE_NAME),
+			new MockTemplateResource(_WRONG_ERROR_TEMPLATE_ID), null,
+			_configuration, _templateContextHelper, null);
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -183,8 +170,9 @@ public class FreeMarkerTemplateTest extends TestCase {
 
 	public void testProcessTemplate5() throws Exception {
 		Template template = new FreeMarkerTemplate(
-			_WRONG_TEMPLATE_ID, null, _TEMPLATE_FILE_NAME, null, null,
-			_configuration, _templateContextHelper, _stringTemplateLoader);
+			new MockTemplateResource(_WRONG_TEMPLATE_ID),
+			new MockTemplateResource(_TEMPLATE_FILE_NAME), null, _configuration,
+			_templateContextHelper, null);
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -199,8 +187,9 @@ public class FreeMarkerTemplateTest extends TestCase {
 
 	public void testProcessTemplate6() throws Exception {
 		Template template = new FreeMarkerTemplate(
-			_WRONG_TEMPLATE_ID, null, _WRONG_ERROR_TEMPLATE_ID, null, null,
-			_configuration, _templateContextHelper, _stringTemplateLoader);
+			new MockTemplateResource(_WRONG_TEMPLATE_ID),
+			new MockTemplateResource(_WRONG_ERROR_TEMPLATE_ID), null,
+			_configuration, _templateContextHelper, null);
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -226,9 +215,10 @@ public class FreeMarkerTemplateTest extends TestCase {
 
 	public void testProcessTemplate7() throws Exception {
 		Template template = new FreeMarkerTemplate(
-			_WRONG_TEMPLATE_ID, null, _WRONG_ERROR_TEMPLATE_ID,
-			_TEST_TEMPLATE_CONTENT, null, _configuration,
-			_templateContextHelper, _stringTemplateLoader);
+			new MockTemplateResource(_WRONG_TEMPLATE_ID),
+			new StringTemplateResource(
+				_WRONG_ERROR_TEMPLATE_ID, _TEST_TEMPLATE_CONTENT),
+			null, _configuration, _templateContextHelper, null);
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -247,8 +237,8 @@ public class FreeMarkerTemplateTest extends TestCase {
 		context.put(_TEST_KEY, _TEST_VALUE);
 
 		Template template = new FreeMarkerTemplate(
-			_TEMPLATE_FILE_NAME, null, null, null, context, _configuration,
-			_templateContextHelper, _stringTemplateLoader);
+			new MockTemplateResource(_TEMPLATE_FILE_NAME), null, context,
+			_configuration, _templateContextHelper, null);
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
@@ -273,7 +263,6 @@ public class FreeMarkerTemplateTest extends TestCase {
 	private static final String _WRONG_TEMPLATE_ID = "WRONG_TEMPLATE_ID";
 
 	private Configuration _configuration;
-	private StringTemplateLoader _stringTemplateLoader;
 	private TemplateContextHelper _templateContextHelper;
 
 	private class MockTemplateContextHelper extends TemplateContextHelper {
@@ -304,35 +293,33 @@ public class FreeMarkerTemplateTest extends TestCase {
 
 	}
 
-	private class MockTemplateLoader implements TemplateLoader {
+	private class MockTemplateResource implements TemplateResource {
 
-		public void closeTemplateSource(Object templateSource) {
+		public MockTemplateResource(String templateId) {
+			_templateId = templateId;
+			_lastModified = System.currentTimeMillis();
 		}
 
-		public Object findTemplateSource(String name) throws IOException {
-			if (_TEMPLATE_FILE_NAME.equals(name)) {
-				return _TEMPLATE_FILE_NAME;
-			}
-
-			throw new ParseException(
-				"Unable to find template source " + name, 0, 0);
+		public long getLastModified() {
+			return _lastModified;
 		}
 
-		public long getLastModified(Object templateSource) {
-			return 0;
-		}
-
-		public Reader getReader(Object templateSource, String encoding)
-			throws IOException {
-
-			if (templateSource == _TEMPLATE_FILE_NAME) {
+		public Reader getReader() throws IOException {
+			if (_templateId == _TEMPLATE_FILE_NAME) {
 				return new StringReader(_TEST_TEMPLATE_CONTENT);
 			}
 
 			throw new ParseException(
-				"Unable to get reader for template source " + templateSource, 0,
+				"Unable to get reader for template source " + _templateId, 0,
 				0);
 		}
+
+		public String getTemplateId() {
+			return _templateId;
+		}
+
+		private long _lastModified;
+		private String _templateId;
 
 	}
 

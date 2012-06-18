@@ -15,8 +15,6 @@
 --%>
 <%@ include file="/html/portal/init.jsp" %>
 
-<%@ page import="com.liferay.portal.template.StringTemplateResource" %>
-
 <c:if test="<%= !themeDisplay.isStatePopUp() %>">
 	<div id="main-content">
 		<table class="lfr-panel-page">

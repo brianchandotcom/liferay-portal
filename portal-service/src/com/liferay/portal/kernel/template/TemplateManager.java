@@ -27,6 +27,8 @@ public interface TemplateManager {
 
 	public void destroy(ClassLoader classLoader);
 
+	public String getName();
+
 	public Template getTemplate(
 		TemplateResource templateResource,
 		TemplateContextType templateContextType);
@@ -35,8 +37,6 @@ public interface TemplateManager {
 		TemplateResource templateResource,
 		TemplateResource errorTemplateResource,
 		TemplateContextType templateContextType);
-
-	public String getTemplateManagerName();
 
 	public void init() throws TemplateException;
 

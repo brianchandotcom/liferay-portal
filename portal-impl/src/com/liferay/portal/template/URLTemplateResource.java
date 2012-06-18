@@ -14,12 +14,12 @@
 
 package com.liferay.portal.template;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
@@ -31,52 +31,53 @@ import java.net.URLConnection;
  */
 public class URLTemplateResource implements TemplateResource {
 
-	public URLTemplateResource(String templateId, URL templateContent) {
+	public URLTemplateResource(String templateId, URL templateURL) {
+		if (templateId == null) {
+			throw new IllegalArgumentException("Missing templateId");
+		}
+
+		if (templateURL == null) {
+			throw new IllegalArgumentException("Missing templateURL");
+		}
 
 		_templateId = templateId;
-		_templateContent = templateContent;
+		_templateURL = templateURL;
 	}
 
 	public long getLastModified() {
-		URLConnection urlConnection = null;
+		InputStream inputStream = null;
 
 		try {
-			urlConnection = _templateContent.openConnection();
+			URLConnection urlConnection = _templateURL.openConnection();
 
-			long lastModified = urlConnection.getLastModified();
-
-			return lastModified;
+			return urlConnection.getLastModified();
 		}
 
-		catch(Exception e) {
+		catch(IOException ioe) {
 			_log.error(
 				"Unable to get last modified time for template " + _templateId,
-				e);
+				ioe);
 
 			return 0;
 		}
 		finally {
-			try {
-				urlConnection.getInputStream().close();
-			}
-			catch (Exception e) {
-			}
-			finally {
-				urlConnection = null;
+			if (inputStream != null) {
+				try {
+					inputStream.close();
+				}
+				catch (IOException ioe) {
+				}
 			}
 		}
 	}
 
 	public Reader getReader() throws IOException {
-		if (_templateContent == null) {
+		if (_templateURL == null) {
 			return null;
 		}
 
-		URLConnection urlConnection = _templateContent.openConnection();
-
-		return new UnsyncBufferedReader(
-			new InputStreamReader(
-				urlConnection.getInputStream(), DEFAUT_ENCODING));
+		return new InputStreamReader(
+			_templateURL.openStream(), DEFAUT_ENCODING);
 	}
 
 	public String getTemplateId() {
@@ -85,7 +86,7 @@ public class URLTemplateResource implements TemplateResource {
 
 	private static Log _log = LogFactoryUtil.getLog(URLTemplateResource.class);
 
-	private URL _templateContent;
 	private String _templateId;
+	private URL _templateURL;
 
 }

@@ -14,8 +14,6 @@
  */
 --%>
 
-<%@ page import="com.liferay.portal.template.StringTemplateResource" %>
-
 <%
 if (!denyAccess && (themeDisplay.isStatePopUp() || (layoutTypePortlet.hasStateMax() && (portlet != null)) || Validator.isNotNull(controlPanelCategory))) {
 	String velocityTemplateId = null;

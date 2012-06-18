@@ -45,6 +45,10 @@ import org.apache.velocity.util.introspection.SecureUberspector;
 public class VelocityManager implements TemplateManager {
 
 	public void destroy() {
+		if (_velocityEngine == null) {
+			return;
+		}
+
 		_classLoaderVelocityContexts.clear();
 
 		_classLoaderVelocityContexts = null;
@@ -56,6 +60,10 @@ public class VelocityManager implements TemplateManager {
 
 	public void destroy(ClassLoader classLoader) {
 		_classLoaderVelocityContexts.remove(classLoader);
+	}
+
+	public String getName() {
+		return VELOCITY;
 	}
 
 	public Template getTemplate(
@@ -138,10 +146,6 @@ public class VelocityManager implements TemplateManager {
 		}
 
 		return null;
-	}
-
-	public String getTemplateManagerName() {
-		return VELOCITY;
 	}
 
 	public void init() throws TemplateException {

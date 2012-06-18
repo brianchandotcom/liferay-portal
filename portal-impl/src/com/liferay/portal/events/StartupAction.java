@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.scheduler.SchedulerEngineUtil;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.servlet.JspFactorySwapper;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
-import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.plugin.PluginPackageIndexer;
@@ -113,14 +112,6 @@ public class StartupAction extends SimpleAction {
 		else if (portalSecurityManagerStrategy.equals("none")) {
 			System.setSecurityManager(null);
 		}
-
-		// Template Resource loader
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Initialize template resource loader");
-		}
-
-		TemplateResourceLoaderUtil.init();
 
 		// Template manager
 

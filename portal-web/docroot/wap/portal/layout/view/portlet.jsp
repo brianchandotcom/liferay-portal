@@ -16,8 +16,6 @@
 
 <%@ include file="/html/portal/init.jsp" %>
 
-<%@ page import="com.liferay.portal.template.StringTemplateResource" %>
-
 <liferay-portlet:runtime portletName="<%= PortletKeys.TAGS_COMPILER %>" />
 
 <%

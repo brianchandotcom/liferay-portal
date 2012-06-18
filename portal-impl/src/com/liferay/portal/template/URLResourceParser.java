@@ -32,15 +32,16 @@ public abstract class URLResourceParser implements TemplateResourceParser {
 		try {
 			URL url = getURL(templateId);
 
-			if (url != null) {
+			if (url == null) {
+				return null;
+			}
+			else {
 				return new URLTemplateResource(templateId, url);
 			}
 		}
-		catch (IOException e) {
-			throw new TemplateException(e);
+		catch (IOException ioe) {
+			throw new TemplateException(ioe);
 		}
-
-		return null;
 	}
 
 	public abstract URL getURL(String templateId) throws IOException;

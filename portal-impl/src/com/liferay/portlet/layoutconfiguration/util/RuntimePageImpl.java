@@ -198,9 +198,9 @@ public class RuntimePageImpl implements RuntimePage {
 	}
 
 	protected void doDispatch(
-					PageContext pageContext, String portletId,
-					TemplateResource templateResource, boolean processTemplate)
-			throws Exception {
+			PageContext pageContext, String portletId,
+			TemplateResource templateResource, boolean processTemplate)
+		throws Exception {
 
 		LayoutTemplate layoutTemplate = getLayoutTemlpate(
 			templateResource.getTemplateId());
@@ -233,7 +233,7 @@ public class RuntimePageImpl implements RuntimePage {
 			if (processTemplate) {
 				doProcessTemplate(
 					pageContext, portletId, templateResource,
-									templateContextType);
+					templateContextType);
 			}
 			else {
 				doProcessCustomizationSettings(
@@ -291,10 +291,10 @@ public class RuntimePageImpl implements RuntimePage {
 	}
 
 	protected void doProcessTemplate(
-				PageContext pageContext, String portletId,
-				TemplateResource templateResource,
-				TemplateContextType templateContextType)
-			throws Exception {
+			PageContext pageContext, String portletId,
+			TemplateResource templateResource,
+			TemplateContextType templateContextType)
+		throws Exception {
 
 		HttpServletRequest request =
 			(HttpServletRequest)pageContext.getRequest();

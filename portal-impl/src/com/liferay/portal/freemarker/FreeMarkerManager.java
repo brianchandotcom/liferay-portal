@@ -75,6 +75,10 @@ public class FreeMarkerManager implements TemplateManager {
 		_classLoaderHelperUtilities.remove(classLoader);
 	}
 
+	public String getName() {
+		return FREEMARKER;
+	}
+
 	public Template getTemplate(
 		TemplateResource templateResource,
 		TemplateContextType templateContextType) {
@@ -147,10 +151,6 @@ public class FreeMarkerManager implements TemplateManager {
 		}
 
 		return null;
-	}
-
-	public String getTemplateManagerName() {
-		return TemplateManager.FREEMARKER;
 	}
 
 	public void init() throws TemplateException {

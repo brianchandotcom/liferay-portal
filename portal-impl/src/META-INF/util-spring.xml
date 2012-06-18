@@ -5,9 +5,9 @@
 	default-init-method="afterPropertiesSet"
 	xmlns="http://www.springframework.org/schema/beans"
 	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:util="http://www.springframework.org/schema/util"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
->
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 	<bean id="com.liferay.portal.cache.keypool.MultiVMKeyPool" class="com.liferay.portal.cache.MultiVMPoolImpl">
 		<property name="portalCacheManager" ref="com.liferay.portal.cache.keypool.MultiVMKeyPoolPortalCacheManager" />
 	</bean>
@@ -331,8 +331,28 @@
 	<bean id="com.liferay.portal.kernel.template.TemplateResourceLoaderUtil" class="com.liferay.portal.kernel.template.TemplateResourceLoaderUtil">
 		<property name="templateResourceLoaders">
 			<list>
-				<bean class="com.liferay.portal.freemarker.FreeMarkerTemplateResourceLoader" />
-				<bean class="com.liferay.portal.velocity.VelocityTemplateResourceLoader" />
+				<bean class="com.liferay.portal.template.DefaultTemplateResourceLoader">
+					<constructor-arg>
+						<util:constant static-field="com.liferay.portal.kernel.template.TemplateManager.FREEMARKER" />
+					</constructor-arg>
+					<constructor-arg>
+						<util:constant static-field="com.liferay.portal.util.PropsValues.FREEMARKER_ENGINE_TEMPLATE_PARSER_CLASSNAMES" />
+					</constructor-arg>
+					<constructor-arg>
+						<util:constant static-field="com.liferay.portal.util.PropsValues.FREEMARKER_ENGINE_RESOURCE_MODIFICATION_CHECK_INTERVAL" />
+					</constructor-arg>
+				</bean>
+				<bean class="com.liferay.portal.template.DefaultTemplateResourceLoader">
+					<constructor-arg>
+						<util:constant static-field="com.liferay.portal.kernel.template.TemplateManager.VELOCITY" />
+					</constructor-arg>
+					<constructor-arg>
+						<util:constant static-field="com.liferay.portal.util.PropsValues.VELOCITY_ENGINE_RESOURCE_PARSER_CLASSNAMES" />
+					</constructor-arg>
+					<constructor-arg>
+						<util:constant static-field="com.liferay.portal.util.PropsValues.VELOCITY_ENGINE_RESOURCE_MODIFICATION_CHECK_INTERVAL" />
+					</constructor-arg>
+				</bean>
 			</list>
 		</property>
 	</bean>

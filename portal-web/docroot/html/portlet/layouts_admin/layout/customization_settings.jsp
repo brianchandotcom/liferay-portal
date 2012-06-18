@@ -16,8 +16,6 @@
 
 <%@ include file="/html/portlet/layouts_admin/init.jsp" %>
 
-<%@ page import="com.liferay.portal.template.StringTemplateResource" %>
-
 <%
 Layout selLayout = (Layout)request.getAttribute("edit_pages.jsp-selLayout");
 

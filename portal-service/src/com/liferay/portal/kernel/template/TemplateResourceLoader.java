@@ -25,13 +25,11 @@ public interface TemplateResourceLoader {
 
 	public void destroy();
 
+	public String getName();
+
 	public TemplateResource getTemplateResource(String templateId)
 		throws TemplateException;
 
-	public String getTemplateResourceLoaderName();
-
 	public boolean hasTemplateResource(String templateId);
-
-	public void init() throws TemplateException;
 
 }

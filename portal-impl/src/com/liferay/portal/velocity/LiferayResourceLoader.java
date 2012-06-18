@@ -70,7 +70,7 @@ public class LiferayResourceLoader extends ResourceLoader {
 	public void init(ExtendedProperties props) {
 		setModificationCheckInterval(
 			PropsValues.
-				VELOCITY_ENGINE_RESOURCE_MANAGER_MODIFICATION_CHECK_INTERVAL);
+				VELOCITY_ENGINE_RESOURCE_MODIFICATION_CHECK_INTERVAL);
 	}
 
 	@Override
@@ -106,37 +106,26 @@ public class LiferayResourceLoader extends ResourceLoader {
 		}
 	}
 
-		protected InputStream doGetResourceStream(String source)
+	protected InputStream doGetResourceStream(String source)
 		throws ResourceNotFoundException {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Get resource for " + source);
 		}
 
-		TemplateResource templateResource = null;
-
 		try {
-			templateResource =
+			TemplateResource templateResource =
 				TemplateResourceLoaderUtil.getTemplateResource(
 					TemplateManager.VELOCITY, source);
+
+			return new ReaderInputStream(templateResource.getReader());
 		}
 		catch (Exception e) {
 			return null;
 		}
-
-		if (templateResource != null) {
-			try {
-				return new ReaderInputStream(templateResource.getReader());
-			}
-			catch (Exception e) {
-				return null;
-			}
-		}
-
-		return null;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
-			LiferayResourceLoader.class);
+		LiferayResourceLoader.class);
 
 }

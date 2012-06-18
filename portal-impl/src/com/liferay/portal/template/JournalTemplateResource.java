@@ -14,13 +14,11 @@
 
 package com.liferay.portal.template;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portlet.journal.model.JournalTemplate;
 
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.Reader;
 
 /**
@@ -29,34 +27,39 @@ import java.io.Reader;
 public class JournalTemplateResource implements TemplateResource {
 
 	public JournalTemplateResource(
-		String templateId, JournalTemplate templateContent) {
+		String templateId, JournalTemplate journalTemplate) {
+
+		if (templateId == null) {
+			throw new IllegalArgumentException("Missing templateId");
+		}
+
+		if (journalTemplate == null) {
+			throw new IllegalArgumentException("Missing journalTemplate");
+		}
 
 		_templateId = templateId;
-		_templateContent = templateContent;
+		_journalTemplate = journalTemplate;
 	}
 
 	public long getLastModified() {
-		return _templateContent.getModifiedDate().getTime();
+		return _journalTemplate.getModifiedDate().getTime();
 	}
 
 	public Reader getReader() throws IOException {
-		if (_templateContent == null) {
+		if (_journalTemplate == null) {
 			return null;
 		}
 
-		String xsl = _templateContent.getXsl();
+		String xsl = _journalTemplate.getXsl();
 
-		return new UnsyncBufferedReader(
-			new InputStreamReader(
-				new UnsyncByteArrayInputStream(
-					xsl.getBytes()), DEFAUT_ENCODING));
+		return new UnsyncStringReader(xsl);
 	}
 
 	public String getTemplateId() {
 		return _templateId;
 	}
 
-	private JournalTemplate _templateContent;
+	private JournalTemplate _journalTemplate;
 	private String _templateId;
 
 }

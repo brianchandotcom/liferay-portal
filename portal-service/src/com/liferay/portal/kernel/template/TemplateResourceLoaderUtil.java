@@ -104,23 +104,12 @@ public class TemplateResourceLoaderUtil {
 		return _templateResourceLoaders.containsKey(templateResourceLoaderName);
 	}
 
-	public static void init() throws TemplateException {
-		for (TemplateResourceLoader templateResourceLoader :
-			_templateResourceLoaders.values()) {
-
-			templateResourceLoader.init();
-		}
-	}
-
 	public static void registerTemplateResourceLoader(
 			TemplateResourceLoader templateResourceLoader)
 		throws TemplateException {
 
-		templateResourceLoader.init();
-
 		_templateResourceLoaders.put(
-			templateResourceLoader.getTemplateResourceLoaderName(),
-			templateResourceLoader);
+			templateResourceLoader.getName(), templateResourceLoader);
 	}
 
 	public static void unregisterTemplateResourceLoader(
@@ -141,8 +130,7 @@ public class TemplateResourceLoaderUtil {
 			templateResourceLoaders) {
 
 			_templateResourceLoaders.put(
-				templateResourceLoader.getTemplateResourceLoaderName(),
-				templateResourceLoader);
+				templateResourceLoader.getName(), templateResourceLoader);
 		}
 	}
 

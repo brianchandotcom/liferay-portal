@@ -60,14 +60,13 @@ public class JournalTemplateResourceParser implements TemplateResourceParser {
 
 			return new JournalTemplateResource(
 				journalTemplateId, journalTemplate);
-
 		}
 		catch (NoSuchTemplateException nste) {
 			return null;
 		}
-		catch (Exception pe) {
+		catch (Exception e) {
 			throw new TemplateException(
-				"Template {" + templateId + "} not found", pe);
+				"Template {" + templateId + "} not found", e);
 		}
 	}
 

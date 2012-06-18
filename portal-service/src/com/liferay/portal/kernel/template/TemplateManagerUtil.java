@@ -112,8 +112,7 @@ public class TemplateManagerUtil {
 
 		Map<String, TemplateManager> templateManagers = _getTemplateManagers();
 
-		templateManagers.put(
-			templateManager.getTemplateManagerName(), templateManager);
+		templateManagers.put(templateManager.getName(), templateManager);
 	}
 
 	public static void unregisterTemplateManager(String templateManagerName) {
@@ -134,8 +133,7 @@ public class TemplateManagerUtil {
 			_getTemplateManagers();
 
 		for (TemplateManager templateManager : templateManagers) {
-			templateManagersMap.put(
-				templateManager.getTemplateManagerName(), templateManager);
+			templateManagersMap.put(templateManager.getName(), templateManager);
 		}
 	}
 

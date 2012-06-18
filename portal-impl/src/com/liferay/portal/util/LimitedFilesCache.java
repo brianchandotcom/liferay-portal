@@ -15,7 +15,6 @@
 package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.concurrent.ConcurrentLRUCache;
-//import jodd.cache.LFUCache;
 
 import java.io.File;
 
@@ -56,23 +55,6 @@ public class LimitedFilesCache<T> {
 			}
 		}
 	}
-/*
-	public static class FileRemovingLFUCache<K> extends LFUCache<K, File> {
-
-		public FileRemovingLFUCache(int maxSize) {
-			super(maxSize);
-		}
-
-		@Override
-		protected void onRemove(K key, File cachedFile) {
-			if (cachedFile != null) {
-				cachedFile.delete();
-			} else {
-				new File(key.toString()).delete();
-			}
-		}
-	}
-*/
 
 	private FileRemovingLFUCache<T> _cache;
 

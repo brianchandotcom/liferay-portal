@@ -129,7 +129,8 @@ public class PHPPortlet extends GenericPortlet {
 
 	@Override
 	public void processAction(
-			ActionRequest actionRequest, ActionResponse actionResponse) {
+		ActionRequest actionRequest, ActionResponse actionResponse) {
+
 		String phpURI = actionRequest.getParameter(_PHP_URI_PARAM);
 
 		if (phpURI != null) {

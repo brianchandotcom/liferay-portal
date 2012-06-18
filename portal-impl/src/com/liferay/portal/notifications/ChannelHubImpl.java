@@ -335,7 +335,7 @@ public class ChannelHubImpl implements ChannelHub {
 		}
 
 		List<NotificationEvent> persistedNotificationEvents =
-				new ArrayList<NotificationEvent>(notificationEvents.size());
+			new ArrayList<NotificationEvent>(notificationEvents.size());
 
 		for (NotificationEvent notificationEvent : notificationEvents) {
 			if (notificationEvent.isDeliveryRequired()) {

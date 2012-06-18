@@ -67,6 +67,7 @@ public class ReportRequest implements Serializable {
 
 	public void setReportRequestContext(
 		ReportRequestContext reportRequestContext) {
+
 		_reportRequestContext = reportRequestContext;
 	}
 

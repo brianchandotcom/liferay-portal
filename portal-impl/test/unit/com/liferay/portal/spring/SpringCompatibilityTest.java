@@ -34,8 +34,8 @@ public class SpringCompatibilityTest {
 
 		try {
 			AbstractAutowireCapableBeanFactoryClass = Class.forName(
-				"org.springframework.beans.factory.support."
-				+ "AbstractAutowireCapableBeanFactory");
+				"org.springframework.beans.factory.support." +
+					"AbstractAutowireCapableBeanFactory");
 		}
 		catch (Exception e) {
 			Assert.fail(e.getMessage());
@@ -56,10 +56,11 @@ public class SpringCompatibilityTest {
 			filteredPropertyDescriptorsCacheField.getType();
 
 		if (!Map.class.isAssignableFrom(
-			filteredPropertyDescriptorsCacheClass)) {
+				filteredPropertyDescriptorsCacheClass)) {
+
 			Assert.fail(
 				filteredPropertyDescriptorsCacheClass.getClass().getName() +
-				" is not " + Map.class.getName());
+					" is not " + Map.class.getName());
 		}
 	}
 
@@ -91,7 +92,7 @@ public class SpringCompatibilityTest {
 		if (!Map.class.isAssignableFrom(shadowMatchCacheClass)) {
 			Assert.fail(
 				shadowMatchCacheClass.getClass().getName() + " is not " +
-				Map.class.getName());
+					Map.class.getName());
 		}
 	}
 
@@ -121,7 +122,7 @@ public class SpringCompatibilityTest {
 		if (!advisedSupportClass.equals(AdvisedSupport.class)) {
 			Assert.fail(
 				advisedSupportClass.getClass().getName() + " is not " +
-				AdvisedSupport.class.getName());
+					AdvisedSupport.class.getName());
 		}
 	}
 

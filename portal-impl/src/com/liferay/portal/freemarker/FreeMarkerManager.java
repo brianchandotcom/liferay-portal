@@ -143,9 +143,9 @@ public class FreeMarkerManager implements TemplateManager {
 		}
 		else if (templateContextType.equals(TemplateContextType.EMPTY)) {
 			return new FreeMarkerTemplate(
-					templateId, templateContent, errorTemplateId,
-					errorTemplateContent, null, _configuration,
-					_templateContextHelper, _stringTemplateLoader);
+				templateId, templateContent, errorTemplateId,
+				errorTemplateContent, null, _configuration,
+				_templateContextHelper, _stringTemplateLoader);
 		}
 		else if (templateContextType.equals(TemplateContextType.RESTRICTED)) {
 			return new RestrictedTemplate(

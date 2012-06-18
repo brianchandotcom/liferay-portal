@@ -68,6 +68,7 @@ public class SessionImpl implements Session {
 
 	public Query createQuery(String queryString, boolean strictName)
 		throws ORMException {
+
 		try {
 			queryString = SQLTransformer.transformFromJpqlToHql(queryString);
 

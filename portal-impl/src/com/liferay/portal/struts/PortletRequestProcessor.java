@@ -559,6 +559,7 @@ public class PortletRequestProcessor extends TilesRequestProcessor {
 
 			if (!strutsPath.equals(portlet.getStrutsPath()) &&
 				!strutsPath.equals(portlet.getParentStrutsPath())) {
+
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"The struts path " + strutsPath + " does not belong " +

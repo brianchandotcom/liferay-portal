@@ -89,7 +89,8 @@ public class StoreProxyBean extends BaseProxyBean implements Store {
 	}
 
 	public byte[] getFileAsBytes(
-			long companyId, long repositoryId, String fileName) {
+		long companyId, long repositoryId, String fileName) {
+
 		throw new UnsupportedOperationException();
 	}
 

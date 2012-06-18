@@ -39,6 +39,7 @@ public class BaseDataSample implements DataSample, Serializable {
 
 		if ((_timeout > 0) && (_duration >= _timeout) &&
 			(requestStatus != RequestStatus.ERROR)) {
+
 			_requestStatus = RequestStatus.TIMEOUT;
 		}
 		else {

@@ -151,7 +151,7 @@ public class DefaultLicenseManagerImpl
 		byte[] bytes = new byte[serverIdArray.length];
 
 		for (int i = 0; i < bytes.length; i++) {
-		   bytes[i] = Byte.valueOf(serverIdArray[i].trim());
+			bytes[i] = Byte.valueOf(serverIdArray[i].trim());
 		}
 
 		LicenseUtil.writeServerProperties(bytes);

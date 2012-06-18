@@ -173,7 +173,17 @@ public class MinifierFilter extends BasePortalFilter {
 			_tempDir += "/portal";
 		}
 
-		_limitedFilesCache = new LimitedFilesCache<String>(1000);
+
+		int minifierFilesLimit = PropsValues.MINIFIER_FILES_LIMIT;
+
+		if (minifierFilesLimit > 0) {
+			_limitedFilesCache =
+				new LimitedFilesCache<String>(PropsValues.MINIFIER_FILES_LIMIT);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Minifier files limit: " + minifierFilesLimit);
+			}
+		}
 	}
 
 	protected String getCacheFileName(HttpServletRequest request) {
@@ -227,7 +237,9 @@ public class MinifierFilter extends BasePortalFilter {
 
 		File cacheFile = new File(cacheFileName);
 
-		_limitedFilesCache.put(cacheFileName);
+		if (_limitedFilesCache != null) {
+			_limitedFilesCache.put(cacheFileName);
+		}
 
 		if (cacheFile.exists()) {
 			boolean staleCache = false;

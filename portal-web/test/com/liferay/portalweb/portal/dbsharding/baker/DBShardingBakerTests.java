@@ -16,6 +16,11 @@ package com.liferay.portalweb.portal.dbsharding.baker;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.StopSeleniumTest;
+import com.liferay.portalweb.portlet.messageboards.mbcategory.addmbcategory.AddMBCategoryTest;
+import com.liferay.portalweb.portlet.messageboards.mbcategory.addmbsubcategory.AddMBSubcategoryTest;
+import com.liferay.portalweb.portlet.messageboards.mbthread.postnewmbsubcategorythread.PostNewMBSubcategoryThreadTest;
+import com.liferay.portalweb.portlet.messageboards.portlet.addportletmb.AddPageMBTest;
+import com.liferay.portalweb.portlet.messageboards.portlet.addportletmb.AddPortletMBTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -27,11 +32,11 @@ public class DBShardingBakerTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(LoginBakerTest.class);
-		testSuite.addTestSuite(AddPageTest.class);
-		testSuite.addTestSuite(AddPortletTest.class);
-		testSuite.addTestSuite(AddCategoryTest.class);
-		testSuite.addTestSuite(AddSubcategoryTest.class);
-		testSuite.addTestSuite(AddMessageTest.class);
+		testSuite.addTestSuite(AddPageMBTest.class);
+		testSuite.addTestSuite(AddPortletMBTest.class);
+		testSuite.addTestSuite(AddMBCategoryTest.class);
+		testSuite.addTestSuite(AddMBSubcategoryTest.class);
+		testSuite.addTestSuite(PostNewMBSubcategoryThreadTest.class);
 		testSuite.addTestSuite(StopSeleniumTest.class);
 
 		return testSuite;

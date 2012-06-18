@@ -36,10 +36,10 @@ public class PostNewMBSubcategoryThreadTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("MB Category Name"),
 			selenium.getText("//h1[@class='header-title']/span"));
-		assertEquals(RuntimeVariables.replace("MB Subcategory Name"),
+		assertEquals(RuntimeVariables.replace("MB Category Subcategory Name"),
 			selenium.getText("//a/strong"));
 		selenium.clickAt("//a/strong",
-			RuntimeVariables.replace("MB Subcategory Name"));
+			RuntimeVariables.replace("MB Category Subcategory Name"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.clickAt("//input[@value='Post New Thread']",
@@ -191,10 +191,10 @@ public class PostNewMBSubcategoryThreadTest extends BaseTestCase {
 			RuntimeVariables.replace("MB Category Name"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("MB Subcategory Name"),
+		assertEquals(RuntimeVariables.replace("MB Category Subcategory Name"),
 			selenium.getText("//a/strong"));
 		selenium.clickAt("//a/strong",
-			RuntimeVariables.replace("MB Subcategory Name"));
+			RuntimeVariables.replace("MB Category Subcategory Name"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(

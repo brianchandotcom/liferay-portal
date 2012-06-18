@@ -858,15 +858,7 @@
 		<priority value="ERROR" />
 	</category>
 
-	<category name="com.liferay.portal.velocity.ClassLoaderVelocityResourceListener">
-		<priority value="ERROR" />
-	</category>
-
 	<category name="com.liferay.portal.velocity.LiferayResourceLoader">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.portal.velocity.ServletVelocityResourceListener">
 		<priority value="ERROR" />
 	</category>
 

@@ -600,8 +600,6 @@ public class PropsValues {
 
 	public static final String[] FLAGS_REASONS = PropsUtil.getArray(PropsKeys.FLAGS_REASONS);
 
-	public static final String FREEMARKER_ENGINE_CACHE_STORAGE = PropsUtil.get(PropsKeys.FREEMARKER_ENGINE_CACHE_STORAGE);
-
 	public static final boolean FREEMARKER_ENGINE_LOCALIZED_LOOKUP = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.FREEMARKER_ENGINE_LOCALIZED_LOOKUP));
 
 	public static final String[] FREEMARKER_ENGINE_MACRO_LIBRARY = PropsUtil.getArray(PropsKeys.FREEMARKER_ENGINE_MACRO_LIBRARY);

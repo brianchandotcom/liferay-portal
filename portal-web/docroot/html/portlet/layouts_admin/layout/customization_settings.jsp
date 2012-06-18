@@ -87,8 +87,8 @@ if (selLayout != null) {
 <div class="customization-settings">
 
 	<%
-	if (velocityTemplateId != null) {
-		RuntimePageUtil.processCustomizationSettings(pageContext, velocityTemplateId, velocityTemplateContent);
+	if (Validator.isNotNull(velocityTemplateId) && Validator.isNotNull(velocityTemplateContent)) {
+		RuntimePageUtil.processCustomizationSettings(pageContext, new StringTemplateResource(velocityTemplateId, velocityTemplateContent));
 	}
 	%>
 

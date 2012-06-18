@@ -14,7 +14,6 @@
 
 package com.liferay.portal.velocity;
 
-import com.liferay.portal.deploy.sandbox.SandboxHandler;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 
 import java.lang.reflect.Field;
@@ -22,7 +21,6 @@ import java.lang.reflect.Field;
 import org.apache.commons.collections.ExtendedProperties;
 import org.apache.velocity.runtime.RuntimeInstance;
 import org.apache.velocity.runtime.RuntimeServices;
-import org.apache.velocity.runtime.resource.Resource;
 import org.apache.velocity.runtime.resource.ResourceManager;
 import org.apache.velocity.runtime.resource.ResourceManagerImpl;
 
@@ -47,19 +45,6 @@ public class LiferayResourceManager extends ResourceManagerImpl {
 		}
 		else {
 			return super.getLoaderNameForResource(source);
-		}
-	}
-
-	@Override
-	public Resource getResource(
-			String resourceName, int resourceType, String encoding)
-		throws Exception {
-
-		if (resourceName.contains(SandboxHandler.SANDBOX_MARKER)) {
-			return loadResource(resourceName, resourceType, encoding);
-		}
-		else {
-			return super.getResource(resourceName, resourceType, encoding);
 		}
 	}
 

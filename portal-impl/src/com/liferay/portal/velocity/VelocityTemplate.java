@@ -15,16 +15,14 @@
 package com.liferay.portal.velocity;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateException;
+import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.template.StringTemplateResource;
 import com.liferay.portal.template.TemplateContextHelper;
-import com.liferay.portal.util.PropsValues;
 
+import java.io.Reader;
 import java.io.Writer;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,8 +30,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.ParseErrorException;
-import org.apache.velocity.runtime.resource.loader.StringResourceLoader;
-import org.apache.velocity.runtime.resource.util.StringResourceRepository;
 
 /**
  * @author Tina Tian
@@ -41,17 +37,15 @@ import org.apache.velocity.runtime.resource.util.StringResourceRepository;
 public class VelocityTemplate implements Template {
 
 	public VelocityTemplate(
-		String templateId, String templateContent, String errorTemplateId,
-		String errorTemplateContent, VelocityContext velocityContext,
+		TemplateResource templateResource,
+		TemplateResource errorTemplateResource, VelocityContext velocityContext,
 		VelocityEngine velocityEngine,
 		TemplateContextHelper templateContextHelper) {
 
-		_templateId = templateId;
-		_templateContent = templateContent;
+		_templateResource = templateResource;
 
-		if (errorTemplateId != null) {
-			_errorTemplateId = errorTemplateId;
-			_errorTemplateContent = errorTemplateContent;
+		if (errorTemplateResource != null) {
+			_errorTemplateResource = errorTemplateResource;
 			_hasErrorTemplate = true;
 		}
 
@@ -75,25 +69,23 @@ public class VelocityTemplate implements Template {
 	}
 
 	public boolean processTemplate(Writer writer) throws TemplateException {
-		handleTemplateContent(_templateId, _templateContent);
-
 		if (!_hasErrorTemplate) {
 			try {
-				return _velocityEngine.mergeTemplate(
-					_templateId, StringPool.UTF8, _velocityContext, writer);
+				return _processTemplate(_templateResource, writer);
 			}
 			catch (Exception e) {
 				throw new TemplateException(
-					"Unable to process Velocity template " + _templateId, e);
+					"Unable to process Velocity template " +
+						_templateResource.getTemplateId(),
+					e);
 			}
 		}
 
 		try {
 			UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
-			boolean result = _velocityEngine.mergeTemplate(
-				_templateId, StringPool.UTF8, _velocityContext,
-				unsyncStringWriter);
+			boolean result = _processTemplate(
+				_templateResource, unsyncStringWriter);
 
 			StringBundler sb = unsyncStringWriter.getStringBundler();
 
@@ -103,7 +95,13 @@ public class VelocityTemplate implements Template {
 		}
 		catch (Exception e1) {
 			put("exception", e1.getMessage());
-			put("script", _templateContent);
+
+			if (_templateResource instanceof StringTemplateResource) {
+				StringTemplateResource stringTemplateResource =
+					(StringTemplateResource)_templateResource;
+
+				put("script", stringTemplateResource.getContent());
+			}
 
 			if (e1 instanceof ParseErrorException) {
 				ParseErrorException pee = (ParseErrorException)e1;
@@ -112,18 +110,15 @@ public class VelocityTemplate implements Template {
 				put("line", pee.getLineNumber());
 			}
 
-			handleTemplateContent(_errorTemplateId, _errorTemplateContent);
-
 			try {
-				 _velocityEngine.mergeTemplate(
-					_errorTemplateId, StringPool.UTF8, _velocityContext,
-					writer);
+				 _processTemplate(_errorTemplateResource, writer);
 
 				return false;
 			}
 			catch (Exception e2) {
 				throw new TemplateException(
-					"Unable to process Velocity template " + _errorTemplateId,
+					"Unable to process Velocity template " +
+						_errorTemplateResource.getTemplateId(),
 					e2);
 			}
 		}
@@ -137,35 +132,42 @@ public class VelocityTemplate implements Template {
 		_velocityContext.put(key, value);
 	}
 
-	protected void handleTemplateContent(
-		String templateId, String templateContent) {
+	private boolean _processTemplate(
+			TemplateResource templateResource, Writer writer)
+		throws Exception {
 
-		if (Validator.isNotNull(templateContent) &&
-			(!PropsValues.LAYOUT_TEMPLATE_CACHE_ENABLED ||
-			 !_velocityEngine.resourceExists(templateId))) {
+		Reader reader = null;
 
-			StringResourceRepository stringResourceRepository =
-				StringResourceLoader.getRepository();
+		try {
+			if (templateResource == null) {
+				throw new Exception(
+					"Unable to find template resource with templateId " +
+						templateResource.getTemplateId());
+			}
 
-			stringResourceRepository.putStringResource(
-				templateId, templateContent);
+			reader = templateResource.getReader();
 
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Added " + templateId +
-						" to the Velocity template repository");
+			if (reader == null) {
+				throw new Exception(
+					"Unable to find template resource with templateId " +
+						templateResource.getTemplateId());
+			}
+
+			return _velocityEngine.evaluate(
+				_velocityContext, writer, templateResource.getTemplateId(),
+				reader);
+		}
+		finally {
+			if (reader != null) {
+				reader.close();
 			}
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(VelocityTemplate.class);
-
-	private String _errorTemplateContent;
-	private String _errorTemplateId;
+	private TemplateResource _errorTemplateResource;
 	private boolean _hasErrorTemplate;
-	private String _templateContent;
 	private TemplateContextHelper _templateContextHelper;
-	private String _templateId;
+	private TemplateResource _templateResource;
 	private VelocityContext _velocityContext;
 	private VelocityEngine _velocityEngine;
 

@@ -19,19 +19,22 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateException;
+import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.template.StringTemplateResource;
 import com.liferay.portal.template.TemplateContextHelper;
-import com.liferay.portal.util.PropsValues;
 
+import freemarker.core.Environment;
 import freemarker.core.ParseException;
 
 import freemarker.template.Configuration;
 
+import java.io.Reader;
 import java.io.Writer;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -43,18 +46,16 @@ import javax.servlet.http.HttpServletRequest;
 public class FreeMarkerTemplate implements Template {
 
 	public FreeMarkerTemplate(
-		String templateId, String templateContent, String errorTemplateId,
-		String errorTemplateContent, Map<String, Object> context,
+		TemplateResource templateResource,
+		TemplateResource errorTemplateResource, Map<String, Object> context,
 		Configuration configuration,
 		TemplateContextHelper templateContextHelper,
-		StringTemplateLoader stringTemplateLoader) {
+		Map<String, TemplateResource> autoImportLibraries) {
 
-		_templateId = templateId;
-		_templateContent = templateContent;
+		_templateResource = templateResource;
 
-		if (errorTemplateId != null) {
-			_errorTemplateId = errorTemplateId;
-			_errorTemplateContent = errorTemplateContent;
+		if (errorTemplateResource != null) {
+			_errorTemplateResource = errorTemplateResource;
 			_hasErrorTemplate = true;
 		}
 
@@ -68,7 +69,7 @@ public class FreeMarkerTemplate implements Template {
 
 		_configuration = configuration;
 		_templateContextHelper = templateContextHelper;
-		_stringTemplateLoader = stringTemplateLoader;
+		_autoImportLibraries = autoImportLibraries;
 	}
 
 	public Object get(String key) {
@@ -80,31 +81,24 @@ public class FreeMarkerTemplate implements Template {
 	}
 
 	public boolean processTemplate(Writer writer) throws TemplateException {
-		handleTemplateContent(_templateId, _templateContent);
-
-		freemarker.template.Template template = null;
-
 		if (!_hasErrorTemplate) {
 			try {
-				template = _configuration.getTemplate(
-					_templateId, StringPool.UTF8);
-
-				template.process(_context, writer);
+				_processTemplate(_templateResource, writer);
 
 				return true;
 			}
 			catch (Exception e) {
 				throw new TemplateException(
-					"Unable to process FreeMarker template " + _templateId, e);
+					"Unable to process FreeMarker template " +
+						_templateResource.getTemplateId(),
+					e);
 			}
 		}
 
 		try {
-			template = _configuration.getTemplate(_templateId, StringPool.UTF8);
-
 			UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
-			template.process(_context, unsyncStringWriter);
+			_processTemplate(_templateResource, unsyncStringWriter);
 
 			StringBundler sb = unsyncStringWriter.getStringBundler();
 
@@ -117,7 +111,13 @@ public class FreeMarkerTemplate implements Template {
 				(e1 instanceof freemarker.template.TemplateException)) {
 
 				put("exception", e1.getMessage());
-				put("script", _templateContent);
+
+				if (_templateResource instanceof StringTemplateResource) {
+					StringTemplateResource stringTemplateResource =
+						(StringTemplateResource)_templateResource;
+
+					put("script", stringTemplateResource.getContent());
+				}
 
 				if (e1 instanceof ParseException) {
 					ParseException pe = (ParseException)e1;
@@ -126,24 +126,21 @@ public class FreeMarkerTemplate implements Template {
 					put("line", pe.getLineNumber());
 				}
 
-				handleTemplateContent(_errorTemplateId, _errorTemplateContent);
-
 				try {
-					template = _configuration.getTemplate(
-						_errorTemplateId, StringPool.UTF8);
-
-					template.process(_context, writer);
+					_processTemplate(_errorTemplateResource, writer);
 				}
 				catch (Exception e2) {
 					throw new TemplateException(
 						"Unable to process FreeMarker template " +
-							_errorTemplateId,
+							_errorTemplateResource.getTemplateId(),
 						e2);
 				}
 			}
 			else {
 				throw new TemplateException(
-					"Unable to process FreeMarker template " + _templateId, e1);
+					"Unable to process FreeMarker template " +
+						_templateResource.getTemplateId(),
+					e1);
 			}
 		}
 
@@ -158,44 +155,97 @@ public class FreeMarkerTemplate implements Template {
 		_context.put(key, value);
 	}
 
-	protected void handleTemplateContent(
-		String templateId, String templateContent) {
+	private void _importLibrary(Environment environment, Set<Reader> readers)
+		throws Exception {
 
-		if (Validator.isNotNull(templateContent) &&
-			(!PropsValues.LAYOUT_TEMPLATE_CACHE_ENABLED ||
-			 !stringTemplateExists(templateId))) {
+		if (_autoImportLibraries == null) {
+			return;
+		}
 
-			_stringTemplateLoader.putTemplate(templateId, templateContent);
+		for (Map.Entry<String, TemplateResource> entry :
+			_autoImportLibraries.entrySet()) {
 
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Added " + templateId + " to the string based FreeMarker " +
-						"template repository");
+			String key = entry.getKey();
+			TemplateResource templateResource = entry.getValue();
+
+			if (templateResource == null) {
+				_log.error(
+					"Unable to find template resource " +
+						templateResource.getTemplateId());
+
+				continue;
+			}
+
+			Reader reader = templateResource.getReader();
+
+			if (reader == null) {
+				_log.error(
+					"Unable to find template resource " + templateResource);
+
+				continue;
+			}
+
+			readers.add(reader);
+
+			freemarker.template.Template importTemplate =
+				new freemarker.template.Template(
+					templateResource.getTemplateId(), reader, _configuration,
+					TemplateResource.DEFAUT_ENCODING);
+
+			environment.importLib(importTemplate, key);
+		}
+	}
+
+	private void _processTemplate(
+			TemplateResource templateResource, Writer writer)
+		throws Exception {
+
+		Set<Reader> readers = new HashSet<Reader>();
+
+		try {
+			if (templateResource == null) {
+				throw new Exception(
+					"Unable to find template resource with templateId " +
+						templateResource.getTemplateId());
+			}
+
+			Reader reader = templateResource.getReader();
+
+			if (reader == null) {
+				throw new Exception(
+					"Unable to find template resource with templateId " +
+						templateResource.getTemplateId());
+			}
+
+			readers.add(reader);
+
+			freemarker.template.Template template =
+				new freemarker.template.Template(
+					templateResource.getTemplateId(), reader, _configuration,
+					TemplateResource.DEFAUT_ENCODING);
+
+			Environment environment = template.createProcessingEnvironment(
+				_context, writer, null);
+
+			_importLibrary(environment, readers);
+
+			environment.process();
+		}
+		finally {
+			for (Reader reader : readers) {
+				reader.close();
 			}
 		}
 	}
 
-	protected boolean stringTemplateExists(String templateId) {
-		Object templateSource = _stringTemplateLoader.findTemplateSource(
-			templateId);
-
-		if (templateSource == null) {
-			return false;
-		}
-
-		return true;
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(FreeMarkerTemplate.class);
 
+	private Map<String, TemplateResource> _autoImportLibraries;
 	private Configuration _configuration;
 	private Map<String, Object> _context;
-	private String _errorTemplateContent;
-	private String _errorTemplateId;
+	private TemplateResource _errorTemplateResource;
 	private boolean _hasErrorTemplate;
-	private StringTemplateLoader _stringTemplateLoader;
-	private String _templateContent;
 	private TemplateContextHelper _templateContextHelper;
-	private String _templateId;
+	private TemplateResource _templateResource;
 
 }

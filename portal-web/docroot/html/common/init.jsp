@@ -151,6 +151,7 @@ page import="com.liferay.portal.service.permission.LayoutPrototypePermissionUtil
 page import="com.liferay.portal.service.permission.LayoutSetPrototypePermissionUtil" %><%@
 page import="com.liferay.portal.service.permission.PortletPermissionUtil" %><%@
 page import="com.liferay.portal.struts.StrutsUtil" %><%@
+page import="com.liferay.portal.template.StringTemplateResource" %><%@
 page import="com.liferay.portal.theme.PortletDisplay" %><%@
 page import="com.liferay.portal.theme.ThemeDisplay" %><%@
 page import="com.liferay.portal.util.CookieKeys" %><%@

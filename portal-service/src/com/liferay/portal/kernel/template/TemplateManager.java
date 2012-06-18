@@ -23,32 +23,20 @@ public interface TemplateManager {
 
 	public static final String VELOCITY = "VELOCITY";
 
-	public void clearCache();
-
-	public void clearCache(String templateId);
-
 	public void destroy();
 
 	public void destroy(ClassLoader classLoader);
 
-	public Template getTemplate(
-		String templateId, String templateContent, String errorTemplateId,
-		String errorTemplateContent, TemplateContextType templateContextType);
+	public String getName();
 
 	public Template getTemplate(
-		String templateId, String templateContent, String errorTemplateId,
+		TemplateResource templateResource,
 		TemplateContextType templateContextType);
 
 	public Template getTemplate(
-		String templateId, String templateContent,
+		TemplateResource templateResource,
+		TemplateResource errorTemplateResource,
 		TemplateContextType templateContextType);
-
-	public Template getTemplate(
-		String templateId, TemplateContextType templateContextType);
-
-	public String getTemplateManagerName();
-
-	public boolean hasTemplate(String templateId);
 
 	public void init() throws TemplateException;
 

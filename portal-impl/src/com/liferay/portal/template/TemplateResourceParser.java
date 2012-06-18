@@ -12,16 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.velocity;
+package com.liferay.portal.template;
 
-import java.io.InputStream;
-
-import org.apache.velocity.exception.ResourceNotFoundException;
+import com.liferay.portal.kernel.template.TemplateException;
+import com.liferay.portal.kernel.template.TemplateResource;
 
 /**
- * @author Alexander Chow
+ * @author Tina Tian
  */
-public abstract class VelocityResourceListener {
+public interface TemplateResourceParser {
 
 	public static final String JOURNAL_SEPARATOR = "_JOURNAL_CONTEXT_";
 
@@ -30,7 +29,7 @@ public abstract class VelocityResourceListener {
 	public static final String THEME_LOADER_SEPARATOR =
 		"_THEME_LOADER_CONTEXT_";
 
-	public abstract InputStream getResourceStream(String source)
-		throws ResourceNotFoundException;
+	public TemplateResource getTemplateResource(String templateId)
+		throws TemplateException;
 
 }

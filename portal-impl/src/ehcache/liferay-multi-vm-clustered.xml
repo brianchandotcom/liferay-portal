@@ -520,20 +520,6 @@
 	<cache
 		eternal="false"
 		maxElementsInMemory="10000"
-		name="com.liferay.portal.velocity.LiferayResourceCacheUtil"
-		overflowToDisk="false"
-		timeToIdleSeconds="600"
-	>
-		<cacheEventListenerFactory
-			class="com.liferay.portal.cache.ehcache.LiferayCacheEventListenerFactory"
-			properties="replicatePuts=false,replicateUpdatesViaCopy=false"
-			propertySeparator=","
-		/>
-		<bootstrapCacheLoaderFactory class="com.liferay.portal.cache.ehcache.LiferayBootstrapCacheLoaderFactory" />
-	</cache>
-	<cache
-		eternal="false"
-		maxElementsInMemory="10000"
 		name="com.liferay.portal.webserver.WebServerServletToken"
 		overflowToDisk="false"
 		timeToIdleSeconds="600"

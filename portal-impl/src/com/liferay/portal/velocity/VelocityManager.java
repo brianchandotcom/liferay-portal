@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateContextType;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateManager;
+import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
@@ -36,8 +37,6 @@ import org.apache.commons.collections.ExtendedProperties;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.runtime.RuntimeConstants;
-import org.apache.velocity.runtime.resource.loader.StringResourceLoader;
-import org.apache.velocity.runtime.resource.util.StringResourceRepository;
 import org.apache.velocity.util.introspection.SecureUberspector;
 
 /**
@@ -45,33 +44,10 @@ import org.apache.velocity.util.introspection.SecureUberspector;
  */
 public class VelocityManager implements TemplateManager {
 
-	public void clearCache() {
-		StringResourceRepository stringResourceRepository =
-			StringResourceLoader.getRepository();
-
-		if (stringResourceRepository != null) {
-			StringResourceRepositoryImpl stringResourceRepositoryImpl =
-				(StringResourceRepositoryImpl)stringResourceRepository;
-
-			stringResourceRepositoryImpl.removeAll();
-		}
-
-		LiferayResourceCacheUtil.removeAll();
-	}
-
-	public void clearCache(String templateId) {
-		StringResourceRepository stringResourceRepository =
-			StringResourceLoader.getRepository();
-
-		if (stringResourceRepository != null) {
-			stringResourceRepository.removeStringResource(templateId);
-		}
-
-		LiferayResourceCacheUtil.remove(templateId);
-	}
-
 	public void destroy() {
-		StringResourceLoader.clearRepositories();
+		if (_velocityEngine == null) {
+			return;
+		}
 
 		_classLoaderVelocityContexts.clear();
 
@@ -86,9 +62,21 @@ public class VelocityManager implements TemplateManager {
 		_classLoaderVelocityContexts.remove(classLoader);
 	}
 
+	public String getName() {
+		return VELOCITY;
+	}
+
 	public Template getTemplate(
-		String templateId, String templateContent, String errorTemplateId,
-		String errorTemplateContent, TemplateContextType templateContextType) {
+		TemplateResource templateResource,
+		TemplateContextType templateContextType) {
+
+		return getTemplate(templateResource, null, templateContextType);
+	}
+
+	public Template getTemplate(
+		TemplateResource templateResource,
+		TemplateResource errorTemplateResource,
+		TemplateContextType templateContextType) {
 
 		if (templateContextType.equals(TemplateContextType.CLASS_LOADER)) {
 
@@ -128,9 +116,9 @@ public class VelocityManager implements TemplateManager {
 				}
 
 				return new PACLVelocityTemplate(
-					templateId, templateContent, errorTemplateId,
-					errorTemplateContent, velocityContext, _velocityEngine,
-					_templateContextHelper, contextClassLoaderPACLPolicy);
+					templateResource, errorTemplateResource, velocityContext,
+					_velocityEngine, _templateContextHelper,
+					contextClassLoaderPACLPolicy);
 			}
 			finally {
 				PortalSecurityManagerThreadLocal.setPACLPolicy(
@@ -139,57 +127,25 @@ public class VelocityManager implements TemplateManager {
 		}
 		else if (templateContextType.equals(TemplateContextType.EMPTY)) {
 			return new VelocityTemplate(
-				templateId, templateContent, errorTemplateId,
-				errorTemplateContent, null, _velocityEngine,
+				templateResource, errorTemplateResource, null, _velocityEngine,
 				_templateContextHelper);
 		}
 		else if (templateContextType.equals(TemplateContextType.RESTRICTED)) {
 			return new RestrictedTemplate(
 				new VelocityTemplate(
-					templateId, templateContent, errorTemplateId,
-					errorTemplateContent, _restrictedVelocityContext,
-					_velocityEngine, _templateContextHelper),
+					templateResource, errorTemplateResource,
+					_restrictedVelocityContext, _velocityEngine,
+					_templateContextHelper),
 				_templateContextHelper.getRestrictedVariables());
 		}
 		else if (templateContextType.equals(TemplateContextType.STANDARD)) {
 			return new VelocityTemplate(
-				templateId, templateContent, errorTemplateId,
-				errorTemplateContent, _standardVelocityContext, _velocityEngine,
+				templateResource, errorTemplateResource,
+				_standardVelocityContext, _velocityEngine,
 				_templateContextHelper);
 		}
 
 		return null;
-	}
-
-	public Template getTemplate(
-		String templateId, String templateContent, String errorTemplateId,
-		TemplateContextType templateContextType) {
-
-		return getTemplate(
-			templateId, templateContent, errorTemplateId, null,
-			templateContextType);
-	}
-
-	public Template getTemplate(
-		String templateId, String templateContent,
-		TemplateContextType templateContextType) {
-
-		return getTemplate(
-			templateId, templateContent, null, null, templateContextType);
-	}
-
-	public Template getTemplate(
-		String templateId, TemplateContextType templateContextType) {
-
-		return getTemplate(templateId, null, null, null, templateContextType);
-	}
-
-	public String getTemplateManagerName() {
-		return VELOCITY;
-	}
-
-	public boolean hasTemplate(String templateId) {
-		return _velocityEngine.resourceExists(templateId);
 	}
 
 	public void init() throws TemplateException {
@@ -198,9 +154,6 @@ public class VelocityManager implements TemplateManager {
 		}
 
 		_velocityEngine = new VelocityEngine();
-
-		LiferayResourceLoader.setVelocityResourceListeners(
-			PropsValues.VELOCITY_ENGINE_RESOURCE_LISTENERS);
 
 		ExtendedProperties extendedProperties = new FastExtendedProperties();
 
@@ -217,37 +170,20 @@ public class VelocityManager implements TemplateManager {
 			StringUtil.merge(PropsValues.VELOCITY_ENGINE_RESTRICTED_PACKAGES));
 
 		extendedProperties.setProperty(
-			VelocityEngine.RESOURCE_LOADER, "string,servlet");
+			VelocityEngine.RESOURCE_LOADER, "liferay");
 
 		extendedProperties.setProperty(
-			"servlet." + VelocityEngine.RESOURCE_LOADER + ".cache",
+			"liferay." + VelocityEngine.RESOURCE_LOADER + ".cache",
 			String.valueOf(
 				PropsValues.VELOCITY_ENGINE_RESOURCE_MANAGER_CACHE_ENABLED));
 
 		extendedProperties.setProperty(
-			"servlet." + VelocityEngine.RESOURCE_LOADER + ".class",
+			"liferay." + VelocityEngine.RESOURCE_LOADER + ".class",
 			LiferayResourceLoader.class.getName());
-
-		extendedProperties.setProperty(
-			"string." + VelocityEngine.RESOURCE_LOADER + ".cache",
-			String.valueOf(
-				PropsValues.VELOCITY_ENGINE_RESOURCE_MANAGER_CACHE_ENABLED));
-
-		extendedProperties.setProperty(
-			"string." + VelocityEngine.RESOURCE_LOADER + ".class",
-			StringResourceLoader.class.getName());
-
-		extendedProperties.setProperty(
-			"string." + VelocityEngine.RESOURCE_LOADER + ".repository.class",
-			StringResourceRepositoryImpl.class.getName());
 
 		extendedProperties.setProperty(
 			VelocityEngine.RESOURCE_MANAGER_CLASS,
 			PropsUtil.get(PropsKeys.VELOCITY_ENGINE_RESOURCE_MANAGER));
-
-		extendedProperties.setProperty(
-			VelocityEngine.RESOURCE_MANAGER_CACHE_CLASS,
-			PropsUtil.get(PropsKeys.VELOCITY_ENGINE_RESOURCE_MANAGER_CACHE));
 
 		extendedProperties.setProperty(
 			VelocityEngine.RUNTIME_LOG_LOGSYSTEM_CLASS,

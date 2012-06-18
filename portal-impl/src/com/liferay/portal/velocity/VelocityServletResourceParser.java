@@ -14,38 +14,26 @@
 
 package com.liferay.portal.velocity;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.template.URLResourceParser;
 import com.liferay.portal.util.PortalUtil;
 
-import java.io.InputStream;
+import java.io.IOException;
+
+import java.net.URL;
 
 import javax.servlet.ServletContext;
-
-import org.apache.velocity.exception.ResourceNotFoundException;
 
 /**
  * @author Alexander Chow
  * @author Raymond Augé
  */
-public class ServletVelocityResourceListener extends VelocityResourceListener {
+public class VelocityServletResourceParser extends URLResourceParser {
 
-	@Override
-	public InputStream getResourceStream(String source)
-		throws ResourceNotFoundException {
-
-		try {
-			return doGetResourceStream(source);
-		}
-		catch (Exception e) {
-			throw new ResourceNotFoundException(source);
-		}
-	}
-
-	protected InputStream doGetResourceStream(String source) throws Exception {
+	public URL getURL(String source) throws IOException {
 		int pos = source.indexOf(SERVLET_SEPARATOR);
 
 		if (pos == -1) {
@@ -77,21 +65,26 @@ public class ServletVelocityResourceListener extends VelocityResourceListener {
 					servletContextName + " " + servletContext);
 		}
 
-		InputStream inputStream = servletContext.getResourceAsStream(name);
+		URL url = servletContext.getResource(name);
 
-		if ((inputStream == null) && name.endsWith("/init_custom.vm")) {
+		if ((url == null) && name.endsWith("/init_custom.vm")) {
 			if (_log.isWarnEnabled()) {
 				_log.warn("The template " + name + " should be created");
 			}
 
-			return new UnsyncByteArrayInputStream(new byte[0]);
+			String portalServletContextName = PortalUtil.getPathContext();
+
+			ServletContext portalServletContext = ServletContextPool.get(
+				portalServletContextName);
+
+			url = portalServletContext.getResource(
+				"/html/themes/_unstyled/template/init_custom.vm");
 		}
-		else {
-			return inputStream;
-		}
+
+		return url;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
-		ServletVelocityResourceListener.class);
+		VelocityServletResourceParser.class);
 
 }

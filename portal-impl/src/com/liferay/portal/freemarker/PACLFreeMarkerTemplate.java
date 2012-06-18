@@ -15,6 +15,7 @@
 package com.liferay.portal.freemarker;
 
 import com.liferay.portal.kernel.template.TemplateException;
+import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 import com.liferay.portal.security.pacl.PACLPolicy;
 import com.liferay.portal.template.TemplateContextHelper;
@@ -31,16 +32,16 @@ import java.util.Map;
 public class PACLFreeMarkerTemplate extends FreeMarkerTemplate {
 
 	public PACLFreeMarkerTemplate(
-		String templateId, String templateContent, String errorTemplateId,
-		String errorTemplateContent, Map<String, Object> context,
+		TemplateResource templateResource,
+		TemplateResource errorTemplateResource, Map<String, Object> context,
 		Configuration configuration,
 		TemplateContextHelper templateContextHelper,
-		StringTemplateLoader stringTemplateLoader, PACLPolicy paclPolicy) {
+		Map<String, TemplateResource> autoImportLibraries,
+		PACLPolicy paclPolicy) {
 
 		super(
-			templateId, templateContent, errorTemplateId, errorTemplateContent,
-			context, configuration, templateContextHelper,
-			stringTemplateLoader);
+			templateResource, errorTemplateResource, context, configuration,
+			templateContextHelper, autoImportLibraries);
 
 		_paclPolicy = paclPolicy;
 	}

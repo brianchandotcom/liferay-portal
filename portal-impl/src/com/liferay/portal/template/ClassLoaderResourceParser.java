@@ -12,37 +12,25 @@
  * details.
  */
 
-package com.liferay.portal.velocity;
+package com.liferay.portal.template;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
-import java.io.InputStream;
+import java.io.IOException;
 
-import org.apache.velocity.exception.ResourceNotFoundException;
+import java.net.URL;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Tina Tian
  */
-public class ClassLoaderVelocityResourceListener
-	extends VelocityResourceListener {
+public class ClassLoaderResourceParser extends URLResourceParser {
 
 	@Override
-	public InputStream getResourceStream(String source)
-		throws ResourceNotFoundException {
-
-		try {
-			return doGetResourceStream(source);
-		}
-		catch (Exception e) {
-			throw new ResourceNotFoundException(source);
-		}
-	}
-
-	protected InputStream doGetResourceStream(String source) throws Exception {
-		if (source.contains(JOURNAL_SEPARATOR) ||
-			source.contains(SERVLET_SEPARATOR) ||
-			source.contains(THEME_LOADER_SEPARATOR)) {
+	public URL getURL(String templateId) throws IOException {
+		if (templateId.contains(JOURNAL_SEPARATOR) ||
+			templateId.contains(SERVLET_SEPARATOR) ||
+			templateId.contains(THEME_LOADER_SEPARATOR)) {
 
 			return null;
 		}
@@ -50,13 +38,13 @@ public class ClassLoaderVelocityResourceListener
 		ClassLoader classLoader = getClass().getClassLoader();
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Loading " + source);
+			_log.debug("Loading " + templateId);
 		}
 
-		return classLoader.getResourceAsStream(source);
+		return classLoader.getResource(templateId);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
-		ClassLoaderVelocityResourceListener.class);
+		ClassLoaderResourceParser.class);
 
 }

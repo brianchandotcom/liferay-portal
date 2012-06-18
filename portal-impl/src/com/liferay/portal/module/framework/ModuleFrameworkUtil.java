@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.osgi.service;
+package com.liferay.portal.module.framework;
 
 import aQute.libg.header.OSGiHeader;
 
@@ -25,11 +25,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.osgi.BundleListener;
-import com.liferay.portal.osgi.FrameworkListener;
-import com.liferay.portal.osgi.OSGiConstants;
-import com.liferay.portal.osgi.OSGiException;
-import com.liferay.portal.osgi.ServiceListener;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -60,6 +55,7 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
 import org.osgi.framework.Constants;
+import org.osgi.framework.FrameworkListener;
 import org.osgi.framework.launch.Framework;
 import org.osgi.framework.launch.FrameworkFactory;
 import org.osgi.framework.startlevel.BundleStartLevel;
@@ -71,7 +67,7 @@ import org.springframework.context.ApplicationContext;
 /**
  * @author Raymond Augé
  */
-public class OSGiServiceUtil {
+public class ModuleFrameworkUtil implements ModuleFrameworkConstants {
 
 	public static Object addBundle(String location) throws PortalException {
 		return addBundle(location, null);
@@ -91,10 +87,6 @@ public class OSGiServiceUtil {
 		return _instance._getState(bundleId);
 	}
 
-	public static void init() throws Exception {
-		_instance._init();
-	}
-
 	public static void registerContext(Object context) {
 		_instance._registerContext(context);
 	}
@@ -105,10 +97,6 @@ public class OSGiServiceUtil {
 		_instance._setBundleStartLevel(bundleId, startLevel);
 	}
 
-	public static void start() throws Exception {
-		_instance._start();
-	}
-
 	public static void startBundle(long bundleId) throws PortalException {
 		_instance._startBundle(bundleId);
 	}
@@ -117,6 +105,14 @@ public class OSGiServiceUtil {
 		throws PortalException {
 
 		_instance._startBundle(bundleId, options);
+	}
+
+	public static void startFramework() throws Exception {
+		_instance._startFramework();
+	}
+
+	public static void startRuntime() throws Exception {
+		_instance._startRuntime();
 	}
 
 	public static void stopBundle(long bundleId) throws PortalException {
@@ -151,7 +147,7 @@ public class OSGiServiceUtil {
 		_instance._updateBundle(bundleId, inputStream);
 	}
 
-	private OSGiServiceUtil() {
+	private ModuleFrameworkUtil() {
 	}
 
 	private Object _addBundle(String location, InputStream inputStream)
@@ -171,7 +167,7 @@ public class OSGiServiceUtil {
 		catch (BundleException be) {
 			_log.error(be, be);
 
-			throw new OSGiException(be);
+			throw new ModuleFrameworkException(be);
 		}
 	}
 
@@ -185,24 +181,27 @@ public class OSGiServiceUtil {
 		properties.put(Constants.BUNDLE_VERSION, ReleaseInfo.getVersion());
 		properties.put(
 			Constants.FRAMEWORK_BEGINNING_STARTLEVEL,
-			String.valueOf(PropsValues.OSGI_FRAMEWORK_BEGINNING_START_LEVEL));
+			String.valueOf(PropsValues.MODULE_FRAMEWORK_BEGINNING_START_LEVEL));
 		properties.put(
 			Constants.FRAMEWORK_BUNDLE_PARENT,
 			Constants.FRAMEWORK_BUNDLE_PARENT_APP);
 		properties.put(
-			Constants.FRAMEWORK_STORAGE, PropsValues.OSGI_FRAMEWORK_STORAGE);
+			Constants.FRAMEWORK_STORAGE,
+			PropsValues.MODULE_FRAMEWORK_STATE_DIR);
 
 		UniqueList<String> packages = new UniqueList<String>();
 
 		try {
 			_getBundleExportPackages(
-				PropsValues.OSGI_SYSTEM_BUNDLE_EXPORT_PACKAGES, packages);
+				PropsValues.MODULE_FRAMEWORK_SYSTEM_BUNDLE_EXPORT_PACKAGES,
+				packages);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 		}
 
-		packages.addAll(Arrays.asList(PropsValues.OSGI_SYSTEM_PACKAGES_EXTRA));
+		packages.addAll(
+			Arrays.asList(PropsValues.MODULE_FRAMEWORK_SYSTEM_PACKAGES_EXTRA));
 
 		Collections.sort(packages);
 
@@ -330,7 +329,7 @@ public class OSGiServiceUtil {
 		Bundle bundle = _getBundle(bundleId);
 
 		if (bundle == null) {
-			throw new OSGiException("No bundle with ID " + bundleId);
+			throw new ModuleFrameworkException("No bundle with ID " + bundleId);
 		}
 
 		int state = bundle.getState();
@@ -356,39 +355,6 @@ public class OSGiServiceUtil {
 		else {
 			return StringPool.BLANK;
 		}
-	}
-
-	private void _init() throws Exception {
-		List<FrameworkFactory> frameworkFactories = ServiceLoader.load(
-			FrameworkFactory.class);
-
-		if (frameworkFactories.isEmpty()) {
-			return;
-		}
-
-		FrameworkFactory frameworkFactory = frameworkFactories.get(0);
-
-		Map<String, String> properties = _buildProperties();
-
-		_framework = frameworkFactory.newFramework(properties);
-
-		_framework.init();
-
-		BundleContext bundleContext = _framework.getBundleContext();
-
-		BundleListener bundleListener = new BundleListener();
-
-		bundleContext.addBundleListener(bundleListener);
-
-		FrameworkListener frameworkListener = new FrameworkListener();
-
-		bundleContext.addFrameworkListener(frameworkListener);
-
-		ServiceListener serviceListener = new ServiceListener();
-
-		bundleContext.addServiceListener(serviceListener);
-
-		_framework.start();
 	}
 
 	private void _registerApplicationContext(
@@ -420,7 +386,7 @@ public class OSGiServiceUtil {
 		}
 
 		if ((context instanceof ApplicationContext) &&
-			PropsValues.OSGI_REGISTER_LIFERAY_SERVICES) {
+			PropsValues.MODULE_FRAMEWORK_REGISTER_LIFERAY_SERVICES) {
 
 			ApplicationContext applicationContext = (ApplicationContext)context;
 
@@ -450,9 +416,9 @@ public class OSGiServiceUtil {
 
 		Hashtable<String, Object> properties = new Hashtable<String, Object>();
 
-		properties.put(OSGiConstants.BEAN_ID, beanName);
-		properties.put(OSGiConstants.ORIGINAL_BEAN, Boolean.TRUE);
-		properties.put(OSGiConstants.SERVICE_VENDOR, ReleaseInfo.getVendor());
+		properties.put(BEAN_ID, beanName);
+		properties.put(ORIGINAL_BEAN, Boolean.TRUE);
+		properties.put(SERVICE_VENDOR, ReleaseInfo.getVendor());
 
 		bundleContext.registerService(
 			names.toArray(new String[names.size()]), bean, properties);
@@ -463,9 +429,9 @@ public class OSGiServiceUtil {
 
 		Hashtable<String, Object> properties = new Hashtable<String, Object>();
 
-		properties.put(OSGiConstants.BEAN_ID, ServletContext.class.getName());
-		properties.put(OSGiConstants.ORIGINAL_BEAN, Boolean.TRUE);
-		properties.put(OSGiConstants.SERVICE_VENDOR, ReleaseInfo.getVendor());
+		properties.put(BEAN_ID, ServletContext.class.getName());
+		properties.put(ORIGINAL_BEAN, Boolean.TRUE);
+		properties.put(SERVICE_VENDOR, ReleaseInfo.getVendor());
 
 		bundleContext.registerService(
 			new String[] {ServletContext.class.getName()}, servletContext,
@@ -480,7 +446,7 @@ public class OSGiServiceUtil {
 		Bundle bundle = _getBundle(bundleId);
 
 		if (bundle == null) {
-			throw new OSGiException("No bundle with ID " + bundleId);
+			throw new ModuleFrameworkException("No bundle with ID " + bundleId);
 		}
 
 		BundleStartLevel bundleStartLevel = bundle.adapt(
@@ -489,17 +455,12 @@ public class OSGiServiceUtil {
 		bundleStartLevel.setStartLevel(startLevel);
 	}
 
-	private void _start() throws Exception {
-		if (_framework == null) {
-			return;
-		}
+	private void _setupLogBridge() throws Exception {
+		BundleContext bundleContext = _framework.getBundleContext();
 
-		FrameworkStartLevel frameworkStartLevel = _framework.adapt(
-			FrameworkStartLevel.class);
+		_logBridge = new LogBridge();
 
-		frameworkStartLevel.setStartLevel(
-			PropsValues.OSGI_FRAMEWORK_RUNTIME_START_LEVEL,
-			(FrameworkListener[])null);
+		_logBridge.start(bundleContext);
 	}
 
 	private void _startBundle(long bundleId) throws PortalException {
@@ -508,7 +469,7 @@ public class OSGiServiceUtil {
 		Bundle bundle = _getBundle(bundleId);
 
 		if (bundle == null) {
-			throw new OSGiException("No bundle with ID " + bundleId);
+			throw new ModuleFrameworkException("No bundle with ID " + bundleId);
 		}
 
 		try {
@@ -517,7 +478,7 @@ public class OSGiServiceUtil {
 		catch (BundleException be) {
 			_log.error(be, be);
 
-			throw new OSGiException(be);
+			throw new ModuleFrameworkException(be);
 		}
 	}
 
@@ -529,7 +490,7 @@ public class OSGiServiceUtil {
 		Bundle bundle = _getBundle(bundleId);
 
 		if (bundle == null) {
-			throw new OSGiException("No bundle with ID " + bundleId);
+			throw new ModuleFrameworkException("No bundle with ID " + bundleId);
 		}
 
 		try {
@@ -538,8 +499,42 @@ public class OSGiServiceUtil {
 		catch (BundleException be) {
 			_log.error(be, be);
 
-			throw new OSGiException(be);
+			throw new ModuleFrameworkException(be);
 		}
+	}
+
+	private void _startFramework() throws Exception {
+		List<FrameworkFactory> frameworkFactories = ServiceLoader.load(
+			FrameworkFactory.class);
+
+		if (frameworkFactories.isEmpty()) {
+			return;
+		}
+
+		FrameworkFactory frameworkFactory = frameworkFactories.get(0);
+
+		Map<String, String> properties = _buildProperties();
+
+		_framework = frameworkFactory.newFramework(properties);
+
+		_framework.init();
+
+		_setupLogBridge();
+
+		_framework.start();
+	}
+
+	private void _startRuntime() throws Exception {
+		if (_framework == null) {
+			return;
+		}
+
+		FrameworkStartLevel frameworkStartLevel = _framework.adapt(
+			FrameworkStartLevel.class);
+
+		frameworkStartLevel.setStartLevel(
+			PropsValues.MODULE_FRAMEWORK_RUNTIME_START_LEVEL,
+			(FrameworkListener)null);
 	}
 
 	private void _stopBundle(long bundleId) throws PortalException {
@@ -548,7 +543,7 @@ public class OSGiServiceUtil {
 		Bundle bundle = _getBundle(bundleId);
 
 		if (bundle == null) {
-			throw new OSGiException("No bundle with ID " + bundleId);
+			throw new ModuleFrameworkException("No bundle with ID " + bundleId);
 		}
 
 		try {
@@ -557,7 +552,7 @@ public class OSGiServiceUtil {
 		catch (BundleException be) {
 			_log.error(be, be);
 
-			throw new OSGiException(be);
+			throw new ModuleFrameworkException(be);
 		}
 	}
 
@@ -569,7 +564,7 @@ public class OSGiServiceUtil {
 		Bundle bundle = _getBundle(bundleId);
 
 		if (bundle == null) {
-			throw new OSGiException("No bundle with ID " + bundleId);
+			throw new ModuleFrameworkException("No bundle with ID " + bundleId);
 		}
 
 		try {
@@ -578,7 +573,7 @@ public class OSGiServiceUtil {
 		catch (BundleException be) {
 			_log.error(be, be);
 
-			throw new OSGiException(be);
+			throw new ModuleFrameworkException(be);
 		}
 	}
 
@@ -586,6 +581,10 @@ public class OSGiServiceUtil {
 		if (_framework == null) {
 			return;
 		}
+
+		BundleContext bundleContext = _framework.getBundleContext();
+
+		_logBridge.stop(bundleContext);
 
 		_framework.stop();
 	}
@@ -599,8 +598,8 @@ public class OSGiServiceUtil {
 			FrameworkStartLevel.class);
 
 		frameworkStartLevel.setStartLevel(
-			PropsValues.OSGI_FRAMEWORK_BEGINNING_START_LEVEL,
-			(FrameworkListener[])null);
+			PropsValues.MODULE_FRAMEWORK_BEGINNING_START_LEVEL,
+			(FrameworkListener)null);
 	}
 
 	private void _uninstallBundle(long bundleId) throws PortalException {
@@ -609,7 +608,7 @@ public class OSGiServiceUtil {
 		Bundle bundle = _getBundle(bundleId);
 
 		if (bundle == null) {
-			throw new OSGiException("No bundle with ID " + bundleId);
+			throw new ModuleFrameworkException("No bundle with ID " + bundleId);
 		}
 
 		try {
@@ -618,7 +617,7 @@ public class OSGiServiceUtil {
 		catch (BundleException be) {
 			_log.error(be, be);
 
-			throw new OSGiException(be);
+			throw new ModuleFrameworkException(be);
 		}
 	}
 
@@ -628,7 +627,7 @@ public class OSGiServiceUtil {
 		Bundle bundle = _getBundle(bundleId);
 
 		if (bundle == null) {
-			throw new OSGiException("No bundle with ID " + bundleId);
+			throw new ModuleFrameworkException("No bundle with ID " + bundleId);
 		}
 
 		try {
@@ -637,7 +636,7 @@ public class OSGiServiceUtil {
 		catch (BundleException be) {
 			_log.error(be, be);
 
-			throw new OSGiException(be);
+			throw new ModuleFrameworkException(be);
 		}
 	}
 
@@ -649,7 +648,7 @@ public class OSGiServiceUtil {
 		Bundle bundle = _getBundle(bundleId);
 
 		if (bundle == null) {
-			throw new OSGiException("No bundle with ID " + bundleId);
+			throw new ModuleFrameworkException("No bundle with ID " + bundleId);
 		}
 
 		try {
@@ -658,14 +657,15 @@ public class OSGiServiceUtil {
 		catch (BundleException be) {
 			_log.error(be, be);
 
-			throw new OSGiException(be);
+			throw new ModuleFrameworkException(be);
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(OSGiServiceUtil.class);
+	private static Log _log = LogFactoryUtil.getLog(ModuleFrameworkUtil.class);
 
-	private static OSGiServiceUtil _instance = new OSGiServiceUtil();
+	private static ModuleFrameworkUtil _instance = new ModuleFrameworkUtil();
 
 	private Framework _framework;
+	private LogBridge _logBridge;
 
 }

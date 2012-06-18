@@ -1455,6 +1455,22 @@ public interface PropsKeys {
 
 	public static final String MODEL_HINTS_CONFIGS = "model.hints.configs";
 
+	public static final String MODULE_FRAMEWORK_ENABLED = "module.framework.enabled";
+
+	public static final String MODULE_FRAMEWORK_BEGINNING_START_LEVEL = "module.framework.beginning.start.level";
+
+	public static final String MODULE_FRAMEWORK_RUNTIME_START_LEVEL = "module.framework.runtime.start.level";
+
+	public static final String MODULE_FRAMEWORK_LIB_DIR = "module.framework.lib.dir";
+
+	public static final String MODULE_FRAMEWORK_STATE_DIR = "module.framework.state.dir";
+
+	public static final String MODULE_FRAMEWORK_REGISTER_LIFERAY_SERVICES = "module.framework.register.liferay.services";
+
+	public static final String MODULE_FRAMEWORK_SYSTEM_BUNDLE_EXPORT_PACKAGES = "module.framework.system.bundle.export.packages";
+
+	public static final String MODULE_FRAMEWORK_SYSTEM_PACKAGES_EXTRA = "module.framework.system.packages.extra";
+
 	public static final String MONITORING_DATA_SAMPLE_THREAD_LOCAL = "monitoring.data.sample.thread.local";
 
 	public static final String MONITORING_PORTAL_REQUEST = "monitoring.portal.request";
@@ -1578,20 +1594,6 @@ public interface PropsKeys {
 	public static final String ORGANIZATIONS_SEARCH_WITH_INDEX = "organizations.search.with.index";
 
 	public static final String ORGANIZATIONS_TYPES = "organizations.types";
-
-	public static final String OSGI_ENABLED = "osgi.enabled";
-
-	public static final String OSGI_FRAMEWORK_BEGINNING_START_LEVEL = "osgi.framework.beginning.start.level";
-
-	public static final String OSGI_FRAMEWORK_RUNTIME_START_LEVEL = "osgi.framework.runtime.start.level";
-
-	public static final String OSGI_FRAMEWORK_STORAGE = "osgi.framework.storage";
-
-	public static final String OSGI_REGISTER_LIFERAY_SERVICES = "osgi.register.liferay.services";
-
-	public static final String OSGI_SYSTEM_BUNDLE_EXPORT_PACKAGES = "osgi.system.bundle.export.packages";
-
-	public static final String OSGI_SYSTEM_PACKAGES_EXTRA = "osgi.system.packages.extra";
 
 	public static final String PASSWORDS_DEFAULT_POLICY_ALLOW_DICTIONARY_WORDS = "passwords.default.policy.allow.dictionary.words";
 

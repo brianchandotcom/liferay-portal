@@ -16,6 +16,8 @@ package com.liferay.portal.kernel.trash;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portlet.trash.DuplicateTrashEntryException;
+import com.liferay.portlet.trash.model.TrashEntry;
 
 /**
  * Represents the interface to manage the basic operations of the Recycle Bin.
@@ -50,6 +52,9 @@ import com.liferay.portal.kernel.exception.SystemException;
  * @author Alexander Chow
  */
 public interface TrashHandler {
+
+	public void checkDuplicateEntry(TrashEntry entry)
+		throws DuplicateTrashEntryException;
 
 	/**
 	 * Deletes all trash entries with the primary keys.
@@ -113,5 +118,7 @@ public interface TrashHandler {
 	 */
 	public void restoreTrashEntry(long classPK)
 		throws PortalException, SystemException;
+
+	public void updateEntryTitle(long classPK, String title) throws SystemException;
 
 }

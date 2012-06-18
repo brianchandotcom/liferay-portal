@@ -20,9 +20,12 @@ import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.trash.DuplicateTrashEntryException;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
 import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
@@ -32,6 +35,7 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -57,11 +61,23 @@ public class EditEntryAction extends PortletAction {
 			else if (cmd.equals(Constants.EMPTY_TRASH)) {
 				emptyTrash(actionRequest);
 			}
+			else if (cmd.equals(Constants.FIX_RESTORE)) {
+				fixRestoredEntry(actionRequest);
+			}
 			else if (cmd.equals(Constants.RESTORE)) {
 				restoreEntries(actionRequest);
 			}
 
 			sendRedirect(actionRequest, actionResponse);
+		}
+		catch (DuplicateTrashEntryException dtee) {
+			HttpServletRequest request = PortalUtil.getHttpServletRequest(
+				actionRequest);
+
+			SessionErrors.add(request, dtee.getClass(), dtee);
+			SessionErrors.add(actionRequest, dtee.getClass());
+
+			setForward(actionRequest, "portlet.trash.restore_error");
 		}
 		catch (Exception e) {
 			SessionErrors.add(actionRequest, e.getClass());
@@ -110,6 +126,31 @@ public class EditEntryAction extends PortletAction {
 		TrashEntryServiceUtil.deleteEntries(themeDisplay.getScopeGroupId());
 	}
 
+	protected void fixRestoredEntry(ActionRequest actionRequest)
+		throws Exception {
+
+		long entryId = ParamUtil.getLong(actionRequest, "entryId");
+		String newName = ParamUtil.getString(actionRequest, "new-name");
+
+		if (Validator.isNotNull(newName)) {
+			try {
+				TrashEntry entry = TrashEntryLocalServiceUtil.getTrashEntry(
+					entryId);
+
+				TrashHandler trashHandler =
+					TrashHandlerRegistryUtil.getTrashHandler(
+						entry.getClassName());
+
+				trashHandler.updateEntryTitle(entry.getClassPK(), newName);
+
+				trashHandler.restoreTrashEntry(entry.getClassPK());
+			}
+			catch (Exception e) {
+			}
+		}
+
+	}
+
 	protected void restoreEntries(ActionRequest actionRequest)
 		throws Exception {
 
@@ -133,6 +174,8 @@ public class EditEntryAction extends PortletAction {
 
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
 			entry.getClassName());
+
+		trashHandler.checkDuplicateEntry(entry);
 
 		trashHandler.restoreTrashEntry(entry.getClassPK());
 	}

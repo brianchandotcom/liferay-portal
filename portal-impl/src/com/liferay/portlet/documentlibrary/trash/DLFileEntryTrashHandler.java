@@ -14,11 +14,20 @@
 
 package com.liferay.portlet.documentlibrary.trash;
 
+import com.liferay.portal.InvalidRepositoryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.repository.Repository;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.repository.liferayrepository.LiferayRepository;
+import com.liferay.portal.service.RepositoryServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
+import com.liferay.portlet.trash.DuplicateTrashEntryException;
+import com.liferay.portlet.trash.model.TrashEntry;
 
 /**
  * Represents the trash handler for the file entry entity.
@@ -29,6 +38,41 @@ import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 public class DLFileEntryTrashHandler extends BaseTrashHandler {
 
 	public static final String CLASS_NAME = DLFileEntry.class.getName();
+
+	public void checkDuplicateEntry(TrashEntry entry)
+		throws DuplicateTrashEntryException {
+
+		DLFileEntry duplicatedFileEntry = null;
+
+		try {
+			DLFileEntry dlFileEntry = getDLFileEntry(entry.getClassPK());
+
+			String restoredTitle = dlFileEntry.getTitle();
+			String originalTitle = restoredTitle;
+
+			if (restoredTitle.indexOf(StringPool.FORWARD_SLASH) > 0) {
+				originalTitle = restoredTitle.substring(0,
+					restoredTitle.indexOf(StringPool.FORWARD_SLASH));
+			}
+
+			duplicatedFileEntry =
+				DLFileEntryLocalServiceUtil.fetchFileEntry(
+					dlFileEntry.getGroupId(), dlFileEntry.getFolderId(),
+					originalTitle);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		if (duplicatedFileEntry != null) {
+			DuplicateTrashEntryException dtee =
+				new DuplicateTrashEntryException();
+
+			dtee.setDuplicateEntryId(entry.getEntryId());
+
+			throw dtee;
+		}
+	}
 
 	/**
 	 * Deletes all file entries with the matching primary keys.
@@ -67,6 +111,43 @@ public class DLFileEntryTrashHandler extends BaseTrashHandler {
 		for (long classPK : classPKs) {
 			DLAppServiceUtil.restoreFileEntryFromTrash(classPK);
 		}
+	}
+
+	public void updateEntryTitle(long classPK, String name)
+		throws SystemException {
+
+		DLFileEntry dlFileEntry = getDLFileEntry(classPK);
+
+		if (dlFileEntry != null) {
+			dlFileEntry.setTitle(name);
+		}
+
+		DLFileEntryLocalServiceUtil.updateDLFileEntry(dlFileEntry, false);
+	}
+
+	protected DLFileEntry getDLFileEntry (long classPK) {
+
+		DLFileEntry dlFileEntry = null;
+
+		try {
+			Repository repository = RepositoryServiceUtil.getRepositoryImpl(
+				0, classPK, 0);
+
+			if (!(repository instanceof LiferayRepository)) {
+				throw new InvalidRepositoryException(
+					"Repository " + repository.getRepositoryId() +
+						" does not support trash operations");
+			}
+
+			FileEntry fileEntry = repository.getFileEntry(classPK);
+
+			dlFileEntry = (DLFileEntry)fileEntry.getModel();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return dlFileEntry;
 	}
 
 }

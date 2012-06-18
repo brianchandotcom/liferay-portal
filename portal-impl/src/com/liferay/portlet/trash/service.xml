@@ -70,4 +70,7 @@
 			<finder-column name="classPK" />
 		</finder>
 	</entity>
+	<exceptions>
+		<exception>DuplicateTrashEntry</exception>
+	</exceptions>
 </service-builder>

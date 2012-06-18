@@ -1871,6 +1871,7 @@
 		</action>
 
 		<action path="/trash/edit_entry" type="com.liferay.portlet.trash.action.EditEntryAction">
+			<forward name="portlet.trash.restore_error" path="portlet.trash.restore_error" />
 			<forward name="portlet.trash.view" path="portlet.trash.view" />
 		</action>
 

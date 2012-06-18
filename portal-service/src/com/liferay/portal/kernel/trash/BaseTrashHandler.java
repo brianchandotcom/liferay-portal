@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
+import com.liferay.portlet.trash.DuplicateTrashEntryException;
+import com.liferay.portlet.trash.model.TrashEntry;
 
 /**
  * Represents the base class for basic operations with the Trash.
@@ -40,6 +42,10 @@ import com.liferay.portlet.asset.model.AssetRendererFactory;
  * @author Zsolt Berentey
  */
 public abstract class BaseTrashHandler implements TrashHandler {
+
+	public void checkDuplicateEntry(TrashEntry entry)
+		throws DuplicateTrashEntryException {
+	}
 
 	public void deleteTrashEntry(long classPK)
 		throws PortalException, SystemException {
@@ -69,6 +75,8 @@ public abstract class BaseTrashHandler implements TrashHandler {
 
 		restoreTrashEntries(new long[] {classPK});
 	}
+
+	public void updateEntryTitle(long classPK, String title) throws SystemException {}
 
 	private AssetRendererFactory getAssetRendererFactory() {
 		return AssetRendererFactoryRegistryUtil.

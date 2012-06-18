@@ -24,6 +24,7 @@ public class N2_UpdateMessageBoardsContentTest extends BaseTestCase {
 	public void testN2_UpdateMessageBoardsContent() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
+		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

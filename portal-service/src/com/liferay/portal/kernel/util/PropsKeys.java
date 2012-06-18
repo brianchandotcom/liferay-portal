@@ -741,6 +741,10 @@ public interface PropsKeys {
 
 	public static final String FREEMARKER_ENGINE_MODIFICATION_CHECK_INTERVAL = "freemarker.engine.modification.check.interval";
 
+	public static final String FREEMARKER_ENGINE_RESTRICTED_CLASSES = "freemarker.engine.restricted.classes";
+
+	public static final String FREEMARKER_ENGINE_RESTRICTED_PACKAGES = "freemarker.engine.restricted.packages";
+
 	public static final String FREEMARKER_ENGINE_TEMPLATE_EXCEPTION_HANDLER = "freemarker.engine.template.exception.handler";
 
 	public static final String FREEMARKER_ENGINE_TEMPLATE_LOADERS = "freemarker.engine.template.loaders";
@@ -1026,7 +1030,7 @@ public interface PropsKeys {
 	public static final String JSONWS_WEB_SERVICE_INVALID_HTTP_METHODS = "jsonws.web.service.invalid.http.methods";
 
 	public static final String JSONWS_WEB_SERVICE_PUBLIC_METHODS = "jsonws.web.service.public.methods";
-	
+
 	public static final String JSONWS_WEB_SERVICE_STRICT_HTTP_METHOD = "jsonws.web.service.strict.http.method";
 
 	public static final String JSP_WRITER_BUFFER_SIZE = "jsp.writer.buffer.size";
@@ -2128,6 +2132,10 @@ public interface PropsKeys {
 	public static final String VELOCITY_ENGINE_RESOURCE_MANAGER_CACHE_ENABLED = "velocity.engine.resource.manager.cache.enabled";
 
 	public static final String VELOCITY_ENGINE_RESOURCE_MANAGER_MODIFICATION_CHECK_INTERVAL = "velocity.engine.resource.manager.modification.check.interval";
+
+	public static final String VELOCITY_ENGINE_RESTRICTED_CLASSES = "velocity.engine.restricted.classes";
+
+	public static final String VELOCITY_ENGINE_RESTRICTED_PACKAGES = "velocity.engine.restricted.packages";
 
 	public static final String VELOCITY_ENGINE_VELOCIMACRO_LIBRARY = "velocity.engine.velocimacro.library";
 

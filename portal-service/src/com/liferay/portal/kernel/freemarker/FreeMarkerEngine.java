@@ -21,7 +21,11 @@ import java.io.Writer;
  */
 public interface FreeMarkerEngine {
 
+	public void destroy(ClassLoader classLoader);
+
 	public void flushTemplate(String freeMarkerTemplateId);
+
+	public FreeMarkerContext getWrappedClassLoaderToolsContext();
 
 	public FreeMarkerContext getWrappedRestrictedToolsContext();
 

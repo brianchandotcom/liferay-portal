@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
+import com.liferay.portal.kernel.servlet.PluginContextListener;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -33,13 +34,16 @@ import com.liferay.portal.kernel.velocity.VelocityEngineUtil;
 import com.liferay.portal.kernel.velocity.VelocityVariablesUtil;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.Theme;
+import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
+import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
+import com.liferay.portal.security.pacl.PACLPolicy;
+import com.liferay.portal.security.pacl.PACLPolicyManager;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.util.freemarker.FreeMarkerTaglibFactoryUtil;
 
 import freemarker.ext.servlet.HttpRequestHashModel;
 import freemarker.ext.servlet.ServletContextHashModel;
-
 import freemarker.template.ObjectWrapper;
 import freemarker.template.TemplateHashModel;
 
@@ -86,26 +90,114 @@ public class ThemeUtil {
 
 	public static void include(
 			ServletContext servletContext, HttpServletRequest request,
-			HttpServletResponse response, PageContext pageContext, String page,
+			HttpServletResponse response, PageContext pageContext, String path,
 			Theme theme)
 		throws Exception {
 
 		String extension = theme.getTemplateExtension();
 
 		if (extension.equals(ThemeHelper.TEMPLATE_EXTENSION_FTL)) {
-			includeFTL(servletContext, request, pageContext, page, theme, true);
+			includeFTL(servletContext, request, pageContext, path, theme, true);
 		}
 		else if (extension.equals(ThemeHelper.TEMPLATE_EXTENSION_VM)) {
-			includeVM(servletContext, request, pageContext, page, theme, true);
+			includeVM(servletContext, request, pageContext, path, theme, true);
 		}
 		else {
-			String path = theme.getTemplatesPath() + StringPool.SLASH + page;
+			path = theme.getTemplatesPath() + StringPool.SLASH + path;
 
 			includeJSP(servletContext, request, response, path, theme);
 		}
 	}
 
 	public static String includeFTL(
+			ServletContext servletContext, HttpServletRequest request,
+			PageContext pageContext, String path, Theme theme, boolean write)
+		throws Exception {
+
+		return doDispatch(
+			servletContext, request, null, pageContext, path, theme, write,
+			ThemeHelper.TEMPLATE_EXTENSION_FTL);
+	}
+
+	public static void includeJSP(
+			ServletContext servletContext, HttpServletRequest request,
+			HttpServletResponse response, String path, Theme theme)
+		throws Exception {
+
+		doDispatch(
+			servletContext, request, response, null, path, theme, true,
+			ThemeHelper.TEMPLATE_EXTENSION_JSP);
+	}
+
+	public static String includeVM(
+			ServletContext servletContext, HttpServletRequest request,
+			PageContext pageContext, String path, Theme theme, boolean write)
+		throws Exception {
+
+		return doDispatch(
+			servletContext, request, null, pageContext, path, theme, write,
+			ThemeHelper.TEMPLATE_EXTENSION_VM);
+	}
+
+	protected static String doDispatch(
+			ServletContext servletContext, HttpServletRequest request,
+			HttpServletResponse response, PageContext pageContext, String path,
+			Theme theme, boolean write, String extension)
+		throws Exception {
+
+		String pluginServletContextName = GetterUtil.getString(
+			theme.getServletContextName());
+
+		ServletContext pluginServletContext = ServletContextPool.get(
+			pluginServletContextName);
+
+		ClassLoader pluginClassLoader =
+			(ClassLoader)pluginServletContext.getAttribute(
+				PluginContextListener.PLUGIN_CLASS_LOADER);
+
+		ClassLoader contextClassLoader =
+			PACLClassLoaderUtil.getContextClassLoader();
+
+		PACLPolicy contextClassLoaderPACLPolicy =
+			PACLPolicyManager.getPACLPolicy(contextClassLoader);
+		PACLPolicy pluginClassLoaderPACLPolicy =
+			PACLPolicyManager.getPACLPolicy(pluginClassLoader);
+
+		if ((pluginClassLoader != null) &&
+			(pluginClassLoader != contextClassLoader)) {
+
+			PACLClassLoaderUtil.setContextClassLoader(pluginClassLoader);
+			PortalSecurityManagerThreadLocal.setPACLPolicy(
+				pluginClassLoaderPACLPolicy);
+		}
+
+		try {
+			if (extension.equals(ThemeHelper.TEMPLATE_EXTENSION_FTL)) {
+				return doIncludeFTL(
+					servletContext, request, pageContext, path, theme, write);
+			}
+			else if (extension.equals(ThemeHelper.TEMPLATE_EXTENSION_JSP)) {
+				doIncludeJSP(servletContext, request, response, path, theme);
+			}
+			else if (extension.equals(ThemeHelper.TEMPLATE_EXTENSION_VM)) {
+				return doIncludeVM(
+					servletContext, request, pageContext, path, theme, write);
+			}
+
+			return null;
+		}
+		finally {
+			if ((pluginClassLoader != null) &&
+				(pluginClassLoader != contextClassLoader)) {
+
+				PortalSecurityManagerThreadLocal.setPACLPolicy(
+					contextClassLoaderPACLPolicy);
+				PACLClassLoaderUtil.setContextClassLoader(contextClassLoader);
+			}
+		}
+	}
+
+	protected static String doIncludeFTL(
 			ServletContext servletContext, HttpServletRequest request,
 			PageContext pageContext, String path, Theme theme, boolean write)
 		throws Exception {
@@ -155,7 +247,7 @@ public class ThemeUtil {
 		}
 
 		FreeMarkerContext freeMarkerContext =
-			FreeMarkerEngineUtil.getWrappedStandardToolsContext();
+			FreeMarkerEngineUtil.getWrappedClassLoaderToolsContext();
 
 		// FreeMarker variables
 
@@ -260,7 +352,7 @@ public class ThemeUtil {
 		}
 	}
 
-	public static void includeJSP(
+	protected static void doIncludeJSP(
 			ServletContext servletContext, HttpServletRequest request,
 			HttpServletResponse response, String path, Theme theme)
 		throws Exception {
@@ -304,7 +396,7 @@ public class ThemeUtil {
 		}
 	}
 
-	public static String includeVM(
+	protected static String doIncludeVM(
 			ServletContext servletContext, HttpServletRequest request,
 			PageContext pageContext, String page, Theme theme, boolean write)
 		throws Exception {
@@ -363,7 +455,7 @@ public class ThemeUtil {
 		}
 
 		VelocityContext velocityContext =
-			VelocityEngineUtil.getWrappedStandardToolsContext();
+			VelocityEngineUtil.getWrappedClassLoaderToolsContext();
 
 		// Velocity variables
 
@@ -416,7 +508,7 @@ public class ThemeUtil {
 		}
 	}
 
-	public static void insertTilesVariables(HttpServletRequest request) {
+	protected static void insertTilesVariables(HttpServletRequest request) {
 		ComponentContext componentContext =
 			(ComponentContext)request.getAttribute(
 				ComponentConstants.COMPONENT_CONTEXT);

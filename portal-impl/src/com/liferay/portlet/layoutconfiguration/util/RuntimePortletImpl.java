@@ -19,6 +19,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.PipingPageContext;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
+import com.liferay.portal.kernel.servlet.PluginContextListener;
+import com.liferay.portal.kernel.servlet.ServletContextPool;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
@@ -29,7 +32,14 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.velocity.VelocityContext;
 import com.liferay.portal.kernel.velocity.VelocityEngineUtil;
 import com.liferay.portal.kernel.velocity.VelocityVariablesUtil;
+import com.liferay.portal.model.LayoutTemplate;
+import com.liferay.portal.model.LayoutTemplateConstants;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
+import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
+import com.liferay.portal.security.pacl.PACLPolicy;
+import com.liferay.portal.security.pacl.PACLPolicyManager;
+import com.liferay.portal.service.LayoutTemplateLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.PortletDisplayFactory;
@@ -66,6 +76,17 @@ public class RuntimePortletImpl implements RuntimePortlet {
 			String velocityTemplateId, String velocityTemplateContent)
 		throws Exception {
 
+		return doDispatch(
+			servletContext, request, response, pageContext, null, null,
+			velocityTemplateId, velocityTemplateContent, false);
+	}
+
+	protected String doProcessCustomizationSettings(
+			ServletContext servletContext, HttpServletRequest request,
+			HttpServletResponse response, PageContext pageContext,
+			String velocityTemplateId, String velocityTemplateContent)
+		throws Exception {
+
 		if (Validator.isNull(velocityTemplateContent)) {
 			return StringPool.BLANK;
 		}
@@ -78,7 +99,7 @@ public class RuntimePortletImpl implements RuntimePortlet {
 				unsyncStringWriter);
 
 		VelocityContext velocityContext =
-			VelocityEngineUtil.getWrappedStandardToolsContext();
+			VelocityEngineUtil.getWrappedClassLoaderToolsContext();
 
 		velocityContext.put("processor", processor);
 
@@ -243,6 +264,18 @@ public class RuntimePortletImpl implements RuntimePortlet {
 			String velocityTemplateContent)
 		throws Exception {
 
+		doDispatch(
+			servletContext, request, response, pageContext, jspWriter,
+			portletId, velocityTemplateId, velocityTemplateContent, true);
+	}
+
+	protected void doProcessTemplate(
+			ServletContext servletContext, HttpServletRequest request,
+			HttpServletResponse response, PageContext pageContext,
+			JspWriter jspWriter, String portletId, String velocityTemplateId,
+			String velocityTemplateContent)
+		throws Exception {
+
 		if (Validator.isNull(velocityTemplateContent)) {
 			return;
 		}
@@ -251,7 +284,7 @@ public class RuntimePortletImpl implements RuntimePortlet {
 			servletContext, request, response, portletId);
 
 		VelocityContext velocityContext =
-			VelocityEngineUtil.getWrappedStandardToolsContext();
+			VelocityEngineUtil.getWrappedClassLoaderToolsContext();
 
 		velocityContext.put("processor", processor);
 
@@ -397,6 +430,98 @@ public class RuntimePortletImpl implements RuntimePortlet {
 					WebKeys.RENDER_PORTLET_RESOURCE, renderPortletResource);
 			}
 		}
+	}
+
+	protected String doDispatch(
+			ServletContext servletContext, HttpServletRequest request,
+			HttpServletResponse response, PageContext pageContext,
+			JspWriter jspWriter, String portletId, String velocityTemplateId,
+			String velocityTemplateContent, boolean processTemplate)
+		throws Exception {
+
+		 if (Validator.isNull(velocityTemplateContent)) {
+			 return null;
+		 }
+
+		LayoutTemplate layoutTemplate = getLayoutTemlpate(velocityTemplateId);
+
+		String pluginServletContextName = GetterUtil.getString(
+			layoutTemplate.getServletContextName());
+
+		ServletContext pluginServletContext = ServletContextPool.get(
+			pluginServletContextName);
+
+		ClassLoader pluginClassLoader =
+			(ClassLoader)pluginServletContext.getAttribute(
+				PluginContextListener.PLUGIN_CLASS_LOADER);
+
+		ClassLoader contextClassLoader =
+			PACLClassLoaderUtil.getContextClassLoader();
+
+		PACLPolicy contextClassLoaderPACLPolicy =
+			PACLPolicyManager.getPACLPolicy(contextClassLoader);
+		PACLPolicy pluginClassLoaderPACLPolicy =
+			PACLPolicyManager.getPACLPolicy(pluginClassLoader);
+
+		try {
+			if ((pluginClassLoader != null) &&
+				(pluginClassLoader != contextClassLoader)) {
+
+				PACLClassLoaderUtil.setContextClassLoader(pluginClassLoader);
+				PortalSecurityManagerThreadLocal.setPACLPolicy(
+					pluginClassLoaderPACLPolicy);
+			}
+
+			if (processTemplate) {
+				doProcessTemplate(
+					servletContext, request, response, pageContext, jspWriter,
+					portletId, velocityTemplateId, velocityTemplateContent);
+			}
+			else {
+				return doProcessCustomizationSettings(
+					servletContext, request, response, pageContext,
+					velocityTemplateId, velocityTemplateContent);
+			}
+
+			return null;
+		}
+		finally {
+			if ((pluginClassLoader != null) &&
+				(pluginClassLoader != contextClassLoader)) {
+
+				PortalSecurityManagerThreadLocal.setPACLPolicy(
+					contextClassLoaderPACLPolicy);
+				PACLClassLoaderUtil.setContextClassLoader(contextClassLoader);
+			}
+		}
+	}
+
+	protected LayoutTemplate getLayoutTemlpate(String velocityTemplateId) {
+		String separator = LayoutTemplateConstants.CUSTOM_SEPARATOR;
+		boolean standard = false;
+
+		if (velocityTemplateId.contains(
+				LayoutTemplateConstants.STANDARD_SEPARATOR)) {
+
+			separator = LayoutTemplateConstants.STANDARD_SEPARATOR;
+			standard = true;
+		}
+
+		String layoutTemplateId = null;
+
+		String themeId = null;
+
+		int pos = velocityTemplateId.indexOf(separator);
+
+		if (pos != -1) {
+			layoutTemplateId = velocityTemplateId.substring(
+				pos + separator.length());
+
+			themeId = velocityTemplateId.substring(0, pos);
+		}
+
+		return LayoutTemplateLocalServiceUtil.getLayoutTemplate(
+			layoutTemplateId, standard, themeId);
 	}
 
 	private static void _defineObjects(

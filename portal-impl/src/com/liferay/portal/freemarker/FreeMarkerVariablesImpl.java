@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.freemarker.FreeMarkerVariables;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.language.UnicodeLanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ArrayUtil_IW;
@@ -76,8 +78,6 @@ import com.liferay.util.portlet.PortletRequestUtil;
 
 import freemarker.ext.beans.BeansWrapper;
 
-import freemarker.template.utility.ObjectConstructor;
-
 import java.util.List;
 import java.util.Map;
 
@@ -106,14 +106,24 @@ public class FreeMarkerVariablesImpl implements FreeMarkerVariables {
 
 		// Browser sniffer
 
-		freeMarkerContext.put(
-			"browserSniffer", BrowserSnifferUtil.getBrowserSniffer());
+		try {
+			freeMarkerContext.put(
+				"browserSniffer", BrowserSnifferUtil.getBrowserSniffer());
+		}
+		catch (SecurityException se) {
+			_log.error(se, se);
+		}
 
 		// Date format
 
-		freeMarkerContext.put(
-			"dateFormatFactory",
-			FastDateFormatFactoryUtil.getFastDateFormatFactory());
+		try {
+			freeMarkerContext.put(
+				"dateFormatFactory",
+				FastDateFormatFactoryUtil.getFastDateFormatFactory());
+		}
+		catch (SecurityException se) {
+			_log.error(se, se);
+		}
 
 		// Date util
 
@@ -124,34 +134,67 @@ public class FreeMarkerVariablesImpl implements FreeMarkerVariables {
 		freeMarkerContext.put(
 			"enumUtil", BeansWrapper.getDefaultInstance().getEnumModels());
 
-		// Expando column service
+		try {
 
-		ServiceLocator serviceLocator = ServiceLocator.getInstance();
+			// Service locator
 
-		freeMarkerContext.put(
-			"expandoColumnLocalService",
-			serviceLocator.findService(
-				ExpandoColumnLocalService.class.getName()));
+			ServiceLocator serviceLocator = ServiceLocator.getInstance();
 
-		// Expando row service
+			insertHelperUtility(
+				freeMarkerContext, restrictedVariables, "serviceLocator",
+				serviceLocator);
 
-		freeMarkerContext.put(
-			"expandoRowLocalService",
-			serviceLocator.findService(ExpandoRowLocalService.class.getName()));
+			// Expando column service
 
-		// Expando table service
+			try {
+				freeMarkerContext.put(
+					"expandoColumnLocalService",
+					serviceLocator.findService(
+						ExpandoColumnLocalService.class.getName()));
+			}
+			catch (SecurityException se) {
+				_log.error(se, se);
+			}
 
-		freeMarkerContext.put(
-			"expandoTableLocalService",
-			serviceLocator.findService(
-				ExpandoTableLocalService.class.getName()));
+			// Expando row service
 
-		// Expando value service
+			try {
+				freeMarkerContext.put(
+					"expandoRowLocalService",
+					serviceLocator.findService(
+						ExpandoRowLocalService.class.getName()));
+			}
+			catch (SecurityException se) {
+				_log.error(se, se);
+			}
 
-		freeMarkerContext.put(
-			"expandoValueLocalService",
-			serviceLocator.findService(
-				ExpandoValueLocalService.class.getName()));
+			// Expando table service
+
+			try {
+				freeMarkerContext.put(
+					"expandoTableLocalService",
+					serviceLocator.findService(
+						ExpandoTableLocalService.class.getName()));
+			}
+			catch (SecurityException se) {
+				_log.error(se, se);
+			}
+
+			// Expando value service
+
+			try {
+				freeMarkerContext.put(
+					"expandoValueLocalService",
+					serviceLocator.findService(
+						ExpandoValueLocalService.class.getName()));
+			}
+			catch (SecurityException se) {
+				_log.error(se, se);
+			}
+		}
+		catch (SecurityException se) {
+			_log.error(se, se);
+		}
 
 		// Getter util
 
@@ -159,35 +202,72 @@ public class FreeMarkerVariablesImpl implements FreeMarkerVariables {
 
 		// Html util
 
-		freeMarkerContext.put("htmlUtil", HtmlUtil.getHtml());
+		try {
+			freeMarkerContext.put("htmlUtil", HtmlUtil.getHtml());
+		}
+		catch (SecurityException se) {
+			_log.error(se, se);
+		}
 
 		// Http util
 
-		freeMarkerContext.put("httpUtil", HttpUtil.getHttp());
+		try {
+			freeMarkerContext.put("httpUtil", HttpUtil.getHttp());
+		}
+		catch (SecurityException se) {
+			_log.error(se, se);
+		}
 
 		// Journal content util
 
-		freeMarkerContext.put(
-			"journalContentUtil", JournalContentUtil.getJournalContent());
+		try {
+			freeMarkerContext.put(
+				"journalContentUtil", JournalContentUtil.getJournalContent());
+		}
+		catch (SecurityException se) {
+			_log.error(se, se);
+		}
 
 		// JSON factory util
 
-		freeMarkerContext.put(
-			"jsonFactoryUtil", JSONFactoryUtil.getJSONFactory());
+		try {
+			freeMarkerContext.put(
+				"jsonFactoryUtil", JSONFactoryUtil.getJSONFactory());
+		}
+		catch (SecurityException se) {
+			_log.error(se, se);
+		}
 
 		// Language util
 
-		freeMarkerContext.put("languageUtil", LanguageUtil.getLanguage());
-		freeMarkerContext.put(
-			"unicodeLanguageUtil", UnicodeLanguageUtil.getUnicodeLanguage());
+		try {
+			freeMarkerContext.put("languageUtil", LanguageUtil.getLanguage());
+		}
+		catch (SecurityException se) {
+			_log.error(se, se);
+		}
+
+		try {
+			freeMarkerContext.put(
+				"unicodeLanguageUtil",
+				UnicodeLanguageUtil.getUnicodeLanguage());
+		}
+		catch (SecurityException se) {
+			_log.error(se, se);
+		}
 
 		// Locale util
 
-		freeMarkerContext.put("localeUtil", LocaleUtil.getInstance());
+		try {
+			freeMarkerContext.put("localeUtil", LocaleUtil.getInstance());
+		}
+		catch (SecurityException se) {
+			_log.error(se, se);
+		}
 
 		// Object util
 
-		freeMarkerContext.put("objectUtil", new ObjectConstructor());
+		freeMarkerContext.put("objectUtil", new LiferayObjectConstructor());
 
 		// Param util
 
@@ -195,29 +275,50 @@ public class FreeMarkerVariablesImpl implements FreeMarkerVariables {
 
 		// Portal util
 
-		insertHelperUtility(
-			freeMarkerContext, restrictedVariables, "portalUtil",
-			PortalUtil.getPortal());
-		insertHelperUtility(
-			freeMarkerContext, restrictedVariables, "portal",
-			PortalUtil.getPortal());
+		try {
+			insertHelperUtility(
+				freeMarkerContext, restrictedVariables, "portalUtil",
+				PortalUtil.getPortal());
+			insertHelperUtility(
+				freeMarkerContext, restrictedVariables, "portal",
+				PortalUtil.getPortal());
+		}
+		catch (SecurityException se) {
+			_log.error(se, se);
+		}
 
 		// Prefs props util
 
-		insertHelperUtility(
-			freeMarkerContext, restrictedVariables, "prefsPropsUtil",
-			PrefsPropsUtil.getPrefsProps());
+		try {
+			insertHelperUtility(
+				freeMarkerContext, restrictedVariables, "prefsPropsUtil",
+				PrefsPropsUtil.getPrefsProps());
+		}
+		catch (SecurityException se) {
+			_log.error(se, se);
+		}
 
 		// Props util
 
-		insertHelperUtility(
-			freeMarkerContext, restrictedVariables, "propsUtil",
-			PropsUtil.getProps());
+		try {
+			insertHelperUtility(
+				freeMarkerContext, restrictedVariables, "propsUtil",
+				PropsUtil.getProps());
+		}
+		catch (SecurityException se) {
+			_log.error(se, se);
+		}
 
 		// Portlet URL factory
 
-		freeMarkerContext.put(
-			"portletURLFactory", PortletURLFactoryUtil.getPortletURLFactory());
+		try {
+			freeMarkerContext.put(
+				"portletURLFactory",
+				PortletURLFactoryUtil.getPortletURLFactory());
+		}
+		catch (SecurityException se) {
+			_log.error(se, se);
+		}
 
 		// Portlet preferences
 
@@ -230,24 +331,40 @@ public class FreeMarkerVariablesImpl implements FreeMarkerVariables {
 		freeMarkerContext.put(
 			"randomizer", Randomizer_IW.getInstance().getWrappedInstance());
 
-		// SAX reader util
+		try {
+			// Util locator
 
-		UtilLocator utilLocator = UtilLocator.getInstance();
+			UtilLocator utilLocator = UtilLocator.getInstance();
 
-		freeMarkerContext.put(
-			"saxReaderUtil", utilLocator.findUtil(SAXReader.class.getName()));
+			insertHelperUtility(
+				freeMarkerContext, restrictedVariables, "utilLocator",
+				utilLocator);
 
-		// Service locator
+			// SAX reader util
 
-		insertHelperUtility(
-			freeMarkerContext, restrictedVariables, "serviceLocator",
-			serviceLocator);
+			try {
+				freeMarkerContext.put(
+					"saxReaderUtil",
+					utilLocator.findUtil(SAXReader.class.getName()));
+			}
+			catch (SecurityException se) {
+				_log.error(se, se);
+			}
+		}
+		catch (SecurityException se) {
+			_log.error(se, se);
+		}
 
 		// Session clicks
 
-		insertHelperUtility(
-			freeMarkerContext, restrictedVariables, "sessionClicks",
-			SessionClicks_IW.getInstance());
+		try {
+			insertHelperUtility(
+				freeMarkerContext, restrictedVariables, "sessionClicks",
+				SessionClicks_IW.getInstance());
+		}
+		catch (SecurityException se) {
+			_log.error(se, se);
+		}
 
 		// Static field getter
 
@@ -267,11 +384,6 @@ public class FreeMarkerVariablesImpl implements FreeMarkerVariables {
 
 		freeMarkerContext.put("timeZoneUtil", TimeZoneUtil_IW.getInstance());
 
-		// Util locator
-
-		insertHelperUtility(
-			freeMarkerContext, restrictedVariables, "utilLocator", utilLocator);
-
 		// Unicode formatter
 
 		freeMarkerContext.put(
@@ -283,42 +395,116 @@ public class FreeMarkerVariablesImpl implements FreeMarkerVariables {
 
 		// Web server servlet token
 
-		freeMarkerContext.put(
-			"webServerToken",
-			WebServerServletTokenUtil.getWebServerServletToken());
+		try {
+			freeMarkerContext.put(
+				"webServerToken",
+				WebServerServletTokenUtil.getWebServerServletToken());
+		}
+		catch (SecurityException se) {
+			_log.error(se, se);
+		}
 
 		// Permissions
 
-		freeMarkerContext.put(
-			"accountPermission", AccountPermissionUtil.getAccountPermission());
-		freeMarkerContext.put(
-			"commonPermission", CommonPermissionUtil.getCommonPermission());
-		freeMarkerContext.put(
-			"groupPermission", GroupPermissionUtil.getGroupPermission());
-		freeMarkerContext.put(
-			"layoutPermission", LayoutPermissionUtil.getLayoutPermission());
-		freeMarkerContext.put(
-			"organizationPermission",
-			OrganizationPermissionUtil.getOrganizationPermission());
-		freeMarkerContext.put(
-			"passwordPolicyPermission",
-			PasswordPolicyPermissionUtil.getPasswordPolicyPermission());
-		freeMarkerContext.put(
-			"portalPermission", PortalPermissionUtil.getPortalPermission());
-		freeMarkerContext.put(
-			"portletPermission", PortletPermissionUtil.getPortletPermission());
-		freeMarkerContext.put(
-			"rolePermission", RolePermissionUtil.getRolePermission());
-		freeMarkerContext.put(
-			"userGroupPermission",
-			UserGroupPermissionUtil.getUserGroupPermission());
-		freeMarkerContext.put(
-			"userPermission", UserPermissionUtil.getUserPermission());
+		try {
+			freeMarkerContext.put(
+				"accountPermission",
+				AccountPermissionUtil.getAccountPermission());
+		}
+		catch (SecurityException se) {
+			_log.error(se, se);
+		}
+
+		try {
+			freeMarkerContext.put(
+				"commonPermission", CommonPermissionUtil.getCommonPermission());
+		}
+		catch (SecurityException se) {
+			_log.error(se, se);
+		}
+
+		try {
+			freeMarkerContext.put(
+				"groupPermission", GroupPermissionUtil.getGroupPermission());
+		}
+		catch (SecurityException se) {
+			_log.error(se, se);
+		}
+
+		try {
+			freeMarkerContext.put(
+				"layoutPermission", LayoutPermissionUtil.getLayoutPermission());
+		}
+		catch (SecurityException se) {
+			_log.error(se, se);
+		}
+		try {
+			freeMarkerContext.put(
+				"organizationPermission",
+				OrganizationPermissionUtil.getOrganizationPermission());
+		}
+		catch (SecurityException se) {
+			_log.error(se, se);
+		}
+
+		try {
+			freeMarkerContext.put(
+				"passwordPolicyPermission",
+				PasswordPolicyPermissionUtil.getPasswordPolicyPermission());
+		}
+		catch (SecurityException se) {
+			_log.error(se, se);
+		}
+		try {
+			freeMarkerContext.put(
+				"portalPermission", PortalPermissionUtil.getPortalPermission());
+		}
+		catch (SecurityException se) {
+			_log.error(se, se);
+		}
+		try {
+			freeMarkerContext.put(
+				"portletPermission",
+				PortletPermissionUtil.getPortletPermission());
+		}
+		catch (SecurityException se) {
+			_log.error(se, se);
+		}
+		try {
+			freeMarkerContext.put(
+				"rolePermission", RolePermissionUtil.getRolePermission());
+		}
+		catch (SecurityException se) {
+			_log.error(se, se);
+		}
+
+		try {
+			freeMarkerContext.put(
+				"userGroupPermission",
+				UserGroupPermissionUtil.getUserGroupPermission());
+		}
+		catch (SecurityException se) {
+			_log.error(se, se);
+		}
+
+		try {
+			freeMarkerContext.put(
+				"userPermission", UserPermissionUtil.getUserPermission());
+		}
+		catch (SecurityException se) {
+			_log.error(se, se);
+		}
 
 		// Deprecated
 
-		freeMarkerContext.put(
-			"imageToken", WebServerServletTokenUtil.getWebServerServletToken());
+		try {
+			freeMarkerContext.put(
+				"imageToken",
+				WebServerServletTokenUtil.getWebServerServletToken());
+		}
+		catch (SecurityException se) {
+			_log.error(se, se);
+		}
 	}
 
 	public void insertVariables(
@@ -534,5 +720,8 @@ public class FreeMarkerVariablesImpl implements FreeMarkerVariables {
 
 		freeMarkerContext.put("tilesSelectable", tilesSelectable);
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		FreeMarkerVariablesImpl.class);
 
 }

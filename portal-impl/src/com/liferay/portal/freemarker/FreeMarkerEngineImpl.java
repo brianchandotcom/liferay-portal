@@ -22,22 +22,30 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.util.PropsValues;
 
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.cache.MultiTemplateLoader;
 import freemarker.cache.TemplateLoader;
-
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 
 import java.io.IOException;
 import java.io.Writer;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 /**
  * @author Mika Koivisto
+ * @author Raymond Augé
  */
 public class FreeMarkerEngineImpl implements FreeMarkerEngine {
+
+	public void destroy(ClassLoader classLoader) {
+		_classLoaderFreeMarkerContexts.remove(classLoader);
+	}
 
 	public void flushTemplate(String freeMarkerTemplateId) {
 		if (_stringTemplateLoader != null) {
@@ -47,6 +55,30 @@ public class FreeMarkerEngineImpl implements FreeMarkerEngine {
 		PortalCache portalCache = LiferayCacheStorage.getPortalCache();
 
 		portalCache.remove(freeMarkerTemplateId);
+	}
+
+	public FreeMarkerContext getWrappedClassLoaderToolsContext() {
+		// This context will have all of its utilities initialized within
+		// the class loader of the current thread
+
+		ClassLoader contextClassLoader =
+			PACLClassLoaderUtil.getContextClassLoader();
+
+		FreeMarkerContextImpl classLoaderContext =
+			_classLoaderFreeMarkerContexts.get(contextClassLoader);
+
+		if (classLoaderContext == null) {
+			classLoaderContext = new FreeMarkerContextImpl();
+
+			FreeMarkerVariablesUtil.insertHelperUtilities(
+				classLoaderContext, null);
+
+			_classLoaderFreeMarkerContexts.put(
+				contextClassLoader, classLoaderContext);
+		}
+
+		return new FreeMarkerContextImpl(
+			classLoaderContext.getWrappedContext());
 	}
 
 	public FreeMarkerContext getWrappedRestrictedToolsContext() {
@@ -84,6 +116,8 @@ public class FreeMarkerEngineImpl implements FreeMarkerEngine {
 		_configuration.setDefaultEncoding(StringPool.UTF8);
 		_configuration.setLocalizedLookup(
 			PropsValues.FREEMARKER_ENGINE_LOCALIZED_LOOKUP);
+		_configuration.setNewBuiltinClassResolver(
+			new LiferayTemplateClassResolver());
 		_configuration.setObjectWrapper(new LiferayObjectWrapper());
 		_configuration.setSetting(
 			"auto_import", PropsValues.FREEMARKER_ENGINE_MACRO_LIBRARY);
@@ -180,6 +214,9 @@ public class FreeMarkerEngineImpl implements FreeMarkerEngine {
 
 	private static Log _log = LogFactoryUtil.getLog(FreeMarkerEngineImpl.class);
 
+	private Map<ClassLoader, FreeMarkerContextImpl>
+		_classLoaderFreeMarkerContexts =
+			new ConcurrentHashMap<ClassLoader, FreeMarkerContextImpl>();
 	private Configuration _configuration;
 	private FreeMarkerContextImpl _restrictedToolsContext;
 	private FreeMarkerContextImpl _standardToolsContext;

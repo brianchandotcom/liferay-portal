@@ -21,6 +21,8 @@ import java.io.Writer;
  */
 public interface VelocityEngine {
 
+	public void destroy(ClassLoader classLoader);
+
 	public void flushTemplate(String velocityTemplateId);
 
 	public VelocityContext getEmptyContext();
@@ -28,6 +30,8 @@ public interface VelocityEngine {
 	public VelocityContext getRestrictedToolsContext();
 
 	public VelocityContext getStandardToolsContext();
+
+	public VelocityContext getWrappedClassLoaderToolsContext();
 
 	public VelocityContext getWrappedRestrictedToolsContext();
 

@@ -23,6 +23,10 @@ import java.io.Writer;
  */
 public class FreeMarkerEngineUtil {
 
+	public static void destroy(ClassLoader classLoader) {
+		getFreeMarkerEngine().destroy(classLoader);
+	}
+
 	public static void flushTemplate(String freeMarkerTemplateId) {
 		getFreeMarkerEngine().flushTemplate(freeMarkerTemplateId);
 	}
@@ -32,6 +36,10 @@ public class FreeMarkerEngineUtil {
 			FreeMarkerEngineUtil.class);
 
 		return _freeMarkerEngine;
+	}
+
+	public static FreeMarkerContext getWrappedClassLoaderToolsContext() {
+		return getFreeMarkerEngine().getWrappedClassLoaderToolsContext();
 	}
 
 	public static FreeMarkerContext getWrappedRestrictedToolsContext() {

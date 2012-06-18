@@ -23,6 +23,10 @@ import java.io.Writer;
  */
 public class VelocityEngineUtil {
 
+	public static void destroy(ClassLoader classLoader) {
+		getVelocityEngine().destroy(classLoader);
+	}
+
 	public static void flushTemplate(String velocityTemplateId) {
 		getVelocityEngine().flushTemplate(velocityTemplateId);
 	}
@@ -43,6 +47,10 @@ public class VelocityEngineUtil {
 		PortalRuntimePermission.checkGetBeanProperty(VelocityEngineUtil.class);
 
 		return _velocityEngine;
+	}
+
+	public static VelocityContext getWrappedClassLoaderToolsContext() {
+		return getVelocityEngine().getWrappedClassLoaderToolsContext();
 	}
 
 	public static VelocityContext getWrappedRestrictedToolsContext() {

@@ -1,0 +1,103 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>ViewOrganizationSiteTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ViewOrganizationSiteTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/web/guest/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>link=Control Panel</td>
+	<td>Control Panel</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Control Panel</td>
+	<td>Control Panel</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Sites</td>
+	<td>Sites</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@id='_134_name']</td>
+	<td>Name</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//input[@value='Search']</td>
+	<td>Search</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[@id='_134_groupsSearchContainer_col-name_row--organization-name']/a</td>
+	<td>Organization Name<br />Belongs to an organization of type Regular Organization.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[@id='_134_groupsSearchContainer_col-type_row--organization-name']/a</td>
+	<td>Private</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[@id='_134_groupsSearchContainer_col-members_row--organization-name']</td>
+	<td>1 Organization</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[@id='_134_groupsSearchContainer_col-active_row--organization-name']</td>
+	<td>Yes</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//td[@id='_134_groupsSearchContainer_col-name_row--organization-name']/a</td>
+	<td>Organization Name<br />Belongs to an organization of type Regular Organization.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h1[@class='portlet-title']/span</td>
+	<td>Site Settings</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h1[@class='header-title']/span</td>
+	<td>Organization Name</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//div[@id='_165_details']/fieldset/div/div/div</td>
+	<td>Organization Name</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>//select[@id='_165_type']</td>
+	<td>Private</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@id='_165_activeCheckbox']</td>
+	<td>Site Active</td>
+</tr>
+</tbody></table>
+</body>
+</html>

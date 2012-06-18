@@ -12,9 +12,12 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.controlpanel.organizations.organizationpage.addorganizationpage;
+package com.liferay.portalweb.portal.controlpanel.organizations.organizationpage.addorganizationpublicpage;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.organizations.organization.addorganization.AddOrganizationTest;
+import com.liferay.portalweb.portal.controlpanel.organizations.organization.addorganization.TearDownOrganizationTest;
+import com.liferay.portalweb.portal.controlpanel.organizations.organization.editorganizationsite.EditOrganizationSiteTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -22,13 +25,14 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddOrganizationPageTests extends BaseTestSuite {
+public class AddOrganizationPublicPageTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddOrganizationTest.class);
-		testSuite.addTestSuite(EditSiteTemplateLayoutsUpdateableTest.class);
-		testSuite.addTestSuite(AddOrganizationPageTest.class);
-		testSuite.addTestSuite(TearDownTest.class);
+		testSuite.addTestSuite(EditOrganizationSiteTest.class);
+		testSuite.addTestSuite(AddOrganizationPublicPageTest.class);
+		testSuite.addTestSuite(ViewOrganizationPublicPageTest.class);
+		testSuite.addTestSuite(TearDownOrganizationTest.class);
 
 		return testSuite;
 	}

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.controlpanel.organizations.organizationpage.addorganizationpage;
+package com.liferay.portalweb.portal.controlpanel.organizations.organization.editorganizationsite;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddOrganizationTest extends BaseTestCase {
-	public void testAddOrganization() throws Exception {
+public class EditOrganizationSiteTest extends BaseTestCase {
+	public void testEditOrganizationSite() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Go to"),
@@ -52,7 +52,16 @@ public class AddOrganizationTest extends BaseTestCase {
 			RuntimeVariables.replace("Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
+		selenium.type("//input[@id='_125_keywords']",
+			RuntimeVariables.replace("Organization*"));
+		selenium.clickAt("//input[@value='Search']",
+			RuntimeVariables.replace("Search"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
+			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -61,7 +70,7 @@ public class AddOrganizationTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]")) {
 					break;
 				}
 			}
@@ -71,19 +80,11 @@ public class AddOrganizationTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Regular Organization"),
+		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		selenium.type("//input[@id='_125_name']",
-			RuntimeVariables.replace("Selenium"));
-		selenium.select("//select[@id='_125_type']",
-			RuntimeVariables.replace("label=Regular Organization"));
-		selenium.clickAt("//input[@value='Save']",
-			RuntimeVariables.replace("Save"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 
@@ -93,7 +94,7 @@ public class AddOrganizationTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
+				if (selenium.isVisible("//a[@id='_125_organizationSiteLink']")) {
 					break;
 				}
 			}
@@ -103,19 +104,38 @@ public class AddOrganizationTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		assertTrue(selenium.isPartialText(
+				"//a[@id='_125_organizationSiteLink']", "Organization Site"));
+		selenium.clickAt("//a[@id='_125_organizationSiteLink']",
+			RuntimeVariables.replace("Organization Site"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//input[@id='_125_siteCheckbox']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertFalse(selenium.isChecked("//input[@id='_125_siteCheckbox']"));
+		selenium.clickAt("//input[@id='_125_siteCheckbox']",
+			RuntimeVariables.replace("Create Site Checkbox"));
+		assertTrue(selenium.isChecked("//input[@id='_125_siteCheckbox']"));
+		selenium.clickAt("//input[@value='Save']",
+			RuntimeVariables.replace("Save"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		selenium.clickAt("link=View All", RuntimeVariables.replace("View All"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		selenium.type("//input[@name='_125_keywords']",
-			RuntimeVariables.replace("Selenium"));
-		selenium.clickAt("//input[@value='Search']",
-			RuntimeVariables.replace("Search"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Selenium"),
-			selenium.getText("//a[2]/strong"));
+		assertTrue(selenium.isChecked("//input[@id='_125_siteCheckbox']"));
 	}
 }

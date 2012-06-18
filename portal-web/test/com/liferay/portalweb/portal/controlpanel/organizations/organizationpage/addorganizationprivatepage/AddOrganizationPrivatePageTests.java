@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.controlpanel.organizations.organizationpage;
+package com.liferay.portalweb.portal.controlpanel.organizations.organizationpage.addorganizationprivatepage;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portal.controlpanel.organizations.organizationpage.addorganizationprivatepage.AddOrganizationPrivatePageTests;
-import com.liferay.portalweb.portal.controlpanel.organizations.organizationpage.addorganizationpublicpage.AddOrganizationPublicPageTests;
-import com.liferay.portalweb.portal.controlpanel.organizations.organizationpage.mergeorganizationpage.MergeOrganizationPageTests;
+import com.liferay.portalweb.portal.controlpanel.organizations.organization.addorganization.AddOrganizationTest;
+import com.liferay.portalweb.portal.controlpanel.organizations.organization.addorganization.TearDownOrganizationTest;
+import com.liferay.portalweb.portal.controlpanel.organizations.organization.editorganizationsite.EditOrganizationSiteTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -25,16 +25,15 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class OrganizationPageTestPlan extends BaseTestSuite {
-
+public class AddOrganizationPrivatePageTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-
-		testSuite.addTest(AddOrganizationPrivatePageTests.suite());
-		testSuite.addTest(AddOrganizationPublicPageTests.suite());
-		testSuite.addTest(MergeOrganizationPageTests.suite());
+		testSuite.addTestSuite(AddOrganizationTest.class);
+		testSuite.addTestSuite(EditOrganizationSiteTest.class);
+		testSuite.addTestSuite(AddOrganizationPrivatePageTest.class);
+		testSuite.addTestSuite(ViewOrganizationPrivatePageTest.class);
+		testSuite.addTestSuite(TearDownOrganizationTest.class);
 
 		return testSuite;
 	}
-
 }

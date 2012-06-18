@@ -23,6 +23,7 @@ import com.liferay.portalweb.portal.controlpanel.organizations.organization.adva
 import com.liferay.portalweb.portal.controlpanel.organizations.organization.assignmembersorganizationuser.AssignMembersOrganizationUserTests;
 import com.liferay.portalweb.portal.controlpanel.organizations.organization.deleteorganization.DeleteOrganizationTests;
 import com.liferay.portalweb.portal.controlpanel.organizations.organization.deleteorganizationassignmembers.DeleteOrganizationAssignMembersTests;
+import com.liferay.portalweb.portal.controlpanel.organizations.organization.editorganizationsite.EditOrganizationSiteTests;
 import com.liferay.portalweb.portal.controlpanel.organizations.organization.removemembersorganization.RemoveMembersOrganizationTests;
 import com.liferay.portalweb.portal.controlpanel.organizations.organization.searchorganization.SearchOrganizationTests;
 
@@ -45,6 +46,7 @@ public class OrganizationTestPlan extends BaseTestSuite {
 		testSuite.addTest(AssignMembersOrganizationUserTests.suite());
 		testSuite.addTest(DeleteOrganizationTests.suite());
 		testSuite.addTest(DeleteOrganizationAssignMembersTests.suite());
+		testSuite.addTest(EditOrganizationSiteTests.suite());
 		testSuite.addTest(RemoveMembersOrganizationTests.suite());
 		testSuite.addTest(SearchOrganizationTests.suite());
 

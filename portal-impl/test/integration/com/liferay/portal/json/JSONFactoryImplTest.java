@@ -17,6 +17,7 @@ package com.liferay.portal.json;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.AssertUtils;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 
 import org.junit.Assert;
@@ -77,6 +78,7 @@ public class JSONFactoryImplTest {
 		checkPrimitiveArrays((FooBean3) primitiveArrays);
 	}
 
+	@Test
 	public void testDeserializePrimitiveArraysSerializable() {
 		String json = buildPrimitiveArraysSerializableJson();
 
@@ -87,6 +89,7 @@ public class JSONFactoryImplTest {
 		checkPrimitiveArrays((FooBean4) primitiveArraysSerializable);
 	}
 
+	@Test
 	public void testDeserializePrimitives() {
 		String json = buildPrimitivesJson();
 
@@ -97,6 +100,7 @@ public class JSONFactoryImplTest {
 		checkPrimitives((FooBean5) primitives);
 	}
 
+	@Test
 	public void testDeserializePrimitivesSerializable() {
 		String json = buildPrimitivesSerializableJson();
 
@@ -107,6 +111,7 @@ public class JSONFactoryImplTest {
 		checkPrimitives((FooBean6)primitivesSerializable);
 	}
 
+	@Test
 	public void testSerializePrimitiveArrays() {
 		String json = buildPrimitiveArraysJson();
 
@@ -115,6 +120,7 @@ public class JSONFactoryImplTest {
 		checkJsonPrimitiveArrays(json);
 	}
 
+	@Test
 	public void testSerializePrimitiveArraysSerializable() {
 		String json = buildPrimitiveArraysSerializableJson();
 
@@ -125,6 +131,7 @@ public class JSONFactoryImplTest {
 		checkJsonSerializableArgument(json);
 	}
 
+	@Test
 	public void testSerializePrimitives() {
 		String json = buildPrimitivesJson();
 
@@ -133,6 +140,7 @@ public class JSONFactoryImplTest {
 		checkJsonPrimitives(json);
 	}
 
+	@Test
 	public void testSerializePrimitivesSerializable() {
 		String json = buildPrimitivesSerializableJson();
 

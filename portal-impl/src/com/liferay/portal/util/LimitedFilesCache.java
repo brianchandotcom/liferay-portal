@@ -14,7 +14,7 @@
 
 package com.liferay.portal.util;
 
-import com.liferay.portal.kernel.concurrent.ConcurrentLRUCache;
+import com.liferay.portal.kernel.concurrent.ConcurrentLFUCache;
 
 import java.io.File;
 
@@ -40,7 +40,7 @@ public class LimitedFilesCache<T> {
 	}
 
 	public static class FileRemovingLFUCache<K> extends
-		ConcurrentLRUCache<K, File> {
+		ConcurrentLFUCache<K, File> {
 
 		public FileRemovingLFUCache(int maxSize) {
 			super(maxSize);

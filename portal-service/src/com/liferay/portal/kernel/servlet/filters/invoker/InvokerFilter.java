@@ -16,7 +16,7 @@ package com.liferay.portal.kernel.servlet.filters.invoker;
 
 import com.liferay.portal.kernel.cache.key.CacheKeyGenerator;
 import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
-import com.liferay.portal.kernel.concurrent.ConcurrentLRUCache;
+import com.liferay.portal.kernel.concurrent.ConcurrentLFUCache;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.BasePortalLifecycle;
@@ -131,7 +131,7 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 			PropsUtil.get(PropsKeys.INVOKER_FILTER_CHAIN_SIZE));
 
 		if (_invokerFilterChainSize > 0) {
-			_filterChains = new ConcurrentLRUCache<String, InvokerFilterChain>(
+			_filterChains = new ConcurrentLFUCache<String, InvokerFilterChain>(
 				_invokerFilterChainSize);
 		}
 
@@ -231,7 +231,7 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 
 	private String _contextPath;
 	private Dispatcher _dispatcher;
-	private ConcurrentLRUCache<String, InvokerFilterChain> _filterChains;
+	private ConcurrentLFUCache<String, InvokerFilterChain> _filterChains;
 	private FilterConfig _filterConfig;
 	private int _invokerFilterChainSize;
 	private InvokerFilterHelper _invokerFilterHelper;

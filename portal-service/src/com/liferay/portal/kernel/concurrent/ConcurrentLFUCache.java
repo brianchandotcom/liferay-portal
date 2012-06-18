@@ -31,13 +31,13 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 /**
  * @author Shuyang Zhou
  */
-public class ConcurrentLRUCache<K, V> {
+public class ConcurrentLFUCache<K, V> {
 
-	public ConcurrentLRUCache(int maxSize) {
+	public ConcurrentLFUCache(int maxSize) {
 		this(maxSize, 0.75F);
 	}
 
-	public ConcurrentLRUCache(int maxSize, float loadFactor) {
+	public ConcurrentLFUCache(int maxSize, float loadFactor) {
 		if ((maxSize <= 0) || (loadFactor <= 0) || (loadFactor >= 1)) {
 			throw new IllegalArgumentException();
 		}

@@ -81,58 +81,6 @@ public class RuntimePortletImpl implements RuntimePortlet {
 			velocityTemplateId, velocityTemplateContent, false);
 	}
 
-	protected String doProcessCustomizationSettings(
-			ServletContext servletContext, HttpServletRequest request,
-			HttpServletResponse response, PageContext pageContext,
-			String velocityTemplateId, String velocityTemplateContent)
-		throws Exception {
-
-		if (Validator.isNull(velocityTemplateContent)) {
-			return StringPool.BLANK;
-		}
-
-		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
-
-		CustomizationSettingsProcessor processor =
-			new CustomizationSettingsProcessor(
-				request, new PipingPageContext(pageContext, unsyncStringWriter),
-				unsyncStringWriter);
-
-		VelocityContext velocityContext =
-			VelocityEngineUtil.getWrappedClassLoaderToolsContext();
-
-		velocityContext.put("processor", processor);
-
-		// Velocity variables
-
-		VelocityVariablesUtil.insertVariables(velocityContext, request);
-
-		// liferay:include tag library
-
-		MethodHandler methodHandler = new MethodHandler(
-			_initMethodKey, servletContext, request,
-			new PipingServletResponse(response, unsyncStringWriter),
-			pageContext);
-
-		Object velocityTaglib = methodHandler.invoke(true);
-
-		velocityContext.put("taglibLiferay", velocityTaglib);
-		velocityContext.put("theme", velocityTaglib);
-
-		try {
-			VelocityEngineUtil.mergeTemplate(
-				velocityTemplateId, velocityTemplateContent, velocityContext,
-				unsyncStringWriter);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw e;
-		}
-
-		return unsyncStringWriter.toString();
-	}
-
 	public String processPortlet(
 			ServletContext servletContext, HttpServletRequest request,
 			HttpServletResponse response, Portlet portlet, String queryString,
@@ -267,91 +215,6 @@ public class RuntimePortletImpl implements RuntimePortlet {
 		doDispatch(
 			servletContext, request, response, pageContext, jspWriter,
 			portletId, velocityTemplateId, velocityTemplateContent, true);
-	}
-
-	protected void doProcessTemplate(
-			ServletContext servletContext, HttpServletRequest request,
-			HttpServletResponse response, PageContext pageContext,
-			JspWriter jspWriter, String portletId, String velocityTemplateId,
-			String velocityTemplateContent)
-		throws Exception {
-
-		if (Validator.isNull(velocityTemplateContent)) {
-			return;
-		}
-
-		TemplateProcessor processor = new TemplateProcessor(
-			servletContext, request, response, portletId);
-
-		VelocityContext velocityContext =
-			VelocityEngineUtil.getWrappedClassLoaderToolsContext();
-
-		velocityContext.put("processor", processor);
-
-		// Velocity variables
-
-		VelocityVariablesUtil.insertVariables(velocityContext, request);
-
-		// liferay:include tag library
-
-		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
-
-		MethodHandler methodHandler = new MethodHandler(
-			_initMethodKey, servletContext, request,
-			new PipingServletResponse(response, unsyncStringWriter),
-			pageContext);
-
-		Object velocityTaglib = methodHandler.invoke(true);
-
-		velocityContext.put("taglibLiferay", velocityTaglib);
-		velocityContext.put("theme", velocityTaglib);
-
-		try {
-			VelocityEngineUtil.mergeTemplate(
-				velocityTemplateId, velocityTemplateContent, velocityContext,
-				unsyncStringWriter);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw e;
-		}
-
-		String output = unsyncStringWriter.toString();
-
-		Map<Portlet, Object[]> portletsMap = processor.getPortletsMap();
-
-		Map<String, StringBundler> contentsMap =
-			new HashMap<String, StringBundler>(portletsMap.size());
-
-		for (Map.Entry<Portlet, Object[]> entry : portletsMap.entrySet()) {
-			Portlet portlet = entry.getKey();
-			Object[] value = entry.getValue();
-
-			String queryString = (String)value[0];
-			String columnId = (String)value[1];
-			Integer columnPos = (Integer)value[2];
-			Integer columnCount = (Integer)value[3];
-
-			UnsyncStringWriter portletUnsyncStringWriter =
-				new UnsyncStringWriter();
-
-			PipingServletResponse pipingServletResponse =
-				new PipingServletResponse(response, portletUnsyncStringWriter);
-
-			processPortlet(
-				servletContext, request, pipingServletResponse, portlet,
-				queryString, columnId, columnPos, columnCount, null, true);
-
-			contentsMap.put(
-				portlet.getPortletId(),
-				portletUnsyncStringWriter.getStringBundler());
-		}
-
-		StringBundler sb = StringUtil.replaceWithStringBundler(
-			output, "[$TEMPLATE_PORTLET_", "$]", contentsMap);
-
-		sb.writeTo(jspWriter);
 	}
 
 	public String processXML(
@@ -494,6 +357,143 @@ public class RuntimePortletImpl implements RuntimePortlet {
 				PACLClassLoaderUtil.setContextClassLoader(contextClassLoader);
 			}
 		}
+	}
+
+	protected String doProcessCustomizationSettings(
+			ServletContext servletContext, HttpServletRequest request,
+			HttpServletResponse response, PageContext pageContext,
+			String velocityTemplateId, String velocityTemplateContent)
+		throws Exception {
+
+		if (Validator.isNull(velocityTemplateContent)) {
+			return StringPool.BLANK;
+		}
+
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+		CustomizationSettingsProcessor processor =
+			new CustomizationSettingsProcessor(
+				request, new PipingPageContext(pageContext, unsyncStringWriter),
+				unsyncStringWriter);
+
+		VelocityContext velocityContext =
+			VelocityEngineUtil.getWrappedClassLoaderToolsContext();
+
+		velocityContext.put("processor", processor);
+
+		// Velocity variables
+
+		VelocityVariablesUtil.insertVariables(velocityContext, request);
+
+		// liferay:include tag library
+
+		MethodHandler methodHandler = new MethodHandler(
+			_initMethodKey, servletContext, request,
+			new PipingServletResponse(response, unsyncStringWriter),
+			pageContext);
+
+		Object velocityTaglib = methodHandler.invoke(true);
+
+		velocityContext.put("taglibLiferay", velocityTaglib);
+		velocityContext.put("theme", velocityTaglib);
+
+		try {
+			VelocityEngineUtil.mergeTemplate(
+				velocityTemplateId, velocityTemplateContent, velocityContext,
+				unsyncStringWriter);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw e;
+		}
+
+		return unsyncStringWriter.toString();
+	}
+
+	protected void doProcessTemplate(
+			ServletContext servletContext, HttpServletRequest request,
+			HttpServletResponse response, PageContext pageContext,
+			JspWriter jspWriter, String portletId, String velocityTemplateId,
+			String velocityTemplateContent)
+		throws Exception {
+
+		if (Validator.isNull(velocityTemplateContent)) {
+			return;
+		}
+
+		TemplateProcessor processor = new TemplateProcessor(
+			servletContext, request, response, portletId);
+
+		VelocityContext velocityContext =
+			VelocityEngineUtil.getWrappedClassLoaderToolsContext();
+
+		velocityContext.put("processor", processor);
+
+		// Velocity variables
+
+		VelocityVariablesUtil.insertVariables(velocityContext, request);
+
+		// liferay:include tag library
+
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+		MethodHandler methodHandler = new MethodHandler(
+			_initMethodKey, servletContext, request,
+			new PipingServletResponse(response, unsyncStringWriter),
+			pageContext);
+
+		Object velocityTaglib = methodHandler.invoke(true);
+
+		velocityContext.put("taglibLiferay", velocityTaglib);
+		velocityContext.put("theme", velocityTaglib);
+
+		try {
+			VelocityEngineUtil.mergeTemplate(
+				velocityTemplateId, velocityTemplateContent, velocityContext,
+				unsyncStringWriter);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw e;
+		}
+
+		String output = unsyncStringWriter.toString();
+
+		Map<Portlet, Object[]> portletsMap = processor.getPortletsMap();
+
+		Map<String, StringBundler> contentsMap =
+			new HashMap<String, StringBundler>(portletsMap.size());
+
+		for (Map.Entry<Portlet, Object[]> entry : portletsMap.entrySet()) {
+			Portlet portlet = entry.getKey();
+			Object[] value = entry.getValue();
+
+			String queryString = (String)value[0];
+			String columnId = (String)value[1];
+			Integer columnPos = (Integer)value[2];
+			Integer columnCount = (Integer)value[3];
+
+			UnsyncStringWriter portletUnsyncStringWriter =
+				new UnsyncStringWriter();
+
+			PipingServletResponse pipingServletResponse =
+				new PipingServletResponse(response, portletUnsyncStringWriter);
+
+			processPortlet(
+				servletContext, request, pipingServletResponse, portlet,
+				queryString, columnId, columnPos, columnCount, null, true);
+
+			contentsMap.put(
+				portlet.getPortletId(),
+				portletUnsyncStringWriter.getStringBundler());
+		}
+
+		StringBundler sb = StringUtil.replaceWithStringBundler(
+			output, "[$TEMPLATE_PORTLET_", "$]", contentsMap);
+
+		sb.writeTo(jspWriter);
 	}
 
 	protected LayoutTemplate getLayoutTemlpate(String velocityTemplateId) {

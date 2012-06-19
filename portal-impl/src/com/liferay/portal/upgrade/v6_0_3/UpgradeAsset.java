@@ -82,7 +82,7 @@ public class UpgradeAsset extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select uuid_ from " + tableName + " where " + columnName1 +
@@ -111,7 +111,7 @@ public class UpgradeAsset extends UpgradeProcess {
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"update AssetEntry set classUuid = ? where classNameId = ? " +
@@ -163,7 +163,7 @@ public class UpgradeAsset extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select classPK from AssetEntry where classNameId = ?");

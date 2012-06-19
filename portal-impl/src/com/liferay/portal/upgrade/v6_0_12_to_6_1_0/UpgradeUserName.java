@@ -43,7 +43,7 @@ public class UpgradeUserName extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			StringBundler sb = new StringBundler(11);
 

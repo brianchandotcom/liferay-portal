@@ -39,7 +39,7 @@ public class UpgradeAdminPortlets extends UpgradeProcess {
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"insert into ResourcePermission (resourcePermissionId, " +
@@ -78,7 +78,7 @@ public class UpgradeAdminPortlets extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select bitwiseValue from ResourceAction where name = ? and " +
@@ -106,7 +106,7 @@ public class UpgradeAdminPortlets extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select groupId from Group_ where name = '" +
@@ -137,7 +137,7 @@ public class UpgradeAdminPortlets extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select * from ResourcePermission where name = ?");

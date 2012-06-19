@@ -82,7 +82,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			StringBundler sb = new StringBundler(9);
 
@@ -146,7 +146,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			StringBundler sb = new StringBundler(9);
 
@@ -205,7 +205,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			StringBundler sb = new StringBundler(5);
 
@@ -250,7 +250,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			DatabaseMetaData databaseMetaData = con.getMetaData();
 
@@ -326,7 +326,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select type_, size_ from Image where imageId = " + imageId);
@@ -432,7 +432,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			try {
 				InputStream is = _sourceHook.getImageAsStream(thumbnailImage);
 
-				con = DataAccess.getConnection();
+				con = DataAccess.getUpgradeOptimizedConnection();
 
 				ps = con.prepareStatement(
 					"select max(fileVersionId) from DLFileVersion where " +
@@ -479,7 +479,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			StringBundler sb = new StringBundler(8);
 
@@ -518,7 +518,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 
 		if (!_sourceHookClassName.equals(DLHook.class.getName())) {
 			try {
-				con = DataAccess.getConnection();
+				con = DataAccess.getUpgradeOptimizedConnection();
 
 				ps = con.prepareStatement("select imageId from Image");
 
@@ -546,7 +546,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select * from IGFolder order by folderId asc");
@@ -605,7 +605,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement("select * from IGImage");
 
@@ -688,7 +688,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select folderId from DLFolder where groupId = " + groupId +

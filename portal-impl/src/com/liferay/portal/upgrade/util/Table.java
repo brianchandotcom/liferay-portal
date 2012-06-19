@@ -144,7 +144,7 @@ public class Table {
 	}
 
 	public String generateTempFile() throws Exception {
-		Connection con = DataAccess.getConnection();
+		Connection con = DataAccess.getUpgradeOptimizedConnection();
 
 		try {
 			return generateTempFile(con);
@@ -447,7 +447,7 @@ public class Table {
 	}
 
 	public void populateTable(String tempFileName) throws Exception {
-		Connection con = DataAccess.getConnection();
+		Connection con = DataAccess.getUpgradeOptimizedConnection();
 
 		try {
 			populateTable(tempFileName, con);

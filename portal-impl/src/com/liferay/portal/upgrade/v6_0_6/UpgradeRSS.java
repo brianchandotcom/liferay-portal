@@ -40,7 +40,7 @@ public class UpgradeRSS extends BaseUpgradePortletPreferences {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select groupId, articleId from JournalArticle where " +

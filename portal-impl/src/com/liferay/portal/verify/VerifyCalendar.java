@@ -50,7 +50,7 @@ public class VerifyCalendar extends VerifyProcess {
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"update CalEvent set recurrence = ? where eventId = ?");
@@ -102,7 +102,7 @@ public class VerifyCalendar extends VerifyProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			String sql =
 				"select eventId, recurrence from CalEvent where (CAST_TEXT(" +

@@ -41,7 +41,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select count(*) from DLFileEntry where groupId = ? and " +
@@ -74,7 +74,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select fileEntryId, groupId, folderId, title, extension, " +

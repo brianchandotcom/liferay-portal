@@ -42,7 +42,7 @@ public class VerifySQLServer extends VerifyProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			StringBundler sb = new StringBundler(12);
 
@@ -176,7 +176,7 @@ public class VerifySQLServer extends VerifyProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			StringBundler sb = new StringBundler(15);
 
@@ -245,7 +245,7 @@ public class VerifySQLServer extends VerifyProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			StringBundler sb = new StringBundler(10);
 

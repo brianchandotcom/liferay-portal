@@ -46,7 +46,7 @@ public class UpgradeAsset extends UpgradeProcess {
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			StringBundler sb = new StringBundler(4);
 
@@ -92,7 +92,7 @@ public class UpgradeAsset extends UpgradeProcess {
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			StringBundler sb = new StringBundler(7);
 
@@ -150,7 +150,7 @@ public class UpgradeAsset extends UpgradeProcess {
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			StringBundler sb = new StringBundler(7);
 
@@ -195,7 +195,7 @@ public class UpgradeAsset extends UpgradeProcess {
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			StringBundler sb = new StringBundler(3);
 
@@ -233,7 +233,7 @@ public class UpgradeAsset extends UpgradeProcess {
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			StringBundler sb = new StringBundler(4);
 
@@ -273,7 +273,7 @@ public class UpgradeAsset extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select * from TagsAssets_TagsEntries where entryId = ?");
@@ -301,7 +301,7 @@ public class UpgradeAsset extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select * from TagsEntry where vocabularyId = ?");
@@ -355,7 +355,7 @@ public class UpgradeAsset extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select * from TagsProperty where entryId = ?");
@@ -399,7 +399,7 @@ public class UpgradeAsset extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select * from TagsVocabulary where folksonomy = ?");
@@ -437,7 +437,7 @@ public class UpgradeAsset extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement("select * from TagsAsset");
 
@@ -487,7 +487,7 @@ public class UpgradeAsset extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select TE.* from TagsEntry TE inner join TagsVocabulary TV " +

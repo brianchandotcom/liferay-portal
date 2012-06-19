@@ -45,7 +45,7 @@ public class UpgradePermission extends UpgradeProcess {
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"insert into Role_ (roleId, companyId, classNameId, classPK, " +
@@ -106,7 +106,7 @@ public class UpgradePermission extends UpgradeProcess {
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"insert into UserGroupRole (userId, groupId, roleId) values " +
@@ -128,7 +128,7 @@ public class UpgradePermission extends UpgradeProcess {
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"insert into Users_Roles (userId, roleId) values (?, ?)");
@@ -152,7 +152,7 @@ public class UpgradePermission extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select classNameId from Group_ where groupId = ?");
@@ -227,7 +227,7 @@ public class UpgradePermission extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select roleId from Role_ where companyId = ? and name = ?");
@@ -254,7 +254,7 @@ public class UpgradePermission extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			StringBundler sb = new StringBundler();
 

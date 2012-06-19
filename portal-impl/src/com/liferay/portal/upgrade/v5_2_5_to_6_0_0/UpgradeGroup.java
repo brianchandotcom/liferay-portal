@@ -39,7 +39,7 @@ public class UpgradeGroup extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(_GET_LAYOUT);
 
@@ -66,7 +66,7 @@ public class UpgradeGroup extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			long classNameId = PortalUtil.getClassNameId(
 				Layout.class.getName());

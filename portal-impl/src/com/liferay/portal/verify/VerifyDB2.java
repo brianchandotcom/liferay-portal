@@ -43,7 +43,7 @@ public class VerifyDB2 extends VerifyProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			StringBundler sb = new StringBundler(4);
 

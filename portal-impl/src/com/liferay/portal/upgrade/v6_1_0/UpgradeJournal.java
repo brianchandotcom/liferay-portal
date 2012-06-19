@@ -79,7 +79,7 @@ public class UpgradeJournal extends UpgradeProcess {
 						"'%image_gallery%'");
 		}
 		catch (Exception e) {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select id_, xsd from JournalStructure where xsd like " +
@@ -108,7 +108,7 @@ public class UpgradeJournal extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"update JournalStructure set xsd = ? where id_ = ?");

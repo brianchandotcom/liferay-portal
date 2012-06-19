@@ -35,7 +35,7 @@ public class UpgradeLayoutSetBranch extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select groupId, layoutSetBranchId, privateLayout from " +
@@ -68,7 +68,7 @@ public class UpgradeLayoutSetBranch extends UpgradeProcess {
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			StringBundler sb = new StringBundler(5);
 
@@ -106,7 +106,7 @@ public class UpgradeLayoutSetBranch extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			StringBundler sb = new StringBundler(4);
 

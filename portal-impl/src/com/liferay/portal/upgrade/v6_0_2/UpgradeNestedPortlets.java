@@ -43,7 +43,7 @@ public class UpgradeNestedPortlets extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(_GET_LAYOUT);
 
@@ -89,7 +89,7 @@ public class UpgradeNestedPortlets extends UpgradeProcess {
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"update Layout set typeSettings = ? where plid = " + plid);

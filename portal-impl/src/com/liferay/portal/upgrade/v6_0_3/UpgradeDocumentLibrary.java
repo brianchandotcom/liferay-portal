@@ -46,7 +46,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select fileVersionId from DLFileVersion where folderId = ? " +
@@ -82,7 +82,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		try {
 			long classNameId = PortalUtil.getClassNameId(DLFileEntry.class);
 
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select tableId from ExpandoTable where classNameId = " +
@@ -101,7 +101,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		}
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select uuid_, fileEntryId, groupId, folderId, name, title " +
@@ -159,7 +159,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"update DLFileVersion set extension = ?, title = ?, " +
@@ -185,7 +185,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select folderId, name, extension, title, description, " +

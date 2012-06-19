@@ -404,6 +404,13 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 		return results;
 	}
 
+	private String _command;
+	private HttpServletRequest _request;
+	private List<Statement> _statements = new ArrayList<Statement>();
+
+	private static class Flag extends KeyValue<String, String> {
+	}
+
 	private class ActionResultJSONSerializable implements JSONSerializable {
 
 		public String toJSONString() {
@@ -413,7 +420,6 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 			jsonSerializer.exclude("*.class");
 
 			for (Statement statement : _statements) {
-
 				String statementName = statement.getName();
 
 				if (statementName == null) {
@@ -431,9 +437,6 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 		}
 
 		private Object _result;
-	}
-
-	private static class Flag extends KeyValue<String, String> {
 	}
 
 	private class Statement {
@@ -494,9 +497,5 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 		private String[] _whitelist;
 
 	}
-
-	private String _command;
-	private HttpServletRequest _request;
-	private List<Statement> _statements = new ArrayList<Statement>();
 
 }

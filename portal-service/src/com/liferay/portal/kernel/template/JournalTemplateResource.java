@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.template;
+package com.liferay.portal.kernel.template;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
-import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portlet.journal.model.JournalTemplate;
 
 import java.io.Reader;

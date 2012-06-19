@@ -15,11 +15,11 @@
 package com.liferay.portal.freemarker;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
+import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.templateparser.TemplateContext;
-import com.liferay.portal.template.StringTemplateResource;
 import com.liferay.portal.template.TemplateContextHelper;
 
 import freemarker.core.ParseException;

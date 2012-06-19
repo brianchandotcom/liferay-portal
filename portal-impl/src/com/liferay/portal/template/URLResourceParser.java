@@ -16,6 +16,7 @@ package com.liferay.portal.template;
 
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
+import com.liferay.portal.kernel.template.URLTemplateResource;
 
 import java.io.IOException;
 

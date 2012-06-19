@@ -12,11 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.template;
+package com.liferay.portal.kernel.template;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.template.TemplateResource;
 
 import java.io.IOException;
 import java.io.InputStream;

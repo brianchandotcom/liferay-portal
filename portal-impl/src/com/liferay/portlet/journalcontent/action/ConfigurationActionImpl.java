@@ -150,12 +150,15 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 				themeDisplay.getScopeGroupId(), articleId);
 		}
 		catch (NoSuchArticleException nsae) {
+		}
+
+		if (journalArticle == null) {
 			try {
 				journalArticle =
 					JournalArticleLocalServiceUtil.getDisplayArticle(
 						companyGroup.getGroupId(), articleId);
 			}
-			catch (NoSuchArticleException nsae1) {
+			catch (NoSuchArticleException nsae) {
 				return null;
 			}
 		}

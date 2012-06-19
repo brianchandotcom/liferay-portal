@@ -275,8 +275,8 @@ Element contentEl = (Element)request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTEN
 							List<Element> children = el.elements();
 
 							for (Element child : children) {
-								String listElName = JS.decodeURIComponent(child.attributeValue("name", StringPool.BLANK));
-								String listElValue = JS.decodeURIComponent(child.attributeValue("type", StringPool.BLANK));
+								String listElName = HtmlUtil.escape(JS.decodeURIComponent(child.attributeValue("name", StringPool.BLANK)));
+								String listElValue = HtmlUtil.escape(JS.decodeURIComponent(child.attributeValue("type", StringPool.BLANK)));
 
 								if (Validator.isNull(listElName) && Validator.isNull(listElValue)) {
 									continue;

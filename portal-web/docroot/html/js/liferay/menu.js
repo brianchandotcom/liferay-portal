@@ -47,6 +47,8 @@ AUI.add(
 			up: STR_T
 		};
 
+		var MAP_LIVE_SEARCH = {};
+
 		var REGEX_DIRECTION = /\bdirection-(down|left|right|up)\b/;
 
 		var REGEX_MAX_DISPLAY_ITEMS = /max-display-items-(\d+)/;
@@ -163,7 +165,7 @@ AUI.add(
 				var menu = trigger.getData('menu');
 				var menuHeight = trigger.getData('menuHeight');
 
-				var liveSearch = menu && menu._liveSearch;
+				var liveSearch = menu && MAP_LIVE_SEARCH[menu.guid()];
 
 				if (liveSearch) {
 					liveSearch.search(STR_BLANK);
@@ -439,7 +441,9 @@ AUI.add(
 			function(trigger, menu) {
 				var instance = Menu._INSTANCE;
 
-				var liveSearch = menu._liveSearch;
+				var id = menu.guid();
+
+				var liveSearch = MAP_LIVE_SEARCH[id];
 
 				if (!liveSearch) {
 					var searchId = A.guid();
@@ -486,7 +490,7 @@ AUI.add(
 						}
 					);
 
-					menu._liveSearch = liveSearch;
+					MAP_LIVE_SEARCH[id] = liveSearch;
 				}
 			},
 			['aui-live-search'],

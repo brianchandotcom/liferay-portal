@@ -22,13 +22,15 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
+import com.liferay.portal.security.pacl.PACLPolicy;
+import com.liferay.portal.security.pacl.PACLPolicyManager;
 import com.liferay.portal.util.PropsValues;
 
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.cache.MultiTemplateLoader;
 import freemarker.cache.TemplateLoader;
-
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 
@@ -66,21 +68,37 @@ public class FreeMarkerEngineImpl implements FreeMarkerEngine {
 		ClassLoader contextClassLoader =
 			PACLClassLoaderUtil.getContextClassLoader();
 
-		FreeMarkerContextImpl classLoaderContext =
-			_classLoaderFreeMarkerContexts.get(contextClassLoader);
+		PACLPolicy threadLocalPACLPolicy =
+			PortalSecurityManagerThreadLocal.getPACLPolicy();
 
-		if (classLoaderContext == null) {
-			classLoaderContext = new FreeMarkerContextImpl();
+		PACLPolicy contextClassLoaderPACLPolicy =
+			PACLPolicyManager.getPACLPolicy(contextClassLoader);
 
-			FreeMarkerVariablesUtil.insertHelperUtilities(
-				classLoaderContext, null);
+		try {
+			PortalSecurityManagerThreadLocal.setPACLPolicy(
+				contextClassLoaderPACLPolicy);
 
-			_classLoaderFreeMarkerContexts.put(
-				contextClassLoader, classLoaderContext);
+			FreeMarkerContextImpl classLoaderContext =
+				_classLoaderFreeMarkerContexts.get(contextClassLoader);
+
+			if (classLoaderContext == null) {
+				classLoaderContext = new FreeMarkerContextImpl();
+
+				FreeMarkerVariablesUtil.insertHelperUtilities(
+					classLoaderContext, null);
+
+				_classLoaderFreeMarkerContexts.put(
+					contextClassLoader, classLoaderContext);
+			}
+
+			return new PACLFreeMarkerContextImpl(
+				classLoaderContext.getWrappedContext(),
+				contextClassLoaderPACLPolicy);
 		}
-
-		return new FreeMarkerContextImpl(
-			classLoaderContext.getWrappedContext());
+		finally {
+			PortalSecurityManagerThreadLocal.setPACLPolicy(
+				threadLocalPACLPolicy);
+		}
 	}
 
 	public FreeMarkerContext getWrappedRestrictedToolsContext() {
@@ -175,10 +193,29 @@ public class FreeMarkerEngineImpl implements FreeMarkerEngine {
 		FreeMarkerContextImpl freeMarkerContextImpl =
 			(FreeMarkerContextImpl)freeMarkerContext;
 
-		Template template = _configuration.getTemplate(
-			freeMarkerTemplateId, StringPool.UTF8);
+		PACLPolicy threadLocalPACLPolicy =
+			PortalSecurityManagerThreadLocal.getPACLPolicy();
 
-		template.process(freeMarkerContextImpl.getWrappedContext(), writer);
+		try {
+			if (freeMarkerContextImpl instanceof PACLFreeMarkerContextImpl) {
+				PACLFreeMarkerContextImpl paclContextImpl =
+					(PACLFreeMarkerContextImpl)freeMarkerContextImpl;
+
+				PortalSecurityManagerThreadLocal.setPACLPolicy(
+					paclContextImpl.getPaclPolicy());
+			}
+
+			Template template = _configuration.getTemplate(
+				freeMarkerTemplateId, StringPool.UTF8);
+
+			template.process(freeMarkerContextImpl.getWrappedContext(), writer);
+		}
+		finally {
+			if (freeMarkerContextImpl instanceof PACLFreeMarkerContextImpl) {
+				PortalSecurityManagerThreadLocal.setPACLPolicy(
+					threadLocalPACLPolicy);
+			}
+		}
 
 		return true;
 	}

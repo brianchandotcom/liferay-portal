@@ -239,7 +239,8 @@ public class DDLRecordFinderImpl extends BasePersistenceImpl<DDLRecord>
 
 			sql = StringUtil.replace(
 				sql, "COUNT(DISTINCT DDLRecord.recordId) AS COUNT_VALUE",
-				"MIN(DDLRecord.recordId), MAX(DDLRecord.recordId)");
+				"MIN(DDLRecord.recordId) AS MIN_RECORD_ID, " +
+					"MAX(DDLRecord.recordId) AS MAX_RECORD_ID");
 
 			if (status == WorkflowConstants.STATUS_ANY) {
 				sql = StringUtil.replace(
@@ -248,8 +249,8 @@ public class DDLRecordFinderImpl extends BasePersistenceImpl<DDLRecord>
 
 			SQLQuery q = session.createSQLQuery(sql);
 
-			q.addScalar("MIN(DDLRecord.recordId)", Type.LONG);
-			q.addScalar("MAX(DDLRecord.recordId)", Type.LONG);
+			q.addScalar("MIN_RECORD_ID", Type.LONG);
+			q.addScalar("MAX_RECORD_ID", Type.LONG);
 
 			QueryPos qPos = QueryPos.getInstance(q);
 

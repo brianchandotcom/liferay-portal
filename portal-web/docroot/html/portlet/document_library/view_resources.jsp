@@ -76,9 +76,11 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 				<liferay-util:include page="/html/portlet/document_library/breadcrumb.jsp" />
 			</div>
 
-			<div class="portal-breadcrumb">
-				<liferay-ui:breadcrumb showCurrentGroup="<%= layout.isTypeControlPanel() %>" showCurrentPortlet="<%= layout.isTypeControlPanel() %>" showGuestGroup="<%= !layout.isTypeControlPanel() %>" showLayout="<%= true %>" showParentGroups="<%= false %>" showPortletBreadcrumb="<%= true %>" />
-			</div>
+			<c:if test="<%= layout.isTypeControlPanel() %>">
+				<div class="portal-breadcrumb">
+					<liferay-ui:breadcrumb showCurrentGroup="<%= true %>" showCurrentPortlet="<%= true %>" showGuestGroup="<%= false %>" showLayout="<%= true %>" showParentGroups="<%= false %>" showPortletBreadcrumb="<%= true %>" />
+				</div>
+			</c:if>
 		</span>
 	</c:if>
 

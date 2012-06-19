@@ -830,6 +830,34 @@ public class SourceFormatter {
 		}
 	}
 
+	private static String _fixDataAccessConnection(
+		String className, String content) {
+
+		int x = content.indexOf("package ");
+
+		int y = content.indexOf(CharPool.SEMICOLON, x);
+
+		if ((x == -1) || (y == -1)) {
+			return content;
+		}
+
+		String packageName = content.substring(x + 8, y);
+
+		if (!packageName.startsWith("com.liferay.portal.kernel.upgrade") &&
+			!packageName.startsWith("com.liferay.portal.upgrade") &&
+			!packageName.startsWith("com.liferay.portal.kernel.verify") &&
+			!packageName.startsWith("com.liferay.portal.verify")) {
+
+			return content;
+		}
+
+		content = StringUtil.replace(
+			content, "DataAccess.getConnection",
+			"DataAccess.getUpgradeOptimizedConnection");
+
+		return content;
+	}
+
 	private static String _formatDDLStructuresXML(String content)
 		throws DocumentException, IOException {
 
@@ -1185,6 +1213,8 @@ public class SourceFormatter {
 				_sourceFormatterHelper.printError(
 					fileName, "UTF-8: " + fileName);
 			}
+
+			newContent = _fixDataAccessConnection(className, newContent);
 
 			newContent = StringUtil.replace(
 				newContent,

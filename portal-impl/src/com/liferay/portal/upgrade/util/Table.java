@@ -372,6 +372,9 @@ public class Table {
 				value = GetterUtil.getLong(rs.getString(name));
 			}
 		}
+		else if (t == Types.BIT) {
+			value = GetterUtil.getBoolean(rs.getBoolean(name));
+		}
 		else if (t == Types.BOOLEAN) {
 			value = GetterUtil.getBoolean(rs.getBoolean(name));
 		}

@@ -17,11 +17,14 @@ package com.liferay.portal.kernel.dao.jdbc;
 import com.liferay.portal.kernel.jndi.JNDIUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.upgrade.dao.orm.UpgradeOptimizedConnectionHandler;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -108,6 +111,25 @@ public class DataAccess {
 		DataSource dataSource = (DataSource)JNDIUtil.lookup(context, location);
 
 		return dataSource.getConnection();
+	}
+
+	public static Connection getUpgradeOptimizedConnection()
+		throws SQLException {
+
+		Connection con = getConnection();
+
+		DatabaseMetaData metaData = con.getMetaData();
+
+		String productName = metaData.getDatabaseProductName();
+
+		if (!productName.equals("Microsoft SQL Server")) {
+			return con;
+		}
+
+		return (Connection) ProxyUtil.newProxyInstance(
+			Thread.currentThread().getContextClassLoader(),
+			new Class[] { Connection.class },
+			new UpgradeOptimizedConnectionHandler(con));
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(DataAccess.class);

@@ -19,6 +19,7 @@ import com.liferay.portal.NoSuchRepositoryException;
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lar.ImportExportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.BaseRepository;
@@ -57,7 +58,7 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 	public long addRepository(
 			long userId, long groupId, long classNameId, long parentFolderId,
 			String name, String description, String portletId,
-			UnicodeProperties typeSettingsProperties, boolean initRepository,
+			UnicodeProperties typeSettingsProperties,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
@@ -89,7 +90,7 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 
 		if (classNameId != getDefaultClassNameId()) {
 			try {
-				createRepositoryImpl(repositoryId, classNameId, initRepository);
+				createRepositoryImpl(repositoryId, classNameId);
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
@@ -101,18 +102,6 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 		}
 
 		return repositoryId;
-	}
-
-	public long addRepository(
-			long userId, long groupId, long classNameId, long parentFolderId,
-			String name, String description, String portletId,
-			UnicodeProperties typeSettingsProperties,
-			ServiceContext serviceContext)
-		throws PortalException, SystemException {
-
-		return addRepository(
-			userId, groupId, classNameId, parentFolderId, name, description,
-			portletId, typeSettingsProperties, true, serviceContext);
 	}
 
 	public void checkRepository(long repositoryId) throws SystemException {
@@ -363,13 +352,6 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 			long repositoryId, long classNameId)
 		throws PortalException, SystemException {
 
-		return createRepositoryImpl(repositoryId, classNameId, true);
-	}
-
-	protected BaseRepository createRepositoryImpl(
-			long repositoryId, long classNameId, boolean initRepository)
-		throws PortalException, SystemException {
-
 		BaseRepository baseRepository = null;
 
 		Repository repository = null;
@@ -421,7 +403,7 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 
 		setupRepository(repositoryId, repository, baseRepository);
 
-		if (initRepository) {
+		if (!ImportExportThreadLocal.isImportInProcess()) {
 			baseRepository.initRepository();
 		}
 

@@ -679,16 +679,12 @@
 
 			var dialog = event.dialog;
 
-			var removeListeners = function() {
-				iframeDocument.purge(true);
-			};
-
 			iframeBody.addClass('aui-dialog-iframe-popup');
 
 			iframeBody.delegate(
 				EVENT_CLICK,
 				function() {
-					removeListeners();
+					iframeDocument.purge(true);
 
 					dialog.close();
 				},
@@ -698,7 +694,7 @@
 			iframeBody.delegate(
 				'submit',
 				function(event) {
-					removeListeners();
+					iframeDocument.purge(true);
 				},
 				'form'
 			);
@@ -708,7 +704,7 @@
 				function(){
 					dialog.set('visible', false, SRC_HIDE_LINK);
 
-					removeListeners();
+					iframeDocument.purge(true);
 				},
 				'.lfr-hide-dialog'
 			);
@@ -721,7 +717,7 @@
 					function(event){
 						event.preventDefault();
 
-						removeListeners();
+						iframeDocument.purge(true);
 
 						submitForm(document.hrefFm, event.currentTarget.attr('href'));
 					},

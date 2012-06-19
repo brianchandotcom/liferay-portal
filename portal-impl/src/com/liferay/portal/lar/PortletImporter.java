@@ -1662,7 +1662,7 @@ public class PortletImporter {
 	protected void updateAssetPublisherClassPKs(
 			PortletDataContext portletDataContext,
 			javax.portlet.PortletPreferences jxPreferences, String key,
-			Class<?> clazz, long groupId)
+			Class<?> clazz, long scopeGroupId, long globalGroupId)
 		throws Exception {
 
 		String[] oldValues = jxPreferences.getValues(key, null);
@@ -1697,7 +1697,13 @@ public class PortletImporter {
 
 					if (className.equals(AssetCategory.class.getName())) {
 						AssetCategory category =
-							AssetCategoryUtil.fetchByUUID_G(uuid, groupId);
+							AssetCategoryUtil.fetchByUUID_G(uuid, scopeGroupId);
+
+						if (category == null) {
+							category =
+								AssetCategoryUtil.fetchByUUID_G(
+									uuid, globalGroupId);
+						}
 
 						if (category != null) {
 							newPrimaryKey = category.getCategoryId();
@@ -1707,7 +1713,14 @@ public class PortletImporter {
 								JournalStructure.class.getName())) {
 
 						JournalStructure structure =
-							JournalStructureUtil.fetchByUUID_G(uuid, groupId);
+							JournalStructureUtil.fetchByUUID_G(
+								uuid, scopeGroupId);
+
+						if (structure == null) {
+							structure =
+								JournalStructureUtil.fetchByUUID_G(
+									uuid, globalGroupId);
+						}
 
 						if (structure != null) {
 							newPrimaryKey = structure.getId();
@@ -1719,7 +1732,8 @@ public class PortletImporter {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Unable to get primary key for " + clazz +
-								" with UUID " + uuid + " in group " + groupId);
+							" with UUID " + uuid + "in either global scope: " +
+							globalGroupId + " or site scope: " + scopeGroupId);
 					}
 				}
 				else {
@@ -1789,17 +1803,20 @@ public class PortletImporter {
 
 				updateAssetPublisherClassPKs(
 					portletDataContext, jxPreferences, "queryValues" + index,
-					AssetCategory.class, companyGroup.getGroupId());
+					AssetCategory.class, portletDataContext.getScopeGroupId(),
+					companyGroup.getGroupId());
 			}
 			else if (name.equals(
-							"anyClassTypeJournalArticleAssetRendererFactory") ||
+						"anyClassTypeJournalArticleAssetRendererFactory") ||
 					 name.equals(
 						"classTypeIdsJournalArticleAssetRendererFactory") ||
 					 name.equals("classTypeIds")) {
 
 				updateAssetPublisherClassPKs(
 					portletDataContext, jxPreferences, name,
-					JournalStructure.class, companyGroup.getGroupId());
+					JournalStructure.class,
+					portletDataContext.getScopeGroupId(),
+					companyGroup.getGroupId());
 			}
 			else if (name.equals("defaultScope") || name.equals("scopeIds")) {
 				updateAssetPublisherGlobalScopeId(

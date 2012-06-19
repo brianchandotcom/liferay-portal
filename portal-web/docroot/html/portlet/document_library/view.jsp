@@ -137,7 +137,7 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 				<aui:input name="fileEntryIds" type="hidden" />
 				<aui:input name="fileShortcutIds" type="hidden" />
 
-				<div class="document-container" id="<portlet:namespace />documentContainer">
+				<div class="document-container" id="<portlet:namespace />entriesContainer">
 					<c:choose>
 						<c:when test='<%= strutsAction.equals("/document_library/search") %>'>
 							<liferay-util:include page="/html/portlet/document_library/search_resources.jsp" />

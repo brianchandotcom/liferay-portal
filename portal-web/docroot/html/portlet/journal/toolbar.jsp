@@ -23,7 +23,7 @@
 <liferay-ui:icon-menu align="left" cssClass="actions-button" direction="down" icon="" id="actionsButtonContainer" message="actions" showExpanded="<%= false %>" showWhenSingleIcon="<%= true %>">
 
 	<%
-	String taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "editArticle', {action: '" + Constants.DELETE + "'});";
+	String taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.DELETE + "'});";
 	%>
 
 	<liferay-ui:icon
@@ -35,7 +35,7 @@
 	/>
 
 	<%
-	taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "editArticle', {action: '" + Constants.EXPIRE + "'});";
+	taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.EXPIRE + "'});";
 	%>
 
 	<liferay-ui:icon
@@ -47,7 +47,7 @@
 	/>
 
 	<%
-	taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "editArticle', {action: '" + Constants.MOVE + "'});";
+	taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.MOVE + "'});";
 	%>
 
 	<liferay-ui:icon

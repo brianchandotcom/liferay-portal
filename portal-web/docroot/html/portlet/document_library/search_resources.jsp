@@ -167,7 +167,7 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajaxRequest) {
 		<portlet:param name="struts_action" value="/document_library/search" />
 	</liferay-portlet:renderURL>
 
-	<div class="document-container" id="<portlet:namespace />documentContainer">
+	<div class="document-container" id="<portlet:namespace />entriesContainer">
 		<aui:form action="<%= searchURL %>" method="get" name="fm">
 			<liferay-portlet:renderURLParams varImpl="searchURL" />
 			<aui:input name="redirect" type="hidden" value="<%= redirect %>" />

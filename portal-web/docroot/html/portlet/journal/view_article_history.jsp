@@ -92,7 +92,7 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 				<aui:button-row>
 
 					<%
-					String taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "editArticle', {action: '" + Constants.EXPIRE + "'});";
+					String taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.EXPIRE + "'});";
 					%>
 
 					<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.EXPIRE) %>">
@@ -100,7 +100,7 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 					</c:if>
 
 					<%
-					taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "editArticle', {action: '" + Constants.DELETE_VERSIONS + "'});";
+					taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.DELETE_VERSIONS + "'});";
 					%>
 
 					<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.DELETE) %>">

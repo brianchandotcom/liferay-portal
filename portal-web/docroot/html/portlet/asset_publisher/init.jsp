@@ -245,18 +245,11 @@ String allMetadataFields = "create-date,modified-date,publish-date,expiration-da
 
 String[] metadataFields = StringUtil.split(preferences.getValue("metadataFields", defaultMetadataFields));
 
-boolean enableRSS = false;
-int rssDelta = 0;
-String rssDisplayStyle = "";
-String rssFormat = "";
-String rssName = "";
-if (selectionStyle.equals("dynamic")){
-	enableRSS = GetterUtil.getBoolean(preferences.getValue("enableRss", null));
-	rssDelta = GetterUtil.getInteger(preferences.getValue("rssDelta", "20"));
-	rssDisplayStyle = preferences.getValue("rssDisplayStyle", RSSUtil.DISPLAY_STYLE_ABSTRACT);
-	rssFormat = preferences.getValue("rssFormat", "atom10");
-	rssName = preferences.getValue("rssName", portletDisplay.getTitle());
-}
+boolean enableRSS = GetterUtil.getBoolean(preferences.getValue("enableRss", null));
+int rssDelta = GetterUtil.getInteger(preferences.getValue("rssDelta", "20"));
+String rssDisplayStyle = preferences.getValue("rssDisplayStyle", RSSUtil.DISPLAY_STYLE_ABSTRACT);
+String rssFormat = preferences.getValue("rssFormat", "atom10");
+String rssName = preferences.getValue("rssName", portletDisplay.getTitle());
 
 String[] assetEntryXmls = preferences.getValues("assetEntryXml", new String[0]);
 

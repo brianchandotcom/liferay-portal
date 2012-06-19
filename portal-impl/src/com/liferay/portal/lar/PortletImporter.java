@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
+import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
@@ -59,6 +60,7 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
+import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.PortletItemLocalServiceUtil;
@@ -95,6 +97,8 @@ import com.liferay.portlet.expando.model.ExpandoTable;
 import com.liferay.portlet.expando.service.ExpandoColumnLocalServiceUtil;
 import com.liferay.portlet.expando.service.ExpandoTableLocalServiceUtil;
 import com.liferay.portlet.expando.util.ExpandoConverterUtil;
+import com.liferay.portlet.journal.model.JournalStructure;
+import com.liferay.portlet.journal.service.persistence.JournalStructureUtil;
 import com.liferay.portlet.journalcontent.util.JournalContentUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.ratings.model.RatingsEntry;
@@ -159,9 +163,14 @@ public class PortletImporter {
 			(PortletPreferencesImpl)PortletPreferencesFactoryUtil.
 				fromXML(companyId, ownerId, ownerType, plid, portletId, xml);
 
-		 Enumeration<String> enu = portletPreferences.getNames();
+		Company company = CompanyLocalServiceUtil.getCompanyById(companyId);
 
-		 while (enu.hasMoreElements()) {
+		Group globalScopeGroup = company.getGroup();
+		long globalScopeGroupId = globalScopeGroup.getGroupId();
+
+		Enumeration<String> enu = portletPreferences.getNames();
+
+		while (enu.hasMoreElements()) {
 			String name = enu.nextElement();
 
 			String value = GetterUtil.getString(
@@ -172,38 +181,26 @@ public class PortletImporter {
 			if (value.equalsIgnoreCase("assetCategories") &&
 				name.startsWith(prefix)) {
 
-				String index = name.substring(prefix.length());
+				String index = name.substring(prefix.length(), name.length());
 
 				String queryValuesName = "queryValues" + index;
 
-				String[] importedAssetCategoryPKs =
-					portletPreferences.getValues(queryValuesName, null);
+				replaceClassPKs(
+					queryValuesName, AssetCategory.class, globalScopeGroupId,
+					portletPreferences, portletDataContext);
+			}
+			else if (
+				name.equals("anyClassTypeJournalArticleAssetRendererFactory") ||
+				name.equals("classTypeIdsJournalArticleAssetRendererFactory") ||
+				name.equals("classTypeIds")) {
 
-				Map<Long, Long> assetCategoryPKs =
-					(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-						AssetCategory.class);
-
-				String[] newAssetCategoryPKs = new String[
-					importedAssetCategoryPKs.length];
-
-				int i = 0;
-
-				for (String importedAssetCategoryPK :
-						importedAssetCategoryPKs) {
-
-					String newAssetCategoryPK = StringUtil.valueOf(
-						assetCategoryPKs.get(
-							new Long(importedAssetCategoryPK)));
-
-					if (Validator.isNull(newAssetCategoryPK)) {
-						newAssetCategoryPK = importedAssetCategoryPK;
-					}
-
-					newAssetCategoryPKs[i++] = newAssetCategoryPK;
-				}
-
-				portletPreferences.setValues(
-					queryValuesName, newAssetCategoryPKs);
+				replaceClassPKs(
+					name, JournalStructure.class, globalScopeGroupId,
+					portletPreferences, portletDataContext);
+			}
+			else if (name.equals("scopeIds") || name.equals("defaultScope")) {
+				replaceGlobalScopeId(
+					name, portletPreferences, globalScopeGroupId);
 			}
 		}
 
@@ -1634,6 +1631,127 @@ public class PortletImporter {
 			portletDataContext.addRatingsEntries(
 				className, classPK, ratingsEntries);
 		}
+	}
+
+	protected void replaceClassPKs(
+			String preferenceName, Class<?> clazz, long globalGroupId,
+			PortletPreferencesImpl portletPreferences,
+			PortletDataContext portletDataContext)
+		throws Exception {
+
+		String[] oldValues = portletPreferences.getValues(preferenceName, null);
+
+		if (oldValues == null) {
+			return;
+		}
+
+		Map<Long, Long> primaryKeysMap =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(clazz);
+
+		String[] newValues = new String[oldValues.length];
+
+		int i = 0;
+
+		for (String oldValue : oldValues) {
+
+			String newValue = oldValue;
+
+			String[] oldIdStrings = StringUtil.split(oldValue);
+
+			for (String oldIdString : oldIdStrings) {
+
+				Long newId = null;
+
+				try {
+					long oldId = Long.parseLong(oldIdString);
+
+					newId = MapUtil.getLong(primaryKeysMap, oldId, oldId);
+				}
+				catch (NumberFormatException e) {
+					newId = replacePrimaryKeyByUUID(
+						oldIdString, clazz, globalGroupId,
+						portletDataContext.getScopeGroupId());
+				}
+
+				if (newId != null) {
+					newValue = newValue.replaceAll(
+						oldIdString, newId.toString());
+				}
+			}
+
+			newValues[i++] = newValue;
+		}
+
+		portletPreferences.setValues(preferenceName, newValues);
+	}
+
+	protected void replaceGlobalScopeId(
+			String preferenceName, PortletPreferencesImpl portletPreferences,
+			long globalScopeId)
+		throws Exception {
+
+		String[] oldValues = portletPreferences.getValues(preferenceName, null);
+
+		if (oldValues == null) {
+			return;
+		}
+
+		String newValue = "Group_" + globalScopeId;
+
+		String[] newValues = new String[oldValues.length];
+
+		int i = 0;
+
+		for (String value : oldValues) {
+			newValues[i++] = StringUtil.replace(
+				value, "Group_Company", newValue);
+		}
+
+		portletPreferences.setValues(preferenceName, newValues);
+	}
+
+	protected Long replacePrimaryKeyByUUID(
+			String uuid, Class<?> clazz, long globalGroupId, long scopeGroupId)
+		throws SystemException {
+
+		String className = clazz.getName();
+
+		if (AssetCategory.class.getName().equals(className)) {
+
+			AssetCategory category = AssetCategoryUtil.fetchByUUID_G(
+				uuid, globalGroupId);
+
+			if (category == null) {
+				category = AssetCategoryUtil.fetchByUUID_G(uuid, scopeGroupId);
+			}
+
+			if (category != null) {
+				return category.getCategoryId();
+			}
+		}
+		else if (JournalStructure.class.getName().equals(className)) {
+
+			JournalStructure structure = JournalStructureUtil.fetchByUUID_G(
+				uuid, globalGroupId);
+
+			if (structure == null) {
+				structure = JournalStructureUtil.fetchByUUID_G(
+					uuid, scopeGroupId);
+			}
+
+			if (structure != null) {
+				return structure.getId();
+			}
+		}
+
+		if (_log.isWarnEnabled()) {
+			_log.warn(
+				"Unable to find instance of " + className + " by uuid: " +
+				uuid + "in either global scope: " + globalGroupId +
+				" or site scope: " + scopeGroupId);
+		}
+
+		return null;
 	}
 
 	protected void resetPortletScope(

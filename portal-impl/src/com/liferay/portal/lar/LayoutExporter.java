@@ -350,11 +350,16 @@ public class LayoutExporter {
 			Image image = ImageLocalServiceUtil.getImage(layoutSet.getLogoId());
 
 			if (image != null) {
-				String logoPath = getLayoutSetLogoPath(portletDataContext);
+				byte[] imageTextObj = image.getTextObj();
 
-				headerElement.addAttribute("logo-path", logoPath);
+				if (imageTextObj != null) {
+					String logoPath = getLayoutSetLogoPath(portletDataContext);
 
-				portletDataContext.addZipEntry(logoPath, image.getTextObj());
+					headerElement.addAttribute("logo-path", logoPath);
+
+					portletDataContext.addZipEntry(
+						logoPath, image.getTextObj());
+				}
 			}
 		}
 

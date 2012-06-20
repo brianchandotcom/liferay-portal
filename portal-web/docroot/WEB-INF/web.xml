@@ -770,52 +770,24 @@
 		<url-pattern>/api/atom/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
-		<servlet-name>Atom Servlet</servlet-name>
-		<url-pattern>/api/secure/atom/*</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
 		<servlet-name>Axis Servlet</servlet-name>
 		<url-pattern>/api/axis/*</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>Axis Servlet</servlet-name>
-		<url-pattern>/api/secure/axis/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>JSON Servlet</servlet-name>
 		<url-pattern>/api/json/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
-		<servlet-name>JSON Servlet</servlet-name>
-		<url-pattern>/api/secure/json/*</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
 		<servlet-name>JSON Web Service Servlet</servlet-name>
 		<url-pattern>/api/jsonws/*</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>JSON Web Service Servlet</servlet-name>
-		<url-pattern>/api/secure/jsonws/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>Remoting Servlet</servlet-name>
 		<url-pattern>/api/spring/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
-		<servlet-name>Remoting Servlet</servlet-name>
-		<url-pattern>/api/secure/spring/*</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
 		<servlet-name>Tunnel Servlet</servlet-name>
 		<url-pattern>/api/liferay/*</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>Tunnel Servlet</servlet-name>
-		<url-pattern>/api/secure/liferay/*</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>WebDAV Servlet</servlet-name>
-		<url-pattern>/api/secure/webdav/*</url-pattern>
 	</servlet-mapping>
 	<session-config>
 		<session-timeout>30</session-timeout>

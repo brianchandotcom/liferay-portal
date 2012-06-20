@@ -21,5 +21,3 @@
 
 	<aui:button type="submit" value="search" />
 </span>
-
-<br /><br />

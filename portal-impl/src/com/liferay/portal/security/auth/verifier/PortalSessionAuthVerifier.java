@@ -21,8 +21,9 @@ import com.liferay.portal.security.auth.AuthException;
 import com.liferay.portal.security.auth.AuthenticationContext;
 import com.liferay.portal.util.PortalUtil;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Properties;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * PortalSessionAuthVerifier returns authenticated user based on portal
@@ -32,8 +33,9 @@ import java.util.Properties;
  */
 public class PortalSessionAuthVerifier implements AuthVerifier {
 
-	public VerificationResult verify(AuthenticationContext ctx,
-		Properties configuration) throws AuthException {
+	public VerificationResult verify(
+		AuthenticationContext ctx, Properties configuration)
+		throws AuthException {
 
 		VerificationResult result = new VerificationResult();
 		try {

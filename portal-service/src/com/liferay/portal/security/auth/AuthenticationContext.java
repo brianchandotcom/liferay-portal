@@ -16,14 +16,15 @@ package com.liferay.portal.security.auth;
 
 import com.liferay.portal.security.auth.verifier.VerificationResult;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * AuthenticationContext holds all information bound with user authentication.
- * It's saved in {@link PortalAAManager} as a ThreadLocal.
+ * It's saved in PortalAAManager as a ThreadLocal.
  *
  * @author Tomas Polesovsky
  */

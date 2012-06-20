@@ -152,8 +152,7 @@ public class BasicAuthHeaderAutoLogin implements AutoLogin, AuthVerifier {
 	 * @throws AuthException with internal system exception
 	 */
 	public VerificationResult verify(
-		AuthenticationContext authenticationContext,
-		Properties configuration)
+		AuthenticationContext authenticationContext, Properties configuration)
 		throws AuthException {
 
 		VerificationResult result = new VerificationResult();

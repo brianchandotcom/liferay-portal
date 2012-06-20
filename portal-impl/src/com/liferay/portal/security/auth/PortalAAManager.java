@@ -21,8 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.RemoteAccessTypeThreadLocal;
-import com.liferay.portal.security.auth.verifier.PortalAuthenticationVerifier;
-import com.liferay.portal.security.auth.verifier.PortalAuthenticationVerifierImpl;
+import com.liferay.portal.security.auth.verifier.AuthVerifierPipeline;
 import com.liferay.portal.security.auth.verifier.VerificationResult;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
@@ -33,20 +32,35 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
+ * PortalAAManager is responsible for creating authentication and authorization
+ * contexts. It use AuthVerifierPipeline for fetching user from
+ * servlet request. <br />
+ * <br/>
+ * Should be used in this order:
+ * <ol><li>
+ * {@link #initAuthenticationContext(HttpServletRequest, HttpServletResponse)}
+ * to create AuthenticationContext. AuthenticationContext is then accessible
+ * from {@link #getAuthenticationContext()}, internally saved as a ThreadLocal.
+ * </li>
+ *
+ * <li>{@link #verifyRequest()} to obtain user from request and update
+ * AuthenticationContext with verifier specific settings.</li>
+ *
+ * <li>{@link #initAuthorizationContext(long userId)} } to init all
+ * authorization related ThreadLocals in the portal. Parameter userId
+ * is available in {@link AuthenticationContext#getVerificationResult()}</li>
+ * </ol>
  * @author Tomas Polesovsky
  * @author Michael C. Han
  */
-public class PortalAAManagerImpl implements PortalAAManager {
+public class PortalAAManager {
 
 	/**
 	 * Temporary singleton.
-	 * //TODO: Rewrite to Spring
 	 */
 	public static PortalAAManager getInstance() {
 		if (_instance == null) {
-			_instance = new PortalAAManagerImpl();
-			_instance.portalAuthenticationVerifier =
-				new PortalAuthenticationVerifierImpl();
+			_instance = new PortalAAManager();
 		}
 
 		return _instance;
@@ -74,7 +88,7 @@ public class PortalAAManagerImpl implements PortalAAManager {
 		setAuthenticationContext(result);
 	}
 
-	public void initAuthorizationContext(long userId) throws AuthException{
+	public void initAuthorizationContext(long userId) throws AuthException {
 		// TODO: think of stack of authorization contexts (ServiceContext
 		// already use stack for this) for running calls under different
 		// privileges, the authorization stack should be bound to the
@@ -107,13 +121,21 @@ public class PortalAAManagerImpl implements PortalAAManager {
 		}
 	}
 
-	public VerificationResult.State verifyRequest() throws SystemException, PortalException {
+	public void setAuthenticationContext(
+		AuthenticationContext authenticationContext) {
+
+		_authenticationContextThreadLocal.set(authenticationContext);
+	}
+
+	public VerificationResult.State verifyRequest()
+		throws SystemException, PortalException {
+
 		AuthenticationContext authenticationCtx = getAuthenticationContext();
 
-		VerificationResult result = portalAuthenticationVerifier
+		VerificationResult result = AuthVerifierPipeline
 			.verifyRequest(authenticationCtx);
 
-		if(result.getAuthenticationSettings() != null){
+		if (result.getAuthenticationSettings() != null) {
 			authenticationCtx.getSettings().putAll(result
 				.getAuthenticationSettings());
 		}
@@ -123,22 +145,13 @@ public class PortalAAManagerImpl implements PortalAAManager {
 		return result.getState();
 	}
 
-	public void setAuthenticationContext(
-		AuthenticationContext authenticationContext) {
-
-		_authenticationContextThreadLocal.set(authenticationContext);
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
-		PortalAAManagerImpl.class);
+		PortalAAManager.class);
 
-	private static PortalAAManagerImpl _instance;
-
+	private static PortalAAManager _instance;
 	private static ThreadLocal<AuthenticationContext>
 		_authenticationContextThreadLocal =
 		new AutoResetThreadLocal<AuthenticationContext>(
-			PortalAAManagerImpl.class + "._authenticationContext");
-
-	private PortalAuthenticationVerifier portalAuthenticationVerifier;
+			PortalAAManager.class + "._authenticationContext");
 
 }

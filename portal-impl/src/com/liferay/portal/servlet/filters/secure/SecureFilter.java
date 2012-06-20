@@ -276,6 +276,7 @@ public class SecureFilter extends BasePortalFilter {
 
 					processFilter(getClass(), request, response, filterChain);
 				}
+
 				catch(SecurityException se) {
 					response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 

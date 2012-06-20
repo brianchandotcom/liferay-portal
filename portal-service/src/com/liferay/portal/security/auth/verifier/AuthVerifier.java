@@ -20,8 +20,6 @@ import com.liferay.portal.security.auth.AuthenticationContext;
 import java.util.Properties;
 
 /**
- *
- *
  * Implementations of AuthVerifier are used to verify authenticated
  * communication.<br />
  * <br />
@@ -62,15 +60,17 @@ public interface AuthVerifier {
 	 * {@link AuthenticationContext} and AuthVerifier can define optional
 	 * settings using
 	 * {@link VerificationResult#setAuthenticationSettings(java.util.Map)}.
-	 *
 	 * <br />
+	 * <br />
+	 * Any thrown exception will be logged, verification will continue with next
+	 * AuthVerifier.
 	 *
 	 * @param authenticationContext Authentication context with
 	 *                             	request and response.
 	 * @param configuration Optional AuthVerifier configuration
 	 * @return Not null {@link VerificationResult} object with defined
 	 * 	{@link VerificationResult.State}.
-	 * @throws AuthException
+	 * @throws AuthException on internal exception
 	 */
 	public VerificationResult verify(
 			AuthenticationContext authenticationContext,

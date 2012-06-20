@@ -39,4 +39,5 @@ public class AuthVerifierConfiguration {
 
 	private AuthVerifier _authVerifier;
 	private Properties _configuration;
+
 }

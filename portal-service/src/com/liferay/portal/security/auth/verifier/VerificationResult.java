@@ -58,8 +58,8 @@ public class VerificationResult {
 		return _userId;
 	}
 
-	public void setAuthenticationSettings(Map<String, Object> authenticationSettings) {
-		this._authenticationSettings = authenticationSettings;
+	public void setAuthenticationSettings(Map<String, Object> settings) {
+		this._authenticationSettings = settings;
 	}
 
 	public void setPassword(String password) {

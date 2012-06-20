@@ -29,11 +29,6 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.security.RemoteAccessTypeThreadLocal;
 import com.liferay.portal.security.auth.HttpPrincipal;
 import com.liferay.portal.security.auth.PortalAAManager;
-import com.liferay.portal.security.auth.PortalAAManagerImpl;
-import com.liferay.portal.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalInstances;
 
@@ -132,7 +127,7 @@ public class TunnelServlet extends HttpServlet {
 				}
 
 				if (user != null) {
-					PortalAAManager pam = PortalAAManagerImpl.getInstance();
+					PortalAAManager pam = PortalAAManager.getInstance();
 					pam.initAuthorizationContext(user.getUserId());
 				}
 			}

@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.RemoteAccessTypeThreadLocal;
-import com.liferay.portal.security.auth.PortalAAManagerImpl;
+import com.liferay.portal.security.auth.PortalAAManager;
 import com.liferay.portal.service.UserLocalServiceUtil;
 
 import java.util.List;
@@ -63,7 +63,7 @@ public class AtomServlet extends AbderaServlet {
 		throws ServletException {
 
 		try {
-			long userId = PortalAAManagerImpl.getInstance()
+			long userId = PortalAAManager.getInstance()
 				.getAuthenticationContext().getVerificationResult().getUserId();
 
 			User user = UserLocalServiceUtil.getUser(userId);

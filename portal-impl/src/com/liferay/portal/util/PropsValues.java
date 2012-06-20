@@ -1272,6 +1272,8 @@ public class PropsValues {
 
 	public static final String POP_SERVER_SUBDOMAIN = PropsUtil.get(PropsKeys.POP_SERVER_SUBDOMAIN);
 
+	public static final String[] PORTAL_AUTHENTICATION_VERIFIER_PIPELINE = PropsUtil.getArray(PropsKeys.PORTAL_AUTHENTICATION_VERIFIER_PIPELINE);
+
 	public static final String PORTAL_CTX = PropsUtil.get(PropsKeys.PORTAL_CTX);
 
 	public static final boolean PORTAL_IMPERSONATION_ENABLE = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.PORTAL_IMPERSONATION_ENABLE));

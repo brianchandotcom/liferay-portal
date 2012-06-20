@@ -1671,7 +1671,7 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 		for (DDMStructure ddmStructure : ddmStructures) {
 			Element structureFieldsElement =
 				(Element)fileEntryElement.selectSingleNode(
-					"//structure-fields[@structureUuid='".concat(
+					"structure-fields[@structureUuid='".concat(
 						ddmStructure.getUuid()).concat("']"));
 
 			if (structureFieldsElement == null) {

@@ -16,6 +16,9 @@ package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portlet.PortalPreferences;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
@@ -61,8 +64,8 @@ public class SessionClicks {
 		String value) {
 
 		try {
-			if ((key.length() > PropsValues.SESSION_CLICKS_MAX_SIZE_TERMS) ||
-				(value.length() > PropsValues.SESSION_CLICKS_MAX_SIZE_TERMS)) {
+			if ((key.length() > _SESSION_CLICKS_MAX_SIZE_TERMS) ||
+				(value.length() > _SESSION_CLICKS_MAX_SIZE_TERMS)) {
 
 				if (_log.isWarnEnabled()) {
 					_log.warn(
@@ -79,7 +82,7 @@ public class SessionClicks {
 
 			int size = preferences.size();
 
-			if (size <= PropsValues.SESSION_CLICKS_MAX_ALLOWED_VALUES) {
+			if (size <= _SESSION_CLICKS_MAX_ALLOWED_VALUES) {
 				preferences.setValue(namespace, key, value);
 			}
 			else {
@@ -100,5 +103,15 @@ public class SessionClicks {
 		SessionClicks.class.getName();
 
 	private static Log _log = LogFactoryUtil.getLog(SessionClicks.class);
+
+	private static final int _SESSION_CLICKS_MAX_SIZE_TERMS =
+		GetterUtil.getInteger(
+			PropsUtil.get(
+				PropsKeys.SESSION_CLICKS_MAX_SIZE_TERMS));
+
+	private static final int _SESSION_CLICKS_MAX_ALLOWED_VALUES =
+		GetterUtil.getInteger(
+			PropsUtil.get(
+				PropsKeys.SESSION_CLICKS_MAX_ALLOWED_VALUES));
 
 }

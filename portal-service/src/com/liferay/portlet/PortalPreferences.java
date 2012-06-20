@@ -40,4 +40,6 @@ public interface PortalPreferences extends Serializable {
 
 	public void setValues(String namespace, String key, String[] values);
 
+	public int size();
+
 }

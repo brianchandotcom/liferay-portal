@@ -1404,6 +1404,10 @@ public class PropsValues {
 
 	public static final String[] SERVLET_SESSION_DESTROY_EVENTS = PropsUtil.getArray(PropsKeys.SERVLET_SESSION_DESTROY_EVENTS);
 
+	public static final int SESSION_CLICKS_MAX_ALLOWED_VALUES = GetterUtil.getInteger(PropsUtil.get(PropsKeys.SESSION_CLICKS_MAX_ALLOWED_VALUES));
+
+	public static final int SESSION_CLICKS_MAX_SIZE_TERMS = GetterUtil.getInteger(PropsUtil.get(PropsKeys.SESSION_CLICKS_MAX_SIZE_TERMS));
+
 	public static final String SESSION_COOKIE_DOMAIN = PropsUtil.get(PropsKeys.SESSION_COOKIE_DOMAIN);
 
 	public static final boolean SESSION_DISABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.SESSION_DISABLED));

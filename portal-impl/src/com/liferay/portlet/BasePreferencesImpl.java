@@ -206,6 +206,12 @@ public abstract class BasePreferencesImpl implements Serializable {
 		}
 	}
 
+	public int size() {
+		Map<String, Preference> preferences = getPreferences();
+
+		return preferences.size();
+	}
+
 	public abstract void store() throws IOException, ValidatorException;
 
 	protected String getActualValue(String value) {

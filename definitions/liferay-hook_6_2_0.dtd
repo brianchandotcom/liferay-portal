@@ -116,6 +116,7 @@ upgrade.processes
 user.notification.event.confirmation.enabled
 users.email.address.generator
 users.email.address.required
+users.email.address.validator
 users.form.add.identification
 users.form.add.main
 users.form.add.miscellaneous

@@ -19,7 +19,7 @@ package com.liferay.portal.model;
  *
  * @author Brian Wing Shun Chan
  */
-public class ResourceConstants {
+public interface ResourceConstants {
 
 	public static final long PRIMKEY_DNE = -1;
 

@@ -261,9 +261,9 @@ public class DLIndexer extends BaseIndexer {
 	protected void addReindexCriteria(
 		DynamicQuery dynamicQuery, long companyId) {
 
-		Property companyIdProperty = PropertyFactoryUtil.forName("companyId");
+		Property property = PropertyFactoryUtil.forName("companyId");
 
-		dynamicQuery.add(companyIdProperty.eq(companyId));
+		dynamicQuery.add(property.eq(companyId));
 	}
 
 	protected void addReindexCriteria(
@@ -365,8 +365,6 @@ public class DLIndexer extends BaseIndexer {
 			document.addText(
 				Field.PROPERTIES, dlFileEntry.getLuceneProperties());
 
-			DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
-
 			document.addText(Field.TITLE, dlFileEntry.getTitle());
 			document.addKeyword(
 				"dataRepositoryId", dlFileEntry.getDataRepositoryId());
@@ -438,9 +436,7 @@ public class DLIndexer extends BaseIndexer {
 
 		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
 
-		if (!dlFileVersion.isApproved() &&
-			(dlFileVersion.getStatus() != WorkflowConstants.STATUS_IN_TRASH)) {
-
+		if (!dlFileVersion.isApproved() && !dlFileVersion.isInTrash()) {
 			return;
 		}
 
@@ -560,12 +556,7 @@ public class DLIndexer extends BaseIndexer {
 		for (DLFileEntry dlFileEntry : dlFileEntries) {
 			Document document = getDocument(dlFileEntry);
 
-			DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
-
-			if ((document != null) &&
-				(dlFileVersion.getStatus() !=
-					WorkflowConstants.STATUS_IN_TRASH)) {
-
+			if (document != null) {
 				documents.add(document);
 			}
 		}

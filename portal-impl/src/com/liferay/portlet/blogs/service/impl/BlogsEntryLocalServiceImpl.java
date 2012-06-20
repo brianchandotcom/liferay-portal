@@ -205,15 +205,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			user.getCompanyId(), groupId, userId, BlogsEntry.class.getName(),
 			entry.getEntryId(), entry, serviceContext);
 
-		// Indexer
-
-		if (entry.getStatus() == WorkflowConstants.STATUS_DRAFT) {
-			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				BlogsEntry.class);
-
-			indexer.reindex(entry);
-		}
-
 		return entry;
 	}
 
@@ -802,6 +793,12 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			blogsEntryPersistence.update(entry, false);
 		}
 
+		// Trash
+
+		trashEntryLocalService.addTrashEntry(
+			userId, entry.getGroupId(), BlogsEntry.class.getName(),
+			entry.getEntryId(), entry.getStatus(), null, null);
+
 		updateStatus(
 			userId, entry.getEntryId(), WorkflowConstants.STATUS_IN_TRASH,
 			new ServiceContext());
@@ -812,12 +809,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			userId, entry.getGroupId(), BlogsEntry.class.getName(),
 			entry.getEntryId(), SocialActivityConstants.TYPE_MOVE_TO_TRASH,
 			StringPool.BLANK, 0);
-
-		// Trash
-
-		trashEntryLocalService.addTrashEntry(
-			userId, entry.getGroupId(), BlogsEntry.class.getName(),
-			entry.getEntryId(), entry.getStatus(), null, null);
 
 		// Workflow
 
@@ -862,15 +853,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			userId, trashEntry.getGroupId(), BlogsEntry.class.getName(),
 			entryId, SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 			StringPool.BLANK, 0);
-
-		//Indexer
-
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			BlogsEntry.class);
-
-		BlogsEntry entry = getBlogsEntry(entryId);
-
-		indexer.reindex(entry);
 
 		// Trash
 
@@ -1145,17 +1127,15 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				assetEntryLocalService.moveEntryToTrash(
 					BlogsEntry.class.getName(), entryId);
 
-				entry.setGroupId(-entry.getGroupId());
-				entry.setStatus(oldStatus);
-
 				indexer.reindex(entry);
-
-				entry.setGroupId(-entry.getGroupId());
-				entry.setStatus(status);
 			}
 			else {
 				assetEntryLocalService.updateVisible(
 					BlogsEntry.class.getName(), entryId, false);
+
+				// Indexer
+
+				indexer.delete(entry);
 			}
 
 			// Social
@@ -1178,10 +1158,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 						extraDataJSONObject.toString(), 0);
 				}
 			}
-
-			// Indexer
-
-			indexer.delete(entry);
 		}
 
 		return entry;

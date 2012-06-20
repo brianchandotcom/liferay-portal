@@ -1669,13 +1669,10 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
 
 		for (DDMStructure ddmStructure : ddmStructures) {
-			Document currentFileEntrydocument = SAXReaderUtil
-					.read(fileEntryElement.asXML());
-
-			Element structureFieldsElement = (Element) currentFileEntrydocument
-					.getRootElement().selectSingleNode(
-							"//structure-fields[@structureUuid='".concat(
-									ddmStructure.getUuid()).concat("']"));
+			Element structureFieldsElement =
+				(Element)fileEntryElement.selectSingleNode(
+					"//structure-fields[@structureUuid='".concat(
+						ddmStructure.getUuid()).concat("']"));
 
 			if (structureFieldsElement == null) {
 				continue;

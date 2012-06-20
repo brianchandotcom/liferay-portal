@@ -2269,7 +2269,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		DLFileShortcut fileShortcut = getFileShortcut(fileShortcutId);
 
 		DLFileShortcutPermission.check(
-			getPermissionChecker(), fileShortcut, ActionKeys.UPDATE);
+			getPermissionChecker(), fileShortcut, ActionKeys.DELETE);
 
 		dlAppHelperLocalService.restoreFileShortcutFromTrash(
 			getUserId(), fileShortcut);
@@ -2296,7 +2296,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		Folder folder = repository.getFolder(folderId);
 
 		DLFolderPermission.check(
-			getPermissionChecker(), folder, ActionKeys.UPDATE);
+			getPermissionChecker(), folder, ActionKeys.DELETE);
 
 		dlAppHelperLocalService.restoreFolderFromTrash(getUserId(), folder);
 	}

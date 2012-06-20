@@ -22,11 +22,7 @@ String backURL = ParamUtil.getString(request, "backURL", redirect);
 
 Group group = ActionUtil.getGroup(renderRequest);
 
-if (group == null) {
-	long groupId = ParamUtil.getLong(request, "groupId");
-
-	group = GroupServiceUtil.getGroup(groupId);
-}
+long groupId = group.getGroupId();
 
 Organization organization = null;
 
@@ -37,7 +33,7 @@ if (group.isOrganization()) {
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/sites_admin/view_teams");
-portletURL.setParameter("groupId", String.valueOf(group.getGroupId()));
+portletURL.setParameter("groupId", String.valueOf(groupId));
 
 pageContext.setAttribute("portletURL", portletURL);
 %>
@@ -73,11 +69,11 @@ pageContext.setAttribute("portletURL", portletURL);
 	<%
 	TeamSearchTerms searchTerms = (TeamSearchTerms)searchContainer.getSearchTerms();
 
-	int total = TeamLocalServiceUtil.searchCount(group.getGroupId(), searchTerms.getName(), searchTerms.getDescription(), new LinkedHashMap<String, Object>());
+	int total = TeamLocalServiceUtil.searchCount(groupId, searchTerms.getName(), searchTerms.getDescription(), new LinkedHashMap<String, Object>());
 
 	searchContainer.setTotal(total);
 
-	List results = TeamLocalServiceUtil.search(group.getGroupId(), searchTerms.getName(), searchTerms.getDescription(), new LinkedHashMap<String, Object>(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+	List results = TeamLocalServiceUtil.search(groupId, searchTerms.getName(), searchTerms.getDescription(), new LinkedHashMap<String, Object>(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 
 	searchContainer.setResults(results);
 
@@ -124,11 +120,11 @@ pageContext.setAttribute("portletURL", portletURL);
 	}
 	%>
 
-	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.MANAGE_TEAMS) %>">
+	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, groupId, ActionKeys.MANAGE_TEAMS) %>">
 		<portlet:renderURL var="addTeamURL">
 			<portlet:param name="struts_action" value="/sites_admin/edit_team" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
+			<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 		</portlet:renderURL>
 
 		<aui:button href='<%= addTeamURL %>' value="add-team" />

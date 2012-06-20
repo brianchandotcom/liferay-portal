@@ -28,6 +28,9 @@ import com.liferay.portal.kernel.search.facet.AssetEntriesFacet;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.MultiValueFacet;
 import com.liferay.portal.kernel.search.facet.ScopeFacet;
+import com.liferay.portal.kernel.trash.TrashHandler;
+import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
+import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -65,6 +68,8 @@ import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 import com.liferay.portlet.expando.util.ExpandoBridgeIndexerUtil;
+import com.liferay.portlet.trash.model.TrashEntry;
+import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -762,6 +767,28 @@ public abstract class BaseIndexer implements Indexer {
 		document.addKeyword(Field.STAGING_GROUP, stagingGroup);
 	}
 
+	protected void addTrashFields(
+		Document document, String className, long classPK) {
+
+		try {
+			TrashEntry entry = TrashEntryLocalServiceUtil.getEntry(
+				className, classPK);
+
+			TrashHandler trashHandler =
+				TrashHandlerRegistryUtil.getTrashHandler(entry.getClassName());
+
+			TrashRenderer trashRenderer = trashHandler.getTrashRenderer(
+				entry.getClassPK());
+
+			document.addDate(Field.REMOVED_DATE, entry.getCreateDate());
+			document.addKeyword(Field.REMOVED_BY, entry.getUserName(), true);
+			document.addKeyword(Field.TYPE, trashRenderer.getType(), true);
+		}
+		catch (Exception e) {
+			_log.error(e.getMessage());
+		}
+	}
+
 	protected BooleanQuery createFullQuery(
 			BooleanQuery contextQuery, SearchContext searchContext)
 		throws Exception {
@@ -1029,8 +1056,10 @@ public abstract class BaseIndexer implements Indexer {
 			document.addKeyword(Field.USER_NAME, userName, true);
 		}
 
+		GroupedModel groupedModel = null;
+
 		if (baseModel instanceof GroupedModel) {
-			GroupedModel groupedModel = (GroupedModel)baseModel;
+			groupedModel = (GroupedModel)baseModel;
 
 			document.addKeyword(
 				Field.GROUP_ID, getParentGroupId(groupedModel.getGroupId()));
@@ -1043,6 +1072,10 @@ public abstract class BaseIndexer implements Indexer {
 				(WorkflowedModel)workflowedBaseModel;
 
 			document.addKeyword(Field.STATUS, workflowedModel.getStatus());
+
+			if ((groupedModel != null) && workflowedModel.isInTrash()) {
+				addTrashFields(document, className, classPK);
+			}
 		}
 
 		ExpandoBridgeIndexerUtil.addAttributes(

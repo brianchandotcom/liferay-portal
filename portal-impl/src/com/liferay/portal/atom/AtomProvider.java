@@ -32,8 +32,6 @@ import org.apache.abdera.protocol.server.impl.SimpleWorkspaceInfo;
  */
 public class AtomProvider extends AbstractWorkspaceProvider {
 
-
-
 	public AtomProvider() {
 		_initWorkspace();
 		_initTargetResolver();

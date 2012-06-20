@@ -228,17 +228,28 @@ public class AuthVerifierPipeline {
 			AuthVerifierConfiguration authVerifierConfiguration =
 				new AuthVerifierConfiguration();
 
-			AuthVerifier authVerifier =
-				(AuthVerifier) InstancePool.get(authVerifierClass);
+			try {
+				AuthVerifier authVerifier =
+					(AuthVerifier) InstancePool.get(authVerifierClass);
 
-			String verifierConfigPrefix = _PORTAL_AUTHENTICATION_VERIFIER +
-				authVerifier.getClass().getSimpleName() + ".";
-			Properties verifierConfiguration = PropsUtil.getProperties(
-				verifierConfigPrefix, true);
+				if (authVerifier == null) {
+					_log.error("Couldn't instantiate " + authVerifierClass);
+					continue;
+				}
 
-			authVerifierConfiguration.setAuthVerifier(authVerifier);
-			authVerifierConfiguration.setConfiguration(verifierConfiguration);
-			result.add(authVerifierConfiguration);
+				String verifierConfigPrefix = _PORTAL_AUTHENTICATION_VERIFIER +
+					authVerifier.getClass().getSimpleName() + ".";
+				Properties verifierConfiguration = PropsUtil.getProperties(
+					verifierConfigPrefix, true);
+
+				authVerifierConfiguration.setAuthVerifier(authVerifier);
+				authVerifierConfiguration.setConfiguration(
+					verifierConfiguration);
+				result.add(authVerifierConfiguration);
+			} catch (Exception e) {
+				_log.error("Couldn't initialize AuthVerifier: "
+					+ authVerifierClass, e);
+			}
 		}
 
 		_verifiersPipeline.addAll(result);

@@ -62,14 +62,30 @@ portletURL.setParameter("tabs1", tabs1);
 		boolean aproximate = false;
 		%>
 
-		<liferay-ui:search-form
-			page="/html/portlet/trash/entry_search.jsp"
-		/>
-
 		<liferay-ui:search-container-results>
-			<%@ include file="/html/portlet/trash/entry_search_results.jspf" %>
 
 			<%
+			if (Validator.isNotNull(searchTerms.getKeywords())) {
+				LinkedHashMap entryParams = new LinkedHashMap();
+
+				Sort sort = SortFactoryUtil.getSort(TrashEntry.class, searchContainer.getOrderByCol(), searchContainer.getOrderByType());
+
+				Hits hits = TrashEntryServiceUtil.search(company.getCompanyId(), groupId, user.getUserId(), searchTerms.getKeywords(), searchContainer.getStart(), searchContainer.getEnd(), sort);
+
+				total = hits.getLength();
+
+				pageContext.setAttribute("results", TrashUtil.getEntries(hits));
+				pageContext.setAttribute("total", total);
+			}
+			else {
+				Object[] entries = TrashEntryServiceUtil.getEntries(groupId, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+
+				pageContext.setAttribute("results", entries[0]);
+				pageContext.setAttribute("total", entries[1]);
+
+				aproximate = (Boolean)entries[2];
+			}
+
 			if ((total == 0) && (TrashEntryLocalServiceUtil.getEntries(groupId).size() != 0)) {
 				searchContainer.setEmptyResultsMessage(LanguageUtil.format(pageContext, "no-entries-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(searchTerms.getKeywords()) + "</strong>"));
 			}
@@ -138,6 +154,10 @@ portletURL.setParameter("tabs1", tabs1);
 
 		<c:if test="<%= total > 0 %>">
 			<aui:button-row>
+				<liferay-ui:search-form
+					page="/html/portlet/trash/entry_search.jsp"
+				/>
+
 				<aui:button name="deleteButton" onClick='<%= renderResponse.getNamespace() + "deleteEntries();" %>' value="delete" />
 
 				<aui:button name="restoreButton" onClick='<%= renderResponse.getNamespace() + "restoreEntries();" %>' value="restore" />

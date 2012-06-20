@@ -1920,6 +1920,7 @@
 		<portlet-name>182</portlet-name>
 		<icon>/html/icons/trash.png</icon>
 		<struts-path>trash</struts-path>
+		<indexer-class>com.liferay.portlet.trash.util.TrashIndexer</indexer-class>
 		<scheduler-entry>
 			<scheduler-event-listener-class>com.liferay.portlet.trash.messaging.CheckEntryMessageListener</scheduler-event-listener-class>
 			<trigger>

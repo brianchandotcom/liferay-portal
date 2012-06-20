@@ -153,7 +153,7 @@ public class TestPropsValues {
 
 			url =
 				protocol + login + ":" + password + "@" + host +
-					"/api/secure/axis/" + serviceName;
+					"/api/axis/" + serviceName;
 		}
 		else {
 			url += "/api/axis/" + serviceName;

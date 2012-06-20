@@ -2151,6 +2151,8 @@ public interface PropsKeys {
 
 	public static final String USERS_EMAIL_ADDRESS_REQUIRED = "users.email.address.required";
 
+	public static final String USERS_EMAIL_ADDRESS_VALIDATOR = "users.email.address.validator";
+
 	public static final String USERS_EXPORT_CSV_FIELDS = "users.export.csv.fields";
 
 	public static final String USERS_FORM_ADD_IDENTIFICATION = "users.form.add.identification";

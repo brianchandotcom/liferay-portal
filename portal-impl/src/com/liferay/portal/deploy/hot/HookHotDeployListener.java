@@ -102,6 +102,8 @@ import com.liferay.portal.security.auth.AutoLogin;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.security.auth.EmailAddressGenerator;
 import com.liferay.portal.security.auth.EmailAddressGeneratorFactory;
+import com.liferay.portal.security.auth.EmailAddressValidator;
+import com.liferay.portal.security.auth.EmailAddressValidatorFactory;
 import com.liferay.portal.security.auth.FullNameGenerator;
 import com.liferay.portal.security.auth.FullNameGeneratorFactory;
 import com.liferay.portal.security.auth.FullNameValidator;
@@ -239,10 +241,11 @@ public class HookHotDeployListener
 		"theme.portlet.decorate.default", "theme.portlet.sharing.default",
 		"theme.shortcut.icon", "upgrade.processes",
 		"user.notification.event.confirmation.enabled",
-		"users.email.address.generator", "users.email.address.required",
-		"users.form.add.identification", "users.form.add.main",
-		"users.form.add.miscellaneous", "users.form.my.account.identification",
-		"users.form.my.account.main", "users.form.my.account.miscellaneous",
+		"users.email.address.generator", "users.email.address.validator",
+		"users.email.address.required", "users.form.add.identification",
+		"users.form.add.main", "users.form.add.miscellaneous",
+		"users.form.my.account.identification", "users.form.my.account.main",
+		"users.form.my.account.miscellaneous",
 		"users.form.update.identification", "users.form.update.main",
 		"users.form.update.miscellaneous", "users.full.name.generator",
 		"users.full.name.validator", "users.image.max.height",
@@ -441,6 +444,12 @@ public class HookHotDeployListener
 				PropsKeys.USERS_EMAIL_ADDRESS_GENERATOR)) {
 
 			EmailAddressGeneratorFactory.setInstance(null);
+		}
+
+		if (portalProperties.containsKey(
+				PropsKeys.USERS_EMAIL_ADDRESS_VALIDATOR)) {
+
+			EmailAddressValidatorFactory.setInstance(null);
 		}
 
 		if (portalProperties.containsKey(PropsKeys.USERS_FULL_NAME_GENERATOR)) {
@@ -1790,6 +1799,21 @@ public class HookHotDeployListener
 					emailAddressGeneratorClassName);
 
 			EmailAddressGeneratorFactory.setInstance(emailAddressGenerator);
+		}
+
+		if (portalProperties.containsKey(
+				PropsKeys.USERS_EMAIL_ADDRESS_VALIDATOR)) {
+
+			String emailAddressValidatorClassName =
+				portalProperties.getProperty(
+					PropsKeys.USERS_EMAIL_ADDRESS_VALIDATOR);
+
+			EmailAddressValidator emailAddressValidator =
+				(EmailAddressValidator)newInstance(
+					portletClassLoader, EmailAddressValidator.class,
+					emailAddressValidatorClassName);
+
+			EmailAddressValidatorFactory.setInstance(emailAddressValidator);
 		}
 
 		if (portalProperties.containsKey(PropsKeys.USERS_FULL_NAME_GENERATOR)) {

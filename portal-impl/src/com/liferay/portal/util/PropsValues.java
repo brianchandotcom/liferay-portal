@@ -1576,6 +1576,8 @@ public class PropsValues {
 
 	public static final String USERS_EMAIL_ADDRESS_GENERATOR = PropsUtil.get(PropsKeys.USERS_EMAIL_ADDRESS_GENERATOR);
 
+	public static final String USERS_EMAIL_ADDRESS_VALIDATOR = PropsUtil.get(PropsKeys.USERS_EMAIL_ADDRESS_VALIDATOR);
+
 	public static boolean USERS_EMAIL_ADDRESS_REQUIRED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.USERS_EMAIL_ADDRESS_REQUIRED));
 
 	public static final String[] USERS_EXPORT_CSV_FIELDS = PropsUtil.getArray(PropsKeys.USERS_EXPORT_CSV_FIELDS);

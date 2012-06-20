@@ -422,6 +422,14 @@
 		<priority value="ERROR" />
 	</category>
 
+	<category name="com.liferay.portal.security.auth.EmailAddressGeneratorFactory">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="com.liferay.portal.security.auth.EmailAddressValidatorFactory">
+		<priority value="ERROR" />
+	</category>
+
 	<category name="com.liferay.portal.security.auth.CASAutoLogin">
 		<priority value="WARN" />
 	</category>

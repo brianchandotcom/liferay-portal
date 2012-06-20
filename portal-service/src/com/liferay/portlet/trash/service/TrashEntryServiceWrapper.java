@@ -99,6 +99,45 @@ public class TrashEntryServiceWrapper implements TrashEntryService,
 	}
 
 	/**
+	* Returns an ordered range of all the trash entries which match the
+	* keywords and the group ID, using the indexer. It is preferable to use
+	* this method instead of the non-indexed version whenever possible for
+	* performance reasons.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end -
+	* start</code> instances. <code>start</code> and <code>end</code> are not
+	* primary keys, they are indexes in the result set. Thus, <code>0</code>
+	* refers to the first result in the set. Setting both <code>start</code>
+	* and <code>end</code> to {@link
+	* com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	* result set.
+	* </p>
+	*
+	* @param groupId the primary key of the group
+	* @param keywords the keywords (space separated), which may occur in the
+	user's first name, middle name, last name, screen name, or email
+	address
+	* @param params the indexer parameters (optionally <code>null</code>). For
+	more information see {@link
+	com.liferay.portlet.usersadmin.util.UserIndexer}.
+	* @param start the lower bound of the range of users
+	* @param end the upper bound of the range of users (not inclusive)
+	* @param sort the field and direction to sort by (optionally
+	<code>null</code>)
+	* @return the matching users
+	* @throws SystemException if a system exception occurred
+	* @see com.liferay.portlet.usersadmin.util.UserIndexer
+	*/
+	public com.liferay.portal.kernel.search.Hits search(long companyId,
+		long groupId, long userId, java.lang.String keywords, int start,
+		int end, com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _trashEntryService.search(companyId, groupId, userId, keywords,
+			start, end, sort);
+	}
+
+	/**
 	 * @deprecated Renamed to {@link #getWrappedService}
 	 */
 	public TrashEntryService getWrappedTrashEntryService() {

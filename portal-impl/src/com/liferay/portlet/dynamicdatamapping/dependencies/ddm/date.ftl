@@ -5,26 +5,42 @@
 </#if>
 
 <#if (fieldRawValue?is_date)>
-	<#assign fieldValue = fieldRawValue?string("MM/dd/yyyy")>
+	<#assign day = fieldRawValue?string("dd")?number>
+	<#assign month = defaultValueDate?string("MM")?number-1>
+	<#assign year = defaultValueDate?string("yyyy")?number>
 </#if>
+
+<#function getDate >
+	<#return dateUtil.newDate()>
+</#function>
 
 <div class="aui-field-wrapper-content lfr-forms-field-wrapper">
 	<@aui.input label=label name=namespacedFieldName type="hidden" value=fieldRawValue!"" />
+	
+	<#assign defaultValueDate = getDate()>
+	<#assign day = defaultValueDate?string("dd")?number>
+	<#assign month = defaultValueDate?string("MM")?number-1>
+	<#assign year = defaultValueDate?string("yyyy")?number>
+	<#assign yearStart = defaultValueDate?string("yyyy")?number + 100>
+	<#assign yearEnd = defaultValueDate?string("yyyy")?number - 100>
 
-	<@aui.input cssClass=cssClass helpMessage=fieldStructure.tip label=label name="${namespacedFieldName}formattedDate" type="text" value=fieldValue>
-		<@aui.validator name="date" />
+	<@liferay_ui["input-date"] dayParam="defaultValueDay" dayValue=day disabled=false monthParam="defaultValueMonth" monthValue=month yearParam="defaultValueYear" yearRangeEnd=yearStart yearRangeStart=yearEnd yearValue=year />
 
-		<#if required>
-			<@aui.validator name="required" />
-		</#if>
-	</@aui.input>
 
 	${fieldStructure.children}
 </div>
 
-<@aui.script use="aui-datepicker">
+<@aui.script>
+	var A = AUI();
+
 	var fieldValueInput = A.one('#${portletNamespace}${namespacedFieldName}');
-	var formattedDateInput = A.one('#${portletNamespace}${namespacedFieldName}formattedDate');
+	var dayInput = A.one('#${portletNamespace}defaultValueDay');
+	var monthInput = A.one('#${portletNamespace}defaultValueMonth');
+	var yearInput = A.one('#${portletNamespace}defaultValueYear');
+
+	var dayValue = ${day?c};
+	var monthValue = ${month?c}+1;
+	var yearValue = ${year?c};
 
 	var updateFieldValue = function(value) {
 		var timestamp = '';
@@ -32,7 +48,7 @@
 		try {
 			var date = A.DataType.Date.parse(value);
 
-			timestamp = date.getTime()
+			timestamp = date.getTime();
 		}
 		catch (e) {
 		}
@@ -40,44 +56,45 @@
 		fieldValueInput.val(timestamp);
 	};
 
-	formattedDateInput.on(
+	dayInput.on(
 		{
 			change: function(event) {
-				var value = formattedDateInput.val();
+				var value = dayInput.val();
 
-				updateFieldValue(value);
+				dayValue = parseInt(value)+1;
+				
+				updateFieldValue(''+monthValue+'/'+dayValue+'/'+yearValue);
+
 			}
 		}
 	);
 
-	updateFieldValue('${fieldValue}');
-
-	new A.DatePicker(
+	monthInput.on(
 		{
-			after: {
-				'calendar:select': function(event) {
-					var date = event.date;
-					var formatted = date.formatted;
+			change: function(event) {
+				var value = monthInput.val();
 
-					if (formatted.length) {
-						formatted = formatted[0];
+				monthValue = parseInt(value)+1;
+				
+				updateFieldValue(''+monthValue+'/'+dayValue+'/'+yearValue);
 
-						this.get('currentNode').val(formatted);
-						updateFieldValue(formatted);
-					}
-				}
-			},
-			calendar: {
-				dateFormat: '%m/%d/%Y',
-
-				<#if (fieldValue != "")>
-					dates: ['${fieldValue}'],
-				</#if>
-
-				selectMultipleDates: false
-			},
-			setValue: false,
-			trigger: formattedDateInput
+			}
 		}
-	).render();
+	);
+
+	yearInput.on(
+		{
+			change: function(event) {
+				var value = yearInput.val();
+
+				yearValue = value;
+				
+				updateFieldValue(''+monthValue+'/'+dayValue+'/'+yearValue);
+
+			}
+		}
+	);
+
+	updateFieldValue(monthValue+'/'+dayValue+'/'+yearValue);
+
 </@aui.script>

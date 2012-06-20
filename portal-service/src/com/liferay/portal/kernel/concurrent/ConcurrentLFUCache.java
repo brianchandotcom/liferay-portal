@@ -31,13 +31,13 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 /**
  * @author Shuyang Zhou
  */
-public class ConcurrentLRUCache<K, V> {
+public class ConcurrentLFUCache<K, V> {
 
-	public ConcurrentLRUCache(int maxSize) {
+	public ConcurrentLFUCache(int maxSize) {
 		this(maxSize, 0.75F);
 	}
 
-	public ConcurrentLRUCache(int maxSize, float loadFactor) {
+	public ConcurrentLFUCache(int maxSize, float loadFactor) {
 		if ((maxSize <= 0) || (loadFactor <= 0) || (loadFactor >= 1)) {
 			throw new IllegalArgumentException();
 		}
@@ -169,6 +169,9 @@ public class ConcurrentLRUCache<K, V> {
 		return sb.toString();
 	}
 
+	protected void onRemove(K key, V value) {
+	}
+
 	private void _cleanUp() {
 		List<Entry<K, ValueWrapper>> valueWrappers =
 			new ArrayList<Entry<K, ValueWrapper>>(_cache.entrySet());
@@ -184,7 +187,13 @@ public class ConcurrentLRUCache<K, V> {
 		while ((cleanUpSize-- > 0) && itr.hasNext()) {
 			Entry<K, ValueWrapper> entry = itr.next();
 
-			_cache.remove(entry.getKey());
+			K key = entry.getKey();
+
+			V value = entry.getValue()._value;
+
+			_cache.remove(key);
+
+			onRemove(key, value);
 
 			itr.remove();
 		}

@@ -1165,6 +1165,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>name</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>yearNullable</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

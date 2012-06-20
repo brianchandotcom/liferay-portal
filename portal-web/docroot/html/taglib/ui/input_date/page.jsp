@@ -24,7 +24,8 @@ if (GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-date:di
 }
 
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-date:cssClass"));
-String formName = namespace + request.getAttribute("liferay-ui:input-date:formName");
+String formName = namespace + request.getAttribute("liferay-ui:input-date:name");
+String name = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-date:name"));
 String monthParam = namespace + request.getAttribute("liferay-ui:input-date:monthParam");
 int monthValue = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:input-date:monthValue"));
 boolean monthNullable = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-date:monthNullable"));
@@ -143,77 +144,86 @@ else if (yearNullable) {
 
 <aui:script use="aui-datepicker-select">
 	var displayDateNode = A.one('#<%= randomNamespace %>displayDate');
+	var datePicker;
 
-	var displayDatePickerHandle = displayDateNode.on(
+	window['<%= namespace + name %>LiferayInputDateDatePickerComponent'] = function() {
+		if (datePicker && datePicker.get('rendered')) {
+			return datePicker;
+		}
+
+		datePicker = new A.DatePickerSelect(
+			{
+				after: {
+					render: function(event) {
+						var instance = this;
+
+						<c:if test="<%= dayEmpty %>">
+							instance.get('dayNode').val('-1');
+						</c:if>
+
+						<c:if test="<%= monthEmpty %>">
+							instance.get('monthNode').val('-1');
+						</c:if>
+
+						<c:if test="<%= yearEmpty %>">
+							instance.get('yearNode').val('-1');
+						</c:if>
+					}
+				},
+				appendOrder: '<%= dateFormatOrder %>',
+				boundingBox: displayDateNode,
+				calendar: {
+					dates: [
+						<c:if test="<%= !monthEmpty && !dayEmpty && !yearEmpty %>">
+							new Date(
+								<%= cal.get(Calendar.YEAR) %>,
+								<%= cal.get(Calendar.MONTH) %>,
+								<%= cal.get(Calendar.DATE) %>
+							)
+						</c:if>
+					],
+
+					<c:choose>
+						<c:when test="<%= dateFormatOrder.equals(_DATE_FORMAT_ORDER_MDY) %>">
+							dateFormat: '%m/%d/%y',
+						</c:when>
+						<c:when test="<%= dateFormatOrder.equals(_DATE_FORMAT_ORDER_YMD) %>">
+							dateFormat: '%y/%m/%d',
+						</c:when>
+						<c:otherwise>
+							dateFormat: '%d/%m/%y',
+						</c:otherwise>
+					</c:choose>
+
+					firstDayOfWeek: <%= firstDayOfWeek %>,
+					locale: '<%= LanguageUtil.getLanguageId(request) %>'
+				},
+				dayNode: '#<%= dayParam %>',
+				disabled: <%= disabled %>,
+				monthNode: '#<%= monthParam %>',
+				nullableDay: <%= dayNullable %>,
+				nullableMonth: <%= monthNullable %>,
+				nullableYear: <%= yearNullable %>,
+				on: {
+					'calendar:select': function(event) {
+						var formatted = event.date.formatted[0];
+
+						A.one('#<%= imageInputId %>Input').val(formatted);
+					}
+				},
+				srcNode: '#<%= randomNamespace %>displayDateContent',
+				yearNode: '#<%= yearParam %>',
+				yearRange: [<%= yearRangeStart %>, <%= yearRangeEnd %>]
+			}
+		).render();
+
+		return datePicker;
+	};
+
+	displayDateNode.once(
 		['click', 'mousemove'],
 		function(event) {
-			new A.DatePickerSelect(
-				{
-					after: {
-						render: function(event) {
-							var instance = this;
-
-							<c:if test="<%= dayEmpty %>">
-								instance.get('dayNode').val('-1');
-							</c:if>
-
-							<c:if test="<%= monthEmpty %>">
-								instance.get('monthNode').val('-1');
-							</c:if>
-
-							<c:if test="<%= yearEmpty %>">
-								instance.get('yearNode').val('-1');
-							</c:if>
-						}
-					},
-					appendOrder: '<%= dateFormatOrder %>',
-					boundingBox: displayDateNode,
-					calendar: {
-						dates: [
-							<c:if test="<%= !monthEmpty && !dayEmpty && !yearEmpty %>">
-								new Date(
-									<%= cal.get(Calendar.YEAR) %>,
-									<%= cal.get(Calendar.MONTH) %>,
-									<%= cal.get(Calendar.DATE) %>
-								)
-							</c:if>
-						],
-
-						<c:choose>
-							<c:when test="<%= dateFormatOrder.equals(_DATE_FORMAT_ORDER_MDY) %>">
-								dateFormat: '%m/%d/%y',
-							</c:when>
-							<c:when test="<%= dateFormatOrder.equals(_DATE_FORMAT_ORDER_YMD) %>">
-								dateFormat: '%y/%m/%d',
-							</c:when>
-							<c:otherwise>
-								dateFormat: '%d/%m/%y',
-							</c:otherwise>
-						</c:choose>
-
-						firstDayOfWeek: <%= firstDayOfWeek %>,
-						locale: '<%= LanguageUtil.getLanguageId(request) %>'
-					},
-					dayNode: '#<%= dayParam %>',
-					disabled: <%= disabled %>,
-					monthNode: '#<%= monthParam %>',
-					nullableDay: <%= dayNullable %>,
-					nullableMonth: <%= monthNullable %>,
-					nullableYear: <%= yearNullable %>,
-					on: {
-						'calendar:select': function(event) {
-							var formatted = event.date.formatted[0];
-
-							A.one('#<%= imageInputId %>Input').val(formatted);
-						}
-					},
-					srcNode: '#<%= randomNamespace %>displayDateContent',
-					yearNode: '#<%= yearParam %>',
-					yearRange: [<%= yearRangeStart %>, <%= yearRangeEnd %>]
-				}
-			).render();
-
-			displayDatePickerHandle.detach();
+			<%= namespace + name %>LiferayInputDateDatePickerComponent();
 		}
 	);
 </aui:script>

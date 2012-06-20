@@ -284,6 +284,7 @@ Map<String, String> hints = ModelHintsUtil.getHints(model, field);
 				monthNullable="<%= monthNullable %>"
 				monthParam='<%= fieldParam + "Month" %>'
 				monthValue="<%= month %>"
+				name="<%= fieldParam %>"
 				yearNullable="<%= yearNullable %>"
 				yearParam='<%= fieldParam + "Year" %>'
 				yearRangeEnd="<%= yearRangeEnd %>"

@@ -183,6 +183,8 @@ long assetClassPK = 0;
 										where: 'outer'
 									},
 									function() {
+										var selectedFilesCountContainer = A.one('.selected-files-count');
+
 										var totalFiles = A.all('input[name=<portlet:namespace />selectUploadedFileCheckbox]');
 
 										var totalFilesCount = totalFiles.size();
@@ -199,8 +201,6 @@ long assetClassPK = 0;
 										else if (selectedFilesCount > 1) {
 											selectedFilesText = A.Lang.sub('<%= UnicodeLanguageUtil.get(pageContext, "x-files-selected") %>', [selectedFilesCount]);
 										}
-
-										var selectedFilesCountContainer = A.one('.selected-files-count');
 
 										selectedFilesCountContainer.setContent(selectedFilesText);
 				

@@ -20,9 +20,9 @@
 String redirect = ParamUtil.getString(request, "redirect");
 String backURL = ParamUtil.getString(request, "backURL", redirect);
 
-long groupId = ParamUtil.getLong(request, "groupId");
+Group group = ActionUtil.getGroup(renderRequest);
 
-Group group = GroupServiceUtil.getGroup(groupId);
+long groupId = group.getGroupId();
 
 Organization organization = null;
 
@@ -124,7 +124,7 @@ pageContext.setAttribute("portletURL", portletURL);
 		<portlet:renderURL var="addTeamURL">
 			<portlet:param name="struts_action" value="/sites_admin/edit_team" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
+			<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 		</portlet:renderURL>
 
 		<aui:button href='<%= addTeamURL %>' value="add-team" />

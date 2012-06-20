@@ -36,7 +36,7 @@
 >
 
 	<%
-	String description = HtmlUtil.escape(recordSet.getDescription(locale));
+	String description = recordSet.getDescription(locale);
 
 	buffer.append(StringUtil.shorten(description, 100));
 	%>

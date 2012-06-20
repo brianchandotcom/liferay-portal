@@ -23,12 +23,7 @@ public class LiberalEmailAddressValidator extends DefaultEmailAddressValidator {
 
 	@Override
 	public boolean validate(long companyId, String emailAddress) {
-		if (Validator.isNull(emailAddress)) {
-			return false;
-		}
-		else {
-			return true;
-		}
+		return Validator.isNotNull(emailAddress);
 	}
 
 }

@@ -37,8 +37,8 @@ public class EmailAddressValidatorFactory {
 			try {
 				_emailAddressValidator =
 					(EmailAddressValidator)classLoader.loadClass(
-						PropsValues.USERS_EMAIL_ADDRESS_VALIDATOR)
-							.newInstance();
+						PropsValues.USERS_EMAIL_ADDRESS_VALIDATOR).
+							newInstance();
 			}
 			catch (Exception e) {
 				_log.error(e, e);

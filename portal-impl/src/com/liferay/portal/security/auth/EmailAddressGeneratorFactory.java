@@ -37,8 +37,8 @@ public class EmailAddressGeneratorFactory {
 			try {
 				_emailAddressGenerator =
 					(EmailAddressGenerator)classLoader.loadClass(
-						PropsValues.USERS_EMAIL_ADDRESS_GENERATOR)
-							.newInstance();
+						PropsValues.USERS_EMAIL_ADDRESS_GENERATOR).
+							newInstance();
 			}
 			catch (Exception e) {
 				_log.error(e, e);

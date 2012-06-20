@@ -426,7 +426,8 @@ public class WikiPageLocalServiceUtil {
 	}
 
 	public static void deleteTempPageAttachment(long userId,
-		java.lang.String fileName, java.lang.String tempFolderName) {
+		java.lang.String fileName, java.lang.String tempFolderName)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteTempPageAttachment(userId, fileName, tempFolderName);
 	}
 

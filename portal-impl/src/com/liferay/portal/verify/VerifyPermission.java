@@ -15,12 +15,14 @@
 package com.liferay.portal.verify;
 
 import com.liferay.portal.NoSuchResourceException;
+import com.liferay.portal.NoSuchResourcePermissionException;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Organization;
@@ -54,7 +56,8 @@ import java.util.List;
  * @author Matthew Kong
  * @author Raymond Augé
  */
-public class VerifyPermission extends VerifyProcess {
+public class VerifyPermission extends VerifyProcess
+	implements ResourceConstants {
 
 	protected void checkPermissions() throws Exception {
 		List<String> modelNames = ResourceActionsUtil.getModelNames();
@@ -187,9 +190,11 @@ public class VerifyPermission extends VerifyProcess {
 	}
 
 	protected void fixLayoutRolePermissions() throws Exception {
-		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM == 6) {
-			fixLayoutRolePermissions_6();
+		if (PropsValues.PERMISSIONS_USER_CHECK_ALGORITHM != 6) {
+			return;
 		}
+
+		fixLayoutRolePermissions_6();
 
 		PermissionCacheUtil.clearCache();
 	}
@@ -205,84 +210,78 @@ public class VerifyPermission extends VerifyProcess {
 	 * @throws Exception
 	 */
 	protected void fixLayoutRolePermissions_6() throws Exception {
-		List<String> actionIds =
-				ResourceActionsUtil.getModelResourceActions(
-						Layout.class.getName());
-		
+		List<String> actionIds = ResourceActionsUtil.getModelResourceActions(
+			Layout.class.getName());
+
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
 			ResourcePermission.class);
 
 		dynamicQuery.add(
 			RestrictionsFactoryUtil.eq("name", Layout.class.getName()));
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.ne("scope", SCOPE_INDIVIDUAL));
 
 		List<ResourcePermission> resourcePermissions =
 			ResourcePermissionLocalServiceUtil.dynamicQuery(dynamicQuery);
 
 		for (ResourcePermission resourcePermission : resourcePermissions) {
-			ResourcePermission layoutResourcePermission = null;
+			long companyId = resourcePermission.getCompanyId();
+			String primKey = resourcePermission.getPrimKey();
 
-			Role ownerRole = RoleLocalServiceUtil
-								.fetchRole(resourcePermission.getCompanyId(),
-										RoleConstants.OWNER);
+			Role ownerRole = RoleLocalServiceUtil.getRole(
+				companyId, RoleConstants.OWNER);
+			long ownerRoleId = ownerRole.getRoleId();
+
 			try {
-				layoutResourcePermission =
-					ResourcePermissionLocalServiceUtil.getResourcePermission(
-						resourcePermission.getCompanyId(),
-						Layout.class.getName(),
-						ResourceConstants.SCOPE_INDIVIDUAL,
-						resourcePermission.getPrimKey(),
-						ownerRole.getRoleId());
+				ResourcePermissionLocalServiceUtil.getResourcePermission(
+					companyId, Layout.class.getName(), SCOPE_INDIVIDUAL,
+					primKey, ownerRoleId);
 			}
-			catch (Exception e) {
+			catch (NoSuchResourcePermissionException nsrpe) {
 				ResourcePermissionLocalServiceUtil.setResourcePermissions(
-					resourcePermission.getCompanyId(), Layout.class.getName(),
-					ResourceConstants.SCOPE_INDIVIDUAL,
-					resourcePermission.getPrimKey(),
-					ownerRole.getRoleId(),
+					companyId, Layout.class.getName(), SCOPE_INDIVIDUAL,
+					primKey, ownerRoleId,
 					ResourcePermissionLocalServiceImpl.EMPTY_ACTION_IDS);
 
-				layoutResourcePermission =
-					ResourcePermissionLocalServiceUtil.getResourcePermission(
-						resourcePermission.getCompanyId(),
-						Layout.class.getName(),
-						ResourceConstants.SCOPE_INDIVIDUAL,
-						resourcePermission.getPrimKey(),
-						ownerRole.getRoleId());
+				ResourcePermissionLocalServiceUtil.getResourcePermission(
+					companyId, Layout.class.getName(), SCOPE_INDIVIDUAL,
+					primKey, ownerRoleId);
 			}
-			
-			/*
-			 * In cases I tested this will not make any changes to DB 
-			 */
-			_log.info("Checking permissions for owner. Total "
-					.concat(Integer.toString(actionIds.size()))
-					.concat(" permissions"));
+
+			// In cases I tested this will not make any changes to DB
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Checking permissions for owner. Total " +
+						actionIds.size() + " permissions");
+			}
+
 			for (String actionId : actionIds) {
 				if (ResourcePermissionLocalServiceUtil.hasResourcePermission(
-							resourcePermission.getCompanyId(),
-							Layout.class.getName(),
-							ResourceConstants.SCOPE_INDIVIDUAL,
-							resourcePermission.getPrimKey(),
-							ownerRole.getRoleId(), actionId)) {
+						companyId, Layout.class.getName(), SCOPE_INDIVIDUAL,
+						primKey, ownerRoleId, actionId)) {
+
 					try {
 						ResourcePermissionLocalServiceUtil
 							.addResourcePermission(
-								resourcePermission.getCompanyId(),
-								Layout.class.getName(),
-								ResourceConstants.SCOPE_INDIVIDUAL,
-								resourcePermission.getPrimKey(),
-								ownerRole.getRoleId(), actionId);
-					} catch (Exception e) {
-						_log.warn(
-							"Can't add resource permission for Layout "
-								.concat("for Owner role ")
-								.concat("individual scope and companyId (")
-								.concat(Long.toString(
-										resourcePermission.getCompanyId()))
-								.concat(") primKey (")
-								.concat(resourcePermission.getPrimKey())
-								.concat(") actionId (")
-								.concat(actionId)
-								.concat(")"));
+								companyId, Layout.class.getName(),
+								SCOPE_INDIVIDUAL, primKey, ownerRoleId,
+								actionId);
+					}
+					catch (Exception e) {
+						StringBundler sb = new StringBundler();
+
+						sb.append("Can't add resource permission on Layout ");
+						sb.append("for {role=Owner, scope=individual, ");
+						sb.append("companyId=");
+						sb.append(companyId);
+						sb.append(", primKey=");
+						sb.append(primKey);
+						sb.append(", actionId=");
+						sb.append(actionId);
+						sb.append("}");
+
+						_log.warn(sb);
 					}
 				}
 			}

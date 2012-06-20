@@ -299,10 +299,11 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 			preferences.setValue("showQueryLogic", String.valueOf(false));
 
 			preferences.setValue("enableRss", String.valueOf(false));
+
 			preferences.reset("rssDelta");
-			preferences.reset("rssName");
-			preferences.reset("rssFormat");
 			preferences.reset("rssDisplayStyle");
+			preferences.reset("rssFormat");
+			preferences.reset("rssName");
 		}
 
 		if (!selectionStyle.equals("view-count") &&

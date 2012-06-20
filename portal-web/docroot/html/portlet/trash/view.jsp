@@ -152,21 +152,21 @@ portletURL.setParameter("tabs1", tabs1);
 			/>
 		</liferay-ui:search-container-row>
 
-		<c:if test="<%= total > 0 %>">
-			<aui:button-row>
-				<liferay-ui:search-form
-					page="/html/portlet/trash/entry_search.jsp"
-				/>
+		<aui:button-row>
+			<liferay-ui:search-form
+				page="/html/portlet/trash/entry_search.jsp"
+			/>
 
+			<c:if test="<%= total > 0 %>">
 				<aui:button name="deleteButton" onClick='<%= renderResponse.getNamespace() + "deleteEntries();" %>' value="delete" />
 
 				<aui:button name="restoreButton" onClick='<%= renderResponse.getNamespace() + "restoreEntries();" %>' value="restore" />
 
 				<aui:button name="emptyTrashButton" onClick='<%= renderResponse.getNamespace() + "emptyTrash();" %>' value="empty-the-recycle-bin" />
-			</aui:button-row>
+			</c:if>
+		</aui:button-row>
 
-			<div class="separator"><!-- --></div>
-		</c:if>
+		<div class="separator"><!-- --></div>
 
 		<liferay-ui:search-iterator type='<%= aproximate ? "more" : "regular" %>' />
 	</liferay-ui:search-container>

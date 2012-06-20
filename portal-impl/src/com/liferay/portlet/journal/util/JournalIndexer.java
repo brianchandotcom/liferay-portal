@@ -130,6 +130,7 @@ public class JournalIndexer extends BaseIndexer {
 			BooleanQuery searchQuery, SearchContext searchContext)
 		throws Exception {
 
+		addSearchTerm(searchQuery, searchContext, Field.ARTICLE_ID, false);
 		addSearchTerm(searchQuery, searchContext, Field.CLASS_PK, false);
 		addSearchLocalizedTerm(
 			searchQuery, searchContext, Field.CONTENT, false);
@@ -218,7 +219,7 @@ public class JournalIndexer extends BaseIndexer {
 		document.addKeyword(Field.TYPE, article.getType());
 		document.addKeyword(Field.VERSION, article.getVersion());
 
-		document.addKeyword("articleId", article.getArticleId());
+		document.addKeyword(Field.ARTICLE_ID, article.getArticleId());
 		document.addDate("displayDate", article.getDisplayDate());
 		document.addKeyword("layoutUuid", article.getLayoutUuid());
 		document.addKeyword("structureId", article.getStructureId());
@@ -274,12 +275,12 @@ public class JournalIndexer extends BaseIndexer {
 		}
 
 		String groupId = document.get(Field.GROUP_ID);
-		String articleId = document.get("articleId");
+		String articleId = document.get(Field.ARTICLE_ID);
 		String version = document.get(Field.VERSION);
 
 		portletURL.setParameter("struts_action", "/journal/edit_article");
 		portletURL.setParameter("groupId", groupId);
-		portletURL.setParameter("articleId", articleId);
+		portletURL.setParameter(Field.ARTICLE_ID, articleId);
 		portletURL.setParameter("version", version);
 
 		return new Summary(title, content, portletURL);

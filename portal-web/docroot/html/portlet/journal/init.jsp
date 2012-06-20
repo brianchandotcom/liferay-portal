@@ -77,6 +77,7 @@ page import="com.liferay.portlet.journal.model.JournalFeed" %><%@
 page import="com.liferay.portlet.journal.model.JournalFeedConstants" %><%@
 page import="com.liferay.portlet.journal.model.JournalFolder" %><%@
 page import="com.liferay.portlet.journal.model.JournalFolderConstants" %><%@
+page import="com.liferay.portlet.journal.model.JournalSearchConstants" %><%@
 page import="com.liferay.portlet.journal.model.JournalStructure" %><%@
 page import="com.liferay.portlet.journal.model.JournalTemplate" %><%@
 page import="com.liferay.portlet.journal.model.JournalTemplateConstants" %><%@
@@ -84,6 +85,7 @@ page import="com.liferay.portlet.journal.model.impl.JournalArticleImpl" %><%@
 page import="com.liferay.portlet.journal.search.ArticleDisplayTerms" %><%@
 page import="com.liferay.portlet.journal.search.ArticleSearch" %><%@
 page import="com.liferay.portlet.journal.search.ArticleSearchTerms" %><%@
+page import="com.liferay.portlet.journal.search.EntriesChecker" %><%@
 page import="com.liferay.portlet.journal.search.FeedDisplayTerms" %><%@
 page import="com.liferay.portlet.journal.search.FeedSearch" %><%@
 page import="com.liferay.portlet.journal.search.FeedSearchTerms" %><%@
@@ -116,7 +118,13 @@ page import="com.liferay.util.RSSUtil" %>
 <%@ page import="java.net.URLDecoder" %>
 
 <%
-PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(request);
+PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(liferayPortletRequest);
+
+PortletPreferences preferences = liferayPortletRequest.getPreferences();
+
+String[] displayViews = StringUtil.split(PrefsParamUtil.getString(preferences, liferayPortletRequest, "displayViews", StringUtil.merge(PropsValues.JOURNAL_DISPLAY_VIEWS)));
+
+String portletId = portletDisplay.getId();
 
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);

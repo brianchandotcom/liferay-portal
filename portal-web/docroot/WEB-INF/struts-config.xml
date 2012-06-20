@@ -816,6 +816,10 @@
 			<forward name="portlet.message_boards.error" path="portlet.journal.error" />
 		</action>
 
+		<action path="/journal/edit_entry" type="com.liferay.portlet.journal.action.EditEntryAction">
+			<forward name="portlet.journal.error" path="portlet.journal.error" />
+		</action>
+
 		<action path="/journal/edit_feed" type="com.liferay.portlet.journal.action.EditFeedAction">
 			<forward name="portlet.journal.edit_feed" path="portlet.journal.edit_feed" />
 			<forward name="portlet.journal.error" path="portlet.journal.error" />
@@ -854,12 +858,26 @@
 
 		<action path="/journal/get_template_content" type="com.liferay.portlet.journal.action.GetTemplateContentAction" />
 
+		<action path="/journal/move_article" type="com.liferay.portlet.journal.action.EditArticleAction">
+			<forward name="portlet.journal.edit_article" path="portlet.journal.move_article" />
+			<forward name="portlet.journal.error" path="portlet.journal.error" />
+		</action>
+
+		<action path="/journal/move_entry" type="com.liferay.portlet.journal.action.EditEntryAction">
+			<forward name="portlet.journal.edit_entry" path="portlet.journal.move_entries" />
+			<forward name="portlet.journal.error" path="portlet.journal.error" />
+		</action>
+
 		<action path="/journal/move_folder" type="com.liferay.portlet.journal.action.EditFolderAction">
 			<forward name="portlet.journal.edit_folder" path="portlet.journal.move_folder" />
 			<forward name="portlet.journal.error" path="portlet.journal.error" />
 		</action>
 
 		<action path="/journal/rss" type="com.liferay.portlet.journal.action.RSSAction" />
+
+		<action path="/journal/search" type="com.liferay.portlet.journal.action.SearchAction">
+			<forward name="portlet.journal.view" path="portlet.journal.view" />
+		</action>
 
 		<action path="/journal/select_display_page" type="com.liferay.portlet.layoutsadmin.action.EditLayoutsAction" />
 
@@ -874,7 +892,10 @@
 
 		<action path="/journal/select_template" forward="portlet.journal.select_template" />
 
-		<action path="/journal/view" forward="portlet.journal.view" />
+		<action path="/journal/view" type="com.liferay.portlet.journal.action.ViewAction">
+			<forward name="portlet.journal.error" path="portlet.journal.error" />
+			<forward name="portlet.journal.view" path="portlet.journal.view" />
+		</action>
 
 		<action path="/journal/view_article" type="com.liferay.portlet.journal.action.EditArticleAction">
 			<forward name="portlet.journal.edit_article" path="portlet.journal.view_article" />

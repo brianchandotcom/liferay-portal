@@ -320,6 +320,13 @@ public class JournalArticleServiceUtil {
 		return getService().getLatestArticle(groupId, className, classPK);
 	}
 
+	public static void moveArticle(long groupId, java.lang.String articleId,
+		long newFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().moveArticle(groupId, articleId, newFolderId);
+	}
+
 	public static void removeArticleLocale(long companyId,
 		java.lang.String languageId)
 		throws com.liferay.portal.kernel.exception.PortalException,

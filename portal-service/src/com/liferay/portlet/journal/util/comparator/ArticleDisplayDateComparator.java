@@ -23,11 +23,9 @@ import com.liferay.portlet.journal.model.JournalArticle;
  */
 public class ArticleDisplayDateComparator extends OrderByComparator {
 
-	public static final String ORDER_BY_ASC =
-		"JournalArticle.displayDate ASC, JournalArticle.version ASC";
+	public static final String ORDER_BY_ASC = "displayDate ASC, version ASC";
 
-	public static final String ORDER_BY_DESC =
-		"JournalArticle.displayDate DESC, JournalArticle.version DESC";
+	public static final String ORDER_BY_DESC = "displayDate DESC, version DESC";
 
 	public static final String[] ORDER_BY_FIELDS = {"displayDate", "version"};
 

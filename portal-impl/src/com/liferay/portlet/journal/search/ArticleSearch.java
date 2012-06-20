@@ -59,16 +59,13 @@ public class ArticleSearch extends SearchContainer<JournalArticle> {
 		orderableHeaders.put("display-date", "display-date");
 	}
 
-	public static final String EMPTY_RESULTS_MESSAGE =
-		"no-web-content-were-found";
-
 	public ArticleSearch(
 		PortletRequest portletRequest, PortletURL iteratorURL) {
 
 		super(
 			portletRequest, new ArticleDisplayTerms(portletRequest),
 			new ArticleSearchTerms(portletRequest), DEFAULT_CUR_PARAM,
-			DEFAULT_DELTA, iteratorURL, headerNames, EMPTY_RESULTS_MESSAGE);
+			DEFAULT_DELTA, iteratorURL, headerNames, null);
 
 		PortletConfig portletConfig =
 			(PortletConfig)portletRequest.getAttribute(
@@ -91,6 +88,9 @@ public class ArticleSearch extends SearchContainer<JournalArticle> {
 			ArticleDisplayTerms.CONTENT, displayTerms.getContent());
 		iteratorURL.setParameter(
 			ArticleDisplayTerms.DESCRIPTION, displayTerms.getDescription());
+		iteratorURL.setParameter(
+			ArticleDisplayTerms.FOLDER_ID,
+			String.valueOf(displayTerms.getFolderId()));
 		iteratorURL.setParameter(
 			ArticleDisplayTerms.GROUP_ID,
 			String.valueOf(displayTerms.getGroupId()));

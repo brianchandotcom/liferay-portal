@@ -509,6 +509,19 @@ public class JournalArticleServiceSoap {
 		}
 	}
 
+	public static void moveArticle(long groupId, java.lang.String articleId,
+		long newFolderId) throws RemoteException {
+		try {
+			JournalArticleServiceUtil.moveArticle(groupId, articleId,
+				newFolderId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static void removeArticleLocale(long companyId,
 		java.lang.String languageId) throws RemoteException {
 		try {

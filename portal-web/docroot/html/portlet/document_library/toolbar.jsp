@@ -33,7 +33,7 @@ Folder folder = (Folder)request.getAttribute("view.jsp-folder");
 	<c:if test="<%= !scopeGroup.isStaged() || scopeGroup.isStagingGroup() || !scopeGroup.isStagedPortlet(PortletKeys.DOCUMENT_LIBRARY) %>">
 
 		<%
-		String taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "editFileEntry', {action: '" + Constants.CANCEL_CHECKOUT + "'});";
+		String taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.CANCEL_CHECKOUT + "'});";
 		%>
 
 		<liferay-ui:icon
@@ -44,7 +44,7 @@ Folder folder = (Folder)request.getAttribute("view.jsp-folder");
 		/>
 
 		<%
-		taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "editFileEntry', {action: '" + Constants.CHECKIN + "'});";
+		taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.CHECKIN + "'});";
 		%>
 
 		<liferay-ui:icon
@@ -55,7 +55,7 @@ Folder folder = (Folder)request.getAttribute("view.jsp-folder");
 		/>
 
 		<%
-		taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "editFileEntry', {action: '" + Constants.CHECKOUT + "'});";
+		taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.CHECKOUT + "'});";
 		%>
 
 		<liferay-ui:icon
@@ -66,7 +66,7 @@ Folder folder = (Folder)request.getAttribute("view.jsp-folder");
 		/>
 
 		<%
-		taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "editFileEntry', {action: '" + Constants.MOVE + "'});";
+		taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.MOVE + "'});";
 		%>
 
 		<liferay-ui:icon
@@ -81,7 +81,7 @@ Folder folder = (Folder)request.getAttribute("view.jsp-folder");
 		<c:when test="<%= (folder == null) || (folder.getModel() instanceof DLFolder) %>">
 
 			<%
-			String taglibURL = "Liferay.fire('" + renderResponse.getNamespace() + "editFileEntry', {action: '" + Constants.MOVE_TO_TRASH + "'});";
+			String taglibURL = "Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.MOVE_TO_TRASH + "'});";
 			%>
 
 			<liferay-ui:icon-delete
@@ -93,7 +93,7 @@ Folder folder = (Folder)request.getAttribute("view.jsp-folder");
 		<c:otherwise>
 
 			<%
-			String taglibURL = "Liferay.fire('" + renderResponse.getNamespace() + "editFileEntry', {action: '" + Constants.DELETE + "'});";
+			String taglibURL = "Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.DELETE + "'});";
 			%>
 
 			<liferay-ui:icon-delete

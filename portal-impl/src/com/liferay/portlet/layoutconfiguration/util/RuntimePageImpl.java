@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.LayoutTemplate;
 import com.liferay.portal.model.LayoutTemplateConstants;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.service.LayoutTemplateLocalServiceUtil;
 import com.liferay.portal.servlet.ThreadLocalFacadeServletRequestWrapperUtil;
@@ -461,6 +462,17 @@ public class RuntimePageImpl implements RuntimePage {
 				pos + separator.length());
 
 			themeId = velocityTemplateId.substring(0, pos);
+		}
+
+		pos = layoutTemplateId.indexOf(PortletConstants.INSTANCE_SEPARATOR);
+
+		if (pos != -1) {
+			layoutTemplateId = layoutTemplateId.substring(
+				pos + PortletConstants.INSTANCE_SEPARATOR.length() + 1);
+
+			pos = layoutTemplateId.indexOf(StringPool.UNDERLINE);
+
+			layoutTemplateId = layoutTemplateId.substring(pos + 1);
 		}
 
 		return LayoutTemplateLocalServiceUtil.getLayoutTemplate(

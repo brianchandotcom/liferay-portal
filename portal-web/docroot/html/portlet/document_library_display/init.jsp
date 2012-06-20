@@ -94,6 +94,9 @@ if (portletId.equals(PortletKeys.DOCUMENT_LIBRARY)) {
 	showFolderMenu = true;
 	showTabs = true;
 }
+else if (portletId.equals(PortletKeys.TRASH)) {
+	showActions = true;
+}
 
 if (showActions) {
 	defaultFolderColumns += ",action";

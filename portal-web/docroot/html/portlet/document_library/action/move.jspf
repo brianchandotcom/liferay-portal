@@ -14,16 +14,37 @@
  */
 --%>
 
-<c:if test="<%= showActions && DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) %>">
-	<portlet:renderURL var="moveURL">
-		<portlet:param name="struts_action" value="/document_library/move_file_entry" />
-		<portlet:param name="redirect" value="<%= viewFolderURL.toString() %>" />
-		<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
-	</portlet:renderURL>
+<c:choose>
+	<c:when test="<%= portletName.equals(PortletKeys.TRASH) %>">
+		<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE) %>">
+			<liferay-portlet:renderURL portletName="<%= PortletKeys.DOCUMENT_LIBRARY%>" var="moveURL">
+				<portlet:param name="struts_action" value="/document_library/move_file_entry" />
+				<portlet:param name="redirect" value="<%= PortalUtil.getCurrentURL(request) %>" />
+				<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
+				<portlet:param name="folderId" value="<%= String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
+				<portlet:param name="moveFromTrash" value="true" />
+			</liferay-portlet:renderURL>
 
-	<liferay-ui:icon
-		image="submit"
-		message="move"
-		url="<%= moveURL %>"
-	/>
-</c:if>
+			<liferay-ui:icon
+				image="submit"
+				message="move"
+				url="<%= moveURL %>"
+			/>
+		</c:if>
+	</c:when>
+	<c:otherwise>
+		<c:if test="<%= showActions && DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) %>">
+			<portlet:renderURL var="moveURL">
+				<portlet:param name="struts_action" value="/document_library/move_file_entry" />
+				<portlet:param name="redirect" value="<%= viewFolderURL.toString() %>" />
+				<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
+			</portlet:renderURL>
+
+			<liferay-ui:icon
+				image="submit"
+				message="move"
+				url="<%= moveURL %>"
+			/>
+		</c:if>
+	</c:otherwise>
+</c:choose>

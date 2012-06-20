@@ -3278,8 +3278,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			"[$EMAIL_VERIFICATION_CODE$]", ticket.getKey(),
 			"[$EMAIL_VERIFICATION_URL$]", verifyEmailAddressURL,
 			"[$REMOTE_ADDRESS$]", serviceContext.getRemoteAddr(),
-			"[$REMOTE_HOST$]", serviceContext.getRemoteHost(), "[$USER_AGENT$]",
-			serviceContext.getUserAgent(), "[$USER_ID$]", user.getUserId(),
+			"[$REMOTE_HOST$]", serviceContext.getRemoteHost(),
+			"[$USER_ID$]", user.getUserId(),
 			"[$USER_SCREENNAME$]", user.getScreenName());
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
@@ -3429,8 +3429,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		subscriptionSender.setContextAttributes(
 			"[$PASSWORD_RESET_URL$]", passwordResetURL, "[$REMOTE_ADDRESS$]",
 			serviceContext.getRemoteAddr(), "[$REMOTE_HOST$]",
-			serviceContext.getRemoteHost(), "[$USER_AGENT$]",
-			serviceContext.getUserAgent(), "[$USER_ID$]", user.getUserId(),
+			serviceContext.getRemoteHost(), "[$USER_ID$]", user.getUserId(),
 			"[$USER_PASSWORD$]", newPassword, "[$USER_SCREENNAME$]",
 			user.getScreenName());
 		subscriptionSender.setFrom(fromAddress, fromName);

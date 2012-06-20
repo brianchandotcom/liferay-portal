@@ -17,7 +17,7 @@ package com.liferay.portal;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Samuel Kong
+ * @author Brian Wing Shun Chan
  */
 public class InvalidFileNameException extends PortalException {
 

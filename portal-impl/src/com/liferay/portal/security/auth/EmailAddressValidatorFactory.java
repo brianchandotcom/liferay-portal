@@ -20,24 +20,24 @@ import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.util.PropsValues;
 
 /**
- * @author Amos Fong
+ * @author Brian Wing Shun Chan
  */
-public class EmailAddressGeneratorFactory {
+public class EmailAddressValidatorFactory {
 
-	public static EmailAddressGenerator getInstance() {
-		if (_emailAddressGenerator == null) {
+	public static EmailAddressValidator getInstance() {
+		if (_emailAddressValidator == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Instantiate " + PropsValues.USERS_EMAIL_ADDRESS_GENERATOR);
+					"Instantiate " + PropsValues.USERS_EMAIL_ADDRESS_VALIDATOR);
 			}
 
 			ClassLoader classLoader =
 				PACLClassLoaderUtil.getPortalClassLoader();
 
 			try {
-				_emailAddressGenerator =
-					(EmailAddressGenerator)classLoader.loadClass(
-						PropsValues.USERS_EMAIL_ADDRESS_GENERATOR).
+				_emailAddressValidator =
+					(EmailAddressValidator)classLoader.loadClass(
+						PropsValues.USERS_EMAIL_ADDRESS_VALIDATOR).
 							newInstance();
 			}
 			catch (Exception e) {
@@ -46,25 +46,25 @@ public class EmailAddressGeneratorFactory {
 		}
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Return " + _emailAddressGenerator.getClass().getName());
+			_log.debug("Return " + _emailAddressValidator.getClass().getName());
 		}
 
-		return _emailAddressGenerator;
+		return _emailAddressValidator;
 	}
 
 	public static void setInstance(
-		EmailAddressGenerator emailAddressGenerator) {
+		EmailAddressValidator emailAddressValidator) {
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Set " + emailAddressGenerator.getClass().getName());
+			_log.debug("Set " + emailAddressValidator.getClass().getName());
 		}
 
-		_emailAddressGenerator = emailAddressGenerator;
+		_emailAddressValidator = emailAddressValidator;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
-		EmailAddressGeneratorFactory.class);
+		EmailAddressValidatorFactory.class);
 
-	private static EmailAddressGenerator _emailAddressGenerator;
+	private static EmailAddressValidator _emailAddressValidator;
 
 }

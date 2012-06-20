@@ -61,10 +61,33 @@ public class SessionClicks {
 		String value) {
 
 		try {
+			if ((key.length() > PropsValues.SESSION_CLICKS_MAX_SIZE_TERMS) ||
+				(value.length() > PropsValues.SESSION_CLICKS_MAX_SIZE_TERMS)) {
+
+				_log.warn(
+					"Session clicks has attempted to exceed the maximum " +
+						"size allowed for keys and/or values. See the " +
+							"property session.clicks.max.size.terms. {key=" +
+								key + ", value=" + value + "}");
+
+				return;
+			}
+
 			PortalPreferences preferences =
 				PortletPreferencesFactoryUtil.getPortalPreferences(request);
 
-			preferences.setValue(namespace, key, value);
+			int size = preferences.size();
+
+			if (size <= PropsValues.SESSION_CLICKS_MAX_ALLOWED_VALUES) {
+				preferences.setValue(namespace, key, value);
+			}
+			else {
+				_log.warn(
+					"Session clicks has attempted to exceed the maximum " +
+						"number of allowed values. See the property " +
+							"session.clicks.max.allowed.values. {size=" +
+								size + "}");
+			}
 		}
 		catch (Exception e) {
 			_log.error(e, e);

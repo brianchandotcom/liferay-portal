@@ -1312,18 +1312,16 @@ public class DLFileEntryLocalServiceImpl
 
 			// Indexer
 
-			if (dlFileVersion.getVersion().equals(
-					DLFileEntryConstants.VERSION_DEFAULT) ||
-				(status == WorkflowConstants.STATUS_IN_TRASH)) {
+			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+				DLFileEntry.class);
 
-				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-					DLFileEntry.class);
-
-				dlFileEntry.setGroupId(-dlFileEntry.getGroupId());
-
+			if (status == WorkflowConstants.STATUS_IN_TRASH) {
 				indexer.reindex(dlFileEntry);
+			}
+			else if (dlFileVersion.getVersion().equals(
+				DLFileEntryConstants.VERSION_DEFAULT)) {
 
-				dlFileEntry.setGroupId(-dlFileEntry.getGroupId());
+				indexer.delete(dlFileEntry);
 			}
 		}
 

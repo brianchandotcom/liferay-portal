@@ -32,12 +32,17 @@
 		entry = TrashEntryLocalServiceUtil.getEntry(entryId);
 	}
 	else if (Validator.isNotNull(className) && (classPK > 0)) {
-		entry = TrashEntryLocalServiceUtil.getEntry(className, classPK);
+		entry = TrashEntryLocalServiceUtil.fetchEntry(className, classPK);
 	}
 
-	TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(entry.getClassName());
+	if (Validator.isNotNull(entry)) {
+		className = entry.getClassName();
+		classPK = entry.getClassPK();
+	}
 
-	TrashRenderer trashRenderer = trashHandler.getTrashRenderer(entry.getClassPK());
+	TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(className);
+
+	TrashRenderer trashRenderer = trashHandler.getTrashRenderer(classPK);
 
 	String path = trashRenderer.render(renderRequest, renderResponse, AssetRenderer.TEMPLATE_FULL_CONTENT);
 	%>

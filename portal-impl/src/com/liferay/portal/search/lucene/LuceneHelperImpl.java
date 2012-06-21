@@ -722,10 +722,16 @@ public class LuceneHelperImpl implements LuceneHelper {
 		else if (query instanceof BooleanQuery) {
 			BooleanQuery curBooleanQuery = (BooleanQuery)query;
 
+			BooleanQuery booleanQueryWrapper = new BooleanQuery();
+
 			for (BooleanClause booleanClause : curBooleanQuery.getClauses()) {
 				_includeIfUnique(
-					booleanQuery, booleanClause.getQuery(),
+					booleanQueryWrapper, booleanClause.getQuery(),
 					booleanClause.getOccur(), like);
+			}
+
+			if (booleanQueryWrapper.getClauses().length > 0) {
+				booleanQuery.add(booleanQueryWrapper, occur);
 			}
 		}
 		else {

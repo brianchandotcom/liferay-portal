@@ -16,10 +16,13 @@ package com.liferay.portlet.trash;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.ExecutionTestListeners;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
+import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
 
@@ -36,35 +39,41 @@ public class DLFolderTrashHandlerTest extends BaseDLTrashHandlerTestCase {
 
 	@Test
 	public void testTrashAndDelete() throws Exception {
-		testTrash(true, false, false);
+		testTrash(true, false, false, false);
 	}
 
 	@Test
 	public void testTrashAndDeleteAndAddFile() throws Exception {
-		testTrash(true, true, false);
+		testTrash(true, true, false, false);
 	}
 
 	@Test
 	public void testTrashAndDeleteAndTrashFile() throws Exception {
-		testTrash(true, true, true);
+		testTrash(true, true, true, false);
 	}
 
 	@Test
 	public void testTrashAndRestore() throws Exception {
-		testTrash(false, false, false);
+		testTrash(false, false, false, false);
 	}
 
 	@Test
 	public void testTrashAndRestoreAndAddFile() throws Exception {
-		testTrash(false, true, false);
+		testTrash(false, true, false, false);
 	}
 
 	@Test
 	public void testTrashAndRestoreAndTrashFile() throws Exception {
-		testTrash(false, true, true);
+		testTrash(false, true, true, false);
 	}
 
-	protected void testTrash(boolean delete, boolean file, boolean trashFile)
+	@Test
+	public void testTrashAndMoveFile() throws Exception {
+		testTrash(false, true, false, true);
+	}
+
+	protected void testTrash(boolean delete, boolean file, boolean trashFile,
+			boolean moveFileFromTrash)
 		throws Exception {
 
 		int initialNotInTrashCount = getNotInTrashCount();
@@ -84,6 +93,8 @@ public class DLFolderTrashHandlerTest extends BaseDLTrashHandlerTestCase {
 			fileEntryId = fileEntry.getFileEntryId();
 
 			addFileRank(fileEntryId);
+
+			Thread.sleep(1000 * TestPropsValues.JUNIT_DELAY_FACTOR);
 
 			Assert.assertEquals(
 				initialSearchFileEntriesCount + 1, searchFileEntriesCount());
@@ -120,6 +131,8 @@ public class DLFolderTrashHandlerTest extends BaseDLTrashHandlerTestCase {
 				initialTrashEntriesCount + 1, getTrashEntriesCount());
 		}
 
+		Thread.sleep(1000 * TestPropsValues.JUNIT_DELAY_FACTOR);
+
 		Assert.assertEquals(
 			initialSearchFileEntriesCount, searchFileEntriesCount());
 
@@ -133,6 +146,8 @@ public class DLFolderTrashHandlerTest extends BaseDLTrashHandlerTestCase {
 		if (delete) {
 			TrashEntryServiceUtil.deleteEntries(folder.getGroupId());
 
+			Thread.sleep(1000 * TestPropsValues.JUNIT_DELAY_FACTOR);
+
 			Assert.assertEquals(initialNotInTrashCount, getNotInTrashCount());
 			Assert.assertEquals(
 				initialSearchFileEntriesCount, searchFileEntriesCount());
@@ -143,8 +158,25 @@ public class DLFolderTrashHandlerTest extends BaseDLTrashHandlerTestCase {
 						DLFileEntryConstants.getClassName(), fileEntryId));
 			}
 		}
+		else if (moveFileFromTrash) {
+			DLAppServiceUtil.moveFileEntryFromTrash(
+				fileEntryId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				ServiceTestUtil.getServiceContext());
+
+			Thread.sleep(1000 * TestPropsValues.JUNIT_DELAY_FACTOR);
+
+			Assert.assertTrue(
+				isAssetEntryVisible(
+					DLFileEntryConstants.getClassName(), fileEntryId));
+			Assert.assertEquals(1, getActiveFileRanksCount(fileEntryId));
+
+			Assert.assertEquals(
+				initialSearchFileEntriesCount + 1, searchFileEntriesCount());
+		}
 		else {
 			DLAppServiceUtil.restoreFolderFromTrash(folder.getFolderId());
+
+			Thread.sleep(1000 * TestPropsValues.JUNIT_DELAY_FACTOR);
 
 			Assert.assertEquals(
 				initialNotInTrashCount + 1, getNotInTrashCount());
@@ -175,7 +207,13 @@ public class DLFolderTrashHandlerTest extends BaseDLTrashHandlerTestCase {
 			}
 		}
 
-		Assert.assertEquals(initialTrashEntriesCount, getTrashEntriesCount());
+		if (moveFileFromTrash) {
+			Assert.assertEquals(
+				initialTrashEntriesCount +1, getTrashEntriesCount());
+		}
+		else {
+			Assert.assertEquals(initialTrashEntriesCount, getTrashEntriesCount());
+		}
 	}
 
 }

@@ -121,7 +121,7 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 			result = list;
 		}
 
-		return new ActionResultJSONSerializable(result);
+		return new InvokerResult(result);
 	}
 
 	private Object _addVariableStatement(
@@ -403,11 +403,7 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 		return results;
 	}
 
-	private String _command;
-	private HttpServletRequest _request;
-	private List<Statement> _statements = new ArrayList<Statement>();
-
-	private class ActionResultJSONSerializable implements JSONSerializable {
+	public class InvokerResult implements JSONSerializable {
 
 		public String toJSONString() {
 			JSONSerializer jsonSerializer =
@@ -428,13 +424,21 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 			return jsonSerializer.serialize(_result);
 		}
 
-		private ActionResultJSONSerializable(Object result) {
+		public Object getResult() {
+			return _result;
+		}
+
+		private InvokerResult(Object result) {
 			_result = result;
 		}
 
 		private Object _result;
 
 	}
+
+	private String _command;
+	private HttpServletRequest _request;
+	private List<Statement> _statements = new ArrayList<Statement>();
 
 	private class Flag extends KeyValue<String, String> {
 	}

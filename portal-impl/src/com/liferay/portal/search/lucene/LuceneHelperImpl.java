@@ -186,6 +186,18 @@ public class LuceneHelperImpl implements LuceneHelper {
 			return;
 		}
 
+		Analyzer analyzer = getAnalyzer();
+
+		if (analyzer instanceof PerFieldAnalyzer) {
+			PerFieldAnalyzer perFieldAnalyzer = (PerFieldAnalyzer)analyzer;
+
+			Analyzer fieldAnalyzer = perFieldAnalyzer.getAnalyzer(field);
+
+			if (fieldAnalyzer instanceof LikeKeywordAnalyzer) {
+				like = true;
+			}
+		}
+
 		if (like) {
 			value = StringUtil.replace(
 				value, StringPool.PERCENT, StringPool.BLANK);
@@ -193,7 +205,7 @@ public class LuceneHelperImpl implements LuceneHelper {
 
 		try {
 			QueryParser queryParser = new QueryParser(
-				getVersion(), field, getAnalyzer());
+				getVersion(), field, analyzer);
 
 			Query query = null;
 

@@ -84,7 +84,7 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 			portletURL="<%= portletURL%>"
 		/>
 
-		<%@ include file="/html/portlet/document_library_display/view_file_entries.jspf" %>
+		<%@ include file="/html/portlet/document_library/view_file_entries.jspf" %>
 
 	</c:when>
 	<c:when test='<%= topLink.equals("home") %>'>
@@ -157,7 +157,7 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 										<portlet:param name="folderId" value="<%= String.valueOf(curFolder.getFolderId()) %>" />
 									</liferay-portlet:renderURL>
 
-									<%@ include file="/html/portlet/document_library_display/folder_columns.jspf" %>
+									<%@ include file="/html/portlet/document_library/folder_columns.jspf" %>
 								</liferay-ui:search-container-row>
 
 								<liferay-ui:search-iterator />
@@ -166,7 +166,7 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 					</c:if>
 
 					<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="documentLibraryDisplayDocumentsListingPanel" persistState="<%= true %>" title="documents">
-						<%@ include file="/html/portlet/document_library_display/view_file_entries.jspf" %>
+						<%@ include file="/html/portlet/document_library/view_file_entries.jspf" %>
 					</liferay-ui:panel>
 				</liferay-ui:panel-container>
 			</aui:column>
@@ -254,7 +254,7 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 					}
 					%>
 
-					<%@ include file="/html/portlet/document_library_display/file_entry_columns.jspf" %>
+					<%@ include file="/html/portlet/document_library/file_entry_columns.jspf" %>
 				</liferay-ui:search-container-row>
 
 				<liferay-ui:search-iterator />

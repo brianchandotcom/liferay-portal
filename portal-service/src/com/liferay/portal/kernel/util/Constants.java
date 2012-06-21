@@ -75,6 +75,8 @@ public interface Constants {
 
 	public static final String MOVE = "move";
 
+	public static final String MOVE_FROM_TRASH = "move_from_trash";
+
 	public static final String MOVE_TO_TRASH = "move_to_trash";
 
 	public static final String PREVIEW = "preview";

@@ -72,7 +72,10 @@ import com.liferay.portlet.expando.service.ExpandoRowLocalService;
 import com.liferay.portlet.expando.service.ExpandoTableLocalService;
 import com.liferay.portlet.expando.service.ExpandoValueLocalService;
 import com.liferay.portlet.journalcontent.util.JournalContentUtil;
+import com.liferay.taglib.util.VelocityTaglib;
 import com.liferay.util.portlet.PortletRequestUtil;
+
+import java.lang.reflect.Method;
 
 import java.util.List;
 import java.util.Map;
@@ -430,6 +433,20 @@ public class VelocityVariablesImpl implements VelocityVariables {
 
 		velocityContext.put("validator", Validator_IW.getInstance());
 
+		// VelocityTaglib methods
+
+		try {
+			Class<?> clazz = VelocityTaglib.class;
+
+			Method method = clazz.getMethod(
+				"layoutIcon", new Class[] {Layout.class});
+
+			velocityContext.put("velocityTaglib#layoutIcon", method);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
 		// Web server servlet token
 
 		try {
@@ -657,8 +674,8 @@ public class VelocityVariablesImpl implements VelocityVariables {
 
 			if (layout != null) {
 				RequestVars requestVars = new RequestVars(
-					request, themeDisplay, layout.getAncestorPlid(),
-					layout.getAncestorLayoutId());
+					request, themeDisplay, velocityContext,
+					layout.getAncestorPlid(), layout.getAncestorLayoutId());
 
 				List<NavItem> navItems = NavItem.fromLayouts(
 					requestVars, layouts);

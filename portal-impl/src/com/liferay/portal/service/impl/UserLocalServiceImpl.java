@@ -1455,14 +1455,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			}
 		}
 
-		// Check if warning message should be sent
-
-		if (isPasswordExpiringSoon(user)) {
-			user.setPasswordReset(true);
-
-			userPersistence.update(user, false);
-		}
-
 		// Check if user should be forced to change password on first login
 
 		if (passwordPolicy.isChangeable() &&

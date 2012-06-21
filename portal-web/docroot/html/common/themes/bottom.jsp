@@ -67,6 +67,8 @@ if ((runtimePortletIds != null) && !runtimePortletIds.isEmpty()) {
 
 <%@ include file="/html/common/themes/bottom_js.jspf" %>
 
+<%@ include file="/html/common/themes/password_expiring_soon.jspf" %>
+
 <%@ include file="/html/common/themes/session_timeout.jspf" %>
 
 <%

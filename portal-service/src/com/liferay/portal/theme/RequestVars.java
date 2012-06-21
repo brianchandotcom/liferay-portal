@@ -14,6 +14,8 @@
 
 package com.liferay.portal.theme;
 
+import com.liferay.portal.kernel.templateparser.TemplateContext;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -23,10 +25,12 @@ public class RequestVars {
 
 	public RequestVars(
 		HttpServletRequest request, ThemeDisplay themeDisplay,
-		long ancestorPlid, long ancestorLayoutId) {
+		TemplateContext templateContext, long ancestorPlid,
+		long ancestorLayoutId) {
 
 		_request = request;
 		_themeDisplay = themeDisplay;
+		_templateContext = templateContext;
 		_ancestorPlid = ancestorPlid;
 		_ancestorLayoutId = ancestorLayoutId;
 	}
@@ -43,6 +47,10 @@ public class RequestVars {
 		return _request;
 	}
 
+	public TemplateContext getTemplateContext() {
+		return _templateContext;
+	}
+
 	public ThemeDisplay getThemeDisplay() {
 		return _themeDisplay;
 	}
@@ -50,6 +58,7 @@ public class RequestVars {
 	private long _ancestorLayoutId;
 	private long _ancestorPlid;
 	private HttpServletRequest _request;
+	private TemplateContext _templateContext;
 	private ThemeDisplay _themeDisplay;
 
 }

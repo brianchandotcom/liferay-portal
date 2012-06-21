@@ -16,12 +16,10 @@ package com.liferay.portal.theme;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.templateparser.TemplateContext;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.MethodCache;
-import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.util.PortalUtil;
 
@@ -31,8 +29,6 @@ import java.lang.reflect.Method;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Brian Wing Shun Chan
@@ -138,11 +134,12 @@ public class NavItem implements Serializable {
 	}
 
 	public void icon() throws Exception {
-		HttpServletRequest request = _vars.getRequest();
+		TemplateContext templateContext = _vars.getTemplateContext();
 
-		Object velocityTaglib = request.getAttribute(WebKeys.VELOCITY_TAGLIB);
+		Object velocityTaglib = templateContext.get("theme");
 
-		Method method = MethodCache.get(_methodKey);
+		Method method = (Method)templateContext.get(
+			"velocityTaglib#layoutIcon");
 
 		method.invoke(velocityTaglib, _layout);
 	}
@@ -161,10 +158,6 @@ public class NavItem implements Serializable {
 			themeDisplay.isTilesSelectable(), themeDisplay.getLayout(),
 			_vars.getAncestorPlid());
 	}
-
-	private static MethodKey _methodKey = new MethodKey(
-		"com.liferay.taglib.util.VelocityTaglib", "layoutIcon",
-		new Class[] {Layout.class});
 
 	private List<NavItem> _children;
 	private Layout _layout;

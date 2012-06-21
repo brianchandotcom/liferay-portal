@@ -1285,7 +1285,9 @@ public class DLFileEntryLocalServiceImpl
 
 			// File entry
 
-			if (dlFileEntry.getVersion().equals(dlFileVersion.getVersion())) {
+			if ((status != WorkflowConstants.STATUS_IN_TRASH) &&
+				dlFileEntry.getVersion().equals(dlFileVersion.getVersion())) {
+
 				String newVersion = DLFileEntryConstants.VERSION_DEFAULT;
 
 				List<DLFileVersion> approvedFileVersions =

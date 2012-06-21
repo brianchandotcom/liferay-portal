@@ -41,12 +41,6 @@ List updatablePackageIds = new ArrayList();
 
 				<%
 				String uploadProgressId = PortalUtil.generateRandomKey(request, "portlet_update_manager_view");
-
-				PortletURL pluginInstallerURL = ((RenderResponseImpl)renderResponse).createRenderURL(PortletKeys.PLUGIN_INSTALLER);
-
-				pluginInstallerURL.setParameter("struts_action", "/plugin_installer/view");
-				pluginInstallerURL.setParameter("tabs1", "browse-repository");
-				pluginInstallerURL.setParameter("backURL", currentURL);
 				%>
 
 				<portlet:actionURL var="installPluginURL">
@@ -203,7 +197,14 @@ List updatablePackageIds = new ArrayList();
 						/>
 
 						<aui:button-row>
-							<aui:button onClick='<%= "submitForm(document.hrefFm," + StringPool.APOSTROPHE + pluginInstallerURL.toString() + StringPool.APOSTROPHE + ");" %>' value="install-more-plugins" />
+							<c:if test="<%= PortletLocalServiceUtil.hasPortlet(themeDisplay.getCompanyId(), PortletKeys.MARKETPLACE_STORE) %>">
+
+								<%
+								PortletURL marketplaceURL = ((RenderResponseImpl)renderResponse).createRenderURL(PortletKeys.MARKETPLACE_STORE);
+								%>
+
+								<aui:button onClick='<%= "submitForm(document.hrefFm," + StringPool.APOSTROPHE + marketplaceURL.toString() + StringPool.APOSTROPHE + ");" %>' value="install-more-plugins" />
+							</c:if>
 
 							<c:if test="<%= !updatablePackageIds.isEmpty() %>">
 								<portlet:actionURL var="ignoreAllURL">

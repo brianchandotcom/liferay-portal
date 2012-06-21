@@ -203,21 +203,14 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 					<%= LanguageUtil.format(pageContext, "available-themes-x", (themes.size() - 1)) %>
 				</span>
 
-				<c:if test="<%= permissionChecker.isOmniadmin() && PrefsPropsUtil.getBoolean(PropsKeys.AUTO_DEPLOY_ENABLED, PropsValues.AUTO_DEPLOY_ENABLED) %>">
+				<c:if test="<%= permissionChecker.isOmniadmin() && PortletLocalServiceUtil.hasPortlet(themeDisplay.getCompanyId(), PortletKeys.MARKETPLACE_STORE) && PrefsPropsUtil.getBoolean(PropsKeys.AUTO_DEPLOY_ENABLED, PropsValues.AUTO_DEPLOY_ENABLED) %>">
 
 					<%
-					PortletURL installPluginsURL = PortletURLFactoryUtil.create(request, PortletKeys.PLUGIN_INSTALLER, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
-
-					installPluginsURL.setWindowState(LiferayWindowState.MAXIMIZED);
-					installPluginsURL.setPortletMode(PortletMode.VIEW);
-
-					installPluginsURL.setParameter("struts_action", "/plugin_installer/view");
-					installPluginsURL.setParameter("backURL", currentURL);
-					installPluginsURL.setParameter("tabs2", "theme-plugins");
+					PortletURL marketplaceURL = PortletURLFactoryUtil.create(request, PortletKeys.MARKETPLACE_STORE, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 					%>
 
 					<span class="install-themes">
-						<a href="<%= installPluginsURL %>" id="<portlet:namespace />installMore"><liferay-ui:message key="install-more" /></a>
+						<a href="<%= marketplaceURL %>" id="<portlet:namespace />installMore"><liferay-ui:message key="install-more" /></a>
 					</span>
 				</c:if>
 			</h3>

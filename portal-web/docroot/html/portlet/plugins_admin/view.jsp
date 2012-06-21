@@ -23,7 +23,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/plugins_admin/view");
 
-PortletURL installPluginsURL = null;
+PortletURL marketplaceURL = null;
 
 boolean showEditPluginHREF = true;
 boolean showReindexButton = false;

@@ -77,21 +77,18 @@
 					</div>
 				</c:if>
 
-				<c:if test="<%= !layout.isTypePanel() && permissionChecker.isOmniadmin() %>">
+				<c:if test="<%= !layout.isTypePanel() && permissionChecker.isOmniadmin() && PortletLocalServiceUtil.hasPortlet(themeDisplay.getCompanyId(), PortletKeys.MARKETPLACE_STORE) %>">
 
 					<%
 					Group controlPanelGroup = GroupLocalServiceUtil.getGroup(company.getCompanyId(), GroupConstants.CONTROL_PANEL);
 
 					long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.getGroupId(), true);
 
-					PortletURLImpl pluginsURL = new PortletURLImpl(request, PortletKeys.PLUGIN_INSTALLER, controlPanelPlid, PortletRequest.RENDER_PHASE);
-
-					pluginsURL.setPortletMode(PortletMode.VIEW);
-					pluginsURL.setRefererPlid(plid);
+					PortletURLImpl marketplaceURL = new PortletURLImpl(request, PortletKeys.MARKETPLACE_STORE, controlPanelPlid, PortletRequest.RENDER_PHASE);
 					%>
 
 					<p class="lfr-install-more">
-						<aui:a href="<%= pluginsURL.toString() %>" label="install-more-applications" />
+						<aui:a href="<%= marketplaceURL.toString() %>" label="install-more-applications" />
 					</p>
 				</c:if>
 			</aui:form>

@@ -70,7 +70,10 @@ import com.liferay.portlet.expando.service.ExpandoRowLocalService;
 import com.liferay.portlet.expando.service.ExpandoTableLocalService;
 import com.liferay.portlet.expando.service.ExpandoValueLocalService;
 import com.liferay.portlet.journalcontent.util.JournalContentUtil;
+import com.liferay.taglib.util.VelocityTaglib;
 import com.liferay.util.portlet.PortletRequestUtil;
+
+import java.lang.reflect.Method;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -376,6 +379,20 @@ public class TemplateContextHelper {
 		// Validator
 
 		variables.put("validator", Validator_IW.getInstance());
+
+		// VelocityTaglib methods
+
+		try {
+			Class<?> clazz = VelocityTaglib.class;
+
+			Method method = clazz.getMethod(
+				"layoutIcon", new Class[] {Layout.class});
+
+			variables.put(_layoutIconMethodKey, method);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
 
 		// Web server servlet token
 
@@ -704,6 +721,10 @@ public class TemplateContextHelper {
 
 		templateContext.put("tilesSelectable", tilesSelectable);
 	}
+
+
+	private static final String _layoutIconMethodKey =
+		"com.liferay.taglib.util.VelocityTaglib#layoutIcon";
 
 	private static Log _log = LogFactoryUtil.getLog(
 		TemplateContextHelper.class);

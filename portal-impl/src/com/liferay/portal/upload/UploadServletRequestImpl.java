@@ -190,7 +190,7 @@ public class UploadServletRequestImpl
 
 		FileItem liferayFileItem = liferayFileItems[0];
 
-		if (liferayFileItem.getSize() <=
+		if (liferayFileItem.getSize() > 0 && liferayFileItem.getSize() <=
 				liferayFileItem.getSizeThreshold()) {
 
 			forceCreate = true;

@@ -27,8 +27,7 @@
 	<%
 	RowChecker rowChecker = null;
 
-	boolean isTrashPortlet = portletId.equals(PortletKeys.TRASH);
-	boolean showDeleteButton = permissionChecker.hasPermission(scopeGroupId, DLFileEntryConstants.getClassName(), scopeGroupId, ActionKeys.DELETE) && !isTrashPortlet;
+	boolean showDeleteButton = permissionChecker.hasPermission(scopeGroupId, DLFileEntryConstants.getClassName(), scopeGroupId, ActionKeys.DELETE) && !portletName.equals(PortletKeys.TRASH);
 
 	if (showActions && showDeleteButton) {
 		rowChecker = new RowChecker(renderResponse);
@@ -106,7 +105,7 @@
 				if (DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW)) {
 					PortletURL tempRowURL = renderResponse.createRenderURL();
 
-					if (isTrashPortlet) {
+					if (portletName.equals(PortletKeys.TRASH)) {
 						tempRowURL.setParameter("struts_action", "/trash/view_content");
 						tempRowURL.setParameter("redirect", currentURL);
 						tempRowURL.setParameter("className", DLFileEntryConstants.getClassName());

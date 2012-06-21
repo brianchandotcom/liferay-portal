@@ -25,7 +25,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
 
-boolean moveFromTrash = ParamUtil.getBoolean(request, "moveFromTrash");
+String cmd = ParamUtil.getString(request, Constants.CMD);
 
 FileEntry fileEntry = (FileEntry)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY);
 
@@ -79,10 +79,9 @@ portletURL.setParameter("fileEntryId", String.valueOf(fileEntryId));
 </portlet:actionURL>
 
 <aui:form action="<%= moveFileEntryURL %>" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveFileEntry(false);" %>'>
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= moveFromTrash ? Constants.MOVE_FROM_TRASH : Constants.MOVE %>" />
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= cmd.equals(Constants.MOVE_FROM_TRASH) ? Constants.MOVE_FROM_TRASH : Constants.MOVE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="fileEntryId" type="hidden" value="<%= fileEntryId %>" />
-	<aui:input name="moveFromTrash" type="hidden" value="<%= moveFromTrash %>" />
 	<aui:input name="newFolderId" type="hidden" value="<%= folderId %>" />
 
 	<liferay-ui:header

@@ -383,8 +383,7 @@ public class DLAppHelperLocalServiceImpl
 		FileVersion fileVersion = new LiferayFileVersion(dlFileVersions.get(0));
 
 		dlFileEntryLocalService.updateStatus(
-			userId, fileVersion.getFileVersionId(),
-			WorkflowConstants.STATUS_APPROVED,
+			userId, fileVersion.getFileVersionId(), fileVersion.getStatus(),
 			new HashMap<String, Serializable>(), serviceContext);
 
 		// File rank
@@ -994,7 +993,9 @@ public class DLAppHelperLocalServiceImpl
 						SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 						StringPool.BLANK, 0);
 				}
-				else {
+				else if(latestDlFileVersion.getStatus() ==
+					WorkflowConstants.STATUS_APPROVED) {
+
 					socialActivityLocalService.addActivity(
 						user.getUserId(), dlFileEntry.getGroupId(),
 						DLFileEntryConstants.getClassName(),

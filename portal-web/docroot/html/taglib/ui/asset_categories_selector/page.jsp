@@ -107,8 +107,8 @@ if (Validator.isNotNull(className)) {
 					labelNode: '#<%= namespace %>assetCategoriesLabel_<%= vocabulary.getVocabularyId() %>',
 					portalModelResource: <%= Validator.isNotNull(className) && (ResourceActionsUtil.isPortalModelResource(className) || className.equals(Group.class.getName())) %>,
 					singleSelect: <%= !vocabulary.isMultiValued() %>,
-					vocabularyIds: '<%= String.valueOf(vocabulary.getVocabularyId()) %>',
-					vocabularyGroupIds: '<%= vocabulary.getGroupId() %>'
+					vocabularyGroupIds: '<%= vocabulary.getGroupId() %>',
+					vocabularyIds: '<%= String.valueOf(vocabulary.getVocabularyId()) %>'
 				}
 			).render();
 		</aui:script>

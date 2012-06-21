@@ -36,6 +36,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.comparator.GroupFriendlyURLComparator;
+import com.liferay.util.UniqueList;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -187,6 +188,8 @@ public class WebDAVUtil {
 
 		// Communities
 
+		List<Group> groups = new UniqueList<Group>();
+
 		LinkedHashMap<String, Object> params =
 			new LinkedHashMap<String, Object>();
 
@@ -195,9 +198,10 @@ public class WebDAVUtil {
 		OrderByComparator orderByComparator = new GroupFriendlyURLComparator(
 			true);
 
-		List<Group> groups = GroupLocalServiceUtil.search(
-			user.getCompanyId(), null, null, params, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, orderByComparator);
+		groups.addAll(
+			GroupLocalServiceUtil.search(
+				user.getCompanyId(), null, null, params, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, orderByComparator));
 
 		// Organizations
 

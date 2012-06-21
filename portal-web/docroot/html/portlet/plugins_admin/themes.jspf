@@ -14,10 +14,10 @@
  */
 --%>
 
-<c:if test="<%= installPluginsURL != null %>">
+<c:if test="<%= marketplaceURL != null %>">
 
 	<%
-	String taglibOnClick = "submitForm(document." + renderResponse.getNamespace() + "fm , '" + installPluginsURL.toString() +"');";
+	String taglibOnClick = "submitForm(document." + renderResponse.getNamespace() + "fm , '" + marketplaceURL.toString() +"');";
 	%>
 
 	<aui:button onClick="<%= taglibOnClick %>" value="install-more-themes" />

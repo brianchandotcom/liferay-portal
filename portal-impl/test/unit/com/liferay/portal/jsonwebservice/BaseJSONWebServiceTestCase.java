@@ -108,7 +108,7 @@ public abstract class BaseJSONWebServiceTestCase extends PowerMockito {
 
 	protected String toJSON(Object object) {
 		if (object instanceof JSONSerializable) {
-			return ((JSONSerializable) object).toJSONString();
+			return ((JSONSerializable)object).toJSONString();
 		}
 
 		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();

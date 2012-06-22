@@ -124,6 +124,39 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 		return new InvokerResult(result);
 	}
 
+	public class InvokerResult implements JSONSerializable {
+
+		public String toJSONString() {
+			JSONSerializer jsonSerializer =
+				JSONFactoryUtil.createJSONSerializer();
+
+			jsonSerializer.exclude("*.class");
+
+			for (Statement statement : _statements) {
+				String name = statement.getName();
+
+				if (name == null) {
+					continue;
+				}
+
+				jsonSerializer.include(name.substring(1));
+			}
+
+			return jsonSerializer.serialize(_result);
+		}
+
+		public Object getResult() {
+			return _result;
+		}
+
+		private InvokerResult(Object result) {
+			_result = result;
+		}
+
+		private Object _result;
+
+	}
+
 	private Object _addVariableStatement(
 			Statement variableStatement, Object result)
 		throws Exception {
@@ -401,39 +434,6 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 		}
 
 		return results;
-	}
-
-	public class InvokerResult implements JSONSerializable {
-
-		public String toJSONString() {
-			JSONSerializer jsonSerializer =
-				JSONFactoryUtil.createJSONSerializer();
-
-			jsonSerializer.exclude("*.class");
-
-			for (Statement statement : _statements) {
-				String name = statement.getName();
-
-				if (name == null) {
-					continue;
-				}
-
-				jsonSerializer.include(name.substring(1));
-			}
-
-			return jsonSerializer.serialize(_result);
-		}
-
-		public Object getResult() {
-			return _result;
-		}
-
-		private InvokerResult(Object result) {
-			_result = result;
-		}
-
-		private Object _result;
-
 	}
 
 	private String _command;

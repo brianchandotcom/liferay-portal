@@ -159,8 +159,8 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 		result = invokerResult.getResult();
 
 		Assert.assertTrue(result instanceof List);
-		Assert.assertEquals("[{\"id\":1},{\"id\":2},{\"id\":3}]",
-			toJSON(invokerResult));
+		Assert.assertEquals(
+			"[{\"id\":1},{\"id\":2},{\"id\":3}]", toJSON(invokerResult));
 	}
 
 	@Test

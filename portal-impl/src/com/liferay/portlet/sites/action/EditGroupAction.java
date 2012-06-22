@@ -486,11 +486,9 @@ public class EditGroupAction extends PortletAction {
 
 		if (!liveGroup.isStaged()) {
 			long privateLayoutSetPrototypeId = ParamUtil.getLong(
-				actionRequest, "privateLayoutSetPrototypeId",
-				privateLayoutSet.getLayoutSetPrototypeId());
+				actionRequest, "privateLayoutSetPrototypeId");
 			long publicLayoutSetPrototypeId = ParamUtil.getLong(
-				actionRequest, "publicLayoutSetPrototypeId",
-				publicLayoutSet.getLayoutSetPrototypeId());
+				actionRequest, "publicLayoutSetPrototypeId");
 
 			boolean privateLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
 				actionRequest, "privateLayoutSetPrototypeLinkEnabled",

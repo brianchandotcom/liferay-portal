@@ -1,83 +1,23 @@
 <#include "../init.ftl">
 
-<#if (fieldValue == "")>
-	<#assign fieldValue = fieldStructure.predefinedValue>
-</#if>
-
 <#if (fieldRawValue?is_date)>
-	<#assign fieldValue = fieldRawValue?string("MM/dd/yyyy")>
+	<#assign fieldDateValue = fieldRawValue>
+<#else>
+	<#assign fieldDateValue = dateUtil.newDate()>
 </#if>
 
-<div class="aui-field-wrapper-content lfr-forms-field-wrapper">
-	<@aui.input label=label name=namespacedFieldName type="hidden" value=fieldRawValue!"" />
+<#assign day = fieldDateValue?string("dd")?number>
+<#assign month = fieldDateValue?string("MM")?number-1>
+<#assign year = fieldDateValue?string("yyyy")?number>
+<#assign yearStart = fieldDateValue?string("yyyy")?number + 100>
+<#assign yearEnd = fieldDateValue?string("yyyy")?number - 100>
 
-	<@aui.input cssClass=cssClass helpMessage=fieldStructure.tip label=label name="${namespacedFieldName}formattedDate" type="text" value=fieldValue>
-		<@aui.validator name="date" />
+<@aui["field-wrapper"] helpMessage=fieldStructure.tip label=label>
+	<#if required>
+		<@aui.validator name="required" />
+	</#if>
 
-		<#if required>
-			<@aui.validator name="required" />
-		</#if>
-	</@aui.input>
+	<@liferay_ui["input-date"] dayParam="${namespacedFieldName}Day" dayValue=day disabled=false monthParam="${namespacedFieldName}Month" monthValue=month yearParam="${namespacedFieldName}Year" yearRangeEnd=yearStart yearRangeStart=yearEnd yearValue=year cssClass=cssClass helpMessage=fieldStructure.tip/>
 
 	${fieldStructure.children}
-</div>
-
-<@aui.script use="aui-datepicker">
-	var fieldValueInput = A.one('#${portletNamespace}${namespacedFieldName}');
-	var formattedDateInput = A.one('#${portletNamespace}${namespacedFieldName}formattedDate');
-
-	var updateFieldValue = function(value) {
-		var timestamp = '';
-
-		try {
-			var date = A.DataType.Date.parse(value);
-
-			timestamp = date.getTime()
-		}
-		catch (e) {
-		}
-
-		fieldValueInput.val(timestamp);
-	};
-
-	formattedDateInput.on(
-		{
-			change: function(event) {
-				var value = formattedDateInput.val();
-
-				updateFieldValue(value);
-			}
-		}
-	);
-
-	updateFieldValue('${fieldValue}');
-
-	new A.DatePicker(
-		{
-			after: {
-				'calendar:select': function(event) {
-					var date = event.date;
-					var formatted = date.formatted;
-
-					if (formatted.length) {
-						formatted = formatted[0];
-
-						this.get('currentNode').val(formatted);
-						updateFieldValue(formatted);
-					}
-				}
-			},
-			calendar: {
-				dateFormat: '%m/%d/%Y',
-
-				<#if (fieldValue != "")>
-					dates: ['${fieldValue}'],
-				</#if>
-
-				selectMultipleDates: false
-			},
-			setValue: false,
-			trigger: formattedDateInput
-		}
-	).render();
-</@aui.script>
+</@>

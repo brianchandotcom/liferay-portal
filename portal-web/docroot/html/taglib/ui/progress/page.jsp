@@ -35,7 +35,7 @@ String sessionKey = GetterUtil.getString(request.getAttribute("liferay-ui:progre
 			</c:if>
 
 			id: '<%= id %>',
-			label: '<%= LanguageUtil.get(pageContext, message) %>',
+			label: '<%= UnicodeLanguageUtil.get(pageContext, message) %>',
 			sessionKey: '<%= HtmlUtil.escapeJS(sessionKey) %>'
 		}
 	);

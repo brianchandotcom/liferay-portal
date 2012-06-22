@@ -16,6 +16,7 @@ package com.liferay.portal.jsonwebservice;
 
 import com.liferay.portal.service.ServiceContext;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -31,6 +32,16 @@ public class FooService {
 		fooData.setId(id);
 
 		return fooData;
+	}
+
+	public static List<FooData> getFooDataList() {
+		List<FooData> fooDataList = new ArrayList<FooData>();
+
+		fooDataList.add(getFooData(1));
+		fooDataList.add(getFooData(2));
+		fooDataList.add(getFooData(3));
+
+		return fooDataList;
 	}
 
 	public static String hello() {

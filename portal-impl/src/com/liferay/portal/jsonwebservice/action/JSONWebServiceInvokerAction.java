@@ -121,7 +121,40 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 			result = list;
 		}
 
-		return new ActionResultJSONSerializable(result);
+		return new InvokerResult(result);
+	}
+
+	public class InvokerResult implements JSONSerializable {
+
+		public String toJSONString() {
+			JSONSerializer jsonSerializer =
+				JSONFactoryUtil.createJSONSerializer();
+
+			jsonSerializer.exclude("*.class");
+
+			for (Statement statement : _statements) {
+				String name = statement.getName();
+
+				if (name == null) {
+					continue;
+				}
+
+				jsonSerializer.include(name.substring(1));
+			}
+
+			return jsonSerializer.serialize(_result);
+		}
+
+		public Object getResult() {
+			return _result;
+		}
+
+		private InvokerResult(Object result) {
+			_result = result;
+		}
+
+		private Object _result;
+
 	}
 
 	private Object _addVariableStatement(
@@ -406,35 +439,6 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 	private String _command;
 	private HttpServletRequest _request;
 	private List<Statement> _statements = new ArrayList<Statement>();
-
-	private class ActionResultJSONSerializable implements JSONSerializable {
-
-		public String toJSONString() {
-			JSONSerializer jsonSerializer =
-				JSONFactoryUtil.createJSONSerializer();
-
-			jsonSerializer.exclude("*.class");
-
-			for (Statement statement : _statements) {
-				String name = statement.getName();
-
-				if (name == null) {
-					continue;
-				}
-
-				jsonSerializer.include(name.substring(1));
-			}
-
-			return jsonSerializer.serialize(_result);
-		}
-
-		private ActionResultJSONSerializable(Object result) {
-			_result = result;
-		}
-
-		private Object _result;
-
-	}
 
 	private class Flag extends KeyValue<String, String> {
 	}

@@ -460,7 +460,10 @@ public class PortletPermissionImpl implements PortletPermission {
 			String portletId, String actionId)
 		throws PortalException, SystemException {
 
-		if (!actionId.equals(ActionKeys.CONFIGURATION)) {
+		if (!actionId.equals(ActionKeys.CONFIGURATION) &&
+			!actionId.equals(ActionKeys.PREFERENCES) &&
+			!actionId.equals(ActionKeys.GUEST_PREFERENCES)) {
+
 			return false;
 		}
 

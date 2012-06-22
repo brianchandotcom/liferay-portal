@@ -89,6 +89,15 @@ public class RoleFinderUtil {
 		return getFinder().findByC_N(companyId, name);
 	}
 
+	public static java.util.List<com.liferay.portal.model.Role> findByC_R_C_A(
+		long companyId, long resourceBlockId, java.lang.String className,
+		java.lang.String actionId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .findByC_R_C_A(companyId, resourceBlockId, className,
+			actionId);
+	}
+
 	public static java.util.List<com.liferay.portal.model.Role> findByU_G(
 		long userId, java.util.List<com.liferay.portal.model.Group> groups)
 		throws com.liferay.portal.kernel.exception.SystemException {

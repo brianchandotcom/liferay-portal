@@ -12,16 +12,19 @@
  * details.
  */
 
-package com.liferay.portal.jsonwebservice;
-
-import com.liferay.portal.kernel.util.CharPool;
+package com.liferay.portal.kernel.util;
 
 /**
  * @author Igor Spasic
+ * @author Eduardo Lundgren
  */
 public class CamelCaseUtil {
 
 	public static String fromCamelCase(String s) {
+		return fromCamelCase(s, CharPool.DASH);
+	}
+
+	public static String fromCamelCase(String s, char delimiter) {
 		StringBuilder sb = new StringBuilder();
 
 		boolean upperCase = false;
@@ -37,7 +40,7 @@ public class CamelCaseUtil {
 
 			if ((i > 0) && Character.isUpperCase(c)) {
 				if (!upperCase || !nextUpperCase) {
-					sb.append(CharPool.DASH);
+					sb.append(delimiter);
 				}
 
 				c = Character.toLowerCase(c);
@@ -85,6 +88,10 @@ public class CamelCaseUtil {
 	}
 
 	public static String toCamelCase(String s) {
+		return toCamelCase(s, CharPool.DASH);
+	}
+
+	public static String toCamelCase(String s, char delimiter) {
 		StringBuilder sb = new StringBuilder(s.length());
 
 		boolean upperCase = false;
@@ -92,7 +99,7 @@ public class CamelCaseUtil {
 		for (int i = 0; i < s.length(); i++) {
 			char c = s.charAt(i);
 
-			if (c == CharPool.DASH) {
+			if (c == delimiter) {
 				upperCase = true;
 			}
 			else if (upperCase) {

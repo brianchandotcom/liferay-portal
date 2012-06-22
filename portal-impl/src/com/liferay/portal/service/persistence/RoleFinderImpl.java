@@ -83,6 +83,9 @@ public class RoleFinderImpl
 	public static final String FIND_BY_C_N =
 		RoleFinder.class.getName() + ".findByC_N";
 
+	public static final String FIND_BY_C_R_C_A =
+		RoleFinder.class.getName() + ".findByC_R_C_A";
+
 	public static final String FIND_BY_U_G =
 		RoleFinder.class.getName() + ".findByU_G";
 
@@ -393,6 +396,39 @@ public class RoleFinderImpl
 		sb.append("}");
 
 		throw new NoSuchRoleException(sb.toString());
+	}
+
+	public List<Role> findByC_R_C_A(
+			long companyId, long resourceBlockId, String className,
+			String actionId)
+		throws SystemException {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_C_R_C_A);
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addEntity("Role_", RoleImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(companyId);
+			qPos.add(className);
+			qPos.add(resourceBlockId);
+			qPos.add(actionId);
+
+			return q.list(true);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	public List<Role> findByU_G(long userId, List<Group> groups)

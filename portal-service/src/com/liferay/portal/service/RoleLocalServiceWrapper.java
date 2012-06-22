@@ -459,9 +459,28 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	public java.util.List<com.liferay.portal.model.Role> getResourceRoles(
 		long companyId, java.lang.String name, int scope,
 		java.lang.String primKey, java.lang.String actionId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return _roleLocalService.getResourceRoles(companyId, name, scope,
 			primKey, actionId);
+	}
+
+	public java.util.List<com.liferay.portal.model.Role> getResourceBlockRoles(
+		long resourceBlockId, java.lang.String className,
+		java.lang.String actionId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _roleLocalService.getResourceBlockRoles(resourceBlockId,
+			className, actionId);
+	}
+
+	public java.util.List<com.liferay.portal.model.Role> getResourceBlockRoles(
+		com.liferay.portal.model.ResourceBlock resourceBlock,
+		java.lang.String className, java.lang.String actionId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _roleLocalService.getResourceBlockRoles(resourceBlock,
+			className, actionId);
 	}
 
 	/**

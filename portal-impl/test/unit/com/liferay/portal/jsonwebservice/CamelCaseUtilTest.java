@@ -14,6 +14,8 @@
 
 package com.liferay.portal.jsonwebservice;
 
+import com.liferay.portal.kernel.util.CamelCaseUtil;
+
 import junit.framework.TestCase;
 
 /**

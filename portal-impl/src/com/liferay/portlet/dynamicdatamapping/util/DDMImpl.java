@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.DuplicateDirectoryException;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
@@ -55,6 +56,7 @@ import com.liferay.portlet.dynamicdatamapping.util.comparator.TemplateNameCompar
 import java.io.InputStream;
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -116,6 +118,28 @@ public class DDMImpl implements DDM {
 			String fieldType = ddmStructure.getFieldType(fieldName);
 			String fieldValue = (String)serviceContext.getAttribute(
 				fieldNamespace + fieldName);
+
+			if (fieldDataType.equals(FieldConstants.DATE)) {
+				int fieldValueMonth =  
+					GetterUtil.getInteger(
+						serviceContext.getAttribute(
+							fieldNamespace + fieldName + "Month"));
+
+				int fieldValueYear =
+					GetterUtil.getInteger(
+						serviceContext.getAttribute(
+							fieldNamespace + fieldName + "Year"));
+
+				int fieldValueDay =
+					GetterUtil.getInteger(
+						serviceContext.getAttribute(
+							fieldNamespace + fieldName + "Day"));
+
+				Date fieldValueDate = PortalUtil.getDate(
+					fieldValueMonth, fieldValueDay, fieldValueYear);
+				
+				fieldValue = String.valueOf(fieldValueDate.getTime());
+			}
 
 			if (fieldDataType.equals(FieldConstants.FILE_UPLOAD)) {
 				continue;

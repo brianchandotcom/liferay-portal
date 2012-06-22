@@ -186,7 +186,11 @@ public class DocumentConversionUtil {
 				documentFormatRegistry.getFormatByFileExtension(
 					targetExtension);
 
-			if (!inputDocumentFormat.isImportable()) {
+			if (inputDocumentFormat == null) {
+				throw new SystemException(
+						"Conversion is not supported from " + sourceExtension);
+			}
+			else if (!inputDocumentFormat.isImportable()) {
 				throw new SystemException(
 					"Conversion is not supported from " +
 						inputDocumentFormat.getName());
@@ -194,10 +198,17 @@ public class DocumentConversionUtil {
 			else if (!inputDocumentFormat.isExportableTo(
 						outputDocumentFormat)) {
 
-				throw new SystemException(
-					"Conversion is not supported from " +
-						inputDocumentFormat.getName() + " to " +
-							outputDocumentFormat.getName());
+				if (outputDocumentFormat == null) {
+					throw new SystemException(
+							"Conversion is not supported from " +
+								inputDocumentFormat.getName() + " to " +
+									targetExtension);
+				} else {
+					throw new SystemException(
+						"Conversion is not supported from " +
+							inputDocumentFormat.getName() + " to " +
+								outputDocumentFormat.getName());
+				}
 			}
 
 			UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =

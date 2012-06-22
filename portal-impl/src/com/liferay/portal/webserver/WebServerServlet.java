@@ -965,7 +965,7 @@ public class WebServerServlet extends HttpServlet {
 			inputStream = fileVersion.getContentStream(true);
 			contentLength = fileVersion.getSize();
 
-			if (Validator.isNotNull(targetExtension)) {
+			if (_isValidExtension(targetExtension)) {
 				File convertedFile = DocumentConversionUtil.convert(
 					tempFileId, inputStream, extension, targetExtension);
 
@@ -1278,6 +1278,20 @@ public class WebServerServlet extends HttpServlet {
 		}
 
 		return user;
+	}
+
+	private boolean _isValidExtension(String extension) {
+		if (Validator.isNull(extension)) {
+			return false;
+		}
+
+		for (char c : extension.trim().toCharArray()) {
+			if (!Validator.isChar(c) && !Validator.isDigit(c)) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	private static final String _DATE_FORMAT_PATTERN = "d MMM yyyy HH:mm z";

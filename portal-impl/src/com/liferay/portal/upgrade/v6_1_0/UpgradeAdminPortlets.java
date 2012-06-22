@@ -31,7 +31,7 @@ import java.sql.ResultSet;
 public class UpgradeAdminPortlets extends UpgradeProcess {
 
 	protected void addResourcePermission(
-			long resourcePermissionId, long companyId, String name, long scope,
+			long resourcePermissionId, long companyId, String name, int scope,
 			String primKey, long roleId, long actionIds)
 		throws Exception {
 
@@ -49,7 +49,7 @@ public class UpgradeAdminPortlets extends UpgradeProcess {
 			ps.setLong(1, resourcePermissionId);
 			ps.setLong(2, companyId);
 			ps.setString(3, name);
-			ps.setLong(4, scope);
+			ps.setInt(4, scope);
 			ps.setString(5, primKey);
 			ps.setLong(6, roleId);
 			ps.setLong(7, actionIds);
@@ -162,7 +162,7 @@ public class UpgradeAdminPortlets extends UpgradeProcess {
 						ResourcePermission.class.getName());
 
 					long companyId = rs.getLong("companyId");
-					long scope = rs.getLong("scope");
+					int scope = rs.getInt("scope");
 					String primKey = rs.getString("primKey");
 					long roleId = rs.getLong("roleId");
 

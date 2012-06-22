@@ -34,10 +34,10 @@ import com.liferay.portlet.documentlibrary.model.impl.DLFileVersionImpl;
 import com.liferay.portlet.documentlibrary.util.ImageProcessorUtil;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 import java.util.Set;
 
@@ -50,9 +50,9 @@ import java.util.Set;
 public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 	protected void addSync(
-			long syncId, long companyId, Date createDate, Date modifiedDate,
-			long fileId, long repositoryId, long parentFolderId, String event,
-			String type)
+			long syncId, long companyId, Timestamp createDate,
+			Timestamp modifiedDate, long fileId, long repositoryId,
+			long parentFolderId, String event, String type)
 		throws Exception {
 
 		Connection con = null;
@@ -68,8 +68,8 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 			ps.setLong(1, syncId);
 			ps.setLong(2, companyId);
-			ps.setDate(3, createDate);
-			ps.setDate(4, createDate);
+			ps.setTimestamp(3, createDate);
+			ps.setTimestamp(4, createDate);
 			ps.setLong(5, fileId);
 			ps.setLong(6, repositoryId);
 			ps.setLong(7, parentFolderId);
@@ -378,7 +378,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 				long fileId = rs.getLong("fileId");
 				long groupId = rs.getLong("groupId");
 				long companyId = rs.getLong("companyId");
-				Date createDate = rs.getDate("createDate");
+				Timestamp createDate = rs.getTimestamp("createDate");
 				long parentFolderId = rs.getLong("parentFolderId");
 				String type = rs.getString("type");
 

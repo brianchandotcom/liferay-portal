@@ -41,9 +41,9 @@ import java.io.InputStream;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -70,12 +70,12 @@ public class UpgradeImageGallery extends UpgradeProcess {
 	protected void addDLFileEntry(
 			String uuid, long fileEntryId, long groupId, long companyId,
 			long userId, String userName, long versionUserId,
-			String versionUserName, Date createDate, Date modifiedDate,
-			long repositoryId, long folderId, String name, String extension,
-			String mimeType, String title, String description,
-			String extraSettings, String version, long size, int readCount,
-			long smallImageId, long largeImageId, long custom1ImageId,
-			long custom2ImageId)
+			String versionUserName, Timestamp createDate,
+			Timestamp modifiedDate, long repositoryId, long folderId,
+			String name, String extension, String mimeType, String title,
+			String description, String extraSettings, String version, long size,
+			int readCount, long smallImageId, long largeImageId,
+			long custom1ImageId, long custom2ImageId)
 		throws Exception {
 
 		Connection con = null;
@@ -108,8 +108,8 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			ps.setString(6, userName);
 			ps.setLong(7, versionUserId);
 			ps.setString(8, versionUserName);
-			ps.setDate(9, createDate);
-			ps.setDate(10, modifiedDate);
+			ps.setTimestamp(9, createDate);
+			ps.setTimestamp(10, modifiedDate);
 			ps.setLong(11, repositoryId);
 			ps.setLong(12, folderId);
 			ps.setString(13, name);
@@ -135,11 +135,12 @@ public class UpgradeImageGallery extends UpgradeProcess {
 
 	protected void addDLFileVersion(
 			long fileVersionId, long groupId, long companyId, long userId,
-			String userName, Date createDate, long repositoryId, long folderId,
-			long fileEntryId, String extension, String mimeType, String title,
-			String description, String changeLog, String extraSettings,
-			long fileEntryTypeId, String version, long size, int status,
-			long statusByUserId, String statusByUserName, Date statusDate)
+			String userName, Timestamp createDate, long repositoryId,
+			long folderId, long fileEntryId, String extension, String mimeType,
+			String title, String description, String changeLog,
+			String extraSettings, long fileEntryTypeId, String version,
+			long size, int status, long statusByUserId, String statusByUserName,
+			Timestamp statusDate)
 		throws Exception {
 
 		Connection con = null;
@@ -168,8 +169,8 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			ps.setLong(3, companyId);
 			ps.setLong(4, userId);
 			ps.setString(5, userName);
-			ps.setDate(6, createDate);
-			ps.setDate(7, statusDate);
+			ps.setTimestamp(6, createDate);
+			ps.setTimestamp(7, statusDate);
 			ps.setLong(8, repositoryId);
 			ps.setLong(9, folderId);
 			ps.setLong(10, fileEntryId);
@@ -185,7 +186,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			ps.setInt(20, status);
 			ps.setLong(21, statusByUserId);
 			ps.setString(22, statusByUserName);
-			ps.setDate(23, statusDate);
+			ps.setTimestamp(23, statusDate);
 
 			ps.executeUpdate();
 		}
@@ -196,9 +197,9 @@ public class UpgradeImageGallery extends UpgradeProcess {
 
 	protected void addDLFolderEntry(
 			String uuid, long folderId, long groupId, long companyId,
-			long userId, String userName, Date createDate, Date modifiedDate,
-			long repositoryId, long parentFolderId, String name,
-			String description, Date lastPostDate)
+			long userId, String userName, Timestamp createDate,
+			Timestamp modifiedDate, long repositoryId, long parentFolderId,
+			String name, String description, Timestamp lastPostDate)
 		throws Exception {
 
 		Connection con = null;
@@ -225,14 +226,14 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			ps.setLong(4, companyId);
 			ps.setLong(5, userId);
 			ps.setString(6, userName);
-			ps.setDate(7, createDate);
-			ps.setDate(8, modifiedDate);
+			ps.setTimestamp(7, createDate);
+			ps.setTimestamp(8, modifiedDate);
 			ps.setLong(9, repositoryId);
 			ps.setBoolean(10, false);
 			ps.setLong(11, parentFolderId);
 			ps.setString(12, name);
 			ps.setString(13, description);
-			ps.setDate(14, lastPostDate);
+			ps.setTimestamp(14, lastPostDate);
 
 			ps.executeUpdate();
 		}
@@ -275,8 +276,8 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			while (rs.next()) {
 				ps.setString(1, dlResourceName);
 				ps.setLong(2, rs.getLong("companyId"));
-				ps.setLong(3, rs.getLong("scope"));
-				ps.setLong(4, rs.getLong("primKey"));
+				ps.setInt(3, rs.getInt("scope"));
+				ps.setString(4, rs.getString("primKey"));
 				ps.setLong(5, rs.getLong("roleId"));
 
 				if (supportsBatchUpdates) {
@@ -335,7 +336,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 
 			if (rs.next()) {
 				String type = rs.getString("type_");
-				long size = rs.getLong("size_");
+				long size = rs.getInt("size_");
 
 				return new Object[] {type, size};
 			}
@@ -562,8 +563,8 @@ public class UpgradeImageGallery extends UpgradeProcess {
 				long companyId = rs.getLong("companyId");
 				long userId = rs.getLong("userId");
 				String userName = rs.getString("userName");
-				Date createDate = rs.getDate("createDate");
-				Date modifiedDate = rs.getDate("modifiedDate");
+				Timestamp createDate = rs.getTimestamp("createDate");
+				Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
 				long parentFolderId = rs.getLong("parentFolderId");
 				String name = rs.getString("name");
 				String description = rs.getString("description");
@@ -618,8 +619,8 @@ public class UpgradeImageGallery extends UpgradeProcess {
 				long companyId = rs.getLong("companyId");
 				long userId = rs.getLong("userId");
 				String userName = rs.getString("userName");
-				Date createDate = rs.getDate("createDate");
-				Date modifiedDate = rs.getDate("modifiedDate");
+				Timestamp createDate = rs.getTimestamp("createDate");
+				Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
 				long folderId = rs.getLong("folderId");
 				String title = rs.getString("name");
 				String description = rs.getString("description");

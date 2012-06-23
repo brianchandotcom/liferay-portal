@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.layoutsadmin.action;
 
+import com.liferay.portal.DuplicateLockException;
 import com.liferay.portal.ImageTypeException;
 import com.liferay.portal.LayoutFriendlyURLException;
 import com.liferay.portal.LayoutHiddenException;
@@ -275,7 +276,8 @@ public class EditLayoutsAction extends PortletAction {
 					SessionErrors.add(actionRequest, e.getClass(), e);
 				}
 			}
-			else if (e instanceof LayoutPrototypeException ||
+			else if (e instanceof DuplicateLockException ||
+					 e instanceof LayoutPrototypeException ||
 					 e instanceof RemoteExportException ||
 					 e instanceof RemoteOptionsException ||
 					 e instanceof SystemException) {

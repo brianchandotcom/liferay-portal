@@ -14,10 +14,16 @@
 
 package com.liferay.portal.kernel.staging;
 
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
+
 /**
  * @author Raymond Augé
  */
 public class StagingConstants {
+
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
+		PropsUtil.get("lock.expiration.time." + Staging.class.getName()));
 
 	public static final String STAGED_PORTLET = "staged-portlet_";
 

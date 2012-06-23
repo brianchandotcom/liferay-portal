@@ -41,7 +41,9 @@ public class PortalClassLoaderServlet
 	}
 
 	@Override
-	public void init(ServletConfig servletConfig) {
+	public void init(ServletConfig servletConfig) throws ServletException {
+		super.init(servletConfig);
+
 		_servletConfig = servletConfig;
 
 		PortalLifecycleUtil.register(this);

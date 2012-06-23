@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.template.TemplateContextType;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateResource;
-import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
@@ -29,9 +29,12 @@ import com.liferay.portal.template.RestrictedTemplate;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.util.PropsValues;
 
+import freemarker.cache.TemplateCache;
+
 import freemarker.template.Configuration;
 
-import java.util.HashMap;
+import java.lang.reflect.Field;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -45,10 +48,6 @@ public class FreeMarkerManager implements TemplateManager {
 		if (_configuration == null) {
 			return;
 		}
-
-		_autoImportLibraries.clear();
-
-		_autoImportLibraries = null;
 
 		_classLoaderHelperUtilities.clear();
 
@@ -123,7 +122,7 @@ public class FreeMarkerManager implements TemplateManager {
 				return new PACLFreeMarkerTemplate(
 					templateResource, errorTemplateResource, helperUtilities,
 					_configuration, _templateContextHelper,
-					_autoImportLibraries, contextClassLoaderPACLPolicy);
+					contextClassLoaderPACLPolicy);
 			}
 			finally {
 				PortalSecurityManagerThreadLocal.setPACLPolicy(
@@ -133,21 +132,21 @@ public class FreeMarkerManager implements TemplateManager {
 		else if (templateContextType.equals(TemplateContextType.EMPTY)) {
 			return new FreeMarkerTemplate(
 				templateResource, errorTemplateResource, null, _configuration,
-				_templateContextHelper, _autoImportLibraries);
+				_templateContextHelper);
 		}
 		else if (templateContextType.equals(TemplateContextType.RESTRICTED)) {
 			return new RestrictedTemplate(
 				new FreeMarkerTemplate(
 					templateResource, errorTemplateResource,
 					_restrictedHelperUtilities, _configuration,
-					_templateContextHelper, _autoImportLibraries),
+					_templateContextHelper),
 				_templateContextHelper.getRestrictedVariables());
 		}
 		else if (templateContextType.equals(TemplateContextType.STANDARD)) {
 			return new FreeMarkerTemplate(
 				templateResource, errorTemplateResource,
 				_standardHelperUtilities, _configuration,
-				_templateContextHelper, _autoImportLibraries);
+				_templateContextHelper);
 		}
 
 		return null;
@@ -158,7 +157,21 @@ public class FreeMarkerManager implements TemplateManager {
 			return;
 		}
 
+		TemplateCache templateCache = new LiferayTemplateCache();
+		templateCache.setConfiguration(_configuration);
+
 		_configuration = new Configuration();
+
+		try {
+			Field cache = ReflectionUtil.getDeclaredField(
+				Configuration.class, "cache");
+
+			cache.set(_configuration, templateCache);
+		}
+		catch (Exception e) {
+			throw new TemplateException(
+				"Unable to Initialize Freemarker manager");
+		}
 
 		_configuration.setDefaultEncoding(StringPool.UTF8);
 		_configuration.setLocalizedLookup(
@@ -171,6 +184,8 @@ public class FreeMarkerManager implements TemplateManager {
 			_configuration.setSetting(
 				"template_exception_handler",
 				PropsValues.FREEMARKER_ENGINE_TEMPLATE_EXCEPTION_HANDLER);
+			_configuration.setSetting(
+				"auto_import", PropsValues.FREEMARKER_ENGINE_MACRO_LIBRARY);
 		}
 		catch (Exception e) {
 			throw new TemplateException("Unable to init freemarker manager", e);
@@ -179,25 +194,6 @@ public class FreeMarkerManager implements TemplateManager {
 		_standardHelperUtilities = _templateContextHelper.getHelperUtilities();
 		_restrictedHelperUtilities =
 			_templateContextHelper.getRestrictedHelperUtilities();
-
-		for (String macroLibrary :
-				PropsValues.FREEMARKER_ENGINE_MACRO_LIBRARY) {
-
-			int index = macroLibrary.indexOf(StringPool.COLON);
-
-			String libraryFile = macroLibrary.substring(0, index);
-
-			libraryFile = libraryFile.trim();
-
-			String libraryName = macroLibrary.substring(index + 1);
-
-			libraryName = libraryName.trim();
-
-			_autoImportLibraries.put(
-				libraryName,
-				TemplateResourceLoaderUtil.getTemplateResource(
-					FREEMARKER, libraryFile));
-		}
 	}
 
 	public void setTemplateContextHelper(
@@ -206,8 +202,6 @@ public class FreeMarkerManager implements TemplateManager {
 		_templateContextHelper = templateContextHelper;
 	}
 
-	private Map<String, TemplateResource> _autoImportLibraries =
-		new HashMap<String, TemplateResource>();
 	private Map<ClassLoader, Map<String, Object>> _classLoaderHelperUtilities =
 		new ConcurrentHashMap<ClassLoader, Map<String, Object>>();
 	private Configuration _configuration;

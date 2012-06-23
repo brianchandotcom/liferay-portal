@@ -35,13 +35,11 @@ public class PACLFreeMarkerTemplate extends FreeMarkerTemplate {
 		TemplateResource templateResource,
 		TemplateResource errorTemplateResource, Map<String, Object> context,
 		Configuration configuration,
-		TemplateContextHelper templateContextHelper,
-		Map<String, TemplateResource> autoImportLibraries,
-		PACLPolicy paclPolicy) {
+		TemplateContextHelper templateContextHelper, PACLPolicy paclPolicy) {
 
 		super(
 			templateResource, errorTemplateResource, context, configuration,
-			templateContextHelper, autoImportLibraries);
+			templateContextHelper);
 
 		_paclPolicy = paclPolicy;
 	}

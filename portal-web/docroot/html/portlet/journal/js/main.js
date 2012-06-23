@@ -95,6 +95,7 @@ AUI.add(
 
 			instance._initializeTagsSuggestionContent();
 			instance._initializePageLoadFieldInstances();
+			instance._attachDelegatedEvents();
 			instance._attachEvents();
 			instance._updateOriginalStructureXSD();
 		};
@@ -213,7 +214,9 @@ AUI.add(
 			closeEditFieldOptions: function() {
 				var instance = this;
 
-				instance.editContainerContextPanel.set('visible', false);
+				if (instance.editContainerContextPanel) {
+					instance.editContainerContextPanel.set('visible', false);
+				}
 
 				instance.unselectFields();
 			},
@@ -2328,7 +2331,6 @@ AUI.add(
 						function(event) {
 							Liferay.set('controlPanelSidebarHidden', true);
 
-							instance._attachDelegatedEvents();
 							instance._attachEditContainerEvents();
 
 							instance.enableEditMode();

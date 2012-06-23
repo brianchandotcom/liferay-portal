@@ -38,7 +38,7 @@ public class UpgradePortletPreferences
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"insert into PortalPreferences (portalPreferencesId, " +
@@ -65,7 +65,7 @@ public class UpgradePortletPreferences
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"insert into PortletPreferences (portletPreferencesId, " +
@@ -100,7 +100,7 @@ public class UpgradePortletPreferences
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select groupId from Layout where plid = " + plid);
@@ -132,7 +132,7 @@ public class UpgradePortletPreferences
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select portletPreferencesId from PortletPreferences where " +
@@ -163,7 +163,7 @@ public class UpgradePortletPreferences
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select ownerId, ownerType, preferences from " +
@@ -196,7 +196,7 @@ public class UpgradePortletPreferences
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			StringBundler sb = new StringBundler(8);
 

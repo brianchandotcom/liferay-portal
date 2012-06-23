@@ -69,7 +69,7 @@ public class UpgradeCommunityProperties extends UpgradeProcess {
 			runSQL(sb.toString());
 		}
 		catch (Exception e) {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			sb = new StringBundler(7);
 
@@ -119,7 +119,7 @@ public class UpgradeCommunityProperties extends UpgradeProcess {
 		sb.append(" = ?");
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(sb.toString());
 

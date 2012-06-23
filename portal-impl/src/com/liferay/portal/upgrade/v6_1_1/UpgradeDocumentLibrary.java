@@ -41,7 +41,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select count(*) from DLFileEntry where groupId = ? and " +
@@ -54,7 +54,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				long count = rs.getLong(1);
+				int count = rs.getInt(1);
 
 				if (count > 0) {
 					return true;
@@ -74,7 +74,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select fileEntryId, groupId, folderId, title, extension, " +

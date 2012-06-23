@@ -40,7 +40,7 @@ public class VerifyAsset extends VerifyProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select distinct groupId from AssetCategory where " +

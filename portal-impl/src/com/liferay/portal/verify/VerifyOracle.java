@@ -47,7 +47,7 @@ public class VerifyOracle extends VerifyProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select table_name, column_name, data_length from " +

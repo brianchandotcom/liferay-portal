@@ -144,7 +144,7 @@ public class Table {
 	}
 
 	public String generateTempFile() throws Exception {
-		Connection con = DataAccess.getConnection();
+		Connection con = DataAccess.getUpgradeOptimizedConnection();
 
 		try {
 			return generateTempFile(con);
@@ -372,6 +372,9 @@ public class Table {
 				value = GetterUtil.getLong(rs.getString(name));
 			}
 		}
+		else if (t == Types.BIT) {
+			value = GetterUtil.getBoolean(rs.getBoolean(name));
+		}
 		else if (t == Types.BOOLEAN) {
 			value = GetterUtil.getBoolean(rs.getBoolean(name));
 		}
@@ -444,7 +447,7 @@ public class Table {
 	}
 
 	public void populateTable(String tempFileName) throws Exception {
-		Connection con = DataAccess.getConnection();
+		Connection con = DataAccess.getUpgradeOptimizedConnection();
 
 		try {
 			populateTable(tempFileName, con);

@@ -21,9 +21,9 @@ import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsValues;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 
 /**
  * @author Juan Fernández
@@ -32,15 +32,15 @@ public class UpgradeSubscription extends UpgradeProcess {
 
 	protected void addSubscription(
 			long subscriptionId, long companyId, long userId, String userName,
-			Date createDate, Date modifiedDate, long classNameId, long classPK,
-			String frequency)
+			Timestamp createDate, Timestamp modifiedDate, long classNameId,
+			long classPK, String frequency)
 		throws Exception {
 
 		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			StringBundler sb = new StringBundler(4);
 
@@ -57,8 +57,8 @@ public class UpgradeSubscription extends UpgradeProcess {
 			ps.setLong(2, companyId);
 			ps.setLong(3, userId);
 			ps.setString(4, userName);
-			ps.setDate(5, createDate);
-			ps.setDate(6, modifiedDate);
+			ps.setTimestamp(5, createDate);
+			ps.setTimestamp(6, modifiedDate);
 			ps.setLong(7, classNameId);
 			ps.setLong(8, classPK);
 			ps.setString(9, frequency);
@@ -89,7 +89,7 @@ public class UpgradeSubscription extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			StringBundler sb = new StringBundler(5);
 
@@ -109,8 +109,8 @@ public class UpgradeSubscription extends UpgradeProcess {
 			while (rs.next()) {
 				long userId = rs.getLong("userId");
 				String userName = rs.getString("userName");
-				Date createDate = rs.getDate("createDate");
-				Date modifiedDate = rs.getDate("modifiedDate");
+				Timestamp createDate = rs.getTimestamp("createDate");
+				Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
 				long classNameId = rs.getLong("classNameId");
 				long classPK = rs.getLong("classPK");
 

@@ -69,7 +69,7 @@ public class UpgradePortletId extends UpgradeProcess {
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"update Layout set typeSettings = ? where plid = " + plid);
@@ -92,7 +92,7 @@ public class UpgradePortletId extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select typeSettings from Layout where plid = " + plid);

@@ -43,7 +43,7 @@ public class UpgradeLayout extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select plid, name, title, typeSettings from Layout");
@@ -201,7 +201,7 @@ public class UpgradeLayout extends UpgradeProcess {
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"update Layout set " + columName + " = ? where plid = " + plid);
@@ -222,7 +222,7 @@ public class UpgradeLayout extends UpgradeProcess {
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"update Layout set name = ? where plid = " + plid);
@@ -241,7 +241,7 @@ public class UpgradeLayout extends UpgradeProcess {
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"update Layout set title = ? where plid = " + plid);
@@ -262,7 +262,7 @@ public class UpgradeLayout extends UpgradeProcess {
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"update Layout set typeSettings = ? where plid = " + plid);

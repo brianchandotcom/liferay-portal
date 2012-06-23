@@ -40,7 +40,7 @@ public class UpgradeExpando extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select * from ExpandoColumn where tableId = ?");
@@ -91,7 +91,7 @@ public class UpgradeExpando extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select * from ExpandoRow where tableId = ?");
@@ -137,7 +137,7 @@ public class UpgradeExpando extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select * from ExpandoTable where name = ?");
@@ -186,7 +186,7 @@ public class UpgradeExpando extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select * from ExpandoValue where tableId = ? and rowId_ = ?");

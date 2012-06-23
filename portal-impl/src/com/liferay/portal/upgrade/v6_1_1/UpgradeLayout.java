@@ -40,7 +40,7 @@ public class UpgradeLayout extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select groupId from Group_ where classPK = (select " +
@@ -72,7 +72,7 @@ public class UpgradeLayout extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select count(*) from Layout where uuid_ = ? and groupId = ? " +
@@ -108,7 +108,7 @@ public class UpgradeLayout extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			// Get pages with a sourcePrototypeLayoutUuid that have a page
 			// template. If the layoutUuid points to a page template, remove

@@ -36,7 +36,7 @@ public class VerifyUUID extends VerifyProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select " + pkColumnName + " from " + modelName +

@@ -34,7 +34,7 @@ public class UpgradeLayout extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select groupId, liveGroupId from Group_ where liveGroupId " +
@@ -60,7 +60,7 @@ public class UpgradeLayout extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select plid, privateLayout, layoutId, friendlyURL from " +
@@ -95,7 +95,7 @@ public class UpgradeLayout extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select uuid_ from Layout where groupId = ? and friendlyURL " +

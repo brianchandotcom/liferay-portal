@@ -43,7 +43,7 @@ public class UpgradeAsset extends UpgradeProcess {
 		long journalStructureId = 0;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select id_ from JournalStructure where structureId = ?");
@@ -69,7 +69,7 @@ public class UpgradeAsset extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select resourcePrimKey, structureId from JournalArticle " +

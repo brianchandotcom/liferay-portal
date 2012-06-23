@@ -39,7 +39,7 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"insert into MBThreadFlag (threadFlagId, userId, " +
@@ -70,7 +70,7 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select messageId, body from MBMessage where (body like " +
@@ -94,7 +94,7 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 		}
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			StringBundler sb = new StringBundler(4);
 
@@ -127,7 +127,7 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"update MBMessage set answer = ? where messageId = " +
@@ -149,7 +149,7 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"update MBMessage set body = ? where messageId = " + messageId);
@@ -169,7 +169,7 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select MBThread.threadId, MBMessage.companyId, " +
@@ -194,7 +194,7 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 		}
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select threadId from MBMessageFlag where flag = 2");
@@ -212,7 +212,7 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 		}
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			StringBundler sb = new StringBundler(4);
 
@@ -242,7 +242,7 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select userId, threadId, modifiedDate from MBMessageFlag " +
@@ -272,7 +272,7 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"update MBThread set question = ? where threadId =" + threadId);

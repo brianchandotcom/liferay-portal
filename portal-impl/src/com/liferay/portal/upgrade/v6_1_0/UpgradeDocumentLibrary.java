@@ -34,10 +34,10 @@ import com.liferay.portlet.documentlibrary.model.impl.DLFileVersionImpl;
 import com.liferay.portlet.documentlibrary.util.ImageProcessorUtil;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 import java.util.Set;
 
@@ -50,16 +50,16 @@ import java.util.Set;
 public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 	protected void addSync(
-			long syncId, long companyId, Date createDate, Date modifiedDate,
-			long fileId, long repositoryId, long parentFolderId, String event,
-			String type)
+			long syncId, long companyId, Timestamp createDate,
+			Timestamp modifiedDate, long fileId, long repositoryId,
+			long parentFolderId, String event, String type)
 		throws Exception {
 
 		Connection con = null;
 		PreparedStatement ps = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"insert into DLSync (syncId, companyId, createDate, " +
@@ -68,8 +68,8 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 			ps.setLong(1, syncId);
 			ps.setLong(2, companyId);
-			ps.setDate(3, createDate);
-			ps.setDate(4, createDate);
+			ps.setTimestamp(3, createDate);
+			ps.setTimestamp(4, createDate);
 			ps.setLong(5, fileId);
 			ps.setLong(6, repositoryId);
 			ps.setLong(7, parentFolderId);
@@ -102,7 +102,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select fileEntryId from DLFileEntry where groupId = ? and " +
@@ -133,7 +133,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		long groupId = 0;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select groupId from DLFolder where folderId = ?");
@@ -159,7 +159,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select fileEntryId, extension from DLFileEntry");
@@ -189,7 +189,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select groupId, fileRankId, folderId, name from DLFileRank");
@@ -223,7 +223,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select fileShortcutId, toFolderId, toName from " +
@@ -261,7 +261,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select groupId, fileVersionId, folderId, name, extension " +
@@ -310,7 +310,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select lockId, key_ from Lock_ where className = ?");
@@ -353,7 +353,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			StringBundler sb = new StringBundler(10);
 
@@ -378,7 +378,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 				long fileId = rs.getLong("fileId");
 				long groupId = rs.getLong("groupId");
 				long companyId = rs.getLong("companyId");
-				Date createDate = rs.getDate("createDate");
+				Timestamp createDate = rs.getTimestamp("createDate");
 				long parentFolderId = rs.getLong("parentFolderId");
 				String type = rs.getString("type");
 
@@ -398,7 +398,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement("select fileEntryId from DLFileEntry");
 
@@ -421,7 +421,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getConnection();
+			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
 				"select fileVersionId, userId, extension, mimeType, version " +

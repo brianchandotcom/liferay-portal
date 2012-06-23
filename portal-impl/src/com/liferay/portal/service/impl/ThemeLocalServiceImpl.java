@@ -724,6 +724,10 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 			ServletContext servletContext, Theme theme, String resourcePath)
 		throws Exception {
 
+		if (!resourcePath.startsWith(StringPool.SLASH)) {
+			resourcePath = StringPool.SLASH.concat(resourcePath);
+		}
+
 		Set<String> resourcePaths = servletContext.getResourcePaths(
 			resourcePath);
 

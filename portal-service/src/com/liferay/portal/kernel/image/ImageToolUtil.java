@@ -21,6 +21,7 @@ import java.awt.image.RenderedImage;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 
 /**
@@ -147,6 +148,10 @@ public class ImageToolUtil {
 	 */
 	public static ImageBag read(File file) throws IOException {
 		return getImageTool().read(file);
+	}
+
+	public static ImageBag read(InputStream inputStream) throws IOException {
+		return getImageTool().read(inputStream);
 	}
 
 	/**

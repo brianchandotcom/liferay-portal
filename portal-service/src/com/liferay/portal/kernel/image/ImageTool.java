@@ -19,6 +19,7 @@ import java.awt.image.RenderedImage;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 
 /**
@@ -58,6 +59,8 @@ public interface ImageTool {
 	public ImageBag read(byte[] bytes) throws IOException;
 
 	public ImageBag read(File file) throws IOException;
+
+	public ImageBag read(InputStream inputStream) throws IOException;
 
 	public RenderedImage scale(RenderedImage renderedImage, int width);
 

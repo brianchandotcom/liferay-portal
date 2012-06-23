@@ -30,11 +30,15 @@ if (Validator.isNotNull(src) && themeDisplay.isThemeImagesFastLoad() && !auiImag
 
 	String imageFileName = StringUtil.replace(src, "common/../", "");
 
+	if (imageFileName.contains(Http.PROTOCOL_DELIMITER)) {
+		URL imageURL = new URL(imageFileName);
+
+		imageFileName = imageURL.getPath();
+	}
+
 	String imagesPath = theme.getContextPath().concat(theme.getImagesPath());
 
 	if (imageFileName.startsWith(imagesPath)) {
-		imageFileName = imageFileName.substring(imagesPath.length());
-
 		spriteImage = theme.getSpriteImage(imageFileName);
 
 		if (spriteImage != null) {
@@ -44,7 +48,7 @@ if (Validator.isNotNull(src) && themeDisplay.isThemeImagesFastLoad() && !auiImag
 				spriteFileName = StringUtil.replace(spriteFileName, ".png", ".gif");
 			}
 
-			spriteFileURL = themeDisplay.getPathThemeImages().concat(spriteFileName);
+			spriteFileURL = spriteFileName;
 		}
 	}
 

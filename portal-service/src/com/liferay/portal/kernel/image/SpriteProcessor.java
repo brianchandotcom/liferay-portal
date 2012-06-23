@@ -14,8 +14,9 @@
 
 package com.liferay.portal.kernel.image;
 
-import java.io.File;
 import java.io.IOException;
+
+import java.net.URL;
 
 import java.util.List;
 import java.util.Properties;
@@ -27,10 +28,12 @@ import javax.servlet.ServletContext;
  */
 public interface SpriteProcessor {
 
+	public static final String PATH = "/sprite";
+
 	public Properties generate(
-			ServletContext servletContext, List<File> imageFiles,
+			ServletContext servletContext, List<URL> imageURLs,
 			String spriteFileName, String spritePropertiesFileName,
-			String spritePropertiesRootPath, int maxHeight, int maxWidth,
+			URL spritePropertiesRootURL, int maxHeight, int maxWidth,
 			int maxSize)
 		throws IOException;
 

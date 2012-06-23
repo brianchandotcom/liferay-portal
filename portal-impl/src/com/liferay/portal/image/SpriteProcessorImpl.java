@@ -24,12 +24,14 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.SortedProperties;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.util.PropertyComparator;
 
 import java.awt.Point;
 import java.awt.Transparency;
@@ -45,12 +47,17 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import java.net.URL;
+import java.net.URLConnection;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
 import javax.imageio.ImageIO;
+
+import javax.servlet.ServletContext;
 
 import javax.media.jai.LookupTableJAI;
 import javax.media.jai.PlanarImage;
@@ -60,8 +67,6 @@ import javax.media.jai.operator.LookupDescriptor;
 import javax.media.jai.operator.MosaicDescriptor;
 import javax.media.jai.operator.TranslateDescriptor;
 
-import javax.servlet.ServletContext;
-
 import org.geotools.image.ImageWorker;
 
 /**
@@ -70,30 +75,30 @@ import org.geotools.image.ImageWorker;
 public class SpriteProcessorImpl implements SpriteProcessor {
 
 	public Properties generate(
-			ServletContext servletContext, List<File> imageFiles,
+			ServletContext servletContext, List<URL> imageURLs,
 			String spriteFileName, String spritePropertiesFileName,
-			String spritePropertiesRootPath, int maxHeight, int maxWidth,
+			URL spritePropertiesRootURL, int maxHeight, int maxWidth,
 			int maxSize)
 		throws IOException {
 
-		if (imageFiles.size() < 1) {
+		if (imageURLs.size() < 1) {
 			return null;
 		}
 
-		if (spritePropertiesRootPath.endsWith(StringPool.BACK_SLASH) ||
-			spritePropertiesRootPath.endsWith(StringPool.SLASH)) {
+		Collections.sort(imageURLs, new PropertyComparator("path"));
 
-			spritePropertiesRootPath = spritePropertiesRootPath.substring(
-				0, spritePropertiesRootPath.length() - 1);
-		}
+		File tempDir = (File)servletContext.getAttribute(
+			JavaConstants.JAVAX_SERVLET_CONTEXT_TEMPDIR);
 
-		Collections.sort(imageFiles);
+		File spriteRootDir = new File(
+			tempDir, SpriteProcessor.PATH);
 
-		String spriteRootDirName = getSpriteRootDirName(
-			servletContext, imageFiles);
+		spriteRootDir.mkdirs();
 
 		File spritePropertiesFile = new File(
-			spriteRootDirName + StringPool.SLASH + spritePropertiesFileName);
+			spriteRootDir, spritePropertiesFileName);
+
+		spritePropertiesFile.getParentFile().mkdirs();
 
 		boolean build = false;
 
@@ -102,8 +107,14 @@ public class SpriteProcessorImpl implements SpriteProcessor {
 		if (spritePropertiesFile.exists()) {
 			lastModified = spritePropertiesFile.lastModified();
 
-			for (File imageFile : imageFiles) {
-				if (imageFile.lastModified() > lastModified) {
+			URLConnection connection = null;
+
+			for (URL imageURL : imageURLs) {
+				connection = imageURL.openConnection();
+
+				if ((connection != null) &&
+					(connection.getLastModified() > lastModified)) {
+
 					build = true;
 
 					break;
@@ -132,13 +143,22 @@ public class SpriteProcessorImpl implements SpriteProcessor {
 		float x = 0;
 		float y = 0;
 
-		for (File imageFile : imageFiles) {
-			if (imageFile.length() > maxSize) {
+		String contextPath = ContextPathUtil.getContextPath(servletContext);
+
+		URLConnection connection = null;
+
+		for (URL imageURL : imageURLs) {
+			connection = imageURL.openConnection();
+
+			if ((connection != null) &&
+				(connection.getContentLength() > maxSize)) {
+
 				continue;
 			}
 
 			try {
-				ImageBag imageBag = ImageToolUtil.read(imageFile);
+				ImageBag imageBag = ImageToolUtil.read(
+					connection.getInputStream());
 
 				RenderedImage renderedImage = imageBag.getRenderedImage();
 
@@ -153,12 +173,12 @@ public class SpriteProcessorImpl implements SpriteProcessor {
 
 					renderedImages.add(renderedImage);
 
-					String key = StringUtil.replace(
-						imageFile.toString(), CharPool.BACK_SLASH,
-						CharPool.SLASH);
+					String key = imageURL.getPath();
 
 					key = key.substring(
-						spritePropertiesRootPath.toString().length());
+						spritePropertiesRootURL.getPath().length() - 1);
+
+					key = contextPath.concat(key);
 
 					String value = (int)y + "," + height + "," + width;
 
@@ -169,7 +189,7 @@ public class SpriteProcessorImpl implements SpriteProcessor {
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
-					_log.warn("Unable to process " + imageFile);
+					_log.warn("Unable to process " + imageURL);
 				}
 
 				if (_log.isDebugEnabled()) {
@@ -192,8 +212,7 @@ public class SpriteProcessorImpl implements SpriteProcessor {
 				MosaicDescriptor.MOSAIC_TYPE_OVERLAY, null, null, null, null,
 				null);
 
-			File spriteFile = new File(
-				spriteRootDirName + StringPool.SLASH + spriteFileName);
+			File spriteFile = new File(spriteRootDir, spriteFileName);
 
 			spriteFile.mkdirs();
 
@@ -212,8 +231,8 @@ public class SpriteProcessorImpl implements SpriteProcessor {
 			renderedImage = imageWorker.getPlanarImage();
 
 			spriteFile = new File(
-				spriteRootDirName + StringPool.SLASH +
-					StringUtil.replace(spriteFileName, ".png", ".gif"));
+				spriteRootDir,
+				StringUtil.replace(spriteFileName, ".png", ".gif"));
 
 			FileOutputStream fos = new FileOutputStream(spriteFile);
 

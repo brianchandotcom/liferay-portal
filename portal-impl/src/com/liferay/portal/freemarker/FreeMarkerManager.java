@@ -157,10 +157,9 @@ public class FreeMarkerManager implements TemplateManager {
 			return;
 		}
 
-		TemplateCache templateCache = new LiferayTemplateCache();
-		templateCache.setConfiguration(_configuration);
-
 		_configuration = new Configuration();
+
+		TemplateCache templateCache = new LiferayTemplateCache(_configuration);
 
 		try {
 			Field cache = ReflectionUtil.getDeclaredField(

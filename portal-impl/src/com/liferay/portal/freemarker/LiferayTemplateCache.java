@@ -36,6 +36,20 @@ import java.util.Locale;
  */
 public class LiferayTemplateCache extends TemplateCache {
 
+	public LiferayTemplateCache(Configuration configuration)
+		throws TemplateException {
+
+		_configuration = configuration;
+
+		try {
+			_normalizeNameMethod = ReflectionUtil.getDeclaredMethod(
+				TemplateCache.class, "normalizeName", String.class);
+		}
+		catch (Exception e) {
+			throw new TemplateException(e);
+		}
+	}
+
 	public Template getTemplate(
 			String templateId, Locale locale, String encoding, boolean parse)
 		throws IOException {
@@ -56,10 +70,7 @@ public class LiferayTemplateCache extends TemplateCache {
 		}
 
 		try {
-			Method method = ReflectionUtil.getDeclaredMethod(
-				TemplateCache.class, "normalizeName", String.class);
-
-			templateId = (String)method.invoke(this, templateId);
+			templateId = (String)_normalizeNameMethod.invoke(this, templateId);
 		}
 		catch (Exception e) {
 			return null;
@@ -87,12 +98,7 @@ public class LiferayTemplateCache extends TemplateCache {
 		}
 	}
 
-	public void setConfiguration(Configuration configuration) {
-		super.setConfiguration(configuration);
-
-		_configuration = configuration;
-	}
-
 	private Configuration _configuration;
+	private Method _normalizeNameMethod;
 
 }

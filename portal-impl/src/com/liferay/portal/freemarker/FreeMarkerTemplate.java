@@ -15,8 +15,6 @@
 package com.liferay.portal.freemarker;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateException;
@@ -172,8 +170,6 @@ public class FreeMarkerTemplate implements Template {
 
 		template.process(_context, writer);
 	}
-
-	private static Log _log = LogFactoryUtil.getLog(FreeMarkerTemplate.class);
 
 	private Configuration _configuration;
 	private Map<String, Object> _context;

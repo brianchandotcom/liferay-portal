@@ -55,6 +55,21 @@ public class VerifyMessageBoards extends VerifyProcess {
 			try {
 				MBMessageLocalServiceUtil.updateAsset(
 					message.getUserId(), message, null, null, null);
+
+				if (message.getStatus() == WorkflowConstants.STATUS_DRAFT) {
+					boolean visible = false;
+
+					if (message.isApproved() &&
+						((message.getClassNameId() == 0) ||
+						 (message.getParentMessageId() != 0))) {
+
+						visible = true;
+					}
+
+					AssetEntryLocalServiceUtil.updateEntry(
+						message.getWorkflowClassName(), message.getMessageId(),
+						null, visible);
+				}
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {

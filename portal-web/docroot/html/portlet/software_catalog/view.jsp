@@ -114,26 +114,26 @@ portletURL.setParameter("tabs1", tabs1);
 
 		if (orderByCol.equals("version")) {
 			docComparator.addOrderBy("version", ascending);
-			docComparator.addOrderBy("modified-date");
+			docComparator.addOrderBy(Field.MODIFIED_DATE);
 			docComparator.addOrderBy(Field.TITLE);
 			docComparator.addOrderBy("type");
 		}
 		else if (orderByCol.equals("modified-date")) {
-			docComparator.addOrderBy("modified-date", ascending);
+			docComparator.addOrderBy(Field.MODIFIED_DATE, ascending);
 			docComparator.addOrderBy(Field.TITLE);
 			docComparator.addOrderBy("version");
 			docComparator.addOrderBy("type");
 		}
 		else if (orderByCol.equals("type")) {
 			docComparator.addOrderBy("type", ascending);
-			docComparator.addOrderBy("modified-date");
+			docComparator.addOrderBy(Field.MODIFIED_DATE);
 			docComparator.addOrderBy(Field.TITLE);
 			docComparator.addOrderBy("version");
 		}
 		else {
 			docComparator.addOrderBy(Field.TITLE, ascending);
 			docComparator.addOrderBy("version");
-			docComparator.addOrderBy("modified-date");
+			docComparator.addOrderBy(Field.MODIFIED_DATE);
 			docComparator.addOrderBy("type");
 		}
 

@@ -134,7 +134,10 @@ public class LiferayPortlet extends GenericPortlet {
 		String actionName = ParamUtil.getString(
 			actionRequest, ActionRequest.ACTION_NAME);
 
-		if (Validator.isNull(actionName)) {
+		if (Validator.isNull(actionName) ||
+			actionName.equals("callActionMethod") ||
+			actionName.equals("processAction")) {
+
 			return false;
 		}
 

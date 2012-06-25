@@ -135,7 +135,8 @@ public class LiferayPortlet extends GenericPortlet {
 			actionRequest, ActionRequest.ACTION_NAME);
 
 		if (Validator.isNull(actionName) ||
-			Validator.equals(actionName, "processAction")) {
+			actionName.equals("callActionMethod") ||
+			actionName.equals("processAction")) {
 
 			return false;
 		}

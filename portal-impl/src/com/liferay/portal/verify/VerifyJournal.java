@@ -22,11 +22,14 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.ResourceLocalServiceUtil;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.asset.NoSuchEntryException;
+import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalContentSearch;
 import com.liferay.portlet.journal.model.JournalStructure;
 import com.liferay.portlet.journal.model.JournalTemplate;
@@ -115,9 +118,18 @@ public class VerifyJournal extends VerifyProcess {
 				article.getResourcePrimKey(), false, false, false);
 
 			try {
-				AssetEntryLocalServiceUtil.getEntry(
+				AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
 					JournalArticle.class.getName(),
 					article.getResourcePrimKey());
+
+				if ((article.getStatus() == WorkflowConstants.STATUS_DRAFT) &&
+					(article.getVersion() ==
+						JournalArticleConstants.VERSION_DEFAULT)) {
+
+					AssetEntryLocalServiceUtil.updateEntry(
+						assetEntry.getClassName(), assetEntry.getClassPK(),
+						null, assetEntry.isVisible());
+				}
 			}
 			catch (NoSuchEntryException nsee) {
 				try {

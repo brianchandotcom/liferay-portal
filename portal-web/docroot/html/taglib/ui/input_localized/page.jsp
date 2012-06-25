@@ -279,7 +279,8 @@ if (Validator.isNull(mainLanguageValue)) {
 					show: function(event) {
 						var instance = this;
 
-						instance._positionHelper.appendTo(document.body);
+						var positionHelper = instance._positionHelper.clone();
+						positionHelper.appendTo(document.body);
 					}
 				},
 				trigger: '#<%= randomNamespace %>languageSelectorTrigger',

@@ -33,6 +33,7 @@ import com.liferay.portal.model.impl.GroupImpl;
 import com.liferay.portal.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.util.comparator.GroupNameComparator;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.ArrayList;
@@ -409,6 +410,11 @@ public class GroupFinderImpl
 		if (sql == null) {
 			String findByC_C_SQL = CustomSQLUtil.get(FIND_BY_C_C);
 
+			if (obc instanceof GroupNameComparator) {
+				findByC_C_SQL = StringUtil.replace(
+					findByC_C_SQL, _GROUP_NAME_SQL, _REPLACE_GROUP_NAME_SQL);
+			}
+
 			if (params.get("active") == Boolean.TRUE) {
 				findByC_C_SQL = StringUtil.replace(
 					findByC_C_SQL, "(Group_.liveGroupId = 0) AND",
@@ -608,6 +614,11 @@ public class GroupFinderImpl
 
 		if (sql == null) {
 			String findByC_N_D_SQL = CustomSQLUtil.get(FIND_BY_C_N_D);
+
+			if (obc instanceof GroupNameComparator) {
+				findByC_N_D_SQL = StringUtil.replace(
+					findByC_N_D_SQL, _GROUP_NAME_SQL, _REPLACE_GROUP_NAME_SQL);
+			}
 
 			if (classNameIds == null) {
 				findByC_N_D_SQL = StringUtil.replace(
@@ -1213,6 +1224,11 @@ public class GroupFinderImpl
 
 		return join;
 	}
+
+	private static final String _GROUP_NAME_SQL = "Group_.name AS groupName";
+
+	private static final String _REPLACE_GROUP_NAME_SQL =
+		"replace(Group_.name, 'LFR_ORGANIZATION', '') as groupName";
 
 	private LinkedHashMap<String, Object> _emptyLinkedHashMap =
 		new LinkedHashMap<String, Object>(0);

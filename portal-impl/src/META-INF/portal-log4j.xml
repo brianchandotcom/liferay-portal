@@ -598,6 +598,10 @@
 		<priority value="INFO" />
 	</category>
 
+	<category name="com.liferay.portal.service.impl.RepositoryLocalServiceImpl">
+		<priority value="ERROR" />
+	</category>
+
 	<category name="com.liferay.portal.service.impl.ResourceLocalServiceImpl">
 		<priority value="ERROR" />
 	</category>

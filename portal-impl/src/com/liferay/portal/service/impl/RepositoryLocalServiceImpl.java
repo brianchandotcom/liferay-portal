@@ -94,7 +94,7 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(e.getMessage());
+					_log.warn(e, e);
 				}
 
 				throw new InvalidRepositoryException(e);

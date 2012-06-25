@@ -6,12 +6,6 @@
 	<#assign fieldDateValue = dateUtil.newDate()>
 </#if>
 
-<#assign day = fieldDateValue?string("dd")?number>
-<#assign month = fieldDateValue?string("MM")?number - 1>
-<#assign year = fieldDateValue?string("yyyy")?number>
-<#assign yearEnd = fieldDateValue?string("yyyy")?number - 100>
-<#assign yearStart = fieldDateValue?string("yyyy")?number + 100>
-
 <@aui["field-wrapper"] helpMessage=fieldStructure.tip label=label>
 	<#if required>
 		<@aui.validator name="required" />
@@ -20,15 +14,15 @@
 	<@liferay_ui["input-date"]
 		cssClass=cssClass
 		dayParam="${namespacedFieldName}Day"
-		dayValue=day
+		dayValue=fieldDateValue?string("dd")?number
 		disabled=false
 		helpMessage=fieldStructure.tip
 		monthParam="${namespacedFieldName}Month"
-		monthValue=month
+		monthValue=fieldDateValue?string("MM")?number - 1
 		yearParam="${namespacedFieldName}Year"
-		yearRangeEnd=yearStart
-		yearRangeStart=yearEnd
-		yearValue=year
+		yearRangeEnd=fieldDateValue?string("yyyy")?number + 100
+		yearRangeStart=fieldDateValue?string("yyyy")?number - 100
+		yearValue=fieldDateValue?string("yyyy")?number
 	/>
 
 	${fieldStructure.children}

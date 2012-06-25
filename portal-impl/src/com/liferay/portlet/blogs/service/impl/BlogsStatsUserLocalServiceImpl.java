@@ -175,8 +175,11 @@ public class BlogsStatsUserLocalServiceImpl
 
 		Date now = new Date();
 
-		int entryCount = blogsEntryPersistence.countByG_U_LtD_S(
-			groupId, userId, now, WorkflowConstants.STATUS_APPROVED);
+		List<BlogsEntry> entries = blogsEntryPersistence.findByG_U_LtD_S(
+			groupId, userId, now, WorkflowConstants.STATUS_APPROVED, 0, 1,
+			new EntryDisplayDateComparator());
+
+		int entryCount = entries.size();
 
 		if (entryCount == 0) {
 			try {
@@ -192,9 +195,7 @@ public class BlogsStatsUserLocalServiceImpl
 
 		statsUser.setEntryCount(entryCount);
 
-		BlogsEntry blogsEntry = blogsEntryPersistence.findByG_U_LtD_S_First(
-			groupId, userId, now, WorkflowConstants.STATUS_APPROVED,
-			new EntryDisplayDateComparator());
+		BlogsEntry blogsEntry = entries.get(0);
 
 		Date lastDisplayDate = blogsEntry.getDisplayDate();
 

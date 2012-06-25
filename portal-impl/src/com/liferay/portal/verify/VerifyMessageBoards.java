@@ -55,6 +55,21 @@ public class VerifyMessageBoards extends VerifyProcess {
 			try {
 				MBMessageLocalServiceUtil.updateAsset(
 					message.getUserId(), message, null, null, null);
+
+				if (message.getStatus() == WorkflowConstants.STATUS_DRAFT) {
+					boolean visible = false;
+
+					if (message.isApproved() &&
+						((message.getClassNameId() == 0) ||
+						 (message.getParentMessageId() != 0))) {
+
+						visible = true;
+					}
+
+					AssetEntryLocalServiceUtil.updateEntry(
+						message.getWorkflowClassName(), message.getMessageId(),
+						null, visible);
+				}
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
@@ -84,8 +99,8 @@ public class VerifyMessageBoards extends VerifyProcess {
 					thread.getRootMessageUserId(), thread.getGroupId(),
 					MBThread.class.getName(), thread.getThreadId(), null, 0,
 					new long[0], new String[0], false, null, null, null, null,
-					null, String.valueOf(thread.getRootMessageId()), null, null,
-					null, null, 0, 0, null, false);
+					String.valueOf(thread.getRootMessageId()), null, null, null,
+					null, 0, 0, null, false);
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {

@@ -254,9 +254,9 @@ public class BookmarksEntryLocalServiceImpl
 		AssetEntry assetEntry = assetEntryLocalService.updateEntry(
 			userId, entry.getGroupId(), BookmarksEntry.class.getName(),
 			entry.getEntryId(), entry.getUuid(), 0, assetCategoryIds,
-			assetTagNames, true, null, null, null, null,
-			ContentTypes.TEXT_PLAIN, entry.getName(), entry.getDescription(),
-			null, entry.getUrl(), null, 0, 0, null, false);
+			assetTagNames, true, null, null, null, ContentTypes.TEXT_PLAIN,
+			entry.getName(), entry.getDescription(), null, entry.getUrl(), null,
+			0, 0, null, false);
 
 		assetLinkLocalService.updateLinks(
 			userId, assetEntry.getEntryId(), assetLinkEntryIds,

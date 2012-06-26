@@ -17,7 +17,6 @@ package com.liferay.portal.spring.hibernate;
 import com.liferay.portal.dao.orm.hibernate.DB2Dialect;
 import com.liferay.portal.dao.orm.hibernate.SQLServer2005Dialect;
 import com.liferay.portal.dao.orm.hibernate.SQLServer2008Dialect;
-import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -44,14 +43,6 @@ import org.hibernate.dialect.resolver.DialectFactory;
  * @author Brian Wing Shun Chan
  */
 public class DialectDetector {
-
-	public static String determineDialect(DataSource dataSource) {
-		Dialect dialect = getDialect(dataSource);
-
-		DBFactoryUtil.setDB(dialect);
-
-		return dialect.getClass().getName();
-	}
 
 	public static Dialect getDialect(DataSource dataSource) {
 		String dialectKey = null;

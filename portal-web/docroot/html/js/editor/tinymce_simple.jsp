@@ -108,7 +108,7 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 
 				if (onChangeCallbackCounter > 0) {
 
-					<%= HtmlUtil.escape(onChangeMethod) %>(window['<%= name %>'].getHTML());
+					<%= HtmlUtil.escapeJS(onChangeMethod) %>(window['<%= name %>'].getHTML());
 
 				}
 

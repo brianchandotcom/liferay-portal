@@ -14,6 +14,7 @@
 
 package com.liferay.portal.staging;
 
+import com.liferay.portal.DuplicateLockException;
 import com.liferay.portal.LayoutSetBranchNameException;
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.NoSuchLayoutBranchException;
@@ -60,6 +61,7 @@ import com.liferay.portal.model.LayoutBranch;
 import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetBranchConstants;
+import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.WorkflowInstanceLink;
@@ -75,6 +77,7 @@ import com.liferay.portal.service.LayoutRevisionLocalServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
+import com.liferay.portal.service.LockLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -84,6 +87,7 @@ import com.liferay.portal.service.http.LayoutServiceHttp;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.SessionClicks;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortalPreferences;
@@ -110,6 +114,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Raymond Augé
  * @author Bruno Farache
  * @author Wesley Gong
+ * @author Zsolt Balogh
  */
 public class StagingImpl implements Staging {
 
@@ -917,6 +922,8 @@ public class StagingImpl implements Staging {
 			Map<String, String[]> parameterMap, Date startDate, Date endDate)
 		throws Exception {
 
+		lockGroup(userId, targetGroupId);
+
 		parameterMap.put(
 			PortletDataHandlerKeys.PERFORM_DIRECT_BINARY_IMPORT,
 			new String[] {Boolean.TRUE.toString()});
@@ -931,6 +938,8 @@ public class StagingImpl implements Staging {
 		}
 		finally {
 			file.delete();
+
+			unlockGroup(targetGroupId);
 		}
 	}
 
@@ -1609,6 +1618,26 @@ public class StagingImpl implements Staging {
 			GetterUtil.getString(group.getTypeSettingsProperty(param)));
 	}
 
+	protected void lockGroup(long userId, long targetGroupId) throws Exception {
+		if (!PropsValues.STAGING_LOCK_ENABLED) {
+			return;
+		}
+
+		if (LockLocalServiceUtil.isLocked(
+				Staging.class.getName(), targetGroupId)) {
+
+			Lock lock = LockLocalServiceUtil.getLock(
+				Staging.class.getName(), targetGroupId);
+
+			throw new DuplicateLockException(lock);
+		}
+
+		LockLocalServiceUtil.lock(
+			userId, Staging.class.getName(), String.valueOf(targetGroupId),
+			StagingImpl.class.getName(), false,
+			StagingConstants.LOCK_EXPIRATION_TIME);
+	}
+
 	protected void publishLayouts(
 			PortletRequest portletRequest, long sourceGroupId,
 			long targetGroupId, Map<String, String[]> parameterMap,
@@ -2045,6 +2074,14 @@ public class StagingImpl implements Staging {
 		}
 
 		return remoteAddress;
+	}
+
+	protected void unlockGroup(long targetGroupId) throws SystemException {
+		if (!PropsValues.STAGING_LOCK_ENABLED) {
+			return;
+		}
+
+		LockLocalServiceUtil.unlock(Staging.class.getName(), targetGroupId);
 	}
 
 	protected void updateGroupTypeSettingsProperties(

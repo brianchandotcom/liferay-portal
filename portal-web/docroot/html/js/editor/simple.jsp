@@ -80,7 +80,7 @@ if (Validator.isNotNull(onChangeMethod)) {
 			if (Validator.isNotNull(onChangeMethod)) {
 			%>
 
-				onChange="<%= HtmlUtil.escape(onChangeMethod) %>(this.value)"
+				onChange="<%= HtmlUtil.escapeJS(onChangeMethod) %>(this.value)"
 
 			<%
 			}

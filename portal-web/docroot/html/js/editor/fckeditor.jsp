@@ -193,7 +193,7 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 				var dirty = FCKeditorAPI.GetInstance('<%= name %>').IsDirty();
 
 				if (dirty) {
-					<%= HtmlUtil.escape(onChangeMethod) %>(window['<%= name %>'].getText());
+					<%= HtmlUtil.escapeJS(onChangeMethod) %>(window['<%= name %>'].getText());
 
 					FCKeditorAPI.GetInstance('<%= name %>').ResetIsDirty();
 				}

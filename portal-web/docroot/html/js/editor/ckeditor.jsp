@@ -118,7 +118,7 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 				var dirty = ckEditor.checkDirty();
 
 				if (dirty) {
-					<%= HtmlUtil.escape(onChangeMethod) %>(window['<%= name %>'].getText());
+					<%= HtmlUtil.escapeJS(onChangeMethod) %>(window['<%= name %>'].getText());
 
 					ckEditor.resetDirty();
 				}

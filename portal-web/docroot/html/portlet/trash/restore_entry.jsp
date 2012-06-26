@@ -43,7 +43,11 @@ String trashEntryId = ParamUtil.getString(request, "trashEntryId");
 
 		<aui:input id="rename" label="keep-both-entries-and-rename-the-entry-from-the-recycle-bin-as" name="<%= Constants.CMD %>" type="radio" value="<%= Constants.RENAME %>" />
 
-		<aui:input label="" name="newName" title="keep-both-files-and-rename-the-file-from-the-recycle-bin-as" />
+		<%
+		String suggestedName = oldName + StringPool.SPACE + StringPool.OPEN_PARENTHESIS + dateFormatDateTime.format(new Date()).replace('/', '.') + StringPool.CLOSE_PARENTHESIS;
+		%>
+
+		<aui:input cssClass="new-file-name" label="" name="newName" title="keep-both-entries-and-rename-the-entry-from-the-recycle-bin-as" value="<%= suggestedName %>" />
 	</aui:fieldset>
 
 	<aui:button-row>

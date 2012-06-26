@@ -12,13 +12,12 @@
 .trash-restore-popup {
 	.aui-form {
 		fieldset {
-			margin-bottom: 0px;
+			margin-bottom: 0;
 			padding: 0 15px;
 		}
 
-		input[type="text"] {
-			margin-left: 20px;
-			width: 380px;
+		.new-file-name .aui-field-input {
+			width: 100%;
 		}
 	}
 

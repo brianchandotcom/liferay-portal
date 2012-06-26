@@ -95,9 +95,7 @@ public abstract class BaseWebDriverImpl
 	public String getFirstNumberIncrement(String locator) {
 		String firstNumber = getFirstNumber(locator);
 
-		int i = GetterUtil.getInteger(firstNumber);
-
-		int firstNumberIncremented = i + 1;
+		int firstNumberIncremented = GetterUtil.getInteger(firstNumber) + 1;
 
 		return StringUtil.valueOf(firstNumberIncremented);
 	}

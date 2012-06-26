@@ -744,13 +744,10 @@ public class PortletURLImpl
 		Portlet portlet = (Portlet)_request.getAttribute(
 			WebKeys.RENDER_PORTLET);
 
-		if (portlet == null) {
-			return;
-		}
-
-		if (portlet.getPortletId().equals(_portletId) ||
+		if ((portlet != null) &&
+			(portlet.getPortletId().equals(_portletId) ||
 			!_portlet.isAddDefaultResource() ||
-			portlet.getPortletId().equals(PortletKeys.CONTROL_PANEL_MENU)) {
+			portlet.getPortletId().equals(PortletKeys.CONTROL_PANEL_MENU))) {
 
 			return;
 		}

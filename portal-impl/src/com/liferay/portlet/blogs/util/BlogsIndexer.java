@@ -91,7 +91,7 @@ public class BlogsIndexer extends BaseIndexer {
 
 		int status = GetterUtil.getInteger(
 			searchContext.getAttribute(Field.STATUS),
-			WorkflowConstants.STATUS_ANY);
+			WorkflowConstants.STATUS_APPROVED);
 
 		if (status != WorkflowConstants.STATUS_ANY) {
 			contextQuery.addRequiredTerm(Field.STATUS, status);
@@ -112,7 +112,11 @@ public class BlogsIndexer extends BaseIndexer {
 
 		Property statusProperty = PropertyFactoryUtil.forName("status");
 
-		dynamicQuery.add(statusProperty.eq(WorkflowConstants.STATUS_APPROVED));
+		Integer[] indexableStatus = new Integer[] {
+			WorkflowConstants.STATUS_APPROVED,
+			WorkflowConstants.STATUS_IN_TRASH};
+
+		dynamicQuery.add(statusProperty.in(indexableStatus));
 	}
 
 	@Override
@@ -161,7 +165,7 @@ public class BlogsIndexer extends BaseIndexer {
 	protected void doReindex(Object obj) throws Exception {
 		BlogsEntry entry = (BlogsEntry)obj;
 
-		if (!entry.isApproved()) {
+		if (!entry.isApproved() && !entry.isInTrash()) {
 			return;
 		}
 

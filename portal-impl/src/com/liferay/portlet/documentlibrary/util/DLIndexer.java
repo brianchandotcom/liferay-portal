@@ -360,6 +360,14 @@ public class DLIndexer extends BaseIndexer {
 				}
 			}
 
+			if (!dlFileVersion.isInTrash() && dlFileVersion.isInTrashFolder()) {
+				DLFolder trashedFolder = dlFileVersion.getTrashFolder();
+
+				addTrashFields(
+					document, DLFolder.class.getName(),
+					trashedFolder.getFolderId());
+			}
+
 			document.addText(Field.DESCRIPTION, dlFileEntry.getDescription());
 			document.addKeyword(Field.FOLDER_ID, dlFileEntry.getFolderId());
 			document.addText(
@@ -436,7 +444,7 @@ public class DLIndexer extends BaseIndexer {
 
 		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
 
-		if (!dlFileVersion.isApproved()) {
+		if (!dlFileVersion.isApproved() && !dlFileVersion.isInTrash()) {
 			return;
 		}
 

@@ -43,6 +43,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
@@ -455,6 +456,15 @@ public class DLUtil {
 		}
 
 		sb.append(queryString);
+
+		if (themeDisplay != null) {
+			String portletName =
+				themeDisplay.getPortletDisplay().getPortletName();
+
+			if (portletName.equals(PortletKeys.TRASH)) {
+				sb.append("&showTrashEntries=1");
+			}
+		}
 
 		String previewURL = sb.toString();
 

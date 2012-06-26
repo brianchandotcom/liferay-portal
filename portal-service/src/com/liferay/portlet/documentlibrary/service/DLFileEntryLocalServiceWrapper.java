@@ -428,16 +428,16 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 		_dlFileEntryLocalService.deleteFileVersion(userId, fileEntryId, version);
 	}
 
-	public com.liferay.portlet.documentlibrary.model.DLFileEntry fetchFileEntryByAnyImageId(
-		long imageId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _dlFileEntryLocalService.fetchFileEntryByAnyImageId(imageId);
-	}
-
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry fetchFileEntry(
 		long groupId, long folderId, java.lang.String title)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _dlFileEntryLocalService.fetchFileEntry(groupId, folderId, title);
+	}
+
+	public com.liferay.portlet.documentlibrary.model.DLFileEntry fetchFileEntryByAnyImageId(
+		long imageId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileEntryLocalService.fetchFileEntryByAnyImageId(imageId);
 	}
 
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getExtraSettingsFileEntries(

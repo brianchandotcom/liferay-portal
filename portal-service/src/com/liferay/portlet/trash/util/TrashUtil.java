@@ -21,15 +21,22 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portlet.trash.NoSuchEntryException;
 import com.liferay.portlet.trash.model.TrashEntry;
+import com.liferay.portlet.trash.model.impl.TrashEntryImpl;
 import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
 import com.liferay.portlet.trash.util.comparator.EntryCreateDateComparator;
 import com.liferay.portlet.trash.util.comparator.EntryTypeComparator;
 import com.liferay.portlet.trash.util.comparator.EntryUserNameComparator;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -48,18 +55,26 @@ public class TrashUtil {
 				doc.get(Field.ENTRY_CLASS_NAME));
 			long classPK = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
 
-			try {
-				TrashEntry entry = TrashEntryLocalServiceUtil.getEntry(
-					entryClassName, classPK);
+			TrashEntry entry = TrashEntryLocalServiceUtil.fetchEntry(
+				entryClassName, classPK);
 
-				entries.add(entry);
+			if (entry == null) {
+				String userName = GetterUtil.getString(
+					doc.get(Field.REMOVED_BY));
+
+				Date removedDate = GetterUtil.get(
+					doc.get(Field.REMOVED_DATE), _dateFormat, new Date());
+
+				entry = new TrashEntryImpl();
+
+				entry.setClassName(entryClassName);
+				entry.setClassPK(classPK);
+
+				entry.setUserName(userName);
+				entry.setCreateDate(removedDate);
 			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn("Can't find trash entry with the given classPK: "
-						+ classPK + " and className: " + entryClassName);
-				}
-			}
+
+			entries.add(entry);
 		}
 
 		return entries;
@@ -88,6 +103,13 @@ public class TrashUtil {
 
 		return orderByComparator;
 	}
+
+	private static final String _INDEX_DATE_FORMAT_PATTERN = PropsUtil.get(
+		PropsKeys.INDEX_DATE_FORMAT_PATTERN);
+
+	private static DateFormat _dateFormat =
+		(DateFormat)FastDateFormatFactoryUtil.getSimpleDateFormat(
+			_INDEX_DATE_FORMAT_PATTERN);
 
 	private static Log _log = LogFactoryUtil.getLog(TrashUtil.class);
 

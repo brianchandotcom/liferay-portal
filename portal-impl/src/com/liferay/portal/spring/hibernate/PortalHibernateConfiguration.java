@@ -38,6 +38,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 
+import org.hibernate.dialect.Dialect;
+
 import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
 
 /**
@@ -69,8 +71,8 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 		_hibernateConfigurationConverter = hibernateConfigurationConverter;
 	}
 
-	protected String determineDialect() {
-		return DialectDetector.determineDialect(getDataSource());
+	protected Dialect determineDialect() {
+		return DialectDetector.getDialect(getDataSource());
 	}
 
 	protected ClassLoader getConfigurationClassLoader() {
@@ -104,9 +106,13 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 			configuration.setProperties(PropsUtil.getProperties());
 
 			if (Validator.isNull(PropsValues.HIBERNATE_DIALECT)) {
-				String dialect = determineDialect();
+				Dialect dialect = determineDialect();
 
-				configuration.setProperty("hibernate.dialect", dialect);
+				setDB(dialect);
+
+				String dialectName = dialect.getClass().getName();
+
+				configuration.setProperty("hibernate.dialect", dialectName);
 			}
 
 			DB db = DBFactoryUtil.getDB();
@@ -179,6 +185,10 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 		configuration = configuration.addInputStream(is);
 
 		is.close();
+	}
+
+	protected void setDB(Dialect dialect) {
+		DBFactoryUtil.setDB(dialect);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

@@ -40,10 +40,29 @@ public class DuplicateTrashEntryException extends PortalException {
 	public long getDuplicateEntryId() {
 		return _duplicateEntryId;
 	}
+
+	public String getOldName() {
+		return _oldName;
+	}
+
+	public long getTrashEntryId() {
+		return _trashEntryId;
+	}
+
 	public void setDuplicateEntryId(long duplicateEntryId) {
 		_duplicateEntryId = duplicateEntryId;
 	}
 
+	public void setOldName(String oldName) {
+		_oldName = oldName;
+	}
+
+	public void setTrashEntryId(long trashEntryId) {
+		_trashEntryId = trashEntryId;
+	}
+
 	private long _duplicateEntryId;
+	private String _oldName;
+	private long _trashEntryId;
 
 }

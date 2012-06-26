@@ -21,11 +21,14 @@ import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.service.RepositoryServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
 import com.liferay.portlet.trash.DuplicateTrashEntryException;
 import com.liferay.portlet.trash.model.TrashEntry;
 
@@ -39,7 +42,7 @@ public class DLFileEntryTrashHandler extends BaseTrashHandler {
 
 	public static final String CLASS_NAME = DLFileEntry.class.getName();
 
-	public void checkDuplicateEntry(TrashEntry entry)
+	public void checkDuplicateEntry(TrashEntry entry, String newName)
 		throws DuplicateTrashEntryException {
 
 		DLFileEntry duplicatedFileEntry = null;
@@ -48,11 +51,16 @@ public class DLFileEntryTrashHandler extends BaseTrashHandler {
 			DLFileEntry dlFileEntry = getDLFileEntry(entry.getClassPK());
 
 			String restoredTitle = dlFileEntry.getTitle();
+
+			if (Validator.isNotNull(newName)) {
+				restoredTitle = newName;
+			}
+
 			String originalTitle = restoredTitle;
 
 			if (restoredTitle.indexOf(StringPool.FORWARD_SLASH) > 0) {
-				originalTitle = restoredTitle.substring(0,
-					restoredTitle.indexOf(StringPool.FORWARD_SLASH));
+				originalTitle = restoredTitle.substring(
+					0, restoredTitle.indexOf(StringPool.FORWARD_SLASH));
 			}
 
 			duplicatedFileEntry =
@@ -68,7 +76,9 @@ public class DLFileEntryTrashHandler extends BaseTrashHandler {
 			DuplicateTrashEntryException dtee =
 				new DuplicateTrashEntryException();
 
-			dtee.setDuplicateEntryId(entry.getEntryId());
+			dtee.setDuplicateEntryId(duplicatedFileEntry.getFileEntryId());
+			dtee.setOldName(duplicatedFileEntry.getTitle());
+			dtee.setTrashEntryId(entry.getEntryId());
 
 			throw dtee;
 		}
@@ -114,19 +124,21 @@ public class DLFileEntryTrashHandler extends BaseTrashHandler {
 	}
 
 	public void updateEntryTitle(long classPK, String name)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		DLFileEntry dlFileEntry = getDLFileEntry(classPK);
+		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
 
 		if (dlFileEntry != null) {
 			dlFileEntry.setTitle(name);
+			dlFileVersion.setTitle(name);
 		}
 
 		DLFileEntryLocalServiceUtil.updateDLFileEntry(dlFileEntry, false);
+		DLFileVersionLocalServiceUtil.updateDLFileVersion(dlFileVersion, false);
 	}
 
-	protected DLFileEntry getDLFileEntry (long classPK) {
-
+	protected DLFileEntry getDLFileEntry(long classPK) {
 		DLFileEntry dlFileEntry = null;
 
 		try {

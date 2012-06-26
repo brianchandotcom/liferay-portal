@@ -43,7 +43,7 @@ import com.liferay.portlet.trash.model.TrashEntry;
  */
 public abstract class BaseTrashHandler implements TrashHandler {
 
-	public void checkDuplicateEntry(TrashEntry entry)
+	public void checkDuplicateEntry(TrashEntry entry, String newName)
 		throws DuplicateTrashEntryException {
 	}
 
@@ -76,7 +76,9 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		restoreTrashEntries(new long[] {classPK});
 	}
 
-	public void updateEntryTitle(long classPK, String title) throws SystemException {}
+	public void updateEntryTitle(long classPK, String title)
+		throws PortalException, SystemException {
+	}
 
 	private AssetRendererFactory getAssetRendererFactory() {
 		return AssetRendererFactoryRegistryUtil.

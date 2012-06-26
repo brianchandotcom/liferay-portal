@@ -1549,8 +1549,8 @@
 		<put name="portlet_content" value="/portlet/trash/error.jsp" />
 	</definition>
 
-	<definition name="portlet.trash.restore_error" extends="portlet.trash">
-		<put name="portlet_content" value="/portlet/trash/restore_error.jsp" />
+	<definition name="portlet.trash.restore_entry" extends="portlet.trash">
+		<put name="portlet_content" value="/portlet/trash/restore_entry.jsp" />
 	</definition>
 
 	<definition name="portlet.trash.view" extends="portlet.trash">

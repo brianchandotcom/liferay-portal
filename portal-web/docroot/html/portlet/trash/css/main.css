@@ -8,3 +8,21 @@
 		width: 100%;
 	}
 }
+
+.trash-restore-popup {
+	.aui-form {
+		fieldset {
+			margin-bottom: 0px;
+			padding: 0 15px;
+		}
+
+		input[type="text"] {
+			margin-left: 20px;
+			width: 380px;
+		}
+	}
+
+	.portlet-msg-alert {
+		margin: 10px 0;
+	}
+}

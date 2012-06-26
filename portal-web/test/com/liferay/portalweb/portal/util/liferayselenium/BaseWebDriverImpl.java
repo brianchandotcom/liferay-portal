@@ -14,9 +14,17 @@
 
 package com.liferay.portalweb.portal.util.liferayselenium;
 
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portalweb.portal.util.TestPropsValues;
 
+import java.util.Calendar;
+
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 /**
  * @author Brian Wing Shun Chan
@@ -39,27 +47,67 @@ public abstract class BaseWebDriverImpl
 	}
 
 	public String getCurrentDay() {
-		return null;
+		Calendar calendar = Calendar.getInstance();
+
+		return StringUtil.valueOf(calendar.get(Calendar.DATE));
 	}
 
 	public String getCurrentMonth() {
-		return null;
+		Calendar calendar = Calendar.getInstance();
+
+		return StringUtil.valueOf(calendar.get(Calendar.MONTH) + 1);
 	}
 
 	public String getCurrentYear() {
-		return null;
+		Calendar calendar = Calendar.getInstance();
+
+		return StringUtil.valueOf(calendar.get(Calendar.YEAR));
 	}
 
 	public String getFirstNumber(String locator) {
-		return null;
+		String text = getWebElement(locator).getText();
+
+		if (text == null) {
+			return StringPool.BLANK;
+		}
+
+		StringBundler sb = new StringBundler();
+
+		char[] chars = text.toCharArray();
+
+		for (char c : chars) {
+			boolean isDigit = false;
+
+			if (Validator.isDigit(c)) {
+				sb.append(c);
+
+				isDigit = true;
+			}
+
+			if (Validator.isNotNull(sb.toString()) && (isDigit == false)) {
+				break;
+			}
+		}
+
+		return sb.toString();
 	}
 
 	public String getFirstNumberIncrement(String locator) {
-		return null;
+		String firstNumber = getFirstNumber(locator);
+
+		int i = GetterUtil.getInteger(firstNumber);
+
+		int firstNumberIncremented = i + 1;
+
+		return StringUtil.valueOf(firstNumberIncremented);
 	}
 
 	public boolean isPartialText(String locator, String value) {
-		return false;
+		WebElement webElement = getWebElement(locator);
+
+		String text = webElement.getText();
+
+		return text.contains(value);
 	}
 
 	public void saveScreenShotAndSource() throws Exception {

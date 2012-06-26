@@ -86,7 +86,7 @@ portletURL.setParameter("tabs1", tabs1);
 				aproximate = (Boolean)entries[2];
 			}
 
-			if ((total == 0) && (TrashEntryLocalServiceUtil.getEntries(groupId).size() != 0)) {
+			if ((total == 0) && (Validator.isNotNull(searchTerms.getKeywords()))) {
 				searchContainer.setEmptyResultsMessage(LanguageUtil.format(pageContext, "no-entries-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(searchTerms.getKeywords()) + "</strong>"));
 			}
 			%>

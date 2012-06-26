@@ -15,7 +15,7 @@
 package com.liferay.portal.verify;
 
 import com.liferay.portal.NoSuchResourceException;
-import com.liferay.portal.NoSuchResourcePermissionException;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
@@ -47,6 +47,10 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.impl.ResourcePermissionLocalServiceImpl;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsValues;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import java.util.List;
 
@@ -210,74 +214,64 @@ public class VerifyPermission
 	 * permission is given to the owner. See LPS-26191.
 	 */
 	protected void fixLayoutRolePermissions_6() throws Exception {
-		List<String> actionIds = ResourceActionsUtil.getModelResourceActions(
+		List<String> actions = ResourceActionsUtil.getModelResourceActions(
 			Layout.class.getName());
 
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
-			ResourcePermission.class);
+		String[] actionIds = actions.toArray(new String[actions.size()]);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq("name", Layout.class.getName()));
-		dynamicQuery.add(RestrictionsFactoryUtil.ne("scope", SCOPE_INDIVIDUAL));
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
 
-		List<ResourcePermission> resourcePermissions =
-			ResourcePermissionLocalServiceUtil.dynamicQuery(dynamicQuery);
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
 
-		for (ResourcePermission resourcePermission : resourcePermissions) {
-			long companyId = resourcePermission.getCompanyId();
-			String primKey = resourcePermission.getPrimKey();
+			StringBundler sb = new StringBundler(21);
 
-			Role ownerRole = RoleLocalServiceUtil.getRole(
-				companyId, RoleConstants.OWNER);
-			long ownerRoleId = ownerRole.getRoleId();
+			sb.append("select ");
+			sb.append(		"Layout.companyId AS companyId, ");
+			sb.append(		"Layout.plid AS primKey, ");
+			sb.append(		"Role_.roleId AS ownerRoleId ");
+			sb.append(	"from ");
+			sb.append(		"Role_, Layout ");
+			sb.append(	"where ");
+			sb.append(		"Role_.name = ? and ");
+			sb.append(		"Role_.companyId = Layout.companyId and ");
+			sb.append(		"1 > (");
+			sb.append(			"select ");
+			sb.append(				"count(*) ");
+			sb.append(			"from ");
+			sb.append(				"ResourcePermission ");
+			sb.append(			"where ");
+			sb.append(				"ResourcePermission.companyId = ");
+			sb.append(					"Layout.companyId and ");
+			sb.append(				"ResourcePermission.roleId = ");
+			sb.append(					"Role_.roleId and ");
+			sb.append(				"ResourcePermission.primKey = Layout.plid");
+			sb.append(		")");
 
-			try {
-				ResourcePermissionLocalServiceUtil.getResourcePermission(
-					companyId, Layout.class.getName(), SCOPE_INDIVIDUAL,
-					primKey, ownerRoleId);
-			}
-			catch (NoSuchResourcePermissionException nsrpe) {
+			ps = con.prepareStatement(sb.toString());
+
+			ps.setString(1, RoleConstants.OWNER);
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long companyId = rs.getLong("companyId");
+				long ownerRoleId = rs.getLong("ownerRoleId");
+				String primKey = String.valueOf(rs.getLong("primKey"));
+
 				ResourcePermissionLocalServiceUtil.setResourcePermissions(
 					companyId, Layout.class.getName(), SCOPE_INDIVIDUAL,
-					primKey, ownerRoleId,
-					ResourcePermissionLocalServiceImpl.EMPTY_ACTION_IDS);
+					primKey, ownerRoleId, actionIds);
 
 				ResourcePermissionLocalServiceUtil.getResourcePermission(
 					companyId, Layout.class.getName(), SCOPE_INDIVIDUAL,
 					primKey, ownerRoleId);
 			}
-
-			for (String actionId : actionIds) {
-				if (ResourcePermissionLocalServiceUtil.hasResourcePermission(
-						companyId, Layout.class.getName(), SCOPE_INDIVIDUAL,
-						primKey, ownerRoleId, actionId)) {
-
-					try {
-						ResourcePermissionLocalServiceUtil
-							.addResourcePermission(
-								companyId, Layout.class.getName(),
-								SCOPE_INDIVIDUAL, primKey, ownerRoleId,
-								actionId);
-					}
-					catch (Exception e) {
-						if (_log.isWarnEnabled()) {
-							StringBundler sb = new StringBundler(9);
-
-							sb.append("Cannot add resource permission on ");
-							sb.append("Layout for {actionId=");
-							sb.append(actionId);
-							sb.append(", companyId=");
-							sb.append(companyId);
-							sb.append(", role=Owner, scope=individual, ");
-							sb.append("primKey=");
-							sb.append(primKey);
-							sb.append("}");
-
-							_log.warn(sb);
-						}
-					}
-				}
-			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
 		}
 	}
 

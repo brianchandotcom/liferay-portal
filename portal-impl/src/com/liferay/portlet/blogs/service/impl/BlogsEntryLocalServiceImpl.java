@@ -752,6 +752,12 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		int oldStatus = entry.getStatus();
 
+		// Trash
+
+		trashEntryLocalService.addTrashEntry(
+			userId, entry.getGroupId(), BlogsEntry.class.getName(),
+			entry.getEntryId(), oldStatus, null, null);
+
 		updateStatus(
 			userId, entry.getEntryId(), WorkflowConstants.STATUS_IN_TRASH,
 			new ServiceContext());
@@ -762,12 +768,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			userId, entry.getGroupId(), BlogsEntry.class.getName(),
 			entry.getEntryId(), SocialActivityConstants.TYPE_MOVE_TO_TRASH,
 			StringPool.BLANK, 0);
-
-		// Trash
-
-		trashEntryLocalService.addTrashEntry(
-			userId, entry.getGroupId(), BlogsEntry.class.getName(),
-			entry.getEntryId(), oldStatus, null, null);
 
 		// Workflow
 
@@ -1097,15 +1097,15 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			if (status == WorkflowConstants.STATUS_IN_TRASH) {
 				assetEntryLocalService.moveEntryToTrash(
 					BlogsEntry.class.getName(), entryId);
+
+				indexer.reindex(entry);
 			}
 			else {
 				assetEntryLocalService.updateVisible(
 					BlogsEntry.class.getName(), entryId, false);
+
+				indexer.delete(entry);
 			}
-
-			// Indexer
-
-			indexer.delete(entry);
 		}
 
 		return entry;

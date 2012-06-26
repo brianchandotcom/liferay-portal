@@ -18,6 +18,11 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.trash.TrashRenderer;
@@ -155,6 +160,67 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 
 		return new Object[] {
 			filteredEntries, filteredEntriesCount, approximate};
+	}
+
+	/**
+	 * Returns an ordered range of all the trash entries which match the
+	 * keywords and the group ID, using the indexer. It is preferable to use
+	 * this method instead of the non-indexed version whenever possible for
+	 * performance reasons.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link
+	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * result set.
+	 * </p>
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  groupId the primary key of the group
+	 * @param  userId the primary key of the user
+	 * @param  keywords the keywords (space separated), which may occur in the
+	 *         user's first name, middle name, last name, screen name, or email
+	 *         address
+	 * @param  start the lower bound of the range of users
+	 * @param  end the upper bound of the range of users (not inclusive)
+	 * @param  sort the field and direction to sort by (optionally
+	 *         <code>null</code>)
+	 * @return the matching users
+	 * @throws SystemException if a system exception occurred
+	 * @see    com.liferay.portlet.usersadmin.util.UserIndexer
+	 */
+	public Hits search(
+			long companyId, long groupId, long userId, String keywords,
+			int start, int end, Sort sort)
+		throws SystemException {
+
+		try {
+			SearchContext searchContext = new SearchContext();
+
+			searchContext.setEnd(end);
+			searchContext.setStart(start);
+
+			searchContext.setCompanyId(companyId);
+			searchContext.setUserId(userId);
+			searchContext.setGroupIds(new long[] {groupId});
+
+			searchContext.setKeywords(keywords);
+
+			if (sort != null) {
+				searchContext.setSorts(new Sort[] {sort});
+			}
+
+			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+				TrashEntry.class);
+
+			return indexer.search(searchContext);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

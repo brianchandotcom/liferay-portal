@@ -150,9 +150,11 @@ if (!selectableTree) {
 					var childLayouts = [];
 					var total = 0;
 
-					if (node.children) {
-						childLayouts = node.children.layouts;
-						total = node.children.total;
+					var nodeChildren = node.children;
+
+					if (nodeChildren) {
+						childLayouts = nodeChildren.layouts;
+						total = nodeChildren.total;
 					}
 
 					var newNode = {
@@ -183,12 +185,12 @@ if (!selectableTree) {
 						draggable: node.updateable,
 						expanded: childLayouts.length > 0,
 						id: TreeUtil.createListItemId(node.groupId, node.layoutId, node.plid),
-						type: '<%= selectableTree ? "task" : "io" %>',
 						paginator: {
 							limit: TreeUtil.PAGINATION_LIMIT,
 							offsetParam: 'start',
 							total: total
-						}
+						},
+						type: '<%= selectableTree ? "task" : "io" %>'
 					};
 
 					var cssClass = '';

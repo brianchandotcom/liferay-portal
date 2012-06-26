@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 
 import java.io.InputStream;
@@ -163,6 +164,10 @@ public class FileVersionProxyBean
 		return _fileVersion.getTitle();
 	}
 
+	public Folder getTrashFolder() {
+		return _fileVersion.getTrashFolder();
+	}
+
 	public long getUserId() {
 		return _fileVersion.getUserId();
 	}
@@ -205,6 +210,10 @@ public class FileVersionProxyBean
 
 	public boolean isInTrash() {
 		return _fileVersion.isInTrash();
+	}
+
+	public boolean isInTrashFolder() {
+		return _fileVersion.isInTrashFolder();
 	}
 
 	public boolean isPending() {

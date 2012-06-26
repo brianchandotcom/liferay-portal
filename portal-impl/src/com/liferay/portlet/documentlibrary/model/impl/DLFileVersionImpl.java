@@ -18,7 +18,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
@@ -109,6 +111,36 @@ public class DLFileVersionImpl extends DLFileVersionBaseImpl {
 
 	public String getIcon() {
 		return DLUtil.getFileIcon(getExtension());
+	}
+
+	public Folder getTrashFolder() {
+
+		DLFolder dlFolder = getFolder();
+
+		while (dlFolder != null) {
+
+			if (dlFolder.isInTrash()) {
+				return new LiferayFolder(dlFolder);
+			}
+
+			try {
+				dlFolder = dlFolder.getParentFolder();
+			}
+			catch (Exception e) {
+				return null;
+			}
+		}
+
+		return null;
+	}
+
+	public boolean isInTrashFolder() {
+		if (getTrashFolder() != null) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	@Override

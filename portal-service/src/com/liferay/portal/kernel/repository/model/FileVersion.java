@@ -72,6 +72,8 @@ public interface FileVersion extends RepositoryModel<FileVersion> {
 
 	public String getTitle();
 
+	public Folder getTrashFolder();
+
 	public long getUserId();
 
 	public String getUserName();
@@ -91,6 +93,8 @@ public interface FileVersion extends RepositoryModel<FileVersion> {
 	public boolean isExpired();
 
 	public boolean isInTrash();
+
+	public boolean isInTrashFolder();
 
 	public boolean isPending();
 

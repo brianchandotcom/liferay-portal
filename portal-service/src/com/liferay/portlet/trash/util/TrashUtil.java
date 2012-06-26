@@ -15,6 +15,10 @@
 package com.liferay.portlet.trash.util;
 
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.trash.util.comparator.EntryCreateDateComparator;
 import com.liferay.portlet.trash.util.comparator.EntryTypeComparator;
 import com.liferay.portlet.trash.util.comparator.EntryUserNameComparator;
@@ -23,6 +27,18 @@ import com.liferay.portlet.trash.util.comparator.EntryUserNameComparator;
  * @author Sergio González
  */
 public class TrashUtil {
+
+	public static void checkPermission(
+			PermissionChecker permissionChecker, long groupId)
+		throws PrincipalException {
+
+		if (!permissionChecker.hasPermission(
+				groupId, PortletKeys.TRASH, PortletKeys.TRASH,
+				ActionKeys.ACCESS_IN_CONTROL_PANEL)) {
+
+			throw new PrincipalException();
+		}
+	}
 
 	public static OrderByComparator getEntryOrderByComparator(
 		String orderByCol, String orderByType) {

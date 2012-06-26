@@ -120,7 +120,7 @@ public class LayoutsTreeUtil {
 				}
 
 				jsonObject.put(
-					"children", JSONFactoryUtil.createJSONArray(childrenJSON));
+					"children", JSONFactoryUtil.createJSONObject(childrenJSON));
 			}
 
 			jsonObject.put("contentDisplayPage", layout.isContentDisplayPage());
@@ -184,7 +184,12 @@ public class LayoutsTreeUtil {
 			jsonArray.put(jsonObject);
 		}
 
-		return jsonArray.toString();
+		JSONObject responseJSONObject = JSONFactoryUtil.createJSONObject();
+
+		responseJSONObject.put("layouts", jsonArray);
+		responseJSONObject.put("total", layouts.size());
+
+		return responseJSONObject.toString();
 	}
 
 }

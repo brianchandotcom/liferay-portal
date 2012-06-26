@@ -229,5 +229,31 @@ public class AssetEntryServiceSoap {
 		}
 	}
 
+	public static com.liferay.portlet.asset.model.AssetEntrySoap updateEntry(
+		long groupId, java.lang.String className, long classPK,
+		java.lang.String classUuid, long classTypeId, long[] categoryIds,
+		java.lang.String[] tagNames, boolean visible, java.util.Date startDate,
+		java.util.Date endDate, java.util.Date expirationDate,
+		java.lang.String mimeType, java.lang.String title,
+		java.lang.String description, java.lang.String summary,
+		java.lang.String url, java.lang.String layoutUuid, int height,
+		int width, java.lang.Integer priority, boolean sync)
+		throws RemoteException {
+		try {
+			com.liferay.portlet.asset.model.AssetEntry returnValue = AssetEntryServiceUtil.updateEntry(groupId,
+					className, classPK, classUuid, classTypeId, categoryIds,
+					tagNames, visible, startDate, endDate, expirationDate,
+					mimeType, title, description, summary, url, layoutUuid,
+					height, width, priority, sync);
+
+			return com.liferay.portlet.asset.model.AssetEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(AssetEntryServiceSoap.class);
 }

@@ -164,10 +164,9 @@ public class DLAppHelperLocalServiceImpl
 				userId, fileEntry.getGroupId(),
 				DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId(),
 				fileEntry.getUuid(), fileEntryTypeId, assetCategoryIds,
-				assetTagNames, false, null, null, null, null,
-				fileEntry.getMimeType(), fileEntry.getTitle(),
-				fileEntry.getDescription(), null, null, null, 0, 0, null,
-				false);
+				assetTagNames, false, null, null, null, fileEntry.getMimeType(),
+				fileEntry.getTitle(), fileEntry.getDescription(), null, null,
+				null, 0, 0, null, false);
 		}
 
 		AssetEntry fileVersionAssetEntry = assetEntryLocalService.fetchEntry(
@@ -190,7 +189,7 @@ public class DLAppHelperLocalServiceImpl
 				DLFileEntryConstants.getClassName(),
 				fileVersion.getFileVersionId(), fileEntry.getUuid(),
 				fileEntryTypeId, assetCategoryIds, assetTagNames, false, null,
-				null, null, null, fileEntry.getMimeType(), fileEntry.getTitle(),
+				null, null, fileEntry.getMimeType(), fileEntry.getTitle(),
 				fileEntry.getDescription(), null, null, null, 0, 0, null,
 				false);
 
@@ -689,7 +688,7 @@ public class DLAppHelperLocalServiceImpl
 				DLFileEntryConstants.getClassName(),
 				fileVersion.getFileVersionId(), fileEntry.getUuid(),
 				fileEntryTypeId, assetCategoryIds, assetTagNames, false, null,
-				null, null, null, fileEntry.getMimeType(), fileEntry.getTitle(),
+				null, null, fileEntry.getMimeType(), fileEntry.getTitle(),
 				fileEntry.getDescription(), null, null, null, 0, 0, null,
 				false);
 		}
@@ -698,7 +697,7 @@ public class DLAppHelperLocalServiceImpl
 				userId, fileEntry.getGroupId(),
 				DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId(),
 				fileEntry.getUuid(), fileEntryTypeId, assetCategoryIds,
-				assetTagNames, visible, null, null, null, null,
+				assetTagNames, visible, null, null, null,
 				fileEntry.getMimeType(), fileEntry.getTitle(),
 				fileEntry.getDescription(), null, null, null, 0, 0, null,
 				false);
@@ -713,7 +712,7 @@ public class DLAppHelperLocalServiceImpl
 					DLFileShortcut.class.getName(),
 					dlFileShortcut.getFileShortcutId(),
 					dlFileShortcut.getUuid(), fileEntryTypeId, assetCategoryIds,
-					assetTagNames, true, null, null, null, null,
+					assetTagNames, true, null, null, null,
 					fileEntry.getMimeType(), fileEntry.getTitle(),
 					fileEntry.getDescription(), null, null, null, 0, 0, null,
 					false);
@@ -818,7 +817,7 @@ public class DLAppHelperLocalServiceImpl
 								DLFileEntryConstants.getClassName(),
 								fileEntry.getFileEntryId(), fileEntry.getUuid(),
 								fileEntryTypeId, assetCategoryIds,
-								assetTagNames, true, null, null, null, null,
+								assetTagNames, true, null, null, null,
 								draftAssetEntry.getMimeType(),
 								fileEntry.getTitle(),
 								fileEntry.getDescription(), null, null, null, 0,

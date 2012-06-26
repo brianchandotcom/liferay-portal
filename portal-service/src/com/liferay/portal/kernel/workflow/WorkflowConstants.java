@@ -79,8 +79,6 @@ public class WorkflowConstants {
 
 	public static final int STATUS_DRAFT = 2;
 
-	public static final int STATUS_DRAFT_FROM_APPROVED = 7;
-
 	public static final int STATUS_EXPIRED = 3;
 
 	public static final int STATUS_IN_TRASH = 8;

@@ -1533,7 +1533,7 @@ public class OrganizationLocalServiceImpl
 		assetEntryLocalService.updateEntry(
 			userId, companyGroup.getGroupId(), Organization.class.getName(),
 			organization.getOrganizationId(), null, 0, assetCategoryIds,
-			assetTagNames, false, null, null, null, null, null,
+			assetTagNames, false, null, null, null, null,
 			organization.getName(), StringPool.BLANK, null, null, null, 0, 0,
 			null, false);
 	}

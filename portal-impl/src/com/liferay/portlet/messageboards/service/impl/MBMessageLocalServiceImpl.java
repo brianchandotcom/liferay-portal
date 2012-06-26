@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -1379,9 +1380,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 			if (message.isDraft() || message.isPending()) {
 			}
-			else if (message.isApproved()) {
-				message.setStatus(WorkflowConstants.STATUS_DRAFT_FROM_APPROVED);
-			}
 			else {
 				message.setStatus(WorkflowConstants.STATUS_DRAFT);
 			}
@@ -1464,10 +1462,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		expandoBridge.setAttributes(serviceContext);
 
 		// Workflow
-
-		if (message.getStatus() != WorkflowConstants.STATUS_DRAFT) {
-			serviceContext.setAttribute("update", Boolean.TRUE.toString());
-		}
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
 			companyId, message.getGroupId(), userId,
@@ -1579,14 +1573,28 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 					((message.getClassNameId() == 0) ||
 					 (message.getParentMessageId() != 0))) {
 
-					assetEntryLocalService.updateVisible(
+					Date publishDate = null;
+
+					AssetEntry assetEntry = assetEntryLocalService.fetchEntry(
+						message.getWorkflowClassName(), message.getMessageId());
+
+					if ((assetEntry != null) &&
+						(assetEntry.getPublishDate() != null)) {
+
+						publishDate = assetEntry.getPublishDate();
+					}
+					else {
+						publishDate = now;
+
+						serviceContext.setCommand(Constants.ADD);
+					}
+
+					assetEntryLocalService.updateEntry(
 						message.getWorkflowClassName(), message.getMessageId(),
-						true);
+						publishDate, true);
 				}
 
-				boolean update = ParamUtil.getBoolean(serviceContext, "update");
-
-				if (!update) {
+				if (serviceContext.isCommandAdd()) {
 
 					// Social
 
@@ -1877,11 +1885,11 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				defaultPreferences);
 		}
 
-		boolean update = ParamUtil.getBoolean(serviceContext, "update");
-
-		if (!update && MBUtil.getEmailMessageAddedEnabled(preferences)) {
+		if (serviceContext.isCommandAdd() &&
+			MBUtil.getEmailMessageAddedEnabled(preferences)) {
 		}
-		else if (update && MBUtil.getEmailMessageUpdatedEnabled(preferences)) {
+		else if (serviceContext.isCommandUpdate() &&
+				 MBUtil.getEmailMessageUpdatedEnabled(preferences)) {
 		}
 		else {
 			return;
@@ -1947,7 +1955,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		String body = null;
 		String signature = null;
 
-		if (update) {
+		if (serviceContext.isCommandUpdate()) {
 			subjectPrefix = MBUtil.getEmailMessageUpdatedSubjectPrefix(
 				preferences);
 			body = MBUtil.getEmailMessageUpdatedBody(preferences);
@@ -2123,9 +2131,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		AssetEntry assetEntry = assetEntryLocalService.updateEntry(
 			userId, message.getGroupId(), message.getWorkflowClassName(),
 			message.getMessageId(), message.getUuid(), 0, assetCategoryIds,
-			assetTagNames, visible, null, null, null, null,
-			ContentTypes.TEXT_HTML, message.getSubject(), null, null, null,
-			null, 0, 0, null, false);
+			assetTagNames, visible, null, null, null, ContentTypes.TEXT_HTML,
+			message.getSubject(), null, null, null, null, 0, 0, null, false);
 
 		assetLinkLocalService.updateLinks(
 			userId, assetEntry.getEntryId(), assetLinkEntryIds,

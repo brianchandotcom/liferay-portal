@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -35,8 +36,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
-import com.liferay.portal.kernel.workflow.WorkflowInstance;
-import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
@@ -67,7 +66,6 @@ import com.liferay.portlet.trash.model.TrashEntry;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -752,6 +750,12 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		int oldStatus = entry.getStatus();
 
+		if (oldStatus == WorkflowConstants.STATUS_PENDING) {
+			entry.setStatus(WorkflowConstants.STATUS_DRAFT);
+
+			blogsEntryPersistence.update(entry, false);
+		}
+
 		updateStatus(
 			userId, entry.getEntryId(), WorkflowConstants.STATUS_IN_TRASH,
 			new ServiceContext());
@@ -767,7 +771,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		trashEntryLocalService.addTrashEntry(
 			userId, entry.getGroupId(), BlogsEntry.class.getName(),
-			entry.getEntryId(), oldStatus, null, null);
+			entry.getEntryId(), entry.getStatus(), null, null);
 
 		// Workflow
 
@@ -777,28 +781,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 					entry.getCompanyId(), entry.getGroupId(),
 					BlogsEntry.class.getName(), entry.getEntryId());
 
-			WorkflowInstance workflowInstance =
-				WorkflowInstanceManagerUtil.getWorkflowInstance(
-					entry.getCompanyId(),
-					workflowInstanceLink.getWorkflowInstanceId());
-
-			Map<String, Serializable> workflowContext =
-				workflowInstance.getWorkflowContext();
-
-			ServiceContext serviceContext = (ServiceContext)workflowContext.get(
-				WorkflowConstants.CONTEXT_SERVICE_CONTEXT);
-
-			boolean update = ParamUtil.getBoolean(serviceContext, "update");
-
-			if (update) {
-				entry.setStatus(WorkflowConstants.STATUS_DRAFT_FROM_APPROVED);
-			}
-			else {
-				entry.setStatus(WorkflowConstants.STATUS_DRAFT);
-			}
-
 			workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(
-				workflowInstanceLink.getWorkflowInstanceId());
+				workflowInstanceLink.getWorkflowInstanceLinkId());
 		}
 
 		return entry;
@@ -869,9 +853,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		AssetEntry assetEntry = assetEntryLocalService.updateEntry(
 			userId, entry.getGroupId(), BlogsEntry.class.getName(),
 			entry.getEntryId(), entry.getUuid(), 0, assetCategoryIds,
-			assetTagNames, visible, null, null, entry.getDisplayDate(), null,
-			ContentTypes.TEXT_HTML, entry.getTitle(), null, summary, null, null,
-			0, 0, null, false);
+			assetTagNames, visible, null, null, null, ContentTypes.TEXT_HTML,
+			entry.getTitle(), null, summary, null, null, 0, 0, null, false);
 
 		assetLinkLocalService.updateLinks(
 			userId, assetEntry.getEntryId(), assetLinkEntryIds,
@@ -934,9 +917,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		if (entry.isPending() || entry.isDraft()) {
 		}
-		else if (entry.isApproved()) {
-			entry.setStatus(WorkflowConstants.STATUS_DRAFT_FROM_APPROVED);
-		}
 		else {
 			entry.setStatus(WorkflowConstants.STATUS_DRAFT);
 		}
@@ -976,10 +956,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		serviceContext.setAttribute(
 			"pingOldTrackbacks", String.valueOf(pingOldTrackbacks));
-
-		if (entry.getStatus() != WorkflowConstants.STATUS_DRAFT) {
-			serviceContext.setAttribute("update", Boolean.TRUE.toString());
-		}
 
 		if (Validator.isNotNull(trackbacks)) {
 			serviceContext.setAttribute("trackbacks", trackbacks);
@@ -1038,32 +1014,34 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			BlogsEntry.class);
 
 		if (status == WorkflowConstants.STATUS_APPROVED) {
-			if (oldStatus != WorkflowConstants.STATUS_APPROVED) {
 
-				// Asset
+			// Asset
 
-				assetEntryLocalService.updateVisible(
-					BlogsEntry.class.getName(), entryId, true);
+			AssetEntry assetEntry = assetEntryLocalService.fetchEntry(
+				BlogsEntry.class.getName(), entryId);
 
-				// Social
+			if ((assetEntry == null) || (assetEntry.getPublishDate() == null)) {
+				serviceContext.setCommand(Constants.ADD);
+			}
 
-				if (oldStatus != WorkflowConstants.STATUS_IN_TRASH) {
-					boolean update = ParamUtil.getBoolean(
-						serviceContext, "update");
+			assetEntryLocalService.updateEntry(
+				BlogsEntry.class.getName(), entryId, entry.getDisplayDate(),
+				true);
 
-					if (update) {
-						socialActivityLocalService.addActivity(
-							user.getUserId(), entry.getGroupId(),
-							BlogsEntry.class.getName(), entryId,
-							BlogsActivityKeys.UPDATE_ENTRY, StringPool.BLANK,
-							0);
-					}
-					else {
-						socialActivityLocalService.addUniqueActivity(
-							user.getUserId(), entry.getGroupId(),
-							BlogsEntry.class.getName(), entryId,
-							BlogsActivityKeys.ADD_ENTRY, StringPool.BLANK, 0);
-					}
+			// Social
+
+			if (oldStatus != WorkflowConstants.STATUS_IN_TRASH) {
+				if (serviceContext.isCommandUpdate()) {
+					socialActivityLocalService.addActivity(
+						user.getUserId(), entry.getGroupId(),
+						BlogsEntry.class.getName(), entryId,
+						BlogsActivityKeys.UPDATE_ENTRY, StringPool.BLANK, 0);
+				}
+				else {
+					socialActivityLocalService.addUniqueActivity(
+						user.getUserId(), entry.getGroupId(),
+						BlogsEntry.class.getName(), entryId,
+						BlogsActivityKeys.ADD_ENTRY, StringPool.BLANK, 0);
 				}
 			}
 
@@ -1224,7 +1202,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			BlogsUtil.getEmailEntryAddedEnabled(preferences)) {
 		}
 		else if (serviceContext.isCommandUpdate() &&
-				 BlogsUtil.getEmailEntryUpdatedEnabled(preferences)) {
+			BlogsUtil.getEmailEntryUpdatedEnabled(preferences)) {
 		}
 		else {
 			return;

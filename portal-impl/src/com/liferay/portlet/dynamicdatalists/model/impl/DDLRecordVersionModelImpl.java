@@ -443,8 +443,7 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 	}
 
 	public boolean isDraft() {
-		if ((getStatus() == WorkflowConstants.STATUS_DRAFT) ||
-				(getStatus() == WorkflowConstants.STATUS_DRAFT_FROM_APPROVED)) {
+		if (getStatus() == WorkflowConstants.STATUS_DRAFT) {
 			return true;
 		}
 		else {

@@ -636,10 +636,10 @@ public class UserServiceWrapper implements UserService,
 	}
 
 	public java.util.List<com.liferay.portal.model.User> getUserGroupUsers(
-		long groupId)
+		long userGroupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _userService.getUserGroupUsers(groupId);
+		return _userService.getUserGroupUsers(userGroupId);
 	}
 
 	/**

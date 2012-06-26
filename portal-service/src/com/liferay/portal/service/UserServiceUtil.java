@@ -647,10 +647,10 @@ public class UserServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.model.User> getUserGroupUsers(
-		long groupId)
+		long userGroupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getUserGroupUsers(groupId);
+		return getService().getUserGroupUsers(userGroupId);
 	}
 
 	/**

@@ -36,7 +36,6 @@ import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Phone;
 import com.liferay.portal.model.Role;
-import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.UserGroupRole;
@@ -637,9 +636,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	public List<User> getCompanyUsers(long companyId, int start, int end)
 		throws PortalException, SystemException {
 
-		if (!roleLocalService.hasUserRole(
-				getUserId(), companyId, RoleConstants.ADMINISTRATOR, true)) {
-
+		if (!getPermissionChecker().isCompanyAdmin(companyId)) {
 			throw new PrincipalException();
 		}
 
@@ -649,9 +646,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	public int getCompanyUsersCount(long companyId)
 			throws PortalException, SystemException {
 
-		if (!roleLocalService.hasUserRole(
-				getUserId(), companyId, RoleConstants.ADMINISTRATOR, true)) {
-
+		if (!getPermissionChecker().isCompanyAdmin(companyId)) {
 			throw new PrincipalException();
 		}
 
@@ -812,13 +807,13 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		return user;
 	}
 
-	public List<User> getUserGroupUsers(long groupId)
+	public List<User> getUserGroupUsers(long userGroupId)
 		throws PortalException, SystemException {
 
-		GroupPermissionUtil.check(
-			getPermissionChecker(), groupId, ActionKeys.VIEW_MEMBERS);
+		UserGroupPermissionUtil.check(
+			getPermissionChecker(), userGroupId, ActionKeys.VIEW_MEMBERS);
 
-		return userLocalService.getUserGroupUsers(groupId);
+		return userLocalService.getUserGroupUsers(userGroupId);
 	}
 
 	/**

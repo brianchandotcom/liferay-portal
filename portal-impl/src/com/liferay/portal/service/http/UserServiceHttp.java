@@ -938,14 +938,15 @@ public class UserServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.portal.model.User> getUserGroupUsers(
-		HttpPrincipal httpPrincipal, long groupId)
+		HttpPrincipal httpPrincipal, long userGroupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(UserServiceUtil.class.getName(),
 					"getUserGroupUsers", _getUserGroupUsersParameterTypes23);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					userGroupId);
 
 			Object returnObj = null;
 

@@ -27,6 +27,7 @@ import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.RoleServiceUtil;
 import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
+import com.liferay.portal.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
@@ -69,6 +70,9 @@ public class ActionUtil {
 
 				if (GroupPermissionUtil.contains(
 						permissionChecker, organizationGroupId,
+						ActionKeys.ASSIGN_USER_ROLES) ||
+					OrganizationPermissionUtil.contains(
+						permissionChecker, organizationId,
 						ActionKeys.ASSIGN_USER_ROLES) ||
 					UserGroupRoleLocalServiceUtil.hasUserGroupRole(
 						themeDisplay.getUserId(), organizationGroupId,

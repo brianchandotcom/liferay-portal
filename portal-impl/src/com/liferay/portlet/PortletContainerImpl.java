@@ -27,11 +27,13 @@ import com.liferay.portal.kernel.portlet.WindowStateFactory;
 import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.StringServletResponse;
+import com.liferay.portal.kernel.struts.LastPath;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -401,6 +403,30 @@ public class PortletContainerImpl implements PortletContainer {
 		Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);
 
 		String portletId = portlet.getPortletId();
+
+		if (!PortalUtil.isAllowAddPortletDefaultResource(request, portlet)) {
+			if (_log.isErrorEnabled()) {
+				String url = request.getRequestURI().toString();
+				LastPath lastPath = (LastPath) request.getAttribute(
+					WebKeys.LAST_PATH);
+
+				if (lastPath != null) {
+					StringBundler lastPathSB = new StringBundler(4);
+
+					lastPathSB.append(PortalUtil.getPortalURL(request));
+					lastPathSB.append(lastPath.getContextPath());
+					lastPathSB.append(lastPath.getPath());
+
+					url = lastPathSB.toString();
+				}
+
+				_log.error("Portlet default resource check denied to execute " +
+					"processAction [portletId, page url]: [" + portletId +
+					", " + url + "]");
+			}
+
+			return;
+		}
 
 		WindowState windowState = WindowStateFactory.getWindowState(
 			ParamUtil.getString(request, "p_p_state"));
@@ -815,6 +841,32 @@ public class PortletContainerImpl implements PortletContainer {
 
 		String portletId = portlet.getPortletId();
 
+		Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);
+
+		if (!PortalUtil.isAllowAddPortletDefaultResource(request, portlet)) {
+			if (_log.isErrorEnabled()) {
+				String url = request.getRequestURI().toString();
+				LastPath lastPath = (LastPath) request.getAttribute(
+					WebKeys.LAST_PATH);
+
+				if (lastPath != null) {
+					StringBundler lastPathSB = new StringBundler(4);
+
+					lastPathSB.append(PortalUtil.getPortalURL(request));
+					lastPathSB.append(lastPath.getContextPath());
+					lastPathSB.append(lastPath.getPath());
+
+					url = lastPathSB.toString();
+				}
+
+				_log.error("Portlet default resource check denied to execute " +
+					"serveResource [portletId, page url]: [" + portletId +
+					", " + url + "]");
+			}
+
+			return;
+		}
+
 		WindowState windowState =
 			(WindowState)request.getAttribute(WebKeys.WINDOW_STATE);
 
@@ -852,8 +904,6 @@ public class PortletContainerImpl implements PortletContainer {
 			WebKeys.THEME_DISPLAY);
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);
 
 		String portletPrimaryKey = PortletPermissionUtil.getPrimaryKey(
 			layout.getPlid(), portletId);

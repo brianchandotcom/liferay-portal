@@ -744,13 +744,10 @@ public class PortletURLImpl
 		Portlet portlet = (Portlet)_request.getAttribute(
 			WebKeys.RENDER_PORTLET);
 
-		if (portlet == null) {
-			return;
-		}
-
-		if (portlet.getPortletId().equals(_portletId) ||
-			!_portlet.isAddDefaultResource() ||
-			portlet.getPortletId().equals(PortletKeys.CONTROL_PANEL_MENU)) {
+		if ((portlet != null) &&
+			(portlet.getPortletId().equals(_portletId) ||
+			 portlet.getPortletId().equals(PortletKeys.CONTROL_PANEL_MENU) ||
+			 (!_portlet.isAddDefaultResource()))) {
 
 			return;
 		}
@@ -1017,10 +1014,10 @@ public class PortletURLImpl
 
 			name = prependNamespace(name);
 
-			for (int i = 0; i < values.length; i++) {
+			for (String value : values) {
 				sb.append(name);
 				sb.append(StringPool.EQUAL);
-				sb.append(processValue(key, values[i]));
+				sb.append(processValue(key, value));
 				sb.append(StringPool.AMPERSAND);
 			}
 		}
@@ -1184,10 +1181,10 @@ public class PortletURLImpl
 
 			name = prependNamespace(name);
 
-			for (int i = 0; i < values.length; i++) {
+			for (String value : values) {
 				parameterSb.append(name);
 				parameterSb.append(StringPool.EQUAL);
-				parameterSb.append(HttpUtil.encodeURL(values[i]));
+				parameterSb.append(HttpUtil.encodeURL(value));
 				parameterSb.append(StringPool.AMPERSAND);
 			}
 		}

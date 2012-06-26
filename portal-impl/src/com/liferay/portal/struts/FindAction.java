@@ -158,6 +158,17 @@ public abstract class FindAction extends Action {
 			plid = PortalUtil.getPlidFromPortletId(groupId, portletId);
 
 			if (plid != LayoutConstants.DEFAULT_PLID) {
+				Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+
+				LayoutTypePortlet layoutTypePortlet =
+					(LayoutTypePortlet)layout.getLayoutType();
+
+				for (String curPortletId :layoutTypePortlet.getPortletIds()) {
+					if (curPortletId.startsWith(portletId)) {
+						portletId = curPortletId;
+					}
+				}
+
 				return new Object[] {plid, portletId};
 			}
 		}

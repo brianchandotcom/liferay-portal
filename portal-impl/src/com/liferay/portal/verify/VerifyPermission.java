@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Organization;
@@ -216,9 +217,7 @@ public class VerifyPermission
 		List<String> actions = ResourceActionsUtil.getModelResourceActions(
 			Layout.class.getName());
 
-		String[] actionIds = new String[actions.size()];
-
-		actions.toArray(actionIds);
+		String[] actionIds = actions.toArray(new String[actions.size()]);
 
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -227,17 +226,31 @@ public class VerifyPermission
 		try {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
-			ps = con.prepareStatement(
-				"select l.companyId companyId, l.plid plid, r.roleId roleId " +
-				"from Role_ r, Layout l where " +
-				"r.name = ? " +
-				"and r.companyId = l.companyId " +
-				"and not exists (" +
-				"select * from ResourcePermission rp where " +
-				"rp.companyId = l.companyId " +
-				"and rp.roleId = r.roleId " +
-				"and rp.primKey = l.plid " +
-				")");
+			StringBundler sb = new StringBundler(21);
+
+			sb.append("select ");
+			sb.append(		"Layout.companyId AS companyId, ");
+			sb.append(		"Layout.plid AS primKey, ");
+			sb.append(		"Role_.roleId AS ownerRoleId ");
+			sb.append(	"from ");
+			sb.append(		"Role_, Layout ");
+			sb.append(	"where ");
+			sb.append(		"Role_.name = ? and ");
+			sb.append(		"Role_.companyId = Layout.companyId and ");
+			sb.append(		"1 > (");
+			sb.append(			"select ");
+			sb.append(				"count(*) ");
+			sb.append(			"from ");
+			sb.append(				"ResourcePermission ");
+			sb.append(			"where ");
+			sb.append(				"ResourcePermission.companyId = ");
+			sb.append(					"Layout.companyId and ");
+			sb.append(				"ResourcePermission.roleId = ");
+			sb.append(					"Role_.roleId and ");
+			sb.append(				"ResourcePermission.primKey = Layout.plid");
+			sb.append(		")");
+
+			ps = con.prepareStatement(sb.toString());
 
 			ps.setString(1, RoleConstants.OWNER);
 
@@ -245,8 +258,8 @@ public class VerifyPermission
 
 			while (rs.next()) {
 				long companyId = rs.getLong("companyId");
-				long ownerRoleId = rs.getLong("roleId");
-				String primKey = Long.toString(rs.getLong("plid"));
+				long ownerRoleId = rs.getLong("ownerRoleId");
+				String primKey = String.valueOf(rs.getLong("primKey"));
 
 				ResourcePermissionLocalServiceUtil.setResourcePermissions(
 					companyId, Layout.class.getName(), SCOPE_INDIVIDUAL,

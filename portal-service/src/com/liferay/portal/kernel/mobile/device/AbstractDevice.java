@@ -34,7 +34,7 @@ public abstract class AbstractDevice implements Device {
 		sb.append(getBrowser());
 		sb.append(", browserVersion=");
 		sb.append(getBrowserVersion());
-		sb.append(", capabiltiies=");
+		sb.append(", capabilities=");
 		sb.append(getCapabilities());
 		sb.append(", model=");
 		sb.append(getModel());

@@ -418,7 +418,6 @@ public class JournalArticleLocalServiceImpl
 		Set<Long> companyIds = new HashSet<Long>();
 
 		for (JournalArticle article : articles) {
-
 			if (PropsValues.JOURNAL_ARTICLE_EXPIRE_ALL_VERSIONS) {
 				List<JournalArticle> versionedArticles =
 					journalArticlePersistence.findByG_A(
@@ -427,11 +426,10 @@ public class JournalArticleLocalServiceImpl
 						new ArticleVersionComparator(true));
 
 				for (JournalArticle versionedArticle : versionedArticles) {
-					versionedArticle.setStatus(
-						WorkflowConstants.STATUS_EXPIRED);
-
 					versionedArticle.setExpirationDate(
 						article.getExpirationDate());
+					versionedArticle.setStatus(
+						WorkflowConstants.STATUS_EXPIRED);
 
 					journalArticlePersistence.update(versionedArticle, false);
 				}

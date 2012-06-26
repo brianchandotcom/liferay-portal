@@ -418,15 +418,28 @@ public class JournalArticleLocalServiceImpl
 		Set<Long> companyIds = new HashSet<Long>();
 
 		for (JournalArticle article : articles) {
-			article.setStatus(WorkflowConstants.STATUS_EXPIRED);
 
-			journalArticlePersistence.update(article, false);
+			if (PropsValues.JOURNAL_ARTICLE_EXPIRE_ALL_VERSIONS) {
+				List<JournalArticle> versionedArticles =
+					journalArticlePersistence.findByG_A(
+						article.getGroupId(), article.getArticleId(),
+						QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+						new ArticleVersionComparator(true));
 
-			if (article.isIndexable()) {
-				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-					JournalArticle.class);
+				for (JournalArticle versionedArticle : versionedArticles) {
+					versionedArticle.setStatus(
+						WorkflowConstants.STATUS_EXPIRED);
 
-				indexer.delete(article);
+					versionedArticle.setExpirationDate(
+						article.getExpirationDate());
+
+					journalArticlePersistence.update(versionedArticle, false);
+				}
+			}
+			else {
+				article.setStatus(WorkflowConstants.STATUS_EXPIRED);
+
+				journalArticlePersistence.update(article, false);
 			}
 
 			updatePreviousApprovedArticle(article);

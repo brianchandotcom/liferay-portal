@@ -621,4 +621,5 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			userId, groupId, articleId, version, status, articleURL,
 			serviceContext);
 	}
+
 }

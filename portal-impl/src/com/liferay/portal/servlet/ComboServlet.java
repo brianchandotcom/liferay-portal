@@ -14,6 +14,8 @@
 
 package com.liferay.portal.servlet;
 
+import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -26,6 +28,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.servlet.filters.dynamiccss.DynamicCSSUtil;
 import com.liferay.portal.util.MinifierUtil;
@@ -35,10 +38,11 @@ import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 
 import java.util.Arrays;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -84,6 +88,14 @@ public class ComboServlet extends HttpServlet {
 			return;
 		}
 
+		Set<String> modulePathSet = new HashSet<String>(modulePaths.length);
+
+		for (String path : modulePaths) {
+			modulePathSet.add(path);
+		}
+
+		modulePaths = modulePathSet.toArray(new String[modulePathSet.size()]);
+
 		Arrays.sort(modulePaths);
 
 		String modulePathsString = null;
@@ -93,7 +105,7 @@ public class ComboServlet extends HttpServlet {
 		if (!PropsValues.COMBO_CHECK_TIMESTAMP) {
 			modulePathsString = Arrays.toString(modulePaths);
 
-			bytesArray = _byteArrays.get(modulePathsString);
+			bytesArray = (byte[][])_byteArraysCache.get(modulePathsString);
 		}
 
 		String firstModulePath = modulePaths[0];
@@ -113,15 +125,21 @@ public class ComboServlet extends HttpServlet {
 				}
 			}
 
+			if (!minifierType.equals("js") && !minifierType.equals("css")) {
+				minifierType = "js";
+			}
+
 			int length = modulePaths.length;
 
 			bytesArray = new byte[length][];
 
 			for (String modulePath : modulePaths) {
 				if (!validateModuleExtension(modulePath)) {
-					PortalUtil.sendError(
-						HttpServletResponse.SC_NOT_FOUND, new IOException(),
-						request, response);
+					response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+
+					response.setHeader(
+						HttpHeaders.CACHE_CONTROL,
+						HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE);
 
 					return;
 				}
@@ -132,6 +150,16 @@ public class ComboServlet extends HttpServlet {
 					modulePath = StringUtil.replaceFirst(
 						p.concat(modulePath), contextPath, StringPool.BLANK);
 
+					if (getFile(modulePath) == null) {
+						response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+
+						response.setHeader(
+							HttpHeaders.CACHE_CONTROL,
+							HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE);
+
+						return;
+					}
+
 					bytes = getFileContent(
 						request, response, modulePath, minifierType);
 				}
@@ -139,8 +167,10 @@ public class ComboServlet extends HttpServlet {
 				bytesArray[--length] = bytes;
 			}
 
-			if (modulePathsString != null) {
-				_byteArrays.put(modulePathsString, bytesArray);
+			if ((modulePathsString != null) &&
+				!PropsValues.COMBO_CHECK_TIMESTAMP) {
+
+				_byteArraysCache.put(modulePathsString, bytesArray);
 			}
 		}
 
@@ -207,7 +237,8 @@ public class ComboServlet extends HttpServlet {
 		String fileContentKey = path.concat(StringPool.QUESTION).concat(
 			minifierType);
 
-		FileContentBag fileContentBag = _fileContentBags.get(fileContentKey);
+		FileContentBag fileContentBag =
+			(FileContentBag)_fileContentBagCache.get(fileContentKey);
 
 		if ((fileContentBag != null) && !PropsValues.COMBO_CHECK_TIMESTAMP) {
 			return fileContentBag._fileContent;
@@ -226,7 +257,7 @@ public class ComboServlet extends HttpServlet {
 				return fileContentBag._fileContent;
 			}
 			else {
-				_fileContentBags.remove(fileContentKey, fileContentBag);
+				_fileContentBagCache.remove(fileContentKey);
 			}
 		}
 
@@ -273,11 +304,12 @@ public class ComboServlet extends HttpServlet {
 				file.lastModified());
 		}
 
-		FileContentBag oldFileContentBag = _fileContentBags.putIfAbsent(
-			fileContentKey, fileContentBag);
+		if (PropsValues.COMBO_CHECK_TIMESTAMP) {
+			int timeToLive =
+				(int)(PropsValues.COMBO_CHECK_TIMESTAMP_INTERVAL / Time.SECOND);
 
-		if (oldFileContentBag != null) {
-			fileContentBag = oldFileContentBag;
+			_fileContentBagCache.put(
+				fileContentKey, fileContentBag, timeToLive);
 		}
 
 		return fileContentBag._fileContent;
@@ -317,12 +349,12 @@ public class ComboServlet extends HttpServlet {
 
 	private static Log _log = LogFactoryUtil.getLog(ComboServlet.class);
 
-	private ConcurrentMap<String, byte[][]> _byteArrays =
-		new ConcurrentHashMap<String, byte[][]>();
-	private ConcurrentMap<String, FileContentBag> _fileContentBags =
-		new ConcurrentHashMap<String, FileContentBag>();
+	private PortalCache _byteArraysCache = SingleVMPoolUtil.getCache(
+		ComboServlet.class.getName());
+	private PortalCache _fileContentBagCache = SingleVMPoolUtil.getCache(
+		FileContentBag.class.getName());
 
-	private static class FileContentBag {
+	private static class FileContentBag implements Serializable {
 
 		public FileContentBag(byte[] fileContent, long lastModifiedTime) {
 			_fileContent = fileContent;

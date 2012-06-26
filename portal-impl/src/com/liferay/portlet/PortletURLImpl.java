@@ -746,8 +746,8 @@ public class PortletURLImpl
 
 		if ((portlet != null) &&
 			(portlet.getPortletId().equals(_portletId) ||
-			!_portlet.isAddDefaultResource() ||
-			portlet.getPortletId().equals(PortletKeys.CONTROL_PANEL_MENU))) {
+			 portlet.getPortletId().equals(PortletKeys.CONTROL_PANEL_MENU) ||
+			 (!_portlet.isAddDefaultResource()))) {
 
 			return;
 		}

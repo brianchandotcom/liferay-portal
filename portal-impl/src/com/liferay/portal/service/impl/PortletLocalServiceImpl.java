@@ -17,6 +17,7 @@ package com.liferay.portal.service.impl;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.image.SpriteProcessor;
 import com.liferay.portal.kernel.image.SpriteProcessorUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -33,6 +34,7 @@ import com.liferay.portal.kernel.spring.aop.Skip;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
@@ -78,7 +80,7 @@ import com.liferay.portlet.expando.model.CustomAttributesDisplay;
 import com.liferay.util.ContentUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
 
-import java.io.File;
+import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -2125,20 +2127,17 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			return;
 		}
 
-		List<File> imageFiles = new ArrayList<File>(resourcePaths.size());
+		List<URL> imageURLs = new ArrayList<URL>(resourcePaths.size());
 
 		for (String curResourcePath : resourcePaths) {
 			if (curResourcePath.endsWith(StringPool.SLASH)) {
 				_setSpriteImages(servletContext, portletApp, curResourcePath);
 			}
 			else if (curResourcePath.endsWith(".png")) {
-				String realPath = ServletContextUtil.getRealPath(
-					servletContext, curResourcePath);
+				URL resource = servletContext.getResource(curResourcePath);
 
-				if (realPath != null) {
-					File imageFile = new File(realPath);
-
-					imageFiles.add(imageFile);
+				if (resource != null) {
+					imageURLs.add(resource);
 				}
 				else {
 					if (ServerDetector.isTomcat()) {
@@ -2154,22 +2153,25 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			}
 		}
 
-		String spriteFileName = PropsValues.SPRITE_FILE_NAME;
-		String spritePropertiesFileName =
-			PropsValues.SPRITE_PROPERTIES_FILE_NAME;
-		String spritePropertiesRootPath = ServletContextUtil.getRealPath(
-			servletContext, StringPool.SLASH);
+		String spriteFileName = resourcePath.concat(
+			PropsValues.SPRITE_FILE_NAME);
+		String spritePropertiesFileName = resourcePath.concat(
+			PropsValues.SPRITE_PROPERTIES_FILE_NAME);
+		URL spritePropertiesRootURL = servletContext.getResource(
+			StringPool.SLASH);
 
 		Properties spriteProperties = SpriteProcessorUtil.generate(
-			servletContext, imageFiles, spriteFileName,
-			spritePropertiesFileName, spritePropertiesRootPath, 16, 16, 10240);
+			servletContext, imageURLs, spriteFileName, spritePropertiesFileName,
+			spritePropertiesRootURL, 16, 16, 10240);
 
 		if (spriteProperties == null) {
 			return;
 		}
 
-		spriteFileName =
-			resourcePath.substring(0, resourcePath.length()) + spriteFileName;
+		String contextPath = ContextPathUtil.getContextPath(servletContext);
+
+		spriteFileName = contextPath.concat(SpriteProcessor.PATH).concat(
+			spriteFileName);
 
 		portletApp.setSpriteImages(spriteFileName, spriteProperties);
 	}

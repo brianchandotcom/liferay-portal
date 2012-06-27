@@ -48,7 +48,7 @@ if (Validator.isNotNull(src) && themeDisplay.isThemeImagesFastLoad() && !auiImag
 				spriteFileName = StringUtil.replace(spriteFileName, ".png", ".gif");
 			}
 
-			spriteFileURL = spriteFileName;
+			spriteFileURL = themeDisplay.getCDNBaseURL().concat(spriteFileName);
 		}
 	}
 
@@ -62,14 +62,6 @@ if (Validator.isNotNull(src) && themeDisplay.isThemeImagesFastLoad() && !auiImag
 		if (portlet != null) {
 			PortletApp portletApp = portlet.getPortletApp();
 
-			imageFileName = src;
-
-			if ((portletApp.isWARFile() || !portlet.getContextPath().equals(StringPool.SLASH)) &&
-				imageFileName.startsWith(portlet.getContextPath())) {
-
-				imageFileName = imageFileName.substring(portlet.getContextPath().length());
-			}
-
 			spriteImage = portletApp.getSpriteImage(imageFileName);
 
 			if (spriteImage != null) {
@@ -79,7 +71,7 @@ if (Validator.isNotNull(src) && themeDisplay.isThemeImagesFastLoad() && !auiImag
 					spriteFileName = StringUtil.replace(spriteFileName, ".png", ".gif");
 				}
 
-				spriteFileURL = portlet.getStaticResourcePath().concat(spriteFileName);
+				spriteFileURL = themeDisplay.getCDNBaseURL().concat(spriteFileName);
 			}
 		}
 	}

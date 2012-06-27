@@ -117,6 +117,9 @@
 				getCDNDynamicResourcesHost: function() {
 					return "<%= themeDisplay.getCDNDynamicResourcesHost() %>";
 				},
+				getCDNBaseURL: function() {
+					return "<%= themeDisplay.getCDNBaseURL() %>";
+				},
 				getCDNHost: function() {
 					return "<%= themeDisplay.getCDNHost() %>";
 				},

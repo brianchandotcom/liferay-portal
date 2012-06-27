@@ -437,6 +437,12 @@ public class DLFileEntryLocalServiceUtil {
 		getService().deleteFileVersion(userId, fileEntryId, version);
 	}
 
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntry fetchFileEntry(
+		long groupId, long folderId, java.lang.String title)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchFileEntry(groupId, folderId, title);
+	}
+
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntry fetchFileEntryByAnyImageId(
 		long imageId)
 		throws com.liferay.portal.kernel.exception.SystemException {

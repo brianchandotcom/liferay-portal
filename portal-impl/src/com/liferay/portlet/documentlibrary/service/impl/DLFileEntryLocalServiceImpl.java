@@ -748,6 +748,12 @@ public class DLFileEntryLocalServiceImpl
 		}
 	}
 
+	public DLFileEntry fetchFileEntry(long groupId, long folderId, String title)
+		throws SystemException {
+
+		return dlFileEntryPersistence.fetchByG_F_T(groupId, folderId, title);
+	}
+
 	public DLFileEntry fetchFileEntryByAnyImageId(long imageId)
 		throws SystemException {
 

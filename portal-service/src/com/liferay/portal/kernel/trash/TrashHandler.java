@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.trash;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portlet.trash.DuplicateTrashEntryException;
 import com.liferay.portlet.trash.model.TrashEntry;
 
 /**
@@ -54,7 +53,7 @@ import com.liferay.portlet.trash.model.TrashEntry;
 public interface TrashHandler {
 
 	public void checkDuplicateEntry(TrashEntry entry, String newName)
-		throws DuplicateTrashEntryException;
+		throws PortalException, SystemException;
 
 	/**
 	 * Deletes all trash entries with the primary keys.

@@ -42,34 +42,25 @@ public class DLFolderTrashHandler extends BaseTrashHandler {
 	public static final String CLASS_NAME = DLFolder.class.getName();
 
 	public void checkDuplicateEntry(TrashEntry entry, String newName)
-		throws DuplicateTrashEntryException {
+		throws PortalException, SystemException {
 
-		DLFolder duplicatedFolder = null;
+		DLFolder dlFolder = getDLFolder(entry.getClassPK());
 
-		try {
-			DLFolder dlFolder = getDLFolder(entry.getClassPK());
+		String restoredTitle = dlFolder.getName();
 
-			String restoredTitle = dlFolder.getName();
-
-			if (Validator.isNotNull(newName)) {
-				restoredTitle = newName;
-			}
-
-			String originalTitle = restoredTitle;
-
-			if (restoredTitle.indexOf(StringPool.FORWARD_SLASH) > 0) {
-				originalTitle = restoredTitle.substring(
-					0, restoredTitle.indexOf(StringPool.FORWARD_SLASH));
-			}
-
-			duplicatedFolder =
-				DLFolderLocalServiceUtil.fetchFolder(
-					dlFolder.getGroupId(), dlFolder.getParentFolderId(),
-					originalTitle);
+		if (Validator.isNotNull(newName)) {
+			restoredTitle = newName;
 		}
-		catch (Exception e) {
-			e.printStackTrace();
+
+		String originalTitle = restoredTitle;
+
+		if (restoredTitle.indexOf(StringPool.FORWARD_SLASH) > 0) {
+			originalTitle = restoredTitle.substring(
+				0, restoredTitle.indexOf(StringPool.FORWARD_SLASH));
 		}
+
+		DLFolder duplicatedFolder = DLFolderLocalServiceUtil.fetchFolder(
+			dlFolder.getGroupId(), dlFolder.getParentFolderId(), originalTitle);
 
 		if (duplicatedFolder != null) {
 			DuplicateTrashEntryException dtee =
@@ -144,35 +135,26 @@ public class DLFolderTrashHandler extends BaseTrashHandler {
 
 		DLFolder dlFolder = getDLFolder(classPK);
 
-		if (dlFolder != null) {
-			dlFolder.setName(name);
-		}
+		dlFolder.setName(name);
 
 		DLFolderLocalServiceUtil.updateDLFolder(dlFolder, false);
 	}
 
-	protected DLFolder getDLFolder(long classPK) {
-		DLFolder dlFolder = null;
+	protected DLFolder getDLFolder(long classPK)
+		throws SystemException, PortalException {
 
-		try {
-			Repository repository = RepositoryServiceUtil.getRepositoryImpl(
-				0, classPK, 0);
+		Repository repository = RepositoryServiceUtil.getRepositoryImpl(
+			0, classPK, 0);
 
-			if (!(repository instanceof LiferayRepository)) {
-				throw new InvalidRepositoryException(
-					"Repository " + repository.getRepositoryId() +
-					" does not support trash operations");
-			}
-
-			Folder folder = repository.getFolder(classPK);
-
-			dlFolder = (DLFolder)folder.getModel();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
+		if (!(repository instanceof LiferayRepository)) {
+			throw new InvalidRepositoryException(
+				"Repository " + repository.getRepositoryId() +
+				" does not support trash operations");
 		}
 
-		return dlFolder;
+		Folder folder = repository.getFolder(classPK);
+
+		return (DLFolder)folder.getModel();
 	}
 
 }

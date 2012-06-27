@@ -43,34 +43,27 @@ public class DLFileEntryTrashHandler extends BaseTrashHandler {
 	public static final String CLASS_NAME = DLFileEntry.class.getName();
 
 	public void checkDuplicateEntry(TrashEntry entry, String newName)
-		throws DuplicateTrashEntryException {
+		throws PortalException, SystemException {
 
-		DLFileEntry duplicatedFileEntry = null;
+		DLFileEntry dlFileEntry = getDLFileEntry(entry.getClassPK());
 
-		try {
-			DLFileEntry dlFileEntry = getDLFileEntry(entry.getClassPK());
+		String restoredTitle = dlFileEntry.getTitle();
 
-			String restoredTitle = dlFileEntry.getTitle();
-
-			if (Validator.isNotNull(newName)) {
-				restoredTitle = newName;
-			}
-
-			String originalTitle = restoredTitle;
-
-			if (restoredTitle.indexOf(StringPool.FORWARD_SLASH) > 0) {
-				originalTitle = restoredTitle.substring(
-					0, restoredTitle.indexOf(StringPool.FORWARD_SLASH));
-			}
-
-			duplicatedFileEntry =
-				DLFileEntryLocalServiceUtil.fetchFileEntry(
-					dlFileEntry.getGroupId(), dlFileEntry.getFolderId(),
-					originalTitle);
+		if (Validator.isNotNull(newName)) {
+			restoredTitle = newName;
 		}
-		catch (Exception e) {
-			e.printStackTrace();
+
+		String originalTitle = restoredTitle;
+
+		if (restoredTitle.indexOf(StringPool.FORWARD_SLASH) > 0) {
+			originalTitle = restoredTitle.substring(
+				0, restoredTitle.indexOf(StringPool.FORWARD_SLASH));
 		}
+
+		DLFileEntry duplicatedFileEntry =
+			DLFileEntryLocalServiceUtil.fetchFileEntry(
+				dlFileEntry.getGroupId(), dlFileEntry.getFolderId(),
+				originalTitle);
 
 		if (duplicatedFileEntry != null) {
 			DuplicateTrashEntryException dtee =
@@ -129,37 +122,28 @@ public class DLFileEntryTrashHandler extends BaseTrashHandler {
 		DLFileEntry dlFileEntry = getDLFileEntry(classPK);
 		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
 
-		if (dlFileEntry != null) {
-			dlFileEntry.setTitle(name);
-			dlFileVersion.setTitle(name);
-		}
+		dlFileEntry.setTitle(name);
+		dlFileVersion.setTitle(name);
 
 		DLFileEntryLocalServiceUtil.updateDLFileEntry(dlFileEntry, false);
 		DLFileVersionLocalServiceUtil.updateDLFileVersion(dlFileVersion, false);
 	}
 
-	protected DLFileEntry getDLFileEntry(long classPK) {
-		DLFileEntry dlFileEntry = null;
+	protected DLFileEntry getDLFileEntry(long classPK)
+		throws SystemException, PortalException {
 
-		try {
-			Repository repository = RepositoryServiceUtil.getRepositoryImpl(
-				0, classPK, 0);
+		Repository repository = RepositoryServiceUtil.getRepositoryImpl(
+			0, classPK, 0);
 
-			if (!(repository instanceof LiferayRepository)) {
-				throw new InvalidRepositoryException(
-					"Repository " + repository.getRepositoryId() +
-						" does not support trash operations");
-			}
-
-			FileEntry fileEntry = repository.getFileEntry(classPK);
-
-			dlFileEntry = (DLFileEntry)fileEntry.getModel();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
+		if (!(repository instanceof LiferayRepository)) {
+			throw new InvalidRepositoryException(
+				"Repository " + repository.getRepositoryId() +
+					" does not support trash operations");
 		}
 
-		return dlFileEntry;
+		FileEntry fileEntry = repository.getFileEntry(classPK);
+
+		return (DLFileEntry)fileEntry.getModel();
 	}
 
 }

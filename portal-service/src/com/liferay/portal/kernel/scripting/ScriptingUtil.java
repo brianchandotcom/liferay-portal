@@ -36,19 +36,22 @@ public class ScriptingUtil {
 
 	public static Map<String, Object> eval(
 			Set<String> allowedClasses, Map<String, Object> inputObjects,
-			Set<String> outputNames, String language, String script)
+			Set<String> outputNames, String language, String script,
+			ClassLoader... classLoaders)
 		throws ScriptingException {
 
 		return getScripting().eval(
-			allowedClasses, inputObjects, outputNames, language, script);
+			allowedClasses, inputObjects, outputNames, language, script,
+			classLoaders);
 	}
 
 	public static void exec(
 			Set<String> allowedClasses, Map<String, Object> inputObjects,
-			String language, String script)
+			String language, String script, ClassLoader... classLoaders)
 		throws ScriptingException {
 
-		getScripting().exec(allowedClasses, inputObjects, language, script);
+		getScripting().exec(
+			allowedClasses, inputObjects, language, script, classLoaders);
 	}
 
 	public static Map<String, Object> getPortletObjects(

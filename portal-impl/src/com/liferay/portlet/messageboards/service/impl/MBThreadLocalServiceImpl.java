@@ -112,13 +112,23 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 	public void deleteThread(long threadId)
 		throws PortalException, SystemException {
+		deleteThread(threadId, MBMessage.class.getName());
+	}
+
+	public void deleteThread(long threadId, String className)
+		throws PortalException, SystemException {
 
 		MBThread thread = mbThreadPersistence.findByPrimaryKey(threadId);
 
-		deleteThread(thread);
+		deleteThread(thread, className);
 	}
 
 	public void deleteThread(MBThread thread)
+			throws PortalException, SystemException {
+		deleteThread(thread, MBMessage.class.getName());
+	}
+
+	public void deleteThread(MBThread thread, String className)
 		throws PortalException, SystemException {
 
 		MBMessage rootMessage = mbMessagePersistence.findByPrimaryKey(
@@ -163,18 +173,18 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			// Ratings
 
 			ratingsStatsLocalService.deleteStats(
-				MBMessage.class.getName(), message.getMessageId());
+				className, message.getMessageId());
 
 			// Asset
 
 			assetEntryLocalService.deleteEntry(
-				MBMessage.class.getName(), message.getMessageId());
+				className, message.getMessageId());
 
 			// Resources
 
 			if (!message.isDiscussion()) {
 				resourceLocalService.deleteResource(
-					message.getCompanyId(), MBMessage.class.getName(),
+					message.getCompanyId(), className,
 					ResourceConstants.SCOPE_INDIVIDUAL, message.getMessageId());
 			}
 
@@ -215,8 +225,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		// Thread Asset
 
-		assetEntryLocalService.deleteEntry(
-			MBThread.class.getName(), thread.getThreadId());
+		assetEntryLocalService.deleteEntry(className, thread.getThreadId());
 
 		// Thread
 

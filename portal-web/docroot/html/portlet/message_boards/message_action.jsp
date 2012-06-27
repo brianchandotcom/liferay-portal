@@ -72,8 +72,6 @@ MBThread thread = message.getThread();
 
 			<liferay-ui:icon
 				image="rss"
-				method="get"
-				target="_blank"
 				url="<%= rssURL.toString() %>"
 			/>
 		</c:if>

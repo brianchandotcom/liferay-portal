@@ -336,7 +336,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 						image="rss"
 						label="<%= true %>"
 						message="subscribe-to-recent-posts"
-						method="get"
 						target="_blank"
 						url="<%= rssURL.toString() %>"
 					/>

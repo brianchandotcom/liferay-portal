@@ -89,7 +89,7 @@ String url = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon:
 String method = (String)request.getAttribute("liferay-ui:icon:method");
 
 if (Validator.isNull(method)) {
-	method = "post";
+	method = "get";
 }
 
 String target = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon:target"));

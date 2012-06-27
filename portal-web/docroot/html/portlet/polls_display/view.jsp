@@ -149,7 +149,6 @@ boolean showIconsActions = themeDisplay.isSignedIn() && (hasConfigurationPermiss
 					cssClass="portlet-configuration"
 					image="configuration"
 					message="select-question"
-					method="get"
 					onClick="<%= portletDisplay.getURLConfigurationJS() %>"
 					url="<%= portletDisplay.getURLConfiguration() %>"
 				/>

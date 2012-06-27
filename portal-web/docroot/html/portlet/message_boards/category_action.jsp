@@ -67,7 +67,6 @@ Set<Long> categorySubscriptionClassPKs = (Set<Long>)row.getParameter("categorySu
 
 		<liferay-ui:icon
 			image="rss"
-			method="get"
 			target="_blank"
 			url="<%= rssURL.toString() %>"
 		/>

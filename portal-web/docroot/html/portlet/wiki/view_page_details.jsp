@@ -142,7 +142,6 @@ int count = 0;
 					image='<%= "../file_system/small/" + conversion %>'
 					label="<%= true %>"
 					message="<%= conversion.toUpperCase() %>"
-					method="get"
 					url="<%= exportPageURL.toString() %>"
 				/>
 

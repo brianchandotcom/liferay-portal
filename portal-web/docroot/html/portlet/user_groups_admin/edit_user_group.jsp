@@ -163,7 +163,6 @@ long userGroupId = BeanParamUtil.getLong(userGroup, request, "userGroupId");
 											image="view"
 											label="<%= true %>"
 											message="open-pages"
-											method="get"
 											target="_blank"
 											url="<%= publicPagesURL.toString() %>"
 										/>
@@ -233,7 +232,6 @@ long userGroupId = BeanParamUtil.getLong(userGroup, request, "userGroupId");
 											image="view"
 											label="<%= true %>"
 											message="open-pages"
-											method="get"
 											target="_blank"
 											url="<%= privatePagesURL.toString() %>"
 										/>

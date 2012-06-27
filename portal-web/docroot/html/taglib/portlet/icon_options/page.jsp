@@ -89,7 +89,6 @@
 					image="../social_bookmarks/facebook"
 					label="<%= true %>"
 					message="add-to-facebook"
-					method="get"
 					url='<%= "http://www.facebook.com/add.php?api_key=" + facebookAPIKey + "&ref=pd" %>'
 				/>
 			</c:if>
@@ -119,7 +118,6 @@
 					image="../common/add"
 					label="<%= true %>"
 					message="add-to-netvibes"
-					method="get"
 					url="<%= netvibesHREF %>"
 				/>
 			</c:if>
@@ -129,7 +127,6 @@
 					image="share"
 					label="<%= true %>"
 					message="share-this-application-with-friends"
-					method="get"
 					url="javascript:;"
 				/>
 			</c:if>

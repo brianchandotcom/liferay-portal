@@ -278,7 +278,6 @@ for (int i = 0; i < results.size(); i++) {
 							image='<%= "../file_system/small/" + DLUtil.getFileIcon(fileEntry.getExtension()) %>'
 							label="<%= true %>"
 							message="<%= fileEntry.getTitle() %>"
-							method="get"
 							url="<%= rowURL.toString() %>"
 						/>
 
@@ -423,7 +422,6 @@ for (int i = 0; i < results.size(); i++) {
 							image="<%= folderImage %>"
 							label="<%= true %>"
 							message="<%= curFolder.getName() %>"
-							method="get"
 							url="<%= rowURL.toString() %>"
 						/>
 					</liferay-util:buffer>

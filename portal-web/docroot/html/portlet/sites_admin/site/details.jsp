@@ -180,7 +180,6 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 												image="view"
 												label="<%= true %>"
 												message="open-public-pages"
-												method="get"
 												target="_blank"
 												url="<%= publicPagesURL.toString() %>"
 											/>
@@ -252,7 +251,6 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 												image="view"
 												label="<%= true %>"
 												message="open-private-pages"
-												method="get"
 												target="_blank"
 												url="<%= privatePagesURL.toString() %>"
 											/>

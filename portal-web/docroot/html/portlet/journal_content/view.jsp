@@ -174,7 +174,6 @@ boolean expired = true;
 											image='<%= "../file_system/small/" + extension %>'
 											label="<%= true %>"
 											message='<%= LanguageUtil.format(pageContext, "x-convert-x-to-x", new Object[] {"aui-helper-hidden-accessible", articleDisplay.getTitle(), extension.toUpperCase()}) %>'
-											method="get"
 											url="<%= exportArticleURL.toString() %>"
 										/>
 
@@ -348,7 +347,6 @@ boolean showIconsActions = themeDisplay.isSignedIn() && (showEditArticleIcon || 
 					cssClass="portlet-configuration"
 					image="configuration"
 					message="select-web-content"
-					method="get"
 					onClick="<%= portletDisplay.getURLConfigurationJS() %>"
 					url="<%= portletDisplay.getURLConfiguration() %>"
 				/>

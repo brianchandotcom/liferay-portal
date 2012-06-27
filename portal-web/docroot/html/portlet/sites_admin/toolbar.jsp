@@ -61,7 +61,6 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 					<liferay-ui:icon
 						image="site_icon"
 						message="blank-site"
-						method="get"
 						url='<%= addSiteURL.toString() %>'
 					/>
 
@@ -75,7 +74,6 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 						<liferay-ui:icon
 							image="site_icon"
 							message="<%= HtmlUtil.escape(layoutSetPrototype.getName(locale)) %>"
-							method="get"
 							url='<%= addSiteURL.toString() %>'
 						/>
 
@@ -94,7 +92,6 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 							cssClass="highlited"
 							image="configuration"
 							message="manage-site-template"
-							method="get"
 							url="<%= manageSiteTemplateURL.toString() %>"
 						/>
 					</c:if>

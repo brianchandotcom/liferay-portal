@@ -172,7 +172,6 @@ if (wikiPage != null) {
 			image="history"
 			label="<%= true %>"
 			message="details"
-			method="get"
 			url="<%= viewPageDetailsURL.toString() %>"
 		/>
 
@@ -275,7 +274,6 @@ if (wikiPage != null) {
 					image="add_article"
 					label="<%= true %>"
 					message="add-child-page"
-					method="get"
 					url="<%= addPageURL.toString() %>"
 				/>,
 			</c:if>

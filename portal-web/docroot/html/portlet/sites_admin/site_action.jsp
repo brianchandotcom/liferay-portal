@@ -164,7 +164,6 @@ boolean hasUpdatePermission = GroupPermissionUtil.contains(permissionChecker, gr
 		<liferay-ui:icon
 			image="site_icon"
 			message='<%= LanguageUtil.format(pageContext, "add-x", "blank-site") %>'
-			method="get"
 			url='<%= addSiteURL.toString() %>'
 		/>
 
@@ -178,7 +177,6 @@ boolean hasUpdatePermission = GroupPermissionUtil.contains(permissionChecker, gr
 			<liferay-ui:icon
 				image="site_icon"
 				message='<%= LanguageUtil.format(pageContext, "add-x", HtmlUtil.escape(layoutSetPrototype.getName(locale))) %>'
-				method="get"
 				url='<%= addSiteURL.toString() %>'
 			/>
 

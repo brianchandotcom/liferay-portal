@@ -79,6 +79,8 @@ public interface Constants {
 
 	public static final String MOVE_TO_TRASH = "move_to_trash";
 
+	public static final String OVERRIDE = "override";
+
 	public static final String PREVIEW = "preview";
 
 	public static final String PRINT = "print";
@@ -90,6 +92,8 @@ public interface Constants {
 	public static final String READ = "read";
 
 	public static final String REJECT = "reject";
+
+	public static final String RENAME = "rename";
 
 	public static final String RESET = "reset";
 

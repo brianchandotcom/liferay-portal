@@ -34,10 +34,15 @@ TrashEntry entry = (TrashEntry)row.getObject();
 		<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
 	</portlet:actionURL>
 
+	<%
+	String taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "checkEntry', {entryId: " + entry.getEntryId() + ",uri: '" + restoreTrashEntryURL.toString() + "'});";
+	%>
+
 	<liferay-ui:icon
 		image="undo"
 		message="restore"
-		url="<%= restoreTrashEntryURL %>"
+		onClick="<%= taglibOnClick %>"
+		url="javascript:;"
 	/>
 
 	<portlet:actionURL var="deleteTrashEntryURL">

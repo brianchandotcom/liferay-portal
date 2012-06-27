@@ -892,9 +892,6 @@ public class SeleneseToJavaBuilder {
 
 				sb.append(");");
 
-				if (param1.equals("open")) {
-					sb.append("loadRequiredJavaScriptModules();");
-				}
 			}
 			else if (param1.equals("clickAndWait")) {
 				sb.append("selenium.click(RuntimeVariables.replace(\"");
@@ -902,7 +899,6 @@ public class SeleneseToJavaBuilder {
 				sb.append("\"));");
 				sb.append("selenium.waitForPageToLoad(\"30000\");");
 
-				sb.append("loadRequiredJavaScriptModules();");
 			}
 			else if (param1.equals("clickAtAndWait") ||
 					 param1.equals("keyDownAndWait") ||
@@ -922,7 +918,6 @@ public class SeleneseToJavaBuilder {
 				sb.append("\"));");
 				sb.append("selenium.waitForPageToLoad(\"30000\");");
 
-				sb.append("loadRequiredJavaScriptModules();");
 			}
 			else if (param1.equals("close") || param1.equals("goBack") ||
 					 param1.equals("refresh") ||
@@ -958,7 +953,6 @@ public class SeleneseToJavaBuilder {
 				sb.append("();");
 				sb.append("selenium.waitForPageToLoad(\"30000\");");
 
-				sb.append("loadRequiredJavaScriptModules();");
 			}
 			else if (param1.equals("gotoIf")) {
 				String conditional = StringUtil.replace(

@@ -363,6 +363,38 @@ public class DLAppHelperLocalServiceImpl
 		}
 	}
 
+	public FileEntry moveFileEntryFromTrash(
+			long userId, FileEntry fileEntry, long newFolderId,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		long fileEntryId = fileEntry.getFileEntryId();
+
+		// File entry
+
+		List<DLFileVersion> dlFileVersions =
+			dlFileVersionLocalService.getFileVersions(
+				fileEntry.getFileEntryId(), WorkflowConstants.STATUS_ANY);
+
+		dlFileVersions = ListUtil.sort(
+			dlFileVersions, new FileVersionVersionComparator());
+
+		FileVersion fileVersion = new LiferayFileVersion(dlFileVersions.get(0));
+
+		dlFileEntryLocalService.updateStatus(
+			userId, fileVersion.getFileVersionId(), fileVersion.getStatus(),
+			new HashMap<String, Serializable>(), serviceContext);
+
+		// File rank
+
+		dlFileRankLocalService.enableFileRanks(fileEntryId);
+
+		// Move from trash
+
+		return dlAppService.moveFileEntry(
+			fileEntryId, newFolderId, serviceContext);
+	}
+
 	public FileEntry moveFileEntryToTrash(long userId, FileEntry fileEntry)
 		throws PortalException, SystemException {
 
@@ -960,7 +992,9 @@ public class DLAppHelperLocalServiceImpl
 						SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 						StringPool.BLANK, 0);
 				}
-				else {
+				else if(latestDlFileVersion.getStatus() ==
+					WorkflowConstants.STATUS_APPROVED) {
+
 					socialActivityLocalService.addActivity(
 						user.getUserId(), dlFileEntry.getGroupId(),
 						DLFileEntryConstants.getClassName(),

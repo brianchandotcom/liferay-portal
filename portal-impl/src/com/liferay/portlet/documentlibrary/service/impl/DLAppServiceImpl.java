@@ -2059,6 +2059,38 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	}
 
 	/**
+	 * Moves the file entry from a trashed folder to the new folder.
+	 *
+	 * @param  fileEntryId the primary key of the file entry
+	 * @param  newFolderId the primary key of the new folder
+	 * @param  serviceContext the service context to be applied
+	 * @return the file entry
+	 * @throws PortalException if the file entry or the new folder could not be
+	 *         found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public FileEntry moveFileEntryFromTrash(
+			long fileEntryId, long newFolderId, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		Repository repository = getRepository(0, fileEntryId, 0);
+
+		if (!(repository instanceof LiferayRepository)) {
+			throw new InvalidRepositoryException(
+				"Repository " + repository.getRepositoryId() +
+					" does not support trash operations");
+		}
+
+		FileEntry fileEntry = repository.getFileEntry(fileEntryId);
+
+		DLFileEntryPermission.check(
+			getPermissionChecker(), fileEntry, ActionKeys.UPDATE);
+
+		return dlAppHelperLocalService.moveFileEntryFromTrash(
+			getUserId(), fileEntry, newFolderId, serviceContext);
+	}
+
+	/**
 	 * Moves the file entry with the primary key to the trash portlet.
 	 *
 	 * @param  fileEntryId the primary key of the file entry
@@ -2269,7 +2301,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		DLFileShortcut fileShortcut = getFileShortcut(fileShortcutId);
 
 		DLFileShortcutPermission.check(
-			getPermissionChecker(), fileShortcut, ActionKeys.UPDATE);
+			getPermissionChecker(), fileShortcut, ActionKeys.DELETE);
 
 		dlAppHelperLocalService.restoreFileShortcutFromTrash(
 			getUserId(), fileShortcut);
@@ -2296,7 +2328,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		Folder folder = repository.getFolder(folderId);
 
 		DLFolderPermission.check(
-			getPermissionChecker(), folder, ActionKeys.UPDATE);
+			getPermissionChecker(), folder, ActionKeys.DELETE);
 
 		dlAppHelperLocalService.restoreFolderFromTrash(getUserId(), folder);
 	}

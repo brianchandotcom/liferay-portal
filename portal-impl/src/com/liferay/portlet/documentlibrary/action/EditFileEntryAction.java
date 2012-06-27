@@ -152,7 +152,10 @@ public class EditFileEntryAction extends PortletAction {
 				checkOutFileEntries(actionRequest);
 			}
 			else if (cmd.equals(Constants.MOVE)) {
-				moveFileEntries(actionRequest);
+				moveFileEntries(actionRequest, false);
+			}
+			else if (cmd.equals(Constants.MOVE_FROM_TRASH)) {
+				moveFileEntries(actionRequest, true);
 			}
 			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
 				deleteFileEntries(actionRequest, true);
@@ -170,7 +173,8 @@ public class EditFileEntryAction extends PortletAction {
 			}
 			else if (cmd.equals(Constants.PREVIEW)) {
 			}
-			else if (!windowState.equals(LiferayWindowState.POP_UP)) {
+			else if (!windowState.equals(LiferayWindowState.POP_UP) &&
+					!cmd.equals(Constants.MOVE_FROM_TRASH)) {
 				sendRedirect(actionRequest, actionResponse);
 			}
 			else {
@@ -624,7 +628,8 @@ public class EditFileEntryAction extends PortletAction {
 		return errorMessage;
 	}
 
-	protected void moveFileEntries(ActionRequest actionRequest)
+	protected void moveFileEntries(
+			ActionRequest actionRequest, boolean moveFromTrash)
 		throws Exception {
 
 		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
@@ -633,17 +638,25 @@ public class EditFileEntryAction extends PortletAction {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DLFileEntry.class.getName(), actionRequest);
 
+		long[] fileEntryIds = null;
+
 		if (fileEntryId > 0) {
-			DLAppServiceUtil.moveFileEntry(
-				fileEntryId, newFolderId, serviceContext);
+			fileEntryIds = new long[] {fileEntryId};
 		}
 		else {
-			long[] fileEntryIds = StringUtil.split(
+			fileEntryIds = StringUtil.split(
 				ParamUtil.getString(actionRequest, "fileEntryIds"), 0L);
+		}
 
-			for (int i = 0; i < fileEntryIds.length; i++) {
+		for (long moveFileEntryId : fileEntryIds) {
+			if (moveFromTrash) {
+				DLAppServiceUtil.moveFileEntryFromTrash(
+					moveFileEntryId, newFolderId, serviceContext);
+			}
+
+			else {
 				DLAppServiceUtil.moveFileEntry(
-					fileEntryIds[i], newFolderId, serviceContext);
+					moveFileEntryId, newFolderId, serviceContext);
 			}
 		}
 	}

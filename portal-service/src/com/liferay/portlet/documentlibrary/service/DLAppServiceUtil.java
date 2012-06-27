@@ -1791,6 +1791,27 @@ public class DLAppServiceUtil {
 	}
 
 	/**
+	* Moves the file entry from a trashed folder to the new folder.
+	*
+	* @param fileEntryId the primary key of the file entry
+	* @param newFolderId the primary key of the new folder
+	* @param serviceContext the service context to be applied
+	* @return the file entry
+	* @throws PortalException if the file entry or the new folder could not be
+	found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryFromTrash(
+		long fileEntryId, long newFolderId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .moveFileEntryFromTrash(fileEntryId, newFolderId,
+			serviceContext);
+	}
+
+	/**
 	* Moves the file entry with the primary key to the trash portlet.
 	*
 	* @param fileEntryId the primary key of the file entry

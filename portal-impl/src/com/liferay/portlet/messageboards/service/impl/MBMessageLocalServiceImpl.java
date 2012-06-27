@@ -691,26 +691,30 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			}
 		}
 
+		String className = MBMessage.class.getName();
+
+		if (message.isDiscussion()) {
+			className = MBDiscussion.class.getName();
+		}
+
 		// Asset
 
-		assetEntryLocalService.deleteEntry(
-			MBMessage.class.getName(), message.getMessageId());
+		assetEntryLocalService.deleteEntry(className, message.getMessageId());
 
 		// Expando
 
 		expandoValueLocalService.deleteValues(
-			MBMessage.class.getName(), message.getMessageId());
+			className, message.getMessageId());
 
 		// Ratings
 
-		ratingsStatsLocalService.deleteStats(
-			MBMessage.class.getName(), message.getMessageId());
+		ratingsStatsLocalService.deleteStats(className, message.getMessageId());
 
 		// Resources
 
 		if (!message.isDiscussion()) {
 			resourceLocalService.deleteResource(
-				message.getCompanyId(), MBMessage.class.getName(),
+				message.getCompanyId(), className,
 				ResourceConstants.SCOPE_INDIVIDUAL, message.getMessageId());
 		}
 

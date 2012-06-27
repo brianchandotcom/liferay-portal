@@ -37,6 +37,7 @@ import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.messageboards.SplitThreadException;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
+import com.liferay.portlet.messageboards.model.MBDiscussion;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageDisplay;
 import com.liferay.portlet.messageboards.model.MBThread;
@@ -160,21 +161,27 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		for (MBMessage message : messages) {
 
+			String className = MBMessage.class.getName();
+
+			if (message.isDiscussion()) {
+				className = MBDiscussion.class.getName();
+			}
+
 			// Ratings
 
 			ratingsStatsLocalService.deleteStats(
-				MBMessage.class.getName(), message.getMessageId());
+				className, message.getMessageId());
 
 			// Asset
 
 			assetEntryLocalService.deleteEntry(
-				MBMessage.class.getName(), message.getMessageId());
+				className, message.getMessageId());
 
 			// Resources
 
 			if (!message.isDiscussion()) {
 				resourceLocalService.deleteResource(
-					message.getCompanyId(), MBMessage.class.getName(),
+					message.getCompanyId(), className,
 					ResourceConstants.SCOPE_INDIVIDUAL, message.getMessageId());
 			}
 

@@ -29,12 +29,13 @@ public interface ScriptingExecutor {
 
 	public Map<String, Object> eval(
 			Set<String> allowedClasses, Map<String, Object> inputObjects,
-			Set<String> outputNames, File scriptFile)
+			Set<String> outputNames, File scriptFile,
+			ClassLoader... classloaders)
 		throws ScriptingException;
 
 	public Map<String, Object> eval(
 			Set<String> allowedClasses, Map<String, Object> inputObjects,
-			Set<String> outputNames, String script)
+			Set<String> outputNames, String script, ClassLoader... classloaders)
 		throws ScriptingException;
 
 	public String getLanguage();

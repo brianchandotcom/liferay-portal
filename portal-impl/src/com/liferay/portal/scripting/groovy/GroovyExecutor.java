@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.scripting.BaseScriptingExecutor;
 import com.liferay.portal.kernel.scripting.ExecutionException;
 import com.liferay.portal.kernel.scripting.ScriptingException;
+import com.liferay.portal.kernel.util.AggregateClassLoader;
+import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
@@ -26,6 +28,7 @@ import groovy.lang.Script;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.WeakHashMap;
 
 /**
  * @author Alberto Montero
@@ -40,7 +43,7 @@ public class GroovyExecutor extends BaseScriptingExecutor {
 
 	public Map<String, Object> eval(
 			Set<String> allowedClasses, Map<String, Object> inputObjects,
-			Set<String> outputNames, String script)
+			Set<String> outputNames, String script, ClassLoader... classLoaders)
 		throws ScriptingException {
 
 		if (allowedClasses != null) {
@@ -48,7 +51,7 @@ public class GroovyExecutor extends BaseScriptingExecutor {
 				"Constrained execution not supported for Groovy");
 		}
 
-		Script compiledScript = getCompiledScript(script);
+		Script compiledScript = getCompiledScript(script, classLoaders);
 
 		Binding binding = new Binding(inputObjects);
 
@@ -73,21 +76,17 @@ public class GroovyExecutor extends BaseScriptingExecutor {
 		return _LANGUAGE;
 	}
 
-	protected Script getCompiledScript(String script) {
-		if (_groovyShell == null) {
-			synchronized (this) {
-				if (_groovyShell == null) {
-					_groovyShell = new GroovyShell();
-				}
-			}
-		}
+	protected Script getCompiledScript(
+		String script, ClassLoader[] classLoaders) {
+
+		GroovyShell groovyShell = getGroovyShell(classLoaders);
 
 		String key = String.valueOf(script.hashCode());
 
 		Script compiledScript = (Script)SingleVMPoolUtil.get(_CACHE_NAME, key);
 
 		if (compiledScript == null) {
-			compiledScript = _groovyShell.parse(script);
+			compiledScript = groovyShell.parse(script);
 
 			SingleVMPoolUtil.put(_CACHE_NAME, key, compiledScript);
 		}
@@ -95,10 +94,47 @@ public class GroovyExecutor extends BaseScriptingExecutor {
 		return compiledScript;
 	}
 
+	protected GroovyShell getGroovyShell(ClassLoader[] classLoaders) {
+
+		if ((classLoaders == null) || (classLoaders.length == 0)) {
+			if (_defaultGroovyShell == null) {
+				synchronized (this) {
+					if (_defaultGroovyShell == null) {
+						_defaultGroovyShell = new GroovyShell();
+					}
+				}
+			}
+
+			return _defaultGroovyShell;
+		}
+
+		ClassLoader aggregateClassLoader =
+			AggregateClassLoader.getAggregateClassLoader(
+				PACLClassLoaderUtil.getPortalClassLoader(), classLoaders);
+
+		GroovyShell groovyShell = null;
+
+		if (!_groovyShells.containsKey(aggregateClassLoader)) {
+			synchronized (this) {
+				if (!_groovyShells.containsKey(aggregateClassLoader)) {
+
+					groovyShell = new GroovyShell(aggregateClassLoader);
+
+					_groovyShells.put(aggregateClassLoader, groovyShell);
+				}
+			}
+		}
+
+		return groovyShell;
+	}
+
 	private static final String _CACHE_NAME = GroovyExecutor.class.getName();
 
 	private static final String _LANGUAGE = "groovy";
 
-	private volatile GroovyShell _groovyShell;
+	private volatile GroovyShell _defaultGroovyShell = new GroovyShell();
+
+	private volatile Map<ClassLoader, GroovyShell> _groovyShells =
+		new WeakHashMap<ClassLoader, GroovyShell>();
 
 }

@@ -74,7 +74,8 @@ public class ScriptingImpl implements Scripting {
 
 	public Map<String, Object> eval(
 			Set<String> allowedClasses, Map<String, Object> inputObjects,
-			Set<String> outputNames, String language, String script)
+			Set<String> outputNames, String language, String script,
+			ClassLoader... classLoaders)
 		throws ScriptingException {
 
 		ScriptingExecutor scriptingExecutor = _scriptingExecutors.get(language);
@@ -93,7 +94,8 @@ public class ScriptingImpl implements Scripting {
 
 		try {
 			return scriptingExecutor.eval(
-				allowedClasses, inputObjects, outputNames, script);
+				allowedClasses, inputObjects, outputNames, script,
+				classLoaders);
 		}
 		catch (Exception e) {
 			throw new ScriptingException(getErrorMessage(script, e), e);
@@ -108,10 +110,11 @@ public class ScriptingImpl implements Scripting {
 
 	public void exec(
 			Set<String> allowedClasses, Map<String, Object> inputObjects,
-			String language, String script)
+			String language, String script, ClassLoader... classLoaders)
 		throws ScriptingException {
 
-		eval(allowedClasses, inputObjects, null, language, script);
+		eval(
+			allowedClasses, inputObjects, null, language, script, classLoaders);
 	}
 
 	public Map<String, Object> getPortletObjects(

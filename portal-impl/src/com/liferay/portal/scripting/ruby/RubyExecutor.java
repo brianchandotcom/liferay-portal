@@ -17,6 +17,7 @@ package com.liferay.portal.scripting.ruby;
 import com.liferay.portal.kernel.scripting.BaseScriptingExecutor;
 import com.liferay.portal.kernel.scripting.ExecutionException;
 import com.liferay.portal.kernel.scripting.ScriptingException;
+import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.util.PortalUtil;
@@ -91,19 +92,23 @@ public class RubyExecutor extends BaseScriptingExecutor {
 	@Override
 	public Map<String, Object> eval(
 			Set<String> allowedClasses, Map<String, Object> inputObjects,
-			Set<String> outputNames, File scriptFile)
+			Set<String> outputNames, File scriptFile,
+			ClassLoader... classLoaders)
 		throws ScriptingException {
 
 		return eval(
-			allowedClasses, inputObjects, outputNames, scriptFile, null);
+			allowedClasses, inputObjects, outputNames, scriptFile, null,
+			classLoaders);
 	}
 
 	public Map<String, Object> eval(
 			Set<String> allowedClasses, Map<String, Object> inputObjects,
-			Set<String> outputNames, String script)
+			Set<String> outputNames, String script, ClassLoader... classLoaders)
 		throws ScriptingException {
 
-		return eval(allowedClasses, inputObjects, outputNames, null, script);
+		return eval(
+			allowedClasses, inputObjects, outputNames, null, script,
+			classLoaders);
 	}
 
 	public String getLanguage() {
@@ -112,7 +117,8 @@ public class RubyExecutor extends BaseScriptingExecutor {
 
 	protected Map<String, Object> eval(
 			Set<String> allowedClasses, Map<String, Object> inputObjects,
-			Set<String> outputNames, File scriptFile, String script)
+			Set<String> outputNames, File scriptFile, String script,
+			ClassLoader... classLoaders)
 		throws ScriptingException {
 
 		if (allowedClasses != null) {
@@ -126,6 +132,15 @@ public class RubyExecutor extends BaseScriptingExecutor {
 
 			RubyInstanceConfig rubyInstanceConfig =
 				localContextProvider.getRubyInstanceConfig();
+
+			if ((classLoaders != null) && (classLoaders.length > 0)) {
+				ClassLoader aggregateClassLoader =
+					AggregateClassLoader.getAggregateClassLoader(
+						PACLClassLoaderUtil.getPortalClassLoader(),
+						classLoaders);
+
+				rubyInstanceConfig.setLoader(aggregateClassLoader);
+			}
 
 			rubyInstanceConfig.setCurrentDirectory(_basePath);
 			rubyInstanceConfig.setLoadPaths(_loadPaths);

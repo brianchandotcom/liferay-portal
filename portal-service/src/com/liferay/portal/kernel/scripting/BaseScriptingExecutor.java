@@ -33,13 +33,16 @@ public abstract class BaseScriptingExecutor implements ScriptingExecutor {
 
 	public Map<String, Object> eval(
 			Set<String> allowedClasses, Map<String, Object> inputObjects,
-			Set<String> outputNames, File scriptFile)
+			Set<String> outputNames, File scriptFile,
+			ClassLoader... classloaders)
 		throws ScriptingException {
 
 		try {
 			String script = FileUtil.read(scriptFile);
 
-			return eval(allowedClasses, inputObjects, outputNames, script);
+			return eval(
+				allowedClasses, inputObjects, outputNames, script,
+				classloaders);
 		}
 		catch (IOException ioe) {
 			throw new ScriptingException(ioe);

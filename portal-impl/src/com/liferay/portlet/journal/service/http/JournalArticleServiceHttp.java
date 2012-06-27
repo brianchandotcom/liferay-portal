@@ -1780,6 +1780,47 @@ public class JournalArticleServiceHttp {
 		}
 	}
 
+	public static com.liferay.portlet.journal.model.JournalArticle updateStatus(
+		HttpPrincipal httpPrincipal, long userId, long groupId,
+		java.lang.String articleId, double version, int status,
+		java.lang.String articleURL,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(JournalArticleServiceUtil.class.getName(),
+					"updateStatus", _updateStatusParameterTypes45);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
+					groupId, articleId, version, status, articleURL,
+					serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.portlet.journal.model.JournalArticle)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(JournalArticleServiceHttp.class);
 	private static final Class<?>[] _addArticleParameterTypes0 = new Class[] {
 			long.class, long.class, long.class, long.class,
@@ -1997,5 +2038,10 @@ public class JournalArticleServiceHttp {
 	private static final Class<?>[] _updateContentParameterTypes44 = new Class[] {
 			long.class, java.lang.String.class, double.class,
 			java.lang.String.class
+		};
+	private static final Class<?>[] _updateStatusParameterTypes45 = new Class[] {
+			long.class, long.class, java.lang.String.class, double.class,
+			int.class, java.lang.String.class,
+			com.liferay.portal.service.ServiceContext.class
 		};
 }

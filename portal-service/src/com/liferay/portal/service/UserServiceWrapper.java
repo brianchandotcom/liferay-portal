@@ -495,6 +495,19 @@ public class UserServiceWrapper implements UserService,
 		_userService.deleteUser(userId);
 	}
 
+	public java.util.List<com.liferay.portal.model.User> getCompanyUsers(
+		long companyId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userService.getCompanyUsers(companyId, start, end);
+	}
+
+	public int getCompanyUsersCount(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userService.getCompanyUsersCount(companyId);
+	}
+
 	/**
 	* Returns the primary keys of all the users belonging to the group.
 	*
@@ -511,6 +524,22 @@ public class UserServiceWrapper implements UserService,
 	}
 
 	/**
+	* Returns all the users belonging to the group.
+	*
+	* @param groupId the primary key of the group
+	* @return the users belonging to the group
+	* @throws PortalException if the current user did not have permission to
+	view group assignments
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.User> getGroupUsers(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userService.getGroupUsers(groupId);
+	}
+
+	/**
 	* Returns the primary keys of all the users belonging to the organization.
 	*
 	* @param organizationId the primary key of the organization
@@ -523,6 +552,22 @@ public class UserServiceWrapper implements UserService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _userService.getOrganizationUserIds(organizationId);
+	}
+
+	/**
+	* Returns all the users belonging to the organization.
+	*
+	* @param organizationId the primary key of the organization
+	* @return users belonging to the organization
+	* @throws PortalException if the current user did not have permission to
+	view organization assignments
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.User> getOrganizationUsers(
+		long organizationId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userService.getOrganizationUsers(organizationId);
 	}
 
 	/**
@@ -588,6 +633,13 @@ public class UserServiceWrapper implements UserService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _userService.getUserByScreenName(companyId, screenName);
+	}
+
+	public java.util.List<com.liferay.portal.model.User> getUserGroupUsers(
+		long userGroupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userService.getUserGroupUsers(userGroupId);
 	}
 
 	/**

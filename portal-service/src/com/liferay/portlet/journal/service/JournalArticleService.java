@@ -396,4 +396,11 @@ public interface JournalArticleService extends BaseService {
 		java.lang.String content)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.portlet.journal.model.JournalArticle updateStatus(
+		long userId, long groupId, java.lang.String articleId, double version,
+		int status, java.lang.String articleURL,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 }

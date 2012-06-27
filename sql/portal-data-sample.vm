@@ -249,6 +249,8 @@ insert into Users_Roles values ($testUserId, $administratorRoleId);
 insert into Users_Roles values ($testUserId, $powerUserRoleId);
 insert into Users_Roles values ($testUserId, $userRoleId);
 
+insert into AssetEntry (entryId, groupId, companyId, userId, userName, createDate, modifiedDate, classNameId, classPK, classUuid, classTypeId, visible, startDate, endDate, publishDate, expirationDate, mimeType, title, description, summary, url, layoutUuid, height, width, priority, viewCount) VALUES ($counter.get(), $testGroupId, $companyId, $testUserId, 'Joe Blogs', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 13, $testUserId, '', 0, 0, NULL, NULL, NULL, NULL, '', 'Joe Bloggs', '', '', '', 0, 0, 0, 0, 0);
+
 ##
 ## Batch Users
 ##

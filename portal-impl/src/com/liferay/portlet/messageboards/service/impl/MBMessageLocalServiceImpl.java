@@ -474,7 +474,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		deleteDiscussionSocialActivities(BlogsEntry.class.getName(), message);
 
-		return deleteMessage(message, MBDiscussion.class.getName());
+		return deleteMessage(message);
 	}
 
 	public void deleteDiscussionMessages(String className, long classPK)
@@ -496,8 +496,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				deleteDiscussionSocialActivities(
 					BlogsEntry.class.getName(), message);
 
-				mbThreadLocalService.deleteThread(
-					message.getThreadId(), MBDiscussion.class.getName());
+				mbThreadLocalService.deleteThread(message.getThreadId());
 			}
 
 			mbDiscussionPersistence.remove(discussion);
@@ -520,12 +519,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 	@Indexable(type = IndexableType.DELETE)
 	public MBMessage deleteMessage(MBMessage message)
-			throws PortalException, SystemException {
-		return deleteMessage(message, MBMessage.class.getName());
-	}
-
-	@Indexable(type = IndexableType.DELETE)
-	public MBMessage deleteMessage(MBMessage message, String className)
 		throws PortalException, SystemException {
 
 		// Attachments
@@ -696,6 +689,12 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 				mbCategoryPersistence.update(category, false);
 			}
+		}
+
+		String className = MBMessage.class.getName();
+
+		if (message.isDiscussion()) {
+			className = MBDiscussion.class.getName();
 		}
 
 		// Asset

@@ -389,14 +389,6 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 		return _mbMessageLocalService.deleteMessage(message);
 	}
 
-	public com.liferay.portlet.messageboards.model.MBMessage deleteMessage(
-		com.liferay.portlet.messageboards.model.MBMessage message,
-		java.lang.String className)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _mbMessageLocalService.deleteMessage(message, className);
-	}
-
 	public java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getCategoryMessages(
 		long groupId, long categoryId, int status, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {

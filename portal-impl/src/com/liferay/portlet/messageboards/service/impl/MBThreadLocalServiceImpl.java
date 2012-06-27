@@ -37,6 +37,7 @@ import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.messageboards.SplitThreadException;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
+import com.liferay.portlet.messageboards.model.MBDiscussion;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageDisplay;
 import com.liferay.portlet.messageboards.model.MBThread;
@@ -112,23 +113,13 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 	public void deleteThread(long threadId)
 		throws PortalException, SystemException {
-		deleteThread(threadId, MBMessage.class.getName());
-	}
-
-	public void deleteThread(long threadId, String className)
-		throws PortalException, SystemException {
 
 		MBThread thread = mbThreadPersistence.findByPrimaryKey(threadId);
 
-		deleteThread(thread, className);
+		deleteThread(thread);
 	}
 
 	public void deleteThread(MBThread thread)
-			throws PortalException, SystemException {
-		deleteThread(thread, MBMessage.class.getName());
-	}
-
-	public void deleteThread(MBThread thread, String className)
 		throws PortalException, SystemException {
 
 		MBMessage rootMessage = mbMessagePersistence.findByPrimaryKey(
@@ -169,6 +160,12 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			thread.getThreadId());
 
 		for (MBMessage message : messages) {
+
+			String className = MBMessage.class.getName();
+
+			if (message.isDiscussion()) {
+				className = MBDiscussion.class.getName();
+			}
 
 			// Ratings
 
@@ -225,7 +222,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		// Thread Asset
 
-		assetEntryLocalService.deleteEntry(className, thread.getThreadId());
+		assetEntryLocalService.deleteEntry(
+			MBThread.class.getName(), thread.getThreadId());
 
 		// Thread
 

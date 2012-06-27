@@ -876,13 +876,15 @@ public class ThemeDisplay
 
 			String host = getCDNHost();
 
-			String portalURL = null;
+			String portalURL = getPortalURL();
 
-			try {
-				portalURL = PortalUtil.getPortalURL(getLayout(), this);
-			}
-			catch (Exception e) {
-				portalURL = getPortalURL();
+			if (this.getServerName() != null) {
+				try {
+					portalURL = PortalUtil.getPortalURL(getLayout(), this);
+				}
+				catch (Exception e) {
+					_log.error(e, e);
+				}
 			}
 
 			if (Validator.isNull(host)) {

@@ -40,6 +40,7 @@ import java.awt.image.WritableRaster;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 
 import java.util.Enumeration;
@@ -242,6 +243,10 @@ public class ImageToolImpl implements ImageTool {
 
 	public ImageBag read(File file) throws IOException {
 		return read(_fileUtil.getBytes(file));
+	}
+
+	public ImageBag read(InputStream inputStream) throws IOException {
+		return read(_fileUtil.getBytes(inputStream));
 	}
 
 	public RenderedImage scale(RenderedImage renderedImage, int width) {

@@ -50,7 +50,8 @@ public class UserGroupRolePermissionImpl implements UserGroupRolePermission {
 				permissionChecker, group.getOrganizationId(),
 				ActionKeys.ASSIGN_USER_ROLES) ||
 			RolePermissionUtil.contains(
-				permissionChecker, roleId, ActionKeys.ASSIGN_MEMBERS)) {
+				permissionChecker, groupId, roleId,
+				ActionKeys.ASSIGN_MEMBERS)) {
 
 			return true;
 		}

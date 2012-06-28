@@ -26,6 +26,13 @@ if (Validator.isNotNull(portletResource)) {
 }
 
 String displayStyle = PrefsParamUtil.getString(preferences, renderRequest, "displayStyle", "horizontal");
+
+boolean showCurrentGroup = PrefsParamUtil.getBoolean(preferences, renderRequest, "showCurrentGroup", true);
+boolean showCurrentPortlet = PrefsParamUtil.getBoolean(preferences, renderRequest, "showCurrentPortlet", true);
+boolean showGuestGroup = PrefsParamUtil.getBoolean(preferences, renderRequest, "showGuestGroup", true);
+boolean showLayout = PrefsParamUtil.getBoolean(preferences, renderRequest, "showLayout", true);
+boolean showParentGroups = PrefsParamUtil.getBoolean(preferences, renderRequest, "showParentGroups", true);
+boolean showPortletBreadcrumb = PrefsParamUtil.getBoolean(preferences, renderRequest, "showPortletBreadcrumb", true);
 %>
 
 <%@ include file="/html/portlet/breadcrumb/init-ext.jsp" %>

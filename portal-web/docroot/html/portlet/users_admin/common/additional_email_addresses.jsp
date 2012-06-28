@@ -82,7 +82,7 @@ else {
 
 		<aui:model-context bean="<%= emailAddress %>" model="<%= EmailAddress.class %>" />
 
-		<div class="aui-helper-clearfix lfr-form-row lfr-form-row-inline">
+		<div class="lfr-form-row lfr-form-row-inline">
 			<div class="row-fields">
 				<aui:input name='<%= "emailAddressId" + emailAddressesIndex %>' type="hidden" value="<%= emailAddress.getEmailAddressId() %>" />
 

@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
@@ -228,10 +227,6 @@ public class CMISFileVersion extends CMISModel implements FileVersion {
 		return _document.getName();
 	}
 
-	public Folder getTrashFolder() {
-		return null;
-	}
-
 	public long getUserId() {
 		try {
 			return UserLocalServiceUtil.getDefaultUserId(getCompanyId());
@@ -285,10 +280,6 @@ public class CMISFileVersion extends CMISModel implements FileVersion {
 	}
 
 	public boolean isInTrash() {
-		return false;
-	}
-
-	public boolean isInTrashFolder() {
 		return false;
 	}
 

@@ -18,9 +18,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
+import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLAppUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -180,7 +180,7 @@ public class LiferayFileVersion extends LiferayModel implements FileVersion {
 		return DLAppUtil.stripTrashNamespace(_dlFileVersion.getTitle());
 	}
 
-	public Folder getTrashFolder() {
+	public DLFolder getTrashFolder() {
 		return _dlFileVersion.getTrashFolder();
 	}
 

@@ -78,6 +78,7 @@ import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
+import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
@@ -834,19 +835,25 @@ public class WebServerServlet extends HttpServlet {
 
 		FileVersion fileVersion = fileEntry.getFileVersion(version);
 
-		if (fileVersion.isInTrashFolder()) {
-			boolean showTrashEntries = ParamUtil.getBoolean(
-				request, "showTrashEntries", false);
+		if (fileVersion.getModel() instanceof DLFileVersion) {
+			LiferayFileVersion liferayFileVersion =
+				(LiferayFileVersion)fileVersion;
 
-			if (showTrashEntries) {
-				PermissionChecker permissionChecker =
-					PermissionThreadLocal.getPermissionChecker();
+			if (liferayFileVersion.isInTrash() ||
+					liferayFileVersion.isInTrashFolder()) {
+				boolean showTrashEntries = ParamUtil.getBoolean(
+					request, "showTrashEntries", false);
 
-				TrashUtil.checkPermission(
-					permissionChecker, fileEntry.getGroupId());
-			}
-			else {
-				throw new NoSuchFileEntryException();
+				if (showTrashEntries) {
+					PermissionChecker permissionChecker =
+						PermissionThreadLocal.getPermissionChecker();
+
+					TrashUtil.checkPermission(
+						permissionChecker, fileEntry.getGroupId());
+				}
+				else {
+					throw new NoSuchFileEntryException();
+				}
 			}
 		}
 

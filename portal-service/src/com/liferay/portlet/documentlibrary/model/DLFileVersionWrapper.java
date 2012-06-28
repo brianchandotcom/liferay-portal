@@ -896,7 +896,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 		return _dlFileVersion.getIcon();
 	}
 
-	public com.liferay.portal.kernel.repository.model.Folder getTrashFolder() {
+	public com.liferay.portlet.documentlibrary.model.DLFolder getTrashFolder() {
 		return _dlFileVersion.getTrashFolder();
 	}
 

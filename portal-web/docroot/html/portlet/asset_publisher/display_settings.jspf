@@ -15,7 +15,8 @@
 --%>
 
 <%
-long assetPublisherDDMTemplateClassNameId = PortalUtil.getClassNameId(AssetEntry.class);
+PortletDisplayTemplateHandler portletDisplayTemplateHandler = PortletDisplayTemplateHandlerRegistryUtil.getPortletDisplayTemplateHandler(AssetEntry.class.getName());
+long portletDisplayTemplateClassNameId = PortalUtil.getClassNameId(portletDisplayTemplateHandler.getClassName());
 %>
 
 <aui:fieldset cssClass="general-display-settings">
@@ -31,15 +32,15 @@ long assetPublisherDDMTemplateClassNameId = PortalUtil.getClassNameId(AssetEntry
 			<%
 			}
 
-			List<DDMTemplate> assetPublisherDDMTemplates = DDMTemplateLocalServiceUtil.getTemplates(scopeGroupId, assetPublisherDDMTemplateClassNameId, scopeGroupId);
+			List<DDMTemplate> assetPublisherDisplayTemplates = DDMTemplateLocalServiceUtil.getTemplates(scopeGroupId, portletDisplayTemplateClassNameId, 0);
 
-			for (DDMTemplate curAssetPublisherDDMTemplate : assetPublisherDDMTemplates) {
-				if (!DDMTemplatePermission.contains(permissionChecker, curAssetPublisherDDMTemplate, ActionKeys.VIEW)) {
+			for (DDMTemplate assetPublisherDisplayTemplate : assetPublisherDisplayTemplates) {
+				if (!DDMTemplatePermission.contains(permissionChecker, assetPublisherDisplayTemplate, ActionKeys.VIEW)) {
 					continue;
 				}
 			%>
 
-				<aui:option label="<%= curAssetPublisherDDMTemplate.getName(locale) %>" selected="<%= (assetPublisherDDMTemplate != null) && (curAssetPublisherDDMTemplate.getTemplateId() == assetPublisherDDMTemplate.getTemplateId()) %>" value='<%= "ddmTemplate_" + curAssetPublisherDDMTemplate.getTemplateId() %>' />
+				<aui:option label="<%= assetPublisherDisplayTemplate.getName(locale) %>" selected="<%= (assetPublisherDDMTemplate != null) && (assetPublisherDisplayTemplate.getTemplateId() == assetPublisherDDMTemplate.getTemplateId()) %>" value='<%= "ddmTemplate_" + assetPublisherDisplayTemplate.getTemplateId() %>' />
 
 			<%
 			}
@@ -47,7 +48,7 @@ long assetPublisherDDMTemplateClassNameId = PortalUtil.getClassNameId(AssetEntry
 
 		</aui:select>
 
-		<liferay-ui:icon cssClass="manage-display-styles" id="selectDDMTemplate" image="configuration" label="<%= true %>" message="manage-display-styles" url="javascript:;" />
+		<liferay-ui:icon cssClass="manage-display-templates" id="selectDDMTemplate" image="configuration" label="<%= true %>" message="manage-display-templates" url="javascript:;" />
 	</div>
 
 	<aui:select cssClass="hidden-field abstract-length" helpMessage="abstract-length-key-help" name="preferences--abstractLength--">
@@ -265,18 +266,15 @@ long assetPublisherDDMTemplateClassNameId = PortalUtil.getClassNameId(AssetEntry
 			function (event) {
 				Liferay.Util.openDDMPortlet(
 					{
-						classNameId: '<%= String.valueOf(assetPublisherDDMTemplateClassNameId) %>',
-						classPK:'<%= String.valueOf(scopeGroupId) %>',
-						ddmResource: 'com.liferay.portlet.assetpublisher',
-						ddmResourceActionId: '<%= ActionKeys.ADD_DISPLAY_STYLE %>',
+						classNameId: '<%= String.valueOf(portletDisplayTemplateClassNameId) %>',
+						ddmResource: '<%= portletDisplayTemplateHandler.getResourceName() %>',
 						dialog: {
 							width:680
 						},
 						id: windowId,
 						showGlobalScope: true,
-						showToolbar: true,
 						struts_action: '/dynamic_data_mapping/view_template',
-						title: '<%= UnicodeLanguageUtil.get(pageContext, "display-styles") %>'
+						title: '<%= UnicodeLanguageUtil.get(pageContext, "application-display-templates") %>'
 					},
 					function (ddmPortletWindow) {
 						ddmPortletWindow.once(

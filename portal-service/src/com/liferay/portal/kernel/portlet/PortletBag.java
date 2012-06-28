@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.pop.MessageListener;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.OpenSearch;
 import com.liferay.portal.kernel.servlet.URLEncoder;
+import com.liferay.portal.kernel.template.PortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.webdav.WebDAVStorage;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
@@ -58,6 +59,9 @@ public interface PortletBag extends Cloneable {
 	public ControlPanelEntry getControlPanelEntryInstance();
 
 	public List<CustomAttributesDisplay> getCustomAttributesDisplayInstances();
+
+	public PortletDisplayTemplateHandler
+		getPortletDisplayTemplateHandlerInstance();
 
 	public FriendlyURLMapper getFriendlyURLMapperInstance();
 

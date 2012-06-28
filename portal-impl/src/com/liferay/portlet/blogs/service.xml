@@ -86,6 +86,10 @@
 			<finder-column name="groupId" />
 			<finder-column name="status" />
 		</finder>
+		<finder name="LtD_S" return-type="Collection">
+			<finder-column name="displayDate" comparator="&lt;" />
+			<finder-column name="status" />
+		</finder>
 		<finder name="C_U_NeS" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="userId" />

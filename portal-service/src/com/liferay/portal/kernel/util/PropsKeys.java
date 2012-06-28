@@ -2336,7 +2336,7 @@ public interface PropsKeys {
 	public static final String WIKI_IMPORTERS_PAGE = "wiki.importers.page";
 
 	public static final String WIKI_INITIAL_NODE_NAME = "wiki.initial.node.name";
-	
+
 	public static final String WIKI_PAGE_ADD_ACTIVITY_ON_MINOR_EDIT = "wiki.page.add.activity.on.minor.edit";
 
 	public static final String WIKI_PAGE_COMMENTS_ENABLED = "wiki.page.comments.enabled";

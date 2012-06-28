@@ -32,6 +32,8 @@ else {
 	primarySearch = portalPreferences.getValue(PortletKeys.SEARCH, "primary-search", StringPool.BLANK);
 }
 
+int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_CUR);
+
 long groupId = ParamUtil.getLong(request, "groupId");
 
 Group group = themeDisplay.getScopeGroup();
@@ -58,6 +60,7 @@ request.setAttribute("search.jsp-portletURL", portletURL);
 
 <aui:form action="<%= searchURL %>" method="get" name="fm" onSubmit='<%= "event.preventDefault();" %>'>
 	<liferay-portlet:renderURLParams varImpl="searchURL" />
+	<aui:input name="cur" type="hidden" value="<%= cur %>" />
 	<aui:input name="format" type="hidden" value="<%= format %>" />
 
 	<aui:fieldset>
@@ -146,6 +149,8 @@ request.setAttribute("search.jsp-portletURL", portletURL);
 		pageLinks.delegate(
 			'click',
 			function(event) {
+				document.<portlet:namespace />fm.<portlet:namespace /><%= SearchContainer.DEFAULT_CUR_PARAM %>.value = parseInt(document.<portlet:namespace />fm.<portlet:namespace /><%= SearchContainer.DEFAULT_CUR_PARAM %>.value) - 1;
+
 				submitForm(document.<portlet:namespace />fm);
 
 				event.preventDefault();
@@ -156,7 +161,7 @@ request.setAttribute("search.jsp-portletURL", portletURL);
 		pageLinks.delegate(
 			'click',
 			function(event) {
-				document.<portlet:namespace />fm.<portlet:namespace /><%= SearchContainer.DEFAULT_CUR_PARAM %>.value = parseInt(document.<portlet:namespace />fm.<portlet:namespace /><%= SearchContainer.DEFAULT_CUR_PARAM %>.value) + 2;
+				document.<portlet:namespace />fm.<portlet:namespace /><%= SearchContainer.DEFAULT_CUR_PARAM %>.value = parseInt(document.<portlet:namespace />fm.<portlet:namespace /><%= SearchContainer.DEFAULT_CUR_PARAM %>.value) + 1;
 
 				submitForm(document.<portlet:namespace />fm);
 

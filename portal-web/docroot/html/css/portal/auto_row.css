@@ -2,7 +2,6 @@
 	border-bottom: 1px solid transparent;
 	margin-bottom: 10px;
 	margin-top: 10px;
-	overflow: hidden;
 	padding: 5px;
 	padding-top: 1px;
 	position: relative;
@@ -10,6 +9,13 @@
 
 .ie .lfr-form-row {
 	width: 100%;
+}
+
+.lfr-form-row:after {
+	clear: both;
+	content: "";
+	display: block;
+	height: 0;
 }
 
 .lfr-form-row:hover {
@@ -51,6 +57,12 @@
 	bottom: 5px;
 	position: absolute;
 	right: 5px;
+}
+
+.ie6, .ie7 {
+	.lfr-form-row {
+		zoom: 1;
+	}
 }
 
 /* Skin */

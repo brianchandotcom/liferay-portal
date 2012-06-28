@@ -99,10 +99,11 @@ if (layout != null) {
 
 				String remoteAddress = typeSettingsProperties.getProperty("remoteAddress");
 				int remotePort = GetterUtil.getInteger(typeSettingsProperties.getProperty("remotePort"));
+				String remotePathContext = typeSettingsProperties.getProperty("remotePathContext");
 				boolean secureConnection = GetterUtil.getBoolean(typeSettingsProperties.getProperty("secureConnection"));
 				long remoteGroupId = GetterUtil.getLong(typeSettingsProperties.getProperty("remoteGroupId"));
 
-				String remoteURL = StagingUtil.buildRemoteURL(remoteAddress, remotePort, secureConnection, remoteGroupId, layout.isPrivateLayout());
+				String remoteURL = StagingUtil.buildRemoteURL(remoteAddress, remotePort, remotePathContext, secureConnection, remoteGroupId, layout.isPrivateLayout());
 				%>
 
 				<li class="aui-state-default aui-tab remote-live-link">

@@ -813,11 +813,12 @@ public class LayoutServiceHttp {
 		java.util.Map<java.lang.Long, java.lang.Boolean> layoutIdMap,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
 		java.lang.String remoteAddress, int remotePort,
-		boolean secureConnection, long remoteGroupId,
-		boolean remotePrivateLayout, java.util.Date startDate,
-		java.util.Date endDate, java.lang.String groupName,
-		java.lang.String cronText, java.util.Date schedulerStartDate,
-		java.util.Date schedulerEndDate, java.lang.String description)
+		java.lang.String remotePathContext, boolean secureConnection,
+		long remoteGroupId, boolean remotePrivateLayout,
+		java.util.Date startDate, java.util.Date endDate,
+		java.lang.String groupName, java.lang.String cronText,
+		java.util.Date schedulerStartDate, java.util.Date schedulerEndDate,
+		java.lang.String description)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -827,9 +828,10 @@ public class LayoutServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					sourceGroupId, privateLayout, layoutIdMap, parameterMap,
-					remoteAddress, remotePort, secureConnection, remoteGroupId,
-					remotePrivateLayout, startDate, endDate, groupName,
-					cronText, schedulerStartDate, schedulerEndDate, description);
+					remoteAddress, remotePort, remotePathContext,
+					secureConnection, remoteGroupId, remotePrivateLayout,
+					startDate, endDate, groupName, cronText,
+					schedulerStartDate, schedulerEndDate, description);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -1393,10 +1395,10 @@ public class LayoutServiceHttp {
 		};
 	private static final Class<?>[] _schedulePublishToRemoteParameterTypes20 = new Class[] {
 			long.class, boolean.class, java.util.Map.class, java.util.Map.class,
-			java.lang.String.class, int.class, boolean.class, long.class,
-			boolean.class, java.util.Date.class, java.util.Date.class,
-			java.lang.String.class, java.lang.String.class, java.util.Date.class,
-			java.util.Date.class, java.lang.String.class
+			java.lang.String.class, int.class, java.lang.String.class,
+			boolean.class, long.class, boolean.class, java.util.Date.class,
+			java.util.Date.class, java.lang.String.class, java.lang.String.class,
+			java.util.Date.class, java.util.Date.class, java.lang.String.class
 		};
 	private static final Class<?>[] _setLayoutsParameterTypes21 = new Class[] {
 			long.class, boolean.class, long.class, long[].class,

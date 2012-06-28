@@ -106,6 +106,10 @@ LayoutSet publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(liveGroup.get
 						<liferay-ui:message arguments="<%= roe.getRemoteGroupId() %>" key="the-remote-site-id-x-is-not-valid" />
 					</c:if>
 
+					<c:if test="<%= roe.getType() == RemoteOptionsException.REMOTE_PATH_CONTEXT %>">
+						<liferay-ui:message arguments="<%= roe.getRemotePathContext() %>" key="the-remote-path-context-x-is-not-valid" />
+					</c:if>
+
 					<c:if test="<%= roe.getType() == RemoteOptionsException.REMOTE_PORT %>">
 						<liferay-ui:message arguments="<%= roe.getRemotePort() %>" key="the-remote-port-x-is-not-valid" />
 					</c:if>
@@ -117,7 +121,9 @@ LayoutSet publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(liveGroup.get
 
 				<aui:input label="remote-host-ip" name="remoteAddress" size="20" type="text" value='<%= liveGroupTypeSettings.getProperty("remoteAddress") %>' />
 
-				<aui:input label="port" name="remotePort" size="10" type="text" value='<%= liveGroupTypeSettings.getProperty("remotePort") %>' />
+				<aui:input label="remote-port" name="remotePort" size="10" type="text" value='<%= liveGroupTypeSettings.getProperty("remotePort") %>' />
+
+				<aui:input label="remote-path-context" name="remotePathContext" size="10" type="text" value='<%= liveGroupTypeSettings.getProperty("remotePathContext") %>' />
 
 				<aui:input label='<%= LanguageUtil.get(pageContext, "remote-site-id" ) %>' name="remoteGroupId" size="10" type="text" value='<%= liveGroupTypeSettings.getProperty("remoteGroupId") %>' />
 

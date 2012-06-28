@@ -41,12 +41,12 @@ import javax.servlet.http.HttpServletRequest;
 public class StagingUtil {
 
 	public static String buildRemoteURL(
-		String remoteAddress, int remotePort, boolean secureConnection,
-		long remoteGroupId, boolean privateLayout) {
+		String remoteAddress, int remotePort, String remotePathContext,
+		boolean secureConnection, long remoteGroupId, boolean privateLayout) {
 
 		return getStaging().buildRemoteURL(
-			remoteAddress, remotePort, secureConnection, remoteGroupId,
-			privateLayout);
+			remoteAddress, remotePort, remotePathContext, secureConnection,
+			remoteGroupId, privateLayout);
 	}
 
 	public static void copyFromLive(PortletRequest PortletRequest)
@@ -76,15 +76,15 @@ public class StagingUtil {
 	public static void copyRemoteLayouts(
 			long sourceGroupId, boolean privateLayout,
 			Map<Long, Boolean> layoutIdMap, Map<String, String[]> parameterMap,
-			String remoteAddress, int remotePort, boolean secureConnection,
-			long remoteGroupId, boolean remotePrivateLayout, Date startDate,
-			Date endDate)
+			String remoteAddress, int remotePort, String remotePathContext,
+			boolean secureConnection, long remoteGroupId,
+			boolean remotePrivateLayout, Date startDate, Date endDate)
 		throws Exception {
 
 		getStaging().copyRemoteLayouts(
 			sourceGroupId, privateLayout, layoutIdMap, parameterMap,
-			remoteAddress, remotePort, secureConnection, remoteGroupId,
-			remotePrivateLayout, startDate, endDate);
+			remoteAddress, remotePort, remotePathContext, secureConnection,
+			remoteGroupId, remotePrivateLayout, startDate, endDate);
 	}
 
 	public static void deleteLastImportSettings(
@@ -141,13 +141,14 @@ public class StagingUtil {
 			long userId, Group scopeGroup, Group liveGroup,
 			boolean branchingPublic, boolean branchingPrivate,
 			String remoteAddress, long remoteGroupId, int remotePort,
-			boolean secureConnection, ServiceContext serviceContext)
+			String remotePathContext, boolean secureConnection,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		getStaging().enableRemoteStaging(
 			userId, scopeGroup, liveGroup, branchingPublic, branchingPrivate,
-			remoteAddress, remoteGroupId, remotePort, secureConnection,
-			serviceContext);
+			remoteAddress, remoteGroupId, remotePathContext, remotePort,
+			secureConnection, serviceContext);
 	}
 
 	public static Group getLiveGroup(long groupId)

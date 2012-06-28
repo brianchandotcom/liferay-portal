@@ -119,8 +119,8 @@ import javax.servlet.http.HttpServletRequest;
 public class StagingImpl implements Staging {
 
 	public String buildRemoteURL(
-		String remoteAddress, int remotePort, boolean secureConnection,
-		long remoteGroupId, boolean privateLayout) {
+		String remoteAddress, int remotePort, String remotePathContext,
+		boolean secureConnection, long remoteGroupId, boolean privateLayout) {
 
 		StringBundler sb = new StringBundler((remoteGroupId > 0) ? 4 : 9);
 
@@ -134,6 +134,7 @@ public class StagingImpl implements Staging {
 		sb.append(remoteAddress);
 		sb.append(StringPool.COLON);
 		sb.append(remotePort);
+		sb.append(remotePathContext);
 
 		if (remoteGroupId > 0) {
 			sb.append("/c/my_sites/view?");
@@ -207,9 +208,9 @@ public class StagingImpl implements Staging {
 	public void copyRemoteLayouts(
 			long sourceGroupId, boolean privateLayout,
 			Map<Long, Boolean> layoutIdMap, Map<String, String[]> parameterMap,
-			String remoteAddress, int remotePort, boolean secureConnection,
-			long remoteGroupId, boolean remotePrivateLayout, Date startDate,
-			Date endDate)
+			String remoteAddress, int remotePort, String remotePathContext,
+			boolean secureConnection, long remoteGroupId,
+			boolean remotePrivateLayout, Date startDate, Date endDate)
 		throws Exception {
 
 		PermissionChecker permissionChecker =
@@ -229,6 +230,7 @@ public class StagingImpl implements Staging {
 		sb.append(remoteAddress);
 		sb.append(StringPool.COLON);
 		sb.append(remotePort);
+		sb.append(remotePathContext);
 
 		String url = sb.toString();
 
@@ -384,6 +386,7 @@ public class StagingImpl implements Staging {
 		typeSettingsProperties.remove("branchingPublic");
 		typeSettingsProperties.remove("remoteAddress");
 		typeSettingsProperties.remove("remoteGroupId");
+		typeSettingsProperties.remove("remotePathContext");
 		typeSettingsProperties.remove("remotePort");
 		typeSettingsProperties.remove("secureConnection");
 		typeSettingsProperties.remove("staged");
@@ -506,11 +509,14 @@ public class StagingImpl implements Staging {
 	public void enableRemoteStaging(
 			long userId, Group scopeGroup, Group liveGroup,
 			boolean branchingPublic, boolean branchingPrivate,
-			String remoteAddress, long remoteGroupId, int remotePort,
-			boolean secureConnection, ServiceContext serviceContext)
+			String remoteAddress, long remoteGroupId, String remotePathContext,
+			int remotePort, boolean secureConnection,
+			ServiceContext serviceContext)
 		throws Exception {
 
-		validate(remoteAddress, remoteGroupId, remotePort, secureConnection);
+		validate(
+			remoteAddress, remoteGroupId, remotePathContext, remotePort,
+			secureConnection);
 
 		if (liveGroup.hasStagingGroup()) {
 			disableStaging(scopeGroup, liveGroup, serviceContext);
@@ -526,6 +532,8 @@ public class StagingImpl implements Staging {
 		typeSettingsProperties.setProperty("remoteAddress", remoteAddress);
 		typeSettingsProperties.setProperty(
 			"remoteGroupId", String.valueOf(remoteGroupId));
+		typeSettingsProperties.setProperty(
+			"remotePathContext", remotePathContext);
 		typeSettingsProperties.setProperty(
 			"remotePort", String.valueOf(remotePort));
 		typeSettingsProperties.setProperty(
@@ -1325,6 +1333,8 @@ public class StagingImpl implements Staging {
 
 			long remoteGroupId = getLong(
 				portletRequest, liveGroup, "remoteGroupId");
+			String remotePathContext = getString(
+				portletRequest, liveGroup, "remotePathContext");
 			int remotePort = getInteger(
 				portletRequest, liveGroup, "remotePort");
 			boolean secureConnection = getBoolean(
@@ -1332,8 +1342,8 @@ public class StagingImpl implements Staging {
 
 			enableRemoteStaging(
 				userId, scopeGroup, liveGroup, branchingPublic,
-				branchingPrivate, remoteAddress, remoteGroupId, remotePort,
-				secureConnection, serviceContext);
+				branchingPrivate, remoteAddress, remoteGroupId,
+				remotePathContext,remotePort, secureConnection, serviceContext);
 		}
 	}
 
@@ -1861,6 +1871,9 @@ public class StagingImpl implements Staging {
 			portletRequest, "remoteGroupId",
 			GetterUtil.getLong(
 				groupTypeSettingsProperties.getProperty("remoteGroupId")));
+		String remotePathContext = ParamUtil.getString(
+			portletRequest, "remotePathContext",
+			groupTypeSettingsProperties.getProperty("remotePathContext"));
 		int remotePort = ParamUtil.getInteger(
 			portletRequest, "remotePort",
 			GetterUtil.getInteger(
@@ -1872,12 +1885,14 @@ public class StagingImpl implements Staging {
 			GetterUtil.getBoolean(
 				groupTypeSettingsProperties.getProperty("secureConnection")));
 
-		validate(remoteAddress, remoteGroupId, remotePort, secureConnection);
+		validate(
+			remoteAddress, remoteGroupId, remotePathContext, remotePort,
+			secureConnection);
 
 		if (group.isCompany()) {
 			updateGroupTypeSettingsProperties(
-				group, remoteAddress, remoteGroupId, remotePort,
-				secureConnection);
+				group, remoteAddress, remoteGroupId, remotePathContext,
+				remotePort, secureConnection);
 		}
 
 		String range = ParamUtil.getString(portletRequest, "range");
@@ -1951,9 +1966,10 @@ public class StagingImpl implements Staging {
 
 			LayoutServiceUtil.schedulePublishToRemote(
 				groupId, privateLayout, layoutIdMap, parameterMap,
-				remoteAddress, remotePort, secureConnection, remoteGroupId,
-				remotePrivateLayout, startDate, endDate, groupName, cronText,
-				startCal.getTime(), schedulerEndDate, description);
+				remoteAddress, remotePort, remotePathContext, secureConnection,
+				remoteGroupId, remotePrivateLayout, startDate, endDate,
+				groupName, cronText, startCal.getTime(), schedulerEndDate,
+				description);
 		}
 		else {
 			MessageStatus messageStatus = new MessageStatus();
@@ -1963,8 +1979,9 @@ public class StagingImpl implements Staging {
 			try {
 				copyRemoteLayouts(
 					groupId, privateLayout, layoutIdMap, parameterMap,
-					remoteAddress, remotePort, secureConnection, remoteGroupId,
-					remotePrivateLayout, startDate, endDate);
+					remoteAddress, remotePort, remotePathContext,
+					secureConnection, remoteGroupId, remotePrivateLayout,
+					startDate, endDate);
 			}
 			catch (Exception e) {
 				messageStatus.setException(e);
@@ -1978,8 +1995,8 @@ public class StagingImpl implements Staging {
 					new LayoutsRemotePublisherRequest(
 						themeDisplay.getUserId(), groupId, privateLayout,
 						layoutIdMap, parameterMap, remoteAddress, remotePort,
-						secureConnection, remoteGroupId, remotePrivateLayout,
-						startDate, endDate);
+						remotePathContext, secureConnection, remoteGroupId,
+						remotePrivateLayout, startDate, endDate);
 
 				messageStatus.setPayload(publisherRequest);
 
@@ -2084,7 +2101,7 @@ public class StagingImpl implements Staging {
 
 	protected void updateGroupTypeSettingsProperties(
 			Group group, String remoteAddress, long remoteGroupId,
-			int remotePort, boolean secureConnection)
+			String remotePathContext, int remotePort, boolean secureConnection)
 		throws Exception {
 
 		UnicodeProperties typeSettingsProperties =
@@ -2093,6 +2110,8 @@ public class StagingImpl implements Staging {
 		typeSettingsProperties.setProperty("remoteAddress", remoteAddress);
 		typeSettingsProperties.setProperty(
 			"remoteGroupId", String.valueOf(remoteGroupId));
+		typeSettingsProperties.setProperty(
+			"remotePathContext", remotePathContext);
 		typeSettingsProperties.setProperty(
 			"remotePort", String.valueOf(remotePort));
 		typeSettingsProperties.setProperty(
@@ -2104,8 +2123,8 @@ public class StagingImpl implements Staging {
 	}
 
 	protected void validate(
-			String remoteAddress, long remoteGroupId, int remotePort,
-			boolean secureConnection)
+			String remoteAddress, long remoteGroupId, String remotePathContext,
+			int remotePort, boolean secureConnection)
 		throws Exception {
 
 		RemoteOptionsException roe = null;
@@ -2130,6 +2149,18 @@ public class StagingImpl implements Staging {
 			throw roe;
 		}
 
+		if (Validator.isNotNull(remotePathContext) &&
+			(!remotePathContext.startsWith(StringPool.FORWARD_SLASH) ||
+			 remotePathContext.endsWith(StringPool.FORWARD_SLASH))) {
+
+			roe = new RemoteOptionsException(
+				RemoteOptionsException.REMOTE_PATH_CONTEXT);
+
+			roe.setRemotePathContext(remotePathContext);
+
+			throw roe;
+		}
+
 		if (remoteGroupId <= 0) {
 			roe = new RemoteOptionsException(
 				RemoteOptionsException.REMOTE_GROUP_ID);
@@ -2145,7 +2176,7 @@ public class StagingImpl implements Staging {
 		User user = UserLocalServiceUtil.getUser(permissionChecker.getUserId());
 
 		String url = buildRemoteURL(
-			remoteAddress, remotePort, secureConnection,
+			remoteAddress, remotePort, remotePathContext, secureConnection,
 			GroupConstants.DEFAULT_LIVE_GROUP_ID, false);
 
 		HttpPrincipal httpPrincipal = new HttpPrincipal(

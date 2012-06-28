@@ -343,6 +343,10 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 			<liferay-ui:message arguments="<%= roe.getRemoteGroupId() %>" key="the-remote-site-id-x-is-not-valid" />
 		</c:if>
 
+		<c:if test="<%= roe.getType() == RemoteOptionsException.REMOTE_PATH_CONTEXT %>">
+			<liferay-ui:message arguments="<%= roe.getRemotePathContext() %>" key="the-remote-path-context-x-is-not-valid" />
+		</c:if>
+
 		<c:if test="<%= roe.getType() == RemoteOptionsException.REMOTE_PORT %>">
 			<liferay-ui:message arguments="<%= roe.getRemotePort() %>" key="the-remote-port-x-is-not-valid" />
 		</c:if>

@@ -49,7 +49,7 @@
 			<portlet:param name="doActionAfterLogin" value="<%= portletName.equals(PortletKeys.FAST_LOGIN) ? Boolean.TRUE.toString() : Boolean.FALSE.toString() %>" />
 		</portlet:actionURL>
 
-		<aui:form action="<%= loginURL %>" method="post" name="fm">
+		<aui:form action="<%= loginURL %>" method="post" name="fm" autocomplete="<%= PropsValues.COMPANY_SECURITY_HTML_LOGIN_AUTOCOMPLETE ? \"on\" : \"off\" %>">
 			<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
 			<c:choose>

@@ -593,22 +593,30 @@ public class WebDriverToSeleniumBridge
 	public void keyDown(String locator, String keySequence) {
 		WebElement webElement = getWebElement(locator);
 
-		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
-
-		WebDriver webDriver = wrapsDriver.getWrappedDriver();
-
-		Actions actions = new Actions(webDriver);
-
-		if (locator.startsWith("\\")) {
+		if (keySequence.startsWith("\\")) {
 			int index = GetterUtil.getInteger(keySequence.substring(1));
 
 			Keys keys = _keysArray[index];
 
-			actions.keyDown(webElement, keys);
+			if ((index >= 48) && (index <= 90)) {
+				webElement.sendKeys(StringPool.ASCII_TABLE[index]);
+			}
+			else if ((index == 16) || (index == 17) || (index == 18)) {
+				WrapsDriver wrapsDriver = (WrapsDriver)webElement;
 
-			Action action = actions.build();
+				WebDriver webDriver = wrapsDriver.getWrappedDriver();
 
-			action.perform();
+				Actions actions = new Actions(webDriver);
+
+				actions.keyDown(webElement, keys);
+
+				Action action = actions.build();
+
+				action.perform();
+			}
+			else {
+				webElement.sendKeys(keys);
+			}
 		}
 		else {
 			webElement.sendKeys(keySequence);
@@ -622,27 +630,30 @@ public class WebDriverToSeleniumBridge
 	public void keyPress(String locator, String keySequence) {
 		WebElement webElement = getWebElement(locator);
 
-		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
-
-		WebDriver webDriver = wrapsDriver.getWrappedDriver();
-
-		Actions actions = new Actions(webDriver);
-
 		if (keySequence.startsWith("\\")) {
 			int index = GetterUtil.getInteger(keySequence.substring(1));
 
-			if ((index >= 48) || (index <= 90)) {
+			Keys keys = _keysArray[index];
+
+			if ((index >= 48) && (index <= 90)) {
 				webElement.sendKeys(StringPool.ASCII_TABLE[index]);
 			}
-			else {
-				Keys keys = _keysArray[index];
+			else if ((index == 16) || (index == 17) || (index == 18)) {
+				WrapsDriver wrapsDriver = (WrapsDriver)webElement;
 
-				actions.keyDown(webElement, keys);
-				actions.keyUp(webElement, keys);
+				WebDriver webDriver = wrapsDriver.getWrappedDriver();
+
+				Actions actions = new Actions(webDriver);
+
+				actions = actions.keyDown(webElement, keys);
+				actions = actions.keyUp(webElement, keys);
 
 				Action action = actions.build();
 
 				action.perform();
+			}
+			else {
+				webElement.sendKeys(keys);
 			}
 		}
 		else {
@@ -655,7 +666,36 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public void keyUp(String locator, String keySequence) {
-		throw new UnsupportedOperationException();
+		WebElement webElement = getWebElement(locator);
+
+		if (keySequence.startsWith("\\")) {
+			int index = GetterUtil.getInteger(keySequence.substring(1));
+
+			Keys keys = _keysArray[index];
+
+			if ((index >= 48) && (index <= 90)) {
+				webElement.sendKeys(StringPool.ASCII_TABLE[index]);
+			}
+			else if ((index == 16) || (index == 17) || (index == 18)) {
+				WrapsDriver wrapsDriver = (WrapsDriver)webElement;
+
+				WebDriver webDriver = wrapsDriver.getWrappedDriver();
+
+				Actions actions = new Actions(webDriver);
+
+				actions.keyUp(webElement, keys);
+
+				Action action = actions.build();
+
+				action.perform();
+			}
+			else {
+				webElement.sendKeys(keys);
+			}
+		}
+		else {
+			webElement.sendKeys(keySequence);
+		}
 	}
 
 	public void keyUpNative(String keycode) {
@@ -1126,7 +1166,7 @@ public class WebDriverToSeleniumBridge
 		_keysArray[111] = Keys.DIVIDE;
 		//keyTable[] = Keys.DOWN;
 		//keyTable[] = Keys.END;
-		_keysArray[13] = Keys.ENTER;
+		_keysArray[13] = Keys.RETURN;
 		//keyTable[] = Keys.EQUALS;
 		_keysArray[27] = Keys.ESCAPE;
 		_keysArray[112] = Keys.F1;

@@ -172,9 +172,11 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 				return null;
 			}
 
-			_log.error(
-				"No theme found for default theme id " + themeId +
-					". Returning a random theme.");
+			if (themeId.indexOf(PortletConstants.WAR_SEPARATOR) == -1) {
+				_log.error(
+					"No theme found for default theme id " + themeId +
+						". Returning a random theme.");
+			}
 
 			for (Map.Entry<String, Theme> entry : _themes.entrySet()) {
 				theme = entry.getValue();

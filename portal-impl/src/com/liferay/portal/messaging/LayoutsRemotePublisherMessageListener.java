@@ -73,6 +73,7 @@ public class LayoutsRemotePublisherMessageListener
 		Map<String, String[]> parameterMap = publisherRequest.getParameterMap();
 		String remoteAddress = publisherRequest.getRemoteAddress();
 		int remotePort = publisherRequest.getRemotePort();
+		String remotePathContext = publisherRequest.getRemotePathContext();
 		boolean secureConnection = publisherRequest.isSecureConnection();
 		long remoteGroupId = publisherRequest.getRemoteGroupId();
 		boolean remotePrivateLayout = publisherRequest.isRemotePrivateLayout();
@@ -135,8 +136,8 @@ public class LayoutsRemotePublisherMessageListener
 		try {
 			StagingUtil.copyRemoteLayouts(
 				sourceGroupId, privateLayout, layoutIdMap, parameterMap,
-				remoteAddress, remotePort, secureConnection, remoteGroupId,
-				remotePrivateLayout, startDate, endDate);
+				remoteAddress, remotePort, remotePathContext, secureConnection,
+				remoteGroupId, remotePrivateLayout, startDate, endDate);
 		}
 		finally {
 			PrincipalThreadLocal.setName(null);

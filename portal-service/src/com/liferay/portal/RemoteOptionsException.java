@@ -25,6 +25,8 @@ public class RemoteOptionsException extends PortalException {
 
 	public static final int REMOTE_GROUP_ID = 3;
 
+	public static final int REMOTE_PATH_CONTEXT = 4;
+
 	public static final int REMOTE_PORT = 2;
 
 	public RemoteOptionsException(int type) {
@@ -37,6 +39,10 @@ public class RemoteOptionsException extends PortalException {
 
 	public long getRemoteGroupId() {
 		return _remoteGroupId;
+	}
+
+	public String getRemotePathContext() {
+		return _remotePathContext;
 	}
 
 	public int getRemotePort() {
@@ -55,12 +61,17 @@ public class RemoteOptionsException extends PortalException {
 		_remoteGroupId = remoteGroupId;
 	}
 
+	public void setRemotePathContext(String remotePathContext) {
+		_remotePathContext = remotePathContext;
+	}
+
 	public void setRemotePort(int remotePort) {
 		_remotePort = remotePort;
 	}
 
 	private String _remoteAddress;
 	private long _remoteGroupId;
+	private String _remotePathContext;
 	private int _remotePort;
 	private int _type;
 

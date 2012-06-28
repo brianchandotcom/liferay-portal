@@ -37,7 +37,7 @@ public class LayoutsRemotePublisherRequest
 
 		super(
 			userId, sourceGroupId, privateLayout, layoutIdMap, parameterMap,
-			remoteAddress, remotePort, secureConnection, remoteGroupId,
+			remoteAddress, remotePort, null, secureConnection, remoteGroupId,
 			remotePrivateLayout, startDate, endDate);
 	}
 

@@ -12084,6 +12084,11 @@ This method handles the creation of the layout including its resources, metadata
 				<comment><![CDATA[the remote port]]></comment>
 			</param>
 			<param>
+				<name>remotePathContext</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[the remote path context]]></comment>
+			</param>
+			<param>
 				<name>secureConnection</name>
 				<type>boolean</type>
 				<comment><![CDATA[whether the connection is secure]]></comment>

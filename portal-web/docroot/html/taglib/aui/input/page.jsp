@@ -184,7 +184,7 @@
 <c:if test='<%= !type.equals("hidden") && !type.equals("assetCategories") %>'>
 			</span>
 
-			<c:if test="<%= Validator.isNotNull(suffix) %>">
+			<c:if test='<%= Validator.isNotNull(suffix) && !inlineLabel.equals("right") %>'>
 				<span class="aui-suffix"><liferay-ui:message key="<%= suffix %>" /></span>
 			</c:if>
 
@@ -202,6 +202,10 @@
 
 					<c:if test="<%= changesContext %>">
 						<span class="aui-helper-hidden-accessible"><liferay-ui:message key="changing-the-value-of-this-field-will-reload-the-page" />)</span>
+					</c:if>
+
+					<c:if test="<%= Validator.isNotNull(suffix) %>">
+						<span class="aui-suffix"><liferay-ui:message key="<%= suffix %>" /></span>
 					</c:if>
 				</label>
 			</c:if>

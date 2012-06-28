@@ -32,8 +32,6 @@ else {
 	primarySearch = portalPreferences.getValue(PortletKeys.SEARCH, "primary-search", StringPool.BLANK);
 }
 
-int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_CUR);
-
 long groupId = ParamUtil.getLong(request, "groupId");
 
 Group group = themeDisplay.getScopeGroup();
@@ -60,7 +58,7 @@ request.setAttribute("search.jsp-portletURL", portletURL);
 
 <aui:form action="<%= searchURL %>" method="get" name="fm" onSubmit='<%= "event.preventDefault();" %>'>
 	<liferay-portlet:renderURLParams varImpl="searchURL" />
-	<aui:input name="cur" type="hidden" value="<%= cur %>" />
+	<aui:input name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" type="hidden" value="<%= ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_CUR) %>" />
 	<aui:input name="format" type="hidden" value="<%= format %>" />
 
 	<aui:fieldset>

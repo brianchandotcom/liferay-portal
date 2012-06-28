@@ -38,7 +38,7 @@ public class ViewResolveTasksTaskAssignedToMeTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//nav/ul/li[contains(.,'Home')]/a/span")) {
+									"//nav/ul/li[contains(.,'Tasks')]/a/span")) {
 							break;
 						}
 					}
@@ -48,8 +48,6 @@ public class ViewResolveTasksTaskAssignedToMeTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				assertEquals(RuntimeVariables.replace("Home"),
-					selenium.getText("//nav/ul/li[contains(.,'Home')]/a/span"));
 				selenium.clickAt("//nav/ul/li[contains(.,'Tasks')]/a/span",
 					RuntimeVariables.replace("Tasks"));
 				selenium.waitForPageToLoad("30000");

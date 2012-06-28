@@ -52,9 +52,9 @@ public class ViewEventEDDisplayDays2Test extends BaseTestCase {
 			RuntimeVariables.replace("Calendar Event Title"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals("Add Event",
-			selenium.getValue("//input[@value='Add Event']"));
 		assertEquals(RuntimeVariables.replace("Calendar Event Title"),
-			selenium.getText("//div[@class='event-title']"));
+			selenium.getText("//h1[@class='header-title']"));
+		assertEquals(RuntimeVariables.replace("Calendar Event Description"),
+			selenium.getText("//p[2]"));
 	}
 }

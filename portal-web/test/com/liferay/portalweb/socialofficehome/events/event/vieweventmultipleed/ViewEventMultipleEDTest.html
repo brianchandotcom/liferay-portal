@@ -39,54 +39,14 @@
 	<td>Calendar Event1 Title</td>
 </tr>
 <tr>
-	<td>assertValue</td>
-	<td>//input[@value='Add Event']</td>
-	<td>Add Event</td>
-</tr>
-<tr>
 	<td>assertText</td>
-	<td>xPath=(//div[@class='event-title'])[1]</td>
+	<td>//h1[@class='header-title']</td>
 	<td>Calendar Event1 Title</td>
 </tr>
 <tr>
-	<td>open</td>
-	<td>/user/joebloggs/so/dashboard/</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>xPath=(//span[@class='portlet-title-text'])[4]</td>
-	<td>Events</td>
-</tr>
-<tr>
 	<td>assertText</td>
-	<td>xPath=(//span[@class='portlet-title-text'])[4]</td>
-	<td>Events</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//h2[contains(.,'Events')]</td>
-	<td>Today's Events</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>xPath=(//span[@class='event-name']/a)[2]</td>
-	<td>Calendar Event2 Title</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>xPath=(//span[@class='event-name']/a)[2]</td>
-	<td>Calendar Event2 Title</td>
-</tr>
-<tr>
-	<td>assertValue</td>
-	<td>//input[@value='Add Event']</td>
-	<td>Add Event</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>xPath=(//div[@class='event-title'])[2]</td>
-	<td>Calendar Event2 Title</td>
+	<td>//p[2]</td>
+	<td>Calendar Event1 Description</td>
 </tr>
 <tr>
 	<td>open</td>
@@ -104,9 +64,49 @@
 	<td>Events</td>
 </tr>
 <tr>
-	<td>assertText</td>
+	<td>assertPartialText</td>
 	<td>//h2[contains(.,'Events')]</td>
-	<td>Today's Events</td>
+	<td>Events</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//span[@class='event-name']/a)[2]</td>
+	<td>Calendar Event2 Title</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>xPath=(//span[@class='event-name']/a)[2]</td>
+	<td>Calendar Event2 Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h1[@class='header-title']</td>
+	<td>Calendar Event2 Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//p[2]</td>
+	<td>Calendar Event2 Description</td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/user/joebloggs/so/dashboard/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>xPath=(//span[@class='portlet-title-text'])[4]</td>
+	<td>Events</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//span[@class='portlet-title-text'])[4]</td>
+	<td>Events</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//h2[contains(.,'Events')]</td>
+	<td>Events</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -119,14 +119,14 @@
 	<td>Calendar Event3 Title</td>
 </tr>
 <tr>
-	<td>assertValue</td>
-	<td>//input[@value='Add Event']</td>
-	<td>Add Event</td>
+	<td>assertText</td>
+	<td>//h1[@class='header-title']</td>
+	<td>Calendar Event3 Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//div[@class='event-title'])[3]</td>
-	<td>Calendar Event3 Title</td>
+	<td>//p[2]</td>
+	<td>Calendar Event3 Description</td>
 </tr>
 </tbody></table>
 </body>

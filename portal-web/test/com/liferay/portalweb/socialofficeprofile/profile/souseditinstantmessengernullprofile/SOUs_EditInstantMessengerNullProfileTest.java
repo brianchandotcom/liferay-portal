@@ -76,12 +76,12 @@ public class SOUs_EditInstantMessengerNullProfileTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("socialofficesn"),
 			selenium.getText(
 				"//div[@data-title='Instant Messenger']/ul/li[contains(.,'Skype')]/span[2]"));
-		assertEquals(RuntimeVariables.replace("YM"),
+		assertEquals(RuntimeVariables.replace("ym"),
 			selenium.getText(
-				"//div[@data-title='Instant Messenger']/ul/li[contains(.,'YM')]/span"));
+				"//div[@data-title='Instant Messenger']/ul/li[contains(.,'ym')]/span"));
 		assertEquals(RuntimeVariables.replace("socialofficesn"),
 			selenium.getText(
-				"//div[@data-title='Instant Messenger']/ul/li[contains(.,'YM')]/span[2]"));
+				"//div[@data-title='Instant Messenger']/ul/li[contains(.,'ym')]/span[2]"));
 		selenium.click("//div[@data-title='Instant Messenger']");
 
 		for (int second = 0;; second++) {
@@ -140,7 +140,7 @@ public class SOUs_EditInstantMessengerNullProfileTest extends BaseTestCase {
 		assertFalse(selenium.isTextPresent("Jabber"));
 		assertFalse(selenium.isTextPresent("msn"));
 		assertFalse(selenium.isTextPresent("Skype"));
-		assertFalse(selenium.isTextPresent("YM"));
+		assertFalse(selenium.isTextPresent("ym"));
 		assertFalse(selenium.isTextPresent("socialofficesnedit"));
 	}
 }

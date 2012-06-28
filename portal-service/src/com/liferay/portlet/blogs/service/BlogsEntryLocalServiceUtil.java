@@ -334,6 +334,12 @@ public class BlogsEntryLocalServiceUtil {
 			.addEntryResources(entryId, groupPermissions, guestPermissions);
 	}
 
+	public static void checkEntries()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().checkEntries();
+	}
+
 	public static void deleteEntries(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

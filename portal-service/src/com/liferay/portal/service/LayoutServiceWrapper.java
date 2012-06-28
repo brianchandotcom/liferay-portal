@@ -631,18 +631,19 @@ public class LayoutServiceWrapper implements LayoutService,
 		java.util.Map<java.lang.Long, java.lang.Boolean> layoutIdMap,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
 		java.lang.String remoteAddress, int remotePort,
-		boolean secureConnection, long remoteGroupId,
-		boolean remotePrivateLayout, java.util.Date startDate,
-		java.util.Date endDate, java.lang.String groupName,
-		java.lang.String cronText, java.util.Date schedulerStartDate,
-		java.util.Date schedulerEndDate, java.lang.String description)
+		java.lang.String remotePathContext, boolean secureConnection,
+		long remoteGroupId, boolean remotePrivateLayout,
+		java.util.Date startDate, java.util.Date endDate,
+		java.lang.String groupName, java.lang.String cronText,
+		java.util.Date schedulerStartDate, java.util.Date schedulerEndDate,
+		java.lang.String description)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_layoutService.schedulePublishToRemote(sourceGroupId, privateLayout,
 			layoutIdMap, parameterMap, remoteAddress, remotePort,
-			secureConnection, remoteGroupId, remotePrivateLayout, startDate,
-			endDate, groupName, cronText, schedulerStartDate, schedulerEndDate,
-			description);
+			remotePathContext, secureConnection, remoteGroupId,
+			remotePrivateLayout, startDate, endDate, groupName, cronText,
+			schedulerStartDate, schedulerEndDate, description);
 	}
 
 	/**

@@ -1313,6 +1313,9 @@
 				<license-name>Apache License 2.0</license-name>
 			</license>
 		</licenses>
+		<comments>
+			This includes a public patch from CMIS-527.
+		</comments>
 	</library>
 	<library>
 		<file-name>portal/chemistry-opencmis-commons-api.jar</file-name>

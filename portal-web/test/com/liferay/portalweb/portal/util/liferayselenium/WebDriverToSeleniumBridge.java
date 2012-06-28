@@ -594,7 +594,6 @@ public class WebDriverToSeleniumBridge
 		WebElement webElement = getWebElement(locator);
 
 		if (keySequence.startsWith("\\")) {
-
 			int index = GetterUtil.getInteger(keySequence.substring(1));
 
 			Keys keys = _keysArray[index];
@@ -602,7 +601,7 @@ public class WebDriverToSeleniumBridge
 			if ((index >= 48) && (index <= 90)) {
 				webElement.sendKeys(StringPool.ASCII_TABLE[index]);
 			}
-			else if (index == 16 || index == 17 || index == 18) {
+			else if ((index == 16) || (index == 17) || (index == 18)) {
 				WrapsDriver wrapsDriver = (WrapsDriver)webElement;
 
 				WebDriver webDriver = wrapsDriver.getWrappedDriver();
@@ -639,7 +638,7 @@ public class WebDriverToSeleniumBridge
 			if ((index >= 48) && (index <= 90)) {
 				webElement.sendKeys(StringPool.ASCII_TABLE[index]);
 			}
-			else if (index == 16 || index == 17 || index == 18) {
+			else if ((index == 16) || (index == 17) || (index == 18)) {
 				WrapsDriver wrapsDriver = (WrapsDriver)webElement;
 
 				WebDriver webDriver = wrapsDriver.getWrappedDriver();
@@ -670,7 +669,6 @@ public class WebDriverToSeleniumBridge
 		WebElement webElement = getWebElement(locator);
 
 		if (keySequence.startsWith("\\")) {
-
 			int index = GetterUtil.getInteger(keySequence.substring(1));
 
 			Keys keys = _keysArray[index];
@@ -678,7 +676,7 @@ public class WebDriverToSeleniumBridge
 			if ((index >= 48) && (index <= 90)) {
 				webElement.sendKeys(StringPool.ASCII_TABLE[index]);
 			}
-			else if (index == 16 || index == 17 || index == 18) {
+			else if ((index == 16) || (index == 17) || (index == 18)) {
 				WrapsDriver wrapsDriver = (WrapsDriver)webElement;
 
 				WebDriver webDriver = wrapsDriver.getWrappedDriver();

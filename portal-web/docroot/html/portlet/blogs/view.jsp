@@ -23,11 +23,37 @@ String assetTagName = ParamUtil.getString(request, "tag");
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/blogs/view");
+
+String portletInstanceId = themeDisplay.getPortletDisplay().getId();
+
+String trashedEntryId = StringPool.BLANK;
+
+if (SessionMessages.contains(request, portletInstanceId + "_delete-success")) {
+	trashedEntryId = GetterUtil.getString(StringUtil.merge((long[])session.getAttribute("trashedEntryIds")));
+
+	session.removeAttribute("trashedEntryIds");
+}
 %>
 
 <liferay-portlet:renderURL varImpl="searchURL">
 	<portlet:param name="struts_action" value="/blogs/search" />
 </liferay-portlet:renderURL>
+
+<% if (SessionMessages.contains(request, portletInstanceId + "_delete-success")) { %>
+	<div class="portlet-msg-notifier">
+		<liferay-ui:message arguments='<%= new String[]{ "blog", "javascript:" + renderResponse.getNamespace() + "undoEntries();" } %>' key="the-selected-x-has-been-moved-to-the-trash.-undo" translateArguments="false" />
+	</div>
+
+	<liferay-portlet:renderURL varImpl="undoURL">
+		<portlet:param name="struts_action" value="/blogs/edit_entry" />
+	</liferay-portlet:renderURL>
+
+	<aui:form action="<%= undoURL.toString() %>" method="get" name="fm2">
+		<aui:input name="<%= Constants.CMD %>" type="hidden" />
+		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+		<aui:input name="restoreEntryIds" type="hidden" />
+	</aui:form>
+<% } %>
 
 <aui:form action="<%= searchURL %>" method="get" name="fm1">
 	<liferay-portlet:renderURLParams varImpl="searchURL" />
@@ -75,3 +101,19 @@ portletURL.setParameter("struts_action", "/blogs/view");
 		Liferay.Util.focusFormField(document.<portlet:namespace />fm1.<portlet:namespace />keywords);
 	</aui:script>
 </c:if>
+
+<aui:script>
+	Liferay.provide(
+				window,
+				'<portlet:namespace />undoEntries',
+				function() {
+					if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-undo-your-last-changes") %>')) {
+						document.<portlet:namespace />fm2.method = "post";
+						document.<portlet:namespace />fm2.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.UNDO %>";
+						document.<portlet:namespace />fm2.<portlet:namespace />restoreEntryIds.value = "<%= trashedEntryId %>";
+						submitForm(document.<portlet:namespace />fm2, "<portlet:actionURL><portlet:param name="struts_action" value="/blogs/edit_entry" /></portlet:actionURL>");
+					}
+				},
+				['liferay-util-list-fields']
+			);
+</aui:script>

@@ -15,12 +15,15 @@
 package com.liferay.portlet.documentlibrary.action;
 
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 import com.liferay.portlet.documentlibrary.FileShortcutPermissionException;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
@@ -34,12 +37,16 @@ import javax.portlet.PortletConfig;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Levente Hudák
  */
 public class EditFileShortcutAction extends PortletAction {
 
@@ -119,8 +126,21 @@ public class EditFileShortcutAction extends PortletAction {
 		long fileShortcutId = ParamUtil.getLong(
 			actionRequest, "fileShortcutId");
 
+		long[] fileShortcutArray = new long[] {fileShortcutId};
+
 		if (moveToTrash) {
 			DLAppServiceUtil.moveFileShortcutToTrash(fileShortcutId);
+
+			HttpServletRequest request = PortalUtil.getHttpServletRequest(
+				actionRequest);
+
+			HttpSession session = request.getSession();
+
+			String portletId = (String)request.getAttribute(WebKeys.PORTLET_ID);
+
+			session.setAttribute("trashedFileShortcutIds",fileShortcutArray);
+
+			SessionMessages.add(request, portletId + "_delete-success");
 		}
 		else {
 			DLAppServiceUtil.deleteFileShortcut(fileShortcutId);

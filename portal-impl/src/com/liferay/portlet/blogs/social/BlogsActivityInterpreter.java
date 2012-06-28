@@ -87,20 +87,14 @@ public class BlogsActivityInterpreter extends BaseSocialActivityInterpreter {
 		if ((activityType == BlogsActivityKeys.ADD_COMMENT) ||
 			(activityType == SocialActivityConstants.TYPE_ADD_COMMENT)) {
 
-			if (Validator.isNull(groupName)) {
-				titlePattern = "activity-blogs-add-comment";
-			}
-			else {
-				titlePattern = "activity-blogs-add-comment-in";
-			}
+			titlePattern = "activity-blogs-add-comment";
 		}
 		else if (activityType == BlogsActivityKeys.ADD_ENTRY) {
-			if (Validator.isNull(groupName)) {
-				titlePattern = "activity-blogs-add-entry";
-			}
-			else {
-				titlePattern = "activity-blogs-add-entry-in";
-			}
+			titlePattern = "activity-blogs-add-entry";
+		}
+
+		if ((titlePattern != null) && Validator.isNotNull(groupName)) {
+			titlePattern = titlePattern + "-in";
 		}
 
 		Date now = new Date();

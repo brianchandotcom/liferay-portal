@@ -23,18 +23,51 @@ public interface PortletDisplayTemplateHandlerRegistry {
 
 	public long[] getClassNameIds();
 
+	/**
+	 * Returns the portlet display template handler associated with the class
+	 * name ID.
+	 *
+	 * @param  classNameId the class name ID of the portlet display template
+	 * @return the portlet display template handler associated with the class
+	 *         name ID
+	 */
 	public PortletDisplayTemplateHandler getPortletDisplayTemplateHandler(
 		long classNameId);
 
+	/**
+	 * Returns the portlet display template handler associated with the class
+	 * name.
+	 *
+	 * @param  className the class name of the portlet display template
+	 * @return the portlet display template handler associated with the class
+	 *         name
+	 */
 	public PortletDisplayTemplateHandler getPortletDisplayTemplateHandler(
 		String className);
 
+	/**
+	 * Returns all of the portlet display template handlers.
+	 *
+	 * @return the portlet display template handlers
+	 */
 	public List<PortletDisplayTemplateHandler>
 		getPortletDisplayTemplateHandlers();
 
+	/**
+	 * Registers the portlet display template handler.
+	 *
+	 * @param portletDisplayTemplateHandler the portlet display template handler
+	 *        to register
+	 */
 	public void register(
 		PortletDisplayTemplateHandler portletDisplayTemplateHandler);
 
+	/**
+	 * Unregisters the portlet display template handler.
+	 *
+	 * @param portletDisplayTemplateHandler the portlet display template handler
+	 *        to unregister
+	 */
 	public void unregister(
 		PortletDisplayTemplateHandler portletDisplayTemplateHandler);
 

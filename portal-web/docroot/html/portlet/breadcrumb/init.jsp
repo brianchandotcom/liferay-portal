@@ -27,12 +27,12 @@ if (Validator.isNotNull(portletResource)) {
 
 String displayStyle = PrefsParamUtil.getString(preferences, renderRequest, "displayStyle", "horizontal");
 
-Boolean showCurrentGroup = PrefsParamUtil.getBoolean(preferences, renderRequest, "showCurrentGroup", true);
-Boolean showCurrentPortlet = PrefsParamUtil.getBoolean(preferences, renderRequest, "showCurrentPortlet", true);
-Boolean showGuestGroup = PrefsParamUtil.getBoolean(preferences, renderRequest, "showGuestGroup", true);
-Boolean showLayout = PrefsParamUtil.getBoolean(preferences, renderRequest, "showLayout", true);
-Boolean showParentGroups = PrefsParamUtil.getBoolean(preferences, renderRequest, "showParentGroups", true);
-Boolean showPortletBreadcrumb = PrefsParamUtil.getBoolean(preferences, renderRequest, "showPortletBreadcrumb", true);
+boolean showCurrentGroup = PrefsParamUtil.getBoolean(preferences, renderRequest, "showCurrentGroup", true);
+boolean showCurrentPortlet = PrefsParamUtil.getBoolean(preferences, renderRequest, "showCurrentPortlet", true);
+boolean showGuestGroup = PrefsParamUtil.getBoolean(preferences, renderRequest, "showGuestGroup", true);
+boolean showLayout = PrefsParamUtil.getBoolean(preferences, renderRequest, "showLayout", true);
+boolean showParentGroups = PrefsParamUtil.getBoolean(preferences, renderRequest, "showParentGroups", true);
+boolean showPortletBreadcrumb = PrefsParamUtil.getBoolean(preferences, renderRequest, "showPortletBreadcrumb", true);
 %>
 
 <%@ include file="/html/portlet/breadcrumb/init-ext.jsp" %>

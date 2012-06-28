@@ -78,9 +78,9 @@ public class AddDefaultDDMTemplatesAction extends SimpleAction {
 		descriptionMap.put(locale, LanguageUtil.get(locale, description));
 
 		DDMTemplateLocalServiceUtil.addTemplate(
-			userId, groupId, PortalUtil.getClassNameId(AssetEntry.class),
-			groupId, templateKey, nameMap, descriptionMap, "list", null, "vm",
-			script, serviceContext);
+			userId, groupId, PortalUtil.getClassNameId(AssetEntry.class), 0,
+			templateKey, nameMap, descriptionMap, "list", null, "vm", script,
+			serviceContext);
 	}
 
 	protected void addDDMTemplates(

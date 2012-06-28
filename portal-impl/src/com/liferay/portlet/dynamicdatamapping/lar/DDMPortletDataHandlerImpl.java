@@ -173,12 +173,6 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 		DDMTemplate template =
 			(DDMTemplate)portletDataContext.getZipEntryAsObject(path);
 
-		if (template.getClassNameId() != PortalUtil.getClassNameId(
-				DDMStructure.class)) {
-
-			return;
-		}
-
 		long userId = portletDataContext.getUserId(template.getUserUuid());
 
 		Map<Long, Long> structureIds =

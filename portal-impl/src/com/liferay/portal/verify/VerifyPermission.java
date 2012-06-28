@@ -221,25 +221,33 @@ public class VerifyPermission
 
 		Connection con = null;
 		PreparedStatement ps = null;
+		PreparedStatement ps2 = null;
 		ResultSet rs = null;
+		ResultSet rs2 = null;
 
 		try {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
-			StringBundler sb = new StringBundler(8);
+			StringBundler sb = new StringBundler(4);
 
 			sb.append("select Layout.companyId as companyId, Layout.plid as ");
 			sb.append("primKey, Role_.roleId as ownerRoleId from Role_, ");
 			sb.append("Layout where Role_.name = ? and Role_.companyId = ");
-			sb.append("Layout.companyId and 1 > (select count(*) from ");
-			sb.append("ResourcePermission where ");
-			sb.append("ResourcePermission.companyId = Layout.companyId and ");
-			sb.append("ResourcePermission.roleId = Role_.roleId and ");
-			sb.append("ResourcePermission.primKey = Layout.plid)");
+			sb.append("Layout.companyId");
 
 			ps = con.prepareStatement(sb.toString());
 
 			ps.setString(1, RoleConstants.OWNER);
+			
+			sb = new StringBundler(4);
+			
+			sb.append("select count(*) from ");
+			sb.append("ResourcePermission where ");
+			sb.append("ResourcePermission.companyId = ? and ");
+			sb.append("ResourcePermission.roleId = ? and ");
+			sb.append("ResourcePermission.primKey = ?");
+			
+			ps2 = con.prepareStatement(sb.toString());
 
 			rs = ps.executeQuery();
 
@@ -247,17 +255,34 @@ public class VerifyPermission
 				long companyId = rs.getLong("companyId");
 				long ownerRoleId = rs.getLong("ownerRoleId");
 				String primKey = String.valueOf(rs.getLong("primKey"));
+				
+				ps2.setLong(1, companyId);
+				ps2.setLong(2, ownerRoleId);
+				ps2.setString(3, primKey);
+				
+				rs2 = ps2.executeQuery();
+				
+				if (rs2.next()) {
+					if (1 > rs2.getLong(1)) {
+						ResourcePermissionLocalServiceUtil
+							.setResourcePermissions(
+								companyId, Layout.class.getName(),
+								SCOPE_INDIVIDUAL, primKey,
+								ownerRoleId, actionIds);
 
-				ResourcePermissionLocalServiceUtil.setResourcePermissions(
-					companyId, Layout.class.getName(), SCOPE_INDIVIDUAL,
-					primKey, ownerRoleId, actionIds);
-
-				ResourcePermissionLocalServiceUtil.getResourcePermission(
-					companyId, Layout.class.getName(), SCOPE_INDIVIDUAL,
-					primKey, ownerRoleId);
+						ResourcePermissionLocalServiceUtil.
+							getResourcePermission(
+								companyId, Layout.class.getName(),
+								SCOPE_INDIVIDUAL, primKey,
+								ownerRoleId);
+					}
+				}
+				
+				DataAccess.cleanUp(rs2);
 			}
 		}
 		finally {
+			DataAccess.cleanUp(ps2);
 			DataAccess.cleanUp(con, ps, rs);
 		}
 	}

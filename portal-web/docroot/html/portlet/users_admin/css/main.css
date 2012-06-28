@@ -42,6 +42,10 @@
 					margin: 1.8em 0;
 				}
 			}
+
+			.aui-helper-clearfix.lfr-form-row {
+				overflow: visible;
+			}
 		}
 	}
 
@@ -241,10 +245,6 @@
 			vertical-align: top;
 		}
 	}
-}
-
-.aui-helper-clearfix.lfr-form-row {
-	overflow: visible;
 }
 
 .ie {

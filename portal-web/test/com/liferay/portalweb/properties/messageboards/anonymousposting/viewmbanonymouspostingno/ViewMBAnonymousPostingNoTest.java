@@ -53,7 +53,7 @@ public class ViewMBAnonymousPostingNoTest extends BaseTestCase {
 		assertFalse(selenium.isTextPresent("Anonymous"));
 		assertFalse(selenium.isTextPresent(
 				"If this is checked, then this message will be posted anonymously."));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//input[@id='_19_anonymousCheckbox']"));
 	}
 }

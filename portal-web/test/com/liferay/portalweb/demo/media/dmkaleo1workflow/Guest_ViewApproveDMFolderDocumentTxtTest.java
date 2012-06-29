@@ -75,9 +75,9 @@ public class Guest_ViewApproveDMFolderDocumentTxtTest extends BaseTestCase {
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Sort By"),
 			selenium.getText("//span[@title='Sort By']/ul/li/strong/a/span"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//span[@title='Add']/ul/li/strong/a/span"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//span[@title='Manage']/ul/li/strong/a/span"));
 		assertEquals(RuntimeVariables.replace("DM Document Title"),
 			selenium.getText(

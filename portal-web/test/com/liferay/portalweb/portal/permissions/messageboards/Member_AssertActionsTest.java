@@ -53,12 +53,12 @@ public class Member_AssertActionsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Subscribe"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-		assertFalse(selenium.isElementPresent("link=Edit"));
-		assertFalse(selenium.isElementPresent("link=Permissions"));
-		assertFalse(selenium.isElementPresent("link=Move Thread"));
-		assertFalse(selenium.isElementPresent("link=Delete"));
-		assertFalse(selenium.isElementPresent("link=Add Category"));
-		assertFalse(selenium.isElementPresent("link=Banned Users"));
+		assertTrue(selenium.isElementNotPresent("link=Edit"));
+		assertTrue(selenium.isElementNotPresent("link=Permissions"));
+		assertTrue(selenium.isElementNotPresent("link=Move Thread"));
+		assertTrue(selenium.isElementNotPresent("link=Delete"));
+		assertTrue(selenium.isElementNotPresent("link=Add Category"));
+		assertTrue(selenium.isElementNotPresent("link=Banned Users"));
 		assertEquals(RuntimeVariables.replace("Category Name"),
 			selenium.getText("//a/strong"));
 		selenium.clickAt("//a/strong", RuntimeVariables.replace("Category Name"));
@@ -68,9 +68,9 @@ public class Member_AssertActionsTest extends BaseTestCase {
 			selenium.getText("//tr[3]/td/a"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
 			RuntimeVariables.replace("Actions"));
-		assertFalse(selenium.isElementPresent("link=Edit"));
-		assertFalse(selenium.isElementPresent("link=Move"));
-		assertFalse(selenium.isElementPresent("link=Delete"));
+		assertTrue(selenium.isElementNotPresent("link=Edit"));
+		assertTrue(selenium.isElementNotPresent("link=Move"));
+		assertTrue(selenium.isElementNotPresent("link=Delete"));
 		assertTrue(selenium.isVisible("//input[@value='Post New Thread']"));
 		selenium.clickAt("//tr[3]/td/a",
 			RuntimeVariables.replace("Thread Subject"));
@@ -82,8 +82,8 @@ public class Member_AssertActionsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Reply with Quote"),
 			selenium.getText(
 				"//ul[@class='edit-controls lfr-component']/li[3]/span/a"));
-		assertFalse(selenium.isElementPresent("link=Delete"));
-		assertFalse(selenium.isElementPresent("link=Edit"));
-		assertFalse(selenium.isElementPresent("link=Permissions"));
+		assertTrue(selenium.isElementNotPresent("link=Delete"));
+		assertTrue(selenium.isElementNotPresent("link=Edit"));
+		assertTrue(selenium.isElementNotPresent("link=Permissions"));
 	}
 }

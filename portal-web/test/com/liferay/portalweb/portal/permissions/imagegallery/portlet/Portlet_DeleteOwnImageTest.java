@@ -81,7 +81,7 @@ public class Portlet_DeleteOwnImageTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to delete this[\\s\\S]$"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//a[@title='Portlet Permissions Image Test Title - ']"));
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),

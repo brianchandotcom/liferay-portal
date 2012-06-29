@@ -304,6 +304,6 @@ public class AddEventRepeatingWeeklyTest extends BaseTestCase {
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent("link=Weekly Repeating Event"));
+		assertTrue(selenium.isElementNotPresent("link=Weekly Repeating Event"));
 	}
 }

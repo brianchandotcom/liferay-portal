@@ -54,7 +54,7 @@ public class User_RenameMainPageVariationRegularSPSeasonTest
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isElementPresent(
 						"//body[contains(@class,'live-view')]"));
-				assertFalse(selenium.isElementPresent(
+				assertTrue(selenium.isElementNotPresent(
 						"//body[contains(@class,'local-staging')]"));
 				assertEquals(RuntimeVariables.replace("Staging"),
 					selenium.getText(
@@ -65,7 +65,7 @@ public class User_RenameMainPageVariationRegularSPSeasonTest
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isElementPresent(
 						"//body[contains(@class,'local-staging')]"));
-				assertFalse(selenium.isElementPresent(
+				assertTrue(selenium.isElementNotPresent(
 						"//body[contains(@class,'live-view')]"));
 
 				boolean seasonPresent = selenium.isElementPresent("link=Season");
@@ -171,7 +171,7 @@ public class User_RenameMainPageVariationRegularSPSeasonTest
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isElementPresent(
 						"//body[contains(@class,'live-view')]"));
-				assertFalse(selenium.isElementPresent(
+				assertTrue(selenium.isElementNotPresent(
 						"//body[contains(@class,'local-staging')]"));
 				assertEquals(RuntimeVariables.replace("Staging"),
 					selenium.getText(
@@ -182,7 +182,7 @@ public class User_RenameMainPageVariationRegularSPSeasonTest
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isElementPresent(
 						"//body[contains(@class,'local-staging')]"));
-				assertFalse(selenium.isElementPresent(
+				assertTrue(selenium.isElementNotPresent(
 						"//body[contains(@class,'live-view')]"));
 				assertEquals(RuntimeVariables.replace(
 						"Season Site Pages Variation of Site Name"),

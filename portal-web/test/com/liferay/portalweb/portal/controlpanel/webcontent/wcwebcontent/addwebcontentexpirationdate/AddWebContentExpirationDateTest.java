@@ -173,17 +173,17 @@ public class AddWebContentExpirationDateTest extends BaseTestCase {
 		selenium.clickAt("//input[@id='_15_neverExpireCheckbox']",
 			RuntimeVariables.replace("Never Auto Expire"));
 		assertFalse(selenium.isChecked("//input[@id='_15_neverExpireCheckbox']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//select[@id='_15_expirationDateMonth' and @disabled='disabled']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//select[@id='_15_expirationDateDay' and @disabled='disabled']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//select[@id='_15_expirationDateYear' and @disabled='disabled']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//select[@name='_15_expirationDateHour' and @disabled='disabled']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//select[@name='_15_expirationDateMinute' and @disabled='disabled']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//select[@name='_15_expirationDateAmPm' and @disabled='disabled']"));
 		selenium.select("//select[@id='_15_expirationDateMonth']",
 			RuntimeVariables.replace("label=December"));

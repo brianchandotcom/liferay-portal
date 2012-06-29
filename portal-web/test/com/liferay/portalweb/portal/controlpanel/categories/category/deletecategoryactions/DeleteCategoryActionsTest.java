@@ -70,7 +70,7 @@ public class DeleteCategoryActionsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//div[contains(@class,'aui-tree-node-checked')]/div[@class='aui-tree-node-checkbox-container']"));
 		selenium.clickAt("//div[@class='aui-tree-node-checkbox-container']",
 			RuntimeVariables.replace("Entry Check Box"));

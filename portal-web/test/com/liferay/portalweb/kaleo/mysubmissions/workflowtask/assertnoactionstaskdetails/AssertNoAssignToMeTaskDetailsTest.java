@@ -67,7 +67,7 @@ public class AssertNoAssignToMeTaskDetailsTest extends BaseTestCase {
 			RuntimeVariables.replace("Web Content Name"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent("link=Actions"));
-		assertFalse(selenium.isElementPresent("link=Assign to Me"));
+		assertTrue(selenium.isElementNotPresent("link=Actions"));
+		assertTrue(selenium.isElementNotPresent("link=Assign to Me"));
 	}
 }

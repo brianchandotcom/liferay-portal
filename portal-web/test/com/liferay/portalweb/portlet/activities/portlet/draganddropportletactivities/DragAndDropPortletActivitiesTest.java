@@ -47,7 +47,7 @@ public class DragAndDropPortletActivitiesTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isVisible(
 				"//div[@id='column-1']/div/div[contains(@class,'portlet-activities')]"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//div[@id='column-2']/div/div[contains(@class,'portlet-activities')]"));
 		assertEquals(RuntimeVariables.replace("Activities"),
 			selenium.getText("//span[@class='portlet-title-text']"));
@@ -76,7 +76,7 @@ public class DragAndDropPortletActivitiesTest extends BaseTestCase {
 
 		assertTrue(selenium.isVisible(
 				"//div[@id='column-2']/div/div[contains(@class,'portlet-activities')]"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//div[@id='column-1']/div/div[contains(@class,'portlet-activities')]"));
 	}
 }

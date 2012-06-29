@@ -108,7 +108,7 @@ public class DeleteSubcategoryActionsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//li/ul/li/div[contains(@class,'aui-tree-node-checked')]/div[@class='aui-tree-node-checkbox-container']"));
 		selenium.clickAt("xPath=(//div[@class='aui-tree-node-checkbox-container'])[2]",
 			RuntimeVariables.replace("Entry Check Box"));
@@ -173,7 +173,7 @@ public class DeleteSubcategoryActionsTest extends BaseTestCase {
 			}
 
 			try {
-				if (!selenium.isElementPresent("//li/ul/li/div/div[4]")) {
+				if (selenium.isElementNotPresent("//li/ul/li/div/div[4]")) {
 					break;
 				}
 			}
@@ -183,6 +183,6 @@ public class DeleteSubcategoryActionsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertFalse(selenium.isElementPresent("//li/ul/li/div/div[4]"));
+		assertTrue(selenium.isElementNotPresent("//li/ul/li/div/div[4]"));
 	}
 }

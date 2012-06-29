@@ -173,17 +173,17 @@ public class AddWebContentReviewDateTest extends BaseTestCase {
 		selenium.clickAt("//input[@id='_15_neverReviewCheckbox']",
 			RuntimeVariables.replace("Never Review"));
 		assertFalse(selenium.isChecked("//input[@id='_15_neverReviewCheckbox']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//select[@id='_15_reviewDateMonth' and @disabled='disabled']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//select[@id='_15_reviewDateDay' and @disabled='disabled']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//select[@id='_15_reviewDateYear' and @disabled='disabled']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//select[@name='_15_reviewDateHour' and @disabled='disabled']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//select[@name='_15_reviewDateMinute' and @disabled='disabled']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//select[@name='_15_reviewDateAmPm' and @disabled='disabled']"));
 		selenium.select("//select[@id='_15_reviewDateMonth']",
 			RuntimeVariables.replace("label=December"));

@@ -158,6 +158,6 @@ public class UnlockDMFolderDocumentTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("DM Folder Name"),
 			selenium.getText("//li[@class='folder selected']/a"));
-		assertFalse(selenium.isElementPresent("//img[@class='locked-icon']"));
+		assertTrue(selenium.isElementNotPresent("//img[@class='locked-icon']"));
 	}
 }

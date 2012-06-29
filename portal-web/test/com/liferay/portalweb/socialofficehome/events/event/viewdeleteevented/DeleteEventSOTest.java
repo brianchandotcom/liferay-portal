@@ -83,6 +83,6 @@ public class DeleteEventSOTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertFalse(selenium.isElementPresent("link=Calendar Event Title"));
+		assertTrue(selenium.isElementNotPresent("link=Calendar Event Title"));
 	}
 }

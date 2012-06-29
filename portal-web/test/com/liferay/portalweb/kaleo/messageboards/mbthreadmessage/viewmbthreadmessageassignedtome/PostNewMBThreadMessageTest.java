@@ -190,10 +190,10 @@ public class PostNewMBThreadMessageTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"There are no threads in this category."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//h1[@class='header-title']/span"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//strong[@class='workflow-status-pending']"));
-		assertFalse(selenium.isElementPresent("//div[@class='thread-body']"));
+		assertTrue(selenium.isElementNotPresent("//div[@class='thread-body']"));
 	}
 }

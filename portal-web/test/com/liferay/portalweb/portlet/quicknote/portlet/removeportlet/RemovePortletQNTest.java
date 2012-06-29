@@ -55,7 +55,7 @@ public class RemovePortletQNTest extends BaseTestCase {
 			}
 
 			try {
-				if (!selenium.isElementPresent(
+				if (selenium.isElementNotPresent(
 							"//div/div/div/div/div[@class='portlet-body']")) {
 					break;
 				}
@@ -66,7 +66,7 @@ public class RemovePortletQNTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//div/div/div/div/div[@class='portlet-body']"));
 	}
 }

@@ -47,6 +47,6 @@ public class Guest_AssertNotViewableBlogsPermissionsButtonTest
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent("//input[@value='Permissions']"));
+		assertTrue(selenium.isElementNotPresent("//input[@value='Permissions']"));
 	}
 }

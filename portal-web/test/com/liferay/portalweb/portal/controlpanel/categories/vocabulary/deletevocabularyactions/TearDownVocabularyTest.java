@@ -111,7 +111,7 @@ public class TearDownVocabularyTest extends BaseTestCase {
 					}
 
 					try {
-						if (!selenium.isElementPresent(
+						if (selenium.isElementNotPresent(
 									"//input[@name='vocabulary-item-check']")) {
 							break;
 						}
@@ -122,7 +122,7 @@ public class TearDownVocabularyTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				assertFalse(selenium.isElementPresent(
+				assertTrue(selenium.isElementNotPresent(
 						"//input[@name='vocabulary-item-check']"));
 
 			case 2:

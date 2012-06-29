@@ -107,7 +107,7 @@ public class TearDownPageCalendarSOTest extends BaseTestCase {
 					}
 
 					try {
-						if (!selenium.isElementPresent(
+						if (selenium.isElementNotPresent(
 									"//nav/ul/li[contains(.,'Calendar Test Page')]/span[@class='delete-tab']")) {
 							break;
 						}

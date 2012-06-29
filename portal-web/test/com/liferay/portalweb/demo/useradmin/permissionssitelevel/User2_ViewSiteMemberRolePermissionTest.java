@@ -52,7 +52,7 @@ public class User2_ViewSiteMemberRolePermissionTest extends BaseTestCase {
 			selenium.getText("//td[2]/span/a/span"));
 		assertEquals(RuntimeVariables.replace("Move to the Recycle Bin"),
 			selenium.getText("//td[3]/span/a/span"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//div[@class='entry '][2]/div[@class='lfr-meta-actions edit-actions entry']"));
 	}
 }

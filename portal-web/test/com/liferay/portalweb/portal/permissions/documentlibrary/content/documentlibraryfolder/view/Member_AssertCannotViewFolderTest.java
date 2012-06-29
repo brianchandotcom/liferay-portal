@@ -49,7 +49,7 @@ public class Member_AssertCannotViewFolderTest extends BaseTestCase {
 			RuntimeVariables.replace("Documents and Media"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 	}
 }

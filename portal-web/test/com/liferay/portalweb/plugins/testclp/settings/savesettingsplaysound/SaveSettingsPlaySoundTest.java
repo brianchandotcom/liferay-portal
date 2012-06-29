@@ -96,7 +96,7 @@ public class SaveSettingsPlaySoundTest extends BaseTestCase {
 					}
 
 					try {
-						if (!selenium.isElementPresent(
+						if (selenium.isElementNotPresent(
 									"//li[@class='chat-settings saved']")) {
 							break;
 						}
@@ -107,7 +107,7 @@ public class SaveSettingsPlaySoundTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				assertFalse(selenium.isElementPresent(
+				assertTrue(selenium.isElementNotPresent(
 						"//li[@class='chat-settings saved']"));
 				selenium.open("/web/guest/home/");
 				loadRequiredJavaScriptModules();

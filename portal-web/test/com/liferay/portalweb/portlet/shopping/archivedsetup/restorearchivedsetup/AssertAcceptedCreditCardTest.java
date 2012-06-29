@@ -50,7 +50,7 @@ public class AssertAcceptedCreditCardTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent("//img[@alt='visa']"));
 		assertTrue(selenium.isElementPresent("//img[@alt='discover']"));
-		assertFalse(selenium.isElementPresent("//img[@alt='mastercard']"));
-		assertFalse(selenium.isElementPresent("//img[@alt='amex']"));
+		assertTrue(selenium.isElementNotPresent("//img[@alt='mastercard']"));
+		assertTrue(selenium.isElementNotPresent("//img[@alt='amex']"));
 	}
 }

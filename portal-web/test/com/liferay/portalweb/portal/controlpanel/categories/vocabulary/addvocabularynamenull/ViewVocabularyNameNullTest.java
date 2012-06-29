@@ -52,7 +52,7 @@ public class ViewVocabularyNameNullTest extends BaseTestCase {
 			RuntimeVariables.replace("Categories"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//span[@class='vocabulary-item']/a"));
 		assertFalse(selenium.isTextPresent("Vocabulary Name"));
 	}

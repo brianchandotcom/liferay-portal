@@ -46,7 +46,7 @@ public class ViewPortletHWPageVariationTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent(
 				"//body[contains(@class,'live-view')]"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//body[contains(@class,'local-staging')]"));
 		assertTrue(selenium.isPartialText("//li[2]/span/a", "Staging"));
 		selenium.clickAt("//li[2]/span/a", RuntimeVariables.replace("Staging"));
@@ -63,6 +63,6 @@ public class ViewPortletHWPageVariationTest extends BaseTestCase {
 			RuntimeVariables.replace("Main Variation"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent("//section"));
+		assertTrue(selenium.isElementNotPresent("//section"));
 	}
 }

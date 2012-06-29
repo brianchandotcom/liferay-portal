@@ -68,7 +68,7 @@ public class AssertDisabledExpireButtonWebContentCPTest extends BaseTestCase {
 			}
 
 			try {
-				if (!selenium.isElementPresent(
+				if (selenium.isElementNotPresent(
 							"//span[contains(@class,'aui-button-disabled')]/span/input[@value='Expire']")) {
 					break;
 				}
@@ -79,9 +79,9 @@ public class AssertDisabledExpireButtonWebContentCPTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//span[contains(@class,'aui-button-disabled')]/span/input[@value='Expire']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//input[@value='Expire' and @disabled='']"));
 		assertTrue(selenium.isVisible("//input[@value='Expire']"));
 		selenium.clickAt("//input[@name='_15_allRowIds']",
@@ -119,7 +119,7 @@ public class AssertDisabledExpireButtonWebContentCPTest extends BaseTestCase {
 			}
 
 			try {
-				if (!selenium.isElementPresent(
+				if (selenium.isElementNotPresent(
 							"//span[contains(@class,'aui-button-disabled')]/span/input[@value='Expire']")) {
 					break;
 				}
@@ -130,9 +130,9 @@ public class AssertDisabledExpireButtonWebContentCPTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//span[contains(@class,'aui-button-disabled')]/span/input[@value='Expire']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//input[@value='Expire' and @disabled='']"));
 		assertTrue(selenium.isVisible("//input[@value='Expire']"));
 		selenium.clickAt("//input[@name='_15_rowIds']",

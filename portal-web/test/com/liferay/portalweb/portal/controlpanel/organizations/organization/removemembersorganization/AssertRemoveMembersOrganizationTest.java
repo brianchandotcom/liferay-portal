@@ -78,6 +78,6 @@ public class AssertRemoveMembersOrganizationTest extends BaseTestCase {
 		selenium.clickAt("//a[2]/strong", RuntimeVariables.replace("Selenium"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent("link=selen01"));
+		assertTrue(selenium.isElementNotPresent("link=selen01"));
 	}
 }

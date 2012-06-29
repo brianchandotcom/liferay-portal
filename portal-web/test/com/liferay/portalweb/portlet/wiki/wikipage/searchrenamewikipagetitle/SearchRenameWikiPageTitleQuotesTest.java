@@ -52,6 +52,6 @@ public class SearchRenameWikiPageTitleQuotesTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent("link=Wiki Page Test Renamed"));
-		assertFalse(selenium.isElementPresent("link=Wiki Page Test"));
+		assertTrue(selenium.isElementNotPresent("link=Wiki Page Test"));
 	}
 }

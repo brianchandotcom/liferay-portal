@@ -46,7 +46,7 @@ public class Portlet_AssertViewPortletTest extends BaseTestCase {
 			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//div[@class='portlet-msg-error']"));
 		assertTrue(selenium.isVisible("//section"));
 		assertEquals(RuntimeVariables.replace("Home"),

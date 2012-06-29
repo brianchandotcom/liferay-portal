@@ -45,8 +45,8 @@ public class Member_AssertActionsTest extends BaseTestCase {
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent("link=Manage Entries"));
-		assertFalse(selenium.isElementPresent("link=Edit"));
-		assertFalse(selenium.isElementPresent("link=Delete"));
+		assertTrue(selenium.isElementNotPresent("link=Manage Entries"));
+		assertTrue(selenium.isElementNotPresent("link=Edit"));
+		assertTrue(selenium.isElementNotPresent("link=Delete"));
 	}
 }

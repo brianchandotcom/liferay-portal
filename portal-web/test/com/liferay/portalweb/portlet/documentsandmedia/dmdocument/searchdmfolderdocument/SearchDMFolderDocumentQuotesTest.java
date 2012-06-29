@@ -119,8 +119,8 @@ public class SearchDMFolderDocumentQuotesTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Searched for \"DM Folder Document Title 1\" everywhere."),
 			selenium.getText("//div[@class='search-info']/span[1]"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
-		assertFalse(selenium.isElementPresent("link=DM Folder Document Title"));
+		assertTrue(selenium.isElementNotPresent("link=DM Folder Document Title"));
 	}
 }

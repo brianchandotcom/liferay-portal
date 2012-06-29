@@ -54,7 +54,7 @@ public class User_PublishToLiveSPChristmas2DeleteWhiteElephantTest
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isElementPresent(
 						"//body[contains(@class,'live-view')]"));
-				assertFalse(selenium.isElementPresent(
+				assertTrue(selenium.isElementNotPresent(
 						"//body[contains(@class,'local-staging')]"));
 				assertEquals(RuntimeVariables.replace("Staging"),
 					selenium.getText(
@@ -65,7 +65,7 @@ public class User_PublishToLiveSPChristmas2DeleteWhiteElephantTest
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isElementPresent(
 						"//body[contains(@class,'local-staging')]"));
-				assertFalse(selenium.isElementPresent(
+				assertTrue(selenium.isElementNotPresent(
 						"//body[contains(@class,'live-view')]"));
 
 				boolean christmas2Present = selenium.isElementPresent(

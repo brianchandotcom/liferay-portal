@@ -69,9 +69,9 @@ public class ViewPageLayoutTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Navigation"),
 			selenium.getText(
 				"//td[@id='column-2' and @class='lfr-column fifty']/div/div[1]/div/div/span"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//td[@id='column-1' and @class='lfr-column thirty']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//td[@id='column-2' and @class='lfr-column seventy']"));
 	}
 }

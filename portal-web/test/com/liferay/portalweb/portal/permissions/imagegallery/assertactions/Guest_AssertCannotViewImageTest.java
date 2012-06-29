@@ -64,7 +64,7 @@ public class Guest_AssertCannotViewImageTest extends BaseTestCase {
 				"Media Gallery Permissions Test Subfolder 2"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//a[@title='Permissions Image Test Edited - ']"));
 		assertEquals(RuntimeVariables.replace(
 				"There are no media files in this folder."),

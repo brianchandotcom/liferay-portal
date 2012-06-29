@@ -93,7 +93,7 @@ public class DeleteVocabularyActionsTest extends BaseTestCase {
 			}
 
 			try {
-				if (!selenium.isElementPresent(
+				if (selenium.isElementNotPresent(
 							"//span[@class='vocabulary-item']/a")) {
 					break;
 				}

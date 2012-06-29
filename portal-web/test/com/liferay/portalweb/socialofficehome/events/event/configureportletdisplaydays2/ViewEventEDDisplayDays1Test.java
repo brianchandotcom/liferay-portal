@@ -47,8 +47,8 @@ public class ViewEventEDDisplayDays1Test extends BaseTestCase {
 			selenium.getText("xPath=(//span[@class='portlet-title-text'])[4]"));
 		assertEquals(RuntimeVariables.replace("There are no more events today."),
 			selenium.getText("//div[2]/div/div[2]/div/section/div/div/div"));
-		assertFalse(selenium.isElementPresent("//h2[contains(.,'Events')]"));
-		assertFalse(selenium.isElementPresent("//span[@class='event-name']/a"));
+		assertTrue(selenium.isElementNotPresent("//h2[contains(.,'Events')]"));
+		assertTrue(selenium.isElementNotPresent("//span[@class='event-name']/a"));
 		assertFalse(selenium.isTextPresent("Calendar Event Title"));
 	}
 }

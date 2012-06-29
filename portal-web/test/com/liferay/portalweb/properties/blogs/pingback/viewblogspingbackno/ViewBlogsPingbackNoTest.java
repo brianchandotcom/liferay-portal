@@ -50,7 +50,7 @@ public class ViewBlogsPingbackNoTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertFalse(selenium.isTextPresent("Allow Pingbacks"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//input[@id='_33_allowPingbacksCheckbox']"));
 	}
 }

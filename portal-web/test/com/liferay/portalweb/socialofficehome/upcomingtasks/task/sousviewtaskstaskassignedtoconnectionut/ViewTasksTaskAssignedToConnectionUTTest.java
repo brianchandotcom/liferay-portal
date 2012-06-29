@@ -46,7 +46,7 @@ public class ViewTasksTaskAssignedToConnectionUTTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Upcoming Tasks"),
 			selenium.getText("//h1/span[contains(.,'Upcoming Tasks')]"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//li[@class='tasks-title normal']/a"));
 		assertFalse(selenium.isTextPresent("Task Description"));
 		assertEquals(RuntimeVariables.replace("View All Tasks"),

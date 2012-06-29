@@ -46,7 +46,7 @@ public class Guest_AssertCannotViewFolderTest extends BaseTestCase {
 			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//a[@title='Media Gallery Permissions Test Folder - ']"));
 	}
 }

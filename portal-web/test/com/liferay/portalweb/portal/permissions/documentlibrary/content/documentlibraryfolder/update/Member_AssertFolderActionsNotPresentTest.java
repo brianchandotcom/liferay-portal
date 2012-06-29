@@ -50,7 +50,7 @@ public class Member_AssertFolderActionsNotPresentTest extends BaseTestCase {
 			RuntimeVariables.replace("Documents and Media"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//span[@class='overlay document-action']/span/ul/li/strong/a"));
 	}
 }

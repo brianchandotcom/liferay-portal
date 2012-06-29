@@ -164,7 +164,7 @@ public class ViewCommunityStagingCommunityWCDTest extends BaseTestCase {
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//body[@class='blue staging controls-visible signed-in public-page']"));
 		assertFalse(selenium.isTextPresent("WC Web Content Content"));
 		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));

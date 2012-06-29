@@ -50,7 +50,7 @@ public class SOUs_SearchSitesSiteTypePrivateTest extends BaseTestCase {
 		selenium.type("//input[@class='search-input']",
 			RuntimeVariables.replace("Private"));
 		Thread.sleep(5000);
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//li[contains(@class, 'social-office-enabled')]/span[2]/a"));
 
 		for (int second = 0;; second++) {

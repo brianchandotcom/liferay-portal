@@ -104,7 +104,7 @@ public class MoveFolderEntryToSubfolderTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//section/div/div/div/div[1]"));
-		assertFalse(selenium.isElementPresent("link=http://www.liferay.com"));
+		assertTrue(selenium.isElementNotPresent("link=http://www.liferay.com"));
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 

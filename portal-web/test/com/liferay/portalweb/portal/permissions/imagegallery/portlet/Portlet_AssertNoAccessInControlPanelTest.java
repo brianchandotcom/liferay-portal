@@ -45,6 +45,6 @@ public class Portlet_AssertNoAccessInControlPanelTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent("link=Image Gallery"));
+		assertTrue(selenium.isElementNotPresent("link=Image Gallery"));
 	}
 }

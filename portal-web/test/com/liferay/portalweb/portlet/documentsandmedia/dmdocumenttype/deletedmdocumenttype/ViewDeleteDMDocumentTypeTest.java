@@ -68,7 +68,7 @@ public class ViewDeleteDMDocumentTypeTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Document Type Name')]"));
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();

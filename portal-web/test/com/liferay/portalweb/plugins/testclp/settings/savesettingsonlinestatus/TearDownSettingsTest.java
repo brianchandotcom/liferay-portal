@@ -106,7 +106,7 @@ public class TearDownSettingsTest extends BaseTestCase {
 					}
 
 					try {
-						if (!selenium.isElementPresent(
+						if (selenium.isElementNotPresent(
 									"//li[@class='chat-settings saved']")) {
 							break;
 						}
@@ -126,7 +126,7 @@ public class TearDownSettingsTest extends BaseTestCase {
 					}
 
 					try {
-						if (!selenium.isElementPresent(
+						if (selenium.isElementNotPresent(
 									"//li[@class='chat-settings saved']")) {
 							break;
 						}
@@ -137,7 +137,7 @@ public class TearDownSettingsTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				assertFalse(selenium.isElementPresent(
+				assertTrue(selenium.isElementNotPresent(
 						"//li[@class='chat-settings saved']"));
 
 			case 100:

@@ -54,7 +54,7 @@ public class User_ViewDeletePageWhiteElephantSPVariationSeasonTest
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isElementPresent(
 						"//body[contains(@class,'live-view')]"));
-				assertFalse(selenium.isElementPresent(
+				assertTrue(selenium.isElementNotPresent(
 						"//body[contains(@class,'local-staging')]"));
 				assertEquals(RuntimeVariables.replace("Staging"),
 					selenium.getText(
@@ -65,7 +65,7 @@ public class User_ViewDeletePageWhiteElephantSPVariationSeasonTest
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isElementPresent(
 						"//body[contains(@class,'local-staging')]"));
-				assertFalse(selenium.isElementPresent(
+				assertTrue(selenium.isElementNotPresent(
 						"//body[contains(@class,'live-view')]"));
 
 				boolean seasonPresent = selenium.isElementPresent("link=Season");
@@ -86,7 +86,7 @@ public class User_ViewDeletePageWhiteElephantSPVariationSeasonTest
 						"Season Site Pages Variation of Site Name"),
 					selenium.getText(
 						"//span[@class='layout-set-branch-description']"));
-				assertFalse(selenium.isElementPresent("link=White Elephant"));
+				assertTrue(selenium.isElementNotPresent("link=White Elephant"));
 				assertEquals(RuntimeVariables.replace("Season"),
 					selenium.getText("//li[2]/span/span/span[1]"));
 				assertEquals(RuntimeVariables.replace("Christmas"),

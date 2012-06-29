@@ -54,6 +54,6 @@ public class Member_AssertCannotUpdateDiscussionTest extends BaseTestCase {
 			RuntimeVariables.replace("TestDocument.txt"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent("link=Edit"));
+		assertTrue(selenium.isElementNotPresent("link=Edit"));
 	}
 }

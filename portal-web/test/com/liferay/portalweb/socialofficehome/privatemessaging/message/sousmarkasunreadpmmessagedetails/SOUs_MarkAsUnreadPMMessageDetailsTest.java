@@ -47,7 +47,7 @@ public class SOUs_MarkAsUnreadPMMessageDetailsTest extends BaseTestCase {
 			RuntimeVariables.replace("Messages"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//tr[contains(@class, 'unread')]"));
 		assertEquals(RuntimeVariables.replace("Private Messaging"),
 			selenium.getText("//span[@class='portlet-title-default']"));

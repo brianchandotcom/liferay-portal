@@ -91,7 +91,7 @@ public class DeleteTagTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),
 			selenium.getText("//div[@id='portletMessages']"));
-		assertFalse(selenium.isElementPresent("//div[2]/ul/li/div/span/a"));
-		assertFalse(selenium.isElementPresent("link=selenium ide"));
+		assertTrue(selenium.isElementNotPresent("//div[2]/ul/li/div/span/a"));
+		assertTrue(selenium.isElementNotPresent("link=selenium ide"));
 	}
 }

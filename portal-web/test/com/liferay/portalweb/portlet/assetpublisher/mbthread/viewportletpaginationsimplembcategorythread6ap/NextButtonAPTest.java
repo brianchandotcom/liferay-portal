@@ -45,7 +45,7 @@ public class NextButtonAPTest extends BaseTestCase {
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent("//a[@class='previous']"));
+		assertTrue(selenium.isElementNotPresent("//a[@class='previous']"));
 		assertEquals(RuntimeVariables.replace("Next"),
 			selenium.getText("//a[@class='next']"));
 		selenium.clickAt("//a[@class='next']", RuntimeVariables.replace("Next"));
@@ -60,6 +60,6 @@ public class NextButtonAPTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Previous"),
 			selenium.getText("//a[@class='previous']"));
-		assertFalse(selenium.isElementPresent("//a[@class='next']"));
+		assertTrue(selenium.isElementNotPresent("//a[@class='next']"));
 	}
 }

@@ -44,11 +44,11 @@ public class User_ViewOffPermissionsBlogsUSPTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Blogs"),
 			selenium.getText("xPath=(//h1[@class='portlet-title'])[3]"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//div[@class='subscribe']/span[2]/a/span"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//input[@value='Add Blog Entry']"));
-		assertFalse(selenium.isElementPresent("//input[@value='Permissions']"));
+		assertTrue(selenium.isElementNotPresent("//input[@value='Permissions']"));
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
 
@@ -130,6 +130,6 @@ public class User_ViewOffPermissionsBlogsUSPTest extends BaseTestCase {
 
 		selenium.typeKeys("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("b"));
-		assertFalse(selenium.isElementPresent("//div[@title='Blogs']"));
+		assertTrue(selenium.isElementNotPresent("//div[@title='Blogs']"));
 	}
 }

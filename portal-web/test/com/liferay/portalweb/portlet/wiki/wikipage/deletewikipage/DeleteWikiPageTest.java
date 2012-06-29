@@ -84,6 +84,6 @@ public class DeleteWikiPageTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertFalse(selenium.isElementPresent("//tr[4]/td[1]/a"));
+		assertTrue(selenium.isElementNotPresent("//tr[4]/td[1]/a"));
 	}
 }

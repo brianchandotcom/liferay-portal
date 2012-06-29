@@ -48,6 +48,6 @@ public class ViewConfigurePortletDDLDEditableTest extends BaseTestCase {
 			RuntimeVariables.replace("Dynamic Data List Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent("//input[@value='Add Record']"));
+		assertTrue(selenium.isElementNotPresent("//input[@value='Add Record']"));
 	}
 }

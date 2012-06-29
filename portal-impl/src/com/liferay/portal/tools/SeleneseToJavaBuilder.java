@@ -679,14 +679,16 @@ public class SeleneseToJavaBuilder {
 			else if (param1.equals("assertElementNotPresent") ||
 					 param1.equals("assertElementPresent")) {
 
+				sb.append("assertTrue(selenium.");
+
 				if (param1.equals("assertElementNotPresent")) {
-					sb.append("assertFalse");
+					sb.append("isElementNotPresent");
 				}
 				else if (param1.equals("assertElementPresent")) {
-					sb.append("assertTrue");
+					sb.append("isElementPresent");
 				}
 
-				sb.append("(selenium.isElementPresent(\"");
+				sb.append("(\"");
 				sb.append(param2);
 				sb.append("\"));");
 			}
@@ -1187,8 +1189,7 @@ public class SeleneseToJavaBuilder {
 				sb.append("try {");
 				sb.append("if (");
 
-				if (param1.equals("waitForElementNotPresent") ||
-					param1.equals("waitForNotPartialText") ||
+				if (param1.equals("waitForNotPartialText") ||
 					param1.equals("waitForNotSelectedLabel") ||
 					param1.equals("waitForNotTable") ||
 					param1.equals("waitForNotText") ||
@@ -1204,9 +1205,13 @@ public class SeleneseToJavaBuilder {
 					sb.append(param2);
 					sb.append("\".equals(selenium.getConfirmation())");
 				}
-				else if (param1.equals("waitForElementNotPresent") ||
-						 param1.equals("waitForElementPresent")) {
-
+				else if (param1.equals("waitForElementNotPresent")) {
+					sb.append("selenium.isElementNotPresent");
+					sb.append("(\"");
+					sb.append(param2);
+					sb.append("\")");
+				}
+				else if (param1.equals("waitForElementPresent")) {
 					sb.append("selenium.isElementPresent");
 					sb.append("(\"");
 					sb.append(param2);

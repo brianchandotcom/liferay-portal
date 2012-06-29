@@ -81,9 +81,9 @@ public class ViewDeleteReplyMicroblogsContentNotificationsTest
 			selenium.getText("xPath=(//div[@class='content'])[1]"));
 		assertEquals(RuntimeVariables.replace("Comment"),
 			selenium.getText("//span[@class='action comment']/a"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"xPath=(//div[@class='user-name']/span)[contains(.,'Social01 Office01 User01')]"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"xPath=(//div[@class='content'])[2]"));
 		assertFalse(selenium.isTextPresent("1 Comment"));
 		selenium.open("/user/joebloggs/so/dashboard/");

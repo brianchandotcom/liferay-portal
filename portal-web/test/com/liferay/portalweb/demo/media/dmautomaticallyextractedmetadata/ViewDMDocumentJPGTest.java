@@ -88,7 +88,7 @@ public class ViewDMDocumentJPGTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Image Width 394"),
 					selenium.getText(
 						"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div[4]"));
-				assertFalse(selenium.isElementPresent(
+				assertTrue(selenium.isElementNotPresent(
 						"xPath=(//div[@id='documentLibraryAssetMetadataPanel'])[2]/div/div/span"));
 
 			case 100:

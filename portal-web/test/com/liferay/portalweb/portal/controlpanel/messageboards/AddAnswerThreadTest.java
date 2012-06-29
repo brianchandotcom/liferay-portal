@@ -193,6 +193,6 @@ public class AddAnswerThreadTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		Thread.sleep(5000);
 		assertTrue(selenium.isElementPresent("link=Resolved"));
-		assertFalse(selenium.isElementPresent("link=Waiting for an Answer"));
+		assertTrue(selenium.isElementNotPresent("link=Waiting for an Answer"));
 	}
 }

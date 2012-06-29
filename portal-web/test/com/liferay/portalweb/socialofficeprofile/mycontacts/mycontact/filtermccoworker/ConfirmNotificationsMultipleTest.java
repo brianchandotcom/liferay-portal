@@ -140,9 +140,9 @@ public class ConfirmNotificationsMultipleTest extends BaseTestCase {
 			selenium.getText("//div[2]/div[2]/a"));
 		selenium.open("/user/joebloggs/home/");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"xPath=(//div[@class='notification-entry'])[1]"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"xPath=(//div[@class='notification-entry'])[2]"));
 		assertFalse(selenium.isTextPresent(
 				"socialofficefriendfn socialofficefriendmn socialofficefriendln wants to be your friend."));

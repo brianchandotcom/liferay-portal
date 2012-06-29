@@ -75,6 +75,6 @@ public class Portlet_AssertCannotEditImageTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertFalse(selenium.isElementPresent("//img[@alt='Edit']"));
+		assertTrue(selenium.isElementNotPresent("//img[@alt='Edit']"));
 	}
 }

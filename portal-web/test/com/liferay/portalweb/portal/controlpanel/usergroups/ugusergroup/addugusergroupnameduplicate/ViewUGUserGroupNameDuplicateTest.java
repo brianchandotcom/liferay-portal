@@ -76,6 +76,6 @@ public class ViewUGUserGroupNameDuplicateTest extends BaseTestCase {
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("UG UserGroup Name"),
 			selenium.getText("//tr[3]/td[2]/a"));
-		assertFalse(selenium.isElementPresent("//tr[4]/td[2]/a"));
+		assertTrue(selenium.isElementNotPresent("//tr[4]/td[2]/a"));
 	}
 }

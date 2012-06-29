@@ -45,9 +45,9 @@ public class Guest_AssertActionsTest extends BaseTestCase {
 			RuntimeVariables.replace("Announcements Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent("link=Edit"));
-		assertFalse(selenium.isElementPresent("link=Delete"));
-		assertFalse(selenium.isElementPresent("link=Manage Entries"));
-		assertFalse(selenium.isElementPresent("link=Mark as Read"));
+		assertTrue(selenium.isElementNotPresent("link=Edit"));
+		assertTrue(selenium.isElementNotPresent("link=Delete"));
+		assertTrue(selenium.isElementNotPresent("link=Manage Entries"));
+		assertTrue(selenium.isElementNotPresent("link=Mark as Read"));
 	}
 }

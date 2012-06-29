@@ -46,7 +46,7 @@ public class User_AddDLImageSiteStagingTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent(
 				"//body[contains(@class,'live-view')]"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//body[contains(@class,'live-staging')]"));
 		assertEquals(RuntimeVariables.replace("Staging"),
 			selenium.getText("//div[@class='staging-bar']/ul/li[2]/span/a"));
@@ -56,7 +56,7 @@ public class User_AddDLImageSiteStagingTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent(
 				"//body[contains(@class,'local-staging')]"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//body[contains(@class,'live-view')]"));
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Add"),

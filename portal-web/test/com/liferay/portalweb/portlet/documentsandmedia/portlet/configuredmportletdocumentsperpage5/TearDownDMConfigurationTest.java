@@ -55,7 +55,7 @@ public class TearDownDMConfigurationTest extends BaseTestCase {
 			}
 
 			try {
-				if (!selenium.isElementPresent("//section")) {
+				if (selenium.isElementNotPresent("//section")) {
 					break;
 				}
 			}
@@ -65,7 +65,7 @@ public class TearDownDMConfigurationTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertFalse(selenium.isElementPresent("//section"));
+		assertTrue(selenium.isElementNotPresent("//section"));
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Documents and Media Test Page",

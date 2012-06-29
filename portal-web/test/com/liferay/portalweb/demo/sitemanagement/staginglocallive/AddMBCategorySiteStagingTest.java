@@ -46,7 +46,7 @@ public class AddMBCategorySiteStagingTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent(
 				"//body[contains(@class,'live-view')]"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//body[contains(@class,'local-staging')]"));
 		assertEquals(RuntimeVariables.replace("Staging"),
 			selenium.getText("//div[@class='staging-bar']/ul/li[2]/span/a"));
@@ -56,7 +56,7 @@ public class AddMBCategorySiteStagingTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent(
 				"//body[contains(@class,'local-staging')]"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//body[contains(@class,'live-view')]"));
 		assertEquals(RuntimeVariables.replace(
 				"The data of this portlet is not staged. Any data changes are immediately available to the Local Live site. The portlet's own workflow is still honored. Portlet setup is still managed from staging."),

@@ -83,7 +83,7 @@ public class AddMBCategoryNameNullTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertFalse(selenium.isTextPresent("MB Category Description"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//span[@title='Actions']/ul/li/strong/a"));
 	}
 }

@@ -159,7 +159,7 @@ public class AddDMFolderImageFileNullTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("DM Folder Image Title"),
 			selenium.getText("//h2[@class='document-title']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//div[@class='lfr-preview-file-image-container']/img"));
 		assertEquals(RuntimeVariables.replace("DM Folder Image Description"),
 			selenium.getText("//span[@class='document-description']"));

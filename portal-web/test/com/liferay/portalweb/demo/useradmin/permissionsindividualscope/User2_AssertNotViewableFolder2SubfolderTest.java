@@ -76,9 +76,9 @@ public class User2_AssertNotViewableFolder2SubfolderTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("DL Folder 2 Image 3 Title"),
 			selenium.getText(
 				"xpath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"xpath=(//a[contains(@class,'document-link')])[3]"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"xpath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[3]"));
 		assertFalse(selenium.isTextPresent("DL Folder 2 SubFolder Name"));
 	}

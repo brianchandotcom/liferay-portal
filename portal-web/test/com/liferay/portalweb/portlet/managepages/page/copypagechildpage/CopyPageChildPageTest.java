@@ -56,9 +56,9 @@ public class CopyPageChildPageTest extends BaseTestCase {
 				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("Child Test Page"),
 					selenium.getText("//nav/ul/li[3]/span/a"));
-				assertFalse(selenium.isElementPresent(
+				assertTrue(selenium.isElementNotPresent(
 						"//section[@id='portlet_58']/header/h1"));
-				assertFalse(selenium.isElementPresent(
+				assertTrue(selenium.isElementNotPresent(
 						"//section[@id='portlet_47']/header/h1"));
 				assertFalse(selenium.isTextPresent("Sign In"));
 				assertFalse(selenium.isTextPresent("Hello World"));

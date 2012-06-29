@@ -56,7 +56,7 @@ public class ViewUserNameTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("1"),
 			selenium.getText("//tr[3]/td[2]/a"));
 		assertTrue(selenium.isVisible("//tr[3]/td[3]/a"));
-		assertFalse(selenium.isElementPresent("//img[@class='avatar']"));
+		assertTrue(selenium.isElementNotPresent("//img[@class='avatar']"));
 		assertFalse(selenium.isTextPresent("Posts:"));
 		assertFalse(selenium.isTextPresent("Stars:"));
 		assertFalse(selenium.isTextPresent("Date:"));

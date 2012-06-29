@@ -28,6 +28,6 @@ public class ViewRemovePortletDMDTest extends BaseTestCase {
 			RuntimeVariables.replace("Documents and Media Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent("//section"));
+		assertTrue(selenium.isElementNotPresent("//section"));
 	}
 }

@@ -47,7 +47,7 @@ public class ViewOrganizationStagingOrganizationWCDTest extends BaseTestCase {
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//body[@class='blue staging controls-visible public-page']"));
 		selenium.clickAt("link=View Staged Page", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
@@ -100,7 +100,7 @@ public class ViewOrganizationStagingOrganizationWCDTest extends BaseTestCase {
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//body[@class='blue staging controls-visible public-page']"));
 		assertFalse(selenium.isTextPresent("WC Web Content Content"));
 		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));

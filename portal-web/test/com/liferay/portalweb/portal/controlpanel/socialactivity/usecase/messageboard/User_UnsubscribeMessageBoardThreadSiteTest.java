@@ -53,7 +53,7 @@ public class User_UnsubscribeMessageBoardThreadSiteTest extends BaseTestCase {
 			}
 
 			try {
-				if (!selenium.isElementPresent("//body[contains(@id,'aui')]")) {
+				if (selenium.isElementNotPresent("//body[contains(@id,'aui')]")) {
 					break;
 				}
 			}

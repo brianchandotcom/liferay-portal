@@ -71,7 +71,7 @@ public class ViewUnlockDMFolderDocumentTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("DM Folder Name"),
 			selenium.getText("//li[@class='folder selected']/a"));
-		assertFalse(selenium.isElementPresent("//img[@class='locked-icon']"));
+		assertTrue(selenium.isElementNotPresent("//img[@class='locked-icon']"));
 		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
@@ -81,7 +81,7 @@ public class ViewUnlockDMFolderDocumentTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		assertFalse(selenium.isTextPresent(
 				"You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day."));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//div[@class='portlet-msg-lock portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText("//button[2]"));
@@ -90,7 +90,7 @@ public class ViewUnlockDMFolderDocumentTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		assertFalse(selenium.isTextPresent(
 				"You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day."));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//div[@class='portlet-msg-lock portlet-msg-success']"));
 	}
 }

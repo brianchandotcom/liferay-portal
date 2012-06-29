@@ -73,7 +73,7 @@ public class RateWikiFrontPageChildPageComment1Test extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("0 (0 Votes)"),
 			selenium.getText(
 				"xPath=(//div[@class='aui-rating-label-element'])[3]"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//a[contains(@class,'aui-rating-element-off aui-rating-thumb-up aui-rating-element-on')]"));
 		selenium.clickAt("//a[contains(@class,'aui-rating-element-off aui-rating-thumb-up')]",
 			RuntimeVariables.replace("Thumbs Up"));

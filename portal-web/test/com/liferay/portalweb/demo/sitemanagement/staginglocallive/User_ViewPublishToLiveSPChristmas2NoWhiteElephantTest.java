@@ -54,7 +54,7 @@ public class User_ViewPublishToLiveSPChristmas2NoWhiteElephantTest
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isElementPresent(
 						"//body[contains(@class,'live-view')]"));
-				assertFalse(selenium.isElementPresent(
+				assertTrue(selenium.isElementNotPresent(
 						"//body[contains(@class,'local-staging')]"));
 				assertTrue(selenium.isPartialText(
 						"//span[@class='last-publication-branch']",
@@ -183,15 +183,15 @@ public class User_ViewPublishToLiveSPChristmas2NoWhiteElephantTest
 				assertEquals(RuntimeVariables.replace("Content Type image/jpeg"),
 					selenium.getText(
 						"//div[@id='documentLibraryAssetMetadataPanel']/div[2]/div"));
-				assertFalse(selenium.isElementPresent(
+				assertTrue(selenium.isElementNotPresent(
 						"//div[@id='column-2']/div/div[contains(@class,'portlet-journal-content')]"));
-				assertFalse(selenium.isElementPresent(
+				assertTrue(selenium.isElementNotPresent(
 						"//div[@id='column-2']/div/div[contains(@class,'portlet-message-boards')]"));
-				assertFalse(selenium.isElementPresent(
+				assertTrue(selenium.isElementNotPresent(
 						"//div[@id='column-2']/div/div[contains(@class,'portlet-user-statistics')]"));
-				assertFalse(selenium.isElementPresent(
+				assertTrue(selenium.isElementNotPresent(
 						"//div[@id='column-2']/div/div[contains(@class,'portlet-search')]"));
-				assertFalse(selenium.isElementPresent(
+				assertTrue(selenium.isElementNotPresent(
 						"//div[@id='column-2']/div/div[contains(@class,'portlet-document-library')]"));
 
 				for (int second = 0;; second++) {
@@ -247,7 +247,7 @@ public class User_ViewPublishToLiveSPChristmas2NoWhiteElephantTest
 						"Page Wiki was last published from Christmas 2."));
 				assertTrue(selenium.isVisible(
 						"//div[@id='column-1']/div/div[contains(@class,'portlet-wiki')]"));
-				assertFalse(selenium.isElementPresent("link=White Elephant"));
+				assertTrue(selenium.isElementNotPresent("link=White Elephant"));
 				assertTrue(selenium.isVisible("link=Prices"));
 				selenium.clickAt("link=Prices",
 					RuntimeVariables.replace("Prices"));

@@ -52,6 +52,6 @@ public class Portlet_AssertCannotEditFolderTest extends BaseTestCase {
 			RuntimeVariables.replace("Media Gallery Temporary Folder"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent("link=Edit"));
+		assertTrue(selenium.isElementNotPresent("link=Edit"));
 	}
 }

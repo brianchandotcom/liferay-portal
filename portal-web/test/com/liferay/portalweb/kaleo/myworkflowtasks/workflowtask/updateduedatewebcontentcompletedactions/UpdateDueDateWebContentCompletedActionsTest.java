@@ -62,14 +62,14 @@ public class UpdateDueDateWebContentCompletedActionsTest extends BaseTestCase {
 		assertTrue(selenium.isElementPresent("//td[4]/a"));
 		assertEquals(RuntimeVariables.replace("Never"),
 			selenium.getText("//td[5]/a"));
-		assertFalse(selenium.isElementPresent("link=Actions"));
-		assertFalse(selenium.isElementPresent("link=Update Due Date"));
+		assertTrue(selenium.isElementNotPresent("link=Actions"));
+		assertTrue(selenium.isElementNotPresent("link=Update Due Date"));
 		selenium.clickAt("//td[2]/a",
 			RuntimeVariables.replace("Web Content Name"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent("link=Change"));
-		assertFalse(selenium.isElementPresent("link=Update Due Date"));
+		assertTrue(selenium.isElementNotPresent("link=Change"));
+		assertTrue(selenium.isElementNotPresent("link=Update Due Date"));
 		selenium.clickAt("link=My Submissions",
 			RuntimeVariables.replace("My Submissions"));
 		selenium.waitForPageToLoad("30000");
@@ -87,14 +87,14 @@ public class UpdateDueDateWebContentCompletedActionsTest extends BaseTestCase {
 			selenium.getText("//td[4]/a"));
 		assertTrue(selenium.isElementPresent("//td[5]/a"));
 		assertTrue(selenium.isElementPresent("//td[6]/a"));
-		assertFalse(selenium.isElementPresent("link=Actions"));
-		assertFalse(selenium.isElementPresent("link=Update Due Date"));
+		assertTrue(selenium.isElementNotPresent("link=Actions"));
+		assertTrue(selenium.isElementNotPresent("link=Update Due Date"));
 		selenium.clickAt("//td[2]/a",
 			RuntimeVariables.replace("Web Content Name"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent("link=Change"));
-		assertFalse(selenium.isElementPresent("link=Update Due Date"));
+		assertTrue(selenium.isElementNotPresent("link=Change"));
+		assertTrue(selenium.isElementNotPresent("link=Update Due Date"));
 		selenium.clickAt("link=Workflow", RuntimeVariables.replace("Workflow"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
@@ -115,13 +115,13 @@ public class UpdateDueDateWebContentCompletedActionsTest extends BaseTestCase {
 			selenium.getText("//td[4]/a"));
 		assertTrue(selenium.isElementPresent("//td[5]/a"));
 		assertTrue(selenium.isElementPresent("//td[6]/a"));
-		assertFalse(selenium.isElementPresent("link=Actions"));
-		assertFalse(selenium.isElementPresent("link=Update Due Date"));
+		assertTrue(selenium.isElementNotPresent("link=Actions"));
+		assertTrue(selenium.isElementNotPresent("link=Update Due Date"));
 		selenium.clickAt("//td[2]/a",
 			RuntimeVariables.replace("Web Content Name"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent("link=Change"));
-		assertFalse(selenium.isElementPresent("link=Update Due Date"));
+		assertTrue(selenium.isElementNotPresent("link=Change"));
+		assertTrue(selenium.isElementNotPresent("link=Update Due Date"));
 	}
 }

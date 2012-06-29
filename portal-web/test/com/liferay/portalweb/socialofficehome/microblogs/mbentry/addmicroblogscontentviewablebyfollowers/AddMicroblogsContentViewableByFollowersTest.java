@@ -121,7 +121,7 @@ public class AddMicroblogsContentViewableByFollowersTest extends BaseTestCase {
 			selenium.getText("//div[@class='content']"));
 		assertEquals(RuntimeVariables.replace("Comment"),
 			selenium.getText("//span[@class='action comment']/a"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//span[@class='action repost']/a"));
 	}
 }

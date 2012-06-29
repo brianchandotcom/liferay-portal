@@ -255,9 +255,9 @@ public class MoveThreadTest extends BaseTestCase {
 						"This m\u00e9ssag\u00e9 will b\u00e9 d\u00e9l\u00e9t\u00e9d!"));
 				assertTrue(selenium.isTextPresent(
 						"Trust and paths will be straightened."));
-				assertFalse(selenium.isElementPresent(
+				assertTrue(selenium.isElementNotPresent(
 						"link=T\u00e9st Subcat\u00e9gory"));
-				assertFalse(selenium.isElementPresent(
+				assertTrue(selenium.isElementNotPresent(
 						"link=T\u00e9st Cat\u00e9gory"));
 
 			case 100:

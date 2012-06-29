@@ -84,6 +84,6 @@ public class DeactivateUserTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertFalse(selenium.isElementPresent("link=selen01"));
+		assertTrue(selenium.isElementNotPresent("link=selen01"));
 	}
 }

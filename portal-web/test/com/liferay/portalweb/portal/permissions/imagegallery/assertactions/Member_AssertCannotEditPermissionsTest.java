@@ -68,6 +68,6 @@ public class Member_AssertCannotEditPermissionsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertFalse(selenium.isElementPresent("//img[@alt='Permissions']"));
+		assertTrue(selenium.isElementNotPresent("//img[@alt='Permissions']"));
 	}
 }

@@ -49,7 +49,7 @@ public class Member_AssertCannotDeleteFolderTest extends BaseTestCase {
 			RuntimeVariables.replace("Documents and Media"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//input[@id='_20_rowIds_com.liferay.portal.kernel.repository.model.FolderCheckbox']"));
 	}
 }

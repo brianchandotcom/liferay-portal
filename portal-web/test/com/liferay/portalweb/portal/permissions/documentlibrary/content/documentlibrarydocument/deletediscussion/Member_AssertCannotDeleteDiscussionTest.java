@@ -54,6 +54,6 @@ public class Member_AssertCannotDeleteDiscussionTest extends BaseTestCase {
 			RuntimeVariables.replace("TestDocument.txt"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent("link=Delete"));
+		assertTrue(selenium.isElementNotPresent("link=Delete"));
 	}
 }

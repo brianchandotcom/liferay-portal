@@ -273,7 +273,7 @@ public class AddEventRepeatingDailyWeekDayTest extends BaseTestCase {
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"link=Daily Week Day Repeating Event"));
 	}
 }

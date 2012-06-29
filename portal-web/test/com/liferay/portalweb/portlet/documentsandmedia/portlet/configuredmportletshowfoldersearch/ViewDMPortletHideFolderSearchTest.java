@@ -45,7 +45,7 @@ public class ViewDMPortletHideFolderSearchTest extends BaseTestCase {
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent("//input[@id='_20_keywords']"));
-		assertFalse(selenium.isElementPresent("//input[@value='Search']"));
+		assertTrue(selenium.isElementNotPresent("//input[@id='_20_keywords']"));
+		assertTrue(selenium.isElementNotPresent("//input[@value='Search']"));
 	}
 }

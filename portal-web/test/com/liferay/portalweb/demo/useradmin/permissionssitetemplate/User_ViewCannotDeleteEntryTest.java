@@ -45,7 +45,7 @@ public class User_ViewCannotDeleteEntryTest extends BaseTestCase {
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//td[contains(.,'Move to the Recycle Bin')]/span/a/span"));
 		assertFalse(selenium.isTextPresent("Move to the Recycle Bin"));
 	}

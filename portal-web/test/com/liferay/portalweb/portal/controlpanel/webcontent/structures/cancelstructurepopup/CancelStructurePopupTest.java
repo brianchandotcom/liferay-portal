@@ -99,7 +99,7 @@ public class CancelStructurePopupTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Cancel']",
 			RuntimeVariables.replace("Cancel"));
 		Thread.sleep(5000);
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//textarea[@id='_15_plainEditorField']"));
 	}
 }

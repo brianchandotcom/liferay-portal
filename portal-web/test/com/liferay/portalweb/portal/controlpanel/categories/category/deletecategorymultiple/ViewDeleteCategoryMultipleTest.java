@@ -73,7 +73,7 @@ public class ViewDeleteCategoryMultipleTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("There are no categories."),
 			selenium.getText(
 				"//div[@class='lfr-message-response portlet-msg-info']"));
-		assertFalse(selenium.isElementPresent("//li/div/div[4]"));
+		assertTrue(selenium.isElementNotPresent("//li/div/div[4]"));
 		assertFalse(selenium.isTextPresent("Category Name"));
 	}
 }

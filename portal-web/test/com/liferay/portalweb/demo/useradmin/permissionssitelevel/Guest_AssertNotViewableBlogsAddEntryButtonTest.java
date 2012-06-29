@@ -46,7 +46,7 @@ public class Guest_AssertNotViewableBlogsAddEntryButtonTest extends BaseTestCase
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//input[@value='Add Blog Entry']"));
 	}
 }

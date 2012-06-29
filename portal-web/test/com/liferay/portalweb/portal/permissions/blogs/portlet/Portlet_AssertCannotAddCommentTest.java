@@ -90,8 +90,8 @@ public class Portlet_AssertCannotAddCommentTest extends BaseTestCase {
 					RuntimeVariables.replace(""));
 
 			case 2:
-				assertFalse(selenium.isElementPresent("link=Add Comment"));
-				assertFalse(selenium.isElementPresent("link=Be the first."));
+				assertTrue(selenium.isElementNotPresent("link=Add Comment"));
+				assertTrue(selenium.isElementNotPresent("link=Be the first."));
 
 			case 100:
 				label = -1;

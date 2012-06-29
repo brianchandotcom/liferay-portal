@@ -91,6 +91,6 @@ public class AddAsteriskTagTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Tag names cannot be an empty string or contain characters such as: \n , = > / < [ { % | + # ? \" ; / * ~."),
 			selenium.getText("//div[@id='portletMessages']"));
-		assertFalse(selenium.isElementPresent("link=*test"));
+		assertTrue(selenium.isElementNotPresent("link=*test"));
 	}
 }

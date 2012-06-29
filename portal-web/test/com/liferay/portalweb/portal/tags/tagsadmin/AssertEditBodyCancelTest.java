@@ -87,6 +87,6 @@ public class AssertEditBodyCancelTest extends BaseTestCase {
 		}
 
 		selenium.click("//input[@value='Close']");
-		assertFalse(selenium.isElementPresent("//input[@id='_99_name']"));
+		assertTrue(selenium.isElementNotPresent("//input[@id='_99_name']"));
 	}
 }

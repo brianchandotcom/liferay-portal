@@ -86,6 +86,6 @@ public class ViewWebFormTest extends BaseTestCase {
 				"There is existing form data. Please export and delete it before making changes to the fields."));
 		assertTrue(selenium.isElementPresent("//input[@value='Export Data']"));
 		assertTrue(selenium.isElementPresent("//input[@value='Delete Data']"));
-		assertFalse(selenium.isElementPresent("link=Add Row"));
+		assertTrue(selenium.isElementNotPresent("link=Add Row"));
 	}
 }

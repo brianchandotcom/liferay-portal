@@ -48,7 +48,7 @@ public class User_DragAndDropPortletDLColumn2SiteStagingTest
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent(
 				"//body[contains(@class,'live-view')]"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//body[contains(@class,'live-staging')]"));
 		assertEquals(RuntimeVariables.replace("Staging"),
 			selenium.getText("//div[@class='staging-bar']/ul/li[2]/span/a"));
@@ -58,11 +58,11 @@ public class User_DragAndDropPortletDLColumn2SiteStagingTest
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent(
 				"//body[contains(@class,'local-staging')]"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//body[contains(@class,'live-view')]"));
 		assertTrue(selenium.isVisible(
 				"//div[@id='column-1']/div/div[contains(@class,'portlet-document-library')]"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//div[@id='column-2']/div/div[contains(@class,'portlet-document-library')]"));
 		assertEquals(RuntimeVariables.replace("Documents and Media"),
 			selenium.getText("//span[@class='portlet-title-text']"));
@@ -91,7 +91,7 @@ public class User_DragAndDropPortletDLColumn2SiteStagingTest
 
 		assertTrue(selenium.isVisible(
 				"//div[@id='column-2']/div/div[contains(@class,'portlet-document-library')]"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//div[@id='column-1']/div/div[contains(@class,'portlet-document-library')]"));
 	}
 }

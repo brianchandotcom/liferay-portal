@@ -75,6 +75,6 @@ public class Portlet_DeleteEntryTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertFalse(selenium.isTextPresent("Blogs Entry Title Edited"));
-		assertFalse(selenium.isElementPresent("//div[@class='entry-title']"));
+		assertTrue(selenium.isElementNotPresent("//div[@class='entry-title']"));
 	}
 }

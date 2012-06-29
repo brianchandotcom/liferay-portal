@@ -23,6 +23,6 @@ public class Guest_AssertNoPagePrePublishTest extends BaseTestCase {
 	public void testGuest_AssertNoPagePrePublish() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent("link=Blogs Test Page"));
+		assertTrue(selenium.isElementNotPresent("link=Blogs Test Page"));
 	}
 }

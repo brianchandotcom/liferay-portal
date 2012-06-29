@@ -69,8 +69,8 @@ public class Guest_AssertCannotEditImageTest extends BaseTestCase {
 
 		assertTrue(selenium.isElementPresent("//img[@alt='Download (29.9k)']"));
 		assertTrue(selenium.isElementPresent("//img[@alt='View']"));
-		assertFalse(selenium.isElementPresent("//img[@alt='Edit']"));
-		assertFalse(selenium.isElementPresent("//img[@alt='Permissions']"));
-		assertFalse(selenium.isElementPresent("//img[@alt='Delete']"));
+		assertTrue(selenium.isElementNotPresent("//img[@alt='Edit']"));
+		assertTrue(selenium.isElementNotPresent("//img[@alt='Permissions']"));
+		assertTrue(selenium.isElementNotPresent("//img[@alt='Delete']"));
 	}
 }

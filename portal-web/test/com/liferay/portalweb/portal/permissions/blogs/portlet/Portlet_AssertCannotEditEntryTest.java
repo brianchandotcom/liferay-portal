@@ -49,6 +49,6 @@ public class Portlet_AssertCannotEditEntryTest extends BaseTestCase {
 			RuntimeVariables.replace("Blogs Entry Title Temporary"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent("link=Edit"));
+		assertTrue(selenium.isElementNotPresent("link=Edit"));
 	}
 }

@@ -69,6 +69,6 @@ public class UserSN_ViewWebContentAssignedUserTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("There are no completed tasks."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
-		assertFalse(selenium.isElementPresent("link=My Submissions"));
+		assertTrue(selenium.isElementNotPresent("link=My Submissions"));
 	}
 }

@@ -48,7 +48,7 @@ public class CombineSubfolderToFolderTest extends BaseTestCase {
 		selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent("link=Test Subfolder Entry"));
+		assertTrue(selenium.isElementNotPresent("link=Test Subfolder Entry"));
 		selenium.click("//td[4]/span/ul/li/strong/a");
 
 		for (int second = 0;; second++) {

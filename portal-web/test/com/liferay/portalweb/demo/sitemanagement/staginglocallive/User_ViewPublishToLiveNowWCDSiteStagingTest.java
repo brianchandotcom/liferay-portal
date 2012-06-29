@@ -47,7 +47,7 @@ public class User_ViewPublishToLiveNowWCDSiteStagingTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent(
 				"//body[contains(@class,'live-view')]"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//body[contains(@class,'local-staging')]"));
 		assertEquals(RuntimeVariables.replace("WCD Web Content Content"),
 			selenium.getText("//div[@class='journal-content-article']/p"));

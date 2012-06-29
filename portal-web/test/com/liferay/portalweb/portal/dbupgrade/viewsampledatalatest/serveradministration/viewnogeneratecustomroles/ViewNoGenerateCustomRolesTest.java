@@ -55,9 +55,9 @@ public class ViewNoGenerateCustomRolesTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		assertFalse(selenium.isTextPresent(
 				"Convert legacy permission algorithm."));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//input[@id='_137_com.liferay.portal.convert.ConvertPermissionAlgorithm.generate-custom-rolesCheckbox']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//input[@value='Execute' and @type='button' and @onclick=\"_137_saveServer('convertProcess.com.liferay.portal.convert.ConvertPermissionAlgorithm');\"]"));
 	}
 }

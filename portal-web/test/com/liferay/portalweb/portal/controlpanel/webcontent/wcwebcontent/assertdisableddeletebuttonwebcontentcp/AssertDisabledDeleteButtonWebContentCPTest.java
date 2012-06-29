@@ -68,7 +68,7 @@ public class AssertDisabledDeleteButtonWebContentCPTest extends BaseTestCase {
 			}
 
 			try {
-				if (!selenium.isElementPresent(
+				if (selenium.isElementNotPresent(
 							"//span[contains(@class,'aui-button-disabled')]/span/input[@value='Delete']")) {
 					break;
 				}
@@ -79,9 +79,9 @@ public class AssertDisabledDeleteButtonWebContentCPTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//span[contains(@class,'aui-button-disabled')]/span/input[@value='Delete']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//input[@value='Delete' and @disabled='']"));
 		assertTrue(selenium.isVisible("//input[@value='Delete']"));
 		selenium.clickAt("//input[@name='_15_allRowIds']",
@@ -119,7 +119,7 @@ public class AssertDisabledDeleteButtonWebContentCPTest extends BaseTestCase {
 			}
 
 			try {
-				if (!selenium.isElementPresent(
+				if (selenium.isElementNotPresent(
 							"//span[contains(@class,'aui-button-disabled')]/span/input[@value='Delete']")) {
 					break;
 				}
@@ -130,9 +130,9 @@ public class AssertDisabledDeleteButtonWebContentCPTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//span[contains(@class,'aui-button-disabled')]/span/input[@value='Delete']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//input[@value='Delete' and @disabled='']"));
 		assertTrue(selenium.isVisible("//input[@value='Delete']"));
 		selenium.clickAt("//input[@name='_15_rowIds']",

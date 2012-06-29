@@ -57,7 +57,7 @@ public class PreviousButtonAPTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Previous"),
 			selenium.getText("//a[@class='previous']"));
-		assertFalse(selenium.isElementPresent("//a[@class='next']"));
+		assertTrue(selenium.isElementNotPresent("//a[@class='next']"));
 		selenium.clickAt("//a[@class='previous']",
 			RuntimeVariables.replace("Previous"));
 		selenium.waitForPageToLoad("30000");
@@ -70,7 +70,7 @@ public class PreviousButtonAPTest extends BaseTestCase {
 			RuntimeVariables.replace("Previous"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent("//a[@class='previous']"));
+		assertTrue(selenium.isElementNotPresent("//a[@class='previous']"));
 		assertEquals(RuntimeVariables.replace("Next"),
 			selenium.getText("//a[@class='next']"));
 	}

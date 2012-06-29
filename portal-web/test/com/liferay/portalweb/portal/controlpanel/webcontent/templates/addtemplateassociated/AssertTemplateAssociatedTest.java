@@ -129,6 +129,7 @@ public class AssertTemplateAssociatedTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Web Content Template Name Associated"),
 			selenium.getText("//span[@class='template-name-label']"));
-		assertFalse(selenium.isElementPresent("link=Web Content Template Name"));
+		assertTrue(selenium.isElementNotPresent(
+				"link=Web Content Template Name"));
 	}
 }

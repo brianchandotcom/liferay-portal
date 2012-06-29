@@ -74,7 +74,7 @@ public class User_ViewDMFolderDocumentDocTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"There are no documents or media files in this folder."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//div[@data-title='DM Document Title']/a/span[@class='entry-title']"));
 	}
 }

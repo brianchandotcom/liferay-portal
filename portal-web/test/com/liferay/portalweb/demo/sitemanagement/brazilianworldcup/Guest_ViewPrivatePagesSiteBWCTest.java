@@ -48,13 +48,14 @@ public class Guest_ViewPrivatePagesSiteBWCTest extends BaseTestCase {
 		assertTrue(selenium.isVisible("//a[@class='logo custom-logo']"));
 		assertTrue(selenium.isElementPresent("//img[@height='156']"));
 		assertTrue(selenium.isElementPresent("//img[@width='320']"));
-		assertFalse(selenium.isElementPresent("//a[@class='logo default-logo']"));
+		assertTrue(selenium.isElementNotPresent(
+				"//a[@class='logo default-logo']"));
 		assertTrue(selenium.isElementPresent(
 				"//body[@class='green yui3-skin-sam controls-visible page-maximized signed-out public-page site']"));
 		assertTrue(selenium.isVisible("link=Home"));
 		assertTrue(selenium.isVisible("link=Arenas"));
-		assertFalse(selenium.isElementPresent("link=Accommodations"));
-		assertFalse(selenium.isElementPresent("link=Maps"));
+		assertTrue(selenium.isElementNotPresent("link=Accommodations"));
+		assertTrue(selenium.isElementNotPresent("link=Maps"));
 		assertEquals(RuntimeVariables.replace("Welcome to Brazil"),
 			selenium.getText("//footer[@id='footer']"));
 		Thread.sleep(5000);

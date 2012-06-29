@@ -71,9 +71,9 @@ public class ViewDeleteSubcategoryDetailsTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Category Name"),
 			selenium.getText("//li/div/div[4]"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//div[@class='aui-tree-hitarea']"));
-		assertFalse(selenium.isElementPresent("//li/ul/li/div/div[4]"));
+		assertTrue(selenium.isElementNotPresent("//li/ul/li/div/div[4]"));
 		assertFalse(selenium.isTextPresent("Subcategory Name"));
 	}
 }

@@ -48,10 +48,11 @@ public class Guest_ViewPublicPagesSiteBWCTest extends BaseTestCase {
 		assertTrue(selenium.isVisible("//a[@class='logo custom-logo']"));
 		assertTrue(selenium.isElementPresent("//img[@height='156']"));
 		assertTrue(selenium.isElementPresent("//img[@width='320']"));
-		assertFalse(selenium.isElementPresent("//a[@class='logo default-logo']"));
+		assertTrue(selenium.isElementNotPresent(
+				"//a[@class='logo default-logo']"));
 		assertTrue(selenium.isElementPresent(
 				"//body[@class='green yui3-skin-sam controls-visible signed-out public-page site']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//body[@class='blue yui3-skin-sam controls-visible signed-out public-page site']"));
 		assertTrue(selenium.isVisible("link=Home"));
 		selenium.clickAt("link=Home", RuntimeVariables.replace("Home"));
@@ -104,8 +105,8 @@ public class Guest_ViewPublicPagesSiteBWCTest extends BaseTestCase {
 			selenium.getText("//li[4]/span/a"));
 		assertEquals(RuntimeVariables.replace("Welcome to Brazil"),
 			selenium.getText("//footer[@id='footer']"));
-		assertFalse(selenium.isElementPresent("link=Accommodations"));
-		assertFalse(selenium.isElementPresent("link=Maps"));
+		assertTrue(selenium.isElementNotPresent("link=Accommodations"));
+		assertTrue(selenium.isElementNotPresent("link=Maps"));
 		Thread.sleep(5000);
 		Thread.sleep(5000);
 		selenium.close();

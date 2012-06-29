@@ -147,7 +147,7 @@ public class User2_SearchFolderImageTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"No documents were found that matched the keywords: frog."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
-		assertFalse(selenium.isElementPresent("//a[@class='document-link']"));
+		assertTrue(selenium.isElementNotPresent("//a[@class='document-link']"));
 		assertFalse(selenium.isTextPresent(
 				"DL Folder 2 SubFolder Image 4 Title"));
 	}

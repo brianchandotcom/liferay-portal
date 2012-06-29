@@ -77,7 +77,7 @@ public class Guest_ViewPage1BlogsEntry1Test extends BaseTestCase {
 			selenium.getText("//div[@class='aui-rating-label-element']"));
 		assertTrue(selenium.isVisible(
 				"xPath=(//img[contains(@class,'aui-rating-element aui-rating-element-on')])[4]"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"xPath=(//img[contains(@class,'aui-rating-element aui-rating-element-on')])[5]"));
 		assertEquals(RuntimeVariables.replace("2 Comments"),
 			selenium.getText("//span[@class='comments']/a"));
@@ -95,7 +95,7 @@ public class Guest_ViewPage1BlogsEntry1Test extends BaseTestCase {
 			selenium.getText("//div[@class='aui-rating-label-element']"));
 		assertTrue(selenium.isVisible(
 				"xPath=(//img[contains(@class,'aui-rating-element aui-rating-element-on')])[4]"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"xPath=(//img[contains(@class,'aui-rating-element aui-rating-element-on')])[5]"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Comment1 Body"),
 			selenium.getText(
@@ -205,7 +205,7 @@ public class Guest_ViewPage1BlogsEntry1Test extends BaseTestCase {
 			selenium.getText("//div[@class='aui-rating-label-element']"));
 		assertTrue(selenium.isVisible(
 				"xPath=(//img[contains(@class,'aui-rating-element aui-rating-element-on')])[4]"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"xPath=(//img[contains(@class,'aui-rating-element aui-rating-element-on')])[5]"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Comment1 Body"),
 			selenium.getText(

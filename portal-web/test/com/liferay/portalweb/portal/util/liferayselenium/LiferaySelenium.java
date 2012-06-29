@@ -33,6 +33,8 @@ public interface LiferaySelenium extends Selenium {
 
 	public String getFirstNumberIncrement(String locator);
 
+	public boolean isElementNotPresent(String locator);
+
 	public boolean isPartialText(String locator, String value);
 
 	public void saveScreenShotAndSource() throws Exception;

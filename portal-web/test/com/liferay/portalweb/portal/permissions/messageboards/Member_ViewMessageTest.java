@@ -58,8 +58,8 @@ public class Member_ViewMessageTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Thread Body"),
 			selenium.getText("//div[@class='thread-body']"));
-		assertFalse(selenium.isElementPresent("link=Edit"));
-		assertFalse(selenium.isElementPresent("link=Delete"));
-		assertFalse(selenium.isElementPresent("link=Permissions"));
+		assertTrue(selenium.isElementNotPresent("link=Edit"));
+		assertTrue(selenium.isElementNotPresent("link=Delete"));
+		assertTrue(selenium.isElementNotPresent("link=Permissions"));
 	}
 }

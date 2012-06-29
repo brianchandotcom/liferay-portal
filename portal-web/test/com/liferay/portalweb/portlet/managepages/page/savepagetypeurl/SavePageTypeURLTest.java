@@ -202,7 +202,7 @@ public class SavePageTypeURLTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isElementPresent("//img[@alt='Liferay']"));
-				assertFalse(selenium.isElementPresent(
+				assertTrue(selenium.isElementNotPresent(
 						"link=Manage Pages Test Page"));
 
 			case 100:

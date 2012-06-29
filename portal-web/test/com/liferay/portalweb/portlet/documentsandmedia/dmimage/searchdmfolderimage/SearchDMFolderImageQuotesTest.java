@@ -102,7 +102,7 @@ public class SearchDMFolderImageQuotesTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Searched for \"DM1 Folder1 Image1 Title1\" everywhere."),
 			selenium.getText("//span[@class='keywords']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 	}
 }

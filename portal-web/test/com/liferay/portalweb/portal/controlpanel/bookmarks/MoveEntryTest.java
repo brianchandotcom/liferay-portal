@@ -160,7 +160,7 @@ public class MoveEntryTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertFalse(selenium.isElementPresent("link=http://www.digg.com"));
+		assertTrue(selenium.isElementNotPresent("link=http://www.digg.com"));
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Go to"),

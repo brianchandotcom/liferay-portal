@@ -60,7 +60,7 @@ public class AssertNoWorkflowAddTaskCommentCompletedTest extends BaseTestCase {
 				"There are no pending tasks assigned to your roles."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[2]"));
 		assertFalse(selenium.isTextPresent("Workflow Task Comment..."));
-		assertFalse(selenium.isElementPresent("link=Comments"));
+		assertTrue(selenium.isElementNotPresent("link=Comments"));
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
@@ -95,7 +95,7 @@ public class AssertNoWorkflowAddTaskCommentCompletedTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"There are no pending publications requested by me."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
-		assertFalse(selenium.isElementPresent("link=Comments"));
+		assertTrue(selenium.isElementNotPresent("link=Comments"));
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
@@ -133,6 +133,6 @@ public class AssertNoWorkflowAddTaskCommentCompletedTest extends BaseTestCase {
 				"There are no pending publication requests."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertFalse(selenium.isTextPresent("Workflow Task Comment..."));
-		assertFalse(selenium.isElementPresent("link=Comments"));
+		assertTrue(selenium.isElementNotPresent("link=Comments"));
 	}
 }

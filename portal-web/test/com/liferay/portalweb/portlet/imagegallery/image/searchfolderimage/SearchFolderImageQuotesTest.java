@@ -84,7 +84,7 @@ public class SearchFolderImageQuotesTest extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//a[@class='image-thumbnail preview aui-image-viewer-link']/img"));
 		assertFalse(selenium.isTextPresent("MG Folder Image Title"));
 	}

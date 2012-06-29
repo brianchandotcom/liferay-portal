@@ -47,15 +47,15 @@ public class User_ViewPublishToLiveNowSiteStagingTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent(
 				"//body[contains(@class,'live-view')]"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//body[contains(@class,'local-staging')]"));
 		assertTrue(selenium.isVisible(
 				"//div[@id='column-1']/div/div[contains(@class,'portlet-user-statistics')]"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//div[@id='column-2']/div/div[contains(@class,'portlet-user-statistics')]"));
 		assertTrue(selenium.isVisible(
 				"//div[@id='column-2']/div/div[contains(@class,'portlet-message-boards')]"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//div[@id='column-1']/div/div[contains(@class,'portlet-message-boards')]"));
 	}
 }

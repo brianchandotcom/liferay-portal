@@ -70,7 +70,7 @@ public class Portlet_AssertCannotEditCommentTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Comments"),
 			selenium.getText("//div[@class='lfr-panel-title']/span"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//li[@class='lfr-discussion-delete-reply']/span/a"));
 	}
 }

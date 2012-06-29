@@ -74,11 +74,11 @@ public class Guest_ViewDMFolderDocumentTxtTest extends BaseTestCase {
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Sort By"),
 			selenium.getText("//span[@title='Sort By']/ul/li/strong/a/span"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//span[@title='Add']/ul/li/strong/a/span"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//span[@title='Manage']/ul/li/strong/a/span"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//div[@data-title='DM Document Title']/a/span[@class='entry-title']"));
 		assertEquals(RuntimeVariables.replace(
 				"There are no documents or media files in this folder."),

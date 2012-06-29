@@ -77,9 +77,9 @@ public class ViewPortletMaximumItems5MBCategoryMessage6APTest
 		assertEquals(RuntimeVariables.replace(
 				"MB Category Thread2 Message Body"),
 			selenium.getText("xPath=(//div[@class='asset-summary'])[5]"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"xPath=(//h3[@class='asset-title'])[6]/a"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"xPath=(//div[@class='asset-summary'])[6]"));
 		assertFalse(selenium.isTextPresent(
 				"MB Category Thread1 Message Subject"));

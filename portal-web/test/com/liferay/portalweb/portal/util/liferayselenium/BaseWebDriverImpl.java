@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portalweb.portal.util.TestPropsValues;
 
 import java.util.Calendar;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -98,6 +100,20 @@ public abstract class BaseWebDriverImpl
 		String firstNumber = getFirstNumber(locator);
 
 		return StringUtil.valueOf(GetterUtil.getInteger(firstNumber) + 1);
+	}
+
+	public boolean isElementNotPresent(String locator) {
+		WebDriver.Options options = manage();
+
+		Timeouts timeouts = options.timeouts();
+
+		timeouts.implicitlyWait(3, TimeUnit.MILLISECONDS);
+
+		List<WebElement> webElements = getWebElements(locator);
+
+		timeouts.implicitlyWait(30, TimeUnit.MILLISECONDS);
+
+		return webElements.isEmpty();
 	}
 
 	public boolean isPartialText(String locator, String value) {

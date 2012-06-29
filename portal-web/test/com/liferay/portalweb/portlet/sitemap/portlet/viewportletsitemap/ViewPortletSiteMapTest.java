@@ -118,6 +118,6 @@ public class ViewPortletSiteMapTest extends BaseTestCase {
 			RuntimeVariables.replace("Site Map Test Child Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent("//section[@class='portlet']"));
+		assertTrue(selenium.isElementNotPresent("//section[@class='portlet']"));
 	}
 }

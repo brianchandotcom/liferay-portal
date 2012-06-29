@@ -85,7 +85,7 @@ public class SearchWebContentTest extends BaseTestCase {
 				loadRequiredJavaScriptModules();
 				selenium.type("//input[@name='_15_keywords']",
 					RuntimeVariables.replace(""));
-				assertFalse(selenium.isElementPresent("link=Web Content Name"));
+				assertTrue(selenium.isElementNotPresent("link=Web Content Name"));
 
 			case 100:
 				label = -1;

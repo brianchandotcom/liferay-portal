@@ -49,7 +49,7 @@ public class Guest_NoViewDmFolderTest extends BaseTestCase {
 				"There are no documents or media files in this folder."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertFalse(selenium.isTextPresent("DM Folder Name"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 	}
 }

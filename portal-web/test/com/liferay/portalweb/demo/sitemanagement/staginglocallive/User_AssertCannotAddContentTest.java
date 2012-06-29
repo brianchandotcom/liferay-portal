@@ -44,8 +44,8 @@ public class User_AssertCannotAddContentTest extends BaseTestCase {
 		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent("//a[@id='addPage']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent("//a[@id='addPage']"));
+		assertTrue(selenium.isElementNotPresent(
 				"//li[contains(@class,'manage-page')]/a"));
 	}
 }

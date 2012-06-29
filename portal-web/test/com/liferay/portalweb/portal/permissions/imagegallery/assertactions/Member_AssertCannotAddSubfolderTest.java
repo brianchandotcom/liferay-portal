@@ -54,6 +54,6 @@ public class Member_AssertCannotAddSubfolderTest extends BaseTestCase {
 			RuntimeVariables.replace("Media Gallery Permissions Test Folder"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent("link=Add Subfolder"));
+		assertTrue(selenium.isElementNotPresent("link=Add Subfolder"));
 	}
 }

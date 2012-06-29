@@ -67,7 +67,7 @@ public class ViewNoWorkflowAddTaskCommentAssignToMyRolesTest
 		assertEquals(RuntimeVariables.replace("Never"),
 			selenium.getText("//td[5]/a"));
 		assertFalse(selenium.isTextPresent("Workflow Task Comment..."));
-		assertFalse(selenium.isElementPresent("link=Comments"));
+		assertTrue(selenium.isElementNotPresent("link=Comments"));
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
@@ -110,7 +110,7 @@ public class ViewNoWorkflowAddTaskCommentAssignToMyRolesTest
 		assertEquals(RuntimeVariables.replace("Never"),
 			selenium.getText("//td[6]/a"));
 		assertFalse(selenium.isTextPresent("Workflow Task Comment..."));
-		assertFalse(selenium.isElementPresent("link=Comments"));
+		assertTrue(selenium.isElementNotPresent("link=Comments"));
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
@@ -156,6 +156,6 @@ public class ViewNoWorkflowAddTaskCommentAssignToMyRolesTest
 		assertEquals(RuntimeVariables.replace("Never"),
 			selenium.getText("//td[6]/a"));
 		assertFalse(selenium.isTextPresent("Workflow Task Comment..."));
-		assertFalse(selenium.isElementPresent("link=Comments"));
+		assertTrue(selenium.isElementNotPresent("link=Comments"));
 	}
 }

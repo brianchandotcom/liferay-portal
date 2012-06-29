@@ -48,6 +48,6 @@ public class RemovePortletVimeoTest extends BaseTestCase {
 		selenium.click("//img[@alt='Remove']");
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to remove this component[\\s\\S]$"));
-		assertFalse(selenium.isElementPresent("//div/section"));
+		assertTrue(selenium.isElementNotPresent("//div/section"));
 	}
 }

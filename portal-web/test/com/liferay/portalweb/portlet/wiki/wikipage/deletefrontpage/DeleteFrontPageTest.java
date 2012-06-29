@@ -86,7 +86,7 @@ public class DeleteFrontPageTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertFalse(selenium.isElementPresent("//td[1]/a"));
+		assertTrue(selenium.isElementNotPresent("//td[1]/a"));
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 

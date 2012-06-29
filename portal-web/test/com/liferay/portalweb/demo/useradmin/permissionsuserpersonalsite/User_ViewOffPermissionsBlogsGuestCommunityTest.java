@@ -46,10 +46,10 @@ public class User_ViewOffPermissionsBlogsGuestCommunityTest extends BaseTestCase
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//div[@class='subscribe']/span[2]/a/span"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//input[@value='Add Blog Entry']"));
-		assertFalse(selenium.isElementPresent("//input[@value='Permissions']"));
+		assertTrue(selenium.isElementNotPresent("//input[@value='Permissions']"));
 	}
 }

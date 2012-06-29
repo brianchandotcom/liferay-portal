@@ -45,6 +45,6 @@ public class User_ViewOffPermissionsBlogsCPTest extends BaseTestCase {
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent("link=Blogs"));
+		assertTrue(selenium.isElementNotPresent("link=Blogs"));
 	}
 }

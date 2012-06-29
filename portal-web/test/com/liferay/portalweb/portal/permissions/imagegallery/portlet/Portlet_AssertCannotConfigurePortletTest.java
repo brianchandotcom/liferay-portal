@@ -47,8 +47,8 @@ public class Portlet_AssertCannotConfigurePortletTest extends BaseTestCase {
 			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//span[@title='Options']/ul/li/strong/a"));
-		assertFalse(selenium.isElementPresent("link=Configuration"));
+		assertTrue(selenium.isElementNotPresent("link=Configuration"));
 	}
 }

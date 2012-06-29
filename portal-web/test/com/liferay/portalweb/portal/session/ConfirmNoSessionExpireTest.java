@@ -31,7 +31,7 @@ public class ConfirmNoSessionExpireTest extends BaseTestCase {
 			}
 
 			try {
-				if (!selenium.isElementPresent("//input[@value='Extend']")) {
+				if (selenium.isElementNotPresent("//input[@value='Extend']")) {
 					break;
 				}
 			}
@@ -43,7 +43,7 @@ public class ConfirmNoSessionExpireTest extends BaseTestCase {
 
 		Thread.sleep(30000);
 		Thread.sleep(30000);
-		assertFalse(selenium.isElementPresent("//input[@value='Extend']"));
+		assertTrue(selenium.isElementNotPresent("//input[@value='Extend']"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

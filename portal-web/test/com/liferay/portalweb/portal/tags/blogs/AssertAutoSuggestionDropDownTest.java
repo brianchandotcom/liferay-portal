@@ -175,11 +175,11 @@ public class AssertAutoSuggestionDropDownTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("selenium2 liferay2"),
 					selenium.getText(
 						"//li[contains(@class,'aui-autocomplete-list-item')]"));
-				assertFalse(selenium.isElementPresent(
+				assertTrue(selenium.isElementNotPresent(
 						"xPath=(//li[@class='aui-autocomplete-list-item'])[1]"));
-				assertFalse(selenium.isElementPresent(
+				assertTrue(selenium.isElementNotPresent(
 						"xPath=(//li[@class='aui-autocomplete-list-item'])[2]"));
-				assertFalse(selenium.isElementPresent(
+				assertTrue(selenium.isElementNotPresent(
 						"xPath=(//li[@class='aui-autocomplete-list-item'])[3]"));
 
 			case 100:

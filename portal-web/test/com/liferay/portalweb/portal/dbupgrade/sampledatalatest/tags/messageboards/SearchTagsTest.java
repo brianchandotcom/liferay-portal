@@ -35,11 +35,11 @@ public class SearchTagsTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isVisible("link=Message1 Tag1 Test1"));
-		assertFalse(selenium.isElementPresent("link=Message2 Tag2 Test2"));
-		assertFalse(selenium.isElementPresent("link=Message3 Tag3 Test3"));
-		assertFalse(selenium.isElementPresent("link=MessageA TagA TestA"));
-		assertFalse(selenium.isElementPresent("link=MessageB TagB TestB"));
-		assertFalse(selenium.isElementPresent("link=MessageC TagC TestC"));
+		assertTrue(selenium.isElementNotPresent("link=Message2 Tag2 Test2"));
+		assertTrue(selenium.isElementNotPresent("link=Message3 Tag3 Test3"));
+		assertTrue(selenium.isElementNotPresent("link=MessageA TagA TestA"));
+		assertTrue(selenium.isElementNotPresent("link=MessageB TagB TestB"));
+		assertTrue(selenium.isElementNotPresent("link=MessageC TagC TestC"));
 		selenium.open("/web/tags-message-board-community/");
 		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Message Boards Page",
@@ -53,11 +53,11 @@ public class SearchTagsTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isVisible("link=Message2 Tag2 Test2"));
-		assertFalse(selenium.isElementPresent("link=Message1 Tag1 Test1"));
-		assertFalse(selenium.isElementPresent("link=Message3 Tag3 Test3"));
-		assertFalse(selenium.isElementPresent("link=MessageA TagA TestA"));
-		assertFalse(selenium.isElementPresent("link=MessageB TagB TestB"));
-		assertFalse(selenium.isElementPresent("link=MessageC TagC TestC"));
+		assertTrue(selenium.isElementNotPresent("link=Message1 Tag1 Test1"));
+		assertTrue(selenium.isElementNotPresent("link=Message3 Tag3 Test3"));
+		assertTrue(selenium.isElementNotPresent("link=MessageA TagA TestA"));
+		assertTrue(selenium.isElementNotPresent("link=MessageB TagB TestB"));
+		assertTrue(selenium.isElementNotPresent("link=MessageC TagC TestC"));
 		selenium.open("/web/tags-message-board-community/");
 		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Message Boards Page",
@@ -71,11 +71,11 @@ public class SearchTagsTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isVisible("link=Message3 Tag3 Test3"));
-		assertFalse(selenium.isElementPresent("link=Message1 Tag1 Test1"));
-		assertFalse(selenium.isElementPresent("link=Message2 Tag2 Test2"));
-		assertFalse(selenium.isElementPresent("link=MessageA TagA TestA"));
-		assertFalse(selenium.isElementPresent("link=MessageB TagB TestB"));
-		assertFalse(selenium.isElementPresent("link=MessageC TagC TestC"));
+		assertTrue(selenium.isElementNotPresent("link=Message1 Tag1 Test1"));
+		assertTrue(selenium.isElementNotPresent("link=Message2 Tag2 Test2"));
+		assertTrue(selenium.isElementNotPresent("link=MessageA TagA TestA"));
+		assertTrue(selenium.isElementNotPresent("link=MessageB TagB TestB"));
+		assertTrue(selenium.isElementNotPresent("link=MessageC TagC TestC"));
 		selenium.open("/web/tags-message-board-community/");
 		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Message Boards Page",
@@ -91,8 +91,8 @@ public class SearchTagsTest extends BaseTestCase {
 		assertTrue(selenium.isVisible("link=MessageA TagA TestA"));
 		assertTrue(selenium.isVisible("link=MessageB TagB TestB"));
 		assertTrue(selenium.isVisible("link=MessageC TagC TestC"));
-		assertFalse(selenium.isElementPresent("link=Message1 Tag1 Test1"));
-		assertFalse(selenium.isElementPresent("link=Message2 Tag2 Test2"));
-		assertFalse(selenium.isElementPresent("link=Message3 Tag3 Test3"));
+		assertTrue(selenium.isElementNotPresent("link=Message1 Tag1 Test1"));
+		assertTrue(selenium.isElementNotPresent("link=Message2 Tag2 Test2"));
+		assertTrue(selenium.isElementNotPresent("link=Message3 Tag3 Test3"));
 	}
 }

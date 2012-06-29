@@ -46,15 +46,15 @@ public class Member_AssertActionTest extends BaseTestCase {
 			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent("link=Look and Feel"));
-		assertFalse(selenium.isElementPresent("link=Configuration"));
-		assertFalse(selenium.isElementPresent("link=Export / Import"));
-		assertFalse(selenium.isElementPresent("//img[@alt='Remove']"));
-		assertFalse(selenium.isElementPresent("link=Add Subfolder"));
-		assertFalse(selenium.isElementPresent("link=Permissions"));
-		assertFalse(selenium.isElementPresent("link=Add Folder"));
-		assertFalse(selenium.isElementPresent("link=Add Repository"));
-		assertFalse(selenium.isElementPresent("link=Add Shortcut"));
+		assertTrue(selenium.isElementNotPresent("link=Look and Feel"));
+		assertTrue(selenium.isElementNotPresent("link=Configuration"));
+		assertTrue(selenium.isElementNotPresent("link=Export / Import"));
+		assertTrue(selenium.isElementNotPresent("//img[@alt='Remove']"));
+		assertTrue(selenium.isElementNotPresent("link=Add Subfolder"));
+		assertTrue(selenium.isElementNotPresent("link=Permissions"));
+		assertTrue(selenium.isElementNotPresent("link=Add Folder"));
+		assertTrue(selenium.isElementNotPresent("link=Add Repository"));
+		assertTrue(selenium.isElementNotPresent("link=Add Shortcut"));
 		assertEquals(RuntimeVariables.replace(
 				"Media Gallery Permissions Test Folder"),
 			selenium.getText(
@@ -71,7 +71,7 @@ public class Member_AssertActionTest extends BaseTestCase {
 			RuntimeVariables.replace("Media Gallery Permissions Test Subfolder"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent("link=Add Subfolder"));
+		assertTrue(selenium.isElementNotPresent("link=Add Subfolder"));
 		assertTrue(selenium.isElementPresent("link=Add Media"));
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();

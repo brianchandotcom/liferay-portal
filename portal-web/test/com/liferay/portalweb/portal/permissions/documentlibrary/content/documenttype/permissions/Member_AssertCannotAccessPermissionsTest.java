@@ -137,8 +137,8 @@ public class Member_AssertCannotAccessPermissionsTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Document Type Name"),
 			selenium.getText("//tr[3]/td[1]"));
-		assertFalse(selenium.isElementPresent("//tr[3]/td[3]/span/a/span"));
-		assertFalse(selenium.isElementPresent("link=Permissions"));
+		assertTrue(selenium.isElementNotPresent("//tr[3]/td[3]/span/a/span"));
+		assertTrue(selenium.isElementNotPresent("link=Permissions"));
 		selenium.selectFrame("relative=top");
 	}
 }

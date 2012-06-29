@@ -54,16 +54,16 @@ public class SearchTest extends BaseTestCase {
 		assertTrue(selenium.isVisible("link=blue"));
 		assertTrue(selenium.isVisible("link=blue car"));
 		assertTrue(selenium.isVisible("link=blue green"));
-		assertFalse(selenium.isElementPresent("link=green"));
-		assertFalse(selenium.isElementPresent("link=green tree"));
+		assertTrue(selenium.isElementNotPresent("link=green"));
+		assertTrue(selenium.isElementNotPresent("link=green tree"));
 		selenium.clickAt("link=Tags", RuntimeVariables.replace("Tags"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_99_tagsAdminSearchInput']",
 			RuntimeVariables.replace("green"));
 		Thread.sleep(5000);
-		assertFalse(selenium.isElementPresent("link=blue"));
-		assertFalse(selenium.isElementPresent("link=blue car"));
+		assertTrue(selenium.isElementNotPresent("link=blue"));
+		assertTrue(selenium.isElementNotPresent("link=blue car"));
 		assertTrue(selenium.isVisible("link=blue green"));
 		assertTrue(selenium.isVisible("link=green"));
 		assertTrue(selenium.isVisible("link=green tree"));

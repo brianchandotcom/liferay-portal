@@ -110,8 +110,8 @@ public class ViewWebFormTest extends BaseTestCase {
 			selenium.getText("//div[3]/div[2]/fieldset/div/div[1]"));
 		assertTrue(selenium.isElementPresent("//input[@value='Export Data']"));
 		assertTrue(selenium.isElementPresent("//input[@value='Delete Data']"));
-		assertFalse(selenium.isElementPresent("//div[3]/span/span/button[1]"));
-		assertFalse(selenium.isElementPresent("//div[4]/span/span/button[1]"));
-		assertFalse(selenium.isElementPresent("//div[5]/span/span/button[1]"));
+		assertTrue(selenium.isElementNotPresent("//div[3]/span/span/button[1]"));
+		assertTrue(selenium.isElementNotPresent("//div[4]/span/span/button[1]"));
+		assertTrue(selenium.isElementNotPresent("//div[5]/span/span/button[1]"));
 	}
 }

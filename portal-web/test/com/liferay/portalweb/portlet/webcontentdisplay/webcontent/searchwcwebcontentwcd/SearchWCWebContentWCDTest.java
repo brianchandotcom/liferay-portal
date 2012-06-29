@@ -63,7 +63,7 @@ public class SearchWCWebContentWCDTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("No Web Content was found."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[2]"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//td[contains(.,'WC WebContent Title')]/a"));
 	}
 }

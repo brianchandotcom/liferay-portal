@@ -107,7 +107,7 @@ public class TearDownPageTest extends BaseTestCase {
 					}
 
 					try {
-						if (!selenium.isElementPresent(
+						if (selenium.isElementNotPresent(
 									"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']")) {
 							break;
 						}
@@ -176,7 +176,7 @@ public class TearDownPageTest extends BaseTestCase {
 					}
 
 					try {
-						if (!selenium.isElementPresent(
+						if (selenium.isElementNotPresent(
 									"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']")) {
 							break;
 						}
@@ -245,7 +245,7 @@ public class TearDownPageTest extends BaseTestCase {
 					}
 
 					try {
-						if (!selenium.isElementPresent(
+						if (selenium.isElementNotPresent(
 									"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']")) {
 							break;
 						}
@@ -314,7 +314,7 @@ public class TearDownPageTest extends BaseTestCase {
 					}
 
 					try {
-						if (!selenium.isElementPresent(
+						if (selenium.isElementNotPresent(
 									"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']")) {
 							break;
 						}
@@ -383,7 +383,7 @@ public class TearDownPageTest extends BaseTestCase {
 					}
 
 					try {
-						if (!selenium.isElementPresent(
+						if (selenium.isElementNotPresent(
 									"xPath=(//li[contains(@class,'lfr-nav-deletable')])[2]/span[@class='delete-tab']")) {
 							break;
 						}

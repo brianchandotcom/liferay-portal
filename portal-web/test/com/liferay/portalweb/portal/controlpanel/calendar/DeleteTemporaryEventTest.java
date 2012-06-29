@@ -104,6 +104,6 @@ public class DeleteTemporaryEventTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertFalse(selenium.isElementPresent("link=Temporary Event"));
+		assertTrue(selenium.isElementNotPresent("link=Temporary Event"));
 	}
 }

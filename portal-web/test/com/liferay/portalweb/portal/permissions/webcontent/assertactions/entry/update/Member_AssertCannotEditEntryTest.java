@@ -55,6 +55,6 @@ public class Member_AssertCannotEditEntryTest extends BaseTestCase {
 			RuntimeVariables.replace("Web Content Name"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent("//input[@value='Publish']"));
+		assertTrue(selenium.isElementNotPresent("//input[@value='Publish']"));
 	}
 }

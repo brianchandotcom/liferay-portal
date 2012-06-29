@@ -47,7 +47,7 @@ public class ViewConfigurePortletAvailableIGImageAPTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertFalse(selenium.isTextPresent("IG Folder Image Name"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//div[@class='asset-resource-info']/div/img"));
 	}
 }

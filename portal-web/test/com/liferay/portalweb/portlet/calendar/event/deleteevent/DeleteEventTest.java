@@ -76,6 +76,6 @@ public class DeleteEventTest extends BaseTestCase {
 						   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 		assertTrue(selenium.isTextPresent(
 				"Your request completed successfully."));
-		assertFalse(selenium.isElementPresent("link=Test Event"));
+		assertTrue(selenium.isElementNotPresent("link=Test Event"));
 	}
 }

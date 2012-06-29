@@ -48,6 +48,6 @@ public class RemovePortletDiggTest extends BaseTestCase {
 		selenium.click("//img[@alt='Remove']");
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to remove this component[\\s\\S]$"));
-		assertFalse(selenium.isElementPresent("//section"));
+		assertTrue(selenium.isElementNotPresent("//section"));
 	}
 }

@@ -66,7 +66,7 @@ public class ViewNoWorkflowAddTaskCommentAssignedToMeTest extends BaseTestCase {
 				"There are no pending tasks assigned to your roles."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertFalse(selenium.isTextPresent("Workflow Task Comment..."));
-		assertFalse(selenium.isElementPresent("link=Comments"));
+		assertTrue(selenium.isElementNotPresent("link=Comments"));
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
@@ -109,7 +109,7 @@ public class ViewNoWorkflowAddTaskCommentAssignedToMeTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Never"),
 			selenium.getText("//td[6]/a"));
 		assertFalse(selenium.isTextPresent("Workflow Task Comment..."));
-		assertFalse(selenium.isElementPresent("link=Comments"));
+		assertTrue(selenium.isElementNotPresent("link=Comments"));
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
@@ -155,6 +155,6 @@ public class ViewNoWorkflowAddTaskCommentAssignedToMeTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Never"),
 			selenium.getText("//td[6]/a"));
 		assertFalse(selenium.isTextPresent("Workflow Task Comment..."));
-		assertFalse(selenium.isElementPresent("link=Comments"));
+		assertTrue(selenium.isElementNotPresent("link=Comments"));
 	}
 }

@@ -52,7 +52,7 @@ public class AddEventRepeatYearlySPTLTest extends BaseTestCase {
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isElementPresent(
 						"//body[contains(@class,'live-view')]"));
-				assertFalse(selenium.isElementPresent(
+				assertTrue(selenium.isElementNotPresent(
 						"//body[contains(@class,'local-staging')]"));
 				assertTrue(selenium.isPartialText("//li[2]/span/a", "Staging"));
 				selenium.clickAt("//li[2]/span/a",
@@ -61,7 +61,7 @@ public class AddEventRepeatYearlySPTLTest extends BaseTestCase {
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isElementPresent(
 						"//body[contains(@class,'local-staging')]"));
-				assertFalse(selenium.isElementPresent(
+				assertTrue(selenium.isElementNotPresent(
 						"//body[contains(@class,'live-view')]"));
 				assertTrue(selenium.isElementPresent(
 						"//a[@id='_170_0publishScheduleLink']"));

@@ -320,9 +320,9 @@ public class RateWikiPageCommentAPTest extends BaseTestCase {
 				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up']"));
 		assertTrue(selenium.isVisible(
 				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up aui-rating-element-on']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down aui-rating-element-on']"));
 	}
 }

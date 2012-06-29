@@ -179,7 +179,7 @@ public class TearDownPageMPTest extends BaseTestCase {
 					}
 
 					try {
-						if (!selenium.isElementPresent(
+						if (selenium.isElementNotPresent(
 									"//div[@id='_88_layoutsContainer']/div[contains(@class,'aui-loadingmask')]")) {
 							break;
 						}
@@ -301,7 +301,7 @@ public class TearDownPageMPTest extends BaseTestCase {
 					}
 
 					try {
-						if (!selenium.isElementPresent(
+						if (selenium.isElementNotPresent(
 									"//div[@id='_88_layoutsContainer']/div[contains(@class,'aui-loadingmask')]")) {
 							break;
 						}
@@ -425,7 +425,7 @@ public class TearDownPageMPTest extends BaseTestCase {
 					}
 
 					try {
-						if (!selenium.isElementPresent(
+						if (selenium.isElementNotPresent(
 									"//div[@id='_88_layoutsContainer']/div[contains(@class,'aui-loadingmask')]")) {
 							break;
 						}
@@ -549,7 +549,7 @@ public class TearDownPageMPTest extends BaseTestCase {
 					}
 
 					try {
-						if (!selenium.isElementPresent(
+						if (selenium.isElementNotPresent(
 									"//div[@id='_88_layoutsContainer']/div[contains(@class,'aui-loadingmask')]")) {
 							break;
 						}
@@ -690,7 +690,7 @@ public class TearDownPageMPTest extends BaseTestCase {
 					}
 
 					try {
-						if (!selenium.isElementPresent(
+						if (selenium.isElementNotPresent(
 									"//div[@id='_88_layoutsContainer']/div[contains(@class,'aui-loadingmask')]")) {
 							break;
 						}

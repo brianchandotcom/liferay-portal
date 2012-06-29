@@ -112,7 +112,7 @@ public class MoveSubfolderEntryToSubfolderTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isTextPresent(
 				"Your request completed successfully."));
-		assertFalse(selenium.isElementPresent("link=http://www.liferay.com"));
+		assertTrue(selenium.isElementNotPresent("link=http://www.liferay.com"));
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
@@ -142,7 +142,7 @@ public class MoveSubfolderEntryToSubfolderTest extends BaseTestCase {
 		selenium.clickAt("//a/strong", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent("link=http://www.liferay.com"));
+		assertTrue(selenium.isElementNotPresent("link=http://www.liferay.com"));
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 

@@ -122,9 +122,9 @@ public class RateBlogsEntryCommentAPTest extends BaseTestCase {
 				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down aui-rating-element-on']"));
 		selenium.clickAt("//div[@id='zyfa_ratingThumbContent']/a[2]",
 			RuntimeVariables.replace("Rate this as bad."));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-up aui-rating-element-on']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//a[@class='aui-rating-element aui-rating-element-off aui-rating-thumb-down aui-rating-element-on']"));
 	}
 }

@@ -55,7 +55,7 @@ public class AssertNoRejectTaskActionsTest extends BaseTestCase {
 		selenium.clickAt("link=Pending", RuntimeVariables.replace("Pending"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent("link=Actions"));
-		assertFalse(selenium.isElementPresent("link=Reject"));
+		assertTrue(selenium.isElementNotPresent("link=Actions"));
+		assertTrue(selenium.isElementNotPresent("link=Reject"));
 	}
 }

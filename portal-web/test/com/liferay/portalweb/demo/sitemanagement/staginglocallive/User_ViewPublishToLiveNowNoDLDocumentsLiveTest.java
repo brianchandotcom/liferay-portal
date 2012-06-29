@@ -47,9 +47,9 @@ public class User_ViewPublishToLiveNowNoDLDocumentsLiveTest extends BaseTestCase
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent(
 				"//body[contains(@class,'live-view')]"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//body[contains(@class,'local-staging')]"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 	}
 }

@@ -53,9 +53,10 @@ public class AssertCannotEditWCWebContentWCDTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"You are viewing the live version of Site Name and cannot make changes here. Make your changes in staging and publish them to Live afterwards to make them public."),
 			selenium.getText("//span[@class='staging-live-help']"));
-		assertFalse(selenium.isElementPresent("//img[@alt='Edit Web Content']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
+				"//img[@alt='Edit Web Content']"));
+		assertTrue(selenium.isElementNotPresent(
 				"//img[@alt='Select Web Content']"));
-		assertFalse(selenium.isElementPresent("//img[@alt='Add Web Content']"));
+		assertTrue(selenium.isElementNotPresent("//img[@alt='Add Web Content']"));
 	}
 }

@@ -55,7 +55,7 @@ public class CombineToParentFolderTest extends BaseTestCase {
 			RuntimeVariables.replace("Edited Test Folder"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent("link=Edited Test Bookmark"));
+		assertTrue(selenium.isElementNotPresent("link=Edited Test Bookmark"));
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
@@ -112,6 +112,6 @@ public class CombineToParentFolderTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertTrue(selenium.isElementPresent("link=http://www.narutofan.com"));
-		assertFalse(selenium.isElementPresent("link=Edited Test SubFolder"));
+		assertTrue(selenium.isElementNotPresent("link=Edited Test SubFolder"));
 	}
 }

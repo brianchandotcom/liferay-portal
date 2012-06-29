@@ -126,6 +126,6 @@ public class EditPageTemplateTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertTrue(selenium.isElementPresent("link=Edited Test Page Template"));
-		assertFalse(selenium.isElementPresent("link=Test Page Template"));
+		assertTrue(selenium.isElementNotPresent("link=Test Page Template"));
 	}
 }

@@ -46,7 +46,7 @@ public class User_NoAddDmDocumentTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		Thread.sleep(5000);
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//span[@title='Add']/ul/li/strong/a/span"));
 	}
 }

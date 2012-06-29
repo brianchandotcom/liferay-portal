@@ -46,7 +46,7 @@ public class ViewMoveDMDocument2NewFolderFolder1Test extends BaseTestCase {
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//div[@data-title='DM Document1 Title']/a/span[2]"));
 		assertEquals(RuntimeVariables.replace("DM Folder1 Name"),
 			selenium.getText("//div[@data-title='DM Folder1 Name']/a/span[2]"));

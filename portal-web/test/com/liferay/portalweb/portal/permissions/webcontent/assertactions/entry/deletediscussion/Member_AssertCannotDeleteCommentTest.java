@@ -49,6 +49,6 @@ public class Member_AssertCannotDeleteCommentTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("WC Comment"),
 			selenium.getText("//div[@class='lfr-discussion-message']"));
-		assertFalse(selenium.isElementPresent("link=Delete"));
+		assertTrue(selenium.isElementNotPresent("link=Delete"));
 	}
 }

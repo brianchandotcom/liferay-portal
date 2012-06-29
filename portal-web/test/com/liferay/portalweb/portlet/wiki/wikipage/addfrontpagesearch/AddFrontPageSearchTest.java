@@ -34,7 +34,7 @@ public class AddFrontPageSearchTest extends BaseTestCase {
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"link=Create a new page on this topic."));
 	}
 }

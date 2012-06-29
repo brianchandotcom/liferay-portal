@@ -53,13 +53,14 @@ public class ViewBlogsEntryCommentsNoTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertFalse(selenium.isTextPresent("0 Comments"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//div[@class='lfr-panel-title']/span[contains(.,'Comments')]"));
 		assertFalse(selenium.isTextPresent("No comments yet."));
 		assertFalse(selenium.isTextPresent("Be the first."));
 		assertFalse(selenium.isTextPresent("Subscribe to Comments"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//fieldset[contains(@class,'add-comment')]/div/a"));
-		assertFalse(selenium.isElementPresent("//span[@class='subscribe-link']"));
+		assertTrue(selenium.isElementNotPresent(
+				"//span[@class='subscribe-link']"));
 	}
 }

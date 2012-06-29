@@ -83,7 +83,7 @@ public class RateWikiFrontPageChildPageTest extends BaseTestCase {
 				"xPath=(//a[contains(@class,'aui-rating-element-on')])[3]"));
 		assertTrue(selenium.isVisible(
 				"xPath=(//a[contains(@class,'aui-rating-element-on')])[4]"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"xPath=(//a[contains(@class,'aui-rating-element-on')])[5]"));
 		assertTrue(selenium.isVisible(
 				"xPath=(//img[contains(@class,'aui-rating-element-on')])[1]"));
@@ -93,7 +93,7 @@ public class RateWikiFrontPageChildPageTest extends BaseTestCase {
 				"xPath=(//img[contains(@class,'aui-rating-element-on')])[3]"));
 		assertTrue(selenium.isVisible(
 				"xPath=(//img[contains(@class,'aui-rating-element-on')])[4]"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"xPath=(//img[contains(@class,'aui-rating-element-on')])[5]"));
 	}
 }

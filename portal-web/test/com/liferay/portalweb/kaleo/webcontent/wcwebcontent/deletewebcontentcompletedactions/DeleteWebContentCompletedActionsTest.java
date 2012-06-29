@@ -95,6 +95,6 @@ public class DeleteWebContentCompletedActionsTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals(RuntimeVariables.replace("No Web Content was found."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
-		assertFalse(selenium.isElementPresent("link=Web Content Name"));
+		assertTrue(selenium.isElementNotPresent("link=Web Content Name"));
 	}
 }

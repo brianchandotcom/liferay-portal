@@ -54,8 +54,8 @@ public class ViewUserNameAndImageTest extends BaseTestCase {
 			selenium.getText("//div[@class='blogger-stars']"));
 		assertTrue(selenium.isPartialText("//div[@class='blogger-date']",
 				"Date:"));
-		assertFalse(selenium.isElementPresent("//th[1]"));
-		assertFalse(selenium.isElementPresent("//th[2]"));
-		assertFalse(selenium.isElementPresent("//th[3]"));
+		assertTrue(selenium.isElementNotPresent("//th[1]"));
+		assertTrue(selenium.isElementNotPresent("//th[2]"));
+		assertTrue(selenium.isElementNotPresent("//th[3]"));
 	}
 }

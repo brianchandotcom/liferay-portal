@@ -48,6 +48,6 @@ public class Member_AssertCannotEditCommentTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("WC Comment"),
 			selenium.getText("//div[@class='lfr-discussion-message']"));
-		assertFalse(selenium.isElementPresent("link=Edit"));
+		assertTrue(selenium.isElementNotPresent("link=Edit"));
 	}
 }

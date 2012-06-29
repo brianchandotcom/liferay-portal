@@ -73,9 +73,9 @@ public class VoteQuestionTest extends BaseTestCase {
 			selenium.getText("//tr[4]/td[5]"));
 		assertEquals(RuntimeVariables.replace("Total Votes: 1"),
 			selenium.getText("//form/div"));
-		assertFalse(selenium.isElementPresent("//input[@value='Vote']"));
-		assertFalse(selenium.isElementPresent("//div/span[1]/span/span/input"));
-		assertFalse(selenium.isElementPresent("//div/span[2]/span/span/input"));
-		assertFalse(selenium.isElementPresent("//div/span[3]/span/span/input"));
+		assertTrue(selenium.isElementNotPresent("//input[@value='Vote']"));
+		assertTrue(selenium.isElementNotPresent("//div/span[1]/span/span/input"));
+		assertTrue(selenium.isElementNotPresent("//div/span[2]/span/span/input"));
+		assertTrue(selenium.isElementNotPresent("//div/span[3]/span/span/input"));
 	}
 }

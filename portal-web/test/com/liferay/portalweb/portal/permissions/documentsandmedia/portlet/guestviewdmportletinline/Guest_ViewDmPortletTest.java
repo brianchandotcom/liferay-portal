@@ -45,7 +45,7 @@ public class Guest_ViewDmPortletTest extends BaseTestCase {
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//div[@class='portlet-msg-error']"));
 		assertFalse(selenium.isTextPresent(
 				"You do not have the required permissions."));

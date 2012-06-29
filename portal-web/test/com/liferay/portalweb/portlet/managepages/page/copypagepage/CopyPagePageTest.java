@@ -50,9 +50,9 @@ public class CopyPagePageTest extends BaseTestCase {
 					RuntimeVariables.replace("Manage Pages Test Page"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
-				assertFalse(selenium.isElementPresent(
+				assertTrue(selenium.isElementNotPresent(
 						"//section[@id='portlet_58']/header/h1"));
-				assertFalse(selenium.isElementPresent(
+				assertTrue(selenium.isElementNotPresent(
 						"//section[@id='portlet_47']/header/h1"));
 				assertFalse(selenium.isTextPresent("Sign In"));
 				assertFalse(selenium.isTextPresent("Hello World"));

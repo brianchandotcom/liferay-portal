@@ -72,7 +72,7 @@ public class TearDownMailAccountTest extends BaseTestCase {
 					}
 
 					try {
-						if (!selenium.isElementPresent(
+						if (selenium.isElementNotPresent(
 									"//input[@id='_1_WAR_mailportlet_password']")) {
 							break;
 						}

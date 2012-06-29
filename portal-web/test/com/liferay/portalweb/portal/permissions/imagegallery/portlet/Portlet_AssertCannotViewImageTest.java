@@ -52,7 +52,7 @@ public class Portlet_AssertCannotViewImageTest extends BaseTestCase {
 			RuntimeVariables.replace("Media Gallery Temporary Folder"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//a[@title='Portlet Permissions Image 2 Test Title - ']"));
 		assertEquals(RuntimeVariables.replace(
 				"There are no media files in this folder."),

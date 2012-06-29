@@ -58,8 +58,8 @@ public class GetConcertEventsTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent("link=Caedmon's Call Concert!"));
-		assertFalse(selenium.isElementPresent("link=Off to Yosemite!"));
-		assertFalse(selenium.isElementPresent("link=Test Event"));
+		assertTrue(selenium.isElementNotPresent("link=Off to Yosemite!"));
+		assertTrue(selenium.isElementNotPresent("link=Test Event"));
 		selenium.clickAt("link=Week", RuntimeVariables.replace("Week"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
@@ -67,8 +67,8 @@ public class GetConcertEventsTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent("link=Caedmon's Call Concert!"));
-		assertFalse(selenium.isElementPresent("link=Off to Yosemite!"));
-		assertFalse(selenium.isElementPresent("link=Test Event"));
+		assertTrue(selenium.isElementNotPresent("link=Off to Yosemite!"));
+		assertTrue(selenium.isElementNotPresent("link=Test Event"));
 		selenium.clickAt("link=Month", RuntimeVariables.replace("Month"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
@@ -76,8 +76,8 @@ public class GetConcertEventsTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent("link=Caedmon's Call Concert!"));
-		assertFalse(selenium.isElementPresent("link=Off to Yosemite!"));
-		assertFalse(selenium.isElementPresent("link=Test Event"));
+		assertTrue(selenium.isElementNotPresent("link=Off to Yosemite!"));
+		assertTrue(selenium.isElementNotPresent("link=Test Event"));
 		selenium.clickAt("link=Events", RuntimeVariables.replace("Events"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();

@@ -45,6 +45,7 @@ public class Member_AssertCannotAddToPageTest extends BaseTestCase {
 			RuntimeVariables.replace("Document Library Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent("//a[@id='_145_addApplication']"));
+		assertTrue(selenium.isElementNotPresent(
+				"//a[@id='_145_addApplication']"));
 	}
 }

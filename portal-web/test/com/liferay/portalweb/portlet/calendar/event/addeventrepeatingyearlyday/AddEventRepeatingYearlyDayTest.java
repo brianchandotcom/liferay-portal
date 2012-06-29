@@ -318,6 +318,7 @@ public class AddEventRepeatingYearlyDayTest extends BaseTestCase {
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent("link=Yearly Day Repeating Event"));
+		assertTrue(selenium.isElementNotPresent(
+				"link=Yearly Day Repeating Event"));
 	}
 }

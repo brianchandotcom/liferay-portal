@@ -45,7 +45,7 @@ public class ViewDMPortletSelectSubfolderTest extends BaseTestCase {
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 		assertEquals(RuntimeVariables.replace("Home"),
 			selenium.getText(

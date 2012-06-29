@@ -51,7 +51,7 @@ public class ViewPortletBreadcrumbTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Breadcrumb Test Page"),
 			selenium.getText(
 				"//div/ul[@class='breadcrumbs breadcrumbs-horizontal lfr-component']/li[2]/span/a"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//div[@class='portlet-body']/ul/li[3]"));
 		selenium.clickAt("link=Child Test Page",
 			RuntimeVariables.replace("Child Test Page"));

@@ -46,6 +46,6 @@ public class Member_AssertCannotAddFolderTest extends BaseTestCase {
 			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent("link=Add Folder"));
+		assertTrue(selenium.isElementNotPresent("link=Add Folder"));
 	}
 }

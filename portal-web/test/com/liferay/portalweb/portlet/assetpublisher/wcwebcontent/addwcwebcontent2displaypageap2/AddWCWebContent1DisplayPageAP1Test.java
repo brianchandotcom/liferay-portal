@@ -328,7 +328,7 @@ public class AddWCWebContent1DisplayPageAP1Test extends BaseTestCase {
 			}
 
 			try {
-				if (!selenium.isElementPresent(
+				if (selenium.isElementNotPresent(
 							"//div[3]/span/span/button[contains(@class,'aui-buttonitem-disabled')]")) {
 					break;
 				}

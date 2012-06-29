@@ -48,10 +48,11 @@ public class ViewPrivatePagesSiteBWCTest extends BaseTestCase {
 		assertTrue(selenium.isVisible("//a[@class='logo default-logo']"));
 		assertTrue(selenium.isElementPresent("//img[@height='156']"));
 		assertTrue(selenium.isElementPresent("//img[@width='320']"));
-		assertFalse(selenium.isElementPresent("//a[@class='logo custom-logo']"));
+		assertTrue(selenium.isElementNotPresent(
+				"//a[@class='logo custom-logo']"));
 		assertTrue(selenium.isElementPresent(
 				"//body[@class='blue yui3-skin-sam controls-visible signed-in private-page site dockbar-ready']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//body[@class='green yui3-skin-sam controls-visible signed-in private-page site dockbar-ready']"));
 		assertTrue(selenium.isVisible("link=Accommodations"));
 		selenium.clickAt("link=Accommodations",
@@ -70,8 +71,8 @@ public class ViewPrivatePagesSiteBWCTest extends BaseTestCase {
 			selenium.getText("//nav/ul/li[3]/span/a"));
 		assertEquals(RuntimeVariables.replace("Powered By Liferay"),
 			selenium.getText("//footer[@id='footer']"));
-		assertFalse(selenium.isElementPresent("link=Home"));
-		assertFalse(selenium.isElementPresent("link=Arenas"));
+		assertTrue(selenium.isElementNotPresent("link=Home"));
+		assertTrue(selenium.isElementNotPresent("link=Arenas"));
 		Thread.sleep(5000);
 		Thread.sleep(5000);
 		selenium.close();

@@ -50,7 +50,7 @@ public class ViewBlogsTrackbackNoTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertFalse(selenium.isTextPresent("Allow Trackbacks"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//input[@id='_33_allowTrackbacksCheckbox']"));
 	}
 }

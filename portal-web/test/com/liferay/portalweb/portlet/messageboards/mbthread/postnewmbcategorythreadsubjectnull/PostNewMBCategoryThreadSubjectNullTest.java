@@ -201,7 +201,7 @@ public class PostNewMBCategoryThreadSubjectNullTest extends BaseTestCase {
 			RuntimeVariables.replace("MB Category Name"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//td[7]/span/ul/li/strong/a/span"));
 	}
 }

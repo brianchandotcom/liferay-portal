@@ -87,7 +87,7 @@ public class AddMBSubcategoryNameNullTest extends BaseTestCase {
 			selenium.getText("//div[3]/h1/span"));
 		assertFalse(selenium.isTextPresent(
 				"MB Category Subcategory Description"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//span[@title='Actions']/ul/li/strong/a"));
 	}
 }

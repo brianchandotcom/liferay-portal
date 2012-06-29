@@ -53,7 +53,7 @@ public class ViewMBPingbackNoTest extends BaseTestCase {
 		assertFalse(selenium.isTextPresent(
 				"To allow pingbacks, please also ensure the entry's guest view permission is enabled."));
 		assertFalse(selenium.isTextPresent("Allow Pingbacks"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//input[@id='_19_allowPingbacksCheckbox']"));
 	}
 }

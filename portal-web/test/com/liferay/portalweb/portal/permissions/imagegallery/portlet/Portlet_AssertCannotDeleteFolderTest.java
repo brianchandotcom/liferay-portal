@@ -55,6 +55,6 @@ public class Portlet_AssertCannotDeleteFolderTest extends BaseTestCase {
 			RuntimeVariables.replace("Media Gallery Temporary Folder Edited"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent("link=Delete"));
+		assertTrue(selenium.isElementNotPresent("link=Delete"));
 	}
 }

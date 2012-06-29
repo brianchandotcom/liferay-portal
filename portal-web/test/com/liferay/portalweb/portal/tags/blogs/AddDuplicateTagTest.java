@@ -125,7 +125,7 @@ public class AddDuplicateTagTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
-				assertFalse(selenium.isElementPresent(
+				assertTrue(selenium.isElementNotPresent(
 						"xPath=(//span[@class='taglib-asset-tags-summary']/a)[2]"));
 
 			case 100:

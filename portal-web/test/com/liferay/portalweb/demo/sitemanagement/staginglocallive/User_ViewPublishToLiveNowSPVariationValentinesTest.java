@@ -48,7 +48,7 @@ public class User_ViewPublishToLiveNowSPVariationValentinesTest
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent(
 				"//body[contains(@class,'live-view')]"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//body[contains(@class,'local-staging')]"));
 
 		for (int second = 0;; second++) {

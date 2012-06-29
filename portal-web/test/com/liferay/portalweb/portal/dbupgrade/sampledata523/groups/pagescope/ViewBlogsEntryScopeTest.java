@@ -90,9 +90,9 @@ public class ViewBlogsEntryScopeTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertFalse(selenium.isTextPresent("Blogs Entry Scope Current Page"));
-		assertFalse(selenium.isElementPresent("//div[@class='entry-title']/a"));
+		assertTrue(selenium.isElementNotPresent("//div[@class='entry-title']/a"));
 		assertFalse(selenium.isTextPresent(
 				"This is a blogs entry scope current page test."));
-		assertFalse(selenium.isElementPresent("//p"));
+		assertTrue(selenium.isElementNotPresent("//p"));
 	}
 }

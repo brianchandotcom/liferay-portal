@@ -54,8 +54,8 @@ public class LastButtonAPTest extends BaseTestCase {
 			selenium.getText("//a[@class='first']"));
 		assertEquals(RuntimeVariables.replace("Previous"),
 			selenium.getText("//a[@class='previous']"));
-		assertFalse(selenium.isElementPresent("//a[@class='next']"));
-		assertFalse(selenium.isElementPresent("//a[@class='last']"));
+		assertTrue(selenium.isElementNotPresent("//a[@class='next']"));
+		assertTrue(selenium.isElementNotPresent("//a[@class='last']"));
 		assertEquals("3", selenium.getSelectedLabel("//select"));
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
@@ -93,8 +93,8 @@ public class LastButtonAPTest extends BaseTestCase {
 			selenium.getText("//a[@class='first']"));
 		assertEquals(RuntimeVariables.replace("Previous"),
 			selenium.getText("//a[@class='previous']"));
-		assertFalse(selenium.isElementPresent("//a[@class='next']"));
-		assertFalse(selenium.isElementPresent("//a[@class='last']"));
+		assertTrue(selenium.isElementNotPresent("//a[@class='next']"));
+		assertTrue(selenium.isElementNotPresent("//a[@class='last']"));
 		assertEquals("3", selenium.getSelectedLabel("//select"));
 	}
 }

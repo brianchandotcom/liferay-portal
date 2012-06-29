@@ -139,7 +139,7 @@ public class ViewRatePage2BlogsEntry2Test extends BaseTestCase {
 				"xPath=(//div[@class='aui-rating-label-element'])[2]"));
 		assertTrue(selenium.isVisible(
 				"xPath=(//img[contains(@class,'aui-rating-element aui-rating-element-on')])[4]"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"xPath=(//img[contains(@class,'aui-rating-element aui-rating-element-on')])[5]"));
 		selenium.open("/web/blogs-page-scope-community/");
 		loadRequiredJavaScriptModules();
@@ -258,7 +258,7 @@ public class ViewRatePage2BlogsEntry2Test extends BaseTestCase {
 				"xPath=(//div[@class='aui-rating-label-element'])[2]"));
 		assertTrue(selenium.isVisible(
 				"xPath=(//img[contains(@class,'aui-rating-element aui-rating-element-on')])[4]"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"xPath=(//img[contains(@class,'aui-rating-element aui-rating-element-on')])[5]"));
 		selenium.open("/web/blogs-page-scope-community/");
 		loadRequiredJavaScriptModules();
@@ -425,7 +425,7 @@ public class ViewRatePage2BlogsEntry2Test extends BaseTestCase {
 				"xPath=(//div[@class='aui-rating-label-element'])[2]"));
 		assertTrue(selenium.isVisible(
 				"xPath=(//img[contains(@class,'aui-rating-element aui-rating-element-on')])[4]"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"xPath=(//img[contains(@class,'aui-rating-element aui-rating-element-on')])[5]"));
 	}
 }

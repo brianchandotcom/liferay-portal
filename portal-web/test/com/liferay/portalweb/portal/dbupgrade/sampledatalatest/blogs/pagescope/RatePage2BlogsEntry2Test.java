@@ -99,9 +99,9 @@ public class RatePage2BlogsEntry2Test extends BaseTestCase {
 				"xPath=(//img[contains(@class,'aui-rating-element-on')])[4]"));
 		assertTrue(selenium.isVisible(
 				"xPath=(//a[contains(@class,'aui-rating-element-on')])[4]"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"xPath=(//img[contains(@class,'aui-rating-element-on')])[5]"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"xPath=(//a[contains(@class,'aui-rating-element-on')])[5]"));
 	}
 }

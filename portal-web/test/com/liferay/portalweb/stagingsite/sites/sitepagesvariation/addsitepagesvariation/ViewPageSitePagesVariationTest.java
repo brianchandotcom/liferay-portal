@@ -46,7 +46,7 @@ public class ViewPageSitePagesVariationTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent(
 				"//body[contains(@class,'live-view')]"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//body[contains(@class,'local-staging')]"));
 		assertTrue(selenium.isPartialText("//li[2]/span/a", "Staging"));
 		selenium.clickAt("//li[2]/span/a", RuntimeVariables.replace("Staging"));
@@ -61,7 +61,7 @@ public class ViewPageSitePagesVariationTest extends BaseTestCase {
 			RuntimeVariables.replace("Main Variation"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent("link=Test Page"));
+		assertTrue(selenium.isElementNotPresent("link=Test Page"));
 		assertEquals(RuntimeVariables.replace("Site Pages Variation Name"),
 			selenium.getText("//li[2]/span/span/a"));
 		selenium.clickAt("//li[2]/span/span/a",

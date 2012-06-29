@@ -65,6 +65,10 @@ public abstract class BaseSeleniumImpl
 			"getFirstNumberIncrement", new String[] {locator,});
 	}
 
+	public boolean isElementNotPresent(String locator) {
+		return !isElementPresent(locator);
+	}
+
 	public boolean isPartialText(String locator, String value) {
 		return _commandProcessor.getBoolean(
 			"isPartialText", new String[] {locator, value,});

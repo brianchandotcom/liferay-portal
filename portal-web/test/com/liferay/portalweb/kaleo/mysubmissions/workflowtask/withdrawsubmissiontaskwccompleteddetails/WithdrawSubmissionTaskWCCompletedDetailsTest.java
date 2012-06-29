@@ -67,7 +67,7 @@ public class WithdrawSubmissionTaskWCCompletedDetailsTest extends BaseTestCase {
 			RuntimeVariables.replace("Web Content Name"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded right null']/ul/li[1]/a"));
 		assertFalse(selenium.isTextPresent("Withdraw Submission"));
 	}

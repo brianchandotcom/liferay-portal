@@ -106,7 +106,7 @@ public class AdvancedSearchWebContentStatusTest extends BaseTestCase {
 				loadRequiredJavaScriptModules();
 				selenium.select("//select[@id='_15_status']",
 					RuntimeVariables.replace("label="));
-				assertFalse(selenium.isElementPresent("link=Web Content Name"));
+				assertTrue(selenium.isElementNotPresent("link=Web Content Name"));
 				selenium.clickAt("link=\u00ab Basic",
 					RuntimeVariables.replace("\u00ab Basic"));
 

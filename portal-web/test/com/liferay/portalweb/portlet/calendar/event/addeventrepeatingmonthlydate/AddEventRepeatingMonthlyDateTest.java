@@ -314,7 +314,7 @@ public class AddEventRepeatingMonthlyDateTest extends BaseTestCase {
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"link=Monthly Date Repeating Event"));
 	}
 }

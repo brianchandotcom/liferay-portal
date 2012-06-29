@@ -52,11 +52,11 @@ public class SearchTagsTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent("link=Message1 Tag1 Test1"));
-		assertFalse(selenium.isElementPresent("link=Message2 Tag2 Test2"));
-		assertFalse(selenium.isElementPresent("link=Message3 Tag3 Test3"));
-		assertFalse(selenium.isElementPresent("link=MessageA TagA TestA"));
-		assertFalse(selenium.isElementPresent("link=MessageB TagB TestB"));
-		assertFalse(selenium.isElementPresent("link=MessageC TagC TestC"));
+		assertTrue(selenium.isElementNotPresent("link=Message2 Tag2 Test2"));
+		assertTrue(selenium.isElementNotPresent("link=Message3 Tag3 Test3"));
+		assertTrue(selenium.isElementNotPresent("link=MessageA TagA TestA"));
+		assertTrue(selenium.isElementNotPresent("link=MessageB TagB TestB"));
+		assertTrue(selenium.isElementNotPresent("link=MessageC TagC TestC"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -85,11 +85,11 @@ public class SearchTagsTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent("link=Message2 Tag2 Test2"));
-		assertFalse(selenium.isElementPresent("link=Message1 Tag1 Test1"));
-		assertFalse(selenium.isElementPresent("link=Message3 Tag3 Test3"));
-		assertFalse(selenium.isElementPresent("link=MessageA TagA TestA"));
-		assertFalse(selenium.isElementPresent("link=MessageB TagB TestB"));
-		assertFalse(selenium.isElementPresent("link=MessageC TagC TestC"));
+		assertTrue(selenium.isElementNotPresent("link=Message1 Tag1 Test1"));
+		assertTrue(selenium.isElementNotPresent("link=Message3 Tag3 Test3"));
+		assertTrue(selenium.isElementNotPresent("link=MessageA TagA TestA"));
+		assertTrue(selenium.isElementNotPresent("link=MessageB TagB TestB"));
+		assertTrue(selenium.isElementNotPresent("link=MessageC TagC TestC"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -118,11 +118,11 @@ public class SearchTagsTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent("link=Message3 Tag3 Test3"));
-		assertFalse(selenium.isElementPresent("link=Message1 Tag1 Test1"));
-		assertFalse(selenium.isElementPresent("link=Message2 Tag2 Test2"));
-		assertFalse(selenium.isElementPresent("link=MessageA TagA TestA"));
-		assertFalse(selenium.isElementPresent("link=MessageB TagB TestB"));
-		assertFalse(selenium.isElementPresent("link=MessageC TagC TestC"));
+		assertTrue(selenium.isElementNotPresent("link=Message1 Tag1 Test1"));
+		assertTrue(selenium.isElementNotPresent("link=Message2 Tag2 Test2"));
+		assertTrue(selenium.isElementNotPresent("link=MessageA TagA TestA"));
+		assertTrue(selenium.isElementNotPresent("link=MessageB TagB TestB"));
+		assertTrue(selenium.isElementNotPresent("link=MessageC TagC TestC"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -153,8 +153,8 @@ public class SearchTagsTest extends BaseTestCase {
 		assertTrue(selenium.isElementPresent("link=MessageA TagA TestA"));
 		assertTrue(selenium.isElementPresent("link=MessageB TagB TestB"));
 		assertTrue(selenium.isElementPresent("link=MessageC TagC TestC"));
-		assertFalse(selenium.isElementPresent("link=Message1 Tag1 Test1"));
-		assertFalse(selenium.isElementPresent("link=Message2 Tag2 Test2"));
-		assertFalse(selenium.isElementPresent("link=Message3 Tag3 Test3"));
+		assertTrue(selenium.isElementNotPresent("link=Message1 Tag1 Test1"));
+		assertTrue(selenium.isElementNotPresent("link=Message2 Tag2 Test2"));
+		assertTrue(selenium.isElementNotPresent("link=Message3 Tag3 Test3"));
 	}
 }

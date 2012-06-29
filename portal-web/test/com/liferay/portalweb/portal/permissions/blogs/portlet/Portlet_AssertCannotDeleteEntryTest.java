@@ -49,6 +49,6 @@ public class Portlet_AssertCannotDeleteEntryTest extends BaseTestCase {
 			RuntimeVariables.replace("Blogs Entry Title Edited"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent("link=Delete"));
+		assertTrue(selenium.isElementNotPresent("link=Delete"));
 	}
 }

@@ -52,7 +52,7 @@ public class Member_AssertCannotAccessPermissionsTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Web Content Name"),
 			selenium.getText("//tr[3]/td[3]/a"));
-		assertFalse(selenium.isElementPresent("link=Permissions"));
+		assertTrue(selenium.isElementNotPresent("link=Permissions"));
 		selenium.clickAt("//tr[3]/td[3]/a",
 			RuntimeVariables.replace("Web Content Name"));
 		selenium.waitForPageToLoad("30000");

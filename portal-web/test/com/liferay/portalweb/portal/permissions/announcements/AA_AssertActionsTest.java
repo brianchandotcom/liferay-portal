@@ -109,7 +109,7 @@ public class AA_AssertActionsTest extends BaseTestCase {
 			}
 
 			try {
-				if (!selenium.isElementPresent("link=Hide")) {
+				if (selenium.isElementNotPresent("link=Hide")) {
 					break;
 				}
 			}

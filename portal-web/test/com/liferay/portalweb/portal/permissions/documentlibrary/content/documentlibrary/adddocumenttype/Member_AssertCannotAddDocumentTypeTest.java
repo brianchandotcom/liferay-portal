@@ -109,7 +109,7 @@ public class Member_AssertCannotAddDocumentTypeTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//span[@class='lfr-toolbar-button add-button ']/a"));
 		selenium.selectFrame("relative=top");
 	}

@@ -25,6 +25,6 @@ public class Guest_AssertNoPagePrePublishOrganizationSiteTest
 		throws Exception {
 		selenium.open("/web/selenium/home/");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent("link=Blogs Test Page"));
+		assertTrue(selenium.isElementNotPresent("link=Blogs Test Page"));
 	}
 }

@@ -75,6 +75,6 @@ public class Portlet_AssertCannotDeleteImageTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertFalse(selenium.isElementPresent("//img[@alt='Delete']"));
+		assertTrue(selenium.isElementNotPresent("//img[@alt='Delete']"));
 	}
 }

@@ -112,7 +112,7 @@ public class MoveDMDocument1NewFolderFolder1ActionsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//div[@data-title='DM Document1 Title']/a/span[2]"));
 		assertEquals(RuntimeVariables.replace("DM Folder1 Name"),
 			selenium.getText("//div[@data-title='DM Folder1 Name']/a/span[2]"));

@@ -396,7 +396,7 @@ public class AddWeeklyRepeatingEventTest extends BaseTestCase {
 					}
 
 					try {
-						if (!selenium.isElementPresent(
+						if (selenium.isElementNotPresent(
 									"link=Repeating Test Event")) {
 							break;
 						}
@@ -407,7 +407,7 @@ public class AddWeeklyRepeatingEventTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				assertFalse(selenium.isElementPresent(
+				assertTrue(selenium.isElementNotPresent(
 						"link=Repeating Test Event"));
 
 			case 100:

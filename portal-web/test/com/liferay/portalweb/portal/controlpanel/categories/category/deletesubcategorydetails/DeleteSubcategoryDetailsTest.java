@@ -158,8 +158,8 @@ public class DeleteSubcategoryDetailsTest extends BaseTestCase {
 				"Your request processed successfully."),
 			selenium.getText(
 				"//div[@class='lfr-message-response portlet-msg-success']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//div[@class='aui-tree-hitarea']"));
-		assertFalse(selenium.isElementPresent("//li/ul/li/div/div[4]"));
+		assertTrue(selenium.isElementNotPresent("//li/ul/li/div/div[4]"));
 	}
 }

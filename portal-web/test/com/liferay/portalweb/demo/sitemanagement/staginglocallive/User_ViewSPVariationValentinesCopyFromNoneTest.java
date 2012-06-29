@@ -53,7 +53,7 @@ public class User_ViewSPVariationValentinesCopyFromNoneTest extends BaseTestCase
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isElementPresent(
 						"//body[contains(@class,'live-view')]"));
-				assertFalse(selenium.isElementPresent(
+				assertTrue(selenium.isElementNotPresent(
 						"//body[contains(@class,'local-staging')]"));
 				assertEquals(RuntimeVariables.replace("Staging"),
 					selenium.getText(
@@ -64,7 +64,7 @@ public class User_ViewSPVariationValentinesCopyFromNoneTest extends BaseTestCase
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isElementPresent(
 						"//body[contains(@class,'local-staging')]"));
-				assertFalse(selenium.isElementPresent(
+				assertTrue(selenium.isElementNotPresent(
 						"//body[contains(@class,'live-view')]"));
 				assertEquals(RuntimeVariables.replace(
 						"Christmas 2 Site Pages Variation of Site Name"),
@@ -100,10 +100,10 @@ public class User_ViewSPVariationValentinesCopyFromNoneTest extends BaseTestCase
 						"The page Home is not enabled in Valentines, but is available for other pages variations."),
 					selenium.getText(
 						"//div[@id='_170_layoutRevisionDetails']/div"));
-				assertFalse(selenium.isElementPresent("//nav/ul/li[1]/a/span"));
-				assertFalse(selenium.isElementPresent("//nav/ul/li[2]/a/span"));
-				assertFalse(selenium.isElementPresent("//nav/ul/li[3]/a/span"));
-				assertFalse(selenium.isElementPresent("//nav/ul/li[4]/a/span"));
+				assertTrue(selenium.isElementNotPresent("//nav/ul/li[1]/a/span"));
+				assertTrue(selenium.isElementNotPresent("//nav/ul/li[2]/a/span"));
+				assertTrue(selenium.isElementNotPresent("//nav/ul/li[3]/a/span"));
+				assertTrue(selenium.isElementNotPresent("//nav/ul/li[4]/a/span"));
 
 			case 100:
 				label = -1;

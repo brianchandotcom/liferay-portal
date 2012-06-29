@@ -47,7 +47,7 @@ public class User_ViewPublishToLiveNowDLDocumentsLiveTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent(
 				"//body[contains(@class,'live-view')]"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//body[contains(@class,'local-staging')]"));
 		assertEquals(RuntimeVariables.replace("DL Image Title"),
 			selenium.getText(

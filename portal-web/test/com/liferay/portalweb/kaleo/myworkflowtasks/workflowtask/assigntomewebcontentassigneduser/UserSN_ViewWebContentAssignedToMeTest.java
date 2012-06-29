@@ -46,6 +46,6 @@ public class UserSN_ViewWebContentAssignedToMeTest extends BaseTestCase {
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent("link=My Workflow Tasks"));
+		assertTrue(selenium.isElementNotPresent("link=My Workflow Tasks"));
 	}
 }

@@ -49,8 +49,8 @@ public class Member_AssertCannotAddShortcutTest extends BaseTestCase {
 			RuntimeVariables.replace("Documents and Media"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//span[@title='Add']/ul/li/strong/a"));
-		assertFalse(selenium.isElementPresent("link=Add"));
+		assertTrue(selenium.isElementNotPresent("link=Add"));
 	}
 }

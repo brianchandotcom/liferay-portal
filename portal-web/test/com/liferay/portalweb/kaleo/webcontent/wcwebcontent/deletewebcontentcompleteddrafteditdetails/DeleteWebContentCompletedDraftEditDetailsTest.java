@@ -65,7 +65,7 @@ public class DeleteWebContentCompletedDraftEditDetailsTest extends BaseTestCase 
 		Thread.sleep(5000);
 		assertTrue(selenium.isElementPresent(
 				"//input[@value='Submit for Publication']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//input[@value='Submit for Publication' and @disabled='']"));
 		assertTrue(selenium.isElementPresent("//button[2]"));
 		selenium.clickAt("//button[2]",

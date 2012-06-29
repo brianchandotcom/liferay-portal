@@ -46,6 +46,6 @@ public class Member_AssertCannotAccessOptionsTest extends BaseTestCase {
 			RuntimeVariables.replace("Document Library Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent("//span[@title='Options']"));
+		assertTrue(selenium.isElementNotPresent("//span[@title='Options']"));
 	}
 }

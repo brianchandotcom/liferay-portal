@@ -108,13 +108,13 @@ public class AssertNotMergeOrganizationPageTest extends BaseTestCase {
 			RuntimeVariables.replace("View Pages"));
 		selenium.waitForPopUp("", RuntimeVariables.replace("5000"));
 		selenium.selectPopUp("");
-		assertFalse(selenium.isElementPresent("link=Welcome"));
+		assertTrue(selenium.isElementNotPresent("link=Welcome"));
 		assertTrue(selenium.isElementPresent("link=Selenium Test Home Page"));
 		selenium.close();
 		selenium.selectWindow("null");
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent("link=Welcome"));
-		assertFalse(selenium.isElementPresent("link=Selenium Test Home Page"));
+		assertTrue(selenium.isElementNotPresent("link=Selenium Test Home Page"));
 	}
 }

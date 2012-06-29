@@ -94,7 +94,7 @@ public class FilterTasksFilterByTagsTest extends BaseTestCase {
 			}
 
 			try {
-				if (!selenium.isElementPresent("//tr[4]/td[1]/div[1]/a")) {
+				if (selenium.isElementNotPresent("//tr[4]/td[1]/div[1]/a")) {
 					break;
 				}
 			}
@@ -104,7 +104,7 @@ public class FilterTasksFilterByTagsTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertFalse(selenium.isElementPresent("//tr[4]/td[1]/div[1]/a"));
+		assertTrue(selenium.isElementNotPresent("//tr[4]/td[1]/div[1]/a"));
 		assertEquals(RuntimeVariables.replace("Portal Task Description"),
 			selenium.getText("//td[1]/div[1]/a"));
 		assertTrue(selenium.isPartialText("//td[1]/div[2]/span[1]",
@@ -147,6 +147,6 @@ public class FilterTasksFilterByTagsTest extends BaseTestCase {
 			selenium.getText("//td[1]/div[1]/a"));
 		assertNotEquals(RuntimeVariables.replace("Site: Liferay"),
 			selenium.getText("//td[1]/div[2]/span[1]"));
-		assertFalse(selenium.isElementPresent("//tr[4]/td[1]/div[1]/a"));
+		assertTrue(selenium.isElementNotPresent("//tr[4]/td[1]/div[1]/a"));
 	}
 }

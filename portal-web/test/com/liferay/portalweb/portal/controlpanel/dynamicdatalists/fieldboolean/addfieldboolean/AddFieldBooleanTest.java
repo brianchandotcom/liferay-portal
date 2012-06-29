@@ -125,7 +125,8 @@ public class AddFieldBooleanTest extends BaseTestCase {
 			selenium.getText(
 				"//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[1]/div"));
 		assertTrue(selenium.isVisible("xPath=(//label[.='Boolean'])[1]"));
-		assertFalse(selenium.isElementPresent("xPath=(//label[.='Boolean'])[2]"));
+		assertTrue(selenium.isElementNotPresent(
+				"xPath=(//label[.='Boolean'])[2]"));
 		selenium.dragAndDropToObject("//div[@class='aui-tabview-content aui-widget-bd']/div/ul/li[1]/div",
 			"//div[@class='aui-tabview-content aui-widget-bd']");
 		assertTrue(selenium.isVisible("xPath=(//label[.='Boolean'])[2]"));

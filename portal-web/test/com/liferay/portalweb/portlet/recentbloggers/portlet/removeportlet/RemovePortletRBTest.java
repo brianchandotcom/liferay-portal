@@ -55,7 +55,7 @@ public class RemovePortletRBTest extends BaseTestCase {
 			}
 
 			try {
-				if (!selenium.isElementPresent("//section")) {
+				if (selenium.isElementNotPresent("//section")) {
 					break;
 				}
 			}
@@ -65,6 +65,6 @@ public class RemovePortletRBTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertFalse(selenium.isElementPresent("//section"));
+		assertTrue(selenium.isElementNotPresent("//section"));
 	}
 }

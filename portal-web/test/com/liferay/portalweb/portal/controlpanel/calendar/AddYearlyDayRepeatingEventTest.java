@@ -316,7 +316,7 @@ public class AddYearlyDayRepeatingEventTest extends BaseTestCase {
 			}
 
 			try {
-				if (!selenium.isElementPresent("link=Repeating Test Event")) {
+				if (selenium.isElementNotPresent("link=Repeating Test Event")) {
 					break;
 				}
 			}
@@ -326,6 +326,6 @@ public class AddYearlyDayRepeatingEventTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertFalse(selenium.isElementPresent("link=Repeating Test Event"));
+		assertTrue(selenium.isElementNotPresent("link=Repeating Test Event"));
 	}
 }

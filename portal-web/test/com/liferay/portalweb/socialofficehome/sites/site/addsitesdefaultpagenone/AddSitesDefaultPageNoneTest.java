@@ -148,13 +148,13 @@ public class AddSitesDefaultPageNoneTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Customization"),
 			selenium.getText("xPath=(//h1[@class='header-title']/span)[3]"));
-		assertFalse(selenium.isElementPresent("//div[4]/span[1]/input"));
-		assertFalse(selenium.isElementPresent("//span[2]/input"));
-		assertFalse(selenium.isElementPresent("//span[3]/input"));
-		assertFalse(selenium.isElementPresent("//span[4]/input"));
-		assertFalse(selenium.isElementPresent("//span[5]/input"));
-		assertFalse(selenium.isElementPresent("//span[6]/input"));
-		assertFalse(selenium.isElementPresent("//span[7]/input"));
+		assertTrue(selenium.isElementNotPresent("//div[4]/span[1]/input"));
+		assertTrue(selenium.isElementNotPresent("//span[2]/input"));
+		assertTrue(selenium.isElementNotPresent("//span[3]/input"));
+		assertTrue(selenium.isElementNotPresent("//span[4]/input"));
+		assertTrue(selenium.isElementNotPresent("//span[5]/input"));
+		assertTrue(selenium.isElementNotPresent("//span[6]/input"));
+		assertTrue(selenium.isElementNotPresent("//span[7]/input"));
 		assertEquals("Save", selenium.getValue("//input[@value='Save']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));

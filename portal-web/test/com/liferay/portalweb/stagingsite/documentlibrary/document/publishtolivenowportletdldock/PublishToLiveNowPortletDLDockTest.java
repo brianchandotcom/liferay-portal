@@ -56,9 +56,9 @@ public class PublishToLiveNowPortletDLDockTest extends BaseTestCase {
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isElementPresent(
 						"//body[contains(@class,'live-view')]"));
-				assertFalse(selenium.isElementPresent(
+				assertTrue(selenium.isElementNotPresent(
 						"//body[contains(@class,'local-staging')]"));
-				assertFalse(selenium.isElementPresent("//section"));
+				assertTrue(selenium.isElementNotPresent("//section"));
 				assertFalse(selenium.isTextPresent("DL Document Title"));
 				assertTrue(selenium.isPartialText("//li[2]/span/a", "Staging"));
 				selenium.clickAt("//li[2]/span/a",
@@ -67,7 +67,7 @@ public class PublishToLiveNowPortletDLDockTest extends BaseTestCase {
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isElementPresent(
 						"//body[contains(@class,'local-staging')]"));
-				assertFalse(selenium.isElementPresent(
+				assertTrue(selenium.isElementNotPresent(
 						"//body[contains(@class,'live-view')]"));
 				selenium.clickAt("link=Document Library Test Page",
 					RuntimeVariables.replace("Document Library Test Page"));

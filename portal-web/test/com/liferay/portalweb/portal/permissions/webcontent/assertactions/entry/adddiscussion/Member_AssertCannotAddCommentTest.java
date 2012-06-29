@@ -46,6 +46,6 @@ public class Member_AssertCannotAddCommentTest extends BaseTestCase {
 			RuntimeVariables.replace("Web Content Display Permissions Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent("link=Be the first."));
+		assertTrue(selenium.isElementNotPresent("link=Be the first."));
 	}
 }

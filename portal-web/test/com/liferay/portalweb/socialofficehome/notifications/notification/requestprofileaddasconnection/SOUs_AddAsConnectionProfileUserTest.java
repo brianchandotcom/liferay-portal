@@ -73,7 +73,7 @@ public class SOUs_AddAsConnectionProfileUserTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Connection Requested"),
 			selenium.getText("//span[@class='disabled']/span"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//span[@class='action add-connection']/a"));
 	}
 }

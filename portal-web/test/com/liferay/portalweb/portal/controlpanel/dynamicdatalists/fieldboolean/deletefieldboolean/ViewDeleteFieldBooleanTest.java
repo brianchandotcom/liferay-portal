@@ -124,7 +124,7 @@ public class ViewDeleteFieldBooleanTest extends BaseTestCase {
 		assertNotEquals(RuntimeVariables.replace("Boolean"),
 			selenium.getText(
 				"//div[@class='aui-diagram-builder-drop-container']/div[1]/div/label"));
-		assertFalse(selenium.isElementPresent("//label[.='Boolean']"));
+		assertTrue(selenium.isElementNotPresent("//label[.='Boolean']"));
 		selenium.selectFrame("relative=top");
 	}
 }

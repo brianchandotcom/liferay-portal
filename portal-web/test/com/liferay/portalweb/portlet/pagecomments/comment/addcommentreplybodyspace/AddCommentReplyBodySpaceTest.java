@@ -119,7 +119,7 @@ public class AddCommentReplyBodySpaceTest extends BaseTestCase {
 			RuntimeVariables.replace("Page Comments Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"xPath=(//div[@class='lfr-discussion-message'])[2]"));
 	}
 }

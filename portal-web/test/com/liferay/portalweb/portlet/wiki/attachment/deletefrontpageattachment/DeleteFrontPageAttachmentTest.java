@@ -106,7 +106,7 @@ public class DeleteFrontPageAttachmentTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"This page does not have any file attachments."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
-		assertFalse(selenium.isElementPresent("//td[1]/a"));
+		assertTrue(selenium.isElementNotPresent("//td[1]/a"));
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 

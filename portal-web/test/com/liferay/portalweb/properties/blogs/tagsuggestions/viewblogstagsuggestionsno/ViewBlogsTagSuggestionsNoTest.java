@@ -90,7 +90,7 @@ public class ViewBlogsTagSuggestionsNoTest extends BaseTestCase {
 					}
 
 					try {
-						if (!selenium.isElementPresent(
+						if (selenium.isElementNotPresent(
 									"//div[@id='blogsEntryCategorizationPanel' and contains(@class,'lfr-collapsed')]")) {
 							break;
 						}
@@ -106,7 +106,8 @@ public class ViewBlogsTagSuggestionsNoTest extends BaseTestCase {
 					selenium.getText("//label[contains(@for,'TagNames')]"));
 				assertTrue(selenium.isVisible("//input[@title='Add Tags']"));
 				assertFalse(selenium.isTextPresent("Suggestions"));
-				assertFalse(selenium.isElementPresent("//button[@id='suggest']"));
+				assertTrue(selenium.isElementNotPresent(
+						"//button[@id='suggest']"));
 
 			case 100:
 				label = -1;

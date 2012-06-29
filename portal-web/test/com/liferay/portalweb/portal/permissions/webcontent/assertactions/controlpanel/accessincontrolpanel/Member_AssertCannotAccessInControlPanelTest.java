@@ -46,6 +46,6 @@ public class Member_AssertCannotAccessInControlPanelTest extends BaseTestCase {
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent("link=Web Content"));
+		assertTrue(selenium.isElementNotPresent("link=Web Content"));
 	}
 }

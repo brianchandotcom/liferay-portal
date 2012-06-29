@@ -52,7 +52,7 @@ public class Member_AssertCannotViewShortcutTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("TestDocument.txt"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]"));
 	}
 }

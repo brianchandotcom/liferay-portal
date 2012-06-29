@@ -48,9 +48,9 @@ public class User_ViewEventThreeMinutesSPChristmasBlogsSPTLTest
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent(
 				"//body[contains(@class,'live-view')]"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//body[contains(@class,'local-staging')]"));
-		assertFalse(selenium.isElementPresent("link=Blogs"));
+		assertTrue(selenium.isElementNotPresent("link=Blogs"));
 		Thread.sleep(180000);
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
@@ -76,7 +76,7 @@ public class User_ViewEventThreeMinutesSPChristmasBlogsSPTLTest
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent(
 				"//body[contains(@class,'live-view')]"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//body[contains(@class,'local-staging')]"));
 		assertTrue(selenium.isVisible("link=Blogs Test Page"));
 		selenium.clickAt("link=Blogs Test Page",

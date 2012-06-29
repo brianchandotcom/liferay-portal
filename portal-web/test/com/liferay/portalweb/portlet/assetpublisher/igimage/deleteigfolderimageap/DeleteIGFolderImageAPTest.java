@@ -150,7 +150,7 @@ public class DeleteIGFolderImageAPTest extends BaseTestCase {
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//div[@class='asset-resource-info']/div"));
 		assertFalse(selenium.isTextPresent("IG Folder Image Name"));
 	}

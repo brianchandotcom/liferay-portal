@@ -71,6 +71,6 @@ public class Portlet_AssertCannotDeleteCommentTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Comments"),
 			selenium.getText("//div[@class='lfr-panel-title']/span"));
-		assertFalse(selenium.isElementPresent("link=Delete"));
+		assertTrue(selenium.isElementNotPresent("link=Delete"));
 	}
 }

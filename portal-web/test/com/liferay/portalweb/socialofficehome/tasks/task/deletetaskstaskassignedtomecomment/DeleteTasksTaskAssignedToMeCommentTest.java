@@ -96,7 +96,7 @@ public class DeleteTasksTaskAssignedToMeCommentTest extends BaseTestCase {
 			}
 
 			try {
-				if (!selenium.isElementPresent(
+				if (selenium.isElementNotPresent(
 							"//div[@class='comment-body']/span")) {
 					break;
 				}
@@ -107,7 +107,7 @@ public class DeleteTasksTaskAssignedToMeCommentTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//div[@class='comment-body']/span"));
 	}
 }

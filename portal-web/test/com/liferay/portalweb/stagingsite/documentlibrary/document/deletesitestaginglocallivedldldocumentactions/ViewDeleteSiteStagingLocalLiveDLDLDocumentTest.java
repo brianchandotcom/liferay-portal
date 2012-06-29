@@ -51,7 +51,7 @@ public class ViewDeleteSiteStagingLocalLiveDLDLDocumentTest extends BaseTestCase
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent(
 				"//body[contains(@class,'live-view')]"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//body[contains(@class,'local-staging')]"));
 		assertEquals(RuntimeVariables.replace("DL Document Title"),
 			selenium.getText("//a[@class='document-link']"));
@@ -84,7 +84,7 @@ public class ViewDeleteSiteStagingLocalLiveDLDLDocumentTest extends BaseTestCase
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent(
 				"//body[contains(@class,'local-staging')]"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//body[contains(@class,'live-view')]"));
 		assertEquals(RuntimeVariables.replace(
 				"There are no documents or media files in this folder."),

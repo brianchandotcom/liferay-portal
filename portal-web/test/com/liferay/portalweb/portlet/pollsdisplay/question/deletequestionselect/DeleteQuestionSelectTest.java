@@ -136,9 +136,9 @@ public class DeleteQuestionSelectTest extends BaseTestCase {
 			RuntimeVariables.replace("Polls Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent("//div/span[1]/span/span/input"));
-		assertFalse(selenium.isElementPresent("//div/span[2]/span/span/input"));
-		assertFalse(selenium.isElementPresent("//div/span[3]/span/span/input"));
+		assertTrue(selenium.isElementNotPresent("//div/span[1]/span/span/input"));
+		assertTrue(selenium.isElementNotPresent("//div/span[2]/span/span/input"));
+		assertTrue(selenium.isElementNotPresent("//div/span[3]/span/span/input"));
 		assertFalse(selenium.isTextPresent("PD Question ChoiceA"));
 		assertFalse(selenium.isTextPresent("PD Question ChoiceB"));
 		assertFalse(selenium.isTextPresent("PD Question ChoiceC"));

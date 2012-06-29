@@ -95,7 +95,7 @@ public class AssertDeleteChoiceTest extends BaseTestCase {
 			selenium.getValue("//input[@id='_25_choiceDescriptionc_en_US']"));
 		assertEquals("Delete Choice D",
 			selenium.getValue("//input[@id='_25_choiceDescriptiond_en_US']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//input[@id='_25_choiceDescriptione_en_US']"));
 		selenium.clickAt("//input[@value='Delete']",
 			RuntimeVariables.replace("Delete"));
@@ -103,19 +103,19 @@ public class AssertDeleteChoiceTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		assertEquals("Delete Choice C",
 			selenium.getValue("//input[@id='_25_choiceDescriptionc_en_US']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//input[@id='_25_choiceDescriptiond_en_US']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//input[@id='_25_choiceDescriptione_en_US']"));
 		selenium.clickAt("//input[@value='Delete']",
 			RuntimeVariables.replace("Delete"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//input[@id='_25_choiceDescriptionc_en_US']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//input[@id='_25_choiceDescriptiond_en_US']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//input[@id='_25_choiceDescriptione_en_US']"));
 	}
 }

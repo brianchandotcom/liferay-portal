@@ -50,7 +50,7 @@ public class Member_AssertCannotUpdateDocumentTest extends BaseTestCase {
 			RuntimeVariables.replace("Documents and Media"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent("link=Edit"));
+		assertTrue(selenium.isElementNotPresent("link=Edit"));
 		assertFalse(selenium.isVisible("link=Move"));
 		assertFalse(selenium.isVisible("link=Checkout"));
 		assertEquals(RuntimeVariables.replace("TestDocument.txt"),
@@ -62,11 +62,11 @@ public class Member_AssertCannotUpdateDocumentTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Download"),
 			selenium.getText("//div[@id='_20_fileEntryToolbar']/span/button[1]"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//div[@id='_20_fileEntryToolbar']/span/button[2]"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//div[@id='_20_fileEntryToolbar']/span/button[3]"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//div[@id='_20_fileEntryToolbar']/span/button[4]"));
 		assertFalse(selenium.isTextPresent("Edit"));
 		assertFalse(selenium.isTextPresent("Move"));

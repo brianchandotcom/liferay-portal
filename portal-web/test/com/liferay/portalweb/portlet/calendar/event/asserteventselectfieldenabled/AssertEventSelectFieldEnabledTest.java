@@ -120,23 +120,23 @@ public class AssertEventSelectFieldEnabledTest extends BaseTestCase {
 		assertTrue(selenium.isElementPresent(
 				"//select[@name='_8_endDateMinute']"));
 		assertTrue(selenium.isElementPresent("//select[@name='_8_endDateAmPm']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//select[@name='_8_startDateMonth' and @disabled='']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//select[@name='_8_startDateDay' and @disabled='']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//select[@name='_8_startDateYear' and @disabled='']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//select[@name='_8_startDateHour' and @disabled='']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//select[@name='_8_startDateMinute' and @disabled='']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//select[@name='_8_startDateAmPm' and @disabled='']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//select[@name='_8_durationHour' and @disabled='']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//select[@name='_8_durationMinute' and @disabled='']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//select[@name='_8_type' and @disabled='']"));
 		selenium.clickAt("//input[@name='_8_recurrenceType' and @value='5']",
 			RuntimeVariables.replace(""));
@@ -157,11 +157,11 @@ public class AssertEventSelectFieldEnabledTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//select[@name='_8_monthlyPos' and @disabled='']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//select[@name='_8_monthlyDay1' and @disabled='']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//select[@name='_8_monthlyDay1' and @disabled='']"));
 		selenium.clickAt("//input[@name='_8_recurrenceType' and @value='6']",
 			RuntimeVariables.replace(""));
@@ -182,19 +182,19 @@ public class AssertEventSelectFieldEnabledTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//select[@name='_8_yearlyMonth0' and @disabled='']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//select[@name='_8_yearlyPos' and @disabled='']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//select[@name='_8_yearlyDay1' and @disabled='']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//select[@name='_8_yearlyMonth1' and @disabled='']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//select[@name='_8_endDateMonth' and @disabled='']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//select[@name='_8_endDateDay' and @disabled='']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//select[@name='_8_endDateYear' and @disabled='']"));
 	}
 }

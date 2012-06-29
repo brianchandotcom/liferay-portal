@@ -31,7 +31,7 @@ public class AddWebContentTest extends BaseTestCase {
 		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isVisible(
 				"//body[@class='blue live-view controls-visible signed-in public-page']"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//body[@class='blue staging controls-visible signed-in public-page']"));
 		assertEquals(RuntimeVariables.replace("Staging"),
 			selenium.getText("//li[@id='_145_staging']/a/span"));
@@ -57,7 +57,7 @@ public class AddWebContentTest extends BaseTestCase {
 			RuntimeVariables.replace("View Staged Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//body[@class='blue live-view controls-visible signed-in public-page']"));
 		assertTrue(selenium.isVisible(
 				"//body[@class='blue staging controls-visible signed-in public-page']"));

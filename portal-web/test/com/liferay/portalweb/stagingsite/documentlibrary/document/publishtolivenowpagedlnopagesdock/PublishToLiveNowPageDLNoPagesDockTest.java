@@ -54,13 +54,13 @@ public class PublishToLiveNowPageDLNoPagesDockTest extends BaseTestCase {
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isElementPresent(
 						"//body[contains(@class,'local-staging')]"));
-				assertFalse(selenium.isElementPresent(
+				assertTrue(selenium.isElementNotPresent(
 						"//body[contains(@class,'live-view')]"));
 				assertNotEquals(RuntimeVariables.replace("Live"),
 					selenium.getText("//li[1]/span/a"));
 				assertTrue(selenium.isElementPresent(
 						"//body[contains(@class,'local-staging')]"));
-				assertFalse(selenium.isElementPresent(
+				assertTrue(selenium.isElementNotPresent(
 						"//body[contains(@class,'live-view')]"));
 				selenium.clickAt("link=Document Library Test Page",
 					RuntimeVariables.replace("Document Library Test Page"));
@@ -287,7 +287,7 @@ public class PublishToLiveNowPageDLNoPagesDockTest extends BaseTestCase {
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isElementPresent(
 						"//body[contains(@class,'local-staging')]"));
-				assertFalse(selenium.isElementPresent(
+				assertTrue(selenium.isElementNotPresent(
 						"//body[contains(@class,'live-view')]"));
 				assertEquals(RuntimeVariables.replace("Live"),
 					selenium.getText("//li[1]/span/a"));

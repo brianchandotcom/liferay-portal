@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.servlet.PluginContextListener;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.MethodHandler;
-import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -50,6 +48,9 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.layoutconfiguration.util.velocity.CustomizationSettingsProcessor;
 import com.liferay.portlet.layoutconfiguration.util.velocity.TemplateProcessor;
 import com.liferay.portlet.layoutconfiguration.util.xml.RuntimeLogic;
+import com.liferay.taglib.util.VelocityTaglib;
+
+import java.lang.reflect.Constructor;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -304,6 +305,25 @@ public class RuntimePortletImpl implements RuntimePortlet {
 		}
 	}
 
+	protected Object buildVelocityTaglib(
+			HttpServletRequest request, HttpServletResponse response,
+			PageContext pageContext)
+		throws Exception {
+
+		// We have to load this class from the plugin class loader (context
+		// class loader) or we will throw a ClassCastException
+
+		Class<?> clazz = Class.forName(VelocityTaglib.class.getName());
+
+		Constructor<?> constructor = clazz.getConstructor(
+			ServletContext.class, HttpServletRequest.class,
+			HttpServletResponse.class, PageContext.class);
+
+		return constructor.newInstance(
+			pageContext.getServletContext(), request, response, pageContext);
+	}
+
+
 	protected String doDispatch(
 			ServletContext servletContext, HttpServletRequest request,
 			HttpServletResponse response, PageContext pageContext,
@@ -400,12 +420,8 @@ public class RuntimePortletImpl implements RuntimePortlet {
 
 		// liferay:include tag library
 
-		MethodHandler methodHandler = new MethodHandler(
-			_initMethodKey, servletContext, request,
-			new PipingServletResponse(response, unsyncStringWriter),
-			pageContext);
-
-		Object velocityTaglib = methodHandler.invoke(true);
+		Object velocityTaglib = buildVelocityTaglib(
+			request, response, pageContext);
 
 		velocityContext.put("taglibLiferay", velocityTaglib);
 		velocityContext.put("theme", velocityTaglib);
@@ -451,12 +467,8 @@ public class RuntimePortletImpl implements RuntimePortlet {
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
-		MethodHandler methodHandler = new MethodHandler(
-			_initMethodKey, servletContext, request,
-			new PipingServletResponse(response, unsyncStringWriter),
-			pageContext);
-
-		Object velocityTaglib = methodHandler.invoke(true);
+		Object velocityTaglib = buildVelocityTaglib(
+			request, response, pageContext);
 
 		velocityContext.put("taglibLiferay", velocityTaglib);
 		velocityContext.put("theme", velocityTaglib);
@@ -569,9 +581,5 @@ public class RuntimePortletImpl implements RuntimePortlet {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(RuntimePortletUtil.class);
-
-	private static MethodKey _initMethodKey = new MethodKey(
-		"com.liferay.taglib.util.VelocityTaglib", "init", ServletContext.class,
-		HttpServletRequest.class, HttpServletResponse.class, PageContext.class);
 
 }

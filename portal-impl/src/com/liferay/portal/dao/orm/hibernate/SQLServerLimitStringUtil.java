@@ -197,7 +197,7 @@ public class SQLServerLimitStringUtil {
 	}
 
 	private static final Pattern _columnAliasPattern = Pattern.compile(
-		"[\\w\\.]+ AS (\\w+)", Pattern.CASE_INSENSITIVE);
+		"[\\w\\.]+(?:\\(.+?\\))? AS (\\w+)", Pattern.CASE_INSENSITIVE);
 	private static final Pattern _distinctPattern = Pattern.compile(
 		" DISTINCT ", Pattern.CASE_INSENSITIVE);
 	private static final Pattern _qualifiedColumnPattern = Pattern.compile(

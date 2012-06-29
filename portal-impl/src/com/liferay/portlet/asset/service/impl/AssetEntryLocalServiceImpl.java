@@ -827,7 +827,18 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			String className, long classPK, Date publishDate, boolean visible)
 		throws PortalException, SystemException {
 
-		return updateEntry(className, classPK, publishDate, null, visible);
+		long classNameId = PortalUtil.getClassNameId(className);
+
+		AssetEntry entry = assetEntryPersistence.findByC_C(
+			classNameId, classPK);
+
+		entry.setPublishDate(publishDate);
+
+		updateVisible(entry, visible);
+
+		assetEntryPersistence.update(entry, false);
+
+		return entry;
 	}
 
 	public AssetEntry updateEntry(
@@ -841,12 +852,9 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			classNameId, classPK);
 
 		entry.setExpirationDate(expirationDate);
-
 		entry.setPublishDate(publishDate);
 
-		if (visible != entry.isVisible()) {
-			updateVisible(entry, visible);
-		}
+		updateVisible(entry, visible);
 
 		assetEntryPersistence.update(entry, false);
 
@@ -1051,16 +1059,20 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	protected void updateVisible(AssetEntry entry, boolean visible)
 		throws PortalException, SystemException {
 
+		if (visible == entry.isVisible()) {
+			return;
+		}
+
 		List<AssetTag> tags = assetEntryPersistence.getAssetTags(
 			entry.getEntryId());
 
-		if (visible && !entry.isVisible()) {
+		if (visible) {
 			for (AssetTag tag : tags) {
 				assetTagLocalService.incrementAssetCount(
 					tag.getTagId(), entry.getClassNameId());
 			}
 		}
-		else if (!visible && entry.isVisible()) {
+		else {
 			for (AssetTag tag : tags) {
 				assetTagLocalService.decrementAssetCount(
 					tag.getTagId(), entry.getClassNameId());

@@ -143,10 +143,24 @@ boolean showMenu = displayAssetTypeFacet || displayAssetTagsFacet || displayAsse
 			</liferay-ui:search-container-row>
 
 			<%
+			String[] assetTagNames = searchContext.getAssetTagNames();
+
+			if (assetTagNames.length > 0) {
+				portletURL.setParameter("assetTagNames", assetTagNames[0]);
+			}
+
 			String[] entryClassNames = searchContext.getEntryClassNames();
 
 			if (entryClassNames.length == 1) {
 				portletURL.setParameter("entryClassName", entryClassNames[0]);
+			}
+
+			if (searchContext.getAttribute("modified") != null) {
+				portletURL.setParameter("modified", GetterUtil.getString(searchContext.getAttribute("modified")));
+			}
+
+			if (searchContext.getAttribute("modifiedselection") != null) {
+				portletURL.setParameter("modifiedselection", GetterUtil.getString(searchContext.getAttribute("modifiedselection")));
 			}
 			%>
 

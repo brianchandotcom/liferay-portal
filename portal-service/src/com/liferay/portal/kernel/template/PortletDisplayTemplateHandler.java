@@ -21,12 +21,37 @@ import java.util.Locale;
  */
 public interface PortletDisplayTemplateHandler {
 
+	/**
+	 * Returns the class name of the portlet display template
+	 *
+	 * @return the the class name of the portlet display template
+	 */
 	public String getClassName();
 
+	/**
+	 * Returns the location of the default template of the portlet display
+	 *
+	 * @return the location of the default template of the portlet display. This
+	 *         template will show the default information for the first portlet
+	 *         display template the user creates.
+	 */
 	public String getDefaultTemplateLocation();
 
+	/**
+	 * Returns the name of the portlet display template
+	 *
+	 * @param  locale the locale of the portlet display template name
+	 * @return the name of the portlet display template
+	 */
 	public String getName(Locale locale);
 
+	/**
+	 * Returns the name of the resource the portlet display template is
+	 * associated with. Permissions on the resource will be checked when adding
+	 * new portlet display templates.
+	 *
+	 * @return the name of the resource
+	 */
 	public String getResourceName();
 
 }

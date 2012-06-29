@@ -395,6 +395,33 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 		}
 	}
 
+	protected String getEncryptedPasswordForLDAP(User user)
+		throws SystemException {
+
+		String password = user.getPasswordUnencrypted();
+
+		String algorithm = PrefsPropsUtil.getString(
+			user.getCompanyId(),
+			PropsKeys.LDAP_AUTH_PASSWORD_ENCRYPTION_ALGORITHM);
+
+		if (Validator.isNotNull(algorithm)) {
+			try {
+				StringBundler sb = new StringBundler(4);
+
+				sb.append(StringPool.OPEN_CURLY_BRACE);
+				sb.append(algorithm);
+				sb.append(StringPool.CLOSE_CURLY_BRACE);
+				sb.append(PwdEncryptor.encrypt(algorithm, password, null));
+
+				password = sb.toString();
+			} catch (PwdEncryptorException e) {
+				throw new SystemException(e);
+			}
+		}
+
+		return password;
+	}
+
 	protected Modifications getModifications(
 		Object object, Properties objectMappings,
 		Map<String, String> reservedFieldNames) {
@@ -496,28 +523,6 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 				}
 			}
 		}
-	}
-
-	private String getEncryptedPasswordForLDAP(User user)
-		throws SystemException {
-
-		String password = user.getPasswordUnencrypted();
-
-		String algorithm = PrefsPropsUtil.getString(
-			user.getCompanyId(),
-			PropsKeys.LDAP_AUTH_PASSWORD_ENCRYPTION_ALGORITHM);
-
-		if (Validator.isNotNull(algorithm)) {
-			try {
-				password =
-					"{" + algorithm + "}" +
-						PwdEncryptor.encrypt(algorithm, password, null);
-			} catch (PwdEncryptorException e) {
-				throw new SystemException(e);
-			}
-		}
-
-		return password;
 	}
 
 	private static final String _DEFAULT_DN = "cn";

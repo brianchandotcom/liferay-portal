@@ -415,6 +415,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 		SearchContext searchContext = new SearchContext();
 
+		searchContext.setAttribute("paginationType", "regular");
 		searchContext.setCompanyId(_fileEntry.getCompanyId());
 		searchContext.setFolderIds(new long[] {_fileEntry.getFolderId()});
 		searchContext.setGroupIds(new long[] {_fileEntry.getRepositoryId()});

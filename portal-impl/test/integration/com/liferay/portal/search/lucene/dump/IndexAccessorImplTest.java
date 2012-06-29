@@ -14,6 +14,8 @@
 
 package com.liferay.portal.search.lucene.dump;
 
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.search.lucene.IndexAccessorImpl;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.ExecutionTestListeners;
@@ -32,6 +34,7 @@ import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TopDocs;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -47,6 +50,16 @@ import org.powermock.api.mockito.PowerMockito;
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class IndexAccessorImplTest extends PowerMockito {
 
+	@AfterClass
+	public static void tearDownAfterClass() throws Exception {
+		System.gc();
+
+		String indexPath = PropsValues.LUCENE_DIR.concat(
+			String.valueOf(_TEST_COMPANY_ID)).concat(StringPool.SLASH);
+
+		FileUtil.deltree(indexPath);
+	}
+
 	@Before
 	public void setUp() throws Exception {
 		_documentsCount = PropsValues.LUCENE_COMMIT_BATCH_SIZE;
@@ -60,8 +73,6 @@ public class IndexAccessorImplTest extends PowerMockito {
 
 	@After
 	public void tearDown() throws Exception {
-		System.gc();
-
 		_indexAccessorImpl.delete();
 		_indexAccessorImpl.close();
 	}

@@ -656,8 +656,6 @@ public class PropsValues {
 
 	public static final boolean INDEX_DUMP_COMPRESSION_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.INDEX_DUMP_COMPRESSION_ENABLED));
 
-	public static final boolean INDEX_FORCE_GC_BEFORE_DELETE = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.INDEX_FORCE_GC_BEFORE_DELETE));
-
 	public static boolean INDEX_ON_STARTUP = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.INDEX_ON_STARTUP));
 
 	public static final int INDEX_ON_STARTUP_DELAY = GetterUtil.getInteger(PropsUtil.get(PropsKeys.INDEX_ON_STARTUP_DELAY));

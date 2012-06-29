@@ -20,6 +20,12 @@ TemplateSearchTerms searchTerms = (TemplateSearchTerms)searchContainer.getSearch
 long[] searchClassNameIds = null;
 long searchClassPK = 0;
 
+long[] groupIds = new long[] {scopeGroupId};
+
+if (showGlobalScope) {
+	groupIds = DLUtil.getGroupIds(themeDisplay);
+}
+
 if (portletName.equals(PortletKeys.APPLICATION_DISPLAY_STYLES)) {
 	searchClassNameIds = PortletDisplayTemplateHandlerRegistryUtil.getClassNameIds();
 	searchClassPK = -1;
@@ -30,12 +36,12 @@ else {
 }
 
 if (searchTerms.isAdvancedSearch()) {
-	results = DDMTemplateServiceUtil.search(company.getCompanyId(), scopeGroupId, searchClassNameIds, searchClassPK, searchTerms.getName(), searchTerms.getDescription(), templateTypeValue, scopeTemplateMode, null, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-	total = DDMTemplateServiceUtil.searchCount(company.getCompanyId(), scopeGroupId, searchClassNameIds, searchClassPK, searchTerms.getName(), searchTerms.getDescription(), templateTypeValue, null, null, searchTerms.isAndOperator());
+	results = DDMTemplateServiceUtil.search(company.getCompanyId(), groupIds, searchClassNameIds, searchClassPK, searchTerms.getName(), searchTerms.getDescription(), templateTypeValue, scopeTemplateMode, null, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+	total = DDMTemplateServiceUtil.searchCount(company.getCompanyId(), groupIds, searchClassNameIds, searchClassPK, searchTerms.getName(), searchTerms.getDescription(), templateTypeValue, null, null, searchTerms.isAndOperator());
 }
 else {
-	results = DDMTemplateServiceUtil.search(company.getCompanyId(), scopeGroupId, searchClassNameIds, searchClassPK, searchTerms.getKeywords(), templateTypeValue, scopeTemplateMode, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-	total = DDMTemplateServiceUtil.searchCount(company.getCompanyId(), scopeGroupId, searchClassNameIds, searchClassPK, searchTerms.getKeywords(), templateTypeValue, scopeTemplateMode);
+	results = DDMTemplateServiceUtil.search(company.getCompanyId(), groupIds, searchClassNameIds, searchClassPK, searchTerms.getKeywords(), templateTypeValue, scopeTemplateMode, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+	total = DDMTemplateServiceUtil.searchCount(company.getCompanyId(), groupIds, searchClassNameIds, searchClassPK, searchTerms.getKeywords(), templateTypeValue, scopeTemplateMode);
 }
 
 pageContext.setAttribute("results", results);

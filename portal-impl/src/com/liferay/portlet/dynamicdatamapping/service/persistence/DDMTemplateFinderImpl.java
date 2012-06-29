@@ -74,7 +74,7 @@ public class DDMTemplateFinderImpl
 	}
 
 	public int countByKeywords(
-			long companyId, long groupId, long[] classNameIds, long classPK,
+			long companyId, long[] groupIds, long[] classNameIds, long classPK,
 			String keywords, String type, String mode)
 		throws SystemException {
 
@@ -95,7 +95,7 @@ public class DDMTemplateFinderImpl
 		}
 
 		return countByC_G_C_C_N_D_T_M_L(
-			companyId, groupId, classNameIds, classPK, names, descriptions,
+			companyId, groupIds, classNameIds, classPK, names, descriptions,
 			types, modes, languages, andOperator);
 	}
 
@@ -123,14 +123,15 @@ public class DDMTemplateFinderImpl
 		throws SystemException {
 
 		long[] classNameIds = new long[] {classNameId};
+		long[] groupIds = new long[] {groupId};
 
 		return doCountByC_G_C_C_N_D_T_M_L(
-			companyId, groupId, classNameIds, classPK, names, descriptions,
+			companyId, groupIds, classNameIds, classPK, names, descriptions,
 			types, modes, languages, andOperator, false);
 	}
 
 	public int countByC_G_C_C_N_D_T_M_L(
-			long companyId, long groupId, long[] classNameIds, long classPK,
+			long companyId, long[] groupIds, long[] classNameIds, long classPK,
 			String name, String description, String type, String mode,
 			String language, boolean andOperator)
 		throws SystemException {
@@ -142,18 +143,18 @@ public class DDMTemplateFinderImpl
 		String[] languages = CustomSQLUtil.keywords(language, false);
 
 		return countByC_G_C_C_N_D_T_M_L(
-			companyId, groupId, classNameIds, classPK, names, descriptions,
+			companyId, groupIds, classNameIds, classPK, names, descriptions,
 			types, modes, languages, andOperator);
 	}
 
 	public int countByC_G_C_C_N_D_T_M_L(
-			long companyId, long groupId, long[] classNameIds, long classPK,
+			long companyId, long[] groupIds, long[] classNameIds, long classPK,
 			String[] names, String[] descriptions, String[] types,
 			String[] modes, String[] languages, boolean andOperator)
 		throws SystemException {
 
 		return doCountByC_G_C_C_N_D_T_M_L(
-			companyId, groupId, classNameIds, classPK, names, descriptions,
+			companyId, groupIds, classNameIds, classPK, names, descriptions,
 			types, modes, languages, andOperator, false) ;
 	}
 
@@ -184,7 +185,7 @@ public class DDMTemplateFinderImpl
 	}
 
 	public int filterCountByKeywords(
-			long companyId, long groupId, long[] classNameIds, long classPK,
+			long companyId, long[] groupIds, long[] classNameIds, long classPK,
 			String keywords, String type, String mode)
 		throws SystemException {
 
@@ -205,7 +206,7 @@ public class DDMTemplateFinderImpl
 		}
 
 		return filterCountByC_G_C_C_N_D_T_M_L(
-			companyId, groupId, classNameIds, classPK, names, descriptions,
+			companyId, groupIds, classNameIds, classPK, names, descriptions,
 			types, modes, languages, andOperator);
 	}
 
@@ -233,14 +234,15 @@ public class DDMTemplateFinderImpl
 		throws SystemException {
 
 		long[] classNameIds = new long[] {classNameId};
+		long[] groupIds = new long[] {groupId};
 
 		return filterCountByC_G_C_C_N_D_T_M_L(
-			companyId, groupId, classNameIds, classPK, names, descriptions,
+			companyId, groupIds, classNameIds, classPK, names, descriptions,
 			types, modes, languages, andOperator);
 	}
 
 	public int filterCountByC_G_C_C_N_D_T_M_L(
-			long companyId, long groupId, long[] classNameIds, long classPK,
+			long companyId, long[] groupIds, long[] classNameIds, long classPK,
 			String name, String description, String type, String mode,
 			String language, boolean andOperator)
 		throws SystemException {
@@ -252,18 +254,18 @@ public class DDMTemplateFinderImpl
 		String[] languages = CustomSQLUtil.keywords(language, false);
 
 		return filterCountByC_G_C_C_N_D_T_M_L(
-			companyId, groupId, classNameIds, classPK, names, descriptions,
+			companyId, groupIds, classNameIds, classPK, names, descriptions,
 			types, modes, languages, andOperator);
 	}
 
 	public int filterCountByC_G_C_C_N_D_T_M_L(
-			long companyId, long groupId, long[] classNameIds, long classPK,
+			long companyId, long[] groupIds, long[] classNameIds, long classPK,
 			String[] names, String[] descriptions, String[] types,
 			String[] modes, String[] languages, boolean andOperator)
 		throws SystemException {
 
 		return doCountByC_G_C_C_N_D_T_M_L(
-			companyId, groupId, classNameIds, classPK, names, descriptions,
+			companyId, groupIds, classNameIds, classPK, names, descriptions,
 			types, modes, languages, andOperator, true);
 	}
 
@@ -296,7 +298,7 @@ public class DDMTemplateFinderImpl
 	}
 
 	public List<DDMTemplate> filterFindByKeywords(
-			long companyId, long groupId, long[] classNameIds, long classPK,
+			long companyId, long[] groupIds, long[] classNameIds, long classPK,
 			String keywords, String type, String mode, int start, int end,
 			OrderByComparator orderByComparator)
 		throws SystemException {
@@ -318,7 +320,7 @@ public class DDMTemplateFinderImpl
 		}
 
 		return filterFindByC_G_C_C_N_D_T_M_L(
-			companyId, groupId, classNameIds, classPK, names, descriptions,
+			companyId, groupIds, classNameIds, classPK, names, descriptions,
 			types, modes, languages, andOperator, start, end,
 			orderByComparator);
 	}
@@ -350,15 +352,16 @@ public class DDMTemplateFinderImpl
 		throws SystemException {
 
 		long[] classNameIds = new long[] {classNameId};
+		long[] groupIds = new long[] {groupId};
 
 		return filterFindByC_G_C_C_N_D_T_M_L(
-			companyId, groupId, classNameIds, classPK, names, descriptions,
+			companyId, groupIds, classNameIds, classPK, names, descriptions,
 			types, modes, languages, andOperator, start, end,
 			orderByComparator);
 	}
 
 	public List<DDMTemplate> filterFindByC_G_C_C_N_D_T_M_L(
-			long companyId, long groupId, long[] classNameIds, long classPK,
+			long companyId, long[] groupIds, long[] classNameIds, long classPK,
 			String name, String description, String type, String mode,
 			String language, boolean andOperator, int start, int end,
 			OrderByComparator orderByComparator)
@@ -371,20 +374,20 @@ public class DDMTemplateFinderImpl
 		String[] languages = CustomSQLUtil.keywords(language, false);
 
 		return filterFindByC_G_C_C_N_D_T_M_L(
-			companyId, groupId, classNameIds, classPK, names, descriptions,
+			companyId, groupIds, classNameIds, classPK, names, descriptions,
 			types, modes, languages, andOperator, start, end,
 			orderByComparator);
 	}
 
 	public List<DDMTemplate> filterFindByC_G_C_C_N_D_T_M_L(
-			long companyId, long groupId, long[] classNameIds, long classPK,
+			long companyId, long[] groupIds, long[] classNameIds, long classPK,
 			String[] names, String[] descriptions, String[] types,
 			String[] modes, String[] languages, boolean andOperator, int start,
 			int end, OrderByComparator orderByComparator)
 		throws SystemException {
 
 		return doFindByC_G_C_C_N_D_T_M_L(
-			companyId, groupId, classNameIds, classPK, names, descriptions,
+			companyId, groupIds, classNameIds, classPK, names, descriptions,
 			types, modes, languages, andOperator, start, end, orderByComparator,
 			true);
 	}
@@ -418,7 +421,7 @@ public class DDMTemplateFinderImpl
 	}
 
 	public List<DDMTemplate> findByKeywords(
-			long companyId, long groupId, long[] classNameIds, long classPK,
+			long companyId, long[] groupIds, long[] classNameIds, long classPK,
 			String keywords, String type, String mode, int start, int end,
 			OrderByComparator orderByComparator)
 		throws SystemException {
@@ -440,7 +443,7 @@ public class DDMTemplateFinderImpl
 		}
 
 		return findByC_G_C_C_N_D_T_M_L(
-			companyId, groupId, classNameIds, classPK, names, descriptions,
+			companyId, groupIds, classNameIds, classPK, names, descriptions,
 			types, modes, languages, andOperator, start, end,
 			orderByComparator);
 	}
@@ -472,15 +475,16 @@ public class DDMTemplateFinderImpl
 		throws SystemException {
 
 		long[] classNameIds = new long[] {classNameId};
+		long[] groupIds = new long[] {groupId};
 
 		return doFindByC_G_C_C_N_D_T_M_L(
-			companyId, groupId, classNameIds, classPK, names, descriptions,
+			companyId, groupIds, classNameIds, classPK, names, descriptions,
 			types, modes, languages, andOperator, start, end, orderByComparator,
 			false);
 	}
 
 	public List<DDMTemplate> findByC_G_C_C_N_D_T_M_L(
-			long companyId, long groupId, long[] classNameIds, long classPK,
+			long companyId, long[] groupIds, long[] classNameIds, long classPK,
 			String name, String description, String type, String mode,
 			String language, boolean andOperator, int start, int end,
 			OrderByComparator orderByComparator)
@@ -493,26 +497,26 @@ public class DDMTemplateFinderImpl
 		String[] languages = CustomSQLUtil.keywords(language, false);
 
 		return findByC_G_C_C_N_D_T_M_L(
-			companyId, groupId, classNameIds, classPK, names, descriptions,
+			companyId, groupIds, classNameIds, classPK, names, descriptions,
 			types, modes, languages, andOperator, start, end,
 			orderByComparator);
 	}
 
 	public List<DDMTemplate> findByC_G_C_C_N_D_T_M_L(
-			long companyId, long groupId, long[] classNameIds, long classPK,
+			long companyId, long[] groupIds, long[] classNameIds, long classPK,
 			String[] names, String[] descriptions, String[] types,
 			String[] modes, String[] languages, boolean andOperator, int start,
 			int end, OrderByComparator orderByComparator)
 		throws SystemException {
 
 		return doFindByC_G_C_C_N_D_T_M_L(
-			companyId, groupId, classNameIds, classPK, names, descriptions,
+			companyId, groupIds, classNameIds, classPK, names, descriptions,
 			types, modes, languages, andOperator, start, end, orderByComparator,
 			false);
 	}
 
 	protected int doCountByC_G_C_C_N_D_T_M_L(
-			long companyId, long groupId, long[] classNameIds, long classPK,
+			long companyId, long[] groupIds, long[] classNameIds, long classPK,
 			String[] names, String[] descriptions, String[] types,
 			String[] modes, String[] languages, boolean andOperator,
 			boolean inlineSQLHelper)
@@ -534,12 +538,16 @@ public class DDMTemplateFinderImpl
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
 					sql, DDMTemplate.class.getName(), "DDMTemplate.templateId",
-					groupId);
+					groupIds);
 			}
 
-			if (groupId <= 0) {
+			if (groupIds.length <= 0) {
 				sql = StringUtil.replace(
-					sql, "(groupId = ?) AND", StringPool.BLANK);
+					sql, "(groupId IN ([$GROUP_ID$])) AND", StringPool.BLANK);
+			}
+			else {
+				sql = StringUtil.replace(
+					sql, "[$GROUP_ID$]", StringUtil.merge(groupIds));
 			}
 
 			if (classNameIds.length == 0) {
@@ -575,10 +583,6 @@ public class DDMTemplateFinderImpl
 
 			qPos.add(companyId);
 
-			if (groupId > 0) {
-				qPos.add(groupId);
-			}
-
 			if (classPK >= 0) {
 				qPos.add(classPK);
 			}
@@ -610,7 +614,7 @@ public class DDMTemplateFinderImpl
 	}
 
 	protected List<DDMTemplate> doFindByC_G_C_C_N_D_T_M_L(
-			long companyId, long groupId, long[] classNameIds, long classPK,
+			long companyId, long[] groupIds, long[] classNameIds, long classPK,
 			String[] names, String[] descriptions, String[] types,
 			String[] modes, String[] languages, boolean andOperator, int start,
 			int end, OrderByComparator orderByComparator,
@@ -633,12 +637,16 @@ public class DDMTemplateFinderImpl
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
 					sql, DDMTemplate.class.getName(), "DDMTemplate.templateId",
-					groupId);
+					groupIds);
 			}
 
-			if (groupId <= 0) {
+			if (groupIds.length <= 0) {
 				sql = StringUtil.replace(
-					sql, "(groupId = ?) AND", StringPool.BLANK);
+					sql, "(groupId IN ([$GROUP_ID$])) AND", StringPool.BLANK);
+			}
+			else {
+				sql = StringUtil.replace(
+					sql, "[$GROUP_ID$]", StringUtil.merge(groupIds));
 			}
 
 			if (classNameIds.length == 0) {
@@ -677,10 +685,6 @@ public class DDMTemplateFinderImpl
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(companyId);
-
-			if (groupId > 0) {
-				qPos.add(groupId);
-			}
 
 			if (classPK >= 0) {
 				qPos.add(classPK);

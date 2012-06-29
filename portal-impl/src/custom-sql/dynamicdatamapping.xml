@@ -81,7 +81,7 @@
 				DDMTemplate
 			WHERE
 				(companyId = ?) AND
-				(groupId = ?) AND
+				(groupId IN ([$GROUP_ID$])) AND
 				(classNameId IN ([$CLASSNAME_ID$])) AND
 				(classPK = ?) AND
 				(
@@ -101,7 +101,7 @@
 				DDMTemplate
 			WHERE
 				(companyId = ?) AND
-				(groupId = ?) AND
+				(groupId IN ([$GROUP_ID$])) AND
 				(classNameId IN ([$CLASSNAME_ID$])) AND
 				(classPK = ?) AND
 				(

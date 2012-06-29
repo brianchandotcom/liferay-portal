@@ -34,6 +34,7 @@ import java.util.Properties;
 
 import javassist.util.proxy.ProxyFactory;
 
+import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
@@ -62,6 +63,13 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 		setBeanClassLoader(getConfigurationClassLoader());
 
 		return super.buildSessionFactory();
+	}
+
+	@Override
+	public void destroy() throws HibernateException {
+		setBeanClassLoader(null);
+
+		super.destroy();
 	}
 
 	public void setHibernateConfigurationConverter(

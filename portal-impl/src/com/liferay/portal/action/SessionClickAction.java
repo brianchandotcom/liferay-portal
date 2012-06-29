@@ -17,6 +17,7 @@ package com.liferay.portal.action;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.SessionClicks;
 
@@ -25,6 +26,7 @@ import java.util.Enumeration;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
@@ -43,7 +45,11 @@ public class SessionClickAction extends Action {
 		throws Exception {
 
 		try {
+			HttpSession session = request.getSession();
 			Enumeration<String> enu = request.getParameterNames();
+
+			boolean useHttpSession = ParamUtil.getBoolean(
+				request, "useHttpSession");
 
 			while (enu.hasMoreElements()) {
 				String name = enu.nextElement();
@@ -51,7 +57,12 @@ public class SessionClickAction extends Action {
 				if (!name.equals("doAsUserId")) {
 					String value = ParamUtil.getString(request, name);
 
-					SessionClicks.put(request, name, value);
+					if (useHttpSession) {
+						SessionClicks.put(session, name, value);
+					}
+					else {
+						SessionClicks.put(request, name, value);
+					}
 				}
 			}
 
@@ -74,12 +85,24 @@ public class SessionClickAction extends Action {
 	}
 
 	protected String getValue(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+
 		String cmd = ParamUtil.getString(request, "cmd");
+		boolean useHttpSession = ParamUtil.getBoolean(
+			request, "useHttpSession");
 
 		if (cmd.equals("get")) {
 			String key = ParamUtil.getString(request, "key");
+			String value = StringPool.BLANK;
 
-			return SessionClicks.get(request, key, cmd);
+			if (useHttpSession) {
+				value = SessionClicks.get(session, key, cmd);
+			}
+			else {
+				value = SessionClicks.get(request, key, cmd);
+			}
+
+			return value;
 		}
 		else if (cmd.equals("getAll")) {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -87,7 +110,14 @@ public class SessionClickAction extends Action {
 			String[] keys = request.getParameterValues("key");
 
 			for (String key : keys) {
-				String value = SessionClicks.get(request, key, cmd);
+				String value = StringPool.BLANK;
+
+				if (useHttpSession) {
+					value = SessionClicks.get(session, key, cmd);
+				}
+				else {
+					value = SessionClicks.get(request, key, cmd);
+				}
 
 				jsonObject.put(key, value);
 			}

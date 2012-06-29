@@ -21,7 +21,9 @@ import com.liferay.portal.kernel.staging.LayoutStagingUtil;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutBranch;
@@ -33,11 +35,13 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.util.SessionClicks;
 import com.liferay.portlet.sites.util.SitesUtil;
 
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * @author Brian Wing Shun Chan
@@ -60,11 +64,15 @@ public class LayoutsTreeUtil {
 			long parentLayoutId, long[] expandedLayoutIds)
 		throws Exception {
 
+		HttpSession session = request.getSession();
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		int start = ParamUtil.getInteger(request, "start");
-		int end = start + PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN;
+		int end = ParamUtil.getInteger(
+			request, "end",
+			start + PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN);
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
@@ -82,19 +90,33 @@ public class LayoutsTreeUtil {
 
 			layoutAncestors.add(selLayout);
 
-			for (Layout layoutAncestor : layoutAncestors) {
-				int index = layouts.indexOf(layoutAncestor);
+			String treeId = getScopedPaginationTreeId(request);
 
-				if (index >= end) {
-					end = index + 1;
+			String paginationJSON = SessionClicks.get(
+				session, treeId, StringPool.BLANK);
 
-					break;
+			if (Validator.isNotNull(paginationJSON) && (end >= 0)) {
+				JSONObject paginationJSONObject =
+					JSONFactoryUtil.createJSONObject(paginationJSON);
+
+				String key = String.valueOf(parentLayoutId);
+
+				if (paginationJSONObject.has(key)) {
+					int paginationEnd = paginationJSONObject.getInt(key);
+
+					if (paginationEnd > end) {
+						end = paginationEnd;
+					}
 				}
 			}
 		}
 
-		start = Math.min(start, layouts.size());
+		start = Math.max(0, Math.min(start, layouts.size()));
 		end = Math.min(end, layouts.size());
+
+		if (end < 0) {
+			end = layouts.size();
+		}
 
 		for (Layout layout : layouts.subList(start, end)) {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -190,6 +212,26 @@ public class LayoutsTreeUtil {
 		responseJSONObject.put("total", layouts.size());
 
 		return responseJSONObject.toString();
+	}
+
+	protected static String getScopedPaginationTreeId(
+		HttpServletRequest request) {
+
+		String treeId = ParamUtil.getString(request, "treeId");
+		long groupId = ParamUtil.getLong(request, "groupId");
+		boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
+
+		StringBundler sb = new StringBundler();
+
+		sb.append(treeId);
+		sb.append(StringPool.COLON);
+		sb.append(groupId);
+		sb.append(StringPool.COLON);
+		sb.append(privateLayout);
+		sb.append(StringPool.COLON);
+		sb.append("Pagination");
+
+		return sb.toString();
 	}
 
 }

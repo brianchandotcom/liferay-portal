@@ -19,18 +19,14 @@ import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.image.SpriteProcessor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.SortedProperties;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.util.PropertyComparator;
 
 import java.awt.Point;
@@ -385,65 +381,6 @@ public class SpriteProcessorImpl implements SpriteProcessor {
 		printImage(tiledImage);}*/
 
 		return tiledImage;
-	}
-
-	protected String getSpriteRootDirName(
-		ServletContext servletContext, List<File> imageFiles) {
-
-		String spriteRootDirName = PropsValues.SPRITE_ROOT_DIR;
-
-		File imageFile = imageFiles.get(0);
-
-		File imageDir = imageFile.getParentFile();
-
-		String imageDirName = imageDir.toString();
-
-		if (Validator.isNull(spriteRootDirName)) {
-			return imageDirName;
-		}
-
-		if (!spriteRootDirName.endsWith(StringPool.BACK_SLASH) &&
-			!spriteRootDirName.endsWith(StringPool.SLASH)) {
-
-			spriteRootDirName += StringPool.SLASH;
-		}
-
-		String portalProxyPath = PropsValues.PORTAL_PROXY_PATH;
-
-		if (Validator.isNotNull(portalProxyPath)) {
-			spriteRootDirName += portalProxyPath + StringPool.SLASH;
-		}
-
-		String portalContextPath = PropsValues.PORTAL_CTX;
-
-		if (Validator.isNotNull(portalContextPath) &&
-			!portalContextPath.equals(StringPool.SLASH)) {
-
-			spriteRootDirName += portalContextPath + StringPool.SLASH;
-		}
-
-		String portletContextPath = ContextPathUtil.getContextPath(
-			servletContext);
-
-		if (Validator.isNotNull(portletContextPath)) {
-			spriteRootDirName += portletContextPath + StringPool.SLASH;
-		}
-
-		String rootRealPath = ServletContextUtil.getRealPath(
-			servletContext, StringPool.SLASH);
-
-		spriteRootDirName = StringUtil.replace(
-			spriteRootDirName + imageDirName.substring(rootRealPath.length()),
-			CharPool.BACK_SLASH, CharPool.SLASH);
-
-		if (spriteRootDirName.endsWith(StringPool.BACK_SLASH) ||
-			spriteRootDirName.endsWith(StringPool.SLASH)) {
-
-			spriteRootDirName = spriteRootDirName.substring(
-				0, spriteRootDirName.length() - 1);
-		}
-
-		return spriteRootDirName;
 	}
 
 	protected void printImage(RenderedImage renderedImage) {

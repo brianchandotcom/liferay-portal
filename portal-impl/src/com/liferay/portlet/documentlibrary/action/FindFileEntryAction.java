@@ -15,6 +15,8 @@
 package com.liferay.portlet.documentlibrary.action;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,7 +43,16 @@ public class FindFileEntryAction extends FindFolderAction {
 	protected String getStrutsAction(
 		HttpServletRequest request, String portletId) {
 
-		return "/document_library/view_file_entry";
+		String strutsAction = StringPool.BLANK;
+
+		if (portletId.startsWith(PortletKeys.DOCUMENT_LIBRARY_DISPLAY)) {
+			strutsAction = "/document_library_display/view_file_entry";
+		}
+		else {
+			strutsAction = "/document_library/view_file_entry";
+		}
+
+		return strutsAction;
 	}
 
 }

@@ -57,7 +57,7 @@ portletURL.setParameter("tabs1", tabs1);
 		portalPreferences.setValue(PortletKeys.DYNAMIC_DATA_MAPPING, "entries-order-by-type", orderByType);
 	}
 	else {
-		orderByCol = portalPreferences.getValue(PortletKeys.DYNAMIC_DATA_MAPPING, "entries-order-by-col", "name");
+		orderByCol = portalPreferences.getValue(PortletKeys.DYNAMIC_DATA_MAPPING, "entries-order-by-col", "id");
 		orderByType = portalPreferences.getValue(PortletKeys.DYNAMIC_DATA_MAPPING, "entries-order-by-type", "asc");
 	}
 
@@ -117,14 +117,14 @@ portletURL.setParameter("tabs1", tabs1);
 			<liferay-ui:search-container-column-text
 				href="<%= rowHREF %>"
 				name="id"
+				orderable="<%= true %>"
+				orderableProperty="id"
 				property="structureId"
 			/>
 
 			<liferay-ui:search-container-column-text
 				href="<%= rowHREF %>"
 				name="name"
-				orderable="<%= true %>"
-				orderableProperty="name"
 				value="<%= HtmlUtil.escape(structure.getName(locale)) %>"
 			/>
 

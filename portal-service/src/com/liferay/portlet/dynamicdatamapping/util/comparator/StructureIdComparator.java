@@ -20,19 +20,19 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 /**
  * @author Eduardo Garcia
  */
-public class StructureNameComparator extends OrderByComparator {
+public class StructureIdComparator extends OrderByComparator {
 
-	public static final String ORDER_BY_ASC = "DDMStructure.name ASC";
+	public static final String ORDER_BY_ASC = "DDMStructure.structureId ASC";
 
-	public static final String ORDER_BY_DESC = "DDMStructure.name DESC";
+	public static final String ORDER_BY_DESC = "DDMStructure.structureId DESC";
 
-	public static final String[] ORDER_BY_FIELDS = {"name"};
+	public static final String[] ORDER_BY_FIELDS = {"structureId"};
 
-	public StructureNameComparator() {
+	public StructureIdComparator() {
 		this(false);
 	}
 
-	public StructureNameComparator(boolean ascending) {
+	public StructureIdComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 
@@ -41,10 +41,17 @@ public class StructureNameComparator extends OrderByComparator {
 		DDMStructure structure1 = (DDMStructure)obj1;
 		DDMStructure structure2 = (DDMStructure)obj2;
 
-		String structureName1 = structure1.getName().toLowerCase();
-		String structureName2 = structure2.getName().toLowerCase();
+		long structureId1 = structure1.getStructureId();
+		long structureId2 = structure2.getStructureId();
 
-		int value = structureName1.compareTo(structureName2);
+		int value = 0;
+
+		if (structureId1 < structureId2) {
+			value = -1;
+		}
+		else if (structureId1 > structureId2) {
+			value = 1;
+		}
 
 		if (_ascending) {
 			return value;

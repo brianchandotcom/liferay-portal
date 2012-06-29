@@ -66,6 +66,8 @@ if (organization != null) {
 		}
 	}
 }
+
+boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(permissionChecker, ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE);
 %>
 
 <h3><liferay-ui:message key="organization-site" /></h3>
@@ -99,6 +101,17 @@ if (organization != null) {
 							%>
 
 						</aui:select>
+
+						<c:choose>
+							<c:when test="<%= hasUnlinkLayoutSetPrototypePermission %>">
+								<div class="aui-helper-hidden" id="<portlet:namespace />publicLayoutSetPrototypeIdOptions">
+									<aui:input helpMessage="enable-propagation-of-changes-from-the-site-template-help" label="enable-propagation-of-changes-from-the-site-template" name="publicLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= true %>" />
+								</div>
+							</c:when>
+							<c:otherwise>
+								<aui:input name="publicLayoutSetPrototypeLinkEnabled" type="hidden" value="<%= true %>" />
+							</c:otherwise>
+						</c:choose>
 					</c:when>
 					<c:otherwise>
 						<aui:field-wrapper label="public-pages">
@@ -144,6 +157,17 @@ if (organization != null) {
 							%>
 
 						</aui:select>
+
+						<c:choose>
+							<c:when test="<%= hasUnlinkLayoutSetPrototypePermission %>">
+								<div class="aui-helper-hidden" id="<portlet:namespace />privateLayoutSetPrototypeIdOptions">
+									<aui:input helpMessage="enable-propagation-of-changes-from-the-site-template-help"  label="enable-propagation-of-changes-from-the-site-template" name="privateLayoutSetPrototypeLinkEnabled" type="checkbox" value="true" />
+								</div>
+							</c:when>
+							<c:otherwise>
+								<aui:input name="privateLayoutSetPrototypeLinkEnabled" type="hidden" value="<%= true %>" />
+							</c:otherwise>
+						</c:choose>
 					</c:when>
 					<c:otherwise>
 						<aui:field-wrapper label="private-pages">
@@ -181,7 +205,14 @@ if (organization != null) {
 		%>
 
 		<aui:script>
+			function <portlet:namespace />testVisibility(currentValue, value) {
+				return currentValue != '';
+			}
+
 			Liferay.Util.toggleBoxes('<portlet:namespace />siteCheckbox','<portlet:namespace />siteTemplates');
+
+			Liferay.Util.toggleSelectBox('<portlet:namespace />publicLayoutSetPrototypeId', <portlet:namespace />testVisibility, '<portlet:namespace />publicLayoutSetPrototypeIdOptions');
+			Liferay.Util.toggleSelectBox('<portlet:namespace />privateLayoutSetPrototypeId', <portlet:namespace />testVisibility, '<portlet:namespace />privateLayoutSetPrototypeIdOptions');
 		</aui:script>
 	</c:when>
 	<c:otherwise>

@@ -238,15 +238,15 @@ public class VerifyPermission
 			ps = con.prepareStatement(sb.toString());
 
 			ps.setString(1, RoleConstants.OWNER);
-			
+
 			sb = new StringBundler(4);
-			
+
 			sb.append("select count(*) from ");
 			sb.append("ResourcePermission where ");
 			sb.append("ResourcePermission.companyId = ? and ");
 			sb.append("ResourcePermission.roleId = ? and ");
 			sb.append("ResourcePermission.primKey = ?");
-			
+
 			ps2 = con.prepareStatement(sb.toString());
 
 			rs = ps.executeQuery();
@@ -255,17 +255,17 @@ public class VerifyPermission
 				long companyId = rs.getLong("companyId");
 				long ownerRoleId = rs.getLong("ownerRoleId");
 				String primKey = String.valueOf(rs.getLong("primKey"));
-				
+
 				ps2.setLong(1, companyId);
 				ps2.setLong(2, ownerRoleId);
 				ps2.setString(3, primKey);
-				
+
 				rs2 = ps2.executeQuery();
-				
+
 				if (rs2.next()) {
 					if (1 > rs2.getLong(1)) {
-						ResourcePermissionLocalServiceUtil
-							.setResourcePermissions(
+						ResourcePermissionLocalServiceUtil.
+							setResourcePermissions(
 								companyId, Layout.class.getName(),
 								SCOPE_INDIVIDUAL, primKey,
 								ownerRoleId, actionIds);
@@ -277,7 +277,7 @@ public class VerifyPermission
 								ownerRoleId);
 					}
 				}
-				
+
 				DataAccess.cleanUp(rs2);
 			}
 		}

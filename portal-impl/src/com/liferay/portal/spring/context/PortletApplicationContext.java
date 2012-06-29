@@ -27,18 +27,13 @@ import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.security.pacl.PACLPolicyManager;
 import com.liferay.portal.spring.util.FilterClassLoader;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.FileNotFoundException;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.aopalliance.aop.Advice;
-
-import org.springframework.aop.Advisor;
-import org.springframework.aop.SpringProxy;
-import org.springframework.aop.TargetSource;
-import org.springframework.aop.framework.Advised;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.web.context.support.XmlWebApplicationContext;
 
@@ -168,11 +163,21 @@ public class PortletApplicationContext extends XmlWebApplicationContext {
 		new HashMap<String, Class<?>>();
 
 	static {
-		_classes.put(Advice.class.getName(), Advice.class);
-		_classes.put(Advised.class.getName(), Advised.class);
-		_classes.put(Advisor.class.getName(), Advisor.class);
-		_classes.put(SpringProxy.class.getName(), SpringProxy.class);
-		_classes.put(TargetSource.class.getName(), TargetSource.class);
+		for (String className :
+				PropsValues.
+					PORTAL_SECURITY_MANAGER_PRELOAD_CLASSLOADER_CLASSES) {
+
+			Class<?> clazz = null;
+
+			try {
+				clazz = Class.forName(className);
+			}
+			catch (ClassNotFoundException e) {
+				_log.error(e, e);
+			}
+
+			_classes.put(clazz.getName(), clazz);
+		}
 	}
 
 }

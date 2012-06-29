@@ -19,9 +19,11 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
@@ -30,9 +32,11 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.model.BaseAssetRenderer;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
+import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
 import com.liferay.portlet.journal.service.permission.JournalArticlePermission;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
@@ -44,6 +48,7 @@ import javax.portlet.RenderResponse;
  * @author Julio Camarero
  * @author Juan Fernández
  * @author Sergio González
+ * @author Raymond Augé
  */
 public class JournalArticleAssetRenderer extends BaseAssetRenderer {
 
@@ -146,26 +151,43 @@ public class JournalArticleAssetRenderer extends BaseAssetRenderer {
 			String noSuchEntryRedirect)
 		throws Exception {
 
-		if (Validator.isNull(_article.getLayoutUuid())) {
-			return noSuchEntryRedirect;
-		}
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)liferayPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 		Group group = themeDisplay.getScopeGroup();
 
-		if (group.getGroupId() != _article.getGroupId()) {
-			group = GroupLocalServiceUtil.getGroup(_article.getGroupId());
+		if (Validator.isNotNull(_article.getLayoutUuid())) {
+			if (group.getGroupId() != _article.getGroupId()) {
+				group = GroupLocalServiceUtil.getGroup(_article.getGroupId());
+			}
+
+			String groupFriendlyURL = PortalUtil.getGroupFriendlyURL(
+				group, false, themeDisplay);
+
+			return groupFriendlyURL.concat(
+				JournalArticleConstants.CANONICAL_URL_SEPARATOR).concat(
+					HtmlUtil.escape(_article.getUrlTitle()));
 		}
 
-		String groupFriendlyURL = PortalUtil.getGroupFriendlyURL(
-			group, false, themeDisplay);
+		Layout layout = themeDisplay.getLayout();
 
-		return groupFriendlyURL.concat(
-			JournalArticleConstants.CANONICAL_URL_SEPARATOR).concat(
-				HtmlUtil.escape(_article.getUrlTitle()));
+		List<Long> hitLayoutIds =
+			JournalContentSearchLocalServiceUtil.getLayoutIds(
+				layout.getGroupId(), layout.isPrivateLayout(),
+				_article.getArticleId());
+
+		if (!hitLayoutIds.isEmpty()) {
+			Long hitLayoutId = hitLayoutIds.get(0);
+
+			Layout hitLayout = LayoutLocalServiceUtil.getLayout(
+				layout.getGroupId(), layout.isPrivateLayout(),
+				hitLayoutId.longValue());
+
+			return PortalUtil.getLayoutURL(hitLayout, themeDisplay);
+		}
+
+		return noSuchEntryRedirect;
 	}
 
 	public long getUserId() {

@@ -91,6 +91,9 @@ public class FinalizeManager {
 		if (THREAD_ENABLED) {
 			Thread thread = new FinalizeThread("Finalize Thread");
 
+			thread.setContextClassLoader(
+				FinalizeManager.class.getClassLoader());
+
 			thread.setDaemon(true);
 
 			thread.start();

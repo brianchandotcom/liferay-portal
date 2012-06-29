@@ -108,7 +108,7 @@
 	<cache
 		eternal="false"
 		maxElementsInMemory="100000"
-		name="com.liferay.portal.kernel.dao.orm.EntityCache..com.liferay.portal.model.impl.ResourceActionImpl"
+		name="com.liferay.portal.kernel.dao.orm.EntityCache.com.liferay.portal.model.impl.ResourceActionImpl"
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>
@@ -122,7 +122,7 @@
 	<cache
 		eternal="false"
 		maxElementsInMemory="1000000"
-		name="com.liferay.portal.kernel.dao.orm.EntityCache..com.liferay.portal.model.impl.ResourcePermissionImpl"
+		name="com.liferay.portal.kernel.dao.orm.EntityCache.com.liferay.portal.model.impl.ResourcePermissionImpl"
 		overflowToDisk="false"
 		timeToIdleSeconds="600"
 	>

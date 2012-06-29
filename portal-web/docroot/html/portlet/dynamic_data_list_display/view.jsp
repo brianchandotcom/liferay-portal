@@ -150,7 +150,6 @@ boolean showEditListTemplateIcon = (listDDMTemplateId != 0) && DDMTemplatePermis
 					cssClass="portlet-configuration"
 					image="configuration"
 					message="select-list"
-					method="get"
 					onClick="<%= portletDisplay.getURLConfigurationJS() %>"
 					url="<%= portletDisplay.getURLConfiguration() %>"
 				/>

@@ -99,7 +99,7 @@ if (name.equals(RoleConstants.GUEST) || name.equals(RoleConstants.OWNER) || name
 			<portlet:param name="saveUsersListView" value="<%= Boolean.FALSE.toString() %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon image="view_users" message="view-users" method="get" url="<%= viewUsersURL %>" />
+		<liferay-ui:icon image="view_users" message="view-users" url="<%= viewUsersURL %>" />
 	</c:if>
 
 	<c:if test="<%= !PortalUtil.isSystemRole(name) && RolePermissionUtil.contains(permissionChecker, role.getRoleId(), ActionKeys.DELETE) %>">

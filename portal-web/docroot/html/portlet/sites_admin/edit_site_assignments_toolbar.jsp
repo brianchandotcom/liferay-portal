@@ -49,7 +49,6 @@ if (group == null) {
 			<liferay-ui:icon
 				image="user_icon"
 				message="user"
-				method="get"
 				url="<%= assignMembersURL.toString() %>"
 			/>
 
@@ -61,7 +60,6 @@ if (group == null) {
 			<liferay-ui:icon
 				image="organization_icon"
 				message="organization"
-				method="get"
 				url="<%= assignMembersURL.toString() %>"
 			/>
 
@@ -73,7 +71,6 @@ if (group == null) {
 			<liferay-ui:icon
 				image="group"
 				message="user-group"
-				method="get"
 				url="<%= assignMembersURL.toString() %>"
 			/>
 		</liferay-ui:icon-menu>

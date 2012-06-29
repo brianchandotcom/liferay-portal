@@ -48,7 +48,6 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 			<liferay-ui:icon
 				image="user_icon"
 				message="regular-role"
-				method="get"
 				url="<%= addRoleURL.toString() %>"
 			/>
 
@@ -59,7 +58,6 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 			<liferay-ui:icon
 				image="site_icon"
 				message="site-role"
-				method="get"
 				url="<%= addRoleURL.toString() %>"
 			/>
 
@@ -70,7 +68,6 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 			<liferay-ui:icon
 				image="organization_icon"
 				message="organization-role"
-				method="get"
 				url="<%= addRoleURL.toString() %>"
 			/>
 		</liferay-ui:icon-menu>

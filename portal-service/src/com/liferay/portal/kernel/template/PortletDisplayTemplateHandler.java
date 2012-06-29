@@ -22,9 +22,9 @@ import java.util.Locale;
 public interface PortletDisplayTemplateHandler {
 
 	/**
-	 * Returns the class name of the portlet display template
+	 * Returns the class name of the portlet display template.
 	 *
-	 * @return the the class name of the portlet display template
+	 * @return the class name of the portlet display template
 	 */
 	public String getClassName();
 
@@ -38,17 +38,17 @@ public interface PortletDisplayTemplateHandler {
 	public String getDefaultTemplateLocation();
 
 	/**
-	 * Returns the name of the portlet display template
+	 * Returns the name of the portlet display template.
 	 *
-	 * @param  locale the locale of the portlet display template name
+	 * @param  locale the locale of the portlet display template name to get
 	 * @return the name of the portlet display template
 	 */
 	public String getName(Locale locale);
 
 	/**
 	 * Returns the name of the resource the portlet display template is
-	 * associated with. Permissions on the resource will be checked when adding
-	 * new portlet display templates.
+	 * associated with. Permissions on the resource are checked when adding a
+	 * new portlet display template.
 	 *
 	 * @return the name of the resource
 	 */

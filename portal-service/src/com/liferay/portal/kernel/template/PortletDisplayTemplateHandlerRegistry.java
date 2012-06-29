@@ -46,7 +46,7 @@ public interface PortletDisplayTemplateHandlerRegistry {
 		String className);
 
 	/**
-	 * Returns all of the portlet display template handlers.
+	 * Returns all the portlet display template handlers.
 	 *
 	 * @return the portlet display template handlers
 	 */

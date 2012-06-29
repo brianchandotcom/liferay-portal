@@ -18,6 +18,18 @@
 PortletDisplayTemplateHandler portletDisplayTemplateHandler = PortletDisplayTemplateHandlerRegistryUtil.getPortletDisplayTemplateHandler(AssetEntry.class.getName());
 
 long portletDisplayTemplateClassNameId = PortalUtil.getClassNameId(portletDisplayTemplateHandler.getClassName());
+
+Group controlPanelGroup = GroupLocalServiceUtil.getGroup(themeDisplay.getCompanyId(), GroupConstants.CONTROL_PANEL);
+
+PortletURL portletDisplayTemplatesURL = PortletURLFactoryUtil.create(request, PortletKeys.PORTLET_DISPLAY_TEMPLATES, LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.getGroupId(), true), PortletRequest.RENDER_PHASE);
+
+portletDisplayTemplatesURL.setWindowState(LiferayWindowState.POP_UP);
+portletDisplayTemplatesURL.setPortletMode(PortletMode.VIEW);
+portletDisplayTemplatesURL.setParameter("struts_action", "/dynamic_data_mapping/view_template");
+
+String portletDisplayTemplatesURLString = portletDisplayTemplatesURL.toString();
+
+portletDisplayTemplatesURLString = HttpUtil.addParameter(portletDisplayTemplatesURLString, "doAsGroupId", scopeGroupId);
 %>
 
 <aui:fieldset cssClass="general-display-settings">
@@ -33,7 +45,7 @@ long portletDisplayTemplateClassNameId = PortalUtil.getClassNameId(portletDispla
 			<%
 			}
 
-			List<DDMTemplate> assetPublisherDDMTemplates = DDMTemplateLocalServiceUtil.getTemplates(scopeGroupId, portletDisplayTemplateClassNameId, 0);
+			List<DDMTemplate> assetPublisherDDMTemplates = DDMTemplateLocalServiceUtil.getTemplates(displayTemplatesGroupId, portletDisplayTemplateClassNameId, 0);
 
 			for (DDMTemplate curAssetPublisherDDMTemplate : assetPublisherDDMTemplates) {
 				if (!DDMTemplatePermission.contains(permissionChecker, curAssetPublisherDDMTemplate, ActionKeys.VIEW)) {
@@ -41,7 +53,7 @@ long portletDisplayTemplateClassNameId = PortalUtil.getClassNameId(portletDispla
 				}
 			%>
 
-				<aui:option label="<%= curAssetPublisherDDMTemplate.getName(locale) %>" selected="<%= (assetPublisherDDMTemplate != null) && (curAssetPublisherDDMTemplate.getTemplateId() == assetPublisherDDMTemplate.getTemplateId()) %>" value='<%= "ddmTemplate_" + curAssetPublisherDDMTemplate.getTemplateId() %>' />
+				<aui:option label="<%= curAssetPublisherDDMTemplate.getName(locale) %>" selected="<%= (portletDisplayTemplate != null) && (curAssetPublisherDDMTemplate.getTemplateId() == portletDisplayTemplate.getTemplateId()) %>" value='<%= "ddmTemplate_" + curAssetPublisherDDMTemplate.getUuid() %>' />
 
 			<%
 			}
@@ -265,17 +277,15 @@ long portletDisplayTemplateClassNameId = PortalUtil.getClassNameId(portletDispla
 		selectDDMTemplate.on(
 			'click',
 			function (event) {
-				Liferay.Util.openDDMPortlet(
+				Liferay.Util.openWindow(
 					{
-						classNameId: '<%= String.valueOf(portletDisplayTemplateClassNameId) %>',
-						ddmResource: '<%= portletDisplayTemplateHandler.getResourceName() %>',
 						dialog: {
-							width:680
+							constrain: true,
+							width: 820
 						},
 						id: windowId,
-						showGlobalScope: true,
-						struts_action: '/dynamic_data_mapping/view_template',
-						title: '<%= UnicodeLanguageUtil.get(pageContext, "application-display-templates") %>'
+						title: '<%= UnicodeLanguageUtil.get(pageContext, "display-templates") %>',
+						uri: '<%= portletDisplayTemplatesURLString %>'
 					},
 					function (ddmPortletWindow) {
 						ddmPortletWindow.once(

@@ -19,6 +19,7 @@
 <%@ page import="com.liferay.portal.NoSuchModelException" %><%@
 page import="com.liferay.portal.kernel.repository.model.FileEntry" %><%@
 page import="com.liferay.portal.kernel.search.Hits" %><%@
+page import="com.liferay.portal.kernel.staging.StagingConstants" %><%@
 page import="com.liferay.portal.kernel.template.PortletDisplayTemplateHandler" %><%@
 page import="com.liferay.portal.kernel.template.PortletDisplayTemplateHandlerRegistryUtil" %><%@
 page import="com.liferay.portal.kernel.xml.Document" %><%@
@@ -174,25 +175,47 @@ if (portletName.equals(PortletKeys.RELATED_ASSETS)) {
 boolean mergeUrlTags = GetterUtil.getBoolean(preferences.getValue("mergeUrlTags", null), true);
 boolean mergeLayoutTags = GetterUtil.getBoolean(preferences.getValue("mergeLayoutTags", null), false);
 
-long assetPublisherDDMTemplateId = 0;
+DDMTemplate portletDisplayTemplate = null;
+long portletDisplayTemplateId = 0;
+String portletDisplayTemplateUuid = StringPool.BLANK;
 
 String displayStyle = GetterUtil.getString(preferences.getValue("displayStyle", "abstracts"));
 
 if (displayStyle.startsWith("ddmTemplate_")) {
-	assetPublisherDDMTemplateId = GetterUtil.getLong(displayStyle.substring("ddmTemplate_".length()));
+	portletDisplayTemplateUuid = displayStyle.substring("ddmTemplate_".length());
 }
 else if (Validator.isNull(displayStyle)) {
 	displayStyle = "abstracts";
 }
 
-DDMTemplate assetPublisherDDMTemplate = null;
+long displayTemplatesGroupId = scopeGroupId;
 
-if (assetPublisherDDMTemplateId > 0) {
+if (themeDisplay.getScopeGroup().hasStagingGroup()) {
+	Group stagedGroup = GroupLocalServiceUtil.getStagingGroup(themeDisplay.getScopeGroupId());
+
+	boolean staged = GetterUtil.getBoolean(themeDisplay.getScopeGroup().getTypeSettingsProperty(StagingConstants.STAGED_PORTLET + PortletKeys.PORTLET_DISPLAY_TEMPLATES));
+
+	if (staged) {
+		displayTemplatesGroupId = stagedGroup.getGroupId();
+	}
+}
+else if (themeDisplay.getScopeGroup().getLiveGroupId() > 0) {
+	Group liveGroup = themeDisplay.getScopeGroup().getLiveGroup();
+
+	boolean staged = GetterUtil.getBoolean(liveGroup.getTypeSettingsProperty(StagingConstants.STAGED_PORTLET + PortletKeys.PORTLET_DISPLAY_TEMPLATES));
+
+	if (!staged) {
+		displayTemplatesGroupId = liveGroup.getGroupId();
+	}
+}
+
+if (Validator.isNotNull(portletDisplayTemplateUuid)) {
 	try {
-		assetPublisherDDMTemplate = DDMTemplateLocalServiceUtil.getDDMTemplate(assetPublisherDDMTemplateId);
+		portletDisplayTemplate = DDMTemplateLocalServiceUtil.getDDMTemplateByUuidAndGroupId(portletDisplayTemplateUuid, displayTemplatesGroupId);
+		portletDisplayTemplateId = portletDisplayTemplate.getTemplateId();
 	}
 	catch (NoSuchTemplateException nste) {
-		assetPublisherDDMTemplateId = 0;
+		portletDisplayTemplateId = 0;
 
 		displayStyle = "abstracts";
 	}

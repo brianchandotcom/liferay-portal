@@ -63,8 +63,8 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 				<h3 class="asset-entries-group-label"><%= assetCategory.getTitle(locale) %></h3>
 
 				<c:choose>
-					<c:when test="<%= assetPublisherDDMTemplateId > 0 %>">
-						<%= AssetPublisherUtil.renderDDMTemplate(renderRequest, renderResponse, assetPublisherDDMTemplateId, results) %>
+					<c:when test="<%= portletDisplayTemplateId > 0 %>">
+						<%= AssetPublisherUtil.renderDDMTemplate(renderRequest, renderResponse, portletDisplayTemplateId, results) %>
 					</c:when>
 					<c:otherwise>
 						<%@ include file="/html/portlet/asset_publisher/view_dynamic_list_asset.jspf" %>
@@ -115,8 +115,8 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 %>
 
 		<c:choose>
-			<c:when test="<%= assetPublisherDDMTemplateId > 0 %>">
-				<%= AssetPublisherUtil.renderDDMTemplate(renderRequest, renderResponse, assetPublisherDDMTemplateId, results) %>
+			<c:when test="<%= portletDisplayTemplateId > 0 %>">
+				<%= AssetPublisherUtil.renderDDMTemplate(renderRequest, renderResponse, portletDisplayTemplateId, results) %>
 			</c:when>
 			<c:otherwise>
 				<%@ include file="/html/portlet/asset_publisher/view_dynamic_list_asset.jspf" %>
@@ -156,8 +156,8 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 				<h3 class="asset-entries-group-label"><liferay-ui:message key="<%= groupAssetRendererFactory.getType() %>" /></h3>
 
 				<c:choose>
-					<c:when test="<%= assetPublisherDDMTemplateId > 0 %>">
-						<%= AssetPublisherUtil.renderDDMTemplate(renderRequest, renderResponse, assetPublisherDDMTemplateId, results) %>
+					<c:when test="<%= portletDisplayTemplateId > 0 %>">
+						<%= AssetPublisherUtil.renderDDMTemplate(renderRequest, renderResponse, portletDisplayTemplateId, results) %>
 					</c:when>
 					<c:otherwise>
 						<%@ include file="/html/portlet/asset_publisher/view_dynamic_list_asset.jspf" %>

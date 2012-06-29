@@ -20,7 +20,7 @@ TemplateSearchTerms searchTerms = (TemplateSearchTerms)searchContainer.getSearch
 long[] searchClassNameIds = null;
 long searchClassPK = 0;
 
-if (portletName.equals(PortletKeys.APPLICATION_DISPLAY_STYLES)) {
+if (portletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES)) {
 	searchClassNameIds = PortletDisplayTemplateHandlerRegistryUtil.getClassNameIds();
 	searchClassPK = -1;
 }

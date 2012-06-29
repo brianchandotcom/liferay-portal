@@ -113,7 +113,7 @@ long classPK = ParamUtil.getLong(request, "classPK");
 					%>
 
 						<liferay-ui:icon
-							image="add_display_style"
+							image="add_portlet_display_template"
 							message="<%= portletDisplayTemplateHandler.getName(locale) %>"
 							method="get"
 							url="<%= addPortletDisplayTemplateURL.toString() %>"

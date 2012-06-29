@@ -151,11 +151,22 @@ if (!portletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES)) {
 				value="<%= LanguageUtil.get(pageContext, template.getName(locale)) %>"
 			/>
 
+			<%
+			String type = null;
+
+			if (portletName.equals(PortletKeys.APPLICATION_DISPLAY_STYLES)) {
+				type = PortletDisplayTemplateHandlerRegistryUtil.getPortletDisplayTemplateHandler(template.getClassNameId()).getName(locale);
+			}
+			else if (Validator.isNull(templateTypeValue)) {
+				type =  LanguageUtil.get(pageContext, template.getType());
+			}
+			%>
+
 			<c:if test="<%= Validator.isNull(templateTypeValue) %>">
 				<liferay-ui:search-container-column-text
 					href="<%= rowHREF %>"
 					name="type"
-					value="<%= LanguageUtil.get(pageContext, template.getType()) %>"
+					value="<%= type %>"
 				/>
 			</c:if>
 

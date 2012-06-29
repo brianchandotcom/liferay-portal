@@ -24,6 +24,10 @@ import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
+import com.liferay.portlet.dynamicdatamapping.RequiredStructureException;
+import com.liferay.portlet.dynamicdatamapping.StructureDuplicateStructureKeyException;
+import com.liferay.portlet.dynamicdatamapping.StructureNameException;
+import com.liferay.portlet.dynamicdatamapping.StructureXsdException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
@@ -66,7 +70,7 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 			Assert.fail("Should not be able to add Structure because " +
 					"structureKey is duplicated");
 		}
-		catch (Exception e) {
+		catch (StructureDuplicateStructureKeyException sdske) {
 		}
 	}
 
@@ -85,7 +89,7 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 			Assert.fail("Should not be able to add Structure because " +
 				"name is empty");
 		}
-		catch (Exception e) {
+		catch (StructureNameException sne) {
 		}
 	}
 
@@ -103,7 +107,7 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 			Assert.fail("Should not be able to add Structure because " +
 				"xsd is empty");
 		}
-		catch (Exception e) {
+		catch (StructureXsdException sxe) {
 		}
 	}
 
@@ -155,7 +159,7 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 				"Should not be able to delete this structure because it is " +
 				"referenced by templates");
 		}
-		catch (Exception e) {
+		catch (RequiredStructureException rse) {
 		}
 	}
 

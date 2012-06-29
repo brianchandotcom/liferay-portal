@@ -24,6 +24,9 @@ import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.dynamicdatamapping.TemplateDuplicateTemplateKeyException;
+import com.liferay.portlet.dynamicdatamapping.TemplateNameException;
+import com.liferay.portlet.dynamicdatamapping.TemplateScriptException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 
@@ -66,7 +69,7 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 			Assert.fail("Should not be able to add Template because " +
 				"templateKey is duplicated");
 		}
-		catch (Exception e) {
+		catch (TemplateDuplicateTemplateKeyException tdtke) {
 		}
 	}
 
@@ -86,7 +89,7 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 			Assert.fail("Should not be able to add Template because " +
 				"name is empty");
 		}
-		catch (Exception e) {
+		catch (TemplateNameException tne) {
 		}
 	}
 
@@ -105,7 +108,7 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 			Assert.fail("Should not be able to add Template because " +
 				"script is empty");
 		}
-		catch (Exception e) {
+		catch (TemplateScriptException tse) {
 		}
 	}
 

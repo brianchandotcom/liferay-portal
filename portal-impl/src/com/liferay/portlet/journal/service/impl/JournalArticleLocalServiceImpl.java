@@ -3415,6 +3415,19 @@ public class JournalArticleLocalServiceImpl
 				previousApprovedArticle = approvedArticles.get(1);
 			}
 
+			Date[] dateInterval = getDateInterval(
+				previousApprovedArticle.getGroupId(),
+				previousApprovedArticle.getArticleId(),
+				previousApprovedArticle.getDisplayDate(),
+				previousApprovedArticle.getExpirationDate());
+
+			Date displayDate = dateInterval[0];
+			Date expirationDate = dateInterval[1];
+
+			assetEntryLocalService.updateEntry(
+				JournalArticle.class.getName(), article.getResourcePrimKey(),
+				displayDate, expirationDate, true);
+
 			if (article.isIndexable()) {
 				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 					JournalArticle.class);

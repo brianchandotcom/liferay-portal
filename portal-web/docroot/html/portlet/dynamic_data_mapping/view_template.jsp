@@ -77,7 +77,7 @@ if (!portletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES)) {
 		portalPreferences.setValue(PortletKeys.DYNAMIC_DATA_MAPPING, "entries-order-by-type", orderByType);
 	}
 	else {
-		orderByCol = portalPreferences.getValue(PortletKeys.DYNAMIC_DATA_MAPPING, "entries-order-by-col", "name");
+		orderByCol = portalPreferences.getValue(PortletKeys.DYNAMIC_DATA_MAPPING, "entries-order-by-col", "id");
 		orderByType = portalPreferences.getValue(PortletKeys.DYNAMIC_DATA_MAPPING, "entries-order-by-type", "asc");
 	}
 
@@ -140,14 +140,14 @@ if (!portletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES)) {
 			<liferay-ui:search-container-column-text
 				href="<%= rowHREF %>"
 				name="id"
+				orderable="<%= true %>"
+				orderableProperty="id"
 				property="templateId"
 			/>
 
 			<liferay-ui:search-container-column-text
 				href="<%= rowHREF %>"
 				name="name"
-				orderable="<%= true %>"
-				orderableProperty="name"
 				value="<%= LanguageUtil.get(pageContext, template.getName(locale)) %>"
 			/>
 

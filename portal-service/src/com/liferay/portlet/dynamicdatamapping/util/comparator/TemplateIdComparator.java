@@ -20,37 +20,38 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 /**
  * @author Eduardo Garcia
  */
-public class TemplateNameComparator extends OrderByComparator {
+public class TemplateIdComparator extends OrderByComparator {
 
-	public static final String ORDER_BY_ASC = "DDMTemplate.name ASC";
+	public static final String ORDER_BY_ASC = "DDMTemplate.templateId ASC";
 
-	public static final String ORDER_BY_DESC = "DDMTemplate.name DESC";
+	public static final String ORDER_BY_DESC = "DDMTemplate.templateId DESC";
 
-	public static final String[] ORDER_BY_FIELDS = {"name"};
+	public static final String[] ORDER_BY_FIELDS = {"templateId"};
 
-	public TemplateNameComparator() {
+	public TemplateIdComparator() {
 		this(false);
 	}
 
-	public TemplateNameComparator(boolean ascending) {
+	public TemplateIdComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 
 	@Override
 	public int compare(Object obj1, Object obj2) {
 		DDMTemplate template1 = (DDMTemplate)obj1;
-
-		String templateName1 = template1.getName();
-
-		templateName1 = templateName1.toLowerCase();
-
 		DDMTemplate template2 = (DDMTemplate)obj2;
 
-		String templateName2 = template2.getName();
+		long templateId1 = template1.getTemplateId();
+		long templateId2 = template2.getTemplateId();
 
-		templateName2 = templateName2.toLowerCase();
+		int value = 0;
 
-		int value = templateName1.compareTo(templateName2);
+		if (templateId1 < templateId2) {
+			value = -1;
+		}
+		else if (templateId1 > templateId2) {
+			value = 1;
+		}
 
 		if (_ascending) {
 			return value;

@@ -163,7 +163,7 @@ public abstract class FindAction extends Action {
 				LayoutTypePortlet layoutTypePortlet =
 					(LayoutTypePortlet)layout.getLayoutType();
 
-				for (String curPortletId :layoutTypePortlet.getPortletIds()) {
+				for (String curPortletId : layoutTypePortlet.getPortletIds()) {
 					if (curPortletId.startsWith(portletId)) {
 						portletId = curPortletId;
 					}

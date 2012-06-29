@@ -57,6 +57,7 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 
 	@Override
 	public void close(boolean force) {
+		PortalExecutorManagerUtil.shutdown(getName(), force);
 	}
 
 	public DestinationStatistics getDestinationStatistics() {

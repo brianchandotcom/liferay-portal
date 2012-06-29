@@ -13,7 +13,6 @@ AUI.add(
 		 * OPTIONS
 		 *
 		 * Required
-		 * hasPermission {boolean}: Whether the current user has permission to modify the navigation
 		 * layoutIds {array}: The displayable layout ids.
 		 * layoutSetBranchId {String}: The id of the layout set branch (when branching is enabled).
 		 * navBlock {string|object}: A selector or DOM element of the navigation.
@@ -23,10 +22,6 @@ AUI.add(
 			{
 				ATTRS: {
 					hasAddLayoutPermission: {
-						value: false
-					},
-
-					hasPermission: {
 						value: false
 					},
 
@@ -43,8 +38,7 @@ AUI.add(
 						getter: function(value) {
 							var instance = this;
 
-							return instance.get('hasPermission') &&
-									instance.get('navBlock').hasClass('modify-pages');
+							return instance.get('navBlock').hasClass('modify-pages');
 						},
 						value: false
 					},
@@ -53,8 +47,7 @@ AUI.add(
 						getter: function(value) {
 							var instance = this;
 
-							return instance.get('hasPermission') &&
-									instance.get('navBlock').hasClass('sort-pages');
+							return instance.get('navBlock').hasClass('sort-pages');
 						},
 						value: false
 					},
@@ -283,7 +276,7 @@ AUI.add(
 						var instance = this;
 
 						if (instance.get('isModifiable')) {
-							var currentItem = instance.get('navBlock').one('li.selected');
+							var currentItem = instance.get('navBlock').one('li.selected.lfr-nav-updateable');
 
 							if (currentItem) {
 								var currentLink = currentItem.one('a');

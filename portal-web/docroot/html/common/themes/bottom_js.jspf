@@ -121,7 +121,6 @@ if (layout != null) {
 				new Liferay.Navigation(
 					{
 						hasAddLayoutPermission: <%= GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_LAYOUT) %>,
-						hasPermission: <%= GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.MANAGE_LAYOUTS) %>,
 						layoutIds: [
 
 							<%

@@ -175,7 +175,13 @@ if (Validator.isNotNull(fieldParam)) {
 			minDate: A.DataType.DateMath.subtract(now, A.DataType.DateMath.YEAR, 2),
 			selectMultipleDates: true,
 			setValue: true,
-			showToday: true
+			showToday: true,
+			strings: {
+				next: '<liferay-ui:message key="next" />',
+				none: '<liferay-ui:message key="none" />',
+				previous: '<liferay-ui:message key="previous" />',
+				today: '<liferay-ui:message key="today" />'
+			}
 		}
 	).render('#<portlet:namespace /><%= facet.getFieldName() %>PlaceHolder');
 </aui:script>

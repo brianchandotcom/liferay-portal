@@ -28,6 +28,7 @@
 			<xs:element name="description" type="xs:string" minOccurs="0" />
 			<xs:element name="script" type="xs:string" />
 			<xs:element name="script-language" type="script-language-type" />
+            <xs:element name="script-required-contexts" type="xs:string" minOccurs="0" />
 			<xs:element name="priority" type="xs:int" minOccurs="0" />
 		</xs:sequence>
 	</xs:complexType>
@@ -130,6 +131,7 @@
 					<xs:sequence>
 						<xs:element name="script" type="xs:string" />
 						<xs:element name="script-language" type="script-language-type" />
+                        <xs:element name="script-required-contexts" type="xs:string" minOccurs="0" />
 						<xs:element ref="transitions" />
 					</xs:sequence>
 				</xs:extension>
@@ -274,6 +276,7 @@
 					<xs:sequence>
 						<xs:element name="script" type="xs:string" />
 						<xs:element name="script-language" type="script-language-type" />
+                        <xs:element name="script-required-contexts" type="xs:string" minOccurs="0" />
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>

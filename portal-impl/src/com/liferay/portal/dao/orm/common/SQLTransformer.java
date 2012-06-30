@@ -258,7 +258,7 @@ public class SQLTransformer {
 	}
 
 	private String _replaceReplace(String newSQL) {
-		return StringUtil.replace(newSQL, "replace(", "str_replace(");
+		return newSQL.replaceAll("(?i)replace\\(", "str_replace(");
 	}
 
 	private String _replaceUnion(String sql) {

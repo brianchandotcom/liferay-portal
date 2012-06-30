@@ -226,18 +226,20 @@ Liferay = window.Liferay || {};
 
 				instance._ioRequest(instance.actionUrl, config);
 
-				var value;
+				if (xHR) {
+					var value;
 
-				if (typeof xHR.responseText == 'unknown') {
-					var data = config.data;
+					if (typeof xHR.responseText == 'unknown') {
+						var data = config.data;
 
-					value = 'IE6 could not access the response for: ' + data.serviceMethodName;
+						value = 'IE6 could not access the response for: ' + data.serviceMethodName;
+					}
+					else {
+						value = eval('(' + xHR.responseText + ')');
+					}
+
+					return value;
 				}
-				else {
-					value = eval('(' + xHR.responseText + ')');
-				}
-
-				return value;
 			},
 
 			bind: function() {

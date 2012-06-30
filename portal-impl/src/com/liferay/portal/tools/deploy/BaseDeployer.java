@@ -246,6 +246,19 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 		}
 	}
 
+	public void copyContextXml(File targetDir) throws Exception {
+		String contextPath = DeployUtil.getResourcePath("context.xml");
+
+		String content = FileUtil.read(contextPath);
+
+		if (!PropsValues.AUTO_DEPLOY_UNPACK_WAR) {
+			content = StringUtil.replace(
+				content, "antiResourceLocking=\"true\"", StringPool.BLANK);
+		}
+
+		FileUtil.write(new File(targetDir, "META-INF/context.xml"), content);
+	}
+
 	public void copyDependencyXml(String fileName, String targetDir)
 		throws Exception {
 

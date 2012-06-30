@@ -14,8 +14,6 @@
 
 package com.liferay.portal.poller.comet;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-
 /**
  * @author Edward Han
  */
@@ -34,8 +32,6 @@ public class PollerCometDelayedJobUtil {
 
 	public void setPollerCometDelayedJob(
 		PollerCometDelayedJob pollerCometDelayedJob) {
-
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_pollerCometDelayedJob = pollerCometDelayedJob;
 	}

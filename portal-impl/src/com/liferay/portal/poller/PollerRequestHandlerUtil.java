@@ -16,7 +16,6 @@ package com.liferay.portal.poller;
 
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.poller.PollerHeader;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -43,8 +42,6 @@ public class PollerRequestHandlerUtil {
 
 	public void setPollerRequestHandler(
 		PollerRequestHandler pollerRequestHandler) {
-
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_pollerRequestHandler = pollerRequestHandler;
 	}

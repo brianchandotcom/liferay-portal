@@ -101,7 +101,7 @@ public class DynamicCSSUtil {
 		Theme theme = null;
 
 		if (themeDisplay == null) {
-			theme = _getTheme(request);
+			theme = getTheme(request);
 
 			if (theme == null) {
 				String currentURL = PortalUtil.getCurrentURL(request);
@@ -116,7 +116,7 @@ public class DynamicCSSUtil {
 
 		String parsedContent = null;
 
-		boolean themeCssFastLoad = _isThemeCssFastLoad(request, themeDisplay);
+		boolean themeCssFastLoad = isThemeCssFastLoad(request, themeDisplay);
 
 		URL resourceURL = servletContext.getResource(resourcePath);
 
@@ -153,10 +153,10 @@ public class DynamicCSSUtil {
 			String queryString = request.getQueryString();
 
 			if (!themeCssFastLoad && Validator.isNotNull(queryString)) {
-				content = _propagateQueryString(content, queryString);
+				content = propagateQueryString(content, queryString);
 			}
 
-			parsedContent = _parseSass(
+			parsedContent = parseSass(
 				request, servletContext, themeDisplay, theme, resourcePath,
 				content);
 
@@ -178,7 +178,7 @@ public class DynamicCSSUtil {
 			},
 			new String[] {
 				PortalUtil.getPathContext(),
-				_getThemeImagesPath(request, themeDisplay, theme)
+				getThemeImagesPath(request, themeDisplay, theme)
 			});
 
 		return parsedContent;
@@ -196,7 +196,7 @@ public class DynamicCSSUtil {
 		return servletContext.getResource(cacheFileName);
 	}
 
-	private static String _getCssThemePath(
+	private static String getCssThemePath(
 			HttpServletRequest request, ThemeDisplay themeDisplay, Theme theme)
 		throws Exception {
 
@@ -241,7 +241,7 @@ public class DynamicCSSUtil {
 		return sassTempDir;
 	}
 
-	private static Theme _getTheme(HttpServletRequest request)
+	private static Theme getTheme(HttpServletRequest request)
 		throws Exception {
 
 		long companyId = PortalUtil.getCompanyId(request);
@@ -301,7 +301,7 @@ public class DynamicCSSUtil {
 		return null;
 	}
 
-	private static String _getThemeImagesPath(
+	private static String getThemeImagesPath(
 			HttpServletRequest request, ThemeDisplay themeDisplay, Theme theme)
 		throws Exception {
 
@@ -321,7 +321,7 @@ public class DynamicCSSUtil {
 		return themeImagesPath;
 	}
 
-	private static boolean _isThemeCssFastLoad(
+	private static boolean isThemeCssFastLoad(
 		HttpServletRequest request, ThemeDisplay themeDisplay) {
 
 		if (themeDisplay != null) {
@@ -332,7 +332,7 @@ public class DynamicCSSUtil {
 			request, "css_fast_load", PropsValues.THEME_CSS_FAST_LOAD);
 	}
 
-	private static String _parseSass(
+	private static String parseSass(
 			HttpServletRequest request, ServletContext servletContext,
 			ThemeDisplay themeDisplay, Theme theme, String resourcePath,
 			String content)
@@ -345,7 +345,7 @@ public class DynamicCSSUtil {
 		inputObjects.put("content", content);
 		inputObjects.put("cssRealPath", resourcePath);
 		inputObjects.put(
-			"cssThemePath", _getCssThemePath(request, themeDisplay, theme));
+			"cssThemePath", getCssThemePath(request, themeDisplay, theme));
 		inputObjects.put("sassCachePath", sassTempDir.getCanonicalPath());
 
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
@@ -366,7 +366,7 @@ public class DynamicCSSUtil {
 	/**
 	 * @see {@link AggregateFilter#aggregateCss(String, String)}
 	 */
-	private static String _propagateQueryString(
+	private static String propagateQueryString(
 		String content, String queryString) {
 
 		StringBuilder sb = new StringBuilder(content.length());

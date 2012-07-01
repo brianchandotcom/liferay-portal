@@ -27,7 +27,8 @@ import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelHintsConstants;
 import com.liferay.portal.scripting.ruby.RubyExecutor;
-import com.liferay.portal.servlet.filters.minifier.MinifierFilter;
+import com.liferay.portal.servlet.filters.aggregate.AggregateFilter;
+import com.liferay.portal.servlet.filters.aggregate.FileAggregateContext;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
 import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.util.PortalImpl;
@@ -45,6 +46,7 @@ import org.apache.tools.ant.DirectoryScanner;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Raymond Augé
  */
 public class SassToCssBuilder {
 
@@ -136,7 +138,10 @@ public class SassToCssBuilder {
 	private String _getContent(File file) throws Exception {
 		String content = FileUtil.read(file);
 
-		content = MinifierFilter.aggregateCss(file.getParent(), content);
+		FileAggregateContext fileMinifierContext = new FileAggregateContext(
+			file);
+
+		content = AggregateFilter.aggregateCss(fileMinifierContext, content);
 
 		return parseStaticTokens(content);
 	}

@@ -97,6 +97,10 @@ public class ExtRegistry {
 
 		Set<String> resourcePaths = servletContext.getResourcePaths("/WEB-INF");
 
+		if ((resourcePaths == null) || resourcePaths.isEmpty()) {
+			return;
+		}
+
 		for (String resourcePath : resourcePaths) {
 			if (resourcePath.startsWith("/WEB-INF/ext-") &&
 				resourcePath.endsWith("-ext.xml")) {

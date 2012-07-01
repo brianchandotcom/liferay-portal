@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
-import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -733,7 +732,7 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 		Set<String> resourcePaths = servletContext.getResourcePaths(
 			resourcePath);
 
-		if (resourcePaths == null) {
+		if ((resourcePaths == null) || resourcePaths.isEmpty()) {
 			return;
 		}
 
@@ -750,15 +749,8 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 					imageURLs.add(imageURL);
 				}
 				else {
-					if (ServerDetector.isTomcat()) {
-						if (_log.isInfoEnabled()) {
-							_log.info(ServletContextUtil.LOG_INFO_SPRITES);
-						}
-					}
-					else {
-						_log.error(
-							"Real path for " + curResourcePath + " is null");
-					}
+					_log.error(
+						"Resource url for " + curResourcePath + " is null");
 				}
 			}
 		}

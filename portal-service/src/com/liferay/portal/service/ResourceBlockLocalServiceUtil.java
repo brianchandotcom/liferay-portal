@@ -474,8 +474,7 @@ public class ResourceBlockLocalServiceUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static void releaseResourceBlock(long resourceBlockId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.SystemException {
 		getService().releaseResourceBlock(resourceBlockId);
 	}
 
@@ -581,34 +580,6 @@ public class ResourceBlockLocalServiceUtil {
 		getService()
 			.removeIndividualScopePermissions(companyId, groupId, name,
 			permissionedModel, roleId, actionIdsLong);
-	}
-
-	/**
-	* Increments the reference count of the resource block and updates it in
-	* the database.
-	*
-	* @param resourceBlockId the primary key of the resource block
-	* @throws PortalException if a resource block with the primary key could
-	not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void retainResourceBlock(long resourceBlockId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		getService().retainResourceBlock(resourceBlockId);
-	}
-
-	/**
-	* Increments the reference count of the resource block and updates it in
-	* the database.
-	*
-	* @param resourceBlock the resource block
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void retainResourceBlock(
-		com.liferay.portal.model.ResourceBlock resourceBlock)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().retainResourceBlock(resourceBlock);
 	}
 
 	public static void setCompanyScopePermissions(long companyId,

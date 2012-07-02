@@ -105,7 +105,13 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 						<c:choose>
 							<c:when test="<%= hasUnlinkLayoutSetPrototypePermission %>">
 								<div class="aui-helper-hidden" id="<portlet:namespace />publicLayoutSetPrototypeIdOptions">
-									<aui:input helpMessage="enable-propagation-of-changes-from-the-site-template-help" label="enable-propagation-of-changes-from-the-site-template" name="publicLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= true %>" />
+									<aui:input
+										helpMessage="enable-propagation-of-changes-from-the-site-template-help"
+										label="enable-propagation-of-changes-from-the-site-template"
+										name="publicLayoutSetPrototypeLinkEnabled"
+										type="checkbox"
+										value="<%= true %>"
+									/>
 								</div>
 							</c:when>
 							<c:otherwise>
@@ -161,7 +167,13 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 						<c:choose>
 							<c:when test="<%= hasUnlinkLayoutSetPrototypePermission %>">
 								<div class="aui-helper-hidden" id="<portlet:namespace />privateLayoutSetPrototypeIdOptions">
-									<aui:input helpMessage="enable-propagation-of-changes-from-the-site-template-help"  label="enable-propagation-of-changes-from-the-site-template" name="privateLayoutSetPrototypeLinkEnabled" type="checkbox" value="true" />
+									<aui:input
+										helpMessage="enable-propagation-of-changes-from-the-site-template-help"
+										label="enable-propagation-of-changes-from-the-site-template"
+										name="privateLayoutSetPrototypeLinkEnabled"
+										type="checkbox"
+										value="<%= true %>"
+									/>
 								</div>
 							</c:when>
 							<c:otherwise>

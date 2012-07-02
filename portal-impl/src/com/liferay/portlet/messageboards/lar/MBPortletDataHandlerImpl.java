@@ -480,6 +480,10 @@ public class MBPortletDataHandlerImpl extends BasePortletDataHandler {
 			InputStream inputStream =
 				portletDataContext.getZipEntryAsInputStream(binPath);
 
+			if (inputStream == null) {
+				continue;
+			}
+
 			ObjectValuePair<String, InputStream> inputStreamOVP =
 				new ObjectValuePair<String, InputStream>(name, inputStream);
 

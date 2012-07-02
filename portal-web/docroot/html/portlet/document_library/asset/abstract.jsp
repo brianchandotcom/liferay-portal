@@ -20,9 +20,12 @@
 int abstractLength = (Integer)request.getAttribute(WebKeys.ASSET_PUBLISHER_ABSTRACT_LENGTH);
 AssetRenderer assetRenderer = (AssetRenderer)request.getAttribute(WebKeys.ASSET_RENDERER);
 
+FileEntry fileEntry = (FileEntry)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY);
 FileVersion fileVersion = (FileVersion)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_VERSION);
 
-FileEntry fileEntry = fileVersion.getFileEntry();
+if (fileVersion == null) {
+	fileVersion = fileEntry.getFileVersion();
+}
 
 boolean showThumbnail = false;
 
@@ -31,35 +34,38 @@ if (fileEntry.getVersion().equals(fileVersion.getVersion())) {
 }
 %>
 
+<p class="asset-description">
+	<%= HtmlUtil.escape(StringUtil.shorten(fileEntry.getDescription(), abstractLength)) %>
+</p>
+
 <c:if test="<%= fileVersion.isApproved() %>">
 	<div class="asset-resource-info">
 		<c:choose>
 			<c:when test="<%= showThumbnail && ImageProcessorUtil.hasImages(fileVersion) %>">
 				<div>
-					<img src="<%= DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&imageThumbnail=1") %>" />
-
-					<%= fileVersion.getTitle() %>
+					<img alt="" src="<%= DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&imageThumbnail=1") %>" />
 				</div>
 			</c:when>
 			<c:when test="<%= showThumbnail && PDFProcessorUtil.hasImages(fileVersion) %>">
 				<div>
-					<img src="<%= DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&documentThumbnail=1") %>" />
-
-					<%= fileVersion.getTitle() %>
+					<img alt="" src="<%= DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&documentThumbnail=1") %>" />
 				</div>
 			</c:when>
 			<c:when test="<%= showThumbnail && VideoProcessorUtil.hasVideo(fileVersion) %>">
 				<div>
-					<img src="<%= DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoThumbnail=1") %>" />
-
-					<%= fileVersion.getTitle() %>
+					<img alt="" src="<%= DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoThumbnail=1") %>" />
 				</div>
 			</c:when>
 			<c:otherwise>
+
+				<%
+				String taglibFileEntryTitle = "<span class='aui-helper-hidden-accessible'>" + fileEntry.getTitle() + "</span>";
+				%>
+
 				<liferay-ui:icon
-					image='<%= "../file_system/small/" + fileVersion.getIcon() %>'
+					image="download"
 					label="<%= true %>"
-					message="<%= HtmlUtil.escape(fileVersion.getTitle()) %>"
+					message='<%= LanguageUtil.format(pageContext, "download-x", taglibFileEntryTitle) + " (" + TextFormatter.formatStorageSize(fileVersion.getSize(), locale) + ")" %>'
 					url="<%= assetRenderer.getURLDownload(themeDisplay) %>"
 				/>
 			</c:otherwise>
@@ -67,6 +73,3 @@ if (fileEntry.getVersion().equals(fileVersion.getVersion())) {
 	</div>
 </c:if>
 
-<p class="asset-description">
-	<%= HtmlUtil.escape(StringUtil.shorten(fileVersion.getDescription(), abstractLength)) %>
-</p>

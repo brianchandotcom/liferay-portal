@@ -45,10 +45,10 @@ import org.junit.runner.RunWith;
 		TransactionalExecutionTestListener.class
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
+@Transactional
 public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 
 	@Test
-	@Transactional
 	public void testAddTemplateWithDuplicatedKey() throws Exception {
 		String templateKey = ServiceTestUtil.randomString();
 
@@ -74,7 +74,6 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 	}
 
 	@Test
-	@Transactional
 	public void testAddTemplateWithoutName() throws Exception {
 		String language = DDMTemplateConstants.LANG_TYPE_VM;
 		String script = getTestTemplateScript(language);
@@ -94,7 +93,6 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 	}
 
 	@Test
-	@Transactional
 	public void testAddTemplateWithoutScript() throws Exception {
 		String language = DDMTemplateConstants.LANG_TYPE_VM;
 		String type = DDMTemplateConstants.TEMPLATE_TYPE_DETAIL;
@@ -113,7 +111,6 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 	}
 
 	@Test
-	@Transactional
 	public void testCopyTemplates() throws Exception {
 		DDMTemplate template = addListTemplate(
 			_testClassNameId, 0, "Test Template");
@@ -124,7 +121,6 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 	}
 
 	@Test
-	@Transactional
 	public void testDeleteTemplate() throws Exception {
 		DDMTemplate template = addListTemplate(
 			_testClassNameId, 0, "Test Template");
@@ -140,7 +136,6 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 	}
 
 	@Test
-	@Transactional
 	public void testFetchTemplate() throws Exception {
 		DDMTemplate template = addListTemplate(
 			_testClassNameId, 0, "Test Template");
@@ -152,7 +147,6 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 	}
 
 	@Test
-	@Transactional
 	public void testGetTemplates() throws Exception {
 		DDMTemplate template = addListTemplate(
 			_testClassNameId, 0, "Test Template");
@@ -164,7 +158,6 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 	}
 
 	@Test
-	@Transactional
 	public void testSearch() throws Exception {
 		DDMTemplate template = addListTemplate(
 			_testClassNameId, 0, "Test Template 1");
@@ -177,11 +170,10 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 			template.getName(), template.getDescription(), template.getType(),
 			template.getMode(), template.getLanguage(), false, 0, 1, null);
 
-		Assert.assertTrue(templates.size() == 1);
+		Assert.assertEquals(1, templates.size() );
 	}
 
 	@Test
-	@Transactional
 	public void testSearchByKeywords() throws Exception {
 		DDMTemplate template = addListTemplate(
 			_testClassNameId, 0, "Test Template 1");
@@ -193,11 +185,10 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 			template.getClassNameId(), template.getClassPK(), null,
 			template.getType(), template.getMode(), 0, 1, null);
 
-		Assert.assertTrue(templates.size() == 1);
+		Assert.assertEquals(1, templates.size() );
 	}
 
 	@Test
-	@Transactional
 	public void testSearchCount() throws Exception {
 		DDMTemplate template = addListTemplate(
 			_testClassNameId, 0, "Test Template");
@@ -212,7 +203,6 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 	}
 
 	@Test
-	@Transactional
 	public void testSearchCountByKeywords() throws Exception {
 		DDMTemplate template = addListTemplate(
 			_testClassNameId, 0, "Test Template");

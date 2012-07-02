@@ -17,6 +17,7 @@ package com.liferay.portlet.dynamicdatamapping.service;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.util.PortalUtil;
@@ -26,6 +27,9 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -134,6 +138,23 @@ public class BaseDDMServiceTestCase {
 			type, mode, language, script, serviceContext);
 	}
 
+	protected String readText(String filename) {
+		Class<?> clazz = getClass();
+
+		InputStream inputStream = clazz.getResourceAsStream(
+			"dependencies/" + filename);
+
+		String text = null;
+		try {
+			text = StringUtil.read(inputStream);
+		}
+		catch (IOException ioe) {
+			text = StringPool.BLANK;
+		}
+
+		return text;
+	}
+
 	protected Map<Locale, String> getDefaultLocaleMap(String defaultValue) {
 		Map<Locale, String> map = new HashMap<Locale, String>();
 		map.put(LocaleUtil.getDefault(), defaultValue);
@@ -142,69 +163,26 @@ public class BaseDDMServiceTestCase {
 	}
 
 	protected String getTestStructureXsd(String storageType) {
-		StringBundler sb = new StringBundler();
+		String text = StringPool.BLANK;
 
 		if (storageType.equals(StorageType.XML.getValue())) {
-			sb.append("<?xml version='1.0' encoding='UTF-8'?>");
-			sb.append("<root available-locales=\"en_US\" ");
-			sb.append("default-locale=\"en_US\">");
-			sb.append("<dynamic-element dataType=\"boolean\" ");
-			sb.append("name=\"checkbox1234\" type=\"checkbox\">\"");
-			sb.append("<meta-data locale=\"en_US\">");
-			sb.append("<entry name=\"label\"><![CDATA[Boolean]]></entry>");
-			sb.append("<entry name=\"showLabel\"><![CDATA[true]]></entry>");
-			sb.append("<entry name=\"tip\"><![CDATA[]]></entry>");
-			sb.append("</meta-data>");
-			sb.append("</dynamic-element>");
-			sb.append("</root>");
+			text = readText("test-structure.xsd");
 		}
 
-		return sb.toString();
+		return text;
 	}
 
 	protected String getTestTemplateScript(String language) {
-		StringBundler sb = new StringBundler();
+		String text = StringPool.BLANK;
 
 		if (language.equals(DDMTemplateConstants.LANG_TYPE_VM)) {
-			sb.append("#set ($preferences = $renderRequest.getPreferences())");
+			text = "#set ($preferences = $renderRequest.getPreferences())";
 		}
 		else if (language.equals("xsd")) {
-			sb.append("<?xml version='1.0' encoding='UTF-8'?>");
-			sb.append("<root available-locales=\"en_US\" ");
-			sb.append("default-locale=\"en_US\">");
-			sb.append("<dynamic-element dataType=\"string\" ");
-			sb.append("name=\"radio2112\" type=\"radio\">");
-			sb.append("<dynamic-element name=\"option_1\" type=\"option\" ");
-			sb.append("value=\"value 1\">");
-			sb.append("<meta-data locale=\"en_US\">");
-			sb.append("<entry name=\"label\"><![CDATA[option 1]]></entry>");
-			sb.append("</meta-data>");
-			sb.append("</dynamic-element>");
-			sb.append("<dynamic-element name=\"option_2\" type=\"option\" ");
-			sb.append("value=\"value 2\">");
-			sb.append("<meta-data locale=\"en_US\">");
-			sb.append("<entry name=\"label\"><![CDATA[option 2]]></entry>");
-			sb.append("</meta-data>");
-			sb.append("</dynamic-element>");
-			sb.append("<dynamic-element name=\"option_3\" type=\"option\" ");
-			sb.append("value=\"value 3\">");
-			sb.append("<meta-data locale=\"en_US\">");
-			sb.append("<entry name=\"label\"><![CDATA[option 3]]></entry>");
-			sb.append("</meta-data>");
-			sb.append("</dynamic-element>");
-			sb.append("<meta-data locale=\"en_US\">");
-			sb.append("<entry name=\"label\"><![CDATA[Radio]]></entry>");
-			sb.append("<entry name=\"showLabel\"><![CDATA[true]]></entry>");
-			sb.append("<entry name=\"required\"><![CDATA[false]]></entry>");
-			sb.append("<entry name=\"predefinedValue\">");
-			sb.append("<![CDATA[[\"\"]]]></entry>");
-			sb.append("<entry name=\"tip\"><![CDATA[]]></entry>");
-			sb.append("</meta-data>");
-			sb.append("</dynamic-element>");
-			sb.append("</root>");
+			text = readText("test-template.xsd");
 		}
 
-		return sb.toString();
+		return text;
 	}
 
 }

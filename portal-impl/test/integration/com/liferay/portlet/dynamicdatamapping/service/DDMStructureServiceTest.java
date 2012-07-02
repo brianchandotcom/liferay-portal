@@ -48,10 +48,10 @@ import org.junit.runner.RunWith;
 		TransactionalExecutionTestListener.class
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
+@Transactional
 public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 
 	@Test
-	@Transactional
 	public void testAddStructureWithDuplicatedKey() throws Exception {
 		String structureKey = ServiceTestUtil.randomString();
 		String storageType = StorageType.XML.getValue();
@@ -75,7 +75,6 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 	}
 
 	@Test
-	@Transactional
 	public void testAddStructureWithoutName() throws Exception {
 		String storageType = StorageType.XML.getValue();
 		String xsd = getTestStructureXsd(storageType);
@@ -94,7 +93,6 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 	}
 
 	@Test
-	@Transactional
 	public void testAddStructureWithoutXsd() throws Exception {
 		String storageType = StorageType.XML.getValue();
 		int type =  DDMStructureConstants.TYPE_DEFAULT;
@@ -112,7 +110,6 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 	}
 
 	@Test
-	@Transactional
 	public void testCopyStructure() throws Exception {
 		DDMStructure structure = addStructure(
 			_testClassNameId, "Test Structure");
@@ -127,7 +124,6 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 	}
 
 	@Test
-	@Transactional
 	public void testDeleteStructure() throws Exception {
 		DDMStructure structure = addStructure(
 			_testClassNameId, "Test Structure");
@@ -143,7 +139,6 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 	}
 
 	@Test
-	@Transactional
 	public void testDeleteStructureReferencedByTemplates() throws Exception {
 		DDMStructure structure = addStructure(
 			_testClassNameId, "Test Structure");
@@ -164,7 +159,6 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 	}
 
 	@Test
-	@Transactional
 	public void testFetchStructure() throws Exception {
 		DDMStructure structure = addStructure(
 			_testClassNameId, "Test Structure");
@@ -177,7 +171,6 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 	}
 
 	@Test
-	@Transactional
 	public void testGetStructures() throws Exception {
 		DDMStructure structure = addStructure(
 			_testClassNameId, "Test Structure");
@@ -189,7 +182,6 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 	}
 
 	@Test
-	@Transactional
 	public void testGetTemplates() throws Exception {
 		DDMStructure structure = addStructure(
 			_testClassNameId, "Test Structure");
@@ -199,11 +191,10 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 
 		List<DDMTemplate> templates = structure.getTemplates();
 
-		Assert.assertTrue(templates.size() == 2);
+		Assert.assertEquals(2, templates.size());
 	}
 
 	@Test
-	@Transactional
 	public void testSearch() throws Exception {
 		DDMStructure structure = addStructure(
 			_testClassNameId, "Test Structure 1");
@@ -217,11 +208,10 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 			structure.getCompanyId(), groupIds, classNameIds, null, null,
 			structure.getStorageType(), structure.getType(), false, 0, 1, null);
 
-		Assert.assertTrue(structures.size() == 1);
+		Assert.assertEquals(1, structures.size());
 	}
 
 	@Test
-	@Transactional
 	public void testSearchByKeywords() throws Exception {
 		DDMStructure structure = addStructure(
 			_testClassNameId, "Test Structure 1");
@@ -234,11 +224,10 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 		List<DDMStructure> structures = DDMStructureLocalServiceUtil.search(
 			structure.getCompanyId(), groupIds, classNameIds, null, 0, 1, null);
 
-		Assert.assertTrue(structures.size() == 1);
+		Assert.assertEquals(1, structures.size());
 	}
 
 	@Test
-	@Transactional
 	public void testSearchCount() throws Exception {
 		DDMStructure structure = addStructure(
 			_testClassNameId, "Test Structure");
@@ -255,7 +244,6 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 	}
 
 	@Test
-	@Transactional
 	public void testSearchCountByKeywords() throws Exception {
 		DDMStructure structure = addStructure(
 			_testClassNameId, "Test Structure");

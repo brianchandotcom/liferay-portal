@@ -82,20 +82,14 @@ public class DLActivityInterpreter extends BaseSocialActivityInterpreter {
 		String titlePattern = null;
 
 		if (activityType == DLActivityKeys.ADD_FILE_ENTRY) {
-			if (Validator.isNull(groupName)) {
-				titlePattern = "activity-document-library-add-file";
-			}
-			else {
-				titlePattern = "activity-document-library-add-file-in";
-			}
+			titlePattern = "activity-document-library-add-file";
 		}
 		else if (activityType == DLActivityKeys.UPDATE_FILE_ENTRY) {
-			if (Validator.isNull(groupName)) {
-				titlePattern = "activity-document-library-update-file";
-			}
-			else {
-				titlePattern = "activity-document-library-update-file-in";
-			}
+			titlePattern = "activity-document-library-update-file";
+		}
+
+		if ((titlePattern != null) && Validator.isNotNull(groupName)) {
+			titlePattern = titlePattern + "-in";
 		}
 
 		String fileTitle = wrapLink(

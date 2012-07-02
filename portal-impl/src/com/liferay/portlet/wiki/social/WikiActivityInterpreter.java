@@ -81,28 +81,17 @@ public class WikiActivityInterpreter extends BaseSocialActivityInterpreter {
 		if ((activityType == WikiActivityKeys.ADD_COMMENT) ||
 			(activityType == SocialActivityConstants.TYPE_ADD_COMMENT)) {
 
-			if (Validator.isNull(groupName)) {
-				titlePattern = "activity-wiki-add-comment";
-			}
-			else {
-				titlePattern = "activity-wiki-add-comment-in";
-			}
+			titlePattern = "activity-wiki-add-comment";
 		}
 		else if (activityType == WikiActivityKeys.ADD_PAGE) {
-			if (Validator.isNull(groupName)) {
-				titlePattern = "activity-wiki-add-page";
-			}
-			else {
-				titlePattern = "activity-wiki-add-page-in";
-			}
+			titlePattern = "activity-wiki-add-page";
 		}
 		else if (activityType == WikiActivityKeys.UPDATE_PAGE) {
-			if (Validator.isNull(groupName)) {
-				titlePattern = "activity-wiki-update-page";
-			}
-			else {
-				titlePattern = "activity-wiki-update-page-in";
-			}
+			titlePattern = "activity-wiki-update-page";
+		}
+
+		if ((titlePattern != null) && Validator.isNotNull(groupName)) {
+			titlePattern = titlePattern + "-in";
 		}
 
 		String pageTitle = wrapLink(

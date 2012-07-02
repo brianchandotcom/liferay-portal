@@ -78,20 +78,14 @@ public class CalendarActivityInterpreter extends BaseSocialActivityInterpreter {
 		String titlePattern = null;
 
 		if (activityType == CalendarActivityKeys.ADD_EVENT) {
-			if (Validator.isNull(groupName)) {
-				titlePattern = "activity-calendar-add-event";
-			}
-			else {
-				titlePattern = "activity-calendar-add-event-in";
-			}
+			titlePattern = "activity-calendar-add-event";
 		}
 		else if (activityType == CalendarActivityKeys.UPDATE_EVENT) {
-			if (Validator.isNull(groupName)) {
-				titlePattern = "activity-calendar-update-event";
-			}
-			else {
-				titlePattern = "activity-calendar-update-event-in";
-			}
+			titlePattern = "activity-calendar-update-event";
+		}
+
+		if ((titlePattern != null) && Validator.isNotNull(groupName)) {
+			titlePattern = titlePattern + "-in";
 		}
 
 		String eventTitle = wrapLink(link, HtmlUtil.escape(event.getTitle()));

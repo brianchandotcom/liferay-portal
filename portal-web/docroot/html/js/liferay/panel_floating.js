@@ -126,6 +126,8 @@ AUI.add(
 					);
 
 					instance.set('trigger', instance._trigger);
+
+					Liferay.on('submitForm', instance.hide, instance);
 				},
 
 				prototype: {

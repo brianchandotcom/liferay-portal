@@ -383,7 +383,7 @@ public class FileSystemStore extends BaseStore {
 
 		String[] fileNames = file.list();
 
-		if (fileNames.length == 0) {
+		if (fileNames != null && fileNames.length == 0) {
 			String fileName = file.getName();
 
 			if ((repositoryId > 0) &&

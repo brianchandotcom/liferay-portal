@@ -92,6 +92,10 @@ public class FileUtil {
 		return getFile().createTempFileName(extension);
 	}
 
+	public static File createTempFolder() {
+		return getFile().createTempFolder();
+	}
+
 	public static String decodeSafeFileName(String fileName) {
 		return getFile().decodeSafeFileName(fileName);
 	}

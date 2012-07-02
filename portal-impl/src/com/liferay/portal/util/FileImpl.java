@@ -203,6 +203,21 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 		return sb.toString();
 	}
 
+	public File createTempFolder() {
+		StringBundler sb = new StringBundler();
+
+		sb.append(SystemProperties.get(SystemProperties.TMP_DIR));
+		sb.append(StringPool.SLASH);
+		sb.append(Time.getTimestamp());
+		sb.append(PwdGenerator.getPassword(PwdGenerator.KEY2, 8));
+
+		File file = new File(sb.toString());
+
+		file.mkdir();
+
+		return file;
+	}
+
 	public String decodeSafeFileName(String fileName) {
 		return StringUtil.replace(
 			fileName, _SAFE_FILE_NAME_2, _SAFE_FILE_NAME_1);

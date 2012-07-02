@@ -57,6 +57,8 @@ public interface File {
 
 	public String createTempFileName(String extension);
 
+	public java.io.File createTempFolder();
+
 	public String decodeSafeFileName(String fileName);
 
 	public boolean delete(java.io.File file);

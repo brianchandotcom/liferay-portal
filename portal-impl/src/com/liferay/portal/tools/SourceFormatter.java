@@ -1259,6 +1259,44 @@ public class SourceFormatter {
 					fileName, "ServiceUtil: " + fileName);
 			}
 
+			if (!className.equals("ProxyUtil") &&
+				newContent.contains("import java.lang.reflect.Proxy;")) {
+
+				_sourceFormatterHelper.printError(
+					fileName, "Proxy: " + fileName);
+			}
+
+			// LPS-28266
+
+			for (int pos1 = -1;;) {
+				pos1 = newContent.indexOf(StringPool.TAB + "try {", pos1 + 1);
+
+				if (pos1 == -1) {
+					break;
+				}
+
+				int pos2 = newContent.indexOf(
+					StringPool.TAB + "try {", pos1 + 1);
+				int pos3 = newContent.indexOf("\"select count(", pos1);
+
+				if ((pos2 != -1) && (pos3 != -1) && (pos2 < pos3)) {
+					continue;
+				}
+
+				int pos4 = newContent.indexOf("rs.getLong(1)", pos1);
+				int pos5 = newContent.indexOf(
+					StringPool.TAB + "finally {", pos1);
+
+				if ((pos3 == -1) || (pos4 == -1) || (pos5 == -1)) {
+					break;
+				}
+
+				if ((pos3 < pos4) && (pos4 < pos5)) {
+					_sourceFormatterHelper.printError(
+						fileName, "Use getInt(1) for count: " + fileName);
+				}
+			}
+
 			if ((newContent != null) && !content.equals(newContent)) {
 				_fileUtil.write(file, newContent);
 

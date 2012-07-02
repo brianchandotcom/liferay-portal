@@ -658,7 +658,7 @@ AUI.add(
 
 					instance._customTitleInput = instance._getNodeById('custom-title');
 					instance._customTitleCheckbox = instance._getNodeById('use-custom-titleCheckbox');
-					instance._showBorders = instance._getNodeById('show-bordersCheckbox');
+					instance._showBorders = instance._getNodeById('show-borders');
 					instance._borderNote = A.one('#border-note');
 					instance._portletLanguage = instance._getNodeById('lfr-portlet-language');
 					instance._portletLinksTarget = instance._getNodeById('lfr-point-links');
@@ -825,7 +825,6 @@ AUI.add(
 					portletData: {
 						language: 'en_US',
 						portletLinksTarget: '',
-						showBorders: themeDisplay.getPortletSetupShowBordersDefault(),
 						title: '',
 						titles: {},
 						useCustomTitle: false
@@ -1177,13 +1176,12 @@ AUI.add(
 
 				// Show borders
 
-				showBorders.detach('click');
-
 				showBorders.on(
-					'click',
+					'change',
 					function(event) {
-						borderNote.toggle();
-						portletData.showBorders = event.currentTarget.get('checked');
+						borderNote.show();
+
+						portletData.showBorders = event.currentTarget.val();
 					}
 				);
 
@@ -1287,7 +1285,7 @@ AUI.add(
 				// Portlet config
 
 				instance._setCheckbox(instance._customTitleCheckbox, portletData.useCustomTitle);
-				instance._setCheckbox(instance._showBorders, portletData.showBorders);
+				instance._setSelect(instance._showBorders, portletData.showBorders);
 				instance._setSelect(instance._portletLanguage, instance._currentLanguage);
 				instance._setSelect(instance._portletLinksTarget, portletData.portletLinksTarget);
 

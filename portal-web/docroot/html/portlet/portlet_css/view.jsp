@@ -112,7 +112,10 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 					</aui:select>
 
-					<aui:input name="show-borders" type="checkbox" />
+					<aui:select label="show-borders" name="show-borders" showEmptyOption="<%= true %>">
+						<aui:option label="yes" value="true" />
+						<aui:option label="no" value="false" />
+					</aui:select>
 
 					<span class="form-hint portlet-msg-info aui-helper-hidden" id="border-note">
 						<liferay-ui:message key="this-change-will-only-be-shown-after-you-refresh-the-page" />

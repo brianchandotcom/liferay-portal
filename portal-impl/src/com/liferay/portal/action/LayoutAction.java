@@ -16,6 +16,8 @@ package com.liferay.portal.action;
 
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.audit.AuditRouterUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -25,17 +27,20 @@ import com.liferay.portal.kernel.portlet.PortletContainerUtil;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.HeaderCacheServletResponse;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.struts.ActionConstants;
 import com.liferay.portal.struts.StrutsUtil;
@@ -44,11 +49,13 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletRequestImpl;
 import com.liferay.portlet.RenderParametersPool;
 import com.liferay.portlet.login.util.LoginUtil;
 import com.liferay.util.servlet.filters.CacheResponseUtil;
 
+import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
@@ -293,6 +300,36 @@ public class LayoutAction extends Action {
 			WebKeys.LAYOUT_CONTENT, unsyncStringWriter.getStringBundler());
 	}
 
+	protected boolean hasPortletSetupLinkToLayoutUuid(
+		Layout layout, String portletId) {
+
+		try {
+			PortletPreferences portletSetup =
+				PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(
+					layout, portletId);
+
+			String linkToLayoutUuid = GetterUtil.getString(
+				portletSetup.getValue("portletSetupLinkToLayoutUuid", null));
+
+			if (Validator.isNotNull(linkToLayoutUuid)) {
+				Layout linkedLayout =
+					LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+						linkToLayoutUuid, layout.getGroupId());
+
+				if (linkedLayout != null) {
+					return true;
+				}
+			}
+		}
+		catch (SystemException se) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(se);
+			}
+		}
+
+		return false;
+	}
+
 	protected ActionForward processLayout(
 			ActionMapping mapping, HttpServletRequest request,
 			HttpServletResponse response, long plid)
@@ -357,6 +394,27 @@ public class LayoutAction extends Action {
 
 			if (portlet != null) {
 				PortletContainerUtil.preparePortlet(request, portlet);
+
+				String orignalLayoutId = request.getParameter(
+					StringPool.UNDERLINE + portlet.getPortletId() +
+					StringPool.UNDERLINE + "p_ol_id");
+
+				if (Validator.isNotNull(orignalLayoutId)) {
+					if (Validator.isNotNull(orignalLayoutId)) {
+						Layout originalLayout =
+							LayoutLocalServiceUtil.getLayout(
+								Long.valueOf(orignalLayoutId));
+
+						if (hasPortletSetupLinkToLayoutUuid(
+								originalLayout, portlet.getPortletId())) {
+
+							request.setAttribute(
+								"hasPortletSetupLinkToLayoutUuid",true);
+							request.setAttribute(
+								"originalLayout", originalLayout);
+						}
+					}
+				}
 
 				if (themeDisplay.isLifecycleAction()) {
 					PortletContainerUtil.processAction(

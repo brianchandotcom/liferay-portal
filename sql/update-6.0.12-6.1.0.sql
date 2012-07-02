@@ -499,6 +499,9 @@ create table ResourceBlockPermission (
 	actionIds LONG
 );
 
+drop index IX_8D83D0CE on ResourcePermission;
+drop index IX_4A1F4402 on ResourcePermission;
+
 create table ResourceTypePermission (
 	resourceTypePermissionId LONG not null primary key,
 	companyId LONG,

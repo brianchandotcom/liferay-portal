@@ -23,6 +23,7 @@ import com.liferay.portal.test.ExecutionTestListeners;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.dynamicdatamapping.TemplateDuplicateTemplateKeyException;
 import com.liferay.portlet.dynamicdatamapping.TemplateNameException;
@@ -170,7 +171,7 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 			template.getName(), template.getDescription(), template.getType(),
 			template.getMode(), template.getLanguage(), false, 0, 1, null);
 
-		Assert.assertEquals(1, templates.size() );
+		Assert.assertEquals(1, templates.size());
 	}
 
 	@Test
@@ -185,34 +186,42 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 			template.getClassNameId(), template.getClassPK(), null,
 			template.getType(), template.getMode(), 0, 1, null);
 
-		Assert.assertEquals(1, templates.size() );
+		Assert.assertEquals(1, templates.size());
 	}
 
 	@Test
 	public void testSearchCount() throws Exception {
-		DDMTemplate template = addListTemplate(
-			_testClassNameId, 0, "Test Template");
+		long companyId = TestPropsValues.getCompanyId();
+		long groupId = TestPropsValues.getGroupId();
+		String name = "Test Template";
+
+		int initCount = DDMTemplateLocalServiceUtil.searchCount(
+			companyId, groupId, _testClassNameId, 0, name, null, null, null,
+			null, false);
+
+		addListTemplate(_testClassNameId, 0, name);
 
 		int count = DDMTemplateLocalServiceUtil.searchCount(
-			template.getCompanyId(), template.getGroupId(),
-			template.getClassNameId(), template.getClassPK(),
-			template.getName(), template.getDescription(), template.getType(),
-			template.getMode(), template.getLanguage(), false);
+			companyId, groupId, _testClassNameId, 0, name, null, null, null,
+			null, false);
 
-		Assert.assertTrue(count > 0);
+		Assert.assertEquals(initCount + 1, count);
 	}
 
 	@Test
 	public void testSearchCountByKeywords() throws Exception {
-		DDMTemplate template = addListTemplate(
-			_testClassNameId, 0, "Test Template");
+		long companyId = TestPropsValues.getCompanyId();
+		long groupId = TestPropsValues.getGroupId();
+
+		int initCount = DDMTemplateLocalServiceUtil.searchCount(
+			companyId, groupId, _testClassNameId, 0, null, null, null);
+
+		addListTemplate(_testClassNameId, 0, "Test Template");
 
 		int count = DDMTemplateLocalServiceUtil.searchCount(
-			template.getCompanyId(), template.getGroupId(),
-			template.getClassNameId(), template.getClassPK(),
-			template.getName(), template.getType(), template.getMode());
+			companyId, groupId, _testClassNameId, 0, null, null, null);
 
-		Assert.assertTrue(count > 0);
+		Assert.assertEquals(initCount + 1, count);
 	}
 
 	protected List<DDMTemplate> copyTemplate(DDMTemplate template)

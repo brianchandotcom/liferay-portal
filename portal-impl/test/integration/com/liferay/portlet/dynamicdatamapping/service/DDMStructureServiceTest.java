@@ -23,6 +23,7 @@ import com.liferay.portal.test.ExecutionTestListeners;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 import com.liferay.portlet.dynamicdatamapping.RequiredStructureException;
 import com.liferay.portlet.dynamicdatamapping.StructureDuplicateStructureKeyException;
@@ -229,33 +230,38 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 
 	@Test
 	public void testSearchCount() throws Exception {
-		DDMStructure structure = addStructure(
-			_testClassNameId, "Test Structure");
+		long companyId = TestPropsValues.getCompanyId();
+		long[] groupIds = new long[] {TestPropsValues.getGroupId()};
+		long[] classNameIds = new long[] {_testClassNameId};
+		String name = "Test Structure";
+		int type = DDMStructureConstants.TYPE_DEFAULT;
 
-		long[] groupIds = new long[] {structure.getGroupId()};
-		long[] classNameIds = new long[] {structure.getClassNameId()};
+		int initCount = DDMStructureLocalServiceUtil.searchCount(
+			companyId, groupIds, classNameIds, name, null, null, type, false);
+		
+		addStructure(_testClassNameId, name);
 
 		int count = DDMStructureLocalServiceUtil.searchCount(
-			structure.getCompanyId(), groupIds, classNameIds,
-			structure.getName(), structure.getDescription(),
-			structure.getStorageType(), structure.getType(), false);
+			companyId, groupIds, classNameIds, name, null, null, type, false);
 
-		Assert.assertTrue(count > 0);
+		Assert.assertEquals(initCount + 1, count);
 	}
 
 	@Test
 	public void testSearchCountByKeywords() throws Exception {
-		DDMStructure structure = addStructure(
-			_testClassNameId, "Test Structure");
+		long companyId = TestPropsValues.getCompanyId();
+		long[] groupIds = new long[] {TestPropsValues.getGroupId()};
+		long[] classNameIds = new long[] {_testClassNameId};
 
-		long[] groupIds = new long[] {structure.getGroupId()};
-		long[] classNameIds = new long[] {structure.getClassNameId()};
+		int initCount = DDMStructureLocalServiceUtil.searchCount(
+			companyId, groupIds, classNameIds, null);
+
+		addStructure(_testClassNameId, "Test Structure");
 
 		int count = DDMStructureLocalServiceUtil.searchCount(
-			structure.getCompanyId(), groupIds, classNameIds,
-			structure.getName());
+			companyId, groupIds, classNameIds, null);
 
-		Assert.assertTrue(count > 0);
+		Assert.assertEquals(initCount + 1, count);
 	}
 
 	protected DDMStructure copyStructure(DDMStructure structure)

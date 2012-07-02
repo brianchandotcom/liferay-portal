@@ -26,14 +26,23 @@ import com.yahoo.platform.yui.mozilla.javascript.EvaluatorException;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Raymond Augé
  */
 public class MinifierUtil {
 
 	public static String minifyCss(String content) {
+		if (!PropsValues.MINIFIER_ENABLED) {
+			return content;
+		}
+
 		return _instance._minifyCss(content);
 	}
 
 	public static String minifyJavaScript(String content) {
+		if (!PropsValues.MINIFIER_ENABLED) {
+			return content;
+		}
+
 		return _instance._minifyJavaScript(content);
 	}
 

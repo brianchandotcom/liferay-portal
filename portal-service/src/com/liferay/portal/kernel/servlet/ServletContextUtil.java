@@ -17,14 +17,13 @@ package com.liferay.portal.kernel.servlet;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
-import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.io.File;
 import java.io.IOException;
+
+import java.net.URL;
+import java.net.URLConnection;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -35,18 +34,9 @@ import javax.servlet.ServletContext;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Raymond Augé
  */
 public class ServletContextUtil {
-
-	public static final String LOG_INFO_LAST_MODIFIED =
-		ServletContextUtil.LOG_INFO_PREFIX + "retrieval of the most recent " +
-			"last modified date of a WAR for best performance";
-
-	public static final String LOG_INFO_PREFIX =
-		"Please configure Tomcat to unpack WARs to enable ";
-
-	public static final String LOG_INFO_SPRITES =
-		LOG_INFO_PREFIX + "enable sprites for best performance";
 
 	public static Set<String> getClassNames(ServletContext servletContext)
 		throws IOException {
@@ -84,43 +74,58 @@ public class ServletContextUtil {
 
 		long lastModified = 0;
 
-		Set<String> resourcePaths = servletContext.getResourcePaths(
-			resourcePath);
+		Set<String> resourcePaths = null;
 
-		if (resourcePaths != null) {
-			for (String curResourcePath : resourcePaths) {
-				if (curResourcePath.endsWith(StringPool.SLASH)) {
-					long curLastModified = getLastModified(
-						servletContext, curResourcePath);
+		if (resourcePath.endsWith(StringPool.SLASH)) {
+			resourcePaths = servletContext.getResourcePaths(
+				resourcePath);
+		}
+		else {
+			resourcePaths = new HashSet<String>();
 
-					if (curLastModified > lastModified) {
-						lastModified = curLastModified;
-					}
+			resourcePaths.add(resourcePath);
+		}
+
+		if ((resourcePaths == null) || resourcePaths.isEmpty()) {
+			if (cache) {
+				servletContext.setAttribute(
+					ServletContextUtil.class.getName() + StringPool.PERIOD +
+						resourcePath,
+					new Long(lastModified));
+			}
+
+			return lastModified;
+		}
+
+		for (String curResourcePath : resourcePaths) {
+			if (curResourcePath.endsWith(StringPool.SLASH)) {
+				long curLastModified = getLastModified(
+					servletContext, curResourcePath);
+
+				if (curLastModified > lastModified) {
+					lastModified = curLastModified;
 				}
-				else {
-					String realPath = getRealPath(
-						servletContext, curResourcePath);
+			}
+			else {
+				try {
+					URL resourceURL = servletContext.getResource(
+						curResourcePath);
 
-					if (realPath == null) {
-						if (ServerDetector.isTomcat()) {
-							if (_log.isInfoEnabled()) {
-								_log.info(LOG_INFO_LAST_MODIFIED);
-							}
-						}
-						else {
-							_log.error(
-								"Real path for " + curResourcePath +
-									" is null");
-						}
+					if (resourceURL == null) {
+						_log.error(
+							"Resource url for " + curResourcePath + " is null");
 
 						continue;
 					}
 
-					File file = new File(realPath);
+					URLConnection urlConnection = resourceURL.openConnection();
 
-					if (file.lastModified() > lastModified) {
-						lastModified = file.lastModified();
+					if (urlConnection.getLastModified() > lastModified) {
+						lastModified = urlConnection.getLastModified();
 					}
+				}
+				catch (IOException ioe) {
+					_log.error(ioe, ioe);
 				}
 			}
 		}
@@ -133,50 +138,6 @@ public class ServletContextUtil {
 		}
 
 		return lastModified;
-	}
-
-	public static String getRealPath(
-		ServletContext servletContext, String path) {
-
-		String realPath = servletContext.getRealPath(path);
-
-		if ((realPath == null) && ServerDetector.isWebLogic()) {
-			String rootDir = getRootDir(servletContext);
-
-			if (path.startsWith(StringPool.SLASH)) {
-				realPath = rootDir + path.substring(1);
-			}
-			else {
-				realPath = rootDir + path;
-			}
-
-			if (!FileUtil.exists(realPath)) {
-				realPath = null;
-			}
-		}
-
-		return realPath;
-	}
-
-	protected static String getRootDir(ServletContext servletContext) {
-		String key = ServletContextUtil.class.getName() + ".rootDir";
-
-		String rootDir = (String)servletContext.getAttribute(key);
-
-		if (rootDir == null) {
-			ClassLoader classLoader = (ClassLoader)servletContext.getAttribute(
-				PluginContextListener.PLUGIN_CLASS_LOADER);
-
-			if (classLoader == null) {
-				classLoader = PortalClassLoaderUtil.getClassLoader();
-			}
-
-			rootDir = WebDirDetector.getRootDir(classLoader);
-
-			servletContext.setAttribute(key, rootDir);
-		}
-
-		return rootDir;
 	}
 
 	private static String _getClassName(String path) {

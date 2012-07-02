@@ -19,22 +19,22 @@ import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
-import com.liferay.portal.kernel.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.servlet.StringServletResponse;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.SystemProperties;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.util.servlet.filters.CacheResponseUtil;
 
 import java.io.File;
+
+import java.net.URL;
+import java.net.URLConnection;
 
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -56,12 +56,13 @@ public class DynamicCSSFilter extends BasePortalFilter {
 		super.init(filterConfig);
 
 		_servletContext = filterConfig.getServletContext();
-		_servletContextName = GetterUtil.getString(
-			_servletContext.getServletContextName());
 
-		if (Validator.isNull(_servletContextName)) {
-			_tempDir += "/portal";
-		}
+		File tempDir = (File)_servletContext.getAttribute(
+			JavaConstants.JAVAX_SERVLET_CONTEXT_TEMPDIR);
+
+		_tempDir = new File(tempDir, _TEMP_DIR);
+
+		_tempDir.mkdirs();
 
 		DynamicCSSUtil.init();
 	}
@@ -79,9 +80,7 @@ public class DynamicCSSFilter extends BasePortalFilter {
 			cacheKeyGenerator.append(sterilizeQueryString(queryString));
 		}
 
-		String cacheKey = String.valueOf(cacheKeyGenerator.finish());
-
-		return _tempDir.concat(StringPool.SLASH).concat(cacheKey);
+		return String.valueOf(cacheKeyGenerator.finish());
 	}
 
 	protected Object getDynamicContent(
@@ -99,30 +98,23 @@ public class DynamicCSSFilter extends BasePortalFilter {
 			requestPath = requestPath.substring(contextPath.length());
 		}
 
-		String realPath = ServletContextUtil.getRealPath(
-			_servletContext, requestPath);
+		URL resourceURL = _servletContext.getResource(requestPath);
 
-		if (realPath == null) {
+		if (resourceURL == null) {
 			return null;
 		}
 
-		realPath = StringUtil.replace(
-			realPath, CharPool.BACK_SLASH, CharPool.SLASH);
-
-		File file = new File(realPath);
-
-		if (!file.exists()) {
-			return null;
-		}
+		URLConnection urlConnection = resourceURL.openConnection();
 
 		String cacheCommonFileName = getCacheFileName(request);
 
 		File cacheContentTypeFile = new File(
-			cacheCommonFileName + "_E_CONTENT_TYPE");
-		File cacheDataFile = new File(cacheCommonFileName + "_E_DATA");
+			_tempDir, cacheCommonFileName + "_E_CONTENT_TYPE");
+		File cacheDataFile = new File(
+			_tempDir, cacheCommonFileName + "_E_DATA");
 
 		if (cacheDataFile.exists() &&
-			(cacheDataFile.lastModified() >= file.lastModified())) {
+			(cacheDataFile.lastModified() >= urlConnection.getLastModified())) {
 
 			if (cacheContentTypeFile.exists()) {
 				String contentType = FileUtil.read(cacheContentTypeFile);
@@ -138,23 +130,23 @@ public class DynamicCSSFilter extends BasePortalFilter {
 		String content = null;
 
 		try {
-			if (realPath.endsWith(_CSS_EXTENSION) && file.exists()) {
+			if (requestPath.endsWith(_CSS_EXTENSION)) {
 				if (_log.isInfoEnabled()) {
-					_log.info("Parsing SASS on CSS " + file);
+					_log.info("Parsing SASS on CSS " + requestPath);
 				}
 
-				content = FileUtil.read(file);
+				content = StringUtil.read(urlConnection.getInputStream());
 
 				dynamicContent = DynamicCSSUtil.parseSass(
-					request, realPath, content);
+					request, _servletContext, requestPath, content);
 
 				response.setContentType(ContentTypes.TEXT_CSS);
 
 				FileUtil.write(cacheContentTypeFile, ContentTypes.TEXT_CSS);
 			}
-			else if (realPath.endsWith(_JSP_EXTENSION) || !file.exists()) {
+			else if (requestPath.endsWith(_JSP_EXTENSION)) {
 				if (_log.isInfoEnabled()) {
-					_log.info("Parsing SASS on JSP or servlet " + realPath);
+					_log.info("Parsing SASS on JSP or servlet " + requestPath);
 				}
 
 				StringServletResponse stringResponse =
@@ -172,7 +164,7 @@ public class DynamicCSSFilter extends BasePortalFilter {
 				content = stringResponse.getString();
 
 				dynamicContent = DynamicCSSUtil.parseSass(
-					request, realPath, content);
+					request, _servletContext, requestPath, content);
 
 				FileUtil.write(
 					cacheContentTypeFile, stringResponse.getContentType());
@@ -182,7 +174,7 @@ public class DynamicCSSFilter extends BasePortalFilter {
 			}
 		}
 		catch (Exception e) {
-			_log.error("Unable to parse SASS on CSS " + realPath, e);
+			_log.error("Unable to parse SASS on CSS " + requestPath, e);
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(content);
@@ -236,13 +228,11 @@ public class DynamicCSSFilter extends BasePortalFilter {
 
 	private static final String _JSP_EXTENSION = ".jsp";
 
-	private static final String _TEMP_DIR =
-		SystemProperties.get(SystemProperties.TMP_DIR) + "/liferay/css";
+	private static final String _TEMP_DIR = "css";
 
 	private static Log _log = LogFactoryUtil.getLog(DynamicCSSFilter.class);
 
 	private ServletContext _servletContext;
-	private String _servletContextName;
-	private String _tempDir = _TEMP_DIR;
+	private File _tempDir;
 
 }

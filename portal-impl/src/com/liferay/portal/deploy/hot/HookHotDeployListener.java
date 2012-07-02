@@ -828,6 +828,10 @@ public class HookHotDeployListener
 		Set<String> resourcePaths = servletContext.getResourcePaths(
 			resourcePath);
 
+		if ((resourcePaths == null) || resourcePaths.isEmpty()) {
+			return;
+		}
+
 		for (String curResourcePath : resourcePaths) {
 			if (curResourcePath.endsWith(StringPool.SLASH)) {
 				getCustomJsps(

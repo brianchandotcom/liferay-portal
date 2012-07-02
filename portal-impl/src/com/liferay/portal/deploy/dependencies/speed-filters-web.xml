@@ -1,4 +1,24 @@
 <filter>
+	<filter-name>Aggregate Filter</filter-name>
+	<filter-class>com.liferay.portal.kernel.servlet.PortalClassLoaderFilter</filter-class>
+	<init-param>
+		<param-name>filter-class</param-name>
+		<param-value>com.liferay.portal.servlet.filters.aggregate.AggregateFilter</param-value>
+	</init-param>
+</filter>
+<filter>
+	<filter-name>Aggregate Filter - JSP</filter-name>
+	<filter-class>com.liferay.portal.kernel.servlet.PortalClassLoaderFilter</filter-class>
+	<init-param>
+		<param-name>filter-class</param-name>
+		<param-value>com.liferay.portal.servlet.filters.aggregate.AggregateFilter</param-value>
+	</init-param>
+	<init-param>
+		<param-name>url-regex-pattern</param-name>
+		<param-value>.+/(css|main)\.jsp</param-value>
+	</init-param>
+</filter>
+<filter>
 	<filter-name>Cache Filter - Resource</filter-name>
 	<filter-class>com.liferay.portal.kernel.servlet.PortalClassLoaderFilter</filter-class>
 	<init-param>
@@ -150,26 +170,6 @@
 		<param-value>com.liferay.portal.servlet.filters.language.LanguageFilter</param-value>
 	</init-param>
 </filter>
-<filter>
-	<filter-name>Minifier Filter</filter-name>
-	<filter-class>com.liferay.portal.kernel.servlet.PortalClassLoaderFilter</filter-class>
-	<init-param>
-		<param-name>filter-class</param-name>
-		<param-value>com.liferay.portal.servlet.filters.minifier.MinifierFilter</param-value>
-	</init-param>
-</filter>
-<filter>
-	<filter-name>Minifier Filter - JSP</filter-name>
-	<filter-class>com.liferay.portal.kernel.servlet.PortalClassLoaderFilter</filter-class>
-	<init-param>
-		<param-name>filter-class</param-name>
-		<param-value>com.liferay.portal.servlet.filters.minifier.MinifierFilter</param-value>
-	</init-param>
-	<init-param>
-		<param-name>url-regex-pattern</param-name>
-		<param-value>.+/(css|main)\.jsp</param-value>
-	</init-param>
-</filter>
 <filter-mapping>
 	<filter-name>Header Filter</filter-name>
 	<url-pattern>*.css</url-pattern>
@@ -275,15 +275,15 @@
 	<url-pattern>*.js</url-pattern>
 </filter-mapping>
 <filter-mapping>
-	<filter-name>Minifier Filter</filter-name>
+	<filter-name>Aggregate Filter</filter-name>
 	<url-pattern>*.css</url-pattern>
 </filter-mapping>
 <filter-mapping>
-	<filter-name>Minifier Filter</filter-name>
+	<filter-name>Aggregate Filter</filter-name>
 	<url-pattern>*.js</url-pattern>
 </filter-mapping>
 <filter-mapping>
-	<filter-name>Minifier Filter - JSP</filter-name>
+	<filter-name>Aggregate Filter - JSP</filter-name>
 	<url-pattern>*.jsp</url-pattern>
 </filter-mapping>
 <filter-mapping>

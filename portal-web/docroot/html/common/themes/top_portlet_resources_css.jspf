@@ -33,6 +33,10 @@
 				headerPortalCss = PortalUtil.getStaticResourceURL(request, PortalUtil.getPathContext() + headerPortalCss, curRootPortlet.getTimestamp());
 			}
 
+			if (!headerPortalCss.contains(Http.PROTOCOL_DELIMITER)) {
+				headerPortalCss = themeDisplay.getCDNBaseURL().concat(headerPortalCss);
+			}
+
 			if (!portletResourceStaticURLs.contains(headerPortalCss)) {
 				portletResourceStaticURLs.add(headerPortalCss);
 	%>
@@ -50,6 +54,10 @@
 				Portlet curRootPortlet = curPortlet.getRootPortlet();
 
 				headerPortletCss = PortalUtil.getStaticResourceURL(request, curPortlet.getStaticResourcePath() + headerPortletCss, curRootPortlet.getTimestamp());
+			}
+
+			if (!headerPortletCss.contains(Http.PROTOCOL_DELIMITER)) {
+				headerPortletCss = themeDisplay.getCDNBaseURL().concat(headerPortletCss);
 			}
 
 			if (!portletResourceStaticURLs.contains(headerPortletCss)) {

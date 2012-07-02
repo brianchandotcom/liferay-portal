@@ -3901,6 +3901,8 @@ public class PortalImpl implements Portal {
 			while (uniqueElementIds.contains(uniqueElementId)) {
 				uniqueElementId = elementId.concat(StringPool.UNDERLINE).concat(
 					String.valueOf(i));
+
+				i++;
 			}
 		}
 

@@ -1259,6 +1259,13 @@ public class SourceFormatter {
 					fileName, "ServiceUtil: " + fileName);
 			}
 
+			if (!className.equals("ProxyUtil") &&
+				newContent.contains("import java.lang.reflect.Proxy;")) {
+
+				_sourceFormatterHelper.printError(
+					fileName, "Proxy: " + fileName);
+			}
+
 			// LPS-28266
 
 			for (int pos1 = -1;;) {

@@ -38,7 +38,6 @@ WorkflowTask workflowTask = (WorkflowTask)row.getObject();
 			cssClass='<%= "workflow-task-" + randomId + " task-assign-to-me-link" %>'
 			image="assign"
 			message="assign-to-me"
-			method="get"
 			url="<%= assignToMeURL %>"
 		/>
 	</c:if>
@@ -72,7 +71,6 @@ WorkflowTask workflowTask = (WorkflowTask)row.getObject();
 				cssClass='<%= "workflow-task-" + randomId + " task-change-status-link" %>'
 				image="../aui/shuffle"
 				message="<%= message %>"
-				method="get"
 				url="<%= editURL %>"
 			/>
 

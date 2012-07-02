@@ -71,7 +71,6 @@ long[] pooledActorsIds = WorkflowTaskManagerUtil.getPooledActorsIds(company.getC
 				id='<%= randomId + transitionName + "taskChangeStatusLink" %>'
 				image="../aui/shuffle"
 				message="<%= message %>"
-				method="get"
 				url="<%= editURL %>"
 			/>
 
@@ -96,7 +95,6 @@ long[] pooledActorsIds = WorkflowTaskManagerUtil.getPooledActorsIds(company.getC
 			id='<%= randomId + "taskAssignToMeLink" %>'
 			image="assign"
 			message="assign-to-me"
-			method="get"
 			url="<%= assignToMeURL %>"
 		/>
 	</c:if>
@@ -115,7 +113,6 @@ long[] pooledActorsIds = WorkflowTaskManagerUtil.getPooledActorsIds(company.getC
 			id='<%= randomId + "taskAssignLink" %>'
 			image="assign"
 			message="assign-to-..."
-			method="get"
 			url="<%= assignURL %>"
 		/>
 	</c:if>
@@ -133,7 +130,6 @@ long[] pooledActorsIds = WorkflowTaskManagerUtil.getPooledActorsIds(company.getC
 			id='<%= randomId + "taskDueDateLink" %>'
 			image="time"
 			message="update-due-date"
-			method="get"
 			url="<%= updateDueDateURL %>"
 		/>
 	</c:if>

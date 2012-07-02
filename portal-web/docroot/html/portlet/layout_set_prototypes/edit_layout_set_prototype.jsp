@@ -77,7 +77,6 @@ Locale[] locales = LanguageUtil.getAvailableLocales();
 					image="view"
 					label="<%= true %>"
 					message="open-site-template"
-					method="get"
 					target="_blank"
 					url="<%= viewURL %>"
 				/>

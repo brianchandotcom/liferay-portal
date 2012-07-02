@@ -41,7 +41,7 @@ long organizationGroupId = organization.getGroup().getGroupId();
 	<liferay-ui:icon
 		image="view_users"
 		message="view-users"
-		method="get" url="<%= viewUsersURL %>"
+		url="<%= viewUsersURL %>"
 	/>
 
 	<c:if test="<%= organization.hasSuborganizations() %>">
@@ -52,6 +52,6 @@ long organizationGroupId = organization.getGroup().getGroupId();
 			<portlet:param name="parentOrganizationId" value="<%= String.valueOf(organizationId) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon image="view_locations" message="view-suborganizations" method="get" url="<%= viewSuborganizationsURL %>" />
+		<liferay-ui:icon image="view_locations" message="view-suborganizations" url="<%= viewSuborganizationsURL %>" />
 	</c:if>
 </liferay-ui:icon-menu>

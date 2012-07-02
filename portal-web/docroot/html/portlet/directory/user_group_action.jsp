@@ -37,7 +37,6 @@ UserGroup userGroup = (UserGroup)row.getObject();
 	<liferay-ui:icon
 		image="view_users"
 		message="view-users"
-		method="get"
 		url="<%= viewUsersURL %>"
 	/>
 </liferay-ui:icon-menu>

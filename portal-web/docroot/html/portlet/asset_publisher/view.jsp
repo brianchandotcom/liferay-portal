@@ -137,7 +137,6 @@ if (!paginationType.equals("none")) {
 		<liferay-ui:icon
 			image="rss"
 			label="<%= true %>"
-			method="get"
 			target="_blank"
 			url="<%= rssURL %>"
 		/>

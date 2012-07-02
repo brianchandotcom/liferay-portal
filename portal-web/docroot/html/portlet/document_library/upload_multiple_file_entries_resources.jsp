@@ -107,7 +107,6 @@ long assetClassPK = 0;
 								id='<%= "fileEntryType_0" %>'
 								image="copy"
 								message="basic-document"
-								method="get"
 								url="<%= viewBasicFileEntryTypeURL %>"
 							/>
 
@@ -127,7 +126,6 @@ long assetClassPK = 0;
 									id='<%= "fileEntryType_" + String.valueOf(curFileEntryType.getFileEntryTypeId()) %>'
 									image="copy"
 									message="<%= curFileEntryType.getName() %>"
-									method="get"
 									url="<%= viewFileEntryTypeURL %>"
 								/>
 

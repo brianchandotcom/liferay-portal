@@ -115,7 +115,6 @@ if (organization != null) {
 										image="view"
 										label="<%= true %>"
 										message="open-public-pages"
-										method="get"
 										target="_blank"
 										url="<%= publicPagesURL.toString() %>"
 									/>
@@ -159,7 +158,6 @@ if (organization != null) {
 										image="view"
 										label="<%= true %>"
 										message="open-private-pages"
-										method="get"
 										target="_blank"
 										url="<%= privatePagesURL.toString() %>"
 									/>

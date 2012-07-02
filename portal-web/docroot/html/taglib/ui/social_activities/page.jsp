@@ -128,7 +128,6 @@ Format timeFormatDate = FastDateFormatFactoryUtil.getTime(locale, timeZone);
 		image="rss"
 		label="<%= true %>"
 		message="<%= feedLinkMessage %>"
-		method="get"
 		target="_blank"
 		url="<%= feedLink %>"
 	/>

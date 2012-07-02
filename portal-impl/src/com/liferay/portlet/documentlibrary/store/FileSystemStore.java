@@ -383,23 +383,25 @@ public class FileSystemStore extends BaseStore {
 
 		String[] fileNames = file.list();
 
-		if (fileNames.length == 0) {
-			String fileName = file.getName();
+		if ((fileNames == null) || (fileNames.length > 0)) {
+			return;
+		}
 
-			if ((repositoryId > 0) &&
-				fileName.equals(String.valueOf(repositoryId))) {
+		String fileName = file.getName();
 
-				RepositoryDirKey repositoryDirKey = new RepositoryDirKey(
-					companyId, repositoryId);
+		if ((repositoryId > 0) &&
+			fileName.equals(String.valueOf(repositoryId))) {
 
-				_repositoryDirs.remove(repositoryDirKey);
-			}
+			RepositoryDirKey repositoryDirKey = new RepositoryDirKey(
+				companyId, repositoryId);
 
-			File parentFile = file.getParentFile();
+			_repositoryDirs.remove(repositoryDirKey);
+		}
 
-			if (file.delete() && (parentFile != null)) {
-				deleteEmptyAncestors(companyId, repositoryId, parentFile);
-			}
+		File parentFile = file.getParentFile();
+
+		if (file.delete() && (parentFile != null)) {
+			deleteEmptyAncestors(companyId, repositoryId, parentFile);
 		}
 	}
 

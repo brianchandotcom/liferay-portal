@@ -280,7 +280,6 @@ if (Validator.isNull(mainLanguageValue)) {
 						var instance = this;
 
 						var positionHelper = instance._positionHelper.clone();
-
 						positionHelper.appendTo(document.body);
 					}
 				},

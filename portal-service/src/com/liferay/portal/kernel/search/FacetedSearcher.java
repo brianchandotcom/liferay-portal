@@ -92,11 +92,16 @@ public class FacetedSearcher extends BaseIndexer {
 
 			Hits hits = SearchEngineUtil.search(searchContext, fullQuery);
 
-			if ((start != QueryUtil.ALL_POS) && (hits.getLength() < start)) {
-				int cur = hits.getLength() / SearchContainer.DEFAULT_DELTA;
+			if ((start != QueryUtil.ALL_POS) && (hits.getLength() <= start)) {
+				int delta = end - start;
 
-				start = cur * SearchContainer.DEFAULT_DELTA;
-				end = start + SearchContainer.DEFAULT_DELTA;
+				start = (hits.getLength() / delta) * delta;
+
+				if ((start == hits.getLength()) && (hits.getLength() > 0)) {
+					start -= delta;
+				}
+
+				end = start + delta;
 			}
 
 			searchContext.setEnd(end);

@@ -6,11 +6,7 @@
 	<#assign fieldDateValue = dateUtil.newDate()>
 </#if>
 
-<@aui["field-wrapper"] helpMessage=fieldStructure.tip label=label>
-	<#if required>
-		<@aui.validator name="required" />
-	</#if>
-
+<@aui["field-wrapper"] helpMessage=fieldStructure.tip label=label required=required>
 	<@liferay_ui["input-date"]
 		cssClass=cssClass
 		dayParam="${namespacedFieldName}Day"

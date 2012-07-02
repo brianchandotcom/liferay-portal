@@ -120,6 +120,7 @@ if (step == 1) {
 					document.<portlet:namespace />fm.<portlet:namespace />groupId.value = groupId;
 
 					<%
+					portletURL.setParameter("resetCur", Boolean.TRUE.toString());
 					portletURL.setParameter("step", "2");
 					%>
 

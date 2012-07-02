@@ -17,13 +17,12 @@ package com.liferay.portal.security.pacl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 import com.liferay.portal.spring.util.FilterClassLoader;
-
-import java.lang.reflect.Proxy;
 
 import java.net.URL;
 
@@ -182,7 +181,7 @@ public class PACLClassUtil {
 						callerClass.getName());
 			}
 
-			if (Proxy.isProxyClass(callerClass)) {
+			if (ProxyUtil.isProxyClass(callerClass)) {
 				if (debug) {
 					_log.debug("Skipping frame because it is proxy class");
 				}

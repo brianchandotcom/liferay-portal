@@ -359,7 +359,7 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 		}
 
 		if (plid != _plid) {
-			portletURLImpl.setParameter("p_ol_id=", String.valueOf(_plid));
+			portletURLImpl.setParameter("p_ol_id", String.valueOf(_plid));
 		}
 
 		return portletURLImpl;

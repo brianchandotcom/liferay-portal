@@ -301,7 +301,7 @@ public class LayoutAction extends Action {
 	}
 
 	protected boolean hasPortletSetupLinkToLayoutUuid(
-			Layout layout, String portletId) {
+		Layout layout, String portletId) {
 
 		try {
 			PortletPreferences portletSetup =
@@ -312,13 +312,12 @@ public class LayoutAction extends Action {
 				portletSetup.getValue("portletSetupLinkToLayoutUuid", null));
 
 			if (Validator.isNotNull(linkToLayoutUuid)) {
-				try {
-					LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
+				Layout linkedLayout =
+					LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
 						linkToLayoutUuid, layout.getGroupId());
 
+				if (linkedLayout != null) {
 					return true;
-				}
-				catch (PortalException pe) {
 				}
 			}
 		}
@@ -396,15 +395,15 @@ public class LayoutAction extends Action {
 			if (portlet != null) {
 				PortletContainerUtil.preparePortlet(request, portlet);
 
-				String p_ol_id = request.getParameter(
+				String orignalLayoutId = request.getParameter(
 					StringPool.UNDERLINE + portlet.getPortletId() +
-					StringPool.UNDERLINE +"p_ol_id");
-				if (Validator.isNotNull(p_ol_id)) {
-					String orignalLayoutId = p_ol_id.substring(1);
+					StringPool.UNDERLINE + "p_ol_id");
 
+				if (Validator.isNotNull(orignalLayoutId)) {
 					if (Validator.isNotNull(orignalLayoutId)) {
-						Layout originalLayout = LayoutLocalServiceUtil.
-							getLayout(Long.valueOf(orignalLayoutId));
+						Layout originalLayout =
+							LayoutLocalServiceUtil.getLayout(
+								Long.valueOf(orignalLayoutId));
 
 						if (hasPortletSetupLinkToLayoutUuid(
 								originalLayout, portlet.getPortletId())) {

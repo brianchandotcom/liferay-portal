@@ -4453,14 +4453,15 @@ public class PortalImpl implements Portal {
 			}
 			else {
 				Layout originalLayout =
-					(Layout) request.getAttribute("originalLayout");
+					(Layout)request.getAttribute("originalLayout");
 
 				if (originalLayout != null) {
 					LayoutTypePortlet originalLayoutTypePortlet =
 						(LayoutTypePortlet)originalLayout.getLayoutType();
 
-					if (originalLayoutTypePortlet.
-							hasPortletId(checkPortletId)) {
+					if (originalLayoutTypePortlet.hasPortletId(
+							checkPortletId)) {
+
 						return true;
 					}
 				}

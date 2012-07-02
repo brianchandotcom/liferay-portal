@@ -529,10 +529,12 @@ public class PortletContainerImpl implements PortletContainer {
 				permissionChecker, scopeGroupId, layout, portlet, portletMode);
 
 			if (!access) {
-				if (Boolean.TRUE.equals(request.getAttribute(
-					"hasPortletSetupLinkToLayoutUuid"))) {
+				Boolean hasPortletSetupLinkToLayoutUuid =
+					(Boolean)request.getAttribute(
+						"hasPortletSetupLinkToLayoutUuid");
 
-					Layout originalLayout = (Layout) request.getAttribute(
+				if (Boolean.TRUE.equals(hasPortletSetupLinkToLayoutUuid)) {
+					Layout originalLayout = (Layout)request.getAttribute(
 						"originalLayout");
 
 					access = PortletPermissionUtil.hasAccessPermission(

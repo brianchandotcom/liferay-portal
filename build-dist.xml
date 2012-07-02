@@ -1257,7 +1257,7 @@ release was successful.</echo>
 			<replacetoken><![CDATA[export JAVA_OPTS]]></replacetoken>
 			<replacevalue>
 				<![CDATA[
-					JAVA_OPTS=-Dfile.encoding=UTF8 -Djava.net.preferIPv4Stack=true -Djonas.felix.configuration.file="$JONAS_ROOT/conf/felix-config.properties" -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m
+					JAVA_OPTS="-Dfile.encoding=UTF8 -Djava.net.preferIPv4Stack=true -Djonas.felix.configuration.file=\"$JONAS_ROOT/conf/felix-config.properties\" -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m"
 
 					export JAVA_OPTS
 				]]>

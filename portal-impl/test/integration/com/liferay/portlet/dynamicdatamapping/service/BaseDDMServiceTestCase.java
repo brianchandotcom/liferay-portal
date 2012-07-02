@@ -66,7 +66,7 @@ public class BaseDDMServiceTestCase {
 		String script = getTestTemplateScript(language);
 
 		return addTemplate(
-				classNameId, classPK, name, type, mode, language, script);
+			classNameId, classPK, name, type, mode, language, script);
 	}
 
 	protected DDMTemplate addListTemplate(long classPK, String name)

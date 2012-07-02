@@ -48,10 +48,10 @@ import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.FieldConstants;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
+import com.liferay.portlet.dynamicdatamapping.util.comparator.StructureIdComparator;
 import com.liferay.portlet.dynamicdatamapping.util.comparator.StructureModifiedDateComparator;
-import com.liferay.portlet.dynamicdatamapping.util.comparator.StructureNameComparator;
+import com.liferay.portlet.dynamicdatamapping.util.comparator.TemplateIdComparator;
 import com.liferay.portlet.dynamicdatamapping.util.comparator.TemplateModifiedDateComparator;
-import com.liferay.portlet.dynamicdatamapping.util.comparator.TemplateNameComparator;
 
 import java.io.InputStream;
 import java.io.Serializable;
@@ -240,11 +240,11 @@ public class DDMImpl implements DDM {
 
 		OrderByComparator orderByComparator = null;
 
-		if (orderByCol.equals("modified-date")) {
-			orderByComparator = new StructureModifiedDateComparator(orderByAsc);
+		if (orderByCol.equals("id")) {
+			orderByComparator = new StructureIdComparator(orderByAsc);
 		}
-		else if (orderByCol.equals("name")) {
-			orderByComparator = new StructureNameComparator(orderByAsc);
+		else if (orderByCol.equals("modified-date")) {
+			orderByComparator = new StructureModifiedDateComparator(orderByAsc);
 		}
 
 		return orderByComparator;
@@ -261,11 +261,11 @@ public class DDMImpl implements DDM {
 
 		OrderByComparator orderByComparator = null;
 
-		if (orderByCol.equals("modified-date")) {
-			orderByComparator = new TemplateModifiedDateComparator(orderByAsc);
+		if (orderByCol.equals("id")) {
+			orderByComparator = new TemplateIdComparator(orderByAsc);
 		}
-		else if (orderByCol.equals("name")) {
-			orderByComparator = new TemplateNameComparator(orderByAsc);
+		else if (orderByCol.equals("modified-date")) {
+			orderByComparator = new TemplateModifiedDateComparator(orderByAsc);
 		}
 
 		return orderByComparator;

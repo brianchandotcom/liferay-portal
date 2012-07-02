@@ -1180,7 +1180,8 @@ AUI.add(
 					'change',
 					function(event) {
 						borderNote.show();
-						portletData.showBorders = event.currentTarget.get('value');
+
+						portletData.showBorders = event.currentTarget.val();
 					}
 				);
 

@@ -154,11 +154,11 @@ if (!portletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES)) {
 			<%
 			String type = null;
 
-			if (portletName.equals(PortletKeys.APPLICATION_DISPLAY_STYLES)) {
+			if (portletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES)) {
 				type = PortletDisplayTemplateHandlerRegistryUtil.getPortletDisplayTemplateHandler(template.getClassNameId()).getName(locale);
 			}
 			else if (Validator.isNull(templateTypeValue)) {
-				type =  LanguageUtil.get(pageContext, template.getType());
+				type = LanguageUtil.get(pageContext, template.getType());
 			}
 			%>
 

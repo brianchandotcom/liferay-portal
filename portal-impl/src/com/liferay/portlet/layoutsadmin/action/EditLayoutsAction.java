@@ -810,7 +810,7 @@ public class EditLayoutsAction extends PortletAction {
 		long layoutPrototypeId = ParamUtil.getLong(
 			uploadPortletRequest, "layoutPrototypeId");
 		boolean layoutPrototypeLinkEnabled= ParamUtil.getBoolean(
-				uploadPortletRequest, "layoutPrototypeLinkEnabled");
+			uploadPortletRequest, "layoutPrototypeLinkEnabled");
 
 		boolean inheritFromParentLayoutId = ParamUtil.getBoolean(
 			uploadPortletRequest, "inheritFromParentLayoutId");

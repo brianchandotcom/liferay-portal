@@ -17,10 +17,12 @@ package com.liferay.portal.lar;
 import com.liferay.portal.LARFileException;
 import com.liferay.portal.LARTypeException;
 import com.liferay.portal.LayoutImportException;
+import com.liferay.portal.LocaleException;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.PortletIdException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lar.ImportExportThreadLocal;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
@@ -32,6 +34,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
@@ -326,6 +329,32 @@ public class PortletImporter {
 				rootPortletId)) {
 
 			throw new PortletIdException("Invalid portlet id " + rootPortletId);
+		}
+
+		// Available Locales compatibility
+
+		Element sourceAvailableLocalesElement = rootElement.element("locale");
+
+		String sourceAvailableLocalesAttribute =
+			sourceAvailableLocalesElement.attributeValue("available-locales");
+
+		List<String> sourceAvailableLocales = ListUtil.fromArray(
+			sourceAvailableLocalesAttribute.split(","));
+
+		List<Locale> targetAvailableLocales = ListUtil.fromArray(
+			LanguageUtil.getAvailableLocales());
+
+		if (targetAvailableLocales.size() < sourceAvailableLocales.size()) {
+			throw new LocaleException();
+		}
+
+		for (String sourceAvailableLocale : sourceAvailableLocales) {
+			Locale sourceLocale = LocaleUtil.fromLanguageId(
+				sourceAvailableLocale);
+
+			if (!targetAvailableLocales.contains(sourceLocale)) {
+				throw new LocaleException();
+			}
 		}
 
 		// Import group id

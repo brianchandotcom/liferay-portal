@@ -312,6 +312,10 @@ MBThreadFlag threadFlag = MBThreadFlagLocalServiceUtil.getThreadFlag(themeDispla
 		</liferay-ui:toggle-area>
 	</c:if>
 
+	<%
+	boolean viewableThread = false;
+	%>
+
 	<c:choose>
 		<c:when test='<%= threadView.equals(MBThreadConstants.THREAD_VIEW_TREE) %>'>
 
@@ -323,12 +327,24 @@ MBThreadFlag threadFlag = MBThreadFlagLocalServiceUtil.getThreadFlag(themeDispla
 			request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_THREAD, thread);
 			request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_LAST_NODE, Boolean.valueOf(false));
 			request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_DEPTH, new Integer(0));
+			request.setAttribute(WebKeys.MESSAGE_BOARDS_VIEWABLE_THREAD, String.valueOf(Boolean.FALSE.toString()));
 			%>
 
 			<liferay-util:include page="/html/portlet/message_boards/view_thread_tree.jsp" />
+
+			<%
+			viewableThread = GetterUtil.getBoolean((String)request.getAttribute(WebKeys.MESSAGE_BOARDS_VIEWABLE_THREAD));
+			%>
+
 		</c:when>
 		<c:otherwise>
 			<%@ include file="/html/portlet/message_boards/view_thread_flat.jspf" %>
 		</c:otherwise>
 	</c:choose>
+
+	<c:if test="<%= !viewableThread %>">
+		<div class="portlet-msg-error">
+			<liferay-ui:message key="you-do-not-have-permission-to-access-the-requested-resource" />
+		</div>
+	</c:if>
 </div>

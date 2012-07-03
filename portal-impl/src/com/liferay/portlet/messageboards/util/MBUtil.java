@@ -33,6 +33,8 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.UserGroup;
+import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
@@ -52,6 +54,7 @@ import com.liferay.portlet.messageboards.model.MBMessageConstants;
 import com.liferay.portlet.messageboards.model.MBStatsUser;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMailingListLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 import com.liferay.util.ContentUtil;
 import com.liferay.util.mail.JavaMailUtil;
 
@@ -703,6 +706,39 @@ public class MBUtil {
 		return GetterUtil.getBoolean(
 			preferences.getValue("allowAnonymousPosting", null),
 			PropsValues.MESSAGE_BOARDS_ANONYMOUS_POSTING_ENABLED);
+	}
+
+	public static boolean isViewableMessage(
+			MBMessage message, MBMessage selMessage, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
+		if (!MBMessagePermission.contains(
+				permissionChecker, selMessage, ActionKeys.VIEW)) {
+
+			return false;
+		}
+
+		if ((message.getMessageId() != selMessage.getMessageId()) &&
+			!MBMessagePermission.contains(
+				permissionChecker, message, ActionKeys.VIEW)) {
+
+			return false;
+		}
+
+		long userId = themeDisplay.getUserId();
+		long scopeGroupId = themeDisplay.getScopeGroupId();
+
+		if (!message.isApproved() &&
+			!Validator.equals(message.getUserId(), userId) &&
+			!permissionChecker.isGroupAdmin(scopeGroupId)) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private static String[] _findThreadPriority(

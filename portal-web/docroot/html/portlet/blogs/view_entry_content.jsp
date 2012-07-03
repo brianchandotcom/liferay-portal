@@ -26,18 +26,25 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 
 <c:choose>
 	<c:when test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.VIEW) && (entry.isApproved() || (entry.getUserId() == user.getUserId()) || BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE)) %>">
-		<div class="entry <%= entry.isApproved() ? "" : "draft" %>">
+		<div class="entry <%= entry.isApproved() ? "" : "draft" %> <%= entry.isVisible() ? "" : "scheduled" %>">
 			<div class="entry-content">
 
 				<%
 				String strutsAction = ParamUtil.getString(request, "struts_action");
 				%>
 
-				<c:if test="<%= !entry.isApproved() %>">
-					<h3>
-						<liferay-ui:message key='<%= entry.isPending() ? "pending-approval" : "draft" %>' />
-					</h3>
-				</c:if>
+				<c:choose>
+					<c:when test="<%= !entry.isApproved() %>">
+						<h3>
+							<liferay-ui:message key='<%= entry.isPending() ? "pending-approval" : "draft" %>' />
+						</h3>
+					</c:when>
+					<c:when test="<%= !entry.isVisible() %>">
+						<h3>
+							<liferay-ui:message key="scheduled" />
+						</h3>
+					</c:when>
+				</c:choose>
 
 				<portlet:renderURL var="viewEntryURL">
 					<portlet:param name="struts_action" value="/blogs/view_entry" />

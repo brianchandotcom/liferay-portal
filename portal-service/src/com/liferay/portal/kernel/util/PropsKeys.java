@@ -2339,6 +2339,8 @@ public interface PropsKeys {
 
 	public static final String WIKI_PAGE_ADD_ACTIVITY_ON_MINOR_EDIT = "wiki.page.add.activity.on.minor.edit";
 
+	public static final String WIKI_PAGE_SEND_EMAIL_ON_MINOR_EDIT = "wiki.page.send.email.on.minor.edit";
+
 	public static final String WIKI_PAGE_COMMENTS_ENABLED = "wiki.page.comments.enabled";
 
 	public static final String WIKI_PAGE_RATINGS_ENABLED = "wiki.page.ratings.enabled";

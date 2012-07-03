@@ -1703,6 +1703,8 @@ public class PropsValues {
 	public static final String WIKI_INITIAL_NODE_NAME = PropsUtil.get(PropsKeys.WIKI_INITIAL_NODE_NAME);
 
 	public static final boolean WIKI_PAGE_ADD_ACTIVITY_ON_MINOR_EDIT = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.WIKI_PAGE_ADD_ACTIVITY_ON_MINOR_EDIT));
+
+	public static final boolean WIKI_PAGE_SEND_EMAIL_ON_MINOR_EDIT = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.WIKI_PAGE_SEND_EMAIL_ON_MINOR_EDIT));
 	
 	public static final boolean WIKI_PAGE_COMMENTS_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.WIKI_PAGE_COMMENTS_ENABLED));
 

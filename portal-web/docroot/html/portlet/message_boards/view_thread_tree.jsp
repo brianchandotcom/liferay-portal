@@ -36,7 +36,9 @@ if (treeWalker.isOdd()) {
 }
 %>
 
-<%@ include file="/html/portlet/message_boards/view_thread_message.jspf" %>
+<c:if test="<%= !Validator.equals(message.getMessageId(), selMessage.getMessageId()) || MBUtil.isViewableMessage(message, message, themeDisplay) %>">
+	<%@ include file="/html/portlet/message_boards/view_thread_message.jspf" %>
+</c:if>
 
 <%
 List messages = treeWalker.getMessages();
@@ -47,7 +49,7 @@ depth++;
 for (int i = range[0]; i < range[1]; i++) {
 	MBMessage curMessage = (MBMessage)messages.get(i);
 
-	if ((!curMessage.isApproved() && (curMessage.getUserId() != user.getUserId()) && !permissionChecker.isGroupAdmin(scopeGroupId)) || !MBMessagePermission.contains(permissionChecker, message, ActionKeys.VIEW)) {
+	if (!MBUtil.isViewableMessage(curMessage, message, themeDisplay)) {
 		continue;
 	}
 

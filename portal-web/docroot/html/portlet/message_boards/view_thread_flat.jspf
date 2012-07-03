@@ -63,7 +63,7 @@ int depth = 0;
 for (int i = 0; i < messages.size(); i++) {
 	message = messages.get(i);
 
-	if ((!message.isApproved() && (message.getUserId() != user.getUserId()) && !permissionChecker.isGroupAdmin(scopeGroupId)) || !MBMessagePermission.contains(permissionChecker, message, ActionKeys.VIEW)) {
+	if (!MBUtil.isViewableMessage(message, message, themeDisplay)) {
 		continue;
 	}
 

@@ -219,10 +219,17 @@ if (Validator.isNotNull(portletDisplayDDMTemplateUuid)) {
 
 		portletDisplayDDMTemplateId = portletDisplayDDMTemplate.getTemplateId();
 	}
-	catch (NoSuchTemplateException nste) {
-		portletDisplayDDMTemplateId = 0;
+	catch (NoSuchTemplateException nste1) {
+		try {
+			portletDisplayDDMTemplate = DDMTemplateLocalServiceUtil.getDDMTemplateByUuidAndGroupId(portletDisplayDDMTemplateUuid, themeDisplay.getCompanyGroupId());
 
-		displayStyle = "abstracts";
+			portletDisplayDDMTemplateId = portletDisplayDDMTemplate.getTemplateId();
+		}
+		catch (NoSuchTemplateException nste2) {
+			portletDisplayDDMTemplateId = 0;
+
+			displayStyle = "abstracts";
+		}
 	}
 }
 

@@ -1,3 +1,5 @@
+<%@ page
+	import="com.liferay.portlet.dynamicdatamapping.service.DDMTemplateServiceUtil" %>
 <%--
 /**
  * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
@@ -45,7 +47,10 @@ portletDisplayDDMTemplatesURLString = HttpUtil.addParameter(portletDisplayDDMTem
 			<%
 			}
 
-			List<DDMTemplate> assetPublisherDDMTemplates = DDMTemplateLocalServiceUtil.getTemplates(portletDisplayDDMTemplateGroupId, portletDisplayDDMTemplateClassNameId, 0);
+			long[] curGroupIds = new long[] {portletDisplayDDMTemplateGroupId, themeDisplay.getCompanyGroupId()};
+			long[] curClassNameIds = new long[] {portletDisplayDDMTemplateClassNameId};
+
+			List<DDMTemplate> assetPublisherDDMTemplates = DDMTemplateServiceUtil.search(company.getCompanyId(), curGroupIds, curClassNameIds, 0, null, null, null, -1, -1, null);
 
 			for (DDMTemplate curAssetPublisherDDMTemplate : assetPublisherDDMTemplates) {
 				if (!DDMTemplatePermission.contains(permissionChecker, curAssetPublisherDDMTemplate, ActionKeys.VIEW)) {

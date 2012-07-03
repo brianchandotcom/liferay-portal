@@ -1152,10 +1152,10 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 	}
 
 	/**
-	 * @see {@link PortletImporter#getAssetCategoryName(String, long, long,
-	 *	  String, int)}
-	 * @see {@link PortletImporter#getAssetVocabularyName(String, long, String,
-	 *	  int)}
+	 * @see com.liferay.portal.lar.PortletImporter#getAssetCategoryName(String,
+	 *      long, long, String, int)
+	 * @see com.liferay.portal.lar.PortletImporter#getAssetVocabularyName(
+	 *      String, long, String, int)
 	 */
 	protected static String getFileEntryTypeName(
 			String uuid, long groupId, String name, int count)
@@ -1223,10 +1223,10 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 	}
 
 	/**
-	 * @see {@link PortletImporter#getAssetCategoryName(String, long, long,
-	 *	  String, int)}
-	 * @see {@link PortletImporter#getAssetVocabularyName(String, long, String,
-	 *	  int)}
+	 * @see com.liferay.portal.lar.PortletImporter#getAssetCategoryName(String,
+	 *      long, long, String, int)
+	 * @see com.liferay.portal.lar.PortletImporter#getAssetVocabularyName(
+	 *      String, long, String, int)
 	 */
 	protected static String getFolderName(
 			String uuid, long groupId, long parentFolderId, String name,

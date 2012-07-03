@@ -65,7 +65,7 @@ import javax.servlet.http.HttpServletResponse;
 public class AggregateFilter extends BasePortalFilter {
 
 	/**
-	 * @see {@link DynamicCSSUtil#_propagateQueryString(String, String)}
+	 * @see DynamicCSSUtil#_propagateQueryString(String, String)
 	 */
 	public static String aggregateCss(
 			AggregateContext aggregateContext, String content)

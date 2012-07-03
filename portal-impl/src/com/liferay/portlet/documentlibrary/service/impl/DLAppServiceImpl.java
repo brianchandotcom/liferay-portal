@@ -79,7 +79,8 @@ import java.util.concurrent.Callable;
  * primary key of the specific repository. If the repository is a default
  * Liferay repository, the <code>repositoryId</code> is the <code>groupId</code>
  * or <code>scopeGroupId</code>. Otherwise, the <code>repositoryId</code> will
- * correspond to values obtained from {@link RepositoryServiceUtil}.
+ * correspond to values obtained from {@link
+ * com.liferay.portal.service.RepositoryServiceUtil}.
  * </p>
  *
  * @author Alexander Chow

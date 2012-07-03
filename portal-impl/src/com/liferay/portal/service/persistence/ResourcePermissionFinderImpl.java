@@ -264,7 +264,7 @@ public class ResourcePermissionFinderImpl
 	}
 
 	/**
-	 * @see {@link PermissionFinderImpl#getScopes(int[])}
+	 * @see PermissionFinderImpl#getScopes(int[])
 	 */
 	protected String getScopes(int[] scopes) {
 		if (scopes.length == 0) {

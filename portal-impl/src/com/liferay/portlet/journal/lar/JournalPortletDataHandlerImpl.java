@@ -123,9 +123,9 @@ import javax.portlet.PortletPreferences;
  * @author Karthik Sudarshan
  * @author Wesley Gong
  * @author Hugo Huijser
- * @see	com.liferay.portal.kernel.lar.PortletDataHandler
- * @see	com.liferay.portlet.journal.lar.JournalContentPortletDataHandlerImpl
- * @see	com.liferay.portlet.journal.lar.JournalCreationStrategy
+ * @see    com.liferay.portal.kernel.lar.PortletDataHandler
+ * @see    com.liferay.portlet.journal.lar.JournalContentPortletDataHandlerImpl
+ * @see    com.liferay.portlet.journal.lar.JournalCreationStrategy
  */
 public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 

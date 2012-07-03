@@ -67,8 +67,8 @@ public class ResourcePermissionLocalServiceImpl
 	extends ResourcePermissionLocalServiceBaseImpl {
 
 	/**
-	 * @see {@link VerifyPermission#fixOrganizationRolePermissions_6} and
-	 *      LPS-23704
+	 * @see com.liferay.portal.verify.VerifyPermission#fixOrganizationRolePermissions_6(
+	 *      )
 	 */
 	public static final String[] EMPTY_ACTION_IDS = {null};
 

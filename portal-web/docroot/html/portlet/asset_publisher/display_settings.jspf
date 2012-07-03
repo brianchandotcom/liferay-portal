@@ -289,7 +289,7 @@ portletDisplayDDMTemplatesURLString = HttpUtil.addParameter(portletDisplayDDMTem
 							width: 820
 						},
 						id: windowId,
-						title: '<%= UnicodeLanguageUtil.get(pageContext, "display-templates") %>',
+						title: '<%= UnicodeLanguageUtil.get(pageContext, "application-display-templates") %>',
 						uri: '<%= portletDisplayDDMTemplatesURLString %>'
 					},
 					function (ddmPortletWindow) {

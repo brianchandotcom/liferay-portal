@@ -1402,19 +1402,24 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 			// Social
 
-			int activity = WikiActivityKeys.ADD_PAGE;
+			if (!page.isMinorEdit() ||
+					PropsValues.WIKI_PAGE_ADD_ACTIVITY_ON_MINOR_EDIT) {
+				int activity = WikiActivityKeys.ADD_PAGE;
 
-			if (page.getVersion() > WikiPageConstants.VERSION_DEFAULT) {
-				activity = WikiActivityKeys.UPDATE_PAGE;
+				if (page.getVersion() > WikiPageConstants.VERSION_DEFAULT) {
+					activity = WikiActivityKeys.UPDATE_PAGE;
+				}
+
+				socialActivityLocalService.addActivity(
+					userId, page.getGroupId(), WikiPage.class.getName(),
+					page.getResourcePrimKey(), activity, StringPool.BLANK, 0);
 			}
-
-			socialActivityLocalService.addActivity(
-				userId, page.getGroupId(), WikiPage.class.getName(),
-				page.getResourcePrimKey(), activity, StringPool.BLANK, 0);
 
 			// Subscriptions
 
-			if (!page.isMinorEdit() && NotificationThreadLocal.isEnabled()) {
+			if (NotificationThreadLocal.isEnabled() &&
+				(!page.isMinorEdit() ||
+					PropsValues.WIKI_PAGE_SEND_EMAIL_ON_MINOR_EDIT)) {
 				boolean update = false;
 
 				if (page.getVersion() > WikiPageConstants.VERSION_DEFAULT) {

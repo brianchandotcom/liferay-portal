@@ -94,7 +94,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 
 	public static void deleteFiles(FileEntry fileEntry, String thumbnailType) {
 		deleteFiles(
-			fileEntry.getCompanyId(), fileEntry.getRepositoryId(),
+			fileEntry.getCompanyId(), fileEntry.getGroupId(),
 			fileEntry.getFileEntryId(), -1, thumbnailType);
 	}
 
@@ -102,7 +102,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		FileVersion fileVersion, String thumbnailType) {
 
 		deleteFiles(
-			fileVersion.getCompanyId(), fileVersion.getRepositoryId(),
+			fileVersion.getCompanyId(), fileVersion.getGroupId(),
 			fileVersion.getFileEntryId(), fileVersion.getFileVersionId(),
 			thumbnailType);
 	}

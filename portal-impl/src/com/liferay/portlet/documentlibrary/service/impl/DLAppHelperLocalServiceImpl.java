@@ -416,29 +416,6 @@ public class DLAppHelperLocalServiceImpl
 
 		int oldStatus = fileVersion.getStatus();
 
-		// File version
-
-		dlFileEntryLocalService.updateStatus(
-			userId, fileVersion.getFileVersionId(),
-			WorkflowConstants.STATUS_IN_TRASH,
-			new HashMap<String, Serializable>(), new ServiceContext());
-
-		// File shortcut
-
-		dlFileShortcutLocalService.disableFileShortcuts(
-			fileEntry.getFileEntryId());
-
-		// File rank
-
-		dlFileRankLocalService.disableFileRanks(fileEntry.getFileEntryId());
-
-		// Social
-
-		socialActivityLocalService.addActivity(
-			userId, fileEntry.getGroupId(), DLFileEntryConstants.getClassName(),
-			fileEntry.getFileEntryId(),
-			SocialActivityConstants.TYPE_MOVE_TO_TRASH, StringPool.BLANK, 0);
-
 		// Trash
 
 		List<ObjectValuePair<Long, Integer>> fileVersionStatuses =
@@ -465,6 +442,29 @@ public class DLAppHelperLocalServiceImpl
 		trashEntryLocalService.addTrashEntry(
 			userId, fileEntry.getGroupId(), DLFileEntryConstants.getClassName(),
 			fileEntry.getFileEntryId(), oldStatus, fileVersionStatuses, null);
+
+		// File version
+
+		dlFileEntryLocalService.updateStatus(
+			userId, fileVersion.getFileVersionId(),
+			WorkflowConstants.STATUS_IN_TRASH,
+			new HashMap<String, Serializable>(), new ServiceContext());
+
+		// File shortcut
+
+		dlFileShortcutLocalService.disableFileShortcuts(
+			fileEntry.getFileEntryId());
+
+		// File rank
+
+		dlFileRankLocalService.disableFileRanks(fileEntry.getFileEntryId());
+
+		// Social
+
+		socialActivityLocalService.addActivity(
+			userId, fileEntry.getGroupId(), DLFileEntryConstants.getClassName(),
+			fileEntry.getFileEntryId(),
+			SocialActivityConstants.TYPE_MOVE_TO_TRASH, StringPool.BLANK, 0);
 
 		// Workflow
 
@@ -1006,12 +1006,7 @@ public class DLAppHelperLocalServiceImpl
 				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 					DLFileEntry.class);
 
-				if (status == WorkflowConstants.STATUS_APPROVED) {
-					indexer.reindex(dlFileEntry);
-				}
-				else {
-					indexer.delete(dlFileEntry);
-				}
+				indexer.reindex(dlFileEntry);
 
 				// Workflow
 

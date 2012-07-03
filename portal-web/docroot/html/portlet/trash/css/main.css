@@ -7,8 +7,12 @@
 	.asset-discussion .taglib-discussion {
 		width: 100%;
 	}
-}
 
+	.aui-search-bar {
+		display: block;
+		float: right;
+	}
+}
 .trash-restore-popup {
 	.aui-form {
 		fieldset {

@@ -74,6 +74,8 @@ for (int i = 0; i < messages.size(); i++) {
 		className = "portlet-section-body results-row";
 		classHoverName = "portlet-section-body-hover results-row hover";
 	}
+
+	viewableThread = true;
 %>
 
 	<%@ include file="/html/portlet/message_boards/view_thread_message.jspf" %>

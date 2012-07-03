@@ -69,17 +69,15 @@ public class LayoutsTreeUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		int start = ParamUtil.getInteger(request, "start");
-		int end = ParamUtil.getInteger(
-			request, "end",
-			start + PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN);
-
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		List<Layout> layoutAncestors = null;
 
 		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
 			groupId, privateLayout, parentLayoutId);
+
+		int start = 0;
+		int end = layouts.size();
 
 		long selPlid = ParamUtil.getLong(request, "selPlid");
 
@@ -91,32 +89,39 @@ public class LayoutsTreeUtil {
 			layoutAncestors.add(selLayout);
 		}
 
-		String treeId = _getScopedPaginationTreeId(request);
+		if (PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN > -1) {
+			start = ParamUtil.getInteger(request, "start");
+			end = ParamUtil.getInteger(
+				request, "end",
+				start + PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN);
 
-		String paginationJSON = SessionClicks.get(
-			session, treeId, StringPool.BLANK);
+			String treeId = _getScopedPaginationTreeId(request);
 
-		if (Validator.isNotNull(paginationJSON) && (end >= 0)) {
-			JSONObject paginationJSONObject = JSONFactoryUtil.createJSONObject(
-				paginationJSON);
+			String paginationJSON = SessionClicks.get(
+				session, treeId, StringPool.BLANK);
 
-			String key = String.valueOf(parentLayoutId);
+			if (Validator.isNotNull(paginationJSON) && (end >= 0)) {
+				JSONObject paginationJSONObject =
+					JSONFactoryUtil.createJSONObject(paginationJSON);
 
-			if (paginationJSONObject.has(key)) {
-				int paginationEnd = paginationJSONObject.getInt(key);
+				String key = String.valueOf(parentLayoutId);
 
-				if (paginationEnd > end) {
-					end = paginationEnd;
+				if (paginationJSONObject.has(key)) {
+					int paginationEnd = paginationJSONObject.getInt(key);
+
+					if (paginationEnd > end) {
+						end = paginationEnd;
+					}
 				}
 			}
-		}
 
-		start = Math.max(0, Math.min(start, layouts.size()));
+			start = Math.max(0, Math.min(start, layouts.size()));
 
-		end = Math.min(end, layouts.size());
+			end = Math.min(end, layouts.size());
 
-		if (end < 0) {
-			end = layouts.size();
+			if (end < 0) {
+				end = layouts.size();
+			}
 		}
 
 		for (Layout layout : layouts.subList(start, end)) {

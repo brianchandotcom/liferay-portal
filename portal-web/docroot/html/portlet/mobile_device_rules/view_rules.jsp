@@ -20,6 +20,16 @@
 String redirect = ParamUtil.getString(request, "redirect");
 String backURL = ParamUtil.getString(request, "backURL");
 
+if (Validator.isNull(redirect) && Validator.isNull(backURL)) {
+
+    PortletURL backPortletURL = renderResponse.createRenderURL();
+
+    backPortletURL.setParameter("struts_action", "/mobile_device_rules/view");
+    backPortletURL.setParameter("groupId", String.valueOf(groupId));
+
+    backURL = backPortletURL.toString();
+}
+
 long ruleGroupId = ParamUtil.getLong(request, "ruleGroupId");
 
 MDRRuleGroup ruleGroup = MDRRuleGroupLocalServiceUtil.getRuleGroup(ruleGroupId);

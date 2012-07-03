@@ -4454,6 +4454,21 @@ public class PortalImpl implements Portal {
 			if (layoutTypePortlet.hasPortletId(checkPortletId)) {
 				return true;
 			}
+			else {
+				Layout originalLayout =
+					(Layout)request.getAttribute("originalLayout");
+
+				if (originalLayout != null) {
+					LayoutTypePortlet originalLayoutTypePortlet =
+						(LayoutTypePortlet)originalLayout.getLayoutType();
+
+					if (originalLayoutTypePortlet.hasPortletId(
+							checkPortletId)) {
+
+						return true;
+					}
+				}
+			}
 		}
 
 		if (themeDisplay.isSignedIn() &&

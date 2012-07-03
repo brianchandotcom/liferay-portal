@@ -533,6 +533,8 @@ create table ResourceBlockPermission (
 
 alter table ResourcePermission add ownerId LONG;
 
+drop index IX_8D83D0CE on ResourcePermission;
+
 create table ResourceTypePermission (
 	resourceTypePermissionId LONG not null primary key,
 	companyId LONG,

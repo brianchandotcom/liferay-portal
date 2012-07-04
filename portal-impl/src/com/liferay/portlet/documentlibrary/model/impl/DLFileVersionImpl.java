@@ -112,7 +112,6 @@ public class DLFileVersionImpl extends DLFileVersionBaseImpl {
 	}
 
 	public DLFolder getTrashFolder() {
-
 		DLFolder dlFolder = getFolder();
 
 		while (dlFolder != null) {

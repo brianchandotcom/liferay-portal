@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.Validator_IW;
 import com.liferay.portal.kernel.webdav.WebDAVUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Image;
@@ -840,20 +841,20 @@ public class WebServerServlet extends HttpServlet {
 				(LiferayFileVersion)fileVersion;
 
 			if (liferayFileVersion.isInTrash() ||
-					liferayFileVersion.isInTrashFolder()) {
-				boolean showTrashEntries = ParamUtil.getBoolean(
-					request, "showTrashEntries", false);
+				liferayFileVersion.isInTrashFolder()) {
 
-				if (showTrashEntries) {
-					PermissionChecker permissionChecker =
-						PermissionThreadLocal.getPermissionChecker();
+				int status = ParamUtil.getInteger(
+					request, "status", WorkflowConstants.STATUS_APPROVED);
 
-					TrashUtil.checkPermission(
-						permissionChecker, fileEntry.getGroupId());
-				}
-				else {
+				if (status != WorkflowConstants.STATUS_IN_TRASH) {
 					throw new NoSuchFileEntryException();
 				}
+
+				PermissionChecker permissionChecker =
+					PermissionThreadLocal.getPermissionChecker();
+
+				TrashUtil.checkPermission(
+					permissionChecker, fileEntry.getGroupId());
 			}
 		}
 

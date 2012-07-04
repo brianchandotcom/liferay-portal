@@ -39,8 +39,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
@@ -458,11 +460,15 @@ public class DLUtil {
 		sb.append(queryString);
 
 		if (themeDisplay != null) {
-			String portletName =
-				themeDisplay.getPortletDisplay().getPortletName();
+			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-			if (portletName.equals(PortletKeys.TRASH)) {
-				sb.append("&showTrashEntries=1");
+			if (portletDisplay != null) {
+				String portletName = portletDisplay.getPortletName();
+
+				if (portletName.equals(PortletKeys.TRASH)) {
+					sb.append("&status=");
+					sb.append(WorkflowConstants.STATUS_IN_TRASH);
+				}
 			}
 		}
 

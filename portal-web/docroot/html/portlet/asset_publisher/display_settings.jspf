@@ -61,7 +61,7 @@ portletDisplayDDMTemplatesURLString = HttpUtil.addParameter(portletDisplayDDMTem
 
 		</aui:select>
 
-		<liferay-ui:icon cssClass="manage-display-templates" id="selectDDMTemplate" image="configuration" label="<%= true %>" message="manage-display-templates" url="javascript:;" />
+		<liferay-ui:icon cssClass="manage-display-templates" id="selectDDMTemplate" image="configuration" label="<%= true %>" message='<%= LanguageUtil.format(pageContext, "manage-display-templates-for-x", themeDisplay.getScopeGroupName(), false) %>' url="javascript:;" />
 	</div>
 
 	<aui:select cssClass="hidden-field abstract-length" helpMessage="abstract-length-key-help" name="preferences--abstractLength--">

@@ -17,7 +17,7 @@
 	</if>
 
 	<target name="clean">
-		<delete dir="classes" />
+		<delete dir="${module.classes.dir}" />
 		<delete dir="test-classes" />
 		<delete dir="test-results" />
 		<delete dir="${doc.dir}/${ant.project.name}/javadocs" />
@@ -40,12 +40,30 @@
 			</then>
 		</if>
 
-		<mkdir dir="classes" />
+		<mkdir dir="${module.classes.dir}" />
 
-		<antcall target="compile-java">
-			<param name="javac.classpathref" value="project.classpath" />
-			<param name="javac.destdir" value="classes" />
-			<param name="javac.srcdir" value="src" />
+		<path id="compile.classpath">
+			<path refid="project.classpath" />
+		</path>
+
+		<liferay-if notNull="module.dependencies">
+			<antcall target="loop-module-dependencies">
+				<param name="loop.modules.cmd" value="compile-module" />
+			</antcall>
+
+			<for list="${module.dependencies}" param="module.dependency.param">
+				<sequential>
+					<liferay-addtopath refid="compile.classpath">
+						<pathelement location="${project.dir}/portal-modules/@{module.dependency.param}/classes" />
+					</liferay-addtopath>
+				</sequential>
+			</for>
+		</liferay-if>
+
+		<antcall target="compile-java" inheritrefs="true">
+			<param name="javac.classpathref" value="compile.classpath" />
+			<param name="javac.destdir" value="${module.classes.dir}" />
+			<param name="javac.srcdir" value="${module.src.dir}" />
 		</antcall>
 	</target>
 
@@ -68,17 +86,42 @@
 	</target>
 
 	<target name="deploy" depends="jar">
+		<liferay-if notNull="module.dependencies">
+			<antcall target="loop-module-dependencies">
+				<param name="loop.modules.cmd" value="deploy-module" />
+			</antcall>
+		</liferay-if>
+
 		<copy file="${jar.file}.jar" todir="${deploy.dir}" />
 	</target>
 
 	<target name="jar" depends="compile">
-		<antcall target="manifest" />
+		<liferay-if available="bnd.bnd">
+			<bndexpand propertyfile="bnd.bnd" />
 
-		<jar
-			basedir="classes"
-			jarfile="${jar.file}.jar"
-			manifest="classes/META-INF/MANIFEST.MF"
-		/>
+			<bnd
+				eclipse="false"
+				exceptions="true"
+				failok="false"
+				output="."
+				sourcepath="${module.src.dir}"
+			>
+				<classpath>
+					<pathelement location="${module.classes.dir}" />
+				</classpath>
+
+				<bndfiles path="bnd.bnd" />
+			</bnd>
+		</liferay-if>
+		<liferay-if notavailable="bnd.bnd">
+			<antcall target="manifest" />
+
+			<jar
+				basedir="classes"
+				jarfile="${jar.file}.jar"
+				manifest="classes/META-INF/MANIFEST.MF"
+			/>
+		</liferay-if>
 	</target>
 
 	<target name="jar-javadoc" depends="javadoc">
@@ -90,7 +133,7 @@
 
 	<target name="jar-sources">
 		<jar
-			basedir="src"
+			basedir="${module.src.dir}"
 			jarfile="${jar.file}-sources.jar"
 		/>
 	</target>
@@ -104,7 +147,7 @@
 			destdir="${doc.dir}/${ant.project.name}/javadocs"
 			maxmemory="768m"
 			packagenames="*.*"
-			sourcepath="src"
+			sourcepath="${module.src.dir}"
 			stylesheetfile="${project.dir}/tools/javadoc.css"
 			useexternalfile="yes"
 		>

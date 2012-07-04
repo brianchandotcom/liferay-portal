@@ -92,6 +92,8 @@
 	<classpathentry kind="lib" path="lib/development/spring-test.jar"/>
 	<classpathentry kind="lib" path="lib/development/tomcat-coyote.jar"/>
 	<classpathentry kind="lib" path="lib/development/xmltask.jar"/>
+	<classpathentry kind="lib" path="lib/framework/org.eclipse.osgi.services.jar"/>
+	<classpathentry kind="lib" path="lib/framework/org.eclipse.osgi.util.jar"/>
 	<classpathentry kind="lib" path="lib/global/portlet.jar"/>
 	<classpathentry kind="lib" path="lib/portal/abdera.jar"/>
 	<classpathentry kind="lib" path="lib/portal/alloy-taglib.jar"/>
@@ -115,7 +117,7 @@
 	<classpathentry kind="lib" path="lib/portal/backport-concurrent.jar"/>
 	<classpathentry kind="lib" path="lib/portal/bcmail.jar"/>
 	<classpathentry kind="lib" path="lib/portal/bcprov.jar"/>
-	<classpathentry kind="lib" path="lib/portal/bnd.jar"/>
+	<classpathentry kind="lib" path="lib/portal/biz.aQute.bnd.jar"/>
 	<classpathentry kind="lib" path="lib/portal/bobo-browse.jar"/>
 	<classpathentry kind="lib" path="lib/portal/bsh.jar"/>
 	<classpathentry kind="lib" path="lib/portal/bsf.jar"/>
@@ -159,7 +161,6 @@
 	<classpathentry kind="lib" path="lib/portal/ecs.jar"/>
 	<classpathentry kind="lib" path="lib/portal/ehcache-core.jar"/>
 	<classpathentry kind="lib" path="lib/portal/ehcache-jgroupsreplication.jar"/>
-	<classpathentry kind="lib" path="lib/portal/equinox.jar"/>
 	<classpathentry kind="lib" path="lib/portal/fastutil.jar"/>
 	<classpathentry kind="lib" path="lib/portal/flexjson.jar"/>
 	<classpathentry kind="lib" path="lib/portal/fontbox.jar"/>
@@ -235,6 +236,8 @@
 	<classpathentry kind="lib" path="lib/portal/oauth-provider.jar"/>
 	<classpathentry kind="lib" path="lib/portal/odmg.jar"/>
 	<classpathentry kind="lib" path="lib/portal/openid4java.jar"/>
+	<classpathentry kind="lib" path="lib/portal/org.apache.felix.fileinstall.jar"/>
+	<classpathentry kind="lib" path="lib/portal/org.eclipse.osgi.jar"/>
 	<classpathentry kind="lib" path="lib/portal/oro.jar"/>
 	<classpathentry kind="lib" path="lib/portal/oscache.jar"/>
 	<classpathentry kind="lib" path="lib/portal/pdfbox.jar"/>

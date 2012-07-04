@@ -39,10 +39,18 @@
 
 	<property name="liferay.home" value="${app.server.parent.dir}" />
 
+	<property name="module.framework.lib.dir" value="${liferay.home}/data/framework/lib" />
+
 	<path id="lib.classpath">
 		<fileset dir="${project.dir}/lib/development" includes="*.jar" />
 		<fileset dir="${project.dir}/lib/global" includes="*.jar" />
 		<fileset dir="${project.dir}/lib/portal" includes="*.jar" />
+
+		<!-- All other libs should take precedence over these -->
+
+		<fileset dir="${project.dir}/lib/framework" includes="*.jar" />
+
+		<pathelement path="${project.dir}/tools/ant/classes" />
 	</path>
 
 	<path id="project.classpath">
@@ -69,9 +77,31 @@
 	<taskdef classpathref="lib.classpath" resource="ise/antelope/tasks/antlib.xml" uri="antlib:ise.antelope.tasks" />
 	<taskdef classpathref="lib.classpath" resource="com/orangevolt/tools/ant/taskdefs.properties" />
 	<taskdef classpathref="lib.classpath" resource="tasks.properties" />
+	<taskdef classpathref="lib.classpath" resource="aQute/bnd/ant/taskdef.properties" />
 
 	<taskdef classname="com.tonicsystems.jarjar.JarJarTask" classpath="${project.dir}/lib/development/jarjar.jar" name="jarjar" />
 	<taskdef classname="com.oopsconsultancy.xmltask.ant.XmlTask" classpath="${project.dir}/lib/development/xmltask.jar" name="xmltask" />
+
+	<trycatch>
+		<try>
+			<taskdef classname="com.liferay.util.ant.AddToPathTask" classpathref="lib.classpath" name="liferay-addtopath" />
+			<taskdef classname="com.liferay.util.ant.IfTask" classpathref="lib.classpath" name="liferay-if" />
+			<taskdef classname="com.liferay.util.ant.RangeTask" classpathref="lib.classpath" name="liferay-range" />
+			<taskdef classname="com.liferay.util.ant.TimerTask" classpathref="lib.classpath" name="liferay-timer" />
+		</try>
+		<catch>
+			<ant dir="${project.dir}/tools/ant" target="compile" inheritAll="false" />
+
+			<taskdef classname="com.liferay.util.ant.AddToPathTask" classpathref="lib.classpath" name="liferay-addtopath" />
+			<taskdef classname="com.liferay.util.ant.IfTask" classpathref="lib.classpath" name="liferay-if" />
+			<taskdef classname="com.liferay.util.ant.RangeTask" classpathref="lib.classpath" name="liferay-range" />
+			<taskdef classname="com.liferay.util.ant.TimerTask" classpathref="lib.classpath" name="liferay-timer" />
+		</catch>
+	</trycatch>
+
+	<var name="module.classes.dir" value="classes" />
+	<var name="module.dependencies" value="" />
+	<var name="module.src.dir" value="src" />
 
 	<property name="doc.dir" value="${project.dir}/api" />
 
@@ -364,7 +394,15 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		</then>
 	</if>
 
+	<target name="clean-module">
+		<ant dir="${project.dir}/portal-modules/${module.name}" target="clean" inheritAll="false" />
+	</target>
+
 	<target name="compile">
+	</target>
+
+	<target name="compile-module">
+		<ant dir="${project.dir}/portal-modules/${module.name}" target="compile"  inheritAll="false" />
 	</target>
 
 	<target name="compile-test">
@@ -418,6 +456,10 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		</ant>
 	</target>
 
+	<target name="deploy-module">
+		<ant dir="${project.dir}/portal-modules/${module.name}" target="deploy" inheritAll="false" />
+	</target>
+
 	<target name="format-javadoc">
 		<echo message="Run &quot;ant compile-test&quot; in portal-impl before using format-javadoc to generate @Override tags." />
 
@@ -458,6 +500,54 @@ Please set the environment variable ANT_OPTS to the recommended value of
 				</cobertura-instrument>
 			</then>
 		</if>
+	</target>
+
+	<target name="jar-module">
+		<ant dir="${project.dir}/portal-modules/${module.name}" target="jar" inheritAll="false" />
+	</target>
+
+	<target name="loop-modules">
+		<for param="module.name">
+			<path>
+				<dirset dir="${project.dir}/portal-modules" includes="*" />
+			</path>
+			<sequential>
+				<antelope:stringutil string="@{module.name}" property="module.name.unix">
+					<antelope:replace regex="\\" replacement="/" />
+				</antelope:stringutil>
+
+				<antelope:grep in="${module.name.unix}" regex="(.*/)(.*)" group="2" property="module.name" />
+
+				<echo message="${module.name}"></echo>
+
+				<antcall target="${loop.modules.cmd}" />
+			</sequential>
+		</for>
+	</target>
+
+	<target name="loop-module-dependencies">
+		<!--
+		This target can be called recursively so it needs to maintain locally
+		scoped the variables.
+		-->
+
+		<var name="module.dependencies.temp" value="${module.dependencies}" />
+		<var name="module.name.temp" value="${module.name}" />
+
+		<var name="module.dependencies" unset="true" />
+
+		<for list="${module.dependencies.temp}" param="module.dependencies.param" >
+			<sequential>
+				<var name="module.name" value="@{module.dependencies.param}" />
+
+				<echo message="${module.name}"></echo>
+
+				<antcall target="${loop.modules.cmd}" inheritall="false" />
+			</sequential>
+		</for>
+
+		<var name="module.dependencies" value="${module.dependencies.temp}" />
+		<var name="module.name" value="${module.name.temp}" />
 	</target>
 
 	<target name="print-current-time">

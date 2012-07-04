@@ -12,6 +12,8 @@
 	</target>
 
 	<target name="clean">
+		<ant dir="${project.dir}/tools/ant" target="clean" inheritAll="false" />
+
 		<ant dir="classes" target="clean" inheritAll="false" />
 
 		<ant dir="portal-service" target="clean" inheritAll="false" />
@@ -21,6 +23,10 @@
 		<ant dir="util-taglib" target="clean" inheritAll="false" />
 
 		<ant dir="portal-impl" target="clean" inheritAll="false" />
+
+		<antcall target="loop-modules">
+			<param name="loop.modules.cmd" value="clean-module" />
+		</antcall>
 
 		<ant dir="portal-web" target="clean" inheritAll="false" />
 
@@ -132,6 +138,10 @@
 		<antcall target="print-current-time" />
 	</target>
 
+	<target name="clean-and-build-ant-tasks">
+		<ant dir="${project.dir}/tools/ant" target="clean" inheritAll="false" />
+	</target>
+
 	<target name="compile">
 		<ant dir="portal-service" target="compile" inheritAll="false" />
 
@@ -140,6 +150,10 @@
 		<ant dir="util-taglib" target="compile" inheritAll="false" />
 
 		<ant dir="portal-impl" target="compile" inheritAll="false" />
+
+		<antcall target="loop-modules">
+			<param name="loop.modules.cmd" value="compile-module" />
+		</antcall>
 	</target>
 
 	<target name="deploy">
@@ -181,6 +195,10 @@ ${app.server.tomcat.dir}, then run "ant -buildfile build-dist.xml unzip-tomcat".
 
 		<ant dir="portal-impl" target="deploy" inheritAll="false" />
 
+		<antcall target="loop-modules">
+			<param name="loop.modules.cmd" value="deploy-module" />
+		</antcall>
+
 		<ant dir="portal-web" target="deploy" inheritAll="false" />
 
 		<copy todir="${liferay.home}/data/hsql">
@@ -211,6 +229,10 @@ ${app.server.tomcat.dir}, then run "ant -buildfile build-dist.xml unzip-tomcat".
 
 		<copy todir="${app.server.lib.portal.dir}">
 			<fileset dir="lib/portal" />
+		</copy>
+
+		<copy todir="${module.framework.lib.dir}">
+			<fileset dir="lib/framework" />
 		</copy>
 
 		<if>
@@ -474,6 +496,10 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 
 		<ant dir="portal-impl" target="jar" inheritAll="false" />
 
+		<antcall target="loop-modules">
+			<param name="loop.modules.cmd" value="jar-module" />
+		</antcall>
+
 		<ant dir="portal-web" target="war" inheritAll="false" />
 
 		<ant dir="support-tomcat" target="jar" inheritAll="false" />
@@ -609,6 +635,41 @@ Plugins: ${lp.plugins.dir}</echo>
 
 	<target name="test-integration">
 		<ant antfile="build-test.xml" target="test-integration" inheritAll="false" />
+	</target>
+
+	<target name="test-ant-task-performance">
+		<!--
+		This task compares the performance difference between uses of the
+		simplified <liferay-if> task vs. the standard <if> task. This test shows
+		it's more than twice as fast.
+		-->
+
+		<liferay-range first="1" last="100000" property="range" />
+
+		<liferay-timer name="100000 iterations of &lt;if&gt; statement">
+			<for list="${range}" param="index">
+				<sequential>
+					<if>
+						<not>
+							<isset property="jdbc.drivers.optional.dir" />
+						</not>
+						<then>
+							<!-- do something -->
+						</then>
+					</if>
+				</sequential>
+			</for>
+		</liferay-timer>
+
+		<liferay-timer name="100000 iterations of &lt;liferay-if&gt; statement">
+			<for list="${range}" param="index">
+				<sequential>
+					<liferay-if null="jdbc.drivers.optional.dir">
+						<!-- do something -->
+					</liferay-if>
+				</sequential>
+			</for>
+		</liferay-timer>
 	</target>
 
 	<target name="test-unit">

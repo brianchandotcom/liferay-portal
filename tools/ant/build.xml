@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="portal-ant-tasks" basedir="." default="compile" xmlns:antelope="antlib:ise.antelope.tasks">
+	<property name="project.dir" value="../.." />
+
+	<path id="lib.classpath">
+		<fileset dir="${project.dir}/lib/portal" includes="ant.jar" />
+	</path>
+
+	<target name="compile">
+		<mkdir dir="classes" />
+
+		<javac
+			classpathref="lib.classpath"
+			destdir="classes"
+			includeAntRuntime="false"
+			srcdir="src"
+		/>
+	</target>
+
+	<target name="clean">
+		<delete dir="classes" />
+
+		<antcall target="compile" />
+	</target>
+
+</project>

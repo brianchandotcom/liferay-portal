@@ -900,6 +900,50 @@
 		</comments>
 	</library>
 	<library>
+		<file-name>framework/org.eclipse.gemini.mgmt.jar</file-name>
+		<version>1.0.1.RELEASE</version>
+		<project-name>Gemini Management</project-name>
+		<project-url>http://www.eclipse.org/gemini/management/</project-url>
+		<licenses>
+			<license>
+				<license-name>Eclipse Public License 1.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
+		<file-name>framework/org.eclipse.osgi.services.jar</file-name>
+		<version>3.3.100.v20120522-1822</version>
+		<project-name>Eclipse OSGi Services</project-name>
+		<project-url>http://www.eclipse.org/equinox</project-url>
+		<licenses>
+			<license>
+				<license-name>Eclipse Public License Version 1.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
+		<file-name>framework/org.eclipse.osgi.util.jar</file-name>
+		<version>3.2.300.v20120522-1822</version>
+		<project-name>Eclipse OSGi Utils</project-name>
+		<project-url>http://www.eclipse.org/equinox</project-url>
+		<licenses>
+			<license>
+				<license-name>Eclipse Public License Version 1.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
+		<file-name>framework/osgi-enterprise.jar</file-name>
+		<version>4.2.0.v201108120515</version>
+		<project-name>OSGi Enterprise Specification</project-name>
+		<project-url>http://download.eclipse.org/tools/orbit/downloads/</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
 		<file-name>global/portlet.jar</file-name>
 		<version>2.0</version>
 		<project-name>JSR 286 Portlet 2.0 Specification</project-name>
@@ -1165,8 +1209,8 @@
 		</licenses>
 	</library>
 	<library>
-		<file-name>portal/bnd.jar</file-name>
-		<version>1.44.0</version>
+		<file-name>portal/biz.aQute.bnd.jar</file-name>
+		<version>1.50.0</version>
 		<project-name>Bnd</project-name>
 		<project-url>http://www.aqute.biz/Bnd</project-url>
 		<licenses>
@@ -1667,17 +1711,6 @@
 		<version>1.4.0</version>
 		<project-name>Ehcache</project-name>
 		<project-url>http://ehcache.sourceforge.net</project-url>
-		<licenses>
-			<license>
-				<license-name>Apache License 2.0</license-name>
-			</license>
-		</licenses>
-	</library>
-	<library>
-		<file-name>portal/equinox.jar</file-name>
-		<version>3.7.0.v20110613</version>
-		<project-name>Eclipse OSGi Platform</project-name>
-		<project-url>http://www.eclipse.org/equinox</project-url>
 		<licenses>
 			<license>
 				<license-name>Apache License 2.0</license-name>
@@ -2574,6 +2607,28 @@
 			<license>
 				<license-name>Apache License 2.0</license-name>
 				<copyright-notice>Copyright (c) 2006-2008 Sxip Identity Corporation</copyright-notice>
+			</license>
+		</licenses>
+	</library>
+	<library>
+		<file-name>portal/org.apache.felix.fileinstall.jar</file-name>
+		<version>3.2.0</version>
+		<project-name>Apache Felix File Install</project-name>
+		<project-url>http://felix.apache.org/site/apache-felix-file-install.html</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+			</license>
+		</licenses>
+	</library>
+	<library>
+		<file-name>portal/org.eclipse.osgi.jar</file-name>
+		<version>3.8.0.v20120529-1548</version>
+		<project-name>Eclipse OSGi Platform</project-name>
+		<project-url>http://www.eclipse.org/equinox</project-url>
+		<licenses>
+			<license>
+				<license-name>Eclipse Public License Version 1.0</license-name>
 			</license>
 		</licenses>
 	</library>

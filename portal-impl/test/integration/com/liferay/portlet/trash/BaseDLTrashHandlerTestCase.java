@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileRank;
@@ -80,6 +81,8 @@ public abstract class BaseDLTrashHandlerTestCase extends BaseDLAppTestCase {
 	}
 
 	protected int searchFileEntriesCount() throws Exception {
+		Thread.sleep(1000 * TestPropsValues.JUNIT_DELAY_FACTOR);
+
 		Indexer indexer = IndexerRegistryUtil.getIndexer(DLIndexer.class);
 
 		SearchContext searchContext = ServiceTestUtil.getSearchContext();

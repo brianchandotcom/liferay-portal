@@ -17,11 +17,12 @@ package com.liferay.portal.kernel.template;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
+import java.net.JarURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -44,10 +45,24 @@ public class URLTemplateResource implements TemplateResource {
 	}
 
 	public long getLastModified() {
-		InputStream inputStream = null;
+		URLConnection urlConnection = null;
 
 		try {
-			URLConnection urlConnection = _templateURL.openConnection();
+			urlConnection = _templateURL.openConnection();
+
+			if (urlConnection instanceof JarURLConnection) {
+				JarURLConnection jarURLConnection =
+					(JarURLConnection)urlConnection;
+
+				URL jarFileURL = jarURLConnection.getJarFileURL();
+
+				if (jarFileURL.getProtocol().equals("file")) {
+					return new File(jarFileURL.getFile()).lastModified();
+				}
+				else {
+					urlConnection = jarFileURL.openConnection();
+				}
+			}
 
 			return urlConnection.getLastModified();
 		}
@@ -60,9 +75,9 @@ public class URLTemplateResource implements TemplateResource {
 			return 0;
 		}
 		finally {
-			if (inputStream != null) {
+			if (urlConnection != null) {
 				try {
-					inputStream.close();
+					urlConnection.getInputStream().close();
 				}
 				catch (IOException ioe) {
 				}
@@ -75,8 +90,10 @@ public class URLTemplateResource implements TemplateResource {
 			return null;
 		}
 
+		URLConnection urlConnection = _templateURL.openConnection();
+
 		return new InputStreamReader(
-			_templateURL.openStream(), DEFAUT_ENCODING);
+			urlConnection.getInputStream(), DEFAUT_ENCODING);
 	}
 
 	public String getTemplateId() {

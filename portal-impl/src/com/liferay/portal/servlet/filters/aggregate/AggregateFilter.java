@@ -291,7 +291,7 @@ public class AggregateFilter extends BasePortalFilter {
 		}
 		else {
 			AggregateContext aggregateContext = new ServletAggregateContext(
-				_servletContext, _servletContext.getResource(StringPool.SLASH));
+				_servletContext, StringPool.SLASH);
 
 			aggregateContext.pushPath(bundleDir);
 
@@ -479,7 +479,7 @@ public class AggregateFilter extends BasePortalFilter {
 		String content = StringUtil.read(urlConnection.getInputStream());
 
 		content = aggregateCss(
-			new ServletAggregateContext(_servletContext, resourceURL), content);
+			new ServletAggregateContext(_servletContext, resourcePath), content);
 
 		return getCssContent(request, response, resourcePath, content);
 	}

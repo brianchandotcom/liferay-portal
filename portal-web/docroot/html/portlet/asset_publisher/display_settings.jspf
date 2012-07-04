@@ -34,7 +34,7 @@ portletDisplayDDMTemplatesURLString = HttpUtil.addParameter(portletDisplayDDMTem
 
 <aui:fieldset cssClass="general-display-settings">
 	<div class="display-style">
-		<aui:select id="displayStyle" name="preferences--displayStyle--">
+		<aui:select id="displayStyle" label="display-template" name="preferences--displayStyle--">
 
 			<%
 			for (String curDisplayStyle : PropsValues.ASSET_PUBLISHER_DISPLAY_STYLES) {

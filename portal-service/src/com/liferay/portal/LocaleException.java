@@ -33,8 +33,36 @@ public class LocaleException extends PortalException {
 		super(msg, cause);
 	}
 
+	public LocaleException(
+		String sourceAvailableLocales, String targetAvailableLocales) {
+
+		super();
+
+		_sourceAvailableLocales = sourceAvailableLocales;
+		_targetAvailableLocales = targetAvailableLocales;
+	}
+
 	public LocaleException(Throwable cause) {
 		super(cause);
 	}
+
+	public String getSourceAvailableLocales() {
+		return _sourceAvailableLocales;
+	}
+
+	public String getTargetAvailableLocales() {
+		return _targetAvailableLocales;
+	}
+
+	public void setSourceAvailableLocales(String sourceAvailableLocales) {
+		_sourceAvailableLocales = sourceAvailableLocales;
+	}
+
+	public void setTargetAvailableLocales(String targetAvailableLocales) {
+		_targetAvailableLocales = targetAvailableLocales;
+	}
+
+	private String _sourceAvailableLocales;
+	private String _targetAvailableLocales;
 
 }

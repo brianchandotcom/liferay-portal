@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
@@ -333,27 +332,35 @@ public class PortletImporter {
 
 		// Available Locales compatibility
 
-		Element sourceAvailableLocalesElement = rootElement.element("locale");
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			portletDataContext.getCompanyId(), portletId);
 
-		String sourceAvailableLocalesAttribute =
-			sourceAvailableLocalesElement.attributeValue("available-locales");
+		PortletDataHandler portletDataHandler =
+			portlet.getPortletDataHandlerInstance();
 
-		List<String> sourceAvailableLocales = ListUtil.fromArray(
-			sourceAvailableLocalesAttribute.split(","));
+		if (portletDataHandler.isDataLocalized()) {
+			Element sourceAvailableLocalesElement = rootElement.element(
+				"locale");
 
-		List<Locale> targetAvailableLocales = ListUtil.fromArray(
-			LanguageUtil.getAvailableLocales());
+			String sourceAvailableLocalesAttribute =
+				sourceAvailableLocalesElement.attributeValue(
+					"available-locales");
 
-		if (targetAvailableLocales.size() < sourceAvailableLocales.size()) {
-			throw new LocaleException();
-		}
+			String[] sourceAvailableLocales = StringUtil.split(
+				sourceAvailableLocalesAttribute);
 
-		for (String sourceAvailableLocale : sourceAvailableLocales) {
-			Locale sourceLocale = LocaleUtil.fromLanguageId(
-				sourceAvailableLocale);
+			Locale[] targetAvailableLocales =
+				LanguageUtil.getAvailableLocales();
 
-			if (!targetAvailableLocales.contains(sourceLocale)) {
-				throw new LocaleException();
+			for (String sourceAvailableLocale : sourceAvailableLocales) {
+				if (!ArrayUtil.contains(
+						targetAvailableLocales,
+						LocaleUtil.fromLanguageId(sourceAvailableLocale))) {
+
+					throw new LocaleException(
+						StringUtil.merge(sourceAvailableLocales),
+						StringUtil.merge(targetAvailableLocales));
+				}
 			}
 		}
 

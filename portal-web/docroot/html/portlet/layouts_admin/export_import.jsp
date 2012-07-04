@@ -130,6 +130,15 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 				</ul>
 			</liferay-ui:error>
 
+			<liferay-ui:error exception="<%= LocaleException.class %>">
+
+				<%
+				LocaleException le = (LocaleException)errorException;
+				%>
+
+				<liferay-ui:message arguments="<%= new String[]{le.getSourceAvailableLocales(), le.getTargetAvailableLocales()} %>" key="the-available-languages-in-the-lar-file-x-do-not-match-the-portal-available-languages-x" />
+			</liferay-ui:error>
+
 			<c:choose>
 				<c:when test="<%= (layout.getGroupId() != groupId) || (layout.isPrivateLayout() != privateLayout) %>">
 					<%@ include file="/html/portlet/layouts_admin/export_import_options.jspf" %>

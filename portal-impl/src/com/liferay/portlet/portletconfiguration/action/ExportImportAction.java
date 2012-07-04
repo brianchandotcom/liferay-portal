@@ -292,10 +292,14 @@ public class ExportImportAction extends EditConfigurationAction {
 		catch (Exception e) {
 			if ((e instanceof LARFileException) ||
 				(e instanceof LARTypeException) ||
-				(e instanceof LocaleException) ||
 				(e instanceof PortletIdException)) {
 
 				SessionErrors.add(actionRequest, e.getClass());
+			}
+			else if (e instanceof LocaleException) {
+				LocaleException le = (LocaleException)e;
+
+				SessionErrors.add(actionRequest, e.getClass(), le);
 			}
 			else {
 				_log.error(e, e);

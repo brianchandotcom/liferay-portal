@@ -87,6 +87,10 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		return _ALWAYS_STAGED;
 	}
 
+	public boolean isDataLocalized() {
+		return _DATA_LOCALIZED;
+	}
+
 	public boolean isPublishToLiveByDefault() {
 		return _PUBLISH_TO_LIVE_BY_DEFAULT;
 	}
@@ -118,6 +122,8 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 	private static final boolean _ALWAYS_EXPORTABLE = false;
 
 	private static final boolean _ALWAYS_STAGED = false;
+
+	private static final boolean _DATA_LOCALIZED = false;
 
 	private static final boolean _PUBLISH_TO_LIVE_BY_DEFAULT = false;
 

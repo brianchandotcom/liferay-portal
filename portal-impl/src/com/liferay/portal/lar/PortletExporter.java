@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -90,7 +89,6 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import org.apache.commons.lang.time.StopWatch;
@@ -938,22 +936,9 @@ public class PortletExporter {
 
 		Element availableLocalesElement = parentElement.addElement("locale");
 
-		Locale[] availableLocales = LanguageUtil.getAvailableLocales();
-
-		StringBundler sbLocales = new StringBundler();
-
-		for (int i = 0; i < availableLocales.length; i++) {
-			Locale availableLocale = availableLocales[i];
-
-			sbLocales.append(LocaleUtil.toLanguageId(availableLocale));
-
-			if (i != availableLocales.length - 1) {
-				sbLocales.append(",");
-			}
-		}
-
 		availableLocalesElement.addAttribute(
-			"available-locales", sbLocales.toString());
+			"available-locales",
+			StringUtil.merge(LanguageUtil.getAvailableLocales()));
 
 		if (portletDataContext.isPathNotProcessed(path)) {
 			try {

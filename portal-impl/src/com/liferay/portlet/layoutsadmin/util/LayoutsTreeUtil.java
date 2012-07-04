@@ -64,15 +64,8 @@ public class LayoutsTreeUtil {
 			long parentLayoutId, long[] expandedLayoutIds)
 		throws Exception {
 
-		HttpSession session = request.getSession();
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
-
-		int start = ParamUtil.getInteger(request, "start");
-		int end = ParamUtil.getInteger(
-			request, "end",
-			start + PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN);
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
@@ -91,32 +84,25 @@ public class LayoutsTreeUtil {
 			layoutAncestors.add(selLayout);
 		}
 
-		String treeId = _getScopedPaginationTreeId(request);
+		int start = 0;
+		int end = layouts.size();
 
-		String paginationJSON = SessionClicks.get(
-			session, treeId, StringPool.BLANK);
+		if (PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN > -1) {
+			start = ParamUtil.getInteger(request, "start");
+			start = Math.max(0, Math.min(start, layouts.size()));
 
-		if (Validator.isNotNull(paginationJSON) && (end >= 0)) {
-			JSONObject paginationJSONObject = JSONFactoryUtil.createJSONObject(
-				paginationJSON);
+			end = ParamUtil.getInteger(
+				request, "end",
+				start + PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN);
 
-			String key = String.valueOf(parentLayoutId);
+			int loadedLayoutsCount = _getLoadedLayoutsCount(
+				request, parentLayoutId);
 
-			if (paginationJSONObject.has(key)) {
-				int paginationEnd = paginationJSONObject.getInt(key);
-
-				if (paginationEnd > end) {
-					end = paginationEnd;
-				}
+			if (loadedLayoutsCount > end) {
+				end = loadedLayoutsCount;
 			}
-		}
 
-		start = Math.max(0, Math.min(start, layouts.size()));
-
-		end = Math.min(end, layouts.size());
-
-		if (end < 0) {
-			end = layouts.size();
+			end = Math.max(start, Math.min(end, layouts.size()));
 		}
 
 		for (Layout layout : layouts.subList(start, end)) {
@@ -215,8 +201,8 @@ public class LayoutsTreeUtil {
 		return responseJSONObject.toString();
 	}
 
-	private static String _getScopedPaginationTreeId(
-		HttpServletRequest request) {
+	private static int _getLoadedLayoutsCount(
+		HttpServletRequest request, long layoutId) throws Exception {
 
 		String treeId = ParamUtil.getString(request, "treeId");
 		long groupId = ParamUtil.getLong(request, "groupId");
@@ -232,7 +218,15 @@ public class LayoutsTreeUtil {
 		sb.append(StringPool.COLON);
 		sb.append("Pagination");
 
-		return sb.toString();
+		HttpSession session = request.getSession();
+
+		String paginationJSON = SessionClicks.get(
+			session, sb.toString(), StringPool.EMPTY_JSON);
+
+		JSONObject paginationJSONObject = JSONFactoryUtil.createJSONObject(
+			paginationJSON);
+
+		return paginationJSONObject.getInt(String.valueOf(layoutId), 0);
 	}
 
 }

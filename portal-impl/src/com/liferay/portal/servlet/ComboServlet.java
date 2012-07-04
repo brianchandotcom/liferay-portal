@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -131,6 +132,12 @@ public class ComboServlet extends HttpServlet {
 				minifierType = "js";
 			}
 
+			// Avoid this call in the loop
+
+			ServletContext servletContext = getServletContext();
+
+			String rootPath = ServletContextUtil.getRootPath(servletContext);
+
 			int length = modulePaths.length;
 
 			bytesArray = new byte[length][];
@@ -151,7 +158,8 @@ public class ComboServlet extends HttpServlet {
 					modulePath = StringUtil.replaceFirst(
 						p.concat(modulePath), contextPath, StringPool.BLANK);
 
-					URL resourceURL = getResourceURL(modulePath);
+					URL resourceURL = getResourceURL(
+						servletContext, rootPath, modulePath);
 
 					if (resourceURL == null) {
 						response.setHeader(
@@ -280,8 +288,9 @@ public class ComboServlet extends HttpServlet {
 		return fileContentBag._fileContent;
 	}
 
-	protected URL getResourceURL(String path) throws IOException {
-		ServletContext servletContext = getServletContext();
+	protected URL getResourceURL(
+			ServletContext servletContext, String rootPath, String path)
+		throws IOException {
 
 		URL resourceURL = servletContext.getResource(path);
 
@@ -289,15 +298,12 @@ public class ComboServlet extends HttpServlet {
 			return null;
 		}
 
-		URL rootResourceURL = servletContext.getResource(StringPool.SLASH);
-
-		String basePath = rootResourceURL.getPath();
-
-		basePath = basePath.concat(_JAVASCRIPT_DIR);
-
 		String filePath = resourceURL.getPath();
 
-		if (filePath.startsWith(basePath)) {
+		int pos = filePath.indexOf(
+			rootPath.concat(StringPool.SLASH).concat(_JAVASCRIPT_DIR));
+
+		if (pos == 0) {
 			return resourceURL;
 		}
 

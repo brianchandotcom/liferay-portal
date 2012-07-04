@@ -16,6 +16,7 @@ package com.liferay.portal.servlet.filters.aggregate;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -36,28 +37,31 @@ import javax.servlet.ServletContext;
 public class ServletAggregateContext implements AggregateContext {
 
 	public ServletAggregateContext(
-			ServletContext servletContext, URL resourceURL)
+			ServletContext servletContext, String resourcePath)
 		throws IOException {
 
 		_servletContext = servletContext;
 
-		String resourcePath = resourceURL.getPath();
+		String rootPath = ServletContextUtil.getRootPath(_servletContext);
 
-		URL rootURL = _servletContext.getResource(StringPool.SLASH);
+		int pos = resourcePath.lastIndexOf(
+			StringPool.SLASH);
 
-		String rootPath = rootURL.getPath();
-
-		if (resourcePath.endsWith(StringPool.SLASH)) {
-			resourcePath = resourcePath.substring(0, resourcePath.length());
+		if (pos > 0) {
+			resourcePath = resourcePath.substring(0, resourcePath.length() - 1);
 		}
 
-		int pos = resourcePath.lastIndexOf(StringPool.SLASH);
+		pos = resourcePath.lastIndexOf(StringPool.SLASH);
 
 		resourcePath = resourcePath.substring(0, pos);
 
-		String currentPath = resourcePath.substring(rootPath.length() - 1);
+		pos = resourcePath.lastIndexOf(rootPath);
 
-		_stack.push(currentPath);
+		if (pos == 0) {
+			resourcePath = resourcePath.substring(rootPath.length());
+		}
+
+		_stack.push(resourcePath);
 	}
 
 	public String getContent(String path) {

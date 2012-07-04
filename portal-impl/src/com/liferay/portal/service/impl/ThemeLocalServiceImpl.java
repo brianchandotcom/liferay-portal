@@ -759,12 +759,11 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 			PropsValues.SPRITE_FILE_NAME);
 		String spritePropertiesFileName = resourcePath.concat(
 			PropsValues.SPRITE_PROPERTIES_FILE_NAME);
-		URL spritePropertiesRootURL = servletContext.getResource(
-			StringPool.SLASH);
+		String rootPath = ServletContextUtil.getRootPath(servletContext);
 
 		Properties spriteProperties = SpriteProcessorUtil.generate(
 			servletContext, imageURLs, spriteFileName, spritePropertiesFileName,
-			spritePropertiesRootURL, 16, 16, 10240);
+			rootPath, 16, 16, 10240);
 
 		if (spriteProperties == null) {
 			return;

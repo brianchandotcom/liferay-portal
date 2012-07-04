@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -37,6 +38,8 @@ import javax.servlet.ServletContext;
  * @author Raymond Augé
  */
 public class ServletContextUtil {
+
+	public static final String WEB_XML_PATH = "/WEB-INF/web.xml";
 
 	public static Set<String> getClassNames(ServletContext servletContext)
 		throws IOException {
@@ -137,6 +140,18 @@ public class ServletContextUtil {
 		}
 
 		return lastModified;
+	}
+
+	public static String getRootPath(ServletContext servletContext)
+		throws MalformedURLException {
+
+		URL rootURL = servletContext.getResource(WEB_XML_PATH);
+
+		String rootPath = rootURL.getPath();
+
+		int pos = rootPath.indexOf(WEB_XML_PATH);
+
+		return rootPath.substring(0, pos);
 	}
 
 	private static String _getClassName(String path) {

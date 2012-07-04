@@ -15,6 +15,7 @@
 package com.liferay.portal.lar;
 
 import com.liferay.portal.NoSuchLayoutException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lar.ImportExportThreadLocal;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
@@ -297,6 +298,10 @@ public class LayoutExporter {
 		Element rootElement = document.addElement("root");
 
 		Element headerElement = rootElement.addElement("header");
+
+		headerElement.addAttribute(
+			"available-locales",
+			StringUtil.merge(LanguageUtil.getAvailableLocales()));
 
 		headerElement.addAttribute(
 			"build-number", String.valueOf(ReleaseInfo.getBuildNumber()));

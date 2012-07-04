@@ -19,6 +19,7 @@
 <%@ page import="com.liferay.portal.LARFileException" %><%@
 page import="com.liferay.portal.LARTypeException" %><%@
 page import="com.liferay.portal.LayoutImportException" %><%@
+page import="com.liferay.portal.LocaleException" %><%@
 page import="com.liferay.portal.NoSuchLayoutException" %><%@
 page import="com.liferay.portal.NoSuchPortletItemException" %><%@
 page import="com.liferay.portal.NoSuchResourceException" %><%@

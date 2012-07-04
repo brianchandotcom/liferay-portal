@@ -17,6 +17,7 @@ package com.liferay.portlet.portletconfiguration.action;
 import com.liferay.portal.LARFileException;
 import com.liferay.portal.LARTypeException;
 import com.liferay.portal.LayoutImportException;
+import com.liferay.portal.LocaleException;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.PortletIdException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -294,6 +295,11 @@ public class ExportImportAction extends EditConfigurationAction {
 				(e instanceof PortletIdException)) {
 
 				SessionErrors.add(actionRequest, e.getClass());
+			}
+			else if (e instanceof LocaleException) {
+				LocaleException le = (LocaleException)e;
+
+				SessionErrors.add(actionRequest, e.getClass(), le);
 			}
 			else {
 				_log.error(e, e);

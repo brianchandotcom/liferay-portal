@@ -121,6 +121,11 @@ public class JournalContentPortletDataHandlerImpl
 	}
 
 	@Override
+	public boolean isDataLocalized() {
+		return _DATA_LOCALIZED;
+	}
+
+	@Override
 	public boolean isPublishToLiveByDefault() {
 		return _PUBLISH_TO_LIVE_BY_DEFAULT;
 	}
@@ -345,6 +350,8 @@ public class JournalContentPortletDataHandlerImpl
 	private static final boolean _ALWAYS_EXPORTABLE = true;
 
 	private static final boolean _ALWAYS_STAGED = true;
+
+	private static final boolean _DATA_LOCALIZED = true;
 
 	private static final String _NAMESPACE = "journal";
 

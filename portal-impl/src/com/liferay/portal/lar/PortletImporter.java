@@ -17,10 +17,12 @@ package com.liferay.portal.lar;
 import com.liferay.portal.LARFileException;
 import com.liferay.portal.LARTypeException;
 import com.liferay.portal.LayoutImportException;
+import com.liferay.portal.LocaleException;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.PortletIdException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lar.ImportExportThreadLocal;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
@@ -326,6 +328,40 @@ public class PortletImporter {
 				rootPortletId)) {
 
 			throw new PortletIdException("Invalid portlet id " + rootPortletId);
+		}
+
+		// Available Locales compatibility
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			portletDataContext.getCompanyId(), portletId);
+
+		PortletDataHandler portletDataHandler =
+			portlet.getPortletDataHandlerInstance();
+
+		if (portletDataHandler.isDataLocalized()) {
+			Element sourceAvailableLocalesElement = rootElement.element(
+				"locale");
+
+			String sourceAvailableLocalesAttribute =
+				sourceAvailableLocalesElement.attributeValue(
+					"available-locales");
+
+			String[] sourceAvailableLocales = StringUtil.split(
+				sourceAvailableLocalesAttribute);
+
+			Locale[] targetAvailableLocales =
+				LanguageUtil.getAvailableLocales();
+
+			for (String sourceAvailableLocale : sourceAvailableLocales) {
+				if (!ArrayUtil.contains(
+						targetAvailableLocales,
+						LocaleUtil.fromLanguageId(sourceAvailableLocale))) {
+
+					throw new LocaleException(
+						StringUtil.merge(sourceAvailableLocales),
+						StringUtil.merge(targetAvailableLocales));
+				}
+			}
 		}
 
 		// Import group id

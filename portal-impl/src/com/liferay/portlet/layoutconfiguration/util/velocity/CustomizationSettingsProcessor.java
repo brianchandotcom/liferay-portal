@@ -16,7 +16,6 @@ package com.liferay.portlet.layoutconfiguration.util.velocity;
 
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -25,6 +24,7 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portlet.sites.util.SitesUtil;
 
 import java.io.Writer;
+import java.lang.reflect.Method;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.jsp.PageContext;
@@ -52,7 +52,7 @@ public class CustomizationSettingsProcessor implements ColumnProcessor {
 			_customizationEnabled = false;
 		}
 
-		if (selLayout.isLayoutPrototypeLinkActive()) {
+ 		if (selLayout.isLayoutPrototypeLinkActive()) {
 			_customizationEnabled = false;
 		}
 	}
@@ -69,8 +69,8 @@ public class CustomizationSettingsProcessor implements ColumnProcessor {
 		boolean customizable = false;
 
 		if (_customizationEnabled) {
-			customizable = GetterUtil.getBoolean(
-				_layoutTypeSettings.getProperty(
+			customizable =
+				GetterUtil.getBoolean(_layoutTypeSettings.getProperty(
 					customizableKey, String.valueOf(false)));
 		}
 
@@ -94,15 +94,20 @@ public class CustomizationSettingsProcessor implements ColumnProcessor {
 		BeanPropertiesUtil.setProperty(inputTag, "type", "checkbox");
 		BeanPropertiesUtil.setProperty(inputTag, "value", customizable);
 
-		MethodHandler doEndMethodHandler = new MethodHandler(
-			_doEndTagMethodKey);
-		MethodHandler doStartMethodHandler = new MethodHandler(
-			_doStartTagMethodKey);
+		Method method =
+			_inputTagClass.getMethod(
+				_doStartTagMethodKey.getMethodName(),
+				_doStartTagMethodKey.getParameterTypes());
 
-		int result = (Integer)doStartMethodHandler.invoke(inputTag);
+		int result = (Integer) method.invoke(inputTag, new Object[] {});
 
 		if (result == Tag.EVAL_BODY_INCLUDE) {
-			doEndMethodHandler.invoke(inputTag);
+			method =
+				_inputTagClass.getMethod(
+					_doEndTagMethodKey.getMethodName(),
+					_doEndTagMethodKey.getParameterTypes());
+
+			result = (Integer) method.invoke(inputTag, new Object[] {});
 		}
 
 		_writer.append("</div>");

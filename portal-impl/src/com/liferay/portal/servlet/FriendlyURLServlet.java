@@ -24,6 +24,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextFactory;
+import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalInstances;
@@ -238,6 +241,15 @@ public class FriendlyURLServlet extends HttpServlet {
 		Map<String, Object> requestContext = new HashMap<String, Object>();
 
 		requestContext.put("request", request);
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext == null) {
+			serviceContext = ServiceContextFactory.getInstance(request);
+
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+		}
 
 		return PortalUtil.getActualURL(
 			group.getGroupId(), _private, mainPath, friendlyURL, params,

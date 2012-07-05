@@ -93,6 +93,10 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 	 * @return the normal model instance
 	 */
 	public static PluginSetting toModel(PluginSettingSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		PluginSetting model = new PluginSettingImpl();
 
 		model.setPluginSettingId(soapModel.getPluginSettingId());
@@ -112,6 +116,10 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 	 * @return the normal model instances
 	 */
 	public static List<PluginSetting> toModels(PluginSettingSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<PluginSetting> models = new ArrayList<PluginSetting>(soapModels.length);
 
 		for (PluginSettingSoap soapModel : soapModels) {

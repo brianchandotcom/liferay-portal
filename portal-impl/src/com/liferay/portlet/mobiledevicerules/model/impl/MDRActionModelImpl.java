@@ -111,6 +111,10 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 	 * @return the normal model instance
 	 */
 	public static MDRAction toModel(MDRActionSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		MDRAction model = new MDRActionImpl();
 
 		model.setUuid(soapModel.getUuid());
@@ -139,6 +143,10 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 	 * @return the normal model instances
 	 */
 	public static List<MDRAction> toModels(MDRActionSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<MDRAction> models = new ArrayList<MDRAction>(soapModels.length);
 
 		for (MDRActionSoap soapModel : soapModels) {

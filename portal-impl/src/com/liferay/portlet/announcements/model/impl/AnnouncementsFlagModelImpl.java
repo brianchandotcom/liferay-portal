@@ -98,6 +98,10 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 	 * @return the normal model instance
 	 */
 	public static AnnouncementsFlag toModel(AnnouncementsFlagSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		AnnouncementsFlag model = new AnnouncementsFlagImpl();
 
 		model.setFlagId(soapModel.getFlagId());
@@ -117,6 +121,10 @@ public class AnnouncementsFlagModelImpl extends BaseModelImpl<AnnouncementsFlag>
 	 */
 	public static List<AnnouncementsFlag> toModels(
 		AnnouncementsFlagSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<AnnouncementsFlag> models = new ArrayList<AnnouncementsFlag>(soapModels.length);
 
 		for (AnnouncementsFlagSoap soapModel : soapModels) {

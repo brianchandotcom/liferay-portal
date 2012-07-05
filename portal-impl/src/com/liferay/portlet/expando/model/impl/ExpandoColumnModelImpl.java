@@ -93,6 +93,10 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 	 * @return the normal model instance
 	 */
 	public static ExpandoColumn toModel(ExpandoColumnSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		ExpandoColumn model = new ExpandoColumnImpl();
 
 		model.setColumnId(soapModel.getColumnId());
@@ -113,6 +117,10 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 	 * @return the normal model instances
 	 */
 	public static List<ExpandoColumn> toModels(ExpandoColumnSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<ExpandoColumn> models = new ArrayList<ExpandoColumn>(soapModels.length);
 
 		for (ExpandoColumnSoap soapModel : soapModels) {

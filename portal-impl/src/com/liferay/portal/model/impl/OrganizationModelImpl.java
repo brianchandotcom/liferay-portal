@@ -100,6 +100,10 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 	 * @return the normal model instance
 	 */
 	public static Organization toModel(OrganizationSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		Organization model = new OrganizationImpl();
 
 		model.setOrganizationId(soapModel.getOrganizationId());
@@ -124,6 +128,10 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 	 * @return the normal model instances
 	 */
 	public static List<Organization> toModels(OrganizationSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<Organization> models = new ArrayList<Organization>(soapModels.length);
 
 		for (OrganizationSoap soapModel : soapModels) {

@@ -105,6 +105,10 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	 * @return the normal model instance
 	 */
 	public static Role toModel(RoleSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		Role model = new RoleImpl();
 
 		model.setRoleId(soapModel.getRoleId());
@@ -127,6 +131,10 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	 * @return the normal model instances
 	 */
 	public static List<Role> toModels(RoleSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<Role> models = new ArrayList<Role>(soapModels.length);
 
 		for (RoleSoap soapModel : soapModels) {

@@ -112,6 +112,10 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 	 * @return the normal model instance
 	 */
 	public static DLFileShortcut toModel(DLFileShortcutSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		DLFileShortcut model = new DLFileShortcutImpl();
 
 		model.setUuid(soapModel.getUuid());
@@ -141,6 +145,10 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 	 * @return the normal model instances
 	 */
 	public static List<DLFileShortcut> toModels(DLFileShortcutSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<DLFileShortcut> models = new ArrayList<DLFileShortcut>(soapModels.length);
 
 		for (DLFileShortcutSoap soapModel : soapModels) {

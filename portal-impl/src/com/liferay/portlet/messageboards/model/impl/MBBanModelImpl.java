@@ -98,6 +98,10 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 	 * @return the normal model instance
 	 */
 	public static MBBan toModel(MBBanSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		MBBan model = new MBBanImpl();
 
 		model.setBanId(soapModel.getBanId());
@@ -119,6 +123,10 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 	 * @return the normal model instances
 	 */
 	public static List<MBBan> toModels(MBBanSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<MBBan> models = new ArrayList<MBBan>(soapModels.length);
 
 		for (MBBanSoap soapModel : soapModels) {

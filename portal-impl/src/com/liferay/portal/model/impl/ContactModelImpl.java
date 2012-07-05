@@ -125,6 +125,10 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 	 * @return the normal model instance
 	 */
 	public static Contact toModel(ContactSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		Contact model = new ContactImpl();
 
 		model.setContactId(soapModel.getContactId());
@@ -171,6 +175,10 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 	 * @return the normal model instances
 	 */
 	public static List<Contact> toModels(ContactSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<Contact> models = new ArrayList<Contact>(soapModels.length);
 
 		for (ContactSoap soapModel : soapModels) {

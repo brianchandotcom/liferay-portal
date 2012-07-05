@@ -115,6 +115,10 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 	 * @return the normal model instance
 	 */
 	public static Address toModel(AddressSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		Address model = new AddressImpl();
 
 		model.setAddressId(soapModel.getAddressId());
@@ -146,6 +150,10 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 	 * @return the normal model instances
 	 */
 	public static List<Address> toModels(AddressSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<Address> models = new ArrayList<Address>(soapModels.length);
 
 		for (AddressSoap soapModel : soapModels) {

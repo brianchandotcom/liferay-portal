@@ -94,6 +94,10 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 	 * @return the normal model instance
 	 */
 	public static Region toModel(RegionSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		Region model = new RegionImpl();
 
 		model.setRegionId(soapModel.getRegionId());
@@ -112,6 +116,10 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 	 * @return the normal model instances
 	 */
 	public static List<Region> toModels(RegionSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<Region> models = new ArrayList<Region>(soapModels.length);
 
 		for (RegionSoap soapModel : soapModels) {

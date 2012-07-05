@@ -112,6 +112,10 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 	 * @return the normal model instance
 	 */
 	public static SCProductEntry toModel(SCProductEntrySoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		SCProductEntry model = new SCProductEntryImpl();
 
 		model.setProductEntryId(soapModel.getProductEntryId());
@@ -141,6 +145,10 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 	 * @return the normal model instances
 	 */
 	public static List<SCProductEntry> toModels(SCProductEntrySoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<SCProductEntry> models = new ArrayList<SCProductEntry>(soapModels.length);
 
 		for (SCProductEntrySoap soapModel : soapModels) {

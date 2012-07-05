@@ -106,6 +106,10 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 	 * @return the normal model instance
 	 */
 	public static TrashEntry toModel(TrashEntrySoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		TrashEntry model = new TrashEntryImpl();
 
 		model.setEntryId(soapModel.getEntryId());
@@ -129,6 +133,10 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 	 * @return the normal model instances
 	 */
 	public static List<TrashEntry> toModels(TrashEntrySoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<TrashEntry> models = new ArrayList<TrashEntry>(soapModels.length);
 
 		for (TrashEntrySoap soapModel : soapModels) {

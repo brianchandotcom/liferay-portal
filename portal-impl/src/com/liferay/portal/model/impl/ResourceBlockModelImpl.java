@@ -94,6 +94,10 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 	 * @return the normal model instance
 	 */
 	public static ResourceBlock toModel(ResourceBlockSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		ResourceBlock model = new ResourceBlockImpl();
 
 		model.setResourceBlockId(soapModel.getResourceBlockId());
@@ -113,6 +117,10 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 	 * @return the normal model instances
 	 */
 	public static List<ResourceBlock> toModels(ResourceBlockSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<ResourceBlock> models = new ArrayList<ResourceBlock>(soapModels.length);
 
 		for (ResourceBlockSoap soapModel : soapModels) {

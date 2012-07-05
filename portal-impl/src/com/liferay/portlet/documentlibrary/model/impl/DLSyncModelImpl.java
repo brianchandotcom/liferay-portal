@@ -106,6 +106,10 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 	 * @return the normal model instance
 	 */
 	public static DLSync toModel(DLSyncSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		DLSync model = new DLSyncImpl();
 
 		model.setSyncId(soapModel.getSyncId());
@@ -132,6 +136,10 @@ public class DLSyncModelImpl extends BaseModelImpl<DLSync>
 	 * @return the normal model instances
 	 */
 	public static List<DLSync> toModels(DLSyncSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<DLSync> models = new ArrayList<DLSync>(soapModels.length);
 
 		for (DLSyncSoap soapModel : soapModels) {

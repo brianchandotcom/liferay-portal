@@ -95,6 +95,10 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 	 * @return the normal model instance
 	 */
 	public static UserGroup toModel(UserGroupSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		UserGroup model = new UserGroupImpl();
 
 		model.setUserGroupId(soapModel.getUserGroupId());
@@ -114,6 +118,10 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 	 * @return the normal model instances
 	 */
 	public static List<UserGroup> toModels(UserGroupSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<UserGroup> models = new ArrayList<UserGroup>(soapModels.length);
 
 		for (UserGroupSoap soapModel : soapModels) {

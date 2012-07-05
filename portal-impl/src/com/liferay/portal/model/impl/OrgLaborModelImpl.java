@@ -103,6 +103,10 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 	 * @return the normal model instance
 	 */
 	public static OrgLabor toModel(OrgLaborSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		OrgLabor model = new OrgLaborImpl();
 
 		model.setOrgLaborId(soapModel.getOrgLaborId());
@@ -133,6 +137,10 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 	 * @return the normal model instances
 	 */
 	public static List<OrgLabor> toModels(OrgLaborSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<OrgLabor> models = new ArrayList<OrgLabor>(soapModels.length);
 
 		for (OrgLaborSoap soapModel : soapModels) {

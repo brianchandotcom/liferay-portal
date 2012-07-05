@@ -115,6 +115,10 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 	 * @return the normal model instance
 	 */
 	public static AssetCategory toModel(AssetCategorySoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		AssetCategory model = new AssetCategoryImpl();
 
 		model.setUuid(soapModel.getUuid());
@@ -143,6 +147,10 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 	 * @return the normal model instances
 	 */
 	public static List<AssetCategory> toModels(AssetCategorySoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<AssetCategory> models = new ArrayList<AssetCategory>(soapModels.length);
 
 		for (AssetCategorySoap soapModel : soapModels) {

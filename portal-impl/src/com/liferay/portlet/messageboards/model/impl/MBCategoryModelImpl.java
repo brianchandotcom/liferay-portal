@@ -109,6 +109,10 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 	 * @return the normal model instance
 	 */
 	public static MBCategory toModel(MBCategorySoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		MBCategory model = new MBCategoryImpl();
 
 		model.setUuid(soapModel.getUuid());
@@ -137,6 +141,10 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 	 * @return the normal model instances
 	 */
 	public static List<MBCategory> toModels(MBCategorySoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<MBCategory> models = new ArrayList<MBCategory>(soapModels.length);
 
 		for (MBCategorySoap soapModel : soapModels) {

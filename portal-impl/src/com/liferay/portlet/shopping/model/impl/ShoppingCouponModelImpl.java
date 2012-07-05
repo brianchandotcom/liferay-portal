@@ -111,6 +111,10 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 	 * @return the normal model instance
 	 */
 	public static ShoppingCoupon toModel(ShoppingCouponSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		ShoppingCoupon model = new ShoppingCouponImpl();
 
 		model.setCouponId(soapModel.getCouponId());
@@ -142,6 +146,10 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 	 * @return the normal model instances
 	 */
 	public static List<ShoppingCoupon> toModels(ShoppingCouponSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<ShoppingCoupon> models = new ArrayList<ShoppingCoupon>(soapModels.length);
 
 		for (ShoppingCouponSoap soapModel : soapModels) {

@@ -127,6 +127,10 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 	 * @return the normal model instance
 	 */
 	public static WikiPage toModel(WikiPageSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		WikiPage model = new WikiPageImpl();
 
 		model.setUuid(soapModel.getUuid());
@@ -163,6 +167,10 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 	 * @return the normal model instances
 	 */
 	public static List<WikiPage> toModels(WikiPageSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<WikiPage> models = new ArrayList<WikiPage>(soapModels.length);
 
 		for (WikiPageSoap soapModel : soapModels) {

@@ -102,6 +102,10 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 	 * @return the normal model instance
 	 */
 	public static ShoppingCategory toModel(ShoppingCategorySoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		ShoppingCategory model = new ShoppingCategoryImpl();
 
 		model.setCategoryId(soapModel.getCategoryId());
@@ -126,6 +130,10 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 	 */
 	public static List<ShoppingCategory> toModels(
 		ShoppingCategorySoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<ShoppingCategory> models = new ArrayList<ShoppingCategory>(soapModels.length);
 
 		for (ShoppingCategorySoap soapModel : soapModels) {

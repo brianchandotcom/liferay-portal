@@ -118,6 +118,10 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 	 * @return the normal model instance
 	 */
 	public static DDMTemplate toModel(DDMTemplateSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		DDMTemplate model = new DDMTemplateImpl();
 
 		model.setUuid(soapModel.getUuid());
@@ -148,6 +152,10 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 	 * @return the normal model instances
 	 */
 	public static List<DDMTemplate> toModels(DDMTemplateSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<DDMTemplate> models = new ArrayList<DDMTemplate>(soapModels.length);
 
 		for (DDMTemplateSoap soapModel : soapModels) {

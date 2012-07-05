@@ -130,6 +130,10 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 	 * @return the normal model instance
 	 */
 	public static MBMessage toModel(MBMessageSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		MBMessage model = new MBMessageImpl();
 
 		model.setUuid(soapModel.getUuid());
@@ -169,6 +173,10 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 	 * @return the normal model instances
 	 */
 	public static List<MBMessage> toModels(MBMessageSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<MBMessage> models = new ArrayList<MBMessage>(soapModels.length);
 
 		for (MBMessageSoap soapModel : soapModels) {

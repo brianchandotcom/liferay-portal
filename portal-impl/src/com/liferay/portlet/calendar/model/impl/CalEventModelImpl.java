@@ -120,6 +120,10 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 	 * @return the normal model instance
 	 */
 	public static CalEvent toModel(CalEventSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		CalEvent model = new CalEventImpl();
 
 		model.setUuid(soapModel.getUuid());
@@ -156,6 +160,10 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 	 * @return the normal model instances
 	 */
 	public static List<CalEvent> toModels(CalEventSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<CalEvent> models = new ArrayList<CalEvent>(soapModels.length);
 
 		for (CalEventSoap soapModel : soapModels) {

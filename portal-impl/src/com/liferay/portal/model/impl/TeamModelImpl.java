@@ -99,6 +99,10 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 	 * @return the normal model instance
 	 */
 	public static Team toModel(TeamSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		Team model = new TeamImpl();
 
 		model.setTeamId(soapModel.getTeamId());
@@ -121,6 +125,10 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 	 * @return the normal model instances
 	 */
 	public static List<Team> toModels(TeamSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<Team> models = new ArrayList<Team>(soapModels.length);
 
 		for (TeamSoap soapModel : soapModels) {

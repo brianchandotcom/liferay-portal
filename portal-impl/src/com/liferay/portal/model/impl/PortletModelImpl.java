@@ -91,6 +91,10 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 	 * @return the normal model instance
 	 */
 	public static Portlet toModel(PortletSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		Portlet model = new PortletImpl();
 
 		model.setId(soapModel.getId());
@@ -109,6 +113,10 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 	 * @return the normal model instances
 	 */
 	public static List<Portlet> toModels(PortletSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<Portlet> models = new ArrayList<Portlet>(soapModels.length);
 
 		for (PortletSoap soapModel : soapModels) {

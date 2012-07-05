@@ -89,6 +89,10 @@ public class ClassNameModelImpl extends BaseModelImpl<ClassName>
 	 * @return the normal model instance
 	 */
 	public static ClassName toModel(ClassNameSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		ClassName model = new ClassNameImpl();
 
 		model.setClassNameId(soapModel.getClassNameId());
@@ -104,6 +108,10 @@ public class ClassNameModelImpl extends BaseModelImpl<ClassName>
 	 * @return the normal model instances
 	 */
 	public static List<ClassName> toModels(ClassNameSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<ClassName> models = new ArrayList<ClassName>(soapModels.length);
 
 		for (ClassNameSoap soapModel : soapModels) {

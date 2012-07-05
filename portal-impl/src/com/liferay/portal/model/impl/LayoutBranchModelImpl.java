@@ -100,6 +100,10 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 	 * @return the normal model instance
 	 */
 	public static LayoutBranch toModel(LayoutBranchSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		LayoutBranch model = new LayoutBranchImpl();
 
 		model.setLayoutBranchId(soapModel.getLayoutBranchId());
@@ -123,6 +127,10 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 	 * @return the normal model instances
 	 */
 	public static List<LayoutBranch> toModels(LayoutBranchSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<LayoutBranch> models = new ArrayList<LayoutBranch>(soapModels.length);
 
 		for (LayoutBranchSoap soapModel : soapModels) {

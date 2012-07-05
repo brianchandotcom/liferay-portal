@@ -131,6 +131,10 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	 * @return the normal model instance
 	 */
 	public static Layout toModel(LayoutSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		Layout model = new LayoutImpl();
 
 		model.setUuid(soapModel.getUuid());
@@ -173,6 +177,10 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	 * @return the normal model instances
 	 */
 	public static List<Layout> toModels(LayoutSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<Layout> models = new ArrayList<Layout>(soapModels.length);
 
 		for (LayoutSoap soapModel : soapModels) {

@@ -105,6 +105,10 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 	 * @return the normal model instance
 	 */
 	public static WikiNode toModel(WikiNodeSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		WikiNode model = new WikiNodeImpl();
 
 		model.setUuid(soapModel.getUuid());
@@ -129,6 +133,10 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 	 * @return the normal model instances
 	 */
 	public static List<WikiNode> toModels(WikiNodeSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<WikiNode> models = new ArrayList<WikiNode>(soapModels.length);
 
 		for (WikiNodeSoap soapModel : soapModels) {

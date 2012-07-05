@@ -112,6 +112,10 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 	 * @return the normal model instance
 	 */
 	public static JournalStructure toModel(JournalStructureSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		JournalStructure model = new JournalStructureImpl();
 
 		model.setUuid(soapModel.getUuid());
@@ -139,6 +143,10 @@ public class JournalStructureModelImpl extends BaseModelImpl<JournalStructure>
 	 */
 	public static List<JournalStructure> toModels(
 		JournalStructureSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<JournalStructure> models = new ArrayList<JournalStructure>(soapModels.length);
 
 		for (JournalStructureSoap soapModel : soapModels) {

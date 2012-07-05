@@ -94,6 +94,10 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	 * @return the normal model instance
 	 */
 	public static Image toModel(ImageSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		Image model = new ImageImpl();
 
 		model.setImageId(soapModel.getImageId());
@@ -114,6 +118,10 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	 * @return the normal model instances
 	 */
 	public static List<Image> toModels(ImageSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<Image> models = new ArrayList<Image>(soapModels.length);
 
 		for (ImageSoap soapModel : soapModels) {

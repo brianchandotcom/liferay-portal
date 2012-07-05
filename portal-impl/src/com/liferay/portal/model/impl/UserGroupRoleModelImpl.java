@@ -88,6 +88,10 @@ public class UserGroupRoleModelImpl extends BaseModelImpl<UserGroupRole>
 	 * @return the normal model instance
 	 */
 	public static UserGroupRole toModel(UserGroupRoleSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		UserGroupRole model = new UserGroupRoleImpl();
 
 		model.setUserId(soapModel.getUserId());
@@ -104,6 +108,10 @@ public class UserGroupRoleModelImpl extends BaseModelImpl<UserGroupRole>
 	 * @return the normal model instances
 	 */
 	public static List<UserGroupRole> toModels(UserGroupRoleSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<UserGroupRole> models = new ArrayList<UserGroupRole>(soapModels.length);
 
 		for (UserGroupRoleSoap soapModel : soapModels) {

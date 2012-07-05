@@ -104,6 +104,10 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 	 * @return the normal model instance
 	 */
 	public static SCFrameworkVersion toModel(SCFrameworkVersionSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		SCFrameworkVersion model = new SCFrameworkVersionImpl();
 
 		model.setFrameworkVersionId(soapModel.getFrameworkVersionId());
@@ -129,6 +133,10 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 	 */
 	public static List<SCFrameworkVersion> toModels(
 		SCFrameworkVersionSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<SCFrameworkVersion> models = new ArrayList<SCFrameworkVersion>(soapModels.length);
 
 		for (SCFrameworkVersionSoap soapModel : soapModels) {

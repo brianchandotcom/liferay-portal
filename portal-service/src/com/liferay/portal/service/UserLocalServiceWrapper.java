@@ -958,6 +958,21 @@ public class UserLocalServiceWrapper implements UserLocalService,
 	}
 
 	/**
+	* Returns the user with the email address.
+	*
+	* @param companyId the primary key of the user's company
+	* @param emailAddress the user's email address
+	* @return the user with the email address, or <code>null</code> if a user
+	with the email address could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.model.User fetchUserByEmailAddress(
+		long companyId, java.lang.String emailAddress)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _userLocalService.fetchUserByEmailAddress(companyId, emailAddress);
+	}
+
+	/**
 	* Returns the user with the primary key.
 	*
 	* @param userId the primary key of the user

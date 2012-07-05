@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutBranch;
@@ -221,7 +220,7 @@ public class LayoutsTreeUtil {
 		HttpSession session = request.getSession();
 
 		String paginationJSON = SessionClicks.get(
-			session, sb.toString(), StringPool.EMPTY_JSON);
+			session, sb.toString(), JSONFactoryUtil.getNullJSON());
 
 		JSONObject paginationJSONObject = JSONFactoryUtil.createJSONObject(
 			paginationJSON);

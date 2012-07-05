@@ -83,8 +83,6 @@ public class StringPool {
 
 	public static final String DOUBLE_UNDERLINE = "__";
 
-	public static final String EMPTY_JSON = "{}";
-
 	public static final String EQUAL = "=";
 
 	public static final String EXCLAMATION = "!";

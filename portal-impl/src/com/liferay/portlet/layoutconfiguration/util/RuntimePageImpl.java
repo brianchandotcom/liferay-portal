@@ -203,7 +203,7 @@ public class RuntimePageImpl implements RuntimePage {
 			TemplateResource templateResource, boolean processTemplate)
 		throws Exception {
 
-		LayoutTemplate layoutTemplate = getLayoutTemlpate(
+		LayoutTemplate layoutTemplate = getLayoutTemplate(
 			templateResource.getTemplateId());
 
 		String pluginServletContextName = GetterUtil.getString(
@@ -444,7 +444,7 @@ public class RuntimePageImpl implements RuntimePage {
 		sb.writeTo(pageContext.getOut());
 	}
 
-	protected LayoutTemplate getLayoutTemlpate(String velocityTemplateId) {
+	protected LayoutTemplate getLayoutTemplate(String velocityTemplateId) {
 		String separator = LayoutTemplateConstants.CUSTOM_SEPARATOR;
 		boolean standard = false;
 

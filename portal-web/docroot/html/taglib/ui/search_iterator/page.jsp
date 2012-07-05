@@ -22,7 +22,7 @@ SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay
 boolean paginate = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:search-iterator:paginate"));
 String type = (String)request.getAttribute("liferay-ui:search:type");
 
-String id = searchContainer.getId(request);
+String id = searchContainer.getId(request, namespace);
 
 int start = searchContainer.getStart();
 int end = searchContainer.getEnd();

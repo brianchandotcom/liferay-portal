@@ -22,7 +22,7 @@ SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay
 String id = (String)request.getAttribute("liferay-ui:search:id");
 
 if (Validator.isNull(id) && (searchContainer != null)) {
-	id = searchContainer.getId(request);
+	id = searchContainer.getId(request, namespace);
 
 	id = id.concat("PageIterator");
 }

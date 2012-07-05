@@ -52,6 +52,7 @@ public class DB2DB extends BaseDB {
 		template = removeLongInserts(template);
 		template = removeNull(template);
 		template = StringUtil.replace(template, "\\'", "''");
+		template = StringUtil.replace(template, "\\n", "'||CHR(10)||'");
 
 		return template;
 	}

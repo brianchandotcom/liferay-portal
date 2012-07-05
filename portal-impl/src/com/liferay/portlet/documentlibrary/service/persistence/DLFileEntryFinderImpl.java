@@ -267,6 +267,13 @@ public class DLFileEntryFinderImpl
 		return doCountByG_F(groupId, folderIds, queryDefinition, true);
 	}
 
+	public List<DLFileEntry> filterFindByG_F(
+			long groupId, List<Long> folderIds, QueryDefinition queryDefinition)
+		throws SystemException {
+
+		return doFindByG_F(groupId, folderIds, queryDefinition, true);
+	}
+
 	public DLFileEntry findByAnyImageId(long imageId)
 		throws NoSuchFileEntryException, SystemException {
 
@@ -540,6 +547,82 @@ public class DLFileEntryFinderImpl
 			}
 
 			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected List<DLFileEntry> doFindByG_F(
+			long groupId, List<Long> folderIds, QueryDefinition queryDefinition,
+			boolean inlineSQLHelper)
+		throws SystemException {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = null;
+
+			String table = "DLFileEntry";
+
+			if (queryDefinition.getStatus() == WorkflowConstants.STATUS_ANY) {
+				sql = CustomSQLUtil.get(FIND_BY_G_F);
+			}
+			else {
+				sql = CustomSQLUtil.get(FIND_BY_G_F_S);
+
+				sql = replaceExcludeStatus(sql, queryDefinition);
+
+				if (inlineSQLHelper && InlineSQLHelperUtil.isEnabled()) {
+					sql = StringUtil.replace(
+						sql, "[$JOIN$]",
+						CustomSQLUtil.get(
+							DLFolderFinderImpl.JOIN_FV_BY_DL_FILE_ENTRY));
+				}
+				else {
+					table = "DLFileVersion";
+
+					sql = StringUtil.replace(sql, "[$JOIN$]", StringPool.BLANK);
+				}
+			}
+
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, DLFileEntry.class.getName(), "DLFileEntry.fileEntryId",
+					groupId);
+			}
+
+			sql = StringUtil.replace(
+				sql, "[$FOLDER_ID$]", getFolderIds(folderIds, table));
+			sql = CustomSQLUtil.replaceOrderBy(
+				sql, queryDefinition.getOrderByComparator());
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addEntity("DLFileEntry", DLFileEntryImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			if (queryDefinition.getStatus() != WorkflowConstants.STATUS_ANY) {
+				qPos.add(queryDefinition.getStatus());
+			}
+
+			for (int i = 0; i < folderIds.size(); i++) {
+				Long folderId = folderIds.get(i);
+
+				qPos.add(folderId);
+			}
+
+			return (List<DLFileEntry>)QueryUtil.list(
+				q, getDialect(), queryDefinition.getStart(),
+				queryDefinition.getEnd());
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

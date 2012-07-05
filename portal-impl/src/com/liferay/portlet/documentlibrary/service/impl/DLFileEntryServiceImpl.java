@@ -254,8 +254,25 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			OrderByComparator obc)
 		throws SystemException {
 
-		return dlFileEntryPersistence.filterFindByG_F(
-			groupId, folderId, start, end, obc);
+		return getFileEntries(
+			groupId, folderId, WorkflowConstants.STATUS_APPROVED, start, end,
+			obc);
+	}
+
+	public List<DLFileEntry> getFileEntries(
+			long groupId, long folderId, int status, int start, int end,
+			OrderByComparator obc)
+		throws SystemException {
+
+		List<Long> folderIds = new ArrayList<Long>();
+
+		folderIds.add(folderId);
+
+		QueryDefinition queryDefinition = new QueryDefinition(
+			status, false, start, end, obc);
+
+		return dlFileEntryFinder.filterFindByG_F(
+			groupId, folderIds, queryDefinition);
 	}
 
 	public List<DLFileEntry> getFileEntries(
@@ -286,7 +303,19 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 	public int getFileEntriesCount(long groupId, long folderId)
 		throws SystemException {
 
-		return dlFileEntryPersistence.filterCountByG_F(groupId, folderId);
+		return getFileEntriesCount(
+			groupId, folderId, WorkflowConstants.STATUS_APPROVED);
+	}
+
+	public int getFileEntriesCount(long groupId, long folderId, int status)
+		throws SystemException {
+
+		List<Long> folderIds = new ArrayList<Long>();
+
+		folderIds.add(folderId);
+
+		return dlFileEntryFinder.filterCountByG_F(
+			groupId, folderIds,  new QueryDefinition(status));
 	}
 
 	public int getFileEntriesCount(

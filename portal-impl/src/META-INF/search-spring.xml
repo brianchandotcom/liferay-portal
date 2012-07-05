@@ -93,7 +93,9 @@
 		<property name="booleanQueryFactory" >
 			<bean class="com.liferay.portal.search.lucene.BooleanQueryFactoryImpl" />
 		</property>
-		<property name="clusteredWrite" value="true" />
+		<property name="clusteredWrite">
+			<util:constant static-field="com.liferay.portal.util.PropsValues.LUCENE_REPLICATE_WRITE" />
+		</property>
 		<property name="clusteredWritePriority">
 			<util:constant static-field="com.liferay.portal.kernel.cluster.Priority.LEVEL5" />
 		</property>

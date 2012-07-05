@@ -91,7 +91,7 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 			return new ArrayList<AssetEntry>();
 		}
 
-		Object[] results = filterEntryQuery(filteredEntryQuery);
+		Object[] results = filterEntryQuery(filteredEntryQuery, false);
 
 		return (List<AssetEntry>)results[0];
 	}
@@ -106,7 +106,7 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 			return 0;
 		}
 
-		Object[] results = filterEntryQuery(filteredEntryQuery);
+		Object[] results = filterEntryQuery(filteredEntryQuery, true);
 
 		return (Integer)results[1];
 	}
@@ -228,7 +228,8 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 			viewableCategoryIds.toArray(new Long[viewableCategoryIds.size()]));
 	}
 
-	protected Object[] filterEntryQuery(AssetEntryQuery entryQuery)
+	protected Object[] filterEntryQuery(
+			AssetEntryQuery entryQuery, boolean returnEntryCountOnly)
 		throws PortalException, SystemException {
 
 		ThreadLocalCache<Object[]> threadLocalCache =
@@ -251,13 +252,19 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 			entryQuery.setStart(0);
 		}
 
-		List<AssetEntry> entries = assetEntryLocalService.getEntries(
-			entryQuery);
+		boolean permissionsEnabled = entryQuery.isEnablePermissions();
 
-		List<AssetEntry> filteredEntries = null;
+		List<AssetEntry> entries = null;
+
+		if (!returnEntryCountOnly || permissionsEnabled) {
+			entries = assetEntryLocalService.getEntries(entryQuery);
+		}
+
 		int filteredEntriesCount = 0;
 
-		if (entryQuery.isEnablePermissions()) {
+		List<AssetEntry> filteredEntries = null;
+
+		if (permissionsEnabled) {
 			PermissionChecker permissionChecker = getPermissionChecker();
 
 			filteredEntries = new ArrayList<AssetEntry>();
@@ -306,8 +313,13 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 		}
 		else {
 			filteredEntries = entries;
-			filteredEntriesCount = assetEntryLocalService.getEntriesCount(
-				entryQuery);
+			if (filteredEntries != null) {
+				filteredEntriesCount = filteredEntries.size();
+			}
+			else {
+				filteredEntriesCount = assetEntryLocalService.getEntriesCount(
+										entryQuery);
+			}
 		}
 
 		results = new Object[] {filteredEntries, filteredEntriesCount};

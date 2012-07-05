@@ -106,23 +106,20 @@ public class AssetEntryFinderImpl
 	protected void buildAllCategoriesSQL(
 		String sqlId, long[] categoryIds, StringBundler sb) {
 
-		sb.append(" AND AssetEntry.entryId IN (");
-
 		for (int i = 0; i < categoryIds.length; i++) {
-			sb.append(CustomSQLUtil.get(sqlId));
-
-			if ((i + 1) < categoryIds.length) {
-				sb.append(" AND AssetEntry.entryId IN (");
-			}
+			sb.append(" INNER JOIN (");
+			String subQuery = StringUtil.replaceFirst(
+								CustomSQLUtil.get(sqlId), " DISTINCT ",
+								StringPool.SPACE);
+			sb.append(subQuery);
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+			sb.append(" c");
+			sb.append(i);
+			sb.append(" ON c");
+			sb.append(i);
+			sb.append(".entryId = AssetEntry.entryId ");
+			sb.append(StringPool.NEW_LINE);
 		}
-
-		for (int i = 0; i < categoryIds.length; i++) {
-			if ((i + 1) < categoryIds.length) {
-				sb.append(StringPool.CLOSE_PARENTHESIS);
-			}
-		}
-
-		sb.append(StringPool.CLOSE_PARENTHESIS);
 	}
 
 	protected void buildAllTagsSQL(long[][] tagIds, StringBundler sb) {
@@ -195,6 +192,19 @@ public class AssetEntryFinderImpl
 			sb.append("AssetEntries_AssetCategories.categoryId) ");
 		}
 
+		if (entryQuery.getAllCategoryIds().length > 0) {
+			if (PropsValues.ASSET_CATEGORIES_SEARCH_HIERARCHICAL) {
+				buildAllCategoriesSQL(
+					FIND_BY_AND_CATEGORY_IDS_TREE,
+					entryQuery.getAllCategoryIds(), sb);
+			}
+			else {
+				buildAllCategoriesSQL(
+					FIND_BY_AND_CATEGORY_IDS, entryQuery.getAllCategoryIds(),
+					sb);
+			}
+		}
+
 		if (entryQuery.getLinkedAssetEntryId() > 0) {
 			sb.append("INNER JOIN ");
 			sb.append("AssetLink ON ");
@@ -239,20 +249,6 @@ public class AssetEntryFinderImpl
 		}
 
 		// Category conditions
-
-		if (entryQuery.getAllCategoryIds().length > 0) {
-			if (PropsValues.ASSET_CATEGORIES_SEARCH_HIERARCHICAL) {
-				buildAllCategoriesSQL(
-					FIND_BY_AND_CATEGORY_IDS_TREE,
-					entryQuery.getAllCategoryIds(), sb);
-			}
-			else {
-				buildAllCategoriesSQL(
-					FIND_BY_AND_CATEGORY_IDS, entryQuery.getAllCategoryIds(),
-					sb);
-			}
-		}
-
 		if (entryQuery.getAnyCategoryIds().length > 0) {
 			if (PropsValues.ASSET_CATEGORIES_SEARCH_HIERARCHICAL) {
 				sb.append(
@@ -389,6 +385,13 @@ public class AssetEntryFinderImpl
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
+		if (PropsValues.ASSET_CATEGORIES_SEARCH_HIERARCHICAL) {
+			qPos.add(entryQuery.getAllLeftAndRightCategoryIds());
+		}
+		else {
+			qPos.add(entryQuery.getAllCategoryIds());
+		}
+
 		if (entryQuery.getLinkedAssetEntryId() > 0) {
 			qPos.add(entryQuery.getLinkedAssetEntryId());
 			qPos.add(entryQuery.getLinkedAssetEntryId());
@@ -404,13 +407,11 @@ public class AssetEntryFinderImpl
 		}
 
 		if (PropsValues.ASSET_CATEGORIES_SEARCH_HIERARCHICAL) {
-			qPos.add(entryQuery.getAllLeftAndRightCategoryIds());
 			qPos.add(entryQuery.getAnyLeftAndRightCategoryIds());
 			qPos.add(entryQuery.getNotAllLeftAndRightCategoryIds());
 			qPos.add(entryQuery.getNotAnyLeftAndRightCategoryIds());
 		}
 		else {
-			qPos.add(entryQuery.getAllCategoryIds());
 			qPos.add(entryQuery.getAnyCategoryIds());
 			qPos.add(entryQuery.getNotAllCategoryIds());
 			qPos.add(entryQuery.getNotAnyCategoryIds());
@@ -452,8 +453,13 @@ public class AssetEntryFinderImpl
 		sb.append(" AND (");
 
 		for (int i = 0; i < categoryIds.length; i++) {
-			sb.append("AssetEntry.entryId NOT IN (");
-			sb.append(CustomSQLUtil.get(sqlId));
+			sb.append("NOT EXISTS (");
+			String subQuery = CustomSQLUtil.get(
+								sqlId).replaceFirst(
+									"(SELECT).*(FROM)", "$1 1 $2");
+			sb.append(subQuery);
+			sb.append(" AND (AssetEntries_AssetCategories.entryId = ");
+			sb.append("AssetEntry.entryId)");
 			sb.append(StringPool.CLOSE_PARENTHESIS);
 
 			if ((i + 1) < categoryIds.length) {
@@ -509,8 +515,13 @@ public class AssetEntryFinderImpl
 		sb.append(" AND (");
 
 		for (int i = 0; i < categoryIds.length; i++) {
-			sb.append("AssetEntry.entryId IN (");
-			sb.append(CustomSQLUtil.get(sqlId));
+			sb.append("EXISTS (");
+			String subQuery = CustomSQLUtil.get(
+								sqlId).replaceFirst(
+									"(SELECT).*(FROM)", "$1 1 $2");
+			sb.append(subQuery);
+			sb.append(" AND (AssetEntries_AssetCategories.entryId = ");
+			sb.append("AssetEntry.entryId)");
 			sb.append(StringPool.CLOSE_PARENTHESIS);
 
 			if ((i + 1) < categoryIds.length) {
@@ -583,8 +594,13 @@ public class AssetEntryFinderImpl
 		StringBundler sb = new StringBundler(notCategoryIds.length * 4 - 1);
 
 		for (int i = 0; i < notCategoryIds.length; i++) {
-			sb.append("AssetEntry.entryId NOT IN (");
-			sb.append(CustomSQLUtil.get(sqlId));
+			sb.append("NOT EXISTS (");
+			String subQuery = CustomSQLUtil.get(
+								sqlId).replaceFirst(
+									"(SELECT).*(FROM)", "$1 1 $2");
+			sb.append(subQuery);
+			sb.append(" AND (AssetEntries_AssetCategories.entryId = ");
+			sb.append("AssetEntry.entryId)");
 			sb.append(StringPool.CLOSE_PARENTHESIS);
 
 			if ((i + 1) < notCategoryIds.length) {

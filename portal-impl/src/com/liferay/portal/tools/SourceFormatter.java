@@ -1610,6 +1610,20 @@ public class SourceFormatter {
 					fileName, "line break: " + fileName + " " + lineCount);
 			}
 
+			if (line.endsWith(StringPool.PLUS)) {
+				int x = line.indexOf(" = ");
+
+				if (x != -1) {
+					int y = line.indexOf(StringPool.QUOTE);
+
+					if ((y == -1) || (x < y)) {
+						_sourceFormatterHelper.printError(
+							fileName,
+							"line break: " + fileName + " " + lineCount);
+					}
+				}
+			}
+
 			if (line.contains("    ") && !line.matches("\\s*\\*.*")) {
 				if (!fileName.endsWith("StringPool.java")) {
 					_sourceFormatterHelper.printError(

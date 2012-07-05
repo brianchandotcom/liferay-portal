@@ -102,6 +102,10 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 	 * @return the normal model instance
 	 */
 	public static RatingsEntry toModel(RatingsEntrySoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		RatingsEntry model = new RatingsEntryImpl();
 
 		model.setEntryId(soapModel.getEntryId());
@@ -124,6 +128,10 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 	 * @return the normal model instances
 	 */
 	public static List<RatingsEntry> toModels(RatingsEntrySoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<RatingsEntry> models = new ArrayList<RatingsEntry>(soapModels.length);
 
 		for (RatingsEntrySoap soapModel : soapModels) {

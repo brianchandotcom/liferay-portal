@@ -101,6 +101,10 @@ public class LayoutSetPrototypeModelImpl extends BaseModelImpl<LayoutSetPrototyp
 	 * @return the normal model instance
 	 */
 	public static LayoutSetPrototype toModel(LayoutSetPrototypeSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		LayoutSetPrototype model = new LayoutSetPrototypeImpl();
 
 		model.setUuid(soapModel.getUuid());
@@ -124,6 +128,10 @@ public class LayoutSetPrototypeModelImpl extends BaseModelImpl<LayoutSetPrototyp
 	 */
 	public static List<LayoutSetPrototype> toModels(
 		LayoutSetPrototypeSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<LayoutSetPrototype> models = new ArrayList<LayoutSetPrototype>(soapModels.length);
 
 		for (LayoutSetPrototypeSoap soapModel : soapModels) {

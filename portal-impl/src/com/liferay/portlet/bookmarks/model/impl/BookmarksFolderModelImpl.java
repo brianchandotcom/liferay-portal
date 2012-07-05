@@ -107,6 +107,10 @@ public class BookmarksFolderModelImpl extends BaseModelImpl<BookmarksFolder>
 	 * @return the normal model instance
 	 */
 	public static BookmarksFolder toModel(BookmarksFolderSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		BookmarksFolder model = new BookmarksFolderImpl();
 
 		model.setUuid(soapModel.getUuid());
@@ -133,6 +137,10 @@ public class BookmarksFolderModelImpl extends BaseModelImpl<BookmarksFolder>
 	 */
 	public static List<BookmarksFolder> toModels(
 		BookmarksFolderSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<BookmarksFolder> models = new ArrayList<BookmarksFolder>(soapModels.length);
 
 		for (BookmarksFolderSoap soapModel : soapModels) {

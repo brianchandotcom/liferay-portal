@@ -101,6 +101,10 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 	 * @return the normal model instance
 	 */
 	public static AssetTag toModel(AssetTagSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		AssetTag model = new AssetTagImpl();
 
 		model.setTagId(soapModel.getTagId());
@@ -123,6 +127,10 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 	 * @return the normal model instances
 	 */
 	public static List<AssetTag> toModels(AssetTagSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<AssetTag> models = new ArrayList<AssetTag>(soapModels.length);
 
 		for (AssetTagSoap soapModel : soapModels) {

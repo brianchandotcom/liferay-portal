@@ -114,6 +114,10 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 	 * @return the normal model instance
 	 */
 	public static MBThread toModel(MBThreadSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		MBThread model = new MBThreadImpl();
 
 		model.setThreadId(soapModel.getThreadId());
@@ -143,6 +147,10 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 	 * @return the normal model instances
 	 */
 	public static List<MBThread> toModels(MBThreadSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<MBThread> models = new ArrayList<MBThread>(soapModels.length);
 
 		for (MBThreadSoap soapModel : soapModels) {

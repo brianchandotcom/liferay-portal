@@ -119,6 +119,10 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 	 * @return the normal model instance
 	 */
 	public static DLFolder toModel(DLFolderSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		DLFolder model = new DLFolderImpl();
 
 		model.setUuid(soapModel.getUuid());
@@ -152,6 +156,10 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 	 * @return the normal model instances
 	 */
 	public static List<DLFolder> toModels(DLFolderSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<DLFolder> models = new ArrayList<DLFolder>(soapModels.length);
 
 		for (DLFolderSoap soapModel : soapModels) {

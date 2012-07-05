@@ -99,6 +99,10 @@ public class SocialActivitySettingModelImpl extends BaseModelImpl<SocialActivity
 	 */
 	public static SocialActivitySetting toModel(
 		SocialActivitySettingSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		SocialActivitySetting model = new SocialActivitySettingImpl();
 
 		model.setActivitySettingId(soapModel.getActivitySettingId());
@@ -120,6 +124,10 @@ public class SocialActivitySettingModelImpl extends BaseModelImpl<SocialActivity
 	 */
 	public static List<SocialActivitySetting> toModels(
 		SocialActivitySettingSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<SocialActivitySetting> models = new ArrayList<SocialActivitySetting>(soapModels.length);
 
 		for (SocialActivitySettingSoap soapModel : soapModels) {

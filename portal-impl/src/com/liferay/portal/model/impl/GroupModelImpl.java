@@ -112,6 +112,10 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	 * @return the normal model instance
 	 */
 	public static Group toModel(GroupSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		Group model = new GroupImpl();
 
 		model.setGroupId(soapModel.getGroupId());
@@ -139,6 +143,10 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	 * @return the normal model instances
 	 */
 	public static List<Group> toModels(GroupSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<Group> models = new ArrayList<Group>(soapModels.length);
 
 		for (GroupSoap soapModel : soapModels) {

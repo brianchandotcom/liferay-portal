@@ -100,6 +100,10 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 	 * @return the normal model instance
 	 */
 	public static ExpandoValue toModel(ExpandoValueSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		ExpandoValue model = new ExpandoValueImpl();
 
 		model.setValueId(soapModel.getValueId());
@@ -121,6 +125,10 @@ public class ExpandoValueModelImpl extends BaseModelImpl<ExpandoValue>
 	 * @return the normal model instances
 	 */
 	public static List<ExpandoValue> toModels(ExpandoValueSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<ExpandoValue> models = new ArrayList<ExpandoValue>(soapModels.length);
 
 		for (ExpandoValueSoap soapModel : soapModels) {

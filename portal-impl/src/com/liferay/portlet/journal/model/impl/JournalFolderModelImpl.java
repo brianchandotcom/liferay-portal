@@ -106,6 +106,10 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 	 * @return the normal model instance
 	 */
 	public static JournalFolder toModel(JournalFolderSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		JournalFolder model = new JournalFolderImpl();
 
 		model.setUuid(soapModel.getUuid());
@@ -130,6 +134,10 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 	 * @return the normal model instances
 	 */
 	public static List<JournalFolder> toModels(JournalFolderSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<JournalFolder> models = new ArrayList<JournalFolder>(soapModels.length);
 
 		for (JournalFolderSoap soapModel : soapModels) {

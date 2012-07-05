@@ -108,6 +108,10 @@ public class MDRRuleGroupInstanceModelImpl extends BaseModelImpl<MDRRuleGroupIns
 	 */
 	public static MDRRuleGroupInstance toModel(
 		MDRRuleGroupInstanceSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		MDRRuleGroupInstance model = new MDRRuleGroupInstanceImpl();
 
 		model.setUuid(soapModel.getUuid());
@@ -134,6 +138,10 @@ public class MDRRuleGroupInstanceModelImpl extends BaseModelImpl<MDRRuleGroupIns
 	 */
 	public static List<MDRRuleGroupInstance> toModels(
 		MDRRuleGroupInstanceSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<MDRRuleGroupInstance> models = new ArrayList<MDRRuleGroupInstance>(soapModels.length);
 
 		for (MDRRuleGroupInstanceSoap soapModel : soapModels) {

@@ -86,6 +86,10 @@ public class ListTypeModelImpl extends BaseModelImpl<ListType>
 	 * @return the normal model instance
 	 */
 	public static ListType toModel(ListTypeSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		ListType model = new ListTypeImpl();
 
 		model.setListTypeId(soapModel.getListTypeId());
@@ -102,6 +106,10 @@ public class ListTypeModelImpl extends BaseModelImpl<ListType>
 	 * @return the normal model instances
 	 */
 	public static List<ListType> toModels(ListTypeSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<ListType> models = new ArrayList<ListType>(soapModels.length);
 
 		for (ListTypeSoap soapModel : soapModels) {

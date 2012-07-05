@@ -98,6 +98,10 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 	 * @return the normal model instance
 	 */
 	public static Country toModel(CountrySoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		Country model = new CountryImpl();
 
 		model.setCountryId(soapModel.getCountryId());
@@ -119,6 +123,10 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 	 * @return the normal model instances
 	 */
 	public static List<Country> toModels(CountrySoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<Country> models = new ArrayList<Country>(soapModels.length);
 
 		for (CountrySoap soapModel : soapModels) {

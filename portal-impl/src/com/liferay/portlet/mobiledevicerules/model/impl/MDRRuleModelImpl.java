@@ -109,6 +109,10 @@ public class MDRRuleModelImpl extends BaseModelImpl<MDRRule>
 	 * @return the normal model instance
 	 */
 	public static MDRRule toModel(MDRRuleSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		MDRRule model = new MDRRuleImpl();
 
 		model.setUuid(soapModel.getUuid());
@@ -135,6 +139,10 @@ public class MDRRuleModelImpl extends BaseModelImpl<MDRRule>
 	 * @return the normal model instances
 	 */
 	public static List<MDRRule> toModels(MDRRuleSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<MDRRule> models = new ArrayList<MDRRule>(soapModels.length);
 
 		for (MDRRuleSoap soapModel : soapModels) {

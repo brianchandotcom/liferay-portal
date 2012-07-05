@@ -115,6 +115,10 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 	 * @return the normal model instance
 	 */
 	public static AnnouncementsEntry toModel(AnnouncementsEntrySoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		AnnouncementsEntry model = new AnnouncementsEntryImpl();
 
 		model.setUuid(soapModel.getUuid());
@@ -146,6 +150,10 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 	 */
 	public static List<AnnouncementsEntry> toModels(
 		AnnouncementsEntrySoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<AnnouncementsEntry> models = new ArrayList<AnnouncementsEntry>(soapModels.length);
 
 		for (AnnouncementsEntrySoap soapModel : soapModels) {

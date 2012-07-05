@@ -132,6 +132,10 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	 * @return the normal model instance
 	 */
 	public static LayoutRevision toModel(LayoutRevisionSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		LayoutRevision model = new LayoutRevisionImpl();
 
 		model.setLayoutRevisionId(soapModel.getLayoutRevisionId());
@@ -176,6 +180,10 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	 * @return the normal model instances
 	 */
 	public static List<LayoutRevision> toModels(LayoutRevisionSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<LayoutRevision> models = new ArrayList<LayoutRevision>(soapModels.length);
 
 		for (LayoutRevisionSoap soapModel : soapModels) {

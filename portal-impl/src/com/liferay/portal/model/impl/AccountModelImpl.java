@@ -101,6 +101,10 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 	 * @return the normal model instance
 	 */
 	public static Account toModel(AccountSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		Account model = new AccountImpl();
 
 		model.setAccountId(soapModel.getAccountId());
@@ -130,6 +134,10 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 	 * @return the normal model instances
 	 */
 	public static List<Account> toModels(AccountSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<Account> models = new ArrayList<Account>(soapModels.length);
 
 		for (AccountSoap soapModel : soapModels) {

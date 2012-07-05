@@ -114,6 +114,10 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 	 * @return the normal model instance
 	 */
 	public static DDMStructure toModel(DDMStructureSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		DDMStructure model = new DDMStructureImpl();
 
 		model.setUuid(soapModel.getUuid());
@@ -142,6 +146,10 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 	 * @return the normal model instances
 	 */
 	public static List<DDMStructure> toModels(DDMStructureSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<DDMStructure> models = new ArrayList<DDMStructure>(soapModels.length);
 
 		for (DDMStructureSoap soapModel : soapModels) {

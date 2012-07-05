@@ -105,6 +105,10 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 	 * @return the normal model instance
 	 */
 	public static LayoutSet toModel(LayoutSetSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		LayoutSet model = new LayoutSetImpl();
 
 		model.setLayoutSetId(soapModel.getLayoutSetId());
@@ -135,6 +139,10 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 	 * @return the normal model instances
 	 */
 	public static List<LayoutSet> toModels(LayoutSetSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<LayoutSet> models = new ArrayList<LayoutSet>(soapModels.length);
 
 		for (LayoutSetSoap soapModel : soapModels) {

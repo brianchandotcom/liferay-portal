@@ -102,6 +102,10 @@ public class AssetTagPropertyModelImpl extends BaseModelImpl<AssetTagProperty>
 	 * @return the normal model instance
 	 */
 	public static AssetTagProperty toModel(AssetTagPropertySoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		AssetTagProperty model = new AssetTagPropertyImpl();
 
 		model.setTagPropertyId(soapModel.getTagPropertyId());
@@ -125,6 +129,10 @@ public class AssetTagPropertyModelImpl extends BaseModelImpl<AssetTagProperty>
 	 */
 	public static List<AssetTagProperty> toModels(
 		AssetTagPropertySoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<AssetTagProperty> models = new ArrayList<AssetTagProperty>(soapModels.length);
 
 		for (AssetTagPropertySoap soapModel : soapModels) {

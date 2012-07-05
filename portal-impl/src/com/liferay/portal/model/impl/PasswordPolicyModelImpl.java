@@ -122,6 +122,10 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 	 * @return the normal model instance
 	 */
 	public static PasswordPolicy toModel(PasswordPolicySoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		PasswordPolicy model = new PasswordPolicyImpl();
 
 		model.setPasswordPolicyId(soapModel.getPasswordPolicyId());
@@ -167,6 +171,10 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 	 * @return the normal model instances
 	 */
 	public static List<PasswordPolicy> toModels(PasswordPolicySoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<PasswordPolicy> models = new ArrayList<PasswordPolicy>(soapModels.length);
 
 		for (PasswordPolicySoap soapModel : soapModels) {

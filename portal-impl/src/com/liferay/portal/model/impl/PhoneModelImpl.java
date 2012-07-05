@@ -107,6 +107,10 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 	 * @return the normal model instance
 	 */
 	public static Phone toModel(PhoneSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		Phone model = new PhoneImpl();
 
 		model.setPhoneId(soapModel.getPhoneId());
@@ -132,6 +136,10 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 	 * @return the normal model instances
 	 */
 	public static List<Phone> toModels(PhoneSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<Phone> models = new ArrayList<Phone>(soapModels.length);
 
 		for (PhoneSoap soapModel : soapModels) {

@@ -126,6 +126,10 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 	 * @return the normal model instance
 	 */
 	public static AssetEntry toModel(AssetEntrySoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		AssetEntry model = new AssetEntryImpl();
 
 		model.setEntryId(soapModel.getEntryId());
@@ -165,6 +169,10 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 	 * @return the normal model instances
 	 */
 	public static List<AssetEntry> toModels(AssetEntrySoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<AssetEntry> models = new ArrayList<AssetEntry>(soapModels.length);
 
 		for (AssetEntrySoap soapModel : soapModels) {

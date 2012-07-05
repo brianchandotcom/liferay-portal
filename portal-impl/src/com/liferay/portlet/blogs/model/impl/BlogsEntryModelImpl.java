@@ -122,6 +122,10 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 	 * @return the normal model instance
 	 */
 	public static BlogsEntry toModel(BlogsEntrySoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		BlogsEntry model = new BlogsEntryImpl();
 
 		model.setUuid(soapModel.getUuid());
@@ -158,6 +162,10 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 	 * @return the normal model instances
 	 */
 	public static List<BlogsEntry> toModels(BlogsEntrySoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<BlogsEntry> models = new ArrayList<BlogsEntry>(soapModels.length);
 
 		for (BlogsEntrySoap soapModel : soapModels) {

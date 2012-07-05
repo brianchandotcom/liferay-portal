@@ -100,6 +100,10 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 	 * @return the normal model instance
 	 */
 	public static PollsVote toModel(PollsVoteSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		PollsVote model = new PollsVoteImpl();
 
 		model.setVoteId(soapModel.getVoteId());
@@ -122,6 +126,10 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 	 * @return the normal model instances
 	 */
 	public static List<PollsVote> toModels(PollsVoteSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<PollsVote> models = new ArrayList<PollsVote>(soapModels.length);
 
 		for (PollsVoteSoap soapModel : soapModels) {

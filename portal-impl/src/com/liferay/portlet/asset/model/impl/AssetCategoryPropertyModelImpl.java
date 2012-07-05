@@ -103,6 +103,10 @@ public class AssetCategoryPropertyModelImpl extends BaseModelImpl<AssetCategoryP
 	 */
 	public static AssetCategoryProperty toModel(
 		AssetCategoryPropertySoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
 		AssetCategoryProperty model = new AssetCategoryPropertyImpl();
 
 		model.setCategoryPropertyId(soapModel.getCategoryPropertyId());
@@ -126,6 +130,10 @@ public class AssetCategoryPropertyModelImpl extends BaseModelImpl<AssetCategoryP
 	 */
 	public static List<AssetCategoryProperty> toModels(
 		AssetCategoryPropertySoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
 		List<AssetCategoryProperty> models = new ArrayList<AssetCategoryProperty>(soapModels.length);
 
 		for (AssetCategoryPropertySoap soapModel : soapModels) {

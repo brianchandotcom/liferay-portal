@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.blogs.social;
 
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -28,9 +29,14 @@ import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.social.model.SocialActivityFeedEntry;
 
+import java.text.Format;
+
+import java.util.Date;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Ryan Park
+ * @author Zsolt Berentey
  */
 public class BlogsActivityInterpreter extends BaseSocialActivityInterpreter {
 
@@ -97,13 +103,38 @@ public class BlogsActivityInterpreter extends BaseSocialActivityInterpreter {
 			}
 		}
 
-		String entryTitle = wrapLink(link, HtmlUtil.escape(entry.getTitle()));
+		Date now = new Date();
+		String entryTitle = null;
+		String scheduledText = null;
+
+		if (now.before(entry.getDisplayDate())) {
+			entryTitle = HtmlUtil.escape(entry.getTitle());
+
+			Format dateFormatDate =
+				FastDateFormatFactoryUtil.getSimpleDateFormat(
+					"MMMM d", themeDisplay.getLocale(),
+					themeDisplay.getTimeZone());
+
+			String displayDateString = dateFormatDate.format(
+				entry.getDisplayDate());
+
+			scheduledText = themeDisplay.translate(
+				"activity-blogs-entry-displayed-on",
+				new Object[] {displayDateString});
+		}
+		else {
+			entryTitle = wrapLink(link, HtmlUtil.escape(entry.getTitle()));
+		}
 
 		Object[] titleArguments = new Object[] {
 			groupName, creatorUserName, receiverUserName, entryTitle
 		};
 
 		String title = themeDisplay.translate(titlePattern, titleArguments);
+
+		if (Validator.isNotNull(scheduledText)) {
+			title = title + StringPool.SPACE + scheduledText;
+		}
 
 		// Body
 

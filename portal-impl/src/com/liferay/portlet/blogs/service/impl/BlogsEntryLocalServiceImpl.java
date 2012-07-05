@@ -1032,6 +1032,12 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		int oldStatus = entry.getStatus();
 
+		if ((status == WorkflowConstants.STATUS_APPROVED) &&
+			now.before(entry.getDisplayDate())) {
+
+			status = WorkflowConstants.STATUS_SCHEDULED;
+		}
+
 		entry.setModifiedDate(serviceContext.getModifiedDate(now));
 		entry.setStatus(status);
 		entry.setStatusByUserId(user.getUserId());
@@ -1039,6 +1045,13 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		entry.setStatusDate(serviceContext.getModifiedDate(now));
 
 		blogsEntryPersistence.update(entry, false);
+
+		AssetEntry assetEntry = assetEntryLocalService.fetchEntry(
+			BlogsEntry.class.getName(), entryId);
+
+		if ((assetEntry == null) || (assetEntry.getPublishDate() == null)) {
+			serviceContext.setCommand(Constants.ADD);
+		}
 
 		// Statistics
 
@@ -1052,20 +1065,15 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 			// Asset
 
-			AssetEntry assetEntry = assetEntryLocalService.fetchEntry(
-				BlogsEntry.class.getName(), entryId);
-
-			if ((assetEntry == null) || (assetEntry.getPublishDate() == null)) {
-				serviceContext.setCommand(Constants.ADD);
-			}
-
 			assetEntryLocalService.updateEntry(
 				BlogsEntry.class.getName(), entryId, entry.getDisplayDate(),
 				true);
 
 			// Social
 
-			if (oldStatus != WorkflowConstants.STATUS_IN_TRASH) {
+			if ((oldStatus != WorkflowConstants.STATUS_IN_TRASH) &&
+				(oldStatus != WorkflowConstants.STATUS_SCHEDULED)) {
+
 				if (serviceContext.isCommandUpdate()) {
 					socialActivityLocalService.addActivity(
 						user.getUserId(), entry.getGroupId(),
@@ -1114,6 +1122,25 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			else {
 				assetEntryLocalService.updateVisible(
 					BlogsEntry.class.getName(), entryId, false);
+			}
+
+			// Social
+
+			if ((status == WorkflowConstants.STATUS_SCHEDULED) &&
+				(oldStatus != WorkflowConstants.STATUS_IN_TRASH)) {
+
+				if (serviceContext.isCommandUpdate()) {
+					socialActivityLocalService.addActivity(
+						user.getUserId(), entry.getGroupId(),
+						BlogsEntry.class.getName(), entryId,
+						BlogsActivityKeys.UPDATE_ENTRY, StringPool.BLANK, 0);
+				}
+				else {
+					socialActivityLocalService.addUniqueActivity(
+						user.getUserId(), entry.getGroupId(),
+						BlogsEntry.class.getName(), entryId,
+						BlogsActivityKeys.ADD_ENTRY, StringPool.BLANK, 0);
+				}
 			}
 
 			// Indexer

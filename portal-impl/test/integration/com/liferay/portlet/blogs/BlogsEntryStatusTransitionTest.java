@@ -24,12 +24,15 @@ import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.ExecutionTestListeners;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
+import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.social.BlogsActivityKeys;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.service.SocialActivityLocalServiceUtil;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.junit.After;
@@ -125,6 +128,62 @@ public class BlogsEntryStatusTransitionTest extends BaseBlogsEntryTestCase {
 	}
 
 	@Test
+	public void testDraftToScheduledByAdd() throws Exception {
+		GregorianCalendar displayDate = new GregorianCalendar();
+
+		displayDate.add(Calendar.DATE, 1);
+
+		blogsEntry.setDisplayDate(displayDate.getTime());
+
+		BlogsEntryLocalServiceUtil.updateBlogsEntry(blogsEntry);
+
+		BlogsEntryLocalServiceUtil.updateStatus(
+			getUserId(), blogsEntry.getEntryId(),
+			WorkflowConstants.STATUS_APPROVED, getServiceContext(blogsEntry));
+
+		Assert.assertFalse(isAssetEntryVisible(blogsEntry.getEntryId()));
+		Assert.assertEquals(0, searchBlogsEntriesCount(group.getGroupId()));
+
+		checkSocialActivity(BlogsActivityKeys.ADD_ENTRY, 1);
+
+		AssetEntry assetEntry = fetchAssetEntry(blogsEntry.getEntryId());
+
+		Assert.assertNull(assetEntry.getPublishDate());
+	}
+
+	@Test
+	public void testDraftToScheduledUpdate() throws Exception {
+		BlogsEntryLocalServiceUtil.updateStatus(
+			getUserId(), blogsEntry.getEntryId(),
+			WorkflowConstants.STATUS_APPROVED, getServiceContext(blogsEntry));
+
+		blogsEntry = BlogsEntryLocalServiceUtil.updateStatus(
+			getUserId(), blogsEntry.getEntryId(),
+			WorkflowConstants.STATUS_DRAFT, getServiceContext(blogsEntry));
+
+		GregorianCalendar displayDate = new GregorianCalendar();
+
+		displayDate.add(Calendar.DATE, 1);
+
+		blogsEntry.setDisplayDate(displayDate.getTime());
+
+		BlogsEntryLocalServiceUtil.updateBlogsEntry(blogsEntry);
+
+		BlogsEntryLocalServiceUtil.updateStatus(
+			getUserId(), blogsEntry.getEntryId(),
+			WorkflowConstants.STATUS_APPROVED, getServiceContext(blogsEntry));
+
+		Assert.assertFalse(isAssetEntryVisible(blogsEntry.getEntryId()));
+		Assert.assertEquals(0, searchBlogsEntriesCount(group.getGroupId()));
+
+		checkSocialActivity(BlogsActivityKeys.UPDATE_ENTRY, 1);
+
+		AssetEntry assetEntry = fetchAssetEntry(blogsEntry.getEntryId());
+
+		Assert.assertNotNull(assetEntry.getPublishDate());
+	}
+
+	@Test
 	public void testDraftToTrash() throws Exception {
 		BlogsEntryLocalServiceUtil.updateStatus(
 			getUserId(), blogsEntry.getEntryId(),
@@ -132,6 +191,65 @@ public class BlogsEntryStatusTransitionTest extends BaseBlogsEntryTestCase {
 
 		Assert.assertFalse(isAssetEntryVisible(blogsEntry.getEntryId()));
 		Assert.assertEquals(0, searchBlogsEntriesCount(group.getGroupId()));
+	}
+
+	@Test
+	public void testScheduledByAddToApproved() throws Exception {
+		GregorianCalendar displayDate = new GregorianCalendar();
+
+		displayDate.add(Calendar.DATE, 1);
+
+		blogsEntry.setDisplayDate(displayDate.getTime());
+		BlogsEntryLocalServiceUtil.updateBlogsEntry(blogsEntry);
+
+		blogsEntry = BlogsEntryLocalServiceUtil.updateStatus(
+			getUserId(), blogsEntry.getEntryId(),
+			WorkflowConstants.STATUS_APPROVED, getServiceContext(blogsEntry));
+
+		displayDate.add(Calendar.DATE, -2);
+
+		blogsEntry.setDisplayDate(displayDate.getTime());
+
+		BlogsEntryLocalServiceUtil.updateBlogsEntry(blogsEntry);
+
+		BlogsEntryLocalServiceUtil.checkEntries();
+
+		Assert.assertTrue(isAssetEntryVisible(blogsEntry.getEntryId()));
+		Assert.assertEquals(1, searchBlogsEntriesCount(group.getGroupId()));
+	}
+
+	@Test
+	public void testScheduledByUpdateToApproved() throws Exception {
+		BlogsEntryLocalServiceUtil.updateStatus(
+			getUserId(), blogsEntry.getEntryId(),
+			WorkflowConstants.STATUS_APPROVED, getServiceContext(blogsEntry));
+
+		GregorianCalendar displayDate = new GregorianCalendar();
+
+		displayDate.add(Calendar.DATE, 1);
+
+		blogsEntry.setDisplayDate(displayDate.getTime());
+		blogsEntry.setStatus(WorkflowConstants.STATUS_DRAFT);
+
+		BlogsEntryLocalServiceUtil.updateBlogsEntry(blogsEntry);
+
+		blogsEntry = BlogsEntryLocalServiceUtil.updateStatus(
+			getUserId(), blogsEntry.getEntryId(),
+			WorkflowConstants.STATUS_APPROVED, getServiceContext(blogsEntry));
+
+		checkSocialActivity(BlogsActivityKeys.UPDATE_ENTRY, 1);
+
+		displayDate.add(Calendar.DATE, -2);
+
+		blogsEntry.setDisplayDate(displayDate.getTime());
+		BlogsEntryLocalServiceUtil.updateBlogsEntry(blogsEntry);
+
+		BlogsEntryLocalServiceUtil.checkEntries();
+
+		Assert.assertTrue(isAssetEntryVisible(blogsEntry.getEntryId()));
+		Assert.assertEquals(1, searchBlogsEntriesCount(group.getGroupId()));
+
+		checkSocialActivity(BlogsActivityKeys.UPDATE_ENTRY, 1);
 	}
 
 	@Test

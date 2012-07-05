@@ -211,13 +211,10 @@ public class BlogsStatsUserLocalServiceImpl
 				statsUser.setLastPostDate(lastDisplayDate);
 			}
 		}
-		else if (displayDate == null) {
-			if (lastPostDate == null) {
-				statsUser.setLastPostDate(lastDisplayDate);
-			}
-			else if (lastPostDate.before(lastDisplayDate)) {
-				statsUser.setLastPostDate(lastDisplayDate);
-			}
+		else if ((lastPostDate == null) ||
+				 lastPostDate.before(lastDisplayDate)) {
+
+			statsUser.setLastPostDate(lastDisplayDate);
 		}
 
 		blogsStatsUserPersistence.update(statsUser, false);

@@ -214,7 +214,13 @@ if (fieldParamSelection.equals("0")) {
 						new Date(<%= fieldParamFromParts[0] %>,<%= GetterUtil.getInteger(fieldParamFromParts[1]) - 1 %>,<%= fieldParamFromParts[2] %>)
 					</c:if>
 				],
-				selectMultipleDates: false
+				selectMultipleDates: false,
+				strings: {
+					next: '<liferay-ui:message key="next" />',
+					none: '<liferay-ui:message key="none" />',
+					previous: '<liferay-ui:message key="previous" />',
+					today: '<liferay-ui:message key="today" />'
+				}
 			},
 			trigger: '#<portlet:namespace /><%= facet.getFieldName() %>from'
 		}
@@ -234,7 +240,13 @@ if (fieldParamSelection.equals("0")) {
 						new Date(<%= fieldParamToParts[0] %>,<%= GetterUtil.getInteger(fieldParamToParts[1]) - 1 %>,<%= fieldParamToParts[2] %>)
 					</c:if>
 				],
-				selectMultipleDates: false
+				selectMultipleDates: false,
+				strings: {
+					next: '<liferay-ui:message key="next" />',
+					none: '<liferay-ui:message key="none" />',
+					previous: '<liferay-ui:message key="previous" />',
+					today: '<liferay-ui:message key="today" />'
+				}
 			},
 			trigger: '#<portlet:namespace /><%= facet.getFieldName() %>to'
 		}

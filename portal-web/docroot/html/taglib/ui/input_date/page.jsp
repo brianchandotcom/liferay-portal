@@ -197,7 +197,13 @@ else if (yearNullable) {
 						</c:choose>
 
 						firstDayOfWeek: <%= firstDayOfWeek %>,
-						locale: '<%= LanguageUtil.getLanguageId(request) %>'
+						locale: '<%= LanguageUtil.getLanguageId(request) %>',
+						strings: {
+							next: '<liferay-ui:message key="next" />',
+							none: '<liferay-ui:message key="none" />',
+							previous: '<liferay-ui:message key="previous" />',
+							today: '<liferay-ui:message key="today" />'
+						}
 					},
 					dayNode: '#<%= dayParam %>',
 					disabled: <%= disabled %>,

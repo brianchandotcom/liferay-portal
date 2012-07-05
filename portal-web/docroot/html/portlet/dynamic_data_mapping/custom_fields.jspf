@@ -86,7 +86,15 @@
 
 					instance.datePicker = new A.DatePicker(
 						{
-							trigger: instance.get('templateNode')
+							trigger: instance.get('templateNode'),
+							calendar: {
+								strings: {
+									next: '<liferay-ui:message key="next" />',
+									none: '<liferay-ui:message key="none" />',
+									previous: '<liferay-ui:message key="previous" />',
+									today: '<liferay-ui:message key="today" />'
+								}
+							}
 						}
 					).render();
 				}

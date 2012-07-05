@@ -160,6 +160,8 @@ update DLFileShortcut set statusByUserId = userId;
 update DLFileShortcut set statusByUserName = userId;
 update DLFileShortcut set statusDate = createDate;
 
+drop index IX_6C5E6512 on DLFileVersion;
+
 alter table DLFileVersion add description STRING null;
 alter table DLFileVersion add status INTEGER;
 alter table DLFileVersion add statusByUserId LONG;

@@ -1150,13 +1150,15 @@ public class PortalUtil {
 	}
 
 	public static String getUniqueElementId(
-		HttpServletRequest request, String id) {
+		HttpServletRequest request, String namespace, String id) {
 
-		return getPortal().getUniqueElementId(request, id);
+		return getPortal().getUniqueElementId(request, namespace, id);
 	}
 
-	public static String getUniqueElementId(PortletRequest request, String id) {
-		return getPortal().getUniqueElementId(request, id);
+	public static String getUniqueElementId(
+		PortletRequest request, String namespace, String id) {
+
+		return getPortal().getUniqueElementId(request, namespace, id);
 	}
 
 	public static UploadPortletRequest getUploadPortletRequest(

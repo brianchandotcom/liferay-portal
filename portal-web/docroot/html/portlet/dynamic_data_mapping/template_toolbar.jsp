@@ -90,7 +90,14 @@ long classPK = ParamUtil.getLong(request, "classPK");
 		<c:otherwise>
 
 			<%
-			List<PortletDisplayTemplateHandler> portletDisplayTemplateHandlers = getPortletDisplayTemplateHandlers(permissionChecker, scopeGroupId);
+			List<PortletDisplayTemplateHandler> portletDisplayTemplateHandlers = new ArrayList<PortletDisplayTemplateHandler>();
+
+			if (classNameId > 0) {
+				portletDisplayTemplateHandlers.add(PortletDisplayTemplateHandlerRegistryUtil.getPortletDisplayTemplateHandler(classNameId));
+			}
+			else {
+				portletDisplayTemplateHandlers.addAll(getPortletDisplayTemplateHandlers(permissionChecker, scopeGroupId));
+			}
 
 			if (!portletDisplayTemplateHandlers.isEmpty()) {
 			%>

@@ -84,7 +84,7 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 			if (object instanceof TemplateResource) {
 				templateResource = (TemplateResource)object;
 
-				if (_modificationCheckInterval <= 0) {
+				if (_modificationCheckInterval < 0) {
 					return templateResource;
 				}
 
@@ -102,6 +102,9 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 						_log.debug("Reload stale template " + templateId);
 					}
 				}
+			}
+			else if (object == _nullHolder) {
+				return null;
 			}
 			else {
 				_portalCache.remove(templateId);
@@ -122,15 +125,18 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 					templateId);
 
 				if (templateResource != null) {
-					String name = getName();
+					if ((_modificationCheckInterval != 0) &&
+						(!_name.equals(TemplateManager.VELOCITY) ||
+							!templateId.contains(
+								SandboxHandler.SANDBOX_MARKER))) {
 
-					if (!name.equals(TemplateManager.VELOCITY) ||
-						!templateId.contains(SandboxHandler.SANDBOX_MARKER)) {
+						templateResource = new TemplateResourceCacheWrapper(
+							templateResource);
 
 						_portalCache.put(templateId, templateResource);
 					}
 
-					break;
+					return templateResource;
 				}
 			}
 			catch (TemplateException te) {
@@ -141,7 +147,9 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 			}
 		}
 
-		return templateResource;
+		_portalCache.put(templateId, _nullHolder);
+
+		return null;
 	}
 
 	public boolean hasTemplateResource(String templateId) {
@@ -153,6 +161,8 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 
 		return false;
 	}
+
+	private static final Object _nullHolder = new Object();
 
 	private static Log _log = LogFactoryUtil.getLog(
 		DefaultTemplateResourceLoader.class);

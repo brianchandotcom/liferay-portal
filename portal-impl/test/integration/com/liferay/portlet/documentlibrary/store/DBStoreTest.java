@@ -175,8 +175,9 @@ public class DBStoreTest {
 
 		directory = ServiceTestUtil.randomString();
 		fileName1 = directory + "/" + ServiceTestUtil.randomString();
-		fileName2 = directory + "/" + ServiceTestUtil.randomString() + "/" +
-			ServiceTestUtil.randomString();
+		fileName2 =
+			directory + "/" + ServiceTestUtil.randomString() + "/" +
+				ServiceTestUtil.randomString();
 
 		_store.addFile(companyId, repositoryId, fileName1, _DATA_VERSION_1);
 		_store.addFile(companyId, repositoryId, fileName2, _DATA_VERSION_1);

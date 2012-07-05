@@ -357,9 +357,7 @@ public class ServiceBuilder {
 
 		Convention convention = Convention.getInstance();
 
-		String classMask = "/**\n" +
-			" * @author $author$\n" +
-			"*/";
+		String classMask = "/**\n" + " * @author $author$\n" + "*/";
 
 		convention.put(
 			ConventionKeys.COMMENT_JAVADOC_TEMPLATE_CLASS,

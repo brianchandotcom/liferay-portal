@@ -38,8 +38,6 @@
 		sb.append("&showAllEntries=1");
 
 		String viewAllEntriesURL = sb.toString();
-
-		User user2 = UserLocalServiceUtil.getUserById(entry.getUserId());
 		%>
 
 		<c:if test='<%= !displayStyle.endsWith("-without-title") %>'>
@@ -72,7 +70,21 @@
 	<c:if test='<%= !displayStyle.equals("title") %>'>
 		<div class="abstract">
 			<c:if test='<%= displayStyle.endsWith("-image") %>'>
-				<a href="<%= viewAllEntriesURL %>"><img align="left" border="0" hspace="0" src="<%= user2.getPortraitURL(themeDisplay) %>" width="65" /></a>
+
+				<%
+				User user2 = UserLocalServiceUtil.fetchUserById(entry.getUserId());
+
+				String portraitUrl = null;
+
+				if (user2 != null) {
+					portraitUrl = user2.getPortraitURL(themeDisplay);
+				}
+				else {
+					portraitUrl = UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, 0);
+				}
+				%>
+
+				<a href="<%= viewAllEntriesURL %>"><img align="left" border="0" hspace="0" src="<%= portraitUrl %>" width="65" /></a>
 			</c:if>
 			<c:choose>
 				<c:when test='<%= displayStyle.startsWith("abstract") %>'>

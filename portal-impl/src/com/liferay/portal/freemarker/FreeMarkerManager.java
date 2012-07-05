@@ -179,7 +179,6 @@ public class FreeMarkerManager implements TemplateManager {
 		_configuration.setNewBuiltinClassResolver(
 			new LiferayTemplateClassResolver());
 		_configuration.setObjectWrapper(new LiferayObjectWrapper());
-		_configuration.setTemplateLoader(new LiferayTemplateLoader());
 
 		try {
 			_configuration.setSetting(

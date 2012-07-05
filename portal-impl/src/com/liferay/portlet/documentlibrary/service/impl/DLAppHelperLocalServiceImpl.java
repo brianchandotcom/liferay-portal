@@ -286,9 +286,13 @@ public class DLAppHelperLocalServiceImpl
 			long userId, FileEntry fileEntry, boolean incrementCounter)
 		throws SystemException {
 
+		if (!incrementCounter) {
+			return;
+		}
+
 		// File rank
 
-		if ((userId > 0) && incrementCounter) {
+		if (userId > 0) {
 			dlFileRankLocalService.updateFileRank(
 				fileEntry.getGroupId(), fileEntry.getCompanyId(), userId,
 				fileEntry.getFileEntryId(), new ServiceContext());
@@ -296,20 +300,18 @@ public class DLAppHelperLocalServiceImpl
 
 		// File read count
 
-		if (PropsValues.DL_FILE_ENTRY_READ_COUNT_ENABLED && incrementCounter) {
-			assetEntryLocalService.incrementViewCounter(
-				userId, DLFileEntryConstants.getClassName(),
-				fileEntry.getFileEntryId(), 1);
+		assetEntryLocalService.incrementViewCounter(
+			userId, DLFileEntryConstants.getClassName(),
+			fileEntry.getFileEntryId(), 1);
 
-			List<DLFileShortcut> fileShortcuts =
-				dlFileShortcutPersistence.findByToFileEntryId(
+		List<DLFileShortcut> fileShortcuts =
+			dlFileShortcutPersistence.findByToFileEntryId(
 				fileEntry.getFileEntryId());
 
-			for (DLFileShortcut fileShortcut : fileShortcuts) {
-				assetEntryLocalService.incrementViewCounter(
-					userId, DLFileShortcut.class.getName(),
-					fileShortcut.getFileShortcutId(), 1);
-			}
+		for (DLFileShortcut fileShortcut : fileShortcuts) {
+			assetEntryLocalService.incrementViewCounter(
+				userId, DLFileShortcut.class.getName(),
+				fileShortcut.getFileShortcutId(), 1);
 		}
 	}
 

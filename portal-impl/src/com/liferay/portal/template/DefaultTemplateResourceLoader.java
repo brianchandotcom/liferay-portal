@@ -103,7 +103,7 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 					}
 				}
 			}
-			else if (object instanceof DummyTemplateResource) {
+			else if (object == _nullHolder) {
 				return null;
 			}
 			else {
@@ -147,7 +147,7 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 			}
 		}
 
-		_portalCache.put(templateId, new DummyTemplateResource());
+		_portalCache.put(templateId, _nullHolder);
 
 		return null;
 	}
@@ -162,6 +162,8 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 		return false;
 	}
 
+	private static final Object _nullHolder = new Object();
+
 	private static Log _log = LogFactoryUtil.getLog(
 		DefaultTemplateResourceLoader.class);
 
@@ -171,8 +173,5 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 		TemplateResourceLoader.class.getName());
 	private Set<TemplateResourceParser> _templateResourceParsers =
 		new HashSet<TemplateResourceParser>();
-
-	private class DummyTemplateResource {
-	}
 
 }

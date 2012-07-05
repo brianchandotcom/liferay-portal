@@ -30,6 +30,7 @@ portletDisplayDDMTemplatesURL.setWindowState(LiferayWindowState.POP_UP);
 String portletDisplayDDMTemplatesURLString = portletDisplayDDMTemplatesURL.toString();
 
 portletDisplayDDMTemplatesURLString = HttpUtil.addParameter(portletDisplayDDMTemplatesURLString, "doAsGroupId", scopeGroupId);
+portletDisplayDDMTemplatesURLString = HttpUtil.addParameter(portletDisplayDDMTemplatesURLString, "classNameId", portletDisplayDDMTemplateClassNameId);
 %>
 
 <aui:fieldset cssClass="general-display-settings">

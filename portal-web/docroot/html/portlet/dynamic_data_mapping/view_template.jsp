@@ -151,7 +151,7 @@ if (!portletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES)) {
 				value="<%= LanguageUtil.get(pageContext, template.getName(locale)) %>"
 			/>
 
-			<c:if test="<%= Validator.isNull(templateTypeValue) %>">
+			<c:if test="<%= Validator.isNull(templateTypeValue) && (classNameId == 0) %>">
 
 				<%
 				String value = null;

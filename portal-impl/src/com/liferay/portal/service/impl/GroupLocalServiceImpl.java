@@ -2370,8 +2370,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				name, StringPool.PERCENT, StringPool.BLANK);
 
 			if (companyName.indexOf(name) != -1) {
-				realName = StringPool.PERCENT + GroupConstants.GUEST +
-					StringPool.PERCENT;
+				realName =
+					StringPool.PERCENT + GroupConstants.GUEST +
+						StringPool.PERCENT;
 			}
 		}
 		catch (PortalException pe) {

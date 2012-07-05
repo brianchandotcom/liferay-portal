@@ -123,8 +123,9 @@ public class RSSAction extends PortletAction {
 
 		syndFeed.setFeedType(RSSUtil.FEED_TYPE_DEFAULT);
 
-		String feedLink = PortalUtil.getLayoutFullURL(themeDisplay) +
-			Portal.FRIENDLY_URL_SEPARATOR + "activities/rss";
+		String feedLink =
+			PortalUtil.getLayoutFullURL(themeDisplay) +
+				Portal.FRIENDLY_URL_SEPARATOR + "activities/rss";
 
 		syndFeed.setLink(feedLink);
 

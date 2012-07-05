@@ -45,10 +45,11 @@ public class Base64 {
 		int rawindex = 0;
 
 		for (int i = 0; i < base64.length(); i += 4) {
-			int block = (getValue(base64.charAt(i)) << 18) +
-						(getValue(base64.charAt(i + 1)) << 12) +
+			int block =
+				(getValue(base64.charAt(i)) << 18) +
+					(getValue(base64.charAt(i + 1)) << 12) +
 						(getValue(base64.charAt(i + 2)) << 6) +
-						getValue(base64.charAt(i + 3));
+							getValue(base64.charAt(i + 3));
 
 			for (int j = 0; j < 3 && rawindex + j < raw.length; j++) {
 				raw[rawindex + j] = (byte)(block >> 8 * (2 - j) & 0xff);

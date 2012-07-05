@@ -360,8 +360,8 @@ public class DiffUtil {
 			return margin;
 		}
 
-		int lastChangedLine = (lastDiff.getLineNumber() - 1) +
-			lastDiff.getChangedLines().size();
+		int lastChangedLine =
+			(lastDiff.getLineNumber() - 1) + lastDiff.getChangedLines().size();
 
 		int currentChangedLine = startPos - margin;
 

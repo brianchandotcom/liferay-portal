@@ -173,17 +173,21 @@ if (!portletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES)) {
 				/>
 			</c:if>
 
-			<liferay-ui:search-container-column-text
-				href="<%= rowHREF %>"
-				name="mode"
-				value="<%= LanguageUtil.get(pageContext, template.getMode()) %>"
-			/>
+			<c:if test="<%= !portletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES) %>">
+				<liferay-ui:search-container-column-text
+					href="<%= rowHREF %>"
+					name="mode"
+					value="<%= LanguageUtil.get(pageContext, template.getMode()) %>"
+				/>
+			</c:if>
 
-			<liferay-ui:search-container-column-text
-				href="<%= rowHREF %>"
-				name="language"
-				value="<%= LanguageUtil.get(pageContext, template.getLanguage()) %>"
-			/>
+			<c:if test="<%= !portletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES) %>">
+				<liferay-ui:search-container-column-text
+					href="<%= rowHREF %>"
+					name="language"
+					value="<%= LanguageUtil.get(pageContext, template.getLanguage()) %>"
+				/>
+			</c:if>
 
 			<liferay-ui:search-container-column-text
 				buffer="buffer"

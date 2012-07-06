@@ -35,12 +35,19 @@ import com.liferay.portlet.journal.service.permission.JournalArticlePermission;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.lang.time.StopWatch;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
  * @author Michael Young
+ * @author Vilmos Papp
  */
 public class JournalContentImpl implements JournalContent {
 
@@ -97,6 +104,27 @@ public class JournalContentImpl implements JournalContent {
 			return null;
 		}
 	}
+
+	public String getContent(
+			long groupId, String articleId, String languageId,
+			RenderRequest renderRequest, RenderResponse renderResponse,
+			HttpServletRequest request, HttpServletResponse response,
+			String templateId, ThemeDisplay themeDisplay, String viewMode,
+			String xmlRequest)
+		throws Exception {
+
+			JournalArticleDisplay articleDisplay = getDisplay(
+				groupId, articleId, templateId, viewMode, languageId,
+				themeDisplay, 1, xmlRequest);
+
+			if (articleDisplay != null) {
+				return articleDisplay.getContent(
+						renderRequest, renderResponse, request, response);
+			}
+			else {
+				return null;
+			}
+		}
 
 	public String getContent(
 		long groupId, String articleId, String viewMode, String languageId,

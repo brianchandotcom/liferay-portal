@@ -15,10 +15,22 @@
 package com.liferay.portlet.journal.model.impl;
 
 import com.liferay.portlet.journal.model.JournalArticleDisplay;
+import com.liferay.portlet.layoutconfiguration.util.RuntimePageUtil;
+import com.liferay.portlet.layoutconfiguration.util.xml.ActionURLLogic;
+import com.liferay.portlet.layoutconfiguration.util.xml.PortletLogic;
+import com.liferay.portlet.layoutconfiguration.util.xml.RenderURLLogic;
+import com.liferay.portlet.layoutconfiguration.util.xml.RuntimeLogic;
+
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
+ * @author Vilmos Papp
  */
 public class JournalArticleDisplayImpl implements JournalArticleDisplay {
 
@@ -69,6 +81,27 @@ public class JournalArticleDisplayImpl implements JournalArticleDisplay {
 
 	public String getContent() {
 		return _content;
+	}
+
+	public String getContent(
+			RenderRequest renderRequest, RenderResponse renderResponse,
+			HttpServletRequest request, HttpServletResponse response)
+		throws Exception {
+
+		RuntimeLogic portletLogic = new PortletLogic(request, response);
+		RuntimeLogic actionURLLogic = new ActionURLLogic(renderResponse);
+		RuntimeLogic renderURLLogic = new RenderURLLogic(renderResponse);
+
+		String processedContent = _content;
+
+		processedContent = RuntimePageUtil.processXML(
+			request, processedContent, portletLogic);
+		processedContent = RuntimePageUtil.processXML(
+			request, processedContent, actionURLLogic);
+		processedContent = RuntimePageUtil.processXML(
+			request, processedContent, renderURLLogic);
+
+		return processedContent;
 	}
 
 	public int getCurrentPage() {

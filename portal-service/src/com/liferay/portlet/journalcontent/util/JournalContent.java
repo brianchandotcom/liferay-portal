@@ -17,6 +17,12 @@ package com.liferay.portlet.journalcontent.util;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.journal.model.JournalArticleDisplay;
 
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * @author Raymond Augé
  */
@@ -57,6 +63,14 @@ public interface JournalContent {
 	public String getContent(
 		long groupId, String articleId, String templateId, String viewMode,
 		String languageId, ThemeDisplay themeDisplay, String xmlRequest);
+
+	public String getContent(
+			long groupId, String articleId, String languageId,
+			RenderRequest renderRequest, RenderResponse renderResponse,
+			HttpServletRequest request, HttpServletResponse response,
+			String templateId, ThemeDisplay themeDisplay, String viewMode,
+			String xmlRequest)
+		throws Exception;
 
 	public String getContent(
 		long groupId, String articleId, String viewMode, String languageId,

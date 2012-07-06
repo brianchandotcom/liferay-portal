@@ -40,7 +40,7 @@ else {
 %>
 
 <div class="journal-content-article">
-	<%= articleDisplay.getContent() %>
+	<%= articleDisplay.getContent(renderRequest, renderResponse, request, response) %>
 </div>
 
 <c:if test="<%= articleDisplay.isPaginate() %>">

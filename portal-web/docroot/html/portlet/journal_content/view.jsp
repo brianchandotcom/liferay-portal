@@ -82,18 +82,8 @@ boolean expired = true;
 					AssetEntryServiceUtil.incrementViewCounter(JournalArticle.class.getName(), articleDisplay.getResourcePrimKey());
 				}
 
-				RuntimeLogic portletLogic = new PortletLogic(request, response);
-				RuntimeLogic actionURLLogic = new ActionURLLogic(renderResponse);
-				RuntimeLogic renderURLLogic = new RenderURLLogic(renderResponse);
-
-				String content = articleDisplay.getContent();
-
-				content = RuntimePageUtil.processXML(request, content, portletLogic);
-				content = RuntimePageUtil.processXML(request, content, actionURLLogic);
-				content = RuntimePageUtil.processXML(request, content, renderURLLogic);
-
 				if (themeDisplay.isStateExclusive()) {
-					out.print(content);
+					out.print(articleDisplay.getContent(renderRequest, renderResponse, request, response));
 
 					return;
 				}
@@ -206,7 +196,7 @@ boolean expired = true;
 				</c:if>
 
 				<div class="journal-content-article" id="article_<%= articleDisplay.getCompanyId() %>_<%= articleDisplay.getGroupId() %>_<%= articleDisplay.getArticleId() %>_<%= articleDisplay.getVersion() %>">
-					<%= content %>
+					<%= articleDisplay.getContent(renderRequest, renderResponse, request, response) %>
 				</div>
 
 				<c:if test="<%= articleDisplay.isPaginate() %>">

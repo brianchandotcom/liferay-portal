@@ -68,5 +68,5 @@ JournalArticleDisplay articleDisplay = JournalContentUtil.getDisplay(groupId, ar
 		</c:if>
 	</c:if>
 
-	<%= articleDisplay.getContent() %>
+	<%= articleDisplay.getContent(renderRequest, renderResponse, request, response)) %>
 </c:if>

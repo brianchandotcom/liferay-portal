@@ -1,63 +1,67 @@
 .lfr-header-row {
 	border: 1px solid transparent;
 	min-height: 31px;
+
+	.lfr-actions {
+		&.lfr-extended {
+			padding: 3px 5px 4px;
+
+			.lfr-trigger {
+				padding-right: 0;
+			}
+
+			strong {
+				padding: 0;
+			}
+		}
+
+		&.show-arrow.direction-down .lfr-trigger strong a {
+			padding: 0 20px 0 4px;
+		}
+	}
+
+	.lfr-actions.lfr-extended, .lfr-search-combobox {
+		border: 1px solid transparent;
+		margin-right: 2px;
+	}
+
+	.aui-fieldset .aui-field-content, .aui-field-row, .aui-button-holder, .aui-field-wrapper-content {
+		margin: 0;
+	}
+
+	.aui-field-choice .aui-field-element {
+		display: inline-block;
+	}
+
+	.aui-button-input {
+		padding: 4px;
+	}
+
+	.lfr-search-combobox {
+		float: right;
+		margin: -2px 0 0 2px;
+	}
 }
 
 .lfr-header-row-content {
 	padding: 3px 4px 0;
 }
 
-.lfr-header-row:after, .lfr-header-row-content:after {
-	clear: both;
-	content: "";
-	display: block;
-	height: 0;
-}
-
-.lfr-header-row .lfr-actions.lfr-extended {
-	padding: 3px 5px 4px;
-}
-
-.lfr-header-row .lfr-actions.lfr-extended .lfr-trigger {
-	padding-right: 0;
-}
-
-.lfr-header-row .lfr-actions.lfr-extended strong {
-	padding: 0;
-}
-
-.lfr-header-row .lfr-actions.lfr-extended, .lfr-header-row .lfr-search-combobox {
-	border: 1px solid transparent;
-	margin-right: 2px;
-}
-
-.lfr-header-row .lfr-actions.show-arrow.direction-down .lfr-trigger strong a {
-	padding: 0 20px 0 4px;
-}
-
-.lfr-header-row .aui-fieldset .aui-field-content, .lfr-header-row .aui-field-row, .lfr-header-row .aui-button-holder, .lfr-header-row .aui-field-wrapper-content {
-	margin: 0;
-}
-
-.lfr-header-row .aui-field-choice .aui-field-element {
-	display: inline-block;
-}
-
-.lfr-header-row .aui-button-input {
-	padding: 4px;
-}
-
-.lfr-header-row .lfr-search-combobox {
-	float: right;
-	margin: -2px 0 0 2px;
+.lfr-header-row, .lfr-header-row-content {
+	&:after {
+		clear: both;
+		content: "";
+		display: block;
+		height: 0;
+	}
 }
 
 /* Skin */
 
 .lfr-header-row {
 	border-bottom-color: #7B7B7B;
-}
 
-.lfr-header-row .aui-buttonitem-content, .lfr-header-row .aui-button-input, .lfr-header-row .lfr-actions.lfr-extended, .lfr-header-row .lfr-search-combobox {
-	border-color: #5F5F5F;
+	.aui-buttonitem-content, .aui-button-input, .lfr-actions.lfr-extended, .lfr-search-combobox {
+		border-color: #5F5F5F;
+	}
 }

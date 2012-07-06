@@ -7,12 +7,16 @@
 	padding: 2px 0 2px 20px;
 }
 
-.js .controls-hidden .lfr-meta-actions, .js .controls-hidden .portlet-borderless-bar, .js .controls-hidden .portlet-topper-toolbar, .js .controls-hidden .lfr-configurator-visibility {
-	display: none;
-}
+.js {
+	.controls-hidden {
+		.lfr-meta-actions, .portlet-borderless-bar, .portlet-topper-toolbar, .lfr-configurator-visibility {
+			display: none;
+		}
+	}
 
-.js .page-maximized .portlet-topper-toolbar {
-	display: block;
+	.page-maximized .portlet-topper-toolbar {
+		display: block;
+	}
 }
 
 .configuration-frame, .control-panel-frame {
@@ -29,10 +33,6 @@
 	visibility: hidden;
 }
 
-.ie .float-container {
-	height: 1%;
-}
-
 .lfr-meta-actions {
 	padding-top: 1em;
 }
@@ -40,26 +40,28 @@
 .lfr-table {
 	border-collapse: collapse;
 	clear: both;
+
+	tr td, tr th {
+		padding: 0 5px;
+
+		&:first-child, &.first-child {
+			padding-left: 0;
+		}
+
+		&:last-child, &.last-child {
+			padding-right: 0;
+		}
+	}
 }
 
-.lfr-table tr td, .lfr-table tr th {
-	padding: 0 5px;
-}
+.lfr-table-grid {
+	.lfr-label {
+		font-weight: bold;
+	}
 
-.lfr-table tr td:first-child, .lfr-table tr td.first-child, .lfr-table tr th:first-child, .lfr-table tr th.first-child {
-	padding-left: 0;
-}
-
-.lfr-table tr td:last-child, .lfr-table tr td.last-child, .lfr-table tr th:last-child, .lfr-table tr th.last-child {
-	padding-right: 0;
-}
-
-.lfr-table-grid .lfr-label {
-	font-weight: bold;
-}
-
-.lfr-table-grid .aui-field-hint {
-	float: none;
+	.aui-field-hint {
+		float: none;
+	}
 }
 
 .lfr-control-links a {
@@ -84,6 +86,10 @@
 	margin-bottom: 10px;
 }
 
+.ie .float-container {
+	height: 1%;
+}
+
 /* Skin */
 
 .lfr-button {
@@ -98,20 +104,24 @@
 	opacity: 0.5;
 }
 
-.ie .lfr-checkbox-preselected {
-	filter: alpha(opacity=50);
-	zoom: 1;
-}
-
 .lfr-configurator-visibility {
 	opacity: 0.5;
 }
 
-.ie .lfr-configurator-visibility, .ie .lfr-configurator-visibility .portlet-topper {
-	filter: alpha(opacity=50);
-	zoom: 1;
-}
-
 .lfr-change-logo {
 	background: url(@theme_image_path@/common/checkerboard.png);
+}
+
+.ie {
+	.lfr-checkbox-preselected {
+		filter: alpha(opacity=50);
+		zoom: 1;
+	}
+
+	.lfr-configurator-visibility {
+		&, .portlet-topper {
+			filter: alpha(opacity=50);
+			zoom: 1;
+		}
+	}
 }

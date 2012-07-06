@@ -3,15 +3,14 @@
 	overflow: hidden;
 }
 
-.aui-form-button.aui-input-disabled input:hover, .aui-form-button.aui-input-disabled button:hover {
-	cursor: auto;
+.aui-form-button.aui-input-disabled {
+	input:hover, button:hover {
+		cursor: auto;
+	}
 }
 
 .aui-form-validator-error-container .aui-field-element {
 	display: inline-block;
-}
-
-.aui-form-validator-error-container .aui-field-element {
 	padding-right: 20px;
 }
 
@@ -26,26 +25,31 @@
 	z-index: 5;
 }
 
-.aui-field-focused .aui-form-validator-message, .aui-form-validator-error-container:hover .aui-form-validator-message {
-	clip: rect(auto auto auto auto);
+.aui-field-focused, .aui-form-validator-error-container:hover {
+	.aui-form-validator-message {
+		clip: rect(auto auto auto auto);
+	}
 }
 
 .aui-field-element {
 	position: relative;
 }
 
+.lfr-dynamic-form {
+	.aui-field-radio .aui-field {
+		display: block;
+		margin-left: 10px;
+	}
 
-.lfr-dynamic-form .aui-field-radio .aui-field {
-	display: block;
-	margin-left: 10px;
-}
+	.aui-field-text {
+		&, .aui-field-element {
+			display: block;
+		}
 
-.lfr-dynamic-form .aui-field-text, .lfr-dynamic-form .aui-field-text .aui-field-element {
-	display: block;
-}
-
-.lfr-dynamic-form .aui-field-text .aui-field-input {
-	width: 100%;
+		.aui-field-input {
+			width: 100%;
+		}
+	}
 }
 
 .lfr-input-resource {
@@ -69,10 +73,10 @@
 
 fieldset, .aui-form fieldset {
 	margin-bottom: 2em;
-}
 
-fieldset:last-child, .aui-form fieldset:last-child {
-	margin-bottom: 0;
+	&:last-child {
+		margin-bottom: 0;
+	}
 }
 
 .lfr-display-terms-search {
@@ -86,27 +90,29 @@ fieldset:last-child, .aui-form fieldset:last-child {
 
 /* Skin */
 
-.aui-form-button.aui-input-disabled input, .aui-form-button.aui-input-disabled button {
-	background: #F5F5F5 url(../images/forms/button.png) repeat-x 0 0;
-	color: #ccc;
-}
+.aui-form-button.aui-input-disabled {
+	input, button {
+		background: #F5F5F5 url(../images/forms/button.png) repeat-x 0 0;
+		color: #ccc;
 
-.aui-form-button.aui-input-disabled input:hover, .aui-form-button.aui-input-disabled button:hover {
-	background: #F5F5F5 url(../images/forms/button.png) repeat-x 0 0;
-	border-color: #DEDEDE #BFBFBF #BFBFBF #DEDEDE;
-	color: #ccc;
+		&:hover {
+			background: #F5F5F5 url(../images/forms/button.png) repeat-x 0 0;
+			border-color: #DEDEDE #BFBFBF #BFBFBF #DEDEDE;
+			color: #ccc;
+		}
+	}
 }
 
 .aui-form-validator-error-container {
 	color: #900;
+
+	.aui-field-element {
+		background: url(@theme_image_path@/messages/error.png) no-repeat scroll 100% 50%;
+	}
 }
 
 .aui-form-validator-stack-error {
 	font-size: 0.9em;
-}
-
-.aui-form-validator-error-container .aui-field-element {
-	background: url(@theme_image_path@/messages/error.png) no-repeat scroll 100% 50%;
 }
 
 [class~="aui-form-validator-message"] {

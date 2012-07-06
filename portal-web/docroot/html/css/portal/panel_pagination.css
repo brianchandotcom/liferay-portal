@@ -1,50 +1,52 @@
-.lfr-panel-content .aui-paginator-container .aui-paginator-page-container, .lfr-panel-content .aui-paginator-container .lfr-paginator-next, .lfr-panel-content .aui-paginator-container .lfr-paginator-prev {
-	display: inline-block;
-}
+.lfr-panel-content {
+	.aui-paginator-container {
+		border-bottom: 1px solid transparent;
+		border-top: 1px solid transparent;
+		overflow: hidden;
+		text-align: center;
 
-.lfr-panel-content .aui-paginator-container .lfr-paginator-next, .lfr-panel-content .aui-paginator-container .lfr-paginator-prev {
-	padding: 8px;
-}
+		.aui-paginator-page-container, .lfr-paginator-next, .lfr-paginator-prev {
+			display: inline-block;
+		}
 
-.lfr-panel-content .aui-paginator-container {
-	border-bottom: 1px solid transparent;
-	border-top: 1px solid transparent;
-	overflow: hidden;
-	text-align: center;
-}
+		.lfr-paginator-next, .lfr-paginator-prev {
+			padding: 8px;
+		}
+	}
 
-.lfr-panel-content .aui-paginator-page-container .aui-paginator-page-link {
-	border: 1px solid transparent;
-	display: inline-block;
-	float: none;
-	padding: 5px 10px;
-	text-align: center;
-	width: auto;
+	.aui-paginator-page-container .aui-paginator-page-link {
+		border: 1px solid transparent;
+		display: inline-block;
+		float: none;
+		padding: 5px 10px;
+		text-align: center;
+		width: auto;
+	}
 }
 
 /* Skin */
 
-.lfr-panel-content .aui-paginator-container {
-	background: #cfd2d5;
-	border-bottom-color: #dcdee0;
-	border-top-color: #dcdee0;
-}
+.lfr-panel-content {
+	.aui-paginator-container {
+		background: #cfd2d5;
+		border-bottom-color: #dcdee0;
+		border-top-color: #dcdee0;
+	}
 
-.lfr-panel-content .aui-paginator-page-container .aui-paginator-page-link {
-	background: none;
-	border-color: #CFD2D5;
-}
+	.aui-paginator-page-container .aui-paginator-page-link {
+		background: none;
+		border-color: #CFD2D5;
 
-.lfr-panel-content .aui-paginator-page-container .aui-paginator-page-link.aui-paginator-current-page:hover {
-	background: #5094d7 url(@theme_image_path@/application/current_page_bg.png) repeat-x 0 0;
-	border-color: #31659c #396ea8 #4c8ccb;
-	color: #fff;
-	font-weight: bold;
-}
+		&.aui-paginator-current-page {
+			background: #99a7b3 url(@theme_image_path@/application/current_page_hover_bg.png) repeat-x 0 0;
+			border-color: #6b7785 #7c8994 #919fa9;
+			color: #fff;
+			font-weight: bold;
 
-.lfr-panel-content .aui-paginator-page-container .aui-paginator-page-link.aui-paginator-current-page {
-	background: #99a7b3 url(@theme_image_path@/application/current_page_hover_bg.png) repeat-x 0 0;
-	border-color: #6b7785 #7c8994 #919fa9;
-	color: #fff;
-	font-weight: bold;
+			&:hover {
+				background: #5094d7 url(@theme_image_path@/application/current_page_bg.png) repeat-x 0 0;
+				border-color: #31659c #396ea8 #4c8ccb;
+			}
+		}
+	}
 }

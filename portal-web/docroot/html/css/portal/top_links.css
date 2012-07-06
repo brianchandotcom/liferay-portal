@@ -7,25 +7,27 @@
 	float: right;
 }
 
-.top-link .taglib-text {
-	border-right: 1px solid transparent;
-	margin-right: 0.4em;
-	padding-right: 0.6em;
-}
+.top-link {
+	.taglib-text {
+		border-right: 1px solid transparent;
+		margin-right: 0.4em;
+		padding-right: 0.6em;
+	}
 
-.top-link.last .taglib-text {
-	border-width: 0;
+	&.last .taglib-text {
+		border-width: 0;
+	}
 }
 
 .top-links-navigation {
 	list-style-type: none;
 	float: left;
 	margin: 0;
-}
 
-.top-links-navigation li {
-	display: inline-block;
-	list-style-type: none;
+	li {
+		display: inline-block;
+		list-style-type: none;
+	}
 }
 
 .ie6, .ie7 {

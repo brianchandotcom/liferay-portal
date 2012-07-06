@@ -44,7 +44,7 @@ String script = BeanParamUtil.getString(template, request, "script");
 
 if (Validator.isNull(script)) {
 	if (classNameId > 0) {
-		PortletDisplayTemplateHandler portletDislayTemplateHandler =  PortletDisplayTemplateHandlerRegistryUtil.getPortletDisplayTemplateHandler(classNameId);
+		PortletDisplayTemplateHandler portletDislayTemplateHandler = PortletDisplayTemplateHandlerRegistryUtil.getPortletDisplayTemplateHandler(classNameId);
 
 		script = ContentUtil.get(portletDislayTemplateHandler.getDefaultTemplateLocation());
 	}

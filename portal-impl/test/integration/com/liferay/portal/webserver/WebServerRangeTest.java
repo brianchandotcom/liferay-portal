@@ -173,7 +173,7 @@ public class WebServerRangeTest extends BaseWebServerTestCase {
 		}
 
 		MockHttpServletResponse response = service(
-			Method.GET, path, headers, null);
+			Method.GET, path, headers, null, null, null);
 
 		int status = response.getStatus();
 

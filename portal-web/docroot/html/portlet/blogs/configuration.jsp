@@ -270,77 +270,7 @@ String[] socialBookmarksTypesArray = StringUtil.split(preferences.getValue("soci
 
 		</c:when>
 		<c:when test='<%= tabs2.equals("display-settings") %>'>
-			<div class="portlet-msg-info">
-				<liferay-ui:message key="set-the-display-styles-used-to-display-blogs-when-viewed-via-as-a-regular-page-or-as-an-rss" />
-			</div>
-
-			<aui:fieldset>
-				<aui:select label="maximum-items-to-display" name="preferences--pageDelta--">
-
-					<%
-					for (int pageDeltaValue : PropsValues.BLOGS_ENTRY_PAGE_DELTA_VALUES) {
-					%>
-
-						<aui:option label="<%= pageDeltaValue %>" selected="<%= pageDelta == pageDeltaValue %>" />
-
-					<%
-					}
-					%>
-
-				</aui:select>
-
-				<aui:select label="display-style" name="preferences--pageDisplayStyle--">
-					<aui:option label="<%= RSSUtil.DISPLAY_STYLE_FULL_CONTENT %>" selected="<%= pageDisplayStyle.equals(RSSUtil.DISPLAY_STYLE_FULL_CONTENT) %>" />
-					<aui:option label="<%= RSSUtil.DISPLAY_STYLE_ABSTRACT %>" selected="<%= pageDisplayStyle.equals(RSSUtil.DISPLAY_STYLE_ABSTRACT) %>" />
-					<aui:option label="<%= RSSUtil.DISPLAY_STYLE_TITLE %>" selected="<%= pageDisplayStyle.equals(RSSUtil.DISPLAY_STYLE_TITLE) %>" />
-				</aui:select>
-
-				<aui:input name="preferences--enableFlags--" type="checkbox" value="<%= enableFlags %>" />
-
-				<aui:input name="preferences--enableRelatedAssets--" type="checkbox" value="<%= enableRelatedAssets %>" />
-
-				<aui:input name="preferences--enableRatings--" type="checkbox" value="<%= enableRatings %>" />
-
-				<c:if test="<%= PropsValues.BLOGS_ENTRY_COMMENTS_ENABLED %>">
-					<aui:input name="preferences--enableComments--" type="checkbox" value="<%= enableComments %>" />
-
-					<aui:input name="preferences--enableCommentRatings--" type="checkbox" value="<%= enableCommentRatings %>" />
-				</c:if>
-
-				<aui:fieldset>
-					<aui:input name="preferences--enableSocialBookmarks--" type="checkbox" value="<%= enableSocialBookmarks %>" />
-
-					<div class="social-boomarks-options" id="<portlet:namespace />socialBookmarksOptions">
-						<aui:select label="display-style" name="preferences--socialBookmarksDisplayStyle--">
-							<aui:option label="simple" selected='<%= socialBookmarksDisplayStyle.equals("simple") %>' />
-							<aui:option label="vertical" selected='<%= socialBookmarksDisplayStyle.equals("vertical") %>' />
-							<aui:option label="horizontal" selected='<%= socialBookmarksDisplayStyle.equals("horizontal") %>' />
-						</aui:select>
-
-						<aui:select label="display-position" name="preferences--socialBookmarksDisplayPosition--">
-							<aui:option label="top" selected='<%= socialBookmarksDisplayPosition.equals("top") %>' />
-							<aui:option label="bottom" selected='<%= socialBookmarksDisplayPosition.equals("bottom") %>' />
-						</aui:select>
-
-						<aui:field-wrapper label="social-bookmarks">
-
-							<%
-							for (String type : PropsUtil.getArray(PropsKeys.SOCIAL_BOOKMARK_TYPES)) {
-							%>
-
-								<aui:field-wrapper inlineLabel="right" label="<%= type %>">
-									<input <%= ArrayUtil.contains(socialBookmarksTypesArray, type) ? "checked": "" %> name="preferences--socialBookmarksTypes--" type="checkbox" value="<%= type %>" />
-								</aui:field-wrapper>
-
-							<%
-							}
-							%>
-
-						</aui:field-wrapper>
-					</div>
-				</aui:fieldset>
-			</aui:fieldset>
-
+			<%@ include file="/html/portlet/blogs/display_settings.jspf" %>
 		</c:when>
 		<c:when test='<%= tabs2.equals("rss") %>'>
 			<aui:fieldset>

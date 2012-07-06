@@ -1189,13 +1189,18 @@ AUI.add(
 						cmd = instance.articleId ? 'update' : 'add';
 					}
 
+					var articleIdInput = instance.getByName(form, 'articleId');
+					var classNameIdInput = instance.getByName(form, 'classNameId');
+					var contentInput = instance.getByName(form, 'content');
 					var cmdInput = instance.getByName(form, 'cmd');
 					var newArticleIdInput = instance.getByName(form, 'newArticleId');
-					var articleIdInput = instance.getByName(form, 'articleId');
-					var contentInput = instance.getByName(form, 'content');
 					var workflowActionInput = instance.getByName(form, 'workflowAction');
 
-					var canSubmit = instance.validateRequiredFields();
+					var canSubmit = true;
+
+					if (classNameIdInput.val() <= 0) {
+						canSubmit = instance.validateRequiredFields();
+					}
 
 					if (canSubmit) {
 						if (cmd == 'publish') {

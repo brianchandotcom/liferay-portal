@@ -248,7 +248,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			serviceContext, "layoutPrototypeUuid");
 		boolean layoutPrototypeLinkEnabled = ParamUtil.getBoolean(
 			serviceContext, "layoutPrototypeLinkEnabled",
-			PropsValues.LAYOUT_PROTOTYPE_LINK_ENABLED);
+			PropsValues.LAYOUT_PROTOTYPE_LINK_ENABLED_DEFAULT);
 
 		if (Validator.isNotNull(layoutPrototypeUuid)) {
 			layout.setLayoutPrototypeUuid(layoutPrototypeUuid);

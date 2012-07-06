@@ -131,6 +131,9 @@ public class UpgradeOptimizedResultSetHandler implements InvocationHandler {
 		else if (t == Types.BIT) {
 			value = GetterUtil.getBoolean(_resultSet.getBoolean(name));
 		}
+		else if (t == Types.BLOB) {
+			value = _resultSet.getBytes(name);
+		}
 		else if (t == Types.BOOLEAN) {
 			value = GetterUtil.getBoolean(_resultSet.getBoolean(name));
 		}

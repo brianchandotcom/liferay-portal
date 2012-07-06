@@ -1105,6 +1105,8 @@ public interface PropsKeys {
 
 	public static final String LAYOUT_PARENTABLE = "layout.parentable";
 
+	public static final String LAYOUT_PROTOTYPE_LINK_ENABLED_DEFAULT = "layout.prototype.link.enabled.default";
+
 	public static final String LAYOUT_PROTOTYPE_MERGE_FAIL_THRESHOLD = "layout.prototype.merge.fail.threshold";
 
 	public static final String LAYOUT_PROTOTYPE_MERGE_LOCK_MAX_TIME = "layout.prototype.merge.lock.max.time";

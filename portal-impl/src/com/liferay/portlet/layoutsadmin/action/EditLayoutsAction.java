@@ -809,6 +809,8 @@ public class EditLayoutsAction extends PortletAction {
 		byte[] iconBytes = getIconBytes(uploadPortletRequest, "iconFileName");
 		long layoutPrototypeId = ParamUtil.getLong(
 			uploadPortletRequest, "layoutPrototypeId");
+		String layoutPrototypeLinkEnabled= ParamUtil.getString(
+			uploadPortletRequest, "layoutPrototypeLinkEnabled");
 
 		boolean inheritFromParentLayoutId = ParamUtil.getBoolean(
 			uploadPortletRequest, "inheritFromParentLayoutId");
@@ -857,7 +859,12 @@ public class EditLayoutsAction extends PortletAction {
 					LayoutPrototypeServiceUtil.getLayoutPrototype(
 						layoutPrototypeId);
 
-				serviceContext.setAttribute("layoutPrototypeLinkEnabled", true);
+				if (Validator.isNotNull(layoutPrototypeLinkEnabled)) {
+					serviceContext.setAttribute(
+						"layoutPrototypeLinkEnabled",
+						layoutPrototypeLinkEnabled);
+				}
+
 				serviceContext.setAttribute(
 					"layoutPrototypeUuid", layoutPrototype.getUuid());
 

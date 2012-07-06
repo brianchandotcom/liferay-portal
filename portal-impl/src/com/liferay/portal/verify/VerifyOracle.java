@@ -45,9 +45,17 @@ public class VerifyOracle extends VerifyProcess {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
+		int buildNumber;
 
 		try {
 			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement("select buildNumber from release_");
+
+			rs = ps.executeQuery();
+
+			rs.next();
+			buildNumber = rs.getInt(1);
 
 			ps = con.prepareStatement(
 				"select table_name, column_name, data_length from " +
@@ -62,7 +70,12 @@ public class VerifyOracle extends VerifyProcess {
 				int dataLength = rs.getInt(3);
 
 				if (dataLength != 4000) {
-					dataLength = dataLength / 4;
+
+					// LPS-26674
+
+					if ((buildNumber >= 6000) && (buildNumber < 6120)) {
+						dataLength = dataLength / 4;
+					}
 				}
 
 				try {

@@ -52,6 +52,7 @@ page import="com.liferay.portlet.sitesadmin.search.TeamSearch" %><%@
 page import="com.liferay.portlet.sitesadmin.search.TeamSearchTerms" %><%@
 page import="com.liferay.portlet.sitesadmin.search.UserGroupTeamChecker" %><%@
 page import="com.liferay.portlet.sitesadmin.search.UserTeamChecker" %><%@
+page import="com.liferay.portlet.trash.model.TrashConstants" %><%@
 page import="com.liferay.portlet.usergroupsadmin.search.UserGroupChecker" %><%@
 page import="com.liferay.portlet.usergroupsadmin.search.UserGroupGroupChecker" %><%@
 page import="com.liferay.portlet.usergroupsadmin.search.UserGroupSearch" %><%@

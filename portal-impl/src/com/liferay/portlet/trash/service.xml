@@ -46,6 +46,11 @@
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
+		<finder name="G_C_CD" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="companyId" />
+			<finder-column name="createDate" comparator="&lt;" />
+		</finder>
 	</entity>
 	<entity name="TrashVersion" local-service="false" remote-service="false">
 

@@ -293,6 +293,18 @@ public class TrashEntryLocalServiceUtil {
 			versions, typeSettingsProperties);
 	}
 
+	public static void cleanUpEntries()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().cleanUpEntries();
+	}
+
+	public static void cleanUpEntries(long companyId, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().cleanUpEntries(companyId, groupId);
+	}
+
 	/**
 	* Deletes the trash entry with the primary key.
 	*

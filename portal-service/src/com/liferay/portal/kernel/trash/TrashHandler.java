@@ -66,6 +66,9 @@ public interface TrashHandler {
 	public void deleteTrashEntries(long[] classPKs)
 		throws PortalException, SystemException;
 
+	public void deleteTrashEntries(long[] classPKs, boolean checkPermission)
+		throws PortalException, SystemException;
+
 	/**
 	 * Deletes the entry with the primary key.
 	 *
@@ -75,6 +78,9 @@ public interface TrashHandler {
 	 * @throws SystemException if a system exception occurred
 	 */
 	public void deleteTrashEntry(long classPK)
+		throws PortalException, SystemException;
+
+	public void deleteTrashEntry(long classPK, boolean checkPermission)
 		throws PortalException, SystemException;
 
 	/**

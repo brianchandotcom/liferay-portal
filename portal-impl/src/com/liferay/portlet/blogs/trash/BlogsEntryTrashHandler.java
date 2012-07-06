@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portlet.blogs.model.BlogsEntry;
+import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.service.BlogsEntryServiceUtil;
 
 /**
@@ -42,6 +43,19 @@ public class BlogsEntryTrashHandler extends BaseTrashHandler {
 
 		for (long classPK : classPKs) {
 			BlogsEntryServiceUtil.deleteEntry(classPK);
+		}
+	}
+
+	public void deleteTrashEntries(long[] classPKs, boolean checkPermission)
+		throws PortalException, SystemException {
+
+		for (long classPK : classPKs) {
+			if (checkPermission) {
+				BlogsEntryServiceUtil.deleteEntry(classPK);
+			}
+			else {
+				BlogsEntryLocalServiceUtil.deleteEntry(classPK);
+			}
 		}
 	}
 

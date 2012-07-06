@@ -14,7 +14,16 @@
 
 package com.liferay.portlet.trash.util;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portlet.trash.model.TrashConstants;
 import com.liferay.portlet.trash.util.comparator.EntryCreateDateComparator;
 import com.liferay.portlet.trash.util.comparator.EntryTypeComparator;
 import com.liferay.portlet.trash.util.comparator.EntryUserNameComparator;
@@ -46,6 +55,36 @@ public class TrashUtil {
 		}
 
 		return orderByComparator;
+	}
+
+	public static boolean isTrashEnabled(long groupId)
+		throws PortalException, SystemException {
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		UnicodeProperties typeSettingsProperties =
+			group.getTypeSettingsProperties();
+
+		String enableRecycleBinProperty = PrefsPropsUtil.getString(
+			group.getCompanyId(), PropsKeys.ENABLE_RECYCLE_BIN);
+
+		if (enableRecycleBinProperty.equals(TrashConstants.DISABLED)) {
+			return false;
+		}
+
+		boolean enableRecycleBin = true;
+
+		if (enableRecycleBinProperty.equals(
+				TrashConstants.DISABLED_BY_DEFAULT)) {
+
+			enableRecycleBin = false;
+		}
+
+		enableRecycleBin = GetterUtil.getBoolean(
+			typeSettingsProperties.getProperty("enableRecycleBin"),
+			enableRecycleBin);
+
+		return enableRecycleBin;
 	}
 
 }

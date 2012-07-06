@@ -212,6 +212,12 @@ public Map<String, PortletURL> getAddPortletURLs(LiferayPortletRequest liferayPo
 
 		AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
 
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(themeDisplay.getCompanyId(), assetRendererFactory.getPortletId());
+
+		if (!portlet.isActive()) {
+			continue;
+		}
+
 		Map<Long, String> classTypes = assetRendererFactory.getClassTypes(new long[] {themeDisplay.getCompanyGroupId(), themeDisplay.getScopeGroupId()}, themeDisplay.getLocale());
 
 		if ((classTypeIds.length == 0) || (classTypes == null)) {

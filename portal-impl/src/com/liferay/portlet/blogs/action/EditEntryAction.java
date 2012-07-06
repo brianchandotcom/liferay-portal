@@ -285,15 +285,15 @@ public class EditEntryAction extends PortletAction {
 			}
 		}
 
-		if (moveToTrash && deleteEntryIds.length > 0) {
+		if (moveToTrash && (deleteEntryIds.length > 0)) {
 			HttpServletRequest request = PortalUtil.getHttpServletRequest(
 				actionRequest);
 
 			HttpSession session = request.getSession();
 
-			String portletId = (String)request.getAttribute(WebKeys.PORTLET_ID);
-
 			session.setAttribute("trashedEntryIds", deleteEntryIds);
+
+			String portletId = (String)request.getAttribute(WebKeys.PORTLET_ID);
 
 			SessionMessages.add(request, portletId + "_delete-success");
 		}
@@ -346,9 +346,7 @@ public class EditEntryAction extends PortletAction {
 
 		long userId = themeDislay.getUserId();
 
-		long[] restoreEntryIds = null;
-
-		restoreEntryIds = StringUtil.split(
+		long[] restoreEntryIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "restoreEntryIds"), 0L);
 
 		for (long restoreEntryId : restoreEntryIds) {

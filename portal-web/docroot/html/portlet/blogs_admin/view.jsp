@@ -21,11 +21,9 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/blogs_admin/view");
 
-String portletInstanceId = themeDisplay.getPortletDisplay().getId();
-
 String trashedEntryIds = StringPool.BLANK;
 
-if (SessionMessages.contains(request, portletInstanceId + "_delete-success")) {
+if (SessionMessages.contains(request, portletDisplay.getId() + "_delete-success")) {
 	trashedEntryIds = GetterUtil.getString(StringUtil.merge((long[])session.getAttribute("trashedEntryIds")));
 
 	session.removeAttribute("trashedEntryIds");
@@ -36,14 +34,14 @@ if (SessionMessages.contains(request, portletInstanceId + "_delete-success")) {
 	<portlet:param name="struts_action" value="/blogs_admin/search" />
 </liferay-portlet:renderURL>
 
-<c:if test='<%= SessionMessages.contains(request, portletInstanceId + "_delete-success") %>'>
+<c:if test='<%= SessionMessages.contains(request, portletDisplay.getId() + "_delete-success") %>'>
 	<div class="portlet-msg-notifier">
 		<c:choose>
 			<c:when test='<%= trashedEntryIds.contains(StringPool.COMMA) %>'>
-				<liferay-ui:message arguments='<%= new String[]{ "blogs", "javascript:" + renderResponse.getNamespace() + "undoEntries();" } %>' key="the-selected-x-have-been-moved-to-the-trash.-undo" translateArguments="false" />
+				<liferay-ui:message arguments='<%= new String[] {"javascript:" + renderResponse.getNamespace() + "undoEntries();"} %>' key="the-selected-items-have-been-moved-to-the-recycle-bin.-undo" translateArguments="false" />
 			</c:when>
 			<c:otherwise>
-				<liferay-ui:message arguments='<%= new String[]{ "blog", "javascript:" + renderResponse.getNamespace() + "undoEntries();" } %>' key="the-selected-x-has-been-moved-to-the-trash.-undo" translateArguments="false" />
+				<liferay-ui:message arguments='<%= new String[] {"javascript:" + renderResponse.getNamespace() + "undoEntries();"} %>' key="the-selected-item-has-been-moved-to-the-recycle-bin.-undo" translateArguments="false" />
 			</c:otherwise>
 		</c:choose>
 	</div>

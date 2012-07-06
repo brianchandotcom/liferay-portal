@@ -24,12 +24,10 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/blogs/view");
 
-String portletInstanceId = themeDisplay.getPortletDisplay().getId();
+String trashedEntryIds = StringPool.BLANK;
 
-String trashedEntryId = StringPool.BLANK;
-
-if (SessionMessages.contains(request, portletInstanceId + "_delete-success")) {
-	trashedEntryId = GetterUtil.getString(StringUtil.merge((long[])session.getAttribute("trashedEntryIds")));
+if (SessionMessages.contains(request, portletDisplay.getId() + "_delete-success")) {
+	trashedEntryIds = GetterUtil.getString(StringUtil.merge((long[])session.getAttribute("trashedEntryIds")));
 
 	session.removeAttribute("trashedEntryIds");
 }
@@ -39,9 +37,9 @@ if (SessionMessages.contains(request, portletInstanceId + "_delete-success")) {
 	<portlet:param name="struts_action" value="/blogs/search" />
 </liferay-portlet:renderURL>
 
-<% if (SessionMessages.contains(request, portletInstanceId + "_delete-success")) { %>
+<% if (SessionMessages.contains(request, portletDisplay.getId() + "_delete-success")) { %>
 	<div class="portlet-msg-notifier">
-		<liferay-ui:message arguments='<%= new String[]{ "blog", "javascript:" + renderResponse.getNamespace() + "undoEntries();" } %>' key="the-selected-x-has-been-moved-to-the-trash.-undo" translateArguments="false" />
+		<liferay-ui:message arguments='<%= new String[] {"javascript:" + renderResponse.getNamespace() + "undoEntries();"} %>' key="the-selected-item-has-been-moved-to-the-recycle-bin.-undo" translateArguments="false" />
 	</div>
 
 	<liferay-portlet:renderURL varImpl="undoURL">
@@ -110,7 +108,7 @@ if (SessionMessages.contains(request, portletInstanceId + "_delete-success")) {
 					if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-undo-your-last-changes") %>')) {
 						document.<portlet:namespace />fm2.method = "post";
 						document.<portlet:namespace />fm2.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.UNDO %>";
-						document.<portlet:namespace />fm2.<portlet:namespace />restoreEntryIds.value = "<%= trashedEntryId %>";
+						document.<portlet:namespace />fm2.<portlet:namespace />restoreEntryIds.value = "<%= trashedEntryIds %>";
 						submitForm(document.<portlet:namespace />fm2, "<portlet:actionURL><portlet:param name="struts_action" value="/blogs/edit_entry" /></portlet:actionURL>");
 					}
 				},

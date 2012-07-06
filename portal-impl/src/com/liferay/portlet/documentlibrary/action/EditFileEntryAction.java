@@ -534,9 +534,9 @@ public class EditFileEntryAction extends PortletAction {
 
 			HttpSession session = request.getSession();
 
-			String portletId = (String)request.getAttribute(WebKeys.PORTLET_ID);
-
 			session.setAttribute("trashedFileEntryIds", deleteFileEntryIds);
+
+			String portletId = (String)request.getAttribute(WebKeys.PORTLET_ID);
 
 			SessionMessages.add(request, portletId + "_delete-success");
 		}

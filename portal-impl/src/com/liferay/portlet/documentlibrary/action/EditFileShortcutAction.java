@@ -126,8 +126,6 @@ public class EditFileShortcutAction extends PortletAction {
 		long fileShortcutId = ParamUtil.getLong(
 			actionRequest, "fileShortcutId");
 
-		long[] fileShortcutArray = new long[] {fileShortcutId};
-
 		if (moveToTrash) {
 			DLAppServiceUtil.moveFileShortcutToTrash(fileShortcutId);
 
@@ -136,9 +134,10 @@ public class EditFileShortcutAction extends PortletAction {
 
 			HttpSession session = request.getSession();
 
-			String portletId = (String)request.getAttribute(WebKeys.PORTLET_ID);
+			session.setAttribute(
+				"trashedFileShortcutIds", new long[] {fileShortcutId});
 
-			session.setAttribute("trashedFileShortcutIds",fileShortcutArray);
+			String portletId = (String)request.getAttribute(WebKeys.PORTLET_ID);
 
 			SessionMessages.add(request, portletId + "_delete-success");
 		}

@@ -17,8 +17,6 @@
 <%@ include file="/html/portlet/document_library_display/init.jsp" %>
 
 <%
-String portletInstanceId = themeDisplay.getPortletDisplay().getId();
-
 int count = 0;
 
 String trashedFolderIds = StringPool.BLANK;
@@ -27,7 +25,7 @@ String trashedFileShortcutIds = StringPool.BLANK;
 
 String trashedElementsText = StringPool.BLANK;
 
-if (SessionMessages.contains(request, portletInstanceId + "_delete-success")) {
+if (SessionMessages.contains(request, portletId + "_delete-success")) {
 	trashedFolderIds = GetterUtil.getString(StringUtil.merge((long[])session.getAttribute("trashedFolderIds")), StringPool.BLANK);
 	trashedFileEntryIds = GetterUtil.getString(StringUtil.merge((long[])session.getAttribute("trashedFileEntryIds")), StringPool.BLANK);
 	trashedFileShortcutIds = GetterUtil.getString(StringUtil.merge((long[])session.getAttribute("trashedFileShortcutIds")), StringPool.BLANK);
@@ -37,36 +35,6 @@ if (SessionMessages.contains(request, portletInstanceId + "_delete-success")) {
 	session.removeAttribute("trashedFileShortcutIds");
 
 	count = (StringUtil.split(trashedFolderIds).length + StringUtil.split(trashedFileShortcutIds).length + StringUtil.split(trashedFileEntryIds).length);
-
-	String trashedElementsKey = null;
-
-	if ((trashedFolderIds.length() > 0) && (trashedElementsKey == null)) {
-		trashedElementsKey = "folder";
-	}
-
-	if (trashedFileShortcutIds.length() > 0) {
-		if (trashedElementsKey == null) {
-			trashedElementsKey = "shortcut";
-		}
-		else {
-			trashedElementsKey = "item";
-		}
-	}
-
-	if (trashedFileEntryIds.length() > 0) {
-		if (trashedElementsKey == null) {
-			trashedElementsKey = "document";
-		}
-		else {
-			trashedElementsKey = "item";
-		}
-	}
-
-	if (count > 1) {
-		trashedElementsKey = trashedElementsKey + "s";
-	}
-
-	trashedElementsText = GetterUtil.getString(LanguageUtil.get(pageContext, trashedElementsKey),StringPool.BLANK);
 }
 
 String topLink = ParamUtil.getString(request, "topLink", "home");
@@ -127,14 +95,14 @@ request.setAttribute("view.jsp-viewFolder", Boolean.TRUE.toString());
 request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntryQuery));
 %>
 
-<% if (SessionMessages.contains(request, portletInstanceId + "_delete-success")) { %>
+<% if (SessionMessages.contains(request, portletId + "_delete-success")) { %>
 	<div class="portlet-msg-notifier">
 		<c:choose>
 			<c:when test='<%= count > 1 %>'>
-				<liferay-ui:message arguments='<%= new String[]{ trashedElementsText.toLowerCase(), "javascript:" + renderResponse.getNamespace() + "undoEntries();" } %>' key="the-selected-x-have-been-moved-to-the-trash.-undo" translateArguments="false" />
+				<liferay-ui:message arguments='<%= new String[] {"javascript:" + renderResponse.getNamespace() + "undoEntries();"} %>' key="the-selected-items-have-been-moved-to-the-recycle-bin.-undo" translateArguments="false" />
 			</c:when>
 			<c:otherwise>
-				<liferay-ui:message arguments='<%= new String[]{ trashedElementsText.toLowerCase(), "javascript:" + renderResponse.getNamespace() + "undoEntries();" } %>' key="the-selected-x-has-been-moved-to-the-trash.-undo" translateArguments="false" />
+				<liferay-ui:message arguments='<%= new String[] {"javascript:" + renderResponse.getNamespace() + "undoEntries();"} %>' key="the-selected-item-has-been-moved-to-the-recycle-bin.-undo" translateArguments="false" />
 			</c:otherwise>
 		</c:choose>
 	</div>

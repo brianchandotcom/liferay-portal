@@ -26,14 +26,12 @@ import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.trash.TrashRenderer;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.trash.model.TrashEntry;
 
-import java.util.LinkedHashMap;
 import java.util.Locale;
 
 import javax.portlet.PortletURL;
@@ -79,6 +77,10 @@ public class TrashIndexer extends BaseIndexer {
 
 			contextQuery.add(groupQuery, BooleanClauseOccur.MUST);
 
+			contextQuery.addTerm(
+				Field.STATUS, String.valueOf(WorkflowConstants.STATUS_IN_TRASH),
+				false, BooleanClauseOccur.MUST);
+
 			BooleanQuery fullQuery = createFullQuery(
 				contextQuery, searchContext);
 
@@ -113,29 +115,6 @@ public class TrashIndexer extends BaseIndexer {
 		}
 
 		return false;
-	}
-
-	@Override
-	public void postProcessContextQuery(
-			BooleanQuery contextQuery, SearchContext searchContext)
-		throws Exception {
-
-		searchContext.setEntryClassNames(null);
-
-		contextQuery.addRequiredTerm(
-			Field.STATUS, WorkflowConstants.STATUS_IN_TRASH);
-
-		LinkedHashMap<String, Object> params =
-			(LinkedHashMap<String, Object>)searchContext.getAttribute("params");
-
-		if (params != null) {
-			String expandoAttributes = (String)params.get("expandoAttributes");
-
-			if (Validator.isNotNull(expandoAttributes)) {
-				addSearchExpando(
-					contextQuery, searchContext, expandoAttributes);
-			}
-		}
 	}
 
 	@Override

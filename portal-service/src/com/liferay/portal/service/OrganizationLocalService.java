@@ -698,7 +698,7 @@ public interface OrganizationLocalService extends BaseLocalService,
 	* @param companyId the primary key of the company
 	* @param params the finder parameters (optionally <code>null</code>). For
 	more information see {@link
-	com.liferay.portlet.usersadmin.util#OrganizationIndexer}
+	com.liferay.portlet.usersadmin.util.OrganizationIndexer}
 	* @param start the lower bound of the range of organizations to return
 	* @param end the upper bound of the range of organizations to return (not
 	inclusive)

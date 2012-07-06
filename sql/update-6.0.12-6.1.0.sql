@@ -16,6 +16,7 @@ alter table BookmarksEntry add description VARCHAR(75) null;
 COMMIT_TRANSACTION;
 
 update BookmarksEntry set description = comments;
+
 alter table BookmarksEntry drop column comments;
 
 alter table BookmarksFolder add resourceBlockId LONG;

@@ -108,6 +108,8 @@ boolean showMenu = displayAssetTypeFacet || displayAssetTagsFacet || displayAsse
 										if (field) {
 											field.value = term.attr('data-value');
 
+											document.<portlet:namespace />fm.<portlet:namespace /><%= SearchContainer.DEFAULT_CUR_PARAM %>.value = 1;
+
 											submitForm(document.<portlet:namespace />fm);
 										}
 									}

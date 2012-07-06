@@ -1549,7 +1549,7 @@ public interface DLAppService extends BaseService {
 	* @return the temporary file entry names
 	* @throws PortalException if the folder was invalid
 	* @throws SystemException if a system exception occurred
-	* @see #addTempFileEntry(long, long, String, String, File)
+	* @see com.liferay.portlet.documentlibrary.service.impl.DLAppServiceImpl#addTempFileEntry(long, long, String, String, File)
 	* @see com.liferay.portal.kernel.util.TempFileUtil
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

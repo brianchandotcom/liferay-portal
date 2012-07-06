@@ -480,10 +480,10 @@ public class PortletImporter {
 	}
 
 	/**
-	 * @see {@link DLPortletDataHandlerImpl#getFileEntryTypeName(String, long,
-	 *      String, int)}
-	 * @see {@link DLPortletDataHandlerImpl#getFolderName(String, long, long,
-	 *      String, int)}
+	 * @see com.liferay.portlet.documentlibrary.lar.DLPortletDataHandlerImpl#getFileEntryTypeName(
+	 *      String, long, String, int)
+	 * @see com.liferay.portlet.documentlibrary.lar.DLPortletDataHandlerImpl#getFolderName(
+	 *      String, long, long, String, int)
 	 */
 	protected String getAssetCategoryName(
 			String uuid, long groupId, long parentCategoryId, String name,
@@ -540,10 +540,10 @@ public class PortletImporter {
 	}
 
 	/**
-	 * @see {@link DLPortletDataHandlerImpl#getFileEntryTypeName(String, long,
-	 *      String, int)}
-	 * @see {@link DLPortletDataHandlerImpl#getFolderName(String, long, long,
-	 *      String, int)}
+	 * @see com.liferay.portlet.documentlibrary.lar.DLPortletDataHandlerImpl#getFileEntryTypeName(
+	 *      String, long, String, int)
+	 * @see com.liferay.portlet.documentlibrary.lar.DLPortletDataHandlerImpl#getFolderName(
+	 *      String, long, long, String, int)
 	 */
 	protected String getAssetVocabularyName(
 			String uuid, long groupId, String name, int count)

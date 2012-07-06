@@ -812,7 +812,7 @@ public class MainServlet extends ActionServlet {
 	}
 
 	/**
-	 * @see {@link SetupWizardUtil#_initPlugins}
+	 * @see SetupWizardUtil#_initPlugins
 	 */
 	protected void initPlugins() throws Exception {
 

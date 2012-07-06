@@ -760,7 +760,7 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 	* @param companyId the primary key of the company
 	* @param params the finder parameters (optionally <code>null</code>). For
 	more information see {@link
-	com.liferay.portlet.enterpriseadmin.util.OrganizationIndexer}
+	com.liferay.portlet.usersadmin.util.OrganizationIndexer}
 	* @param start the lower bound of the range of organizations to return
 	* @param end the upper bound of the range of organizations to return (not
 	inclusive)
@@ -798,7 +798,7 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 	country (optionally <code>null</code>)
 	* @param params the finder parameters (optionally <code>null</code>). For
 	more information see {@link
-	com.liferay.portlet.enterpriseadmin.util.OrganizationIndexer}
+	com.liferay.portlet.usersadmin.util.OrganizationIndexer}
 	* @param start the lower bound of the range of organizations to return
 	* @param end the upper bound of the range of organizations to return (not
 	inclusive)
@@ -806,7 +806,7 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 	<code>null</code>)
 	* @return the matching organizations ordered by name
 	* @throws SystemException if a system exception occurred
-	* @see com.liferay.portlet.enterpriseadmin.util.OrganizationIndexer
+	* @see com.liferay.portlet.usersadmin.util.OrganizationIndexer
 	*/
 	public com.liferay.portal.kernel.search.Hits search(long companyId,
 		long parentOrganizationId, java.lang.String keywords,
@@ -1065,7 +1065,7 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 	* @param country the country keywords (optionally <code>null</code>)
 	* @param params the finder parameters (optionally <code>null</code>). For
 	more information see {@link
-	com.liferay.portlet.enterpriseadmin.util.OrganizationIndexer}.
+	com.liferay.portlet.usersadmin.util.OrganizationIndexer}.
 	* @param andSearch whether every field must match its keywords or just one
 	field
 	* @param start the lower bound of the range of organizations to return
@@ -1075,7 +1075,7 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 	<code>null</code>)
 	* @return the matching organizations ordered by <code>sort</code>
 	* @throws SystemException if a system exception occurred
-	* @see com.liferay.portlet.enterpriseadmin.util.OrganizationIndexer
+	* @see com.liferay.portlet.usersadmin.util.OrganizationIndexer
 	*/
 	public com.liferay.portal.kernel.search.Hits search(long companyId,
 		long parentOrganizationId, java.lang.String name,

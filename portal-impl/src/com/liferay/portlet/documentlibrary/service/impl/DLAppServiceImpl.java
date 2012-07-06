@@ -79,7 +79,8 @@ import java.util.concurrent.Callable;
  * primary key of the specific repository. If the repository is a default
  * Liferay repository, the <code>repositoryId</code> is the <code>groupId</code>
  * or <code>scopeGroupId</code>. Otherwise, the <code>repositoryId</code> will
- * correspond to values obtained from {@link RepositoryServiceUtil}.
+ * correspond to values obtained from {@link
+ * com.liferay.portal.service.RepositoryServiceUtil}.
  * </p>
  *
  * @author Alexander Chow
@@ -1941,7 +1942,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 * @return the temporary file entry names
 	 * @throws PortalException if the folder was invalid
 	 * @throws SystemException if a system exception occurred
-	 * @see    #addTempFileEntry(long, long, String, String, File)
+	 * @see    com.liferay.portlet.documentlibrary.service.impl.DLAppServiceImpl#addTempFileEntry(
+	 *         long, long, String, String, File)
 	 * @see    com.liferay.portal.kernel.util.TempFileUtil
 	 */
 	public String[] getTempFileEntryNames(

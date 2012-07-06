@@ -281,7 +281,7 @@ public class LayoutServiceSoap {
 	*
 	* @param groupId the primary key of the group
 	* @param scopeGroupId the primary key of the scope group. See {@link
-	ServiceContext#getScopeGroupId()}.
+	com.liferay.portal.service.ServiceContext#getScopeGroupId()}.
 	* @param privateLayout whether the layout is private to the group
 	* @param portletId the primary key of the portlet
 	* @return Returns the primary key of the default layout group; {@link

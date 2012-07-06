@@ -205,12 +205,20 @@ public PortletURL getAddPortletURL(LiferayPortletRequest liferayPortletRequest, 
 public Map<String, PortletURL> getAddPortletURLs(LiferayPortletRequest liferayPortletRequest, LiferayPortletResponse liferayPortletResponse, long[] classNameIds, long[] classTypeIds, long[] allAssetCategoryIds, String[] allAssetTagNames) throws Exception {
 	ThemeDisplay themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
+	long companyId = themeDisplay.getCompanyId();
+
 	Map<String, PortletURL> addPortletURLs = new TreeMap<String, PortletURL>(new ModelResourceComparator(themeDisplay.getLocale()));
 
 	for (long classNameId : classNameIds) {
 		String className = PortalUtil.getClassName(classNameId);
 
 		AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(companyId, assetRendererFactory.getPortletId());
+
+		if (!portlet.isActive()) {
+			continue;
+		}
 
 		Map<Long, String> classTypes = assetRendererFactory.getClassTypes(new long[] {themeDisplay.getCompanyGroupId(), themeDisplay.getScopeGroupId()}, themeDisplay.getLocale());
 

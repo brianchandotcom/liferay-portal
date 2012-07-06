@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/blogs/init.jsp" %>
 
 <%
-String tabs2 = ParamUtil.getString(request, "tabs2", "email-from");
+String tabs2 = ParamUtil.getString(request, "tabs2", "display-settings");
 
 String redirect = ParamUtil.getString(request, "redirect");
 
@@ -63,7 +63,7 @@ String[] socialBookmarksTypesArray = StringUtil.split(preferences.getValue("soci
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
 	<liferay-ui:tabs
-		names="email-from,entry-added-email,entry-updated-email,display-settings,rss"
+		names="display-settings,email-from,entry-added-email,entry-updated-email,rss"
 		param="tabs2"
 		url="<%= portletURL %>"
 	/>

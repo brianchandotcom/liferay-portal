@@ -43,7 +43,8 @@ page import="com.liferay.portlet.documentlibrary.util.DLUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.ImageProcessorUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.PDFProcessorUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.VideoProcessorUtil" %><%@
-page import="com.liferay.portlet.imagegallerydisplay.util.IGUtil" %>
+page import="com.liferay.portlet.imagegallerydisplay.util.IGUtil" %><%@
+page import="com.liferay.portlet.trash.util.TrashUtil" %>
 
 <%
 PortletPreferences preferences = renderRequest.getPreferences();

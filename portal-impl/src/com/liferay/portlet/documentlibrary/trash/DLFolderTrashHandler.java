@@ -89,6 +89,19 @@ public class DLFolderTrashHandler extends BaseTrashHandler {
 		}
 	}
 
+	public void deleteTrashEntries(long[] classPKs, boolean checkPermission)
+		throws PortalException, SystemException {
+
+		for (long classPK : classPKs) {
+			if (checkPermission) {
+				DLAppServiceUtil.deleteFolder(classPK);
+			}
+			else {
+				DLAppLocalServiceUtil.deleteFolder(classPK);
+			}
+		}
+	}
+
 	/**
 	 * Returns the folder entity's class name
 	 *

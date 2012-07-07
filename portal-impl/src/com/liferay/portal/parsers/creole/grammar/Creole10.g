@@ -463,7 +463,12 @@ table_normalcell returns [TableDataNode cell = null]
 	:	table_cell_markup  tc = table_cellcontent { $cell = new TableDataNode($tc.items); }
 	;
 table_cellcontent returns [CollectionNode items = new CollectionNode()]
-	:	onestar  ( tcp = table_cellcontentpart  {$items.add($tcp.node); } onestar )*
+	:	onestar  ( tcp = table_cellcontentpart  {
+			if($tcp.node != null) {
+				$items.add($tcp.node);
+			}
+		}
+		onestar )*
 	;
 table_cellcontentpart returns [ASTNode node = null]
 	:	tf = table_formattedelement {$node=$tf.content;}

@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.Validator_IW;
 import com.liferay.portal.kernel.webdav.WebDAVUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Image;
@@ -78,6 +79,7 @@ import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
+import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
@@ -97,6 +99,7 @@ import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
+import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.awt.image.RenderedImage;
 
@@ -817,6 +820,28 @@ public class WebServerServlet extends HttpServlet {
 			fileEntry.getFileEntryId(), version);
 
 		FileVersion fileVersion = fileEntry.getFileVersion(version);
+
+		if (fileVersion.getModel() instanceof DLFileVersion) {
+			LiferayFileVersion liferayFileVersion =
+				(LiferayFileVersion)fileVersion;
+
+			if (liferayFileVersion.isInTrash() ||
+				liferayFileVersion.isInTrashFolder()) {
+
+				int status = ParamUtil.getInteger(
+					request, "status", WorkflowConstants.STATUS_APPROVED);
+
+				if (status != WorkflowConstants.STATUS_IN_TRASH) {
+					throw new NoSuchFileEntryException();
+				}
+
+				PermissionChecker permissionChecker =
+					PermissionThreadLocal.getPermissionChecker();
+
+				TrashUtil.checkPermission(
+					permissionChecker, fileEntry.getGroupId());
+			}
+		}
 
 		String fileName = fileVersion.getTitle();
 

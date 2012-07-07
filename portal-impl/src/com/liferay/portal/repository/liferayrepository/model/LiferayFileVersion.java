@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
+import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLAppUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -179,6 +180,10 @@ public class LiferayFileVersion extends LiferayModel implements FileVersion {
 		return DLAppUtil.stripTrashNamespace(_dlFileVersion.getTitle());
 	}
 
+	public DLFolder getTrashFolder() {
+		return _dlFileVersion.getTrashFolder();
+	}
+
 	public long getUserId() {
 		return _dlFileVersion.getUserId();
 	}
@@ -226,6 +231,10 @@ public class LiferayFileVersion extends LiferayModel implements FileVersion {
 
 	public boolean isInTrash() {
 		return _dlFileVersion.isInTrash();
+	}
+
+	public boolean isInTrashFolder() {
+		return _dlFileVersion.isInTrashFolder();
 	}
 
 	public boolean isPending() {

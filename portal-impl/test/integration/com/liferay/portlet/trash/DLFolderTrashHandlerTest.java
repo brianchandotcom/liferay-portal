@@ -16,6 +16,7 @@ package com.liferay.portlet.trash;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.ExecutionTestListeners;
@@ -35,6 +36,25 @@ import org.junit.runner.RunWith;
 @ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class DLFolderTrashHandlerTest extends BaseDLTrashHandlerTestCase {
+
+	@Test
+	public void testFileIsInTrashFolder() throws Exception {
+		Folder folder = addFolder(false, "Test Folder");
+
+		Folder subfolder = addFolder(folder.getFolderId(), "Test Subfolder");
+
+		FileEntry fileEntry = addFileEntry(
+			subfolder.getFolderId(), "Test File.txt");
+
+		LiferayFileVersion liferayFileVersion =
+			(LiferayFileVersion)fileEntry.getFileVersion();
+
+		Assert.assertFalse(liferayFileVersion.isInTrashFolder());
+
+		DLAppServiceUtil.moveFolderToTrash(folder.getFolderId());
+
+		Assert.assertTrue(liferayFileVersion.isInTrashFolder());
+	}
 
 	@Test
 	public void testTrashAndDelete() throws Exception {

@@ -17,6 +17,7 @@ package com.liferay.portal.webserver;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.User;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.service.BaseDLAppTestCase;
@@ -36,7 +37,7 @@ public abstract class BaseWebServerTestCase extends BaseDLAppTestCase {
 
 	public MockHttpServletResponse service(
 			String method, String path, Map<String, String> headers,
-			byte[] data)
+			Map<String, String> params, User user, byte[] data)
 		throws Exception {
 
 		MockHttpServletResponse response = new MockHttpServletResponse();
@@ -47,16 +48,25 @@ public abstract class BaseWebServerTestCase extends BaseDLAppTestCase {
 			headers = new HashMap<String, String>();
 		}
 
+		if (params == null) {
+			params = new HashMap<String, String>();
+		}
+
+		if (user == null) {
+			user = TestPropsValues.getUser();
+		}
+
 		String requestURI =
 			_CONTEXT_PATH + _SERVLET_PATH + _PATH_INFO_PREFACE + path;
 
 		MockHttpServletRequest request = new MockHttpServletRequest(
 			method, requestURI);
 
-		request.setAttribute(WebKeys.USER, TestPropsValues.getUser());
+		request.setAttribute(WebKeys.USER, user);
 		request.setContextPath(_CONTEXT_PATH);
 		request.setServletPath(_SERVLET_PATH);
 		request.setPathInfo(_PATH_INFO_PREFACE + path);
+		request.setParameters(params);
 
 		if (data != null) {
 			request.setContent(data);

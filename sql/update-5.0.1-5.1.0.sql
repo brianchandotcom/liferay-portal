@@ -17,6 +17,7 @@ update Country set a2 = 'NI', a3 = 'NIC' where countryId = 159;
 update Country set a2 = 'RS', a3 = 'SRB' where countryId = 189;
 
 drop table ExpandoRow;
+
 create table ExpandoRow (
 	rowId_ LONG not null primary key,
 	tableId LONG,
@@ -24,6 +25,7 @@ create table ExpandoRow (
 );
 
 drop table ExpandoValue;
+
 create table ExpandoValue (
 	valueId LONG not null primary key,
 	tableId LONG,
@@ -35,6 +37,7 @@ create table ExpandoValue (
 );
 
 drop table SocialActivity;
+
 create table SocialActivity (
 	activityId LONG not null primary key,
 	groupId LONG,

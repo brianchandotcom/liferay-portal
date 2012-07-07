@@ -16,6 +16,7 @@ alter table BookmarksEntry add description VARCHAR(75) null;
 COMMIT_TRANSACTION;
 
 update BookmarksEntry set description = comments;
+
 alter table BookmarksEntry drop column comments;
 
 alter table BookmarksFolder add resourceBlockId LONG;
@@ -678,7 +679,7 @@ create table QUARTZ_SIMPLE_TRIGGERS (
 	primary key (SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP)
 );
 
-CREATE TABLE QUARTZ_SIMPROP_TRIGGERS (
+create table QUARTZ_SIMPROP_TRIGGERS (
 	SCHED_NAME VARCHAR(120) not null,
 	TRIGGER_NAME VARCHAR(200) not null,
 	TRIGGER_GROUP VARCHAR(200) not null,

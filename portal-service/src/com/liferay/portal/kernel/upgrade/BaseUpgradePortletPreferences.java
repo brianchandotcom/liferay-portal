@@ -271,7 +271,7 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 						companyId, ownerId, ownerType, plid, portletId,
 						preferences);
 
-					if (preferences != newPreferences) {
+					if (!preferences.equals(newPreferences)) {
 						updatePortletPreferences(
 							portletPreferencesId, newPreferences);
 					}

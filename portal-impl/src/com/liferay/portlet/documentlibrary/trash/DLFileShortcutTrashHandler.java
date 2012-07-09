@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileShortcutLocalServiceUtil;
 
@@ -47,6 +48,19 @@ public class DLFileShortcutTrashHandler extends BaseTrashHandler {
 
 		for (long classPK : classPKs) {
 			DLAppServiceUtil.deleteFileShortcut(classPK);
+		}
+	}
+
+	public void deleteTrashEntries(long[] classPKs, boolean checkPermission)
+		throws PortalException, SystemException {
+
+		for (long classPK : classPKs) {
+			if (checkPermission) {
+				DLAppServiceUtil.deleteFileShortcut(classPK);
+			}
+			else {
+				DLAppLocalServiceUtil.deleteFileShortcut(classPK);
+			}
 		}
 	}
 

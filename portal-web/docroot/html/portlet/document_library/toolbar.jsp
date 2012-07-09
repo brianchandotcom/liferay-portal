@@ -81,12 +81,12 @@ Folder folder = (Folder)request.getAttribute("view.jsp-folder");
 		<c:when test="<%= (folder == null) || (folder.getModel() instanceof DLFolder) %>">
 
 			<%
-			String taglibURL = "Liferay.fire('" + renderResponse.getNamespace() + "editFileEntry', {action: '" + Constants.MOVE_TO_TRASH + "'});";
+			String taglibURL = "Liferay.fire('" + renderResponse.getNamespace() + "editFileEntry', {action: '" + (TrashUtil.isTrashEnabled(themeDisplay.getScopeGroupId()) ? Constants.MOVE_TO_TRASH : Constants.DELETE) + "'});";
 			%>
 
 			<liferay-ui:icon-delete
-				confirmation="are-you-sure-you-want-to-move-the-selected-entries-to-the-recycle-bin"
-				trash="<%= true %>"
+				confirmation='<%= TrashUtil.isTrashEnabled(themeDisplay.getScopeGroupId()) ? "are-you-sure-you-want-to-move-the-selected-entries-to-the-recycle-bin" : "are-you-sure-you-want-to-delete-the-selected-entries" %>'
+				trash="<%= TrashUtil.isTrashEnabled(themeDisplay.getScopeGroupId()) %>"
 				url="<%= taglibURL %>"
 			/>
 		</c:when>

@@ -53,6 +53,12 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		deleteTrashEntries(new long[] {classPK});
 	}
 
+	public void deleteTrashEntry(long classPK, boolean checkPermission)
+		throws PortalException, SystemException {
+
+		deleteTrashEntries(new long[] {classPK}, checkPermission);
+	}
+
 	public TrashRenderer getTrashRenderer(long classPK)
 		throws PortalException, SystemException {
 

@@ -14,19 +14,31 @@
 
 package com.liferay.portlet.trash.service.impl;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.trash.TrashHandler;
+import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.model.Company;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
+import com.liferay.portal.service.CompanyLocalServiceUtil;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PrefsPropsUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashVersion;
 import com.liferay.portlet.trash.service.base.TrashEntryLocalServiceBaseImpl;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -102,6 +114,37 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 		}
 
 		return trashEntry;
+	}
+
+	public void cleanUpEntries() throws PortalException, SystemException {
+		List<Company> companies = CompanyLocalServiceUtil.getCompanies();
+
+		for (Company company : companies) {
+			List<Group> groups = GroupLocalServiceUtil.search(
+				company.getCompanyId(), null, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+			for (Group group : groups) {
+				cleanUpEntries(group.getCompanyId(), group.getGroupId());
+			}
+		}
+	}
+
+	public void cleanUpEntries(long companyId, long groupId)
+		throws PortalException, SystemException {
+
+		Date date = getCleanUpLimitDate(companyId, groupId);
+
+		List<TrashEntry> trashEntries = trashEntryPersistence.findByG_C_CD(
+			groupId, companyId, date);
+
+		for (TrashEntry trashEntry : trashEntries) {
+			TrashHandler trashHandler =
+				TrashHandlerRegistryUtil.getTrashHandler(
+					trashEntry.getClassName());
+
+			trashHandler.deleteTrashEntry(trashEntry.getClassPK(), false);
+		}
 	}
 
 	/**
@@ -296,6 +339,30 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 		long classNameId = PortalUtil.getClassNameId(className);
 
 		return trashVersionPersistence.findByC_C(classNameId, classPK);
+	}
+
+	protected Date getCleanUpLimitDate(long companyId, long groupId)
+		throws PortalException, SystemException {
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		int trashEntriesMaxAge = PrefsPropsUtil.getInteger(
+			companyId, PropsKeys.TRASH_ENTRIES_MAX_AGE,
+			PropsValues.TRASH_ENTRIES_MAX_AGE);
+
+		UnicodeProperties groupTypeSettings = group.getTypeSettingsProperties();
+
+		trashEntriesMaxAge = GetterUtil.getInteger(
+			groupTypeSettings.getProperty("trashEntriesMaxAge"),
+			trashEntriesMaxAge);
+
+		Calendar cal = Calendar.getInstance();
+
+		cal.setTime(new Date());
+
+		cal.add(Calendar.DATE, -trashEntriesMaxAge);
+
+		return cal.getTime();
 	}
 
 }

@@ -52,8 +52,5 @@ TrashEntry entry = (TrashEntry)row.getObject();
 		<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
 	</portlet:actionURL>
 
-	<liferay-ui:icon
-		image="delete"
-		url="<%= deleteEntryURL %>"
-	/>
+	<liferay-ui:icon-delete url="<%= deleteEntryURL %>" />
 </liferay-ui:icon-menu>

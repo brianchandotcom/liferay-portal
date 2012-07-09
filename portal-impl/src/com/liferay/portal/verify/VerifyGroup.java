@@ -173,12 +173,11 @@ public class VerifyGroup extends VerifyProcess {
 		try {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
-			StringBundler sb = new StringBundler(6);
+			StringBundler sb = new StringBundler(5);
 
-			sb.append("select classPK, groupId, name from Group_");
-			sb.append("where name like '%");
+			sb.append("select groupId, name from Group_ where name like '%");
 			sb.append(GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX);
-			sb.append("%' and name not like '% ");
+			sb.append("%' and name not like '%");
 			sb.append(GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX);
 			sb.append("'");
 
@@ -187,22 +186,19 @@ public class VerifyGroup extends VerifyProcess {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
-				long classPK = rs.getLong("classPK");
 				long groupId = rs.getLong("groupId");
 				String name = rs.getString("name");
 
-				if (name.startsWith(String.valueOf(classPK))) {
-					int pos = name.indexOf(
-						GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX);
+				int pos = name.indexOf(
+					GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX);
 
-					pos = name.indexOf(" ", pos + 1);
+				pos = name.indexOf(" ", pos + 1);
 
-					String newName =
-						name.substring(pos + 1) +
-							GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX;
+				String newName =
+					name.substring(pos + 1) +
+						GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX;
 
-					updateName(groupId, newName);
-				}
+				updateName(groupId, newName);
 			}
 		}
 		finally {

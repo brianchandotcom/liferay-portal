@@ -550,14 +550,14 @@ create index IX_C28C72EC on MembershipRequest (groupId, statusId);
 create index IX_35AA8FA6 on MembershipRequest (groupId, userId, statusId);
 create index IX_66D70879 on MembershipRequest (userId);
 
+create index IX_834BCEB6 on Organization_ (companyId);
+create unique index IX_E301BDF5 on Organization_ (companyId, name);
+create index IX_418E4522 on Organization_ (companyId, parentOrganizationId);
+
 create index IX_4A527DD3 on OrgGroupRole (groupId);
 create index IX_AB044D1C on OrgGroupRole (roleId);
 
 create index IX_6AF0D434 on OrgLabor (organizationId);
-
-create index IX_834BCEB6 on Organization_ (companyId);
-create unique index IX_E301BDF5 on Organization_ (companyId, name);
-create index IX_418E4522 on Organization_ (companyId, parentOrganizationId);
 
 create index IX_2C1142E on PasswordPolicy (companyId, defaultPolicy);
 create unique index IX_3FBFA9F4 on PasswordPolicy (companyId, name);
@@ -796,6 +796,20 @@ create index IX_526A032A on TrashEntry (groupId);
 create index IX_630A643B on TrashVersion (classNameId, classPK);
 create index IX_55D44577 on TrashVersion (entryId);
 
+create index IX_3A1E834E on User_ (companyId);
+create index IX_6EF03E4E on User_ (companyId, defaultUser);
+create unique index IX_615E9F7A on User_ (companyId, emailAddress);
+create index IX_1D731F03 on User_ (companyId, facebookId);
+create index IX_89509087 on User_ (companyId, openId);
+create unique index IX_C5806019 on User_ (companyId, screenName);
+create index IX_F6039434 on User_ (companyId, status);
+create unique index IX_9782AD88 on User_ (companyId, userId);
+create unique index IX_5ADBE171 on User_ (contactId);
+create index IX_762F63C6 on User_ (emailAddress);
+create index IX_A18034A4 on User_ (portraitId);
+create index IX_E0422BDA on User_ (uuid_);
+create index IX_405CC0E on User_ (uuid_, companyId);
+
 create index IX_524FEFCE on UserGroup (companyId);
 create unique index IX_23EAD0D on UserGroup (companyId, name);
 create index IX_69771487 on UserGroup (companyId, parentUserGroupId);
@@ -824,26 +838,6 @@ create index IX_3DBB361A on UserNotificationEvent (userId, archived);
 create index IX_ECD8CFEA on UserNotificationEvent (uuid_);
 create index IX_A6BAFDFE on UserNotificationEvent (uuid_, companyId);
 
-create index IX_29BA1CF5 on UserTracker (companyId);
-create index IX_46B0AE8E on UserTracker (sessionId);
-create index IX_E4EFBA8D on UserTracker (userId);
-
-create index IX_14D8BCC0 on UserTrackerPath (userTrackerId);
-
-create index IX_3A1E834E on User_ (companyId);
-create index IX_6EF03E4E on User_ (companyId, defaultUser);
-create unique index IX_615E9F7A on User_ (companyId, emailAddress);
-create index IX_1D731F03 on User_ (companyId, facebookId);
-create index IX_89509087 on User_ (companyId, openId);
-create unique index IX_C5806019 on User_ (companyId, screenName);
-create index IX_F6039434 on User_ (companyId, status);
-create unique index IX_9782AD88 on User_ (companyId, userId);
-create unique index IX_5ADBE171 on User_ (contactId);
-create index IX_762F63C6 on User_ (emailAddress);
-create index IX_A18034A4 on User_ (portraitId);
-create index IX_E0422BDA on User_ (uuid_);
-create index IX_405CC0E on User_ (uuid_, companyId);
-
 create index IX_C4F9E699 on Users_Groups (groupId);
 create index IX_F10B6C6B on Users_Groups (userId);
 
@@ -858,6 +852,12 @@ create index IX_A098EFBF on Users_Teams (userId);
 
 create index IX_66FF2503 on Users_UserGroups (userGroupId);
 create index IX_BE8102D6 on Users_UserGroups (userId);
+
+create index IX_29BA1CF5 on UserTracker (companyId);
+create index IX_46B0AE8E on UserTracker (sessionId);
+create index IX_E4EFBA8D on UserTracker (userId);
+
+create index IX_14D8BCC0 on UserTrackerPath (userTrackerId);
 
 create unique index IX_A083D394 on VirtualHost (companyId, layoutSetId);
 create unique index IX_431A3960 on VirtualHost (hostname);

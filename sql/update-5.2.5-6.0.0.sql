@@ -1,23 +1,3 @@
-create table Lock_ (
-	uuid_ VARCHAR(75) null,
-	lockId LONG not null primary key,
-	companyId LONG,
-	userId LONG,
-	userName VARCHAR(75) null,
-	createDate DATE null,
-	className VARCHAR(75) null,
-	key_ VARCHAR(200) null,
-	owner VARCHAR(75) null,
-	inheritable BOOLEAN,
-	expirationDate DATE null
-);
-
-alter table Release_ add servletContextName VARCHAR(75);
-
-COMMIT_TRANSACTION;
-
-update Release_ set servletContextName = 'portal';
-
 create table AssetCategory (
 	uuid_ VARCHAR(75) null,
 	categoryId LONG not null primary key,
@@ -211,6 +191,20 @@ create table LayoutSetPrototype (
 	active_ BOOLEAN
 );
 
+create table Lock_ (
+	uuid_ VARCHAR(75) null,
+	lockId LONG not null primary key,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	className VARCHAR(75) null,
+	key_ VARCHAR(200) null,
+	owner VARCHAR(75) null,
+	inheritable BOOLEAN,
+	expirationDate DATE null
+);
+
 alter table MBMessage add allowPingbacks BOOLEAN;
 alter table MBMessage add status INTEGER;
 alter table MBMessage add statusByUserId LONG;
@@ -233,6 +227,12 @@ alter table MBThread add statusDate DATE;
 COMMIT_TRANSACTION;
 
 update MBThread set status = 0;
+
+alter table Release_ add servletContextName VARCHAR(75);
+
+COMMIT_TRANSACTION;
+
+update Release_ set servletContextName = 'portal';
 
 alter table ShoppingItem add groupId LONG;
 

@@ -1539,6 +1539,13 @@ create table RepositoryEntry (
 	mappedId VARCHAR(75) null
 );
 
+create table ResourceAction (
+	resourceActionId LONG not null primary key,
+	name VARCHAR(255) null,
+	actionId VARCHAR(75) null,
+	bitwiseValue LONG
+);
+
 create table ResourceBlock (
 	resourceBlockId LONG not null primary key,
 	companyId LONG,
@@ -1555,22 +1562,6 @@ create table ResourceBlockPermission (
 	actionIds LONG
 );
 
-create table ResourceTypePermission (
-	resourceTypePermissionId LONG not null primary key,
-	companyId LONG,
-	groupId LONG,
-	name VARCHAR(75) null,
-	roleId LONG,
-	actionIds LONG
-);
-
-create table ResourceAction (
-	resourceActionId LONG not null primary key,
-	name VARCHAR(255) null,
-	actionId VARCHAR(75) null,
-	bitwiseValue LONG
-);
-
 create table ResourcePermission (
 	resourcePermissionId LONG not null primary key,
 	companyId LONG,
@@ -1579,6 +1570,15 @@ create table ResourcePermission (
 	primKey VARCHAR(255) null,
 	roleId LONG,
 	ownerId LONG,
+	actionIds LONG
+);
+
+create table ResourceTypePermission (
+	resourceTypePermissionId LONG not null primary key,
+	companyId LONG,
+	groupId LONG,
+	name VARCHAR(75) null,
+	roleId LONG,
 	actionIds LONG
 );
 

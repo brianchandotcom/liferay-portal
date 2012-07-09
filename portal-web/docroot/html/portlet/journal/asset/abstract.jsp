@@ -59,7 +59,7 @@ else {
 String summary = articleDisplay.getDescription();
 
 if (Validator.isNull(summary)) {
-	summary = HtmlUtil.stripHtml(articleDisplay.getContent(renderRequest, renderResponse, request, response));
+	summary = HtmlUtil.stripHtml(articleDisplay.getContent());
 }
 %>
 

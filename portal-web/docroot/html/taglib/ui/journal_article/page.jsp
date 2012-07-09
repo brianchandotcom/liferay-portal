@@ -21,6 +21,8 @@
 <%@ page import="com.liferay.portlet.journal.service.JournalArticleResourceLocalServiceUtil" %>
 <%@ page import="com.liferay.portlet.journalcontent.util.JournalContentUtil" %>
 
+<portlet:defineObjects />
+
 <%
 long articleResourcePrimKey = GetterUtil.getLong((String)request.getAttribute("liferay-ui:journal-article:articleResourcePrimKey"));
 long groupId = GetterUtil.getLong((String)request.getAttribute("liferay-ui:journal-article:groupId"));
@@ -68,5 +70,5 @@ JournalArticleDisplay articleDisplay = JournalContentUtil.getDisplay(groupId, ar
 		</c:if>
 	</c:if>
 
-	<%= articleDisplay.getContent(renderRequest, renderResponse, request, response)) %>
+	<%= JournalContentUtil.getContent(articleDisplay, renderResponse, request, response) %>
 </c:if>

@@ -16,12 +16,6 @@ package com.liferay.portlet.journal.model;
 
 import java.io.Serializable;
 
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 /**
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
@@ -36,11 +30,6 @@ public interface JournalArticleDisplay extends Serializable {
 	public long getCompanyId();
 
 	public String getContent();
-
-	public String getContent(
-			RenderRequest renderRequest, RenderResponse renderResponse,
-			HttpServletRequest request, HttpServletResponse response)
-		throws Exception;
 
 	public int getCurrentPage();
 

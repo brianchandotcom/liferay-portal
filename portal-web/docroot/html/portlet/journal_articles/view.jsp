@@ -245,7 +245,7 @@ double version = ParamUtil.getDouble(request, "version");
 					%>
 
 					<div class="journal-content-article">
-						<%= articleDisplay.getContent(renderRequest, renderResponse, request, responses) %>
+						<%= JournalContentUtil.getContent(articleDisplay, renderResponse, request, response) %>
 					</div>
 
 					<c:if test="<%= articleDisplay.isPaginate() %>">

@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermissio
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.journal.model.JournalArticleDisplay;
 
-import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,6 +36,14 @@ public class JournalContentUtil {
 		long groupId, String articleId, String templateId) {
 
 		getJournalContent().clearCache(groupId, articleId, templateId);
+	}
+
+	public static String getContent(
+		JournalArticleDisplay articleDisplay, RenderResponse renderResponse,
+		HttpServletRequest request, HttpServletResponse response) {
+
+		return getJournalContent().getContent(
+			articleDisplay, renderResponse, request, response);
 	}
 
 	public static String getContent(
@@ -72,20 +79,6 @@ public class JournalContentUtil {
 	}
 
 	public static String getContent(
-			long groupId, String articleId, String languageId,
-			RenderRequest renderRequest, RenderResponse renderResponse,
-			HttpServletRequest request, HttpServletResponse response,
-			String templateId, ThemeDisplay themeDisplay, String viewMode,
-			String xmlRequest)
-		throws Exception {
-
-			return getJournalContent().getContent(
-				groupId, articleId, languageId, renderRequest, renderResponse,
-				request, response, templateId, themeDisplay, viewMode,
-				xmlRequest);
-		}
-
-	public static String getContent(
 		long groupId, String articleId, String viewMode, String languageId,
 		ThemeDisplay themeDisplay) {
 
@@ -93,10 +86,21 @@ public class JournalContentUtil {
 			groupId, articleId, viewMode, languageId, themeDisplay);
 	}
 
+	public static String getContent(
+		String articleId, long groupId, String languageId,
+		RenderResponse renderResponse, HttpServletRequest request,
+		HttpServletResponse response, String templateId,
+		ThemeDisplay themeDisplay, String viewMode, String xmlRequest) {
+
+		return getJournalContent().getContent(
+			articleId, groupId, languageId, renderResponse, request, response,
+			templateId, themeDisplay, viewMode, xmlRequest);
+	}
+
 	public static JournalArticleDisplay getDisplay(
-			long groupId, String articleId, double version, String templateId,
-			String viewMode, String languageId, ThemeDisplay themeDisplay,
-			int page, String xmlRequest) {
+		long groupId, String articleId, double version, String templateId,
+		String viewMode, String languageId, ThemeDisplay themeDisplay, int page,
+		String xmlRequest) {
 
 		return getJournalContent().getDisplay(
 			groupId, articleId, version, templateId, viewMode, languageId,

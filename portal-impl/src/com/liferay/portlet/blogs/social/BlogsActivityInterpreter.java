@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -98,9 +99,7 @@ public class BlogsActivityInterpreter extends BaseSocialActivityInterpreter {
 			}
 		}
 		else if (activityType == BlogsActivityKeys.ADD_ENTRY) {
-			Date now = new Date();
-
-			if (now.before(entry.getDisplayDate())) {
+			if (entry.getStatus() == WorkflowConstants.STATUS_SCHEDULED) {
 				entryTitle = HtmlUtil.escape(entry.getTitle());
 
 				Format dateFormatDate =

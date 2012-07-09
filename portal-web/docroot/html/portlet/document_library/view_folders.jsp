@@ -202,7 +202,7 @@ request.setAttribute("view_folders.jsp-total", String.valueOf(total));
 							</c:if>
 
 							<%
-							List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeServiceUtil.getFileEntryTypes(DLUtil.getGroupIds(themeDisplay));
+							List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeServiceUtil.getFileEntryTypes(PortalUtil.getGroupIds(themeDisplay));
 							%>
 
 							<c:if test="<%= !fileEntryTypes.isEmpty() %>">

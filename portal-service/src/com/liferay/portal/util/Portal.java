@@ -617,6 +617,12 @@ public interface Portal {
 			Group group, boolean privateLayoutSet, ThemeDisplay themeDisplay)
 		throws PortalException, SystemException;
 
+	public long[] getGroupIds(long groupId)
+		throws PortalException, SystemException;
+
+	public long[] getGroupIds(ThemeDisplay themeDisplay)
+		throws PortalException, SystemException;
+
 	public String[] getGroupPermissions(HttpServletRequest request);
 
 	public String[] getGroupPermissions(PortletRequest portletRequest);

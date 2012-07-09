@@ -2047,6 +2047,30 @@ public class PortalImpl implements Portal {
 			group, privateLayoutSet, themeDisplay, false);
 	}
 
+	public long[] getGroupIds(long groupId)
+		throws PortalException, SystemException {
+
+		Group scopeGroup = GroupLocalServiceUtil.getGroup(groupId);
+
+		Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
+			scopeGroup.getCompanyId());
+
+		if (scopeGroup.isLayout()) {
+			return new long[] {
+				scopeGroup.getParentGroupId(), companyGroup.getGroupId()
+			};
+		}
+		else {
+			return new long[] {groupId, companyGroup.getGroupId()};
+		}
+	}
+
+	public long[] getGroupIds(ThemeDisplay themeDisplay)
+		throws PortalException, SystemException {
+
+		return getGroupIds(themeDisplay.getScopeGroupId());
+	}
+
 	public String[] getGroupPermissions(HttpServletRequest request) {
 		return request.getParameterValues("groupPermissions");
 	}

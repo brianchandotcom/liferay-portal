@@ -177,7 +177,7 @@ public class VerifyGroup extends VerifyProcess {
 
 			sb.append("select groupId, name from Group_ where name like '%");
 			sb.append(GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX);
-			sb.append("%' and name not like '% ");
+			sb.append("%' and name not like '%");
 			sb.append(GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX);
 			sb.append("'");
 

@@ -681,7 +681,7 @@ public class LiferayRepository
 		throws PortalException, SystemException {
 
 		long fileEntryTypeId = ParamUtil.getLong(
-			serviceContext, "fileEntryTypeId", -1L);
+			serviceContext, "fileEntryTypeId", 0L);
 		Map<String, Fields> fieldsMap = getFieldsMap(
 			serviceContext, fileEntryTypeId);
 		long size = 0;

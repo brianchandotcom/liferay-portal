@@ -120,13 +120,12 @@ public interface TrashEntryService extends BaseService {
 	* result set.
 	* </p>
 	*
+	* @param companyId the primary key of the company
 	* @param groupId the primary key of the group
+	* @param userId the primary key of the user
 	* @param keywords the keywords (space separated), which may occur in the
 	user's first name, middle name, last name, screen name, or email
 	address
-	* @param params the indexer parameters (optionally <code>null</code>). For
-	more information see {@link
-	com.liferay.portlet.usersadmin.util.UserIndexer}.
 	* @param start the lower bound of the range of users
 	* @param end the upper bound of the range of users (not inclusive)
 	* @param sort the field and direction to sort by (optionally

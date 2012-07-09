@@ -1,29 +1,31 @@
-.lfr-tree .aui-tree-label {
-	display: table-cell;
-	float: none;
-	padding-left: 2px;
-}
+.lfr-tree {
+	.aui-tree-label {
+		display: table-cell;
+		float: none;
+		padding-left: 2px;
+	}
 
-.lfr-tree li {
-	margin-bottom: 2px;
-	padding-left: 0;
-}
+	li {
+		margin-bottom: 2px;
+		padding-left: 0;
 
-.lfr-tree li ul li, .lfr-tree li.tree-item {
-	padding-left: 0;
-}
+		ul li, &.tree-item {
+			padding-left: 0;
+		}
 
-.lfr-tree li.tree-item {
-	padding-left: 5px;
-}
+		&.tree-item {
+			padding-left: 5px;
 
-.lfr-tree li.tree-item li {
-	padding-left: 20px;
-}
+			li {
+				padding-left: 20px;
+			}
 
-.lfr-tree li.tree-item ul {
-	margin-left: 0;
-	margin-top: 5px;
+			ul {
+				margin-left: 0;
+				margin-top: 5px;
+			}
+		}
+	}
 }
 
 /* Skin */

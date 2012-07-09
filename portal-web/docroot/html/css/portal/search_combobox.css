@@ -1,36 +1,34 @@
 .lfr-search-combobox {
 	float: right;
 	white-space: nowrap;
-}
 
-.lfr-search-combobox .aui-field-content, .lfr-search-combobox .aui-button {
-	border-width: 0;
-	display: inline-block;
-	float: left;
-	vertical-align: top;
-}
-
-.lfr-search-combobox .aui-button {
-	margin-left: 0.5em;
-}
-
-.lfr-search-combobox:after {
-	clear: both;
-	content: "";
-	display: block;
-	height: 0;
-}
-
-.lfr-search-combobox .lfr-search-combobox-item {
-	margin-right: 0;
-}
-
-.lfr-search-combobox .aui-button-input {
-	padding: 4px;
-}
-
-.ie6 {
-	.lfr-search-combobox {
-		position: relative;
+	.aui-field-content, .aui-button {
+		border-width: 0;
+		display: inline-block;
+		float: left;
+		vertical-align: top;
 	}
+
+	.aui-button {
+		margin-left: 0.5em;
+	}
+
+	&:after {
+		clear: both;
+		content: "";
+		display: block;
+		height: 0;
+	}
+
+	.lfr-search-combobox-item {
+		margin-right: 0;
+	}
+
+	.aui-button-input {
+		padding: 4px;
+	}
+}
+
+.ie6 .lfr-search-combobox {
+	position: relative;
 }

@@ -46,7 +46,7 @@ int trashEntriesMaxAge = PropertiesParamUtil.getInteger(groupTypeSettings, reque
 <aui:fieldset>
 	<aui:input label="enable-recycle-bin" name="enableRecycleBin" type="checkbox" value="<%= enableRecycleBin %>" />
 
-	<aui:input label="set-the-number-of-days-that-files-will-be-kept-in-the-recycle-bin" name="trashEntriesMaxAge" type="text" value="<%= trashEntriesMaxAge %>">
+	<aui:input label="number-of-days-files-will-be-kept-in-the-recycle-bin" name="trashEntriesMaxAge" type="text" value="<%= trashEntriesMaxAge %>">
 		<aui:validator name="number" />
 	</aui:input>
 </aui:fieldset>

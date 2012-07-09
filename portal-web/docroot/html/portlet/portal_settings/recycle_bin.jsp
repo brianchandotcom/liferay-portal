@@ -31,7 +31,7 @@ int trashEntriesMaxAge = PrefsPropsUtil.getInteger(company.getCompanyId(), Props
 		<aui:option label="disabled" selected="<%= enableRecycleBin.equals(TrashConstants.DISABLED) %>" value="<%= TrashConstants.DISABLED %>" />
 	</aui:select>
 
-	<aui:input label="set-the-number-of-days-that-files-will-be-kept-in-the-recycle-bin" name='<%= "settings--" + PropsKeys.TRASH_ENTRIES_MAX_AGE + "--" %>' type="text" value="<%= trashEntriesMaxAge %>">
+	<aui:input label="number-of-days-files-will-be-kept-in-the-recycle-bin" name='<%= "settings--" + PropsKeys.TRASH_ENTRIES_MAX_AGE + "--" %>' type="text" value="<%= trashEntriesMaxAge %>">
 		<aui:validator name="number" />
 	</aui:input>
 </aui:fieldset>

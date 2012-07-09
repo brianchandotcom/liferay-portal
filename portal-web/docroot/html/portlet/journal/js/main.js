@@ -1196,11 +1196,8 @@ AUI.add(
 					var newArticleIdInput = instance.getByName(form, 'newArticleId');
 					var workflowActionInput = instance.getByName(form, 'workflowAction');
 
-					var canSubmit = true;
-
-					if (classNameIdInput.val() <= 0) {
-						canSubmit = instance.validateRequiredFields();
-					}
+					var classNameId = Liferay.Util.toNumber(classNameIdInput.val());
+					var canSubmit = classNameId || instance.validateRequiredFields();
 
 					if (canSubmit) {
 						if (cmd == 'publish') {

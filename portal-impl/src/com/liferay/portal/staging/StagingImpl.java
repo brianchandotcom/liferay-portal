@@ -754,6 +754,14 @@ public class StagingImpl implements Staging {
 		}
 
 		if (!parameterMap.containsKey(
+				PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_LINK_ENABLED)) {
+
+			parameterMap.put(
+				PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_LINK_ENABLED,
+				new String[] {Boolean.FALSE.toString()});
+		}
+
+		if (!parameterMap.containsKey(
 				PortletDataHandlerKeys.LAYOUT_SET_SETTINGS)) {
 
 			parameterMap.put(

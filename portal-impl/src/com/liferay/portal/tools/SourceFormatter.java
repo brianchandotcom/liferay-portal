@@ -2244,7 +2244,7 @@ public class SourceFormatter {
 
 			String content = _fileUtil.read(file);
 
-			String newContent = _formatSQLContent(content);
+			String newContent = _formatSQLContent(fileName, content);
 
 			if ((newContent != null) && !content.equals(newContent)) {
 				_fileUtil.write(file, newContent);
@@ -2254,28 +2254,67 @@ public class SourceFormatter {
 		}
 	}
 
-	private static String _formatSQLContent(String content) throws IOException {
+	private static String _formatSQLContent(String fileName, String content)
+		throws IOException {
+
 		StringBundler sb = new StringBundler();
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new UnsyncStringReader(content));
 
+		int lineCount = 0;
+
 		String line = null;
 
 		String previousLineSqlCommand = StringPool.BLANK;
+		String previousTableName = StringPool.BLANK;
 
 		while ((line = unsyncBufferedReader.readLine()) != null) {
+			lineCount++;
+
 			if (line.trim().length() == 0) {
 				line = StringPool.BLANK;
 			}
 
 			if (Validator.isNotNull(line) && !line.startsWith(StringPool.TAB)) {
-				String sqlCommand = StringUtil.split(line, CharPool.SPACE)[0];
+				String[] words = StringUtil.split(line, CharPool.SPACE);
+
+				String sqlCommand = words[0];
 
 				if (Validator.isNotNull(previousLineSqlCommand) &&
 					!previousLineSqlCommand.equals(sqlCommand)) {
 
 					sb.append("\n");
+				}
+
+				for (int i = 0; i < words.length; i++) {
+					String tableName = StringPool.BLANK;
+					String word = words[i];
+
+					if (word.equals("table") || word.equals("update")) {
+						tableName = words[i + 1];
+					}
+					else if (word.equals("index")) {
+						tableName = words[i + 3];
+					}
+
+					if (tableName.endsWith(StringPool.SEMICOLON)) {
+						tableName = StringUtil.replaceLast(
+							tableName, StringPool.SEMICOLON, StringPool.BLANK);
+					}
+
+					if (Validator.isNotNull(tableName)) {
+						if (Validator.isNotNull(previousTableName) &&
+							(previousTableName.compareToIgnoreCase(
+								tableName) > 0)) {
+
+							_sourceFormatterHelper.printError(
+								fileName,
+								"sort: " + fileName + " " + lineCount);
+						}
+
+						previousTableName = tableName;
+					}
 				}
 
 				previousLineSqlCommand = sqlCommand;

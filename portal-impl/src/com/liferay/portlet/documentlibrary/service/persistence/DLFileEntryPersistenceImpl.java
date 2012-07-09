@@ -58,6 +58,7 @@ import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryModelImpl;
 import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructurePersistence;
 import com.liferay.portlet.expando.service.persistence.ExpandoValuePersistence;
+import com.liferay.portlet.trash.service.persistence.TrashEntryPersistence;
 
 import java.io.Serializable;
 
@@ -9660,6 +9661,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	protected DDMStructurePersistence ddmStructurePersistence;
 	@BeanReference(type = ExpandoValuePersistence.class)
 	protected ExpandoValuePersistence expandoValuePersistence;
+	@BeanReference(type = TrashEntryPersistence.class)
+	protected TrashEntryPersistence trashEntryPersistence;
 	private static final String _SQL_SELECT_DLFILEENTRY = "SELECT dlFileEntry FROM DLFileEntry dlFileEntry";
 	private static final String _SQL_SELECT_DLFILEENTRY_WHERE = "SELECT dlFileEntry FROM DLFileEntry dlFileEntry WHERE ";
 	private static final String _SQL_COUNT_DLFILEENTRY = "SELECT COUNT(dlFileEntry) FROM DLFileEntry dlFileEntry";

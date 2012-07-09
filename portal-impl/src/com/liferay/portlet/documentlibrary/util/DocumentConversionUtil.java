@@ -186,10 +186,20 @@ public class DocumentConversionUtil {
 				documentFormatRegistry.getFormatByFileExtension(
 					targetExtension);
 
-			if (!inputDocumentFormat.isImportable()) {
+			if (inputDocumentFormat == null) {
+				throw new SystemException(
+					"Conversion is not supported from ." + sourceExtension);
+			}
+			else if (!inputDocumentFormat.isImportable()) {
 				throw new SystemException(
 					"Conversion is not supported from " +
 						inputDocumentFormat.getName());
+			}
+			else if (outputDocumentFormat == null) {
+				throw new SystemException(
+					"Conversion is not supported from " +
+						inputDocumentFormat.getName() + " to ." +
+							targetExtension);
 			}
 			else if (!inputDocumentFormat.isExportableTo(
 						outputDocumentFormat)) {

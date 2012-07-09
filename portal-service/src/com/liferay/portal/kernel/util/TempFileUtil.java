@@ -209,15 +209,14 @@ public class TempFileUtil {
 		return fileNames;
 	}
 
-	protected static boolean isValidFileName(String name) {
+	protected static void validateFileName(String name) throws PortalException {
 		if ((name == null) ||
 			name.contains(StringPool.SLASH) ||
-			name.contains(StringPool.BACK_SLASH)) {
+			name.contains(StringPool.BACK_SLASH) ||
+			name.contains(File.pathSeparator)) {
 
-			return false;
+			throw new TempFileNameException();
 		}
-
-		return true;
 	}
 
 	private static String _getTempAbsolutePath(
@@ -264,9 +263,7 @@ public class TempFileUtil {
 	private static String _getTempFileName(long userId, String fileName)
 		throws PortalException {
 
-		if (!isValidFileName(fileName)) {
-			throw new TempFileNameException();
-		}
+		validateFileName(fileName);
 
 		StringBundler sb = new StringBundler(4);
 
@@ -281,9 +278,7 @@ public class TempFileUtil {
 	private static String _getTempFileName(String fileName)
 		throws PortalException {
 
-		if (!isValidFileName(fileName)) {
-			throw new TempFileNameException();
-		}
+		validateFileName(fileName);
 
 		return fileName + _SUFFIX_TEMP_FILENAME;
 	}

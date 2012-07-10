@@ -31,13 +31,6 @@ public class MainServletExecutionTestListener
 	extends EnvironmentExecutionTestListener {
 
 	@Override
-	public void runAfterClass(TestContext testContext) {
-		super.runAfterClass(testContext);
-
-		_mainServlet.destroy();
-	}
-
-	@Override
 	public void runBeforeClass(TestContext testContext) {
 		super.runBeforeClass(testContext);
 

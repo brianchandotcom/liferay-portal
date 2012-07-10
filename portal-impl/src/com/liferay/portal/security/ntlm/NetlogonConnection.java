@@ -71,7 +71,7 @@ public class NetlogonConnection {
 	public void connect(
 			String domainController, String domainControllerName,
 			NtlmServiceAccount ntlmServiceAccount, SecureRandom secureRandom)
-		throws IOException, NtlmLogonException, NoSuchAlgorithmException {
+		throws IOException, NoSuchAlgorithmException, NtlmLogonException {
 
 		NtlmPasswordAuthentication ntlmPasswordAuthentication =
 			new NtlmPasswordAuthentication(

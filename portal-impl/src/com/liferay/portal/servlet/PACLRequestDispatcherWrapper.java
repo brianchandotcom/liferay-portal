@@ -42,14 +42,14 @@ public class PACLRequestDispatcherWrapper implements RequestDispatcher {
 
 	public void forward(
 			ServletRequest servletRequest, ServletResponse servletResponse)
-		throws ServletException, IOException {
+		throws IOException, ServletException {
 
 		doDispatch(servletRequest, servletResponse, false);
 	}
 
 	public void include(
 			ServletRequest servletRequest, ServletResponse servletResponse)
-		throws ServletException, IOException {
+		throws IOException, ServletException {
 
 		doDispatch(servletRequest, servletResponse, true);
 	}
@@ -57,7 +57,7 @@ public class PACLRequestDispatcherWrapper implements RequestDispatcher {
 	protected void doDispatch(
 			ServletRequest servletRequest, ServletResponse servletResponse,
 			boolean include)
-		throws ServletException, IOException {
+		throws IOException, ServletException {
 
 		ClassLoader contextClassLoader =
 			PACLClassLoaderUtil.getContextClassLoader();

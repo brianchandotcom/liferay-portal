@@ -49,7 +49,7 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 	 * @throws PrincipalException if a principal exception occurred
 	 */
 	public void deleteEntries(long groupId)
-		throws SystemException, PrincipalException {
+		throws PrincipalException, SystemException {
 
 		List<TrashEntry> entries = trashEntryLocalService.getEntries(groupId);
 
@@ -85,7 +85,7 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 	 * @throws PrincipalException if a principal exception occurred
 	 */
 	public Object[] getEntries(long groupId)
-		throws SystemException, PrincipalException {
+		throws PrincipalException, SystemException {
 
 		return getEntries(groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
@@ -106,7 +106,7 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 	 */
 	public Object[] getEntries(
 			long groupId, int start, int end, OrderByComparator obc)
-		throws SystemException, PrincipalException {
+		throws PrincipalException, SystemException {
 
 		int entriesCount = trashEntryLocalService.getEntriesCount(groupId);
 

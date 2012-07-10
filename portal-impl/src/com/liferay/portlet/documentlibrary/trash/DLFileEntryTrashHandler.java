@@ -140,7 +140,7 @@ public class DLFileEntryTrashHandler extends BaseTrashHandler {
 	}
 
 	protected DLFileEntry getDLFileEntry(long classPK)
-		throws SystemException, PortalException {
+		throws PortalException, SystemException {
 
 		Repository repository = RepositoryServiceUtil.getRepositoryImpl(
 			0, classPK, 0);

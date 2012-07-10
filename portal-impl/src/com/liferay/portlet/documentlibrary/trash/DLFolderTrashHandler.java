@@ -147,7 +147,7 @@ public class DLFolderTrashHandler extends BaseTrashHandler {
 	}
 
 	protected DLFolder getDLFolder(long classPK)
-		throws SystemException, PortalException {
+		throws PortalException, SystemException {
 
 		Repository repository = RepositoryServiceUtil.getRepositoryImpl(
 			0, classPK, 0);

@@ -56,7 +56,7 @@ public class FolderUtil extends LiferayBase {
 	}
 
 	public static Folder findByPrimaryKey(long folderId)
-		throws SystemException, NoSuchFolderException {
+		throws NoSuchFolderException, SystemException {
 
 		DLFolder dlFolder = DLFolderUtil.findByPrimaryKey(folderId);
 

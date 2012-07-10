@@ -50,7 +50,7 @@ public class CustomizationSettingsProcessor implements ColumnProcessor {
 			_customizationEnabled = false;
 		}
 
- 		if (selLayout.isLayoutPrototypeLinkActive()) {
+		if (selLayout.isLayoutPrototypeLinkActive()) {
 			_customizationEnabled = false;
 		}
 	}
@@ -67,8 +67,8 @@ public class CustomizationSettingsProcessor implements ColumnProcessor {
 		boolean customizable = false;
 
 		if (_customizationEnabled) {
-			customizable =
-				GetterUtil.getBoolean(_layoutTypeSettings.getProperty(
+			customizable = GetterUtil.getBoolean(
+				_layoutTypeSettings.getProperty(
 					customizableKey, String.valueOf(false)));
 		}
 

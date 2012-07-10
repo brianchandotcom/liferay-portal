@@ -79,6 +79,10 @@ public interface PortletDataContext extends Serializable {
 			Element element, String path, ClassedModel classedModel)
 		throws PortalException, SystemException;
 
+	public void addGlobalReference(Class<?> clazz, String uuid);
+
+	public void addGlobalReference(Class<?> clazz, long classPK);
+
 	public void addLocks(Class<?> clazz, String key)
 		throws PortalException, SystemException;
 
@@ -246,6 +250,10 @@ public interface PortletDataContext extends Serializable {
 	public boolean isDataStrategyMirror();
 
 	public boolean isDataStrategyMirrorWithOverwriting();
+
+	public boolean isGlobalReference(Class<?> clazz, String uuid);
+
+	public boolean isGlobalReference(Class<?> clazz, long classPK);
 
 	public boolean isPathNotProcessed(String path);
 

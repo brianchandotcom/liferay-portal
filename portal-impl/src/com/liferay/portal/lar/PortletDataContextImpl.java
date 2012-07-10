@@ -398,6 +398,22 @@ public class PortletDataContextImpl implements PortletDataContext {
 		}
 	}
 
+	public void addGlobalReference(Class<?> clazz, String uuid) {
+		List<String> values = _globalReferencesMap.get(clazz.getName());
+
+		if (values == null) {
+			values = new ArrayList<String>();
+
+			_globalReferencesMap.put(clazz.getName(), values);
+		}
+
+		values.add(uuid);
+	}
+
+	public void addGlobalReference(Class<?> clazz, long classPK) {
+		addGlobalReference(clazz, String.valueOf(classPK));
+	}
+
 	public void addLocks(Class<?> clazz, String key)
 		throws PortalException, SystemException {
 
@@ -1170,6 +1186,28 @@ public class PortletDataContextImpl implements PortletDataContext {
 		}
 	}
 
+	public boolean isGlobalReference(Class<?> clazz, String uuid) {
+		return isGlobalReference(clazz.getName(), uuid);
+	}
+
+	public boolean isGlobalReference(String className, String uuid) {
+		List<String> values = _globalReferencesMap.get(className);
+
+		if (values != null && values.contains(uuid)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isGlobalReference(Class<?> clazz, long classPK) {
+		return isGlobalReference(clazz, String.valueOf(classPK));
+	}
+
+	public boolean isGlobalReference(String className, long classPK) {
+		return isGlobalReference(className, String.valueOf(classPK));
+	}
+
 	public boolean isPathNotProcessed(String path) {
 		return !addPrimaryKey(String.class, path);
 	}
@@ -1491,6 +1529,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	private Date _endDate;
 	private Map<String, List<ExpandoColumn>> _expandoColumnsMap =
 		new HashMap<String, List<ExpandoColumn>>();
+	private Map<String, List<String>> _globalReferencesMap =
+		new HashMap<String, List<String>>();
 	private long _groupId;
 	private Map<String, Lock> _locksMap = new HashMap<String, Lock>();
 	private Map<String, Map<?, ?>> _newPrimaryKeysMaps =

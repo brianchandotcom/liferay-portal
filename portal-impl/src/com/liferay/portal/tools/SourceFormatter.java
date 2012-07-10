@@ -1412,6 +1412,8 @@ public class SourceFormatter {
 				line = StringUtil.replaceLast(line, "{", " {");
 			}
 
+			line = _sortExceptions(line);
+
 			if (trimmedLine.startsWith("if (") ||
 				trimmedLine.startsWith("else if (") ||
 				trimmedLine.startsWith("while (") ||
@@ -3414,6 +3416,51 @@ public class SourceFormatter {
 		}
 
 		return newLine;
+	}
+
+	private static String _sortExceptions(String line) {
+		if (!line.endsWith(StringPool.OPEN_CURLY_BRACE) &&
+			!line.endsWith(StringPool.SEMICOLON)) {
+
+			return line;
+		}
+
+		int x = line.indexOf("throws ");
+
+		if (x == -1) {
+			return line;
+		}
+
+		String previousException = StringPool.BLANK;
+
+		String[] exceptions = StringUtil.split(
+			line.substring(x), CharPool.SPACE);
+
+		for (int i = 1; i < exceptions.length; i++) {
+			String exception = exceptions[i];
+
+			if (exception.equals(StringPool.OPEN_CURLY_BRACE)) {
+				break;
+			}
+
+			if (exception.endsWith(StringPool.COMMA) ||
+				exception.endsWith(StringPool.SEMICOLON)) {
+
+				exception = exception.substring(0, exception.length() - 1);
+			}
+
+			if (Validator.isNotNull(previousException) &&
+				(previousException.compareToIgnoreCase(exception) > 0)) {
+
+				return StringUtil.replace(
+					line, previousException + ", " + exception,
+					exception + ", " + previousException);
+			}
+
+			previousException = exception;
+		}
+
+		return line;
 	}
 
 	private static String _sortJSPAttributes(

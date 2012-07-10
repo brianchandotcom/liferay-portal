@@ -199,10 +199,10 @@ else if (yearNullable) {
 						firstDayOfWeek: <%= firstDayOfWeek %>,
 						locale: '<%= LanguageUtil.getLanguageId(request) %>',
 						strings: {
-							next: '<liferay-ui:message key="next" />',
-							none: '<liferay-ui:message key="none" />',
-							previous: '<liferay-ui:message key="previous" />',
-							today: '<liferay-ui:message key="today" />'
+							next: '<liferay-ui:message key="next" unicode="true" />',
+							none: '<liferay-ui:message key="none" unicode="true" />',
+							previous: '<liferay-ui:message key="previous" unicode="true" />',
+							today: '<liferay-ui:message key="today" unicode="true" />'
 						}
 					},
 					dayNode: '#<%= dayParam %>',

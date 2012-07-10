@@ -216,10 +216,10 @@ if (fieldParamSelection.equals("0")) {
 				],
 				selectMultipleDates: false,
 				strings: {
-					next: '<liferay-ui:message key="next" />',
-					none: '<liferay-ui:message key="none" />',
-					previous: '<liferay-ui:message key="previous" />',
-					today: '<liferay-ui:message key="today" />'
+					next: '<liferay-ui:message key="next" unicode="true" />',
+					none: '<liferay-ui:message key="none" unicode="true" />',
+					previous: '<liferay-ui:message key="previous" unicode="true" />',
+					today: '<liferay-ui:message key="today" unicode="true" />'
 				}
 			},
 			trigger: '#<portlet:namespace /><%= facet.getFieldName() %>from'
@@ -242,10 +242,10 @@ if (fieldParamSelection.equals("0")) {
 				],
 				selectMultipleDates: false,
 				strings: {
-					next: '<liferay-ui:message key="next" />',
-					none: '<liferay-ui:message key="none" />',
-					previous: '<liferay-ui:message key="previous" />',
-					today: '<liferay-ui:message key="today" />'
+					next: '<liferay-ui:message key="next" unicode="true" />',
+					none: '<liferay-ui:message key="none" unicode="true" />',
+					previous: '<liferay-ui:message key="previous" unicode="true" />',
+					today: '<liferay-ui:message key="today" unicode="true" />'
 				}
 			},
 			trigger: '#<portlet:namespace /><%= facet.getFieldName() %>to'

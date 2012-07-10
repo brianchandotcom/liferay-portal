@@ -143,25 +143,34 @@
 	</sql>
 	<sql id="com.liferay.portlet.asset.service.persistence.AssetEntryFinder.findByAndCategoryIds">
 		<![CDATA[
-			SELECT
-				DISTINCT AssetEntries_AssetCategories.entryId
-			FROM
-				AssetEntries_AssetCategories
-			WHERE
-				categoryId = ?
+			EXISTS
+				(
+					SELECT
+						1
+					FROM
+						AssetEntries_AssetCategories
+					WHERE
+						(categoryId = ?) AND
+						(AssetEntries_AssetCategories.entryId = AssetEntry.entryId)
+				)
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.asset.service.persistence.AssetEntryFinder.findByAndCategoryIdsTree">
 		<![CDATA[
-			SELECT
-				DISTINCT AssetEntries_AssetCategories.entryId
-			FROM
-				AssetEntries_AssetCategories
-			INNER JOIN
-				AssetCategory ON
-					(AssetCategory.categoryId = AssetEntries_AssetCategories.categoryId)
-			WHERE
-				(AssetCategory.groupId = ?) AND (AssetCategory.leftCategoryId BETWEEN ? AND ?)
+			EXISTS
+				(
+					SELECT
+						1
+					FROM
+						AssetEntries_AssetCategories
+					INNER JOIN
+						AssetCategory ON
+							(AssetCategory.categoryId = AssetEntries_AssetCategories.categoryId)
+					WHERE
+						(AssetCategory.groupId = ?) AND
+						(AssetCategory.leftCategoryId BETWEEN ? AND ?) AND
+						(AssetEntries_AssetCategories.entryId = AssetEntry.entryId)
+				)
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.asset.service.persistence.AssetEntryFinder.findByAndTagIds">
@@ -172,6 +181,35 @@
 				AssetEntries_AssetTags
 			WHERE
 				([$TAG_ID])
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.asset.service.persistence.AssetEntryFinder.joinCategories">
+		<![CDATA[
+			INNER JOIN
+				(
+					SELECT
+						AssetEntries_AssetCategories.entryId
+					FROM
+						AssetEntries_AssetCategories
+					WHERE
+						categoryId = ?
+				)
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.asset.service.persistence.AssetEntryFinder.joinCategoriesTree">
+		<![CDATA[
+			INNER JOIN
+				(
+					SELECT
+						AssetEntries_AssetCategories.entryId
+					FROM
+						AssetEntries_AssetCategories
+					INNER JOIN
+						AssetCategory ON
+							(AssetCategory.categoryId = AssetEntries_AssetCategories.categoryId)
+					WHERE
+						(AssetCategory.groupId = ?) AND (AssetCategory.leftCategoryId BETWEEN ? AND ?)
+				)
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.asset.service.persistence.AssetLinkFinder.findByE1_V">

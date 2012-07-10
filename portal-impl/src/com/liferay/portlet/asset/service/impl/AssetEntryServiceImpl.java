@@ -302,19 +302,16 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 			entryQuery.setStart(0);
 		}
 
-		boolean permissionsEnabled = entryQuery.isEnablePermissions();
-
 		List<AssetEntry> entries = null;
 
-		if (!returnEntryCountOnly || permissionsEnabled) {
+		if (!returnEntryCountOnly || entryQuery.isEnablePermissions()) {
 			entries = assetEntryLocalService.getEntries(entryQuery);
 		}
 
+		List<AssetEntry> filteredEntries = null;
 		int filteredEntriesCount = 0;
 
-		List<AssetEntry> filteredEntries = null;
-
-		if (permissionsEnabled) {
+		if (entryQuery.isEnablePermissions()) {
 			PermissionChecker permissionChecker = getPermissionChecker();
 
 			filteredEntries = new ArrayList<AssetEntry>();
@@ -363,6 +360,7 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 		}
 		else {
 			filteredEntries = entries;
+
 			if (filteredEntries != null) {
 				filteredEntriesCount = filteredEntries.size();
 			}

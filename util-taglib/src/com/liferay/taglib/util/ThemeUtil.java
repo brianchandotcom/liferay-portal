@@ -325,7 +325,7 @@ public class ThemeUtil {
 				public void service(
 						ServletRequest servletRequest,
 						ServletResponse servletResponse)
-					throws ServletException, IOException {
+					throws IOException, ServletException {
 
 					servlet.service(servletRequest, servletResponse);
 				}

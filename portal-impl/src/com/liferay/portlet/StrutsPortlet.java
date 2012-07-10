@@ -225,7 +225,7 @@ public class StrutsPortlet extends LiferayPortlet {
 
 	@Override
 	public void processEvent(EventRequest request, EventResponse response)
-		throws PortletException, IOException {
+		throws IOException, PortletException {
 
 		request.setAttribute(WebKeys.PORTLET_STRUTS_ACTION, viewAction);
 

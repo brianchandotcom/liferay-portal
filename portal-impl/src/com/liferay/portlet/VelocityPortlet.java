@@ -134,7 +134,7 @@ public class VelocityPortlet extends GenericPortlet {
 	@Override
 	public void serveResource(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws PortletException, IOException {
+		throws IOException, PortletException {
 
 		if (Validator.isNull(_resourceTemplateId)) {
 			super.serveResource(resourceRequest, resourceResponse);

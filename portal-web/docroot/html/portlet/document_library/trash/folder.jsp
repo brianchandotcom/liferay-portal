@@ -14,9 +14,18 @@
  */
 --%>
 
-<%@ include file="/html/portlet/document_library_display/init.jsp" %>
+<%@ include file="/html/portlet/document_library/init.jsp" %>
 
 <%
+int foldersPerPage = SearchContainer.DEFAULT_DELTA;
+int fileEntriesPerPage = SearchContainer.DEFAULT_DELTA;
+
+String[] folderColumns = new String[]{"name" ,"num-of-folders","num-of-documents","action"};
+String[] fileEntryColumns = new String[]{"name","size","locked","action"};
+
+boolean showSubfolders = true;
+boolean mergedView = false;
+
 String redirect = ParamUtil.getString(request, "redirect");
 
 Folder folder = (Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);

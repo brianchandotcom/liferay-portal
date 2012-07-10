@@ -158,15 +158,9 @@ public class EditFolderAction extends PortletAction {
 			ActionRequest actionRequest, boolean moveFromTrash)
 		throws Exception {
 
-		long folderId = ParamUtil.getLong(actionRequest, "folderId");
-
 		long[] folderIds = null;
 
-		long parentFolderId = ParamUtil.getLong(
-			actionRequest, "parentFolderId");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DLFileEntry.class.getName(), actionRequest);
+		long folderId = ParamUtil.getLong(actionRequest, "folderId");
 
 		if (folderId > 0) {
 			folderIds = new long[] {folderId};
@@ -175,6 +169,12 @@ public class EditFolderAction extends PortletAction {
 			folderIds = StringUtil.split(
 				ParamUtil.getString(actionRequest, "folderIds"), 0L);
 		}
+
+		long parentFolderId = ParamUtil.getLong(
+			actionRequest, "parentFolderId");
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			DLFileEntry.class.getName(), actionRequest);
 
 		for (long curFolderId : folderIds) {
 			if (moveFromTrash) {

@@ -43,16 +43,16 @@ public class RateEntryAction extends JSONAction {
 
 		String className = getClassName(request);
 		long classPK = getClassPK(request);
+		int maxScore = ParamUtil.getInteger(
+			request, "maxScore", PropsValues.RATINGS_DEFAULT_NUMBER_OF_STARS);
 		double score = ParamUtil.getDouble(request, "score");
-		int size = ParamUtil.getInteger(
-			request, "size", PropsValues.RATINGS_DEFAULT_NUMBER_OF_STARS);
 
 		if (score == 0) {
 			RatingsEntryServiceUtil.deleteEntry(className, classPK);
 		}
 		else {
 			RatingsEntryServiceUtil.updateEntry(
-				className, classPK, score, size);
+				className, classPK, score, maxScore);
 		}
 
 		RatingsStats stats = RatingsStatsLocalServiceUtil.getStats(

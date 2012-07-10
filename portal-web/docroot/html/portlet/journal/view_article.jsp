@@ -45,7 +45,7 @@ try {
 		<c:when test="<%= (articleDisplay != null) && !expired %>">
 
 			<div class="journal-content-article">
-				<%= articleDisplay.getContent() %>
+				<%= RuntimePageUtil.processXML(request, response, articleDisplay.getContent()) %>
 			</div>
 
 		</c:when>

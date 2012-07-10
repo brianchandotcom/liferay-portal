@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portlet.layoutconfiguration.util.xml.RuntimeLogic;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 
 /**
@@ -56,6 +57,14 @@ public class RuntimePageUtil {
 		throws Exception {
 
 		getRuntimePage().processTemplate(pageContext, templateResource);
+	}
+
+	public static String processXML(
+			HttpServletRequest request, HttpServletResponse response,
+			String content)
+		throws Exception {
+
+		return getRuntimePage().processXML(request, response, content);
 	}
 
 	public static String processXML(

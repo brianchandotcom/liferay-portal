@@ -17,11 +17,6 @@ package com.liferay.portlet.journalcontent.util;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.journal.model.JournalArticleDisplay;
 
-import javax.portlet.RenderResponse;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 /**
  * @author Raymond Augé
  */
@@ -48,10 +43,6 @@ public interface JournalContent {
 	public void clearCache(long groupId, String articleId, String templateId);
 
 	public String getContent(
-		JournalArticleDisplay articleDisplay, RenderResponse renderResponse,
-		HttpServletRequest request, HttpServletResponse response);
-
-	public String getContent(
 		long groupId, String articleId, String viewMode, String languageId,
 		String xmlRequest);
 
@@ -70,12 +61,6 @@ public interface JournalContent {
 	public String getContent(
 		long groupId, String articleId, String viewMode, String languageId,
 		ThemeDisplay themeDisplay);
-
-	public String getContent(
-		String articleId, long groupId, String languageId,
-		RenderResponse renderResponse, HttpServletRequest request,
-		HttpServletResponse response, String templateId,
-		ThemeDisplay themeDisplay, String viewMode, String xmlRequest);
 
 	public JournalArticleDisplay getDisplay(
 		long groupId, String articleId, double version, String templateId,

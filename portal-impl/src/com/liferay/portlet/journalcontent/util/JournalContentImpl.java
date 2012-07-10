@@ -31,19 +31,9 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.journal.model.JournalArticleDisplay;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.permission.JournalArticlePermission;
-import com.liferay.portlet.layoutconfiguration.util.RuntimePageUtil;
-import com.liferay.portlet.layoutconfiguration.util.xml.ActionURLLogic;
-import com.liferay.portlet.layoutconfiguration.util.xml.PortletLogic;
-import com.liferay.portlet.layoutconfiguration.util.xml.RenderURLLogic;
-import com.liferay.portlet.layoutconfiguration.util.xml.RuntimeLogic;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import javax.portlet.RenderResponse;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.time.StopWatch;
 
@@ -51,7 +41,6 @@ import org.apache.commons.lang.time.StopWatch;
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
  * @author Michael Young
- * @author Vilmos Papp
  */
 public class JournalContentImpl implements JournalContent {
 
@@ -65,39 +54,6 @@ public class JournalContentImpl implements JournalContent {
 
 	public void clearCache(long groupId, String articleId, String templateId) {
 		clearCache();
-	}
-
-	public String getContent(
-		JournalArticleDisplay articleDisplay, RenderResponse renderResponse,
-		HttpServletRequest request, HttpServletResponse response) {
-
-		if (articleDisplay != null) {
-			RuntimeLogic portletLogic = new PortletLogic(request, response);
-			RuntimeLogic actionURLLogic = new ActionURLLogic(renderResponse);
-			RuntimeLogic renderURLLogic = new RenderURLLogic(renderResponse);
-
-			String processedContent = articleDisplay.getContent();
-
-			try {
-				processedContent = RuntimePageUtil.processXML(
-					request, processedContent, portletLogic);
-				processedContent = RuntimePageUtil.processXML(
-					request, processedContent, actionURLLogic);
-				processedContent = RuntimePageUtil.processXML(
-					request, processedContent, renderURLLogic);
-			}
-			catch (Exception ex) {
-				if (_log.isWarnEnabled()) {
-					_log.warn("Unable to process the content of " +
-						articleDisplay.getArticleId());
-				}
-			}
-
-			return processedContent;
-		}
-		else {
-			return null;
-		}
 	}
 
 	public String getContent(
@@ -148,19 +104,6 @@ public class JournalContentImpl implements JournalContent {
 
 		return getContent(
 			groupId, articleId, null, viewMode, languageId, themeDisplay);
-	}
-
-	public String getContent(
-		String articleId, long groupId, String languageId,
-		RenderResponse renderResponse, HttpServletRequest request,
-		HttpServletResponse response, String templateId,
-		ThemeDisplay themeDisplay, String viewMode, String xmlRequest) {
-
-		JournalArticleDisplay articleDisplay = getDisplay(
-			groupId, articleId, templateId, viewMode, languageId, themeDisplay,
-			1, xmlRequest);
-
-		return getContent(articleDisplay, renderResponse, request, response);
 	}
 
 	public JournalArticleDisplay getDisplay(

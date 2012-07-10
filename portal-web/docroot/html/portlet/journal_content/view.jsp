@@ -83,7 +83,7 @@ boolean expired = true;
 				}
 
 				if (themeDisplay.isStateExclusive()) {
-					out.print(JournalContentUtil.getContent(articleDisplay, renderResponse, request, response));
+					out.print(RuntimePageUtil.processXML(request, response, articleDisplay.getContent()));
 
 					return;
 				}
@@ -196,7 +196,7 @@ boolean expired = true;
 				</c:if>
 
 				<div class="journal-content-article" id="article_<%= articleDisplay.getCompanyId() %>_<%= articleDisplay.getGroupId() %>_<%= articleDisplay.getArticleId() %>_<%= articleDisplay.getVersion() %>">
-					<%= JournalContentUtil.getContent(articleDisplay, renderResponse, request, response) %>
+					<%= RuntimePageUtil.processXML(request, response, articleDisplay.getContent()) %>
 				</div>
 
 				<c:if test="<%= articleDisplay.isPaginate() %>">

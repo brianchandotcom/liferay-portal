@@ -20,6 +20,7 @@
 <%@ page import="com.liferay.portlet.journal.model.JournalArticleResource" %>
 <%@ page import="com.liferay.portlet.journal.service.JournalArticleResourceLocalServiceUtil" %>
 <%@ page import="com.liferay.portlet.journalcontent.util.JournalContentUtil" %>
+<%@ page import="com.liferay.portlet.layoutconfiguration.util.RuntimePageUtil" %>
 
 <portlet:defineObjects />
 
@@ -70,5 +71,5 @@ JournalArticleDisplay articleDisplay = JournalContentUtil.getDisplay(groupId, ar
 		</c:if>
 	</c:if>
 
-	<%= JournalContentUtil.getContent(articleDisplay, renderResponse, request, response) %>
+	<%= RuntimePageUtil.processXML(request, response, articleDisplay.getContent()) %>
 </c:if>

@@ -19,7 +19,6 @@ import com.liferay.portlet.journal.model.JournalArticleDisplay;
 /**
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
- * @author Vilmos Papp
  */
 public class JournalArticleDisplayImpl implements JournalArticleDisplay {
 

@@ -18,11 +18,6 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermissio
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.journal.model.JournalArticleDisplay;
 
-import javax.portlet.RenderResponse;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 /**
  * @author Raymond Augé
  */
@@ -36,14 +31,6 @@ public class JournalContentUtil {
 		long groupId, String articleId, String templateId) {
 
 		getJournalContent().clearCache(groupId, articleId, templateId);
-	}
-
-	public static String getContent(
-		JournalArticleDisplay articleDisplay, RenderResponse renderResponse,
-		HttpServletRequest request, HttpServletResponse response) {
-
-		return getJournalContent().getContent(
-			articleDisplay, renderResponse, request, response);
 	}
 
 	public static String getContent(
@@ -84,17 +71,6 @@ public class JournalContentUtil {
 
 		return getJournalContent().getContent(
 			groupId, articleId, viewMode, languageId, themeDisplay);
-	}
-
-	public static String getContent(
-		String articleId, long groupId, String languageId,
-		RenderResponse renderResponse, HttpServletRequest request,
-		HttpServletResponse response, String templateId,
-		ThemeDisplay themeDisplay, String viewMode, String xmlRequest) {
-
-		return getJournalContent().getContent(
-			articleId, groupId, languageId, renderResponse, request, response,
-			templateId, themeDisplay, viewMode, xmlRequest);
 	}
 
 	public static JournalArticleDisplay getDisplay(

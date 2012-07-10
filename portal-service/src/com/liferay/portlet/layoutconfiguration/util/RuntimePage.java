@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portlet.layoutconfiguration.util.xml.RuntimeLogic;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 
 /**
@@ -38,6 +39,11 @@ public interface RuntimePage {
 
 	public void processTemplate(
 			PageContext pageContext, TemplateResource templateResource)
+		throws Exception;
+
+	public String processXML(
+			HttpServletRequest request, HttpServletResponse response,
+			String content)
 		throws Exception;
 
 	public String processXML(

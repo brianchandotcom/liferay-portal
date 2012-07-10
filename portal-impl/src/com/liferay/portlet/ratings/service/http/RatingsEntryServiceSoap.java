@@ -78,11 +78,11 @@ public class RatingsEntryServiceSoap {
 	}
 
 	public static com.liferay.portlet.ratings.model.RatingsEntrySoap updateEntry(
-		java.lang.String className, long classPK, double score, int size)
+		java.lang.String className, long classPK, double score, int maxScore)
 		throws RemoteException {
 		try {
 			com.liferay.portlet.ratings.model.RatingsEntry returnValue = RatingsEntryServiceUtil.updateEntry(className,
-					classPK, score, size);
+					classPK, score, maxScore);
 
 			return com.liferay.portlet.ratings.model.RatingsEntrySoap.toSoapModel(returnValue);
 		}

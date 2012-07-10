@@ -310,11 +310,11 @@ public class RatingsEntryLocalServiceWrapper implements RatingsEntryLocalService
 
 	public com.liferay.portlet.ratings.model.RatingsEntry updateEntry(
 		long userId, java.lang.String className, long classPK, double score,
-		int size, com.liferay.portal.service.ServiceContext serviceContext)
+		int maxScore, com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _ratingsEntryLocalService.updateEntry(userId, className,
-			classPK, score, size, serviceContext);
+			classPK, score, maxScore, serviceContext);
 	}
 
 	/**

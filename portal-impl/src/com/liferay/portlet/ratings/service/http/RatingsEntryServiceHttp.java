@@ -89,7 +89,7 @@ public class RatingsEntryServiceHttp {
 
 	public static com.liferay.portlet.ratings.model.RatingsEntry updateEntry(
 		HttpPrincipal httpPrincipal, java.lang.String className, long classPK,
-		double score, int size)
+		double score, int maxScore)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -97,7 +97,7 @@ public class RatingsEntryServiceHttp {
 					"updateEntry", _updateEntryParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					className, classPK, score, size);
+					className, classPK, score, maxScore);
 
 			Object returnObj = null;
 

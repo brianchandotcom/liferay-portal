@@ -122,6 +122,14 @@ public class BlogsActivityInterpreter extends BaseSocialActivityInterpreter {
 				}
 			}
 		}
+		else if (activityType == BlogsActivityKeys.UPDATE_ENTRY) {
+			if (Validator.isNull(groupName)) {
+				titlePattern = "activity-blogs-update-entry";
+			}
+			else {
+				titlePattern = "activity-blogs-update-entry-in";
+			}
+		}
 
 		Object[] titleArguments = new Object[] {
 			groupName, creatorUserName, receiverUserName, entryTitle,

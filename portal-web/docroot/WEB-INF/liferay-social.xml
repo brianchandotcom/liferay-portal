@@ -97,7 +97,7 @@
 		<model-name>com.liferay.portlet.blogs.model.BlogsEntry</model-name>
 		<activity-type>3</activity-type>
 		<language-key>UPDATE_ENTRY</language-key>
-		<log-activity>false</log-activity>
+		<log-activity>true</log-activity>
 		<participation-value>1</participation-value>
 		<participation-limit period="period">10</participation-limit>
 		<counter>

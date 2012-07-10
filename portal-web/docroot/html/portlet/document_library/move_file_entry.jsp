@@ -118,14 +118,16 @@ portletURL.setParameter("fileEntryId", String.valueOf(fileEntryId));
 			<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 		</portlet:renderURL>
 
-		<aui:field-wrapper label="current-folder">
-			<liferay-ui:icon
-				image="folder"
-				label="<%= true %>"
-				message="<%= folderName %>"
-				url="<%= viewFolderURL %>"
-			/>
-		</aui:field-wrapper>
+		<c:if test="<%= !cmd.equals(Constants.MOVE_FROM_TRASH) %>">
+			<aui:field-wrapper label="current-folder">
+				<liferay-ui:icon
+					image="folder"
+					label="<%= true %>"
+					message="<%= folderName %>"
+					url="<%= viewFolderURL %>"
+				/>
+			</aui:field-wrapper>
+		</c:if>
 
 		<aui:field-wrapper label="new-folder">
 			<aui:a href="<%= viewFolderURL %>" id="folderName"><%= folderName %></aui:a>

@@ -1168,7 +1168,7 @@ public class SitesUtil {
 
 		File file = null;
 
-		StringBundler sb = new StringBundler(importData ? 4 : 4);
+		StringBundler sb = new StringBundler(importData ? 4 : 3);
 
 		sb.append(_TEMP_DIR);
 		sb.append(layoutSetPrototype.getUuid());

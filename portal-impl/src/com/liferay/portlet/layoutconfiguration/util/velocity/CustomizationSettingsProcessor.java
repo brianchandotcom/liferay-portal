@@ -14,17 +14,15 @@
 
 package com.liferay.portlet.layoutconfiguration.util.velocity;
 
-import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.CustomizedPages;
 import com.liferay.portal.model.Layout;
 import com.liferay.portlet.sites.util.SitesUtil;
+import com.liferay.taglib.aui.InputTag;
 
 import java.io.Writer;
-import java.lang.reflect.Method;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.jsp.PageContext;
@@ -82,32 +80,20 @@ public class CustomizationSettingsProcessor implements ColumnProcessor {
 		_writer.append(columnId);
 		_writer.append("</h1>");
 
-		Object inputTag = _inputTagClass.newInstance();
+		InputTag inputTag = new InputTag();
 
-		BeanPropertiesUtil.setProperty(
-			inputTag, "disabled", !_customizationEnabled);
-		BeanPropertiesUtil.setProperty(inputTag, "label", "customizable");
-		BeanPropertiesUtil.setProperty(
-			inputTag, "name",
+		inputTag.setDisabled(!_customizationEnabled);
+		inputTag.setLabel("customizable");
+		inputTag.setName(
 			"TypeSettingsProperties--".concat(customizableKey).concat("--"));
-		BeanPropertiesUtil.setProperty(inputTag, "pageContext", _pageContext);
-		BeanPropertiesUtil.setProperty(inputTag, "type", "checkbox");
-		BeanPropertiesUtil.setProperty(inputTag, "value", customizable);
+		inputTag.setPageContext(_pageContext);
+		inputTag.setType("checkbox");
+		inputTag.setValue(customizable);
 
-		Method method =
-			_inputTagClass.getMethod(
-				_doStartTagMethodKey.getMethodName(),
-				_doStartTagMethodKey.getParameterTypes());
-
-		int result = (Integer) method.invoke(inputTag, new Object[] {});
+		int result = inputTag.doStartTag();
 
 		if (result == Tag.EVAL_BODY_INCLUDE) {
-			method =
-				_inputTagClass.getMethod(
-					_doEndTagMethodKey.getMethodName(),
-					_doEndTagMethodKey.getParameterTypes());
-
-			result = (Integer) method.invoke(inputTag, new Object[] {});
+			inputTag.doEndTag();
 		}
 
 		_writer.append("</div>");
@@ -127,23 +113,9 @@ public class CustomizationSettingsProcessor implements ColumnProcessor {
 		return StringPool.BLANK;
 	}
 
-	private static MethodKey _doEndTagMethodKey = new MethodKey(
-		"com.liferay.taglib.aui.InputTag", "doEndTag");
-	private static MethodKey _doStartTagMethodKey = new MethodKey(
-		"com.liferay.taglib.aui.InputTag", "doStartTag");
-	private static Class<?> _inputTagClass;
-
 	private boolean _customizationEnabled;
 	private UnicodeProperties _layoutTypeSettings;
 	private PageContext _pageContext;
 	private Writer _writer;
-
-	static {
-		try {
-			_inputTagClass = Class.forName("com.liferay.taglib.aui.InputTag");
-		}
-		catch (ClassNotFoundException cnfe) {
-		}
-	}
 
 }

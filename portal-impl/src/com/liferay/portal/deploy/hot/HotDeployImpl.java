@@ -60,7 +60,9 @@ public class HotDeployImpl implements HotDeploy {
 		_hotDeployListeners = new CopyOnWriteArrayList<HotDeployListener>();
 	}
 
-	public void fireDeployEvent(final HotDeployEvent hotDeployEvent) {
+	public synchronized void fireDeployEvent(
+		final HotDeployEvent hotDeployEvent) {
+
 		PortalLifecycleUtil.register(
 			new PACLPortalLifecycle(hotDeployEvent),
 			PortalLifecycle.METHOD_INIT);
@@ -93,7 +95,7 @@ public class HotDeployImpl implements HotDeploy {
 		}
 	}
 
-	public void fireUndeployEvent(HotDeployEvent hotDeployEvent) {
+	public synchronized void fireUndeployEvent(HotDeployEvent hotDeployEvent) {
 		for (HotDeployListener hotDeployListener : _hotDeployListeners) {
 			try {
 				hotDeployListener.invokeUndeploy(hotDeployEvent);
@@ -117,14 +119,16 @@ public class HotDeployImpl implements HotDeploy {
 		_hotDeployListeners.add(hotDeployListener);
 	}
 
-	public void reset() {
+	public synchronized void reset() {
 		_capturePrematureEvents = true;
 		_dependentHotDeployEvents.clear();
 		_deployedServletContextNames.clear();
 		_hotDeployListeners.clear();
 	}
 
-	public void setCapturePrematureEvents(boolean capturePrematureEvents) {
+	public synchronized void setCapturePrematureEvents(
+		boolean capturePrematureEvents) {
+
 		_capturePrematureEvents = capturePrematureEvents;
 	}
 

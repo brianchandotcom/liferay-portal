@@ -76,7 +76,6 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.documentlibrary.FileExtensionException;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -967,8 +966,6 @@ public class WebServerServlet extends HttpServlet {
 			contentLength = fileVersion.getSize();
 
 			if (Validator.isNotNull(targetExtension)) {
-				validateExtension(targetExtension);
-
 				File convertedFile = DocumentConversionUtil.convert(
 					tempFileId, inputStream, extension, targetExtension);
 
@@ -1138,17 +1135,6 @@ public class WebServerServlet extends HttpServlet {
 		response.setContentType(ContentTypes.TEXT_HTML_UTF8);
 
 		template.processTemplate(response.getWriter());
-	}
-
-	protected void validateExtension(String extension)
-		throws FileExtensionException {
-
-		if (extension.contains(StringPool.SLASH) ||
-			extension.contains(StringPool.BACK_SLASH) ||
-			extension.contains(File.pathSeparator)) {
-
-			throw new FileExtensionException(extension);
-		}
 	}
 
 	protected void writeImage(

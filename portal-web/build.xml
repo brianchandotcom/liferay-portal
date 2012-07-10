@@ -312,7 +312,7 @@
 
 						<replace file="docroot/html/js/editor/ckeditor/_source/plugins/popup/plugin.js">
 							<replacetoken><![CDATA[popupWindow.moveTo( left, top );]]></replacetoken>
-							<replacevalue><![CDATA[// Chrome 18 is problematic, but it's not really needed here (#8855)]]></replacevalue>
+							<replacevalue><![CDATA[// Chrome is problematic, but it's not really needed here (#8855)]]></replacevalue>
 						</replace>
 
 						<replace file="docroot/html/js/editor/ckeditor/_source/plugins/popup/plugin.js">
@@ -321,7 +321,7 @@
 								<![CDATA[
 									var ua = navigator.userAgent.toLowerCase();
 
-									if (ua.indexOf(' chrome/18') == -1) {
+									if (ua.indexOf(' chrome/') == -1) {
 										popupWindow.moveTo(left, top);
 										popupWindow.resizeTo(width, height);
 									}

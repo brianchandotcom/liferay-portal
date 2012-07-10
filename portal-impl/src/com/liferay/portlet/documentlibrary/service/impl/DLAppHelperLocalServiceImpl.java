@@ -480,6 +480,16 @@ public class DLAppHelperLocalServiceImpl
 		return fileEntry;
 	}
 
+	public DLFileShortcut moveFileShortcutFromTrash(
+			long userId, DLFileShortcut dlFileShortcut, long newFolderId,
+			long toFileEntryId, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return dlAppService.updateFileShortcut(
+			dlFileShortcut.getFileShortcutId(), newFolderId, toFileEntryId,
+			serviceContext);
+	}
+
 	public DLFileShortcut moveFileShortcutToTrash(
 			long userId, DLFileShortcut dlFileShortcut)
 		throws PortalException, SystemException {

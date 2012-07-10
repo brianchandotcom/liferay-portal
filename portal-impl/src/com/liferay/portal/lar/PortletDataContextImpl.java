@@ -57,6 +57,7 @@ import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.TeamLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.NoSuchEntryException;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetEntry;
@@ -1143,7 +1144,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 			RatingsEntryLocalServiceUtil.updateEntry(
 				userId, clazz.getName(), newClassPK, ratingsEntry.getScore(),
-				serviceContext);
+				PropsValues.RATINGS_DEFAULT_NUMBER_OF_STARS, serviceContext);
 		}
 	}
 

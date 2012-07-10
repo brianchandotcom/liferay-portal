@@ -56,10 +56,11 @@ public class RatingsEntryServiceWrapper implements RatingsEntryService,
 	}
 
 	public com.liferay.portlet.ratings.model.RatingsEntry updateEntry(
-		java.lang.String className, long classPK, double score)
+		java.lang.String className, long classPK, double score, int maxScore)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _ratingsEntryService.updateEntry(className, classPK, score);
+		return _ratingsEntryService.updateEntry(className, classPK, score,
+			maxScore);
 	}
 
 	/**

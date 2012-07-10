@@ -32,11 +32,12 @@ public class RatingsEntryServiceImpl extends RatingsEntryServiceBaseImpl {
 	}
 
 	public RatingsEntry updateEntry(
-			String className, long classPK, double score)
+			String className, long classPK, double score, int maxScore)
 		throws PortalException, SystemException {
 
 		return ratingsEntryLocalService.updateEntry(
-			getUserId(), className, classPK, score, new ServiceContext());
+			getUserId(), className, classPK, score, maxScore,
+			new ServiceContext());
 	}
 
 }

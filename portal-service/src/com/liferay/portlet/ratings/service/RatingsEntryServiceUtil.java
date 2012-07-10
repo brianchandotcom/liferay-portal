@@ -62,10 +62,10 @@ public class RatingsEntryServiceUtil {
 	}
 
 	public static com.liferay.portlet.ratings.model.RatingsEntry updateEntry(
-		java.lang.String className, long classPK, double score)
+		java.lang.String className, long classPK, double score, int maxScore)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().updateEntry(className, classPK, score);
+		return getService().updateEntry(className, classPK, score, maxScore);
 	}
 
 	public static RatingsEntryService getService() {

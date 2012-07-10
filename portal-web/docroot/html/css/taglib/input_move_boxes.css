@@ -1,38 +1,40 @@
 .taglib-move-boxes {
 	margin-bottom: 1em;
-}
 
-.taglib-move-boxes .arrow-button img {
-	border-width: 0;
-	height: 16px;
-	width: 16px;
-}
+	.arrow-button img {
+		border-width: 0;
+		height: 16px;
+		width: 16px;
+	}
 
-.taglib-move-boxes .choice-selector select {
-	min-width: 150px;
+	.choice-selector {
+		select {
+			min-width: 150px;
+		}
+
+		label {
+			border-bottom: 1px solid transparent;
+			display: block;
+			margin-bottom: 5px;
+			padding: 5px;
+		}
+
+		.aui-field-content {
+			margin-bottom: 0;
+		}
+	}
+
+	.move-arrow-buttons {
+		margin-top: 5em;
+
+		.arrow-button {
+			display: block;
+		}
+	}
 }
 
 .ie .taglib-move-boxes .choice-selector select {
 	width: expression(this.currentStyle.getAttribute('minWidth') || 150 + 'px');
-}
-
-.taglib-move-boxes .choice-selector label {
-	border-bottom: 1px solid transparent;
-	display: block;
-	margin-bottom: 5px;
-	padding: 5px;
-}
-
-.taglib-move-boxes .choice-selector .aui-field-content {
-	margin-bottom: 0;
-}
-
-.taglib-move-boxes .move-arrow-buttons {
-	margin-top: 5em;
-}
-
-.taglib-move-boxes .move-arrow-buttons .arrow-button {
-	display: block;
 }
 
 /* Skin */

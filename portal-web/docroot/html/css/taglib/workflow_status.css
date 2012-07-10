@@ -1,50 +1,51 @@
 .taglib-workflow-status {
 	margin: 0.5em 0;
-}
 
-.taglib-workflow-status .workflow-id {
-	padding: 2px 20px;
-}
+	.workflow-id, .workflow-version {
+		padding: 2px 20px;
+	}
 
-.taglib-workflow-status .workflow-version {
-	margin-right: 5px;
-	padding: 2px 20px;
-}
+	.workflow-version, .workflow-status {
+		margin-right: 5px;
+	}
 
-.taglib-workflow-status .workflow-status {
-	margin-right: 5px;
-	padding: 2px 0 2px 20px;
+	.workflow-status {
+		padding: 2px 0 2px 20px;
+	}
 }
 
 /* Skin */
 
-.taglib-workflow-status .workflow-id {
-	background: url(@theme_image_path@/common/history.png) no-repeat 0 50%;
-	color: #999;
-}
+.taglib-workflow-status {
+	.workflow-id, .workflow-version, .workflow-status {
+		color: #999;
+	}
 
-.taglib-workflow-status .workflow-version {
-	background: url(@theme_image_path@/common/pages.png) no-repeat 0 50%;
-	color: #999;
-}
+	.workflow-id {
+		background: url(@theme_image_path@/common/history.png) no-repeat 0 50%;
+	}
 
-.taglib-workflow-status .workflow-status {
-	background: url(@theme_image_path@/common/recent_changes.png) no-repeat 0 50%;
-	color: #999;
-}
+	.workflow-version {
+		background: url(@theme_image_path@/common/pages.png) no-repeat 0 50%;
+	}
 
-.taglib-workflow-status .workflow-status .workflow-status-approved {
-	color: #41801D;
-}
+	.workflow-status {
+		background: url(@theme_image_path@/common/recent_changes.png) no-repeat 0 50%;
 
-.taglib-workflow-status .workflow-status .workflow-status-draft {
-	color: #3068BA;
-}
+		.workflow-status-approved {
+			color: #41801D;
+		}
 
-.taglib-workflow-status .workflow-status .workflow-status-expired {
-	color: #933;
-}
+		.workflow-status-draft {
+			color: #3068BA;
+		}
 
-.taglib-workflow-status .workflow-status .workflow-status-pending {
-	color: #F7A233;
+		.workflow-status-expired {
+			color: #933;
+		}
+
+		.workflow-status-pending {
+			color: #F7A233;
+		}
+	}
 }

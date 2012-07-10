@@ -1,14 +1,16 @@
-.taglib-icon-list li {
-	float: left;
-	margin-right: 1em;
-}
+.taglib-icon-list {
+	li {
+		float: left;
+		margin-right: 1em;
+	}
 
-.taglib-icon-list:after {
-	clear: both;
-	content: ".";
-	display: block;
-	height: 0;
-	visibility: hidden;
+	&:after {
+		clear: both;
+		content: ".";
+		display: block;
+		height: 0;
+		visibility: hidden;
+	}
 }
 
 .ie .taglib-icon-list {

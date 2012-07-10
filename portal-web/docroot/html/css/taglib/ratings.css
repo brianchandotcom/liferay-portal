@@ -1,45 +1,49 @@
-.taglib-ratings.stars {
-	overflow: hidden;
-	padding-top: 10px;
-}
+.taglib-ratings {
+	&.stars {
+		overflow: hidden;
+		padding-top: 10px;
 
-.taglib-ratings.stars .liferay-rating-score {
-	padding-left: 15px;
-}
+		.liferay-rating-score {
+			padding-left: 15px;
+		}
 
-.taglib-ratings .aui-rating-content {
-	display: block;
-}
+		.liferay-rating-vote, .liferay-rating-score {
+			float: left;
+		}
+	}
 
-.taglib-ratings.stars .liferay-rating-vote, .taglib-ratings.stars .liferay-rating-score {
-	float: left;
-}
+	.aui-rating-content {
+		display: block;
+	}
 
-.ie6 .taglib-ratings .aui-rating-content {
-	display: inline;
-}
+	&.score {
+		white-space: nowrap;
+	}
 
-.ie6 .taglib-ratings.stars {
-	display: inline-block;
-}
+	&.thumbs {
+		float: left;
+		margin: 0;
 
-.taglib-ratings.score {
-	white-space: nowrap;
-}
+		.aui-thumbrating {
+			height: 20px;
 
-.taglib-ratings.thumbs .aui-thumbrating {
-	height: 20px;
-}
-
-.taglib-ratings.thumbs .aui-thumbrating .aui-rating-label-element {
-	padding: 0 5px;
-}
-
-.taglib-ratings.thumbs {
-	float: left;
-	margin: 0;
+			.aui-rating-label-element {
+				padding: 0 5px;
+			}
+		}
+	}
 }
 
 .js .taglib-ratings .liferay-rating-vote .aui-field {
 	display: none;
+}
+
+.ie6 .taglib-ratings {
+	.aui-rating-content {
+		display: inline;
+	}
+
+	&.stars {
+		display: inline-block;
+	}
 }

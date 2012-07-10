@@ -6,10 +6,10 @@
 .taglib-language-list-text {
 	border-right: 1px solid transparent;
 	padding: 0 0.2em;
-}
 
-.taglib-language-list-text.last {
-	border-width: 0;
+	&.last {
+		border-width: 0;
+	}
 }
 
 /* Skin */

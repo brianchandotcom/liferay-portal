@@ -1,16 +1,18 @@
-.js .taglib-webdav .show-webdav {
-	display: block;
-}
+.js .taglib-webdav {
+	.show-webdav {
+		display: block;
+	}
 
-.js .taglib-webdav table {
-	border: 1px solid transparent;
-	border-left-width: 0;
-	border-right-width: 0;
-	display: none;
-}
+	table {
+		border: 1px solid transparent;
+		border-left-width: 0;
+		border-right-width: 0;
+		display: none;
+	}
 
-.js .taglib-webdav.visible table {
-	display: block;
+	&.visible table {
+		display: block;
+	}
 }
 
 .taglib-webdav table:after {
@@ -27,10 +29,12 @@
 
 /* Skin */
 
-.js .taglib-webdav.visible {
-	background: #F0F5F7;
-}
+.js .taglib-webdav {
+	&.visible {
+		background: #F0F5F7;
+	}
 
-.js .taglib-webdav table {
-	border-color: #828F95;
+	table {
+		border-color: #828F95;
+	}
 }

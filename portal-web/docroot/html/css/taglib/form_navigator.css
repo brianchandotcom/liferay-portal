@@ -1,157 +1,163 @@
-.taglib-form-navigator .form-navigator {
-	border: 1px solid transparent;
-	float: right;
-	margin: 0 0 0 15px;
-	padding: 10px;
-	position: relative;
-	width: 30%;
-	z-index: 1;
-}
+.taglib-form-navigator {
+	.form-navigator {
+		border: 1px solid transparent;
+		float: right;
+		margin: 0 0 0 15px;
+		padding: 10px;
+		position: relative;
+		width: 30%;
+		z-index: 1;
 
-.taglib-form-navigator .form-navigator h3 {
-	margin: 0;
-}
+		h3 {
+			margin: 0;
+		}
 
-.taglib-form-navigator .form-navigator ul {
-	margin-bottom: 10px;
-}
+		ul {
+			margin-bottom: 10px;
+		}
 
-.taglib-form-navigator .form-navigator li a {
-	cursor: pointer;
-	display: block;
-	padding: 2px 0 2px 5px;
-}
+		li {
+			a {
+				cursor: pointer;
+				display: block;
+				padding: 2px 0 2px 5px;
 
-.taglib-form-navigator .form-navigator li.selected {
-	left: -22px;
-	margin-right: -22px;
-	padding: 0;
-	position: relative;
-}
+				.error-notice {
+					display: none;
+				}
+			}
 
-.taglib-form-navigator .form-navigator li.selected a {
-	display: block;
-	margin: 0 0 0 11px;
-	overflow: hidden;
-	padding: 2px 10px;
-}
+			&.selected {
+				left: -22px;
+				margin-right: -22px;
+				padding: 0;
+				position: relative;
 
-.taglib-form-navigator .form-navigator .modified-notice {
-	display: none;
-}
+				a {
+					display: block;
+					margin: 0 0 0 11px;
+					overflow: hidden;
+					padding: 2px 10px;
+				}
 
-.taglib-form-navigator .form-navigator .section-modified .modified-notice {
-	display: inline;
-}
+				&.section-error a {
+					margin-left: 11px;
+					padding-left: 35px;
+				}
+			}
 
-.taglib-form-navigator .form-navigator .selected.section-modified .modified-notice {
-	display: inline;
-}
+			&.section-error a {
+				padding-left: 25px;
+			}
+		}
 
-.taglib-form-navigator .form-navigator li.section-error a {
-	padding-left: 25px;
-}
+		.modified-notice {
+			display: none;
+		}
 
-.taglib-form-navigator .form-navigator li.selected.section-error a {
-	margin-left: 11px;
-	padding-left: 35px;
-}
+		.section-modified , .selected.section-modified {
+			.modified-notice {
+				display: inline;
+			}
+		}
 
-.taglib-form-navigator .form-navigator li a .error-notice {
-	display: none;
-}
+		.aui-button-holder {
+			margin-top: 20px;
+		}
+	}
 
-.taglib-form-navigator .form-navigator .aui-button-holder {
-	margin-top: 20px;
-}
+	.form-section {
+		float: left;
+		width: 63%;
 
-.taglib-form-navigator .form-section {
-	float: left;
-	width: 63%;
-}
+		.aui-fieldset {
+			display: table-cell;
+		}
 
-.taglib-form-navigator .form-section .aui-fieldset {
-	display: table-cell;
+		h3 {
+			border-bottom: 1px solid transparent;
+			clear: both;
+			margin: 10px 0;
+		}
+	}
+
+	.form-section .aui-field-input, .lfr-change-logo img {
+		max-width: 100%;
+	}
 }
 
 .ie .form-section .aui-fieldset {
 	display: block;
 }
 
-.taglib-form-navigator .form-section .aui-field-input, .taglib-form-navigator .lfr-change-logo img {
-	max-width: 100%;
-}
-
 .ie6 .taglib-form-navigator .form-section {
 	width: 60%;
 }
 
-.taglib-form-navigator .form-section h3 {
-	border-bottom: 1px solid transparent;
-	clear: both;
-	margin: 10px 0;
-}
-
 /* Skin */
 
-.taglib-form-navigator .form-navigator {
-	background-color: #D7F1FF;
-	border-color: #88C5D9;
-}
+.taglib-form-navigator {
+	.form-navigator {
+		background-color: #D7F1FF;
+		border-color: #88C5D9;
 
-.taglib-form-navigator .form-navigator h3 {
-	color: #036;
-	font-size: 14px;
-	font-weight: bold;
-}
+		h3 {
+			color: #036;
+			font-size: 14px;
+			font-weight: bold;
+		}
 
-.taglib-form-navigator .form-navigator li a:hover {
-	background-color: #88C5D9;
-	text-decoration: none;
-}
+		li {
+			a:hover {
+				background-color: #88C5D9;
+				text-decoration: none;
+			}
 
-.taglib-form-navigator .form-navigator li.selected {
-	background: url(@theme_image_path@/control_panel/selected.png) no-repeat 0 50%;
-	font-weight: bold;
-}
+			&.selected {
+				background: url(@theme_image_path@/control_panel/selected.png) no-repeat 0 50%;
+				font-weight: bold;
 
-.taglib-form-navigator .form-navigator li.selected a {
-	background-color: #5C696E;
-	color: #FFF;
-	text-decoration: none;
+				a {
+					background-color: #5C696E;
+					color: #FFF;
+					text-decoration: none;
+				}
+
+				&.section-error a {
+					background-position: 15px 50%;
+					color: #F99;
+				}
+			}
+
+			&.section-error a {
+				background-image: url(@theme_image_path@/messages/alert.png);
+				background-position: 5px 50%;
+				background-repeat: no-repeat;
+				color: #F00;
+				font-weight: bold;
+			}
+		}
+
+		.modified-notice {
+			font-weight: bold;
+		}
+
+		.section-modified .modified-notice {
+			color: #090;
+		}
+
+		.selected.section-modified .modified-notice {
+			color: #9F3;
+		}
+	}
+
+	.form-section h3 {
+		border-bottom-color: #000;
+		font-size: 14px;
+		font-weight: 700;
+	}
 }
 
 .ie6 .taglib-form-navigator .form-navigator li.selected a:hover {
 	background-color: #5C696E;
-}
-
-.taglib-form-navigator .form-navigator .modified-notice {
-	font-weight: bold;
-}
-
-.taglib-form-navigator .form-navigator .section-modified .modified-notice {
-	color: #090;
-}
-
-.taglib-form-navigator .form-navigator .selected.section-modified .modified-notice {
-	color: #9F3;
-}
-
-.taglib-form-navigator .form-navigator li.section-error a {
-	background-image: url(@theme_image_path@/messages/alert.png);
-	background-position: 5px 50%;
-	background-repeat: no-repeat;
-	color: #F00;
-	font-weight: bold;
-}
-
-.taglib-form-navigator .form-navigator li.selected.section-error a {
-	background-position: 15px 50%;
-	color: #F99;
-}
-
-.taglib-form-navigator .form-section h3 {
-	border-bottom-color: #000;
-	font-size: 14px;
-	font-weight: 700;
 }

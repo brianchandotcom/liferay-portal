@@ -1,13 +1,11 @@
-.taglib-diff-html span.diff-html-added img {
-	border: 2px solid transparent;
-}
+.taglib-diff-html span {
+	&.diff-html-added img, &.diff-html-removed img {
+		border: 2px solid transparent;
+	}
 
-.taglib-diff-html span.diff-html-changed img {
-	border: 2px dotted transparent;
-}
-
-.taglib-diff-html span.diff-html-removed img {
-	border: 2px solid transparent;
+	&.diff-html-changed img {
+		border: 2px dotted transparent;
+	}
 }
 
 .taglib-diff-html div.diff-removed-image, div.diff-added-image {
@@ -18,47 +16,57 @@
 	width: 200px;
 }
 
-.gecko .taglib-diff-html div.diff-removed-image, .gecko div.diff-added-image {
-	-moz-opacity: 0.55;
+.gecko {
+	.taglib-diff-html div.diff-removed-image, div.diff-added-image {
+		-moz-opacity: 0.55;
+	}
 }
 
-.ie .taglib-diff-html div.diff-removed-image, .ie div.diff-added-image {
-	filter: alpha(opacity=55);
+.ie {
+	.taglib-diff-html div.diff-removed-image, div.diff-added-image {
+		filter: alpha(opacity=55);
+	}
 }
 
 /* Skin */
 
-.taglib-diff-html div.diff-removed-image {
-	background: #fdc6c6 url(@theme_image_path@/diff/minus.png);
-}
+.taglib-diff-html {
+	div {
+		&.diff-removed-image {
+			background: #fdc6c6 url(@theme_image_path@/diff/minus.png);
+		}
 
-.taglib-diff-html div.diff-added-image {
-	background: #cfc url(@theme_image_path@/diff/plus.png) no-repeat;
-}
+		&.diff-added-image {
+			background: #cfc url(@theme_image_path@/diff/plus.png) no-repeat;
+		}
+	}
 
-.taglib-diff-html span.diff-html-added img {
-	border-color: #cfc;
-}
+	span {
+		&.diff-html-added {
+			background-color: #cfc;
+			font-size: 1em;
 
-.taglib-diff-html span.diff-html-added {
-	background-color: #cfc;
-	font-size: 1em;
-}
+			img {
+				border-color: #cfc;
+			}
+		}
 
-.taglib-diff-html span.diff-html-changed img {
-	border-color: #009;
-}
+		&.diff-html-changed {
+			background: url(@theme_image_path@/diff/underline.png) bottom repeat-x;
 
-.taglib-diff-html span.diff-html-changed {
-	background: url(@theme_image_path@/diff/underline.png) bottom repeat-x;
-}
+			img {
+				border-color: #009;
+			}
+		}
 
-.taglib-diff-html span.diff-html-removed img {
-	border-color: #fdc6c6;
-}
+		&.diff-html-removed {
+			background-color: #fdc6c6;
+			font-size: 1em;
+			text-decoration: line-through;
 
-.taglib-diff-html span.diff-html-removed {
-	background-color: #fdc6c6;
-	font-size: 1em;
-	text-decoration: line-through;
+			img {
+				border-color: #fdc6c6;
+			}
+		}
+	}
 }

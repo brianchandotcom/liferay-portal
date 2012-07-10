@@ -519,6 +519,25 @@ public class DLAppHelperLocalServiceImpl
 		}
 	}
 
+	public Folder moveFolderFromTrash(
+			long userId, Folder folder, long parentFolderId,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		// Folder
+
+		dlFolderLocalService.updateStatus(
+			userId, folder.getFolderId(), WorkflowConstants.STATUS_APPROVED,
+			new HashMap<String, Serializable>(), new ServiceContext());
+
+		// File rank
+
+		dlFileRankLocalService.enableFileRanksByFolderId(folder.getFolderId());
+
+		return dlAppService.moveFolder(
+			folder.getFolderId(), parentFolderId, serviceContext);
+	}
+
 	public Folder moveFolderToTrash(long userId, Folder folder)
 		throws PortalException, SystemException {
 

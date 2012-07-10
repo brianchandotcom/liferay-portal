@@ -2182,6 +2182,38 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	}
 
 	/**
+	 * Moves the folder with the primary key from the trash portlet
+	 * to the new parent folder with the primary key
+	 *
+	 * @param  folderId the primary key of the folder
+	 * @param  parentFolderId the primary key of the new parent folder
+	 * @param  serviceContext the service context to be applied
+	 * @return the file entry
+	 * @throws PortalException if the folder could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Folder moveFolderFromTrash(
+			long folderId, long parentFolderId, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		Repository repository = getRepository(folderId, 0, 0);
+
+		if (!(repository instanceof LiferayRepository)) {
+			throw new InvalidRepositoryException(
+				"Repository " + repository.getRepositoryId() +
+					" does not support trash operations");
+		}
+
+		Folder folder = repository.getFolder(folderId);
+
+		DLFolderPermission.check(
+			getPermissionChecker(), folder, ActionKeys.UPDATE);
+
+		return dlAppHelperLocalService.moveFolderFromTrash(
+			getUserId(), folder, parentFolderId, serviceContext);
+	}
+
+	/**
 	 * Moves the folder with the primary key to the trash portlet.
 	 *
 	 * @param  folderId the primary key of the folder

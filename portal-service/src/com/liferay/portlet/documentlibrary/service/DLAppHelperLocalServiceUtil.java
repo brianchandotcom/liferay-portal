@@ -190,6 +190,17 @@ public class DLAppHelperLocalServiceUtil {
 		getService().moveFolder(folder);
 	}
 
+	public static com.liferay.portal.kernel.repository.model.Folder moveFolderFromTrash(
+		long userId, com.liferay.portal.kernel.repository.model.Folder folder,
+		long parentFolderId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .moveFolderFromTrash(userId, folder, parentFolderId,
+			serviceContext);
+	}
+
 	public static com.liferay.portal.kernel.repository.model.Folder moveFolderToTrash(
 		long userId, com.liferay.portal.kernel.repository.model.Folder folder)
 		throws com.liferay.portal.kernel.exception.PortalException,

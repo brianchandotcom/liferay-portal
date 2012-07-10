@@ -190,6 +190,16 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 		_dlAppHelperLocalService.moveFolder(folder);
 	}
 
+	public com.liferay.portal.kernel.repository.model.Folder moveFolderFromTrash(
+		long userId, com.liferay.portal.kernel.repository.model.Folder folder,
+		long parentFolderId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlAppHelperLocalService.moveFolderFromTrash(userId, folder,
+			parentFolderId, serviceContext);
+	}
+
 	public com.liferay.portal.kernel.repository.model.Folder moveFolderToTrash(
 		long userId, com.liferay.portal.kernel.repository.model.Folder folder)
 		throws com.liferay.portal.kernel.exception.PortalException,

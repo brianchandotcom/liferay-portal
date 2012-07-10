@@ -65,7 +65,10 @@ public class EditFolderAction extends PortletAction {
 				deleteFolders(actionRequest, false);
 			}
 			else if (cmd.equals(Constants.MOVE)) {
-				moveFolders(actionRequest);
+				moveFolders(actionRequest, false);
+			}
+			else if (cmd.equals(Constants.MOVE_FROM_TRASH)) {
+				moveFolders(actionRequest, true);
 			}
 			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
 				deleteFolders(actionRequest, true);
@@ -151,8 +154,21 @@ public class EditFolderAction extends PortletAction {
 		}
 	}
 
-	protected void moveFolders(ActionRequest actionRequest) throws Exception {
+	protected void moveFolders(
+			ActionRequest actionRequest, boolean moveFromTrash)
+		throws Exception {
+
+		long[] folderIds = null;
+
 		long folderId = ParamUtil.getLong(actionRequest, "folderId");
+
+		if (folderId > 0) {
+			folderIds = new long[] {folderId};
+		}
+		else {
+			folderIds = StringUtil.split(
+				ParamUtil.getString(actionRequest, "folderIds"), 0L);
+		}
 
 		long parentFolderId = ParamUtil.getLong(
 			actionRequest, "parentFolderId");
@@ -160,15 +176,12 @@ public class EditFolderAction extends PortletAction {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DLFileEntry.class.getName(), actionRequest);
 
-		if (folderId > 0) {
-			DLAppServiceUtil.moveFolder(
-				folderId, parentFolderId, serviceContext);
-		}
-		else {
-			long[] folderIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "folderIds"), 0L);
-
-			for (long curFolderId : folderIds) {
+		for (long curFolderId : folderIds) {
+			if (moveFromTrash) {
+				DLAppServiceUtil.moveFolderFromTrash(
+					curFolderId, parentFolderId, serviceContext);
+			}
+			else {
 				DLAppServiceUtil.moveFolder(
 					curFolderId, parentFolderId, serviceContext);
 			}

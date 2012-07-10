@@ -25,6 +25,8 @@ long folderId = BeanParamUtil.getLong(folder, request, "folderId");
 
 long repositoryId = BeanParamUtil.getLong(folder, request, "repositoryId");
 long parentFolderId = BeanParamUtil.getLong(folder, request, "parentFolderId", DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+String cmd = ParamUtil.getString(request, Constants.CMD, Constants.MOVE);
 %>
 
 <liferay-util:include page="/html/portlet/document_library/top_links.jsp" />
@@ -34,7 +36,7 @@ long parentFolderId = BeanParamUtil.getLong(folder, request, "parentFolderId", D
 </portlet:actionURL>
 
 <aui:form action="<%= moveFolderURL %>" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveFolder(false);" %>'>
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.MOVE %>" />
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= cmd %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="folderId" type="hidden" value="<%= folderId %>" />
 	<aui:input name="parentFolderId" type="hidden" value="<%= parentFolderId %>" />

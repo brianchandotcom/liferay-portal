@@ -1670,7 +1670,8 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @return the temporary file entry names
 	* @throws PortalException if the folder was invalid
 	* @throws SystemException if a system exception occurred
-	* @see com.liferay.portlet.documentlibrary.service.impl.DLAppServiceImpl#addTempFileEntry(long, long, String, String, File)
+	* @see com.liferay.portlet.documentlibrary.service.impl.DLAppServiceImpl#addTempFileEntry(
+	long, long, String, String, File)
 	* @see com.liferay.portal.kernel.util.TempFileUtil
 	*/
 	public java.lang.String[] getTempFileEntryNames(long groupId,
@@ -1818,6 +1819,26 @@ public class DLAppServiceWrapper implements DLAppService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _dlAppService.moveFolder(folderId, parentFolderId, serviceContext);
+	}
+
+	/**
+	* Moves the folder with the primary key from the trash portlet
+	* to the new parent folder with the primary key
+	*
+	* @param folderId the primary key of the folder
+	* @param parentFolderId the primary key of the new parent folder
+	* @param serviceContext the service context to be applied
+	* @return the file entry
+	* @throws PortalException if the folder could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portal.kernel.repository.model.Folder moveFolderFromTrash(
+		long folderId, long parentFolderId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlAppService.moveFolderFromTrash(folderId, parentFolderId,
+			serviceContext);
 	}
 
 	/**

@@ -104,8 +104,7 @@
 	}
 
 	.lfr-discussion {
-		&:hover .lfr-discussion-actions li a,
-		.lfr-discussion-actions li a:focus {
+		&:hover .lfr-discussion-actions li a, .lfr-discussion-actions li a:focus {
 			clip: rect(auto auto auto auto);
 			position: static;
 		}

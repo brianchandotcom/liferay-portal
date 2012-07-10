@@ -1,3 +1,5 @@
+@import "compass";
+
 .taglib-search-toggle {
 	.inline-control {
 		float: none;
@@ -17,9 +19,7 @@
 	}
 
 	.aui-field-input {
-		-moz-box-sizing: border-box;
-		-webkit-box-sizing: border-box;
-		box-sizing: border-box;
+		@include box-sizing("border-box");
 	}
 
 	.aui-field-input, .aui-field-element, .aui-field-content {

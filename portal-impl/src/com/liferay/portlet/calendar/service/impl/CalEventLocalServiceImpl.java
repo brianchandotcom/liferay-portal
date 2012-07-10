@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.cal.TZSRecurrence;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedOutputStream;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mail.MailMessage;
@@ -252,9 +254,13 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 
 		// Social
 
+		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
+
+		extraDataJSONObject.put("title", event.getTitle());
+
 		socialActivityLocalService.addActivity(
 			userId, groupId, CalEvent.class.getName(), eventId,
-			CalendarActivityKeys.ADD_EVENT, StringPool.BLANK, 0);
+			CalendarActivityKeys.ADD_EVENT, extraDataJSONObject.toString(), 0);
 
 		// Pool
 
@@ -818,9 +824,14 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 
 		// Social
 
+		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
+
+		extraDataJSONObject.put("title", event.getTitle());
+
 		socialActivityLocalService.addActivity(
 			userId, event.getGroupId(), CalEvent.class.getName(), eventId,
-			CalendarActivityKeys.UPDATE_EVENT, StringPool.BLANK, 0);
+			CalendarActivityKeys.UPDATE_EVENT, extraDataJSONObject.toString(),
+			0);
 
 		// Pool
 

@@ -14,11 +14,15 @@
 
 package com.liferay.portlet.social.model;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -34,6 +38,8 @@ public abstract class BaseSocialActivityInterpreter
 
 	public SocialActivityFeedEntry interpret(
 		SocialActivity activity, ThemeDisplay themeDisplay) {
+
+		_activity = activity;
 
 		try {
 			return doInterpret(activity, themeDisplay);
@@ -95,6 +101,19 @@ public abstract class BaseSocialActivityInterpreter
 		}
 	}
 
+	protected String getTitle(String defaultValue) throws PortalException {
+		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject(
+			_activity.getExtraData());
+
+		String title = extraDataJSONObject.getString("title");
+
+		if (Validator.isNull(title)) {
+			return HtmlUtil.escape(defaultValue);
+		}
+
+		return HtmlUtil.escape(title);
+	}
+
 	protected String getUserName(long userId, ThemeDisplay themeDisplay) {
 		try {
 			if (userId <= 0) {
@@ -148,5 +167,7 @@ public abstract class BaseSocialActivityInterpreter
 
 	private static Log _log = LogFactoryUtil.getLog(
 		BaseSocialActivityInterpreter.class);
+
+	private SocialActivity _activity;
 
 }

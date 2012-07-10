@@ -17,6 +17,8 @@ package com.liferay.portlet.blogs.service.impl;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
@@ -1061,6 +1063,10 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			serviceContext.setCommand(Constants.ADD);
 		}
 
+		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
+
+		extraDataJSONObject.put("title", entry.getTitle());
+
 		if (status == WorkflowConstants.STATUS_APPROVED) {
 
 			// Asset
@@ -1078,13 +1084,15 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 					socialActivityLocalService.addActivity(
 						user.getUserId(), entry.getGroupId(),
 						BlogsEntry.class.getName(), entryId,
-						BlogsActivityKeys.UPDATE_ENTRY, StringPool.BLANK, 0);
+						BlogsActivityKeys.UPDATE_ENTRY,
+						extraDataJSONObject.toString(), 0);
 				}
 				else {
 					socialActivityLocalService.addUniqueActivity(
 						user.getUserId(), entry.getGroupId(),
 						BlogsEntry.class.getName(), entryId,
-						BlogsActivityKeys.ADD_ENTRY, StringPool.BLANK, 0);
+						BlogsActivityKeys.ADD_ENTRY,
+						extraDataJSONObject.toString(), 0);
 				}
 			}
 
@@ -1133,13 +1141,15 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 					socialActivityLocalService.addActivity(
 						user.getUserId(), entry.getGroupId(),
 						BlogsEntry.class.getName(), entryId,
-						BlogsActivityKeys.UPDATE_ENTRY, StringPool.BLANK, 0);
+						BlogsActivityKeys.UPDATE_ENTRY,
+						extraDataJSONObject.toString(), 0);
 				}
 				else {
 					socialActivityLocalService.addUniqueActivity(
 						user.getUserId(), entry.getGroupId(),
 						BlogsEntry.class.getName(), entryId,
-						BlogsActivityKeys.ADD_ENTRY, StringPool.BLANK, 0);
+						BlogsActivityKeys.ADD_ENTRY,
+						extraDataJSONObject.toString(), 0);
 				}
 			}
 

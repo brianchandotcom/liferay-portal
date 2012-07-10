@@ -15,7 +15,6 @@
 package com.liferay.portlet.blogs.social;
 
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -81,7 +80,7 @@ public class BlogsActivityInterpreter extends BaseSocialActivityInterpreter {
 
 		// Title
 
-		String entryTitle = wrapLink(link, HtmlUtil.escape(entry.getTitle()));
+		String entryTitle = wrapLink(link, getTitle(entry.getTitle()));
 		String displayDate = StringPool.BLANK;
 
 		String titlePattern = null;
@@ -98,7 +97,7 @@ public class BlogsActivityInterpreter extends BaseSocialActivityInterpreter {
 		}
 		else if (activityType == BlogsActivityKeys.ADD_ENTRY) {
 			if (entry.getStatus() == WorkflowConstants.STATUS_SCHEDULED) {
-				entryTitle = HtmlUtil.escape(entry.getTitle());
+				entryTitle = getTitle(entry.getTitle());
 
 				Format dateFormatDate =
 					FastDateFormatFactoryUtil.getSimpleDateFormat(

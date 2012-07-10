@@ -15,7 +15,6 @@
 package com.liferay.portlet.documentlibrary.social;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -98,8 +97,7 @@ public class DLActivityInterpreter extends BaseSocialActivityInterpreter {
 			}
 		}
 
-		String fileTitle = wrapLink(
-			link, HtmlUtil.escape(fileEntry.getTitle()));
+		String fileTitle = wrapLink(link, getTitle(fileEntry.getTitle()));
 
 		Object[] titleArguments = new Object[] {
 			groupName, creatorUserName, fileTitle

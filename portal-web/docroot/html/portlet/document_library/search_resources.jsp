@@ -468,13 +468,9 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajaxRequest) {
 
 					</liferay-ui:tabs>
 				</div>
-
-				<span id="<portlet:namespace />displayStyleButtons">
-					<liferay-util:include page="/html/portlet/document_library/display_style_buttons.jsp" />
-				</span>
 			</c:when>
 			<c:otherwise>
-				<div class="repository-search-results" data-repositoryId="<%= searchRepositoryId %>" id='<%= liferayPortletResponse.getNamespace() + "searchResults" + searchRepositoryId %>'>
+				<div class="repository-search-results" data-repositoryId="<%= searchRepositoryId %>" id='<%= liferayPortletResponse.getNamespace() + "searchResultsContainer" + searchRepositoryId %>'>
 					<%= searchResults %>
 				</div>
 			</c:otherwise>
@@ -486,6 +482,14 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajaxRequest) {
 		</div>
 	</c:when>
 </c:choose>
+
+<%
+request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
+%>
+
+<span id="<portlet:namespace />displayStyleButtons">
+	<liferay-util:include page="/html/portlet/document_library/display_style_buttons.jsp" />
+</span>
 
 <%!
 private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.document_library.search_resources_jsp");

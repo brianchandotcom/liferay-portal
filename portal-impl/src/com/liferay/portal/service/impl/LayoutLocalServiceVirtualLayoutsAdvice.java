@@ -92,8 +92,8 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 						layout.getSourcePrototypeLayoutUuid())) {
 
 					if (!SitesUtil.isLayoutModifiedSinceLastMerge(layout)) {
-
-						SitesUtil.mergeLayoutSetProtypeLayouts(group, layoutSet);
+						SitesUtil.mergeLayoutSetProtypeLayouts(
+							group, layoutSet);
 					}
 				}
 			}
@@ -105,7 +105,6 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 		else if (methodName.equals("getLayouts") &&
 				 (Arrays.equals(parameterTypes, _TYPES_L_B_L) ||
 				  Arrays.equals(parameterTypes, _TYPES_L_B_L_B_I_I))) {
-			List<Layout> layouts = (List<Layout>)methodInvocation.proceed();
 
 			long groupId = (Long)arguments[0];
 			boolean privateLayout = (Boolean)arguments[1];
@@ -117,30 +116,26 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 				LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 					groupId, privateLayout);
 
-				try {
-					MergeLayoutPrototypesThreadLocal.setInProgress(true);
-					WorkflowThreadLocal.setEnabled(false);
+				List<Layout> layouts = (List<Layout>)methodInvocation.proceed();
 
-					boolean isAnyLayoutModifiedSinceLastMerge = false;
+				for (Layout layout : layouts) {
+					if (!SitesUtil.isLayoutModifiedSinceLastMerge(layout)) {
+						try {
+							MergeLayoutPrototypesThreadLocal.setInProgress(
+								true);
+							WorkflowThreadLocal.setEnabled(false);
 
-					for ( Layout layout : layouts) {
-
-						if (!SitesUtil.isLayoutModifiedSinceLastMerge(layout)) {
-
-							isAnyLayoutModifiedSinceLastMerge = true;
-
-							break;
+							SitesUtil.mergeLayoutSetProtypeLayouts(
+								group, layoutSet);
+							}
+						finally {
+							MergeLayoutPrototypesThreadLocal.setInProgress(
+								false);
+							WorkflowThreadLocal.setEnabled(workflowEnabled);
 						}
-					}
 
-					if (isAnyLayoutModifiedSinceLastMerge) {
-
-						SitesUtil.mergeLayoutSetProtypeLayouts(group, layoutSet);
+						break;
 					}
-				}
-				finally {
-					MergeLayoutPrototypesThreadLocal.setInProgress(false);
-					WorkflowThreadLocal.setEnabled(workflowEnabled);
 				}
 
 				Object returnValue = methodInvocation.proceed();

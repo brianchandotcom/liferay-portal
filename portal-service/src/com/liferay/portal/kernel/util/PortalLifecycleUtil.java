@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.util;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -82,8 +83,8 @@ public class PortalLifecycleUtil {
 
 	private static boolean _inFlushDestroys;
 	private static List<PortalLifecycle> _portalLifecyclesDestroy =
-		new ArrayList<PortalLifecycle>();
+		Collections.synchronizedList(new ArrayList<PortalLifecycle>());
 	private static List<PortalLifecycle> _portalLifecyclesInit =
-		new ArrayList<PortalLifecycle>();
+		Collections.synchronizedList(new ArrayList<PortalLifecycle>());
 
 }

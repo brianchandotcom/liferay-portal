@@ -3364,6 +3364,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 					"/portal/update_password?p_l_id="+
 						serviceContext.getPlid() +
 							"&ticketKey=" + ticket.getKey();
+
+			user.setPasswordReset(true);
+
+			userPersistence.update(user, false);
 		}
 		else {
 			if (!PwdEncryptor.PASSWORDS_ENCRYPTION_ALGORITHM.equals(

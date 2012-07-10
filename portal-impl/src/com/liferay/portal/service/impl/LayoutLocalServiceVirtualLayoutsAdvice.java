@@ -91,7 +91,10 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 				if (Validator.isNotNull(
 						layout.getSourcePrototypeLayoutUuid())) {
 
-					SitesUtil.mergeLayoutSetProtypeLayouts(group, layoutSet);
+					if (!SitesUtil.isLayoutModifiedSinceLastMerge(layout)) {
+
+						SitesUtil.mergeLayoutSetProtypeLayouts(group, layoutSet);
+					}
 				}
 			}
 			finally {
@@ -102,6 +105,7 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 		else if (methodName.equals("getLayouts") &&
 				 (Arrays.equals(parameterTypes, _TYPES_L_B_L) ||
 				  Arrays.equals(parameterTypes, _TYPES_L_B_L_B_I_I))) {
+			List<Layout> layouts = (List<Layout>)methodInvocation.proceed();
 
 			long groupId = (Long)arguments[0];
 			boolean privateLayout = (Boolean)arguments[1];
@@ -117,7 +121,22 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 					MergeLayoutPrototypesThreadLocal.setInProgress(true);
 					WorkflowThreadLocal.setEnabled(false);
 
-					SitesUtil.mergeLayoutSetProtypeLayouts(group, layoutSet);
+					boolean isAnyLayoutModifiedSinceLastMerge = false;
+
+					for ( Layout layout : layouts) {
+
+						if (!SitesUtil.isLayoutModifiedSinceLastMerge(layout)) {
+
+							isAnyLayoutModifiedSinceLastMerge = true;
+
+							break;
+						}
+					}
+
+					if (isAnyLayoutModifiedSinceLastMerge) {
+
+						SitesUtil.mergeLayoutSetProtypeLayouts(group, layoutSet);
+					}
 				}
 				finally {
 					MergeLayoutPrototypesThreadLocal.setInProgress(false);

@@ -797,16 +797,13 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		// Social
 
+		socialActivityCounterLocalService.disableActivityCounters(
+			BlogsEntry.class.getName(), entry.getEntryId());
+
 		socialActivityLocalService.addActivity(
 			userId, entry.getGroupId(), BlogsEntry.class.getName(),
 			entry.getEntryId(), SocialActivityConstants.TYPE_MOVE_TO_TRASH,
 			StringPool.BLANK, 0);
-
-		// Trash
-
-		trashEntryLocalService.addTrashEntry(
-			userId, entry.getGroupId(), BlogsEntry.class.getName(),
-			entry.getEntryId(), entry.getStatus(), null, null);
 
 		// Workflow
 
@@ -851,10 +848,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			userId, trashEntry.getGroupId(), BlogsEntry.class.getName(),
 			entryId, SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 			StringPool.BLANK, 0);
-
-		// Trash
-
-		trashEntryLocalService.deleteEntry(trashEntry.getEntryId());
 	}
 
 	public void subscribe(long userId, long groupId)
@@ -1115,13 +1108,18 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 			// Asset
 
+			assetEntryLocalService.updateVisible(
+				BlogsEntry.class.getName(), entryId, false);
+
 			if (status == WorkflowConstants.STATUS_IN_TRASH) {
-				assetEntryLocalService.moveEntryToTrash(
-					BlogsEntry.class.getName(), entryId);
+				trashEntryLocalService.addTrashEntry(
+					userId, entry.getGroupId(), BlogsEntry.class.getName(),
+					entry.getEntryId(), oldStatus, null, null);
+
+				indexer.reindex(entry);
 			}
 			else {
-				assetEntryLocalService.updateVisible(
-					BlogsEntry.class.getName(), entryId, false);
+				indexer.delete(entry);
 			}
 
 			// Social
@@ -1142,10 +1140,13 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 						BlogsActivityKeys.ADD_ENTRY, StringPool.BLANK, 0);
 				}
 			}
+		}
 
-			// Indexer
+		if ((oldStatus == WorkflowConstants.STATUS_IN_TRASH) &&
+			(status != WorkflowConstants.STATUS_IN_TRASH)) {
 
-			indexer.delete(entry);
+			trashEntryLocalService.deleteEntry(
+				BlogsEntry.class.getName(), entryId);
 		}
 
 		return entry;

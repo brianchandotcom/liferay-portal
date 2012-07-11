@@ -15,6 +15,7 @@
 package com.liferay.portlet.trash;
 
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
@@ -33,6 +34,7 @@ import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.ExecutionTestListeners;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
+import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
@@ -51,6 +53,7 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Manuel de la Peña
+ * @author Julio Camarero
  */
 @ExecutionTestListeners(
 	listeners = {
@@ -83,12 +86,10 @@ public class BlogsEntryTrashHandlerTest {
 		testTrash(false, false);
 	}
 
-	protected BlogsEntry addBlogsEntry(Group group, boolean approved)
+	protected BlogsEntry addBlogsEntry(
+			Group group, boolean approved, ServiceContext serviceContext)
 		throws Exception {
 
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
-
-		serviceContext.setScopeGroupId(group.getGroupId());
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
 		String title = "Title";
@@ -152,13 +153,27 @@ public class BlogsEntryTrashHandlerTest {
 	}
 
 	protected int searchBlogsEntriesCount(long groupId) throws Exception {
-		Indexer indexer = IndexerRegistryUtil.getIndexer(BlogsEntry.class);
+		Thread.sleep(1000 * TestPropsValues.JUNIT_DELAY_FACTOR);
 
+		Indexer indexer = IndexerRegistryUtil.getIndexer(BlogsEntry.class);
 		SearchContext searchContext = ServiceTestUtil.getSearchContext();
 
 		searchContext.setGroupIds(new long[] {groupId});
 
 		Hits results = indexer.search(searchContext);
+
+		return results.getLength();
+	}
+
+	protected int searchTrashEntriesCount(
+		String keywords, ServiceContext serviceContext) throws Exception {
+
+		Thread.sleep(1000 * TestPropsValues.JUNIT_DELAY_FACTOR);
+
+		Hits results = TrashEntryServiceUtil.search(
+			serviceContext.getCompanyId(), serviceContext.getScopeGroupId(),
+			serviceContext.getUserId(), keywords, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
 
 		return results.getLength();
 	}
@@ -169,13 +184,19 @@ public class BlogsEntryTrashHandlerTest {
 		Group group = ServiceTestUtil.addGroup(
 			"BlogsEntryTrashHandlerTest#testGroup");
 
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
+
+		serviceContext.setScopeGroupId(group.getGroupId());
+
 		int initialBlogsEntriesCount = getBlogsEntriesNotInTrashCount(
 			group.getGroupId());
 		int initialTrashEntriesCount = getTrashEntriesCount(group.getGroupId());
 		int initialBlogsEntriesSearchCount = searchBlogsEntriesCount(
 			group.getGroupId());
+		int initialTrashEntriesSearchCount = searchTrashEntriesCount(
+			"Title", serviceContext);
 
-		BlogsEntry blogsEntry = addBlogsEntry(group, approved);
+		BlogsEntry blogsEntry = addBlogsEntry(group, approved, serviceContext);
 
 		int oldStatus = blogsEntry.getStatus();
 
@@ -198,6 +219,10 @@ public class BlogsEntryTrashHandlerTest {
 				searchBlogsEntriesCount(group.getGroupId()));
 		}
 
+		Assert.assertEquals(
+			initialTrashEntriesSearchCount,
+			searchTrashEntriesCount("Title", serviceContext));
+
 		BlogsEntryServiceUtil.moveEntryToTrash(blogsEntry.getEntryId());
 
 		TrashEntry trashEntry = TrashEntryLocalServiceUtil.getEntry(
@@ -216,6 +241,9 @@ public class BlogsEntryTrashHandlerTest {
 		Assert.assertEquals(
 			initialBlogsEntriesSearchCount,
 			searchBlogsEntriesCount(group.getGroupId()));
+		Assert.assertEquals(
+			initialTrashEntriesSearchCount + 1,
+			searchTrashEntriesCount("Title", serviceContext));
 
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
 			blogsEntry.getModelClassName());
@@ -230,6 +258,9 @@ public class BlogsEntryTrashHandlerTest {
 			Assert.assertEquals(
 				initialBlogsEntriesSearchCount,
 				searchBlogsEntriesCount(group.getGroupId()));
+			Assert.assertEquals(
+				initialTrashEntriesSearchCount,
+				searchTrashEntriesCount("Title", serviceContext));
 		}
 		else {
 			trashHandler.restoreTrashEntry(blogsEntry.getEntryId());
@@ -255,6 +286,14 @@ public class BlogsEntryTrashHandlerTest {
 					initialBlogsEntriesSearchCount,
 					searchBlogsEntriesCount(group.getGroupId()));
 			}
+
+			Assert.assertEquals(
+				initialTrashEntriesSearchCount,
+				searchTrashEntriesCount("Title", serviceContext));
+
+			// clean up
+
+			trashHandler.deleteTrashEntry(blogsEntry.getEntryId());
 		}
 	}
 

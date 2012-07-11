@@ -14,11 +14,13 @@
 
 package com.liferay.portlet.trash;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
@@ -88,6 +90,19 @@ public abstract class BaseDLTrashHandlerTestCase extends BaseDLAppTestCase {
 		SearchContext searchContext = ServiceTestUtil.getSearchContext();
 
 		Hits results = indexer.search(searchContext);
+
+		return results.getLength();
+	}
+
+	protected int searchTrashEntriesCount(
+		String keywords, ServiceContext serviceContext) throws Exception {
+
+		Thread.sleep(1000 * TestPropsValues.JUNIT_DELAY_FACTOR);
+
+		Hits results = TrashEntryServiceUtil.search(
+			serviceContext.getCompanyId(), serviceContext.getScopeGroupId(),
+			serviceContext.getUserId(), keywords, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
 
 		return results.getLength();
 	}

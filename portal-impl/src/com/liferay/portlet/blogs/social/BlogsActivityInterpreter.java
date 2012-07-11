@@ -80,7 +80,8 @@ public class BlogsActivityInterpreter extends BaseSocialActivityInterpreter {
 
 		// Title
 
-		String entryTitle = wrapLink(link, getTitle(entry.getTitle()));
+		String entryTitle = wrapLink(
+			link, getTitle(activity.getExtraData(), entry.getTitle()));
 		String displayDate = StringPool.BLANK;
 
 		String titlePattern = null;
@@ -97,7 +98,8 @@ public class BlogsActivityInterpreter extends BaseSocialActivityInterpreter {
 		}
 		else if (activityType == BlogsActivityKeys.ADD_ENTRY) {
 			if (entry.getStatus() == WorkflowConstants.STATUS_SCHEDULED) {
-				entryTitle = getTitle(entry.getTitle());
+				entryTitle = getTitle(
+					activity.getExtraData(), entry.getTitle());
 
 				Format dateFormatDate =
 					FastDateFormatFactoryUtil.getSimpleDateFormat(

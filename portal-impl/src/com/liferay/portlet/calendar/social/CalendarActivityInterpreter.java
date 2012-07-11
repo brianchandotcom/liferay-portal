@@ -94,7 +94,8 @@ public class CalendarActivityInterpreter extends BaseSocialActivityInterpreter {
 			}
 		}
 
-		String eventTitle = wrapLink(link, getTitle(event.getTitle()));
+		String eventTitle = wrapLink(
+			link, getTitle(activity.getExtraData(), event.getTitle()));
 
 		Object[] titleArguments = new Object[] {
 			groupName, creatorUserName, eventTitle

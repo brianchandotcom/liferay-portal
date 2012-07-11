@@ -39,8 +39,6 @@ public abstract class BaseSocialActivityInterpreter
 	public SocialActivityFeedEntry interpret(
 		SocialActivity activity, ThemeDisplay themeDisplay) {
 
-		_activity = activity;
-
 		try {
 			return doInterpret(activity, themeDisplay);
 		}
@@ -101,9 +99,11 @@ public abstract class BaseSocialActivityInterpreter
 		}
 	}
 
-	protected String getTitle(String defaultValue) throws PortalException {
+	protected String getTitle(String extraData, String defaultValue)
+		throws PortalException {
+
 		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject(
-			_activity.getExtraData());
+			extraData);
 
 		String title = extraDataJSONObject.getString("title");
 
@@ -167,7 +167,5 @@ public abstract class BaseSocialActivityInterpreter
 
 	private static Log _log = LogFactoryUtil.getLog(
 		BaseSocialActivityInterpreter.class);
-
-	private SocialActivity _activity;
 
 }

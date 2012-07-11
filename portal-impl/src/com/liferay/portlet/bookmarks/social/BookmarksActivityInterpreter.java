@@ -93,7 +93,8 @@ public class BookmarksActivityInterpreter
 			}
 		}
 
-		String entryTitle = wrapLink(link, getTitle(entry.getName()));
+		String entryTitle = wrapLink(
+			link, getTitle(activity.getExtraData(), entry.getName()));
 
 		Object[] titleArguments = new Object[] {
 			groupName, creatorUserName, receiverUserName, entryTitle

@@ -984,7 +984,8 @@ public class HttpImpl implements Http {
 
 			MultipartRequestEntity multipartRequestEntity =
 				new MultipartRequestEntity(
-					partsList.toArray(new Part[0]), postMethod.getParams());
+					partsList.toArray(new Part[partsList.size()]),
+					postMethod.getParams());
 
 			postMethod.setRequestEntity(multipartRequestEntity);
 		}

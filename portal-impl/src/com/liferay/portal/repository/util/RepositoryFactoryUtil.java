@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.repository.BaseRepository;
 import com.liferay.portal.kernel.repository.RepositoryException;
 import com.liferay.portal.util.PropsValues;
 
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -46,7 +47,10 @@ public class RepositoryFactoryUtil {
 	}
 
 	public static String[] getRepositoryClassNames() {
-		return _repositoryFactories.keySet().toArray(new String[] {});
+		Set<String> repositoryFactoryKeys = _repositoryFactories.keySet();
+
+		return repositoryFactoryKeys.toArray(
+			new String[repositoryFactoryKeys.size()]);
 	}
 
 	public static void registerRepositoryFactory(

@@ -119,19 +119,26 @@ public class DBLoader {
 	private void _loadDerby() throws Exception {
 		Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
 
-		Connection con = DriverManager.getConnection(
-			"jdbc:derby:" + _sqlDir + "/" + _databaseName + ";create=true", "",
-			"");
+		Connection con = null;
 
-		if (Validator.isNull(_fileName)) {
-			_loadDerby(con, _sqlDir + "/portal/portal-derby.sql");
-			_loadDerby(con, _sqlDir + "/indexes.sql");
-		}
-		else {
-			_loadDerby(con, _sqlDir + "/" + _fileName);
-		}
+		try {
+			con = DriverManager.getConnection(
+				"jdbc:derby:" + _sqlDir + "/" + _databaseName + ";create=true", "",
+				"");
 
-		con.close();
+			if (Validator.isNull(_fileName)) {
+				_loadDerby(con, _sqlDir + "/portal/portal-derby.sql");
+				_loadDerby(con, _sqlDir + "/indexes.sql");
+			}
+			else {
+				_loadDerby(con, _sqlDir + "/" + _fileName);
+			}
+		}
+		finally {
+			if (con != null) {
+				con.close();
+			}
+		}
 
 		try {
 			con = DriverManager.getConnection(
@@ -144,6 +151,11 @@ public class DBLoader {
 
 			if (!sqlState.equals("08006")) {
 				throw sqle;
+			}
+		}
+		finally {
+			if (con != null) {
+				con.close();
 			}
 		}
 	}
@@ -194,27 +206,34 @@ public class DBLoader {
 		// See LEP-2927. Appending ;shutdown=true to the database connection URL
 		// guarantees that ${_databaseName}.log is purged.
 
-		Connection con = DriverManager.getConnection(
-			"jdbc:hsqldb:" + _sqlDir + "/" + _databaseName + ";shutdown=true",
-			"sa", "");
+		Connection con = null;
 
-		if (Validator.isNull(_fileName)) {
-			loadHypersonic(con, _sqlDir + "/portal/portal-hypersonic.sql");
-			loadHypersonic(con, _sqlDir + "/indexes.sql");
+		try {
+			con = DriverManager.getConnection(
+				"jdbc:hsqldb:" + _sqlDir + "/" + _databaseName + ";shutdown=true",
+				"sa", "");
+
+			if (Validator.isNull(_fileName)) {
+				loadHypersonic(con, _sqlDir + "/portal/portal-hypersonic.sql");
+				loadHypersonic(con, _sqlDir + "/indexes.sql");
+			}
+			else {
+				loadHypersonic(con, _sqlDir + "/" + _fileName);
+			}
+
+			// Shutdown Hypersonic
+
+			Statement statement = con.createStatement();
+
+			statement.execute("SHUTDOWN COMPACT");
+
+			statement.close();
 		}
-		else {
-			loadHypersonic(con, _sqlDir + "/" + _fileName);
+		finally {
+			if (con != null) {
+				con.close();
+			}
 		}
-
-		// Shutdown Hypersonic
-
-		Statement statement = con.createStatement();
-
-		statement.execute("SHUTDOWN COMPACT");
-
-		statement.close();
-
-		con.close();
 
 		// Hypersonic will encode unicode characters twice, this will undo
 		// it

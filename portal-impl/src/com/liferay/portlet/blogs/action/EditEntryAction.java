@@ -14,10 +14,13 @@
 
 package com.liferay.portlet.blogs.action;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -61,7 +64,9 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.WindowState;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -73,6 +78,7 @@ import org.apache.struts.action.ActionMapping;
  * @author Thiago Moreira
  * @author Juan Fernández
  * @author Zsolt Berentey
+ * @author Levente Hudák
  */
 public class EditEntryAction extends PortletAction {
 
@@ -102,6 +108,9 @@ public class EditEntryAction extends PortletAction {
 			}
 			else if (cmd.equals(Constants.SUBSCRIBE)) {
 				subscribe(actionRequest);
+			}
+			else if (cmd.equals(Constants.UNDO)) {
+				restoreEntries(actionRequest);
 			}
 			else if (cmd.equals(Constants.UNSUBSCRIBE)) {
 				unsubscribe(actionRequest);
@@ -275,6 +284,19 @@ public class EditEntryAction extends PortletAction {
 				BlogsEntryServiceUtil.deleteEntry(deleteEntryId);
 			}
 		}
+
+		if (moveToTrash && (deleteEntryIds.length > 0)) {
+			HttpServletRequest request = PortalUtil.getHttpServletRequest(
+				actionRequest);
+
+			HttpSession session = request.getSession();
+
+			session.setAttribute("trashedEntryIds", deleteEntryIds);
+
+			String portletId = (String)request.getAttribute(WebKeys.PORTLET_ID);
+
+			SessionMessages.add(request, portletId + "_delete-success");
+		}
 	}
 
 	protected String getSaveAndContinueRedirect(
@@ -314,6 +336,23 @@ public class EditEntryAction extends PortletAction {
 		portletURL.setParameter("preview", String.valueOf(preview), false);
 
 		return portletURL.toString();
+	}
+
+	protected void restoreEntries(ActionRequest actionRequest)
+		throws PortalException, SystemException {
+
+		ThemeDisplay themeDislay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long userId = themeDislay.getUserId();
+
+		long[] restoreEntryIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "restoreEntryIds"), 0L);
+
+		for (long restoreEntryId : restoreEntryIds) {
+			BlogsEntryLocalServiceUtil.restoreEntryFromTrash(
+				userId, restoreEntryId);
+		}
 	}
 
 	protected void subscribe(ActionRequest actionRequest) throws Exception {

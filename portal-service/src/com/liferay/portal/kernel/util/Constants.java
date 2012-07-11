@@ -117,6 +117,8 @@ public interface Constants {
 
 	public static final String TRANSLATE = "translate";
 
+	public static final String UNDO = "undo";
+
 	public static final String UNLOCK = "unlock";
 
 	public static final String UNSUBSCRIBE = "unsubscribe";

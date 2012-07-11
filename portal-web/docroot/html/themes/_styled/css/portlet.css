@@ -228,6 +228,16 @@ body.portlet {
 	border-color: #F00;
 }
 
+/* ---------- Undo messages ---------- */
+
+.portlet-msg-notifier {
+	@extend .portlet-msg;
+	background-color: #FFC;
+	background-image: url(../images/messages/alert.png);
+	border-color: #FC0;
+	color: #E09000;
+}
+
 /* ---------- Warning messages ---------- */
 
 .portlet-msg-alert, .lfr-message-alert {

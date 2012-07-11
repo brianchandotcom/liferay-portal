@@ -17,6 +17,24 @@
 <%@ include file="/html/portlet/document_library/init.jsp" %>
 
 <%
+int count = 0;
+
+String trashedFolderIds = StringPool.BLANK;
+String trashedFileEntryIds = StringPool.BLANK;
+String trashedFileShortcutIds = StringPool.BLANK;
+
+if (SessionMessages.contains(request, portletId + "_delete-success")) {
+	trashedFolderIds = GetterUtil.getString(StringUtil.merge((long[])session.getAttribute("trashedFolderIds")));
+	trashedFileEntryIds = GetterUtil.getString(StringUtil.merge((long[])session.getAttribute("trashedFileEntryIds")));
+	trashedFileShortcutIds = GetterUtil.getString(StringUtil.merge((long[])session.getAttribute("trashedFileShortcutIds")));
+
+	session.removeAttribute("trashedFolderIds");
+	session.removeAttribute("trashedFileEntryIds");
+	session.removeAttribute("trashedFileShortcutIds");
+
+	count = (StringUtil.split(trashedFolderIds).length + StringUtil.split(trashedFileShortcutIds).length + StringUtil.split(trashedFileEntryIds).length);
+}
+
 String strutsAction = ParamUtil.getString(request, "struts_action");
 
 Folder folder = (com.liferay.portal.kernel.repository.model.Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);
@@ -72,6 +90,19 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 
 request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 %>
+
+<% if (SessionMessages.contains(request, portletId + "_delete-success")) { %>
+	<div class="portlet-msg-notifier">
+		<c:choose>
+			<c:when test='<%= count > 1 %>'>
+				<liferay-ui:message arguments='<%= new String[] {"javascript:" + renderResponse.getNamespace() + "undoEntries();"} %>' key="the-selected-items-have-been-moved-to-the-recycle-bin.-undo" translateArguments="false" />
+			</c:when>
+			<c:otherwise>
+				<liferay-ui:message arguments='<%= new String[] {"javascript:" + renderResponse.getNamespace() + "undoEntries();"} %>' key="the-selected-item-has-been-moved-to-the-recycle-bin.-undo" translateArguments="false" />
+			</c:otherwise>
+		</c:choose>
+	</div>
+<% } %>
 
 <div id="<portlet:namespace />documentLibraryContainer">
 	<aui:layout cssClass="lfr-app-column-view">
@@ -136,6 +167,9 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 				<aui:input name="folderIds" type="hidden" />
 				<aui:input name="fileEntryIds" type="hidden" />
 				<aui:input name="fileShortcutIds" type="hidden" />
+				<aui:input name="restoreFolderIds" type="hidden" />
+				<aui:input name="restoreFileShortcutIds" type="hidden" />
+				<aui:input name="restoreFileEntryIds" type="hidden" />
 
 				<div class="document-container" id="<portlet:namespace />documentContainer">
 					<c:choose>
@@ -185,6 +219,22 @@ if (folder != null) {
 	);
 
 	<portlet:namespace />toggleActionsButton();
+
+	Liferay.provide(
+		window,
+		'<portlet:namespace />undoEntries',
+		function() {
+			if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-undo-your-last-changes") %>')) {
+				document.<portlet:namespace />fm2.method = "post";
+				document.<portlet:namespace />fm2.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.UNDO %>";
+				document.<portlet:namespace />fm2.<portlet:namespace />restoreFolderIds.value = "<%= trashedFolderIds %>";
+				document.<portlet:namespace />fm2.<portlet:namespace />restoreFileShortcutIds.value = "<%= trashedFileShortcutIds %>";
+				document.<portlet:namespace />fm2.<portlet:namespace />restoreFileEntryIds.value = "<%= trashedFileEntryIds %>";
+				submitForm(document.<portlet:namespace />fm2, "<portlet:actionURL><portlet:param name="struts_action" value="/document_library/edit_entry" /></portlet:actionURL>");
+			}
+		},
+		['liferay-util-list-fields']
+	);
 </aui:script>
 
 <c:if test='<%= !strutsAction.equals("/document_library/search") %>'>

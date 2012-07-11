@@ -15,13 +15,16 @@
 package com.liferay.portlet.documentlibrary.action;
 
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
@@ -38,6 +41,9 @@ import javax.portlet.PortletConfig;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -46,6 +52,7 @@ import org.apache.struts.action.ActionMapping;
  * @author Brian Wing Shun Chan
  * @author Alexander Chow
  * @author Sergio González
+ * @author Levente Hudák
  */
 public class EditFolderAction extends PortletAction {
 
@@ -151,6 +158,19 @@ public class EditFolderAction extends PortletAction {
 
 			AssetPublisherUtil.removeRecentFolderId(
 				actionRequest, DLFileEntry.class.getName(), deleteFolderId);
+		}
+
+		if (moveToTrash && (deleteFolderIds.length > 0)) {
+			HttpServletRequest request = PortalUtil.getHttpServletRequest(
+				actionRequest);
+
+			HttpSession session = request.getSession();
+
+			session.setAttribute("trashedFolderIds", deleteFolderIds);
+
+			String portletId = (String)request.getAttribute(WebKeys.PORTLET_ID);
+
+			SessionMessages.add(request, portletId + "_delete-success");
 		}
 	}
 

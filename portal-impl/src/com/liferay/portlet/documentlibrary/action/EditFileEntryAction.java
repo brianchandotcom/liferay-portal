@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
@@ -88,7 +89,9 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.WindowState;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -99,6 +102,7 @@ import org.apache.struts.action.ActionMapping;
  * @author Alexander Chow
  * @author Sergio González
  * @author Manuel de la Peña
+ * @author Levente Hudák
  */
 public class EditFileEntryAction extends PortletAction {
 
@@ -495,15 +499,16 @@ public class EditFileEntryAction extends PortletAction {
 			ActionRequest actionRequest, boolean moveToTrash)
 		throws Exception {
 
+		long[] deleteFileEntryIds = null;
+
 		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
+
 		String version = ParamUtil.getString(actionRequest, "version");
 
 		if ((fileEntryId > 0) && Validator.isNotNull(version)) {
 			DLAppServiceUtil.deleteFileVersion(fileEntryId, version);
 		}
 		else {
-			long[] deleteFileEntryIds = null;
-
 			if (fileEntryId > 0) {
 				deleteFileEntryIds = new long[] {fileEntryId};
 			}
@@ -521,6 +526,19 @@ public class EditFileEntryAction extends PortletAction {
 					DLAppServiceUtil.deleteFileEntry(deleteFileEntryId);
 				}
 			}
+		}
+
+		if (moveToTrash && (deleteFileEntryIds.length > 0)) {
+			HttpServletRequest request = PortalUtil.getHttpServletRequest(
+				actionRequest);
+
+			HttpSession session = request.getSession();
+
+			session.setAttribute("trashedFileEntryIds", deleteFileEntryIds);
+
+			String portletId = (String)request.getAttribute(WebKeys.PORTLET_ID);
+
+			SessionMessages.add(request, portletId + "_delete-success");
 		}
 	}
 

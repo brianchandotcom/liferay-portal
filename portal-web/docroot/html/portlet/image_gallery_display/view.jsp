@@ -17,6 +17,26 @@
 <%@ include file="/html/portlet/image_gallery_display/init.jsp" %>
 
 <%
+int count = 0;
+
+String trashedFolderIds = StringPool.BLANK;
+String trashedFileEntryIds = StringPool.BLANK;
+String trashedFileShortcutIds = StringPool.BLANK;
+
+String trashedElementsText = StringPool.BLANK;
+
+if (SessionMessages.contains(request, portletId + "_delete-success")) {
+	trashedFolderIds = GetterUtil.getString(StringUtil.merge((long[])session.getAttribute("trashedFolderIds")), StringPool.BLANK);
+	trashedFileEntryIds = GetterUtil.getString(StringUtil.merge((long[])session.getAttribute("trashedFileEntryIds")), StringPool.BLANK);
+	trashedFileShortcutIds = GetterUtil.getString(StringUtil.merge((long[])session.getAttribute("trashedFileShortcutIds")), StringPool.BLANK);
+
+	session.removeAttribute("trashedFolderIds");
+	session.removeAttribute("trashedFileEntryIds");
+	session.removeAttribute("trashedFileShortcutIds");
+
+	count = (StringUtil.split(trashedFolderIds).length + StringUtil.split(trashedFileShortcutIds).length + StringUtil.split(trashedFileEntryIds).length);
+}
+
 String topLink = ParamUtil.getString(request, "topLink", "home");
 
 Folder folder = (Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);
@@ -71,6 +91,36 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 
 request.setAttribute("view.jsp-portletURL", portletURL);
 %>
+
+<% if (SessionMessages.contains(request, portletId + "_delete-success")) { %>
+	<div class="portlet-msg-notifier">
+		<c:choose>
+			<c:when test='<%= count > 1 %>'>
+				<liferay-ui:message arguments='<%= new String[] {"javascript:" + renderResponse.getNamespace() + "undoEntries();" } %>' key="the-selected-items-have-been-moved-to-the-recycle-bin.-undo" translateArguments="false" />
+			</c:when>
+			<c:otherwise>
+				<liferay-ui:message arguments='<%= new String[] {"javascript:" + renderResponse.getNamespace() + "undoEntries();" } %>' key="the-selected-item-has-been-moved-to-the-recycle-bin.-undo" translateArguments="false" />
+			</c:otherwise>
+		</c:choose>
+	</div>
+
+	<liferay-portlet:renderURL varImpl="editFileEntryURL">
+		<portlet:param name="struts_action" value="/document_library/edit_file_entry" />
+	</liferay-portlet:renderURL>
+
+	<aui:form action="<%= editFileEntryURL.toString() %>" method="get" name="fm2">
+		<aui:input name="<%= Constants.CMD %>" type="hidden" />
+		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+		<aui:input name="repositoryId" type="hidden" value="<%= repositoryId %>" />
+		<aui:input name="newFolderId" type="hidden" />
+		<aui:input name="folderIds" type="hidden" />
+		<aui:input name="fileEntryIds" type="hidden" />
+		<aui:input name="fileShortcutIds" type="hidden" />
+		<aui:input name="restoreFolderIds" type="hidden" />
+		<aui:input name="restoreFileShortcutIds" type="hidden" />
+		<aui:input name="restoreFileEntryIds" type="hidden" />
+	</aui:form>
+<% } %>
 
 <liferay-util:include page="/html/portlet/document_library/top_links.jsp" />
 
@@ -238,3 +288,21 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 	</c:when>
 </c:choose>
+
+<aui:script>
+	Liferay.provide(
+		window,
+		'<portlet:namespace />undoEntries',
+		function() {
+			if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-undo-your-last-changes") %>')) {
+				document.<portlet:namespace />fm2.method = "post";
+				document.<portlet:namespace />fm2.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.UNDO %>";
+				document.<portlet:namespace />fm2.<portlet:namespace />restoreFolderIds.value = "<%= trashedFolderIds %>";
+				document.<portlet:namespace />fm2.<portlet:namespace />restoreFileShortcutIds.value = "<%= trashedFileShortcutIds %>";
+				document.<portlet:namespace />fm2.<portlet:namespace />restoreFileEntryIds.value = "<%= trashedFileEntryIds %>";
+				submitForm(document.<portlet:namespace />fm2, "<portlet:actionURL><portlet:param name="struts_action" value="/document_library/edit_entry" /></portlet:actionURL>");
+			}
+		},
+		['liferay-util-list-fields']
+	);
+</aui:script>

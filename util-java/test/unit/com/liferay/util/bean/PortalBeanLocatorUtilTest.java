@@ -50,7 +50,6 @@ public class PortalBeanLocatorUtilTest extends PowerMockito {
 
 	@Test
 	public void testLocateExistingBean() {
-
 		when(
 			_beanLocator.locate("existingBean")
 		).thenReturn(

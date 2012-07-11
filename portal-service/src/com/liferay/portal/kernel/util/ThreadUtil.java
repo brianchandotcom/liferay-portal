@@ -57,7 +57,6 @@ public class ThreadUtil {
 	}
 
 	public static String threadDump() {
-
 		String threadDump = _getThreadDumpFromJstack();
 
 		if (Validator.isNull(threadDump)) {

@@ -57,12 +57,10 @@ public class AtomProvider extends AbstractWorkspaceProvider {
 		String baseUri = request.getBaseUri().toString();
 
 		for (WorkspaceInfo workspaceInfo : workspaces) {
-
 			Collection<CollectionInfo> collections =
 				workspaceInfo.getCollections(request);
 
 			for (CollectionInfo collectionInfo : collections) {
-
 				String href = collectionInfo.getHref(request);
 
 				if (href == null) {
@@ -93,11 +91,9 @@ public class AtomProvider extends AbstractWorkspaceProvider {
 	}
 
 	private void _initTargetResolver() {
-
 		RegexTargetResolver targetResolver = new RegexTargetResolver();
 
 		for (String base : _BASES) {
-
 			targetResolver.setPattern(
 				base + "?(\\?[^#]*)?", TargetType.TYPE_SERVICE);
 

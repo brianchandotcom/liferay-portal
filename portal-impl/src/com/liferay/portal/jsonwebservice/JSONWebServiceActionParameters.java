@@ -363,7 +363,6 @@ public class JSONWebServiceActionParameters {
 
 		@Override
 		public Object put(String key, Object value) {
-
 			if (key.startsWith(StringPool.DASH)) {
 				key = key.substring(1);
 

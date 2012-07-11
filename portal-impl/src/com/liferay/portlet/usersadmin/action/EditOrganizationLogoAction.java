@@ -67,7 +67,6 @@ public class EditOrganizationLogoAction extends PortletAction {
 				setForward(actionRequest, "portlet.users_admin.error");
 			}
 			else if (e instanceof UploadException) {
-
 				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else {

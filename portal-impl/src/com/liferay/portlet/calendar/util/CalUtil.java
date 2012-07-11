@@ -148,7 +148,6 @@ public class CalUtil {
 	}
 
 	public static String toString(Calendar cal, String[] types) {
-
 		StringBundler sb = new StringBundler(9);
 
 		if (cal != null) {

@@ -15,15 +15,24 @@
 package com.liferay.portlet.portletdisplaytemplates.util;
 
 import com.liferay.portal.kernel.staging.StagingConstants;
+import com.liferay.portal.kernel.templateparser.Transformer;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.dynamicdatalists.util.DDLTransformer;
 import com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
+
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Juan Fernández
@@ -109,5 +118,60 @@ public class PortletDisplayTemplatesUtil {
 
 		return portletDisplayDDMTemplateGroupId;
 	}
+
+	public static String renderDDMTemplate(
+			RenderRequest renderRequest, RenderResponse renderResponse,
+			long ddmTemplateId, List entries)
+		throws Exception {
+
+		Map<String, Object> contextObjects = new HashMap<String, Object>();
+
+		return renderDDMTemplate(
+			renderRequest, renderResponse, ddmTemplateId, entries,
+			contextObjects);
+	}
+
+	public static String renderDDMTemplate(
+			RenderRequest renderRequest, RenderResponse renderResponse,
+			long ddmTemplateId, List entries,
+			Map<String, Object> contextObjects)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(
+			ddmTemplateId);
+
+		contextObjects.put(PortletDisplayTemplatesConstants.ENTRIES, entries);
+
+		if (entries.size() == 1) {
+			contextObjects.put(
+				PortletDisplayTemplatesConstants.ENTRY, entries.get(0));
+		}
+
+		contextObjects.put(
+			PortletDisplayTemplatesConstants.DDM_TEMPLATE_ID, ddmTemplateId);
+
+		contextObjects.put(
+			PortletDisplayTemplatesConstants.LOCALE, renderRequest.getLocale());
+
+		contextObjects.put(
+			PortletDisplayTemplatesConstants.RENDER_REQUEST, renderRequest);
+
+		contextObjects.put(
+			PortletDisplayTemplatesConstants.RENDER_RESPONSE, renderResponse);
+
+		contextObjects.put(
+			PortletDisplayTemplatesConstants.THEME_DISPLAY, themeDisplay);
+
+		_transformer = new DDLTransformer();
+
+		return _transformer.transform(
+			themeDisplay, contextObjects, ddmTemplate.getScript(),
+			ddmTemplate.getLanguage());
+	}
+
+	private static Transformer _transformer = new DDLTransformer();
 
 }

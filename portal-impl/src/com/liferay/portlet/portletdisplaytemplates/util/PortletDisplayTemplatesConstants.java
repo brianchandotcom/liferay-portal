@@ -12,20 +12,20 @@
  * details.
  */
 
-package com.liferay.portlet.assetpublisher.util;
+package com.liferay.portlet.portletdisplaytemplates.util;
 
 /**
  * @author Juan Fernández
  */
-public class AssetPublisherConstants {
-
-	public static final String ASSET_ENTRIES = "assetEntries";
-
-	public static final String ASSET_ENTRY = "assetEntry";
+public class PortletDisplayTemplatesConstants {
 
 	public static final String ASSET_PUBLISHER_HELPER = "assetPublisherHelper";
 
 	public static final String DDM_TEMPLATE_ID = "ddmTemplateId";
+
+	public static final String ENTRIES = "entries";
+
+	public static final String ENTRY = "entry";
 
 	public static final String LOCALE = "locale";
 

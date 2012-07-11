@@ -14,8 +14,12 @@
 
 package com.liferay.portlet.ratings.service.impl;
 
+import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
@@ -24,8 +28,6 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.model.BlogsStatsUser;
-import com.liferay.portlet.messageboards.model.MBDiscussion;
-import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.ratings.EntryScoreException;
 import com.liferay.portlet.ratings.model.RatingsEntry;
 import com.liferay.portlet.ratings.model.RatingsStats;
@@ -252,15 +254,16 @@ public class RatingsEntryLocalServiceImpl
 	protected void validate(String className, double score)
 		throws PortalException {
 
-		double maxScore = PropsValues.RATINGS_DEFAULT_NUMBER_OF_STARS;
-		double minScore = 0;
+		Filter filter = new Filter(className);
 
-		if (className.equals(MBDiscussion.class.getName()) ||
-			className.equals(MBMessage.class.getName())) {
+		double maxScore =
+			GetterUtil.getInteger(PropsUtil.get(
+				PropsKeys.RATINGS_MAX_SCORE, filter),
+				PropsValues.RATINGS_DEFAULT_NUMBER_OF_STARS);
 
-			maxScore = 1;
-			minScore = -1;
-		}
+		double minScore =
+			GetterUtil.getInteger(PropsUtil.get(
+				PropsKeys.RATINGS_MIN_SCORE, filter));
 
 		if ((score < minScore) || (score > maxScore)) {
 			throw new EntryScoreException();

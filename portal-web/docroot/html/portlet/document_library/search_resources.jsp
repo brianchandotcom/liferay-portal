@@ -167,7 +167,7 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajaxRequest) {
 		<portlet:param name="struts_action" value="/document_library/search" />
 	</liferay-portlet:renderURL>
 
-	<div class="document-container" id="<portlet:namespace />documentContainer">
+	<div class="document-container" id="<portlet:namespace />entriesContainer">
 		<aui:form action="<%= searchURL %>" method="get" name="fm">
 			<liferay-portlet:renderURLParams varImpl="searchURL" />
 			<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
@@ -316,47 +316,47 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajaxRequest) {
 						<c:otherwise>
 
 							<%
-								resultRows = searchContainer.getResultRows();
+							resultRows = searchContainer.getResultRows();
 
-																	ResultRow row = new ResultRow(fileEntry, fileEntry.getFileEntryId(), i);
+							ResultRow row = new ResultRow(fileEntry, fileEntry.getFileEntryId(), i);
 
-																	// Position
+							// Position
 
-																	PortletURL rowURL = liferayPortletResponse.createRenderURL();
+							PortletURL rowURL = liferayPortletResponse.createRenderURL();
 
-																	rowURL.setParameter("struts_action", "/document_library/view_file_entry");
-																	rowURL.setParameter("redirect", HttpUtil.removeParameter(currentURL, liferayPortletResponse.getNamespace() + "ajax"));
-																	rowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
+							rowURL.setParameter("struts_action", "/document_library/view_file_entry");
+							rowURL.setParameter("redirect", HttpUtil.removeParameter(currentURL, liferayPortletResponse.getNamespace() + "ajax"));
+							rowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 
-																	for (String columnName : entryColumns) {
-																		if (columnName.equals("action")) {
-																			row.addJSP("right", SearchEntry.DEFAULT_VALIGN, "/html/portlet/document_library/file_entry_action.jsp");
-																		}
+							for (String columnName : entryColumns) {
+								if (columnName.equals("action")) {
+									row.addJSP("right", SearchEntry.DEFAULT_VALIGN, "/html/portlet/document_library/file_entry_action.jsp");
+								}
 
-																		if (columnName.equals("create-date")) {
-																			row.addText(dateFormatDateTime.format(fileEntry.getCreateDate()));
-																		}
+								if (columnName.equals("create-date")) {
+									row.addText(dateFormatDateTime.format(fileEntry.getCreateDate()));
+								}
 
-																		if (columnName.equals("downloads")) {
-																			row.addText(String.valueOf(fileEntry.getReadCount()));
-																		}
+								if (columnName.equals("downloads")) {
+									row.addText(String.valueOf(fileEntry.getReadCount()));
+								}
 
-																		if (columnName.equals("modified-date")) {
-																			row.addText(dateFormatDateTime.format(fileEntry.getModifiedDate()));
-																		}
+								if (columnName.equals("modified-date")) {
+									row.addText(dateFormatDateTime.format(fileEntry.getModifiedDate()));
+								}
 
-																		if (columnName.equals("name")) {
-																			row.addText(fileEntry.getTitle(), rowURL);
-																		}
+								if (columnName.equals("name")) {
+									row.addText(fileEntry.getTitle(), rowURL);
+								}
 
-																		if (columnName.equals("size")) {
-																			row.addText(TextFormatter.formatStorageSize(fileEntry.getSize(), locale));
-																		}
-																	}
+								if (columnName.equals("size")) {
+									row.addText(TextFormatter.formatStorageSize(fileEntry.getSize(), locale));
+								}
+							}
 
-																	// Add result row
+							// Add result row
 
-																	resultRows.add(row);
+							resultRows.add(row);
 							%>
 
 						</c:otherwise>

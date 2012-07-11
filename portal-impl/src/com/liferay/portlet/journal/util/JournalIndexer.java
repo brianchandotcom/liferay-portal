@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
@@ -172,6 +173,36 @@ public class JournalIndexer extends BaseIndexer {
 		Property statusProperty = PropertyFactoryUtil.forName("status");
 
 		dynamicQuery.add(statusProperty.eq(status));
+	}
+
+	@Override
+	protected void addSearchLocalizedTerm(
+			BooleanQuery searchQuery, SearchContext searchContext, String field,
+			boolean like)
+		throws Exception {
+
+		if (Validator.isNull(field)) {
+			return;
+		}
+
+		String value = String.valueOf(searchContext.getAttribute(field));
+
+		if (Validator.isNull(value)) {
+			value = searchContext.getKeywords();
+		}
+
+		if (Validator.isNull(value)) {
+			return;
+		}
+
+		field = DocumentImpl.getLocalizedName(searchContext.getLocale(), field);
+
+		if (searchContext.isAndSearch()) {
+			searchQuery.addRequiredTerm(field, value, like);
+		}
+		else {
+			searchQuery.addTerm(field, value, like);
+		}
 	}
 
 	@Override

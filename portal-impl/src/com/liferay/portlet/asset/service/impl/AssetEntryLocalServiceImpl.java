@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.search.facet.ScopeFacet;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -70,6 +71,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -420,6 +422,8 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 			searchContext.addFacet(assetEntriesFacet);
 
+			Locale displayLocale = LocaleThreadLocal.getThemeDisplayLocale();
+
 			Facet scopeFacet = new ScopeFacet(searchContext);
 
 			scopeFacet.setStatic(true);
@@ -432,10 +436,12 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			searchContext.setEntryClassNames(getClassNames(className));
 			searchContext.setGroupIds(groupIds);
 			searchContext.setKeywords(keywords);
+			searchContext.setLocale(displayLocale);
 
 			QueryConfig queryConfig = new QueryConfig();
 
 			queryConfig.setHighlightEnabled(false);
+			queryConfig.setLocale(displayLocale);
 			queryConfig.setScoreEnabled(false);
 
 			searchContext.setQueryConfig(queryConfig);
@@ -476,6 +482,8 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 			searchContext.addFacet(assetEntriesFacet);
 
+			Locale displayLocale = LocaleThreadLocal.getThemeDisplayLocale();
+
 			Facet scopeFacet = new ScopeFacet(searchContext);
 
 			scopeFacet.setStatic(true);
@@ -491,10 +499,12 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			searchContext.setEnd(end);
 			searchContext.setEntryClassNames(getClassNames(className));
 			searchContext.setGroupIds(groupIds);
+			searchContext.setLocale(displayLocale);
 
 			QueryConfig queryConfig = new QueryConfig();
 
 			queryConfig.setHighlightEnabled(false);
+			queryConfig.setLocale(displayLocale);
 			queryConfig.setScoreEnabled(false);
 
 			searchContext.setQueryConfig(queryConfig);

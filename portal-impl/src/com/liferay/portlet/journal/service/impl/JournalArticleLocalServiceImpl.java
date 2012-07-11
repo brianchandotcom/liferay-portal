@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MathUtil;
@@ -1752,6 +1753,8 @@ public class JournalArticleLocalServiceImpl
 		throws SystemException {
 
 		try {
+			Locale displayLocale = LocaleThreadLocal.getThemeDisplayLocale();
+
 			SearchContext searchContext = new SearchContext();
 
 			searchContext.setAndSearch(andSearch);
@@ -1776,6 +1779,7 @@ public class JournalArticleLocalServiceImpl
 			searchContext.setCompanyId(companyId);
 			searchContext.setEnd(end);
 			searchContext.setGroupIds(new long[] {groupId});
+			searchContext.setLocale(displayLocale);
 
 			if (params != null) {
 				String keywords = (String)params.remove("keywords");
@@ -1788,6 +1792,7 @@ public class JournalArticleLocalServiceImpl
 			QueryConfig queryConfig = new QueryConfig();
 
 			queryConfig.setHighlightEnabled(false);
+			queryConfig.setLocale(displayLocale);
 			queryConfig.setScoreEnabled(false);
 
 			searchContext.setQueryConfig(queryConfig);

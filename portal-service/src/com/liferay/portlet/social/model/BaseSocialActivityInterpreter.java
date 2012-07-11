@@ -14,12 +14,13 @@
 
 package com.liferay.portlet.social.model;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -99,19 +100,22 @@ public abstract class BaseSocialActivityInterpreter
 		}
 	}
 
-	protected String getTitle(String extraData, String defaultValue)
-		throws PortalException {
+	protected String getTitle(String extraData, String defaultValue) {
+		try {
+			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject(
+				extraData);
 
-		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject(
-			extraData);
+			String title = extraDataJSONObject.getString("title");
 
-		String title = extraDataJSONObject.getString("title");
-
-		if (Validator.isNull(title)) {
-			return HtmlUtil.escape(defaultValue);
+			if (Validator.isNotNull(title)) {
+				return HtmlUtil.escape(title);
+			}
+		}
+		catch (JSONException jsone) {
+			_log.error("Unable to create JSON object from " + extraData);
 		}
 
-		return HtmlUtil.escape(title);
+		return HtmlUtil.escape(defaultValue);
 	}
 
 	protected String getUserName(long userId, ThemeDisplay themeDisplay) {
@@ -148,7 +152,7 @@ public abstract class BaseSocialActivityInterpreter
 	}
 
 	protected String wrapLink(String link, String text) {
-		StringBuilder sb = new StringBuilder();
+		StringBundler sb = new StringBundler(5);
 
 		sb.append("<a href=\"");
 		sb.append(link);

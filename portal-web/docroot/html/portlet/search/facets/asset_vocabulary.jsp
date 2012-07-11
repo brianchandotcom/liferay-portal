@@ -30,7 +30,16 @@ if (assetVocabularyId > 0) {
 	assetVocabularies.add(assetVocabulary);
 }
 else {
-	assetVocabularies = AssetVocabularyServiceUtil.getGroupsVocabularies(new long[] {themeDisplay.getScopeGroupId(), themeDisplay.getParentGroupId()});
+	long[] groupIds = null;
+	
+	if (themeDisplay.getScopeGroupId() != themeDisplay.getParentGroupId()){
+		groupIds = new long[] {themeDisplay.getScopeGroupId(), themeDisplay.getParentGroupId()};
+	}
+	else{
+		groupIds = new long[] {themeDisplay.getScopeGroupId()};
+	}
+	
+	assetVocabularies = AssetVocabularyServiceUtil.getGroupsVocabularies(groupIds);
 }
 
 if (assetVocabularies.isEmpty()) {

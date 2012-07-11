@@ -55,7 +55,7 @@ public class AuthenticationContext {
 	}
 
 	public void setVerificationResult(VerificationResult verificationResult) {
-		this._verificationResult = verificationResult;
+		_verificationResult = verificationResult;
 	}
 
 	private HttpServletRequest _httpServletRequest;

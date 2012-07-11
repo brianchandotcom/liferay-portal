@@ -14,6 +14,8 @@
 
 package com.liferay.portal.security.sac;
 
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.MethodSecurity;
 import com.liferay.portal.security.RemoteMethodAccessType;

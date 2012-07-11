@@ -16,8 +16,6 @@ package com.liferay.portal.security.auth;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.RemoteAccessTypeThreadLocal;
@@ -27,6 +25,8 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.UserLocalServiceUtil;
+
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -81,11 +81,13 @@ public class PortalAAManager {
 				"Changing privileges is prohibited");
 		}
 
-		AuthenticationContext result = new AuthenticationContext();
-		result.setRequest(request);
-		result.setResponse(response);
+		AuthenticationContext authenticationContext =
+			new AuthenticationContext();
 
-		setAuthenticationContext(result);
+		authenticationContext.setRequest(request);
+		authenticationContext.setResponse(response);
+
+		setAuthenticationContext(authenticationContext);
 	}
 
 	public void initAuthorizationContext(long userId) throws AuthException {
@@ -130,28 +132,31 @@ public class PortalAAManager {
 	public VerificationResult.State verifyRequest()
 		throws SystemException, PortalException {
 
-		AuthenticationContext authenticationCtx = getAuthenticationContext();
+		AuthenticationContext authenticationContext =
+			getAuthenticationContext();
 
-		VerificationResult result = AuthVerifierPipeline
-			.verifyRequest(authenticationCtx);
+		VerificationResult verificationResult =
+			AuthVerifierPipeline.verifyRequest(authenticationContext);
 
-		if (result.getAuthenticationSettings() != null) {
-			authenticationCtx.getSettings().putAll(result
-				.getAuthenticationSettings());
+		Map<String, Object> resultSettings =
+			verificationResult.getAuthenticationSettings();
+
+		if (resultSettings != null) {
+			Map<String, Object> contextSettings =
+				authenticationContext.getSettings();
+
+			contextSettings.putAll(resultSettings);
 		}
 
-		authenticationCtx.setVerificationResult(result);
+		authenticationContext.setVerificationResult(verificationResult);
 
-		return result.getState();
+		return verificationResult.getState();
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		PortalAAManager.class);
 
 	private static PortalAAManager _instance;
 	private static ThreadLocal<AuthenticationContext>
 		_authenticationContextThreadLocal =
-		new AutoResetThreadLocal<AuthenticationContext>(
-			PortalAAManager.class + "._authenticationContext");
+			new AutoResetThreadLocal<AuthenticationContext>(
+				PortalAAManager.class + "._authenticationContext");
 
 }

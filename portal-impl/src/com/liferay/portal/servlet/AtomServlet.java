@@ -62,6 +62,8 @@ public class AtomServlet extends AbderaServlet {
 			HttpServletRequest request, HttpServletResponse response)
 		throws ServletException {
 
+		boolean remoteAccess = RemoteAccessTypeThreadLocal.isRemoteAccess();
+
 		try {
 			long userId = PortalAAManager.getInstance()
 				.getAuthenticationContext().getVerificationResult().getUserId();
@@ -76,6 +78,9 @@ public class AtomServlet extends AbderaServlet {
 		}
 		catch (Exception e) {
 			throw new ServletException(e);
+		}
+		finally {
+			RemoteAccessTypeThreadLocal.setRemoteAccess(remoteAccess);
 		}
 	}
 

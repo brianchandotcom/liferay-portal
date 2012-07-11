@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.AuthenticationContext;
@@ -33,6 +34,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.CopyOnWriteArrayList;
+
+import javax.servlet.http.HttpServletRequest;
 
 import jodd.util.Wildcard;
 
@@ -53,31 +56,36 @@ public class AuthVerifierPipeline {
 
 	/**
 	 * Register new configuration into pipeline before existing verifiers
-	 * @param configuration to be registered, must contain verifier and config
+	 * @param authVerifierConfiguration to be registered, must contain verifier and config
 	 */
-	public static void register(AuthVerifierConfiguration configuration) {
-		if (Validator.isNull(configuration) ||
-			Validator.isNull(configuration.getAuthVerifier()) ||
-			Validator.isNull(configuration.getConfiguration())) {
+	public static void register(
+		AuthVerifierConfiguration authVerifierConfiguration) {
 
-			throw new IllegalArgumentException("AuthVerifierConfiguration, " +
-				"authVerifier or configuration is null!");
+		if (Validator.isNull(authVerifierConfiguration) ||
+			Validator.isNull(authVerifierConfiguration.getAuthVerifier()) ||
+			Validator.isNull(authVerifierConfiguration.getConfiguration())) {
+
+			throw new IllegalArgumentException(
+				"AuthVerifierConfiguration, authVerifier or configuration is " +
+					"null!");
 		}
 
-		_instance._register(configuration);
+		_instance._register(authVerifierConfiguration);
 	}
 
 	/**
 	 * Removes configuration from the pipeline
-	 * @param configuration to be removed from pipeline
+	 * @param authVerifierConfiguration to be removed from pipeline
 	 */
-	public static void unregister(AuthVerifierConfiguration configuration) {
-		if (Validator.isNull(configuration)) {
-			throw new IllegalArgumentException("AuthVerifierConfiguration is " +
-				"null!");
+	public static void unregister(
+		AuthVerifierConfiguration authVerifierConfiguration) {
+
+		if (Validator.isNull(authVerifierConfiguration)) {
+			throw new IllegalArgumentException(
+				"AuthVerifierConfiguration is null!");
 		}
 
-		_instance._unregister(configuration);
+		_instance._unregister(authVerifierConfiguration);
 	}
 
 	/**
@@ -96,64 +104,78 @@ public class AuthVerifierPipeline {
 	 * If there is no verifier that can extract user from request then returns
 	 * {@link VerificationResult} with default Guest user.
 	 *
-	 * @param authCtx Not null context with HttpServletRequest and
+	 * @param authenticationContext Not null context with HttpServletRequest and
 	 *                HttpServletResponse
 	 * @return Not null VerificationResult with authenticated or default user
 	 */
 	public static VerificationResult verifyRequest(
-		AuthenticationContext authCtx) throws SystemException, PortalException {
+			AuthenticationContext authenticationContext)
+		throws SystemException, PortalException {
 
-		if (authCtx == null) {
+		if (authenticationContext == null) {
 			throw new IllegalStateException(
 				"AuthenticationContext is not set!");
 		}
 
-		return _instance._verifyRequest(authCtx);
+		return _instance._verifyRequest(authenticationContext);
 	}
 
-	protected void _register(AuthVerifierConfiguration configuration) {
-		_verifiersPipeline.add(0, configuration);
+	protected void _register(
+		AuthVerifierConfiguration authVerifierConfiguration) {
+
+		_verifiersPipeline.add(0, authVerifierConfiguration);
 	}
 
-	protected void _unregister(AuthVerifierConfiguration configuration) {
-		_verifiersPipeline.remove(configuration);
+	protected void _unregister(
+		AuthVerifierConfiguration authVerifierConfiguration) {
+
+		_verifiersPipeline.remove(authVerifierConfiguration);
 	}
 
-	protected VerificationResult _verifyRequest(AuthenticationContext authCtx)
+	protected VerificationResult _verifyRequest(
+			AuthenticationContext authenticationContext)
 		throws SystemException, PortalException {
 
 		List<AuthVerifierConfiguration> matchingVerifiers =
-			getMatchingVerifiers(authCtx);
+			getMatchingVerifiers(authenticationContext);
 
-		for (AuthVerifierConfiguration verifierConfig : matchingVerifiers) {
+		for (AuthVerifierConfiguration authVerifierConfiguration :
+				matchingVerifiers) {
 
-			AuthVerifier verifier = verifierConfig.getAuthVerifier();
-			Properties authConfig = verifierConfig.getConfiguration();
+			AuthVerifier authVerifier =
+				authVerifierConfiguration.getAuthVerifier();
+			Properties configuration =
+				authVerifierConfiguration.getConfiguration();
 
 			VerificationResult result = null;
 
 			try {
-				result = verifier.verify(authCtx, authConfig);
-			} catch (Exception e) {
-				_log.error("Exception in " + verifier.getClass().getName() +
-					" during authentication verification, omitting.", e);
+				result = authVerifier.verify(
+					authenticationContext, configuration);
+			}
+			catch (Exception e) {
+				_log.error(
+					"Exception in " + authVerifier.getClass().getName() +
+						" during authentication verification, omitting.",
+					e);
 
 				continue;
 			}
 
 			if (result == null) {
-				_log.error("Verifier didn't return any result! [AuthVerifier]:"
-					+ " [" + verifier.getClass().getName() + "]");
+				_log.error(
+					"Verifier didn't return any result! {AuthVerifier=" +
+						authVerifier.getClass().getName() + "}");
 
 				continue;
 			}
 
 			// continue only if verification state is N/A
 			if (result.getState() !=
-				VerificationResult.State.NOT_APPLICABLE) {
+					VerificationResult.State.NOT_APPLICABLE) {
 
 				Map<String, Object> mergedSettings = mergeSettings(
-					authConfig, result.getAuthenticationSettings());
+					configuration, result.getAuthenticationSettings());
 
 				result.setAuthenticationSettings(mergedSettings);
 
@@ -162,19 +184,21 @@ public class AuthVerifierPipeline {
 		}
 
 		// fallback to guest
-		return createGuestVerificationResult(authCtx);
+		return createGuestVerificationResult(authenticationContext);
 	}
 
 	protected boolean canApply(
-		AuthVerifierConfiguration verifierConfig, String requestURI) {
+		AuthVerifierConfiguration authVerifierConfiguration, String requestURI) {
 
-		String[] urls = StringUtil.split(verifierConfig.getConfiguration()
-			.getProperty("urls"));
+		AuthVerifier authVerifier = authVerifierConfiguration.getAuthVerifier();
+		Properties configuration = authVerifierConfiguration.getConfiguration();
+
+		String[] urls = StringUtil.split(configuration.getProperty("urls"));
 
 		if (urls.length == 0) {
-			_log.error("Verifier is missing its url configuration! " +
-				"[AuthVerifier]: [" + verifierConfig.getAuthVerifier()
-				.getClass().getName() + "]");
+			_log.error(
+				"Verifier is missing its url configuration! {AuthVerifier=" +
+					authVerifier.getClass().getName() + "}");
 
 			return false;
 		}
@@ -183,13 +207,14 @@ public class AuthVerifierPipeline {
 	}
 
 	protected VerificationResult createGuestVerificationResult(
-		AuthenticationContext authenticationContext) throws
-		SystemException, PortalException {
+			AuthenticationContext authenticationContext)
+		throws SystemException, PortalException {
+
+		HttpServletRequest httpServletRequest =
+			authenticationContext.getHttpServletRequest();
 
 		// TODO: cache guestVerificationResult per companyId
-		long companyId = PortalUtil.getCompanyId(
-			authenticationContext.getHttpServletRequest());
-
+		long companyId = PortalUtil.getCompanyId(httpServletRequest);
 		long guestId = UserLocalServiceUtil.getDefaultUserId(companyId);
 
 		VerificationResult result = new VerificationResult();
@@ -203,15 +228,19 @@ public class AuthVerifierPipeline {
 	protected List<AuthVerifierConfiguration> getMatchingVerifiers(
 		AuthenticationContext authenticationContext) {
 
+		HttpServletRequest httpServletRequest =
+			authenticationContext.getHttpServletRequest();
+
 		List<AuthVerifierConfiguration> result =
 			new ArrayList<AuthVerifierConfiguration>();
 
-		String requestURI = authenticationContext.getHttpServletRequest()
-			.getRequestURI();
+		String requestURI = httpServletRequest.getRequestURI();
 
-		for (AuthVerifierConfiguration verifierConfig : _verifiersPipeline) {
-			if (canApply(verifierConfig, requestURI)) {
-				result.add(verifierConfig);
+		for (AuthVerifierConfiguration authVerifierConfiguration :
+				_verifiersPipeline) {
+
+			if (canApply(authVerifierConfiguration, requestURI)) {
+				result.add(authVerifierConfiguration);
 			}
 		}
 
@@ -223,32 +252,38 @@ public class AuthVerifierPipeline {
 			new ArrayList<AuthVerifierConfiguration>();
 
 		for (String authVerifierClass :
-			PropsValues.PORTAL_AUTHENTICATION_VERIFIER_PIPELINE) {
+				PropsValues.PORTAL_AUTHENTICATION_VERIFIER_PIPELINE) {
 
 			AuthVerifierConfiguration authVerifierConfiguration =
 				new AuthVerifierConfiguration();
 
 			try {
-				AuthVerifier authVerifier =
-					(AuthVerifier) InstancePool.get(authVerifierClass);
+				AuthVerifier authVerifier = (AuthVerifier)InstancePool.get(
+					authVerifierClass);
 
 				if (authVerifier == null) {
 					_log.error("Couldn't instantiate " + authVerifierClass);
+
 					continue;
 				}
 
-				String verifierConfigPrefix = _PORTAL_AUTHENTICATION_VERIFIER +
-					authVerifier.getClass().getSimpleName() + ".";
+				String verifierConfigPrefix =
+					_PORTAL_AUTHENTICATION_VERIFIER.concat(
+						authVerifier.getClass().getSimpleName()).concat(
+							StringPool.PERIOD);
 				Properties verifierConfiguration = PropsUtil.getProperties(
 					verifierConfigPrefix, true);
 
 				authVerifierConfiguration.setAuthVerifier(authVerifier);
 				authVerifierConfiguration.setConfiguration(
 					verifierConfiguration);
+
 				result.add(authVerifierConfiguration);
-			} catch (Exception e) {
-				_log.error("Couldn't initialize AuthVerifier: "
-					+ authVerifierClass, e);
+			}
+			catch (Exception e) {
+				_log.error(
+					"Couldn't initialize AuthVerifier: " + authVerifierClass,
+					e);
 			}
 		}
 

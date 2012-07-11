@@ -34,12 +34,15 @@ import javax.servlet.http.HttpServletRequest;
 public class PortalSessionAuthVerifier implements AuthVerifier {
 
 	public VerificationResult verify(
-		AuthenticationContext ctx, Properties configuration)
+			AuthenticationContext authenticationContext,
+			Properties configuration)
 		throws AuthException {
 
 		VerificationResult result = new VerificationResult();
+
 		try {
-			HttpServletRequest request = ctx.getHttpServletRequest();
+			HttpServletRequest request =
+				authenticationContext.getHttpServletRequest();
 			User user = PortalUtil.getUser(request);
 
 			if (user == null) {

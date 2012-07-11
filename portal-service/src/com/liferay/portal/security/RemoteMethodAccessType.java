@@ -18,6 +18,7 @@ package com.liferay.portal.security;
  * @author Michael C. Han
  */
 public enum RemoteMethodAccessType {
+
 	ANONYMOUS, AUTHENTICATED
 
 }

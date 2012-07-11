@@ -14,6 +14,8 @@
 
 package com.liferay.portal.security.auth.verifier;
 
+import com.liferay.portal.kernel.util.StringBundler;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,8 +39,10 @@ public class VerificationResult {
 
 	public enum State {
 		/** Authentication has been successful */
-		SUCCESS, /** Authentication token is invalid */
-		INVALID_CREDENTIALS, /** Authentication cannot be applied */
+		SUCCESS,
+		/** Authentication token is invalid */
+		INVALID_CREDENTIALS,
+		/** Authentication cannot be applied */
 		NOT_APPLICABLE
 	}
 
@@ -59,7 +63,7 @@ public class VerificationResult {
 	}
 
 	public void setAuthenticationSettings(Map<String, Object> settings) {
-		this._authenticationSettings = settings;
+		_authenticationSettings = settings;
 	}
 
 	public void setPassword(String password) {
@@ -76,11 +80,17 @@ public class VerificationResult {
 
 	@Override
 	public String toString() {
-		return "VerificationResult{" +
-			"_authenticationSettings=" + _authenticationSettings +
-			", _state=" + _state +
-			", _userId=" + _userId +
-			'}';
+		StringBundler sb = new StringBundler(7);
+
+		sb.append("{authenticationSettings=");
+		sb.append(_authenticationSettings);
+		sb.append(", state=");
+		sb.append(_state);
+		sb.append(", userId=");
+		sb.append(_userId);
+		sb.append("}");
+
+		return sb.toString();
 	}
 
 	private Map<String, Object> _authenticationSettings =

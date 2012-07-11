@@ -14,8 +14,6 @@
 
 package com.liferay.portal.security.sac;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.security.MethodSecurity;
 import com.liferay.portal.security.RemoteAccessTypeThreadLocal;
 import com.liferay.portal.security.RemoteMethodAccessType;
@@ -38,7 +36,6 @@ public class SACAdvice extends
 
 	@Override
 	public Object before(MethodInvocation methodInvocation) throws Throwable {
-
 		boolean remoteAccess = RemoteAccessTypeThreadLocal.isRemoteAccess();
 
 		MethodSecurity methodSecurity = findAnnotation(methodInvocation);
@@ -63,18 +60,17 @@ public class SACAdvice extends
 		_serviceAccessControlManager = serviceAccessControlManager;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(SACAdvice.class);
+	private static MethodSecurity _nullMethodSecurity = new MethodSecurity() {
 
-	private static MethodSecurity _nullMethodSecurity =
-		new MethodSecurity() {
-			public RemoteMethodAccessType remoteMethodAccessType() {
-				return RemoteMethodAccessType.ANONYMOUS;
-			}
+		public RemoteMethodAccessType remoteMethodAccessType() {
+			return RemoteMethodAccessType.ANONYMOUS;
+		}
 
-			public Class<? extends Annotation> annotationType() {
-				return MethodSecurity.class;
-			}
-		};
+		public Class<? extends Annotation> annotationType() {
+			return MethodSecurity.class;
+		}
+
+	};
 
 	private ServiceAccessControlManagerImpl _serviceAccessControlManager;
 

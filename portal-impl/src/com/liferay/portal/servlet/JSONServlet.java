@@ -52,6 +52,8 @@ public class JSONServlet extends HttpServlet {
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
 
+		boolean remoteAccess = RemoteAccessTypeThreadLocal.isRemoteAccess();
+
 		try {
 			RemoteAccessTypeThreadLocal.setRemoteAccess(true);
 
@@ -79,6 +81,9 @@ public class JSONServlet extends HttpServlet {
 		}
 		catch (Exception e) {
 			_log.error(e, e);
+		}
+		finally {
+			RemoteAccessTypeThreadLocal.setRemoteAccess(remoteAccess);
 		}
 	}
 

@@ -82,12 +82,12 @@ public abstract class JSONAction extends Action {
 				json = "var " + instance + "=" + json + ";";
 			}
 		}
-		catch (PrincipalException pe) {
+		catch (SecurityException se) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(pe.getMessage());
+				_log.warn(se.getMessage());
 			}
 
-			json = JSONFactoryUtil.serializeException(pe);
+			json = JSONFactoryUtil.serializeException(se);
 		}
 		catch (Exception e) {
 			PortalUtil.sendError(

@@ -1598,6 +1598,11 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 					// Social
 
+					JSONObject extraDataJSONObject =
+						JSONFactoryUtil.createJSONObject();
+
+					extraDataJSONObject.put("title", message.getSubject());
+
 					if (!message.isDiscussion() ) {
 						if (!message.isAnonymous() && !user.isDefaultUser()) {
 							long receiverUserId = 0;
@@ -1614,8 +1619,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 								userId, message.getGroupId(),
 								MBMessage.class.getName(),
 								message.getMessageId(),
-								MBActivityKeys.ADD_MESSAGE, StringPool.BLANK,
-								receiverUserId);
+								MBActivityKeys.ADD_MESSAGE,
+								extraDataJSONObject.toString(), receiverUserId);
 
 							if ((parentMessage != null) &&
 								(receiverUserId != userId)) {
@@ -1625,7 +1630,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 									MBMessage.class.getName(),
 									parentMessage.getMessageId(),
 									MBActivityKeys.REPLY_MESSAGE,
-									StringPool.BLANK, 0);
+									extraDataJSONObject.toString(), 0);
 							}
 						}
 					}
@@ -1644,9 +1649,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 									className, classPK);
 
 							if (assetEntry != null) {
-								JSONObject extraDataJSONObject =
-									JSONFactoryUtil.createJSONObject();
-
 								extraDataJSONObject.put(
 									"messageId", message.getMessageId());
 

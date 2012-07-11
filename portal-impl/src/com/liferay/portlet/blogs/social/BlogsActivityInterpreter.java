@@ -15,7 +15,6 @@
 package com.liferay.portlet.blogs.social;
 
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -81,7 +80,9 @@ public class BlogsActivityInterpreter extends BaseSocialActivityInterpreter {
 
 		// Title
 
-		String entryTitle = wrapLink(link, HtmlUtil.escape(entry.getTitle()));
+		String entryTitle = getTitle(activity.getExtraData(), entry.getTitle());
+
+		String displayTitle = wrapLink(link, entryTitle);
 		String displayDate = StringPool.BLANK;
 
 		String titlePattern = null;
@@ -98,7 +99,7 @@ public class BlogsActivityInterpreter extends BaseSocialActivityInterpreter {
 		}
 		else if (activityType == BlogsActivityKeys.ADD_ENTRY) {
 			if (entry.getStatus() == WorkflowConstants.STATUS_SCHEDULED) {
-				entryTitle = HtmlUtil.escape(entry.getTitle());
+				displayTitle = entryTitle;
 
 				Format dateFormatDate =
 					FastDateFormatFactoryUtil.getSimpleDateFormat(
@@ -123,9 +124,17 @@ public class BlogsActivityInterpreter extends BaseSocialActivityInterpreter {
 				}
 			}
 		}
+		else if (activityType == BlogsActivityKeys.UPDATE_ENTRY) {
+			if (Validator.isNull(groupName)) {
+				titlePattern = "activity-blogs-update-entry";
+			}
+			else {
+				titlePattern = "activity-blogs-update-entry-in";
+			}
+		}
 
 		Object[] titleArguments = new Object[] {
-			groupName, creatorUserName, receiverUserName, entryTitle,
+			groupName, creatorUserName, receiverUserName, displayTitle,
 			displayDate
 		};
 

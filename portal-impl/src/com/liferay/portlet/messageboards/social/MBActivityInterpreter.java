@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.messageboards.social;
 
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -113,7 +112,7 @@ public class MBActivityInterpreter extends BaseSocialActivityInterpreter {
 		}
 
 		String messageSubject = wrapLink(
-			link, HtmlUtil.escape(message.getSubject()));
+			link, getTitle(activity.getExtraData(), message.getSubject()));
 
 		Object[] titleArguments = new Object[] {
 			groupName, creatorUserName, receiverUserName, messageSubject

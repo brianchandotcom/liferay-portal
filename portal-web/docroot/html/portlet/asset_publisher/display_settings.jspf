@@ -18,19 +18,6 @@
 PortletDisplayTemplateHandler portletDisplayDDMTemplateHandler = PortletDisplayTemplateHandlerRegistryUtil.getPortletDisplayTemplateHandler(AssetEntry.class.getName());
 
 long portletDisplayDDMTemplateClassNameId = PortalUtil.getClassNameId(portletDisplayDDMTemplateHandler.getClassName());
-
-Group controlPanelGroup = GroupLocalServiceUtil.getGroup(themeDisplay.getCompanyId(), GroupConstants.CONTROL_PANEL);
-
-PortletURL portletDisplayDDMTemplatesURL = PortletURLFactoryUtil.create(request, PortletKeys.PORTLET_DISPLAY_TEMPLATES, LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.getGroupId(), true), PortletRequest.RENDER_PHASE);
-
-portletDisplayDDMTemplatesURL.setParameter("struts_action", "/dynamic_data_mapping/view_template");
-portletDisplayDDMTemplatesURL.setPortletMode(PortletMode.VIEW);
-portletDisplayDDMTemplatesURL.setWindowState(LiferayWindowState.POP_UP);
-
-String portletDisplayDDMTemplatesURLString = portletDisplayDDMTemplatesURL.toString();
-
-portletDisplayDDMTemplatesURLString = HttpUtil.addParameter(portletDisplayDDMTemplatesURLString, "doAsGroupId", scopeGroupId);
-portletDisplayDDMTemplatesURLString = HttpUtil.addParameter(portletDisplayDDMTemplatesURLString, "classNameId", portletDisplayDDMTemplateClassNameId);
 %>
 
 <aui:fieldset cssClass="general-display-settings">
@@ -87,7 +74,11 @@ portletDisplayDDMTemplatesURLString = HttpUtil.addParameter(portletDisplayDDMTem
 			</optgroup>
 		</aui:select>
 
-		<liferay-ui:icon cssClass="manage-display-templates" id="selectDDMTemplate" image="configuration" label="<%= true %>" message='<%= LanguageUtil.format(pageContext, "manage-display-templates-for-x", themeDisplay.getScopeGroupName(), false) %>' url="javascript:;" />
+		<liferay-ui:ddm-template-selector
+			classNameId="<%= String.valueOf(portletDisplayDDMTemplateClassNameId) %>"
+			message='<%= LanguageUtil.format(pageContext, "manage-display-templates-for-x", themeDisplay.getScopeGroupName(), false) %>'
+			refreshURL="<%= configurationRenderURL.toString() %>"
+		/>
 	</div>
 
 	<aui:select cssClass="hidden-field abstract-length" helpMessage="abstract-length-key-help" name="preferences--abstractLength--">
@@ -247,7 +238,6 @@ portletDisplayDDMTemplatesURLString = HttpUtil.addParameter(portletDisplayDDMTem
 
 <aui:script use="aui-base">
 	var selectDisplayStyle = A.one('#<portlet:namespace />displayStyle');
-	var selectDDMTemplate = A.one('#<portlet:namespace />selectDDMTemplate');
 
 	function showHiddenFields () {
 		var assetLinkBehavior = A.one('.asset-link-behavior');
@@ -296,35 +286,4 @@ portletDisplayDDMTemplatesURLString = HttpUtil.addParameter(portletDisplayDDMTem
 	}
 
 	Liferay.Util.toggleBoxes('<portlet:namespace />enableSocialBookmarksCheckbox','<portlet:namespace />socialBookmarksOptions');
-
-	if (selectDDMTemplate) {
-		var windowId = A.guid();
-
-		selectDDMTemplate.on(
-			'click',
-			function (event) {
-				Liferay.Util.openWindow(
-					{
-						dialog: {
-							constrain: true,
-							width: 820
-						},
-						id: windowId,
-						title: '<%= UnicodeLanguageUtil.get(pageContext, "application-display-templates") %>',
-						uri: '<%= portletDisplayDDMTemplatesURLString %>'
-					},
-					function (ddmPortletWindow) {
-						ddmPortletWindow.once(
-							'visibleChange',
-							function(event) {
-								if (!event.newVal) {
-									submitForm(document.<portlet:namespace />fm, '<%= configurationRenderURL.toString() %>');
-								}
-							}
-						);
-					}
-				);
-			}
-		);
-	}
 </aui:script>

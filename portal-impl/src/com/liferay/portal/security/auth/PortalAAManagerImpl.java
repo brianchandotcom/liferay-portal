@@ -91,7 +91,9 @@ public class PortalAAManagerImpl implements PortalAAManager {
 
 			PermissionThreadLocal.setPermissionChecker(permissionChecker);
 			//TODO: Init ServiceContext?
-			//TODO: Verify we don't need to init PrincipalThreadLocal
+
+			//TODO: Verify if we need to init PrincipalThreadLocal.password
+			PrincipalThreadLocal.setName(userId);
 
 			// TODO: why we have so many ThreadLocals instead of one with whole
 			// context ???

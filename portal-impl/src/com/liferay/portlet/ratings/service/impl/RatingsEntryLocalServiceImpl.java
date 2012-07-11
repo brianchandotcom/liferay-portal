@@ -256,14 +256,12 @@ public class RatingsEntryLocalServiceImpl
 
 		Filter filter = new Filter(className);
 
-		double maxScore =
-			GetterUtil.getInteger(PropsUtil.get(
-				PropsKeys.RATINGS_MAX_SCORE, filter),
-				PropsValues.RATINGS_DEFAULT_NUMBER_OF_STARS);
+		double maxScore = GetterUtil.getInteger(
+			PropsUtil.get(PropsKeys.RATINGS_MAX_SCORE, filter),
+			PropsValues.RATINGS_DEFAULT_NUMBER_OF_STARS);
 
-		double minScore =
-			GetterUtil.getInteger(PropsUtil.get(
-				PropsKeys.RATINGS_MIN_SCORE, filter));
+		double minScore = GetterUtil.getInteger(
+			PropsUtil.get(PropsKeys.RATINGS_MIN_SCORE, filter));
 
 		if ((score < minScore) || (score > maxScore)) {
 			throw new EntryScoreException();

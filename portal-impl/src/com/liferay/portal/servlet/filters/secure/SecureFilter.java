@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.RemoteAccessTypeThreadLocal;
 import com.liferay.portal.security.auth.AuthSettingsUtil;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -270,7 +271,18 @@ public class SecureFilter extends BasePortalFilter {
 			}
 
 			if (request != null) {
-				processFilter(getClass(), request, response, filterChain);
+				try {
+					RemoteAccessTypeThreadLocal.setRemoteAccess(true);
+
+					processFilter(getClass(), request, response, filterChain);
+				}
+				catch(SecurityException se) {
+					response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+
+					if (_log.isErrorEnabled()) {
+						_log.error("Access denied: ", se);
+					}
+				}
 			}
 		}
 	}

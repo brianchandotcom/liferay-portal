@@ -94,7 +94,7 @@ if (pageDisplayStyle.startsWith("ddmTemplate_")) {
 	portletDisplayDDMTemplate = PortletDisplayTemplatesUtil.getPortletDisplayDDMTemplate(portletDisplayDDMTemplateGroupId, pageDisplayStyle);
 
 	if (portletDisplayDDMTemplate != null) {
-		portletDisplayDDMTemplate.getTemplateId();
+		portletDisplayDDMTemplateId = portletDisplayDDMTemplate.getTemplateId();
 	}
 }
 %>

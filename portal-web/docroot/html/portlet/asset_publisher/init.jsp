@@ -47,6 +47,7 @@ page import="com.liferay.portlet.asset.util.AssetUtil" %><%@
 page import="com.liferay.portlet.assetpublisher.search.AssetDisplayTerms" %><%@
 page import="com.liferay.portlet.assetpublisher.search.AssetSearch" %><%@
 page import="com.liferay.portlet.assetpublisher.search.AssetSearchTerms" %><%@
+page import="com.liferay.portlet.assetpublisher.util.AssetPublisherHelperUtil" %><%@
 page import="com.liferay.portlet.assetpublisher.util.AssetPublisherUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFileEntry" %><%@
 page import="com.liferay.portlet.documentlibrary.model.DLFileEntryConstants" %><%@
@@ -59,6 +60,7 @@ page import="com.liferay.portlet.dynamicdatamapping.service.permission.DDMTempla
 page import="com.liferay.portlet.journal.model.JournalArticle" %><%@
 page import="com.liferay.portlet.journal.model.JournalStructure" %><%@
 page import="com.liferay.portlet.journal.service.JournalStructureLocalServiceUtil" %><%@
+page import="com.liferay.portlet.portletdisplaytemplates.util.PortletDisplayTemplatesConstants"%><%@
 page import="com.liferay.portlet.portletdisplaytemplates.util.PortletDisplayTemplatesUtil" %><%@
 page import="com.liferay.util.RSSUtil" %><%@
 page import="com.liferay.util.xml.DocUtil" %>
@@ -186,7 +188,7 @@ if (displayStyle.startsWith("ddmTemplate_")) {
 	portletDisplayDDMTemplate = PortletDisplayTemplatesUtil.getPortletDisplayDDMTemplate(portletDisplayDDMTemplateGroupId, displayStyle);
 
 	if (portletDisplayDDMTemplate != null) {
-		portletDisplayDDMTemplate.getTemplateId();
+		portletDisplayDDMTemplateId = portletDisplayDDMTemplate.getTemplateId();
 	}
 }
 

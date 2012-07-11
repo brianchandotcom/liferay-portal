@@ -1089,6 +1089,13 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				}
 			}
 
+			// Trash
+
+			if (oldStatus == WorkflowConstants.STATUS_IN_TRASH) {
+				trashEntryLocalService.deleteEntry(
+					BlogsEntry.class.getName(), entryId);
+			}
+
 			// Indexer
 
 			indexer.reindex(entry);
@@ -1119,17 +1126,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			assetEntryLocalService.updateVisible(
 				BlogsEntry.class.getName(), entryId, false);
 
-			if (status == WorkflowConstants.STATUS_IN_TRASH) {
-				trashEntryLocalService.addTrashEntry(
-					userId, entry.getGroupId(), BlogsEntry.class.getName(),
-					entry.getEntryId(), oldStatus, null, null);
-
-				indexer.reindex(entry);
-			}
-			else {
-				indexer.delete(entry);
-			}
-
 			// Social
 
 			if ((status == WorkflowConstants.STATUS_SCHEDULED) &&
@@ -1150,13 +1146,27 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 						extraDataJSONObject.toString(), 0);
 				}
 			}
-		}
 
-		if ((oldStatus == WorkflowConstants.STATUS_IN_TRASH) &&
-			(status != WorkflowConstants.STATUS_IN_TRASH)) {
+			// Trash
 
-			trashEntryLocalService.deleteEntry(
-				BlogsEntry.class.getName(), entryId);
+			if (status == WorkflowConstants.STATUS_IN_TRASH) {
+				trashEntryLocalService.addTrashEntry(
+					userId, entry.getGroupId(), BlogsEntry.class.getName(),
+					entry.getEntryId(), oldStatus, null, null);
+			}
+			else if (oldStatus == WorkflowConstants.STATUS_IN_TRASH) {
+				trashEntryLocalService.deleteEntry(
+					BlogsEntry.class.getName(), entryId);
+			}
+
+			// Indexer
+
+			if (status == WorkflowConstants.STATUS_IN_TRASH) {
+				indexer.reindex(entry);
+			}
+			else {
+				indexer.delete(entry);
+			}
 		}
 
 		return entry;

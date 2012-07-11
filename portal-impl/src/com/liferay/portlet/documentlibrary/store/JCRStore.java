@@ -498,7 +498,7 @@ public class JCRStore extends BaseStore {
 			JCRFactoryUtil.closeSession(session);
 		}
 
-		return fileNames.toArray(new String[0]);
+		return fileNames.toArray(new String[fileNames.size()]);
 	}
 
 	@Override

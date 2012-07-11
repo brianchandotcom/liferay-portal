@@ -1720,13 +1720,14 @@ public class CMISRepository extends BaseCmisRepository {
 
 		hits.setDocs(
 			documents.toArray(
-				new com.liferay.portal.kernel.search.Document[0]));
+				new com.liferay.portal.kernel.search.Document[
+					documents.size()]));
 		hits.setLength(total);
 		hits.setQuery(query);
 		hits.setQueryTerms(new String[0]);
-		hits.setScores(scores.toArray(new Float[0]));
+		hits.setScores(scores.toArray(new Float[scores.size()]));
 		hits.setSearchTime(searchTime);
-		hits.setSnippets(snippets.toArray(new String[0]));
+		hits.setSnippets(snippets.toArray(new String[snippets.size()]));
 		hits.setStart(startTime);
 
 		return hits;

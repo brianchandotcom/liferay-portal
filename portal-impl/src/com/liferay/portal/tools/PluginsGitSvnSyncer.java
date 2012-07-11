@@ -126,7 +126,7 @@ public class PluginsGitSvnSyncer {
 			}
 		}
 
-		return list.toArray(new String[] {});
+		return list.toArray(new String[list.size()]);
 	}
 
 	private void _updateGitIgnores(String srcDirName, String destDirName)

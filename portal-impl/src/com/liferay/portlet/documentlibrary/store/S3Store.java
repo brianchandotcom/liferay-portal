@@ -198,7 +198,7 @@ public class S3Store extends BaseStore {
 			throw new SystemException(s3se);
 		}
 
-		return fileNames.toArray(new String[0]);
+		return fileNames.toArray(new String[fileNames.size()]);
 	}
 
 	@Override

@@ -54,7 +54,7 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 					repositoryDir.getPath() + StringPool.SLASH + directory));
 		}
 
-		return fileNames.toArray(new String[0]);
+		return fileNames.toArray(new String[fileNames.size()]);
 	}
 
 	@Override

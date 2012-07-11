@@ -204,7 +204,8 @@ public class PortalLDAPUtil {
 
 		return _getAttributes(
 			ldapContext, fullDistinguishedName,
-			mappedGroupAttributeIds.toArray(new String[0]));
+			mappedGroupAttributeIds.toArray(
+				new String[mappedGroupAttributeIds.size()]));
 	}
 
 	public static byte[] getGroups(

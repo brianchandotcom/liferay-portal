@@ -85,7 +85,11 @@ public class MemcachePortalCache implements PortalCache {
 			future.cancel(true);
 		}
 
-		return values.values();
+		if (values != null) {
+			return values.values();
+		}
+
+		return null;
 	}
 
 	public Object get(Serializable key) {

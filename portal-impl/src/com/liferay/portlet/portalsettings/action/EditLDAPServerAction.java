@@ -33,6 +33,8 @@ import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.WebKeys;
 
+import java.util.Set;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
@@ -105,7 +107,10 @@ public class EditLDAPServerAction extends PortletAction {
 
 		String postfix = LDAPSettingsUtil.getPropertyPostfix(ldapServerId);
 
-		String[] keys = properties.keySet().toArray(new String[0]);
+		Set<String> propertiesKeys = properties.keySet();
+
+		String[] keys = propertiesKeys.toArray(
+			new String[propertiesKeys.size()]);
 
 		for (String key : keys) {
 			if (ArrayUtil.contains(defaultKeys, key)) {

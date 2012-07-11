@@ -45,54 +45,11 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class AuthVerificationFilter extends BasePortalFilter {
 
-	protected boolean applyHttps(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws IOException {
-
-		if (_log.isDebugEnabled()) {
-			String completeURL = HttpUtil.getCompleteURL(httpServletRequest);
-
-			_log.debug("Securing " + completeURL);
-		}
-
-		StringBundler redirectURL = new StringBundler(5);
-
-		redirectURL.append(Http.HTTPS_WITH_SLASH);
-		redirectURL.append(httpServletRequest.getServerName());
-		redirectURL.append(httpServletRequest.getRequestURI());
-
-		String queryString = httpServletRequest.getQueryString();
-
-		if (Validator.isNotNull(queryString)) {
-			redirectURL.append(StringPool.QUESTION);
-			redirectURL.append(httpServletRequest.getQueryString());
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Redirect to " + redirectURL);
-		}
-
-		httpServletResponse.sendRedirect(redirectURL.toString());
-
-		return true;
-	}
-
 	@Override
 	protected void processFilter(
 			HttpServletRequest request, HttpServletResponse response,
 			FilterChain filterChain)
 		throws Exception {
-
-		if (!request.isSecure()){
-			applyHttps(request, response);
-
-			if (_log.isDebugEnabled()) {
-				_log.debug("Switched into HTTPS, returning.");
-			}
-
-			return;
-		}
 
 		PortalAAManager pam =
 			PortalAAManagerImpl.getInstance();

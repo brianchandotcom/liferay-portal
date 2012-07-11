@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.RemoteAccessTypeThreadLocal;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
@@ -65,35 +66,9 @@ public class RemotingServlet extends DispatcherServlet {
 			HttpServletRequest request, HttpServletResponse response)
 		throws ServletException {
 
+		RemoteAccessTypeThreadLocal.setRemoteAccess(true);
+
 		try {
-			PortalInstances.getCompanyId(request);
-
-			String remoteUser = request.getRemoteUser();
-
-			if (_log.isDebugEnabled()) {
-				_log.debug("Remote user " + remoteUser);
-			}
-
-			if (remoteUser != null) {
-				PrincipalThreadLocal.setName(remoteUser);
-
-				long userId = GetterUtil.getLong(remoteUser);
-
-				User user = UserLocalServiceUtil.getUserById(userId);
-
-				PermissionChecker permissionChecker =
-					PermissionCheckerFactoryUtil.create(user);
-
-				PermissionThreadLocal.setPermissionChecker(permissionChecker);
-			}
-			else {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"User id is not provided. An exception will be " +
-							"thrown if a protected method is accessed.");
-				}
-			}
-
 			super.service(request, response);
 		}
 		catch (Exception e) {

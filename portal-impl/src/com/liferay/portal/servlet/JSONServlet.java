@@ -60,8 +60,6 @@ public class JSONServlet extends HttpServlet {
 		throws IOException, ServletException {
 
 		try {
-			resolveRemoteUser(request);
-
 			RemoteAccessTypeThreadLocal.setRemoteAccess(true);
 
 			if (_pluginClassLoader == null) {
@@ -97,29 +95,6 @@ public class JSONServlet extends HttpServlet {
 		jsonAction.setServletContext(servletContext);
 
 		return jsonAction;
-	}
-
-	protected void resolveRemoteUser(HttpServletRequest request)
-		throws Exception {
-
-		String remoteUser = request.getRemoteUser();
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Remote user " + remoteUser);
-		}
-
-		if (remoteUser != null) {
-			PrincipalThreadLocal.setName(remoteUser);
-
-			long userId = GetterUtil.getLong(remoteUser);
-
-			User user = UserLocalServiceUtil.getUserById(userId);
-
-			PermissionChecker permissionChecker =
-				PermissionCheckerFactoryUtil.create(user);
-
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
-		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(JSONServlet.class);

@@ -78,28 +78,6 @@ public class JSONWebServiceServlet extends JSONServlet {
 
 		RemoteAccessTypeThreadLocal.setRemoteAccess(true);
 
-		String uri = request.getRequestURI();
-
-		int pos = uri.indexOf("/secure/");
-
-		if (pos != -1) {
-			uri = uri.substring(0, pos) + uri.substring(pos + 7);
-
-			String queryString = request.getQueryString();
-
-			if (queryString != null) {
-				uri = uri.concat(StringPool.QUESTION).concat(queryString);
-			}
-
-			if (_log.isDebugEnabled()) {
-				_log.debug("Redirect from secure to public");
-			}
-
-			response.sendRedirect(uri);
-
-			return;
-		}
-
 		if (_log.isDebugEnabled()) {
 			_log.debug("Servlet context " + request.getContextPath());
 		}
@@ -168,31 +146,6 @@ public class JSONWebServiceServlet extends JSONServlet {
 		_jsonWebServiceServiceAction.setServletContext(servletContext);
 
 		return _jsonWebServiceServiceAction;
-	}
-
-	@Override
-	protected void resolveRemoteUser(HttpServletRequest request)
-		throws Exception {
-/*
-		UserResolver userResolver = new UserResolver(request);
-
-		CompanyThreadLocal.setCompanyId(userResolver.getCompanyId());
-
-		request.setAttribute("companyId", userResolver.getCompanyId());
-
-		User user = userResolver.getUser();
-
-		if (user != null) {
-			PermissionChecker permissionChecker =
-				PermissionCheckerFactoryUtil.create(user);
-
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
-
-			request.setAttribute("user", user);
-			request.setAttribute("userId", user.getUserId());
-		}
-
-		*/
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

@@ -58,13 +58,18 @@ public class RemotingServlet extends DispatcherServlet {
 			HttpServletRequest request, HttpServletResponse response)
 		throws ServletException {
 
-		RemoteAccessTypeThreadLocal.setRemoteAccess(true);
+		boolean remoteAccess = RemoteAccessTypeThreadLocal.isRemoteAccess();
 
 		try {
+			RemoteAccessTypeThreadLocal.setRemoteAccess(true);
+
 			super.service(request, response);
 		}
 		catch (Exception e) {
 			throw new ServletException(e);
+		}
+		finally {
+			RemoteAccessTypeThreadLocal.setRemoteAccess(remoteAccess);
 		}
 	}
 

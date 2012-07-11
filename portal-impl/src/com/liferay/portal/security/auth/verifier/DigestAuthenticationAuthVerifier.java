@@ -33,13 +33,15 @@ import javax.servlet.http.HttpServletRequest;
 public class DigestAuthenticationAuthVerifier implements AuthVerifier {
 
 	public VerificationResult verify(
-		AuthenticationContext ctx, Properties configuration)
+			AuthenticationContext authenticationContext,
+			Properties configuration)
 		throws AuthException {
 
 		VerificationResult result = new VerificationResult();
-		try {
 
-			HttpServletRequest request = ctx.getHttpServletRequest();
+		try {
+			HttpServletRequest request =
+				authenticationContext.getHttpServletRequest();
 			long userId = PortalUtil.getDigestAuthUserId(request);
 
 			if (userId == 0) {

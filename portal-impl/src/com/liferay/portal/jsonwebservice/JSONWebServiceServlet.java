@@ -76,6 +76,8 @@ public class JSONWebServiceServlet extends JSONServlet {
 			return;
 		}
 
+		boolean remoteAccess = RemoteAccessTypeThreadLocal.isRemoteAccess();
+
 		RemoteAccessTypeThreadLocal.setRemoteAccess(true);
 
 		if (_log.isDebugEnabled()) {
@@ -92,7 +94,12 @@ public class JSONWebServiceServlet extends JSONServlet {
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher(
 				apiPath);
 
-			requestDispatcher.forward(request, response);
+			try {
+				requestDispatcher.forward(request, response);
+			}
+			finally {
+				RemoteAccessTypeThreadLocal.setRemoteAccess(remoteAccess);
+			}
 		}
 		else {
 			String requestURI = request.getRequestURI();
@@ -131,6 +138,8 @@ public class JSONWebServiceServlet extends JSONServlet {
 			}
 			finally {
 				StreamUtil.cleanUp(inputStream);
+
+				RemoteAccessTypeThreadLocal.setRemoteAccess(remoteAccess);
 			}
 		}
 	}

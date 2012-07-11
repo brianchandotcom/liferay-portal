@@ -63,6 +63,8 @@ public class AxisServlet extends com.liferay.util.axis.AxisServlet {
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
 
+		boolean remoteAccess = RemoteAccessTypeThreadLocal.isRemoteAccess();
+
 		try {
 			RemoteAccessTypeThreadLocal.setRemoteAccess(true);
 
@@ -93,6 +95,9 @@ public class AxisServlet extends com.liferay.util.axis.AxisServlet {
 		}
 		catch (Exception e) {
 			throw new ServletException(e);
+		}
+		finally {
+			RemoteAccessTypeThreadLocal.setRemoteAccess(remoteAccess);
 		}
 	}
 

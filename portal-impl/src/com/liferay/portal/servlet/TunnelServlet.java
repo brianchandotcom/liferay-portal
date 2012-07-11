@@ -68,6 +68,8 @@ public class TunnelServlet extends HttpServlet {
 
 		Object returnObj = null;
 
+		boolean remoteAccess = RemoteAccessTypeThreadLocal.isRemoteAccess();
+
 		try {
 			ObjectValuePair<HttpPrincipal, Object> ovp =
 				(ObjectValuePair<HttpPrincipal, Object>)ois.readObject();
@@ -154,6 +156,9 @@ public class TunnelServlet extends HttpServlet {
 		}
 		catch (Exception e) {
 			_log.error(e, e);
+		}
+		finally {
+			RemoteAccessTypeThreadLocal.setRemoteAccess(remoteAccess);
 		}
 
 		if (returnObj != null) {

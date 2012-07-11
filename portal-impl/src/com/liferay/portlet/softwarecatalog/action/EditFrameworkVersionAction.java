@@ -68,7 +68,6 @@ public class EditFrameworkVersionAction extends PortletAction {
 				setForward(actionRequest, "portlet.software_catalog.error");
 			}
 			else if (e instanceof FrameworkVersionNameException) {
-
 				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else {

@@ -92,7 +92,6 @@ public class TranslationToXHTMLTest extends AbstractWikiParserTests {
 
 	@Test
 	public void testParseCorrectlyNoWikiBlockWitMultipleAndText() {
-
 		Assert.assertEquals(
 			"<pre>public interface Foo {" + _NEW_LINE + "void foo();" +
 				_NEW_LINE + "}" + _NEW_LINE + "</pre><p>Outside preserve </p>",

@@ -701,7 +701,6 @@ public class LayoutImporter {
 			long portletPreferencesGroupId = groupId;
 
 			try {
-
 				if ((layout != null) && !group.isCompany()) {
 					portletPreferencesGroupId = layout.getGroupId();
 				}

@@ -196,7 +196,6 @@ public class SAXReaderUtil {
 	}
 
 	public static void sort(List<Node> nodes, String xPathExpression) {
-
 		getSAXReader().sort(nodes, xPathExpression);
 	}
 

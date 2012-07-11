@@ -69,7 +69,6 @@ public class PostMembershipRequestAction extends PortletAction {
 				setForward(actionRequest, "portlet.sites_admin.error");
 			}
 			else if (e instanceof MembershipRequestCommentsException) {
-
 				SessionErrors.add(actionRequest, e.getClass());
 
 				setForward(

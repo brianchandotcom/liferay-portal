@@ -689,7 +689,6 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		try {
-
 			CalendarBuilder builder = new CalendarBuilder();
 
 			net.fortuna.ical4j.model.Calendar calendar = builder.build(

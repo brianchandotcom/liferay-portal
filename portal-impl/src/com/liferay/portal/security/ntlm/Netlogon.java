@@ -47,7 +47,6 @@ public class Netlogon {
 		NetlogonConnection netlogonConnection = new NetlogonConnection();
 
 		try {
-
 			netlogonConnection.connect(
 				_domainController, _domainControllerName, _ntlmServiceAccount,
 				_secureRandom);

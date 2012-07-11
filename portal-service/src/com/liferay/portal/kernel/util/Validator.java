@@ -525,8 +525,9 @@ public class Validator {
 		}
 
 		for (char c : nameCharArray) {
-			if (!isChar(c) && !isDigit(c) && (c != CharPool.DASH) &&
-				(c != CharPool.PERIOD)) {
+			if (!isChar(c) && !isDigit(c) && (c != CharPool.COLON) &&
+				(c != CharPool.CLOSE_BRACKET) && (c != CharPool.DASH) &&
+				(c != CharPool.OPEN_BRACKET) && (c != CharPool.PERIOD)) {
 
 				return false;
 			}

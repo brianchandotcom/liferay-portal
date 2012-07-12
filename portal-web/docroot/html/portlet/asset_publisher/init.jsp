@@ -60,7 +60,7 @@ page import="com.liferay.portlet.dynamicdatamapping.service.permission.DDMTempla
 page import="com.liferay.portlet.journal.model.JournalArticle" %><%@
 page import="com.liferay.portlet.journal.model.JournalStructure" %><%@
 page import="com.liferay.portlet.journal.service.JournalStructureLocalServiceUtil" %><%@
-page import="com.liferay.portlet.portletdisplaytemplates.util.PortletDisplayTemplatesConstants"%><%@
+page import="com.liferay.portlet.portletdisplaytemplates.util.PortletDisplayTemplatesConstants" %><%@
 page import="com.liferay.portlet.portletdisplaytemplates.util.PortletDisplayTemplatesUtil" %><%@
 page import="com.liferay.util.RSSUtil" %><%@
 page import="com.liferay.util.xml.DocUtil" %>
@@ -258,6 +258,10 @@ boolean allowEmptyResults = false;
 Map<String, PortletURL> addPortletURLs = null;
 
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
+
+Map<String, Object> contextObjects = new HashMap<String, Object>();
+
+contextObjects.put(PortletDisplayTemplatesConstants.ASSET_PUBLISHER_HELPER, AssetPublisherHelperUtil.getAssetPublisherHelper());
 %>
 
 <%@ include file="/html/portlet/asset_publisher/init-ext.jsp" %>

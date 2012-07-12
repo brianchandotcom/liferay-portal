@@ -17,10 +17,10 @@
 <%@ include file="/html/taglib/ui/social_bookmark/init.jsp" %>
 
 <%
-String twitterDisplayStyle = displayStyle;
+String twitterDisplayStyle = "none";
 
-if (displayStyle.equals("simple")) {
-	twitterDisplayStyle = "none";
+if (displayStyle.equals("horizontal") || displayStyle.equals("vertical")) {
+	twitterDisplayStyle = displayStyle;
 }
 %>
 

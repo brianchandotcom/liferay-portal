@@ -229,7 +229,7 @@ insert into Contact_ (contactId, companyId, userId, userName, createDate, modifi
 ## User (test@liferay.com)
 ##
 
-insert into User_ (userId, companyId, createDate, modifiedDate, defaultUser, contactId, password_, passwordEncrypted, passwordReset, screenName, emailAddress, greeting, firstName, middleName, lastName, loginDate, lastLoginDate, failedLoginAttempts, agreedToTermsOfUse, status) values ($testUserId, $companyId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, FALSE, $testContactId, 'test', FALSE, FALSE, 'joebloggs', 'test@liferay.com', 'Welcome Joe Bloggs!', 'Joe', '', 'Bloggs', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, FALSE, 0);
+insert into User_ (userId, companyId, createDate, modifiedDate, defaultUser, contactId, password_, passwordEncrypted, passwordReset, screenName, emailAddress, greeting, firstName, middleName, lastName, loginDate, lastLoginDate, failedLoginAttempts, agreedToTermsOfUse, emailAddressVerified, status) values ($testUserId, $companyId, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, FALSE, $testContactId, 'test', FALSE, FALSE, 'joebloggs', 'test@liferay.com', 'Welcome Joe Bloggs!', 'Joe', '', 'Bloggs', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, FALSE, TRUE, 0);
 insert into Contact_ (contactId, companyId, userId, userName, createDate, modifiedDate, classNameId, classPK, accountId, parentContactId, emailAddress, firstName, middleName, lastName, male, birthday) values ($testContactId, $companyId, $testUserId, 'Joe Bloggs', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, $userClassNameId, $testUserId, $accountId, 0, 'test@liferay.com', 'Joe', '', 'Bloggs', TRUE, '01/01/1970');
 
 #set ($testGroupId = $counter.get())

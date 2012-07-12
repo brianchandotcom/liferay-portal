@@ -91,7 +91,7 @@ public class EditCompanyLogoAction extends PortletAction {
 		InputStream inputStream = null;
 
 		try {
-			 inputStream = uploadPortletRequest.getFileAsStream("fileName");
+			inputStream = uploadPortletRequest.getFileAsStream("fileName");
 
 			if (inputStream == null) {
 				throw new UploadException();

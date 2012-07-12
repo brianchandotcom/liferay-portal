@@ -276,8 +276,8 @@ public class Recurrence implements Serializable {
 		 */
 		Calendar tempEnd = (Calendar)dtStart.clone();
 
-		tempEnd.setTime(new Date(dtStart.getTime().getTime()
-								 + duration.getInterval()));
+		tempEnd.setTime(
+			new Date(dtStart.getTime().getTime() + duration.getInterval()));
 
 		return tempEnd;
 	}
@@ -388,8 +388,9 @@ public class Recurrence implements Serializable {
 
 		/* Loop over ranges for the duration. */
 
-		while (candidate.getTime().getTime() + duration.getInterval()
-			   > myCurrent.getTime().getTime()) {
+		while ((candidate.getTime().getTime() + duration.getInterval()) >
+					myCurrent.getTime().getTime()) {
+
 			if (candidateIsInRecurrence(candidate, debug)) {
 				return true;
 			}
@@ -508,8 +509,8 @@ public class Recurrence implements Serializable {
 		tempEnd.clear(Calendar.ZONE_OFFSET);
 		tempEnd.clear(Calendar.DST_OFFSET);
 		tempEnd.setTimeZone(TimeZoneUtil.getTimeZone(StringPool.UTC));
-		duration.setInterval(tempEnd.getTime().getTime()
-							 - dtStart.getTime().getTime());
+		duration.setInterval(
+			tempEnd.getTime().getTime() - dtStart.getTime().getTime());
 	}
 
 	/**
@@ -682,8 +683,9 @@ public class Recurrence implements Serializable {
 	 * @return long
 	 */
 	protected static long getMonthNumber(Calendar cal) {
-		return (cal.get(Calendar.YEAR) - 1970) * 12L
-			   + (cal.get(Calendar.MONTH) - Calendar.JANUARY);
+		return
+			((cal.get(Calendar.YEAR) - 1970) * 12L) +
+				(cal.get(Calendar.MONTH) - Calendar.JANUARY);
 	}
 
 	/**
@@ -715,11 +717,13 @@ public class Recurrence implements Serializable {
 		// Calculate the "week epoch" -- the weekstart day closest to January 1,
 		// 1970 (which was a Thursday)
 
-		long weekEpoch = (tempCal.getFirstDayOfWeek() - Calendar.THURSDAY) * 24L
-						 * 60 * 60 * 1000L;
+		long weekEpoch =
+			(tempCal.getFirstDayOfWeek() - Calendar.THURSDAY) * 24L * 60 * 60 *
+				1000L;
 
-		return (tempCal.getTime().getTime() - weekEpoch)
-			   / (7 * 24 * 60 * 60 * 1000);
+		return
+			(tempCal.getTime().getTime() - weekEpoch) /
+				(7 * 24 * 60 * 60 * 1000);
 	}
 
 	/**
@@ -733,8 +737,8 @@ public class Recurrence implements Serializable {
 			throw new IllegalArgumentException("Not a constant length field");
 		}
 
-		int fieldLength = (start.getMaximum(field) - start.getMinimum(field)
-						   + 1);
+		int fieldLength =
+			(start.getMaximum(field) - start.getMinimum(field) + 1);
 		int delta = start.get(field) - candidate.get(field);
 
 		if (delta > 0) {
@@ -786,8 +790,9 @@ public class Recurrence implements Serializable {
 		candidate.set(Calendar.MONTH, start.get(Calendar.MONTH));
 		candidate.set(Calendar.DATE, start.get(Calendar.DATE));
 
-		while ((start.get(Calendar.MONTH) != candidate.get(Calendar.MONTH))
-			   || (start.get(Calendar.DATE) != candidate.get(Calendar.DATE))) {
+		while ((start.get(Calendar.MONTH) != candidate.get(Calendar.MONTH)) ||
+			   (start.get(Calendar.DATE) != candidate.get(Calendar.DATE))) {
+
 			candidate.add(Calendar.YEAR, -1);
 			candidate.set(Calendar.MONTH, start.get(Calendar.MONTH));
 			candidate.set(Calendar.DATE, start.get(Calendar.DATE));
@@ -903,12 +908,12 @@ public class Recurrence implements Serializable {
 				return (int)(getWeekNumber(tempCand) - getWeekNumber(dtStart));
 
 			case MONTHLY :
-				return (int)(getMonthNumber(candidate)
-							 - getMonthNumber(dtStart));
+				return
+					(int)(getMonthNumber(candidate) - getMonthNumber(dtStart));
 
 			case YEARLY :
-				return candidate.get(Calendar.YEAR)
-					   - dtStart.get(Calendar.YEAR);
+				return
+					candidate.get(Calendar.YEAR) - dtStart.get(Calendar.YEAR);
 
 			default :
 				throw new IllegalStateException("bad frequency internally...");

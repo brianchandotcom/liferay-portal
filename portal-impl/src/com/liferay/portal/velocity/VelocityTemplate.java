@@ -111,7 +111,7 @@ public class VelocityTemplate implements Template {
 			}
 
 			try {
-				 _processTemplate(_errorTemplateResource, writer);
+				_processTemplate(_errorTemplateResource, writer);
 
 				return false;
 			}

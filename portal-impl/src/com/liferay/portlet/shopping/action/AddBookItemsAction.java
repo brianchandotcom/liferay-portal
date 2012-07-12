@@ -87,7 +87,7 @@ public class AddBookItemsAction extends PortletAction {
 			ShoppingItemServiceUtil.addBookItems(groupId, categoryId, isbns);
 		}
 		catch (AmazonException ae) {
-			 SessionErrors.add(actionRequest, ae.getClass());
+			SessionErrors.add(actionRequest, ae.getClass());
 		}
 	}
 

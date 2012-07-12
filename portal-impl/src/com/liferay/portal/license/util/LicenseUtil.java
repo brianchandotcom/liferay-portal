@@ -419,7 +419,7 @@ public class LicenseUtil {
 				}
 			}
 			else {
-				 connection = url.openConnection();
+				connection = url.openConnection();
 			}
 
 			connection.setDoOutput(true);

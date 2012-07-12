@@ -27,6 +27,6 @@ public interface OAuthManager {
 	public String getVersion() throws OAuthException;
 
 	public void signRequest(Token accessToken, OAuthRequest oAuthRequest)
-	 	throws OAuthException;
+		throws OAuthException;
 
 }

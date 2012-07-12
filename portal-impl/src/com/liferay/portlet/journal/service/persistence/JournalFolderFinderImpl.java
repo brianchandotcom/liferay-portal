@@ -84,7 +84,7 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 			long groupId, long folderId, boolean inlineSQLHelper)
 		throws SystemException {
 
-	   Session session = null;
+		Session session = null;
 
 		try {
 			session = openSession();

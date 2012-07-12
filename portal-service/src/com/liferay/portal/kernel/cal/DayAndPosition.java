@@ -166,8 +166,9 @@ public class DayAndPosition implements Cloneable, Serializable {
 
 		DayAndPosition that = (DayAndPosition)obj;
 
-		return (getDayOfWeek() == that.getDayOfWeek())
-			   && (getDayPosition() == that.getDayPosition());
+		return
+			(getDayOfWeek() == that.getDayOfWeek()) &&
+			(getDayPosition() == that.getDayPosition());
 	}
 
 	/**

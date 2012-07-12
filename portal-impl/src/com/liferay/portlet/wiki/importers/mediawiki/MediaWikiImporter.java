@@ -550,7 +550,7 @@ public class MediaWikiImporter implements WikiImporter {
 				}
 			}
 			catch (SystemException se) {
-				 _log.error(se, se);
+				_log.error(se, se);
 			}
 
 			if ((i % 5) == 0) {

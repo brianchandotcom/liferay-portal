@@ -32,8 +32,8 @@ import javax.servlet.ServletContext;
 public interface Theme extends Comparable<Theme>, Plugin, Serializable {
 
 	public void addSetting(
-		 String key, String value, boolean configurable, String type,
-		 String[] options, String script);
+		String key, String value, boolean configurable, String type,
+		String[] options, String script);
 
 	public List<ColorScheme> getColorSchemes();
 

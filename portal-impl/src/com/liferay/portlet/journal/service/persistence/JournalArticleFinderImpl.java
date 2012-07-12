@@ -223,7 +223,7 @@ public class JournalArticleFinderImpl
 			String articleId, Double version, String title, String description,
 			String content, String type, String[] structureIds,
 			String[] templateIds, Date displayDateGT, Date displayDateLT,
-			 int status, Date reviewDate, boolean andOperator)
+			int status, Date reviewDate, boolean andOperator)
 		throws SystemException {
 
 		String[] articleIds = CustomSQLUtil.keywords(articleId, false);
@@ -545,11 +545,11 @@ public class JournalArticleFinderImpl
 	public List<JournalArticle> findByC_G_F_C_A_V_T_D_C_T_S_T_D_S_R(
 			long companyId, long groupId, long folderId, long classNameId,
 			String[] articleIds, Double version, String[] titles,
-			 String[] descriptions, String[] contents, String type,
-			 String[] structureIds, String[] templateIds, Date displayDateGT,
-			 Date displayDateLT, int status, Date reviewDate,
-			 boolean andOperator, int start, int end,
-			 OrderByComparator orderByComparator)
+			String[] descriptions, String[] contents, String type,
+			String[] structureIds, String[] templateIds, Date displayDateGT,
+			Date displayDateLT, int status, Date reviewDate,
+			boolean andOperator, int start, int end,
+			OrderByComparator orderByComparator)
 		throws SystemException {
 
 		return doFindByC_G_F_C_A_V_T_D_C_T_S_T_D_S_R(

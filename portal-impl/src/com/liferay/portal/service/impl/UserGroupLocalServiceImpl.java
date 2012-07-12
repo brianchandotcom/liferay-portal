@@ -505,7 +505,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 			LinkedHashMap<String, Object> params)
 		throws SystemException {
 
-		 return userGroupFinder.countByKeywords(companyId, keywords, params);
+		return userGroupFinder.countByKeywords(companyId, keywords, params);
 	}
 
 	/**

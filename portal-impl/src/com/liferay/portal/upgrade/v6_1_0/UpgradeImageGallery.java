@@ -293,7 +293,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 					}
 				}
 				else {
-				 	ps.executeUpdate();
+					ps.executeUpdate();
 				}
 			}
 

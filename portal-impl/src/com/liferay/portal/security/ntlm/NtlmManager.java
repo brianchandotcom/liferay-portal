@@ -67,9 +67,9 @@ public class NtlmManager {
 		}
 
 		return _netlogon.logon(
-			 type3Message.getDomain(), type3Message.getUser(),
-			 type3Message.getWorkstation(), serverChallenge,
-			 type3Message.getNTResponse(), type3Message.getLMResponse());
+			type3Message.getDomain(), type3Message.getUser(),
+			type3Message.getWorkstation(), serverChallenge,
+			type3Message.getNTResponse(), type3Message.getLMResponse());
 	}
 
 	public String getDomain() {

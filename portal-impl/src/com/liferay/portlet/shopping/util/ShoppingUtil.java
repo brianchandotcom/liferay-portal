@@ -753,8 +753,8 @@ public class ShoppingUtil {
 
 				int arrayPos;
 				for (arrayPos = i / numOfRepeats;
-					 arrayPos >= vArray.length;
-					 arrayPos = arrayPos - vArray.length) {
+					arrayPos >= vArray.length;
+					arrayPos = arrayPos - vArray.length) {
 				}
 
 				if (!fieldsValues.contains(vArray[arrayPos].trim())) {

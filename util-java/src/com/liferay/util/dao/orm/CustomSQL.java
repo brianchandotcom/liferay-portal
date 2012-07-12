@@ -365,7 +365,7 @@ public class CustomSQL {
 			_sqlPool = new HashMap<String, String>();
 		}
 		else {
-			 _sqlPool.clear();
+			_sqlPool.clear();
 		}
 
 		try {

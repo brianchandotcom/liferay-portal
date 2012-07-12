@@ -304,7 +304,7 @@ public class DLFileEntryLocalServiceImpl
 			DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION, version);
 
 		if (serviceContext.getWorkflowAction() ==
-		 		WorkflowConstants.ACTION_PUBLISH) {
+				WorkflowConstants.ACTION_PUBLISH) {
 
 			startWorkflowInstance(
 				userId, serviceContext, dlFileVersion,

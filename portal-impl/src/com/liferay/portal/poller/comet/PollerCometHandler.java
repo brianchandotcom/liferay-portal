@@ -66,8 +66,8 @@ public class PollerCometHandler extends BaseCometHandler {
 				cometRequest.getRequest(), pollerRequestString);
 
 		if (pollerResponseHeaderJSONObject != null) {
-			 _channelListener = new PollerCometChannelListener(
-				 cometSession, pollerResponseHeaderJSONObject);
+			_channelListener = new PollerCometChannelListener(
+				cometSession, pollerResponseHeaderJSONObject);
 
 			try {
 				ChannelHubManagerUtil.registerChannelListener(

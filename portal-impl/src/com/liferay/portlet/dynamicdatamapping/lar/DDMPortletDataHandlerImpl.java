@@ -271,8 +271,8 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"An article with the key " + template.getTemplateKey()
-						+ " already " + "exists. The new generated key is " +
+					"An article with the key " + template.getTemplateKey() +
+						" already exists. The new generated key is " +
 							newTemplate.getTemplateKey());
 			}
 		}

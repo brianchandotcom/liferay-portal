@@ -153,6 +153,12 @@ public class CASFilter extends BasePortalFilter {
 		else {
 			String login = (String)session.getAttribute(WebKeys.CAS_LOGIN);
 
+			if (Validator.isNotNull(login)) {
+				processFilter(CASFilter.class, request, response, filterChain);
+
+				return;
+			}
+
 			String serverName = PrefsPropsUtil.getString(
 				companyId, PropsKeys.CAS_SERVER_NAME,
 				PropsValues.CAS_SERVER_NAME);
@@ -169,20 +175,14 @@ public class CASFilter extends BasePortalFilter {
 			String ticket = ParamUtil.getString(request, "ticket");
 
 			if (Validator.isNull(ticket)) {
-				if (Validator.isNotNull(login)) {
-					processFilter(
-						CASFilter.class, request, response, filterChain);
-				}
-				else {
-					String loginUrl = PrefsPropsUtil.getString(
-						companyId, PropsKeys.CAS_LOGIN_URL,
-						PropsValues.CAS_LOGIN_URL);
+				String loginUrl = PrefsPropsUtil.getString(
+					companyId, PropsKeys.CAS_LOGIN_URL,
+					PropsValues.CAS_LOGIN_URL);
 
-					loginUrl = HttpUtil.addParameter(
-						loginUrl, "service", serviceUrl);
+				loginUrl = HttpUtil.addParameter(
+					loginUrl, "service", serviceUrl);
 
-					response.sendRedirect(loginUrl);
-				}
+				response.sendRedirect(loginUrl);
 
 				return;
 			}

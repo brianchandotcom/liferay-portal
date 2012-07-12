@@ -67,7 +67,7 @@ for (int i = 0; i < results.size(); i++) {
 	sb.append("', '");
 	sb.append(fileEntry.getUuid());
 	sb.append("', '");
-	sb.append(fileEntry.getTitle());
+	sb.append(HtmlUtil.escapeJS(fileEntry.getTitle()));
 	sb.append("', '");
 	sb.append(fileEntry.getVersion());
 	sb.append("'); Liferay.Util.getWindow().close();");

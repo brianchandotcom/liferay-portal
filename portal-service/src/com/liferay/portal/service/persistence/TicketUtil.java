@@ -228,6 +228,51 @@ public class TicketUtil {
 	}
 
 	/**
+	* Returns the ticket where key = &#63; and type = &#63; or throws a {@link com.liferay.portal.NoSuchTicketException} if it could not be found.
+	*
+	* @param key the key
+	* @param type the type
+	* @return the matching ticket
+	* @throws com.liferay.portal.NoSuchTicketException if a matching ticket could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Ticket findByK_T(
+		java.lang.String key, int type)
+		throws com.liferay.portal.NoSuchTicketException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByK_T(key, type);
+	}
+
+	/**
+	* Returns the ticket where key = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param key the key
+	* @param type the type
+	* @return the matching ticket, or <code>null</code> if a matching ticket could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Ticket fetchByK_T(
+		java.lang.String key, int type)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByK_T(key, type);
+	}
+
+	/**
+	* Returns the ticket where key = &#63; and type = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param key the key
+	* @param type the type
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching ticket, or <code>null</code> if a matching ticket could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Ticket fetchByK_T(
+		java.lang.String key, int type, boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByK_T(key, type, retrieveFromCache);
+	}
+
+	/**
 	* Returns all the tickets.
 	*
 	* @return the tickets
@@ -291,6 +336,21 @@ public class TicketUtil {
 	}
 
 	/**
+	* Removes the ticket where key = &#63; and type = &#63; from the database.
+	*
+	* @param key the key
+	* @param type the type
+	* @return the ticket that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portal.model.Ticket removeByK_T(
+		java.lang.String key, int type)
+		throws com.liferay.portal.NoSuchTicketException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().removeByK_T(key, type);
+	}
+
+	/**
 	* Removes all the tickets from the database.
 	*
 	* @throws SystemException if a system exception occurred
@@ -310,6 +370,19 @@ public class TicketUtil {
 	public static int countByKey(java.lang.String key)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().countByKey(key);
+	}
+
+	/**
+	* Returns the number of tickets where key = &#63; and type = &#63;.
+	*
+	* @param key the key
+	* @param type the type
+	* @return the number of matching tickets
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByK_T(java.lang.String key, int type)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByK_T(key, type);
 	}
 
 	/**

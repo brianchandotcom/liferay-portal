@@ -274,6 +274,11 @@ public class TicketPersistenceTest {
 
 		Assert.assertTrue(Validator.equals(existingTicketModelImpl.getKey(),
 				existingTicketModelImpl.getOriginalKey()));
+
+		Assert.assertTrue(Validator.equals(existingTicketModelImpl.getKey(),
+				existingTicketModelImpl.getOriginalKey()));
+		Assert.assertEquals(existingTicketModelImpl.getType(),
+			existingTicketModelImpl.getOriginalType());
 	}
 
 	protected Ticket addTicket() throws Exception {

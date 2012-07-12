@@ -81,6 +81,16 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 			TicketModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByKey",
 			new String[] { String.class.getName() });
+	public static final FinderPath FINDER_PATH_FETCH_BY_K_T = new FinderPath(TicketModelImpl.ENTITY_CACHE_ENABLED,
+			TicketModelImpl.FINDER_CACHE_ENABLED, TicketImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByK_T",
+			new String[] { String.class.getName(), Integer.class.getName() },
+			TicketModelImpl.KEY_COLUMN_BITMASK |
+			TicketModelImpl.TYPE_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_K_T = new FinderPath(TicketModelImpl.ENTITY_CACHE_ENABLED,
+			TicketModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByK_T",
+			new String[] { String.class.getName(), Integer.class.getName() });
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_ALL = new FinderPath(TicketModelImpl.ENTITY_CACHE_ENABLED,
 			TicketModelImpl.FINDER_CACHE_ENABLED, TicketImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
@@ -102,6 +112,10 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_KEY,
 			new Object[] { ticket.getKey() }, ticket);
+
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_K_T,
+			new Object[] { ticket.getKey(), Integer.valueOf(ticket.getType()) },
+			ticket);
 
 		ticket.resetOriginalValues();
 	}
@@ -178,6 +192,9 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 	protected void clearUniqueFindersCache(Ticket ticket) {
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_KEY,
 			new Object[] { ticket.getKey() });
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_K_T,
+			new Object[] { ticket.getKey(), Integer.valueOf(ticket.getType()) });
 	}
 
 	/**
@@ -308,6 +325,10 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 		if (isNew) {
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_KEY,
 				new Object[] { ticket.getKey() }, ticket);
+
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_K_T,
+				new Object[] { ticket.getKey(), Integer.valueOf(
+						ticket.getType()) }, ticket);
 		}
 		else {
 			if ((ticketModelImpl.getColumnBitmask() &
@@ -320,6 +341,23 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_KEY,
 					new Object[] { ticket.getKey() }, ticket);
+			}
+
+			if ((ticketModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_K_T.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						ticketModelImpl.getOriginalKey(),
+						Integer.valueOf(ticketModelImpl.getOriginalType())
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_K_T, args);
+
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_K_T, args);
+
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_K_T,
+					new Object[] {
+						ticket.getKey(), Integer.valueOf(ticket.getType())
+					}, ticket);
 			}
 		}
 
@@ -598,6 +636,168 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 	}
 
 	/**
+	 * Returns the ticket where key = &#63; and type = &#63; or throws a {@link com.liferay.portal.NoSuchTicketException} if it could not be found.
+	 *
+	 * @param key the key
+	 * @param type the type
+	 * @return the matching ticket
+	 * @throws com.liferay.portal.NoSuchTicketException if a matching ticket could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Ticket findByK_T(String key, int type)
+		throws NoSuchTicketException, SystemException {
+		Ticket ticket = fetchByK_T(key, type);
+
+		if (ticket == null) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("key=");
+			msg.append(key);
+
+			msg.append(", type=");
+			msg.append(type);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchTicketException(msg.toString());
+		}
+
+		return ticket;
+	}
+
+	/**
+	 * Returns the ticket where key = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param key the key
+	 * @param type the type
+	 * @return the matching ticket, or <code>null</code> if a matching ticket could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Ticket fetchByK_T(String key, int type) throws SystemException {
+		return fetchByK_T(key, type, true);
+	}
+
+	/**
+	 * Returns the ticket where key = &#63; and type = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param key the key
+	 * @param type the type
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching ticket, or <code>null</code> if a matching ticket could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Ticket fetchByK_T(String key, int type, boolean retrieveFromCache)
+		throws SystemException {
+		Object[] finderArgs = new Object[] { key, type };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_K_T,
+					finderArgs, this);
+		}
+
+		if (result instanceof Ticket) {
+			Ticket ticket = (Ticket)result;
+
+			if (!Validator.equals(key, ticket.getKey()) ||
+					(type != ticket.getType())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_SELECT_TICKET_WHERE);
+
+			if (key == null) {
+				query.append(_FINDER_COLUMN_K_T_KEY_1);
+			}
+			else {
+				if (key.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_K_T_KEY_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_K_T_KEY_2);
+				}
+			}
+
+			query.append(_FINDER_COLUMN_K_T_TYPE_2);
+
+			query.append(TicketModelImpl.ORDER_BY_JPQL);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (key != null) {
+					qPos.add(key);
+				}
+
+				qPos.add(type);
+
+				List<Ticket> list = q.list();
+
+				result = list;
+
+				Ticket ticket = null;
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_K_T,
+						finderArgs, list);
+				}
+				else {
+					ticket = list.get(0);
+
+					cacheResult(ticket);
+
+					if ((ticket.getKey() == null) ||
+							!ticket.getKey().equals(key) ||
+							(ticket.getType() != type)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_K_T,
+							finderArgs, ticket);
+					}
+				}
+
+				return ticket;
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (result == null) {
+					FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_K_T,
+						finderArgs);
+				}
+
+				closeSession(session);
+			}
+		}
+		else {
+			if (result instanceof List<?>) {
+				return null;
+			}
+			else {
+				return (Ticket)result;
+			}
+		}
+	}
+
+	/**
 	 * Returns all the tickets.
 	 *
 	 * @return the tickets
@@ -726,6 +926,21 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 	}
 
 	/**
+	 * Removes the ticket where key = &#63; and type = &#63; from the database.
+	 *
+	 * @param key the key
+	 * @param type the type
+	 * @return the ticket that was removed
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Ticket removeByK_T(String key, int type)
+		throws NoSuchTicketException, SystemException {
+		Ticket ticket = findByK_T(key, type);
+
+		return remove(ticket);
+	}
+
+	/**
 	 * Removes all the tickets from the database.
 	 *
 	 * @throws SystemException if a system exception occurred
@@ -792,6 +1007,76 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 				}
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_KEY, finderArgs,
+					count);
+
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of tickets where key = &#63; and type = &#63;.
+	 *
+	 * @param key the key
+	 * @param type the type
+	 * @return the number of matching tickets
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByK_T(String key, int type) throws SystemException {
+		Object[] finderArgs = new Object[] { key, type };
+
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_K_T,
+				finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_TICKET_WHERE);
+
+			if (key == null) {
+				query.append(_FINDER_COLUMN_K_T_KEY_1);
+			}
+			else {
+				if (key.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_K_T_KEY_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_K_T_KEY_2);
+				}
+			}
+
+			query.append(_FINDER_COLUMN_K_T_TYPE_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (key != null) {
+					qPos.add(key);
+				}
+
+				qPos.add(type);
+
+				count = (Long)q.uniqueResult();
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (count == null) {
+					count = Long.valueOf(0);
+				}
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_K_T, finderArgs,
 					count);
 
 				closeSession(session);
@@ -999,6 +1284,10 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 	private static final String _FINDER_COLUMN_KEY_KEY_1 = "ticket.key IS NULL";
 	private static final String _FINDER_COLUMN_KEY_KEY_2 = "ticket.key = ?";
 	private static final String _FINDER_COLUMN_KEY_KEY_3 = "(ticket.key IS NULL OR ticket.key = ?)";
+	private static final String _FINDER_COLUMN_K_T_KEY_1 = "ticket.key IS NULL AND ";
+	private static final String _FINDER_COLUMN_K_T_KEY_2 = "ticket.key = ? AND ";
+	private static final String _FINDER_COLUMN_K_T_KEY_3 = "(ticket.key IS NULL OR ticket.key = ?) AND ";
+	private static final String _FINDER_COLUMN_K_T_TYPE_2 = "ticket.type = ?";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "ticket.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Ticket exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Ticket exists with the key {";

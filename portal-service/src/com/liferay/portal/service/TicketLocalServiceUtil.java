@@ -278,11 +278,24 @@ public class TicketLocalServiceUtil {
 		return getService().fetchTicket(key);
 	}
 
+	public static com.liferay.portal.model.Ticket fetchTicket(
+		java.lang.String key, int type)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchTicket(key, type);
+	}
+
 	public static com.liferay.portal.model.Ticket getTicket(
 		java.lang.String key)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getTicket(key);
+	}
+
+	public static com.liferay.portal.model.Ticket getTicket(
+		java.lang.String key, int type)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getTicket(key, type);
 	}
 
 	public static TicketLocalService getService() {

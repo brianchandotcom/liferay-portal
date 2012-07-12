@@ -4906,11 +4906,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	public void verifyEmailAddress(String ticketKey)
 		throws PortalException, SystemException {
 
-		Ticket ticket = ticketLocalService.getTicket(ticketKey);
+		Ticket ticket = ticketLocalService.getTicket(
+			ticketKey, TicketConstants.TYPE_EMAIL_ADDRESS);
 
-		if (ticket.isExpired() ||
-			(ticket.getType() != TicketConstants.TYPE_EMAIL_ADDRESS)) {
-
+		if (ticket.isExpired()) {
 			throw new NoSuchTicketException();
 		}
 

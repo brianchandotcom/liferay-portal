@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.Ticket;
+import com.liferay.portal.model.TicketConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.AuthTokenUtil;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -133,7 +134,8 @@ public class UpdatePasswordAction extends Action {
 		}
 
 		try {
-			Ticket ticket = TicketLocalServiceUtil.getTicket(ticketKey);
+			Ticket ticket = TicketLocalServiceUtil.getTicket(
+				ticketKey, TicketConstants.TYPE_PASSWORD);
 
 			if (!ticket.isExpired()) {
 				return ticket;

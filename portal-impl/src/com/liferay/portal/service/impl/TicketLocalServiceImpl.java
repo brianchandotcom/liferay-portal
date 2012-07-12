@@ -60,10 +60,20 @@ public class TicketLocalServiceImpl extends TicketLocalServiceBaseImpl {
 		return ticketPersistence.fetchByKey(key);
 	}
 
+	public Ticket fetchTicket(String key, int type) throws SystemException {
+		return ticketPersistence.fetchByK_T(key, type);
+	}
+
 	public Ticket getTicket(String key)
 		throws PortalException, SystemException {
 
 		return ticketPersistence.findByKey(key);
+	}
+
+	public Ticket getTicket(String key, int type)
+		throws PortalException, SystemException {
+
+		return ticketPersistence.findByK_T(key, type);
 	}
 
 }

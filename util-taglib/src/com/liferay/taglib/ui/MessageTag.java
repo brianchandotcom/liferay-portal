@@ -42,15 +42,11 @@ public class MessageTag extends TagSupport {
 			boolean unicode = GetterUtil.getBoolean(
 				request.getAttribute(WebKeys.JS_CONTEXT));
 
-			if (unicode) {
-				_unicode = unicode;
-			}
-
 			if (_arguments == null) {
 				if (!_localizeKey) {
 					value = _key;
 				}
-				else if (_unicode) {
+				else if (unicode) {
 					value = UnicodeLanguageUtil.get(pageContext, _key);
 				}
 				else {
@@ -58,7 +54,7 @@ public class MessageTag extends TagSupport {
 				}
 			}
 			else {
-				if (_unicode) {
+				if (unicode) {
 					value = UnicodeLanguageUtil.format(
 						pageContext, _key, _arguments, _translateArguments);
 				}
@@ -83,7 +79,6 @@ public class MessageTag extends TagSupport {
 				_key = null;
 				_localizeKey = true;
 				_translateArguments = true;
-				_unicode = false;
 			}
 		}
 	}
@@ -108,14 +103,9 @@ public class MessageTag extends TagSupport {
 		_translateArguments = translateArguments;
 	}
 
-	public void setUnicode(boolean unicode) {
-		_unicode = unicode;
-	}
-
 	private Object[] _arguments;
 	private String _key;
 	private boolean _localizeKey = true;
 	private boolean _translateArguments = true;
-	private boolean _unicode;
 
 }

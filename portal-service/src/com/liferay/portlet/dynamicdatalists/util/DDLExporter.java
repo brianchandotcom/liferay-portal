@@ -16,8 +16,11 @@ package com.liferay.portlet.dynamicdatalists.util;
 
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import java.util.Locale;
+
 /**
  * @author Marcellus Tavares
+ * @author Manuel de la Peña
  */
 public interface DDLExporter {
 
@@ -32,5 +35,9 @@ public interface DDLExporter {
 			long recordSetId, int status, int start, int end,
 			OrderByComparator orderByComparator)
 		throws Exception;
+
+	public Locale getLocale();
+
+	public void setLocale(Locale locale);
 
 }

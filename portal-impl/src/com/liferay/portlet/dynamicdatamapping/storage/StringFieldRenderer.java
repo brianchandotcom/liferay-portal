@@ -16,13 +16,14 @@ package com.liferay.portlet.dynamicdatamapping.storage;
 
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.util.DDMImpl;
 
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -31,9 +32,7 @@ import java.util.Map;
 public class StringFieldRenderer extends BaseFieldRenderer {
 
 	@Override
-	protected String doRender(ThemeDisplay themeDisplay, Field field)
-		throws Exception {
-
+	protected String doRender(Field field, Locale locale) throws Exception {
 		String value = String.valueOf(field.getValue());
 
 		if (Validator.isNull(value)) {
@@ -57,7 +56,7 @@ public class StringFieldRenderer extends BaseFieldRenderer {
 		for (int i = 0; i < valuesJSONArray.length(); i++) {
 			Map<String, String> fieldsMap = ddmStructure.getFields(
 				field.getName(), FieldConstants.VALUE,
-				valuesJSONArray.getString(i));
+				valuesJSONArray.getString(i), LocaleUtil.toLanguageId(locale));
 
 			if (fieldsMap == null) {
 				continue;

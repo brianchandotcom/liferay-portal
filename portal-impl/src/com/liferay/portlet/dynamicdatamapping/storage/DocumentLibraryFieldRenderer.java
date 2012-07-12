@@ -24,11 +24,12 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 
 import java.io.Serializable;
+
+import java.util.Locale;
 
 /**
  * @author Bruno Basto
@@ -36,7 +37,7 @@ import java.io.Serializable;
 public class DocumentLibraryFieldRenderer extends BaseFieldRenderer {
 
 	@Override
-	protected String doRender(ThemeDisplay themeDisplay, Field field) {
+	protected String doRender(Field field, Locale locale) {
 		Serializable fieldValue = field.getValue();
 
 		if (Validator.isNull(fieldValue) ||
@@ -73,8 +74,7 @@ public class DocumentLibraryFieldRenderer extends BaseFieldRenderer {
 				e instanceof PrincipalException) {
 
 				return LanguageUtil.format(
-					themeDisplay.getLocale(), "is-temporarily-unavailable",
-					"content");
+					locale, "is-temporarily-unavailable","content");
 			}
 		}
 

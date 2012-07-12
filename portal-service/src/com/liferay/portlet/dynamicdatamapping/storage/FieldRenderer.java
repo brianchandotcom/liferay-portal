@@ -14,13 +14,13 @@
 
 package com.liferay.portlet.dynamicdatamapping.storage;
 
-import com.liferay.portal.theme.ThemeDisplay;
+import java.util.Locale;
 
 /**
  * @author Bruno Basto
  */
 public interface FieldRenderer {
 
-	public String render(ThemeDisplay themeDisplay, Field field);
+	public String render(Field field, Locale locale);
 
 }

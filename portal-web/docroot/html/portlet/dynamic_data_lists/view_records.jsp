@@ -122,7 +122,7 @@ portletURL.setParameter("recordSetId", String.valueOf(recordSet.getRecordSetId()
 				if (fieldsModel.contains(name)) {
 					com.liferay.portlet.dynamicdatamapping.storage.Field field = fieldsModel.get(name);
 
-					value = field.getRenderedValue(themeDisplay);
+					value = field.getRenderedValue(themeDisplay.getLocale());
 				}
 				else {
 					value = StringPool.BLANK;

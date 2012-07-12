@@ -16,16 +16,18 @@ package com.liferay.portlet.dynamicdatamapping.storage;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.theme.ThemeDisplay;
+
+import java.util.Locale;
 
 /**
  * @author Bruno Basto
+ * @author Manuel de la Peña
  */
 public abstract class BaseFieldRenderer implements FieldRenderer {
 
-	public String render(ThemeDisplay themeDisplay, Field field) {
+	public String render(Field field, Locale locale) {
 		try {
-			return doRender(themeDisplay, field);
+			return doRender(field, locale);
 		}
 		catch (Exception e) {
 			if (_log.isErrorEnabled()) {
@@ -36,7 +38,7 @@ public abstract class BaseFieldRenderer implements FieldRenderer {
 		return null;
 	}
 
-	protected abstract String doRender(ThemeDisplay themeDisplay, Field field)
+	protected abstract String doRender(Field field, Locale locale)
 		throws Exception;
 
 	private static Log _log = LogFactoryUtil.getLog(BaseFieldRenderer.class);

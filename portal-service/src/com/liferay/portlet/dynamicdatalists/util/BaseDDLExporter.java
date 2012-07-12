@@ -15,11 +15,15 @@
 package com.liferay.portlet.dynamicdatalists.util;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.Locale;
+
 /**
  * @author Marcellus Tavares
+ * @author Manuel de la Peña
  */
 public abstract class BaseDDLExporter implements DDLExporter {
 
@@ -48,9 +52,23 @@ public abstract class BaseDDLExporter implements DDLExporter {
 		return doExport(recordSetId, status, start, end, orderByComparator);
 	}
 
+	public Locale getLocale() {
+		if (_locale == null) {
+			_locale = LocaleUtil.getDefault();
+		}
+
+		return _locale;
+	}
+
+	public void setLocale(Locale locale) {
+		_locale = locale;
+	}
+
 	protected abstract byte[] doExport(
 			long recordSetId, int status, int start, int end,
 			OrderByComparator orderByComparator)
 		throws Exception;
+
+	private Locale _locale;
 
 }

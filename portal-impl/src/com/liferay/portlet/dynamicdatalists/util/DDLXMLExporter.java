@@ -14,18 +14,22 @@
 
 package com.liferay.portlet.dynamicdatalists.util;
 
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
+import com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordSetServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.FieldConstants;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
+import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
 
 import java.io.Serializable;
 
@@ -34,6 +38,7 @@ import java.util.Map;
 
 /**
  * @author Marcellus Tavares
+ * @author Manuel de la Peña
  */
 public class DDLXMLExporter extends BaseDDLExporter {
 
@@ -62,8 +67,8 @@ public class DDLXMLExporter extends BaseDDLExporter {
 
 		DDMStructure ddmStructure = recordSet.getDDMStructure();
 
-		Map<String, Map<String, String>> fieldsMap =
-			ddmStructure.getFieldsMap();
+		Map<String, Map<String, String>> fieldsMap = ddmStructure.getFieldsMap(
+			LocaleUtil.toLanguageId(getLocale()));
 
 		Document document = SAXReaderUtil.createDocument();
 
@@ -75,17 +80,28 @@ public class DDLXMLExporter extends BaseDDLExporter {
 		for (DDLRecord record : records) {
 			Element fieldsElement = rootElement.addElement("fields");
 
-			Fields fields = record.getFields();
+			DDLRecordVersion recordVersion = record.getRecordVersion();
 
-			for (Map<String, String> fieldMap : fieldsMap.values()) {
-				String label = fieldMap.get(FieldConstants.LABEL);
-				String name = fieldMap.get(FieldConstants.NAME);
+			Fields fieldsModel = StorageEngineUtil.getFields(
+				recordVersion.getDDMStorageId());
 
-				Field field = fields.get(name);
+			for (Map<String, String> fields : fieldsMap.values()) {
+				String dataType = fields.get(FieldConstants.DATA_TYPE);
 
-				Serializable value = field.getValue();
+				String label = fields.get(FieldConstants.LABEL);
+				String name = fields.get(FieldConstants.NAME);
+				String value = StringPool.BLANK;
 
-				addFieldElement(fieldsElement, label, value);
+				if (fieldsModel.contains(name)) {
+					Field field = fieldsModel.get(name);
+
+					value = field.getRenderedValue(getLocale());
+				}
+
+				Serializable fieldValueSerializable =
+					FieldConstants.getSerializable(dataType, value);
+
+				addFieldElement(fieldsElement, label, fieldValueSerializable);
 			}
 		}
 

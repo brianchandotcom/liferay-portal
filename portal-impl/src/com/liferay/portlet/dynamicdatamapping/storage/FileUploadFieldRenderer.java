@@ -21,9 +21,10 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.theme.ThemeDisplay;
 
 import java.io.Serializable;
+
+import java.util.Locale;
 
 /**
  * @author Bruno Basto
@@ -31,7 +32,7 @@ import java.io.Serializable;
 public class FileUploadFieldRenderer extends BaseFieldRenderer {
 
 	@Override
-	protected String doRender(ThemeDisplay themeDisplay, Field field) {
+	protected String doRender(Field field, Locale locale) {
 		Serializable fieldValue = field.getValue();
 
 		if (Validator.isNull(fieldValue) ||

@@ -16,11 +16,12 @@ package com.liferay.portlet.dynamicdatamapping.storage;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 
 import java.io.Serializable;
+
+import java.util.Locale;
 
 /**
  * @author Brian Wing Shun Chan
@@ -58,7 +59,7 @@ public class Field implements Serializable {
 		return _name;
 	}
 
-	public String getRenderedValue(ThemeDisplay themeDisplay)
+	public String getRenderedValue(Locale locale)
 		throws PortalException, SystemException {
 
 		DDMStructure ddmStructure = getDDMStructure();
@@ -72,7 +73,7 @@ public class Field implements Serializable {
 		FieldRenderer fieldrenderer = FieldRendererFactory.getFieldRenderer(
 			dataType);
 
-		return fieldrenderer.render(themeDisplay, this);
+		return fieldrenderer.render(this, locale);
 	}
 
 	public String getType() throws PortalException, SystemException {

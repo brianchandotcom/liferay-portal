@@ -16,9 +16,12 @@ package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.language.UnicodeLanguageUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.WebKeys;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
@@ -32,6 +35,16 @@ public class MessageTag extends TagSupport {
 	public int doEndTag() throws JspException {
 		try {
 			String value = StringPool.BLANK;
+
+			HttpServletRequest request =
+				(HttpServletRequest)pageContext.getRequest();
+
+			boolean unicode = GetterUtil.getBoolean(
+				request.getAttribute(WebKeys.JS_CONTEXT));
+
+			if (unicode) {
+				_unicode = unicode;
+			}
 
 			if (_arguments == null) {
 				if (!_localizeKey) {

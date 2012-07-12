@@ -174,6 +174,13 @@ String publishScheduleMessage = LanguageUtil.get(pageContext, publishScheduleDia
 				</c:when>
 				<c:otherwise>
 					<c:if test="<%= stagingGroup.isStagedRemotely() || GroupPermissionUtil.contains(permissionChecker, liveGroup.getGroupId(), ActionKeys.PUBLISH_STAGING) %>">
+
+						<%
+							if (groupId == 0) {
+								publishRenderURL.setParameter("selPlid", String.valueOf(plid));
+							}
+						%>
+
 						<c:choose>
 							<c:when test="<%= (layoutSetBranchId > 0) && (layoutSetBranches.size() > 1) %>">
 

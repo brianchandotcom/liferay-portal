@@ -257,7 +257,7 @@ if (!selectableTree) {
 				}
 			}
 
-			A.Array.each(node.get('paginator'), TreeUtil.restoreNodeState);
+			A.Array.each(node.get('children'), TreeUtil.restoreNodeState);
 		},
 
 		restoreSelectedNode: function(node) {

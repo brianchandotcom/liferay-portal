@@ -92,7 +92,6 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 						layout.getSourcePrototypeLayoutUuid())) {
 
 					if (!SitesUtil.isLayoutModifiedSinceLastMerge(layout)) {
-
 						SitesUtil.mergeLayoutSetProtypeLayouts(
 							group, layoutSet);
 					}
@@ -117,18 +116,18 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 				LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 					groupId, privateLayout);
 
-				Object returnValue = methodInvocation.proceed();
+				List<Layout> layouts = (List<Layout>)methodInvocation.proceed();
 
 				try {
 					MergeLayoutPrototypesThreadLocal.setInProgress(true);
 					WorkflowThreadLocal.setEnabled(false);
 
-					if (((List<Layout>)returnValue).isEmpty()) {
+					if (layouts.isEmpty()) {
 						SitesUtil.mergeLayoutSetProtypeLayouts(
 							group, layoutSet);
 					}
 
-					for (Layout layout : (List<Layout>)returnValue) {
+					for (Layout layout : layouts) {
 						if (!SitesUtil.isLayoutModifiedSinceLastMerge(layout)) {
 							SitesUtil.mergeLayoutSetProtypeLayouts(
 								group, layoutSet);
@@ -150,16 +149,14 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 							LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
 
 						return addUserGroupLayouts(
-							group, layoutSet, (List<Layout>)returnValue,
-							parentLayoutId);
+							group, layoutSet, layouts, parentLayoutId);
 					}
 					else {
-						return addChildUserGroupLayouts(
-							group, (List<Layout>)returnValue);
+						return addChildUserGroupLayouts(group, layouts);
 					}
 				}
 
-				return returnValue;
+				return layouts;
 			}
 			catch (Exception e) {
 				_log.error(e, e);

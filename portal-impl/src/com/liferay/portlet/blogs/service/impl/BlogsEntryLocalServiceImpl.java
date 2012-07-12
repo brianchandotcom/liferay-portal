@@ -799,16 +799,13 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		// Social
 
+		socialActivityCounterLocalService.disableActivityCounters(
+			BlogsEntry.class.getName(), entry.getEntryId());
+
 		socialActivityLocalService.addActivity(
 			userId, entry.getGroupId(), BlogsEntry.class.getName(),
 			entry.getEntryId(), SocialActivityConstants.TYPE_MOVE_TO_TRASH,
 			StringPool.BLANK, 0);
-
-		// Trash
-
-		trashEntryLocalService.addTrashEntry(
-			userId, entry.getGroupId(), BlogsEntry.class.getName(),
-			entry.getEntryId(), entry.getStatus(), null, null);
 
 		// Workflow
 
@@ -853,10 +850,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			userId, trashEntry.getGroupId(), BlogsEntry.class.getName(),
 			entryId, SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 			StringPool.BLANK, 0);
-
-		// Trash
-
-		trashEntryLocalService.deleteEntry(trashEntry.getEntryId());
 	}
 
 	public void subscribe(long userId, long groupId)
@@ -1096,6 +1089,13 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				}
 			}
 
+			// Trash
+
+			if (oldStatus == WorkflowConstants.STATUS_IN_TRASH) {
+				trashEntryLocalService.deleteEntry(
+					BlogsEntry.class.getName(), entryId);
+			}
+
 			// Indexer
 
 			indexer.reindex(entry);
@@ -1123,14 +1123,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 			// Asset
 
-			if (status == WorkflowConstants.STATUS_IN_TRASH) {
-				assetEntryLocalService.moveEntryToTrash(
-					BlogsEntry.class.getName(), entryId);
-			}
-			else {
-				assetEntryLocalService.updateVisible(
-					BlogsEntry.class.getName(), entryId, false);
-			}
+			assetEntryLocalService.updateVisible(
+				BlogsEntry.class.getName(), entryId, false);
 
 			// Social
 
@@ -1153,9 +1147,26 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				}
 			}
 
+			// Trash
+
+			if (status == WorkflowConstants.STATUS_IN_TRASH) {
+				trashEntryLocalService.addTrashEntry(
+					userId, entry.getGroupId(), BlogsEntry.class.getName(),
+					entry.getEntryId(), oldStatus, null, null);
+			}
+			else if (oldStatus == WorkflowConstants.STATUS_IN_TRASH) {
+				trashEntryLocalService.deleteEntry(
+					BlogsEntry.class.getName(), entryId);
+			}
+
 			// Indexer
 
-			indexer.delete(entry);
+			if (status == WorkflowConstants.STATUS_IN_TRASH) {
+				indexer.reindex(entry);
+			}
+			else {
+				indexer.delete(entry);
+			}
 		}
 
 		return entry;

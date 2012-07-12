@@ -16,10 +16,7 @@
 
 <%@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<style>
-	<%@ include file="/html/js/editor/ckeditor_creole_css.jspf" %>
-</style>
-
 <liferay-util:include page="/html/js/editor/ckeditor.jsp">
 	<liferay-util:param name="ckEditorConfigFileName" value="ckconfig_creole.jsp" />
+	<liferay-util:param name="hideImageResizing" value="<%= Boolean.TRUE.toString() %>" />
 </liferay-util:include>

@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -408,9 +409,23 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		}
 	}
 
+	/**
+	 * @deprecated {@link #search(long, long[], long, String, String, Locale,
+	 * 				int, int)}
+	 */
 	public Hits search(
 			long companyId, long[] groupIds, long userId, String className,
 			String keywords, int start, int end)
+		throws SystemException {
+
+		return search(
+			companyId, groupIds, userId, className, keywords,
+			LocaleThreadLocal.getThemeDisplayLocale(), start, end);
+	}
+
+	public Hits search(
+			long companyId, long[] groupIds, long userId, String className,
+			String keywords, Locale displayLocale, int start, int end)
 		throws SystemException {
 
 		try {
@@ -421,8 +436,6 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			assetEntriesFacet.setStatic(true);
 
 			searchContext.addFacet(assetEntriesFacet);
-
-			Locale displayLocale = LocaleThreadLocal.getThemeDisplayLocale();
 
 			Facet scopeFacet = new ScopeFacet(searchContext);
 
@@ -458,11 +471,28 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		}
 	}
 
+	/**
+	 * @deprecated {@link #search(long, long[], long, String, String, String,
+	 * 				String, String, String, boolean, Locale, int, int end)}
+	 */
 	public Hits search(
 			long companyId, long[] groupIds, long userId, String className,
 			String userName, String title, String description,
 			String assetCategoryIds, String assetTagNames, boolean andSearch,
 			int start, int end)
+		throws SystemException {
+
+		return search(
+			companyId, groupIds, userId, className, userName, title,
+			description, assetCategoryIds, assetTagNames, andSearch,
+			LocaleThreadLocal.getThemeDisplayLocale(), start, end);
+	}
+
+	public Hits search(
+			long companyId, long[] groupIds, long userId, String className,
+			String userName, String title, String description,
+			String assetCategoryIds, String assetTagNames, boolean andSearch,
+			Locale displayLocale, int start, int end)
 		throws SystemException {
 
 		try {
@@ -481,8 +511,6 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			assetEntriesFacet.setStatic(true);
 
 			searchContext.addFacet(assetEntriesFacet);
-
-			Locale displayLocale = LocaleThreadLocal.getThemeDisplayLocale();
 
 			Facet scopeFacet = new ScopeFacet(searchContext);
 
@@ -521,12 +549,28 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		}
 	}
 
+	/**
+	 * @deprecated {@link #search(long, long[], String, String, Locale,
+	 *				int, int)}
+	 */
 	public Hits search(
 			long companyId, long[] groupIds, String className, String keywords,
 			int start, int end)
 		throws SystemException {
 
-		return search(companyId, groupIds, 0, className, keywords, start, end);
+		return search(
+			companyId, groupIds, className, keywords,
+			LocaleThreadLocal.getThemeDisplayLocale(), start, end);
+	}
+
+	public Hits search(
+			long companyId, long[] groupIds, String className, String keywords,
+			Locale displayLocale, int start, int end)
+		throws SystemException {
+
+		return search(
+			companyId, groupIds, 0, className, keywords, displayLocale, start,
+			end);
 	}
 
 	public AssetEntryDisplay[] searchEntryDisplays(
@@ -537,7 +581,8 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		List<AssetEntry> entries = new ArrayList<AssetEntry>();
 
 		Hits hits = search(
-			companyId, groupIds, className, keywords, start, end);
+			companyId, groupIds, className, keywords,
+			LocaleUtil.fromLanguageId(languageId), start, end);
 
 		List<Document> hitsList = hits.toList();
 
@@ -565,7 +610,8 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		throws SystemException {
 
 		Hits hits = search(
-			companyId, groupIds, className, keywords, QueryUtil.ALL_POS,
+			companyId, groupIds, className, keywords,
+			LocaleUtil.fromLanguageId(languageId), QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 
 		return hits.getLength();

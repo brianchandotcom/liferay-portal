@@ -1710,10 +1710,28 @@ public class JournalArticleLocalServiceImpl
 			start, end, obc);
 	}
 
+	/**
+	 * @deprecated {@link #search(long, long, long, long, String, String,
+	 * 				String, LinkedHashMap, Locale, int, int,
+	 * 				Sort)}
+	 */
 	public Hits search(
 			long companyId, long groupId, long folderId, long classNameId,
 			String structureId, String templateId, String keywords,
 			LinkedHashMap<String, Object> params, int start, int end, Sort sort)
+		throws SystemException {
+
+		return search(
+			companyId, groupId, folderId, classNameId, structureId, templateId,
+			keywords, params, LocaleThreadLocal.getThemeDisplayLocale(), start,
+			end, sort);
+	}
+
+	public Hits search(
+			long companyId, long groupId, long folderId, long classNameId,
+			String structureId, String templateId, String keywords,
+			LinkedHashMap<String, Object> params, Locale displayLocale,
+			int start, int end, Sort sort)
 		throws SystemException {
 
 		String articleId = null;
@@ -1741,9 +1759,14 @@ public class JournalArticleLocalServiceImpl
 		return search(
 			companyId, groupId, folderId, classNameId, articleId, title,
 			description, content, null, status, structureId, templateId, params,
-			andOperator, start, end, sort);
+			andOperator, displayLocale, start, end, sort);
 	}
 
+	/**
+	 * @deprecated {@link #search(long, long, long, long, String, String,
+	 * 			    String, String, String, String, String, String,
+	 * 				LinkedHashMap, boolean, Locale, int, int, Sort)}
+	 */
 	public Hits search(
 			long companyId, long groupId, long folderId, long classNameId,
 			String articleId, String title, String description, String content,
@@ -1752,9 +1775,22 @@ public class JournalArticleLocalServiceImpl
 			int end, Sort sort)
 		throws SystemException {
 
-		try {
-			Locale displayLocale = LocaleThreadLocal.getThemeDisplayLocale();
+		return search(
+			companyId, groupId, folderId, classNameId, articleId, title,
+			description, content, type, status, structureId, templateId, params,
+			andSearch, LocaleThreadLocal.getThemeDisplayLocale(), start, end,
+			sort);
+	}
 
+	public Hits search(
+			long companyId, long groupId, long folderId, long classNameId,
+			String articleId, String title, String description, String content,
+			String type, String status, String structureId, String templateId,
+			LinkedHashMap<String, Object> params, boolean andSearch,
+			Locale displayLocale, int start, int end, Sort sort)
+		throws SystemException {
+
+		try {
 			SearchContext searchContext = new SearchContext();
 
 			searchContext.setAndSearch(andSearch);

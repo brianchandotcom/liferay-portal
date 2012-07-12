@@ -40,10 +40,8 @@ public abstract class BaseAutoDeployListener implements AutoDeployListener {
 	}
 
 	public boolean isHookPlugin(File file) throws AutoDeployException {
-		String fileName = file.getName();
-
-		if (isMatchingFile(file, "WEB-INF/liferay-plugin-package.properties") &&
-			fileName.contains("-hook") && !fileName.contains("-portlet")) {
+		if (isMatchingFile(file, "WEB-INF/liferay-hook.xml") &&
+			!isMatchingFile(file, "WEB-INF/liferay-portlet.xml")) {
 
 			return true;
 		}

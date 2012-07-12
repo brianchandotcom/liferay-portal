@@ -54,7 +54,7 @@ public class MainServletExecutionTestListener
 	protected String getResourceBasePath() {
 		File file = new File("portal-web/docroot");
 
-		return "file://" + file.getAbsolutePath();
+		return "file:" + file.getAbsolutePath();
 	}
 
 	private MainServlet _mainServlet;

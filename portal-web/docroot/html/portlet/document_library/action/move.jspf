@@ -14,52 +14,37 @@
  */
 --%>
 
-<c:choose>
-	<c:when test="<%= portletName.equals(PortletKeys.TRASH) %>">
+<%
+FileVersion fileVersion = fileEntry.getFileVersion();
+%>
 
-		<%
-		FileVersion fileVersion = fileEntry.getFileVersion();
-		%>
+<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) && ((portletName.equals(PortletKeys.TRASH) && !fileVersion.isInTrash()) || showActions) %>">
 
-		<c:if test="<%= !fileVersion.isInTrash() && DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) %>">
-			<liferay-portlet:renderURL portletName="<%= PortletKeys.DOCUMENT_LIBRARY%>" var="moveURL">
-				<portlet:param name="struts_action" value="/document_library/move_file_entry" />
-				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.MOVE_FROM_TRASH %>" />
-				<portlet:param name="redirect" value="<%= PortalUtil.getCurrentURL(request) %>" />
-				<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
-				<portlet:param name="folderId" value="<%= String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
-			</liferay-portlet:renderURL>
+	<%
+	PortletURL moveURL = liferayPortletResponse.createRenderURL(PortletKeys.DOCUMENT_LIBRARY);
 
-			<liferay-ui:icon
-				image="submit"
-				message="move"
-				url="<%= moveURL %>"
-			/>
-		</c:if>
-	</c:when>
-	<c:otherwise>
-		<c:if test="<%= showActions && DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) %>">
+	if (fileShortcut != null) {
+		moveURL.setParameter("struts_action", "/document_library/move_file_shortcut");
+		moveURL.setParameter("fileShortcutId", String.valueOf(fileShortcut.getFileShortcutId()));
+	}
+	else {
+		moveURL.setParameter("struts_action", "/document_library/move_file_entry");
+		moveURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
+	}
 
-			<%
-			PortletURL moveURL = liferayPortletResponse.createRenderURL();
+	if (portletName.equals(PortletKeys.TRASH) && !fileVersion.isInTrash()) {
+		moveURL.setParameter("redirect", PortalUtil.getCurrentURL(request));
+		moveURL.setParameter(Constants.CMD, Constants.MOVE_FROM_TRASH);
+		moveURL.setParameter("folderId", String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
+	}
+	else if (showActions) {
+		moveURL.setParameter("redirect", viewFolderURL.toString());
+	}
+	%>
 
-			if (fileShortcut != null) {
-				moveURL.setParameter("struts_action", "/document_library/move_file_shortcut");
-				moveURL.setParameter("fileShortcutId", String.valueOf(fileShortcut.getFileShortcutId()));
-			}
-			else {
-				moveURL.setParameter("struts_action", "/document_library/move_file_entry");
-				moveURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
-			}
-
-			moveURL.setParameter("redirect", viewFolderURL.toString());
-			%>
-
-			<liferay-ui:icon
-				image="submit"
-				message="move"
-				url="<%= moveURL.toString() %>"
-			/>
-		</c:if>
-	</c:otherwise>
-</c:choose>
+	<liferay-ui:icon
+		image="submit"
+		message="move"
+		url="<%= moveURL.toString() %>"
+	/>
+</c:if>

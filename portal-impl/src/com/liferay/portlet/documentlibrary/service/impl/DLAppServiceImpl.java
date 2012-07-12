@@ -2120,6 +2120,32 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	}
 
 	/**
+	 * Moves the file shortcut from a trashed folder to the new folder.
+	 *
+	 * @param  fileShortcutId the primary key of the file shortcut
+	 * @param  newFolderId the primary key of the new folder
+	 * @param  serviceContext the service context to be applied
+	 * @return the file entry
+	 * @throws PortalException if the file entry or the new folder could not be
+	 *         found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLFileShortcut moveFileShortcutFromTrash(
+			long fileShortcutId, long newFolderId, long toFileEntryId,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		DLFileShortcut fileShortcut = getFileShortcut(fileShortcutId);
+
+		DLFileShortcutPermission.check(
+			getPermissionChecker(), fileShortcut, ActionKeys.UPDATE);
+
+		return dlAppHelperLocalService.moveFileShortcutFromTrash(
+			getUserId(), fileShortcut, newFolderId, toFileEntryId,
+			serviceContext);
+	}
+
+	/**
 	 * Moves the file shortcut with the primary key to the trash portlet.
 	 *
 	 * @param  fileShortcutId the primary key of the file shortcut

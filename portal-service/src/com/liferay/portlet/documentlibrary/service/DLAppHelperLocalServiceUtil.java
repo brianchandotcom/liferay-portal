@@ -175,6 +175,18 @@ public class DLAppHelperLocalServiceUtil {
 		return getService().moveFileEntryToTrash(userId, fileEntry);
 	}
 
+	public static com.liferay.portlet.documentlibrary.model.DLFileShortcut moveFileShortcutFromTrash(
+		long userId,
+		com.liferay.portlet.documentlibrary.model.DLFileShortcut dlFileShortcut,
+		long newFolderId, long toFileEntryId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .moveFileShortcutFromTrash(userId, dlFileShortcut,
+			newFolderId, toFileEntryId, serviceContext);
+	}
+
 	public static com.liferay.portlet.documentlibrary.model.DLFileShortcut moveFileShortcutToTrash(
 		long userId,
 		com.liferay.portlet.documentlibrary.model.DLFileShortcut dlFileShortcut)

@@ -27,64 +27,101 @@ String content = BeanParamUtil.getString(wikiPage, request, "content");
 	<liferay-ui:toggle
 		defaultShowContent="<%= false %>"
 		hideMessage='<%= LanguageUtil.get(pageContext, "hide-syntax-help") + " &raquo;" %>'
-		id="toggle_id_wiki_edit_wiki_syntax_help"
+		id='<%= renderResponse.getNamespace() + "wikiEditorHelp" %>'
 		showMessage='<%= "&laquo; " + LanguageUtil.get(pageContext, "show-syntax-help") %>'
 	/>
 </div>
 
-<table class="lfr-table" width="100%">
-<tr>
-	<td class="lfr-top" width="70%">
+<div>
+	<aui:layout>
+		<aui:column columnWidth="70" id="wikiEditorContainer">
+			<%
+			long resourcePrimKey = 0;
 
-		<%
-		long resourcePrimKey = 0;
+			String attachmentURLPrefix = StringPool.BLANK;
 
-		String attachmentURLPrefix = StringPool.BLANK;
+			if (wikiPage != null) {
+				resourcePrimKey = wikiPage.getResourcePrimKey();
 
-		if (wikiPage != null) {
-			resourcePrimKey = wikiPage.getResourcePrimKey();
+				attachmentURLPrefix = themeDisplay.getPortalURL() + themeDisplay.getPathMain() + "/wiki/get_page_attachment?p_l_id=" + themeDisplay.getPlid() + "&nodeId=" + wikiPage.getNodeId() + "&title=" + HttpUtil.encodeURL(wikiPage.getTitle()) + "&fileName=";
+			}
 
-			attachmentURLPrefix = themeDisplay.getPortalURL() + themeDisplay.getPathMain() + "/wiki/get_page_attachment?p_l_id=" + themeDisplay.getPlid() + "&nodeId=" + wikiPage.getNodeId() + "&title=" + HttpUtil.encodeURL(wikiPage.getTitle()) + "&fileName=";
-		}
+			Map<String,String> configParams = new HashMap();
 
-		Map<String,String> configParams = new HashMap();
+			configParams.put("attachmentURLPrefix", attachmentURLPrefix);
+			configParams.put("wikiPageResourcePrimKey", String.valueOf(resourcePrimKey));
 
-		configParams.put("attachmentURLPrefix", attachmentURLPrefix);
-		configParams.put("wikiPageResourcePrimKey", String.valueOf(resourcePrimKey));
+			Map<String,String> fileBrowserParams = new HashMap();
 
-		Map<String,String> fileBrowserParams = new HashMap();
+			fileBrowserParams.put("attachmentURLPrefix", attachmentURLPrefix);
+			fileBrowserParams.put("Type", "Attachment");
+			fileBrowserParams.put("wikiPageResourcePrimKey", String.valueOf(resourcePrimKey));
+			%>
 
-		fileBrowserParams.put("attachmentURLPrefix", attachmentURLPrefix);
-		fileBrowserParams.put("Type", "Attachment");
-		fileBrowserParams.put("wikiPageResourcePrimKey", String.valueOf(resourcePrimKey));
-		%>
+			<liferay-ui:input-editor
+				configParams="<%= configParams %>"
+				editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>"
+				fileBrowserParams="<%= fileBrowserParams %>"
+				toolbarSet="creole"
+				width="100%"
+			/>
 
-		<liferay-ui:input-editor
-			configParams="<%= configParams %>"
-			editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>"
-			fileBrowserParams="<%= fileBrowserParams %>"
-			toolbarSet="creole"
-			width="100%"
-		/>
+			<aui:input name="content" type="hidden" />
+		</aui:column>
 
-		<aui:input name="content" type="hidden" />
-	</td>
-	<td class="syntax-help" id="toggle_id_wiki_edit_wiki_syntax_help" style="display: <liferay-ui:toggle-value defaultValue="none" id="toggle_id_wiki_edit_wiki_syntax_help" />" valign="top">
-		<h3>
-			<liferay-ui:message key="syntax-help" />
-		</h3>
+		<aui:column columnWidth="30" id="wikiEditorHelp">
+			<h3>
+				<liferay-ui:message key="syntax-help" />
+			</h3>
 
-		<liferay-util:include page="<%= WikiUtil.getHelpPage(format) %>" />
+			<liferay-util:include page="<%= WikiUtil.getHelpPage(format) %>" />
 
-		<aui:a href="<%= WikiUtil.getHelpURL(format) %>" target="_blank"><liferay-ui:message key="learn-more" /> &raquo;</aui:a>
-	</td>
-</tr>
-</table>
+			<aui:a href="<%= WikiUtil.getHelpURL(format) %>" target="_blank"><liferay-ui:message key="learn-more" /> &raquo;</aui:a>
+		</aui:column>
+	</aui:layout>
+</div>
 
 <aui:script>
 	function <portlet:namespace />initEditor() {
 		return "<%= UnicodeFormatter.toString(content) %>";
 	}
+</aui:script>
+
+<aui:script use="node-core">
+	var CSS_EDITOR_WIDTH_EXPANDED = 'aui-w100';
+
+	var CSS_EDITOR_WIDTH_NORMAL = 'aui-w70';
+
+	var STATE_HIDDEN = 0;
+
+	var STATE_VISIBLE = 1;
+
+	Liferay.on(
+		'toggle:stateChange',
+		function(event) {
+			var id = event.id;
+
+			if (id === '<portlet:namespace />wikiEditorHelp') {
+				var state = event.state;
+
+				var classSrc = CSS_EDITOR_WIDTH_NORMAL;
+				var classDest = CSS_EDITOR_WIDTH_EXPANDED;
+
+				if (state === STATE_VISIBLE) {
+					classSrc = CSS_EDITOR_WIDTH_EXPANDED;
+					classDest = CSS_EDITOR_WIDTH_NORMAL;
+				}
+
+				A.one('#<portlet:namespace />wikiEditorContainer').replaceClass(classSrc, classDest);
+
+				var editorInstance = A.config.win['<portlet:namespace />editor']
+
+				if (editorInstance) {
+					editorInstance.focus();
+				}
+			}
+		}
+	);
 </aui:script>
 
 <%!

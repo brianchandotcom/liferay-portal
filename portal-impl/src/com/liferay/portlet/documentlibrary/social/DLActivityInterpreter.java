@@ -97,11 +97,11 @@ public class DLActivityInterpreter extends BaseSocialActivityInterpreter {
 			}
 		}
 
-		String fileTitle = wrapLink(
-			link, getTitle(activity.getExtraData(), fileEntry.getTitle()));
+		String fileTitle = getValue(
+			activity.getExtraData(), "title", fileEntry.getTitle());
 
 		Object[] titleArguments = new Object[] {
-			groupName, creatorUserName, fileTitle
+			groupName, creatorUserName, wrapLink(link, fileTitle)
 		};
 
 		String title = themeDisplay.translate(titlePattern, titleArguments);

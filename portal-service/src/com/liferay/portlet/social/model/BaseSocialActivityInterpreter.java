@@ -100,24 +100,6 @@ public abstract class BaseSocialActivityInterpreter
 		}
 	}
 
-	protected String getTitle(String extraData, String defaultValue) {
-		try {
-			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject(
-				extraData);
-
-			String title = extraDataJSONObject.getString("title");
-
-			if (Validator.isNotNull(title)) {
-				return HtmlUtil.escape(title);
-			}
-		}
-		catch (JSONException jsone) {
-			_log.error("Unable to create JSON object from " + extraData);
-		}
-
-		return HtmlUtil.escape(defaultValue);
-	}
-
 	protected String getUserName(long userId, ThemeDisplay themeDisplay) {
 		try {
 			if (userId <= 0) {
@@ -149,6 +131,30 @@ public abstract class BaseSocialActivityInterpreter
 		catch (Exception e) {
 			return StringPool.BLANK;
 		}
+	}
+
+	protected String getValue(
+		String extraData, String key, String defaultValue) {
+
+		if (Validator.isNull(extraData)) {
+			return HtmlUtil.escape(defaultValue);
+		}
+
+		try {
+			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject(
+				extraData);
+
+			String value = extraDataJSONObject.getString(key);
+
+			if (Validator.isNotNull(value)) {
+				return HtmlUtil.escape(value);
+			}
+		}
+		catch (JSONException jsone) {
+			_log.error("Unable to create JSON object from " + extraData);
+		}
+
+		return HtmlUtil.escape(defaultValue);
 	}
 
 	protected String wrapLink(String link, String text) {

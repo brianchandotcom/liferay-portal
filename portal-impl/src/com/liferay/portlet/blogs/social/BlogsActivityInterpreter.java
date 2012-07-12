@@ -80,7 +80,8 @@ public class BlogsActivityInterpreter extends BaseSocialActivityInterpreter {
 
 		// Title
 
-		String entryTitle = getTitle(activity.getExtraData(), entry.getTitle());
+		String entryTitle = getValue(
+			activity.getExtraData(), "title", entry.getTitle());
 
 		String displayTitle = wrapLink(link, entryTitle);
 		String displayDate = StringPool.BLANK;

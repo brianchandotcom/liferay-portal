@@ -28,11 +28,12 @@ import com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 /**
  * @author Juan Fernández

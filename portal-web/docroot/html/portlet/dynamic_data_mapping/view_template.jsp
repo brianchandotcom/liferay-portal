@@ -101,6 +101,7 @@ if (!portletName.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES)) {
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portlet.dynamicdatamapping.model.DDMTemplate"
+			escapedModel="<%= true %>"
 			keyProperty="templateId"
 			modelVar="template"
 		>

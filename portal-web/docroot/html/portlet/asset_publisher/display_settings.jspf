@@ -42,7 +42,7 @@ portletDisplayDDMTemplatesURLString = HttpUtil.addParameter(portletDisplayDDMTem
 				for (String curDisplayStyle : PropsValues.ASSET_PUBLISHER_DISPLAY_STYLES) {
 				%>
 
-					<aui:option label="<%= curDisplayStyle %>" selected="<%= displayStyle.equals(curDisplayStyle) %>" />
+					<aui:option label="<%= HtmlUtil.escape(curDisplayStyle) %>" selected="<%= displayStyle.equals(curDisplayStyle) %>" />
 
 				<%
 				}
@@ -60,7 +60,7 @@ portletDisplayDDMTemplatesURLString = HttpUtil.addParameter(portletDisplayDDMTem
 					}
 				%>
 
-					<aui:option label="<%= companyAssetPublisherDDMTemplate.getName(locale) %>" selected="<%= (portletDisplayDDMTemplate != null) && (companyAssetPublisherDDMTemplate.getTemplateId() == portletDisplayDDMTemplate.getTemplateId()) %>" value='<%= "ddmTemplate_" + companyAssetPublisherDDMTemplate.getUuid() %>' />
+					<aui:option label="<%= HtmlUtil.escape(companyAssetPublisherDDMTemplate.getName(locale)) %>" selected="<%= (portletDisplayDDMTemplate != null) && (companyAssetPublisherDDMTemplate.getTemplateId() == portletDisplayDDMTemplate.getTemplateId()) %>" value='<%= "ddmTemplate_" + companyAssetPublisherDDMTemplate.getUuid() %>' />
 
 				<%
 				}
@@ -78,7 +78,7 @@ portletDisplayDDMTemplatesURLString = HttpUtil.addParameter(portletDisplayDDMTem
 					}
 				%>
 
-					<aui:option label="<%= groupAssetPublisherDDMTemplate.getName(locale) %>" selected="<%= (portletDisplayDDMTemplate != null) && (groupAssetPublisherDDMTemplate.getTemplateId() == portletDisplayDDMTemplate.getTemplateId()) %>" value='<%= "ddmTemplate_" + groupAssetPublisherDDMTemplate.getUuid() %>' />
+					<aui:option label="<%= HtmlUtil.escape(groupAssetPublisherDDMTemplate.getName(locale)) %>" selected="<%= (portletDisplayDDMTemplate != null) && (groupAssetPublisherDDMTemplate.getTemplateId() == portletDisplayDDMTemplate.getTemplateId()) %>" value='<%= "ddmTemplate_" + groupAssetPublisherDDMTemplate.getUuid() %>' />
 
 				<%
 				}

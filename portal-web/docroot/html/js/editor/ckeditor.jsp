@@ -37,6 +37,8 @@ if (!ckEditorConfigFileName.equals("ckconfig.jsp")) {
 	useCustomDataProcessor = true;
 }
 
+boolean hideImageResizing = ParamUtil.getBoolean(request, "hideImageResizing", false);
+
 Map<String, String> configParamsMap = (Map<String, String>)request.getAttribute("liferay-ui:input-editor:configParams");
 Map<String, String> fileBrowserParamsMap = (Map<String, String>)request.getAttribute("liferay-ui:input-editor:fileBrowserParams");
 
@@ -58,6 +60,28 @@ if (Validator.isNotNull(onChangeMethod)) {
 boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:skipEditorLoading"));
 String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolbarSet");
 %>
+
+<c:if test="<%= hideImageResizing %>">
+	<liferay-util:html-top outputKey="hide_image_resizing">
+		<style type="text/css">
+			td.cke_dialog_ui_hbox_first {
+				display:none !important;
+			}
+
+			td.cke_dialog_footer td.cke_dialog_ui_hbox_first {
+				display:block !important;
+			}
+
+			a.cke_dialog_tab {
+				display: none !important;
+			}
+
+			a.cke_dialog_tab_selected {
+				display:block !important;
+			}
+		</style>
+	</liferay-util:html-top>
+</c:if>
 
 <c:if test="<%= !skipEditorLoading %>">
 	<liferay-util:html-top outputKey="js_editor_ckeditor">

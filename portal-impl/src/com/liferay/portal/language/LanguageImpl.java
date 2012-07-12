@@ -534,7 +534,7 @@ public class LanguageImpl implements Language {
 	}
 
 	public void resetAvailableLocales(long companyId) {
-		 _resetAvailableLocales(companyId);
+		_resetAvailableLocales(companyId);
 	}
 
 	public void updateCookie(

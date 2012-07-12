@@ -147,7 +147,7 @@ public class NtlmFilter extends BasePortalFilter {
 				!Validator.equals(
 					ntlmManager.getServiceAccount(), serviceAccount) ||
 				!Validator.equals(
-					 ntlmManager.getServicePassword(), servicePassword)) {
+					ntlmManager.getServicePassword(), servicePassword)) {
 
 				ntlmManager.setConfiguration(
 					domain, domainController, domainControllerName,

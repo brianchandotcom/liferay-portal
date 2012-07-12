@@ -34,8 +34,8 @@ import org.springframework.orm.jpa.vendor.TopLinkJpaVendorAdapter;
  * @author Prashant Dighe
  * @author Brian Wing Shun Chan
  */
-public class LocalContainerEntityManagerFactoryBean extends
-	 org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean {
+public class LocalContainerEntityManagerFactoryBean
+	extends org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean {
 
 	public LocalContainerEntityManagerFactoryBean() {
 		try {

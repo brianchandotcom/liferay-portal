@@ -258,7 +258,7 @@ public class LiferayEhcacheRegionFactory extends EhCacheRegionFactory {
 			}
 
 			if (ehcache != null) {
-				 manager.removeCache(cacheName);
+				manager.removeCache(cacheName);
 			}
 
 			ehcache = new ModifiableEhcacheWrapper(replacementCache);

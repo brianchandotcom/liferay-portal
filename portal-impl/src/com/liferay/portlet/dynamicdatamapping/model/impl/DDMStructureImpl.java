@@ -81,17 +81,15 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 				_document = SAXReaderUtil.read(getXsd());
 			}
 			catch (Exception e) {
-				 StackTraceElement[] stackTraceElements = e.getStackTrace();
+				StackTraceElement[] stackTraceElements = e.getStackTrace();
 
-				 for (StackTraceElement stackTraceElement :
-						stackTraceElements) {
+				for (StackTraceElement stackTraceElement : stackTraceElements) {
+					String className = stackTraceElement.getClassName();
 
-					 String className = stackTraceElement.getClassName();
-
-					 if (className.endsWith("DDMStructurePersistenceTest")) {
-						 return null;
-					 }
-				 }
+					if (className.endsWith("DDMStructurePersistenceTest")) {
+						return null;
+					}
+				}
 
 				_log.error(e, e);
 			}

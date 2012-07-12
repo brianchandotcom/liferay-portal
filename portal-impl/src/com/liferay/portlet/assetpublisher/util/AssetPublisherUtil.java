@@ -198,7 +198,7 @@ public class AssetPublisherUtil {
 					new String[0], QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 			for (AssetCategory assetCategory : assetCategories) {
-				 allCategoryIdsList.add(assetCategory.getCategoryId());
+				allCategoryIdsList.add(assetCategory.getCategoryId());
 			}
 		}
 

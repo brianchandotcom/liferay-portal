@@ -728,14 +728,14 @@ public class PortletImporter {
 						PermissionThreadLocal.getPermissionChecker();
 
 					if (permissionChecker.hasPermission(
-							 groupId, AssetCategory.class.getName(),
-							 existingAssetCategory.getCategoryId(),
-							 ActionKeys.UPDATE)) {
+							groupId, AssetCategory.class.getName(),
+							existingAssetCategory.getCategoryId(),
+							ActionKeys.UPDATE)) {
 
-						 serviceContext.setScopeGroupId(groupId);
+						serviceContext.setScopeGroupId(groupId);
 					}
 					else {
-						 updateAssetCategory = false;
+						updateAssetCategory = false;
 					}
 				}
 
@@ -933,14 +933,14 @@ public class PortletImporter {
 					PermissionThreadLocal.getPermissionChecker();
 
 				if (permissionChecker.hasPermission(
-					 groupId, AssetVocabulary.class.getName(),
-					 existingAssetVocabulary.getVocabularyId(),
-					 ActionKeys.UPDATE)) {
+					groupId, AssetVocabulary.class.getName(),
+					existingAssetVocabulary.getVocabularyId(),
+					ActionKeys.UPDATE)) {
 
-					 serviceContext.setScopeGroupId(groupId);
+					serviceContext.setScopeGroupId(groupId);
 				}
 				else {
-					 updateVocabulary = false;
+					updateVocabulary = false;
 				}
 			}
 

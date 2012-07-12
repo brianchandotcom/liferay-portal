@@ -46,15 +46,15 @@ public class JSONFactoryImpl implements JSONFactory {
 
 		_jsonSerializer = new LiferayJSONSerializer();
 
-		 try {
-			 _jsonSerializer.registerDefaultSerializers();
+		try {
+			_jsonSerializer.registerDefaultSerializers();
 
-			 _jsonSerializer.registerSerializer(new LiferaySerializer());
-			 _jsonSerializer.registerSerializer(new LocaleSerializer());
-		 }
-		 catch (Exception e) {
-			 _log.error(e, e);
-		 }
+			_jsonSerializer.registerSerializer(new LiferaySerializer());
+			_jsonSerializer.registerSerializer(new LocaleSerializer());
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
 	}
 
 	public String convertJSONMLArrayToXML(String jsonml) {

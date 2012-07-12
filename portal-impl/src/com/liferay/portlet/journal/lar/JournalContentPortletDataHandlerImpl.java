@@ -80,7 +80,7 @@ public class JournalContentPortletDataHandlerImpl
 	@Override
 	public PortletDataHandlerControl[] getExportMetadataControls() {
 		return new PortletDataHandlerControl[] {
-			 new PortletDataHandlerBoolean(
+			new PortletDataHandlerBoolean(
 				_NAMESPACE, "web-content", true,
 				JournalPortletDataHandlerImpl.getMetadataControls()),
 			new PortletDataHandlerBoolean(
@@ -100,7 +100,7 @@ public class JournalContentPortletDataHandlerImpl
 	@Override
 	public PortletDataHandlerControl[] getImportMetadataControls() {
 		return new PortletDataHandlerControl[] {
-			 new PortletDataHandlerBoolean(
+			new PortletDataHandlerBoolean(
 				_NAMESPACE, "web-content", true,
 				JournalPortletDataHandlerImpl.getMetadataControls()),
 			new PortletDataHandlerBoolean(

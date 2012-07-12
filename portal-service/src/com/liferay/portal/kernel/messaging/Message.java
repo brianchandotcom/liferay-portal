@@ -153,7 +153,7 @@ public class Message implements Cloneable, Serializable {
 
 	public void put(String key, Object value) {
 		if (_values == null) {
-			 _values = new HashMap<String, Object>();
+			_values = new HashMap<String, Object>();
 		}
 
 		_values.put(key, value);

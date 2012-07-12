@@ -327,7 +327,7 @@ public class DBStore extends BaseStore {
 		InputStream inputStream = null;
 
 		try {
-			 inputStream = new FileInputStream(file);
+			inputStream = new FileInputStream(file);
 		}
 		catch (FileNotFoundException fnfe) {
 			throw new SystemException(fnfe);

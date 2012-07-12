@@ -31,8 +31,8 @@ public class NetrServerReqChallenge extends DcerpcMessage {
 		_clientChallenge = clientChallenge;
 		_serverChallenge = serverChallenge;
 
-		 ptype = 0;
-		 flags = DCERPC_FIRST_FRAG | DCERPC_LAST_FRAG;
+		ptype = 0;
+		flags = DCERPC_FIRST_FRAG | DCERPC_LAST_FRAG;
 	}
 
 	@Override

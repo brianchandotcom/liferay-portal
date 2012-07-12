@@ -1541,6 +1541,19 @@ public class SourceFormatter {
 						trimmedLine, StringPool.TAB, StringPool.SPACE);
 				}
 
+				if (line.contains(StringPool.TAB + StringPool.SPACE) &&
+					!previousLine.endsWith("&&") &&
+					!previousLine.endsWith("||") &&
+					!previousLine.contains(StringPool.TAB + "((") &&
+					!previousLine.contains(StringPool.TAB + StringPool.SPACE) &&
+					!previousLine.contains(StringPool.TAB + "implements ") &&
+					!previousLine.contains(StringPool.TAB + "throws ")) {
+
+					line = StringUtil.replace(
+						line, StringPool.TAB + StringPool.SPACE,
+						StringPool.TAB);
+				}
+
 				while (trimmedLine.contains(StringPool.DOUBLE_SPACE) &&
 					   !trimmedLine.contains(
 						   StringPool.QUOTE + StringPool.DOUBLE_SPACE) &&

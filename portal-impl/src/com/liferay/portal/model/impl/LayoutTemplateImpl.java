@@ -37,7 +37,7 @@ import javax.servlet.ServletContext;
  * @author Jorge Ferrer
  */
 public class LayoutTemplateImpl
-	 extends PluginBaseImpl implements LayoutTemplate {
+	extends PluginBaseImpl implements LayoutTemplate {
 
 	public LayoutTemplateImpl() {
 	}

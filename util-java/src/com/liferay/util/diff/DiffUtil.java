@@ -289,7 +289,7 @@ public class DiffUtil {
 			}
 
 			if (aligned) {
-				 break;
+				break;
 			}
 			else {
 				_highlightLines(

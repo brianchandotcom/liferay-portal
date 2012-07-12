@@ -28,7 +28,7 @@ public class BooleanClauseImpl implements BooleanClause {
 
 		_query = query;
 		_booleanClauseOccur = booleanClauseOccur;
-	 }
+	}
 
 	public BooleanClauseOccur getBooleanClauseOccur() {
 		return _booleanClauseOccur;

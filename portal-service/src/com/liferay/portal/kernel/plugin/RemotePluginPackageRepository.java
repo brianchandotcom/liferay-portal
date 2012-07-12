@@ -46,7 +46,7 @@ public class RemotePluginPackageRepository {
 			pluginPackage.getModuleId());
 
 		if (existingPackage != null) {
-		   return;
+			return;
 		}
 
 		_artifactURLIndex.put(pluginPackage.getArtifactURL(), pluginPackage);

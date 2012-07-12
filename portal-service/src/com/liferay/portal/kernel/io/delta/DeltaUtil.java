@@ -39,8 +39,8 @@ public class DeltaUtil {
 	public static final byte REFERENCE_RANGE_KEY = 3;
 
 	public static void checksums(
-		 	FileChannel originalFileChannel,
-		 	ByteChannelWriter checksumsByteChannelWriter)
+			FileChannel originalFileChannel,
+			ByteChannelWriter checksumsByteChannelWriter)
 		throws IOException {
 
 		checksums(originalFileChannel, checksumsByteChannelWriter, 512);

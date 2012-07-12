@@ -137,16 +137,16 @@ public class MessageListenerImpl implements MessageListener {
 					categoryId);
 
 				groupId = category.getGroupId();
-		 	}
-		 	catch (NoSuchCategoryException nsce) {
-		 		groupId = categoryId;
-		 		categoryId = MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID;
-		 	}
+			}
+			catch (NoSuchCategoryException nsce) {
+				groupId = categoryId;
+				categoryId = MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID;
+			}
 
-		 	if (_log.isDebugEnabled()) {
-		 		_log.debug("Group id " + groupId);
-		 		_log.debug("Category id " + categoryId);
-		 	}
+			if (_log.isDebugEnabled()) {
+				_log.debug("Group id " + groupId);
+				_log.debug("Category id " + categoryId);
+			}
 
 			User user = UserLocalServiceUtil.getUserByEmailAddress(
 				company.getCompanyId(), from);

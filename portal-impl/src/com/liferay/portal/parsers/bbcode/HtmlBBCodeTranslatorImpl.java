@@ -230,11 +230,11 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 
 		value = handleNewLine(bbCodeItems, tags, marker, value);
 
-		 for (int i = 0; i < _EMOTICONS.length; i++) {
+		for (int i = 0; i < _EMOTICONS.length; i++) {
 			String[] emoticon = _EMOTICONS[i];
 
 			value = StringUtil.replace(value, emoticon[1], emoticon[0]);
-		 }
+		}
 
 		sb.append(value);
 	}

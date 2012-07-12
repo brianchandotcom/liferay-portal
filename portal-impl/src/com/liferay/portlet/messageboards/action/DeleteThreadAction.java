@@ -15,6 +15,7 @@
 package com.liferay.portlet.messageboards.action;
 
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -32,6 +33,7 @@ import org.apache.struts.action.ActionMapping;
 /**
  * @author Deepak Gothe
  * @author Sergio González
+ * @author Zsolt Berentey
  */
 public class DeleteThreadAction extends PortletAction {
 
@@ -41,8 +43,15 @@ public class DeleteThreadAction extends PortletAction {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+
 		try {
-			deleteThreads(actionRequest, actionResponse);
+			if (cmd.equals(Constants.DELETE)) {
+				deleteThreads(actionRequest, false);
+			}
+			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
+				deleteThreads(actionRequest, true);
+			}
 
 			sendRedirect(actionRequest, actionResponse);
 		}
@@ -61,19 +70,25 @@ public class DeleteThreadAction extends PortletAction {
 	}
 
 	protected void deleteThreads(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+			ActionRequest actionRequest, boolean moveToTrash)
 		throws Exception {
 
-		long threadId = ParamUtil.getLong(actionRequest, "threadId");
+		long[] deleteThreadIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "threadIds"), 0L);
 
-		if (threadId > 0) {
-			MBThreadServiceUtil.deleteThread(threadId);
+		if (deleteThreadIds.length == 0) {
+			long threadId = ParamUtil.getLong(actionRequest, "threadId");
+
+			if (threadId > 0) {
+				deleteThreadIds = new long[] {threadId};
+			}
 		}
-		else {
-			long[] deleteThreadIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "threadIds"), 0L);
 
-			for (int i = 0; i < deleteThreadIds.length; i++) {
+		for (int i = 0; i < deleteThreadIds.length; i++) {
+			if (moveToTrash) {
+				MBThreadServiceUtil.moveThreadToTrash(deleteThreadIds[i]);
+			}
+			else {
 				MBThreadServiceUtil.deleteThread(deleteThreadIds[i]);
 			}
 		}

@@ -17,6 +17,7 @@ package com.liferay.portlet.messageboards.trash;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
+import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.CompanyConstants;
@@ -24,6 +25,8 @@ import com.liferay.portal.model.Group;
 import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.messageboards.model.MBThread;
+import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBThreadServiceUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.Date;
@@ -41,8 +44,9 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 	 * Deletes trash attachments from all the message boards messages from a
 	 * group that were deleted after a given date.
 	 *
-	 * @param  groupId the primary key of the group
+	 * @param  group ID the primary key of the group
 	 * @param  date the date from which attachments will be deleted
+	 * @throws PortalException if the attachments could not be found or deleted
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
@@ -89,14 +93,71 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 		}
 	}
 
-	public void deleteTrashEntries(long[] classPKs, boolean checkPermission) {
+	/**
+	 * Deletes all message boards threads with the matching primary keys.
+	 *
+	 * @param  classPKs the primary keys of the message boards threads to be
+	 *         deleted
+	 * @param  checkPermission whether to check for necessary permissions
+	 * @throws PortalException if any one of the message boards threads could
+	 *         not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteTrashEntries(long[] classPKs, boolean checkPermission)
+		throws PortalException, SystemException {
+
+		for (long classPK : classPKs) {
+			if (checkPermission) {
+				MBThreadServiceUtil.deleteThread(classPK);
+			}
+			else {
+				MBThreadLocalServiceUtil.deleteThread(classPK);
+			}
+		}
 	}
 
+	/**
+	 * Returns the message boards thread's class name
+	 *
+	 * @return the message boards thread's class name
+	 */
 	public String getClassName() {
 		return CLASS_NAME;
 	}
 
-	public void restoreTrashEntries(long[] classPKs) {
+	/**
+	 * Returns the trash renderer for the message boards thread with the
+	 * primary key.
+	 *
+	 * @param  classPK the primary key of the message boards thread
+	 * @return Returns the trash renderer
+	 * @throws PortalException if the message boards thread could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public TrashRenderer getTrashRenderer(long classPK)
+		throws PortalException, SystemException {
+
+		MBThread thread = MBThreadLocalServiceUtil.getThread(classPK);
+
+		return new MBThreadTrashRenderer(thread);
+	}
+
+	/**
+	 * Restores all message boards threads with the matching primary keys.
+	 *
+	 * @param  classPKs the primary key of the message boards threads to be
+	 *         restored
+	 * @throws PortalException if any one of the message boards threads could
+	 *         not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void restoreTrashEntries(long[] classPKs)
+		throws PortalException, SystemException {
+
+		for (long classPK : classPKs) {
+			MBThreadServiceUtil.restoreThreadFromTrash(classPK);
+		}
 	}
 
 }

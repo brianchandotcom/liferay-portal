@@ -86,6 +86,7 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 				"value.object.column.bitmask.enabled.com.liferay.portal.model.Ticket"),
 			true);
 	public static long KEY_COLUMN_BITMASK = 1L;
+	public static long TYPE_COLUMN_BITMASK = 2L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.Ticket"));
 
@@ -278,7 +279,19 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 	}
 
 	public void setType(int type) {
+		_columnBitmask |= TYPE_COLUMN_BITMASK;
+
+		if (!_setOriginalType) {
+			_setOriginalType = true;
+
+			_originalType = _type;
+		}
+
 		_type = type;
+	}
+
+	public int getOriginalType() {
+		return _originalType;
 	}
 
 	public String getExtraInfo() {
@@ -404,6 +417,10 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 		TicketModelImpl ticketModelImpl = this;
 
 		ticketModelImpl._originalKey = ticketModelImpl._key;
+
+		ticketModelImpl._originalType = ticketModelImpl._type;
+
+		ticketModelImpl._setOriginalType = false;
 
 		ticketModelImpl._columnBitmask = 0;
 	}
@@ -547,6 +564,8 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 	private String _key;
 	private String _originalKey;
 	private int _type;
+	private int _originalType;
+	private boolean _setOriginalType;
 	private String _extraInfo;
 	private Date _expirationDate;
 	private long _columnBitmask;

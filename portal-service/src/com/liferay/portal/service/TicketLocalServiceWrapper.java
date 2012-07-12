@@ -268,10 +268,22 @@ public class TicketLocalServiceWrapper implements TicketLocalService,
 		return _ticketLocalService.fetchTicket(key);
 	}
 
+	public com.liferay.portal.model.Ticket fetchTicket(java.lang.String key,
+		int type) throws com.liferay.portal.kernel.exception.SystemException {
+		return _ticketLocalService.fetchTicket(key, type);
+	}
+
 	public com.liferay.portal.model.Ticket getTicket(java.lang.String key)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _ticketLocalService.getTicket(key);
+	}
+
+	public com.liferay.portal.model.Ticket getTicket(java.lang.String key,
+		int type)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _ticketLocalService.getTicket(key, type);
 	}
 
 	/**

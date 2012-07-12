@@ -1966,6 +1966,10 @@
 		<finder name="Key" return-type="Ticket">
 			<finder-column name="key" />
 		</finder>
+		<finder name="K_T" return-type="Ticket">
+			<finder-column name="key" />
+			<finder-column name="type" />
+		</finder>
 	</entity>
 	<entity name="User" uuid="true" local-service="true" remote-service="true">
 

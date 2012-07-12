@@ -93,11 +93,12 @@ public class BookmarksActivityInterpreter
 			}
 		}
 
-		String entryTitle = wrapLink(
-			link, getTitle(activity.getExtraData(), entry.getName()));
+		String entryTitle = getValue(
+			activity.getExtraData(), "title", entry.getName());
 
 		Object[] titleArguments = new Object[] {
-			groupName, creatorUserName, receiverUserName, entryTitle
+			groupName, creatorUserName, receiverUserName,
+			wrapLink(link, entryTitle)
 		};
 
 		String title = themeDisplay.translate(titlePattern, titleArguments);

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -43,9 +44,13 @@ import java.util.List;
  */
 public class TrashUtil {
 
+	public static final int TRASH_DEFAULT_VALUE = -1;
+
 	public static final int TRASH_DISABLED = 0;
 
 	public static final int TRASH_DISABLED_BY_DEFAULT = 1;
+
+	public static final int TRASH_ENABLED = 3;
 
 	public static final int TRASH_ENABLED_BY_DEFAULT = 2;
 
@@ -100,24 +105,58 @@ public class TrashUtil {
 		return orderByComparator;
 	}
 
+	public static int getMaxAge(Group group)
+		throws PortalException, SystemException {
+
+		if (group.isLayout()) {
+			group = group.getParentGroup();
+		}
+
+		int trashEntriesMaxAgeCompany = PrefsPropsUtil.getInteger(
+			group.getCompanyId(), PropsKeys.TRASH_ENTRIES_MAX_AGE,
+			GetterUtil.getInteger(
+				PropsUtil.get(PropsKeys.TRASH_ENTRIES_MAX_AGE)));
+
+		UnicodeProperties typeSettingsProperties =
+			group.getTypeSettingsProperties();
+
+		return GetterUtil.getInteger(
+			typeSettingsProperties.getProperty("trashEntriesMaxAge"),
+			trashEntriesMaxAgeCompany);
+	}
+
 	public static boolean isTrashEnabled(long groupId)
 		throws PortalException, SystemException {
 
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
+		if (group.isLayout()) {
+			group = group.getParentGroup();
+		}
+
 		UnicodeProperties typeSettingsProperties =
 			group.getTypeSettingsProperties();
 
-		int trashEnabled = PrefsPropsUtil.getInteger(
+		int trashEnabledCompany = PrefsPropsUtil.getInteger(
 			group.getCompanyId(), PropsKeys.TRASH_ENABLED);
 
-		if (trashEnabled == TRASH_DISABLED) {
+		if (trashEnabledCompany == TRASH_DISABLED) {
 			return false;
 		}
 
-		return GetterUtil.getBoolean(
+		int trashEnabledGroup = GetterUtil.getInteger(
 			typeSettingsProperties.getProperty("trashEnabled"),
-			(trashEnabled == TRASH_ENABLED_BY_DEFAULT));
+			TRASH_DEFAULT_VALUE);
+
+		if ((trashEnabledGroup == TRASH_ENABLED) ||
+			((trashEnabledGroup == TRASH_DEFAULT_VALUE) &&
+			 	(trashEnabledCompany == TRASH_ENABLED_BY_DEFAULT))) {
+
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(TrashUtil.class);

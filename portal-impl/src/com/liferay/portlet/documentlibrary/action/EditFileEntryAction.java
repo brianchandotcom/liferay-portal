@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -69,7 +68,6 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 
-import java.io.File;
 import java.io.InputStream;
 
 import java.util.ArrayList;
@@ -360,24 +358,28 @@ public class EditFileEntryAction extends PortletAction {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		long userId = themeDisplay.getUserId();
+
 		long repositoryId = ParamUtil.getLong(actionRequest, "repositoryId");
 		long folderId = ParamUtil.getLong(actionRequest, "folderId");
 		String contentType = MimeTypesUtil.getContentType(selectedFileName);
 		String description = ParamUtil.getString(actionRequest, "description");
 		String changeLog = ParamUtil.getString(actionRequest, "changeLog");
 
-		File file = null;
-
 		try {
-			file = TempFileUtil.getTempFile(
-				themeDisplay.getUserId(), selectedFileName, _TEMP_FOLDER_NAME);
+			InputStream inputStream = TempFileUtil.getTempFileAsStream(
+				userId, selectedFileName, _TEMP_FOLDER_NAME);
+
+			long size = TempFileUtil.getTempFileSize(
+				userId, selectedFileName, _TEMP_FOLDER_NAME);
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				DLFileEntry.class.getName(), actionRequest);
 
 			FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
 				repositoryId, folderId, selectedFileName, contentType,
-				selectedFileName, description, changeLog, file, serviceContext);
+				selectedFileName, description, changeLog, inputStream, size,
+				serviceContext);
 
 			AssetPublisherUtil.addAndStoreSelection(
 				actionRequest, DLFileEntry.class.getName(),
@@ -398,7 +400,8 @@ public class EditFileEntryAction extends PortletAction {
 				new KeyValuePair(selectedFileName, errorMessage));
 		}
 		finally {
-			FileUtil.delete(file);
+			TempFileUtil.deleteTempFile(
+				userId, selectedFileName, _TEMP_FOLDER_NAME);
 		}
 	}
 

@@ -95,6 +95,8 @@ boolean showSyntaxHelp = ((clickValue != null) && clickValue.equals("block"));
 </aui:script>
 
 <aui:script use="node-core">
+	var UA = A.UA;
+
 	var CSS_EDITOR_WIDTH_EXPANDED = 'aui-w100';
 
 	var CSS_EDITOR_WIDTH_NORMAL = 'aui-w70';
@@ -119,7 +121,19 @@ boolean showSyntaxHelp = ((clickValue != null) && clickValue.equals("block"));
 					classDest = CSS_EDITOR_WIDTH_NORMAL;
 				}
 
-				A.one('#<portlet:namespace />wikiEditorContainer').replaceClass(classSrc, classDest);
+				var editorContainer = A.one('#<portlet:namespace />wikiEditorContainer');
+
+				editorContainer.replaceClass(classSrc, classDest);
+
+				if (UA.webkit && state === STATE_VISIBLE) {
+					var editorFrame = editorContainer.one('iframe');
+
+					if (editorFrame) {
+						editorFrame.hide();
+
+						A.later(0, editorFrame, editorFrame.show);
+					}
+				}
 
 				var editorInstance = A.config.win['<portlet:namespace />editor']
 

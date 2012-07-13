@@ -51,7 +51,7 @@ String defaultMessage = (String)request.getAttribute("liferay-ui:toggle:defaultM
 		'<%= stateVar %>Toggle',
 		function(state, saveState) {
 			var A = AUI();
-			
+
 			var STATE_HIDDEN = 0;
 
 			var STATE_VISIBLE = 1;

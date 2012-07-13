@@ -21,20 +21,27 @@ WikiPage wikiPage = (WikiPage)request.getAttribute("edit_page.jsp-wikiPage");
 String format = BeanParamUtil.getString(wikiPage, request, "format", WikiPageConstants.DEFAULT_FORMAT);
 
 String content = BeanParamUtil.getString(wikiPage, request, "content");
+
+String id = renderResponse.getNamespace() + "wikiEditorHelp";
+
+String clickValue = SessionClicks.get(request, id, null);
+
+boolean showSyntaxHelp = ((clickValue != null) && clickValue.equals("block"));
 %>
 
 <div align="right">
 	<liferay-ui:toggle
 		defaultShowContent="<%= false %>"
 		hideMessage='<%= LanguageUtil.get(pageContext, "hide-syntax-help") + " &raquo;" %>'
-		id='<%= renderResponse.getNamespace() + "wikiEditorHelp" %>'
+		id="<%= id %>"
 		showMessage='<%= "&laquo; " + LanguageUtil.get(pageContext, "show-syntax-help") %>'
 	/>
 </div>
 
 <div>
 	<aui:layout>
-		<aui:column columnWidth="70" id="wikiEditorContainer">
+		<aui:column columnWidth="<%= showSyntaxHelp ? 70 : 100 %>" id="wikiEditorContainer">
+
 			<%
 			long resourcePrimKey = 0;
 
@@ -69,7 +76,7 @@ String content = BeanParamUtil.getString(wikiPage, request, "content");
 			<aui:input name="content" type="hidden" />
 		</aui:column>
 
-		<aui:column columnWidth="30" id="wikiEditorHelp">
+		<aui:column columnWidth="30" id="wikiEditorHelp" style='<%= showSyntaxHelp ? StringPool.BLANK : "display: none" %>'>
 			<h3>
 				<liferay-ui:message key="syntax-help" />
 			</h3>
@@ -101,7 +108,7 @@ String content = BeanParamUtil.getString(wikiPage, request, "content");
 		function(event) {
 			var id = event.id;
 
-			if (id === '<portlet:namespace />wikiEditorHelp') {
+			if (id === '<%= id %>') {
 				var state = event.state;
 
 				var classSrc = CSS_EDITOR_WIDTH_NORMAL;

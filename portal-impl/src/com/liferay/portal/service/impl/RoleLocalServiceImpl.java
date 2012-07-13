@@ -1229,10 +1229,9 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		for (String portletId : getDefaultControlPanelPortlets()) {
-
 			ResourceAction resourceAction =
 				resourceActionLocalService.fetchResourceAction(
-				portletId, ActionKeys.ACCESS_IN_CONTROL_PANEL);
+					portletId, ActionKeys.ACCESS_IN_CONTROL_PANEL);
 
 			if (resourceAction == null) {
 				continue;

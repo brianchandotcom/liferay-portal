@@ -41,6 +41,10 @@ AUI.add(
 		 * onUploadError {function}: Called when an error in the upload occurs. Gets passed the error number as it's only argument.
 		 */
 
+		var TEMP_FILE_NAME_CHARECTERS = 15;
+
+		var MAX_FILE_NAME_SIZE = 255;
+
 		var Upload = function(options) {
 			var instance = this;
 
@@ -68,17 +72,8 @@ AUI.add(
 			instance._buttonPlaceHolderId = instance._namespace('buttonHolder');
 			instance._overlayButton = options.overlayButton || true;
 
-			instance._onFileComplete = options.onFileComplete;
-			instance._onUploadsComplete = options.onUploadsComplete;
-			instance._onUploadProgress = options.onUploadProgress;
-			instance._onUploadError = options.onUploadError;
-
 			instance._classicUploaderParam = 'uploader=classic';
 			instance._newUploaderParam = 'uploader=new';
-
-			instance._queueCancelled = false;
-
-			instance._flashVersion = A.SWF.getFlashVersion();
 
 			// Check for an override via the query string
 
@@ -127,7 +122,7 @@ AUI.add(
 				instance._useNewUploaderText = Liferay.Language.get('use-the-new-uploader');
 			}
 
-			if (!A.SWF.isFlashVersionAtLeast(9) && instance._fallbackContainer) {
+			if (instance.flashVersion >= 9 && instance._fallbackContainer) {
 				instance._fallbackContainer.show();
 
 				instance._setupIframe();
@@ -135,45 +130,15 @@ AUI.add(
 				return;
 			}
 
-			instance._setupCallbacks();
 			instance._setupUploader();
 		};
 
 		Upload.prototype = {
-			cancelUploads: function() {
+			addFile: function(file) {
 				var instance = this;
-
-				var stats = instance._getStats();
-
-				while (stats.files_queued > 0) {
-					instance._uploader.cancelUpload();
-
-					stats = instance._getStats();
-				}
-
-				var uploadError = instance._fileList.all('.upload-error');
-
-				if (uploadError) {
-					uploadError.remove(true);
-				}
-
-				if (stats.in_progress === 0) {
-					instance._queueCancelled = false;
-				}
-
-				instance._cancelButton.hide();
-			},
-
-			fileAdded: function(file) {
-				var instance = this;
-
-				instance._pendingFileInfo.hide();
-
-				var listingFiles = instance.getFileListUl();
-
-				instance._cancelButton.show();
 
 				var fileId = instance._namespace(file.id);
+
 				var fileName = file.name;
 
 				var li = A.Node.create(
@@ -187,16 +152,50 @@ AUI.add(
 						'<a class="lfr-button delete-button" href="javascript:;" id="' + fileId + 'deleteButton">' + instance._deleteFileText + '</a>' +
 					'</li>');
 
+				instance._pendingFileInfo.hide();
+
+				instance._cancelButton.show();
+
 				var cancelButton = li.all('.cancel-button');
 
-				if (cancelButton) {
-					cancelButton.on(
-						'click',
-						function() {
-							instance._uploader.cancelUpload(file.id);
+				cancelButton.on(
+					'click',
+					function(event) {
+						cancelButton.hide();
+
+						var uploader = instance._uploader;
+						var queue = uploader.queue || {};
+
+						queue.cancelUpload(file);
+
+						if (uploader.stats.files_queued === 1) {
+							// The YUI Uploader Queue has a bug: if you upload and cancel a single file, subsequent uploads will not be handled properly in the queue
+
+							uploader.queue = null;
+
+							// Note: calling queue = null (without the uploader property) will not null the uploader's queue property
 						}
-					);
-				}
+						else {
+							queue._startNextFile();
+
+							file.set('bytesUploaded', 0);
+
+							var cancelAllUploads = instance._cancelButton;
+
+							cancelAllUploads.hide();
+						}
+
+						if (li) {
+							li.remove(true);
+						}
+
+						uploader.stats.files_queued -= 1;
+
+						instance._updateList(0, instance._cancelFileText);
+					}
+				);
+
+				var listingFiles = instance._getFileListUl();
 
 				var uploadedFiles = listingFiles.one('.upload-complete');
 
@@ -206,248 +205,47 @@ AUI.add(
 				else {
 					listingFiles.append(li);
 				}
-
-				var stats = instance._getStats();
-				var listLength = stats.files_queued;
-
-				instance._updateList(listLength);
-
-				instance._uploader.startUpload(file.id);
 			},
 
-			fileAddError: function(file, error_code, msg) {
+			_cancelAllFiles: function() {
 				var instance = this;
-
-				var queueError = SWFUpload.QUEUE_ERROR;
-
-				if (error_code == queueError.FILE_EXCEEDS_SIZE_LIMIT || error_code == queueError.ZERO_BYTE_FILE) {
-					var maxFileSizeInKB = Math.floor(instance._maxFileSize.replace(/\D/g,'') / 1024);
-
-					var dataBuffer = [file.name, instance._invalidFileSizeText.replace('{0}', maxFileSizeInKB)];
-
-					if (error_code == queueError.ZERO_BYTE_FILE) {
-						dataBuffer[1] = instance._zeroByteFileText;
-					}
-
-					var ul = instance.getFileListUl();
-
-					ul.append(Lang.sub(TPL_FILE_ERROR, dataBuffer));
-				}
-			},
-
-			fileCancelled: function(file, error_code, msg) {
-				var instance = this;
-
-				var stats = instance._getStats();
-
-				var fileId = instance._namespace(file.id);
-				var fileName = file.name;
-				var li = A.one('#' + fileId);
-
-				instance._updateList(stats.files_queued);
-
-				if (li) {
-					li.hide();
-				}
-			},
-
-			fileUploadComplete: function(file) {
-				var instance = this;
-
-				var fileId = instance._namespace(file.id);
-
-				var li = A.one('#' + fileId);
-
-				if (li) {
-					li.replaceClass('file-uploading', 'upload-complete selectable selected');
-
-					var input = li.one('input');
-
-					if (input) {
-						input.attr('checked', true);
-
-						input.show();
-					}
-
-					instance._pendingFileInfo.hide();
-
-					instance._updateManageUploadDisplay();
-				}
-
-				instance._updateMetadataContainer();
 
 				var uploader = instance._uploader;
 
-				var stats = instance._getStats();
+				var queue = uploader.queue;
 
-				if (stats.files_queued > 0 && !instance._queueCancelled) {
+				var fileList = queue.get('fileList');
 
-					// Automatically start the next upload if the queue wasn't cancelled
+				queue.cancelUpload();
 
-					uploader.startUpload();
-				}
-				else if (stats.files_queued === 0 && !instance._queueCancelled) {
+				// because of the bug where canceling a single file will not remove the queue. it will be cheaper to just null it then do a comparison every time.
+				uploader.queue = null;
 
-					// Call Queue Complete if there are no more files queued and the queue wasn't cancelled
+				uploader.stats.files_queued = 0;
+				uploader.stats.files_total = 0;
 
-					instance.uploadsComplete(file);
-				}
-				else {
+				A.each(
+					fileList,
+					function(item, index, collection) {
+						var fileId = instance._namespace(item.id);
 
-					// Don't do anything. Remove the queue cancelled flag (if the queue was cancelled it will be set again)
+						var li = A.one('#' + fileId);
 
-					instance._queueCancelled = false;
-				}
-
-				if (instance._onFileComplete) {
-					instance._onFileComplete(file);
-				}
-			},
-
-			flashLoaded: function() {
-				var instance = this;
-
-				instance._setupControls();
-			},
-
-			getFileListUl: function() {
-				var instance = this;
-
-				var listingFiles = instance._fileList;
-				var listingUl = listingFiles.all('ul');
-
-				if (!listingUl.size()) {
-					instance._listInfo.append('<h4></h4>');
-
-					listingUl = A.Node.create('<ul class="lfr-component"></ul>');
-
-					listingFiles.append(listingUl);
-
-					instance._manageUploadTarget.append(instance._clearUploadsButton);
-					instance._clearUploadsButton.hide();
-
-					instance._cancelButton.on(
-						'click',
-						function() {
-							instance.cancelUploads();
-
-							instance._clearUploadsButton.hide();
+						if (li) {
+							li.remove(true);
 						}
-					);
-
-					instance._fileListUl = listingUl;
-				}
-
-				return instance._fileListUl;
-			},
-
-			uploadError: function(file, error_code, msg) {
-				var instance = this;
-
-				/*
-				Error codes:
-					-10 HTTP error
-					-20 No upload script specified
-					-30 IOError
-					-40 Security error
-					-50 Filesize too big
-				*/
-
-				if (error_code == SWFUpload.UPLOAD_ERROR.FILE_CANCELLED) {
-					instance.fileCancelled(file, error_code, msg);
-				}
-
-				if ((error_code == SWFUpload.UPLOAD_ERROR.HTTP_ERROR) ||
-					(error_code == SWFUpload.UPLOAD_ERROR.IO_ERROR)) {
-
-					var fileId = instance._namespace(file.id);
-					var li = A.one('#' + fileId);
-
-					if (li) {
-						li.remove(true);
-					}
-
-					var ul = instance.getFileListUl();
-
-					var message = instance._errorMessages[msg] || instance._unexpectedUploadErrorText;
-
-					ul.append(Lang.sub(TPL_FILE_ERROR, [file.name, message]));
-				}
-
-				if (instance._onUploadError) {
-					instance._onUploadError(arguments);
-				}
-
-				instance._updateMetadataContainer();
-			},
-
-			uploadProgress: function(file, bytesLoaded) {
-				var instance = this;
-				var fileId = instance._namespace(file.id);
-				var progress = document.getElementById(fileId + 'progress');
-				var percent = Math.ceil((bytesLoaded / file.size) * 100);
-
-				progress.style.width = percent + '%';
-
-				if (instance._onUploadProgress) {
-					instance._onUploadProgress(file, bytesLoaded);
-				}
-			},
-
-			uploadsComplete: function(file) {
-				var instance = this;
-
-				instance._cancelButton.hide();
-				instance._updateList(0, instance._uploadsCompleteText);
-
-				instance._clearUploadsButton.show();
-
-				if (instance._onUploadsComplete) {
-					instance._onUploadsComplete();
-				}
-
-				var uploader = instance._uploader;
-
-				uploader.setStats(
-					{
-						successful_uploads: 0
 					}
 				);
 
-				Liferay.fire('allUploadsComplete');
-			},
+				instance._cancelButton.hide();
 
-			uploadStart: function(file) {
-				var instance = this;
-
-				var stats = instance._getStats();
-				var listLength = (stats.successful_uploads + stats.upload_errors + stats.files_queued);
-				var position = (stats.successful_uploads + stats.upload_errors + 1);
-
-				var currentListText = Lang.sub(instance._uploadStatusText, [position, listLength]);
-				var fileId = instance._namespace(file.id);
-
-				instance._updateList(listLength, currentListText);
-
-				var li = A.one('#' + fileId);
-
-				if (li) {
-					li.addClass('file-uploading');
-				}
-
-				return true;
-			},
-
-			uploadSuccess: function(file, data) {
-				var instance = this;
-
-				instance.fileUploadComplete(file, data);
+				instance._updateList(0, instance._cancelUploadsText);
 			},
 
 			_clearUploads: function() {
 				var instance = this;
 
-				var completeUploads = instance.getFileListUl().all('.file-saved,.upload-error');
+				var completeUploads = instance._getFileListUl().all('.file-saved,.upload-error');
 
 				if (completeUploads) {
 					completeUploads.remove(true);
@@ -462,7 +260,7 @@ AUI.add(
 				var allRowIdsCheckbox = A.one('#' + instance._namespace('allRowIdsCheckbox'));
 
 				if (fileNames.length) {
-					var ul = instance.getFileListUl();
+					var ul = instance._getFileListUl();
 
 					instance._pendingFileInfo.show();
 
@@ -499,6 +297,74 @@ AUI.add(
 				}
 			},
 
+			_getFileListUl: function() {
+				var instance = this;
+
+				var listingFiles = instance._fileList;
+				var listingUl = listingFiles.all('ul');
+
+				if (!listingUl.size()) {
+					instance._listInfo.append('<h4></h4>');
+
+					listingUl = A.Node.create('<ul class="lfr-component"></ul>');
+
+					listingFiles.append(listingUl);
+
+					instance._manageUploadTarget.append(instance._clearUploadsButton);
+					instance._clearUploadsButton.hide();
+
+					instance._cancelButton.on('click', instance._cancelAllFiles, instance);
+
+					instance._fileListUl = listingUl;
+				}
+
+				return instance._fileListUl;
+			},
+
+			_getValidFiles: function(data) {
+				var instance = this;
+
+				return A.Array.filter(
+					data,
+					function (item, index, collection) {
+						var maxFileSizeInKB = Math.floor(instance._maxFileSize.replace(/\D/g,'') / 1024);
+
+						item.id = A.guid();
+						item.name = item.get('name');
+						item.size = item.get("size") || 0;
+
+						var ul = instance._getFileListUl();
+
+						if (item.size > maxFileSizeInKB * 1024) {
+							var errorMessage = [item.name, instance._invalidFileSizeText.replace('{0}', maxFileSizeInKB)];
+
+							ul.append(Lang.sub(TPL_FILE_ERROR, errorMessage));
+
+							return;
+						}
+						else if (item.name.length > 240) {
+							var errorMessage = [item.name, instance._invalidFileNameText];
+
+							ul.append(Lang.sub(TPL_FILE_ERROR, errorMessage));
+
+							return;
+						}
+						else if (item.size === 0) {
+							var errorMessage = [item.name, instance._zeroByteFileText];
+
+							ul.append(Lang.sub(TPL_FILE_ERROR, errorMessage));
+
+							return;
+						}
+						else {
+							instance.addFile(item);
+						}
+
+						return item;
+					}
+				);
+			},
+
 			_handleDeleteResponse: function(json, li) {
 				var instance = this;
 
@@ -516,10 +382,69 @@ AUI.add(
 				instance._updatePendingInfoContainer();
 			},
 
-			_getStats: function() {
+			_handleDrag: function(event) {
 				var instance = this;
 
-				return instance._uploader.getStats();
+				var dragDropArea = instance._dragDropArea;
+
+				var target = event.target;
+
+				if (event.type === 'dragover') {
+					if (target === dragDropArea || target.ancestor('.float-container') === dragDropArea) {
+						dragDropArea.addClass('drag-highlight');
+					}
+				}
+				else {
+					dragDropArea.removeClass('drag-highlight');
+				}
+			},
+
+			_handleDrop: function(event) {
+				var instance = this;
+
+				var dragDropArea = instance._dragDropArea;
+
+				var target = event.target;
+
+				var uploader = instance._uploader;
+
+				if (target === dragDropArea || target.ancestor('.float-container') === dragDropArea) {
+					var fileList = [];
+
+					var dragDropFiles = event._event.dataTransfer.files;
+
+					if (!!dragDropFiles) {
+						A.each(
+							dragDropFiles,
+							function (item, index, collection) {
+								fileList.push(new A.FileHTML5(item));
+							}
+						);
+
+						event.fileList = fileList;
+
+						dragDropArea.removeClass('drag-highlight');
+
+						uploader.fire('fileselect', event);
+					}
+
+					event.preventDefault();
+					event.stopPropagation();
+				}
+
+				var uploaderType = uploader.TYPE;
+
+				if (uploaderType === 'html5') {
+					dragDropArea.removeClass('drag-highlight');
+				}
+				else if (uploaderType === 'flash') {
+					var selectFilesButton = uploader.get('selectFilesButton');
+
+					selectFilesButton.removeClass('yui3-button-selected');
+				}
+
+				event.preventDefault();
+				event.stopPropagation();
 			},
 
 			_markSelected: function(node) {
@@ -528,6 +453,36 @@ AUI.add(
 				var fileItem = node.ancestor('.upload-file.selectable');
 
 				fileItem.toggleClass('selected');
+			},
+
+			_namespace: function(txt) {
+				var instance = this;
+
+				txt = txt || '';
+
+				return instance._namespaceId + txt;
+			},
+
+			_onAllUploadsComplete: function (event) {
+				var instance = this;
+
+				var uploader = instance._uploader;
+
+				uploader.stats.files_queued = 0;
+				uploader.stats.files_total = 0;
+				uploader.stats.files_uploaded = 0;
+
+				uploader.set('enabled', true);
+
+				uploader.set('fileList', []);
+
+				instance._cancelButton.hide();
+
+				instance._clearUploadsButton.show();
+
+				instance._updateList(0, instance._uploadsCompleteText);
+
+				Liferay.fire('allUploadsComplete');
 			},
 
 			_onDeleteFileClick: function(currentTarget) {
@@ -569,105 +524,164 @@ AUI.add(
 				instance._updateMetadataContainer();
 			},
 
-			_namespace: function(txt) {
+			_onUploadComplete: function (upload) {
 				var instance = this;
 
-				txt = txt || '';
+				var file = upload.file;
 
-				return instance._namespaceId + txt;
+				var fileId = instance._namespace(file.id);
 
+				var li = A.one('#' + fileId);
+
+				var uploader = instance._uploader;
+
+				var queue = uploader.queue;
+
+				uploader.stats.files_uploaded++;
+
+				var data = upload.data;
+
+				if (data === 'file_error::invalid characters in file name') {
+					var ul = instance._getFileListUl();
+
+					var dataBuffer = [file.name, instance._invalidFileNameText];
+
+					ul.append(Lang.sub(TPL_FILE_ERROR, dataBuffer));
+
+					if (li) {
+						li.remove(true);
+					}
+
+					return;
+				}
+
+				if (li) {
+					li.replaceClass('file-uploading', 'upload-complete selectable selected');
+
+					var input = li.one('input');
+
+					if (input) {
+						input.attr('checked', true);
+
+						input.show();
+					}
+
+					instance._updateManageUploadDisplay();
+				}
+
+				instance._updateMetadataContainer();
+			},
+
+			_queueUpload: function(upload) {
+				var instance = this;
+
+				var fileList = upload.fileList;
+
+				var validFiles = instance._getValidFiles(fileList);
+
+				var validFilesLength = validFiles.length;
+
+				if (validFilesLength > 0) {
+					var uploader = instance._uploader;
+
+					uploader.set('fileList', validFiles);
+
+					uploader.stats.files_total += validFilesLength;
+
+					uploader.stats.files_queued += validFilesLength;
+
+					var queueIsUploading = instance._queueIsUploading();
+
+					if (queueIsUploading) {
+						A.each(
+							validFiles,
+							function (item, index, collection){
+								uploader.queue.addToQueueBottom(item);
+							}
+						);
+					}
+					else {
+						uploader.uploadAll();
+					}
+				}
+			},
+
+			_queueIsUploading: function() {
+				var instance = this;
+
+				var uploader = instance._uploader;
+
+				var queue = uploader.queue;
+
+				return !!(queue && queue._currentState && queue._currentState === 'uploading');
 			},
 
 			_setupCallbacks: function() {
 				var instance = this;
 
-				// Global callback references
+				var uploader = instance._uploader;
 
-				instance._cancelUploads = instance._namespace('cancelUploads');
-				instance._fileAdded = instance._namespace('fileAdded');
-				instance._fileAddError = instance._namespace('fileAddError');
-				instance._fileCancelled = instance._namespace('fileCancelled');
-				instance._flashLoaded = instance._namespace('flashLoaded');
-				instance._uploadStart = instance._namespace('uploadStart');
-				instance._uploadProgress = instance._namespace('uploadProgress');
-				instance._uploadError = instance._namespace('uploadError');
-				instance._uploadSuccess = instance._namespace('uploadSuccess');
-				instance._fileUploadComplete = instance._namespace('fileUploadComplete');
-				instance._uploadsComplete = instance._namespace('uploadsComplete');
-				instance._uploadsCancelled = instance._namespace('uploadsCancelled');
+				var docElement = A.one(document.documentElement);
 
-				// Global swfUpload var
+				uploader.after('fileselect', instance._queueUpload, instance);
+				uploader.on('alluploadscomplete', instance._onAllUploadsComplete, instance);
+				uploader.on('fileuploadstart', instance._updateUploadStarting, instance);
+				uploader.on('uploadcomplete', instance._onUploadComplete, instance);
+				uploader.on('uploadprogress', instance._updateUploadProgress, instance);
 
-				instance._swfUpload = instance._namespace('cancelUploads');
+				docElement.on(['dragover', 'dragleave'], instance._handleDrag, instance);
+				docElement.on('drop', instance._handleDrop, instance);
 
-				window[instance._cancelUploads] = function() {
-					instance.cancelUploads.apply(instance, arguments);
-				};
+				docElement.on(
+					'dragover',
+					function(event) {
+						event.stopPropagation();
+						event.preventDefault();
+						try {
+							event._event.dataTransfer.dropEffect = 'copy';
+						}
+						catch (err) {
+						}
+					},
+					false
+				);
 
-				window[instance._fileAdded] = function() {
-					instance.fileAdded.apply(instance, arguments);
-				};
+				A.getWin().on(
+					'beforeunload',
+					function(event) {
+						var queueIsUploading = instance._queueIsUploading();
 
-				window[instance._fileAddError] = function() {
-					instance.fileAddError.apply(instance, arguments);
-				};
-
-				window[instance._fileCancelled] = function() {
-					instance.fileCancelled.apply(instance, arguments);
-				};
-
-				window[instance._uploadStart] = function() {
-					instance.uploadStart.apply(instance, arguments);
-				};
-
-				window[instance._uploadProgress] = function() {
-					instance.uploadProgress.apply(instance, arguments);
-				};
-
-				window[instance._uploadError] = function() {
-					instance.uploadError.apply(instance, arguments);
-				};
-
-				window[instance._fileUploadComplete] = function() {
-					instance.fileUploadComplete.apply(instance, arguments);
-				};
-
-				window[instance._uploadSuccess] = function() {
-					instance.uploadSuccess.apply(instance, arguments);
-				};
-
-				window[instance._uploadsComplete] = function() {
-					instance.uploadsComplete.apply(instance, arguments);
-				};
-
-				window[instance._flashLoaded] = function() {
-					instance.flashLoaded.apply(instance, arguments);
-				};
-
+						if (queueIsUploading) {
+							event.preventDefault();
+						}
+					}
+				);
 			},
 
 			_setupControls: function() {
 				var instance = this;
 
 				if (!instance._hasControls) {
-					instance._uploadTargetId = instance._namespace('uploadTarget');
-					instance._manageUploadTargetId = instance._namespace('manageUploadTarget');
-					instance._listInfoId = instance._namespace('listInfo');
+					instance._dragDropAreaId = instance._namespace('dragDropArea');
+					instance._dragDropAreaContentId = instance._namespace('dragDropAreaContent');
 					instance._fileListId = instance._namespace('fileList');
+					instance._listInfoId = instance._namespace('listInfo');
+					instance._manageUploadTargetId = instance._namespace('manageUploadTarget');
+					instance._uploadTargetId = instance._namespace('uploadTarget');
 
-					instance._uploadTarget = A.Node.create('<div id="' + instance._uploadTargetId + '" class="float-container upload-target"></div>');
+					instance._dragDropArea = A.Node.create('<div id="' + instance._dragDropAreaId + '" class="float-container drag-drop-area">DROP FILES HERE TO UPLOAD<br/>OR</div>');
 					instance._manageUploadTarget = A.Node.create('<div id="' + instance._manageUploadTargetId + '" class="aui-helper-hidden float-container manage-upload-target"><span class="aui-field aui-field-choice select-files aui-state-default"><span class="aui-field-content"><span class="aui-field-element"><input class="aui-helper-hidden select-all-files" id="' + instance._namespace('allRowIdsCheckbox') + '" name="' + instance._namespace('allRowIdsCheckbox') + '" type="checkbox"/></span></span></span></div>');
+					instance._uploadTarget = A.Node.create('<div id="' + instance._uploadTargetId + '" class="float-container upload-target"></div>');
 
-					instance._uploadTarget.setStyle('position', 'relative');
 					instance._manageUploadTarget.setStyle('position', 'relative');
-
-					instance._listInfo = A.Node.create('<div id="' + instance._listInfoId + '" class="upload-list-info"></div>');
-					instance._pendingFileInfo = A.Node.create('<div class="pending-files-info portlet-msg-alert aui-helper-hidden">' + instance._pendingFileText + '</div>');
-					instance._fileList = A.Node.create('<div id="' + instance._fileListId + '" class="upload-list"></div>');
-					instance._cancelButton = A.Node.create('<a class="lfr-button cancel-uploads" href="javascript:;">' + instance._cancelUploadsText + '</a>');
-					instance._clearUploadsButton = A.Node.create('<a class="lfr-button clear-uploads" href="javascript:;">' + instance._clearRecentUploadsText + '</a>');
+					instance._uploadTarget.setStyle('position', 'relative');
 
 					instance._browseButton = A.Node.create('<div class="browse-button-container"><a class="lfr-button browse-button" href="javascript:;">' + instance._browseText + '</a></div>');
+					instance._cancelButton = A.Node.create('<a class="lfr-button cancel-uploads" href="javascript:;">' + instance._cancelUploadsText + '</a>');
+					instance._clearUploadsButton = A.Node.create('<a class="lfr-button clear-uploads" href="javascript:;">' + instance._clearRecentUploadsText + '</a>');
+					instance._fileList = A.Node.create('<div id="' + instance._fileListId + '" class="upload-list"></div>');
+					instance._listInfo = A.Node.create('<div id="' + instance._listInfoId + '" class="upload-list-info"></div>');
+					instance._pendingFileInfo = A.Node.create('<div class="pending-files-info portlet-msg-alert aui-helper-hidden">' + instance._pendingFileText + '</div>');
 
 					Liferay.on('filesSaved', instance._updateMetadataContainer, instance);
 
@@ -725,6 +739,7 @@ AUI.add(
 					var container = instance._container;
 					var manageUploadTarget = instance._manageUploadTarget;
 					var uploadTarget = instance._uploadTarget;
+					var dragDropArea = instance._dragDropArea || {};
 
 					container.append(uploadTarget);
 					container.append(instance._listInfo);
@@ -732,7 +747,6 @@ AUI.add(
 					container.append(manageUploadTarget);
 					container.append(instance._fileList);
 
-					uploadTarget.append(instance._browseButton);
 					manageUploadTarget.append(instance._cancelButton);
 
 					instance._clearUploadsButton.on(
@@ -741,59 +755,6 @@ AUI.add(
 							instance._clearUploads();
 						}
 					);
-
-					if (instance._overlayButton) {
-						uploadTarget = instance._uploadTarget;
-
-						var ie6 = Liferay.Browser.isIe() && Liferay.Browser.getMajorVersion() < 7;
-						var movieContentBox = instance._movieContentBox;
-
-						var regionStyles = {};
-
-						var calculateOffset = function() {
-							var buttonWidth = uploadTarget.get('offsetWidth');
-							var buttonHeight = uploadTarget.get('offsetHeight');
-
-							var buttonOffset = uploadTarget.getXY();
-							var deltaX = 0;
-							var deltaY = 0;
-
-							if (!ie6) {
-								deltaX = A.DOM.docScrollX();
-								deltaY = A.DOM.docScrollY();
-							}
-
-							regionStyles.left = buttonOffset[0] - deltaX;
-							regionStyles.top = buttonOffset[1] - deltaY;
-
-							movieContentBox.setStyles(regionStyles);
-
-							try {
-								instance._uploader.setButtonDimensions(buttonWidth, buttonHeight);
-							}
-							catch (e) {
-							}
-						};
-
-						calculateOffset();
-
-						var calculateTask = A.debounce(calculateOffset, 200);
-
-						if (!ie6) {
-							var win = A.getWin();
-
-							win.on('scroll', calculateTask);
-							win.on('resize', calculateTask);
-						}
-					}
-					else {
-						instance._uploadTarget.on(
-							'click',
-							function() {
-								instance._uploader.selectFiles();
-							}
-						);
-					}
 
 					instance._cancelButton.hide();
 
@@ -897,62 +858,6 @@ AUI.add(
 			_setupUploader: function() {
 				var instance = this;
 
-				if (instance._allowedFileTypes.indexOf('*') == -1) {
-					var fileTypes = instance._allowedFileTypes.split(',');
-
-					fileTypes = A.Array.map(
-						fileTypes,
-						function(value, key) {
-							var fileType = value;
-
-							if (value.indexOf('*') == -1) {
-								fileType = '*' + value;
-							}
-							return fileType;
-						}
-					);
-
-					instance._allowedFileTypes = fileTypes.join(';');
-				}
-
-				instance._uploader = new SWFUpload(
-					{
-						auto_upload: false,
-						browse_link_class: 'browse-button liferay-button',
-						browse_link_innerhtml: instance._browseText,
-						button_cursor: SWFUpload.CURSOR.HAND,
-						button_height: instance._buttonHeight,
-						button_image_url: instance._buttonUrl,
-						button_placeholder_id: '',
-						button_text: instance._buttonText,
-						button_text_left_padding: 0,
-						button_text_style: '',
-						button_text_top_padding: 0,
-						button_width: instance._buttonWidth,
-						button_window_mode: 'transparent',
-						create_ui: true,
-						debug: false,
-						file_post_name: 'file',
-						file_queue_error_handler: window[instance._fileAddError],
-						file_queued_handler: window[instance._fileAdded],
-						file_size_limit: instance._maxFileSize,
-						file_types: instance._allowedFileTypes,
-						file_types_description: instance._fileTypesDescriptionText,
-						flash_url: themeDisplay.getPathContext() + '/html/js/misc/swfupload/swfupload_f10.swf',
-						swfupload_loaded_handler: window[instance._flashLoaded],
-						target: instance._uploadTargetId,
-						upload_cancel_callback: window[instance._cancelUploads],
-						upload_complete_handler: window[instance._fileUploadComplete],
-						upload_error_handler: window[instance._uploadError],
-						upload_file_cancel_callback: window[instance._fileCancelled],
-						upload_progress_handler: window[instance._uploadProgress],
-						upload_queue_complete_callback: window[instance._uploadsComplete],
-						upload_start_handler: window[instance._uploadStart],
-						upload_success_handler: window[instance._uploadSuccess],
-						upload_url: instance._uploadFile
-					}
-				);
-
 				instance._movieBoundingBox = A.Node.create('<div class="lfr-upload-movie"><div class="lfr-upload-movie-content"></div></div>');
 				instance._movieContentBox = instance._movieBoundingBox.get('firstChild');
 
@@ -961,29 +866,78 @@ AUI.add(
 
 				A.getBody().prepend(movieBoundingBox);
 
-				var movieElement = instance._uploader.getMovieElement();
+				var uploadURL = Liferay.Util.addParams('ts=' + A.Lang.now() , instance._uploadFile);
 
-				if (movieElement) {
-					movieContentBox.appendChild(movieElement);
+				if (A.Uploader.TYPE && A.Uploader.TYPE != 'none' && !A.UA.ios) {
+					var uploader = new A.Uploader(
+						{
+							fileFieldName: 'file',
+							height: '35px',
+							multipleFiles: true,
+							selectButtonLabel: 'Select Files',
+							simLimit: 2,
+							swfURL: Liferay.Util.addParams('ts=' + A.Lang.now() , themeDisplay.getPathContext() + '/html/js/aui/uploader/assets/flashuploader.swf'),
+							uploadURL: uploadURL
+						}
+					);
 
-					var defaultStyles = {
-						zIndex: 100000
-					};
+					uploader.TYPE = A.Uploader.TYPE;
 
-					if (!(Liferay.Browser.isIe() && Liferay.Browser.getMajorVersion() < 7)) {
-						defaultStyles.top = 0;
+					instance._uploader = uploader;
+
+					if (A.Uploader.TYPE == "html5") {
+						var docElement = A.one(document.documentElement);
+
+						uploader.set("dragAndDropArea", instance._dragDropArea);
+
+						var docElement = document.documentElement;
+						var docElementNode = A.one(docElement);
 					}
 
-					movieContentBox.setStyles(defaultStyles);
-				}
+					instance._setupControls();
 
-				window[instance._swfUpload] = instance._uploader;
+					instance._setupCallbacks();
+
+					uploader.stats = {
+						files_queued: 0,
+						files_total: 0,
+						files_uploaded: 0
+					}
+
+					var uploadTarget = instance._uploadTarget;
+
+					if (uploader.TYPE === 'html5') {
+						var dragDropArea = instance._dragDropArea;
+
+						uploadTarget.append(dragDropArea);
+
+						uploader.render(dragDropArea);
+
+						uploader.set('height', '35px');
+						uploader.set('width', '150px');
+					}
+					else if (uploader.TYPE === 'flash') {
+						uploader.render(uploadTarget);
+
+						uploader.set('height', '40px');
+					}
+				}
+			},
+
+			_updateList: function(listLength, message) {
+				var instance = this;
+				var infoTitle = instance._listInfo.one('h4');
+
+				if (infoTitle) {
+					var listText = message || Lang.sub(instance._fileListPendingText, [listLength]);
+					infoTitle.html(listText);
+				}
 			},
 
 			_updateManageUploadDisplay: function() {
 				var instance = this;
 
-				var ul = instance.getFileListUl();
+				var ul = instance._getFileListUl();
 
 				var files = ul.all('li');
 
@@ -998,7 +952,7 @@ AUI.add(
 				instance._clearUploadsButton.toggle(hasUploadedFiles);
 				instance._manageUploadTarget.toggle(hasUploadedFiles);
 
-				instance._listInfo.toggle(files.size());
+				instance._listInfo.toggle(!!files.size());
 			},
 
 			_updateMetadataContainer: function() {
@@ -1062,16 +1016,38 @@ AUI.add(
 				}
 			},
 
-			_updateList: function(listLength, message) {
+			_updateUploadProgress: function (upload) {
 				var instance = this;
 
-				var infoTitle = instance._listInfo.one('h4');
+				var file = upload.file;
 
-				if (infoTitle) {
-					var listText = message || Lang.sub(instance._fileListPendingText, [listLength]);
+				var fileId = instance._namespace(file.id);
 
-					infoTitle.html(listText);
+				var li = A.one('#' + fileId);
+
+				var progress = document.getElementById(fileId + 'progress');
+
+				if (li && progress) {
+					li.addClass('file-uploading');
+
+					progress.style.width = upload.percentLoaded + '%';
 				}
+			},
+
+			_updateUploadStarting: function(event) {
+				var instance = this;
+
+				var uploader = instance._uploader;
+
+				var files_queued = --uploader.stats.files_queued;
+
+				var files_total = uploader.stats.files_total;
+
+				var position = files_total - files_queued;
+
+				var currentListText = Lang.sub(instance._uploadStatusText, [position, files_total]);
+
+				instance._updateList(0, currentListText);
 			}
 		};
 
@@ -1079,6 +1055,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-io-request', 'aui-swf', 'collection', 'swfupload']
+		requires: ['aui-io-request', 'collection', 'swfupload', 'uploader', 'uploader-flash', 'uploader-html5']
 	}
 );

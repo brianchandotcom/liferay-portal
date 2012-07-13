@@ -1,5 +1,36 @@
+.lfr-dynamic-uploader .lfr-upload-container .upload-target {
+	background-image: none;
+	margin-right: 1.5em;
+}
+
 .lfr-upload-container {
 	margin-bottom: 1em;
+
+	.drag-drop-area {
+		background: none repeat scroll 0 0 #EBEBEB;
+		border: 4px dashed #DDDDDD;
+		font-size: 20;
+		margin-left: 0;
+		margin-top: 0;
+		padding-bottom: 30px;
+		padding-top: 30px;
+		text-align: center;
+
+		.drag-highlight {
+			background: none repeat scroll 0 0 #DDEDDE;
+			border: 4px dashed #7D7;
+		}
+
+		.yui3-uploader{
+			margin-left: auto;
+			margin-right: auto;
+		}
+	}
+
+	.drag-drop-area.drag-highlight {
+		background: none repeat scroll 0 0 #DDEDDE;
+		border: 4px dashed #7D7;
+	}
 
 	.upload-target {
 		border: 1px solid transparent;
@@ -168,7 +199,7 @@
 .lfr-upload-container {
 	.upload-target {
 		background-color: #8FBE31;
-		border-color: #729A22;
+		border: none;
 		text-shadow: 1px 1px #656565;
 	}
 

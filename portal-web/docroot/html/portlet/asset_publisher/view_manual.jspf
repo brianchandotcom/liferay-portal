@@ -32,7 +32,7 @@ request.setAttribute("view.jsp-results", results);
 
 <c:choose>
 	<c:when test="<%= portletDisplayDDMTemplateId > 0 %>">
-		<%= AssetPublisherUtil.renderDDMTemplate(renderRequest, renderResponse, portletDisplayDDMTemplateId, results) %>
+		<%= PortletDisplayTemplatesUtil.renderDDMTemplate(renderRequest, renderResponse, portletDisplayDDMTemplateId, results, contextObjects) %>
 	</c:when>
 	<c:otherwise>
 

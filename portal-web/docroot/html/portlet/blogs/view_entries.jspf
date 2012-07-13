@@ -60,38 +60,47 @@ showSearch = showSearch && !results.isEmpty();
 />
 
 <%
-for (Object result : results) {
-	BlogsEntry entry = null;
+if (portletDisplayDDMTemplateId > 0) {
+%>
 
-	AssetEntry assetEntry = null;
+	<%= PortletDisplayTemplatesUtil.renderDDMTemplate(renderRequest, renderResponse, portletDisplayDDMTemplateId, results) %>
 
-	if (result instanceof AssetEntry) {
-		assetEntry = (AssetEntry)result;
+<%
+}
+else {
+	for (Object result : results) {
+		BlogsEntry entry = null;
 
-		entry = BlogsEntryLocalServiceUtil.getEntry(assetEntry.getClassPK());
+		AssetEntry assetEntry = null;
 
-		AssetUtil.addLayoutTags(request, assetEntry.getTags());
-	}
-	else {
-		entry = (BlogsEntry)result;
-	}
+		if (result instanceof AssetEntry) {
+			assetEntry = (AssetEntry)result;
 
-	if (((entry.getStatus() == WorkflowConstants.STATUS_DRAFT) || (entry.getDisplayDate().after(new Date()))) && (entry.getUserId() != user.getUserId()) && !permissionChecker.isGroupAdmin(scopeGroupId)) {
-		searchContainer.setTotal(searchContainer.getTotal() - 1);
+			entry = BlogsEntryLocalServiceUtil.getEntry(assetEntry.getClassPK());
 
-		continue;
-	}
+			AssetUtil.addLayoutTags(request, assetEntry.getTags());
+		}
+		else {
+			entry = (BlogsEntry)result;
+		}
 
-	request.setAttribute("view_entry_content.jsp-searchContainer", searchContainer);
+		if (((entry.getStatus() == WorkflowConstants.STATUS_DRAFT) || (entry.getDisplayDate().after(new Date()))) && (entry.getUserId() != user.getUserId()) && !permissionChecker.isGroupAdmin(scopeGroupId)) {
+			searchContainer.setTotal(searchContainer.getTotal() - 1);
 
-	request.setAttribute("view_entry_content.jsp-entry", entry);
+			continue;
+		}
 
-	request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
+		request.setAttribute("view_entry_content.jsp-searchContainer", searchContainer);
+
+		request.setAttribute("view_entry_content.jsp-entry", entry);
+
+		request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 %>
 
 	<liferay-util:include page="/html/portlet/blogs/view_entry_content.jsp" />
 
 <%
+	}
 }
 
 ResourceURL rssURL = liferayPortletResponse.createResourceURL();

@@ -9,7 +9,7 @@ AUI.add(
 
 		var ATTR_CHECKED = 'checked';
 
-		var CSS_RESULT_ROW = '.results-row';
+		var CSS_RESULT_ROW = '.results-row.selectable';
 
 		var CSS_SELECTED = 'selected';
 
@@ -150,7 +150,11 @@ AUI.add(
 					_getDisplayStyle: function(currentDisplayStyle, style) {
 						var instance = this;
 
-						var displayStyle = History.get(currentDisplayStyle) || instance.get(STR_DISPLAY_STYLE);
+						var currentDisplayStyleHistory = History.get(currentDisplayStyle) || instance.get(STR_DISPLAY_STYLE);
+
+						var displayStyle = currentDisplayStyleHistory[instance._displayStyle] || currentDisplayStyleHistory;
+
+						displayStyle = !A.Object.isEmpty(currentDisplayStyleHistory) ? currentDisplayStyleHistory : instance.get(STR_DISPLAY_STYLE);
 
 						if (style) {
 							displayStyle = (displayStyle == style);

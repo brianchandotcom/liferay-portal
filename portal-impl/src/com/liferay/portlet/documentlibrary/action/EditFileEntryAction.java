@@ -134,7 +134,8 @@ public class EditFileEntryAction extends PortletAction {
 			}
 			else if (cmd.equals(Constants.ADD) ||
 					 cmd.equals(Constants.UPDATE) ||
-					 cmd.equals(Constants.UPDATE_AND_CHECKIN)) {
+					 cmd.equals(Constants.UPDATE_AND_CHECKIN) ||
+					 cmd.equals(Constants.ADD_DYNAMIC)) {
 
 				updateFileEntry(portletConfig, actionRequest, actionResponse);
 			}
@@ -622,8 +623,9 @@ public class EditFileEntryAction extends PortletAction {
 				 e instanceof SourceFileNameException ||
 				 e instanceof StorageFieldRequiredException) {
 
-			if (!cmd.equals(Constants.ADD_MULTIPLE) &&
-				!cmd.equals(Constants.ADD_TEMP)) {
+			if (!(cmd.equals(Constants.ADD_MULTIPLE) ||
+				cmd.equals(Constants.ADD_TEMP) ||
+				cmd.equals(Constants.ADD_DYNAMIC))) {
 
 				SessionErrors.add(actionRequest, e.getClass());
 
@@ -773,11 +775,11 @@ public class EditFileEntryAction extends PortletAction {
 
 			long size = uploadPortletRequest.getSize("file");
 
-			if (cmd.equals(Constants.ADD) && (size == 0)) {
+			if ((cmd.equals(Constants.ADD) || cmd.equals(Constants.ADD_DYNAMIC)) && (size == 0)) {
 				contentType = MimeTypesUtil.getContentType(title);
 			}
 
-			if (cmd.equals(Constants.ADD) || (size > 0)) {
+			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.ADD_DYNAMIC) || (size > 0)) {
 				String portletName = portletConfig.getPortletName();
 
 				if (portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY)) {
@@ -810,7 +812,7 @@ public class EditFileEntryAction extends PortletAction {
 
 			FileEntry fileEntry = null;
 
-			if (cmd.equals(Constants.ADD)) {
+			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.ADD_DYNAMIC)) {
 
 				// Add file entry
 
@@ -821,6 +823,14 @@ public class EditFileEntryAction extends PortletAction {
 				AssetPublisherUtil.addAndStoreSelection(
 					actionRequest, DLFileEntry.class.getName(),
 					fileEntry.getFileEntryId(), -1);
+
+				if (cmd.equals(Constants.ADD_DYNAMIC)) {
+					JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+					jsonObject.put("fileEntryId", fileEntry.getFileEntryId());
+
+					writeJSON(actionRequest, actionResponse, jsonObject);
+				}
 			}
 			else if (cmd.equals(Constants.UPDATE_AND_CHECKIN)) {
 
@@ -843,6 +853,20 @@ public class EditFileEntryAction extends PortletAction {
 
 			AssetPublisherUtil.addRecentFolderId(
 				actionRequest, DLFileEntry.class.getName(), folderId);
+		}
+		catch (Exception e) {
+
+			UploadException uploadException =
+					(UploadException)actionRequest.getAttribute(
+						WebKeys.UPLOAD_EXCEPTION);
+
+			if (uploadException != null && 
+				uploadException.isExceededSizeLimit()) {
+				
+				throw new FileSizeException(uploadException.getCause());
+			}
+				
+			throw e;
 		}
 		finally {
 			StreamUtil.cleanUp(inputStream);

@@ -420,12 +420,16 @@ else if (dlFileEntryType != null) {
 
 			String publishButtonLabel = "publish";
 
-			if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, DLFileEntryConstants.getClassName())) {
+			if (DLUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, folderId, fileEntryTypeId)) {
 				publishButtonLabel = "submit-for-publication";
 			}
 
+			boolean saveAsDraft = false;
+
 			if ((checkedOut || pending) && !PropsValues.DL_FILE_ENTRY_DRAFTS_ENABLED) {
 				publishButtonLabel = "save";
+
+				saveAsDraft = true;
 			}
 			%>
 
@@ -433,7 +437,7 @@ else if (dlFileEntryType != null) {
 				<aui:button disabled="<%= checkedOut && !hasLock %>" name="saveButton" onClick='<%= renderResponse.getNamespace() + "saveFileEntry(true);" %>' value="<%= saveButtonLabel %>" />
 			</c:if>
 
-			<aui:button disabled="<%= checkedOut && !hasLock || (pending && PropsValues.DL_FILE_ENTRY_DRAFTS_ENABLED) %>" name="publishButton" type="submit" value="<%= publishButtonLabel %>" />
+			<aui:button disabled="<%= checkedOut && !hasLock || (pending && PropsValues.DL_FILE_ENTRY_DRAFTS_ENABLED) %>" name="publishButton" onClick='<%= renderResponse.getNamespace() + "saveFileEntry(" + saveAsDraft + ");" %>' value="<%= publishButtonLabel %>" />
 
 			<c:if test="<%= (fileEntry != null) && ((checkedOut && hasLock) || !checkedOut) %>">
 				<c:choose>

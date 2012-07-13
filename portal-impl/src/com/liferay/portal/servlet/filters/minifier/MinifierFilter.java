@@ -173,12 +173,11 @@ public class MinifierFilter extends BasePortalFilter {
 			_tempDir += "/portal";
 		}
 
-
 		int minifierFilesLimit = PropsValues.MINIFIER_FILES_LIMIT;
 
 		if (minifierFilesLimit > 0) {
 			_limitedFilesCache =
-				new LimitedFilesCache<String>(PropsValues.MINIFIER_FILES_LIMIT);
+				new LimitedFilesCache<String>(minifierFilesLimit);
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Minifier files limit: " + minifierFilesLimit);

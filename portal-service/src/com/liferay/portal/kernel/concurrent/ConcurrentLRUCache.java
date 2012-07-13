@@ -169,6 +169,9 @@ public class ConcurrentLRUCache<K, V> {
 		return sb.toString();
 	}
 
+	protected void onRemove(K key, V value) {
+	}
+
 	private void _cleanUp() {
 		List<Entry<K, ValueWrapper>> valueWrappers =
 			new ArrayList<Entry<K, ValueWrapper>>(_cache.entrySet());
@@ -194,9 +197,6 @@ public class ConcurrentLRUCache<K, V> {
 
 			itr.remove();
 		}
-	}
-
-	protected void onRemove(K key, V value) {
 	}
 
 	private Map<K, ValueWrapper> _cache = new HashMap<K, ValueWrapper>();

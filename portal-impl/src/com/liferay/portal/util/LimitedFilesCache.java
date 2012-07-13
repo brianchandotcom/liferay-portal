@@ -31,12 +31,12 @@ public class LimitedFilesCache<T> {
 		return _cache.get(key);
 	}
 
-	public void put(T key, File file) {
-		_cache.put(key, file);
-	}
-
 	public void put(T key) {
 		_cache.put(key, null);
+	}
+
+	public void put(T key, File file) {
+		_cache.put(key, file);
 	}
 
 	public static class FileRemovingLFUCache<K> extends
@@ -50,7 +50,8 @@ public class LimitedFilesCache<T> {
 		protected void onRemove(K key, File cachedFile) {
 			if (cachedFile != null) {
 				cachedFile.delete();
-			} else {
+			}
+			else {
 				new File(key.toString()).delete();
 			}
 		}

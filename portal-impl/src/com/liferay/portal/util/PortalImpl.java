@@ -1487,20 +1487,34 @@ public class PortalImpl implements Portal {
 	}
 
 	public Date getDate(
-			int month, int day, int year, int hour, int min, PortalException pe)
+			int month, int day, int year,
+			Class<? extends PortalException> clazz)
 		throws PortalException {
 
-		return getDate(month, day, year, hour, min, null, pe);
+		return getDate(month, day, year, null, clazz);
+	}
+
+	public Date getDate(
+			int month, int day, int year, int hour, int min,
+			Class<? extends PortalException> clazz)
+		throws PortalException {
+
+		return getDate(month, day, year, hour, min, null, clazz);
 	}
 
 	public Date getDate(
 			int month, int day, int year, int hour, int min, TimeZone timeZone,
-			PortalException pe)
+			Class<? extends PortalException> clazz)
 		throws PortalException {
 
 		if (!Validator.isGregorianDate(month, day, year)) {
-			if (pe != null) {
-				throw pe;
+			if (clazz != null) {
+				try {
+					throw clazz.newInstance();
+				}
+				catch (Exception e) {
+					throw new PortalException(e);
+				}
 			}
 			else {
 				return null;
@@ -1537,17 +1551,12 @@ public class PortalImpl implements Portal {
 		}
 	}
 
-	public Date getDate(int month, int day, int year, PortalException pe)
-		throws PortalException {
-
-		return getDate(month, day, year, null, pe);
-	}
-
 	public Date getDate(
-			int month, int day, int year, TimeZone timeZone, PortalException pe)
+			int month, int day, int year, TimeZone timeZone,
+			Class<? extends PortalException> clazz)
 		throws PortalException {
 
-		return getDate(month, day, year, -1, -1, timeZone, pe);
+		return getDate(month, day, year, -1, -1, timeZone, clazz);
 	}
 
 	public long getDefaultCompanyId() {
@@ -1762,7 +1771,7 @@ public class PortalImpl implements Portal {
 
 			value = getDate(
 				valueDateMonth, valueDateDay, valueDateYear, valueDateHour,
-				valueDateMinute, timeZone, new ValueDataException());
+				valueDateMinute, timeZone, ValueDataException.class);
 		}
 		else if (type == ExpandoColumnConstants.DATE_ARRAY) {
 		}
@@ -1900,7 +1909,7 @@ public class PortalImpl implements Portal {
 
 			value = getDate(
 				valueDateMonth, valueDateDay, valueDateYear, valueDateHour,
-				valueDateMinute, timeZone, new ValueDataException());
+				valueDateMinute, timeZone, ValueDataException.class);
 		}
 		else if (type == ExpandoColumnConstants.DATE_ARRAY) {
 		}

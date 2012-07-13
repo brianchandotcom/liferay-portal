@@ -268,7 +268,7 @@ public class EditExpandoAction extends PortletAction {
 
 			value = PortalUtil.getDate(
 				valueDateMonth, valueDateDay, valueDateYear, valueDateHour,
-				valueDateMinute, user.getTimeZone(), new ValueDataException());
+				valueDateMinute, user.getTimeZone(), ValueDataException.class);
 		}
 		else if (type == ExpandoColumnConstants.DATE_ARRAY) {
 		}

@@ -77,12 +77,12 @@ public class AnnouncementsEntryLocalServiceImpl
 		Date displayDate = PortalUtil.getDate(
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, user.getTimeZone(),
-			new EntryDisplayDateException());
+			EntryDisplayDateException.class);
 
 		Date expirationDate = PortalUtil.getDate(
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, user.getTimeZone(),
-			new EntryExpirationDateException());
+			EntryExpirationDateException.class);
 
 		Date now = new Date();
 
@@ -307,12 +307,12 @@ public class AnnouncementsEntryLocalServiceImpl
 		Date displayDate = PortalUtil.getDate(
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, user.getTimeZone(),
-			new EntryDisplayDateException());
+			EntryDisplayDateException.class);
 
 		Date expirationDate = PortalUtil.getDate(
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, user.getTimeZone(),
-			new EntryExpirationDateException());
+			EntryExpirationDateException.class);
 
 		validate(title, content, url);
 

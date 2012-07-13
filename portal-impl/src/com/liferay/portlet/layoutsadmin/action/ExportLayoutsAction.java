@@ -117,7 +117,7 @@ public class ExportLayoutsAction extends PortletAction {
 				startDate = PortalUtil.getDate(
 					startDateMonth, startDateDay, startDateYear, startDateHour,
 					startDateMinute, themeDisplay.getTimeZone(),
-					new PortalException());
+					PortalException.class);
 
 				int endDateMonth = ParamUtil.getInteger(
 					actionRequest, "endDateMonth");
@@ -139,7 +139,7 @@ public class ExportLayoutsAction extends PortletAction {
 				endDate = PortalUtil.getDate(
 					endDateMonth, endDateDay, endDateYear, endDateHour,
 					endDateMinute, themeDisplay.getTimeZone(),
-					new PortalException());
+					PortalException.class);
 			}
 			else if (range.equals("fromLastPublishDate")) {
 				LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(

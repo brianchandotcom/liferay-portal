@@ -62,7 +62,7 @@ public class PollsQuestionLocalServiceImpl
 			expirationDate = PortalUtil.getDate(
 				expirationDateMonth, expirationDateDay, expirationDateYear,
 				expirationDateHour, expirationDateMinute, user.getTimeZone(),
-				new QuestionExpirationDateException());
+				QuestionExpirationDateException.class);
 		}
 
 		Date now = new Date();
@@ -242,7 +242,7 @@ public class PollsQuestionLocalServiceImpl
 			expirationDate = PortalUtil.getDate(
 				expirationDateMonth, expirationDateDay, expirationDateYear,
 				expirationDateHour, expirationDateMinute, user.getTimeZone(),
-				new QuestionExpirationDateException());
+				QuestionExpirationDateException.class);
 		}
 
 		validate(titleMap, descriptionMap, choices);

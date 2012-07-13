@@ -385,31 +385,36 @@ public class PortalUtil {
 	}
 
 	public static Date getDate(
-			int month, int day, int year, int hour, int min, PortalException pe)
+			int month, int day, int year,
+			Class<? extends PortalException> clazz)
 		throws PortalException {
 
-		return getPortal().getDate(month, day, year, hour, min, pe);
+		return getPortal().getDate(month, day, year, clazz);
+	}
+
+	public static Date getDate(
+			int month, int day, int year, int hour, int min,
+			Class<? extends PortalException> clazz)
+		throws PortalException {
+
+		return getPortal().getDate(month, day, year, hour, min, clazz);
 	}
 
 	public static Date getDate(
 			int month, int day, int year, int hour, int min, TimeZone timeZone,
-			PortalException pe)
+			Class<? extends PortalException> clazz)
 		throws PortalException {
 
-		return getPortal().getDate(month, day, year, hour, min, timeZone, pe);
-	}
-
-	public static Date getDate(int month, int day, int year, PortalException pe)
-		throws PortalException {
-
-		return getPortal().getDate(month, day, year, pe);
+		return getPortal().getDate(
+			month, day, year, hour, min, timeZone, clazz);
 	}
 
 	public static Date getDate(
-			int month, int day, int year, TimeZone timeZone, PortalException pe)
+			int month, int day, int year, TimeZone timeZone,
+			Class<? extends PortalException> clazz)
 		throws PortalException {
 
-		return getPortal().getDate(month, day, year, timeZone, pe);
+		return getPortal().getDate(month, day, year, timeZone, clazz);
 	}
 
 	/**

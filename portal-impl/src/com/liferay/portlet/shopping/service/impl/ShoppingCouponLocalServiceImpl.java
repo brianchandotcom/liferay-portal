@@ -72,7 +72,7 @@ public class ShoppingCouponLocalServiceImpl
 		Date startDate = PortalUtil.getDate(
 			startDateMonth, startDateDay, startDateYear, startDateHour,
 			startDateMinute, user.getTimeZone(),
-			new CouponStartDateException());
+			CouponStartDateException.class);
 
 		Date endDate = null;
 
@@ -80,7 +80,7 @@ public class ShoppingCouponLocalServiceImpl
 			endDate = PortalUtil.getDate(
 				endDateMonth, endDateDay, endDateYear, endDateHour,
 				endDateMinute, user.getTimeZone(),
-				new CouponEndDateException());
+				CouponEndDateException.class);
 		}
 
 		if ((endDate != null) && startDate.after(endDate)) {
@@ -193,7 +193,7 @@ public class ShoppingCouponLocalServiceImpl
 		Date startDate = PortalUtil.getDate(
 			startDateMonth, startDateDay, startDateYear, startDateHour,
 			startDateMinute, user.getTimeZone(),
-			new CouponStartDateException());
+			CouponStartDateException.class);
 
 		Date endDate = null;
 
@@ -201,7 +201,7 @@ public class ShoppingCouponLocalServiceImpl
 			endDate = PortalUtil.getDate(
 				endDateMonth, endDateDay, endDateYear, endDateHour,
 				endDateMinute, user.getTimeZone(),
-				new CouponEndDateException());
+				CouponEndDateException.class);
 		}
 
 		if ((endDate != null) && startDate.after(endDate)) {

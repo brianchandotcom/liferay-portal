@@ -182,7 +182,7 @@ public class EditWorkflowTaskAction extends PortletAction {
 
 		Date dueDate = PortalUtil.getDate(
 			dueDateMonth, dueDateDay, dueDateYear, dueDateHour, dueDateMinute,
-			new WorkflowTaskDueDateException());
+			WorkflowTaskDueDateException.class);
 
 		WorkflowTaskManagerUtil.updateDueDate(
 			themeDisplay.getCompanyId(), themeDisplay.getUserId(),

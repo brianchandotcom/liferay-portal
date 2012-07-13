@@ -111,7 +111,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		Date displayDate = PortalUtil.getDate(
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, user.getTimeZone(),
-			new EntryDisplayDateException());
+			EntryDisplayDateException.class);
 
 		byte[] smallImageBytes = null;
 
@@ -915,7 +915,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		Date displayDate = PortalUtil.getDate(
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, user.getTimeZone(),
-			new EntryDisplayDateException());
+			EntryDisplayDateException.class);
 
 		byte[] smallImageBytes = null;
 

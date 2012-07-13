@@ -484,15 +484,13 @@ public interface Portal {
 	public Date getDate(int month, int day, int year);
 
 	/**
-	 * Returns the date object for the specified month, day, year, hour, and
-	 * minute, optionally throwing an exception if the date is invalid.
+	 * Returns the date object for the specified month, day, and year,
+	 * optionally throwing an exception if the date is invalid.
 	 *
 	 * @param  month the month (0-based, meaning 0 for January)
 	 * @param  day the day of the month
 	 * @param  year the year
-	 * @param  hour the hour (0-24)
-	 * @param  min the minute of the hour
-	 * @param  pe the exception to throw if the date is invalid. If
+	 * @param  clazz the exception Class to throw if the date is invalid. If
 	 *         <code>null</code>, no exception will be thrown for an invalid
 	 *         date.
 	 * @return the date object, or <code>null</code> if the date is invalid and
@@ -501,7 +499,30 @@ public interface Portal {
 	 *         not <code>null</code>
 	 */
 	public Date getDate(
-			int month, int day, int year, int hour, int min, PortalException pe)
+			int month, int day, int year,
+			Class<? extends PortalException> clazz)
+		throws PortalException;
+
+	/**
+	 * Returns the date object for the specified month, day, year, hour, and
+	 * minute, optionally throwing an exception if the date is invalid.
+	 *
+	 * @param  month the month (0-based, meaning 0 for January)
+	 * @param  day the day of the month
+	 * @param  year the year
+	 * @param  hour the hour (0-24)
+	 * @param  min the minute of the hour
+	 * @param  clazz the exception Class to throw if the date is invalid. If
+	 *         <code>null</code>, no exception will be thrown for an invalid
+	 *         date.
+	 * @return the date object, or <code>null</code> if the date is invalid and
+	 *         no exception to throw was provided
+	 * @throws PortalException if the date was invalid and <code>pe</code> was
+	 *         not <code>null</code>
+	 */
+	public Date getDate(
+			int month, int day, int year, int hour, int min,
+			Class<? extends PortalException> clazz)
 		throws PortalException;
 
 	/**
@@ -514,7 +535,7 @@ public interface Portal {
 	 * @param  hour the hour (0-24)
 	 * @param  min the minute of the hour
 	 * @param  timeZone the time zone of the date
-	 * @param  pe the exception to throw if the date is invalid. If
+	 * @param  clazz the exception Class to throw if the date is invalid. If
 	 *         <code>null</code>, no exception will be thrown for an invalid
 	 *         date.
 	 * @return the date object, or <code>null</code> if the date is invalid and
@@ -524,25 +545,7 @@ public interface Portal {
 	 */
 	public Date getDate(
 			int month, int day, int year, int hour, int min, TimeZone timeZone,
-			PortalException pe)
-		throws PortalException;
-
-	/**
-	 * Returns the date object for the specified month, day, and year,
-	 * optionally throwing an exception if the date is invalid.
-	 *
-	 * @param  month the month (0-based, meaning 0 for January)
-	 * @param  day the day of the month
-	 * @param  year the year
-	 * @param  pe the exception to throw if the date is invalid. If
-	 *         <code>null</code>, no exception will be thrown for an invalid
-	 *         date.
-	 * @return the date object, or <code>null</code> if the date is invalid and
-	 *         no exception to throw was provided
-	 * @throws PortalException if the date was invalid and <code>pe</code> was
-	 *         not <code>null</code>
-	 */
-	public Date getDate(int month, int day, int year, PortalException pe)
+			Class<? extends PortalException> clazz)
 		throws PortalException;
 
 	/**
@@ -553,7 +556,7 @@ public interface Portal {
 	 * @param  day the day of the month
 	 * @param  year the year
 	 * @param  timeZone the time zone of the date
-	 * @param  pe the exception to throw if the date is invalid. If
+	 * @param  clazz the exception Class to throw if the date is invalid. If
 	 *         <code>null</code>, no exception will be thrown for an invalid
 	 *         date.
 	 * @return the date object, or <code>null</code> if the date is invalid and
@@ -562,7 +565,8 @@ public interface Portal {
 	 *         not <code>null</code>
 	 */
 	public Date getDate(
-			int month, int day, int year, TimeZone timeZone, PortalException pe)
+			int month, int day, int year, TimeZone timeZone,
+			Class<? extends PortalException> clazz)
 		throws PortalException;
 
 	public long getDefaultCompanyId();

@@ -574,8 +574,7 @@ public class BeanPropertiesImpl implements BeanProperties {
 
 		try {
 			return PortalUtil.getDate(
-				month, day, year, hour, minute, user.getTimeZone(),
-				new PortalException());
+				month, day, year, hour, minute, user.getTimeZone(), null);
 		}
 		catch (PortalException pe) {
 			return null;

@@ -72,7 +72,7 @@ if (layoutSetBranches.contains(layoutSetBranch)) {
 					buffer.append("' data-layoutSetBranchName='");
 					buffer.append(HtmlUtil.escape(curLayoutSetBranch.getName()));
 					buffer.append("' data-layoutSetBranchMessage='");
-					buffer.append(UnicodeLanguageUtil.format(pageContext, "are-you-sure-you-want-to-merge-changes-from-x", curLayoutSetBranch.getName()));
+					buffer.append(HtmlUtil.escape(LanguageUtil.format(pageContext, "are-you-sure-you-want-to-merge-changes-from-x", curLayoutSetBranch.getName())));
 					buffer.append("' href='#'>");
 					buffer.append(LanguageUtil.get(pageContext, "select"));
 					buffer.append("</a>");

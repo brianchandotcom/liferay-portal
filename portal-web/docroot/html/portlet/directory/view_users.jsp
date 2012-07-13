@@ -65,7 +65,7 @@ if (Validator.isNotNull(viewUsersRedirect)) {
 	<c:if test="<%= organization != null %>">
 		<aui:input name="<%= UserDisplayTerms.ORGANIZATION_ID %>" type="hidden" value="<%= organization.getOrganizationId() %>" />
 
-		<h3><%= UnicodeLanguageUtil.format(pageContext, "users-of-x", organization.getName()) %></h3>
+		<h3><%= HtmlUtil.escape(LanguageUtil.format(pageContext, "users-of-x", organization.getName())) %></h3>
 	</c:if>
 
 	<c:if test="<%= userGroup != null %>">

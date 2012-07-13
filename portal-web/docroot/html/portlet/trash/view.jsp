@@ -130,11 +130,20 @@ portletURL.setParameter("tabs1", tabs1);
 				value="<%= LanguageUtil.get(pageContext, trashRenderer.getType()) %>"
 			/>
 
+			<%
+			Date now = new Date();
+
+			long lastAgo = now.getTime() - entry.getCreateDate().getTime();
+			%>
+
 			<liferay-ui:search-container-column-text
 				name="removed-date"
 				orderable="<%= true %>"
-				value="<%= dateFormatDateTime.format(entry.getCreateDate()) %>"
-			/>
+			>
+				<span title="<liferay-ui:message arguments="<%= dateFormatDateTime.format(entry.getCreateDate()) %>" key="deleted-x" />">
+					<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(pageContext, lastAgo, true) %>" key="x-ago" />
+				</span>
+			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
 				name="removed-by"
@@ -148,6 +157,18 @@ portletURL.setParameter("tabs1", tabs1);
 			/>
 		</liferay-ui:search-container-row>
 
+		<%
+		String emptyTrashLink = StringPool.BLANK;
+
+		if (total > 0) {
+			emptyTrashLink = "<a href='javascript:;' onClick='" +  renderResponse.getNamespace() + "emptyTrash();' >" + LanguageUtil.get(pageContext, "empty-the-recycle-bin") + "</a>";
+		}
+		%>
+
+		<div class="lfr-message-info">
+			<liferay-ui:message arguments="<%= new String[]{String.valueOf(TrashUtil.getMaxAge(group)), emptyTrashLink} %>" key="entries-that-have-been-in-recycle-bin-more-than-x-days-will-be-automatically-deleted-x" />
+		</div>
+
 		<aui:button-row>
 			<liferay-ui:search-form
 				page="/html/portlet/trash/entry_search.jsp"
@@ -157,9 +178,7 @@ portletURL.setParameter("tabs1", tabs1);
 				<aui:button name="deleteButton" onClick='<%= renderResponse.getNamespace() + "deleteEntries();" %>' value="delete" />
 
 				<aui:button name="restoreButton" onClick='<%= renderResponse.getNamespace() + "restoreEntries();" %>' value="restore" />
-
-				<aui:button name="emptyTrashButton" onClick='<%= renderResponse.getNamespace() + "emptyTrash();" %>' value="empty-the-recycle-bin" />
-			</c:if>
+		    </c:if>
 		</aui:button-row>
 
 		<div class="separator"><!-- --></div>

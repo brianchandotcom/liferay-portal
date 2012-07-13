@@ -21,19 +21,16 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PrefsPropsUtil;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashVersion;
 import com.liferay.portlet.trash.service.base.TrashEntryLocalServiceBaseImpl;
+import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -335,17 +332,10 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 		return trashVersionPersistence.findByC_C(classNameId, classPK);
 	}
 
-	protected Date getMaxAge(Group group) throws SystemException {
-		int trashEntriesMaxAge = PrefsPropsUtil.getInteger(
-			group.getCompanyId(), PropsKeys.TRASH_ENTRIES_MAX_AGE,
-			PropsValues.TRASH_ENTRIES_MAX_AGE);
+	protected Date getMaxAge(Group group)
+		throws PortalException, SystemException {
 
-		UnicodeProperties typeSettingsProperties =
-			group.getTypeSettingsProperties();
-
-		trashEntriesMaxAge = GetterUtil.getInteger(
-			typeSettingsProperties.getProperty("trashEntriesMaxAge"),
-			trashEntriesMaxAge);
+		int trashEntriesMaxAge = TrashUtil.getMaxAge(group);
 
 		Calendar calendar = Calendar.getInstance();
 

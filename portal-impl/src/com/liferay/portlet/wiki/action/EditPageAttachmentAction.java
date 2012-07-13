@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -43,7 +42,6 @@ import com.liferay.portlet.wiki.NoSuchNodeException;
 import com.liferay.portlet.wiki.NoSuchPageException;
 import com.liferay.portlet.wiki.service.WikiPageServiceUtil;
 
-import java.io.File;
 import java.io.InputStream;
 
 import java.util.ArrayList;
@@ -242,18 +240,17 @@ public class EditPageAttachmentAction extends EditFileEntryAction {
 		long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
 		String title = ParamUtil.getString(actionRequest, "title");
 
-		File file = null;
+		String tempFileName = TempFileUtil.getTempFileName(
+			themeDisplay.getUserId(), selectedFileName, _TEMP_FOLDER_NAME);
 
 		try {
-			file = TempFileUtil.getTempFile(
-				themeDisplay.getUserId(), selectedFileName, _TEMP_FOLDER_NAME);
+			InputStream inputStream = TempFileUtil.getTempFileAsStream(
+				tempFileName);
 
-			if ((file != null) && file.exists()) {
-				WikiPageServiceUtil.addPageAttachment(
-					nodeId, title, selectedFileName, file);
+			WikiPageServiceUtil.addPageAttachment(
+				nodeId, title, selectedFileName, inputStream);
 
-				validFileNames.add(selectedFileName);
-			}
+			validFileNames.add(selectedFileName);
 		}
 		catch (Exception e) {
 			String errorMessage = getAddMultipleFileEntriesErrorMessage(
@@ -265,7 +262,7 @@ public class EditPageAttachmentAction extends EditFileEntryAction {
 			invalidFileNameKVPs.add(invalidFileNameKVP);
 		}
 		finally {
-			FileUtil.delete(file);
+			TempFileUtil.deleteTempFile(tempFileName);
 		}
 	}
 

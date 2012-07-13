@@ -415,7 +415,8 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 
 	public void deleteTempPageAttachment(long userId,
 		java.lang.String fileName, java.lang.String tempFolderName)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		_wikiPageLocalService.deleteTempPageAttachment(userId, fileName,
 			tempFolderName);
 	}

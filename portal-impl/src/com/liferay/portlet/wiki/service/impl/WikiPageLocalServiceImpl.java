@@ -587,7 +587,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 	public void deleteTempPageAttachment(
 			long userId, String fileName, String tempFolderName)
-		throws PortalException {
+		throws PortalException, SystemException {
 
 		TempFileUtil.deleteTempFile(userId, fileName, tempFolderName);
 	}

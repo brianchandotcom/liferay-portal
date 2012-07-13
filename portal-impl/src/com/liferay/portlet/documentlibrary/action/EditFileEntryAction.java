@@ -358,20 +358,19 @@ public class EditFileEntryAction extends PortletAction {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long userId = themeDisplay.getUserId();
-
 		long repositoryId = ParamUtil.getLong(actionRequest, "repositoryId");
 		long folderId = ParamUtil.getLong(actionRequest, "folderId");
 		String contentType = MimeTypesUtil.getContentType(selectedFileName);
 		String description = ParamUtil.getString(actionRequest, "description");
 		String changeLog = ParamUtil.getString(actionRequest, "changeLog");
 
+		String tempFileName = TempFileUtil.getTempFileName(
+			themeDisplay.getUserId(), selectedFileName, _TEMP_FOLDER_NAME);
+
 		try {
 			InputStream inputStream = TempFileUtil.getTempFileAsStream(
-				userId, selectedFileName, _TEMP_FOLDER_NAME);
-
-			long size = TempFileUtil.getTempFileSize(
-				userId, selectedFileName, _TEMP_FOLDER_NAME);
+				tempFileName);
+			long size = TempFileUtil.getTempFileSize(tempFileName);
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				DLFileEntry.class.getName(), actionRequest);
@@ -400,8 +399,7 @@ public class EditFileEntryAction extends PortletAction {
 				new KeyValuePair(selectedFileName, errorMessage));
 		}
 		finally {
-			TempFileUtil.deleteTempFile(
-				userId, selectedFileName, _TEMP_FOLDER_NAME);
+			TempFileUtil.deleteTempFile(tempFileName);
 		}
 	}
 

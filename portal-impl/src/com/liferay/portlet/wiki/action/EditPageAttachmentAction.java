@@ -237,14 +237,15 @@ public class EditPageAttachmentAction extends EditFileEntryAction {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long userId = themeDisplay.getUserId();
-
 		long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
 		String title = ParamUtil.getString(actionRequest, "title");
 
+		String tempFileName = TempFileUtil.getTempFileName(
+			themeDisplay.getUserId(), selectedFileName, _TEMP_FOLDER_NAME);
+
 		try {
 			InputStream inputStream = TempFileUtil.getTempFileAsStream(
-				themeDisplay.getUserId(), selectedFileName, _TEMP_FOLDER_NAME);
+				tempFileName);
 
 			WikiPageServiceUtil.addPageAttachment(
 				nodeId, title, selectedFileName, inputStream);
@@ -261,8 +262,7 @@ public class EditPageAttachmentAction extends EditFileEntryAction {
 			invalidFileNameKVPs.add(invalidFileNameKVP);
 		}
 		finally {
-			TempFileUtil.deleteTempFile(
-				userId, selectedFileName, _TEMP_FOLDER_NAME);
+			TempFileUtil.deleteTempFile(tempFileName);
 		}
 	}
 

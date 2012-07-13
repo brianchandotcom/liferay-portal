@@ -96,6 +96,12 @@ public class TempFileUtil {
 
 		String tempFileName = getTempFileName(userId, fileName, tempPathName);
 
+		deleteTempFile(tempFileName);
+	}
+
+	public static void deleteTempFile(String tempFileName)
+		throws PortalException, SystemException {
+
 		DLStoreUtil.deleteFile(_COMPANY_ID, _REPOSITORY_ID, tempFileName);
 	}
 
@@ -105,18 +111,8 @@ public class TempFileUtil {
 		deleteTempFile(_USER_ID, fileName, tempPathName);
 	}
 
-	public static InputStream getTempFileAsStream(
-			String fileName, String tempPathName)
+	public static InputStream getTempFileAsStream(String tempFileName)
 		throws PortalException, SystemException {
-
-		return getTempFileAsStream(_USER_ID, fileName, tempPathName);
-	}
-
-	public static InputStream getTempFileAsStream(
-			long userId, String fileName, String tempPathName)
-		throws PortalException, SystemException {
-
-		String tempFileName = getTempFileName(userId, fileName, tempPathName);
 
 		return DLStoreUtil.getFileAsStream(
 			_COMPANY_ID, _REPOSITORY_ID, tempFileName);
@@ -154,24 +150,7 @@ public class TempFileUtil {
 		return getTempFileEntryNames(_USER_ID, tempPathName);
 	}
 
-	public static long getTempFileSize
-			(String fileName, String tempPathName)
-		throws PortalException, SystemException {
-
-		return getTempFileSize(_USER_ID, fileName, tempPathName);
-	}
-
-	public static long getTempFileSize
-			(long userId, String fileName, String tempPathName)
-		throws PortalException, SystemException {
-
-		String tempFileName = getTempFileName(userId, fileName, tempPathName);
-
-		return DLStoreUtil.getFileSize(
-			_COMPANY_ID, _REPOSITORY_ID, tempFileName);
-	}
-
-	protected static String getTempFileName(
+	public static String getTempFileName(
 			long userId, String fileName, String tempPathName)
 		throws PortalException {
 
@@ -184,6 +163,13 @@ public class TempFileUtil {
 		sb.append(_SUFFIX_TEMP_FILENAME);
 
 		return sb.toString();
+	}
+
+	public static long getTempFileSize(String tempFileName)
+		throws PortalException, SystemException {
+
+		return DLStoreUtil.getFileSize(
+			_COMPANY_ID, _REPOSITORY_ID, tempFileName);
 	}
 
 	protected static String getTempFolderName(
@@ -201,9 +187,8 @@ public class TempFileUtil {
 	}
 
 	protected static void validateFileName(String name) throws PortalException {
-		if ((name == null) ||
+		if ((name == null) || name.contains(StringPool.BACK_SLASH) ||
 			name.contains(StringPool.SLASH) ||
-			name.contains(StringPool.BACK_SLASH) ||
 			name.contains(File.pathSeparator)) {
 
 			throw new TempFileNameException();

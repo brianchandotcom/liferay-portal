@@ -106,12 +106,14 @@ import com.liferay.portlet.sites.util.SitesUtil;
 import java.io.File;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
+import java.util.Vector;
 
 import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
@@ -334,24 +336,13 @@ public class ServicePreAction extends Action {
 				// Get locale from the request
 
 				if ((locale == null) && PropsValues.LOCALE_DEFAULT_REQUEST) {
-					locale = request.getLocale();
+					locale = getLocale(request.getLocales(), false);
 				}
 
 				// Get locale from the default user
 
 				if (locale == null) {
-					locale = user.getLocale();
-				}
-
-				if (Validator.isNull(locale.getCountry())) {
-
-					// Locales must contain a country code
-
-					locale = LanguageUtil.getLocale(locale.getLanguage());
-				}
-
-				if (!LanguageUtil.isAvailableLocale(locale)) {
-					locale = user.getLocale();
+					locale = getLocale(user.getLocale(), true);
 				}
 			}
 
@@ -1616,6 +1607,42 @@ public class ServicePreAction extends Action {
 		friendlyURL = GetterUtil.getString(friendlyURL);
 
 		return FriendlyURLNormalizerUtil.normalize(friendlyURL);
+	}
+
+	protected Locale getLocale(
+		Enumeration<Locale> locales, boolean returnLastLocale) {
+
+		Locale locale = null;
+
+		while (locales.hasMoreElements()) {
+			locale = locales.nextElement();
+
+			if (Validator.isNull(locale.getCountry())) {
+
+				// Locales must contain a country code
+
+				locale = LanguageUtil.getLocale(locale.getLanguage());
+			}
+
+			if (LanguageUtil.isAvailableLocale(locale)) {
+				return locale;
+			}
+		}
+
+		if (returnLastLocale) {
+			return locale;
+		}
+		else {
+			return null;
+		}
+	}
+
+	protected Locale getLocale(Locale locale, boolean returnLastLocale) {
+		Vector<Locale> locales = new Vector<Locale>();
+
+		locales.add(locale);
+
+		return getLocale(locales.elements(), returnLastLocale);
 	}
 
 	protected Object[] getViewableLayouts(

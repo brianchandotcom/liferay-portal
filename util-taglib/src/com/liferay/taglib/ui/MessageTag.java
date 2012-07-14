@@ -16,9 +16,12 @@ package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.language.UnicodeLanguageUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.WebKeys;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
@@ -33,11 +36,17 @@ public class MessageTag extends TagSupport {
 		try {
 			String value = StringPool.BLANK;
 
+			HttpServletRequest request =
+				(HttpServletRequest)pageContext.getRequest();
+
+			boolean unicode = GetterUtil.getBoolean(
+				request.getAttribute(WebKeys.JS_CONTEXT));
+
 			if (_arguments == null) {
 				if (!_localizeKey) {
 					value = _key;
 				}
-				else if (_unicode) {
+				else if (unicode) {
 					value = UnicodeLanguageUtil.get(pageContext, _key);
 				}
 				else {
@@ -45,7 +54,7 @@ public class MessageTag extends TagSupport {
 				}
 			}
 			else {
-				if (_unicode) {
+				if (unicode) {
 					value = UnicodeLanguageUtil.format(
 						pageContext, _key, _arguments, _translateArguments);
 				}
@@ -70,7 +79,6 @@ public class MessageTag extends TagSupport {
 				_key = null;
 				_localizeKey = true;
 				_translateArguments = true;
-				_unicode = false;
 			}
 		}
 	}
@@ -95,14 +103,9 @@ public class MessageTag extends TagSupport {
 		_translateArguments = translateArguments;
 	}
 
-	public void setUnicode(boolean unicode) {
-		_unicode = unicode;
-	}
-
 	private Object[] _arguments;
 	private String _key;
 	private boolean _localizeKey = true;
 	private boolean _translateArguments = true;
-	private boolean _unicode;
 
 }

@@ -2,10 +2,10 @@
 
 #set ($assetLinkBehaviour = $preferences.getValue("assetLinkBehavior", ''))
 
-#foreach ($assetEntry in $assetEntries)
-	#set ($assetRenderer = $assetEntry.getAssetRenderer())
+#foreach ($entry in $entries)
+	#set ($assetRenderer = $entry.getAssetRenderer())
 
-	#set ($viewURL = $assetPublisherHelper.getAssetViewURL($renderRequest, $renderResponse, $assetEntry))
+	#set ($viewURL = $assetPublisherHelper.getAssetViewURL($renderRequest, $renderResponse, $entry))
 
 	#if ($assetLinkBehaviour != 'showFullContent')
 		#set ($viewURL = $assetRenderer.getURLViewInContext($renderRequest, $renderResponse, $viewURL))
@@ -17,13 +17,13 @@
 				<a class="taglib-icon" href="$assetRenderer.getURLEdit($renderRequest, $renderResponse)">
 					<img alt="#language("edit")" class="icon" src="$themeDisplay.getPathThemeImages()/common/edit.png" />
 
-					<span class="taglib-text">#language("edit") <span class="aui-helper-hidden-accessible">$assetEntry.getTitle($locale)</span></span>
+					<span class="taglib-text">#language("edit") <span class="aui-helper-hidden-accessible">$entry.getTitle($locale)</span></span>
 				</a>
 			</span>
 		</div>
 
 		<h3 class="asset-title">
-			<a href="$viewURL"><img alt="" src="$assetRenderer.getIconPath($renderRequest)" /> $assetEntry.getTitle($locale)</a>
+			<a href="$viewURL"><img alt="" src="$assetRenderer.getIconPath($renderRequest)" /> $entry.getTitle($locale)</a>
 		</h3>
 
 		<div class="asset-content">
@@ -32,7 +32,7 @@
 			</div>
 
 			<div class="asset-more">
-				<a href="$viewURL">#language("read-more") <span class="aui-helper-hidden-accessible">#language("about") $assetEntry.getTitle($locale)</span> &raquo; </a>
+				<a href="$viewURL">#language("read-more") <span class="aui-helper-hidden-accessible">#language("about") $entry.getTitle($locale)</span> &raquo; </a>
 			</div>
 		</div>
 	</div>

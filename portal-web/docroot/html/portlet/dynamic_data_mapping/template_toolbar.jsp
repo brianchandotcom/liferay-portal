@@ -147,7 +147,7 @@ public List<PortletDisplayTemplateHandler> getPortletDisplayTemplateHandlers(Per
 	List<PortletDisplayTemplateHandler> allowedPortletDisplayTemplateHandlers = new ArrayList<PortletDisplayTemplateHandler>();
 
 	for (PortletDisplayTemplateHandler portletDisplayTemplateHandler : portletDisplayTemplateHandlers) {
-		if (DDMPermission.contains(permissionChecker, scopeGroupId, portletDisplayTemplateHandler.getResourceName(), ActionKeys.ADD_TEMPLATE)) {
+		if (DDMPermission.contains(permissionChecker, scopeGroupId, portletDisplayTemplateHandler.getResourceName(), ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE)) {
 			allowedPortletDisplayTemplateHandlers.add(portletDisplayTemplateHandler);
 		}
 	}

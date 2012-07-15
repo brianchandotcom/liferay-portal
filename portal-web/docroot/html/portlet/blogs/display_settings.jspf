@@ -14,6 +14,12 @@
  */
 --%>
 
+<%
+PortletDisplayTemplateHandler portletDisplayDDMTemplateHandler = PortletDisplayTemplateHandlerRegistryUtil.getPortletDisplayTemplateHandler(BlogsEntry.class.getName());
+
+long portletDisplayDDMTemplateClassNameId = PortalUtil.getClassNameId(portletDisplayDDMTemplateHandler.getClassName());
+%>
+
 <div class="portlet-msg-info">
 	<liferay-ui:message key="set-the-display-styles-used-to-display-blogs-when-viewed-via-as-a-regular-page-or-as-an-rss" />
 </div>

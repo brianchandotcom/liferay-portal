@@ -80,6 +80,13 @@ public class SocialActivityCounterFinderImpl
 
 			qPos.add(groupId);
 			qPos.add(PortalUtil.getClassNameId(User.class.getName()));
+
+			if ((names != null) && (names.length > 0)){
+				for(String name : names){
+					qPos.add(name);
+				}
+			}
+
 			qPos.add(SocialCounterPeriodUtil.getPeriodLength());
 			qPos.add(SocialCounterPeriodUtil.getActivityDay());
 
@@ -327,7 +334,7 @@ public class SocialActivityCounterFinderImpl
 		StringBundler sb = new StringBundler(names.length * 2 - 1);
 
 		for (int i = 0; i < names.length; i++) {
-			sb.append(StringUtil.quote(names[i], StringPool.APOSTROPHE));
+			sb.append(StringPool.QUESTION);
 
 			if ((i + 1) < names.length) {
 				sb.append(StringPool.COMMA);

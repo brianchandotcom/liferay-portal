@@ -517,6 +517,18 @@ public class PortalUtil {
 			group, privateLayoutSet, themeDisplay);
 	}
 
+	public static long[] getGroupIds(long groupId)
+		throws PortalException, SystemException {
+
+		return getPortal().getGroupIds(groupId);
+	}
+
+	public static long[] getGroupIds(ThemeDisplay themeDisplay)
+		throws PortalException, SystemException {
+
+		return getPortal().getGroupIds(themeDisplay);
+	}
+
 	public static String[] getGroupPermissions(HttpServletRequest request) {
 		return getPortal().getGroupPermissions(request);
 	}

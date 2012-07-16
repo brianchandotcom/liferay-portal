@@ -417,7 +417,7 @@
 
 	.lfr-header-row {
 		.display-style .aui-icon {
-			background-image: url(@theme_image_path@/document_library/layouts.png);
+			background-image: url(@theme_image_path@/application/layouts.png);
 			background-repeat: no-repeat;
 		}
 

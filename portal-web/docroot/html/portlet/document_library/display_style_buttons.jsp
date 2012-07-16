@@ -33,7 +33,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 %>
 
 <c:if test="<%= displayViews.length > 1 %>">
-	<aui:script use="aui-dialog,aui-dialog-iframe">
+	<aui:script use="aui-base,aui-toolbar">
 		var buttonRow = A.one('#<portlet:namespace />displayStyleToolbar');
 
 		function onButtonClick(displayStyle) {
@@ -45,6 +45,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 				'<portlet:namespace />viewEntries': <%= Boolean.FALSE.toString() %>,
 				'<portlet:namespace />viewEntriesPage': <%= Boolean.TRUE.toString() %>,
 				'<portlet:namespace />viewFolders': <%= Boolean.FALSE.toString() %>,
+				'<portlet:namespace />searchType': <%= DLSearchConstants.FRAGMENT %>,
 				'<portlet:namespace />saveDisplayStyle': <%= Boolean.TRUE.toString() %>
 			};
 
@@ -53,6 +54,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 			}
 			else {
 				config['<portlet:namespace />keywords'] = '<%= HtmlUtil.escapeJS(keywords) %>';
+				config['<portlet:namespace />searchFolderId'] = '<%= folderId %>';
 			}
 
 			if (<%= fileEntryTypeId != -1 %>) {

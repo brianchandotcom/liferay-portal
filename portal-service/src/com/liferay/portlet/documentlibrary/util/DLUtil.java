@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -360,30 +359,6 @@ public class DLUtil {
 
 	public static String getGenericName(String extension) {
 		return _instance._getGenericName(extension);
-	}
-
-	public static long[] getGroupIds(long groupId)
-		throws PortalException, SystemException {
-
-		Group scopeGroup = GroupLocalServiceUtil.getGroup(groupId);
-
-		Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
-			scopeGroup.getCompanyId());
-
-		if (scopeGroup.isLayout()) {
-			return new long[] {
-				scopeGroup.getParentGroupId(), companyGroup.getGroupId()
-			};
-		}
-		else {
-			return new long[] {groupId, companyGroup.getGroupId()};
-		}
-	}
-
-	public static long[] getGroupIds(ThemeDisplay themeDisplay)
-		throws PortalException, SystemException {
-
-		return getGroupIds(themeDisplay.getScopeGroupId());
 	}
 
 	public static String[] getMediaGalleryMimeTypes(

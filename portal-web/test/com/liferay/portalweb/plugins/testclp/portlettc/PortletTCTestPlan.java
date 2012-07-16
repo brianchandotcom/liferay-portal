@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portalweb.plugins.testclp.portlet;
+package com.liferay.portalweb.plugins.testclp.portlettc;
 
-import com.liferay.portalweb.plugins.testclp.portlet.addportlet.AddPortletTests;
-import com.liferay.portalweb.plugins.testclp.portlet.addportletduplicate.AddPortletDuplicateTests;
-import com.liferay.portalweb.plugins.testclp.portlet.removeportlet.RemovePortletTests;
+import com.liferay.portalweb.plugins.testclp.portlettc.addportlettc.AddPortletTCTests;
+import com.liferay.portalweb.plugins.testclp.portlettc.addportlettcduplicate.AddPortletTCDuplicateTests;
+import com.liferay.portalweb.plugins.testclp.portlettc.removeportlettc.RemovePortletTCTests;
 import com.liferay.portalweb.portal.BaseTestSuite;
 
 import junit.framework.Test;
@@ -25,16 +25,15 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class PortletTestPlan extends BaseTestSuite {
+public class PortletTCTestPlan extends BaseTestSuite {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(AddPortletTests.suite());
-		testSuite.addTest(AddPortletDuplicateTests.suite());
-		testSuite.addTest(RemovePortletTests.suite());
+		testSuite.addTest(AddPortletTCTests.suite());
+		testSuite.addTest(AddPortletTCDuplicateTests.suite());
+		testSuite.addTest(RemovePortletTCTests.suite());
 
 		return testSuite;
 	}
-
 }

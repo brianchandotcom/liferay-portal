@@ -14,6 +14,8 @@
 
 package com.liferay.portalweb.plugins.testclp.settings.savesettingsstatusmessage;
 
+import com.liferay.portalweb.plugins.testclp.portlettc.addportlettc.AddPageTCTest;
+import com.liferay.portalweb.plugins.testclp.portlettc.addportlettc.AddPortletTCTest;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 
@@ -26,8 +28,8 @@ import junit.framework.TestSuite;
 public class SaveSettingsStatusMessageTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(AddPageTest.class);
-		testSuite.addTestSuite(AddPortletTest.class);
+		testSuite.addTestSuite(AddPageTCTest.class);
+		testSuite.addTestSuite(AddPortletTCTest.class);
 		testSuite.addTestSuite(SaveSettingsStatusMessageTest.class);
 		testSuite.addTestSuite(TearDownSettingsTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);

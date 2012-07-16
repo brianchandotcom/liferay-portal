@@ -36,4 +36,5 @@ public class PortletTCTestPlan extends BaseTestSuite {
 
 		return testSuite;
 	}
+
 }

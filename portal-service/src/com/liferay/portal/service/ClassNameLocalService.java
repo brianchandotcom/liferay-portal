@@ -244,6 +244,17 @@ public interface ClassNameLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.ClassName fetchClassName(
+		java.lang.String value)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long fetchClassNameId(java.lang.Class<?> clazz);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long fetchClassNameId(java.lang.String value);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.ClassName getClassName(
 		java.lang.String value)
 		throws com.liferay.portal.kernel.exception.SystemException;

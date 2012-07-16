@@ -266,6 +266,20 @@ public class ClassNameLocalServiceWrapper implements ClassNameLocalService,
 		_classNameLocalService.checkClassNames();
 	}
 
+	public com.liferay.portal.model.ClassName fetchClassName(
+		java.lang.String value)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _classNameLocalService.fetchClassName(value);
+	}
+
+	public long fetchClassNameId(java.lang.Class<?> clazz) {
+		return _classNameLocalService.fetchClassNameId(clazz);
+	}
+
+	public long fetchClassNameId(java.lang.String value) {
+		return _classNameLocalService.fetchClassNameId(value);
+	}
+
 	public com.liferay.portal.model.ClassName getClassName(
 		java.lang.String value)
 		throws com.liferay.portal.kernel.exception.SystemException {

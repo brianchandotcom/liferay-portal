@@ -31,15 +31,15 @@ public class ClassNameServiceImpl extends ClassNameServiceBaseImpl {
 	}
 
 	public ClassName getClassName(String value) throws SystemException {
-		return classNameLocalService.getClassName(value);
+		return classNameLocalService.fetchClassName(value);
 	}
 
 	public long getClassNameId(Class<?> clazz) {
-		return classNameLocalService.getClassNameId(clazz);
+		return classNameLocalService.fetchClassNameId(clazz);
 	}
 
 	public long getClassNameId(String value) {
-		return classNameLocalService.getClassNameId(value);
+		return classNameLocalService.fetchClassNameId(value);
 	}
 
 }

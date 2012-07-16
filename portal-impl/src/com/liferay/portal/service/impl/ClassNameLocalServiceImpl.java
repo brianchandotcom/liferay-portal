@@ -75,6 +75,54 @@ public class ClassNameLocalServiceImpl
 	}
 
 	@Skip
+	public ClassName fetchClassName(String value) throws SystemException {
+		if (Validator.isNull(value)) {
+			return _nullClassName;
+		}
+
+		// Always cache the class name. This table exists to improve
+		// performance.
+
+		ClassName className = _classNames.get(value);
+
+		if (className == null) {
+			try {
+				className = classNamePersistence.fetchByValue(value);
+
+				if (className == null) {
+					return _nullClassName;
+				}
+			}
+			catch (SystemException e) {
+				throw new RuntimeException(
+					"Unable to get class name from value " + value, e);
+			}
+
+			_classNames.put(value, className);
+		}
+
+		return className;
+	}
+
+	@Skip
+	public long fetchClassNameId(Class<?> clazz) {
+		return fetchClassNameId(clazz.getName());
+	}
+
+	@Skip
+	public long fetchClassNameId(String value) {
+		try {
+			ClassName className = fetchClassName(value);
+
+			return className.getClassNameId();
+		}
+		catch (SystemException e) {
+			throw new RuntimeException(
+				"Unable to get class name from value " + value, e);
+		}
+	}
+
+	@Skip
 	public ClassName getClassName(String value) throws SystemException {
 		if (Validator.isNull(value)) {
 			return _nullClassName;

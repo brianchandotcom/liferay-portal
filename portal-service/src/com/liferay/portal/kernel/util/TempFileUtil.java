@@ -17,6 +17,8 @@ package com.liferay.portal.kernel.util;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.ByteArrayFileInputStream;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 
 import java.io.File;
@@ -139,6 +141,7 @@ public class TempFileUtil {
 			return fileNames;
 		}
 		catch (Exception e) {
+			_log.error(e);
 			return new String[0];
 		}
 	}
@@ -170,7 +173,9 @@ public class TempFileUtil {
 	}
 
 	protected static String getTempFolderName(
-		long userId, String tempPathName) {
+		long userId, String tempPathName) throws PortalException {
+
+		validatePathName(tempPathName);
 
 		StringBundler sb = new StringBundler(5);
 
@@ -186,9 +191,46 @@ public class TempFileUtil {
 	protected static void validateFileName(String name) throws PortalException {
 		if ((name == null) || name.contains(StringPool.BACK_SLASH) ||
 			name.contains(StringPool.SLASH) ||
-			name.contains(File.pathSeparator)) {
+			name.contains(File.pathSeparator) ||
+			(name.indexOf(_NULL_CHAR) > -1)) {
 
 			throw new TempFileNameException();
+		}
+	}
+
+	protected static void validatePathName(String pathName)
+		throws PortalException {
+
+		if (pathName == null) {
+			return;
+		}
+
+		if (pathName.indexOf(_NULL_CHAR) > -1) {
+			throw new TempFileNameException();
+		}
+
+		int pos = pathName.indexOf(StringPool.DOUBLE_PERIOD);
+		if (pos > -1) {
+			if (pathName.length() == 2) {
+				throw new TempFileNameException();
+			}
+
+			char slash = StringPool.SLASH.charAt(0);
+			char backSlash = StringPool.BACK_SLASH.charAt(0);
+
+			if (pos > 0) {
+				char charChecking = pathName.charAt(pos - 1);
+				if ((charChecking == slash) || (charChecking == backSlash)) {
+					throw new TempFileNameException();
+				}
+			}
+
+			if ((pos + 2) < pathName.length()) {
+				char charChecking = pathName.charAt(pos + 2);
+				if ((charChecking == slash) || (charChecking == backSlash)) {
+					throw new TempFileNameException();
+				}
+			}
 		}
 	}
 
@@ -196,10 +238,14 @@ public class TempFileUtil {
 
 	private static final long _COMPANY_ID = 0;
 
+	private static final char _NULL_CHAR = 0;
+
 	private static final long _REPOSITORY_ID = 0;
 
 	private static final String _SUFFIX_TEMP_FILENAME = "_temp.tmp";
 
 	private static final long _USER_ID = 0;
+
+	private static Log _log = LogFactoryUtil.getLog(TempFileUtil.class);
 
 }

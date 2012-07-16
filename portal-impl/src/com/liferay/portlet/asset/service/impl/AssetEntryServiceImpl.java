@@ -236,11 +236,23 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 			ThreadLocalCacheManager.getThreadLocalCache(
 				Lifecycle.REQUEST, AssetEntryServiceImpl.class.getName());
 
-		String key = entryQuery.toString();
+		String key = entryQuery.toString().concat(StringPool.POUND).concat(
+			Boolean.toString(returnEntryCountOnly));
 
 		Object[] results = threadLocalCache.get(key);
 
 		if (results != null) {
+			return results;
+		}
+
+		if (returnEntryCountOnly && !entryQuery.isEnablePermissions()) {
+			int entriesCount = assetEntryLocalService.getEntriesCount(
+				entryQuery);
+
+			results = new Object[] {null, entriesCount};
+
+			threadLocalCache.put(key, results);
+
 			return results;
 		}
 
@@ -252,11 +264,8 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 			entryQuery.setStart(0);
 		}
 
-		List<AssetEntry> entries = null;
-
-		if (!returnEntryCountOnly || entryQuery.isEnablePermissions()) {
-			entries = assetEntryLocalService.getEntries(entryQuery);
-		}
+		List<AssetEntry> entries = assetEntryLocalService.getEntries(
+			entryQuery);
 
 		List<AssetEntry> filteredEntries = null;
 		int filteredEntriesCount = 0;
@@ -310,14 +319,7 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 		}
 		else {
 			filteredEntries = entries;
-
-			if (filteredEntries != null) {
-				filteredEntriesCount = filteredEntries.size();
-			}
-			else {
-				filteredEntriesCount = assetEntryLocalService.getEntriesCount(
-										entryQuery);
-			}
+			filteredEntriesCount = filteredEntries.size();
 		}
 
 		results = new Object[] {filteredEntries, filteredEntriesCount};

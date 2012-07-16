@@ -66,4 +66,8 @@ public interface AssetCategoryFinder {
 		long groupId, java.lang.String name,
 		java.lang.String[] categoryProperties, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<java.lang.Long> getTreeCategoryIds(
+		java.lang.Long parentCategoryId)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

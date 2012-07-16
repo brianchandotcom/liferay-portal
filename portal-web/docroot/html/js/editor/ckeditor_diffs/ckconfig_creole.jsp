@@ -31,6 +31,8 @@ if (wikiPageResourcePrimKey > 0) {
 }
 %>
 
+CKEDITOR.config.disableObjectResizing=true;
+
 CKEDITOR.config.height = 265;
 
 CKEDITOR.config.removePlugins = [

@@ -73,6 +73,14 @@ String defaultMessage = (String)request.getAttribute("liferay-ui:toggle:defaultM
 				if ((saveState == null) || saveState) {
 					Liferay.Store('<%= id %>', 'none');
 				}
+
+				Liferay.fire(
+					'toggle:stateChange',
+					{
+						id: '<%= id %>',
+						state: 0
+					}
+				);
 			}
 			else {
 				<%= stateVar %> = "";
@@ -91,6 +99,14 @@ String defaultMessage = (String)request.getAttribute("liferay-ui:toggle:defaultM
 				if ((saveState == null) || saveState) {
 					Liferay.Store('<%= id %>', 'block');
 				}
+
+				Liferay.fire(
+					'toggle:stateChange',
+					{
+						id: '<%= id %>',
+						state: 1
+					}
+				);
 			}
 		},
 		['liferay-store']

@@ -12,8 +12,10 @@
  * details.
  */
 
-package com.liferay.portalweb.plugins.testclp.portlet.addportletduplicate;
+package com.liferay.portalweb.plugins.testclp.portlettc.removeportlettc;
 
+import com.liferay.portalweb.plugins.testclp.portlettc.addportlettc.AddPageTCTest;
+import com.liferay.portalweb.plugins.testclp.portlettc.addportlettc.AddPortletTCTest;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 
@@ -23,12 +25,12 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddPortletDuplicateTests extends BaseTestSuite {
+public class RemovePortletTCTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(AddPageTest.class);
-		testSuite.addTestSuite(AddPortletTest.class);
-		testSuite.addTestSuite(AddPortletDuplicateTest.class);
+		testSuite.addTestSuite(AddPageTCTest.class);
+		testSuite.addTestSuite(AddPortletTCTest.class);
+		testSuite.addTestSuite(RemovePortletTCTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

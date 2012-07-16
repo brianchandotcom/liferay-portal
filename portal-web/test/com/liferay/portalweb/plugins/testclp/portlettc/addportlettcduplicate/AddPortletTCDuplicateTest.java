@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.plugins.testdependency;
+package com.liferay.portalweb.plugins.testclp.portlettc.addportlettcduplicate;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,12 +20,12 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddPortletAbleTest extends BaseTestCase {
-	public void testAddPortletAble() throws Exception {
+public class AddPortletTCDuplicateTest extends BaseTestCase {
+	public void testAddPortletTCDuplicate() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
-		selenium.click(RuntimeVariables.replace(
-				"link=Sample Test Dependency Page"));
+		selenium.clickAt("link=Test CLP Test Page",
+			RuntimeVariables.replace("Test CLP Test Page"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div[@id='dockbar']",
@@ -120,8 +120,7 @@ public class AddPortletAbleTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible(
-							"//div[@title='Test Dependency Able']/p/a")) {
+				if (selenium.isVisible("//div[@title='Test CLP']")) {
 					break;
 				}
 			}
@@ -131,25 +130,6 @@ public class AddPortletAbleTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("//div[@title='Test Dependency Able']/p/a",
-			RuntimeVariables.replace("Add"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//section")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		assertTrue(selenium.isVisible("//section"));
+		assertFalse(selenium.isVisible("//div[@title='Test CLP']/p/a"));
 	}
 }

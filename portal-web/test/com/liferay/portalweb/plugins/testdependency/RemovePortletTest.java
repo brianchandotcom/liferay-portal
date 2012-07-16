@@ -24,6 +24,10 @@ public class RemovePortletTest extends BaseTestCase {
 	public void testRemovePortlet() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
+		selenium.click(RuntimeVariables.replace(
+				"link=Sample Test Dependency Page"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -31,7 +35,7 @@ public class RemovePortletTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Sample Test Dependency Page")) {
+				if (selenium.isVisible("//img[@alt='Remove']")) {
 					break;
 				}
 			}
@@ -41,13 +45,24 @@ public class RemovePortletTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.click(RuntimeVariables.replace(
-				"link=Sample Test Dependency Page"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.click("//img[@alt='Remove']");
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to remove this component[\\s\\S]$"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if ("Are you sure you want to remove this component?".equals(
+							selenium.getConfirmation())) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

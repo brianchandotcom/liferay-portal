@@ -14,7 +14,7 @@
 
 package com.liferay.portalweb.plugins.testclp;
 
-import com.liferay.portalweb.plugins.testclp.portlet.PortletTestPlan;
+import com.liferay.portalweb.plugins.testclp.portlettc.PortletTCTestPlan;
 import com.liferay.portalweb.plugins.testclp.settings.SettingsTestPlan;
 import com.liferay.portalweb.portal.BaseTestSuite;
 
@@ -29,7 +29,7 @@ public class TestCLPTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(PortletTestPlan.suite());
+		testSuite.addTest(PortletTCTestPlan.suite());
 		testSuite.addTest(SettingsTestPlan.suite());
 
 		return testSuite;

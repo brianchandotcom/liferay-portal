@@ -22,6 +22,13 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("struts_action", "/blogs_admin/view");
 %>
 
+<portlet:actionURL var="undoTrashURL">
+	<portlet:param name="struts_action" value="/blogs/edit_entry" />
+	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
+</portlet:actionURL>
+
+<liferay-ui:trash-undo portletURL="<%= undoTrashURL %>" />
+
 <liferay-portlet:renderURL varImpl="searchURL">
 	<portlet:param name="struts_action" value="/blogs_admin/search" />
 </liferay-portlet:renderURL>
@@ -90,7 +97,7 @@ portletURL.setParameter("struts_action", "/blogs_admin/view");
 		window,
 		'<portlet:namespace />deleteEntries',
 		function() {
-			if (confirm('<%= UnicodeLanguageUtil.get(pageContext, TrashUtil.isTrashEnabled(themeDisplay.getScopeGroupId()) ? "are-you-sure-you-want-to-move-the-selected-entries-to-the-recycle-bin" : "are-you-sure-you-want-to-delete-the-selected-entries") %>')) {
+			if (<%= TrashUtil.isTrashEnabled(themeDisplay.getScopeGroupId()) %> || confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-the-selected-entries") %>')) {
 				document.<portlet:namespace />fm.method = "post";
 				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= TrashUtil.isTrashEnabled(themeDisplay.getScopeGroupId()) ? Constants.MOVE_TO_TRASH :Constants.DELETE %>";
 				document.<portlet:namespace />fm.<portlet:namespace />deleteEntryIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds");

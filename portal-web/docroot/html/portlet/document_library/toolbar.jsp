@@ -85,7 +85,7 @@ Folder folder = (Folder)request.getAttribute("view.jsp-folder");
 			%>
 
 			<liferay-ui:icon-delete
-				confirmation='<%= TrashUtil.isTrashEnabled(themeDisplay.getScopeGroupId()) ? "are-you-sure-you-want-to-move-the-selected-entries-to-the-recycle-bin" : "are-you-sure-you-want-to-delete-the-selected-entries" %>'
+				confirmation="are-you-sure-you-want-to-delete-the-selected-entries"
 				trash="<%= TrashUtil.isTrashEnabled(themeDisplay.getScopeGroupId()) %>"
 				url="<%= taglibURL %>"
 			/>

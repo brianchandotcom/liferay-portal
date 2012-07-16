@@ -73,29 +73,34 @@ public class IconDeleteTag extends IconTag {
 			url = "submitForm(document.hrefFm, '".concat(url).concat("');");
 		}
 
-		StringBundler sb = new StringBundler(5);
+		if (!_trash) {
+			StringBundler sb = new StringBundler(5);
 
-		sb.append("javascript:if (confirm('");
+			sb.append("javascript:if (confirm('");
 
-		if (Validator.isNotNull(_confirmation)) {
-			sb.append(UnicodeLanguageUtil.get(pageContext, _confirmation));
-		}
-		else {
-			String confirmation = "are-you-sure-you-want-to-delete-this";
+			if (Validator.isNotNull(_confirmation)) {
+				sb.append(UnicodeLanguageUtil.get(pageContext, _confirmation));
+			}
+			else {
+				String confirmation = "are-you-sure-you-want-to-delete-this";
 
-			if (_trash) {
-				confirmation =
-					"are-you-sure-you-want-to-move-this-to-the-recycle-bin";
+				if (_trash) {
+					confirmation =
+						"are-you-sure-you-want-to-move-this-to-the-recycle-bin";
+				}
+
+				sb.append(UnicodeLanguageUtil.get(pageContext, confirmation));
 			}
 
-			sb.append(UnicodeLanguageUtil.get(pageContext, confirmation));
+			sb.append("')) { ");
+			sb.append(url);
+			sb.append(" } else { self.focus(); }");
+
+			url = sb.toString();
 		}
-
-		sb.append("')) { ");
-		sb.append(url);
-		sb.append(" } else { self.focus(); }");
-
-		url = sb.toString();
+		else {
+			url = "javascript: ".concat(url);
+		}
 
 		setUrl(url);
 

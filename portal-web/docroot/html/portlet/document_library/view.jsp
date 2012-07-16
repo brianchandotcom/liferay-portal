@@ -73,6 +73,13 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 %>
 
+<portlet:actionURL var="undoTrashURL">
+	<portlet:param name="struts_action" value="/document_library/edit_entry" />
+	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
+</portlet:actionURL>
+
+<liferay-ui:trash-undo portletURL="<%= undoTrashURL %>" />
+
 <div id="<portlet:namespace />documentLibraryContainer">
 	<aui:layout cssClass="lfr-app-column-view">
 		<aui:column columnWidth="<%= 20 %>" cssClass="navigation-pane" first="<%= true %>">
@@ -200,7 +207,8 @@ if (folder != null) {
 		{
 			actions: {
 				DELETE: '<%= Constants.DELETE %>',
-				MOVE: '<%= Constants.MOVE %>'
+				MOVE: '<%= Constants.MOVE %>',
+				MOVE_TO_TRASH: '<%= Constants.MOVE_TO_TRASH %>'
 			},
 			allRowIds: '<%= RowChecker.ALL_ROW_IDS %>',
 			defaultParams: {
@@ -230,6 +238,7 @@ if (folder != null) {
 			},
 			mainUrl: '<%= mainURL %>',
 			moveEntryRenderUrl: '<portlet:renderURL><portlet:param name="struts_action" value="/document_library/move_entry" /></portlet:renderURL>',
+			moveToTrashUrl: '<portlet:actionURL><portlet:param name="struts_action" value="/document_library/edit_entry" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.MOVE_TO_TRASH %>" /></portlet:actionURL>',
 			namespace: '<portlet:namespace />',
 			portletId: '<%= portletId %>',
 			repositories: [

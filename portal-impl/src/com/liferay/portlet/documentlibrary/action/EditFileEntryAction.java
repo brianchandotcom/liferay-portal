@@ -20,11 +20,13 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
@@ -72,7 +74,9 @@ import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -97,6 +101,7 @@ import org.apache.struts.action.ActionMapping;
  * @author Alexander Chow
  * @author Sergio González
  * @author Manuel de la Peña
+ * @author Levente Hudák
  */
 public class EditFileEntryAction extends PortletAction {
 
@@ -135,7 +140,8 @@ public class EditFileEntryAction extends PortletAction {
 				addTempFileEntry(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteFileEntries(actionRequest, false);
+				deleteFileEntries(
+					actionRequest, (LiferayPortletConfig)portletConfig, false);
 			}
 			else if (cmd.equals(Constants.DELETE_TEMP)) {
 				deleteTempFileEntry(actionRequest, actionResponse);
@@ -156,7 +162,8 @@ public class EditFileEntryAction extends PortletAction {
 				moveFileEntries(actionRequest, true);
 			}
 			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
-				deleteFileEntries(actionRequest, true);
+				deleteFileEntries(
+					actionRequest, (LiferayPortletConfig)portletConfig, true);
 			}
 			else if (cmd.equals(Constants.REVERT)) {
 				revertFileEntry(actionRequest);
@@ -493,18 +500,19 @@ public class EditFileEntryAction extends PortletAction {
 	}
 
 	protected void deleteFileEntries(
-			ActionRequest actionRequest, boolean moveToTrash)
+			ActionRequest actionRequest, LiferayPortletConfig portletConfig,
+			boolean moveToTrash)
 		throws Exception {
 
 		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
 		String version = ParamUtil.getString(actionRequest, "version");
 
+		long[] deleteFileEntryIds = null;
+
 		if ((fileEntryId > 0) && Validator.isNotNull(version)) {
 			DLAppServiceUtil.deleteFileVersion(fileEntryId, version);
 		}
 		else {
-			long[] deleteFileEntryIds = null;
-
 			if (fileEntryId > 0) {
 				deleteFileEntryIds = new long[] {fileEntryId};
 			}
@@ -522,6 +530,22 @@ public class EditFileEntryAction extends PortletAction {
 					DLAppServiceUtil.deleteFileEntry(deleteFileEntryId);
 				}
 			}
+		}
+
+		if (moveToTrash && Validator.isNotNull(deleteFileEntryIds)) {
+			Map<String, long[]> data = new HashMap<String, long[]>();
+
+			data.put("restoreFileEntryIds", deleteFileEntryIds);
+
+			SessionMessages.add(
+				actionRequest,
+				portletConfig.getPortletId() +
+					SessionMessages.KEY_SUFFIX_DELETE_SUCCESS, data);
+
+			SessionMessages.add(
+				actionRequest,
+				portletConfig.getPortletName() +
+					SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE);
 		}
 	}
 

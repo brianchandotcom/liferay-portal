@@ -341,11 +341,11 @@ public class ServicePreAction extends Action {
 						Locale requestLocale = locales.nextElement();
 
 						if (Validator.isNull(requestLocale.getCountry())) {
-							String requestLanguageCode =
-								requestLocale.getLanguage();
+
+							// Locales must contain a country code
 
 							requestLocale = LanguageUtil.getLocale(
-								requestLanguageCode);
+								requestLocale.getLanguage());
 						}
 
 						if (LanguageUtil.isAvailableLocale(requestLocale)) {

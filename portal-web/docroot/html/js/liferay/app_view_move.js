@@ -1,7 +1,6 @@
 AUI.add(
 	'liferay-app-view-move',
 	function(A) {
-		var AObject = A.Object;
 		var History = Liferay.HistoryManager;
 		var Lang = A.Lang;
 		var UA = A.UA;
@@ -10,8 +9,6 @@ AUI.add(
 		var CSS_ACTIVE_AREA = 'active-area';
 
 		var CSS_ACTIVE_AREA_PROXY = 'active-area-proxy';
-
-		var CSS_SELECTED = 'selected';
 
 		var DATA_FOLDER_ID = 'data-folder-id';
 

@@ -74,8 +74,9 @@ AUI.add(
 						validator: Lang.isString
 					},
 
-					displayStyleToolbarId: {
-						validator: Lang.isString
+					displayStyleToolbar: {
+						setter: A.one,
+						value: null
 					},
 
 					entry: {
@@ -136,7 +137,7 @@ AUI.add(
 						instance._displayStyle = instance.ns(PARAM_DISPLAY_STYLE);
 						instance._folderId = instance.ns(STR_FOLDER_ID);
 
-						instance._displayStyleToolbar = instance.byId(instance.get('displayStyleToolbarId'));
+						instance._displayStyleToolbar = instance.get('displayStyleToolbar');
 
 						instance._portletMessageContainer = A.Node.create(TPL_MESSAGE_RESPONSE);
 
@@ -191,15 +192,11 @@ AUI.add(
 
 					processData: function(data) {
 						var instance = this;
-						
+
 						instance._setBreadcrumb(data);
-
 						instance._setButtons(data);
-
 						instance._setEntries(data);
-
 						instance._setFolders(data);
-
 						instance._setParentFolderTitle(data);
 
 						WIN[instance.ns(STR_TOGGLE_ACTIONS_BUTTON)]();
@@ -232,8 +229,6 @@ AUI.add(
 						var instance = this;
 
 						var requestParams = event.requestParams;
-
-						var config = instance._config;
 
 						var data = {};
 
@@ -336,8 +331,6 @@ AUI.add(
 
 						instance._listView.set('direction', direction);
 
-						var config = instance._config;
-
 						var requestParams = {};
 
 						requestParams[instance.ns(PARAM_STRUTS_ACTION)] = instance.get(STR_STRUTS_ACTION);
@@ -402,8 +395,6 @@ AUI.add(
 						var instance = this;
 
 						event.preventDefault();
-
-						var config = instance._config;
 
 						var requestParams = {};
 
@@ -491,6 +482,7 @@ AUI.add(
 						var instance = this;
 
 						var data = ioRequest.get(STR_DATA);
+
 						var responseData = ioRequest.get('responseData');
 
 						var eventType = instance._eventDataRetrieveSuccess;
@@ -617,8 +609,7 @@ AUI.add(
 					},
 
 					_validateEntry: function(value) {
-						return Lang.isObject(value) &&
-							Lang.isString(value['paramName']) && Lang.isString(value['typeId']);
+						return Lang.isObject(value) && Lang.isString(value.paramName) && Lang.isString(value.typeId);
 					},
 
 					_validateFolderContainer: function(value) {

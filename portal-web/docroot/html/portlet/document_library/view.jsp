@@ -205,35 +205,41 @@ if (folder != null) {
 
 	new Liferay.Portlet.DocumentLibrary(
 		{
-			allRowIds: '<%= RowChecker.ALL_ROW_IDS %>',
-			defaultParams: {
-				p_p_id: <%= portletId %>,
-				p_p_lifecycle: 0
-			},
-			defaultParentFolderId: '<%= DLFolderConstants.DEFAULT_PARENT_FOLDER_ID %>',
 			displayStyle: '<%= HtmlUtil.escapeJS(displayStyle) %>',
-			displayViews: ['<%= StringUtil.merge(displayViews, "','") %>'],
-			editEntryUrl: '<portlet:actionURL><portlet:param name="struts_action" value="/document_library/edit_entry" /></portlet:actionURL>',
-			entriesTotal: <%= entriesTotal %>,
-			entryEnd: <%= entryEnd %>,
-			entryRowsPerPage: <%= entryRowsPerPage %>,
-			entryRowsPerPageOptions: [<%= StringUtil.merge(PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) %>],
-			entryStart: <%= entryStart %>,
-			folderEnd: <%= folderEnd %>,
-			folderId: <%= folderId %>,
-			folderIdRegEx: /&?<portlet:namespace />folderId=([\d]+)/i,
-			folderIdHashRegEx: /#.*&?<portlet:namespace />folderId=([\d]+)/i,
-			folderRowsPerPage: <%= folderRowsPerPage %>,
-			folderRowsPerPageOptions: [<%= StringUtil.merge(PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) %>],
-			folderStart: <%= folderStart %>,
-			foldersTotal: <%= foldersTotal %>,
-			form: {
-				method: 'post',
-				node: A.one(document.<portlet:namespace />fm2)
+			folders: {
+				defaultParams: {
+					p_p_id: <%= portletId %>,
+					p_p_lifecycle: 0
+				},
+				defaultParentFolderId: '<%= DLFolderConstants.DEFAULT_PARENT_FOLDER_ID %>',
+				mainUrl: '<%= mainURL %>',
+				strutsAction: '/document_library/view'
 			},
-			mainUrl: '<%= mainURL %>',
-			moveEntryRenderUrl: '<portlet:renderURL><portlet:param name="struts_action" value="/document_library/move_entry" /></portlet:renderURL>',
-			moveToTrashUrl: '<portlet:actionURL><portlet:param name="struts_action" value="/document_library/edit_entry" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.MOVE_TO_TRASH %>" /></portlet:actionURL>',
+			move: {
+				allRowIds: '<%= RowChecker.ALL_ROW_IDS %>',
+				editEntryUrl: '<portlet:actionURL><portlet:param name="struts_action" value="/document_library/edit_entry" /></portlet:actionURL>',
+				folderIdRegEx: /&?<portlet:namespace />folderId=([\d]+)/i,
+				folderIdHashRegEx: /#.*&?<portlet:namespace />folderId=([\d]+)/i,
+				form: {
+					method: 'post',
+					node: A.one(document.<portlet:namespace />fm2)
+				},
+				moveEntryRenderUrl: '<portlet:renderURL><portlet:param name="struts_action" value="/document_library/move_entry" /></portlet:renderURL>',
+				updateable: <%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.UPDATE) %>
+			},
+			paginator: {
+				entriesTotal: <%= entriesTotal %>,
+				entryEnd: <%= entryEnd %>,
+				entryRowsPerPage: <%= entryRowsPerPage %>,
+				entryRowsPerPageOptions: [<%= StringUtil.merge(PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) %>],
+				entryStart: <%= entryStart %>,
+				folderEnd: <%= folderEnd %>,
+				folderId: <%= folderId %>,
+				folderRowsPerPage: <%= folderRowsPerPage %>,
+				folderRowsPerPageOptions: [<%= StringUtil.merge(PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) %>],
+				folderStart: <%= folderStart %>,
+				foldersTotal: <%= foldersTotal %>
+			},
 			namespace: '<portlet:namespace />',
 			portletId: '<%= portletId %>',
 			repositories: [
@@ -259,10 +265,11 @@ if (folder != null) {
 
 			],
 			rowIds: '<%= RowChecker.ROW_IDS %>',
-			strutsAction: '/document_library/view',
+			select: {
+				displayViews: ['<%= StringUtil.merge(displayViews, "','") %>']
+			},
 			syncMessageDisabled: <%= !PropsValues.DL_SHOW_LIFERAY_SYNC_MESSAGE %>,
 			syncMessageSuppressed: <%= !GetterUtil.getBoolean(SessionClicks.get(request, liferayPortletResponse.getNamespace() + "show-sync-message", "true")) %>,
-			updateable: <%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.UPDATE) %>
 		}
 	);
 </aui:script>

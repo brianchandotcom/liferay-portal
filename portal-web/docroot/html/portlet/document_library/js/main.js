@@ -5,8 +5,6 @@ AUI.add(
 		var Lang = A.Lang;
 		var History = Liferay.HistoryManager;
 
-		var formatSelectorNS = A.Node.formatSelectorNS;
-
 		var UA = A.UA;
 
 		var CSS_SYNC_MESSAGE_HIDDEN = 'sync-message-hidden';
@@ -26,8 +24,6 @@ AUI.add(
 		var STR_CLICK = 'click';
 
 		var STR_DATA_SEARCH_PROCESSED = 'data-searchProcessed';
-
-		var STR_FOLDER_CONTAINER = 'folderContainer';
 
 		var STR_FOLDER_ID = 'folderId';
 
@@ -100,115 +96,83 @@ AUI.add(
 							).render();
 						}
 
-						var folderContainer = instance.byId(STR_FOLDER_CONTAINER);
+						var checkBoxesId = [
+							instance.ns(STR_ROW_IDS_FILE_SHORTCUT_CHECKBOX),
+							instance.ns(STR_ROW_IDS_FOLDER_CHECKBOX),
+							instance.ns(STR_ROW_IDS_FILE_ENTRY_CHECKBOX)
+						];
 
-						var appViewPaginator = new Liferay.AppViewPaginator(
-							{
-								entriesTotal: config.entriesTotal,
-								entryEnd: config.entryEnd,
-								entryPaginatorContainer: '.document-entries-paginator',
-								entryRowsPerPage: config.entryRowsPerPage,
-								entryRowsPerPageOptions: config.entryRowsPerPageOptions,
-								entryStart: config.entryStart,
-								folderEnd: config.folderEnd,
-								folderId: config.folderId,
-								folderPaginatorContainer: '.folder-paginator',
-								folderRowsPerPage: config.folderRowsPerPage,
-								folderRowsPerPageOptions: config.folderRowsPerPageOptions,
-								folderStart: config.folderStart,
-								foldersTotal: config.foldersTotal,
-								namespace: config.namespace
-							}
-						);
+						var displayStyle = config.displayStyle;
 
-						instance._appViewPaginator = appViewPaginator;
+						var displayStyleCSSClass = 'document-display-style';
 
 						var displayStyleToolbar = instance.byId(DISPLAY_STYLE_TOOLBAR);
 
-						var appViewSelect = new Liferay.AppViewSelect(
-							{
-								checkBoxesId:
-									[
-										instance.ns(STR_ROW_IDS_FILE_SHORTCUT_CHECKBOX),
-										instance.ns(STR_ROW_IDS_FOLDER_CHECKBOX),
-										instance.ns(STR_ROW_IDS_FILE_ENTRY_CHECKBOX)
-									],
-								displayStyle: config.displayStyle,
-								displayStyleCSSClass: 'document-display-style',
-								displayStyleToolbar: displayStyleToolbar,
-								displayViews: config.displayViews,
-								folderContainer: folderContainer,
-								namespace: config.namespace,
-								portletContainerId: instance.ns('documentLibraryContainer'),
-								repositories: config.repositories,
-								selector: 'document-selector'
-							}
-						);
+						var namespace = instance.NS;
 
-						instance._appViewSelect = appViewSelect;
+						var portletContainerId = instance.ns('documentLibraryContainer');
 
-						var appViewMove = new Liferay.AppViewMove(
-							{
-								allRowIds: config.allRowIds,
-								processEntryIds:
-									{
-										checkBoxesIds:
-											[
-												instance.ns(STR_ROW_IDS_FILE_SHORTCUT_CHECKBOX),
-												instance.ns(STR_ROW_IDS_FOLDER_CHECKBOX),
-												instance.ns(STR_ROW_IDS_FILE_ENTRY_CHECKBOX)
-											],
-										entryIds:
-											[
-												instance.ns('fileShortcutIds'),
-												instance.ns('folderIds'),
-												instance.ns('fileEntryIds')
-											]
-									},
-								displayStyleCSSClass: 'document-display-style',
-								draggableCSSClass: 'document-link',
-								editEntryUrl: config._editEntryUrl,
-								folderIdHashRegEx: config.folderIdHashRegEx,
-								form: config.form,
-								moveConstant: config.moveConstant,
-								moveEntryRenderUrl: config.moveEntryRenderUrl,
-								namespace: config.namespace,
-								portletContainerId: instance.ns('documentLibraryContainer'),
-								portletGroup: 'document-library',
-								updateable: config.updateable
-							}
-						);
+						var paginatorConfig = config.paginator;
 
-						instance._appViewMove = appViewMove;
+						paginatorConfig.entryPaginatorContainer = '.document-entries-paginator';
+						paginatorConfig.folderPaginatorContainer = '.folder-paginator';
+						paginatorConfig.namespace = namespace;
 
-						var appViewFolders = new Liferay.AppViewFolders(
-							{
-								defaultParams: config.defaultParams,
-								defaultParentFolderId: config.defaultParentFolderId,
-								displayStyle: config.displayStyle,
-								displayStyleCSSClass: 'document-display-style',
-								displayStyleToolbarId: DISPLAY_STYLE_TOOLBAR,
-								mainUrl: config.mainUrl,
-								namespace: instance.NS,
-								portletContainerId: instance.ns('documentLibraryContainer'),
-								strutsAction: config.strutsAction
-							}
-						);
+						var appViewPaginator = new Liferay.AppViewPaginator(paginatorConfig);
 
-						instance._appViewFolders = appViewFolders;
+						instance._appViewPaginator = appViewPaginator;
+
+						var selectConfig = config.select;
+
+						selectConfig.checkBoxesId = checkBoxesId;
+						selectConfig.displayStyle = displayStyle;
+						selectConfig.displayStyleCSSClass = displayStyleCSSClass;
+						selectConfig.displayStyleToolbar = displayStyleToolbar;
+						selectConfig.folderContainer = instance.byId('folderContainer');
+						selectConfig.namespace = namespace;
+						selectConfig.portletContainerId = portletContainerId;
+						selectConfig.repositories = config.repositories;
+						selectConfig.selector = 'document-selector';
+
+						instance._appViewSelect = new Liferay.AppViewSelect(selectConfig);
+
+						var moveConfig = config.move;
+
+						moveConfig.processEntryIds = {
+							checkBoxesIds: checkBoxesId,
+							entryIds: [
+								instance.ns('fileShortcutIds'),
+								instance.ns('folderIds'),
+								instance.ns('fileEntryIds')
+							]
+						};
+
+						moveConfig.displayStyleCSSClass = displayStyleCSSClass;
+						moveConfig.draggableCSSClass = 'document-link';
+						moveConfig.namespace = namespace;
+						moveConfig.portletContainerId = portletContainerId;
+						moveConfig.portletGroup = 'document-library';
+
+						instance._appViewMove = new Liferay.AppViewMove(moveConfig);
+
+						var foldersConfig = config.folders;
+
+						foldersConfig.displayStyle = displayStyle;
+						foldersConfig.displayStyleCSSClass = displayStyleCSSClass;
+						foldersConfig.displayStyleToolbar = displayStyleToolbar;
+						foldersConfig.namespace = namespace;
+						foldersConfig.portletContainerId = portletContainerId;
+
+						instance._appViewFolders = new Liferay.AppViewFolders(foldersConfig);
 
 						var eventHandles = [
 							Liferay.on(instance._eventDataRetrieveSuccess, instance._onDataRetrieveSuccess, instance),
 							Liferay.on(instance._eventOpenDocument, instance._openDocument, instance),
-							Liferay.on(instance._eventPageLoaded, instance._onPageLoaded, instance)
-						];
-
-						eventHandles.push(
+							Liferay.on(instance._eventPageLoaded, instance._onPageLoaded, instance),
 							History.after('stateChange', instance._afterStateChange, instance),
 							Liferay.on('showTab', instance._onShowTab, instance),
 							Liferay.on(instance._eventChangeSearchFolder, instance._onChangeSearchFolder, instance)
-						);
-
+						];
 
 						instance._config = config;
 
@@ -478,7 +442,7 @@ AUI.add(
 						var requestParams = {};
 
 						requestParams[instance.ns(STRUTS_ACTION)] = '/document_library/search';
-						requestParams[instance.ns('repositoryId')] =  searchData.repositoryId;
+						requestParams[instance.ns('repositoryId')] = searchData.repositoryId;
 						requestParams[instance.ns(SEARCH_REPOSITORY_ID)] = searchData.searchRepositoryId;
 						requestParams[instance.ns(STR_FOLDER_ID)] = searchData.folderId;
 						requestParams[instance.ns(STR_SEARCH_FOLDER_ID)] = searchData.searchFolderId;
@@ -631,6 +595,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-loading-mask', 'aui-parse-content', 'event-simulate', 'liferay-app-view-move', 'liferay-app-view-folders', 'liferay-history-manager', 'liferay-message', 'liferay-app-view-paginator', 'liferay-portlet-base', 'liferay-app-view-select', 'querystring-parse-simple']
+		requires: ['aui-loading-mask', 'aui-parse-content', 'event-simulate', 'liferay-app-view-folders', 'liferay-app-view-move', 'liferay-app-view-paginator', 'liferay-app-view-select', 'liferay-history-manager', 'liferay-message', 'liferay-portlet-base', 'querystring-parse-simple']
 	}
 );

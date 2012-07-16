@@ -50,7 +50,7 @@ AUI.add(
 					},
 
 					displayStyleToolbar: {
-						setter: '_setDisplayStyleToolbar'
+						setter: A.one
 					},
 
 					displayViews: {
@@ -58,7 +58,7 @@ AUI.add(
 					},
 
 					folderContainer: {
-						setter: '_setFolderContainer'
+						setter: A.one
 					},
 
 					portletContainerId: {
@@ -92,6 +92,8 @@ AUI.add(
 						instance._portletContainer = instance.byId(instance.get('portletContainerId'));
 
 						instance._displayStyle = instance.ns('displayStyle');
+
+						instance._displayStyleToolbar = instance.get('displayStyleToolbar');
 
 						instance._entriesContainer = instance.byId('entriesContainer');
 
@@ -134,7 +136,7 @@ AUI.add(
 						var length = displayViews.length;
 
 						if (length > 1) {
-							var displayStyleToolbar = instance.get('displayStyleToolbar').getData(DISPLAY_STYLE_TOOLBAR);
+							var displayStyleToolbar = instance._displayStyleToolbar.getData(DISPLAY_STYLE_TOOLBAR);
 
 							var displayStyle = instance._getDisplayStyle(instance._displayStyle);
 
@@ -257,14 +259,6 @@ AUI.add(
 							instance._checkBoxesId,
 							instance._selectAllCheckbox
 						);
-					},
-
-					_setDisplayStyleToolbar: function(value) {
-						return A.one(value);
-					},
-
-					_setFolderContainer: function(value) {
-						return A.one(value);
 					},
 
 					_setSelectedEntries: function(selectedEntries) {

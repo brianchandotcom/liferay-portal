@@ -9,7 +9,7 @@
 
 @mixin input-field-focus {
 	background: #FFC none;
-	border: 1px solid #FC0;
+	border-color: #FC0;
 }
 
 @mixin button-default {

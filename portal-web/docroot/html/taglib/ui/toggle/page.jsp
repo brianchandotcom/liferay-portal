@@ -52,10 +52,6 @@ String defaultMessage = (String)request.getAttribute("liferay-ui:toggle:defaultM
 		function(state, saveState) {
 			var A = AUI();
 
-			var STATE_HIDDEN = 0;
-
-			var STATE_VISIBLE = 1;
-
 			if (state == null) {
 				state = <%= stateVar %>;
 			}
@@ -82,7 +78,7 @@ String defaultMessage = (String)request.getAttribute("liferay-ui:toggle:defaultM
 					'toggle:stateChange',
 					{
 						id: '<%= id %>',
-						state: STATE_HIDDEN
+						state: 0
 					}
 				);
 			}
@@ -108,7 +104,7 @@ String defaultMessage = (String)request.getAttribute("liferay-ui:toggle:defaultM
 					'toggle:stateChange',
 					{
 						id: '<%= id %>',
-						state: STATE_VISIBLE
+						state: 1
 					}
 				);
 			}

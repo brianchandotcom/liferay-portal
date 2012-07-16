@@ -76,7 +76,7 @@ boolean showSyntaxHelp = ((clickValue != null) && clickValue.equals("block"));
 			<aui:input name="content" type="hidden" />
 		</aui:column>
 
-		<aui:column columnWidth="30" id="wikiEditorHelp" style='<%= showSyntaxHelp ? StringPool.BLANK : "display: none" %>'>
+		<aui:column cssClass="syntax-help" columnWidth="30" id="wikiEditorHelp" style='<%= showSyntaxHelp ? StringPool.BLANK : "display: none" %>'>
 			<h3>
 				<liferay-ui:message key="syntax-help" />
 			</h3>
@@ -94,16 +94,10 @@ boolean showSyntaxHelp = ((clickValue != null) && clickValue.equals("block"));
 	}
 </aui:script>
 
-<aui:script use="node-core">
-	var UA = A.UA;
+<aui:script use="aui-base">
+	var CSS_EDITOR_WIDTH = 'aui-w70';
 
 	var CSS_EDITOR_WIDTH_EXPANDED = 'aui-w100';
-
-	var CSS_EDITOR_WIDTH_NORMAL = 'aui-w70';
-
-	var STATE_HIDDEN = 0;
-
-	var STATE_VISIBLE = 1;
 
 	Liferay.on(
 		'toggle:stateChange',
@@ -113,29 +107,31 @@ boolean showSyntaxHelp = ((clickValue != null) && clickValue.equals("block"));
 			if (id === '<%= id %>') {
 				var state = event.state;
 
-				var classSrc = CSS_EDITOR_WIDTH_NORMAL;
+				var classSrc = CSS_EDITOR_WIDTH;
 				var classDest = CSS_EDITOR_WIDTH_EXPANDED;
 
-				if (state === STATE_VISIBLE) {
+				var visible = (state === 1);
+
+				if (visible) {
 					classSrc = CSS_EDITOR_WIDTH_EXPANDED;
-					classDest = CSS_EDITOR_WIDTH_NORMAL;
+					classDest = CSS_EDITOR_WIDTH;
 				}
 
 				var editorContainer = A.one('#<portlet:namespace />wikiEditorContainer');
 
 				editorContainer.replaceClass(classSrc, classDest);
 
-				if (UA.webkit && state === STATE_VISIBLE) {
+				if (visible && A.UA.webkit) {
 					var editorFrame = editorContainer.one('iframe');
 
 					if (editorFrame) {
 						editorFrame.hide();
 
-						A.later(0, editorFrame, editorFrame.show);
+						A.later(0, editorFrame, 'show');
 					}
 				}
 
-				var editorInstance = A.config.win['<portlet:namespace />editor']
+				var editorInstance = window['<portlet:namespace />editor'];
 
 				if (editorInstance) {
 					editorInstance.focus();

@@ -20,6 +20,7 @@ import com.ecyrd.jspwiki.url.URLConstructor;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Properties;
@@ -67,13 +68,14 @@ public class LiferayURLConstructor implements URLConstructor {
 		if (context.equals(WikiContext.EDIT)) {
 			path =
 				"[$BEGIN_PAGE_TITLE_EDIT$]" +
-					JSPWikiEngine.decodeJSPWikiName(name) +
+					_escapeName(JSPWikiEngine.decodeJSPWikiName(name)) +
 						"[$END_PAGE_TITLE_EDIT$]";
 		}
 		else if (context.equals(WikiContext.VIEW)) {
 			path =
-				"[$BEGIN_PAGE_TITLE$]" + JSPWikiEngine.decodeJSPWikiName(name) +
-					"[$END_PAGE_TITLE$]";
+				"[$BEGIN_PAGE_TITLE$]" +
+					_escapeName(JSPWikiEngine.decodeJSPWikiName(name)) +
+						"[$END_PAGE_TITLE$]";
 		}
 		else if (context.equals(WikiContext.ATTACH)) {
 			if (name.indexOf(CharPool.SLASH) == -1) {
@@ -101,5 +103,21 @@ public class LiferayURLConstructor implements URLConstructor {
 
 		return "Wiki.jsp";
 	}
+
+	private static String _escapeName(String name) {
+		if (name == null) {
+			return StringPool.BLANK;
+		}
+
+		return StringUtil.replace(name, _UNESCAPED_CHARS, _ESCAPED_CHARS);
+	}
+
+	private static final String[] _ESCAPED_CHARS = new String[] {
+		"<PLUS>", "<QUESTION>", "<SLASH>"
+	};
+
+	private static final String[] _UNESCAPED_CHARS = new String[] {
+		StringPool.PLUS, StringPool.QUESTION, StringPool.SLASH
+	};
 
 }

@@ -14,28 +14,20 @@
 
 package com.liferay.portal.lar;
 
-import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
-import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.model.LayoutSetPrototype;
-import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.LayoutTypePortletConstants;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
-import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.ExecutionTestListeners;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.TransactionalCallbackAwareExecutionTestListener;
-import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.sites.util.SitesUtil;
 
 import org.junit.Assert;
@@ -43,7 +35,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 
 /**
@@ -57,7 +48,7 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 		TransactionalCallbackAwareExecutionTestListener.class
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class LayoutExportImportTest extends PowerMockito {
+public class LayoutExportImportTest extends BaseExportImportTestCase {
 
 	@Before
 	public void setUp() {
@@ -120,49 +111,6 @@ public class LayoutExportImportTest extends PowerMockito {
 	@Transactional
 	public void testLSPLinkEnabledwithPageDeletionFromLP() throws Exception {
 		testLayoutSetPrototype(true, false, true, true, true);
-	}
-
-	protected Layout addLayout(
-			long groupId, String name, LayoutPrototype layoutPrototype,
-			boolean linkEnabled)
-		throws Exception {
-
-		String friendlyURL =
-			StringPool.SLASH + FriendlyURLNormalizerUtil.normalize(name);
-
-		Layout layout = null;
-
-		try {
-			layout = LayoutLocalServiceUtil.getFriendlyURLLayout(
-				groupId, false, friendlyURL);
-
-			return layout;
-		}
-		catch (NoSuchLayoutException nsle) {
-		}
-
-		String description = "This is a test page.";
-
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
-
-		serviceContext.setAttribute("layoutPrototypeLinkEnabled", linkEnabled);
-		serviceContext.setAttribute(
-			"layoutPrototypeUuid", layoutPrototype.getUuid());
-
-		return LayoutLocalServiceUtil.addLayout(
-			TestPropsValues.getUserId(), groupId, false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, name, null, description,
-			LayoutConstants.TYPE_PORTLET, false, friendlyURL, serviceContext);
-	}
-
-	protected void propagateChanges(Group group) throws Exception {
-		LayoutLocalServiceUtil.getLayouts(
-			group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-	}
-
-	protected void propagateChanges(Layout layout) throws Exception {
-		LayoutLocalServiceUtil.getLayout(layout.getPlid());
 	}
 
 	protected void testLayoutSetPrototype(
@@ -295,20 +243,6 @@ public class LayoutExportImportTest extends PowerMockito {
 					groupLayoutsCount, layoutSetPrototypeLayoutsCount + 2);
 			}
 		}
-	}
-
-	protected Layout updateLayoutTemplateId(
-		Layout layout, String layoutTemplateId) throws Exception {
-
-		LayoutTypePortlet layoutTypePortlet =
-			(LayoutTypePortlet)layout.getLayoutType();
-
-		layoutTypePortlet.setLayoutTemplateId(
-			TestPropsValues.getUserId(), layoutTemplateId);
-
-		return LayoutServiceUtil.updateLayout(
-			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			layout.getTypeSettings());
 	}
 
 }

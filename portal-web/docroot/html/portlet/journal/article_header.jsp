@@ -59,7 +59,7 @@ else if (article != null) {
 %>
 
 <liferay-ui:header
-	backURL="<%= article != null ? redirect : backURL %>"
+	backURL="<%= article == null ? redirect : backURL %>"
 	localizeTitle="<%= localizeTitle %>"
 	title="<%= title %>"
 />

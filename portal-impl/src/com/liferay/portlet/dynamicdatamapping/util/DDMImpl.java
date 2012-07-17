@@ -133,7 +133,9 @@ public class DDMImpl implements DDM {
 				Date fieldValueDate = PortalUtil.getDate(
 					fieldValueMonth, fieldValueDay, fieldValueYear);
 
-				fieldValue = String.valueOf(fieldValueDate.getTime());
+				if (fieldValueDate != null) {
+					fieldValue = String.valueOf(fieldValueDate.getTime());
+				}
 			}
 
 			if ((fieldValue == null) ||

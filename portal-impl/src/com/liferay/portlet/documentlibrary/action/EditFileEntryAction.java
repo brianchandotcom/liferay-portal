@@ -140,7 +140,7 @@ public class EditFileEntryAction extends PortletAction {
 				addTempFileEntry(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteFileEntries(
+				deleteFileEntry(
 					(LiferayPortletConfig)portletConfig, actionRequest, false);
 			}
 			else if (cmd.equals(Constants.DELETE_TEMP)) {
@@ -162,7 +162,7 @@ public class EditFileEntryAction extends PortletAction {
 				moveFileEntries(actionRequest, true);
 			}
 			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
-				deleteFileEntries(
+				deleteFileEntry(
 					(LiferayPortletConfig)portletConfig, actionRequest, true);
 			}
 			else if (cmd.equals(Constants.REVERT)) {
@@ -499,56 +499,47 @@ public class EditFileEntryAction extends PortletAction {
 		}
 	}
 
-	protected void deleteFileEntries(
+	protected void deleteFileEntry(
 			LiferayPortletConfig liferayPortletConfig,
 			ActionRequest actionRequest, boolean moveToTrash)
 		throws Exception {
 
-		long[] deleteFileEntryIds = null;
-
 		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
+
+		if (fileEntryId == 0) {
+			return;
+		}
+
 		String version = ParamUtil.getString(actionRequest, "version");
 
-		if ((fileEntryId > 0) && Validator.isNotNull(version)) {
+		if (Validator.isNotNull(version)) {
 			DLAppServiceUtil.deleteFileVersion(fileEntryId, version);
-		}
-		else {
-			if (fileEntryId > 0) {
-				deleteFileEntryIds = new long[] {fileEntryId};
-			}
-			else {
-				deleteFileEntryIds = StringUtil.split(
-					ParamUtil.getString(actionRequest, "deleteFileEntryIds"),
-					0L);
-			}
 
-			for (long deleteFileEntryId : deleteFileEntryIds) {
-				if (moveToTrash) {
-					DLAppServiceUtil.moveFileEntryToTrash(deleteFileEntryId);
-				}
-				else {
-					DLAppServiceUtil.deleteFileEntry(deleteFileEntryId);
-				}
-			}
+			return;
 		}
 
-		if (moveToTrash && (deleteFileEntryIds != null) &&
-			(deleteFileEntryIds.length > 0)) {
+		if (!moveToTrash) {
+			DLAppServiceUtil.deleteFileEntry(fileEntryId);
 
-			Map<String, long[]> data = new HashMap<String, long[]>();
-
-			data.put("restoreFileEntryIds", deleteFileEntryIds);
-
-			SessionMessages.add(
-				actionRequest,
-				liferayPortletConfig.getPortletId() +
-					SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA, data);
-
-			SessionMessages.add(
-				actionRequest,
-				liferayPortletConfig.getPortletId() +
-					SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE);
+			return;
 		}
+
+		DLAppServiceUtil.moveFileEntryToTrash(fileEntryId);
+
+		Map<String, long[]> data = new HashMap<String, long[]>();
+
+		data.put("restoreFileEntryIds", new long[] {fileEntryId});
+
+		SessionMessages.add(
+			actionRequest,
+			liferayPortletConfig.getPortletId() +
+				SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA,
+			data);
+
+		SessionMessages.add(
+			actionRequest,
+			liferayPortletConfig.getPortletId() +
+				SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE);
 	}
 
 	protected void deleteTempFileEntry(

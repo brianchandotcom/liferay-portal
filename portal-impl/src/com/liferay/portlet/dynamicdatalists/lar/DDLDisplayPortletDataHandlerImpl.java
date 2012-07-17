@@ -39,6 +39,12 @@ import javax.portlet.PortletPreferences;
 public class DDLDisplayPortletDataHandlerImpl extends BasePortletDataHandler {
 
 	@Override
+	public String[] getDataPortletPreferences() {
+		return new String[] {
+			"recordSetId", "detailDDMTemplateId", "listDDMTemplateId"};
+	}
+
+	@Override
 	public boolean isAlwaysExportable() {
 		return _ALWAYS_EXPORTABLE;
 	}

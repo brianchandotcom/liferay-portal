@@ -71,6 +71,11 @@ public class JournalContentPortletDataHandlerImpl
 	extends BasePortletDataHandler {
 
 	@Override
+	public String[] getDataPortletPreferences() {
+		return new String[] {"groupId", "articleId", "templateId"};
+	}
+
+	@Override
 	public PortletDataHandlerControl[] getExportControls() {
 		return new PortletDataHandlerControl[] {
 			_selectedArticles, _embeddedAssets

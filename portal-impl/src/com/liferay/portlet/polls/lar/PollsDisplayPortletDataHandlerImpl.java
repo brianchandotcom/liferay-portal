@@ -43,6 +43,11 @@ import javax.portlet.PortletPreferences;
 public class PollsDisplayPortletDataHandlerImpl extends BasePortletDataHandler {
 
 	@Override
+	public String[] getDataPortletPreferences() {
+		return new String[] {"questionId"};
+	}
+
+	@Override
 	public PortletDataHandlerControl[] getExportControls() {
 		return new PortletDataHandlerControl[] {_questions, _votes};
 	}

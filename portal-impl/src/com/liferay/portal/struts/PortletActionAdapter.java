@@ -111,6 +111,15 @@ public class PortletActionAdapter extends PortletAction {
 		_originalPortletAction = portletAction;
 	}
 
+	protected boolean isCheckMethodOnProcessAction() {
+		if (_originalPortletAction != null) {
+			return _originalPortletAction.isCheckMethodOnProcessAction();
+		}
+		else {
+			return super.isCheckMethodOnProcessAction();
+		}
+	}
+
 	private PortletAction _originalPortletAction;
 	private StrutsPortletAction _strutsPortletAction;
 

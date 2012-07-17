@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/document_library_display/init.jsp" %>
 
 <%
-	String redirect = ParamUtil.getString(request, "redirect");
+String redirect = ParamUtil.getString(request, "redirect");
 String backURL = ParamUtil.getString(request, "backURL");
 
 long repositoryId = ParamUtil.getLong(request, "repositoryId");

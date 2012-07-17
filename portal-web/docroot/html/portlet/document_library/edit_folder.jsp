@@ -120,26 +120,26 @@ if (workflowEnabled) {
 		<c:if test="<%= rootFolder || ((folder != null) && (folder.getModel() instanceof DLFolder)) %>">
 
 			<%
-				DLFolder dlFolder = null;
+			DLFolder dlFolder = null;
 
-				long defaultFileEntryTypeId = 0;
+			long defaultFileEntryTypeId = 0;
 
-				if (!rootFolder) {
-					dlFolder = (DLFolder)folder.getModel();
+			if (!rootFolder) {
+				dlFolder = (DLFolder)folder.getModel();
 
-					defaultFileEntryTypeId = dlFolder.getDefaultFileEntryTypeId();
-				}
+				defaultFileEntryTypeId = dlFolder.getDefaultFileEntryTypeId();
+			}
 
-				List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolderFileEntryTypes(PortalUtil.getSiteAndCompanyGroupIds(themeDisplay), folderId, false);
+			List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolderFileEntryTypes(PortalUtil.getSiteAndCompanyGroupIds(themeDisplay), folderId, false);
 
-				String headerNames = null;
+			String headerNames = null;
 
-				if (workflowEnabled) {
-					headerNames = "name,workflow,null";
-				}
-				else {
-					headerNames = "name,null";
-				}
+			if (workflowEnabled) {
+				headerNames = "name,workflow,null";
+			}
+			else {
+				headerNames = "name,null";
+			}
 			%>
 
 			<aui:field-wrapper helpMessage='<%= rootFolder ? "" : "document-type-restrictions-help" %>' label='<%= rootFolder ? "" : (workflowEnabled ? "document-type-restrictions-and-workflow" : "document-type-restrictions") %>'>

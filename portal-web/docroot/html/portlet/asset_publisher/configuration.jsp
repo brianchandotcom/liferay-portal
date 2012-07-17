@@ -565,6 +565,7 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 									<aui:option label="expiration-date" selected='<%= orderByColumn1.equals("expirationDate") %>' value="expirationDate" />
 									<aui:option label="priority" selected='<%= orderByColumn1.equals("priority") %>'><liferay-ui:message key="priority" /></aui:option>
 									<aui:option label="view-count" selected='<%= orderByColumn1.equals("viewCount") %>' value="viewCount" />
+									<aui:option label="ratings" selected='<%= orderByColumn1.equals("ratings") %>'><liferay-ui:message key="ratings" /></aui:option>
 								</aui:select>
 
 								<aui:select inlineField="<%= true %>" label="" name="preferences--orderByType1--">
@@ -582,6 +583,7 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 									<aui:option label="expiration-date" selected='<%= orderByColumn2.equals("expirationDate") %>' value="expirationDate" />
 									<aui:option label="priority" selected='<%= orderByColumn2.equals("priority") %>'><liferay-ui:message key="priority" /></aui:option>
 									<aui:option label="view-count" selected='<%= orderByColumn2.equals("viewCount") %>' value="viewCount" />
+									<aui:option label="ratings" selected='<%= orderByColumn1.equals("ratings") %>'><liferay-ui:message key="ratings" /></aui:option>
 								</aui:select>
 
 								<aui:select inlineField="<%= true %>" label="" name="preferences--orderByType2--">

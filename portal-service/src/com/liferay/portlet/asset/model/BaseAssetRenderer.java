@@ -32,6 +32,8 @@ import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletRequest;
@@ -146,6 +148,13 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 
 	public boolean isPrintable() {
 		return false;
+	}
+
+	public String renderActions(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws Exception {
+
+		return null;
 	}
 
 	protected long getControlPanelPlid(

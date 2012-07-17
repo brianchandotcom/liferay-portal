@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 /**
  * @author Alexander Chow
@@ -33,6 +35,13 @@ public abstract class BaseTrashRenderer implements TrashRenderer {
 
 	public String getIconPath(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPathThemeImages() + "/common/page.png";
+	}
+
+	public String renderActions(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws Exception {
+
+		return null;
 	}
 
 }

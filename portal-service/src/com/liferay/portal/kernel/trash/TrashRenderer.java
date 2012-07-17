@@ -50,4 +50,8 @@ public interface TrashRenderer {
 			String template)
 		throws Exception;
 
+	public String renderActions(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws Exception;
+
 }

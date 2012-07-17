@@ -764,23 +764,28 @@ public abstract class BaseIndexer implements Indexer {
 	}
 
 	protected void addTrashFields(
-		Document document, String className, long classPK) {
+		Document document, String className, long classPK, String type) {
 
 		try {
 			TrashEntry trashEntry = TrashEntryLocalServiceUtil.getEntry(
 				className, classPK);
 
-			TrashHandler trashHandler =
-				TrashHandlerRegistryUtil.getTrashHandler(
-					trashEntry.getClassName());
-
-			TrashRenderer trashRenderer = trashHandler.getTrashRenderer(
-				trashEntry.getClassPK());
-
 			document.addDate(Field.REMOVED_DATE, trashEntry.getCreateDate());
 			document.addKeyword(
 				Field.REMOVED_BY_USER_NAME, trashEntry.getUserName(), true);
-			document.addKeyword(Field.TYPE, trashRenderer.getType(), true);
+
+			if (type == null) {
+				TrashHandler trashHandler =
+					TrashHandlerRegistryUtil.getTrashHandler(
+						trashEntry.getClassName());
+
+				TrashRenderer trashRenderer = trashHandler.getTrashRenderer(
+					trashEntry.getClassPK());
+
+				type = trashRenderer.getType();
+			}
+
+			document.addKeyword(Field.TYPE, type, true);
 		}
 		catch (Exception e) {
 			_log.error(e.getMessage());
@@ -1072,7 +1077,7 @@ public abstract class BaseIndexer implements Indexer {
 			document.addKeyword(Field.STATUS, workflowedModel.getStatus());
 
 			if ((groupedModel != null) && workflowedModel.isInTrash()) {
-				addTrashFields(document, className, classPK);
+				addTrashFields(document, className, classPK, null);
 			}
 		}
 

@@ -4402,6 +4402,7 @@
 	<entity class="com.liferay.portlet.trash.model.impl.TrashEntryImpl" name="TrashEntry">
 		<table name="TrashEntry" />
 		<attributes>
+			<transient name="rootTrashEntry" />
 			<transient name="typeSettingsProperties" />
 		</attributes>
 	</entity>

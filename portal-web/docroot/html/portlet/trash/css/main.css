@@ -12,6 +12,11 @@
 		display: block;
 		float: right;
 	}
+
+	.trash-root-entry {
+		color: #999;
+		float: right;
+	}
 }
 .trash-restore-popup {
 	.aui-form {

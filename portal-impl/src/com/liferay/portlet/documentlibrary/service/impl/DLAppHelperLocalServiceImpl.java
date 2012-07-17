@@ -551,13 +551,6 @@ public class DLAppHelperLocalServiceImpl
 
 		dlFileRankLocalService.disableFileRanksByFolderId(folder.getFolderId());
 
-		// Trash
-
-		trashEntryLocalService.addTrashEntry(
-			userId, folder.getGroupId(), DLFolderConstants.getClassName(),
-			folder.getFolderId(), WorkflowConstants.STATUS_APPROVED, null,
-			null);
-
 		return new LiferayFolder(dlFolder);
 	}
 
@@ -1038,12 +1031,7 @@ public class DLAppHelperLocalServiceImpl
 				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 					DLFileEntry.class);
 
-				if (status == WorkflowConstants.STATUS_APPROVED) {
-					indexer.reindex(dlFileEntry);
-				}
-				else {
-					indexer.delete(dlFileEntry);
-				}
+				indexer.reindex(dlFileEntry);
 
 				// Workflow
 

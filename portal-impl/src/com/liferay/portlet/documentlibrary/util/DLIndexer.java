@@ -55,6 +55,7 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.asset.DLFileEntryAssetRendererFactory;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
@@ -358,6 +359,23 @@ public class DLIndexer extends BaseIndexer {
 					throw new SearchException(
 						"Cannot extract text from file" + dlFileEntry);
 				}
+			}
+
+			if (!dlFileVersion.isInTrash() && dlFileVersion.isInTrashFolder()) {
+				document.addKeyword(
+					Field.STATUS, WorkflowConstants.STATUS_IN_TRASH);
+
+				DLFolder trashedFolder = dlFileVersion.getTrashFolder();
+
+				addTrashFields(
+					document, DLFolder.class.getName(),
+					trashedFolder.getFolderId(),
+					DLFileEntryAssetRendererFactory.TYPE);
+
+				document.addKeyword(
+					Field.ROOT_ENTRY_CLASS_NAME, DLFolder.class.getName());
+				document.addKeyword(
+					Field.ROOT_ENTRY_CLASS_PK, trashedFolder.getFolderId());
 			}
 
 			document.addText(Field.DESCRIPTION, dlFileEntry.getDescription());

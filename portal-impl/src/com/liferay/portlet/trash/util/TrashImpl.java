@@ -30,12 +30,14 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portlet.trash.model.TrashEntry;
+import com.liferay.portlet.trash.model.impl.TrashEntryImpl;
 import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
 import com.liferay.portlet.trash.util.comparator.EntryCreateDateComparator;
 import com.liferay.portlet.trash.util.comparator.EntryTypeComparator;
 import com.liferay.portlet.trash.util.comparator.EntryUserNameComparator;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -56,8 +58,36 @@ public class TrashImpl implements Trash {
 				document.get(Field.ENTRY_CLASS_PK));
 
 			try {
-				TrashEntry entry = TrashEntryLocalServiceUtil.getEntry(
+				TrashEntry entry = TrashEntryLocalServiceUtil.fetchEntry(
 					entryClassName, classPK);
+
+				if (entry == null) {
+					String userName = GetterUtil.getString(
+						document.get(Field.REMOVED_BY_USER_NAME));
+
+					Date removedDate = document.getDate(Field.REMOVED_DATE);
+
+					entry = new TrashEntryImpl();
+
+					entry.setClassName(entryClassName);
+					entry.setClassPK(classPK);
+
+					entry.setUserName(userName);
+					entry.setCreateDate(removedDate);
+
+					String rootEntryClassName = GetterUtil.getString(
+						document.get(Field.ROOT_ENTRY_CLASS_NAME));
+					long rootEntryClassPK = GetterUtil.getLong(
+						document.get(Field.ROOT_ENTRY_CLASS_PK));
+
+					TrashEntry rootTrashEntry =
+						TrashEntryLocalServiceUtil.fetchEntry(
+							rootEntryClassName, rootEntryClassPK);
+
+					if (rootTrashEntry != null) {
+						entry.setRootTrashEntry(rootTrashEntry);
+					}
+				}
 
 				entries.add(entry);
 			}

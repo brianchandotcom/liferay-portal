@@ -22,17 +22,17 @@
 	<sql id="com.liferay.portal.security.permission.InlineSQLHelper.findByResourceBlockId">
 		<![CDATA[
 			SELECT
-				resourceBlockId
+				resourceBlock.resourceBlockId
 			FROM
-				ResourceBlock
+				ResourceBlock resourceBlock
 			WHERE
-				resourceBlockId IN (
+				resourceBlock.resourceBlockId IN (
 					SELECT
-						resourceBlockId
+						resourceBlockPermission.resourceBlockId
 					FROM
-						ResourceBlockPermission
+						ResourceBlockPermission resourceBlockPermission
 					WHERE
-						(roleId IN ([$ROLE_ID$]))
+						(resourceBlockPermission.roleId IN ([$ROLE_ID$]))
 				)
 				AND (resourceBlock.companyId = [$COMPANY_ID$])
 				AND (resourceBlock.groupId = [$GROUP_ID$])

@@ -143,13 +143,13 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 					WorkflowThreadLocal.setEnabled(workflowEnabled);
 				}
 
-				long targetGroupId =
-					VirtualLayoutThreadLocal.getTargetGroupId();
+				if (!PropsValues.
+						USER_GROUPS_COPY_LAYOUTS_TO_USER_PERSONAL_SITE) {
 
-				if (PropsValues.
-						USER_GROUPS_COPY_LAYOUTS_TO_USER_PERSONAL_SITE &&
-					group.isUser()) {
+					return layouts;
+				}
 
+				if (group.isUser()) {
 					VirtualLayoutThreadLocal.setTargetGroupId(
 						group.getGroupId());
 
@@ -163,16 +163,17 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 						return addChildUserGroupLayouts(group, layouts);
 					}
 				}
-				else if (PropsValues.
-							USER_GROUPS_COPY_LAYOUTS_TO_USER_PERSONAL_SITE &&
-					group.isUserGroup() &&
-					(targetGroupId != GroupConstants.DEFAULT_LIVE_GROUP_ID)) {
+				else if (group.isUserGroup()) {
+					long targetGroupId =
+						VirtualLayoutThreadLocal.getTargetGroupId();
 
-					Group targetGroup = GroupLocalServiceUtil.getGroup(
-						targetGroupId);
+					if (targetGroupId != GroupConstants.DEFAULT_LIVE_GROUP_ID) {
+						Group targetGroup = GroupLocalServiceUtil.getGroup(
+							targetGroupId);
 
-					return addChildUserGroupLayouts(
-						targetGroup, (List<Layout>)layouts);
+						return addChildUserGroupLayouts(
+							targetGroup, (List<Layout>)layouts);
+					}
 				}
 
 				return layouts;

@@ -18,8 +18,6 @@ import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.model.GroupConstants;
 
 /**
- * <a href="VirtualLayoutThreadLocal.java.html"><b><i>View Source</i></b></a>
- *
  * @author Dale Shan
  */
 public class VirtualLayoutThreadLocal {

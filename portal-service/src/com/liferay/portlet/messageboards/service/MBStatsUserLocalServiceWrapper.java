@@ -290,6 +290,16 @@ public class MBStatsUserLocalServiceWrapper implements MBStatsUserLocalService,
 		_mbStatsUserLocalService.deleteStatsUsersByUserId(userId);
 	}
 
+	public java.util.Date getLasPostDateByUserId(long groupId, long userId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mbStatsUserLocalService.getLasPostDateByUserId(groupId, userId);
+	}
+
+	public long getMessageCountByGroupId(long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mbStatsUserLocalService.getMessageCountByGroupId(groupId);
+	}
+
 	public long getMessageCountByUserId(long userId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _mbStatsUserLocalService.getMessageCountByUserId(userId);
@@ -331,6 +341,13 @@ public class MBStatsUserLocalServiceWrapper implements MBStatsUserLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _mbStatsUserLocalService.updateStatsUser(groupId, userId,
 			lastPostDate);
+	}
+
+	public com.liferay.portlet.messageboards.model.MBStatsUser updateStatsUser(
+		long groupId, long userId, int messageCount, java.util.Date lastPostDate)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mbStatsUserLocalService.updateStatsUser(groupId, userId,
+			messageCount, lastPostDate);
 	}
 
 	/**

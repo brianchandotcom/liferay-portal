@@ -168,7 +168,7 @@ public class AssetEntryFinderImpl
 			if (orderByCol1.equals("ratings") ||
 				orderByCol2.equals("ratings")) {
 
-				sb.append(", RatingsEntry.score ");
+				sb.append(", RatingsStats.averageScore ");
 			}
 		}
 
@@ -206,10 +206,10 @@ public class AssetEntryFinderImpl
 			entryQuery.getOrderByCol2().equals("ratings")) {
 
 			sb.append(" LEFT JOIN ");
-			sb.append("RatingsEntry ON ");
-			sb.append("(RatingsEntry.classNameId = ");
+			sb.append("RatingsStats ON ");
+			sb.append("(RatingsStats.classNameId = ");
 			sb.append("AssetEntry.classNameId) AND ");
-			sb.append("(RatingsEntry.classPK = AssetEntry.classPK)");
+			sb.append("(RatingsStats.classPK = AssetEntry.classPK)");
 		}
 
 		sb.append("WHERE ");
@@ -341,7 +341,7 @@ public class AssetEntryFinderImpl
 			sb.append(" ORDER BY ");
 
 			if (entryQuery.getOrderByCol1().equals("ratings")) {
-				sb.append("RatingsEntry.score");
+				sb.append("RatingsStats.averageScore");
 			}
 			else {
 				sb.append("AssetEntry.");
@@ -356,7 +356,7 @@ public class AssetEntryFinderImpl
 					entryQuery.getOrderByCol2())) {
 
 				if (entryQuery.getOrderByCol2().equals("ratings")) {
-					sb.append(", RatingsEntry.score");
+					sb.append(", RatingsStats.averageScore");
 				}
 				else {
 					sb.append(", AssetEntry.");

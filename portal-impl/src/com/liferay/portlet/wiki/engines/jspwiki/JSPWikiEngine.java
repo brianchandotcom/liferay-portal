@@ -155,10 +155,7 @@ public class JSPWikiEngine implements WikiEngine {
 
 		WikiContext wikiContext = new WikiContext(engine, jspWikiPage);
 
-		content = _decodeJSPWikiContent(
-			engine.textToHTML(wikiContext, content));
-
-		return content;
+		return _decodeJSPWikiContent(engine.textToHTML(wikiContext, content));
 	}
 
 	protected LiferayJSPWikiEngine getEngine(long nodeId) throws WikiException {
@@ -216,26 +213,18 @@ public class JSPWikiEngine implements WikiEngine {
 		StringBundler encodedContent = new StringBundler();
 
 		Matcher commentMatcher = _wikiCommentPattern.matcher(content);
-		Matcher wikiLinkMatcher = null;
 
 		int start = 0;
 		int end = 0;
 
-		String oldContent = StringPool.BLANK;
-		String newContent = StringPool.BLANK;
-
 		while (commentMatcher.find()) {
 			end = commentMatcher.start();
 
-			oldContent = content.substring(start, end);
+			String oldContent = content.substring(start, end);
 
-			wikiLinkMatcher = _wikiLinkPattern.matcher(oldContent);
+			Matcher wikiLinkMatcher = _wikiLinkPattern.matcher(oldContent);
 
-			newContent = oldContent;
-
-			newContent = _encodeLink(newContent, wikiLinkMatcher);
-
-			encodedContent.append(newContent);
+			encodedContent.append(_encodeLink(oldContent, wikiLinkMatcher));
 			encodedContent.append(
 				content.substring(
 					commentMatcher.start(), commentMatcher.end()));
@@ -243,16 +232,12 @@ public class JSPWikiEngine implements WikiEngine {
 			start = commentMatcher.end();
 		}
 
-		if (start != content.length()) {
-			oldContent = content.substring(start);
+		if (start < content.length()) {
+			content = content.substring(start);
 
-			wikiLinkMatcher = _wikiLinkPattern.matcher(oldContent);
+			Matcher wikiLinkMatcher = _wikiLinkPattern.matcher(content);
 
-			newContent = oldContent;
-
-			newContent = _encodeLink(newContent, wikiLinkMatcher);
-
-			encodedContent.append(newContent);
+			encodedContent.append(_encodeLink(content, wikiLinkMatcher));
 		}
 
 		return encodedContent.toString();
@@ -282,8 +267,8 @@ public class JSPWikiEngine implements WikiEngine {
 			}
 
 			String newLink =
-				"[[" + _encodeJSPWikiName(url) + "|"
-					+ _encodeJSPWikiName(name) + "]]";
+				"[[" + _encodeJSPWikiName(url) + "|" +
+					_encodeJSPWikiName(name) + "]]";
 
 			content = StringUtil.replace(content, link, newLink);
 		}

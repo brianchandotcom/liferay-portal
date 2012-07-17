@@ -105,10 +105,6 @@ public class LiferayURLConstructor implements URLConstructor {
 	}
 
 	private static String _escapeName(String name) {
-		if (name == null) {
-			return StringPool.BLANK;
-		}
-
 		return StringUtil.replace(name, _UNESCAPED_CHARS, _ESCAPED_CHARS);
 	}
 

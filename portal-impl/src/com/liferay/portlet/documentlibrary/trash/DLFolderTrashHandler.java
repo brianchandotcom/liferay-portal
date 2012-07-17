@@ -150,7 +150,7 @@ public class DLFolderTrashHandler extends BaseTrashHandler {
 		throws PortalException, SystemException {
 
 		Repository repository = RepositoryServiceUtil.getRepositoryImpl(
-			0, classPK, 0);
+			classPK, 0, 0);
 
 		if (!(repository instanceof LiferayRepository)) {
 			throw new InvalidRepositoryException(

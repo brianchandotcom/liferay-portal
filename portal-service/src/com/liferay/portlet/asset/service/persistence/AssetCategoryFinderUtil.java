@@ -96,6 +96,12 @@ public class AssetCategoryFinderUtil {
 				   .findByG_N_P(groupId, name, categoryProperties, start, end);
 	}
 
+	public static java.util.List<java.lang.Long> getTreeCategoryIds(
+		java.lang.Long parentCategoryId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().getTreeCategoryIds(parentCategoryId);
+	}
+
 	public static AssetCategoryFinder getFinder() {
 		if (_finder == null) {
 			_finder = (AssetCategoryFinder)PortalBeanLocatorUtil.locate(AssetCategoryFinder.class.getName());

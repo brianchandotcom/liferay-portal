@@ -91,7 +91,7 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 			return new ArrayList<AssetEntry>();
 		}
 
-		Object[] results = filterEntryQuery(filteredEntryQuery);
+		Object[] results = filterEntryQuery(filteredEntryQuery, false);
 
 		return (List<AssetEntry>)results[0];
 	}
@@ -106,7 +106,7 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 			return 0;
 		}
 
-		Object[] results = filterEntryQuery(filteredEntryQuery);
+		Object[] results = filterEntryQuery(filteredEntryQuery, true);
 
 		return (Integer)results[1];
 	}
@@ -228,18 +228,31 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 			viewableCategoryIds.toArray(new Long[viewableCategoryIds.size()]));
 	}
 
-	protected Object[] filterEntryQuery(AssetEntryQuery entryQuery)
+	protected Object[] filterEntryQuery(
+			AssetEntryQuery entryQuery, boolean returnEntryCountOnly)
 		throws PortalException, SystemException {
 
 		ThreadLocalCache<Object[]> threadLocalCache =
 			ThreadLocalCacheManager.getThreadLocalCache(
 				Lifecycle.REQUEST, AssetEntryServiceImpl.class.getName());
 
-		String key = entryQuery.toString();
+		String key = entryQuery.toString().concat(StringPool.POUND).concat(
+			Boolean.toString(returnEntryCountOnly));
 
 		Object[] results = threadLocalCache.get(key);
 
 		if (results != null) {
+			return results;
+		}
+
+		if (returnEntryCountOnly && !entryQuery.isEnablePermissions()) {
+			int entriesCount = assetEntryLocalService.getEntriesCount(
+				entryQuery);
+
+			results = new Object[] {null, entriesCount};
+
+			threadLocalCache.put(key, results);
+
 			return results;
 		}
 
@@ -306,8 +319,7 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 		}
 		else {
 			filteredEntries = entries;
-			filteredEntriesCount = assetEntryLocalService.getEntriesCount(
-				entryQuery);
+			filteredEntriesCount = filteredEntries.size();
 		}
 
 		results = new Object[] {filteredEntries, filteredEntriesCount};

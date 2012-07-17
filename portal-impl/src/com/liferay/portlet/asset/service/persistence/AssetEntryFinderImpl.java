@@ -34,6 +34,7 @@ import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.sql.Timestamp;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -41,15 +42,13 @@ import java.util.List;
 /**
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
+ * @author Shuyang Zhou
  */
 public class AssetEntryFinderImpl
 	extends BasePersistenceImpl<AssetEntry> implements AssetEntryFinder {
 
 	public static final String FIND_BY_AND_CATEGORY_IDS =
 		AssetEntryFinder.class.getName() + ".findByAndCategoryIds";
-
-	public static final String FIND_BY_AND_CATEGORY_IDS_TREE =
-		AssetEntryFinder.class.getName() + ".findByAndCategoryIdsTree";
 
 	public static final String FIND_BY_AND_TAG_IDS =
 		AssetEntryFinder.class.getName() + ".findByAndTagIds";
@@ -103,22 +102,46 @@ public class AssetEntryFinderImpl
 		}
 	}
 
-	protected void buildAllCategoriesSQL(
-		String sqlId, long[] categoryIds, StringBundler sb) {
+	protected void buildAllCategoriesSQL(long[] categoryIds, StringBundler sb)
+		throws SystemException {
 
-		sb.append(" AND AssetEntry.entryId IN (");
+		String sql = CustomSQLUtil.get(FIND_BY_AND_CATEGORY_IDS);
+
+		sb.append(" AND (");
 
 		for (int i = 0; i < categoryIds.length; i++) {
-			sb.append(CustomSQLUtil.get(sqlId));
+			if (PropsValues.ASSET_CATEGORIES_SEARCH_HIERARCHICAL) {
+				List<Long> treeCategoryIdArray =
+					AssetCategoryFinderUtil.getTreeCategoryIds(categoryIds[i]);
 
-			if ((i + 1) < categoryIds.length) {
-				sb.append(" AND AssetEntry.entryId IN (");
+				if (treeCategoryIdArray.size() > 1) {
+					long[] treeCategoryIds =
+						new long[treeCategoryIdArray.size()];
+
+					for (int j = 0; j < treeCategoryIdArray.size(); j++) {
+						treeCategoryIds[j] = treeCategoryIdArray.get(j);
+					}
+
+					String categoryIdsString = StringUtil.merge(
+						treeCategoryIds);
+
+					String tempSQL = StringUtil.replace(
+						sql, "[$CATEGORY_IDS$]", categoryIdsString);
+
+					sb.append(tempSQL);
+
+					continue;
+				}
 			}
-		}
 
-		for (int i = 0; i < categoryIds.length; i++) {
+			String tempSQL = StringUtil.replace(
+				sql, "IN ([$CATEGORY_IDS$])",
+				"= ".concat(String.valueOf(categoryIds[i])));
+
+			sb.append(tempSQL);
+
 			if ((i + 1) < categoryIds.length) {
-				sb.append(StringPool.CLOSE_PARENTHESIS);
+				sb.append(" AND ");
 			}
 		}
 
@@ -150,8 +173,40 @@ public class AssetEntryFinderImpl
 		sb.append(StringPool.CLOSE_PARENTHESIS);
 	}
 
+	protected void buildAnyCategoriesSQL(long[] categoryIds, StringBundler sb)
+		throws SystemException {
+
+		String sql = CustomSQLUtil.get(FIND_BY_AND_CATEGORY_IDS);
+
+		if (PropsValues.ASSET_CATEGORIES_SEARCH_HIERARCHICAL) {
+			List<Long> categoryIdArray = new ArrayList<Long>();
+
+			for (long categoryId : categoryIds) {
+				categoryIdArray.addAll(
+					AssetCategoryFinderUtil.getTreeCategoryIds(categoryId));
+			}
+
+			categoryIds = new long[categoryIdArray.size()];
+
+			for (int i = 0; i < categoryIdArray.size(); i++) {
+				categoryIds[i] = categoryIdArray.get(i);
+			}
+		}
+
+		sb.append(" AND (");
+
+		String categoryIdsString = StringUtil.merge(categoryIds);
+
+		sql = StringUtil.replace(sql, "[$CATEGORY_IDS$]", categoryIdsString);
+
+		sb.append(sql);
+
+		sb.append(StringPool.CLOSE_PARENTHESIS);
+	}
+
 	protected SQLQuery buildAssetQuerySQL(
-		AssetEntryQuery entryQuery, boolean count, Session session) {
+			AssetEntryQuery entryQuery, boolean count, Session session)
+		throws SystemException {
 
 		StringBundler sb = new StringBundler();
 
@@ -182,17 +237,6 @@ public class AssetEntryFinderImpl
 			sb.append("INNER JOIN ");
 			sb.append("AssetTag ON ");
 			sb.append("(AssetTag.tagId = AssetEntries_AssetTags.tagId) ");
-		}
-
-		if (entryQuery.getAnyCategoryIds().length > 0) {
-			sb.append("INNER JOIN ");
-			sb.append("AssetEntries_AssetCategories ON ");
-			sb.append("(AssetEntries_AssetCategories.entryId = ");
-			sb.append("AssetEntry.entryId) ");
-			sb.append("INNER JOIN ");
-			sb.append("AssetCategory ON ");
-			sb.append("(AssetCategory.categoryId = ");
-			sb.append("AssetEntries_AssetCategories.categoryId) ");
 		}
 
 		if (entryQuery.getLinkedAssetEntryId() > 0) {
@@ -241,63 +285,19 @@ public class AssetEntryFinderImpl
 		// Category conditions
 
 		if (entryQuery.getAllCategoryIds().length > 0) {
-			if (PropsValues.ASSET_CATEGORIES_SEARCH_HIERARCHICAL) {
-				buildAllCategoriesSQL(
-					FIND_BY_AND_CATEGORY_IDS_TREE,
-					entryQuery.getAllCategoryIds(), sb);
-			}
-			else {
-				buildAllCategoriesSQL(
-					FIND_BY_AND_CATEGORY_IDS, entryQuery.getAllCategoryIds(),
-					sb);
-			}
+			buildAllCategoriesSQL(entryQuery.getAllCategoryIds(), sb);
 		}
 
 		if (entryQuery.getAnyCategoryIds().length > 0) {
-			if (PropsValues.ASSET_CATEGORIES_SEARCH_HIERARCHICAL) {
-				sb.append(
-					getCategoryIds(
-						FIND_BY_AND_CATEGORY_IDS_TREE,
-						entryQuery.getAnyCategoryIds()));
-			}
-			else {
-				sb.append(
-					getCategoryIds(
-						FIND_BY_AND_CATEGORY_IDS,
-						entryQuery.getAnyCategoryIds()));
-			}
+			buildAnyCategoriesSQL(entryQuery.getAnyCategoryIds(), sb);
 		}
 
 		if (entryQuery.getNotAllCategoryIds().length > 0) {
-			if (PropsValues.ASSET_CATEGORIES_SEARCH_HIERARCHICAL) {
-				buildNotAnyCategoriesSQL(
-					FIND_BY_AND_CATEGORY_IDS_TREE,
-					entryQuery.getNotAllCategoryIds(), sb);
-			}
-			else {
-				buildNotAnyCategoriesSQL(
-					FIND_BY_AND_CATEGORY_IDS, entryQuery.getNotAllCategoryIds(),
-					sb);
-			}
+			buildNotAllCategoriesSQL(entryQuery.getNotAllCategoryIds(), sb);
 		}
 
 		if (entryQuery.getNotAnyCategoryIds().length > 0) {
-			sb.append(" AND (");
-
-			if (PropsValues.ASSET_CATEGORIES_SEARCH_HIERARCHICAL) {
-				sb.append(
-					getNotCategoryIds(
-						FIND_BY_AND_CATEGORY_IDS_TREE,
-						entryQuery.getNotAnyCategoryIds()));
-			}
-			else {
-				sb.append(
-					getNotCategoryIds(
-						FIND_BY_AND_CATEGORY_IDS,
-						entryQuery.getNotAnyCategoryIds()));
-			}
-
-			sb.append(") ");
+			buildNotAnyCategoriesSQL(entryQuery.getNotAnyCategoryIds(), sb);
 		}
 
 		// Asset entry subtypes
@@ -403,19 +403,6 @@ public class AssetEntryFinderImpl
 			qPos.add(layout.getUuid());
 		}
 
-		if (PropsValues.ASSET_CATEGORIES_SEARCH_HIERARCHICAL) {
-			qPos.add(entryQuery.getAllLeftAndRightCategoryIds());
-			qPos.add(entryQuery.getAnyLeftAndRightCategoryIds());
-			qPos.add(entryQuery.getNotAllLeftAndRightCategoryIds());
-			qPos.add(entryQuery.getNotAnyLeftAndRightCategoryIds());
-		}
-		else {
-			qPos.add(entryQuery.getAllCategoryIds());
-			qPos.add(entryQuery.getAnyCategoryIds());
-			qPos.add(entryQuery.getNotAllCategoryIds());
-			qPos.add(entryQuery.getNotAnyCategoryIds());
-		}
-
 		qPos.add(entryQuery.getAllTagIds());
 		qPos.add(entryQuery.getAnyTagIds());
 		qPos.add(entryQuery.getNotAllTagIds());
@@ -446,20 +433,89 @@ public class AssetEntryFinderImpl
 		}
 	}
 
-	protected void buildNotAnyCategoriesSQL(
-		String sqlId, long[] categoryIds, StringBundler sb) {
+	protected void buildNotAllCategoriesSQL(
+			long[] categoryIds, StringBundler sb)
+		throws SystemException {
+
+		String sql = CustomSQLUtil.get(FIND_BY_AND_CATEGORY_IDS);
 
 		sb.append(" AND (");
 
 		for (int i = 0; i < categoryIds.length; i++) {
-			sb.append("AssetEntry.entryId NOT IN (");
-			sb.append(CustomSQLUtil.get(sqlId));
-			sb.append(StringPool.CLOSE_PARENTHESIS);
+			sb.append("NOT ");
+
+			if (PropsValues.ASSET_CATEGORIES_SEARCH_HIERARCHICAL) {
+				List<Long> treeCategoryIdArray =
+					AssetCategoryFinderUtil.getTreeCategoryIds(categoryIds[i]);
+
+				if (treeCategoryIdArray.size() > 1) {
+					long[] treeCategoryIds =
+						new long[treeCategoryIdArray.size()];
+
+					for (int j = 0; j < treeCategoryIdArray.size(); j++) {
+						treeCategoryIds[j] = treeCategoryIdArray.get(j);
+					}
+
+					String categoryIdsString = StringUtil.merge(
+						treeCategoryIds);
+
+					String tempSQL = StringUtil.replace(
+						sql, "[$CATEGORY_IDS$]", categoryIdsString);
+
+					sb.append(tempSQL);
+
+					continue;
+				}
+			}
+
+			String tempSQL = StringUtil.replace(
+				sql, "IN ([$CATEGORY_IDS$])",
+				"= ".concat(String.valueOf(categoryIds[i])));
+
+			sb.append(tempSQL);
 
 			if ((i + 1) < categoryIds.length) {
 				sb.append(" OR ");
 			}
 		}
+
+		sb.append(StringPool.CLOSE_PARENTHESIS);
+	}
+
+	protected void buildNotAnyCategoriesSQL(
+			long[] notCategoryIds, StringBundler sb)
+		throws SystemException {
+
+		if (notCategoryIds.length == 0) {
+			return;
+		}
+
+		String sql = CustomSQLUtil.get(FIND_BY_AND_CATEGORY_IDS);
+
+		long[] categoryIds = notCategoryIds;
+
+		if (PropsValues.ASSET_CATEGORIES_SEARCH_HIERARCHICAL) {
+			List<Long> categoryIdArray = new ArrayList<Long>();
+
+			for (long categoryId : notCategoryIds) {
+				categoryIdArray.addAll(
+					AssetCategoryFinderUtil.getTreeCategoryIds(categoryId));
+			}
+
+			categoryIds = new long[categoryIdArray.size()];
+
+			for (int i = 0; i < categoryIdArray.size(); i++) {
+				categoryIds[i] = categoryIdArray.get(i);
+			}
+		}
+
+		sb.append(" AND (NOT ");
+
+		String categoryIdsString = StringUtil.merge(categoryIds);
+
+		sql = StringUtil.replace(sql, "[$CATEGORY_IDS$]", categoryIdsString);
+
+		sb.append(sql);
 
 		sb.append(StringPool.CLOSE_PARENTHESIS);
 	}
@@ -499,26 +555,6 @@ public class AssetEntryFinderImpl
 				sb.append("OR ");
 			}
 		}
-
-		return sb.toString();
-	}
-
-	protected String getCategoryIds(String sqlId, long[] categoryIds) {
-		StringBundler sb = new StringBundler();
-
-		sb.append(" AND (");
-
-		for (int i = 0; i < categoryIds.length; i++) {
-			sb.append("AssetEntry.entryId IN (");
-			sb.append(CustomSQLUtil.get(sqlId));
-			sb.append(StringPool.CLOSE_PARENTHESIS);
-
-			if ((i + 1) < categoryIds.length) {
-				sb.append(" OR ");
-			}
-		}
-
-		sb.append(StringPool.CLOSE_PARENTHESIS);
 
 		return sb.toString();
 	}
@@ -571,26 +607,6 @@ public class AssetEntryFinderImpl
 		}
 
 		sb.append(")");
-
-		return sb.toString();
-	}
-
-	protected String getNotCategoryIds(String sqlId, long[] notCategoryIds) {
-		if (notCategoryIds.length == 0) {
-			return StringPool.BLANK;
-		}
-
-		StringBundler sb = new StringBundler(notCategoryIds.length * 4 - 1);
-
-		for (int i = 0; i < notCategoryIds.length; i++) {
-			sb.append("AssetEntry.entryId NOT IN (");
-			sb.append(CustomSQLUtil.get(sqlId));
-			sb.append(StringPool.CLOSE_PARENTHESIS);
-
-			if ((i + 1) < notCategoryIds.length) {
-				sb.append(" AND ");
-			}
-		}
 
 		return sb.toString();
 	}

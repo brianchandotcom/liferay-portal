@@ -551,13 +551,6 @@ public class DLAppHelperLocalServiceImpl
 
 		dlFileRankLocalService.disableFileRanksByFolderId(folder.getFolderId());
 
-		// Trash
-
-		trashEntryLocalService.addTrashEntry(
-			userId, folder.getGroupId(), DLFolderConstants.getClassName(),
-			folder.getFolderId(), WorkflowConstants.STATUS_APPROVED, null,
-			null);
-
 		return new LiferayFolder(dlFolder);
 	}
 

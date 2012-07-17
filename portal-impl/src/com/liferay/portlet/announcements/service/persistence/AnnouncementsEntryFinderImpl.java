@@ -408,6 +408,9 @@ public class AnnouncementsEntryFinderImpl
 				displayDateHour, displayDateMinute, null);
 		}
 		catch (PortalException pe) {
+		}
+
+		if (displayDate == null) {
 			displayDate = new Date();
 		}
 
@@ -421,6 +424,9 @@ public class AnnouncementsEntryFinderImpl
 				expirationDateHour, expirationDateMinute, null);
 		}
 		catch (PortalException pe) {
+		}
+
+		if (expirationDate == null) {
 			expirationDate = new Date();
 		}
 

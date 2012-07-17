@@ -44,4 +44,9 @@ public interface TrashEntry extends TrashEntryModel, PersistedModel {
 
 	public void setTypeSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties);
+
+	public com.liferay.portlet.trash.model.TrashEntry getRootTrashEntry();
+
+	public void setRootTrashEntry(
+		com.liferay.portlet.trash.model.TrashEntry rootTrashEntry);
 }

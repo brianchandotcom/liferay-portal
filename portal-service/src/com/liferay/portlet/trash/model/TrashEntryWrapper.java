@@ -443,6 +443,15 @@ public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {
 		_trashEntry.setTypeSettingsProperties(typeSettingsProperties);
 	}
 
+	public com.liferay.portlet.trash.model.TrashEntry getRootTrashEntry() {
+		return _trashEntry.getRootTrashEntry();
+	}
+
+	public void setRootTrashEntry(
+		com.liferay.portlet.trash.model.TrashEntry rootTrashEntry) {
+		_trashEntry.setRootTrashEntry(rootTrashEntry);
+	}
+
 	/**
 	 * @deprecated Renamed to {@link #getWrappedModel}
 	 */

@@ -163,8 +163,8 @@ int sortColumnIndex = -1;
 								<c:when test="<%= Validator.isNull(orderByJS) %>">
 
 									<%
-									url = HttpUtil.addParameter(url, namespace + searchContainer.getOrderByColParam(), orderKey);
-									url = HttpUtil.addParameter(url, namespace + searchContainer.getOrderByTypeParam(), orderByType);
+									url = HttpUtil.setParameter(url, namespace + searchContainer.getOrderByColParam(), orderKey);
+									url = HttpUtil.setParameter(url, namespace + searchContainer.getOrderByTypeParam(), orderByType);
 									%>
 
 									<a href="<%= url %>">

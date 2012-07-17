@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.asset.service.persistence;
 
+import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -33,6 +35,7 @@ import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.model.impl.AssetCategoryImpl;
+import com.liferay.portlet.asset.model.impl.AssetCategoryModelImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.Collections;
@@ -43,6 +46,7 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  * @author Bruno Farache
  * @author Jorge Ferrer
+ * @author Shuyang Zhou
  */
 public class AssetCategoryFinderImpl
 	extends BasePersistenceImpl<AssetCategory> implements AssetCategoryFinder {
@@ -55,6 +59,13 @@ public class AssetCategoryFinderImpl
 
 	public static final String COUNT_BY_G_N_P =
 		AssetCategoryFinder.class.getName() + ".countByG_N_P";
+
+	public static final FinderPath FINDER_PATH_GET_TREE_CATEGORY_IDS =
+		new FinderPath(
+			AssetCategoryModelImpl.ENTITY_CACHE_ENABLED,
+			AssetCategoryModelImpl.FINDER_CACHE_ENABLED, List.class,
+			AssetCategoryPersistenceImpl.FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"getTreeCategoryIds", new String[] {Long.class.getName()});
 
 	public static final String FIND_BY_ENTRY_ID =
 		AssetCategoryFinder.class.getName() + ".findByEntryId";
@@ -70,6 +81,9 @@ public class AssetCategoryFinderImpl
 
 	public static final String FIND_BY_G_N_P =
 		AssetCategoryFinder.class.getName() + ".findByG_N_P";
+
+	public static final String GET_TREE_CATEGORY_IDS =
+		AssetCategoryFinder.class.getName() + ".getTreeCategoryIds";
 
 	public int countByG_C_N(long groupId, long classNameId, String name)
 		throws SystemException {
@@ -340,6 +354,60 @@ public class AssetCategoryFinderImpl
 		finally {
 			closeSession(session);
 		}
+	}
+
+	public List<Long> getTreeCategoryIds(Long parentCategoryId)
+		throws SystemException {
+
+		Object[] finderArgs = new Object[] {parentCategoryId};
+
+		List<Long> list = (List<Long>)FinderCacheUtil.getResult(
+			FINDER_PATH_GET_TREE_CATEGORY_IDS, finderArgs, this);
+
+		if (list != null) {
+			return list;
+		}
+
+		Session session = null;
+
+		try {
+			AssetCategory parentAssetCategory =
+				AssetCategoryUtil.findByPrimaryKey(parentCategoryId);
+
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(GET_TREE_CATEGORY_IDS);
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addScalar(
+				"CategoryId", com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(parentAssetCategory.getGroupId());
+			qPos.add(parentAssetCategory.getLeftCategoryId());
+			qPos.add(parentAssetCategory.getRightCategoryId());
+
+			list = q.list();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			if (list == null) {
+				FinderCacheUtil.removeResult(
+					FINDER_PATH_GET_TREE_CATEGORY_IDS, finderArgs);
+			}
+			else {
+				FinderCacheUtil.putResult(
+					FINDER_PATH_GET_TREE_CATEGORY_IDS, finderArgs, list);
+			}
+
+			closeSession(session);
+		}
+
+		return list;
 	}
 
 	protected int doCountByG_N_V(

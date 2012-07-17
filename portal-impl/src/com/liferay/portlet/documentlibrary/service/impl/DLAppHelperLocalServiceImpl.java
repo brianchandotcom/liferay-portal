@@ -1031,12 +1031,7 @@ public class DLAppHelperLocalServiceImpl
 				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 					DLFileEntry.class);
 
-				if (status == WorkflowConstants.STATUS_APPROVED) {
-					indexer.reindex(dlFileEntry);
-				}
-				else {
-					indexer.delete(dlFileEntry);
-				}
+				indexer.reindex(dlFileEntry);
 
 				// Workflow
 

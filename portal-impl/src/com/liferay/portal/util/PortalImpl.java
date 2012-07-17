@@ -1450,9 +1450,11 @@ public class PortalImpl implements Portal {
 
 				String[] facebookData = FacebookUtil.getFacebookData(request);
 
-				currentURL =
-					FacebookUtil.FACEBOOK_APPS_URL + facebookData[0] +
-						facebookData[2];
+				if (facebookData != null) {
+					currentURL =
+						FacebookUtil.FACEBOOK_APPS_URL + facebookData[0] +
+							facebookData[2];
+				}
 			}
 		}
 

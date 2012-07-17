@@ -50,7 +50,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			serviceContext, "ddmResourceActionId");
 
 		if (Validator.isNull(ddmResourceActionId)) {
-			ddmResourceActionId = ActionKeys.ADD_TEMPLATE;
+			ddmResourceActionId = ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE;
 		}
 
 		DDMPermission.check(

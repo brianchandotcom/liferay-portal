@@ -49,6 +49,7 @@
 		<permissions>
 			<supports>
 				<action-key>ADD_ENTRY</action-key>
+				<action-key>ADD_PORTLET_DISPLAY_TEMPLATE</action-key>
 				<action-key>PERMISSIONS</action-key>
 				<action-key>SUBSCRIBE</action-key>
 			</supports>
@@ -56,6 +57,7 @@
 			<guest-defaults />
 			<guest-unsupported>
 				<action-key>ADD_ENTRY</action-key>
+				<action-key>ADD_PORTLET_DISPLAY_TEMPLATE</action-key>
 				<action-key>PERMISSIONS</action-key>
 				<action-key>SUBSCRIBE</action-key>
 			</guest-unsupported>

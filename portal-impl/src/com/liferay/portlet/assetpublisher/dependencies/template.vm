@@ -2,13 +2,13 @@
 ## You can use Velocity to define display styles for the Asset Publisher.
 ## A set of variables have been made available for the template developers:
 ##
-##  $assetEntries: the list of entries that are being shown in the asset
+##  $entries: the list of entries that are being shown in the asset
 ##                  publisher
 ##
-##  $assetEntry: this is the asset entry when there's only ony asset entry
+##  $entry: this is the asset entry when there's only ony asset entry
 ##
 ##  $assetPublisherHelper: helper class available for developers. You can use it
-##                         to get the aset view url by calling
+##                         to get the asset view url by calling
 ##                         getAssetViewURL($renderRequest, $renderResponse,
 ##                         $assetEntry)
 ##
@@ -25,8 +25,8 @@
 ## It is possible to use these variables to create advanced templates to display
 ## a list of assets in your asset publisher. Here's a simple template example:
 ##
-##  #foreach($assetEntry in $assetEntries)
-##    #set ($assetRenderer = $assetEntry.getAssetRenderer())
+##  #foreach($entry in $entries)
+##    #set ($assetRenderer = $entry.getAssetRenderer())
 ##
 ##    #set ($viewURL = $assetRenderer.getURLViewInContext($renderRequest,
 ##                     $renderResponse, $viewNoContext))
@@ -48,7 +48,7 @@
 ##      <a href="$viewURL">
 ##        <img alt="" src="$assetRenderer.getIconPath($renderRequest)" />
 ##
-##        $assetEntry.getTitle($locale)
+##        $entry.getTitle($locale)
 ##      </a>
 ##    </h3>
 ##

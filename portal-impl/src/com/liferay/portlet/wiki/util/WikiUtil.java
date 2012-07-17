@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.util.DiffHtmlUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -442,7 +443,8 @@ public class WikiUtil {
 			String replacement = null;
 
 			if (matcher.groupCount() >= 1) {
-				String encodedTitle = HttpUtil.encodeURL(matcher.group(1));
+				String encodedTitle = HttpUtil.encodeURL(
+					HtmlUtil.unescape(matcher.group(1)));
 
 				replacement = url.replace("$1", encodedTitle);
 			}

@@ -142,6 +142,7 @@ public class TempFileUtil {
 		}
 		catch (Exception e) {
 			_log.error(e);
+
 			return new String[0];
 		}
 	}
@@ -172,8 +173,8 @@ public class TempFileUtil {
 			_COMPANY_ID, _REPOSITORY_ID, tempFileName);
 	}
 
-	protected static String getTempFolderName(
-		long userId, String tempPathName) throws PortalException {
+	protected static String getTempFolderName(long userId, String tempPathName)
+		throws PortalException {
 
 		validatePathName(tempPathName);
 
@@ -210,24 +211,28 @@ public class TempFileUtil {
 		}
 
 		int pos = pathName.indexOf(StringPool.DOUBLE_PERIOD);
+
 		if (pos > -1) {
 			if (pathName.length() == 2) {
 				throw new TempFileNameException();
 			}
 
-			char slash = StringPool.SLASH.charAt(0);
-			char backSlash = StringPool.BACK_SLASH.charAt(0);
-
 			if (pos > 0) {
 				char charChecking = pathName.charAt(pos - 1);
-				if ((charChecking == slash) || (charChecking == backSlash)) {
+
+				if ((charChecking == CharPool.SLASH) ||
+					(charChecking == CharPool.BACK_SLASH)) {
+
 					throw new TempFileNameException();
 				}
 			}
 
 			if ((pos + 2) < pathName.length()) {
 				char charChecking = pathName.charAt(pos + 2);
-				if ((charChecking == slash) || (charChecking == backSlash)) {
+
+				if ((charChecking == CharPool.SLASH) ||
+					(charChecking == CharPool.BACK_SLASH)) {
+
 					throw new TempFileNameException();
 				}
 			}

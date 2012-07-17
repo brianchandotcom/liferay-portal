@@ -37,7 +37,11 @@ public class TrashControlPanelEntry extends BaseControlPanelEntry {
 			Portlet portlet, String category, ThemeDisplay themeDisplay)
 		throws Exception {
 
-		return TrashUtil.isTrashEnabled(themeDisplay.getScopeGroupId());
+		if (TrashUtil.isTrashEnabled(themeDisplay.getScopeGroupId())) {
+			return super.isVisible(portlet, category, themeDisplay);
+		}
+
+		return false;
 	}
 
 }

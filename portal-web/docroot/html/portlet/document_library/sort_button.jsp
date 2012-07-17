@@ -68,15 +68,6 @@ if (orderByType.equals("asc")) {
 	/>
 
 	<%
-	taglibURL = "javascript:" + liferayPortletResponse.getNamespace() + "sortEntries('" + folderId + "', 'readCount','" + reverseOrderByType + "')";
-	%>
-
-	<liferay-ui:icon
-		message="read-count"
-		url="<%= taglibURL %>"
-	/>
-
-	<%
 	taglibURL = "javascript:" + liferayPortletResponse.getNamespace() + "sortEntries('" + folderId + "', 'size','" + reverseOrderByType + "')";
 	%>
 

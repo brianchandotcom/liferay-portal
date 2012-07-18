@@ -163,8 +163,8 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 					}
 				}
 				else if (group.isUserGroup() &&
-					(parentLayoutId !=
-						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID)) {
+						 (parentLayoutId !=
+							 LayoutConstants.DEFAULT_PARENT_LAYOUT_ID)) {
 
 					long targetGroupId = _virtualLayoutTargetGroupId.get();
 

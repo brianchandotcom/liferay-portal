@@ -245,6 +245,33 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 			"\"Welcome 173 to Jupiter\"", toJSON(invokerResult));
 	}
 
+	@Test
+	public void testSimpleCallWithNull() throws Exception {
+		Map<String, Object> map = new LinkedHashMap<String, Object>();
+
+		Map<String, Object> params = new LinkedHashMap<String, Object>();
+
+		map.put("/foo/hello-world", params);
+
+		params.put("userId", 173);
+		params.put("worldName", null);
+
+		String json = toJSON(map);
+
+		JSONWebServiceAction jsonWebServiceAction = prepareInvokerAction(json);
+
+		Object result = jsonWebServiceAction.invoke();
+
+		JSONWebServiceInvokerAction.InvokerResult invokerResult =
+			(JSONWebServiceInvokerAction.InvokerResult)result;
+
+		result = invokerResult.getResult();
+
+		Assert.assertEquals("Welcome 173 to null", result);
+		Assert.assertEquals(
+			"\"Welcome 173 to null\"", toJSON(invokerResult));
+	}
+
 	protected JSONWebServiceAction prepareInvokerAction(String content)
 		throws Exception {
 

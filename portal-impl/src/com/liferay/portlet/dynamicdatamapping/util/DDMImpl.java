@@ -116,7 +116,7 @@ public class DDMImpl implements DDM {
 
 			String fieldDataType = ddmStructure.getFieldDataType(fieldName);
 			String fieldType = ddmStructure.getFieldType(fieldName);
-			String fieldValue = (String)serviceContext.getAttribute(
+			Serializable fieldValue = serviceContext.getAttribute(
 				fieldNamespace + fieldName);
 
 			if (fieldDataType.equals(FieldConstants.DATE)) {
@@ -147,19 +147,11 @@ public class DDMImpl implements DDM {
 			if (fieldType.equals(DDMImpl.TYPE_RADIO) ||
 				fieldType.equals(DDMImpl.TYPE_SELECT)) {
 
-				Object value = serviceContext.getAttribute(
-					fieldNamespace + fieldName);
-
-				String[] fieldValues = {};
-
-				if (value instanceof String) {
-					fieldValues = new String[] {String.valueOf(value)};
-				}
-				else if (value instanceof String[]) {
-					fieldValues = (String[])value;
+				if (fieldValue instanceof String) {
+					fieldValue = new String[] {String.valueOf(fieldValue)};
 				}
 
-				fieldValue = JSONFactoryUtil.serialize(fieldValues);
+				fieldValue = JSONFactoryUtil.serialize(fieldValue);
 			}
 
 			Serializable fieldValueSerializable =

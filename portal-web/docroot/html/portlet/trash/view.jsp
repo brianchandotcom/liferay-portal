@@ -224,17 +224,18 @@ portletURL.setParameter("tabs1", tabs1);
 	<liferay-ui:search-iterator type='<%= aproximate ? "more" : "regular" %>' />
 </liferay-ui:search-container>
 
-<aui:script use="aui-base">
+<aui:script>
 	Liferay.provide(
 		window,
 		'<portlet:namespace />deleteEntries',
 		function() {
-			var deleteEntryIds = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds");
+			var A = AUI();
 
 			if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-the-selected-entries") %>')) {
 				document.<portlet:namespace />fm.method = "post";
 				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.DELETE %>";
-				document.<portlet:namespace />fm.<portlet:namespace />deleteEntryIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds");
+				document.<portlet:namespace />fm.<portlet:namespace />deleteEntryIds.value = Liferay.Util.listCheckedExcept('#<portlet:namespace />trashEntriesSearchContainer', "<portlet:namespace />allRowIds");
+
 				submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/trash/edit_entry" /></portlet:actionURL>");
 			}
 		},
@@ -245,12 +246,13 @@ portletURL.setParameter("tabs1", tabs1);
 		window,
 		'<portlet:namespace />restoreEntries',
 		function() {
-			var restoreEntryIds = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds");
+			var A = AUI();
 
 			if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-restore-the-selected-entries") %>')) {
 				document.<portlet:namespace />fm.method = "post";
 				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.RESTORE %>";
-				document.<portlet:namespace />fm.<portlet:namespace />restoreEntryIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds");
+				document.<portlet:namespace />fm.<portlet:namespace />restoreEntryIds.value = Liferay.Util.listCheckedExcept('#<portlet:namespace />trashEntriesSearchContainer', "<portlet:namespace />allRowIds");
+
 				submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/trash/edit_entry" /></portlet:actionURL>");
 			}
 		},

@@ -35,7 +35,7 @@ Group group = themeDisplay.getScopeGroup();
 	<c:if test="<%= totalEntries > 0 %>">
 		<a class="trash-empty-link" href="javascript:;" id="<%= namespace %>empty"><liferay-ui:message key="<%= emptyMessage %>" /></a>
 
-		<aui:form action="<%= portletURL %>" cssClass="trash-empty-form" method="post" name="emptyForm">
+		<aui:form action="<%= portletURL %>" cssClass="trash-empty-form" name="emptyForm">
 			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.EMPTY_TRASH %>" />
 			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 

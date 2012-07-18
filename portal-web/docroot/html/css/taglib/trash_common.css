@@ -1,6 +1,6 @@
 .taglib-trash-empty, .taglib-trash-undo {
 	.trash-empty-form, .trash-undo-form {
-		display: inline;
+		display: block;
 	}
 
 	.trash-empty-link, .trash-undo-link {

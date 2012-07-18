@@ -101,6 +101,10 @@ public class StringUtil_IW {
 		return StringUtil.extractLast(s, delimiter);
 	}
 
+	public java.lang.String extractLeadingDigits(java.lang.String s) {
+		return StringUtil.extractLeadingDigits(s);
+	}
+
 	/**
 	 * @deprecated
 	 */

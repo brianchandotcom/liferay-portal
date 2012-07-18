@@ -49,8 +49,6 @@ public class FinderPath {
 		_finderCacheEnabled = finderCacheEnabled;
 		_resultClass = resultClass;
 		_cacheName = cacheName;
-		_methodName = methodName;
-		_params = params;
 		_columnBitmask = columnBitmask;
 
 		if (BaseModel.class.isAssignableFrom(_resultClass)) {
@@ -69,7 +67,7 @@ public class FinderPath {
 			_cacheKeyGenerator = cacheKeyGenerator;
 		}
 
-		_initCacheKeyPrefix();
+		_initCacheKeyPrefix(methodName, params);
 		_initLocalCacheKeyPrefix();
 	}
 
@@ -109,14 +107,6 @@ public class FinderPath {
 
 	public long getColumnBitmask() {
 		return _columnBitmask;
-	}
-
-	public String getMethodName() {
-		return _methodName;
-	}
-
-	public String[] getParams() {
-		return _params;
 	}
 
 	public Class<?> getResultClass() {
@@ -163,13 +153,13 @@ public class FinderPath {
 		return cacheKeyGenerator.getCacheKey(sb);
 	}
 
-	private void _initCacheKeyPrefix() {
-		StringBundler sb = new StringBundler(_params.length * 2 + 3);
+	private void _initCacheKeyPrefix(String methodName, String[] params) {
+		StringBundler sb = new StringBundler(params.length * 2 + 3);
 
-		sb.append(_methodName);
+		sb.append(methodName);
 		sb.append(_PARAMS_SEPARATOR);
 
-		for (String param : _params) {
+		for (String param : params) {
 			sb.append(StringPool.PERIOD);
 			sb.append(param);
 		}
@@ -196,8 +186,6 @@ public class FinderPath {
 	private boolean _entityCacheEnabled;
 	private boolean _finderCacheEnabled;
 	private String _localCacheKeyPrefix;
-	private String _methodName;
-	private String[] _params;
 	private Class<?> _resultClass;
 
 }

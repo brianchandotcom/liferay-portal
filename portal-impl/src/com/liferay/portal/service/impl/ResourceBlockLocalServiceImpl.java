@@ -14,14 +14,18 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.portal.NoSuchResourceBlockException;
 import com.liferay.portal.ResourceBlocksNotSupportedException;
+import com.liferay.portal.kernel.dao.orm.ORMException;
+import com.liferay.portal.kernel.dao.orm.QueryPos;
+import com.liferay.portal.kernel.dao.orm.SQLQuery;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.Digester;
-import com.liferay.portal.kernel.util.DigesterUtil;
+import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.model.AuditedModel;
 import com.liferay.portal.model.GroupedModel;
@@ -32,6 +36,7 @@ import com.liferay.portal.model.ResourceBlock;
 import com.liferay.portal.model.ResourceBlockConstants;
 import com.liferay.portal.model.ResourceBlockPermissionsContainer;
 import com.liferay.portal.model.ResourceTypePermission;
+import com.liferay.portal.model.impl.ResourceBlockImpl;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.security.permission.ResourceBlockIdsBag;
@@ -39,18 +44,16 @@ import com.liferay.portal.service.PersistedModelLocalService;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
 import com.liferay.portal.service.base.ResourceBlockLocalServiceBaseImpl;
 
-import java.nio.ByteBuffer;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.SortedMap;
 
 /**
  * Manages the creation and upkeep of resource blocks and the resources they
  * contain.
  *
  * @author Connor McKay
+ * @author Shuyang Zhou
  */
 public class ResourceBlockLocalServiceImpl
 	extends ResourceBlockLocalServiceBaseImpl {
@@ -171,7 +174,7 @@ public class ResourceBlockLocalServiceImpl
 		resourceBlock.setPermissionsHash(permissionsHash);
 		resourceBlock.setReferenceCount(1);
 
-		updateResourceBlock(resourceBlock);
+		updateResourceBlock(resourceBlock, false);
 
 		resourceBlockPermissionLocalService.addResourceBlockPermissions(
 			resourceBlockId, resourceBlockPermissionsContainer);
@@ -301,35 +304,6 @@ public class ResourceBlockLocalServiceImpl
 		return getActionIds(resourceBlock.getName(), actionIdsLong);
 	}
 
-	/**
-	 * Returns the permissions hash of the resource permissions. The permissions
-	 * hash is a representation of all the roles with access to the resource
-	 * along with the actions they can perform.
-	 *
-	 * @param  resourceBlockPermissionsContainer the resource block permissions
-	 * @return the permissions hash of the resource permissions
-	 */
-	public String getPermissionsHash(
-		ResourceBlockPermissionsContainer resourceBlockPermissionsContainer) {
-
-		SortedMap<Long, Long> permissions =
-			resourceBlockPermissionsContainer.getPermissions();
-
-		// long is 8 bytes, there are 2 longs per permission, so preallocate
-		// byte buffer to 16 * the number of permissions.
-
-		ByteBuffer byteBuffer = ByteBuffer.allocate(permissions.size() * 16);
-
-		for (Map.Entry<Long, Long> entry : permissions.entrySet()) {
-			byteBuffer.putLong(entry.getKey());
-			byteBuffer.putLong(entry.getValue());
-		}
-
-		byteBuffer.flip();
-
-		return DigesterUtil.digestHex(Digester.SHA_1, byteBuffer);
-	}
-
 	public ResourceBlock getResourceBlock(String name, long primKey)
 		throws PortalException, SystemException {
 
@@ -385,20 +359,14 @@ public class ResourceBlockLocalServiceImpl
 			isPermissionedModelLocalService(name);
 	}
 
+	@Transactional(
+		propagation= Propagation.REQUIRES_NEW,
+		isolation= Isolation.READ_COMMITTED)
 	public void releasePermissionedModelResourceBlock(
 			PermissionedModel permissionedModel)
 		throws PortalException, SystemException {
 
-		try {
-			releaseResourceBlock(permissionedModel.getResourceBlockId());
-		}
-		catch (NoSuchResourceBlockException nsrbe) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Resource block " + permissionedModel.getResourceBlockId() +
-						" missing");
-			}
-		}
+		releaseResourceBlock(permissionedModel.getResourceBlockId());
 	}
 
 	public void releasePermissionedModelResourceBlock(String name, long primKey)
@@ -420,12 +388,49 @@ public class ResourceBlockLocalServiceImpl
 	 *         not be found
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Transactional(
+		propagation= Propagation.REQUIRES_NEW,
+		isolation= Isolation.READ_COMMITTED)
 	public void releaseResourceBlock(long resourceBlockId)
-		throws PortalException, SystemException {
+		throws SystemException {
 
-		ResourceBlock resourceBlock = getResourceBlock(resourceBlockId);
+		Session session = resourceBlockPersistence.openSession();
 
-		releaseResourceBlock(resourceBlock);
+		while (true) {
+			try {
+				SQLQuery sqlQuery = session.createSQLQuery(_SQL_UPDATE_RELEASE);
+
+				QueryPos qPos = QueryPos.getInstance(sqlQuery);
+
+				qPos.add(resourceBlockId);
+
+				int affectRows = sqlQuery.executeUpdate();
+
+				if (affectRows > 0) {
+					ResourceBlock resourceBlock = (ResourceBlock)session.get(
+						ResourceBlockImpl.class, Long.valueOf(resourceBlockId));
+
+					if (resourceBlock.getReferenceCount() == 0) {
+						sqlQuery = session.createSQLQuery(_SQL_DELETE_RELEASED);
+
+						qPos = QueryPos.getInstance(sqlQuery);
+
+						qPos.add(resourceBlockId);
+
+						sqlQuery.executeUpdate();
+					}
+				}
+
+				resourceBlockPersistence.closeSession(session);
+
+				break;
+			}
+			catch (ORMException orme) {
+				_log.warn(
+					"Failed to decrease reference count for ResourceBlock " +
+						"id : " + resourceBlockId + ", retry.", orme);
+			}
+		}
 	}
 
 	/**
@@ -436,19 +441,13 @@ public class ResourceBlockLocalServiceImpl
 	 * @param  resourceBlock the resource block
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Transactional(
+		propagation= Propagation.REQUIRES_NEW,
+		isolation= Isolation.READ_COMMITTED)
 	public void releaseResourceBlock(ResourceBlock resourceBlock)
 		throws SystemException {
 
-		long referenceCount = resourceBlock.getReferenceCount() - 1;
-
-		if (referenceCount <= 0) {
-			deleteResourceBlock(resourceBlock);
-			return;
-		}
-
-		resourceBlock.setReferenceCount(referenceCount);
-
-		updateResourceBlock(resourceBlock);
+		releaseResourceBlock(resourceBlock.getResourceBlockId());
 	}
 
 	public void removeAllGroupScopePermissions(
@@ -561,38 +560,6 @@ public class ResourceBlockLocalServiceImpl
 		updateIndividualScopePermissions(
 			companyId, groupId, name, permissionedModel, roleId, actionIdsLong,
 			ResourceBlockConstants.OPERATOR_REMOVE);
-	}
-
-	/**
-	 * Increments the reference count of the resource block and updates it in
-	 * the database.
-	 *
-	 * @param  resourceBlockId the primary key of the resource block
-	 * @throws PortalException if a resource block with the primary key could
-	 *         not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	public void retainResourceBlock(long resourceBlockId)
-		throws PortalException, SystemException {
-
-		ResourceBlock resourceBlock = getResourceBlock(resourceBlockId);
-
-		retainResourceBlock(resourceBlock);
-	}
-
-	/**
-	 * Increments the reference count of the resource block and updates it in
-	 * the database.
-	 *
-	 * @param  resourceBlock the resource block
-	 * @throws SystemException if a system exception occurred
-	 */
-	public void retainResourceBlock(ResourceBlock resourceBlock)
-		throws SystemException {
-
-		resourceBlock.setReferenceCount(resourceBlock.getReferenceCount() + 1);
-
-		updateResourceBlock(resourceBlock);
 	}
 
 	public void setCompanyScopePermissions(
@@ -793,32 +760,91 @@ public class ResourceBlockLocalServiceImpl
 
 		resourceBlockPermissionsContainer.setPermissions(roleId, actionIdsLong);
 
-		String permissionsHash = getPermissionsHash(
-			resourceBlockPermissionsContainer);
+		String permissionsHash =
+			resourceBlockPermissionsContainer.getPermissionsHash();
 
-		updateResourceBlockId(
+		resourceBlockLocalService.updateResourceBlockId(
 			companyId, groupId, name, permissionedModel, permissionsHash,
 			resourceBlockPermissionsContainer);
 
 		PermissionCacheUtil.clearCache();
 	}
 
+	@Transactional(
+		propagation= Propagation.REQUIRES_NEW,
+		isolation= Isolation.READ_COMMITTED)
 	public ResourceBlock updateResourceBlockId(
 			long companyId, long groupId, String name,
 			PermissionedModel permissionedModel, String permissionsHash,
 			ResourceBlockPermissionsContainer resourceBlockPermissionsContainer)
 		throws SystemException {
 
-		ResourceBlock resourceBlock = resourceBlockPersistence.fetchByC_G_N_P(
-			companyId, groupId, name, permissionsHash);
+		ResourceBlock resourceBlock;
 
-		if (resourceBlock == null) {
-			resourceBlock = addResourceBlock(
-				companyId, groupId, name, permissionsHash,
-				resourceBlockPermissionsContainer);
-		}
-		else {
-			retainResourceBlock(resourceBlock);
+		while (true) {
+			resourceBlock = resourceBlockPersistence.fetchByC_G_N_P(
+				companyId, groupId, name, permissionsHash, false);
+
+			if (resourceBlock == null) {
+				try {
+					resourceBlock = addResourceBlock(
+						companyId, groupId, name, permissionsHash,
+						resourceBlockPermissionsContainer);
+				}
+				catch (SystemException se) {
+					_log.warn(
+						"Failed to insert a new resource block, retry.", se);
+
+					continue;
+				}
+
+				break;
+			}
+			else {
+				Session session = resourceBlockPersistence.openSession();
+
+				try {
+					SQLQuery sqlQuery = session.createSQLQuery(
+						_SQL_UPDATE_RETAIN);
+
+					QueryPos qPos = QueryPos.getInstance(sqlQuery);
+
+					qPos.add(resourceBlock.getResourceBlockId());
+
+					int affectRows = sqlQuery.executeUpdate();
+
+					if (affectRows > 0) {
+						// Note, this is not very accurate, under concurrent
+						// environment, the caller may see discontinuous
+						// reference count changing in a system-wide point of
+						// view.
+						// This is caused by the decision of using "update set"
+						// solution. So far this seems to be ok as no one really
+						// depends on a continuous reference count changing. But
+						// if someday this becomes required, we should change to
+						// "update where" solution.
+						resourceBlock.setReferenceCount(
+							resourceBlock.getReferenceCount() + 1);
+
+						break;
+					}
+				}
+				catch (ORMException orme) {
+					_log.warn(
+						"Failed to increase reference count for " +
+							"ResourceBlock id : " +
+								resourceBlock.getResourceBlockId() + ", retry.",
+						orme);
+				}
+				finally {
+					// Prevent Hibernate from automatically flushing out first
+					// level cache, which will lead to a regular update to
+					// overwrite previous change causing lost update.
+					session.evict(resourceBlock);
+
+					resourceBlockPersistence.closeSession(session);
+				}
+			}
 		}
 
 		permissionedModel.setResourceBlockId(
@@ -886,13 +912,23 @@ public class ResourceBlockLocalServiceImpl
 			resourceBlockPermissionLocalService.
 			getResourceBlockPermissionsContainer(resourceBlock.getPrimaryKey());
 
-		String permissionsHash = getPermissionsHash(
-			resourceBlockPermissionsContainer);
+		String permissionsHash =
+			resourceBlockPermissionsContainer.getPermissionsHash();
 
 		resourceBlock.setPermissionsHash(permissionsHash);
 
 		updateResourceBlock(resourceBlock);
 	}
+
+	private static final String _SQL_DELETE_RELEASED =
+		"DELETE FROM ResourceBlock WHERE referenceCount <= 0 AND " +
+		"resourceBlockId = ?";
+	private static final String _SQL_UPDATE_RELEASE =
+		"UPDATE ResourceBlock SET referenceCount = (referenceCount - 1) WHERE" +
+		" resourceBlockId = ?";
+	private static final String _SQL_UPDATE_RETAIN =
+		"UPDATE ResourceBlock SET referenceCount = (referenceCount + 1) WHERE" +
+		" referenceCount > 0 AND resourceBlockId = ?";
 
 	private static Log _log = LogFactoryUtil.getLog(
 		ResourceBlockLocalServiceImpl.class);

@@ -394,19 +394,6 @@ public class ResourceBlockLocalServiceWrapper
 		return _resourceBlockLocalService.getPermissions(resourceBlock, roleId);
 	}
 
-	/**
-	* Returns the permissions hash of the resource permissions. The permissions
-	* hash is a representation of all the roles with access to the resource
-	* along with the actions they can perform.
-	*
-	* @param resourceBlockPermissionsContainer the resource block permissions
-	* @return the permissions hash of the resource permissions
-	*/
-	public java.lang.String getPermissionsHash(
-		com.liferay.portal.model.ResourceBlockPermissionsContainer resourceBlockPermissionsContainer) {
-		return _resourceBlockLocalService.getPermissionsHash(resourceBlockPermissionsContainer);
-	}
-
 	public com.liferay.portal.model.ResourceBlock getResourceBlock(
 		java.lang.String name, long primKey)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -477,8 +464,7 @@ public class ResourceBlockLocalServiceWrapper
 	* @throws SystemException if a system exception occurred
 	*/
 	public void releaseResourceBlock(long resourceBlockId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.SystemException {
 		_resourceBlockLocalService.releaseResourceBlock(resourceBlockId);
 	}
 
@@ -575,34 +561,6 @@ public class ResourceBlockLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_resourceBlockLocalService.removeIndividualScopePermissions(companyId,
 			groupId, name, permissionedModel, roleId, actionIdsLong);
-	}
-
-	/**
-	* Increments the reference count of the resource block and updates it in
-	* the database.
-	*
-	* @param resourceBlockId the primary key of the resource block
-	* @throws PortalException if a resource block with the primary key could
-	not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public void retainResourceBlock(long resourceBlockId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		_resourceBlockLocalService.retainResourceBlock(resourceBlockId);
-	}
-
-	/**
-	* Increments the reference count of the resource block and updates it in
-	* the database.
-	*
-	* @param resourceBlock the resource block
-	* @throws SystemException if a system exception occurred
-	*/
-	public void retainResourceBlock(
-		com.liferay.portal.model.ResourceBlock resourceBlock)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_resourceBlockLocalService.retainResourceBlock(resourceBlock);
 	}
 
 	public void setCompanyScopePermissions(long companyId,

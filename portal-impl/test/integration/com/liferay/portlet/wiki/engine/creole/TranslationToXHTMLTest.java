@@ -83,7 +83,7 @@ public class TranslationToXHTMLTest extends AbstractWikiParserTests {
 	}
 
 	@Test
-	public void testParseCorrectlyNoWikiBlockWitBraces() {
+	public void testParseCorrectlyNoWikiBlockWithBraces() {
 		Assert.assertEquals(
 			"<pre>{" + _NEW_LINE + "foo" + _NEW_LINE + "}" + _NEW_LINE +
 				"</pre>",
@@ -91,7 +91,7 @@ public class TranslationToXHTMLTest extends AbstractWikiParserTests {
 	}
 
 	@Test
-	public void testParseCorrectlyNoWikiBlockWitMultipleAndText() {
+	public void testParseCorrectlyNoWikiBlockWithMultipleAndText() {
 		Assert.assertEquals(
 			"<pre>public interface Foo {" + _NEW_LINE + "void foo();" +
 				_NEW_LINE + "}" + _NEW_LINE + "</pre><p>Outside preserve </p>",
@@ -99,7 +99,7 @@ public class TranslationToXHTMLTest extends AbstractWikiParserTests {
 	}
 
 	@Test
-	public void testParseCorrectlyNoWikiBlockWitMultipleBraces() {
+	public void testParseCorrectlyNoWikiBlockWithMultipleBraces() {
 		Assert.assertEquals(
 			"<pre>public interface Foo {" + _NEW_LINE + "void foo();" +
 				_NEW_LINE + "}" + _NEW_LINE + "</pre>",
@@ -151,14 +151,14 @@ public class TranslationToXHTMLTest extends AbstractWikiParserTests {
 	}
 
 	@Test
-	public void testParseCorrectlyOneNonEmptyNoWikiBlockWitBraces() {
+	public void testParseCorrectlyOneNonEmptyNoWikiBlockWithBraces() {
 		Assert.assertEquals(
 			"<p>Preserving </p><pre>.lfr-helper{span}</pre>",
 			translate("nowikiblock-6.creole"));
 	}
 
 	@Test
-	public void testParseCorrectlyOneNonEmptyNoWikiBlockWitMultipleLines() {
+	public void testParseCorrectlyOneNonEmptyNoWikiBlockWithMultipleLines() {
 		Assert.assertEquals(
 			"<pre>Multiple" + _NEW_LINE + "lines</pre>",
 			toUnix(translate("nowikiblock-5.creole")));

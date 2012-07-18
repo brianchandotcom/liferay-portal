@@ -125,7 +125,9 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 			String[] ranks = StringUtil.splitLines(
 				ParamUtil.getString(actionRequest, "ranks_" + languageId));
 
-			Map<String, String> map = new TreeMap<String, String>();
+			Map<Integer, String> minPostsRankMap =
+				new TreeMap<Integer, String>();
+			Map<String, String> roleRankMap = new TreeMap<String, String>();
 
 			for (String rank : ranks) {
 				if (!isValidUserRank(rank)) {
@@ -139,14 +141,28 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 				String kvpName = kvp[0];
 				String kvpValue = kvp[1];
 
-				map.put(kvpValue, kvpName);
+				if (Validator.isDigit(kvpValue)) {
+					minPostsRankMap.put(Integer.parseInt(kvpValue), kvpName);
+				}
+				else {
+					roleRankMap.put(kvpValue, kvpName);
+				}
 			}
 
-			ranks = new String[map.size()];
+			ranks = new String[minPostsRankMap.size() + roleRankMap.size()];
 
 			int count = 0;
 
-			for (Map.Entry<String, String> entry : map.entrySet()) {
+			for (Map.Entry<Integer, String> entry :
+					minPostsRankMap.entrySet()) {
+
+				String kvpValue = StringUtil.valueOf(entry.getKey());
+				String kvpName = entry.getValue();
+
+				ranks[count++] = kvpName + StringPool.EQUAL + kvpValue;
+			}
+
+			for (Map.Entry<String, String> entry : roleRankMap.entrySet()) {
 				String kvpValue = entry.getKey();
 				String kvpName = entry.getValue();
 

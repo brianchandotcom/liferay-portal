@@ -20,6 +20,8 @@ Map<String,String> configParams = new HashMap();
 configParams.put("emoticonsPath", themeDisplay.getPathThemeImages() + "/emoticons");
 
 if (quote && Validator.isNull(body) && (curParentMessage != null)) {
+	parentAuthor = StringUtil.replace(parentAuthor, new String[]{"[", "]", "(", ")"}, new String[]{"&#91;", "&#93;", "&#40;", "&#41;"});
+
 	StringBundler sb = new StringBundler(5);
 	sb.append("[quote=");
 	sb.append(parentAuthor);

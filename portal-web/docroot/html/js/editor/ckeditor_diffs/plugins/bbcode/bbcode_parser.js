@@ -1,4 +1,29 @@
 ;(function() {
+	var LiferayUtil = Liferay.Util;
+
+	var entities = function() {
+		var escapedChars = LiferayUtil.MAP_HTML_CHARS_ESCAPED;
+
+		escapedChars['['] = '&#91;';
+		escapedChars[']'] = '&#93;';
+		escapedChars['('] = '&#40;';
+		escapedChars[')'] = '&#41;';
+
+		return escapedChars;
+	}();
+
+	var BBCodeUtil = {
+		escape: function(data) {
+			return LiferayUtil.escapeHTML(data, true, entities);
+		},
+
+		unescape: function(data) {
+			return LiferayUtil.unescapeHTML(data, entities);
+		}
+	};
+
+	Liferay.BBCodeUtil = BBCodeUtil;
+}());;(function() {
 	var REGEX_BBCODE = /(?:\[((?:[a-z]|\*){1,16})(?:=([^\x00-\x1F"'\(\)<>\[\]]{1,2083}))?\])|(?:\[\/([a-z]{1,16})\])/ig;
 
 	var Lexer = function(data) {
@@ -252,6 +277,9 @@
 
 	Liferay.BBCodeParser = Parser;
 })();;(function() {
+	var BBCodeUtil = Liferay.BBCodeUtil;
+	var Util = Liferay.Util;
+
 	var Parser = Liferay.BBCodeParser;
 
 	var hasOwnProperty = Object.prototype.hasOwnProperty;
@@ -427,7 +455,7 @@
 			instance._stack = [];
 		},
 
-		_escapeHTML: Liferay.Util.escapeHTML,
+		_escapeHTML: Util.escapeHTML,
 
 		_extractData: function(toTagName, consume) {
 			var instance = this;
@@ -506,7 +534,7 @@
 			var hrefInput = token.attribute || instance._extractData(STR_EMAIL, false);
 
 			if (REGEX_URI.test(hrefInput)) {
-				if (hrefInput.indexOf(STR_MAILTO) != 0) {
+				if (hrefInput.indexOf(STR_MAILTO) !== 0) {
 					hrefInput = STR_MAILTO + hrefInput;
 				}
 
@@ -655,7 +683,7 @@
 			var result = '<blockquote>';
 
 			if (cite && cite.length) {
-				cite = instance._escapeHTML(cite);
+				cite = BBCodeUtil.escape(cite);
 
 				result = '<blockquote><cite>' + cite + '</cite>';
 			}

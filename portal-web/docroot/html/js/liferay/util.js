@@ -1,5 +1,6 @@
 ;(function(A, Liferay) {
 	var AArray = A.Array;
+	var AObject = A.Object;
 	var Browser = Liferay.Browser;
 	var Lang = A.Lang;
 
@@ -23,26 +24,33 @@
 
 	var MAP_HTML_CHARS_UNESCAPED = {};
 
-	for (var i in MAP_HTML_CHARS_ESCAPED) {
-		if (MAP_HTML_CHARS_ESCAPED.hasOwnProperty(i)) {
-			var escapedValue = MAP_HTML_CHARS_ESCAPED[i];
+	AObject.each(
+		MAP_HTML_CHARS_ESCAPED,
+		function(item, index) {
+			MAP_HTML_CHARS_UNESCAPED[item] = index;
 
-			MAP_HTML_CHARS_UNESCAPED[escapedValue] = i;
-
-			htmlEscapedValues.push(escapedValue);
-			htmlUnescapedValues.push(i);
+			htmlEscapedValues.push(item);
+			htmlUnescapedValues.push(index);
 		}
-	}
+	);
 
 	var REGEX_DASH = /-([a-z])/gi;
 
-	var REGEX_HTML_ESCAPE = new RegExp('[' + htmlUnescapedValues.join('') + ']', 'g');
+	var STR_LEFT_SQUARE_BRACKET = '[';
+
+	var STR_RIGHT_SQUARE_BRACKET = ']';
+
+	var REGEX_HTML_ESCAPE = new RegExp(STR_LEFT_SQUARE_BRACKET + htmlUnescapedValues.join('') + STR_RIGHT_SQUARE_BRACKET, 'g');
 
 	var REGEX_HTML_UNESCAPE = new RegExp(htmlEscapedValues.join('|'), 'gi');
 
 	var SRC_HIDE_LINK = {
 		src: 'hideLink'
 	};
+
+	var STR_LEFT_ROUND_BRACKET = '(';
+
+	var STR_RIGHT_ROUND_BRACKET = ')';
 
 	var Window = {
 		ALIGN_CENTER: {
@@ -274,8 +282,38 @@
 			);
 		},
 
-		escapeHTML: function(str) {
-			return str.replace(REGEX_HTML_ESCAPE, Util._escapeHTML);
+		escapeHTML: function(str, preventDoubleEscape, entities) {
+			var result;
+
+			var regex = REGEX_HTML_ESCAPE;
+
+			var entitiesList = [];
+
+			var entitiesValues;
+
+			if (Lang.isObject(entities)) {
+				entitiesValues = [];
+
+				AObject.each(
+					entities,
+					function(item, index) {
+						index = Util._prefixEntityValue(index);
+
+						entitiesList.push(index);
+
+						entitiesValues.push(item);
+					}
+				);
+
+				regex = new RegExp(STR_LEFT_SQUARE_BRACKET + entitiesList.join('') + STR_RIGHT_SQUARE_BRACKET, 'g');
+			}
+			else {
+				entities = MAP_HTML_CHARS_ESCAPED;
+
+				entitiesValues = htmlEscapedValues;
+			}
+
+			return str.replace(regex, A.bind(Util._escapeHTML, Util, !!preventDoubleEscape, entities, entitiesValues));
 		},
 
 		getColumnId: function(str) {
@@ -471,7 +509,7 @@
 				oldBox.options[i] = null;
 			}
 
-			for (var i = 0; i < newBox.length; i++) {
+			for (i = 0; i < newBox.length; i++) {
 				oldBox.options[i] = new Option(newBox[i].value, i);
 			}
 
@@ -568,8 +606,32 @@
 			return value;
 		},
 
-		unescapeHTML: function(str) {
-			return str.replace(REGEX_HTML_UNESCAPE, Util._unescapeHTML);
+		unescapeHTML: function(str, entities) {
+			var regex = REGEX_HTML_UNESCAPE;
+
+			var entitiesMap = MAP_HTML_CHARS_UNESCAPED;
+
+			if (entities) {
+				var entitiesValues = [];
+
+				entitiesMap = {};
+
+				AObject.each(
+					entities,
+					function(item, index) {
+						entitiesMap[item] = index;
+
+						entitiesValues.push(item);
+					}
+				);
+
+				regex = new RegExp(entitiesValues.join('|'), 'gi');
+			}
+
+			return str.replace(
+				regex,
+				A.bind(Util._unescapeHTML, Util, entitiesMap)
+			);
 		},
 
 		_defaultSubmitFormFn: function(event) {
@@ -593,7 +655,7 @@
 				Util._submitLocked = true;
 			}
 
-			if (action != null) {
+			if (action !== null) {
 				form.attr('action', action);
 			}
 
@@ -602,8 +664,33 @@
 			form.attr('target', '');
 		},
 
-		_escapeHTML: function(match) {
-			return MAP_HTML_CHARS_ESCAPED[match];
+		_escapeHTML: function(preventDoubleEscape, entities, entitiesValues, match) {
+			var result;
+
+			if (preventDoubleEscape) {
+				var arrayArgs = AArray(arguments);
+
+				var length = arrayArgs.length;
+
+				var string = arrayArgs[length - 1];
+				var offset = arrayArgs[length - 2];
+
+				var nextSemicolonIndex = string.indexOf(';', offset);
+
+				if (nextSemicolonIndex >= 0) {
+					var entity = string.substring(offset, nextSemicolonIndex + 1);
+
+					if (AArray.indexOf(entitiesValues, entity) >= 0) {
+						result = match;
+					}
+				}
+			}
+
+			if (!result) {
+				result = entities[match];
+			}
+
+			return result;
 		},
 
 		_getEditableInstance: function(title) {
@@ -664,9 +751,21 @@
 			return editable;
 		},
 
-		_unescapeHTML: function(match) {
-			return MAP_HTML_CHARS_UNESCAPED[match];
-		}
+		_prefixEntityValue: function(entityValue) {
+			if (entityValue === STR_LEFT_SQUARE_BRACKET || entityValue === STR_RIGHT_SQUARE_BRACKET ||
+				entityValue === STR_LEFT_ROUND_BRACKET || entityValue === STR_RIGHT_ROUND_BRACKET) {
+
+				entityValue = '\\' + entityValue;
+			}
+
+			return entityValue;
+		},
+
+		_unescapeHTML: function(entities, match) {
+			return entities[match];
+		},
+
+		MAP_HTML_CHARS_ESCAPED: MAP_HTML_CHARS_ESCAPED
 	};
 
 	Liferay.provide(
@@ -748,10 +847,10 @@
 			var selector;
 
 			if (isArray(name)) {
-				selector = 'input[name='+ name.join('], input[name=') + ']';
+				selector = 'input[name='+ name.join('], input[name=') + STR_RIGHT_SQUARE_BRACKET;
 			}
 			else {
-				selector = 'input[name=' + name + ']';
+				selector = 'input[name=' + name + STR_RIGHT_SQUARE_BRACKET;
 			}
 
 			form = A.one(form);
@@ -773,7 +872,7 @@
 			var totalOn = 0;
 			var inputs = A.one(form).all('input[type=checkbox]');
 
-			allBox = A.one(allBox) || A.one(form).one('input[name=' + allBox + ']');
+			allBox = A.one(allBox) || A.one(form).one('input[name=' + allBox + STR_RIGHT_SQUARE_BRACKET);
 
 			if (!isArray(name)) {
 				name = [name];
@@ -1224,7 +1323,7 @@
 				box.all('option').item(selectedIndex).remove(true);
 			}
 			else {
-				box.all('option[value=' + value + ']').item(selectedIndex).remove(true);
+				box.all('option[value=' + value + STR_RIGHT_SQUARE_BRACKET).item(selectedIndex).remove(true);
 			}
 		},
 		['aui-base']
@@ -1293,7 +1392,7 @@
 			var el = A.one('#' + elString);
 
 			if (!el) {
-				el = A.one('textarea[name=' + elString + ']');
+				el = A.one('textarea[name=' + elString + STR_RIGHT_SQUARE_BRACKET);
 			}
 
 			if (el) {
@@ -1435,7 +1534,7 @@
 		Util,
 		'setSelectedValue',
 		function(col, value) {
-			var option = A.one(col).one('option[value=' + value + ']');
+			var option = A.one(col).one('option[value=' + value + STR_RIGHT_SQUARE_BRACKET);
 
 			if (option) {
 				option.set('selected', true);

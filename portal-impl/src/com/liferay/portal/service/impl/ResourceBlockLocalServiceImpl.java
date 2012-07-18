@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.Digester;
-import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.model.AuditedModel;
 import com.liferay.portal.model.GroupedModel;
@@ -39,12 +37,9 @@ import com.liferay.portal.service.PersistedModelLocalService;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
 import com.liferay.portal.service.base.ResourceBlockLocalServiceBaseImpl;
 
-import java.nio.ByteBuffer;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.SortedMap;
 
 /**
  * Manages the creation and upkeep of resource blocks and the resources they
@@ -299,35 +294,6 @@ public class ResourceBlockLocalServiceImpl
 			roleId);
 
 		return getActionIds(resourceBlock.getName(), actionIdsLong);
-	}
-
-	/**
-	 * Returns the permissions hash of the resource permissions. The permissions
-	 * hash is a representation of all the roles with access to the resource
-	 * along with the actions they can perform.
-	 *
-	 * @param  resourceBlockPermissionsContainer the resource block permissions
-	 * @return the permissions hash of the resource permissions
-	 */
-	public String getPermissionsHash(
-		ResourceBlockPermissionsContainer resourceBlockPermissionsContainer) {
-
-		SortedMap<Long, Long> permissions =
-			resourceBlockPermissionsContainer.getPermissions();
-
-		// long is 8 bytes, there are 2 longs per permission, so preallocate
-		// byte buffer to 16 * the number of permissions.
-
-		ByteBuffer byteBuffer = ByteBuffer.allocate(permissions.size() * 16);
-
-		for (Map.Entry<Long, Long> entry : permissions.entrySet()) {
-			byteBuffer.putLong(entry.getKey());
-			byteBuffer.putLong(entry.getValue());
-		}
-
-		byteBuffer.flip();
-
-		return DigesterUtil.digestHex(Digester.SHA_1, byteBuffer);
 	}
 
 	public ResourceBlock getResourceBlock(String name, long primKey)
@@ -793,8 +759,8 @@ public class ResourceBlockLocalServiceImpl
 
 		resourceBlockPermissionsContainer.setPermissions(roleId, actionIdsLong);
 
-		String permissionsHash = getPermissionsHash(
-			resourceBlockPermissionsContainer);
+		String permissionsHash =
+			resourceBlockPermissionsContainer.getPermissionsHash();
 
 		updateResourceBlockId(
 			companyId, groupId, name, permissionedModel, permissionsHash,
@@ -886,8 +852,8 @@ public class ResourceBlockLocalServiceImpl
 			resourceBlockPermissionLocalService.
 			getResourceBlockPermissionsContainer(resourceBlock.getPrimaryKey());
 
-		String permissionsHash = getPermissionsHash(
-			resourceBlockPermissionsContainer);
+		String permissionsHash =
+			resourceBlockPermissionsContainer.getPermissionsHash();
 
 		resourceBlock.setPermissionsHash(permissionsHash);
 

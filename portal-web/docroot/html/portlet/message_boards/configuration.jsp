@@ -79,7 +79,6 @@ else if (tabs2.equals("message-updated-email")) {
 	<liferay-ui:error key="emailMessageUpdatedSubjectPrefix" message="please-enter-a-valid-subject" />
 	<liferay-ui:error key="userRank" message="please-enter-valid-user-ranks" />
 
-
 	<c:choose>
 		<c:when test='<%= tabs2.equals("general") %>'>
 			<aui:fieldset>

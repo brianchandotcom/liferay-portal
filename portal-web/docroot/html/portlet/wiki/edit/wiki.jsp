@@ -22,7 +22,7 @@ String format = BeanParamUtil.getString(wikiPage, request, "format", WikiPageCon
 
 String content = BeanParamUtil.getString(wikiPage, request, "content");
 
-String toggleId = "toggle_id_wiki_editor_help";
+String toggleId = renderResponse.getNamespace() + "toggle_id_wiki_editor_help";
 
 String toggleValue = SessionClicks.get(request, toggleId, null);
 

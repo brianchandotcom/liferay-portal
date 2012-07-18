@@ -67,6 +67,17 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}
 
+	protected boolean isValidUserRank(String rank) {
+		if ((StringUtil.count(rank, StringPool.EQUAL) != 1) ||
+			rank.startsWith(StringPool.EQUAL) ||
+			rank.endsWith(StringPool.EQUAL)) {
+
+			return false;
+		}
+
+		return true;
+	}
+
 	protected void updateThreadPriorities(ActionRequest actionRequest)
 		throws Exception {
 
@@ -108,28 +119,50 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
 		Locale[] locales = LanguageUtil.getAvailableLocales();
 
-		for (int i = 0; i < locales.length; i++) {
-			String languageId = LocaleUtil.toLanguageId(locales[i]);
+		for (Locale locale : locales) {
+			String languageId = LocaleUtil.toLanguageId(locale);
 
 			String[] ranks = StringUtil.splitLines(
 				ParamUtil.getString(actionRequest, "ranks_" + languageId));
 
-			Map<String, String> map = new TreeMap<String, String>();
+			Map<Integer, String> minPostsRankMap =
+				new TreeMap<Integer, String>();
+			Map<String, String> roleRankMap = new TreeMap<String, String>();
 
-			for (int j = 0; j < ranks.length; j++) {
-				String[] kvp = StringUtil.split(ranks[j], CharPool.EQUAL);
+			for (String rank : ranks) {
+				if (!isValidUserRank(rank)) {
+					SessionErrors.add(actionRequest, "userRank");
+
+					return;
+				}
+
+				String[] kvp = StringUtil.split(rank, CharPool.EQUAL);
 
 				String kvpName = kvp[0];
 				String kvpValue = kvp[1];
 
-				map.put(kvpValue, kvpName);
+				if (Validator.isDigit(kvpValue)) {
+					minPostsRankMap.put(Integer.parseInt(kvpValue), kvpName);
+				}
+				else {
+					roleRankMap.put(kvpValue, kvpName);
+				}
 			}
 
-			ranks = new String[map.size()];
+			ranks = new String[minPostsRankMap.size() + roleRankMap.size()];
 
 			int count = 0;
 
-			for (Map.Entry<String, String> entry : map.entrySet()) {
+			for (Map.Entry<Integer, String> entry :
+					minPostsRankMap.entrySet()) {
+
+				String kvpValue = StringUtil.valueOf(entry.getKey());
+				String kvpName = entry.getValue();
+
+				ranks[count++] = kvpName + StringPool.EQUAL + kvpValue;
+			}
+
+			for (Map.Entry<String, String> entry : roleRankMap.entrySet()) {
 				String kvpValue = entry.getKey();
 				String kvpName = entry.getValue();
 

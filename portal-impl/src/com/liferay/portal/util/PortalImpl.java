@@ -91,6 +91,7 @@ import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.LayoutTypePortletConstants;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.PublicRenderParameter;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcePermission;
@@ -4505,6 +4506,17 @@ public class PortalImpl implements Portal {
 			}
 
 			if (layoutTypePortlet.hasPortletId(checkPortletId)) {
+				return true;
+			}
+
+			String resourcePrimKey =
+				String.valueOf(themeDisplay.getPlid()).concat(
+				PortletConstants.LAYOUT_SEPARATOR).concat(portletId);
+
+			if (ResourcePermissionLocalServiceUtil.getResourcePermissionsCount(
+					themeDisplay.getCompanyId(), portlet.getPortletName(),
+					ResourceConstants.SCOPE_INDIVIDUAL, resourcePrimKey) > 0) {
+
 				return true;
 			}
 		}

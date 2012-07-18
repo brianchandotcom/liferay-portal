@@ -59,6 +59,7 @@ public class ResourceBlockPermissionsContainer {
 	 * @return the permissions hash of the resource permissions
 	 */
 	public String getPermissionsHash() {
+
 		// long is 8 bytes, there are 2 longs per permission, so preallocate
 		// byte buffer to 16 * the number of permissions.
 

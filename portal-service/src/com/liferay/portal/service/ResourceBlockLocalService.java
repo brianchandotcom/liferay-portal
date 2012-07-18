@@ -337,18 +337,6 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 		com.liferay.portal.model.ResourceBlock resourceBlock, long roleId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	/**
-	* Returns the permissions hash of the resource permissions. The permissions
-	* hash is a representation of all the roles with access to the resource
-	* along with the actions they can perform.
-	*
-	* @param resourceBlockPermissionsContainer the resource block permissions
-	* @return the permissions hash of the resource permissions
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.lang.String getPermissionsHash(
-		com.liferay.portal.model.ResourceBlockPermissionsContainer resourceBlockPermissionsContainer);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.ResourceBlock getResourceBlock(
 		java.lang.String name, long primKey)

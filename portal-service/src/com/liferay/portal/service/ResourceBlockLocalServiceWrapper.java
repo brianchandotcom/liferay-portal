@@ -394,19 +394,6 @@ public class ResourceBlockLocalServiceWrapper
 		return _resourceBlockLocalService.getPermissions(resourceBlock, roleId);
 	}
 
-	/**
-	* Returns the permissions hash of the resource permissions. The permissions
-	* hash is a representation of all the roles with access to the resource
-	* along with the actions they can perform.
-	*
-	* @param resourceBlockPermissionsContainer the resource block permissions
-	* @return the permissions hash of the resource permissions
-	*/
-	public java.lang.String getPermissionsHash(
-		com.liferay.portal.model.ResourceBlockPermissionsContainer resourceBlockPermissionsContainer) {
-		return _resourceBlockLocalService.getPermissionsHash(resourceBlockPermissionsContainer);
-	}
-
 	public com.liferay.portal.model.ResourceBlock getResourceBlock(
 		java.lang.String name, long primKey)
 		throws com.liferay.portal.kernel.exception.PortalException,

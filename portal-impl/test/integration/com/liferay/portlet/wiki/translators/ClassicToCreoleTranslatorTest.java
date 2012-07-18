@@ -182,6 +182,17 @@ public class ClassicToCreoleTranslatorTest {
 	}
 
 	@Test
+	public void testMultilinePreWithBraces() throws Exception {
+		String content = "previous line\n monospace\n {second line}\nnext line";
+
+		String expected =
+			"previous line\n{{{\n monospace\n {second line}\n}}}\nnext line";
+		String actual = _translate(content);
+
+		Assert.assertEquals(expected, actual);
+	}
+
+	@Test
 	public void testNotListItem() throws Exception {
 		String content = "\t*item";
 

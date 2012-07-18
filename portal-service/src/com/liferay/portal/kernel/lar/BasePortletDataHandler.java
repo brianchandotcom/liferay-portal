@@ -49,6 +49,10 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		}
 	}
 
+	public String[] getDataPortletPreferences() {
+		return new String[0];
+	}
+
 	public PortletDataHandlerControl[] getExportControls() {
 		return new PortletDataHandlerControl[0];
 	}

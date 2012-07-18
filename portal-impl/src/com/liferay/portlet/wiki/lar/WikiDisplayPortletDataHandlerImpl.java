@@ -46,6 +46,11 @@ import javax.portlet.PortletPreferences;
 public class WikiDisplayPortletDataHandlerImpl extends BasePortletDataHandler {
 
 	@Override
+	public String[] getDataPortletPreferences() {
+		return new String[] {"title", "nodeId"};
+	}
+
+	@Override
 	public PortletDataHandlerControl[] getExportControls() {
 		return new PortletDataHandlerControl[] {
 			_nodesAndPages

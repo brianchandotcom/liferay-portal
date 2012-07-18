@@ -48,6 +48,11 @@ import javax.portlet.PortletPreferences;
 public class RSSPortletDataHandlerImpl extends JournalPortletDataHandlerImpl {
 
 	@Override
+	public String[] getDataPortletPreferences() {
+		return new String[] {"footerArticleValues", "headerArticleValues"};
+	}
+
+	@Override
 	public PortletDataHandlerControl[] getExportControls() {
 		return new PortletDataHandlerControl[] {
 			_selectedArticles, _embeddedAssets

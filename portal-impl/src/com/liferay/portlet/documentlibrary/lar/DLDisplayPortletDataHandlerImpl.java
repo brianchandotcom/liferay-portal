@@ -42,6 +42,11 @@ import javax.portlet.PortletPreferences;
 public class DLDisplayPortletDataHandlerImpl extends BasePortletDataHandler {
 
 	@Override
+	public String[] getDataPortletPreferences() {
+		return new String[] {"rootFolderId"};
+	}
+
+	@Override
 	public PortletDataHandlerControl[] getExportControls() {
 		return new PortletDataHandlerControl[] {
 			_foldersAndDocuments, _shortcuts, _previewsAndThumbnails, _ranks

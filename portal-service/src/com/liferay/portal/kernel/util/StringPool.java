@@ -127,6 +127,8 @@ public class StringPool {
 
 	public static final String NULL = "null";
 
+	public static final String NULL_CHAR = "\u0000";
+
 	public static final String OPEN_BRACKET = "[";
 
 	public static final String OPEN_CURLY_BRACE = "{";

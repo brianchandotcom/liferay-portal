@@ -616,9 +616,7 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 			byte[] bytes = portletDataContext.getZipEntryAsByteArray(
 				smallImagePath);
 
-			smallFile = File.createTempFile(
-				String.valueOf(article.getSmallImageId()),
-				StringPool.PERIOD + article.getSmallImageType());
+			smallFile = FileUtil.createTempFile(article.getSmallImageType());
 
 			FileUtil.write(smallFile, bytes);
 		}
@@ -1268,9 +1266,8 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 				smallImagePath);
 
 			if (bytes != null) {
-				smallFile = File.createTempFile(
-					String.valueOf(template.getSmallImageId()),
-					StringPool.PERIOD + template.getSmallImageType());
+				smallFile = FileUtil.createTempFile(
+					template.getSmallImageType());
 
 				FileUtil.write(smallFile, bytes);
 			}

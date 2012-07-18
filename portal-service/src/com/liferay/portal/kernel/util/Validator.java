@@ -440,13 +440,31 @@ public class Validator {
 
 		// LEP-1445
 
-		for (int i = 0; i < _EMAIL_ADDRESS_SPECIAL_CHAR.length; i++) {
-			if (c == _EMAIL_ADDRESS_SPECIAL_CHAR[i]) {
+		for (char specialChar : _EMAIL_ADDRESS_SPECIAL_CHAR) {
+			if (c == specialChar) {
 				return true;
 			}
 		}
 
 		return false;
+	}
+
+	/**
+	 * Returns <code>true</code> if the file extension is valid
+	 *
+	 * @param  fileExtension file extension
+	 * @return <code>true</code> if the extension is valid; <code>false</code>
+	 *         otherwise
+	 */
+	public static boolean isFileExtension(String fileExtension) {
+		if (isNull(fileExtension) || fileExtension.contains(StringPool.SLASH) ||
+			fileExtension.contains(StringPool.BACK_SLASH) ||
+			fileExtension.contains(StringPool.NULL_CHAR)) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	/**

@@ -74,8 +74,13 @@ public class ActionUtil {
 				serviceContext.setAddGuestPermissions(false);
 			}
 
+			long companyId = PortalUtil.getCompanyId(portletRequest);
+
+			long defaultUserId = UserLocalServiceUtil.getDefaultUserId(
+				companyId);
+
 			node = WikiNodeLocalServiceUtil.addDefaultNode(
-				themeDisplay.getUserId(), serviceContext);
+				defaultUserId, serviceContext);
 		}
 		else {
 			node = WikiUtil.getFirstNode(portletRequest);
@@ -168,13 +173,10 @@ public class ActionUtil {
 		}
 		catch (NoSuchPageException nspe) {
 			if (title.equals(WikiPageConstants.FRONT_PAGE) && (version == 0)) {
-				long userId = PortalUtil.getUserId(request);
+				long companyId = PortalUtil.getCompanyId(request);
 
-				if (userId == 0) {
-					long companyId = PortalUtil.getCompanyId(request);
-
-					userId = UserLocalServiceUtil.getDefaultUserId(companyId);
-				}
+				long defaultUserId = UserLocalServiceUtil.getDefaultUserId(
+					companyId);
 
 				ServiceContext serviceContext = new ServiceContext();
 
@@ -195,8 +197,8 @@ public class ActionUtil {
 					WorkflowThreadLocal.setEnabled(false);
 
 					page = WikiPageLocalServiceUtil.addPage(
-						userId, nodeId, title, null, WikiPageConstants.NEW,
-						true, serviceContext);
+						defaultUserId, nodeId, title, null,
+						WikiPageConstants.NEW, true, serviceContext);
 				}
 				finally {
 					WorkflowThreadLocal.setEnabled(workflowEnabled);

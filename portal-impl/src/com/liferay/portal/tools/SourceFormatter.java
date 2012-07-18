@@ -2032,11 +2032,22 @@ public class SourceFormatter {
 					if (pos != -1) {
 						String attribute = trimmedLine.substring(0, pos);
 
-						if (Validator.isNotNull(previousAttribute)) {
+						if (!trimmedLine.endsWith(StringPool.QUOTE) &&
+							!trimmedLine.endsWith(StringPool.APOSTROPHE)) {
+
+							_sourceFormatterHelper.printError(
+								fileName,
+								"attribute: " + fileName + " " + lineCount);
+
+							readAttributes = false;
+						}
+						else if (Validator.isNotNull(previousAttribute)) {
 							if (!_isJSPAttributName(attribute)) {
 								_sourceFormatterHelper.printError(
 									fileName,
 									"attribute: " + fileName + " " + lineCount);
+
+								readAttributes = false;
 							}
 							else if (Validator.isNull(
 										previousAttributeAndValue) &&
@@ -2048,7 +2059,13 @@ public class SourceFormatter {
 							}
 						}
 
-						previousAttribute = attribute;
+						if (!readAttributes) {
+							previousAttribute = null;
+							previousAttributeAndValue = null;
+						}
+						else {
+							previousAttribute = attribute;
+						}
 					}
 				}
 				else {

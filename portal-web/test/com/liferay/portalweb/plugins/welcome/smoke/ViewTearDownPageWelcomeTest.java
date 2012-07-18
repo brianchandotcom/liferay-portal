@@ -23,8 +23,8 @@ public class ViewTearDownPageWelcomeTest extends BaseTestCase {
 	public void testViewTearDownPageWelcome() throws Exception {
 		selenium.open("/web/guest/what-we-do/");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent("link=Test Page1"));
-		assertFalse(selenium.isElementPresent("link=Test Page2"));
-		assertFalse(selenium.isElementPresent("link=Test Page3"));
+		assertTrue(selenium.isElementNotPresent("link=Test Page1"));
+		assertTrue(selenium.isElementNotPresent("link=Test Page2"));
+		assertTrue(selenium.isElementNotPresent("link=Test Page3"));
 	}
 }

@@ -40,7 +40,7 @@ public class SimpleRuleHandler implements RuleHandler {
 	public boolean evaluateRule(MDRRule mdrRule, ThemeDisplay themeDisplay) {
 		Device device = themeDisplay.getDevice();
 
-		if (device == null) {
+		if (device == null || Validator.isNull(device.getOS())) {
 			return false;
 		}
 

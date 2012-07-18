@@ -21,10 +21,9 @@ import com.liferay.portal.kernel.atom.AtomCollectionAdapterRegistryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.User;
-import com.liferay.portal.security.auth.CompanyThreadLocal;
-import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.security.permission.PermissionThreadLocal;
+import com.liferay.portal.security.RemoteAccessTypeThreadLocal;
+import com.liferay.portal.security.auth.PortalAAManager;
+import com.liferay.portal.service.UserLocalServiceUtil;
 
 import java.util.List;
 
@@ -63,30 +62,25 @@ public class AtomServlet extends AbderaServlet {
 			HttpServletRequest request, HttpServletResponse response)
 		throws ServletException {
 
+		boolean remoteAccess = RemoteAccessTypeThreadLocal.isRemoteAccess();
+
 		try {
-			UserResolver userResolver = new UserResolver(request);
+			long userId = PortalAAManager.getInstance()
+				.getAuthenticationContext().getVerificationResult().getUserId();
 
-			CompanyThreadLocal.setCompanyId(userResolver.getCompanyId());
+			User user = UserLocalServiceUtil.getUser(userId);
 
-			User user = userResolver.getUser();
+			AtomUtil.saveUserInRequest(request, user);
 
-			if (user != null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug("User " + user.getUserId());
-				}
-
-				PermissionChecker permissionChecker =
-					PermissionCheckerFactoryUtil.create(user);
-
-				PermissionThreadLocal.setPermissionChecker(permissionChecker);
-
-				AtomUtil.saveUserInRequest(request, user);
-			}
+			RemoteAccessTypeThreadLocal.setRemoteAccess(true);
 
 			super.service(request, response);
 		}
 		catch (Exception e) {
 			throw new ServletException(e);
+		}
+		finally {
+			RemoteAccessTypeThreadLocal.setRemoteAccess(remoteAccess);
 		}
 	}
 

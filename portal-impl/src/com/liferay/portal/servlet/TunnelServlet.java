@@ -26,11 +26,9 @@ import com.liferay.portal.kernel.util.MethodWrapper;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.RemoteAccessTypeThreadLocal;
 import com.liferay.portal.security.auth.HttpPrincipal;
-import com.liferay.portal.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.security.permission.PermissionThreadLocal;
+import com.liferay.portal.security.auth.PortalAAManager;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalInstances;
 
@@ -69,6 +67,8 @@ public class TunnelServlet extends HttpServlet {
 		}
 
 		Object returnObj = null;
+
+		boolean remoteAccess = RemoteAccessTypeThreadLocal.isRemoteAccess();
 
 		try {
 			ObjectValuePair<HttpPrincipal, Object> ovp =
@@ -129,15 +129,12 @@ public class TunnelServlet extends HttpServlet {
 				}
 
 				if (user != null) {
-					PrincipalThreadLocal.setName(user.getUserId());
-
-					PermissionChecker permissionChecker =
-						PermissionCheckerFactoryUtil.create(user);
-
-					PermissionThreadLocal.setPermissionChecker(
-						permissionChecker);
+					PortalAAManager pam = PortalAAManager.getInstance();
+					pam.initAuthorizationContext(user.getUserId());
 				}
 			}
+
+			RemoteAccessTypeThreadLocal.setRemoteAccess(true);
 
 			if (returnObj == null) {
 				if (methodHandler != null) {
@@ -159,6 +156,9 @@ public class TunnelServlet extends HttpServlet {
 		}
 		catch (Exception e) {
 			_log.error(e, e);
+		}
+		finally {
+			RemoteAccessTypeThreadLocal.setRemoteAccess(remoteAccess);
 		}
 
 		if (returnObj != null) {

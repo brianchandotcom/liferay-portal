@@ -50,6 +50,22 @@ public class ProtectedServletRequest extends HttpServletRequestWrapper {
 			return super.getAuthType();
 		}
 
+		if (HttpServletRequest.BASIC_AUTH.equals(_authType)) {
+			return HttpServletRequest.BASIC_AUTH;
+		}
+
+		if (HttpServletRequest.CLIENT_CERT_AUTH.equals(_authType)) {
+			return HttpServletRequest.CLIENT_CERT_AUTH;
+		}
+
+		if (HttpServletRequest.DIGEST_AUTH.equals(_authType)) {
+			return HttpServletRequest.DIGEST_AUTH;
+		}
+
+		if (HttpServletRequest.FORM_AUTH.equals(_authType)) {
+			return HttpServletRequest.FORM_AUTH;
+		}
+
 		return _authType;
 	}
 

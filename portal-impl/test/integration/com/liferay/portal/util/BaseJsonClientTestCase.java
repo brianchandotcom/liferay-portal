@@ -50,7 +50,7 @@ import org.apache.http.util.EntityUtils;
  */
 public class BaseJsonClientTestCase {
 
-	public static final String URL_JSONWS = "/api/secure/jsonws";
+	public static final String URL_JSONWS = "/api/jsonws";
 
 	@SuppressWarnings("unchecked")
 	public void checkException(String responseContent) throws Exception {

@@ -762,13 +762,9 @@ public class PropsValues {
 
 	public static final String[] JSON_SERVICE_INVALID_CLASS_NAMES = PropsUtil.getArray(PropsKeys.JSON_SERVICE_INVALID_CLASS_NAMES);
 
-	public static final String[] JSON_SERVICE_PUBLIC_METHODS = PropsUtil.getArray(PropsKeys.JSON_SERVICE_PUBLIC_METHODS);
-
 	public static final boolean JSON_WEB_SERVICE_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.JSON_WEB_SERVICE_ENABLED));
 
 	public static final String[] JSONWS_WEB_SERVICE_INVALID_HTTP_METHODS = PropsUtil.getArray(PropsKeys.JSONWS_WEB_SERVICE_INVALID_HTTP_METHODS);
-
-	public static final String[] JSONWS_WEB_SERVICE_PUBLIC_METHODS = PropsUtil.getArray(PropsKeys.JSONWS_WEB_SERVICE_PUBLIC_METHODS);
 
 	public static final boolean JSONWS_WEB_SERVICE_STRICT_HTTP_METHOD = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.JSONWS_WEB_SERVICE_STRICT_HTTP_METHOD));
 
@@ -1275,6 +1271,8 @@ public class PropsValues {
 	public static final int POP_SERVER_NOTIFICATIONS_INTERVAL = GetterUtil.getInteger(PropsUtil.get(PropsKeys.POP_SERVER_NOTIFICATIONS_INTERVAL));
 
 	public static final String POP_SERVER_SUBDOMAIN = PropsUtil.get(PropsKeys.POP_SERVER_SUBDOMAIN);
+
+	public static final String[] PORTAL_AUTHENTICATION_VERIFIER_PIPELINE = PropsUtil.getArray(PropsKeys.PORTAL_AUTHENTICATION_VERIFIER_PIPELINE);
 
 	public static final String PORTAL_CTX = PropsUtil.get(PropsKeys.PORTAL_CTX);
 

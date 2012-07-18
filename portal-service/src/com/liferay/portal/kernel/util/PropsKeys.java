@@ -1041,13 +1041,9 @@ public interface PropsKeys {
 
 	public static final String JSON_SERVICE_INVALID_CLASS_NAMES = "json.service.invalid.class.names";
 
-	public static final String JSON_SERVICE_PUBLIC_METHODS = "json.service.public.methods";
-
 	public static final String JSON_WEB_SERVICE_ENABLED = "json.web.service.enabled";
 
 	public static final String JSONWS_WEB_SERVICE_INVALID_HTTP_METHODS = "jsonws.web.service.invalid.http.methods";
-
-	public static final String JSONWS_WEB_SERVICE_PUBLIC_METHODS = "jsonws.web.service.public.methods";
 
 	public static final String JSONWS_WEB_SERVICE_STRICT_HTTP_METHOD = "jsonws.web.service.strict.http.method";
 
@@ -1726,6 +1722,8 @@ public interface PropsKeys {
 	public static final String POP_SERVER_NOTIFICATIONS_INTERVAL = "pop.server.notifications.interval";
 
 	public static final String POP_SERVER_SUBDOMAIN = "pop.server.subdomain";
+
+	public static final String PORTAL_AUTHENTICATION_VERIFIER_PIPELINE = "portal.authentication.verifier.pipeline";
 
 	public static final String PORTAL_CTX = "portal.ctx";
 

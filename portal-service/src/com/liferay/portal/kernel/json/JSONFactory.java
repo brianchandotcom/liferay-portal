@@ -74,4 +74,6 @@ public interface JSONFactory {
 
 	public String serializeException(Exception exception);
 
+	public String serializeThrowable(Throwable throwable);
+
 }

@@ -15,6 +15,7 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.ResourceBlocksNotSupportedException;
+import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
@@ -35,6 +36,7 @@ import com.liferay.portal.model.ResourceBlock;
 import com.liferay.portal.model.ResourceBlockConstants;
 import com.liferay.portal.model.ResourceBlockPermissionsContainer;
 import com.liferay.portal.model.ResourceTypePermission;
+import com.liferay.portal.model.impl.ResourceBlockImpl;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.security.permission.ResourceBlockIdsBag;
@@ -51,6 +53,7 @@ import java.util.Map;
  * contain.
  *
  * @author Connor McKay
+ * @author Shuyang Zhou
  */
 public class ResourceBlockLocalServiceImpl
 	extends ResourceBlockLocalServiceBaseImpl {
@@ -356,6 +359,9 @@ public class ResourceBlockLocalServiceImpl
 			isPermissionedModelLocalService(name);
 	}
 
+	@Transactional(
+		propagation= Propagation.REQUIRES_NEW,
+		isolation= Isolation.READ_COMMITTED)
 	public void releasePermissionedModelResourceBlock(
 			PermissionedModel permissionedModel)
 		throws PortalException, SystemException {
@@ -390,25 +396,40 @@ public class ResourceBlockLocalServiceImpl
 
 		Session session = resourceBlockPersistence.openSession();
 
-		try {
-			SQLQuery sqlQuery = session.createSQLQuery(_SQL_UPDATE_RELEASE);
+		while (true) {
+			try {
+				SQLQuery sqlQuery = session.createSQLQuery(_SQL_UPDATE_RELEASE);
 
-			QueryPos qPos = QueryPos.getInstance(sqlQuery);
+				QueryPos qPos = QueryPos.getInstance(sqlQuery);
 
-			qPos.add(resourceBlockId);
+				qPos.add(resourceBlockId);
 
-			sqlQuery.executeUpdate();
+				int affectRows = sqlQuery.executeUpdate();
 
-			sqlQuery = session.createSQLQuery(_SQL_DELETE_RELEASED);
+				if (affectRows > 0) {
+					ResourceBlock resourceBlock = (ResourceBlock)session.get(
+						ResourceBlockImpl.class, Long.valueOf(resourceBlockId));
 
-			qPos = QueryPos.getInstance(sqlQuery);
+					if (resourceBlock.getReferenceCount() == 0) {
+						sqlQuery = session.createSQLQuery(_SQL_DELETE_RELEASED);
 
-			qPos.add(resourceBlockId);
+						qPos = QueryPos.getInstance(sqlQuery);
 
-			sqlQuery.executeUpdate();
-		}
-		finally {
-			resourceBlockPersistence.closeSession(session);
+						qPos.add(resourceBlockId);
+
+						sqlQuery.executeUpdate();
+					}
+				}
+
+				resourceBlockPersistence.closeSession(session);
+
+				break;
+			}
+			catch (ORMException orme) {
+				_log.warn(
+					"Failed to decrease reference count for ResourceBlock " +
+						"id : " + resourceBlockId + ", retry.", orme);
+			}
 		}
 	}
 
@@ -420,6 +441,9 @@ public class ResourceBlockLocalServiceImpl
 	 * @param  resourceBlock the resource block
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Transactional(
+		propagation= Propagation.REQUIRES_NEW,
+		isolation= Isolation.READ_COMMITTED)
 	public void releaseResourceBlock(ResourceBlock resourceBlock)
 		throws SystemException {
 
@@ -739,7 +763,7 @@ public class ResourceBlockLocalServiceImpl
 		String permissionsHash =
 			resourceBlockPermissionsContainer.getPermissionsHash();
 
-		updateResourceBlockId(
+		resourceBlockLocalService.updateResourceBlockId(
 			companyId, groupId, name, permissionedModel, permissionsHash,
 			resourceBlockPermissionsContainer);
 
@@ -755,37 +779,31 @@ public class ResourceBlockLocalServiceImpl
 			ResourceBlockPermissionsContainer resourceBlockPermissionsContainer)
 		throws SystemException {
 
-		Session session = resourceBlockPersistence.openSession();
-
 		ResourceBlock resourceBlock;
 
-		try {
-			while (true) {
-				resourceBlock = resourceBlockPersistence.fetchByC_G_N_P(
-					companyId, groupId, name, permissionsHash, false);
+		while (true) {
+			resourceBlock = resourceBlockPersistence.fetchByC_G_N_P(
+				companyId, groupId, name, permissionsHash, false);
 
-				if (resourceBlock == null) {
-					try {
-						resourceBlock = addResourceBlock(
-							companyId, groupId, name, permissionsHash,
-							resourceBlockPermissionsContainer);
-
-						session.flush();
-					}
-					catch (SystemException se) {
-						_log.warn(
-							"Failed to insert a new resource block, retrying.",
-							se);
-
-						continue;
-					}
-					break;
+			if (resourceBlock == null) {
+				try {
+					resourceBlock = addResourceBlock(
+						companyId, groupId, name, permissionsHash,
+						resourceBlockPermissionsContainer);
 				}
-				else {
-					// Prevent Hibernate from automatically persisting changes
-					// and overwriting the update here.
-					session.evict(resourceBlock);
+				catch (SystemException se) {
+					_log.warn(
+						"Failed to insert a new resource block, retry.", se);
 
+					continue;
+				}
+
+				break;
+			}
+			else {
+				Session session = resourceBlockPersistence.openSession();
+
+				try {
 					SQLQuery sqlQuery = session.createSQLQuery(
 						_SQL_UPDATE_RETAIN);
 
@@ -796,17 +814,41 @@ public class ResourceBlockLocalServiceImpl
 					int affectRows = sqlQuery.executeUpdate();
 
 					if (affectRows > 0) {
+						// Note, this is not very accurate, under concurrent
+						// environment, the caller may see discontinuous
+						// reference count changing in a system-wide point of
+						// view.
+						// This is caused by the decision of using "update set"
+						// solution. So far this seems to be ok as no one really
+						// depends on a continuous reference count changing. But
+						// if someday this becomes required, we should change to
+						// "update where" solution.
+						resourceBlock.setReferenceCount(
+							resourceBlock.getReferenceCount() + 1);
+
 						break;
 					}
 				}
+				catch (ORMException orme) {
+					_log.warn(
+						"Failed to increase reference count for " +
+							"ResourceBlock id : " +
+								resourceBlock.getResourceBlockId() + ", retry.",
+						orme);
+				}
+				finally {
+					// Prevent Hibernate from automatically flushing out first
+					// level cache, which will lead to a regular update to
+					// overwrite previous change causing lost update.
+					session.evict(resourceBlock);
+
+					resourceBlockPersistence.closeSession(session);
+				}
 			}
-		}
-		finally {
-			resourceBlockPersistence.closeSession(session);
 		}
 
 		permissionedModel.setResourceBlockId(
-				resourceBlock.getResourceBlockId());
+			resourceBlock.getResourceBlockId());
 
 		permissionedModel.persist();
 

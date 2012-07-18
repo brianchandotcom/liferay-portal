@@ -726,7 +726,7 @@ public class LiferayRepository
 		long defaultFileEntryTypeId = ParamUtil.getLong(
 			serviceContext, "defaultFileEntryTypeId");
 		SortedArrayList<Long> fileEntryTypeIds = getLongList(
-			serviceContext, "fileEntryTypeSearchContainerPrimaryKeys");
+			serviceContext, "dlFileEntryTypesSearchContainerPrimaryKeys");
 		boolean overrideFileEntryTypes = ParamUtil.getBoolean(
 			serviceContext, "overrideFileEntryTypes");
 

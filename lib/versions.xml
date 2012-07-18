@@ -2381,6 +2381,20 @@
 		</comments>
 	</library>
 	<library>
+		<file-name>portal/kxml2.jar</file-name>
+		<version>2.3.0</version>
+		<project-name>XmlPull API</project-name>
+		<project-url>http://kxml.sourceforge.net/kxml2</project-url>
+		<licenses>
+			<license>
+				<license-name>BSD Style License</license-name>
+			</license>
+		</licenses>
+		<comments>
+			See LPS-24702.
+		</comments>
+	</library>
+	<library>
 		<file-name>portal/liferay-icu4j.jar</file-name>
 		<version>4.0.1</version>
 		<project-name>ICU4J</project-name>
@@ -3396,7 +3410,7 @@
 	</library>
 	<library>
 		<file-name>portal/xstream.jar</file-name>
-		<version>1.3.1</version>
+		<version>1.4.2</version>
 		<project-name>XStream</project-name>
 		<project-url>http://xstream.codehaus.org</project-url>
 		<licenses>

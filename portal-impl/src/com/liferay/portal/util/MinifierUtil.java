@@ -96,8 +96,9 @@ public class MinifierUtil {
 		PropsUtil.get(PropsKeys.MINIFIER_YUI_COMPRESSOR_CSS_LINE_BREAK));
 
 	private static final boolean _JS_DISABLE_OPTIMIZATIONS =
-		GetterUtil.getBoolean(PropsUtil.get(
-			PropsKeys.MINIFIER_YUI_COMPRESSOR_JS_DISABLE_OPTIMIZATION));
+		GetterUtil.getBoolean(
+			PropsUtil.get(
+				PropsKeys.MINIFIER_YUI_COMPRESSOR_JS_DISABLE_OPTIMIZATION));
 
 	private static final int _JS_LINE_BREAK = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.MINIFIER_YUI_COMPRESSOR_JS_LINE_BREAK));
@@ -106,8 +107,9 @@ public class MinifierUtil {
 		PropsUtil.get(PropsKeys.MINIFIER_YUI_COMPRESSOR_JS_MUNGE));
 
 	private static final boolean _JS_PRESERVE_ALL_SEMICOLONS =
-		GetterUtil.getBoolean(PropsUtil.get(
-			PropsKeys.MINIFIER_YUI_COMPRESSOR_JS_PRESERVE_ALL_SEMICOLONS));
+		GetterUtil.getBoolean(
+			PropsUtil.get(
+				PropsKeys.MINIFIER_YUI_COMPRESSOR_JS_PRESERVE_ALL_SEMICOLONS));
 
 	private static final boolean _JS_VERBOSE = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.MINIFIER_YUI_COMPRESSOR_JS_VERBOSE));

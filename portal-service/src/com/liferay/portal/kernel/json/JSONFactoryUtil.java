@@ -139,6 +139,10 @@ public class JSONFactoryUtil {
 		return getJSONFactory().serializeException(exception);
 	}
 
+	public static String serializeThrowable(Throwable throwable) {
+		return getJSONFactory().serializeThrowable(throwable);
+	}
+
 	public void setJSONFactory(JSONFactory jsonFactory) {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 

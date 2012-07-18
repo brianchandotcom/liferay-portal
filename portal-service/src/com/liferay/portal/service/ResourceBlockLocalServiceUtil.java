@@ -451,8 +451,7 @@ public class ResourceBlockLocalServiceUtil {
 
 	public static void releasePermissionedModelResourceBlock(
 		com.liferay.portal.model.PermissionedModel permissionedModel)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.SystemException {
 		getService().releasePermissionedModelResourceBlock(permissionedModel);
 	}
 

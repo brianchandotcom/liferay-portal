@@ -56,6 +56,36 @@
 				[$PRIM_KEYS$]
 		]]>
 	</sql>
+	<sql id="com.liferay.portal.service.impl.ResourceBlockLocalServiceImpl.deleteResourceBlock">
+		<![CDATA[
+			DELETE FROM
+				ResourceBlock
+			WHERE
+				(referenceCount <= 0) AND
+				(resourceBlockId = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.portal.service.impl.ResourceBlockLocalServiceImpl.releaseResourceBlock">
+		<![CDATA[
+			UPDATE
+				ResourceBlock
+			SET
+				referenceCount = (referenceCount - 1)
+			WHERE
+				(resourceBlockId = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.portal.service.impl.ResourceBlockLocalServiceImpl.retainResourceBlock">
+		<![CDATA[
+			UPDATE
+				ResourceBlock
+			SET
+				referenceCount = (referenceCount + 1)
+			WHERE
+				(referenceCount > 0) AND
+				(resourceBlockId = ?)
+		]]>
+	</sql>
 	<sql id="com.liferay.portal.service.persistence.GroupFinder.countByGroupId">
 		<![CDATA[
 			SELECT

@@ -373,8 +373,7 @@ public interface ResourceBlockLocalService extends BaseLocalService,
 
 	public void releasePermissionedModelResourceBlock(
 		com.liferay.portal.model.PermissionedModel permissionedModel)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public void releasePermissionedModelResourceBlock(java.lang.String name,
 		long primKey)

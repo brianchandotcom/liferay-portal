@@ -43,6 +43,7 @@ import com.liferay.portal.security.permission.ResourceBlockIdsBag;
 import com.liferay.portal.service.PersistedModelLocalService;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
 import com.liferay.portal.service.base.ResourceBlockLocalServiceBaseImpl;
+import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -360,11 +361,11 @@ public class ResourceBlockLocalServiceImpl
 	}
 
 	@Transactional(
-		propagation= Propagation.REQUIRES_NEW,
-		isolation= Isolation.READ_COMMITTED)
+		isolation = Isolation.READ_COMMITTED,
+		propagation = Propagation.REQUIRES_NEW)
 	public void releasePermissionedModelResourceBlock(
 			PermissionedModel permissionedModel)
-		throws PortalException, SystemException {
+		throws SystemException {
 
 		releaseResourceBlock(permissionedModel.getResourceBlockId());
 	}
@@ -389,8 +390,8 @@ public class ResourceBlockLocalServiceImpl
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Transactional(
-		propagation= Propagation.REQUIRES_NEW,
-		isolation= Isolation.READ_COMMITTED)
+		isolation = Isolation.READ_COMMITTED,
+		propagation = Propagation.REQUIRES_NEW)
 	public void releaseResourceBlock(long resourceBlockId)
 		throws SystemException {
 
@@ -398,20 +399,22 @@ public class ResourceBlockLocalServiceImpl
 
 		while (true) {
 			try {
-				SQLQuery sqlQuery = session.createSQLQuery(_SQL_UPDATE_RELEASE);
+				String sql = CustomSQLUtil.get(_RELEASE_RESOURCE_BLOCK);
+
+				SQLQuery sqlQuery = session.createSQLQuery(sql);
 
 				QueryPos qPos = QueryPos.getInstance(sqlQuery);
 
 				qPos.add(resourceBlockId);
 
-				int affectRows = sqlQuery.executeUpdate();
-
-				if (affectRows > 0) {
+				if (sqlQuery.executeUpdate() > 0) {
 					ResourceBlock resourceBlock = (ResourceBlock)session.get(
 						ResourceBlockImpl.class, Long.valueOf(resourceBlockId));
 
 					if (resourceBlock.getReferenceCount() == 0) {
-						sqlQuery = session.createSQLQuery(_SQL_DELETE_RELEASED);
+						sql = CustomSQLUtil.get(_DELETE_RESOURCE_BLOCK);
+
+						sqlQuery = session.createSQLQuery(sql);
 
 						qPos = QueryPos.getInstance(sqlQuery);
 
@@ -426,9 +429,11 @@ public class ResourceBlockLocalServiceImpl
 				break;
 			}
 			catch (ORMException orme) {
-				_log.warn(
-					"Failed to decrease reference count for ResourceBlock " +
-						"id : " + resourceBlockId + ", retry.", orme);
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to decrement reference count for resource " +
+							"block " + resourceBlockId + ". Retrying.");
+				}
 			}
 		}
 	}
@@ -442,8 +447,8 @@ public class ResourceBlockLocalServiceImpl
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Transactional(
-		propagation= Propagation.REQUIRES_NEW,
-		isolation= Isolation.READ_COMMITTED)
+		isolation = Isolation.READ_COMMITTED,
+		propagation = Propagation.REQUIRES_NEW)
 	public void releaseResourceBlock(ResourceBlock resourceBlock)
 		throws SystemException {
 
@@ -771,15 +776,15 @@ public class ResourceBlockLocalServiceImpl
 	}
 
 	@Transactional(
-		propagation= Propagation.REQUIRES_NEW,
-		isolation= Isolation.READ_COMMITTED)
+		isolation = Isolation.READ_COMMITTED,
+		propagation = Propagation.REQUIRES_NEW)
 	public ResourceBlock updateResourceBlockId(
 			long companyId, long groupId, String name,
 			PermissionedModel permissionedModel, String permissionsHash,
 			ResourceBlockPermissionsContainer resourceBlockPermissionsContainer)
 		throws SystemException {
 
-		ResourceBlock resourceBlock;
+		ResourceBlock resourceBlock = null;
 
 		while (true) {
 			resourceBlock = resourceBlockPersistence.fetchByC_G_N_P(
@@ -792,8 +797,10 @@ public class ResourceBlockLocalServiceImpl
 						resourceBlockPermissionsContainer);
 				}
 				catch (SystemException se) {
-					_log.warn(
-						"Failed to insert a new resource block, retry.", se);
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to add a new resource block. Retrying");
+					}
 
 					continue;
 				}
@@ -804,25 +811,24 @@ public class ResourceBlockLocalServiceImpl
 				Session session = resourceBlockPersistence.openSession();
 
 				try {
-					SQLQuery sqlQuery = session.createSQLQuery(
-						_SQL_UPDATE_RETAIN);
+					String sql = CustomSQLUtil.get(_RETAIN_RESOURCE_BLOCK);
+
+					SQLQuery sqlQuery = session.createSQLQuery(sql);
 
 					QueryPos qPos = QueryPos.getInstance(sqlQuery);
 
 					qPos.add(resourceBlock.getResourceBlockId());
 
-					int affectRows = sqlQuery.executeUpdate();
+					if (sqlQuery.executeUpdate() > 0) {
 
-					if (affectRows > 0) {
-						// Note, this is not very accurate, under concurrent
-						// environment, the caller may see discontinuous
-						// reference count changing in a system-wide point of
-						// view.
-						// This is caused by the decision of using "update set"
-						// solution. So far this seems to be ok as no one really
-						// depends on a continuous reference count changing. But
-						// if someday this becomes required, we should change to
-						// "update where" solution.
+						// We currently use an "update set" SQL statement to
+						// increment the reference count in a discontinuous
+						// manner. We can change it to an "update where" SQL
+						// statement to guarantee continuous counts. We are
+						// using a SQL statement that allows for a discontinuous
+						// count since it is cheaper and continuity is not
+						// required.
+
 						resourceBlock.setReferenceCount(
 							resourceBlock.getReferenceCount() + 1);
 
@@ -830,16 +836,23 @@ public class ResourceBlockLocalServiceImpl
 					}
 				}
 				catch (ORMException orme) {
-					_log.warn(
-						"Failed to increase reference count for " +
-							"ResourceBlock id : " +
-								resourceBlock.getResourceBlockId() + ", retry.",
-						orme);
+					if (_log.isWarnEnabled()) {
+						long resourceBlockId =
+							resourceBlock.getResourceBlockId();
+
+						_log.warn(
+							"Unable to increment reference count for " +
+								"resource block " + resourceBlockId +
+									". Retrying");
+					}
 				}
 				finally {
-					// Prevent Hibernate from automatically flushing out first
-					// level cache, which will lead to a regular update to
-					// overwrite previous change causing lost update.
+
+					// Prevent Hibernate from automatically flushing out the
+					// first level cache since that will lead to a regular
+					// update that will overwrite the previous update causing a
+					// lost update.
+
 					session.evict(resourceBlock);
 
 					resourceBlockPersistence.closeSession(session);
@@ -920,15 +933,17 @@ public class ResourceBlockLocalServiceImpl
 		updateResourceBlock(resourceBlock);
 	}
 
-	private static final String _SQL_DELETE_RELEASED =
-		"DELETE FROM ResourceBlock WHERE referenceCount <= 0 AND " +
-		"resourceBlockId = ?";
-	private static final String _SQL_UPDATE_RELEASE =
-		"UPDATE ResourceBlock SET referenceCount = (referenceCount - 1) WHERE" +
-		" resourceBlockId = ?";
-	private static final String _SQL_UPDATE_RETAIN =
-		"UPDATE ResourceBlock SET referenceCount = (referenceCount + 1) WHERE" +
-		" referenceCount > 0 AND resourceBlockId = ?";
+	private static final String _DELETE_RESOURCE_BLOCK =
+		ResourceBlockLocalServiceImpl.class.getName() +
+			".deleteResourceBlock";
+
+	private static final String _RELEASE_RESOURCE_BLOCK =
+		ResourceBlockLocalServiceImpl.class.getName() +
+			".releaseResourceBlock";
+
+	private static final String _RETAIN_RESOURCE_BLOCK =
+		ResourceBlockLocalServiceImpl.class.getName() +
+			".retainResourceBlock";
 
 	private static Log _log = LogFactoryUtil.getLog(
 		ResourceBlockLocalServiceImpl.class);

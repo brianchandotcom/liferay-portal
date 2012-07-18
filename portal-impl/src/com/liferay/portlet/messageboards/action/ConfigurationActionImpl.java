@@ -67,6 +67,17 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}
 
+	protected boolean isValidUserRank(String rank) {
+		if ((StringUtil.count(rank, StringPool.EQUAL) != 1) ||
+			rank.startsWith(StringPool.EQUAL) ||
+			rank.endsWith(StringPool.EQUAL)) {
+
+			return false;
+		}
+
+		return true;
+	}
+
 	protected void updateThreadPriorities(ActionRequest actionRequest)
 		throws Exception {
 
@@ -108,16 +119,22 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
 		Locale[] locales = LanguageUtil.getAvailableLocales();
 
-		for (int i = 0; i < locales.length; i++) {
-			String languageId = LocaleUtil.toLanguageId(locales[i]);
+		for (Locale locale : locales) {
+			String languageId = LocaleUtil.toLanguageId(locale);
 
 			String[] ranks = StringUtil.splitLines(
 				ParamUtil.getString(actionRequest, "ranks_" + languageId));
 
 			Map<String, String> map = new TreeMap<String, String>();
 
-			for (int j = 0; j < ranks.length; j++) {
-				String[] kvp = StringUtil.split(ranks[j], CharPool.EQUAL);
+			for (String rank : ranks) {
+				if (!isValidUserRank(rank)) {
+					SessionErrors.add(actionRequest, "userRank");
+
+					return;
+				}
+
+				String[] kvp = StringUtil.split(rank, CharPool.EQUAL);
 
 				String kvpName = kvp[0];
 				String kvpValue = kvp[1];

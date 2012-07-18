@@ -1459,6 +1459,18 @@ public interface PropsKeys {
 
 	public static final String MINIFIER_INLINE_CONTENT_CACHE_SKIP_JAVASCRIPT = "minifier.inline.content.cache.skip.javascript";
 
+	public static final String MINIFIER_YUI_COMPRESSOR_CSS_LINE_BREAK = "minifier.yui.compressor.css.line.break";
+
+	public static final String MINIFIER_YUI_COMPRESSOR_JS_DISABLE_OPTIMIZATION = "minifier.yui.compressor.js.disable.optimizations";
+
+	public static final String MINIFIER_YUI_COMPRESSOR_JS_LINE_BREAK = "minifier.yui.compressor.js.line.break";
+
+	public static final String MINIFIER_YUI_COMPRESSOR_JS_MUNGE = "minifier.yui.compressor.js.munge";
+
+	public static final String MINIFIER_YUI_COMPRESSOR_JS_PRESERVE_ALL_SEMICOLONS = "minifier.yui.compressor.js.preserve.all.semicolons";
+
+	public static final String MINIFIER_YUI_COMPRESSOR_JS_VERBOSE = "minifier.yui.compressor.js.verbose";
+
 	public static final String MOBILE_DEVICE_RULES_RULE_GROUP_COPY_POSTFIX = "mobile.device.rules.rule.group.copy.postfix";
 
 	public static final String MODEL_HINTS_CONFIGS = "model.hints.configs";

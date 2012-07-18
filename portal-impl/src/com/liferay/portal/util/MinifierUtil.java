@@ -18,6 +18,9 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 import com.yahoo.platform.yui.compressor.CssCompressor;
 import com.yahoo.platform.yui.compressor.JavaScriptCompressor;
@@ -89,17 +92,27 @@ public class MinifierUtil {
 		return unsyncStringWriter.toString();
 	}
 
-	private static final int _CSS_LINE_BREAK = -1;
+	private static final int _CSS_LINE_BREAK = GetterUtil.getInteger(
+		PropsUtil.get(PropsKeys.MINIFIER_YUI_COMPRESSOR_CSS_LINE_BREAK));
 
-	private static final boolean _JS_DISABLE_OPTIMIZATIONS = false;
+	private static final boolean _JS_DISABLE_OPTIMIZATIONS =
+		GetterUtil.getBoolean(
+			PropsUtil.get(
+				PropsKeys.MINIFIER_YUI_COMPRESSOR_JS_DISABLE_OPTIMIZATION));
 
-	private static final int _JS_LINE_BREAK = -1;
+	private static final int _JS_LINE_BREAK = GetterUtil.getInteger(
+		PropsUtil.get(PropsKeys.MINIFIER_YUI_COMPRESSOR_JS_LINE_BREAK));
 
-	private static final boolean _JS_MUNGE = true;
+	private static final boolean _JS_MUNGE = GetterUtil.getBoolean(
+		PropsUtil.get(PropsKeys.MINIFIER_YUI_COMPRESSOR_JS_MUNGE));
 
-	private static final boolean _JS_PRESERVE_ALL_SEMICOLONS = false;
+	private static final boolean _JS_PRESERVE_ALL_SEMICOLONS =
+		GetterUtil.getBoolean(
+			PropsUtil.get(
+				PropsKeys.MINIFIER_YUI_COMPRESSOR_JS_PRESERVE_ALL_SEMICOLONS));
 
-	private static final boolean _JS_VERBOSE = false;
+	private static final boolean _JS_VERBOSE = GetterUtil.getBoolean(
+		PropsUtil.get(PropsKeys.MINIFIER_YUI_COMPRESSOR_JS_VERBOSE));
 
 	private static Log _log = LogFactoryUtil.getLog(MinifierUtil.class);
 

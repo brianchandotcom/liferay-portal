@@ -47,6 +47,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
@@ -657,13 +658,19 @@ public class DLUtil {
 		throws Exception {
 
 		while (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(folderId);
+			try {
+				DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(
+					folderId);
 
-			if (dlFolder.isOverrideFileEntryTypes()) {
-				break;
+				if (dlFolder.isOverrideFileEntryTypes()) {
+					break;
+				}
+
+				folderId = dlFolder.getParentFolderId();
 			}
-
-			folderId = dlFolder.getParentFolderId();
+			catch (NoSuchFolderException nsfe) {
+				return false;
+			}
 		}
 
 		if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(

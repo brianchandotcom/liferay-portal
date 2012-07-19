@@ -132,9 +132,15 @@ public class StagingImpl implements Staging {
 		}
 
 		sb.append(remoteAddress);
-		sb.append(StringPool.COLON);
-		sb.append(remotePort);
-		sb.append(remotePathContext);
+
+		if (remotePort > 0) {
+			sb.append(StringPool.COLON);
+			sb.append(remotePort);
+		}
+
+		if (Validator.isNotNull(remotePathContext)) {
+			sb.append(remotePathContext);
+		}
 
 		if (remoteGroupId > 0) {
 			sb.append("/c/my_sites/view?");

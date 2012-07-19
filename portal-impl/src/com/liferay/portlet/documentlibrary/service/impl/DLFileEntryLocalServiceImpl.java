@@ -1194,6 +1194,10 @@ public class DLFileEntryLocalServiceImpl
 
 		String extraSettings = StringPool.BLANK;
 
+		if (fileEntryTypeId == -1) {
+			fileEntryTypeId = dlFileEntry.getFileEntryTypeId();
+		}
+
 		fileEntryTypeId = getFileEntryTypeId(
 			PortalUtil.getSiteAndCompanyGroupIds(dlFileEntry.getGroupId()),
 			dlFileEntry.getFolderId(), fileEntryTypeId);

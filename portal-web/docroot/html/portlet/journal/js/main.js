@@ -1052,7 +1052,11 @@ AUI.add(
 						30000
 					);
 
-					instance.getById('selectTemplateButton').focus();
+					var selectTemplateButton = instance.getById('selectTemplateButton');
+
+					if (selectTemplateButton) {
+						selectTemplateButton.focus();
+					}
 				}
 				else {
 					var defaultLocale = instance.getDefaultLocale();
@@ -1091,7 +1095,9 @@ AUI.add(
 				instance.hideEditContainerMessage();
 				instance.loadEditFieldOptions(source);
 
-				instance.editContainerContextPanel.refreshAlign();
+				if (instance.editContainerContextPanel) {
+					instance.editContainerContextPanel.refreshAlign();
+				}
 			},
 
 			repeatField: function(source) {
@@ -1182,7 +1188,11 @@ AUI.add(
 						30000
 					);
 
-					instance.getById('selectTemplateButton').focus();
+					var selectTemplateButton = instance.getById('selectTemplateButton');
+
+					if (selectTemplateButton) {
+						selectTemplateButton.focus();
+					}
 				}
 				else {
 					if (!cmd) {
@@ -1286,7 +1296,9 @@ AUI.add(
 				journalMessage.attr('className', className);
 				journalMessage.show();
 
-				instance.editContainerContextPanel.refreshAlign();
+				if (instance.editContainerContextPanel) {
+					instance.editContainerContextPanel.refreshAlign();
+				}
 
 				if (message) {
 					journalMessage.html(message);
@@ -1298,7 +1310,9 @@ AUI.add(
 					function() {
 						journalMessage.hide();
 
-						instance.editContainerContextPanel.refreshAlign();
+						if (instance.editContainerContextPanel) {
+							instance.editContainerContextPanel.refreshAlign();
+						}
 					}
 				);
 			},

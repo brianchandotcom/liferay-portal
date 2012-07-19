@@ -315,6 +315,13 @@ public class JournalArticleServiceWrapper implements JournalArticleService,
 			classPK);
 	}
 
+	public void moveArticle(long groupId, java.lang.String articleId,
+		long newFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_journalArticleService.moveArticle(groupId, articleId, newFolderId);
+	}
+
 	public void removeArticleLocale(long companyId, java.lang.String languageId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

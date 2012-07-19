@@ -720,6 +720,10 @@ public class PropsValues {
 
 	public static final boolean JOURNAL_CONTENT_SEARCH_SHOW_LISTED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.JOURNAL_CONTENT_SEARCH_SHOW_LISTED));
 
+	public static final String JOURNAL_DEFAULT_DISPLAY_VIEW = PropsUtil.get(PropsKeys.JOURNAL_DEFAULT_DISPLAY_VIEW);
+
+	public static final String[] JOURNAL_DISPLAY_VIEWS = PropsUtil.getArray(PropsKeys.JOURNAL_DISPLAY_VIEWS);
+
 	public static final String JOURNAL_EMAIL_FROM_ADDRESS = PropsUtil.get(PropsKeys.JOURNAL_EMAIL_FROM_ADDRESS);
 
 	public static final String JOURNAL_EMAIL_FROM_NAME = PropsUtil.get(PropsKeys.JOURNAL_EMAIL_FROM_NAME);

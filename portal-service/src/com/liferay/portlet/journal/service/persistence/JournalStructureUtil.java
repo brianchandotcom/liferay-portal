@@ -659,6 +659,64 @@ public class JournalStructureUtil {
 	}
 
 	/**
+	* Returns all the journal structures where groupId = any &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param groupIds the group IDs
+	* @return the matching journal structures
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.journal.model.JournalStructure> findByGroupId(
+		long[] groupIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByGroupId(groupIds);
+	}
+
+	/**
+	* Returns a range of all the journal structures where groupId = any &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param groupIds the group IDs
+	* @param start the lower bound of the range of journal structures
+	* @param end the upper bound of the range of journal structures (not inclusive)
+	* @return the range of matching journal structures
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.journal.model.JournalStructure> findByGroupId(
+		long[] groupIds, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByGroupId(groupIds, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the journal structures where groupId = any &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param groupIds the group IDs
+	* @param start the lower bound of the range of journal structures
+	* @param end the upper bound of the range of journal structures (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching journal structures
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.journal.model.JournalStructure> findByGroupId(
+		long[] groupIds, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByGroupId(groupIds, start, end, orderByComparator);
+	}
+
+	/**
 	* Returns all the journal structures that the user has permission to view where groupId = &#63;.
 	*
 	* @param groupId the group ID
@@ -730,6 +788,60 @@ public class JournalStructureUtil {
 		return getPersistence()
 				   .filterFindByGroupId_PrevAndNext(id, groupId,
 			orderByComparator);
+	}
+
+	/**
+	* Returns all the journal structures that the user has permission to view where groupId = any &#63;.
+	*
+	* @param groupIds the group IDs
+	* @return the matching journal structures that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.journal.model.JournalStructure> filterFindByGroupId(
+		long[] groupIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().filterFindByGroupId(groupIds);
+	}
+
+	/**
+	* Returns a range of all the journal structures that the user has permission to view where groupId = any &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param groupIds the group IDs
+	* @param start the lower bound of the range of journal structures
+	* @param end the upper bound of the range of journal structures (not inclusive)
+	* @return the range of matching journal structures that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.journal.model.JournalStructure> filterFindByGroupId(
+		long[] groupIds, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().filterFindByGroupId(groupIds, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the journal structures that the user has permission to view where groupId = any &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	* </p>
+	*
+	* @param groupIds the group IDs
+	* @param start the lower bound of the range of journal structures
+	* @param end the upper bound of the range of journal structures (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching journal structures that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portlet.journal.model.JournalStructure> filterFindByGroupId(
+		long[] groupIds, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .filterFindByGroupId(groupIds, start, end, orderByComparator);
 	}
 
 	/**
@@ -1512,6 +1624,18 @@ public class JournalStructureUtil {
 	}
 
 	/**
+	* Returns the number of journal structures where groupId = any &#63;.
+	*
+	* @param groupIds the group IDs
+	* @return the number of matching journal structures
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByGroupId(long[] groupIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByGroupId(groupIds);
+	}
+
+	/**
 	* Returns the number of journal structures that the user has permission to view where groupId = &#63;.
 	*
 	* @param groupId the group ID
@@ -1521,6 +1645,18 @@ public class JournalStructureUtil {
 	public static int filterCountByGroupId(long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence().filterCountByGroupId(groupId);
+	}
+
+	/**
+	* Returns the number of journal structures that the user has permission to view where groupId = any &#63;.
+	*
+	* @param groupIds the group IDs
+	* @return the number of matching journal structures that the user has permission to view
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int filterCountByGroupId(long[] groupIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().filterCountByGroupId(groupIds);
 	}
 
 	/**

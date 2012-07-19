@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortalPreferences;
@@ -47,10 +48,12 @@ public class ArticleSearch extends SearchContainer<JournalArticle> {
 	static {
 		headerNames.add("id");
 		headerNames.add("title");
+		headerNames.add("status");
 		//headerNames.add("version");
 		headerNames.add("modified-date");
 		headerNames.add("display-date");
 		headerNames.add("author");
+		headerNames.add(StringPool.BLANK);
 
 		orderableHeaders.put("id", "id");
 		orderableHeaders.put("name", "title");
@@ -59,16 +62,13 @@ public class ArticleSearch extends SearchContainer<JournalArticle> {
 		orderableHeaders.put("display-date", "display-date");
 	}
 
-	public static final String EMPTY_RESULTS_MESSAGE =
-		"no-web-content-were-found";
-
 	public ArticleSearch(
 		PortletRequest portletRequest, PortletURL iteratorURL) {
 
 		super(
 			portletRequest, new ArticleDisplayTerms(portletRequest),
 			new ArticleSearchTerms(portletRequest), DEFAULT_CUR_PARAM,
-			DEFAULT_DELTA, iteratorURL, headerNames, EMPTY_RESULTS_MESSAGE);
+			DEFAULT_DELTA, iteratorURL, headerNames, null);
 
 		PortletConfig portletConfig =
 			(PortletConfig)portletRequest.getAttribute(
@@ -91,6 +91,9 @@ public class ArticleSearch extends SearchContainer<JournalArticle> {
 			ArticleDisplayTerms.CONTENT, displayTerms.getContent());
 		iteratorURL.setParameter(
 			ArticleDisplayTerms.DESCRIPTION, displayTerms.getDescription());
+		iteratorURL.setParameter(
+			ArticleDisplayTerms.FOLDER_ID,
+			String.valueOf(displayTerms.getFolderId()));
 		iteratorURL.setParameter(
 			ArticleDisplayTerms.GROUP_ID,
 			String.valueOf(displayTerms.getGroupId()));

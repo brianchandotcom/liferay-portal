@@ -18,7 +18,7 @@
 
 <%@ page import="com.liferay.portal.kernel.sanitizer.Sanitizer" %><%@
 page import="com.liferay.portal.kernel.sanitizer.SanitizerUtil" %><%@
-page import="com.liferay.portlet.journal.action.EditArticleAction" %><%@
+page import="com.liferay.portlet.journal.action.ActionUtil" %><%@
 page import="com.liferay.portlet.journal.model.JournalArticle" %><%@
 page import="com.liferay.portlet.journal.search.ArticleSearch" %><%@
 page import="com.liferay.portlet.journal.search.ArticleSearchTerms" %><%@

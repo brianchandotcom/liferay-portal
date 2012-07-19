@@ -185,7 +185,7 @@ type = ParamUtil.getString(request, "type", type);
 
 		curArticle = curArticle.toEscapedModel();
 
-		ResultRow row = new ResultRow(null, curArticle.getArticleId() + EditArticleAction.VERSION_SEPARATOR + curArticle.getVersion(), i);
+		ResultRow row = new ResultRow(null, curArticle.getArticleId() + ActionUtil.VERSION_SEPARATOR + curArticle.getVersion(), i);
 
 		StringBundler sb = new StringBundler(7);
 

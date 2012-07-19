@@ -62,7 +62,7 @@ for (int i = 0; i < results.size(); i++) {
 
 	long articleResourceId = article.getResourcePrimKey();
 
-	ResultRow row = new ResultRow(article, article.getArticleId() + EditArticleAction.VERSION_SEPARATOR + article.getVersion(), i);
+	ResultRow row = new ResultRow(article, article.getArticleId() + ActionUtil.VERSION_SEPARATOR + article.getVersion(), i);
 
 	StringBundler sb = new StringBundler(9);
 

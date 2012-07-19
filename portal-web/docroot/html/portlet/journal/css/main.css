@@ -172,13 +172,113 @@
 		}
 	}
 
+	.lfr-search-combobox {
+		.advanced-search-column-content {
+			border-right: 0;
+		}
+
+		.article-advanced-search-icon {
+			background: #D4D4D4 url(@theme_image_path@/portlet/header_bg.png) repeat-x scroll 0 0;
+
+			&:hover {
+				background: #B9CED9 url(@theme_image_path@/application/state_hover_bg.png) repeat-x scroll 0 0;
+				border-color: #627782;
+				color: #369;
+			}
+
+			input {
+				background: url(@theme_image_path@/arrows/05_down.png) no-repeat scroll 9px 60% transparent;
+				width: 28px;
+
+				&.close-advanced-search {
+					background-image: url(@theme_image_path@/arrows/05_up.png);
+					background-position: 8px 50%;
+				}
+			}
+		}
+
+		.aui-button {
+			margin-left: 0;
+		}
+
+		.search input {
+			border-radius: 1px;
+		}
+	}
+
 	.journal-article-container ul {
 		margin: 0;
+	}
+
+	.move-list {
+		.move-article, .move-folder {
+			background: #F0FAF0 url() no-repeat 5px 50%;
+			border-bottom: 1px solid #CCC;
+			display: block;
+			font-weight: bold;
+			margin-bottom: 1px;
+			padding: 5px;
+			padding-left: 25px;
+			position: relative;
+		}
+
+		.move-article {
+			background-image: url(@theme_image_path@/file_system/small/html.png);
+		}
+
+		.move-folder {
+			background-image: url(@theme_image_path@/common/folder.png);
+		}
+
+		.move-error {
+			background-color: #FDD;
+			background-image: url(@theme_image_path@/messages/error.png);
+			font-weight: normal;
+			opacity: 0.6;
+
+			.error-message {
+				position: absolute;
+				right: 5px;
+			}
+		}
+
+		.lfr-component {
+			margin: 0;
+		}
+	}
+
+	.journal-breadcrumb {
+		background-color: #EBEBEB;
+		background-image: url(@theme_image_path@/application/button_bg_selected.png);
+
+		ul {
+			margin-bottom: 0;
+		}
+	}
+
+	.move-list-info {
+		margin: 5px 0;
+
+		h4 {
+			font-size: 1.3em;
+		}
 	}
 
 	li {
 		list-style: none;
 		position: relative;
+	}
+
+	.body-row {
+		height: 100%;
+		overflow: hidden;
+		position: relative;
+		width: 100%;
+
+		ul li a .icon {
+			float: left;
+			margin-right: 5px;
+		}
 	}
 
 	.body-row li.selected {
@@ -201,6 +301,10 @@
 
 		&:hover {
 			background-color: #D3E8F1;
+		}
+
+		.active-area, .active-area.hover {
+			background-color: #5AD300;
 		}
 	}
 
@@ -349,7 +453,73 @@
 		}
 	}
 
-	.journal-article-instructions-container {
+	.journal-container {
+		.search-info {
+			background-color: #D3E8F1;
+			padding: 10px;
+			padding-right: 50px;
+			position: relative;
+
+			.keywords {
+				float: none;
+				font-size: 1.4em;
+				font-weight: bold;
+			}
+
+			.change-search-folder {
+				font-size: 0.8em;
+				font-weight: normal;
+			}
+
+			.close-search {
+				margin-top: -8px;
+				position: absolute;
+				right: 15px;
+				top: 50%;
+			}
+		}
+	}
+
+	.journal-container, .article-entries-paginator {
+		clear: both;
+	}
+
+	.context-pane {
+		overflow: hidden;
+
+		.context-pane-content {
+			border-left: 1px solid #7B7B7B;
+			position: relative;
+		}
+	}
+
+	.taglib-search-iterator-page-iterator-top, .taglib-search-iterator-page-iterator-bottom, .aui-paginator-container, .journal-breadcrumb {
+		background: #D9D9D9 url(@theme_image_path@/application/subheader_bg.png) 0 0 repeat-x;
+		clear: both;
+		padding: 5px;
+		position: relative;
+	}
+
+	.taglib-search-iterator-page-iterator-top, .taglib-search-iterator-page-iterator-bottom, .aui-paginator-container {
+		text-align: center;
+	}
+
+	.taglib-search-iterator-page-iterator-top.page-iterator-bottom, .lfr-app-column-view .taglib-search-iterator-page-iterator-bottom {
+		bottom: 0;
+		left: 0;
+		position: absolute;
+		right: 0;
+	}
+
+	.taglib-search-iterator {
+		table-layout: fixed;
+
+		.align-left {
+			word-wrap: break-word;
+		}
+	}
+
+.journal-article-instructions-container {
 		display: normal;
 	}
 
@@ -434,11 +604,52 @@
 		width: 350px;
 	}
 
-	.lfr-header-row-content .parent-folder-title {
-		color: #FFF;
-		font-weight: bold;
-		padding: 6px 10px 6px 25px;
-		text-shadow: -1px -1px #505050;
+	.lfr-header-row {
+		.display-style .aui-icon {
+			background-image: url(@theme_image_path@/application/layouts.png);
+			background-repeat: no-repeat;
+		}
+
+		.aui-icon-display-list {
+			background-position: 0 100%;
+		}
+
+		.aui-icon-display-icon {
+			background-position: -16px 0;
+		}
+
+		.aui-icon-display-descriptive {
+			background-position: -32px 0;
+		}
+
+		.aui-state-active {
+			.aui-icon-display-icon {
+				background-position: -16px 100%;
+			}
+
+			.aui-icon-display-descriptive {
+				background-position: -32px 100%;
+			}
+		}
+	}
+
+	.lfr-header-row-content {
+		position: relative;
+
+		.toolbar, .add-button {
+			float: left;
+		}
+
+		.display-style {
+			float: right;
+		}
+
+		.parent-folder-title {
+			color: #FFF;
+			font-weight: bold;
+			padding: 6px 10px 6px 25px;
+			text-shadow: -1px -1px #505050;
+		}
 	}
 
 	.lfr-list-view-content {
@@ -478,6 +689,14 @@
 		}
 	}
 
+	.lfr-list-view-data-container {
+		background-color: #FAFAFA;
+		height: 100%;
+		position: absolute;
+		width: 100%;
+		z-index: 9999;
+	}
+
 	.lfr-menu-list ul {
 		background: #F0F0F0;
 		position: relative;
@@ -489,6 +708,201 @@
 			position: absolute;
 			right: 5px;
 			top: -10px;
+		}
+	}
+
+	.select-entries {
+		border-color: #5F5F5F;
+		float: left;
+		line-height: 0;
+		margin-right: 2px;
+		padding: 0;
+
+		.aui-field-element {
+			padding: 5px 4px 4px;
+			border: 1px solid #FFF;
+			border-color: #F0F1F2 #B2B2B2 #949494 #F0F1F1;
+
+			.aui-field-input-choice {
+				margin: 0;
+			}
+		}
+	}
+
+	.article-display-style {
+		a {
+			color: #333;
+		}
+
+		.article-link {
+			display: block;
+			text-align: center;
+			text-decoration: none;
+		}
+
+		.article-thumbnail {
+			img {
+				background: #EAEAEA;
+				border: 1px solid #CCC;
+				margin: 0;
+				padding: 5px;
+			}
+		}
+
+		&:hover .article-thumbnail img {
+			background-color: #B0D2E1;
+			border-color: #7ABFDD;
+		}
+
+		&.selected .article-thumbnail img {
+			background-color: #B0D2E1;
+			border-color: #057CB0;
+		}
+
+		&.display-descriptive {
+			display: block;
+			margin: 5px;
+			padding: 5px 0;
+			padding-left: 20px;
+			position: relative;
+			text-align: left;
+
+			&:after {
+				clear: both;
+				content: ".";
+				display: block;
+				height: 0;
+				visibility: hidden;
+			}
+
+			.article-title {
+				display: block;
+				font-size: 1.15em;
+				font-weight: bold;
+				padding: 5px 0 0;
+			}
+
+			.article-description {
+				display: block;
+				height: 100px;
+				overflow: hidden;
+				word-wrap: break-word;
+			}
+
+			.article-action {
+				height: 20px;
+				overflow: hidden;
+				position: absolute;
+				right: 6px;
+				top: 10px;
+				width: 22px;
+			}
+
+			.article-selector {
+				left: 5px;
+				position: absolute;
+				top: 10px;
+			}
+
+			.article-thumbnail {
+				display: inline-block;
+				float: left;
+				margin: 5px 10px 5px 5px;
+				position: relative;
+				text-align: center;
+			}
+
+			.article-link {
+				display: block;
+				text-align: left;
+				text-decoration: none;
+			}
+
+			&:hover .article-selector, &.selected .article-selector {
+				clip: rect(auto auto auto auto);
+				position: absolute;
+			}
+
+			&.selected, .selected:hover {
+				background-color: #00A2EA;
+			}
+		}
+
+		&.display-icon {
+			display: inline-block;
+			float: left;
+			margin: 5px;
+			padding: 10px 0;
+			position: relative;
+			vertical-align: top;
+			width: 200px;
+			height: 160px;
+
+			.article-action {
+				overflow: hidden;
+				position: absolute;
+				right: 5px;
+				width: 22px;
+			}
+
+			.article-selector {
+				left: 10px;
+				position: absolute;
+				top: 10px;
+			}
+
+			.article-thumbnail {
+				display: inline-block;
+				position: relative;
+				text-align: center;
+			}
+
+			.article-title {
+				clear: both;
+				display: block;
+				padding: 0 10px;
+				word-wrap: break-word;
+			}
+
+			&.selected, &.selected:hover {
+				background-color: #00A2EA;
+			}
+
+			.article-selector, &:hover .article-selector, &.selected .article-selector {
+				position: absolute;
+			}
+		}
+
+		.article-action .direction-down {
+			height: 20px;
+		}
+
+		&.selected a {
+			color: #FFF;
+		}
+
+		&.active-area, &.active-area.hover, &.active-area td {
+			background-color: #5AD300;
+		}
+
+		.overlay.article-action a {
+			display: block;
+			float: right;
+			min-height: 15px;
+		}
+
+		&:hover, &.hover {
+			background-color: #D3E8F1;
+		}
+
+		&:hover .overlay, &.hover .overlay, &.selected .article-selector {
+			clip: rect(auto auto auto auto);
+		}
+	}
+
+	.article-display-style, .lfr-search-container {
+		.overlay {
+			clip: rect(0, 0, 0, 0);
 		}
 	}
 
@@ -981,3 +1395,26 @@
 		}
 	}
 }
+
+.active-area-proxy {
+	background: #FFFFE0 url(@theme_image_path@/portlet/pop_up.png) no-repeat 10px 50%;
+	font-size: 1.2em;
+	padding: 0.3em 0.3em 0.3em 2em;
+}
+
+.ie6, .ie7 {
+	.portlet-journal {
+		.article-display-style.display-descriptive {
+			min-width: 0px;
+		}
+	}
+}
+
+.ie7 {
+	.portlet-journal {
+		.lfr-actions .lfr-trigger strong {
+			min-width: 0px;
+		}
+	}
+}
+

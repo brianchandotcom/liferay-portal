@@ -156,6 +156,21 @@ public class JournalStructureServiceSoap {
 		}
 	}
 
+	public static com.liferay.portlet.journal.model.JournalStructureSoap[] getStructures(
+		long[] groupIds) throws RemoteException {
+		try {
+			java.util.List<com.liferay.portlet.journal.model.JournalStructure> returnValue =
+				JournalStructureServiceUtil.getStructures(groupIds);
+
+			return com.liferay.portlet.journal.model.JournalStructureSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.journal.model.JournalStructureSoap[] search(
 		long companyId, long[] groupIds, java.lang.String keywords, int start,
 		int end, com.liferay.portal.kernel.util.OrderByComparator obc)

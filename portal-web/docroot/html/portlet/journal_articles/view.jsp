@@ -99,7 +99,7 @@ double version = ParamUtil.getDouble(request, "version");
 
 			article = article.toEscapedModel();
 
-			ResultRow row = new ResultRow(article, article.getArticleId() + EditArticleAction.VERSION_SEPARATOR + article.getVersion(), i);
+			ResultRow row = new ResultRow(article, article.getArticleId() + ActionUtil.VERSION_SEPARATOR + article.getVersion(), i);
 
 			String rowHREF = null;
 

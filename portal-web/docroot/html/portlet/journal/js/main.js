@@ -3503,7 +3503,7 @@ AUI.add(
 		registerFieldModel('List', 'list', 'ListField', true);
 		registerFieldModel('MultiList', 'multi-list', 'MultiListField', true);
 		registerFieldModel('LinkToPage', 'link_to_layout', 'LinkToPageField', true);
-		registerFieldModel('SelectionBreak', 'selection_break', 'SelectionBreakField', true);
+		registerFieldModel('SelectionBreak', 'selection_break', 'SelectionBreakField', false);
 
 		Liferay.Portlet.Journal = Journal;
 	},

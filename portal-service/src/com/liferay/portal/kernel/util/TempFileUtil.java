@@ -141,7 +141,11 @@ public class TempFileUtil {
 			return fileNames;
 		}
 		catch (Exception e) {
-			_log.error(e, e);
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to list temporary file names for: " +
+					userId + " in " + tempPathName, e);
+			}
 
 			return new String[0];
 		}

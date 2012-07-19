@@ -234,7 +234,7 @@ if (Validator.isNull(redirect)) {
 
 				<c:if test="<%= Validator.isNotNull(parentTitle) %>">
 					<aui:field-wrapper label="parent">
-						<%= parentTitle %>
+						<%= HtmlUtil.escape(parentTitle) %>
 					</aui:field-wrapper>
 				</c:if>
 

@@ -488,6 +488,16 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 			publishDate, expirationDate, visible);
 	}
 
+	public com.liferay.portlet.asset.model.AssetEntry updateEntry(
+		java.lang.String className, long classPK, java.util.Date publishDate,
+		java.util.Date expirationDate, java.util.Date modifiedDate,
+		boolean visible)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _assetEntryLocalService.updateEntry(className, classPK,
+			publishDate, expirationDate, modifiedDate, visible);
+	}
+
 	public com.liferay.portlet.asset.model.AssetEntry updateVisible(
 		java.lang.String className, long classPK, boolean visible)
 		throws com.liferay.portal.kernel.exception.PortalException,

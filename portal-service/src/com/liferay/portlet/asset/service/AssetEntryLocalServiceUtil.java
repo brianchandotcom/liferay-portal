@@ -500,6 +500,17 @@ public class AssetEntryLocalServiceUtil {
 			expirationDate, visible);
 	}
 
+	public static com.liferay.portlet.asset.model.AssetEntry updateEntry(
+		java.lang.String className, long classPK, java.util.Date publishDate,
+		java.util.Date expirationDate, java.util.Date modifiedDate,
+		boolean visible)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateEntry(className, classPK, publishDate,
+			expirationDate, modifiedDate, visible);
+	}
+
 	public static com.liferay.portlet.asset.model.AssetEntry updateVisible(
 		java.lang.String className, long classPK, boolean visible)
 		throws com.liferay.portal.kernel.exception.PortalException,

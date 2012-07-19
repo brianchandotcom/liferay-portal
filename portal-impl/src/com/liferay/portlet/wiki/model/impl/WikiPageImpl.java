@@ -78,6 +78,30 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 		return pages;
 	}
 
+	public String getDeletedAttachmentsDir() {
+		if (_deletedAttachmentDirs == null) {
+			_deletedAttachmentDirs = "wiki/.trashed_" + getResourcePrimKey();
+		}
+
+		return _deletedAttachmentDirs;
+	}
+
+	public String[] getDeletedAttachmentsFiles()
+		throws PortalException, SystemException {
+
+		String[] fileNames = new String[0];
+
+		try {
+			fileNames = DLStoreUtil.getFileNames(
+				getCompanyId(), CompanyConstants.SYSTEM,
+				getDeletedAttachmentsDir());
+		}
+		catch (NoSuchDirectoryException nsde) {
+		}
+
+		return fileNames;
+	}
+
 	public WikiNode getNode() {
 		WikiNode node = null;
 
@@ -151,8 +175,13 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 		_attachmentDirs = attachmentsDir;
 	}
 
+	public void setDeletedAttachmentsDir(String deletedAttachmentsDir) {
+		_deletedAttachmentDirs = deletedAttachmentsDir;
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(WikiPageImpl.class);
 
 	private String _attachmentDirs;
+	private String _deletedAttachmentDirs;
 
 }

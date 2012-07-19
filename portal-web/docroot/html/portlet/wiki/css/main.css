@@ -351,6 +351,10 @@
 		padding: 0.1em 10px 0.1em 0;
 	}
 
+	.trash-attachments {
+		float: right;
+	}
+
 	#wikiCommentsPanelContainer {
 		border-width: 0;
 	}

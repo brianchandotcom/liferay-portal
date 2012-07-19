@@ -39,7 +39,7 @@ if (SessionMessages.contains(portletRequest, portletDisplay.getId() + SessionMes
 
 			<a class="trash-undo-link" href="javascript:;" id="<%= namespace %>undo"><liferay-ui:message key="undo" /></a>
 
-			<aui:form action="<%= portletURL %>" cssClass="trash-undo-form" method="post" name="undoForm">
+			<aui:form action="<%= portletURL %>" cssClass="trash-undo-form" name="undoForm">
 				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 				<%

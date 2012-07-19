@@ -32,10 +32,14 @@ import java.io.InputStream;
 public class DLAppUtil {
 
 	public static String appendTrashNamespace(String title) {
+		return appendTrashNamespace(title, StringPool.SLASH);
+	}
+
+	public static String appendTrashNamespace(String title, String separator) {
 		StringBundler sb = new StringBundler(3);
 
 		sb.append(title);
-		sb.append(StringPool.SLASH);
+		sb.append(separator);
 		sb.append(System.currentTimeMillis());
 
 		return sb.toString();
@@ -92,7 +96,11 @@ public class DLAppUtil {
 	}
 
 	public static String stripTrashNamespace(String title) {
-		int index = title.indexOf(StringPool.SLASH);
+		return stripTrashNamespace(title, StringPool.SLASH);
+	}
+
+	public static String stripTrashNamespace(String title, String separator) {
+		int index = title.lastIndexOf(separator);
 
 		if (index >= 0) {
 			title = title.substring(0, index);

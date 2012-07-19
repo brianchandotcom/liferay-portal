@@ -3106,6 +3106,31 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>trash-empty</name>
+		<tag-class>com.liferay.taglib.ui.TrashEmptyTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>confirmMessage</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>emptyMessage</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>portletURL</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>totalEntries</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<name>trash-undo</name>
 		<tag-class>com.liferay.taglib.ui.TrashUndoTag</tag-class>
 		<body-content>empty</body-content>

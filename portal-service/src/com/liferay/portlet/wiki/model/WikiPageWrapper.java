@@ -881,6 +881,16 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 		return _wikiPage.getChildPages();
 	}
 
+	public java.lang.String getDeletedAttachmentsDir() {
+		return _wikiPage.getDeletedAttachmentsDir();
+	}
+
+	public java.lang.String[] getDeletedAttachmentsFiles()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _wikiPage.getDeletedAttachmentsFiles();
+	}
+
 	public com.liferay.portlet.wiki.model.WikiNode getNode() {
 		return _wikiPage.getNode();
 	}
@@ -899,6 +909,10 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 
 	public void setAttachmentsDir(java.lang.String attachmentsDir) {
 		_wikiPage.setAttachmentsDir(attachmentsDir);
+	}
+
+	public void setDeletedAttachmentsDir(java.lang.String deletedAttachmentsDir) {
+		_wikiPage.setDeletedAttachmentsDir(deletedAttachmentsDir);
 	}
 
 	/**

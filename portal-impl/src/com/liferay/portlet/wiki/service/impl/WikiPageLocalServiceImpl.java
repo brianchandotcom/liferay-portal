@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MathUtil;
@@ -52,6 +53,7 @@ import com.liferay.portlet.documentlibrary.DuplicateDirectoryException;
 import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
+import com.liferay.portlet.documentlibrary.util.DLAppUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.wiki.DuplicatePageException;
@@ -591,6 +593,20 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		TempFileUtil.deleteTempFile(userId, fileName, tempFolderName);
 	}
 
+	public void emptyPageAttachments(long nodeId, String title)
+		throws PortalException, SystemException {
+
+		WikiPage page = getPage(nodeId, title);
+
+		long companyId = page.getCompanyId();
+		long repositoryId = CompanyConstants.SYSTEM;
+
+		String deletedAttachmentsDir = page.getDeletedAttachmentsDir();
+
+		DLStoreUtil.deleteDirectory(
+			companyId, repositoryId, deletedAttachmentsDir);
+	}
+
 	public List<WikiPage> getChildren(
 			long nodeId, boolean head, String parentTitle)
 		throws SystemException {
@@ -1107,6 +1123,78 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		movePage(userId, nodeId, title, newTitle, true, serviceContext);
+	}
+
+	public void movePageAttachmentFromTrash(
+			long nodeId, String title, String deletedFileName)
+		throws PortalException, SystemException {
+
+		if (Validator.isNull(deletedFileName)) {
+			return;
+		}
+
+		WikiPage page = getPage(nodeId, title);
+
+		long companyId = page.getCompanyId();
+		long repositoryId = CompanyConstants.SYSTEM;
+
+		String attachmentsDir = page.getAttachmentsDir();
+
+		if (!DLStoreUtil.hasDirectory(
+			companyId, repositoryId, attachmentsDir)) {
+
+			DLStoreUtil.addDirectory(companyId, repositoryId, attachmentsDir);
+		}
+
+		String fileName =
+			attachmentsDir + StringPool.FORWARD_SLASH +
+				DLAppUtil.stripTrashNamespace(
+					FileUtil.getShortFileName(deletedFileName),
+					StringPool.UNDERLINE);
+
+		try {
+			DLStoreUtil.updateFile(
+				companyId, repositoryId, deletedFileName, fileName);
+		}
+		catch (NoSuchFileException nsfe) {
+		}
+	}
+
+	public void movePageAttachmentToTrash(
+			long nodeId, String title, String fileName)
+		throws PortalException, SystemException {
+
+		if (Validator.isNull(fileName)) {
+			return;
+		}
+
+		WikiPage page = getPage(nodeId, title);
+
+		long companyId = page.getCompanyId();
+		long repositoryId = CompanyConstants.SYSTEM;
+
+		String deletedAttachmentsDir = page.getDeletedAttachmentsDir();
+
+		if (!DLStoreUtil.hasDirectory(
+			companyId, repositoryId, deletedAttachmentsDir)) {
+
+			DLStoreUtil.addDirectory(
+				companyId, repositoryId, deletedAttachmentsDir);
+		}
+
+		String deletedFileName =
+			deletedAttachmentsDir + StringPool.FORWARD_SLASH +
+				DLAppUtil.appendTrashNamespace(
+					FileUtil.getShortFileName(fileName), StringPool.UNDERLINE);
+
+		try {
+			DLStoreUtil.updateFile(
+				companyId, repositoryId, fileName, deletedFileName);
+		}
+		catch (NoSuchFileException nsfe) {
+			DLStoreUtil.deleteDirectory(
+				companyId, repositoryId, deletedAttachmentsDir);
+		}
 	}
 
 	public WikiPage revertPage(

@@ -39,6 +39,12 @@ public interface WikiPage extends WikiPageModel, PersistedModel {
 
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> getChildPages();
 
+	public java.lang.String getDeletedAttachmentsDir();
+
+	public java.lang.String[] getDeletedAttachmentsFiles()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public com.liferay.portlet.wiki.model.WikiNode getNode();
 
 	public com.liferay.portlet.wiki.model.WikiPage getParentPage();
@@ -50,4 +56,6 @@ public interface WikiPage extends WikiPageModel, PersistedModel {
 	public boolean isResourceMain();
 
 	public void setAttachmentsDir(java.lang.String attachmentsDir);
+
+	public void setDeletedAttachmentsDir(java.lang.String deletedAttachmentsDir);
 }

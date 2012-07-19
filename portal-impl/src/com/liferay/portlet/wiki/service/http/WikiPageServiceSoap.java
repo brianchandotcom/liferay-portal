@@ -183,6 +183,18 @@ public class WikiPageServiceSoap {
 		}
 	}
 
+	public static void emptyPageAttachments(long nodeId, java.lang.String title)
+		throws RemoteException {
+		try {
+			WikiPageServiceUtil.emptyPageAttachments(nodeId, title);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.wiki.model.WikiPageSoap getDraftPage(
 		long nodeId, java.lang.String title) throws RemoteException {
 		try {
@@ -316,6 +328,34 @@ public class WikiPageServiceSoap {
 		throws RemoteException {
 		try {
 			WikiPageServiceUtil.movePage(nodeId, title, newTitle, serviceContext);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void movePageAttachmentFromTrash(long nodeId,
+		java.lang.String title, java.lang.String deletedFileName)
+		throws RemoteException {
+		try {
+			WikiPageServiceUtil.movePageAttachmentFromTrash(nodeId, title,
+				deletedFileName);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void movePageAttachmentToTrash(long nodeId,
+		java.lang.String title, java.lang.String fileName)
+		throws RemoteException {
+		try {
+			WikiPageServiceUtil.movePageAttachmentToTrash(nodeId, title,
+				fileName);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

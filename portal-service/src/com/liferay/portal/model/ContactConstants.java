@@ -28,20 +28,21 @@ public class ContactConstants {
 	public static String getFullName(
 		String firstName, String middleName, String lastName) {
 
-		if (Validator.isNull(middleName)) {
-			return firstName.concat(StringPool.SPACE).concat(lastName);
-		}
-		else {
-			StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(5);
 
-			sb.append(firstName);
+		sb.append(firstName);
+
+		if (Validator.isNotNull(middleName)) {
 			sb.append(StringPool.SPACE);
 			sb.append(middleName);
+		}
+
+		if (Validator.isNotNull(lastName)) {
 			sb.append(StringPool.SPACE);
 			sb.append(lastName);
-
-			return sb.toString();
 		}
+
+		return sb.toString();
 	}
 
 }

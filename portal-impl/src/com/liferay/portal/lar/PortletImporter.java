@@ -1885,8 +1885,25 @@ public class PortletImporter {
 			Portlet portlet = PortletLocalServiceUtil.getPortletById(
 				portletDataContext.getCompanyId(), portletId);
 
+			if (portlet == null) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Do not update portlet preferences for " + portletId +
+							" because the portlet does not exist");
+				}
+
+				return;
+			}
+
 			PortletDataHandler portletDataHandler =
 				portlet.getPortletDataHandlerInstance();
+
+			if (portletDataHandler == null) {
+				PortletPreferencesLocalServiceUtil.updatePreferences(
+					ownerId, ownerType, plid, portletId, xml);
+
+				return;
+			}
 
 			// Portlet preferences to be updated only when importing data
 

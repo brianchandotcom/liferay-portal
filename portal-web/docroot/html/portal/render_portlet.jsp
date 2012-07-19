@@ -57,8 +57,20 @@ PortletPreferencesIds portletPreferencesIds = PortletPreferencesFactoryUtil.getP
 
 PortletPreferences portletPreferences = null;
 
+Group group = layout.getGroup();
+
 if (allowAddPortletDefaultResource) {
 	portletPreferences = PortletPreferencesLocalServiceUtil.getPreferences(portletPreferencesIds);
+
+	String scopeLayoutUuid = portletPreferences.getValue("lfrScopeLayoutUuid", null);
+
+	if (Validator.isNotNull(scopeLayoutUuid)) {
+		Layout scopeLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(scopeLayoutUuid, group.getGroupId());
+
+		portletPreferencesIds = PortletPreferencesFactoryUtil.getPortletPreferencesIds(request, scopeLayout, portletId);
+
+		portletPreferences = PortletPreferencesLocalServiceUtil.getPreferences(portletPreferencesIds);
+	}
 }
 else {
 	portletPreferences = PortletPreferencesLocalServiceUtil.getStrictPreferences(portletPreferencesIds);
@@ -193,8 +205,6 @@ Boolean portletParallelRender = (Boolean)request.getAttribute(WebKeys.PORTLET_PA
 if ((portletParallelRender != null) && (portletParallelRender.booleanValue() == false)) {
 	showRefreshIcon = false;
 }
-
-Group group = layout.getGroup();
 
 if (!portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
 	if ((!group.hasStagingGroup() || group.isStagingGroup()) &&

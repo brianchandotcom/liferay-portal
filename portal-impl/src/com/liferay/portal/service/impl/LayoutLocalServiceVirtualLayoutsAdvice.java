@@ -122,25 +122,25 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 					MergeLayoutPrototypesThreadLocal.setInProgress(true);
 					WorkflowThreadLocal.setEnabled(false);
 
-					List<Layout> allLayouts = LayoutLocalServiceUtil.getLayouts(
+					List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
 						groupId, privateLayout);
 
-					if (allLayouts.isEmpty()) {
+					if (layouts.isEmpty()) {
 						SitesUtil.mergeLayoutSetProtypeLayouts(
 							group, layoutSet);
 					}
 
-					boolean isAnyLayoutModifiedSinceLastMerge = false;
-					
-					for (Layout layout : allLayouts) {
+					boolean modified = false;
+
+					for (Layout layout : layouts) {
 						if (SitesUtil.isLayoutModifiedSinceLastMerge(layout)) {
-							isAnyLayoutModifiedSinceLastMerge = true;
+							modified = true;
 
 							break;
 						}
 					}
 
-					if(!isAnyLayoutModifiedSinceLastMerge) {
+					if (!modified) {
 						SitesUtil.mergeLayoutSetProtypeLayouts(
 							group, layoutSet);
 					}

@@ -3428,7 +3428,7 @@ public class JournalArticleLocalServiceImpl
 
 			assetEntryLocalService.updateEntry(
 				JournalArticle.class.getName(), article.getResourcePrimKey(),
-				displayDate, expirationDate, true, modifiedDate);
+				displayDate, expirationDate, modifiedDate, true);
 
 			if (article.isIndexable()) {
 				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(

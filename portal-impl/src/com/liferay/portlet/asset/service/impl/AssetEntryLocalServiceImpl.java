@@ -770,7 +770,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 	public AssetEntry updateEntry(
 			String className, long classPK, Date publishDate,
-			Date expirationDate, boolean visible, Date modifiedDate)
+			Date expirationDate, Date modifiedDate, boolean visible)
 		throws PortalException, SystemException {
 
 		long classNameId = PortalUtil.getClassNameId(className);

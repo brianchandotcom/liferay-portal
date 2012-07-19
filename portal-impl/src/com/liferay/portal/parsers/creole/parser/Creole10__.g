@@ -61,7 +61,7 @@ T79 : 'X' ;
 // $ANTLR src "/home/dougwong/liferay/github/tr-portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g" 879
 ESCAPE					: '~';
 // $ANTLR src "/home/dougwong/liferay/github/tr-portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g" 880
-NOWIKI_BLOCK_CLOSE		: 	NEWLINE  '}}}';
+NOWIKI_BLOCK_CLOSE		: NEWLINE  '}}}';
 // $ANTLR src "/home/dougwong/liferay/github/tr-portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g" 881
 NEWLINE					: ( CR )?  LF
 						| CR;
@@ -78,7 +78,7 @@ fragment SPACE			: ' ';
 fragment TABULATOR		: '\t';
 
 // $ANTLR src "/home/dougwong/liferay/github/tr-portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g" 890
-BRACE_CLOSE				: ~('}') '}' ~('}');
+BRACE_CLOSE				: NEWLINE '}';
 // $ANTLR src "/home/dougwong/liferay/github/tr-portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g" 891
 COLON_SLASH				: ':'  '/';
 // $ANTLR src "/home/dougwong/liferay/github/tr-portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g" 892

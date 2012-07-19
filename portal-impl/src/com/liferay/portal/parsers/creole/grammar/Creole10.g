@@ -877,7 +877,7 @@ forced_linebreak
 ///////////////////////////////////////////////////////////////////////////////
 
 ESCAPE					: '~';
-NOWIKI_BLOCK_CLOSE		: 	NEWLINE  '}}}';
+NOWIKI_BLOCK_CLOSE		: NEWLINE  '}}}';
 NEWLINE					: ( CR )?  LF
 						| CR;
 fragment CR				: '\r';
@@ -887,7 +887,7 @@ BLANKS					: ( SPACE | TABULATOR )+;
 fragment SPACE			: ' ';
 fragment TABULATOR		: '\t';
 
-BRACE_CLOSE				: ~('}') '}' ~('}');
+BRACE_CLOSE				: NEWLINE '}';
 COLON_SLASH				: ':'  '/';
 ITAL					: '//';
 NOWIKI_OPEN				: '{{{';

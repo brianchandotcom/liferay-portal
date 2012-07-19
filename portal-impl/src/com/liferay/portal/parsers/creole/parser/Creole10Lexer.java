@@ -1,4 +1,4 @@
-// $ANTLR 3.0.1 /home/dougwong/liferay/github/tr-portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g 2012-07-17 11:54:50
+// $ANTLR 3.0.1 /home/dougwong/liferay/github/tr-portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g 2012-07-18 19:11:17
 
 /**
  * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
@@ -779,7 +779,7 @@ public class Creole10Lexer extends Lexer {
 	try {
 	    int _type = NOWIKI_BLOCK_CLOSE;
 	    // /home/dougwong/liferay/github/tr-portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:880:21: ( NEWLINE '}}}' )
-	    // /home/dougwong/liferay/github/tr-portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:880:24: NEWLINE '}}}'
+	    // /home/dougwong/liferay/github/tr-portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:880:23: NEWLINE '}}}'
 	    {
 	    mNEWLINE(); 
 	    match("}}}"); 
@@ -986,30 +986,11 @@ public class Creole10Lexer extends Lexer {
     public final void mBRACE_CLOSE() throws RecognitionException {
 	try {
 	    int _type = BRACE_CLOSE;
-	    // /home/dougwong/liferay/github/tr-portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:890:16: (~ ( '}' ) '}' ~ ( '}' ) )
-	    // /home/dougwong/liferay/github/tr-portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:890:18: ~ ( '}' ) '}' ~ ( '}' )
+	    // /home/dougwong/liferay/github/tr-portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:890:16: ( NEWLINE '}' )
+	    // /home/dougwong/liferay/github/tr-portal/portal-impl/src/com/liferay/portal/parsers/creole/grammar/Creole10.g:890:18: NEWLINE '}'
 	    {
-	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='|')||(input.LA(1)>='~' && input.LA(1)<='\uFFFE') ) {
-		input.consume();
-
-	    }
-	    else {
-		MismatchedSetException mse =
-		    new MismatchedSetException(null,input);
-		recover(mse);	 throw mse;
-	    }
-
+	    mNEWLINE(); 
 	    match('}'); 
-	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='|')||(input.LA(1)>='~' && input.LA(1)<='\uFFFE') ) {
-		input.consume();
-
-	    }
-	    else {
-		MismatchedSetException mse =
-		    new MismatchedSetException(null,input);
-		recover(mse);	 throw mse;
-	    }
-
 
 	    }
 
@@ -1399,344 +1380,121 @@ public class Creole10Lexer extends Lexer {
 	int LA4_0 = input.LA(1);
 
 	if ( (LA4_0==':') ) {
-	    switch ( input.LA(2) ) {
-	    case '}':
-		{
-		alt4=41;
-		}
-		break;
-	    case '/':
-		{
-		alt4=42;
-		}
-		break;
-	    default:
-		alt4=1;}
+	    int LA4_1 = input.LA(2);
 
+	    if ( (LA4_1=='/') ) {
+		alt4=42;
+	    }
+	    else {
+		alt4=1;}
 	}
 	else if ( (LA4_0=='C') ) {
-	    int LA4_2 = input.LA(2);
-
-	    if ( (LA4_2=='}') ) {
-		alt4=41;
-	    }
-	    else {
-		alt4=2;}
+	    alt4=2;
 	}
 	else if ( (LA4_0=='2') ) {
-	    int LA4_3 = input.LA(2);
-
-	    if ( (LA4_3=='}') ) {
-		alt4=41;
-	    }
-	    else {
-		alt4=3;}
+	    alt4=3;
 	}
 	else if ( (LA4_0=='D') ) {
-	    int LA4_4 = input.LA(2);
-
-	    if ( (LA4_4=='}') ) {
-		alt4=41;
-	    }
-	    else {
-		alt4=4;}
+	    alt4=4;
 	}
 	else if ( (LA4_0=='o') ) {
-	    int LA4_5 = input.LA(2);
-
-	    if ( (LA4_5=='}') ) {
-		alt4=41;
-	    }
-	    else {
-		alt4=5;}
+	    alt4=5;
 	}
 	else if ( (LA4_0=='k') ) {
-	    int LA4_6 = input.LA(2);
-
-	    if ( (LA4_6=='}') ) {
-		alt4=41;
-	    }
-	    else {
-		alt4=6;}
+	    alt4=6;
 	}
 	else if ( (LA4_0=='u') ) {
-	    int LA4_7 = input.LA(2);
-
-	    if ( (LA4_7=='}') ) {
-		alt4=41;
-	    }
-	    else {
-		alt4=7;}
+	    alt4=7;
 	}
 	else if ( (LA4_0=='W') ) {
-	    int LA4_8 = input.LA(2);
-
-	    if ( (LA4_8=='}') ) {
-		alt4=41;
-	    }
-	    else {
-		alt4=8;}
+	    alt4=8;
 	}
 	else if ( (LA4_0=='i') ) {
-	    int LA4_9 = input.LA(2);
-
-	    if ( (LA4_9=='}') ) {
-		alt4=41;
-	    }
-	    else {
-		alt4=9;}
+	    alt4=9;
 	}
 	else if ( (LA4_0=='F') ) {
-	    int LA4_10 = input.LA(2);
-
-	    if ( (LA4_10=='}') ) {
-		alt4=41;
-	    }
-	    else {
-		alt4=10;}
+	    alt4=10;
 	}
 	else if ( (LA4_0=='l') ) {
-	    int LA4_11 = input.LA(2);
-
-	    if ( (LA4_11=='}') ) {
-		alt4=41;
-	    }
-	    else {
-		alt4=11;}
+	    alt4=11;
 	}
 	else if ( (LA4_0=='c') ) {
-	    int LA4_12 = input.LA(2);
-
-	    if ( (LA4_12=='}') ) {
-		alt4=41;
-	    }
-	    else {
-		alt4=12;}
+	    alt4=12;
 	}
 	else if ( (LA4_0=='r') ) {
-	    int LA4_13 = input.LA(2);
-
-	    if ( (LA4_13=='}') ) {
-		alt4=41;
-	    }
-	    else {
-		alt4=13;}
+	    alt4=13;
 	}
 	else if ( (LA4_0=='G') ) {
-	    int LA4_14 = input.LA(2);
-
-	    if ( (LA4_14=='}') ) {
-		alt4=41;
-	    }
-	    else {
-		alt4=14;}
+	    alt4=14;
 	}
 	else if ( (LA4_0=='g') ) {
-	    int LA4_15 = input.LA(2);
-
-	    if ( (LA4_15=='}') ) {
-		alt4=41;
-	    }
-	    else {
-		alt4=15;}
+	    alt4=15;
 	}
 	else if ( (LA4_0=='e') ) {
-	    int LA4_16 = input.LA(2);
-
-	    if ( (LA4_16=='}') ) {
-		alt4=41;
-	    }
-	    else {
-		alt4=16;}
+	    alt4=16;
 	}
 	else if ( (LA4_0=='J') ) {
-	    int LA4_17 = input.LA(2);
-
-	    if ( (LA4_17=='}') ) {
-		alt4=41;
-	    }
-	    else {
-		alt4=17;}
+	    alt4=17;
 	}
 	else if ( (LA4_0=='S') ) {
-	    int LA4_18 = input.LA(2);
-
-	    if ( (LA4_18=='}') ) {
-		alt4=41;
-	    }
-	    else {
-		alt4=18;}
+	    alt4=18;
 	}
 	else if ( (LA4_0=='P') ) {
-	    int LA4_19 = input.LA(2);
-
-	    if ( (LA4_19=='}') ) {
-		alt4=41;
-	    }
-	    else {
-		alt4=19;}
+	    alt4=19;
 	}
 	else if ( (LA4_0=='M') ) {
-	    int LA4_20 = input.LA(2);
-
-	    if ( (LA4_20=='}') ) {
-		alt4=41;
-	    }
-	    else {
-		alt4=20;}
+	    alt4=20;
 	}
 	else if ( (LA4_0=='a') ) {
-	    int LA4_21 = input.LA(2);
-
-	    if ( (LA4_21=='}') ) {
-		alt4=41;
-	    }
-	    else {
-		alt4=21;}
+	    alt4=21;
 	}
 	else if ( (LA4_0=='t') ) {
-	    int LA4_22 = input.LA(2);
-
-	    if ( (LA4_22=='}') ) {
-		alt4=41;
-	    }
-	    else {
-		alt4=22;}
+	    alt4=22;
 	}
 	else if ( (LA4_0=='b') ) {
-	    int LA4_23 = input.LA(2);
-
-	    if ( (LA4_23=='}') ) {
-		alt4=41;
-	    }
-	    else {
-		alt4=23;}
+	    alt4=23;
 	}
 	else if ( (LA4_0=='d') ) {
-	    int LA4_24 = input.LA(2);
-
-	    if ( (LA4_24=='}') ) {
-		alt4=41;
-	    }
-	    else {
-		alt4=24;}
+	    alt4=24;
 	}
 	else if ( (LA4_0=='n') ) {
-	    int LA4_25 = input.LA(2);
-
-	    if ( (LA4_25=='}') ) {
-		alt4=41;
-	    }
-	    else {
-		alt4=25;}
+	    alt4=25;
 	}
 	else if ( (LA4_0=='O') ) {
-	    int LA4_26 = input.LA(2);
-
-	    if ( (LA4_26=='}') ) {
-		alt4=41;
-	    }
-	    else {
-		alt4=26;}
+	    alt4=26;
 	}
 	else if ( (LA4_0=='m') ) {
-	    int LA4_27 = input.LA(2);
-
-	    if ( (LA4_27=='}') ) {
-		alt4=41;
-	    }
-	    else {
-		alt4=27;}
+	    alt4=27;
 	}
 	else if ( (LA4_0=='s') ) {
-	    int LA4_28 = input.LA(2);
-
-	    if ( (LA4_28=='}') ) {
-		alt4=41;
-	    }
-	    else {
-		alt4=28;}
+	    alt4=28;
 	}
 	else if ( (LA4_0=='h') ) {
-	    int LA4_29 = input.LA(2);
-
-	    if ( (LA4_29=='}') ) {
-		alt4=41;
-	    }
-	    else {
-		alt4=29;}
+	    alt4=29;
 	}
 	else if ( (LA4_0=='p') ) {
-	    int LA4_30 = input.LA(2);
-
-	    if ( (LA4_30=='}') ) {
-		alt4=41;
-	    }
-	    else {
-		alt4=30;}
+	    alt4=30;
 	}
 	else if ( (LA4_0=='R') ) {
-	    int LA4_31 = input.LA(2);
-
-	    if ( (LA4_31=='}') ) {
-		alt4=41;
-	    }
-	    else {
-		alt4=31;}
+	    alt4=31;
 	}
 	else if ( (LA4_0=='x') ) {
-	    int LA4_32 = input.LA(2);
-
-	    if ( (LA4_32=='}') ) {
-		alt4=41;
-	    }
-	    else {
-		alt4=32;}
+	    alt4=32;
 	}
 	else if ( (LA4_0=='T') ) {
-	    int LA4_33 = input.LA(2);
-
-	    if ( (LA4_33=='}') ) {
-		alt4=41;
-	    }
-	    else {
-		alt4=33;}
+	    alt4=33;
 	}
 	else if ( (LA4_0=='y') ) {
-	    int LA4_34 = input.LA(2);
-
-	    if ( (LA4_34=='}') ) {
-		alt4=41;
-	    }
-	    else {
-		alt4=34;}
+	    alt4=34;
 	}
 	else if ( (LA4_0=='U') ) {
-	    int LA4_35 = input.LA(2);
-
-	    if ( (LA4_35=='}') ) {
-		alt4=41;
-	    }
-	    else {
-		alt4=35;}
+	    alt4=35;
 	}
 	else if ( (LA4_0=='X') ) {
-	    int LA4_36 = input.LA(2);
-
-	    if ( (LA4_36=='}') ) {
-		alt4=41;
-	    }
-	    else {
-		alt4=36;}
+	    alt4=36;
 	}
 	else if ( (LA4_0=='~') ) {
-	    int LA4_37 = input.LA(2);
-
-	    if ( (LA4_37=='}') ) {
-		alt4=41;
-	    }
-	    else {
-		alt4=37;}
+	    alt4=37;
 	}
 	else if ( (LA4_0=='\r') ) {
 	    switch ( input.LA(2) ) {
@@ -1747,23 +1505,22 @@ public class Creole10Lexer extends Lexer {
 		if ( (LA4_95=='}') ) {
 		    alt4=38;
 		}
-		else if ( ((LA4_95>='\u0000' && LA4_95<='|')||(LA4_95>='~' && LA4_95<='\uFFFE')) ) {
-		    alt4=41;
-		}
 		else {
-		    NoViableAltException nvae =
-			new NoViableAltException("1:1: Tokens : ( T44 | T45 | T46 | T47 | T48 | T49 | T50 | T51 | T52 | T53 | T54 | T55 | T56 | T57 | T58 | T59 | T60 | T61 | T62 | T63 | T64 | T65 | T66 | T67 | T68 | T69 | T70 | T71 | T72 | T73 | T74 | T75 | T76 | T77 | T78 | T79 | ESCAPE | NOWIKI_BLOCK_CLOSE | NEWLINE | BLANKS | BRACE_CLOSE | COLON_SLASH | ITAL | NOWIKI_OPEN | NOWIKI_CLOSE | LINK_OPEN | LINK_CLOSE | IMAGE_OPEN | IMAGE_CLOSE | FORCED_LINEBREAK | EQUAL | PIPE | POUND | DASH | STAR | SLASH | EXTENSION | TABLE_OF_CONTENTS_OPEN_MARKUP | TABLE_OF_CONTENTS_CLOSE_MARKUP | TABLE_OF_CONTENTS_TEXT | INSIGNIFICANT_CHAR );", 4, 95, input);
-
-		    throw nvae;
-		}
+		    alt4=41;}
 		}
 		break;
 	    case '\n':
 		{
-		int LA4_97 = input.LA(3);
+		int LA4_96 = input.LA(3);
 
-		if ( (LA4_97=='}') ) {
-		    alt4=38;
+		if ( (LA4_96=='}') ) {
+		    int LA4_95 = input.LA(4);
+
+		    if ( (LA4_95=='}') ) {
+			alt4=38;
+		    }
+		    else {
+			alt4=41;}
 		}
 		else {
 		    alt4=39;}
@@ -1782,89 +1539,46 @@ public class Creole10Lexer extends Lexer {
 		if ( (LA4_95=='}') ) {
 		    alt4=38;
 		}
-		else if ( ((LA4_95>='\u0000' && LA4_95<='|')||(LA4_95>='~' && LA4_95<='\uFFFE')) ) {
-		    alt4=41;
-		}
 		else {
-		    NoViableAltException nvae =
-			new NoViableAltException("1:1: Tokens : ( T44 | T45 | T46 | T47 | T48 | T49 | T50 | T51 | T52 | T53 | T54 | T55 | T56 | T57 | T58 | T59 | T60 | T61 | T62 | T63 | T64 | T65 | T66 | T67 | T68 | T69 | T70 | T71 | T72 | T73 | T74 | T75 | T76 | T77 | T78 | T79 | ESCAPE | NOWIKI_BLOCK_CLOSE | NEWLINE | BLANKS | BRACE_CLOSE | COLON_SLASH | ITAL | NOWIKI_OPEN | NOWIKI_CLOSE | LINK_OPEN | LINK_CLOSE | IMAGE_OPEN | IMAGE_CLOSE | FORCED_LINEBREAK | EQUAL | PIPE | POUND | DASH | STAR | SLASH | EXTENSION | TABLE_OF_CONTENTS_OPEN_MARKUP | TABLE_OF_CONTENTS_CLOSE_MARKUP | TABLE_OF_CONTENTS_TEXT | INSIGNIFICANT_CHAR );", 4, 95, input);
-
-		    throw nvae;
-		}
+		    alt4=41;}
 	    }
 	    else {
 		alt4=39;}
 	}
 	else if ( (LA4_0=='\t'||LA4_0==' ') ) {
-	    int LA4_40 = input.LA(2);
-
-	    if ( (LA4_40=='}') ) {
-		alt4=41;
-	    }
-	    else {
-		alt4=40;}
+	    alt4=40;
 	}
 	else if ( (LA4_0=='/') ) {
-	    switch ( input.LA(2) ) {
-	    case '/':
-		{
-		alt4=43;
-		}
-		break;
-	    case '}':
-		{
-		alt4=41;
-		}
-		break;
-	    default:
-		alt4=56;}
+	    int LA4_41 = input.LA(2);
 
+	    if ( (LA4_41=='/') ) {
+		alt4=43;
+	    }
+	    else {
+		alt4=56;}
 	}
 	else if ( (LA4_0=='{') ) {
-	    switch ( input.LA(2) ) {
-	    case '{':
-		{
-		int LA4_101 = input.LA(3);
+	    int LA4_42 = input.LA(2);
 
-		if ( (LA4_101=='{') ) {
+	    if ( (LA4_42=='{') ) {
+		int LA4_100 = input.LA(3);
+
+		if ( (LA4_100=='{') ) {
 		    alt4=44;
 		}
 		else {
 		    alt4=48;}
-		}
-		break;
-	    case '}':
-		{
-		alt4=41;
-		}
-		break;
-	    default:
+	    }
+	    else {
 		alt4=61;}
-
-	}
-	else if ( (LA4_0=='[') ) {
-	    switch ( input.LA(2) ) {
-	    case '[':
-		{
-		alt4=46;
-		}
-		break;
-	    case '}':
-		{
-		alt4=41;
-		}
-		break;
-	    default:
-		alt4=61;}
-
 	}
 	else if ( (LA4_0=='}') ) {
-	    int LA4_44 = input.LA(2);
+	    int LA4_43 = input.LA(2);
 
-	    if ( (LA4_44=='}') ) {
-		int LA4_104 = input.LA(3);
+	    if ( (LA4_43=='}') ) {
+		int LA4_101 = input.LA(3);
 
-		if ( (LA4_104=='}') ) {
+		if ( (LA4_101=='}') ) {
 		    alt4=45;
 		}
 		else {
@@ -1873,145 +1587,83 @@ public class Creole10Lexer extends Lexer {
 	    else {
 		alt4=61;}
 	}
-	else if ( (LA4_0==']') ) {
-	    switch ( input.LA(2) ) {
-	    case '}':
-		{
-		alt4=41;
-		}
-		break;
-	    case ']':
-		{
-		alt4=47;
-		}
-		break;
-	    default:
-		alt4=61;}
+	else if ( (LA4_0=='[') ) {
+	    int LA4_44 = input.LA(2);
 
+	    if ( (LA4_44=='[') ) {
+		alt4=46;
+	    }
+	    else {
+		alt4=61;}
+	}
+	else if ( (LA4_0==']') ) {
+	    int LA4_45 = input.LA(2);
+
+	    if ( (LA4_45==']') ) {
+		alt4=47;
+	    }
+	    else {
+		alt4=61;}
 	}
 	else if ( (LA4_0=='\\') ) {
-	    switch ( input.LA(2) ) {
-	    case '}':
-		{
-		alt4=41;
-		}
-		break;
-	    case '\\':
-		{
-		alt4=50;
-		}
-		break;
-	    default:
-		alt4=61;}
+	    int LA4_46 = input.LA(2);
 
+	    if ( (LA4_46=='\\') ) {
+		alt4=50;
+	    }
+	    else {
+		alt4=61;}
 	}
 	else if ( (LA4_0=='=') ) {
-	    int LA4_47 = input.LA(2);
-
-	    if ( (LA4_47=='}') ) {
-		alt4=41;
-	    }
-	    else {
-		alt4=51;}
+	    alt4=51;
 	}
 	else if ( (LA4_0=='|') ) {
-	    int LA4_48 = input.LA(2);
-
-	    if ( (LA4_48=='}') ) {
-		alt4=41;
-	    }
-	    else {
-		alt4=52;}
+	    alt4=52;
 	}
 	else if ( (LA4_0=='#') ) {
-	    int LA4_49 = input.LA(2);
-
-	    if ( (LA4_49=='}') ) {
-		alt4=41;
-	    }
-	    else {
-		alt4=53;}
+	    alt4=53;
 	}
 	else if ( (LA4_0=='-') ) {
-	    int LA4_50 = input.LA(2);
-
-	    if ( (LA4_50=='}') ) {
-		alt4=41;
-	    }
-	    else {
-		alt4=54;}
+	    alt4=54;
 	}
 	else if ( (LA4_0=='*') ) {
-	    int LA4_51 = input.LA(2);
-
-	    if ( (LA4_51=='}') ) {
-		alt4=41;
-	    }
-	    else {
-		alt4=55;}
+	    alt4=55;
 	}
 	else if ( (LA4_0=='@') ) {
-	    switch ( input.LA(2) ) {
-	    case '}':
-		{
-		alt4=41;
-		}
-		break;
-	    case '@':
-		{
-		alt4=57;
-		}
-		break;
-	    default:
-		alt4=61;}
+	    int LA4_52 = input.LA(2);
 
+	    if ( (LA4_52=='@') ) {
+		alt4=57;
+	    }
+	    else {
+		alt4=61;}
 	}
 	else if ( (LA4_0=='<') ) {
-	    switch ( input.LA(2) ) {
-	    case '}':
-		{
-		alt4=41;
-		}
-		break;
-	    case '<':
-		{
-		int LA4_113 = input.LA(3);
+	    int LA4_53 = input.LA(2);
 
-		if ( (LA4_113=='T') ) {
+	    if ( (LA4_53=='<') ) {
+		int LA4_111 = input.LA(3);
+
+		if ( (LA4_111=='T') ) {
 		    alt4=60;
 		}
 		else {
 		    alt4=58;}
-		}
-		break;
-	    default:
-		alt4=61;}
-
-	}
-	else if ( (LA4_0=='>') ) {
-	    switch ( input.LA(2) ) {
-	    case '}':
-		{
-		alt4=41;
-		}
-		break;
-	    case '>':
-		{
-		alt4=59;
-		}
-		break;
-	    default:
-		alt4=61;}
-
-	}
-	else if ( ((LA4_0>='\u0000' && LA4_0<='\b')||(LA4_0>='\u000B' && LA4_0<='\f')||(LA4_0>='\u000E' && LA4_0<='\u001F')||(LA4_0>='!' && LA4_0<='\"')||(LA4_0>='$' && LA4_0<=')')||(LA4_0>='+' && LA4_0<=',')||LA4_0=='.'||(LA4_0>='0' && LA4_0<='1')||(LA4_0>='3' && LA4_0<='9')||LA4_0==';'||LA4_0=='?'||(LA4_0>='A' && LA4_0<='B')||LA4_0=='E'||(LA4_0>='H' && LA4_0<='I')||(LA4_0>='K' && LA4_0<='L')||LA4_0=='N'||LA4_0=='Q'||LA4_0=='V'||(LA4_0>='Y' && LA4_0<='Z')||(LA4_0>='^' && LA4_0<='`')||LA4_0=='f'||LA4_0=='j'||LA4_0=='q'||(LA4_0>='v' && LA4_0<='w')||LA4_0=='z'||(LA4_0>='\u007F' && LA4_0<='\uFFFE')) ) {
-	    int LA4_55 = input.LA(2);
-
-	    if ( (LA4_55=='}') ) {
-		alt4=41;
 	    }
 	    else {
 		alt4=61;}
+	}
+	else if ( (LA4_0=='>') ) {
+	    int LA4_54 = input.LA(2);
+
+	    if ( (LA4_54=='>') ) {
+		alt4=59;
+	    }
+	    else {
+		alt4=61;}
+	}
+	else if ( ((LA4_0>='\u0000' && LA4_0<='\b')||(LA4_0>='\u000B' && LA4_0<='\f')||(LA4_0>='\u000E' && LA4_0<='\u001F')||(LA4_0>='!' && LA4_0<='\"')||(LA4_0>='$' && LA4_0<=')')||(LA4_0>='+' && LA4_0<=',')||LA4_0=='.'||(LA4_0>='0' && LA4_0<='1')||(LA4_0>='3' && LA4_0<='9')||LA4_0==';'||LA4_0=='?'||(LA4_0>='A' && LA4_0<='B')||LA4_0=='E'||(LA4_0>='H' && LA4_0<='I')||(LA4_0>='K' && LA4_0<='L')||LA4_0=='N'||LA4_0=='Q'||LA4_0=='V'||(LA4_0>='Y' && LA4_0<='Z')||(LA4_0>='^' && LA4_0<='`')||LA4_0=='f'||LA4_0=='j'||LA4_0=='q'||(LA4_0>='v' && LA4_0<='w')||LA4_0=='z'||(LA4_0>='\u007F' && LA4_0<='\uFFFE')) ) {
+	    alt4=61;
 	}
 	else {
 	    NoViableAltException nvae =

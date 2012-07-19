@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.util;
 
 import java.text.DateFormat;
 import java.text.Format;
+import java.text.ParseException;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -249,6 +250,15 @@ public class DateUtil {
 		Date date = new Date();
 
 		return date.getTime();
+	}
+
+	public static Date parseDate(String dateString, Locale locale)
+		throws ParseException {
+
+		DateFormat dateFormat = DateFormat.getDateInstance(
+			DateFormat.SHORT, locale);
+
+		return dateFormat.parse(dateString);
 	}
 
 }

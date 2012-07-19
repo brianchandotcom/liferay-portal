@@ -43,11 +43,13 @@ import com.liferay.portal.security.permission.ResourceBlockIdsBag;
 import com.liferay.portal.service.PersistedModelLocalService;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
 import com.liferay.portal.service.base.ResourceBlockLocalServiceBaseImpl;
+import com.liferay.portal.spring.transaction.TransactionCommitCallbackUtil;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 /**
  * Manages the creation and upkeep of resource blocks and the resources they
@@ -780,7 +782,7 @@ public class ResourceBlockLocalServiceImpl
 		propagation = Propagation.REQUIRES_NEW)
 	public ResourceBlock updateResourceBlockId(
 			long companyId, long groupId, String name,
-			PermissionedModel permissionedModel, String permissionsHash,
+			final PermissionedModel permissionedModel, String permissionsHash,
 			ResourceBlockPermissionsContainer resourceBlockPermissionsContainer)
 		throws SystemException {
 
@@ -863,7 +865,17 @@ public class ResourceBlockLocalServiceImpl
 		permissionedModel.setResourceBlockId(
 			resourceBlock.getResourceBlockId());
 
-		permissionedModel.persist();
+		Callable<Void> callable = new Callable<Void>() {
+
+			public Void call() throws Exception {
+				permissionedModel.persist();
+
+				return null;
+			}
+
+		};
+
+		TransactionCommitCallbackUtil.registerCallback(callable);
 
 		return resourceBlock;
 	}

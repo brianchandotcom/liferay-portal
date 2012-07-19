@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.microsofttranslator.MicrosoftTranslatorException;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.NumericalStringComparator;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -468,7 +469,8 @@ public class LangBuilder {
 		UnsyncBufferedWriter unsyncBufferedWriter = new UnsyncBufferedWriter(
 			new FileWriter(propertiesFile));
 
-		Set<String> messages = new TreeSet<String>();
+		Set<String> messages = new TreeSet<String>(
+			new NumericalStringComparator(true, true));
 
 		boolean begin = false;
 		boolean firstLine = true;

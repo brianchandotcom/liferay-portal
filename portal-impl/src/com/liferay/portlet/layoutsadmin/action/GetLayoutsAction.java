@@ -36,11 +36,12 @@ public class GetLayoutsAction extends JSONAction {
 		throws Exception {
 
 		long groupId = ParamUtil.getLong(request, "groupId");
+		boolean incomplete = ParamUtil.getBoolean(request, "incomplete", true);
 		boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 		long parentLayoutId = ParamUtil.getLong(request, "parentLayoutId");
 
 		return LayoutsTreeUtil.getLayoutsJSON(
-			request, groupId, privateLayout, parentLayoutId);
+			request, groupId, privateLayout, parentLayoutId, incomplete);
 	}
 
 }

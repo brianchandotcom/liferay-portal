@@ -14,27 +14,26 @@
 
 package com.liferay.portlet.usersadmin.action;
 
+import com.liferay.portal.ImageTypeException;
 import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.UserPortraitSizeException;
 import com.liferay.portal.UserPortraitTypeException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.UploadException;
-import com.liferay.portal.kernel.upload.UploadPortletRequest;
-import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.model.User;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.UserServiceUtil;
-import com.liferay.portal.struts.PortletAction;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.util.portlet.PortletRequestUtil;
-
-import java.io.InputStream;
+import com.liferay.portlet.documentlibrary.FileSizeException;
+import com.liferay.portlet.documentlibrary.NoSuchFileException;
+import com.liferay.portlet.portalsettings.action.EditCompanyLogoAction;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -45,7 +44,7 @@ import org.apache.struts.action.ActionMapping;
 /**
  * @author Brian Wing Shun Chan
  */
-public class EditUserPortraitAction extends PortletAction {
+public class EditUserPortraitAction extends EditCompanyLogoAction {
 
 	@Override
 	public void processAction(
@@ -54,9 +53,16 @@ public class EditUserPortraitAction extends PortletAction {
 		throws Exception {
 
 		try {
-			updatePortrait(actionRequest);
+			String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-			sendRedirect(actionRequest, actionResponse);
+			if (cmd.equals(Constants.ADD_TEMP)) {
+				addTempImageFile(actionRequest);
+			}
+			else {
+				saveTempImageFile(actionRequest);
+
+				sendRedirect(actionRequest, actionResponse);
+			}
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchUserException ||
@@ -66,9 +72,19 @@ public class EditUserPortraitAction extends PortletAction {
 
 				setForward(actionRequest, "portlet.users_admin.error");
 			}
-			else if (e instanceof UploadException ||
-					 e instanceof UserPortraitSizeException ||
+			else if (e instanceof FileSizeException ||
+					 e instanceof ImageTypeException ||
 					 e instanceof UserPortraitTypeException) {
+
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+				jsonObject.putException(e);
+
+				writeJSON(actionRequest, actionResponse, jsonObject);
+			}
+			else if (e instanceof NoSuchFileException ||
+					 e instanceof UserPortraitSizeException ||
+					 e instanceof UploadException) {
 
 				SessionErrors.add(actionRequest, e.getClass());
 			}
@@ -84,36 +100,24 @@ public class EditUserPortraitAction extends PortletAction {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws Exception {
 
-		return mapping.findForward(getForward(
-			renderRequest, "portlet.users_admin.edit_user_portrait"));
+		return mapping.findForward(
+			getForward(
+				renderRequest, "portlet.users_admin.edit_user_portrait"));
 	}
 
-	protected void updatePortrait(ActionRequest actionRequest)
+	@Override
+	protected String getTempImageFileName(PortletRequest portletRequest) {
+		return ParamUtil.getString(portletRequest, "p_u_i_d");
+	}
+
+	@Override
+	protected void saveTempImageFile(
+			PortletRequest portletRequest, byte[] bytes)
 		throws Exception {
 
-		if (_log.isDebugEnabled()) {
-			PortletRequestUtil.testMultipartWithCommonsFileUpload(
-				actionRequest);
-		}
+		long userId = ParamUtil.getLong(portletRequest, "p_u_i_d");
 
-		UploadPortletRequest uploadPortletRequest =
-			PortalUtil.getUploadPortletRequest(actionRequest);
-
-		User user = PortalUtil.getSelectedUser(uploadPortletRequest);
-
-		InputStream inputStream = uploadPortletRequest.getFileAsStream(
-			"fileName");
-
-		if (inputStream == null) {
-			throw new UploadException();
-		}
-
-		byte[] bytes = FileUtil.getBytes(inputStream);
-
-		UserServiceUtil.updatePortrait(user.getUserId(), bytes);
+		UserServiceUtil.updatePortrait(userId, bytes);
 	}
-
-	private static Log _log = LogFactoryUtil.getLog(
-		EditUserPortraitAction.class);
 
 }

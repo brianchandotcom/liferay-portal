@@ -84,6 +84,16 @@ public interface LayoutSetService extends BaseService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public void updateLogo(long groupId, boolean privateLayout, boolean logo,
+		byte[] bytes)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void updateLogo(long groupId, boolean privateLayout, boolean logo,
+		java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void updateLogo(long groupId, boolean privateLayout, boolean logo,
 		java.io.InputStream inputStream)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

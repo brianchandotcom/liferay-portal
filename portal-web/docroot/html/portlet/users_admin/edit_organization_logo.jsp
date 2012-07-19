@@ -19,24 +19,21 @@
 <%
 long groupId = ParamUtil.getLong(request, "groupId");
 long publicLayoutSetId = ParamUtil.getLong(request, "publicLayoutSetId");
+
+String logoURL = StringPool.BLANK;
+
+if (publicLayoutSetId != 0) {
+	LayoutSet publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(publicLayoutSetId);
+
+	logoURL = themeDisplay.getPathImage() + "/organization_logo?img_id=" + publicLayoutSet.getLogoId() + "&t=" + WebServerServletTokenUtil.getToken(publicLayoutSet.getLogoId());
+}
 %>
 
 <c:choose>
 	<c:when test='<%= SessionMessages.contains(renderRequest, "request_processed") %>'>
-
-		<%
-		String logoURL = StringPool.BLANK;
-
-		if (publicLayoutSetId != 0) {
-			LayoutSet publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(publicLayoutSetId);
-
-			logoURL = themeDisplay.getPathImage() + "/organization_logo?img_id=" + publicLayoutSet.getLogoId() + "&t=" + WebServerServletTokenUtil.getToken(publicLayoutSet.getLogoId());
-		}
-		%>
-
 		<aui:script>
-			window.close();
 			opener.<portlet:namespace />changeLogo('<%= logoURL %>');
+			window.close();
 		</aui:script>
 	</c:when>
 	<c:otherwise>
@@ -47,15 +44,20 @@ long publicLayoutSetId = ParamUtil.getLong(request, "publicLayoutSetId");
 		<aui:form action="<%= editOrganizationLogoURL %>" enctype="multipart/form-data" method="post" name="fm">
 			<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 			<aui:input name="publicLayoutSetId" type="hidden" value="<%= publicLayoutSetId %>" />
+			<aui:input name="cropRegion" type="hidden" />
 
-			<liferay-ui:error exception="<%= ImageTypeException.class %>" message="please-enter-a-file-with-a-valid-file-type" />
+			<liferay-ui:error exception="<%= NoSuchFileException.class %>" message="an-unexpected-error-occurred-while-uploading-your-file" />
 			<liferay-ui:error exception="<%= UploadException.class %>" message="an-unexpected-error-occurred-while-uploading-your-file" />
 
 			<aui:fieldset>
 				<aui:input label="upload-a-logo-for-the-organization-pages-that-will-be-used-instead-of-the-default-enterprise-logo-in-both-public-and-private-pages" name="fileName" size="50" type="file" />
 
+				<div class="lfr-change-logo portrait-preview" id="<portlet:namespace />portraitPreview">
+					<img class="portrait-preview-img" id="<portlet:namespace />portraitPreviewImg" src="<%= HtmlUtil.escape(logoURL) %>" />
+				</div>
+
 				<aui:button-row>
-					<aui:button type="submit" />
+					<aui:button name="submitButton" type="submit" />
 
 					<aui:button onClick="window.close();" type="cancel" value="close" />
 				</aui:button-row>
@@ -67,5 +69,16 @@ long publicLayoutSetId = ParamUtil.getLong(request, "publicLayoutSetId");
 				Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />fileName);
 			</aui:script>
 		</c:if>
+
+		<aui:script use="liferay-logo-editor">
+			new Liferay.LogoEditor(
+				{
+					maxFileSize: '<%= PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE) / 1024 %>',
+					namespace: '<portlet:namespace />',
+					previewURL: '<portlet:resourceURL><portlet:param name="struts_action" value="/users_admin/edit_organization_logo" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.GET_TEMP %>" /><portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" /></portlet:resourceURL>',
+					uploadURL: '<portlet:actionURL><portlet:param name="struts_action" value="/users_admin/edit_organization_logo" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" /><portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" /></portlet:actionURL>'
+				}
+			);
+		</aui:script>
 	</c:otherwise>
 </c:choose>

@@ -366,6 +366,29 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 	 * Updates the company's logo.
 	 *
 	 * @param  companyId the primary key of the company
+	 * @param  bytes the bytes of the company's logo image
+	 * @return the company with the primary key
+	 * @throws PortalException if the company's logo ID could not be found or if
+	 *         the logo's image was corrupted or if the user was an
+	 *         administrator
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Company updateLogo(long companyId, byte[] bytes)
+		throws PortalException, SystemException {
+
+		if (!roleLocalService.hasUserRole(
+				getUserId(), companyId, RoleConstants.ADMINISTRATOR, true)) {
+
+			throw new PrincipalException();
+		}
+
+		return companyLocalService.updateLogo(companyId, bytes);
+	}
+
+	/**
+	 * Updates the company's logo.
+	 *
+	 * @param  companyId the primary key of the company
 	 * @param  inputStream the input stream of the company's logo image
 	 * @return the company with the primary key
 	 * @throws PortalException if the company's logo ID could not be found or if

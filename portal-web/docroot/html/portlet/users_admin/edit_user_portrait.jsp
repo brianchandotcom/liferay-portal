@@ -18,13 +18,15 @@
 
 <%
 User selUser = PortalUtil.getSelectedUser(request);
+
+long maxFileSize = PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE) / 1024;
 %>
 
 <c:choose>
 	<c:when test='<%= SessionMessages.contains(renderRequest, "request_processed") %>'>
 		<aui:script>
-			window.close();
 			opener.<portlet:namespace />changeLogo('<%= selUser.getPortraitURL(themeDisplay) %>');
+			window.close();
 		</aui:script>
 	</c:when>
 	<c:otherwise>
@@ -34,25 +36,25 @@ User selUser = PortalUtil.getSelectedUser(request);
 
 		<aui:form action="<%= editUserPortraitURL %>" enctype="multipart/form-data" method="post" name="fm">
 			<aui:input name="p_u_i_d" type="hidden" value="<%= selUser.getUserId() %>" />
+			<aui:input name="cropRegion" type="hidden" />
 
+			<liferay-ui:error exception="<%= NoSuchFileException.class %>" message="an-unexpected-error-occurred-while-uploading-your-file" />
 			<liferay-ui:error exception="<%= UploadException.class %>" message="an-unexpected-error-occurred-while-uploading-your-file" />
 
 			<liferay-ui:error exception="<%= UserPortraitSizeException.class %>">
 
-				<%
-				long imageMaxSize = PrefsPropsUtil.getLong(PropsKeys.USERS_IMAGE_MAX_SIZE) / 1024;
-				%>
-
-				<liferay-ui:message arguments="<%= imageMaxSize %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" />
+				<liferay-ui:message arguments="<%= PrefsPropsUtil.getLong(PropsKeys.USERS_IMAGE_MAX_SIZE) / 1024 %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" />
 			</liferay-ui:error>
 
-			<liferay-ui:error exception="<%= UserPortraitTypeException.class %>" message="please-enter-a-file-with-a-valid-file-type" />
-
 			<aui:fieldset>
-				<aui:input label='<%= LanguageUtil.format(pageContext, "upload-a-gif-or-jpeg-that-is-x-pixels-tall-and-x-pixels-wide", new Object[] {"120", "100"}, false) %>' name="fileName" size="50" type="file" />
+				<aui:input label='<%= LanguageUtil.format(pageContext, "upload-images-no-larger-than-x-k", maxFileSize, false) %>' name="fileName" size="50" type="file" />
+
+				<div class="lfr-change-logo portrait-preview" id="<portlet:namespace />portraitPreview">
+					<img class="portrait-preview-img" id="<portlet:namespace />portraitPreviewImg" src="<%= HtmlUtil.escape(selUser.getPortraitURL(themeDisplay)) %>" />
+				</div>
 
 				<aui:button-row>
-					<aui:button type="submit" />
+					<aui:button name="submitButton" type="submit" />
 
 					<aui:button onClick="window.close();" type="cancel" value="close" />
 				</aui:button-row>
@@ -64,5 +66,16 @@ User selUser = PortalUtil.getSelectedUser(request);
 				Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />fileName);
 			</aui:script>
 		</c:if>
+
+		<aui:script use="liferay-logo-editor">
+			new Liferay.LogoEditor(
+				{
+					maxFileSize: '<%= maxFileSize %>',
+					namespace: '<portlet:namespace />',
+					previewURL: '<portlet:resourceURL><portlet:param name="struts_action" value="/users_admin/edit_user_portrait" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.GET_TEMP %>" /><portlet:param name="p_u_i_d" value="<%= String.valueOf(selUser.getUserId()) %>" /></portlet:resourceURL>',
+					uploadURL: '<portlet:actionURL><portlet:param name="struts_action" value="/users_admin/edit_user_portrait" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" /><portlet:param name="p_u_i_d" value="<%= String.valueOf(selUser.getUserId()) %>" /></portlet:actionURL>'
+				}
+			);
+		</aui:script>
 	</c:otherwise>
 </c:choose>

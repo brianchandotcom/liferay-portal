@@ -657,7 +657,12 @@ public class DLUtil {
 		throws Exception {
 
 		while (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(folderId);
+			DLFolder dlFolder = DLFolderLocalServiceUtil.fetchDLFolder(
+				folderId);
+
+			if (dlFolder == null) {
+				return false;
+			}
 
 			if (dlFolder.isOverrideFileEntryTypes()) {
 				break;

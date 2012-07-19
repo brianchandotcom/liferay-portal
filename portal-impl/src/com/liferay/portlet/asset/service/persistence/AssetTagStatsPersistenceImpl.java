@@ -685,10 +685,6 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 	/**
 	 * Returns the first asset tag stats in the ordered set where tagId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param tagId the tag ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching asset tag stats
@@ -698,31 +694,46 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 	public AssetTagStats findByTagId_First(long tagId,
 		OrderByComparator orderByComparator)
 		throws NoSuchTagStatsException, SystemException {
+		AssetTagStats assetTagStats = fetchByTagId_First(tagId,
+				orderByComparator);
+
+		if (assetTagStats != null) {
+			return assetTagStats;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("tagId=");
+		msg.append(tagId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchTagStatsException(msg.toString());
+	}
+
+	/**
+	 * Returns the first asset tag stats in the ordered set where tagId = &#63;.
+	 *
+	 * @param tagId the tag ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching asset tag stats, or <code>null</code> if a matching asset tag stats could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public AssetTagStats fetchByTagId_First(long tagId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<AssetTagStats> list = findByTagId(tagId, 0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("tagId=");
-			msg.append(tagId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchTagStatsException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last asset tag stats in the ordered set where tagId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param tagId the tag ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -733,34 +744,48 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 	public AssetTagStats findByTagId_Last(long tagId,
 		OrderByComparator orderByComparator)
 		throws NoSuchTagStatsException, SystemException {
+		AssetTagStats assetTagStats = fetchByTagId_Last(tagId, orderByComparator);
+
+		if (assetTagStats != null) {
+			return assetTagStats;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("tagId=");
+		msg.append(tagId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchTagStatsException(msg.toString());
+	}
+
+	/**
+	 * Returns the last asset tag stats in the ordered set where tagId = &#63;.
+	 *
+	 * @param tagId the tag ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching asset tag stats, or <code>null</code> if a matching asset tag stats could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public AssetTagStats fetchByTagId_Last(long tagId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByTagId(tagId);
 
 		List<AssetTagStats> list = findByTagId(tagId, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("tagId=");
-			msg.append(tagId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchTagStatsException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the asset tag statses before and after the current asset tag stats in the ordered set where tagId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param tagStatsId the primary key of the current asset tag stats
 	 * @param tagId the tag ID
@@ -1041,10 +1066,6 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 	/**
 	 * Returns the first asset tag stats in the ordered set where classNameId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param classNameId the class name ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching asset tag stats
@@ -1054,32 +1075,47 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 	public AssetTagStats findByClassNameId_First(long classNameId,
 		OrderByComparator orderByComparator)
 		throws NoSuchTagStatsException, SystemException {
+		AssetTagStats assetTagStats = fetchByClassNameId_First(classNameId,
+				orderByComparator);
+
+		if (assetTagStats != null) {
+			return assetTagStats;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("classNameId=");
+		msg.append(classNameId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchTagStatsException(msg.toString());
+	}
+
+	/**
+	 * Returns the first asset tag stats in the ordered set where classNameId = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching asset tag stats, or <code>null</code> if a matching asset tag stats could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public AssetTagStats fetchByClassNameId_First(long classNameId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<AssetTagStats> list = findByClassNameId(classNameId, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("classNameId=");
-			msg.append(classNameId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchTagStatsException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last asset tag stats in the ordered set where classNameId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param classNameId the class name ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1090,34 +1126,49 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 	public AssetTagStats findByClassNameId_Last(long classNameId,
 		OrderByComparator orderByComparator)
 		throws NoSuchTagStatsException, SystemException {
+		AssetTagStats assetTagStats = fetchByClassNameId_Last(classNameId,
+				orderByComparator);
+
+		if (assetTagStats != null) {
+			return assetTagStats;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("classNameId=");
+		msg.append(classNameId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchTagStatsException(msg.toString());
+	}
+
+	/**
+	 * Returns the last asset tag stats in the ordered set where classNameId = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching asset tag stats, or <code>null</code> if a matching asset tag stats could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public AssetTagStats fetchByClassNameId_Last(long classNameId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByClassNameId(classNameId);
 
 		List<AssetTagStats> list = findByClassNameId(classNameId, count - 1,
 				count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("classNameId=");
-			msg.append(classNameId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchTagStatsException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the asset tag statses before and after the current asset tag stats in the ordered set where classNameId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param tagStatsId the primary key of the current asset tag stats
 	 * @param classNameId the class name ID

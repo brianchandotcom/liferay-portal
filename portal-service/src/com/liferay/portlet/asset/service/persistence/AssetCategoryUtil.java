@@ -247,10 +247,6 @@ public class AssetCategoryUtil {
 	/**
 	* Returns the first asset category in the ordered set where uuid = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching asset category
@@ -266,11 +262,22 @@ public class AssetCategoryUtil {
 	}
 
 	/**
-	* Returns the last asset category in the ordered set where uuid = &#63;.
+	* Returns the first asset category in the ordered set where uuid = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param uuid the uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching asset category, or <code>null</code> if a matching asset category could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.asset.model.AssetCategory fetchByUuid_First(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
+	}
+
+	/**
+	* Returns the last asset category in the ordered set where uuid = &#63;.
 	*
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -287,11 +294,22 @@ public class AssetCategoryUtil {
 	}
 
 	/**
-	* Returns the asset categories before and after the current asset category in the ordered set where uuid = &#63;.
+	* Returns the last asset category in the ordered set where uuid = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param uuid the uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching asset category, or <code>null</code> if a matching asset category could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.asset.model.AssetCategory fetchByUuid_Last(
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
+	}
+
+	/**
+	* Returns the asset categories before and after the current asset category in the ordered set where uuid = &#63;.
 	*
 	* @param categoryId the primary key of the current asset category
 	* @param uuid the uuid
@@ -414,10 +432,6 @@ public class AssetCategoryUtil {
 	/**
 	* Returns the first asset category in the ordered set where uuid = &#63; and companyId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -435,11 +449,24 @@ public class AssetCategoryUtil {
 	}
 
 	/**
-	* Returns the last asset category in the ordered set where uuid = &#63; and companyId = &#63;.
+	* Returns the first asset category in the ordered set where uuid = &#63; and companyId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching asset category, or <code>null</code> if a matching asset category could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.asset.model.AssetCategory fetchByUuid_C_First(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the last asset category in the ordered set where uuid = &#63; and companyId = &#63;.
 	*
 	* @param uuid the uuid
 	* @param companyId the company ID
@@ -458,11 +485,24 @@ public class AssetCategoryUtil {
 	}
 
 	/**
-	* Returns the asset categories before and after the current asset category in the ordered set where uuid = &#63; and companyId = &#63;.
+	* Returns the last asset category in the ordered set where uuid = &#63; and companyId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching asset category, or <code>null</code> if a matching asset category could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.asset.model.AssetCategory fetchByUuid_C_Last(
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the asset categories before and after the current asset category in the ordered set where uuid = &#63; and companyId = &#63;.
 	*
 	* @param categoryId the primary key of the current asset category
 	* @param uuid the uuid
@@ -539,10 +579,6 @@ public class AssetCategoryUtil {
 	/**
 	* Returns the first asset category in the ordered set where groupId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching asset category
@@ -558,11 +594,22 @@ public class AssetCategoryUtil {
 	}
 
 	/**
-	* Returns the last asset category in the ordered set where groupId = &#63;.
+	* Returns the first asset category in the ordered set where groupId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching asset category, or <code>null</code> if a matching asset category could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.asset.model.AssetCategory fetchByGroupId_First(
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByGroupId_First(groupId, orderByComparator);
+	}
+
+	/**
+	* Returns the last asset category in the ordered set where groupId = &#63;.
 	*
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -579,11 +626,22 @@ public class AssetCategoryUtil {
 	}
 
 	/**
-	* Returns the asset categories before and after the current asset category in the ordered set where groupId = &#63;.
+	* Returns the last asset category in the ordered set where groupId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param groupId the group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching asset category, or <code>null</code> if a matching asset category could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.asset.model.AssetCategory fetchByGroupId_Last(
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
+	}
+
+	/**
+	* Returns the asset categories before and after the current asset category in the ordered set where groupId = &#63;.
 	*
 	* @param categoryId the primary key of the current asset category
 	* @param groupId the group ID
@@ -735,10 +793,6 @@ public class AssetCategoryUtil {
 	/**
 	* Returns the first asset category in the ordered set where parentCategoryId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param parentCategoryId the parent category ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching asset category
@@ -756,11 +810,24 @@ public class AssetCategoryUtil {
 	}
 
 	/**
-	* Returns the last asset category in the ordered set where parentCategoryId = &#63;.
+	* Returns the first asset category in the ordered set where parentCategoryId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param parentCategoryId the parent category ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching asset category, or <code>null</code> if a matching asset category could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.asset.model.AssetCategory fetchByParentCategoryId_First(
+		long parentCategoryId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByParentCategoryId_First(parentCategoryId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last asset category in the ordered set where parentCategoryId = &#63;.
 	*
 	* @param parentCategoryId the parent category ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -779,11 +846,24 @@ public class AssetCategoryUtil {
 	}
 
 	/**
-	* Returns the asset categories before and after the current asset category in the ordered set where parentCategoryId = &#63;.
+	* Returns the last asset category in the ordered set where parentCategoryId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param parentCategoryId the parent category ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching asset category, or <code>null</code> if a matching asset category could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.asset.model.AssetCategory fetchByParentCategoryId_Last(
+		long parentCategoryId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByParentCategoryId_Last(parentCategoryId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the asset categories before and after the current asset category in the ordered set where parentCategoryId = &#63;.
 	*
 	* @param categoryId the primary key of the current asset category
 	* @param parentCategoryId the parent category ID
@@ -860,10 +940,6 @@ public class AssetCategoryUtil {
 	/**
 	* Returns the first asset category in the ordered set where vocabularyId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param vocabularyId the vocabulary ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching asset category
@@ -880,11 +956,23 @@ public class AssetCategoryUtil {
 	}
 
 	/**
-	* Returns the last asset category in the ordered set where vocabularyId = &#63;.
+	* Returns the first asset category in the ordered set where vocabularyId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param vocabularyId the vocabulary ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching asset category, or <code>null</code> if a matching asset category could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.asset.model.AssetCategory fetchByVocabularyId_First(
+		long vocabularyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByVocabularyId_First(vocabularyId, orderByComparator);
+	}
+
+	/**
+	* Returns the last asset category in the ordered set where vocabularyId = &#63;.
 	*
 	* @param vocabularyId the vocabulary ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -902,11 +990,23 @@ public class AssetCategoryUtil {
 	}
 
 	/**
-	* Returns the asset categories before and after the current asset category in the ordered set where vocabularyId = &#63;.
+	* Returns the last asset category in the ordered set where vocabularyId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param vocabularyId the vocabulary ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching asset category, or <code>null</code> if a matching asset category could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.asset.model.AssetCategory fetchByVocabularyId_Last(
+		long vocabularyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByVocabularyId_Last(vocabularyId, orderByComparator);
+	}
+
+	/**
+	* Returns the asset categories before and after the current asset category in the ordered set where vocabularyId = &#63;.
 	*
 	* @param categoryId the primary key of the current asset category
 	* @param vocabularyId the vocabulary ID
@@ -986,10 +1086,6 @@ public class AssetCategoryUtil {
 	/**
 	* Returns the first asset category in the ordered set where groupId = &#63; and vocabularyId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param groupId the group ID
 	* @param vocabularyId the vocabulary ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1007,11 +1103,24 @@ public class AssetCategoryUtil {
 	}
 
 	/**
-	* Returns the last asset category in the ordered set where groupId = &#63; and vocabularyId = &#63;.
+	* Returns the first asset category in the ordered set where groupId = &#63; and vocabularyId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param groupId the group ID
+	* @param vocabularyId the vocabulary ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching asset category, or <code>null</code> if a matching asset category could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.asset.model.AssetCategory fetchByG_V_First(
+		long groupId, long vocabularyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByG_V_First(groupId, vocabularyId, orderByComparator);
+	}
+
+	/**
+	* Returns the last asset category in the ordered set where groupId = &#63; and vocabularyId = &#63;.
 	*
 	* @param groupId the group ID
 	* @param vocabularyId the vocabulary ID
@@ -1030,11 +1139,24 @@ public class AssetCategoryUtil {
 	}
 
 	/**
-	* Returns the asset categories before and after the current asset category in the ordered set where groupId = &#63; and vocabularyId = &#63;.
+	* Returns the last asset category in the ordered set where groupId = &#63; and vocabularyId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param groupId the group ID
+	* @param vocabularyId the vocabulary ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching asset category, or <code>null</code> if a matching asset category could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.asset.model.AssetCategory fetchByG_V_Last(
+		long groupId, long vocabularyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByG_V_Last(groupId, vocabularyId, orderByComparator);
+	}
+
+	/**
+	* Returns the asset categories before and after the current asset category in the ordered set where groupId = &#63; and vocabularyId = &#63;.
 	*
 	* @param categoryId the primary key of the current asset category
 	* @param groupId the group ID
@@ -1195,10 +1317,6 @@ public class AssetCategoryUtil {
 	/**
 	* Returns the first asset category in the ordered set where parentCategoryId = &#63; and name = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param parentCategoryId the parent category ID
 	* @param name the name
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1216,11 +1334,24 @@ public class AssetCategoryUtil {
 	}
 
 	/**
-	* Returns the last asset category in the ordered set where parentCategoryId = &#63; and name = &#63;.
+	* Returns the first asset category in the ordered set where parentCategoryId = &#63; and name = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param parentCategoryId the parent category ID
+	* @param name the name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching asset category, or <code>null</code> if a matching asset category could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.asset.model.AssetCategory fetchByP_N_First(
+		long parentCategoryId, java.lang.String name,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByP_N_First(parentCategoryId, name, orderByComparator);
+	}
+
+	/**
+	* Returns the last asset category in the ordered set where parentCategoryId = &#63; and name = &#63;.
 	*
 	* @param parentCategoryId the parent category ID
 	* @param name the name
@@ -1239,11 +1370,24 @@ public class AssetCategoryUtil {
 	}
 
 	/**
-	* Returns the asset categories before and after the current asset category in the ordered set where parentCategoryId = &#63; and name = &#63;.
+	* Returns the last asset category in the ordered set where parentCategoryId = &#63; and name = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param parentCategoryId the parent category ID
+	* @param name the name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching asset category, or <code>null</code> if a matching asset category could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.asset.model.AssetCategory fetchByP_N_Last(
+		long parentCategoryId, java.lang.String name,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByP_N_Last(parentCategoryId, name, orderByComparator);
+	}
+
+	/**
+	* Returns the asset categories before and after the current asset category in the ordered set where parentCategoryId = &#63; and name = &#63;.
 	*
 	* @param categoryId the primary key of the current asset category
 	* @param parentCategoryId the parent category ID
@@ -1325,10 +1469,6 @@ public class AssetCategoryUtil {
 	/**
 	* Returns the first asset category in the ordered set where parentCategoryId = &#63; and vocabularyId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param parentCategoryId the parent category ID
 	* @param vocabularyId the vocabulary ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1347,11 +1487,25 @@ public class AssetCategoryUtil {
 	}
 
 	/**
-	* Returns the last asset category in the ordered set where parentCategoryId = &#63; and vocabularyId = &#63;.
+	* Returns the first asset category in the ordered set where parentCategoryId = &#63; and vocabularyId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param parentCategoryId the parent category ID
+	* @param vocabularyId the vocabulary ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching asset category, or <code>null</code> if a matching asset category could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.asset.model.AssetCategory fetchByP_V_First(
+		long parentCategoryId, long vocabularyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByP_V_First(parentCategoryId, vocabularyId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last asset category in the ordered set where parentCategoryId = &#63; and vocabularyId = &#63;.
 	*
 	* @param parentCategoryId the parent category ID
 	* @param vocabularyId the vocabulary ID
@@ -1371,11 +1525,25 @@ public class AssetCategoryUtil {
 	}
 
 	/**
-	* Returns the asset categories before and after the current asset category in the ordered set where parentCategoryId = &#63; and vocabularyId = &#63;.
+	* Returns the last asset category in the ordered set where parentCategoryId = &#63; and vocabularyId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param parentCategoryId the parent category ID
+	* @param vocabularyId the vocabulary ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching asset category, or <code>null</code> if a matching asset category could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.asset.model.AssetCategory fetchByP_V_Last(
+		long parentCategoryId, long vocabularyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByP_V_Last(parentCategoryId, vocabularyId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the asset categories before and after the current asset category in the ordered set where parentCategoryId = &#63; and vocabularyId = &#63;.
 	*
 	* @param categoryId the primary key of the current asset category
 	* @param parentCategoryId the parent category ID
@@ -1455,10 +1623,6 @@ public class AssetCategoryUtil {
 	/**
 	* Returns the first asset category in the ordered set where name = &#63; and vocabularyId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param name the name
 	* @param vocabularyId the vocabulary ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1476,11 +1640,24 @@ public class AssetCategoryUtil {
 	}
 
 	/**
-	* Returns the last asset category in the ordered set where name = &#63; and vocabularyId = &#63;.
+	* Returns the first asset category in the ordered set where name = &#63; and vocabularyId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param name the name
+	* @param vocabularyId the vocabulary ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching asset category, or <code>null</code> if a matching asset category could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.asset.model.AssetCategory fetchByN_V_First(
+		java.lang.String name, long vocabularyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByN_V_First(name, vocabularyId, orderByComparator);
+	}
+
+	/**
+	* Returns the last asset category in the ordered set where name = &#63; and vocabularyId = &#63;.
 	*
 	* @param name the name
 	* @param vocabularyId the vocabulary ID
@@ -1499,11 +1676,24 @@ public class AssetCategoryUtil {
 	}
 
 	/**
-	* Returns the asset categories before and after the current asset category in the ordered set where name = &#63; and vocabularyId = &#63;.
+	* Returns the last asset category in the ordered set where name = &#63; and vocabularyId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param name the name
+	* @param vocabularyId the vocabulary ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching asset category, or <code>null</code> if a matching asset category could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.asset.model.AssetCategory fetchByN_V_Last(
+		java.lang.String name, long vocabularyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByN_V_Last(name, vocabularyId, orderByComparator);
+	}
+
+	/**
+	* Returns the asset categories before and after the current asset category in the ordered set where name = &#63; and vocabularyId = &#63;.
 	*
 	* @param categoryId the primary key of the current asset category
 	* @param name the name
@@ -1589,10 +1779,6 @@ public class AssetCategoryUtil {
 	/**
 	* Returns the first asset category in the ordered set where groupId = &#63; and parentCategoryId = &#63; and name = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param groupId the group ID
 	* @param parentCategoryId the parent category ID
 	* @param name the name
@@ -1612,11 +1798,26 @@ public class AssetCategoryUtil {
 	}
 
 	/**
-	* Returns the last asset category in the ordered set where groupId = &#63; and parentCategoryId = &#63; and name = &#63;.
+	* Returns the first asset category in the ordered set where groupId = &#63; and parentCategoryId = &#63; and name = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param groupId the group ID
+	* @param parentCategoryId the parent category ID
+	* @param name the name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching asset category, or <code>null</code> if a matching asset category could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.asset.model.AssetCategory fetchByG_P_N_First(
+		long groupId, long parentCategoryId, java.lang.String name,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByG_P_N_First(groupId, parentCategoryId, name,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last asset category in the ordered set where groupId = &#63; and parentCategoryId = &#63; and name = &#63;.
 	*
 	* @param groupId the group ID
 	* @param parentCategoryId the parent category ID
@@ -1637,11 +1838,26 @@ public class AssetCategoryUtil {
 	}
 
 	/**
-	* Returns the asset categories before and after the current asset category in the ordered set where groupId = &#63; and parentCategoryId = &#63; and name = &#63;.
+	* Returns the last asset category in the ordered set where groupId = &#63; and parentCategoryId = &#63; and name = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param groupId the group ID
+	* @param parentCategoryId the parent category ID
+	* @param name the name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching asset category, or <code>null</code> if a matching asset category could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.asset.model.AssetCategory fetchByG_P_N_Last(
+		long groupId, long parentCategoryId, java.lang.String name,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByG_P_N_Last(groupId, parentCategoryId, name,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the asset categories before and after the current asset category in the ordered set where groupId = &#63; and parentCategoryId = &#63; and name = &#63;.
 	*
 	* @param categoryId the primary key of the current asset category
 	* @param groupId the group ID

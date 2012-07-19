@@ -247,10 +247,6 @@ public class AssetEntryUtil {
 	/**
 	* Returns the first asset entry in the ordered set where companyId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching asset entry
@@ -267,11 +263,23 @@ public class AssetEntryUtil {
 	}
 
 	/**
-	* Returns the last asset entry in the ordered set where companyId = &#63;.
+	* Returns the first asset entry in the ordered set where companyId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching asset entry, or <code>null</code> if a matching asset entry could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.asset.model.AssetEntry fetchByCompanyId_First(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByCompanyId_First(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the last asset entry in the ordered set where companyId = &#63;.
 	*
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -289,11 +297,23 @@ public class AssetEntryUtil {
 	}
 
 	/**
-	* Returns the asset entries before and after the current asset entry in the ordered set where companyId = &#63;.
+	* Returns the last asset entry in the ordered set where companyId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching asset entry, or <code>null</code> if a matching asset entry could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.asset.model.AssetEntry fetchByCompanyId_Last(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByCompanyId_Last(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the asset entries before and after the current asset entry in the ordered set where companyId = &#63;.
 	*
 	* @param entryId the primary key of the current asset entry
 	* @param companyId the company ID
@@ -369,10 +389,6 @@ public class AssetEntryUtil {
 	/**
 	* Returns the first asset entry in the ordered set where visible = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param visible the visible
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching asset entry
@@ -388,11 +404,22 @@ public class AssetEntryUtil {
 	}
 
 	/**
-	* Returns the last asset entry in the ordered set where visible = &#63;.
+	* Returns the first asset entry in the ordered set where visible = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param visible the visible
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching asset entry, or <code>null</code> if a matching asset entry could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.asset.model.AssetEntry fetchByVisible_First(
+		boolean visible,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByVisible_First(visible, orderByComparator);
+	}
+
+	/**
+	* Returns the last asset entry in the ordered set where visible = &#63;.
 	*
 	* @param visible the visible
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -409,11 +436,22 @@ public class AssetEntryUtil {
 	}
 
 	/**
-	* Returns the asset entries before and after the current asset entry in the ordered set where visible = &#63;.
+	* Returns the last asset entry in the ordered set where visible = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param visible the visible
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching asset entry, or <code>null</code> if a matching asset entry could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.asset.model.AssetEntry fetchByVisible_Last(
+		boolean visible,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByVisible_Last(visible, orderByComparator);
+	}
+
+	/**
+	* Returns the asset entries before and after the current asset entry in the ordered set where visible = &#63;.
 	*
 	* @param entryId the primary key of the current asset entry
 	* @param visible the visible
@@ -489,10 +527,6 @@ public class AssetEntryUtil {
 	/**
 	* Returns the first asset entry in the ordered set where publishDate = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param publishDate the publish date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching asset entry
@@ -509,11 +543,23 @@ public class AssetEntryUtil {
 	}
 
 	/**
-	* Returns the last asset entry in the ordered set where publishDate = &#63;.
+	* Returns the first asset entry in the ordered set where publishDate = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param publishDate the publish date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching asset entry, or <code>null</code> if a matching asset entry could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.asset.model.AssetEntry fetchByPublishDate_First(
+		java.util.Date publishDate,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByPublishDate_First(publishDate, orderByComparator);
+	}
+
+	/**
+	* Returns the last asset entry in the ordered set where publishDate = &#63;.
 	*
 	* @param publishDate the publish date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -531,11 +577,23 @@ public class AssetEntryUtil {
 	}
 
 	/**
-	* Returns the asset entries before and after the current asset entry in the ordered set where publishDate = &#63;.
+	* Returns the last asset entry in the ordered set where publishDate = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param publishDate the publish date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching asset entry, or <code>null</code> if a matching asset entry could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.asset.model.AssetEntry fetchByPublishDate_Last(
+		java.util.Date publishDate,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByPublishDate_Last(publishDate, orderByComparator);
+	}
+
+	/**
+	* Returns the asset entries before and after the current asset entry in the ordered set where publishDate = &#63;.
 	*
 	* @param entryId the primary key of the current asset entry
 	* @param publishDate the publish date
@@ -612,10 +670,6 @@ public class AssetEntryUtil {
 	/**
 	* Returns the first asset entry in the ordered set where expirationDate = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param expirationDate the expiration date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching asset entry
@@ -632,11 +686,24 @@ public class AssetEntryUtil {
 	}
 
 	/**
-	* Returns the last asset entry in the ordered set where expirationDate = &#63;.
+	* Returns the first asset entry in the ordered set where expirationDate = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param expirationDate the expiration date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching asset entry, or <code>null</code> if a matching asset entry could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.asset.model.AssetEntry fetchByExpirationDate_First(
+		java.util.Date expirationDate,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByExpirationDate_First(expirationDate,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last asset entry in the ordered set where expirationDate = &#63;.
 	*
 	* @param expirationDate the expiration date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -654,11 +721,23 @@ public class AssetEntryUtil {
 	}
 
 	/**
-	* Returns the asset entries before and after the current asset entry in the ordered set where expirationDate = &#63;.
+	* Returns the last asset entry in the ordered set where expirationDate = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param expirationDate the expiration date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching asset entry, or <code>null</code> if a matching asset entry could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.portlet.asset.model.AssetEntry fetchByExpirationDate_Last(
+		java.util.Date expirationDate,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByExpirationDate_Last(expirationDate, orderByComparator);
+	}
+
+	/**
+	* Returns the asset entries before and after the current asset entry in the ordered set where expirationDate = &#63;.
 	*
 	* @param entryId the primary key of the current asset entry
 	* @param expirationDate the expiration date

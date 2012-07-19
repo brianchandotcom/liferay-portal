@@ -18,27 +18,31 @@
 
 // Article id
 
-row.addText(curArticle.getArticleId(), rowURL);
+row.addText(curArticle.getArticleId());
 
 // Title
 
-row.addText(curArticle.getTitle(locale), rowURL);
+TextSearchEntry articleTitleSearchEntry = new TextSearchEntry();
+
+articleTitleSearchEntry.setName(articleTitle);
+
+row.addSearchEntry(articleTitleSearchEntry);
 
 // Status
 
-row.addText(LanguageUtil.get(pageContext, WorkflowConstants.toLabel(curArticle.getStatus())), rowURL);
+row.addText(LanguageUtil.get(pageContext, WorkflowConstants.toLabel(curArticle.getStatus())));
 
 // Modified date
 
-row.addText(dateFormatDateTime.format(curArticle.getModifiedDate()), rowURL);
+row.addText(dateFormatDateTime.format(curArticle.getModifiedDate()));
 
 // Display date
 
-row.addText(dateFormatDateTime.format(curArticle.getDisplayDate()), rowURL);
+row.addText(dateFormatDateTime.format(curArticle.getDisplayDate()));
 
 // Author
 
-row.addText(HtmlUtil.escape(PortalUtil.getUserName(curArticle.getUserId(), curArticle.getUserName())), rowURL);
+row.addText(HtmlUtil.escape(PortalUtil.getUserName(curArticle.getUserId(), curArticle.getUserName())));
 
 // Action
 

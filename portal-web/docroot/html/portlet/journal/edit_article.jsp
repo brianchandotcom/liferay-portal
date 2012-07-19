@@ -159,8 +159,7 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 	<aui:input id="articleContent" name="content" type="hidden" />
 	<aui:input name="articleURL" type="hidden" value="<%= editArticleRenderURL %>" />
 	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />
-	<aui:input name="deleteArticleIds" type="hidden" value="<%= articleId + EditArticleAction.VERSION_SEPARATOR + version %>" />
-	<aui:input name="expireArticleIds" type="hidden" value="<%= articleId + EditArticleAction.VERSION_SEPARATOR + version %>" />
+	<aui:input name="articleId" type="hidden" value="<%= articleId + EditArticleAction.VERSION_SEPARATOR + version %>" />
 
 	<liferay-ui:error exception="<%= ArticleContentSizeException.class %>" message="you-have-exceeded-the-maximum-article-content-size-allowed" />
 

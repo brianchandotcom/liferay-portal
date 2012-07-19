@@ -67,7 +67,7 @@ JournalArticle article = (JournalArticle)row.getObject();
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPIRE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
-			<portlet:param name="expireArticleIds" value="<%= article.getArticleId() + EditArticleAction.VERSION_SEPARATOR + article.getVersion() %>" />
+			<portlet:param name="articleId" value="<%= article.getArticleId() + EditArticleAction.VERSION_SEPARATOR + article.getVersion() %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon image="time" message="expire" url="<%= expireURL %>"
@@ -80,7 +80,7 @@ JournalArticle article = (JournalArticle)row.getObject();
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
-			<portlet:param name="deleteArticleIds" value="<%= article.getArticleId() + EditArticleAction.VERSION_SEPARATOR + article.getVersion() %>" />
+			<portlet:param name="articleId" value="<%= article.getArticleId() + EditArticleAction.VERSION_SEPARATOR + article.getVersion() %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete url="<%= deleteURL %>"

@@ -18,23 +18,10 @@
 
 // Article id
 
-row.addText(String.valueOf(curFolder.getFolderId()), rowURL);
+row.addText(String.valueOf(curFolder.getFolderId()));
 
 // Title
-%>
 
-<liferay-util:buffer var="folderTitle">
-	<liferay-ui:icon
-		image="<%= folderImage %>"
-		label="<%= true %>"
-		message="<%= curFolder.getName() %>"
-		method="get"
-		url="<%= rowURL.toString() %>"
-	/>
-</liferay-util:buffer>
-
-
-<%
 TextSearchEntry folderTitleSearchEntry = new TextSearchEntry();
 
 folderTitleSearchEntry.setName(folderTitle);
@@ -47,7 +34,7 @@ row.addText("--");
 
 // Modified date
 
-row.addText(dateFormatDateTime.format(curFolder.getModifiedDate()), rowURL);
+row.addText(dateFormatDateTime.format(curFolder.getModifiedDate()));
 
 // Display date
 
@@ -55,7 +42,7 @@ row.addText("--");
 
 // Author
 
-row.addText(HtmlUtil.escape(PortalUtil.getUserName(curFolder.getUserId(), curFolder.getUserName())), rowURL);
+row.addText(HtmlUtil.escape(PortalUtil.getUserName(curFolder.getUserId(), curFolder.getUserName())));
 
 // Action
 

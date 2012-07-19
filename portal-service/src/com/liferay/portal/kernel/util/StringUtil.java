@@ -563,6 +563,27 @@ public class StringUtil {
 		}
 	}
 
+	public static String extractLeadingDigits(String s) {
+		if (s == null) {
+			return StringPool.BLANK;
+		}
+
+		StringBundler sb = new StringBundler();
+
+		char[] chars = s.toCharArray();
+
+		for (char c : chars) {
+			if (Validator.isDigit(c)) {
+				sb.append(c);
+			}
+			else {
+				return sb.toString();
+			}
+		}
+
+		return sb.toString();
+	}
+
 	/**
 	 * @deprecated
 	 */

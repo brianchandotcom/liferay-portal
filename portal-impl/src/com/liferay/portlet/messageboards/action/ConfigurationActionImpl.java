@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.NumericalStringComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -65,6 +66,17 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		}
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
+	}
+
+	protected boolean isValidUserRank(String rank) {
+		if ((StringUtil.count(rank, StringPool.EQUAL) != 1) ||
+			rank.startsWith(StringPool.EQUAL) ||
+			rank.endsWith(StringPool.EQUAL)) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	protected void updateThreadPriorities(ActionRequest actionRequest)
@@ -114,10 +126,17 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 			String[] ranks = StringUtil.splitLines(
 				ParamUtil.getString(actionRequest, "ranks_" + languageId));
 
-			Map<String, String> map = new TreeMap<String, String>();
+			Map<String, String> map = new TreeMap<String, String>(
+				new NumericalStringComparator());
 
-			for (int j = 0; j < ranks.length; j++) {
-				String[] kvp = StringUtil.split(ranks[j], CharPool.EQUAL);
+			for (String rank : ranks) {
+				if (!isValidUserRank(rank)) {
+					SessionErrors.add(actionRequest, "userRank");
+
+					return;
+				}
+
+				String[] kvp = StringUtil.split(rank, CharPool.EQUAL);
 
 				String kvpName = kvp[0];
 				String kvpValue = kvp[1];

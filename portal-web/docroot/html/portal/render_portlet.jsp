@@ -62,10 +62,10 @@ Group group = layout.getGroup();
 if (allowAddPortletDefaultResource) {
 	portletPreferences = PortletPreferencesLocalServiceUtil.getPreferences(portletPreferencesIds);
 
-	String lfrScopeLayoutUuid = portletPreferences.getValue("lfrScopeLayoutUuid", null);
+	String scopeLayoutUuid = portletPreferences.getValue("lfrScopeLayoutUuid", null);
 
-	if (Validator.isNotNull(lfrScopeLayoutUuid)) {
-		Layout scopeLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(lfrScopeLayoutUuid, group.getGroupId());
+	if (Validator.isNotNull(scopeLayoutUuid)) {
+		Layout scopeLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(scopeLayoutUuid, group.getGroupId());
 
 		portletPreferencesIds = PortletPreferencesFactoryUtil.getPortletPreferencesIds(request, scopeLayout, portletId);
 

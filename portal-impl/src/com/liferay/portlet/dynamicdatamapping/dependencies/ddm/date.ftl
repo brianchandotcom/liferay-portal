@@ -3,7 +3,11 @@
 <#if (fieldRawValue?is_date)>
 	<#assign fieldDateValue = fieldRawValue>
 <#else>
-	<#assign fieldDateValue = dateUtil.newDate()>
+	<#if (validator.isNotNull(predefinedValue))>
+		<#assign fieldDateValue = dateUtil.parseDate(predefinedValue, locale)>
+	<#else>
+		<#assign fieldDateValue = dateUtil.newDate()>
+	</#if>
 </#if>
 
 <@aui["field-wrapper"] helpMessage=fieldStructure.tip label=label required=required>

@@ -102,6 +102,13 @@ public class DateUtil_IW {
 		return DateUtil.newTime();
 	}
 
+	public static java.util.Date parseDate(
+			java.lang.String dateString, java.util.Locale locale)
+		throws java.text.ParseException {
+
+		return DateUtil.parseDate(dateString, locale);
+	}
+
 	private DateUtil_IW() {
 	}
 

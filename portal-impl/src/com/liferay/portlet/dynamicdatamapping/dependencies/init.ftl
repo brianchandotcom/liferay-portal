@@ -41,7 +41,7 @@
 <#if fields?? && fields.get(fieldName)??>
 	<#assign field = fields.get(fieldName)>
 
-	<#assign fieldValue = field.getRenderedValue(themeDisplay.getLocale())>
+	<#assign fieldValue = field.getRenderedValue(locale)>
 	<#assign fieldRawValue = field.getValue()>
 </#if>
 

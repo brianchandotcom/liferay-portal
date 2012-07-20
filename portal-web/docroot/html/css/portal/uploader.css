@@ -16,7 +16,7 @@
 		padding-top: 30px;
 		text-align: center;
 
-		.drag-highlight {
+		&.drag-highlight {
 			background: none repeat scroll 0 0 #DDEDDE;
 			border: 4px dashed #7D7;
 		}
@@ -25,11 +25,6 @@
 			margin-left: auto;
 			margin-right: auto;
 		}
-	}
-
-	.drag-drop-area.drag-highlight {
-		background: none repeat scroll 0 0 #DDEDDE;
-		border: 4px dashed #7D7;
 	}
 
 	.upload-target {
@@ -49,13 +44,13 @@
 	}
 
 	a {
-		&.clear-uploads {
-			float: right;
-		}
-
 		&.cancel-uploads {
 			float: right;
 			margin-right: 0;
+		}
+
+		&.clear-uploads {
+			float: right;
 		}
 	}
 
@@ -67,6 +62,11 @@
 		padding: 5px;
 		padding-left: 25px;
 		position: relative;
+
+		&.upload-complete.file-saved {
+			opacity: 0.6;
+			padding-left: 25px;
+		}
 
 		.file-title {
 			padding-right: 16px;
@@ -95,11 +95,6 @@
 		text-indent: -9999em;
 		top: 50%;
 		width: 16px;
-	}
-
-	.upload-file.upload-complete.file-saved {
-		opacity: 0.6;
-		padding-left: 25px;
 	}
 
 	.file-added .success-message {
@@ -199,7 +194,7 @@
 .lfr-upload-container {
 	.upload-target {
 		background-color: #8FBE31;
-		border: none;
+		border-width: 0;
 		text-shadow: 1px 1px #656565;
 	}
 

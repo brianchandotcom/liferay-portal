@@ -322,11 +322,9 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 			<c:when test='<%= selectionStyle.equals("dynamic") %>'>
 				<liferay-ui:panel-container extended="<%= true %>" id="assetPublisherDynamicSelectionStylePanelContainer" persistState="<%= true %>">
 					<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="assetPublisherSourcePanel" persistState="<%= true %>" title="source">
-						<c:if test="<%= !rootPortletId.equals(PortletKeys.RELATED_ASSETS) %>">
-							<aui:fieldset label="scope">
-								<%= selectScope %>
-							</aui:fieldset>
-						</c:if>
+						<aui:fieldset cssClass='<%= rootPortletId.equals(PortletKeys.RELATED_ASSETS) ? "aui-helper-hidden" : "" %>' label="scope">
+							<%= selectScope %>
+						</aui:fieldset>
 
 						<aui:fieldset label="asset-entry-type">
 

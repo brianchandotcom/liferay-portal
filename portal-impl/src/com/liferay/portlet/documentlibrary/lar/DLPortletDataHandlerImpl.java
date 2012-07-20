@@ -370,7 +370,9 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 					fileEntryTitle);
 
 				if (existingTitleFileEntry != null) {
-					if (portletDataContext.
+					if ((fileEntry.getGroupId() ==
+							portletDataContext.getSourceGroupId()) &&
+						portletDataContext.
 							isDataStrategyMirrorWithOverwriting()) {
 
 						DLAppLocalServiceUtil.deleteFileEntry(

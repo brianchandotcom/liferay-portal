@@ -25,6 +25,9 @@ import junit.framework.TestSuite;
 public class SmokeTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
+		testSuite.addTestSuite(ViewPageWhatWeDoTest.class);
+		testSuite.addTestSuite(ViewPageWhoIsUsingLiferayTest.class);
+		testSuite.addTestSuite(ViewPageLiferayBenefitsTest.class);
 		testSuite.addTestSuite(AddPage1WelcomeTest.class);
 		testSuite.addTestSuite(AddPage2WelcomeTest.class);
 		testSuite.addTestSuite(AddPage3WelcomeTest.class);

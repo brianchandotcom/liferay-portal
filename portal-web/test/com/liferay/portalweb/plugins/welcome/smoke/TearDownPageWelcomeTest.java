@@ -50,7 +50,7 @@ public class TearDownPageWelcomeTest extends BaseTestCase {
 				}
 
 				boolean page1Present = selenium.isElementPresent(
-						"xPath=(//li[contains(@class,'lfr-nav-deletable')])/a/span");
+						"xPath=(//li[contains(@class,'lfr-nav-deletable')]/a/span)[4]");
 
 				if (!page1Present) {
 					label = 2;
@@ -59,7 +59,7 @@ public class TearDownPageWelcomeTest extends BaseTestCase {
 				}
 
 				selenium.mouseOver(
-					"xPath=(//li[contains(@class,'lfr-nav-deletable')])/a/span");
+					"xPath=(//li[contains(@class,'lfr-nav-deletable')]/a/span)[4]");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -119,7 +119,7 @@ public class TearDownPageWelcomeTest extends BaseTestCase {
 				}
 
 				boolean page2Present = selenium.isElementPresent(
-						"xPath=(//li[contains(@class,'lfr-nav-deletable')])/a/span");
+						"xPath=(//li[contains(@class,'lfr-nav-deletable')]/a/span)[4]");
 
 				if (!page2Present) {
 					label = 3;
@@ -128,7 +128,7 @@ public class TearDownPageWelcomeTest extends BaseTestCase {
 				}
 
 				selenium.mouseOver(
-					"xPath=(//li[contains(@class,'lfr-nav-deletable')])/a/span");
+					"xPath=(//li[contains(@class,'lfr-nav-deletable')]/a/span)[4]");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -188,7 +188,7 @@ public class TearDownPageWelcomeTest extends BaseTestCase {
 				}
 
 				boolean page3Present = selenium.isElementPresent(
-						"xPath=(//li[contains(@class,'lfr-nav-deletable')])/a/span");
+						"xPath=(//li[contains(@class,'lfr-nav-deletable')]/a/span)[4]");
 
 				if (!page3Present) {
 					label = 4;
@@ -197,7 +197,7 @@ public class TearDownPageWelcomeTest extends BaseTestCase {
 				}
 
 				selenium.mouseOver(
-					"xPath=(//li[contains(@class,'lfr-nav-deletable')])/a/span");
+					"xPath=(//li[contains(@class,'lfr-nav-deletable')]/a/span)[4]");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -257,7 +257,7 @@ public class TearDownPageWelcomeTest extends BaseTestCase {
 				}
 
 				boolean page4Present = selenium.isElementPresent(
-						"xPath=(//li[contains(@class,'lfr-nav-deletable')])/a/span");
+						"xPath=(//li[contains(@class,'lfr-nav-deletable')]/a/span)[4]");
 
 				if (!page4Present) {
 					label = 5;
@@ -266,7 +266,7 @@ public class TearDownPageWelcomeTest extends BaseTestCase {
 				}
 
 				selenium.mouseOver(
-					"xPath=(//li[contains(@class,'lfr-nav-deletable')])/a/span");
+					"xPath=(//li[contains(@class,'lfr-nav-deletable')]/a/span)[4]");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -326,7 +326,7 @@ public class TearDownPageWelcomeTest extends BaseTestCase {
 				}
 
 				boolean page5Present = selenium.isElementPresent(
-						"xPath=(//li[contains(@class,'lfr-nav-deletable')])/a/span");
+						"xPath=(//li[contains(@class,'lfr-nav-deletable')]/a/span)[4]");
 
 				if (!page5Present) {
 					label = 6;
@@ -335,7 +335,7 @@ public class TearDownPageWelcomeTest extends BaseTestCase {
 				}
 
 				selenium.mouseOver(
-					"xPath=(//li[contains(@class,'lfr-nav-deletable')])/a/span");
+					"xPath=(//li[contains(@class,'lfr-nav-deletable')]/a/span)[4]");
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {

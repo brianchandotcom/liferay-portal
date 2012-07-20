@@ -54,13 +54,40 @@ AUI.add(
 					destructor: function() {
 						var instance = this;
 
-						instance._imageCropper.destroy();
+						var imageCropper = instance._imageCropper;
+
+						if (imageCropper) {
+							imageCropper.destroy();
+						}
+					},
+
+					_getMessageNode: function(message, cssClass) {
+						var instance = this;
+
+						var messageNode = instance._messageNode;
+
+						if (!messageNode) {
+							messageNode = A.Node.create('<div></div>');
+
+							instance._messageNode = messageNode;
+						}
+
+						if (message) {
+							messageNode.html(message);
+						}
+
+						if (cssClass) {
+							messageNode.removeClass('portlet-msg-error').removeClass('portlet-msg-success');
+
+							messageNode.addClass(cssClass);
+						}
+
+						return messageNode;
 					},
 
 					_onFileNameChange: function(event) {
 						var instance = this;
 
-						var previewURL = instance.get('previewURL');
 						var uploadURL = instance.get('uploadURL');
 
 						var imageCropper = instance._imageCropper;
@@ -82,48 +109,8 @@ AUI.add(
 									upload: true
 								},
 								on: {
-									complete: function(event, id, obj) {
-										var exception = null;
-
-										if (obj.responseText.indexOf('FileSizeException') != -1) {
-											exception = 'FileSizeException';
-										}
-										else if (obj.responseText.indexOf('TypeException') != -1) {
-											exception = 'TypeException';
-										}
-
-										if (exception != null) {
-											messageClass = 'portlet-msg-error';
-
-											if (exception == 'FileSizeException') {
-												message =  Lang.sub(
-													Liferay.Language.get('upload-images-no-larger-than-x-k'),
-													[instance.get('maxFileSize')]
-												);
-											}
-											else {
-												message = Liferay.Language.get('please-enter-a-file-with-a-valid-file-type');
-											}
-
-											TPL_MESSAGE = '<div class="{messageClass}">{message}</div>';
-											var ErrorMessage = Lang.sub(
-												TPL_MESSAGE,
-												{
-													message: message,
-													messageClass: messageClass
-												}
-											);
-
-											instance._formNode.prepend(ErrorMessage);
-										}
-
-										previewURL = Liferay.Util.addParams('t=' + Lang.now(), previewURL);
-										portraitPreviewImg.attr('src', previewURL);
-										portraitPreviewImg.removeClass('loading');
-									},
-									start: function() {
-										Liferay.Util.toggleDisabled(instance._submitButton, true);
-									}
+									complete: A.bind('_onUploadComplete', instance),
+									start: A.bind('_onUploadStart', instance)
 								}
 							}
 						);
@@ -136,26 +123,17 @@ AUI.add(
 						var portraitPreviewImg = instance._portraitPreviewImg;
 
 						if (portraitPreviewImg.attr('src').indexOf('spacer.png') == -1) {
+							var cropHeight = portraitPreviewImg.height();
+							var cropWidth = portraitPreviewImg.width();
 
-							var cropHeight;
-							var cropWidth;
+							if (cropHeight > 50) {
+								cropHeight *= 0.3;
+							}
 
-							var portraitHeight = portraitPreviewImg.height();
-							var portraitWidth = portraitPreviewImg.width();
+							if (cropWidth > 50) {
+								cropHeight *= 0.3;
+							}
 
-							if (portraitHeight <= 50) {
-								cropHeight = portraitHeight;
-							}
-							else{
-								cropHeight = portraitHeight * 0.3;
-							}
-							if (portraitPreviewImg.width() <= 50) {
-								cropWidth = portraitWidth;
-							}
-							else {
-								cropWidth = portraitWidth * 0.3;
-							}
-							
 							if (imageCropper) {
 								imageCropper.enable();
 
@@ -194,6 +172,55 @@ AUI.add(
 						if (imageCropper) {
 							instance._cropRegionNode.val(A.JSON.stringify(imageCropper.get('region')));
 						}
+					},
+
+					_onUploadComplete: function(event, id, obj) {
+						var instance = this;
+
+						var responseText = obj.responseText;
+
+						var exception;
+
+						if (responseText.indexOf('FileSizeException') > -1) {
+							exception = 'FileSizeException';
+						}
+						else if (responseText.indexOf('TypeException') > -1) {
+							exception = 'TypeException';
+						}
+
+						if (exception) {
+							if (exception == 'FileSizeException') {
+								message = Lang.sub(
+									Liferay.Language.get('upload-images-no-larger-than-x-k'),
+									[instance.get('maxFileSize')]
+								);
+							}
+							else {
+								message = Liferay.Language.get('please-enter-a-file-with-a-valid-file-type');
+							}
+
+							var messageNode = instance._getMessageNode(message, 'portlet-msg-error');
+
+							instance._formNode.prepend(messageNode);
+						}
+
+						var previewURL = instance.get('previewURL');
+
+						previewURL = Liferay.Util.addParams('t=' + Lang.now(), previewURL);
+
+						var portraitPreviewImg = instance._portraitPreviewImg;
+
+						portraitPreviewImg.attr('src', previewURL);
+
+						portraitPreviewImg.removeClass('loading');
+					},
+
+					_onUploadStart: function(event, id, obj) {
+						var instance = this;
+
+						instance._getMessageNode().remove();
+
+						Liferay.Util.toggleDisabled(instance._submitButton, true);
 					}
 				}
 			}

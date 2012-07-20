@@ -52,8 +52,8 @@ if (publicLayoutSetId != 0) {
 			<aui:fieldset>
 				<aui:input label="upload-a-logo-for-the-organization-pages-that-will-be-used-instead-of-the-default-enterprise-logo-in-both-public-and-private-pages" name="fileName" size="50" type="file" />
 
-				<div class="lfr-change-logo portrait-preview" id="<portlet:namespace />portraitPreview">
-					<img class="portrait-preview-img" id="<portlet:namespace />portraitPreviewImg" src="<%= HtmlUtil.escape(logoURL) %>" />
+				<div class="lfr-change-logo lfr-portrait-preview" id="<portlet:namespace />portraitPreview">
+					<img class="lfr-portrait-preview-img" id="<portlet:namespace />portraitPreviewImg" src="<%= HtmlUtil.escape(logoURL) %>" />
 				</div>
 
 				<aui:button-row>

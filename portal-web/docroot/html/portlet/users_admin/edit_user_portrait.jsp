@@ -49,8 +49,8 @@ long maxFileSize = PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_
 			<aui:fieldset>
 				<aui:input label='<%= LanguageUtil.format(pageContext, "upload-images-no-larger-than-x-k", maxFileSize, false) %>' name="fileName" size="50" type="file" />
 
-				<div class="lfr-change-logo portrait-preview" id="<portlet:namespace />portraitPreview">
-					<img class="portrait-preview-img" id="<portlet:namespace />portraitPreviewImg" src="<%= HtmlUtil.escape(selUser.getPortraitURL(themeDisplay)) %>" />
+				<div class="lfr-change-logo lfr-portrait-preview" id="<portlet:namespace />portraitPreview">
+					<img class="lfr-portrait-preview-img" id="<portlet:namespace />portraitPreviewImg" src="<%= HtmlUtil.escape(selUser.getPortraitURL(themeDisplay)) %>" />
 				</div>
 
 				<aui:button-row>

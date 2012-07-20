@@ -41,8 +41,8 @@ String logoURL = themeDisplay.getPathImage() + "/company_logo?img_id=" + company
 			<aui:fieldset>
 				<aui:input label="" name="fileName" size="50" type="file" />
 
-				<div class="lfr-change-logo portrait-preview" id="<portlet:namespace />portraitPreview">
-					<img class="portrait-preview-img" id="<portlet:namespace />portraitPreviewImg" src="<%= HtmlUtil.escape(logoURL) %>" />
+				<div class="lfr-change-logo lfr-portrait-preview" id="<portlet:namespace />portraitPreview">
+					<img class="lfr-portrait-preview-img" id="<portlet:namespace />portraitPreviewImg" src="<%= HtmlUtil.escape(logoURL) %>" />
 				</div>
 
 				<aui:button-row>

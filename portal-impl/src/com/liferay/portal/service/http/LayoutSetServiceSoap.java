@@ -99,6 +99,18 @@ public class LayoutSetServiceSoap {
 		}
 	}
 
+	public static void updateLogo(long groupId, boolean privateLayout,
+		boolean logo, byte[] bytes) throws RemoteException {
+		try {
+			LayoutSetServiceUtil.updateLogo(groupId, privateLayout, logo, bytes);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portal.model.LayoutSetSoap updateLookAndFeel(
 		long groupId, boolean privateLayout, java.lang.String themeId,
 		java.lang.String colorSchemeId, java.lang.String css, boolean wapTheme)

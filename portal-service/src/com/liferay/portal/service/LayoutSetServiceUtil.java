@@ -86,6 +86,20 @@ public class LayoutSetServiceUtil {
 	}
 
 	public static void updateLogo(long groupId, boolean privateLayout,
+		boolean logo, byte[] bytes)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().updateLogo(groupId, privateLayout, logo, bytes);
+	}
+
+	public static void updateLogo(long groupId, boolean privateLayout,
+		boolean logo, java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().updateLogo(groupId, privateLayout, logo, file);
+	}
+
+	public static void updateLogo(long groupId, boolean privateLayout,
 		boolean logo, java.io.InputStream inputStream)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

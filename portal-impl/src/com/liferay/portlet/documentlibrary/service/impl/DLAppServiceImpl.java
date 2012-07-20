@@ -1956,21 +1956,28 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		return TempFileUtil.getTempFileEntryNames(getUserId(), tempFolderName);
 	}
 
+	/**
+	 * @deprecated Use {@link #checkOutFileEntry(long, ServiceContext)}.
+	 */
 	public Lock lockFileEntry(long fileEntryId)
 		throws PortalException, SystemException {
 
-		Repository repository = getRepository(0, fileEntryId, 0);
+		checkOutFileEntry(fileEntryId, new ServiceContext());
 
-		return repository.lockFileEntry(fileEntryId);
+		return getFileEntry(fileEntryId).getLock();
 	}
 
+	/**
+	 * @deprecated Use {@link #checkOutFileEntry(long, String, long, ServiceContext)}.
+	 */
 	public Lock lockFileEntry(
 			long fileEntryId, String owner, long expirationTime)
 		throws PortalException, SystemException {
 
-		Repository repository = getRepository(0, fileEntryId, 0);
+		FileEntry fileEntry = checkOutFileEntry(
+			fileEntryId, owner, expirationTime, new ServiceContext());
 
-		return repository.lockFileEntry(fileEntryId, owner, expirationTime);
+		return fileEntry.getLock();
 	}
 
 	/**
@@ -2446,20 +2453,23 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		}
 	}
 
+	/**
+	 * @deprecated Use {@link #checkInFileEntry(long, boolean, String, ServiceContext)}.
+	 */
 	public void unlockFileEntry(long fileEntryId)
 		throws PortalException, SystemException {
 
-		Repository repository = getRepository(0, fileEntryId, 0);
-
-		repository.unlockFileEntry(fileEntryId);
+		checkInFileEntry(
+			fileEntryId, false, StringPool.BLANK, new ServiceContext());
 	}
 
+	/**
+	 * @deprecated Use {@link #checkInFileEntry(long, String)}.
+	 */
 	public void unlockFileEntry(long fileEntryId, String lockUuid)
 		throws PortalException, SystemException {
 
-		Repository repository = getRepository(0, fileEntryId, 0);
-
-		repository.unlockFileEntry(fileEntryId, lockUuid);
+		checkInFileEntry(fileEntryId, lockUuid);
 	}
 
 	/**

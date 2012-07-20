@@ -391,8 +391,11 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			if (resource instanceof DLFileEntryResourceImpl) {
 				FileEntry fileEntry = (FileEntry)resource.getModel();
 
-				lock = DLAppServiceUtil.lockFileEntry(
-					fileEntry.getFileEntryId(), owner, timeout);
+				DLAppServiceUtil.checkOutFileEntry(
+					fileEntry.getFileEntryId(), owner, timeout,
+					new ServiceContext());
+
+				lock = fileEntry.getLock();
 			}
 			else {
 				boolean inheritable = false;
@@ -778,7 +781,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			if (resource instanceof DLFileEntryResourceImpl) {
 				FileEntry fileEntry = (FileEntry)resource.getModel();
 
-				DLAppServiceUtil.unlockFileEntry(
+				DLAppServiceUtil.checkInFileEntry(
 					fileEntry.getFileEntryId(), token);
 
 				if (webDavRequest.isAppleDoubleRequest()) {

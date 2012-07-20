@@ -319,19 +319,6 @@ public class DLFileEntryServiceUtil {
 		return getService().isFileEntryCheckedOut(fileEntryId);
 	}
 
-	public static com.liferay.portal.model.Lock lockFileEntry(long fileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().lockFileEntry(fileEntryId);
-	}
-
-	public static com.liferay.portal.model.Lock lockFileEntry(
-		long fileEntryId, java.lang.String owner, long expirationTime)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().lockFileEntry(fileEntryId, owner, expirationTime);
-	}
-
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntry moveFileEntry(
 		long fileEntryId, long newFolderId,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -355,19 +342,6 @@ public class DLFileEntryServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().revertFileEntry(fileEntryId, version, serviceContext);
-	}
-
-	public static void unlockFileEntry(long fileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		getService().unlockFileEntry(fileEntryId);
-	}
-
-	public static void unlockFileEntry(long fileEntryId,
-		java.lang.String lockUuid)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		getService().unlockFileEntry(fileEntryId, lockUuid);
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntry updateFileEntry(

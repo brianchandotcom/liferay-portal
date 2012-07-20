@@ -1558,10 +1558,16 @@ public interface DLAppService extends BaseService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* @deprecated Use {@link #checkOutFileEntry(long, ServiceContext)}.
+	*/
 	public com.liferay.portal.model.Lock lockFileEntry(long fileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* @deprecated Use {@link #checkOutFileEntry(long, String, long, ServiceContext)}.
+	*/
 	public com.liferay.portal.model.Lock lockFileEntry(long fileEntryId,
 		java.lang.String owner, long expirationTime)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -1818,10 +1824,16 @@ public interface DLAppService extends BaseService {
 		com.liferay.portal.kernel.search.Query query)
 		throws com.liferay.portal.kernel.search.SearchException;
 
+	/**
+	* @deprecated Use {@link #checkInFileEntry(long, boolean, String, ServiceContext)}.
+	*/
 	public void unlockFileEntry(long fileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* @deprecated Use {@link #checkInFileEntry(long, String)}.
+	*/
 	public void unlockFileEntry(long fileEntryId, java.lang.String lockUuid)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

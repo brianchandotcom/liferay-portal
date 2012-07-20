@@ -14,31 +14,28 @@
 
 package com.liferay.portal.freemarker;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.template.StringTemplateResource;
-import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.template.AbstractTemplate;
 import com.liferay.portal.template.TemplateContextHelper;
 
 import freemarker.core.ParseException;
 
 import freemarker.template.Configuration;
+import freemarker.template.Template;
 
 import java.io.Reader;
 import java.io.Writer;
 
+import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Mika Koivisto
  * @author Tina Tian
  */
-public class FreeMarkerTemplate implements Template {
+public class FreeMarkerTemplate extends AbstractTemplate {
 
 	public FreeMarkerTemplate(
 		TemplateResource templateResource,
@@ -46,14 +43,11 @@ public class FreeMarkerTemplate implements Template {
 		Configuration configuration,
 		TemplateContextHelper templateContextHelper) {
 
-		_templateResource = templateResource;
+		super(templateResource, errorTemplateResource, templateContextHelper);
 
-		if (errorTemplateResource != null) {
-			_errorTemplateResource = errorTemplateResource;
-			_hasErrorTemplate = true;
-		}
-
-		_context = new ConcurrentHashMap<String, Object>();
+		// Template is always being used as stack local, no way it could be
+		// shared across threads, so the threadsafty protection is not needed.
+		_context = new HashMap<String, Object>();
 
 		if (context != null) {
 			for (Map.Entry<String, Object> entry : context.entrySet()) {
@@ -62,82 +56,10 @@ public class FreeMarkerTemplate implements Template {
 		}
 
 		_configuration = configuration;
-		_templateContextHelper = templateContextHelper;
 	}
 
 	public Object get(String key) {
 		return _context.get(key);
-	}
-
-	public void prepare(HttpServletRequest request) {
-		_templateContextHelper.prepare(this, request);
-	}
-
-	public boolean processTemplate(Writer writer) throws TemplateException {
-		if (!_hasErrorTemplate) {
-			try {
-				_processTemplate(_templateResource, writer);
-
-				return true;
-			}
-			catch (Exception e) {
-				throw new TemplateException(
-					"Unable to process FreeMarker template " +
-						_templateResource.getTemplateId(),
-					e);
-			}
-		}
-
-		try {
-			UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
-
-			_processTemplate(_templateResource, unsyncStringWriter);
-
-			StringBundler sb = unsyncStringWriter.getStringBundler();
-
-			sb.writeTo(writer);
-
-			return true;
-		}
-		catch (Exception e1) {
-			if ((e1 instanceof ParseException) ||
-				(e1 instanceof freemarker.template.TemplateException)) {
-
-				put("exception", e1.getMessage());
-
-				if (_templateResource instanceof StringTemplateResource) {
-					StringTemplateResource stringTemplateResource =
-						(StringTemplateResource)_templateResource;
-
-					put("script", stringTemplateResource.getContent());
-				}
-
-				if (e1 instanceof ParseException) {
-					ParseException pe = (ParseException)e1;
-
-					put("column", pe.getColumnNumber());
-					put("line", pe.getLineNumber());
-				}
-
-				try {
-					_processTemplate(_errorTemplateResource, writer);
-				}
-				catch (Exception e2) {
-					throw new TemplateException(
-						"Unable to process FreeMarker template " +
-							_errorTemplateResource.getTemplateId(),
-						e2);
-				}
-			}
-			else {
-				throw new TemplateException(
-					"Unable to process FreeMarker template " +
-						_templateResource.getTemplateId(),
-					e1);
-			}
-		}
-
-		return false;
 	}
 
 	public void put(String key, Object value) {
@@ -148,34 +70,72 @@ public class FreeMarkerTemplate implements Template {
 		_context.put(key, value);
 	}
 
-	private void _processTemplate(
+	protected void handleException(
+			TemplateResource templateResource,
+			TemplateResource errorTemplateResource, Exception exception,
+			Writer writer)
+		throws TemplateException {
+
+		if ((exception instanceof ParseException) ||
+			(exception instanceof freemarker.template.TemplateException)) {
+
+			put("exception", exception.getMessage());
+
+			if (templateResource instanceof StringTemplateResource) {
+				StringTemplateResource stringTemplateResource =
+					(StringTemplateResource)templateResource;
+
+				put("script", stringTemplateResource.getContent());
+			}
+
+			if (exception instanceof ParseException) {
+				ParseException pe = (ParseException)exception;
+
+				put("column", pe.getColumnNumber());
+				put("line", pe.getLineNumber());
+			}
+
+			try {
+				processTemplate(errorTemplateResource, writer);
+			}
+			catch (Exception e) {
+				throw new TemplateException(
+					"Unable to process FreeMarker template " +
+						errorTemplateResource.getTemplateId(),
+					e);
+			}
+		}
+		else {
+			throw new TemplateException(
+				"Unable to process FreeMarker template " +
+					templateResource.getTemplateId(),
+				exception);
+		}
+	}
+
+	protected void processTemplate(
 			TemplateResource templateResource, Writer writer)
 		throws Exception {
 
-		if (templateResource == null) {
-			throw new Exception("Unable to find template resource");
-		}
+		Reader reader = null;
 
-		Reader reader = templateResource.getReader();
+		try {
+			reader = templateResource.getReader();
 
-		if (reader == null) {
-			throw new Exception(
-				"Unable to find template resource " + templateResource);
-		}
-
-		freemarker.template.Template template =
-			new freemarker.template.Template(
+			Template template = new Template(
 				templateResource.getTemplateId(), reader, _configuration,
 				TemplateResource.DEFAUT_ENCODING);
 
-		template.process(_context, writer);
+			template.process(_context, writer);
+		}
+		finally {
+			if (reader != null) {
+				reader.close();
+			}
+		}
 	}
 
 	private Configuration _configuration;
 	private Map<String, Object> _context;
-	private TemplateResource _errorTemplateResource;
-	private boolean _hasErrorTemplate;
-	private TemplateContextHelper _templateContextHelper;
-	private TemplateResource _templateResource;
 
 }

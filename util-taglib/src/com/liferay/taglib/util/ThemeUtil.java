@@ -468,6 +468,12 @@ public class ThemeUtil {
 			TemplateResourceLoaderUtil.getTemplateResource(
 				TemplateManager.VELOCITY, resourcePath);
 
+		if (templateResource == null) {
+			_log.error(resourcePath + " does not exist");
+
+			return null;
+		}
+
 		Template template = TemplateManagerUtil.getTemplate(
 			TemplateManager.VELOCITY, templateResource,
 			TemplateContextType.STANDARD);

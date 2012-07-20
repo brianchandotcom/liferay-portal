@@ -1113,6 +1113,10 @@ public class WebServerServlet extends HttpServlet {
 			TemplateResourceLoaderUtil.getTemplateResource(
 				TemplateManager.FREEMARKER, _TEMPLATE_FTL);
 
+		if (templateResource == null) {
+			return;
+		}
+
 		Template template = TemplateManagerUtil.getTemplate(
 			TemplateManager.FREEMARKER, templateResource,
 			TemplateContextType.RESTRICTED);

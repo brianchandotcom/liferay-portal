@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.template;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Reader;
 
@@ -24,16 +25,39 @@ import java.io.Reader;
 public class StringTemplateResource implements TemplateResource {
 
 	public StringTemplateResource(String templateId, String templateContent) {
-		if (templateId == null) {
+		if (Validator.isNull(templateId)) {
 			throw new IllegalArgumentException("Template ID is null");
 		}
 
-		if (templateContent == null) {
+		if (Validator.isNull(templateContent)) {
 			throw new IllegalArgumentException("Template content is null");
 		}
 
 		_templateId = templateId;
 		_templateContent = templateContent;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof StringTemplateResource)) {
+			return false;
+		}
+
+		StringTemplateResource stringTemplateResource =
+			(StringTemplateResource)obj;
+
+		// No need to use Validator, as constructor ensures they are not null
+		if (_templateId.equals(stringTemplateResource._templateId) &&
+			_templateContent.equals(stringTemplateResource._templateContent)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public String getContent() {
@@ -45,15 +69,16 @@ public class StringTemplateResource implements TemplateResource {
 	}
 
 	public Reader getReader() {
-		if (_templateContent == null) {
-			return null;
-		}
-
 		return new UnsyncStringReader(_templateContent);
 	}
 
 	public String getTemplateId() {
 		return _templateId;
+	}
+
+	@Override
+	public int hashCode() {
+		return _templateId.hashCode() * 11 + _templateContent.hashCode();
 	}
 
 	private long _lastModified = System.currentTimeMillis();

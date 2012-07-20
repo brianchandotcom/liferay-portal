@@ -29,7 +29,33 @@ import java.util.concurrent.atomic.AtomicReference;
 public class CacheTemplateResource implements TemplateResource {
 
 	public CacheTemplateResource(TemplateResource templateResource) {
+		if (templateResource == null) {
+			throw new IllegalArgumentException("TemplateResource is null");
+		}
+
 		_templateResource = templateResource;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof CacheTemplateResource)) {
+			return false;
+		}
+
+		CacheTemplateResource cacheTemplateResource =
+			(CacheTemplateResource)obj;
+
+		// No need to use Validator, as constructor ensures it is not null
+		if (_templateResource.equals(cacheTemplateResource._templateResource)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public long getLastModified() {
@@ -47,10 +73,6 @@ public class CacheTemplateResource implements TemplateResource {
 
 		try {
 			reader = _templateResource.getReader();
-
-			if (reader == null) {
-				return null;
-			}
 
 			char[] buffer = new char[1024];
 
@@ -78,6 +100,11 @@ public class CacheTemplateResource implements TemplateResource {
 
 	public String getTemplateId() {
 		return _templateResource.getTemplateId();
+	}
+
+	@Override
+	public int hashCode() {
+		return _templateResource.hashCode();
 	}
 
 	private long _lastModified = System.currentTimeMillis();

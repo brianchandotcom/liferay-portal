@@ -185,17 +185,19 @@ public class DDMXSDImpl implements DDMXSD {
 				TemplateResourceLoaderUtil.getTemplateResource(
 					TemplateManager.FREEMARKER, resource);
 
-			Template template = TemplateManagerUtil.getTemplate(
-				TemplateManager.FREEMARKER, templateResource,
-				TemplateContextType.STANDARD);
+			if (templateResource != null) {
+				Template template = TemplateManagerUtil.getTemplate(
+					TemplateManager.FREEMARKER, templateResource,
+					TemplateContextType.STANDARD);
 
-			for (Map.Entry<String, Object> entry :
-					freeMarkerContext.entrySet()) {
+				for (Map.Entry<String, Object> entry :
+						freeMarkerContext.entrySet()) {
 
-				template.put(entry.getKey(), entry.getValue());
+					template.put(entry.getKey(), entry.getValue());
+				}
+
+				sb.append(processFTL(pageContext, template));
 			}
-
-			sb.append(processFTL(pageContext, template));
 		}
 
 		return sb.toString();

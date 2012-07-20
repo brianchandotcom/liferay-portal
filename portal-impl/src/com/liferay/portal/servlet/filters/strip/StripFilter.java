@@ -46,6 +46,9 @@ import java.nio.CharBuffer;
 import java.util.HashSet;
 import java.util.Set;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletContext;
@@ -406,9 +409,15 @@ public class StripFilter extends BasePortalFilter {
 							_MARKER_TYPE_JAVASCRIPT_NEXTS) == -1)) {
 
 						// Open script tag has attribute other than
-						// type="text/javascript". Skip stripping.
+						// type="text/javascript" check for
+						// language="JavaScript" to determine whether to
+						// skip stripping.
 
-						return;
+						if (!processLanguageAttribute(
+								charBuffer, startPos, length)) {
+
+							return;
+						}
 					}
 
 					// Open script tag has no attribute or has attribute
@@ -501,6 +510,36 @@ public class StripFilter extends BasePortalFilter {
 		}
 
 		outputCloseTag(charBuffer, writer, _MARKER_SCRIPT_CLOSE);
+	}
+
+	private boolean processLanguageAttribute(
+		CharBuffer charBuffer, int startPos, int length) {
+
+		// language attribute is normally deprecated.  if support is disabled,
+		// return and skip stripping
+		if (!PropsValues.STRIP_JS_LANGUAGE_ATTRIBUTE_SUPPORT_ENABLED) {
+			return false;
+		}
+
+		// if the language attribute does not exist return and skip stripping
+		if (KMPSearch.search(
+				charBuffer, startPos, length, _MARKER_LANGUAGE,
+				_MARKER_LANGUAGE_NEXTS) == -1) {
+
+			return false;
+		}
+
+		Pattern pattern = Pattern.compile(_JAVASCRIPT_REGEX_PATTERN);
+
+		Matcher matcher = pattern.matcher(charBuffer);
+
+		//if language="javascript" is found, then continue stripping
+		if (matcher.find()) {
+			return true;
+		}
+
+		//otherwise, skip stripping
+		return false;
 	}
 
 	protected void processPre(CharBuffer oldCharBuffer, Writer writer)
@@ -639,12 +678,20 @@ public class StripFilter extends BasePortalFilter {
 
 	private static final String _ENSURE_CONTENT_LENGTH = "ensureContentLength";
 
+	private static final String _JAVASCRIPT_REGEX_PATTERN =
+		"[Jj][aA][vV][aA][sS][cC][rR][iI][pP][tT]";
+
 	private static final String _MARKER_INPUT_CLOSE = "/>";
 
 	private static final int[] _MARKER_INPUT_CLOSE_NEXTS =
 		KMPSearch.generateNexts(_MARKER_INPUT_CLOSE);
 
 	private static final char[] _MARKER_INPUT_OPEN = "input".toCharArray();
+
+	private static final String _MARKER_LANGUAGE = "language=\"";
+
+	private static final int[] _MARKER_LANGUAGE_NEXTS = KMPSearch.generateNexts(
+		_MARKER_LANGUAGE);
 
 	private static final String _MARKER_PRE_CLOSE = "/pre>";
 

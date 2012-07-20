@@ -69,7 +69,7 @@ public class ProcessUtil {
 		String id = name.substring(0, index);
 
 		try {
-			return Integer.parseInt(id);
+			return GetterUtil.getInteger(id);
 		}
 		catch (NumberFormatException nfe) {
 			throw new RuntimeException(

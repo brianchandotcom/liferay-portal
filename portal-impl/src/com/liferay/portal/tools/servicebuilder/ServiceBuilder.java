@@ -854,7 +854,7 @@ public class ServiceBuilder {
 	}
 
 	public String getDimensions(String dims) {
-		return getDimensions(Integer.parseInt(dims));
+		return getDimensions(GetterUtil.getInteger(dims));
 	}
 
 	public Entity getEntity(String name) throws IOException {

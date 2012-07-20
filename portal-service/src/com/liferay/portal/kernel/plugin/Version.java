@@ -298,8 +298,9 @@ public class Version implements Comparable<Version>, Serializable {
 				0, containerString.length() - 1);
 
 			try {
-				int containerNumber = Integer.parseInt(containerNumberString);
-				int number = Integer.parseInt(numberString);
+				int containerNumber = GetterUtil.getInteger(
+					containerNumberString);
+				int number = GetterUtil.getInteger(numberString);
 
 				return containerNumber <= number;
 			}

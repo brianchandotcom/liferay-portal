@@ -134,7 +134,7 @@ public class ReleaseInfo {
 
 	private static final String _BUILD = "6200";
 
-	private static final int _BUILD_NUMBER = Integer.parseInt(_BUILD);
+	private static final int _BUILD_NUMBER = GetterUtil.getInteger(_BUILD);
 
 	private static final String _CODE_NAME = "Newton";
 

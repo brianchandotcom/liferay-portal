@@ -46,7 +46,7 @@ public class LicenseManagerUtil {
 	public static List<Map<String, String>> getClusterLicenseProperties(
 		String clusterNodeId) {
 
-		return getLicenseManager().getLicenseProperties();
+		return getLicenseManager().getClusterLicenseProperties(clusterNodeId);
 	}
 
 	public static String getHostName() {

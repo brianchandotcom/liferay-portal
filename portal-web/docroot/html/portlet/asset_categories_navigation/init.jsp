@@ -44,7 +44,7 @@ boolean allAssetVocabularies = GetterUtil.getBoolean(preferences.getValue("allAs
 
 long[] assetVocabularyIds = availableAssetVocabularyIds;
 
-if (!allAssetVocabularies && preferences.getValues("assetVocabularyIds", null) != null) {
+if (!allAssetVocabularies && (preferences.getValues("assetVocabularyIds", null) != null)) {
 	assetVocabularyIds = StringUtil.split(preferences.getValue("assetVocabularyIds", null), 0L);
 }
 %>

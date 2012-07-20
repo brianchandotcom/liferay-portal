@@ -93,7 +93,7 @@ public class LiferayVideoConverter extends LiferayConverter {
 			try {
 				JQTFastStart.convert(videoFile, tempFile);
 
-				if (tempFile.exists() && tempFile.length() > 0) {
+				if (tempFile.exists() && (tempFile.length() > 0)) {
 					videoFile.delete();
 
 					tempFile.renameTo(videoFile);

@@ -259,7 +259,7 @@ for (int i = 0; i < results.size(); i++) {
 
 			sb.append(group.getDescriptiveName(locale));
 
-			if (j < groups.size() - 1) {
+			if (j < (groups.size() - 1)) {
 				sb.append(StringPool.COMMA);
 				sb.append(StringPool.SPACE);
 			}

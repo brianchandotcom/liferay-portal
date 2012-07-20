@@ -32,7 +32,7 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 	var itemsInStock = true;
 
 	function <portlet:namespace />checkout() {
-		if (<%= (ShoppingUtil.meetsMinOrder(shoppingPrefs, items)) ? "true" : "false" %>) {
+		if (<%= ShoppingUtil.meetsMinOrder(shoppingPrefs, items) ? "true" : "false" %>) {
 			if (!itemsInStock) {
 				if (confirm("<%= UnicodeLanguageUtil.get(pageContext, "your-cart-has-items-that-are-out-of-stock") %>")) {
 					document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.CHECKOUT %>";

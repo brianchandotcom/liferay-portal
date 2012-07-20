@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.servlet.PortletSessionTracker;
 import com.liferay.portal.kernel.servlet.ProtectedServletRequest;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
@@ -96,6 +97,8 @@ import com.liferay.portlet.social.util.SocialConfigurationUtil;
 import com.liferay.util.ContentUtil;
 import com.liferay.util.servlet.EncryptedServletRequest;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import java.util.List;
@@ -114,6 +117,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.PageContext;
+
+import jodd.io.ZipUtil;
 
 import org.apache.struts.Globals;
 import org.apache.struts.action.ActionServlet;
@@ -222,6 +227,17 @@ public class MainServlet extends ActionServlet {
 
 		try {
 			initServerDetector();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Initialize ruby");
+		}
+
+		try {
+			initRuby();
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -915,6 +931,48 @@ public class MainServlet extends ActionServlet {
 				ResourceActionLocalServiceUtil.checkResourceActions(
 					modelName, modelActions);
 			}
+		}
+	}
+
+	protected void initRuby() throws Exception {
+
+		String liferayHome = PropsValues.LIFERAY_HOME;
+
+		File rubyFolder = new File(liferayHome, "ruby");
+
+		boolean unzipRubyGems = false;
+
+		if (rubyFolder.exists() == false) {
+			rubyFolder.mkdirs();
+		}
+
+		String liferayLibPortalDir = PropsValues.LIFERAY_LIB_PORTAL_DIR;
+
+		File rubyGemsJar = new File(liferayLibPortalDir, "ruby-gems.jar");
+
+		if (!rubyGemsJar.exists()) {
+			throw new FileNotFoundException("ruby-gems.jar not found!");
+		}
+
+		File rubyGemsTouchFile = new File(rubyFolder, "ruby-gems");
+
+		if (!rubyGemsTouchFile.exists()) {
+			unzipRubyGems = true;
+		}
+		else {
+			if (rubyGemsTouchFile.lastModified() < rubyGemsJar.lastModified()) {
+				unzipRubyGems = true;
+			}
+		}
+
+		if (unzipRubyGems) {
+			FileUtil.deltree(rubyFolder);
+
+			rubyFolder.mkdir();
+
+			ZipUtil.unzip(rubyGemsJar, rubyFolder);
+
+			FileUtil.touch(rubyGemsTouchFile);
 		}
 	}
 

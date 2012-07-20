@@ -28,11 +28,6 @@ public class SmokeTests extends BaseTestSuite {
 		testSuite.addTestSuite(ViewPageWhatWeDoTest.class);
 		testSuite.addTestSuite(ViewPageWhoIsUsingLiferayTest.class);
 		testSuite.addTestSuite(ViewPageLiferayBenefitsTest.class);
-		testSuite.addTestSuite(AddPage1WelcomeTest.class);
-		testSuite.addTestSuite(AddPage2WelcomeTest.class);
-		testSuite.addTestSuite(AddPage3WelcomeTest.class);
-		testSuite.addTestSuite(TearDownPageWelcomeTest.class);
-		testSuite.addTestSuite(ViewTearDownPageWelcomeTest.class);
 
 		return testSuite;
 	}

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -164,13 +165,13 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		try {
 			StringBundler sb = new StringBundler(7);
 
-			sb.append("//dynamic-element[@name=\"");
-			sb.append(fieldName);
-			sb.append("\"] //dynamic-element[@");
-			sb.append(attributeName);
-			sb.append("=\"");
-			sb.append(attributeValue);
-			sb.append("\"]");
+			sb.append("//dynamic-element[@name=");
+			sb.append(HtmlUtil.escapeXPathAttribute(fieldName));
+			sb.append("] //dynamic-element[@");
+			sb.append(HtmlUtil.escapeXPath(attributeName));
+			sb.append("=");
+			sb.append(HtmlUtil.escapeXPathAttribute(attributeValue));
+			sb.append("]");
 
 			XPath xPathSelector = SAXReaderUtil.createXPath(sb.toString());
 

@@ -36,6 +36,10 @@ public interface Html {
 
 	public String escapeURL(String url);
 
+	public String escapeXPath(String xpath);
+
+	public String escapeXPathAttribute(String xpathAttribute);
+
 	public String extractText(String html);
 
 	public String fromInputSafe(String text);
@@ -55,5 +59,4 @@ public interface Html {
 	public String unescapeCDATA(String text);
 
 	public String wordBreak(String text, int columns);
-
 }

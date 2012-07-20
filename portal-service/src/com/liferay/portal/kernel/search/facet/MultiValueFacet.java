@@ -78,7 +78,7 @@ public class MultiValueFacet extends BaseFacet {
 			FacetValueValidator facetValueValidator = getFacetValueValidator();
 
 			if ((searchContext.getUserId() > 0) &&
-				(!facetValueValidator.check(searchContext, value))) {
+				!facetValueValidator.check(searchContext, value)) {
 
 				continue;
 			}

@@ -112,6 +112,12 @@ public class EvaluateLogTest extends BaseTestCase {
 				continue;
 			}
 
+			// LPS-28734
+
+			if (line.contains("java.nio.channels.ClosedChannelException")) {
+				continue;
+			}
+
 			System.out.println("\nException Line:\n\n" + line + "\n");
 
 			return false;

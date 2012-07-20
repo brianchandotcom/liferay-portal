@@ -59,7 +59,7 @@ if (Validator.isNotNull(portletResourceNamespace)){
 		}
 	);
 
-	window.<%= namespace %>structureAvailableFields = availableFields.concat(Liferay.FormBuilder.AVAILABLE_FIELDS.DDM_TEMPLATE);
+	window.<%= HtmlUtil.escapeJS(namespace) %>structureAvailableFields = availableFields.concat(Liferay.FormBuilder.AVAILABLE_FIELDS.DDM_TEMPLATE);
 </aui:script>
 
 <%!

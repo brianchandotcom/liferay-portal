@@ -355,6 +355,7 @@ public class SourceFormatter {
 		}
 
 		ifClause = _stripQuotes(ifClause);
+		ifClause = _stripRedundantParentheses(ifClause);
 
 		ifClause = StringUtil.replace(
 			ifClause, new String[] {"'('", "')'"},
@@ -3673,6 +3674,28 @@ public class SourceFormatter {
 		content = beforeImports + imports + "\n" + afterImports;
 
 		return content;
+	}
+
+	private static String _stripRedundantParentheses(String s) {
+		for (int x = 0;;) {
+			x = s.indexOf(StringPool.OPEN_PARENTHESIS, x + 1);
+			int y = s.indexOf(StringPool.CLOSE_PARENTHESIS, x);
+
+			if ((x == -1) || (y == -1)) {
+				return s;
+			}
+
+			String linePart = s.substring(x + 1, y);
+
+			linePart = StringUtil.replace(
+				linePart, StringPool.COMMA, StringPool.BLANK);
+
+			if (Validator.isAlphanumericName(linePart) ||
+				Validator.isNull(linePart)) {
+
+				s = s.substring(0, x) + s.substring(y + 1);
+			}
+		}
 	}
 
 	private static String _stripQuotes(String s) {

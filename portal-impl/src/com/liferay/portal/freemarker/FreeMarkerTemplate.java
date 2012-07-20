@@ -16,9 +16,12 @@ package com.liferay.portal.freemarker;
 
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.TemplateException;
+import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateResource;
+import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
 import com.liferay.portal.template.AbstractTemplate;
 import com.liferay.portal.template.TemplateContextHelper;
+import com.liferay.portal.util.PropsValues;
 
 import freemarker.core.ParseException;
 
@@ -43,7 +46,10 @@ public class FreeMarkerTemplate extends AbstractTemplate {
 		Configuration configuration,
 		TemplateContextHelper templateContextHelper) {
 
-		super(templateResource, errorTemplateResource, templateContextHelper);
+		super(
+			templateResource, errorTemplateResource, templateContextHelper,
+			_templateResourceLoaderName,
+			PropsValues.FREEMARKER_ENGINE_RESOURCE_MODIFICATION_CHECK_INTERVAL);
 
 		// Template is always being used as stack local, no way it could be
 		// shared across threads, so the threadsafty protection is not needed.
@@ -131,6 +137,10 @@ public class FreeMarkerTemplate extends AbstractTemplate {
 			}
 		}
 	}
+
+	private static String _templateResourceLoaderName =
+		TemplateResourceLoaderUtil.getTemplateResourceLoader(
+				TemplateManager.FREEMARKER).getName();
 
 	private Configuration _configuration;
 	private Map<String, Object> _context;

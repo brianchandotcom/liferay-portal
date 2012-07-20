@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.template.AbstractTemplate;
 import com.liferay.portal.template.TemplateContextHelper;
+import com.liferay.portal.template.TemplateResourceThreadLocal;
 import com.liferay.portal.util.PropsValues;
 
 import freemarker.core.ParseException;
@@ -27,7 +28,6 @@ import freemarker.core.ParseException;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 
-import java.io.Reader;
 import java.io.Writer;
 
 import java.util.HashMap;
@@ -119,21 +119,19 @@ public class FreeMarkerTemplate extends AbstractTemplate {
 			TemplateResource templateResource, Writer writer)
 		throws Exception {
 
-		Reader reader = null;
+		TemplateResourceThreadLocal.setTemplateResource(
+			TemplateManager.FREEMARKER, templateResource);
 
 		try {
-			reader = templateResource.getReader();
-
-			Template template = new Template(
-				templateResource.getTemplateId(), reader, _configuration,
+			Template template = _configuration.getTemplate(
+				getTemplateResourceUUID(templateResource),
 				TemplateResource.DEFAUT_ENCODING);
 
 			template.process(_context, writer);
 		}
 		finally {
-			if (reader != null) {
-				reader.close();
-			}
+			TemplateResourceThreadLocal.setTemplateResource(
+				TemplateManager.FREEMARKER, null);
 		}
 	}
 

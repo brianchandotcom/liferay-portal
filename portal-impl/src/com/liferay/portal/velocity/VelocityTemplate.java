@@ -20,11 +20,12 @@ import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.template.AbstractTemplate;
 import com.liferay.portal.template.TemplateContextHelper;
+import com.liferay.portal.template.TemplateResourceThreadLocal;
 import com.liferay.portal.util.PropsValues;
 
-import java.io.Reader;
 import java.io.Writer;
 
+import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.ParseErrorException;
@@ -101,19 +102,19 @@ public class VelocityTemplate extends AbstractTemplate {
 			TemplateResource templateResource, Writer writer)
 		throws Exception {
 
-		Reader reader = null;
+		TemplateResourceThreadLocal.setTemplateResource(
+			TemplateManager.VELOCITY, templateResource);
 
 		try {
-			reader = templateResource.getReader();
+			Template template = _velocityEngine.getTemplate(
+				getTemplateResourceUUID(templateResource),
+				TemplateResource.DEFAUT_ENCODING);
 
-			_velocityEngine.evaluate(
-				_velocityContext, writer, templateResource.getTemplateId(),
-				reader);
+			template.merge(_velocityContext, writer);
 		}
 		finally {
-			if (reader != null) {
-				reader.close();
-			}
+			TemplateResourceThreadLocal.setTemplateResource(
+				TemplateManager.VELOCITY, null);
 		}
 	}
 

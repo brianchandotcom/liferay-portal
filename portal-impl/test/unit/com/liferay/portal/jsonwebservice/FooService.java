@@ -79,6 +79,10 @@ public class FooService {
 		return '[' + name + '|' + number + ']';
 	}
 
+	public static String nullReturn() {
+		return null;
+	}
+
 	public static String srvcctx(ServiceContext serviceContext) {
 		Class<?> clazz = serviceContext.getClass();
 

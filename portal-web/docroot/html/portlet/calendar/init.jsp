@@ -68,7 +68,7 @@ String yearParam = request.getParameter("year");
 Calendar selCal = CalendarFactoryUtil.getCalendar(timeZone, locale);
 
 try {
-	selCal.set(Calendar.YEAR, Integer.parseInt(yearParam));
+	selCal.set(Calendar.YEAR, GetterUtil.getInteger(yearParam));
 }
 catch (NumberFormatException nfe) {
 }
@@ -78,7 +78,7 @@ try {
 		selCal.set(Calendar.DATE, 1);
 	}
 
-	selCal.set(Calendar.MONTH, Integer.parseInt(monthParam));
+	selCal.set(Calendar.MONTH, GetterUtil.getInteger(monthParam));
 }
 catch (NumberFormatException nfe) {
 }
@@ -86,7 +86,7 @@ catch (NumberFormatException nfe) {
 try {
 	int maxDayOfMonth = selCal.getActualMaximum(Calendar.DATE);
 
-	int dayParamInt = Integer.parseInt(dayParam);
+	int dayParamInt = GetterUtil.getInteger(dayParam);
 
 	if (dayParamInt > maxDayOfMonth) {
 		dayParamInt = maxDayOfMonth;

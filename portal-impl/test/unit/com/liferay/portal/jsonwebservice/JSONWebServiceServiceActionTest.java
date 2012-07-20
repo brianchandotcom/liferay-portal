@@ -42,8 +42,6 @@ import static junit.framework.Assert.assertEquals;
 public class JSONWebServiceServiceActionTest
 	extends BaseJSONWebServiceTestCase {
 
-	private static JSONWebServiceServiceAction jsonWebServiceServiceAction;
-
 	@BeforeClass
 	public static void init() throws Exception {
 		initPortalServices();
@@ -52,7 +50,7 @@ public class JSONWebServiceServiceActionTest
 
 		portalUtil.setPortal(new PortalImpl());
 
-		jsonWebServiceServiceAction = new JSONWebServiceServiceAction("", null);
+		_jsonWebServiceServiceAction = new JSONWebServiceServiceAction("", null);
 
 		registerActionClass(FooService.class);
 	}
@@ -84,7 +82,7 @@ public class JSONWebServiceServiceActionTest
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
-		json = jsonWebServiceServiceAction.getJSON(new ActionMapping(),
+		json = _jsonWebServiceServiceAction.getJSON(new ActionMapping(),
 			new DynaActionForm(), mockHttpServletRequest,
 			mockHttpServletResponse);
 
@@ -110,7 +108,7 @@ public class JSONWebServiceServiceActionTest
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
-		json = jsonWebServiceServiceAction.getJSON(new ActionMapping(),
+		json = _jsonWebServiceServiceAction.getJSON(new ActionMapping(),
 			new DynaActionForm(), mockHttpServletRequest,
 			mockHttpServletResponse);
 
@@ -131,5 +129,7 @@ public class JSONWebServiceServiceActionTest
 
 		return mockHttpServletRequest;
 	}
+
+	private static JSONWebServiceServiceAction _jsonWebServiceServiceAction;
 
 }

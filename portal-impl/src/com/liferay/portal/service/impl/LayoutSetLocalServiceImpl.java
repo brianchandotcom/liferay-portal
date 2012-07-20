@@ -36,6 +36,7 @@ import com.liferay.portal.service.base.LayoutSetLocalServiceBaseImpl;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -290,6 +291,19 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		layoutSet.setLayoutSetPrototypeUuid(layoutSetPrototypeUuid);
 
 		layoutSetPersistence.update(layoutSet, false);
+	}
+
+	public LayoutSet updateLogo(
+			long groupId, boolean privateLayout, boolean logo, byte[] bytes)
+		throws PortalException, SystemException {
+
+		InputStream is = null;
+
+		if (logo) {
+			is = new ByteArrayInputStream(bytes);
+		}
+
+		return updateLogo(groupId, privateLayout, logo, is);
 	}
 
 	public LayoutSet updateLogo(

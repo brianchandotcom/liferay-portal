@@ -23,6 +23,7 @@ import com.liferay.portal.service.base.LayoutSetServiceBaseImpl;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.service.permission.PortalPermissionUtil;
 
+import java.io.File;
 import java.io.InputStream;
 
 /**
@@ -72,6 +73,20 @@ public class LayoutSetServiceImpl extends LayoutSetServiceBaseImpl {
 		layoutSetLocalService.updateLayoutSetPrototypeLinkEnabled(
 			groupId, privateLayout, layoutSetPrototypeLinkEnabled,
 			layoutSetPrototypeUuid);
+	}
+
+	public void updateLogo(
+			long groupId, boolean privateLayout, boolean logo, byte[] bytes)
+		throws PortalException, SystemException {
+
+		updateLogo(groupId, privateLayout, logo, bytes);
+	}
+
+	public void updateLogo(
+			long groupId, boolean privateLayout, boolean logo, File file)
+		throws PortalException, SystemException {
+
+		updateLogo(groupId, privateLayout, logo, file);
 	}
 
 	public void updateLogo(

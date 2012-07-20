@@ -268,8 +268,8 @@ public class ClusterExecutorImpl
 
 	public void portalPortConfigured(int port) {
 		if (!isEnabled() ||
-			_localClusterNode.getPort() ==
-				PropsValues.PORTAL_INSTANCE_HTTP_PORT) {
+			(_localClusterNode.getPort() ==
+				PropsValues.PORTAL_INSTANCE_HTTP_PORT)) {
 
 			return;
 		}

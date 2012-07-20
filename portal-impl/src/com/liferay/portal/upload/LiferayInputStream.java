@@ -89,7 +89,7 @@ public class LiferayInputStream extends ServletInputStreamWrapper {
 			curPercent = progressTracker.getPercent();
 		}
 
-		if ((curPercent == null) || (percent - curPercent.intValue() >= 1)) {
+		if ((curPercent == null) || ((percent - curPercent.intValue()) >= 1)) {
 			if (progressTracker == null) {
 				progressTracker = new ProgressTracker(
 					_session, StringPool.BLANK);

@@ -156,7 +156,7 @@ public class ProgressInputStream extends InputStream {
 			curPercent = progressTracker.getPercent();
 		}
 
-		if ((curPercent == null) || (percent - curPercent.intValue() >= 1)) {
+		if ((curPercent == null) || ((percent - curPercent.intValue()) >= 1)) {
 			if (progressTracker == null) {
 				progressTracker = new ProgressTracker(
 					_portletSession, _progressId);

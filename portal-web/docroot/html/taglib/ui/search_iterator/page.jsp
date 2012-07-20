@@ -118,7 +118,7 @@ int sortColumnIndex = -1;
 				else if (i == 0) {
 					cssClass = "first";
 				}
-				else if (i == headerNames.size() - 1) {
+				else if (i == (headerNames.size() - 1)) {
 					cssClass = "last";
 				}
 

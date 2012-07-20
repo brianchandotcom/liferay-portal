@@ -180,7 +180,7 @@ if (!StringUtil.contains(tabs4Names, tabs4)) {
 
 						hiddenFields.hide();
 
-						if (layoutPrototypeIdSelect && layoutPrototypeIdSelect.val() == '') {
+						if (layoutPrototypeIdSelect && (layoutPrototypeIdSelect.val() == '')) {
 							hiddenFields.show();
 						}
 						else {

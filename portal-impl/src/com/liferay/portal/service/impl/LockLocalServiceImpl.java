@@ -20,6 +20,8 @@ import com.liferay.portal.NoSuchLockException;
 import com.liferay.portal.kernel.dao.orm.LockMode;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lock.LockListener;
+import com.liferay.portal.kernel.lock.LockListenerRegistryUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.Validator;
@@ -52,7 +54,7 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 		Lock lock = lockPersistence.findByC_K(className, key);
 
 		if (lock.isExpired()) {
-			lockPersistence.remove(lock);
+			expireLock(lock);
 
 			throw new ExpiredLockException();
 		}
@@ -123,49 +125,64 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 			boolean inheritable, long expirationTime)
 		throws PortalException, SystemException {
 
-		Date now = new Date();
+		LockListener lockListener = LockListenerRegistryUtil.getLockListener(
+			className);
 
-		Lock lock = lockPersistence.fetchByC_K(className, key);
+		if (lockListener != null) {
+			lockListener.onBeforeLock(key);
+		}
 
-		if (lock != null) {
-			if (lock.isExpired()) {
-				lockPersistence.remove(lock);
+		try {
+			Date now = new Date();
 
-				lock = null;
+			Lock lock = lockPersistence.fetchByC_K(className, key);
+
+			if (lock != null) {
+				if (lock.isExpired()) {
+					expireLock(lock);
+
+					lock = null;
+				}
+				else if (lock.getUserId() != userId) {
+					throw new DuplicateLockException(lock);
+				}
 			}
-			else if (lock.getUserId() != userId) {
-				throw new DuplicateLockException(lock);
+
+			if (lock == null) {
+				User user = userPersistence.findByPrimaryKey(userId);
+
+				long lockId = counterLocalService.increment();
+
+				lock = lockPersistence.create(lockId);
+
+				lock.setCompanyId(user.getCompanyId());
+				lock.setUserId(user.getUserId());
+				lock.setUserName(user.getFullName());
+				lock.setClassName(className);
+				lock.setKey(key);
+				lock.setOwner(owner);
+				lock.setInheritable(inheritable);
+			}
+
+			lock.setCreateDate(now);
+
+			if (expirationTime == 0) {
+				lock.setExpirationDate(null);
+			}
+			else {
+				lock.setExpirationDate(
+					new Date(now.getTime() + expirationTime));
+			}
+
+			lockPersistence.update(lock, false);
+
+			return lock;
+		}
+		finally {
+			if (lockListener != null) {
+				lockListener.onAfterLock(key);
 			}
 		}
-
-		if (lock == null) {
-			User user = userPersistence.findByPrimaryKey(userId);
-
-			long lockId = counterLocalService.increment();
-
-			lock = lockPersistence.create(lockId);
-
-			lock.setCompanyId(user.getCompanyId());
-			lock.setUserId(user.getUserId());
-			lock.setUserName(user.getFullName());
-			lock.setClassName(className);
-			lock.setKey(key);
-			lock.setOwner(owner);
-			lock.setInheritable(inheritable);
-		}
-
-		lock.setCreateDate(now);
-
-		if (expirationTime == 0) {
-			lock.setExpirationDate(null);
-		}
-		else {
-			lock.setExpirationDate(new Date(now.getTime() + expirationTime));
-		}
-
-		lockPersistence.update(lock, false);
-
-		return lock;
 	}
 
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -183,34 +200,48 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 			String updatedOwner, boolean retrieveFromCache)
 		throws SystemException {
 
-		Lock lock = lockFinder.fetchByC_K(className, key, LockMode.UPGRADE);
+		LockListener lockListener = LockListenerRegistryUtil.getLockListener(
+			className);
 
-		if (lock == null) {
-			long lockId = counterLocalService.increment();
-
-			lock = lockPersistence.create(lockId);
-
-			lock.setCreateDate(new Date());
-			lock.setClassName(className);
-			lock.setKey(key);
-			lock.setOwner(updatedOwner);
-
-			lockPersistence.update(lock, false);
-
-			lock.setNew(true);
-		}
-		else if (Validator.equals(lock.getOwner(), expectedOwner)) {
-			lock.setCreateDate(new Date());
-			lock.setClassName(className);
-			lock.setKey(key);
-			lock.setOwner(updatedOwner);
-
-			lockPersistence.update(lock, false);
-
-			lock.setNew(true);
+		if (lockListener != null) {
+			lockListener.onBeforeLock(key);
 		}
 
-		return lock;
+		try {
+			Lock lock = lockFinder.fetchByC_K(className, key, LockMode.UPGRADE);
+
+			if (lock == null) {
+				long lockId = counterLocalService.increment();
+
+				lock = lockPersistence.create(lockId);
+
+				lock.setCreateDate(new Date());
+				lock.setClassName(className);
+				lock.setKey(key);
+				lock.setOwner(updatedOwner);
+
+				lockPersistence.update(lock, false);
+
+				lock.setNew(true);
+			}
+			else if (Validator.equals(lock.getOwner(), expectedOwner)) {
+				lock.setCreateDate(new Date());
+				lock.setClassName(className);
+				lock.setKey(key);
+				lock.setOwner(updatedOwner);
+
+				lockPersistence.update(lock, false);
+
+				lock.setNew(true);
+			}
+
+			return lock;
+		}
+		finally {
+			if (lockListener != null) {
+				lockListener.onAfterLock(key);
+			}
+		}
 	}
 
 	public Lock refresh(String uuid, long companyId, long expirationTime)
@@ -226,18 +257,35 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 
 		Lock lock = locks.get(0);
 
-		lock.setCreateDate(now);
+		LockListener lockListener = LockListenerRegistryUtil.getLockListener(
+			lock.getClassName());
 
-		if (expirationTime == 0) {
-			lock.setExpirationDate(null);
+		String key = lock.getKey();
+
+		if (lockListener != null) {
+			lockListener.onBeforeRefresh(key);
 		}
-		else {
-			lock.setExpirationDate(new Date(now.getTime() + expirationTime));
+
+		try {
+			lock.setCreateDate(now);
+
+			if (expirationTime == 0) {
+				lock.setExpirationDate(null);
+			}
+			else {
+				lock.setExpirationDate(
+					new Date(now.getTime() + expirationTime));
+			}
+
+			lockPersistence.update(lock, false);
+
+			return lock;
 		}
-
-		lockPersistence.update(lock, false);
-
-		return lock;
+		finally {
+			if (lockListener != null) {
+				lockListener.onAfterRefresh(key);
+			}
+		}
 	}
 
 	public void unlock(String className, long key) throws SystemException {
@@ -265,7 +313,41 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 		}
 
 		if (Validator.equals(lock.getOwner(), owner)) {
-			deleteLock(lock);
+			LockListener lockListener =
+				LockListenerRegistryUtil.getLockListener(lock.getClassName());
+
+			if (lockListener != null) {
+				lockListener.onBeforeUnlock(key);
+			}
+
+			try {
+				lockPersistence.remove(lock);
+			}
+			finally {
+				if (lockListener != null) {
+					lockListener.onAfterUnlock(key);
+				}
+			}
+		}
+	}
+
+	protected void expireLock(Lock lock) throws SystemException {
+		LockListener lockListener = LockListenerRegistryUtil.getLockListener(
+			lock.getClassName());
+
+		String key = lock.getKey();
+
+		if (lockListener != null) {
+			lockListener.onBeforeExpire(key);
+		}
+
+		try {
+			lockPersistence.remove(lock);
+		}
+		finally {
+			if (lockListener != null) {
+				lockListener.onAfterExpire(key);
+			}
 		}
 	}
 
@@ -276,7 +358,7 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 
 		if (lock != null) {
 			if (lock.isExpired()) {
-				lockPersistence.remove(lock);
+				expireLock(lock);
 
 				lock = null;
 			}

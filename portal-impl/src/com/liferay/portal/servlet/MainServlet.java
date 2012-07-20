@@ -935,14 +935,11 @@ public class MainServlet extends ActionServlet {
 	}
 
 	protected void initRuby() throws Exception {
-
 		String liferayHome = PropsValues.LIFERAY_HOME;
 
 		File rubyFolder = new File(liferayHome, "ruby");
 
-		boolean unzipRubyGems = false;
-
-		if (rubyFolder.exists() == false) {
+		if (!rubyFolder.exists()) {
 			rubyFolder.mkdirs();
 		}
 
@@ -956,16 +953,9 @@ public class MainServlet extends ActionServlet {
 
 		File rubyGemsTouchFile = new File(rubyFolder, "ruby-gems");
 
-		if (!rubyGemsTouchFile.exists()) {
-			unzipRubyGems = true;
-		}
-		else {
-			if (rubyGemsTouchFile.lastModified() < rubyGemsJar.lastModified()) {
-				unzipRubyGems = true;
-			}
-		}
+		if (!rubyGemsTouchFile.exists() ||
+			rubyGemsTouchFile.lastModified() < rubyGemsJar.lastModified()) {
 
-		if (unzipRubyGems) {
 			FileUtil.deltree(rubyFolder);
 
 			rubyFolder.mkdir();

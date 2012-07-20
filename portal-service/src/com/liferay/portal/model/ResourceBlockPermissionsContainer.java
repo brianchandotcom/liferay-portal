@@ -14,6 +14,12 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.util.Digester;
+import com.liferay.portal.kernel.util.DigesterUtil;
+
+import java.nio.ByteBuffer;
+
+import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -43,6 +49,30 @@ public class ResourceBlockPermissionsContainer {
 
 	public SortedMap<Long, Long> getPermissions() {
 		return _permissions;
+	}
+
+	/**
+	 * Returns the permissions hash of the resource permissions. The permissions
+	 * hash is a representation of all the roles with access to the resource
+	 * along with the actions they can perform.
+	 *
+	 * @return the permissions hash of the resource permissions
+	 */
+	public String getPermissionsHash() {
+
+		// long is 8 bytes, there are 2 longs per permission, so preallocate
+		// byte buffer to 16 * the number of permissions.
+
+		ByteBuffer byteBuffer = ByteBuffer.allocate(_permissions.size() * 16);
+
+		for (Map.Entry<Long, Long> entry : _permissions.entrySet()) {
+			byteBuffer.putLong(entry.getKey());
+			byteBuffer.putLong(entry.getValue());
+		}
+
+		byteBuffer.flip();
+
+		return DigesterUtil.digestHex(Digester.SHA_1, byteBuffer);
 	}
 
 	public void removePermission(long roleId, long actionIdsLong) {

@@ -404,19 +404,6 @@ public class ResourceBlockLocalServiceUtil {
 		return getService().getPermissions(resourceBlock, roleId);
 	}
 
-	/**
-	* Returns the permissions hash of the resource permissions. The permissions
-	* hash is a representation of all the roles with access to the resource
-	* along with the actions they can perform.
-	*
-	* @param resourceBlockPermissionsContainer the resource block permissions
-	* @return the permissions hash of the resource permissions
-	*/
-	public static java.lang.String getPermissionsHash(
-		com.liferay.portal.model.ResourceBlockPermissionsContainer resourceBlockPermissionsContainer) {
-		return getService().getPermissionsHash(resourceBlockPermissionsContainer);
-	}
-
 	public static com.liferay.portal.model.ResourceBlock getResourceBlock(
 		java.lang.String name, long primKey)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -464,8 +451,7 @@ public class ResourceBlockLocalServiceUtil {
 
 	public static void releasePermissionedModelResourceBlock(
 		com.liferay.portal.model.PermissionedModel permissionedModel)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.SystemException {
 		getService().releasePermissionedModelResourceBlock(permissionedModel);
 	}
 
@@ -487,8 +473,7 @@ public class ResourceBlockLocalServiceUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static void releaseResourceBlock(long resourceBlockId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.SystemException {
 		getService().releaseResourceBlock(resourceBlockId);
 	}
 
@@ -594,34 +579,6 @@ public class ResourceBlockLocalServiceUtil {
 		getService()
 			.removeIndividualScopePermissions(companyId, groupId, name,
 			permissionedModel, roleId, actionIdsLong);
-	}
-
-	/**
-	* Increments the reference count of the resource block and updates it in
-	* the database.
-	*
-	* @param resourceBlockId the primary key of the resource block
-	* @throws PortalException if a resource block with the primary key could
-	not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void retainResourceBlock(long resourceBlockId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		getService().retainResourceBlock(resourceBlockId);
-	}
-
-	/**
-	* Increments the reference count of the resource block and updates it in
-	* the database.
-	*
-	* @param resourceBlock the resource block
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void retainResourceBlock(
-		com.liferay.portal.model.ResourceBlock resourceBlock)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().retainResourceBlock(resourceBlock);
 	}
 
 	public static void setCompanyScopePermissions(long companyId,

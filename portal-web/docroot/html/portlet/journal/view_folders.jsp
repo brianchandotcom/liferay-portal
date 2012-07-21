@@ -173,7 +173,7 @@ request.setAttribute("view_folders.jsp-total", String.valueOf(total));
 									<liferay-ui:icon image="copy" message="" />
 
 									<span class="article-title">
-										<%= structure.getName(locale) %>
+										<%= HtmlUtil.escape(structure.getName(locale)) %>
 									</span>
 								</a>
 							</li>

@@ -199,7 +199,7 @@ if (feed != null) {
 						<portlet:param name="parentStructureId" value="<%= structureId %>" />
 					</portlet:renderURL>
 
-					<aui:a href="<%= structureURL %>" id="structureName" label="<%= structureName %>" />
+					<aui:a href="<%= structureURL %>" id="structureName" label="<%= HtmlUtil.escape(structureName) %>" />
 
 					<aui:button name="selectStructureButton" onClick='<%= renderResponse.getNamespace() + "openStructureSelector();" %>' value="select" />
 

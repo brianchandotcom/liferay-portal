@@ -77,12 +77,11 @@
 
 	.lfr-change-logo img {
 		border-width: 0;
-		display: block;
 		width: auto;
 	}
 
 	.company-logo {
-		border: none;
+		border-width: 0;
 		width: 100px;
 	}
 

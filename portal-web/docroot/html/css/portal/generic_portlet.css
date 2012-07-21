@@ -127,7 +127,7 @@
 }
 
 .lfr-change-logo {
-	background: url(@theme_image_path@/common/checkerboard.png);
+	background: url(@theme_image_path@/common/checkerboard.png) repeat 50%;
 }
 
 .lfr-portrait-preview .lfr-portrait-preview-img.loading {

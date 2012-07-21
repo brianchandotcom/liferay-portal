@@ -32,8 +32,8 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.WorkflowInstanceLinkLocalServiceUtil;
 import com.liferay.portal.struts.PortletAction;
-import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 
 import java.io.Serializable;
 
@@ -166,10 +166,10 @@ public class EditWorkflowInstanceAction extends PortletAction {
 			PermissionChecker permissionChecker =
 				themeDisplay.getPermissionChecker();
 
-			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+			String portletId = PortalUtil.getPortletId(actionRequest);
 
-			if (permissionChecker.hasPermission(
-					groupId, portletDisplay.getId(), 0,
+			if (!permissionChecker.hasPermission(
+					groupId, portletId, 0,
 					ActionKeys.ACCESS_IN_CONTROL_PANEL)) {
 
 				return themeDisplay.getURLControlPanel();

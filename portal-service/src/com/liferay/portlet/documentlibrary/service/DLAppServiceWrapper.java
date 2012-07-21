@@ -1681,12 +1681,18 @@ public class DLAppServiceWrapper implements DLAppService,
 			tempFolderName);
 	}
 
+	/**
+	* @deprecated Use {@link #checkOutFileEntry(long, ServiceContext)}.
+	*/
 	public com.liferay.portal.model.Lock lockFileEntry(long fileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _dlAppService.lockFileEntry(fileEntryId);
 	}
 
+	/**
+	* @deprecated Use {@link #checkOutFileEntry(long, String, long, ServiceContext)}.
+	*/
 	public com.liferay.portal.model.Lock lockFileEntry(long fileEntryId,
 		java.lang.String owner, long expirationTime)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -1986,12 +1992,18 @@ public class DLAppServiceWrapper implements DLAppService,
 		return _dlAppService.search(repositoryId, searchContext, query);
 	}
 
+	/**
+	* @deprecated Use {@link #checkInFileEntry(long, boolean, String, ServiceContext)}.
+	*/
 	public void unlockFileEntry(long fileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_dlAppService.unlockFileEntry(fileEntryId);
 	}
 
+	/**
+	* @deprecated Use {@link #checkInFileEntry(long, String)}.
+	*/
 	public void unlockFileEntry(long fileEntryId, java.lang.String lockUuid)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

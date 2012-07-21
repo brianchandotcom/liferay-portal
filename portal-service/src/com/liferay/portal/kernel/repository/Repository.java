@@ -217,9 +217,15 @@ public interface Repository {
 	public List<Long> getSubfolderIds(long folderId, boolean recurse)
 		throws SystemException;
 
+	/**
+	 * @deprecated Use {@link #checkOutFileEntry(long, ServiceContext)}.
+	 */
 	public Lock lockFileEntry(long fileEntryId)
 		throws PortalException, SystemException;
 
+	/**
+	 * @deprecated Use {@link #checkOutFileEntry(long, String, long, ServiceContext)}.
+	 */
 	public Lock lockFileEntry(
 			long fileEntryId, String owner, long expirationTime)
 		throws PortalException, SystemException;
@@ -257,12 +263,6 @@ public interface Repository {
 
 	public Hits search(SearchContext searchContext, Query query)
 		throws SearchException;
-
-	public void unlockFileEntry(long fileEntryId)
-		throws PortalException, SystemException;
-
-	public void unlockFileEntry(long fileEntryId, String lockUuid)
-		throws PortalException, SystemException;
 
 	public void unlockFolder(long folderId, String lockUuid)
 		throws PortalException, SystemException;

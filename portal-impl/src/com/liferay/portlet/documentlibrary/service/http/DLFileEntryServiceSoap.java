@@ -565,30 +565,6 @@ public class DLFileEntryServiceSoap {
 		}
 	}
 
-	public static void unlockFileEntry(long fileEntryId)
-		throws RemoteException {
-		try {
-			DLFileEntryServiceUtil.unlockFileEntry(fileEntryId);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static void unlockFileEntry(long fileEntryId,
-		java.lang.String lockUuid) throws RemoteException {
-		try {
-			DLFileEntryServiceUtil.unlockFileEntry(fileEntryId, lockUuid);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	public static boolean verifyFileEntryCheckOut(long fileEntryId,
 		java.lang.String lockUuid) throws RemoteException {
 		try {

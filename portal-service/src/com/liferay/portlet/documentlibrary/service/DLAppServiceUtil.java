@@ -1716,12 +1716,18 @@ public class DLAppServiceUtil {
 				   .getTempFileEntryNames(groupId, folderId, tempFolderName);
 	}
 
+	/**
+	* @deprecated Use {@link #checkOutFileEntry(long, ServiceContext)}.
+	*/
 	public static com.liferay.portal.model.Lock lockFileEntry(long fileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().lockFileEntry(fileEntryId);
 	}
 
+	/**
+	* @deprecated Use {@link #checkOutFileEntry(long, String, long, ServiceContext)}.
+	*/
 	public static com.liferay.portal.model.Lock lockFileEntry(
 		long fileEntryId, java.lang.String owner, long expirationTime)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -2027,12 +2033,18 @@ public class DLAppServiceUtil {
 		return getService().search(repositoryId, searchContext, query);
 	}
 
+	/**
+	* @deprecated Use {@link #checkInFileEntry(long, boolean, String, ServiceContext)}.
+	*/
 	public static void unlockFileEntry(long fileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().unlockFileEntry(fileEntryId);
 	}
 
+	/**
+	* @deprecated Use {@link #checkInFileEntry(long, String)}.
+	*/
 	public static void unlockFileEntry(long fileEntryId,
 		java.lang.String lockUuid)
 		throws com.liferay.portal.kernel.exception.PortalException,

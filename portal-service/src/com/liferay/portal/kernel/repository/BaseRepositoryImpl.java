@@ -261,15 +261,30 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 	public abstract void initRepository()
 		throws PortalException, SystemException;
 
-	public Lock lockFileEntry(long fileEntryId) {
-		throw new UnsupportedOperationException();
+	/**
+	 * @deprecated Use {@link #checkOutFileEntry(long, ServiceContext)}.
+	 */
+	public Lock lockFileEntry(long fileEntryId)
+		throws PortalException, SystemException {
+
+		checkOutFileEntry(fileEntryId, new ServiceContext());
+
+		return getFileEntry(fileEntryId).getLock();
 	}
 
+	/**
+	 * @deprecated Use {@link #checkOutFileEntry(long, String, long, ServiceContext)}.
+	 */
 	public Lock lockFileEntry(
-		long fileEntryId, String owner, long expirationTime) {
+			long fileEntryId, String owner, long expirationTime)
+		throws PortalException, SystemException {
 
-		throw new UnsupportedOperationException();
+		FileEntry fileEntry = checkOutFileEntry(
+			fileEntryId, owner, expirationTime, new ServiceContext());
+
+		return fileEntry.getLock();
 	}
+
 
 	public Hits search(SearchContext searchContext) throws SearchException {
 		searchContext.setSearchEngineId(SearchEngineUtil.GENERIC_ENGINE_ID);
@@ -324,14 +339,6 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 
 	public void setUserLocalService(UserLocalService userLocalService) {
 		this.userLocalService = userLocalService;
-	}
-
-	public void unlockFileEntry(long fileEntryId) {
-		throw new UnsupportedOperationException();
-	}
-
-	public void unlockFileEntry(long fileEntryId, String lockUuid) {
-		throw new UnsupportedOperationException();
 	}
 
 	public void unlockFolder(long parentFolderId, String title, String lockUuid)

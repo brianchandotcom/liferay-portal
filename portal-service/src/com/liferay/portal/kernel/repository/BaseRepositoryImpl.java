@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.RepositoryEntry;
 import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.service.ServiceContext;
@@ -259,6 +260,31 @@ public abstract class BaseRepositoryImpl implements BaseRepository {
 
 	public abstract void initRepository()
 		throws PortalException, SystemException;
+
+	/**
+	 * @deprecated Use {@link #checkOutFileEntry(long, ServiceContext)}.
+	 */
+	public Lock lockFileEntry(long fileEntryId)
+		throws PortalException, SystemException {
+
+		checkOutFileEntry(fileEntryId, new ServiceContext());
+
+		return getFileEntry(fileEntryId).getLock();
+	}
+
+	/**
+	 * @deprecated Use {@link #checkOutFileEntry(long, String, long, ServiceContext)}.
+	 */
+	public Lock lockFileEntry(
+			long fileEntryId, String owner, long expirationTime)
+		throws PortalException, SystemException {
+
+		FileEntry fileEntry = checkOutFileEntry(
+			fileEntryId, owner, expirationTime, new ServiceContext());
+
+		return fileEntry.getLock();
+	}
+
 
 	public Hits search(SearchContext searchContext) throws SearchException {
 		searchContext.setSearchEngineId(SearchEngineUtil.GENERIC_ENGINE_ID);

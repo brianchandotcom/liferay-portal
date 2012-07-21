@@ -217,6 +217,19 @@ public interface Repository {
 	public List<Long> getSubfolderIds(long folderId, boolean recurse)
 		throws SystemException;
 
+	/**
+	 * @deprecated Use {@link #checkOutFileEntry(long, ServiceContext)}.
+	 */
+	public Lock lockFileEntry(long fileEntryId)
+		throws PortalException, SystemException;
+
+	/**
+	 * @deprecated Use {@link #checkOutFileEntry(long, String, long, ServiceContext)}.
+	 */
+	public Lock lockFileEntry(
+			long fileEntryId, String owner, long expirationTime)
+		throws PortalException, SystemException;
+
 	public Lock lockFolder(long folderId)
 		throws PortalException, SystemException;
 

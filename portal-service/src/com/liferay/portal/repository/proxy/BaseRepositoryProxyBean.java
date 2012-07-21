@@ -470,6 +470,30 @@ public class BaseRepositoryProxyBean
 		_baseRepository.initRepository();
 	}
 
+	/**
+	 * @deprecated Use {@link #checkOutFileEntry(long, ServiceContext)}.
+	 */
+	public Lock lockFileEntry(long fileEntryId)
+		throws PortalException, SystemException {
+
+		Lock lock = _baseRepository.lockFileEntry(fileEntryId);
+
+		return (Lock)newProxyInstance(lock, Lock.class);
+	}
+
+	/**
+	 * @deprecated Use {@link #checkOutFileEntry(long, String, long, ServiceContext)}.
+	 */
+	public Lock lockFileEntry(
+			long fileEntryId, String owner, long expirationTime)
+		throws PortalException, SystemException {
+
+		Lock lock = _baseRepository.lockFileEntry(
+			fileEntryId, owner, expirationTime);
+
+		return (Lock)newProxyInstance(lock, Lock.class);
+	}
+
 	public Lock lockFolder(long folderId)
 		throws PortalException, SystemException {
 

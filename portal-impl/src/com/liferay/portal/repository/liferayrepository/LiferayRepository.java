@@ -558,6 +558,31 @@ public class LiferayRepository
 			getGroupId(), toFolderId(folderId), recurse);
 	}
 
+	/**
+	 * @deprecated Use {@link #checkOutFileEntry(long, ServiceContext)}.
+	 */
+	public Lock lockFileEntry(long fileEntryId)
+			throws PortalException, SystemException {
+
+		FileEntry fileEntry = checkOutFileEntry(
+			fileEntryId, new ServiceContext());
+
+		return fileEntry.getLock();
+	}
+
+	/**
+	 * @deprecated Use {@link #checkOutFileEntry(long, String, long, ServiceContext)}.
+	 */
+	public Lock lockFileEntry(
+			long fileEntryId, String owner, long expirationTime)
+		throws PortalException, SystemException {
+
+		FileEntry fileEntry = checkOutFileEntry(
+			fileEntryId, owner, expirationTime, new ServiceContext());
+
+		return fileEntry.getLock();
+	}
+
 	public Lock lockFolder(long folderId)
 		throws PortalException, SystemException {
 

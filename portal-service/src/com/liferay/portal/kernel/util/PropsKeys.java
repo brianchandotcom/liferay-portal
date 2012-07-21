@@ -545,6 +545,8 @@ public interface PropsKeys {
 
 	public static final String DL_FILE_ENTRY_DRAFTS_ENABLED = "dl.file.entry.drafts.enabled";
 
+	public static final String DL_FILE_ENTRY_LOCK_POLICY = "dl.file.entry.lock.policy";
+
 	public static final String DL_FILE_ENTRY_PREVIEW_AUDIO = "dl.file.entry.preview.audio.";
 
 	public static final String DL_FILE_ENTRY_PREVIEW_AUDIO_BIT_RATE = "dl.file.entry.preview.audio.bit.rate";
@@ -1278,6 +1280,8 @@ public interface PropsKeys {
 	public static final String LOCALES = "locales";
 
 	public static final String LOCALES_BETA = "locales.beta";
+
+	public static final String LOCK_LISTENERS = "lock.listeners";
 
 	public static final String LOGIN_CREATE_ACCOUNT_ALLOW_CUSTOM_PASSWORD = "login.create.account.allow.custom.password";
 

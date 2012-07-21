@@ -66,6 +66,7 @@ layout.user.public.layouts.modifiable
 layout.user.public.layouts.power.user.required
 ldap.attrs.transformer.impl
 locales.beta
+lock.listeners
 login.create.account.allow.custom.password
 login.events.post
 login.events.pre

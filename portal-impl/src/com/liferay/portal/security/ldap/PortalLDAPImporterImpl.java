@@ -1020,9 +1020,9 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 	}
 
 	protected void populateExpandoAttributes(
-		ExpandoBridge expandoBridge, Map<String, String> expandoAttributes) {
+		ExpandoBridge expandoBridge, Map<String, String[]> expandoAttributes) {
 
-		for (Map.Entry<String, String> expandoAttribute :
+		for (Map.Entry<String, String[]> expandoAttribute :
 				expandoAttributes.entrySet()) {
 
 			String name = expandoAttribute.getKey();
@@ -1033,8 +1033,8 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 
 			int type = expandoBridge.getAttributeType(name);
 
-			Serializable value = ExpandoConverterUtil.getAttributeFromString(
-				type, expandoAttribute.getValue());
+			Serializable value = ExpandoConverterUtil.
+				getAttributeFromStringArray(type, expandoAttribute.getValue());
 
 			try {
 				ExpandoValueLocalServiceUtil.addValue(

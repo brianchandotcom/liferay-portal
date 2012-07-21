@@ -147,7 +147,6 @@ if (organization != null) {
 				editLogoURL="<%= editOrganizationLogoURL %>"
 				imageId="<%= logoId %>"
 				logoDisplaySelector=".organization-logo"
-				showBackground="<%= false %>"
 			/>
 		</c:if>
 	</div>

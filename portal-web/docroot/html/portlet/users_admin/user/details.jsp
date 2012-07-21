@@ -140,7 +140,6 @@ boolean deletePortrait = ParamUtil.getBoolean(request, "deletePortrait");
 				editLogoURL="<%= editUserPortraitURL %>"
 				imageId="<%= selUser.getPortraitId() %>"
 				logoDisplaySelector=".user-logo"
-				showBackground="<%= false %>"
 			/>
 		</c:if>
 	</div>

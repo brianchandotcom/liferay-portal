@@ -93,6 +93,63 @@ public class ExpandoConverterUtil {
 		}
 	}
 
+	public static Serializable getAttributeFromStringArray(
+		int type, String[] attribute) {
+
+		if ((attribute == null) || (attribute.length == 0)) {
+			return null;
+		}
+
+		if (type == ExpandoColumnConstants.BOOLEAN) {
+			return GetterUtil.getBoolean(attribute[0]);
+		}
+		else if (type == ExpandoColumnConstants.BOOLEAN_ARRAY) {
+			return GetterUtil.getBooleanValues(attribute);
+		}
+		else if (type == ExpandoColumnConstants.DATE) {
+			return GetterUtil.getDate(attribute[0], _getDateFormat());
+		}
+		else if (type == ExpandoColumnConstants.DATE_ARRAY) {
+			return GetterUtil.getDateValues(attribute, _getDateFormat());
+		}
+		else if (type == ExpandoColumnConstants.DOUBLE) {
+			return GetterUtil.getDouble(attribute[0]);
+		}
+		else if (type == ExpandoColumnConstants.DOUBLE_ARRAY) {
+			return GetterUtil.getDoubleValues(attribute);
+		}
+		else if (type == ExpandoColumnConstants.FLOAT) {
+			return GetterUtil.getFloat(attribute[0]);
+		}
+		else if (type == ExpandoColumnConstants.FLOAT_ARRAY) {
+			return GetterUtil.getFloatValues(attribute);
+		}
+		else if (type == ExpandoColumnConstants.INTEGER) {
+			return GetterUtil.getInteger(attribute[0]);
+		}
+		else if (type == ExpandoColumnConstants.INTEGER_ARRAY) {
+			return GetterUtil.getIntegerValues(attribute);
+		}
+		else if (type == ExpandoColumnConstants.LONG) {
+			return GetterUtil.getLong(attribute[0]);
+		}
+		else if (type == ExpandoColumnConstants.LONG_ARRAY) {
+			return GetterUtil.getLongValues(attribute);
+		}
+		else if (type == ExpandoColumnConstants.SHORT) {
+			return GetterUtil.getShort(attribute[0]);
+		}
+		else if (type == ExpandoColumnConstants.SHORT_ARRAY) {
+			return GetterUtil.getShortValues(attribute);
+		}
+		else if (type == ExpandoColumnConstants.STRING) {
+			return attribute[0];
+		}
+		else {
+			return attribute;
+		}
+	}
+
 	public static String getStringFromAttribute(
 		int type, Serializable attribute) {
 

@@ -47,7 +47,7 @@ public class LDAPUser {
 		return _contact;
 	}
 
-	public Map<String, String> getContactExpandoAttributes() {
+	public Map<String, String[]> getContactExpandoAttributes() {
 		return _contactExpandoAttributes;
 	}
 
@@ -175,7 +175,7 @@ public class LDAPUser {
 		return _user;
 	}
 
-	public Map<String, String> getUserExpandoAttributes() {
+	public Map<String, String[]> getUserExpandoAttributes() {
 		return _userExpandoAttributes;
 	}
 
@@ -248,7 +248,7 @@ public class LDAPUser {
 	}
 
 	public void setContactExpandoAttributes(
-		Map<String, String> contactExpandoAttributes) {
+		Map<String, String[]> contactExpandoAttributes) {
 
 		_contactExpandoAttributes = contactExpandoAttributes;
 	}
@@ -394,7 +394,7 @@ public class LDAPUser {
 	}
 
 	public void setUserExpandoAttributes(
-		Map<String, String> userExpandoAttributes) {
+		Map<String, String[]> userExpandoAttributes) {
 
 		_userExpandoAttributes = userExpandoAttributes;
 	}
@@ -414,7 +414,7 @@ public class LDAPUser {
 	private boolean _autoPassword;
 	private boolean _autoScreenName;
 	private Contact _contact;
-	private Map<String, String> _contactExpandoAttributes;
+	private Map<String, String[]> _contactExpandoAttributes;
 	private long _creatorUserId;
 	private long[] _groupIds;
 	private long[] _organizationIds;
@@ -426,7 +426,7 @@ public class LDAPUser {
 	private boolean _updatePassword;
 	private boolean _updatePortrait;
 	private User _user;
-	private Map<String, String> _userExpandoAttributes;
+	private Map<String, String[]> _userExpandoAttributes;
 	private long[] _userGroupIds;
 	private List<UserGroupRole> _userGroupRoles;
 

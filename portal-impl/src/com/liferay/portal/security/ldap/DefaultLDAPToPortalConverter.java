@@ -148,7 +148,7 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 
 		ldapUser.setContact(contact);
 
-		Map<String, String> contactExpandoAttributes = getExpandoAttributes(
+		Map<String, String[]> contactExpandoAttributes = getExpandoAttributes(
 			attributes, contactExpandoMappings);
 
 		ldapUser.setContactExpandoAttributes(contactExpandoAttributes);
@@ -208,7 +208,7 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 
 		ldapUser.setUser(user);
 
-		Map<String, String> userExpandoAttributes = getExpandoAttributes(
+		Map<String, String[]> userExpandoAttributes = getExpandoAttributes(
 			attributes, userExpandoMappings);
 
 		ldapUser.setUserExpandoAttributes(userExpandoAttributes);
@@ -219,16 +219,17 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 		return ldapUser;
 	}
 
-	protected Map<String, String> getExpandoAttributes(
+	protected Map<String, String[]> getExpandoAttributes(
 			Attributes attributes, Properties expandoMappings)
 		throws NamingException {
 
-		Map<String, String> expandoAttributes = new HashMap<String, String>();
+		Map<String, String[]> expandoAttributes =
+			new HashMap<String, String[]>();
 
 		for (Object key : expandoMappings.keySet()) {
 			String name = (String)key;
 
-			String value = LDAPUtil.getAttributeString(
+			String[] value = LDAPUtil.getAttributeStringArray(
 				attributes, expandoMappings, name);
 
 			if (Validator.isNotNull(value)) {

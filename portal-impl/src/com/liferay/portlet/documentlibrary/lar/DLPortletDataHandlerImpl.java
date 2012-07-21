@@ -427,46 +427,64 @@ public class DLPortletDataHandlerImpl extends BasePortletDataHandler {
 				FileVersion latestExistingFileVersion =
 					existingFileEntry.getLatestFileVersion();
 
-				if (!fileVersion.getUuid().equals(
-						latestExistingFileVersion.getUuid())) {
+				boolean indexEnabled = serviceContext.isIndexingEnabled();
 
-					DLFileVersion alreadyExistingFileVersion =
-						DLFileVersionLocalServiceUtil.
-							getFileVersionByUuidAndGroupId(
-								fileVersion.getUuid(),
-								existingFileEntry.getGroupId());
+				try {
+					serviceContext.setIndexingEnabled(false);
+					if (!fileVersion.getUuid().equals(
+							latestExistingFileVersion.getUuid())) {
 
-					if (alreadyExistingFileVersion != null) {
-						serviceContext.setAttribute(
-							"existingDLFileVersionId",
-							alreadyExistingFileVersion.getFileVersionId());
+						DLFileVersion alreadyExistingFileVersion =
+							DLFileVersionLocalServiceUtil.
+								getFileVersionByUuidAndGroupId(
+									fileVersion.getUuid(),
+									existingFileEntry.getGroupId());
+
+						if (alreadyExistingFileVersion != null) {
+							serviceContext.setAttribute(
+								"existingDLFileVersionId",
+								alreadyExistingFileVersion.getFileVersionId());
+						}
+
+						serviceContext.setUuid(fileVersion.getUuid());
+
+						importedFileEntry =
+							DLAppLocalServiceUtil.updateFileEntry(
+								userId, existingFileEntry.getFileEntryId(),
+								fileEntry.getTitle(), fileEntry.getMimeType(),
+								fileEntry.getTitle(),
+								fileEntry.getDescription(), null, false, is,
+								fileEntry.getSize(), serviceContext);
+					}
+					else {
+						DLAppLocalServiceUtil.updateAsset(
+							userId, existingFileEntry,
+							latestExistingFileVersion, assetCategoryIds,
+							assetTagNames, null);
+
+						importedFileEntry = existingFileEntry;
 					}
 
-					serviceContext.setUuid(fileVersion.getUuid());
+					if (importedFileEntry.getFolderId() != folderId) {
+						importedFileEntry = DLAppLocalServiceUtil.moveFileEntry(
+							userId, importedFileEntry.getFileEntryId(),
+							folderId, serviceContext);
+					}
 
-					importedFileEntry = DLAppLocalServiceUtil.updateFileEntry(
-						userId, existingFileEntry.getFileEntryId(),
-						fileEntry.getTitle(), fileEntry.getMimeType(),
-						fileEntry.getTitle(), fileEntry.getDescription(), null,
-						false, is, fileEntry.getSize(), serviceContext);
-				}
-				else {
-					DLAppLocalServiceUtil.updateAsset(
-						userId, existingFileEntry, latestExistingFileVersion,
-						assetCategoryIds, assetTagNames, null);
-
-					if (existingFileEntry instanceof LiferayFileEntry) {
+					if (importedFileEntry instanceof LiferayFileEntry) {
 						LiferayFileEntry liferayFileEntry =
-							(LiferayFileEntry)existingFileEntry;
+							(LiferayFileEntry)importedFileEntry;
 
 						Indexer indexer = IndexerRegistryUtil.getIndexer(
 							DLFileEntry.class);
 
 						indexer.reindex(liferayFileEntry.getModel());
 					}
-
-					importedFileEntry = existingFileEntry;
 				}
+				finally {
+					serviceContext.setIndexingEnabled(indexEnabled);
+				}
+
 			}
 		}
 		else {

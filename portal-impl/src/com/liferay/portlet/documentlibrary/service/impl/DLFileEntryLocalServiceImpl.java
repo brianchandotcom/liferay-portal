@@ -1349,9 +1349,11 @@ public class DLFileEntryLocalServiceImpl
 
 		// Indexer
 
-		if ((status == WorkflowConstants.STATUS_APPROVED) ||
+		if (((status == WorkflowConstants.STATUS_APPROVED) ||
 			(status == WorkflowConstants.STATUS_IN_TRASH) ||
-			(oldStatus == WorkflowConstants.STATUS_IN_TRASH)) {
+			(oldStatus == WorkflowConstants.STATUS_IN_TRASH)) &&
+			((serviceContext == null) ||
+				(serviceContext.isIndexingEnabled()))) {
 
 			reindex(dlFileEntry);
 		}
@@ -1656,8 +1658,16 @@ public class DLFileEntryLocalServiceImpl
 		}
 
 		dlFileEntry.setFolderId(newFolderId);
+		dlFileEntry.setModifiedDate(serviceContext.getModifiedDate(null));
 
 		dlFileEntryPersistence.update(dlFileEntry, false);
+
+		// Folder
+
+		DLFolder dlFolder = dlFolderPersistence.findByPrimaryKey(newFolderId);
+		dlFolder.setModifiedDate(serviceContext.getModifiedDate(null));
+
+		dlFolderPersistence.update(dlFolder, false);
 
 		// File version
 

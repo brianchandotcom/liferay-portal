@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.PropsKeys;
 
 import java.util.Map;
-import java.util.TreeMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Alexander Chow
@@ -52,6 +52,6 @@ public class LockListenerRegistryImpl implements LockListenerRegistry {
 	}
 
 	private Map<String, LockListener> _lockListenerMap =
-		new TreeMap<String, LockListener>();
+		new ConcurrentHashMap<String, LockListener>();
 
 }

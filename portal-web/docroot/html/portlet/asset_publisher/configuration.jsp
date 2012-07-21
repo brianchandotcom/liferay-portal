@@ -410,7 +410,7 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 								List<KeyValuePair> subTypesLeftList = new ArrayList<KeyValuePair>();
 
 								for (long subTypeId : assetSelectedClassTypeIds) {
-									subTypesLeftList.add(new KeyValuePair(String.valueOf(subTypeId), assetAvailableClassTypes.get(subTypeId)));
+									subTypesLeftList.add(new KeyValuePair(String.valueOf(subTypeId), HtmlUtil.escape(assetAvailableClassTypes.get(subTypeId))));
 								}
 
 								Arrays.sort(assetSelectedClassTypeIds);
@@ -432,11 +432,11 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 										<%
 										for(Long classTypeId : assetAvailableClassTypes.keySet()) {
 											if (Arrays.binarySearch(assetSelectedClassTypeIds, classTypeId) < 0) {
-												subTypesRightList.add(new KeyValuePair(String.valueOf(classTypeId), assetAvailableClassTypes.get(classTypeId)));
+												subTypesRightList.add(new KeyValuePair(String.valueOf(classTypeId), HtmlUtil.escape(assetAvailableClassTypes.get(classTypeId))));
 											}
 										%>
 
-											<aui:option label="<%= assetAvailableClassTypes.get(classTypeId) %>" selected="<%= !anyAssetSubType && (assetSelectedClassTypeIds.length == 1) && (classTypeId.equals(assetSelectedClassTypeIds[0])) %>" value="<%= classTypeId %>" />
+											<aui:option label="<%= HtmlUtil.escapeAttribute(assetAvailableClassTypes.get(classTypeId)) %>" selected="<%= !anyAssetSubType && (assetSelectedClassTypeIds.length == 1) && (classTypeId.equals(assetSelectedClassTypeIds[0])) %>" value="<%= classTypeId %>" />
 
 										<%
 										}

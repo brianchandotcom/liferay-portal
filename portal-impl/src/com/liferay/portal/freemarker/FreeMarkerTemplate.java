@@ -70,10 +70,7 @@ public class FreeMarkerTemplate extends AbstractTemplate {
 		_context.put(key, value);
 	}
 
-	protected void handleException(
-			TemplateResource templateResource,
-			TemplateResource errorTemplateResource, Exception exception,
-			Writer writer)
+	protected void handleException(Exception exception, Writer writer)
 		throws TemplateException {
 
 		if ((exception instanceof ParseException) ||

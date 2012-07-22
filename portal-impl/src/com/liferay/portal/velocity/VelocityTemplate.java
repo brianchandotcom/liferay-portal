@@ -62,10 +62,7 @@ public class VelocityTemplate extends AbstractTemplate {
 		_velocityContext.put(key, value);
 	}
 
-	protected void handleException(
-			TemplateResource templateResource,
-			TemplateResource errorTemplateResource, Exception exception,
-			Writer writer)
+	protected void handleException(Exception exception, Writer writer)
 		throws TemplateException {
 
 		put("exception", exception.getMessage());

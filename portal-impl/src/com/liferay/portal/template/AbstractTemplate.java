@@ -42,8 +42,9 @@ public abstract class AbstractTemplate implements Template {
 			throw new IllegalArgumentException("TemplateContextHelper is null");
 		}
 
-		_templateResource = templateResource;
-		_errorTemplateResource = errorTemplateResource;
+		this.templateResource = templateResource;
+		this.errorTemplateResource = errorTemplateResource;
+
 		_templateContextHelper = templateContextHelper;
 	}
 
@@ -52,16 +53,16 @@ public abstract class AbstractTemplate implements Template {
 	}
 
 	public boolean processTemplate(Writer writer) throws TemplateException {
-		if (_errorTemplateResource == null) {
+		if (errorTemplateResource == null) {
 			try {
-				processTemplate(_templateResource, writer);
+				processTemplate(templateResource, writer);
 
 				return true;
 			}
 			catch (Exception e) {
 				throw new TemplateException(
 					"Unable to process template " +
-						_templateResource.getTemplateId(),
+						templateResource.getTemplateId(),
 					e);
 			}
 		}
@@ -69,7 +70,7 @@ public abstract class AbstractTemplate implements Template {
 		try {
 			UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
-			processTemplate(_templateResource, unsyncStringWriter);
+			processTemplate(templateResource, unsyncStringWriter);
 
 			StringBundler sb = unsyncStringWriter.getStringBundler();
 
@@ -78,25 +79,22 @@ public abstract class AbstractTemplate implements Template {
 			return true;
 		}
 		catch (Exception e) {
-			handleException(
-				_templateResource, _errorTemplateResource, e, writer);
+			handleException(e, writer);
 
 			return false;
 		}
 	}
 
-	protected abstract void handleException(
-			TemplateResource templateResource,
-			TemplateResource errorTemplateResource, Exception exception,
-			Writer writer)
+	protected abstract void handleException(Exception exception, Writer writer)
 		throws TemplateException;
 
 	protected abstract void processTemplate(
 			TemplateResource templateResource, Writer writer)
 		throws Exception;
 
-	private TemplateResource _errorTemplateResource;
+	protected TemplateResource errorTemplateResource;
+	protected TemplateResource templateResource;
+
 	private TemplateContextHelper _templateContextHelper;
-	private TemplateResource _templateResource;
 
 }

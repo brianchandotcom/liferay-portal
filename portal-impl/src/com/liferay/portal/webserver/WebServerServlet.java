@@ -1114,7 +1114,8 @@ public class WebServerServlet extends HttpServlet {
 				TemplateManager.FREEMARKER, _TEMPLATE_FTL);
 
 		if (templateResource == null) {
-			return;
+			throw new Exception(
+				"Failed to load TemplateResource " + _TEMPLATE_FTL);
 		}
 
 		Template template = TemplateManagerUtil.getTemplate(

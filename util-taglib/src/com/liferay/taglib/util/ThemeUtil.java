@@ -469,9 +469,8 @@ public class ThemeUtil {
 				TemplateManager.VELOCITY, resourcePath);
 
 		if (templateResource == null) {
-			_log.error(resourcePath + " does not exist");
-
-			return null;
+			throw new Exception(
+				"Failed to load TemplateResource " + resourcePath);
 		}
 
 		Template template = TemplateManagerUtil.getTemplate(

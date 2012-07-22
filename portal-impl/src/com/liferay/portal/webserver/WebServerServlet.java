@@ -1111,10 +1111,6 @@ public class WebServerServlet extends HttpServlet {
 			List<WebServerEntry> webServerEntries)
 		throws Exception {
 
-		if (_templateResource == null) {
-			return;
-		}
-
 		Template template = TemplateManagerUtil.getTemplate(
 			TemplateManager.FREEMARKER, _templateResource,
 			TemplateContextType.RESTRICTED);
@@ -1319,7 +1315,7 @@ public class WebServerServlet extends HttpServlet {
 				templateId, templateURL);
 		}
 		catch (Exception e) {
-			_templateResource = null;
+			throw new ExceptionInInitializerError(e);
 		}
 	}
 

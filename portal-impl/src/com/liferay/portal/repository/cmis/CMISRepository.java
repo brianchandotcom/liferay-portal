@@ -1158,57 +1158,17 @@ public class CMISRepository extends BaseCmisRepository {
 		}
 	}
 
-	public FileEntry toFileEntry(Document document) throws SystemException {
-		Object[] ids = null;
+	public FileEntry toFileEntry(Document document)
+		throws PortalException, SystemException {
 
-		if (isDocumentRetrievableByVersionSeriesId()) {
-			ids = getRepositoryEntryIds(document.getVersionSeriesId());
-		}
-		else {
-			ids = getRepositoryEntryIds(document.getId());
-		}
-
-		long fileEntryId = (Long)ids[0];
-		String uuid = (String)ids[1];
-
-		FileEntry fileEntry = new CMISFileEntry(
-			this, uuid, fileEntryId, document);
-
-		try {
-			dlAppHelperLocalService.checkAssetEntry(
-				PrincipalThreadLocal.getUserId(), fileEntry,
-				fileEntry.getFileVersion());
-		}
-		catch (Exception e) {
-			_log.error("Unable to update asset", e);
-		}
-
-		return fileEntry;
+		return toFileEntry(document, false);
 	}
 
 	@Override
 	public FileEntry toFileEntry(String objectId)
 		throws PortalException, SystemException {
 
-		try {
-			Session session = getSession();
-
-			Document document = (Document)session.getObject(objectId);
-
-			return toFileEntry(document);
-		}
-		catch (CmisObjectNotFoundException confe) {
-			throw new NoSuchFileEntryException(
-				"No CMIS file entry with {objectId=" + objectId + "}", confe);
-		}
-		catch (SystemException se) {
-			throw se;
-		}
-		catch (Exception e) {
-			processException(e);
-
-			throw new RepositoryException(e);
-		}
+		return toFileEntry(objectId, false);
 	}
 
 	public FileVersion toFileVersion(Document version) throws SystemException {
@@ -1647,6 +1607,13 @@ public class CMISRepository extends BaseCmisRepository {
 		String queryString = CMISSearchQueryBuilderUtil.buildQuery(
 			searchContext, query);
 
+		if (repositoryInfo.getProductName().contains("Nuxeo") &&
+			repositoryInfo.getProductVersion().contains("5.4")) {
+
+			queryString +=
+				" AND (" + PropertyIds.IS_LATEST_VERSION + " = true)";
+		}
+
 		if (_log.isDebugEnabled()) {
 			_log.debug("CMIS search query: " + queryString);
 		}
@@ -1685,7 +1652,37 @@ public class CMISRepository extends BaseCmisRepository {
 			String objectId = queryResult.getPropertyValueByQueryName(
 				PropertyIds.OBJECT_ID);
 
-			FileEntry fileEntry = toFileEntry(objectId);
+			if (_log.isDebugEnabled()) {
+				_log.debug("Search result objectId " + objectId);
+			}
+
+			FileEntry fileEntry = null;
+
+			try {
+				fileEntry = toFileEntry(objectId, true);
+			}
+			catch (Exception e) {
+				if (_log.isDebugEnabled()) {
+					if ((e.getCause() != null) &&
+						(e.getCause().getCause() != null) &&
+						(e.getCause().getCause() instanceof
+							CmisObjectNotFoundException)) {
+
+						_log.debug(
+							"Search result ignored for CMIS document which " +
+								"has a version with an invalid objectId " +
+									e.getCause().getCause().getMessage());
+					}
+					else {
+						_log.debug(
+							"Search result ignored for invalid objectId", e);
+					}
+				}
+
+				total--;
+
+				continue;
+			}
 
 			document.addKeyword(
 				Field.ENTRY_CLASS_NAME, fileEntry.getModelClassName());
@@ -2112,6 +2109,84 @@ public class CMISRepository extends BaseCmisRepository {
 		}
 	}
 
+	protected FileEntry toFileEntry(Document document, boolean strict)
+		throws PortalException, SystemException {
+
+		Object[] ids = null;
+
+		if (isDocumentRetrievableByVersionSeriesId()) {
+			ids = getRepositoryEntryIds(document.getVersionSeriesId());
+		}
+		else {
+			ids = getRepositoryEntryIds(document.getId());
+		}
+
+		long fileEntryId = (Long)ids[0];
+		String uuid = (String)ids[1];
+
+		FileEntry fileEntry = new CMISFileEntry(
+			this, uuid, fileEntryId, document);
+
+		FileVersion fileVersion = null;
+
+		try {
+			fileVersion = fileEntry.getFileVersion();
+		}
+		catch (Exception e) {
+			if (strict) {
+				if ((Boolean)ids[2]) {
+					RepositoryEntryUtil.remove(fileEntryId);
+				}
+
+				if (e instanceof CmisObjectNotFoundException) {
+					throw new NoSuchFileVersionException(
+						"No CMIS file version with CMIS file entry {objectId=" +
+							document.getId() + "}", e);
+				}
+				else if (e instanceof SystemException) {
+					throw (SystemException)e;
+				}
+				else {
+					processException(e);
+
+					throw new RepositoryException(e);
+				}
+			}
+			else {
+				_log.error("Unable to update asset", e);
+			}
+		}
+
+		dlAppHelperLocalService.checkAssetEntry(
+			PrincipalThreadLocal.getUserId(), fileEntry, fileVersion);
+
+		return fileEntry;
+	}
+
+	protected FileEntry toFileEntry(String objectId, boolean strict)
+		throws PortalException, SystemException {
+
+		try {
+			Session session = getSession();
+
+			Document document = (Document)session.getObject(objectId);
+
+			return toFileEntry(document, strict);
+		}
+		catch (CmisObjectNotFoundException confe) {
+			throw new NoSuchFileEntryException(
+				"No CMIS file entry with {objectId=" + objectId + "}", confe);
+		}
+		catch (SystemException se) {
+			throw se;
+		}
+		catch (Exception e) {
+			processException(e);
+
+			throw new RepositoryException(e);
+		}
+	}
+
 	protected String toFileEntryId(long fileEntryId)
 		throws PortalException, SystemException {
 
@@ -2186,7 +2261,7 @@ public class CMISRepository extends BaseCmisRepository {
 	}
 
 	protected Object toFolderOrFileEntry(CmisObject cmisObject)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		if (cmisObject instanceof Document) {
 			FileEntry fileEntry = toFileEntry((Document)cmisObject);

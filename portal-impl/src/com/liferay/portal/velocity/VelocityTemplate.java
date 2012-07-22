@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateResource;
-import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
 import com.liferay.portal.template.AbstractTemplate;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.util.PropsValues;
@@ -43,7 +42,7 @@ public class VelocityTemplate extends AbstractTemplate {
 
 		super(
 			templateResource, errorTemplateResource, templateContextHelper,
-			_templateResourceLoaderName,
+			TemplateManager.VELOCITY,
 			PropsValues.VELOCITY_ENGINE_RESOURCE_MODIFICATION_CHECK_INTERVAL);
 
 		if (velocityContext == null) {
@@ -117,10 +116,6 @@ public class VelocityTemplate extends AbstractTemplate {
 			}
 		}
 	}
-
-	private static String _templateResourceLoaderName =
-		TemplateResourceLoaderUtil.getTemplateResourceLoader(
-				TemplateManager.VELOCITY).getName();
 
 	private VelocityContext _velocityContext;
 	private VelocityEngine _velocityEngine;

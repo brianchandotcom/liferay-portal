@@ -124,7 +124,7 @@ editPermissionsURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 			<aui:input name="roleId" type="hidden" value="<%= role.getRoleId() %>" />
 			<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
 			<aui:input name="modelResources" type="hidden" value='<%= (modelResources == null) ? "" : StringUtil.merge(modelResources) %>' />
-			<aui:input name="showModelResources" type="hidden" value='<%= String.valueOf(showModelResources) %>' />
+			<aui:input name="showModelResources" type="hidden" value="<%= String.valueOf(showModelResources) %>" />
 			<aui:input name="selectedTargets" type="hidden" />
 
 			<c:choose>

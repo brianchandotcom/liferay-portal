@@ -214,7 +214,7 @@ userSearch.setRowChecker(new RowChecker(renderResponse));
 			String taglibOnClick = renderResponse.getNamespace() + "deleteUsers('" + (searchTerms.isActive() ? Constants.DEACTIVATE : Constants.DELETE) + "');";
 			%>
 
-			<aui:button onClick="<%= taglibOnClick %>" value='<%= searchTerms.isActive() ? Constants.DEACTIVATE : Constants.DELETE %>' />
+			<aui:button onClick="<%= taglibOnClick %>" value="<%= searchTerms.isActive() ? Constants.DEACTIVATE : Constants.DELETE %>" />
 		</c:if>
 
 		<c:if test="<%= showRestoreButton %>">

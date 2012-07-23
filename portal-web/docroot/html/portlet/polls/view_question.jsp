@@ -66,7 +66,7 @@ if (viewResults && !PollsQuestionPermission.contains(permissionChecker, question
 		<br /><br />
 
 		<c:choose>
-			<c:when test='<%= !viewResults && !question.isExpired() && !hasVoted && PollsQuestionPermission.contains(permissionChecker, question, ActionKeys.ADD_VOTE) %>'>
+			<c:when test="<%= !viewResults && !question.isExpired() && !hasVoted && PollsQuestionPermission.contains(permissionChecker, question, ActionKeys.ADD_VOTE) %>">
 				<aui:field-wrapper>
 
 					<%

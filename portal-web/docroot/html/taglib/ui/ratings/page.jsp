@@ -62,7 +62,7 @@ if (ratingsEntry != null) {
 		<c:choose>
 			<c:when test='<%= type.equals("stars") %>'>
 				<c:choose>
-					<c:when test='<%= themeDisplay.isSignedIn() %>'>
+					<c:when test="<%= themeDisplay.isSignedIn() %>">
 						<div class="liferay-rating-vote" id="<%= randomNamespace %>ratingStar">
 							<div id="<%= randomNamespace %>ratingStarContent">
 								<div class="aui-rating-label-element"><liferay-ui:message key="your-rating" /></div>
@@ -107,7 +107,7 @@ if (ratingsEntry != null) {
 			</c:when>
 			<c:when test='<%= type.equals("thumbs") %>'>
 				<c:choose>
-					<c:when test='<%= themeDisplay.isSignedIn() %>'>
+					<c:when test="<%= themeDisplay.isSignedIn() %>">
 						<div class="aui-thumbrating liferay-rating-vote" id="<%= randomNamespace %>ratingThumb">
 							<div class="aui-helper-clearfix aui-rating-content aui-thumbrating-content" id="<%= randomNamespace %>ratingThumbContent">
 								<div class="aui-rating-label-element">

@@ -54,7 +54,7 @@ ColorScheme selColorScheme = ThemeLocalServiceUtil.getColorScheme(company.getCom
 			<img alt="<%= selTheme.getName() %>" class="theme-screenshot" onclick="document.getElementById('<portlet:namespace />SelTheme').checked = true;" src="<%= selTheme.getStaticResourcePath() %><%= selTheme.getImagesPath() %>/thumbnail.png" title="<%= selTheme.getName() %>" />
 
 			<div class="theme-details">
-				<aui:input checked="<%= true %>" cssClass="selected-theme theme-title" id='SelTheme' label="<%= selTheme.getName() %>" name="themeId" type="radio" value="<%= selTheme.getThemeId() %>" />
+				<aui:input checked="<%= true %>" cssClass="selected-theme theme-title" id="SelTheme" label="<%= selTheme.getName() %>" name="themeId" type="radio" value="<%= selTheme.getThemeId() %>" />
 
 				<dl class="theme-fields">
 
@@ -108,7 +108,7 @@ ColorScheme selColorScheme = ThemeLocalServiceUtil.getColorScheme(company.getCom
 								<div class="<%= cssClass %> theme-entry">
 									<img alt="" class="modify-link theme-thumbnail" onclick="document.getElementById('<portlet:namespace />ColorSchemeId<%= i %>').checked = true;" src="<%= selTheme.getStaticResourcePath() %><%= curColorScheme.getColorSchemeThumbnailPath() %>/thumbnail.png" title="<%= curColorScheme.getName() %>" />
 
-									<aui:input checked="<%= selColorScheme.getColorSchemeId().equals(curColorScheme.getColorSchemeId()) %>" cssClass="theme-title" id='<%= "ColorSchemeId" + i %>' label="<%= curColorScheme.getName() %>" name='colorSchemeId' type="radio" value="<%= curColorScheme.getColorSchemeId() %>" />
+									<aui:input checked="<%= selColorScheme.getColorSchemeId().equals(curColorScheme.getColorSchemeId()) %>" cssClass="theme-title" id='<%= "ColorSchemeId" + i %>' label="<%= curColorScheme.getName() %>" name="colorSchemeId" type="radio" value="<%= curColorScheme.getColorSchemeId() %>" />
 								</div>
 
 								<%
@@ -149,7 +149,7 @@ ColorScheme selColorScheme = ThemeLocalServiceUtil.getColorScheme(company.getCom
 							<div class="theme-entry">
 								<img alt="" class="modify-link theme-thumbnail" onclick="document.getElementById('<portlet:namespace />ThemeId<%= i %>').checked = true;" src="<%= curTheme.getStaticResourcePath() %><%= curTheme.getImagesPath() %>/thumbnail.png" title="<%= curTheme.getName() %>" />
 
-								<aui:input cssClass="theme-title" id='<%= "ThemeId" + i %>' label="<%= curTheme.getName() %>" name='themeId' type="radio" value="<%= curTheme.getThemeId() %>" />
+								<aui:input cssClass="theme-title" id='<%= "ThemeId" + i %>' label="<%= curTheme.getName() %>" name="themeId" type="radio" value="<%= curTheme.getThemeId() %>" />
 							</div>
 						</li>
 

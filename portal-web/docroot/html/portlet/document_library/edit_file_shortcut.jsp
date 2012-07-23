@@ -113,7 +113,7 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 			String taglibOpenGroupWindow = "var toGroupWindow = window.open('" + selectGroupURL + "','toGroup', 'directories=no,height=640,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,width=680'); void(''); toGroupWindow.focus();";
 			%>
 
-			<aui:button onClick='<%= taglibOpenGroupWindow %>' value="select" />
+			<aui:button onClick="<%= taglibOpenGroupWindow %>" value="select" />
 		</aui:field-wrapper>
 
 		<aui:field-wrapper label="document">
@@ -134,7 +134,7 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 			String taglibOpenFileEntryWindow = "var toFileEntryWindow = window.open(" + renderResponse.getNamespace() + "createSelectFileEntryURL('" + selectFileEntryURL.toString() + "'),'toGroup', 'directories=no,height=640,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,width=680'); void(''); toFileEntryWindow.focus();";
 			%>
 
-			<aui:button disabled="<%= (toGroup == null) %>" name="selectToFileEntryButton" onClick='<%= taglibOpenFileEntryWindow %>' value="select" />
+			<aui:button disabled="<%= (toGroup == null) %>" name="selectToFileEntryButton" onClick="<%= taglibOpenFileEntryWindow %>" value="select" />
 		</aui:field-wrapper>
 
 		<c:if test="<%= fileShortcut == null %>">

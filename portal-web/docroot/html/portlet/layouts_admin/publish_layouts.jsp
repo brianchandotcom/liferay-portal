@@ -389,11 +389,11 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 			<c:if test="<%= schedule %>">
 				<div class="lfr-portlet-toolbar">
 					<span class="lfr-toolbar-button view-button">
-						<aui:a href='javascript:;' label="view-all" />
+						<aui:a href="javascript:;" label="view-all" />
 					</span>
 
 					<span class="lfr-toolbar-button add-button current">
-						<aui:a href='javascript:;' label="add" />
+						<aui:a href="javascript:;" label="add" />
 					</span>
 				</div>
 

@@ -234,7 +234,7 @@
 											%>
 
 														<li class="tree-item">
-															<aui:input label="<%= PortalUtil.getPortletTitle(portlet, application, locale) %>" name='<%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + rootPortletId %>' type="checkbox" value="<%= checked %>" />
+															<aui:input label="<%= PortalUtil.getPortletTitle(portlet, application, locale) %>" name="<%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + rootPortletId %>" type="checkbox" value="<%= checked %>" />
 
 															<ul id="<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA %>_<%= rootPortletId %>Controls">
 																<li class="handler-control">

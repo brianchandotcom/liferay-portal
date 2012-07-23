@@ -36,7 +36,7 @@ for (int i = 1; i <= maxDayOfMonth; i++) {
 
 <table width="100%">
 <tr>
-	<c:if test='<%= summaryTabShowMiniMonth %>'>
+	<c:if test="<%= summaryTabShowMiniMonth %>">
 		<td class="lfr-top" style="padding-right: 10px;" width="1%">
 			<div class="calendar-container float-container">
 				<div class="calendar-day">
@@ -60,7 +60,7 @@ for (int i = 1; i <= maxDayOfMonth; i++) {
 		<tr>
 	</c:if>
 
-	<c:if test='<%= summaryTabShowTodaysEvents %>'>
+	<c:if test="<%= summaryTabShowTodaysEvents %>">
 		<td class="lfr-top">
 			<%@ include file="/html/portlet/calendar/event_iterator.jspf" %>
 		</td>

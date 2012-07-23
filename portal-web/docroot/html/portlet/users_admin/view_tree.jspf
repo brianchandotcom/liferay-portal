@@ -360,7 +360,7 @@ if (filterManageableOrganizations) {
 							</c:if>
 						</liferay-util:buffer>
 
-						<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="usersAdminOrganizationsPanel" persistState="<%= true %>" title='<%= organizationsPanelTitle %>'>
+						<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="usersAdminOrganizationsPanel" persistState="<%= true %>" title="<%= organizationsPanelTitle %>">
 							<%= organizationsTree %>
 						</liferay-ui:panel>
 					</c:if>
@@ -412,7 +412,7 @@ if (filterManageableOrganizations) {
 								/>
 							</c:when>
 							<c:otherwise>
-								<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="usersAdminUsersPanel" persistState="<%= true %>" title='<%= usersPanelTitle %>'>
+								<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="usersAdminUsersPanel" persistState="<%= true %>" title="<%= usersPanelTitle %>">
 
 									<%
 									boolean organizationContextView = true;

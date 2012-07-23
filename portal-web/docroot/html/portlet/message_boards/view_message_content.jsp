@@ -291,7 +291,7 @@ MBThreadFlag threadFlag = MBThreadFlagLocalServiceUtil.getThreadFlag(themeDispla
 
 	<div class="message-scroll" id="<portlet:namespace />message_0"></div>
 
-	<c:if test='<%= threadView.equals(MBThreadConstants.THREAD_VIEW_COMBINATION) && (messages.size() > 1) %>'>
+	<c:if test="<%= threadView.equals(MBThreadConstants.THREAD_VIEW_COMBINATION) && (messages.size() > 1) %>">
 		<liferay-ui:toggle-area id="toggle_id_message_boards_view_message_thread">
 			<table class="toggle_id_message_boards_view_message_thread">
 
@@ -317,7 +317,7 @@ MBThreadFlag threadFlag = MBThreadFlagLocalServiceUtil.getThreadFlag(themeDispla
 	%>
 
 	<c:choose>
-		<c:when test='<%= threadView.equals(MBThreadConstants.THREAD_VIEW_TREE) %>'>
+		<c:when test="<%= threadView.equals(MBThreadConstants.THREAD_VIEW_TREE) %>">
 
 			<%
 			request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER, treeWalker);

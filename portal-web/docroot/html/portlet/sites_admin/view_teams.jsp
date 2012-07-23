@@ -127,7 +127,7 @@ pageContext.setAttribute("portletURL", portletURL);
 			<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 		</portlet:renderURL>
 
-		<aui:button href='<%= addTeamURL %>' value="add-team" />
+		<aui:button href="<%= addTeamURL %>" value="add-team" />
 
 		<br /><br />
 	</c:if>

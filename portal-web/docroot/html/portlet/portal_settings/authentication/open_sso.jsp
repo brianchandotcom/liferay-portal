@@ -53,7 +53,7 @@ String openSsoLastNameAttr = PrefsPropsUtil.getString(company.getCompanyId(), Pr
 		String taglibOnClick = renderResponse.getNamespace() + "testOpenSSOSettings();";
 		%>
 
-		<aui:button onClick='<%= taglibOnClick %>' value="test-opensso-configuration" />
+		<aui:button onClick="<%= taglibOnClick %>" value="test-opensso-configuration" />
 	</aui:button-row>
 </aui:fieldset>
 

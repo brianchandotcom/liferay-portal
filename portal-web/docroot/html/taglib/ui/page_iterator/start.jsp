@@ -175,7 +175,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 						}
 						%>
 
-						<aui:select changesContext="<%= true %>" id='<%= id + "_page" %>' inlineLabel="left" name="page" onchange='<%= namespace + curParam + "updateCur(this);" %>' suffix='<%= suffix %>'>
+						<aui:select changesContext="<%= true %>" id='<%= id + "_page" %>' inlineLabel="left" name="page" onchange='<%= namespace + curParam + "updateCur(this);" %>' suffix="<%= suffix %>">
 
 							<%
 							int pagesIteratorMax = maxPages;

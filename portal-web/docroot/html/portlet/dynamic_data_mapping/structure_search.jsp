@@ -33,8 +33,8 @@ StructureDisplayTerms displayTerms = new StructureDisplayTerms(renderRequest);
 		<c:choose>
 			<c:when test="<%= scopeClassNameId == 0 %>">
 				<aui:select label="type" name="<%= displayTerms.CLASS_NAME_ID %>">
-					<aui:option label='<%= ResourceActionsUtil.getModelResource(locale, DDLRecordSet.class.getName()) %>' selected='<%= "datalist".equals(displayTerms.getStorageType()) %>' value="<%= PortalUtil.getClassNameId(DDLRecordSet.class.getName()) %>" />
-					<aui:option label='<%= ResourceActionsUtil.getModelResource(locale, DLFileEntryMetadata.class.getName()) %>' selected='<%= "datalist".equals(displayTerms.getStorageType()) %>' value="<%= PortalUtil.getClassNameId(DLFileEntryMetadata.class.getName()) %>" />
+					<aui:option label="<%= ResourceActionsUtil.getModelResource(locale, DDLRecordSet.class.getName()) %>" selected='<%= "datalist".equals(displayTerms.getStorageType()) %>' value="<%= PortalUtil.getClassNameId(DDLRecordSet.class.getName()) %>" />
+					<aui:option label="<%= ResourceActionsUtil.getModelResource(locale, DLFileEntryMetadata.class.getName()) %>" selected='<%= "datalist".equals(displayTerms.getStorageType()) %>' value="<%= PortalUtil.getClassNameId(DLFileEntryMetadata.class.getName()) %>" />
 				</aui:select>
 			</c:when>
 			<c:otherwise>

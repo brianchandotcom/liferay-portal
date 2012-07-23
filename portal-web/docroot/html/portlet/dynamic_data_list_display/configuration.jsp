@@ -74,7 +74,7 @@ request.setAttribute("record_set_action.jsp-selRecordSet", selRecordSet);
 					}
 				%>
 
-					<aui:option label="<%= template.getName(locale) %>" selected="<%= selected %>" value="<%= template.getTemplateId() %>" />
+					<aui:option label="<%= HtmlUtil.escape(template.getName(locale)) %>" selected="<%= selected %>" value="<%= template.getTemplateId() %>" />
 
 				<%
 				}
@@ -96,7 +96,7 @@ request.setAttribute("record_set_action.jsp-selRecordSet", selRecordSet);
 					}
 				%>
 
-					<aui:option label="<%= template.getName(locale) %>" selected="<%= selected %>" value="<%= template.getTemplateId() %>" />
+					<aui:option label="<%= HtmlUtil.escape(template.getName(locale)) %>" selected="<%= selected %>" value="<%= template.getTemplateId() %>" />
 
 				<%
 				}

@@ -57,7 +57,7 @@ long portletDisplayTemplateHandlerClassNameId = PortalUtil.getClassNameId(portle
 					}
 				%>
 
-					<aui:option label="<%= companyAssetPublisherDDMTemplate.getName(locale) %>" selected="<%= (portletDisplayDDMTemplate != null) && (companyAssetPublisherDDMTemplate.getTemplateId() == portletDisplayDDMTemplate.getTemplateId()) %>" value='<%= "ddmTemplate_" + companyAssetPublisherDDMTemplate.getUuid() %>' />
+					<aui:option label="<%= HtmlUtil.escape(companyAssetPublisherDDMTemplate.getName(locale)) %>" selected="<%= (portletDisplayDDMTemplate != null) && (companyAssetPublisherDDMTemplate.getTemplateId() == portletDisplayDDMTemplate.getTemplateId()) %>" value='<%= "ddmTemplate_" + companyAssetPublisherDDMTemplate.getUuid() %>' />
 
 				<%
 				}
@@ -75,7 +75,7 @@ long portletDisplayTemplateHandlerClassNameId = PortalUtil.getClassNameId(portle
 					}
 				%>
 
-					<aui:option label="<%= groupAssetPublisherDDMTemplate.getName(locale) %>" selected="<%= (portletDisplayDDMTemplate != null) && (groupAssetPublisherDDMTemplate.getTemplateId() == portletDisplayDDMTemplate.getTemplateId()) %>" value='<%= "ddmTemplate_" + groupAssetPublisherDDMTemplate.getUuid() %>' />
+					<aui:option label="<%= HtmlUtil.escape(groupAssetPublisherDDMTemplate.getName(locale)) %>" selected="<%= (portletDisplayDDMTemplate != null) && (groupAssetPublisherDDMTemplate.getTemplateId() == portletDisplayDDMTemplate.getTemplateId()) %>" value='<%= "ddmTemplate_" + groupAssetPublisherDDMTemplate.getUuid() %>' />
 
 				<%
 				}

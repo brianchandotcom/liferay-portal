@@ -48,6 +48,7 @@ if (Validator.isNull(formAction)) {
 String name = (String)request.getAttribute("liferay-ui:language:name");
 Locale[] locales = (Locale[])request.getAttribute("liferay-ui:language:locales");
 int displayStyle = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:language:displayStyle"));
+boolean displayCurrentLocale = GetterUtil.getBoolean((String) request.getAttribute("liferay-ui:language:displayCurrentLocale"), true);
 
 Map langCounts = new HashMap();
 
@@ -116,6 +117,13 @@ for (int i = 0; i < locales.length; i++) {
 
 		<%
 		for (int i = 0; i < locales.length; i++) {
+			String currentLanguageId = LocaleUtil.toLanguageId(locale);
+			String languageId = LocaleUtil.toLanguageId(locales[i]);
+
+			if (!displayCurrentLocale && currentLanguageId.equals(languageId)) {
+				continue;
+			}
+
 			String language = locales[i].getDisplayLanguage(locales[i]);
 			String country = locales[i].getDisplayCountry(locales[i]);
 
@@ -130,7 +138,15 @@ for (int i = 0; i < locales.length; i++) {
 
 			<c:choose>
 				<c:when test="<%= (displayStyle == LanguageTag.LIST_LONG_TEXT) || (displayStyle == LanguageTag.LIST_SHORT_TEXT) %>">
-					<a class="taglib-language-list-text <%= ((i + 1) < locales.length) ? StringPool.BLANK : "last" %>" href="<%= formAction %>&<%= name %>=<%= locales[i].getLanguage() + "_" + locales[i].getCountry() %>" lang="<%= LocaleUtil.toW3cLanguageId(locales[i]) %>">
+					<c:choose>
+						<c:when test="<%= currentLanguageId.equals(languageId) %>">
+							<span class="taglib-language-list-text <%= ((i + 1) < locales.length) ? StringPool.BLANK : "last" %>" lang="<%= LocaleUtil.toW3cLanguageId(locales[i]) %>">
+						</c:when>
+						<c:otherwise>
+							<a class="taglib-language-list-text <%= ((i + 1) < locales.length) ? StringPool.BLANK : "last" %>" href="<%= formAction %>&<%= name %>=<%= locales[i].getLanguage() + "_" + locales[i].getCountry() %>" lang="<%= LocaleUtil.toW3cLanguageId(locales[i]) %>">
+						</c:otherwise>
+					</c:choose>
+
 						<%= language %>
 
 						<c:if test="<%= duplicateLanguages.contains(locales[i].getLanguage()) %>">
@@ -140,7 +156,15 @@ for (int i = 0; i < locales.length; i++) {
 						<c:if test="<%= LanguageUtil.isBetaLocale(locales[i]) %>">
 							[Beta]
 						</c:if>
-					</a>
+
+					<c:choose>
+						<c:when test="<%= currentLanguageId.equals(languageId) %>">
+							</span>
+						</c:when>
+						<c:otherwise>
+							</a>
+						</c:otherwise>
+					</c:choose>
 				</c:when>
 				<c:otherwise>
 
@@ -156,7 +180,7 @@ for (int i = 0; i < locales.length; i++) {
 						image='<%= "../language/" + LocaleUtil.toLanguageId(locales[i]) %>'
 						lang="<%= LocaleUtil.toW3cLanguageId(locales[i]) %>"
 						message="<%= message %>"
-						url='<%= formAction + "&" + name + "=" + LocaleUtil.toLanguageId(locales[i]) %>'
+						url='<%= currentLanguageId.equals(languageId) ? null : formAction + "&" + name + "=" + LocaleUtil.toLanguageId(locales[i]) %>'
 					/>
 				</c:otherwise>
 			</c:choose>

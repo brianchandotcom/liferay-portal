@@ -35,6 +35,10 @@ public class LanguageTag extends IncludeTag {
 
 	public static final int SELECT_BOX = 3;
 
+	public void setDisplayCurrentLocale(boolean displayCurrentLocale) {
+		_displayCurrentLocale = displayCurrentLocale;
+	}
+
 	public void setDisplayStyle(int displayStyle) {
 		_displayStyle = displayStyle;
 	}
@@ -57,6 +61,7 @@ public class LanguageTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		_displayCurrentLocale = true;
 		_displayStyle = LIST_ICON;
 		_formAction = null;
 		_formName = "fm";
@@ -71,6 +76,9 @@ public class LanguageTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		request.setAttribute(
+			"liferay-ui:language:displayCurrentLocale",
+			String.valueOf(_displayCurrentLocale));
 		request.setAttribute(
 			"liferay-ui:language:displayStyle", String.valueOf(_displayStyle));
 		request.setAttribute("liferay-ui:language:formAction", _formAction);
@@ -91,6 +99,7 @@ public class LanguageTag extends IncludeTag {
 
 	private static final String _PAGE = "/html/taglib/ui/language/page.jsp";
 
+	private boolean _displayCurrentLocale = true;
 	private int _displayStyle = LIST_ICON;
 	private String _formAction;
 	private String _formName = "fm";

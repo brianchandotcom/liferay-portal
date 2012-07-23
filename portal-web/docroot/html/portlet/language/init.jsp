@@ -31,6 +31,7 @@ Locale[] availableLocales = LanguageUtil.getAvailableLocales();
 String[] availableLanguageIds = LocaleUtil.toLanguageIds(availableLocales);
 
 String[] languageIds = StringUtil.split(preferences.getValue("languageIds", StringUtil.merge(availableLanguageIds)));
+boolean displayCurrentLocale = GetterUtil.getBoolean(preferences.getValue("displayCurrentLocale", null), true);
 int displayStyle = GetterUtil.getInteger(preferences.getValue("displayStyle", StringPool.BLANK));
 %>
 

@@ -77,6 +77,8 @@ String redirect = ParamUtil.getString(request, "redirect");
 		</aui:select>
 	</aui:fieldset>
 
+	<aui:input name="preferences--displayCurrentLocale--" type="checkbox" value="<%= displayCurrentLocale %>" />
+
 	<aui:button-row>
 		<aui:button type="submit" />
 	</aui:button-row>

@@ -84,6 +84,10 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 
 <liferay-util:include page="/html/portlet/document_library/top_links.jsp" />
 
+<div class="document-library-breadcrumb" id="<portlet:namespace />breadcrumbContainer">
+	<liferay-util:include page="/html/portlet/document_library/breadcrumb.jsp" />
+</div>
+
 <c:choose>
 	<c:when test="<%= useAssetEntryQuery %>">
 		<liferay-ui:categorization-filter
@@ -200,16 +204,6 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 				</aui:column>
 			</c:if>
 		</aui:layout>
-
-		<%
-		if (folder != null) {
-			DLUtil.addPortletBreadcrumbEntries(folder, request, renderResponse);
-
-			PortalUtil.setPageSubtitle(folder.getName(), request);
-			PortalUtil.setPageDescription(folder.getDescription(), request);
-		}
-		%>
-
 	</c:when>
 	<c:when test='<%= topLink.equals("mine") || topLink.equals("recent") %>'>
 		<aui:layout>
@@ -269,8 +263,6 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 		</aui:layout>
 
 		<%
-		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, topLink), currentURL);
-
 		PortalUtil.setPageSubtitle(LanguageUtil.get(pageContext, topLink), request);
 		%>
 

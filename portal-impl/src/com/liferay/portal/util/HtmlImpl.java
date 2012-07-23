@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -233,6 +234,67 @@ public class HtmlImpl implements Html {
 
 	public String escapeURL(String url) {
 		return escape(url, ESCAPE_MODE_URL);
+	}
+
+	public String escapeXPath(String xpath) {
+		if(Validator.isNull(xpath)){
+			return xpath;
+		}
+
+		StringBuilder sb = new StringBuilder(xpath.length());
+
+		for (int i = 0; i < xpath.length(); i++) {
+			char c = xpath.charAt(i);
+
+			boolean isVulnerable = false;
+
+			for (int j = 0; j < _XPATH_TOKENS.length; j++) {
+				if (c == _XPATH_TOKENS[j]){
+					isVulnerable = true;
+					break;
+				}
+			}
+
+			if(isVulnerable){
+				sb.append(StringPool.UNDERLINE);
+			} else {
+				sb.append(c);
+			}
+		}
+
+		return sb.toString();
+	}
+
+	public String escapeXPathAttribute(String xpathAttribute) {
+		boolean hasQuote = xpathAttribute.contains(StringPool.QUOTE);
+		boolean hasApostrophe = xpathAttribute.contains(StringPool.APOSTROPHE);
+
+		StringBundler result = new StringBundler(3);
+
+		if(hasQuote && hasApostrophe) {
+			String[] parts = xpathAttribute.split(StringPool.APOSTROPHE);
+			String delimiter = "', \"'\", '";
+
+			result.append("concat('");
+			result.append(StringUtil.merge(parts, delimiter));
+			result.append("')");
+
+			return result.toString();
+		}
+
+		if(hasQuote){
+			result.append(StringPool.APOSTROPHE);
+			result.append(xpathAttribute);
+			result.append(StringPool.APOSTROPHE);
+
+			return result.toString();
+		}
+
+		result.append(StringPool.QUOTE);
+		result.append(xpathAttribute);
+		result.append(StringPool.QUOTE);
+
+		return result.toString();
 	}
 
 	public String extractText(String html) {
@@ -496,4 +558,9 @@ public class HtmlImpl implements Html {
 
 	private static final char[] _TAG_SCRIPT = {'s', 'c', 'r', 'i', 'p', 't'};
 
+	// see http://www.w3.org/TR/xpath20/#lexical-structure
+
+	private static final char[] _XPATH_TOKENS = { 
+		'(', ')', '[', ']', '.', '@', ',', ':', '/', '|', '+', '-', '=', '!',
+		'<', '>', '*', '$', '"', '"', ' ', 9, 10, 13, 133, 8232};
 }

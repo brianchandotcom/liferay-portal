@@ -50,7 +50,8 @@ public class JSONWebServiceServiceActionTest
 
 		portalUtil.setPortal(new PortalImpl());
 
-		_jsonWebServiceServiceAction = new JSONWebServiceServiceAction("", null);
+		_jsonWebServiceServiceAction = new JSONWebServiceServiceAction(
+			"", null);
 
 		registerActionClass(FooService.class);
 	}
@@ -108,8 +109,8 @@ public class JSONWebServiceServiceActionTest
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
-		json = _jsonWebServiceServiceAction.getJSON(new ActionMapping(),
-			new DynaActionForm(), mockHttpServletRequest,
+		json = _jsonWebServiceServiceAction.getJSON(
+			new ActionMapping(), new DynaActionForm(), mockHttpServletRequest,
 			mockHttpServletResponse);
 
 		assertEquals("\"Welcome 173 to Jupiter\"", json);

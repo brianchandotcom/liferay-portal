@@ -2101,6 +2101,18 @@ public interface UserLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Removes the user from the teams of a group.
+	*
+	* @param groupId the primary key of the group
+	* @param userIds the primary keys of the users
+	* @throws PortalException if a portal exception occurred
+	* @throws SystemException if a system exception occurred
+	*/
+	public void unsetUserTeams(long groupId, long[] userIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Updates whether the user has agreed to the terms of use.
 	*
 	* @param userId the primary key of the user

@@ -865,6 +865,21 @@ public class UserServiceUtil {
 	}
 
 	/**
+	* Removes the users from the teams of a group.
+	*
+	* @param groupId the primary key of the group
+	* @param userIds the primary keys of the users
+	* @throws PortalException if the current user did not have permission to
+	modify user group assignments
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void unsetUserTeams(long groupId, long[] userIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().unsetUserTeams(groupId, userIds);
+	}
+
+	/**
 	* Updates the user's response to the terms of use agreement.
 	*
 	* @param userId the primary key of the user

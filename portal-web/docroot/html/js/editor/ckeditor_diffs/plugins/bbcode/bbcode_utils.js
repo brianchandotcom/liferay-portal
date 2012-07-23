@@ -1,26 +1,20 @@
 ;(function() {
+	var A = AUI();
+
 	var LiferayUtil = Liferay.Util;
 
-	var entities = function() {
-		var escapedChars = LiferayUtil.MAP_HTML_CHARS_ESCAPED;
-
-		escapedChars['['] = '&#91;';
-		escapedChars[']'] = '&#93;';
-		escapedChars['('] = '&#40;';
-		escapedChars[')'] = '&#41;';
-
-		return escapedChars;
-	}();
-
-	var BBCodeUtil = {
-		escape: function(data) {
-			return LiferayUtil.escapeHTML(data, true, entities);
-		},
-
-		unescape: function(data) {
-			return LiferayUtil.unescapeHTML(data, entities);
+	var entities = A.merge(
+		LiferayUtil.MAP_HTML_CHARS_ESCAPED,
+		{
+			'[': '&#91;',
+			']': '&#93;',
+			'(': '&#40;',
+			')': '&#41;'
 		}
-	};
+	);
 
-	Liferay.BBCodeUtil = BBCodeUtil;
+	var BBCodeUtil = Liferay.namespace('BBCodeUtil');
+
+	BBCodeUtil.escape = A.rbind('escapeHTML', LiferayUtil, true, entities);
+	BBCodeUtil.unescape = A.rbind('unescapeHTML', LiferayUtil, entities);
 }());

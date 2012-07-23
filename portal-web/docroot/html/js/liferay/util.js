@@ -1,8 +1,12 @@
 ;(function(A, Liferay) {
+	A.use('aui-base-lang');
+
+	var Lang = A.Lang;
+
 	var AArray = A.Array;
 	var AObject = A.Object;
+	var AString = A.Lang.String;
 	var Browser = Liferay.Browser;
-	var Lang = A.Lang;
 
 	var isArray = Lang.isArray;
 	var arrayIndexOf = AArray.indexOf;
@@ -36,6 +40,10 @@
 
 	var REGEX_DASH = /-([a-z])/gi;
 
+	var STR_LEFT_ROUND_BRACKET = '(';
+
+	var STR_RIGHT_ROUND_BRACKET = ')';
+
 	var STR_LEFT_SQUARE_BRACKET = '[';
 
 	var STR_RIGHT_SQUARE_BRACKET = ']';
@@ -47,10 +55,6 @@
 	var SRC_HIDE_LINK = {
 		src: 'hideLink'
 	};
-
-	var STR_LEFT_ROUND_BRACKET = '(';
-
-	var STR_RIGHT_ROUND_BRACKET = ')';
 
 	var Window = {
 		ALIGN_CENTER: {
@@ -297,15 +301,13 @@
 				AObject.each(
 					entities,
 					function(item, index) {
-						index = Util._prefixEntityValue(index);
-
 						entitiesList.push(index);
 
 						entitiesValues.push(item);
 					}
 				);
 
-				regex = new RegExp(STR_LEFT_SQUARE_BRACKET + entitiesList.join('') + STR_RIGHT_SQUARE_BRACKET, 'g');
+				regex = new RegExp(STR_LEFT_SQUARE_BRACKET + AString.escapeRegEx(entitiesList.join('')) + STR_RIGHT_SQUARE_BRACKET, 'g');
 			}
 			else {
 				entities = MAP_HTML_CHARS_ESCAPED;
@@ -313,7 +315,7 @@
 				entitiesValues = htmlEscapedValues;
 			}
 
-			return str.replace(regex, A.bind(Util._escapeHTML, Util, !!preventDoubleEscape, entities, entitiesValues));
+			return str.replace(regex, A.bind('_escapeHTML', Util, !!preventDoubleEscape, entities, entitiesValues));
 		},
 
 		getColumnId: function(str) {
@@ -628,10 +630,7 @@
 				regex = new RegExp(entitiesValues.join('|'), 'gi');
 			}
 
-			return str.replace(
-				regex,
-				A.bind(Util._unescapeHTML, Util, entitiesMap)
-			);
+			return str.replace(regex, A.bind('_unescapeHTML', Util, entitiesMap));
 		},
 
 		_defaultSubmitFormFn: function(event) {
@@ -749,16 +748,6 @@
 			}
 
 			return editable;
-		},
-
-		_prefixEntityValue: function(entityValue) {
-			if (entityValue === STR_LEFT_SQUARE_BRACKET || entityValue === STR_RIGHT_SQUARE_BRACKET ||
-				entityValue === STR_LEFT_ROUND_BRACKET || entityValue === STR_RIGHT_ROUND_BRACKET) {
-
-				entityValue = '\\' + entityValue;
-			}
-
-			return entityValue;
 		},
 
 		_unescapeHTML: function(entities, match) {

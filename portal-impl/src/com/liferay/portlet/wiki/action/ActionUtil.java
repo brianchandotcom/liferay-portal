@@ -74,13 +74,8 @@ public class ActionUtil {
 				serviceContext.setAddGuestPermissions(false);
 			}
 
-			long companyId = PortalUtil.getCompanyId(portletRequest);
-
-			long defaultUserId = UserLocalServiceUtil.getDefaultUserId(
-				companyId);
-
 			node = WikiNodeLocalServiceUtil.addDefaultNode(
-				defaultUserId, serviceContext);
+				themeDisplay.getDefaultUserId(), serviceContext);
 		}
 		else {
 			node = WikiUtil.getFirstNode(portletRequest);
@@ -173,11 +168,6 @@ public class ActionUtil {
 		}
 		catch (NoSuchPageException nspe) {
 			if (title.equals(WikiPageConstants.FRONT_PAGE) && (version == 0)) {
-				long companyId = PortalUtil.getCompanyId(request);
-
-				long defaultUserId = UserLocalServiceUtil.getDefaultUserId(
-					companyId);
-
 				ServiceContext serviceContext = new ServiceContext();
 
 				Layout layout = themeDisplay.getLayout();
@@ -197,7 +187,7 @@ public class ActionUtil {
 					WorkflowThreadLocal.setEnabled(false);
 
 					page = WikiPageLocalServiceUtil.addPage(
-						defaultUserId, nodeId, title, null,
+						themeDisplay.getDefaultUserId(), nodeId, title, null,
 						WikiPageConstants.NEW, true, serviceContext);
 				}
 				finally {

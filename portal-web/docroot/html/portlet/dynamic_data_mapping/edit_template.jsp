@@ -46,7 +46,9 @@ if (Validator.isNull(script)) {
 	if (classNameId > 0) {
 		PortletDisplayTemplateHandler portletDislayTemplateHandler = PortletDisplayTemplateHandlerRegistryUtil.getPortletDisplayTemplateHandler(classNameId);
 
-		script = ContentUtil.get(portletDislayTemplateHandler.getDefaultTemplateLocation());
+		if (Validator.isNotNull(portletDislayTemplateHandler)) {
+			script = ContentUtil.get(portletDislayTemplateHandler.getDefaultTemplateLocation());
+		}
 	}
 	else if (!type.equals("detail")) {
 		script = ContentUtil.get(PropsUtil.get(PropsKeys.DYNAMIC_DATA_MAPPING_TEMPLATE_LANGUAGE_CONTENT, new Filter(DDMTemplateConstants.LANG_TYPE_VM)));

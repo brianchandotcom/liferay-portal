@@ -1,0 +1,4 @@
+Bundle-SymbolicName: portal-service
+Export-Package: com.liferay.*
+Import-Package: *;resolution:=optional
+Private-Package: *

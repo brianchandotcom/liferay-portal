@@ -74,11 +74,33 @@
 	<target name="jar" depends="compile">
 		<antcall target="manifest" />
 
-		<jar
-			basedir="classes"
-			jarfile="${jar.file}.jar"
-			manifest="classes/META-INF/MANIFEST.MF"
-		/>
+		<if>
+			<available file="bnd.bnd" />
+			<then>
+				<bndexpand propertyfile="bnd.bnd" />
+
+				<bnd
+					eclipse="false"
+					exceptions="true"
+					failok="false"
+					output="."
+					sourcepath="."
+				>
+					<classpath>
+						<pathelement location="classes" />
+					</classpath>
+
+					<bndfiles path="bnd.bnd" />
+				</bnd>
+			</then>
+			<else>
+				<jar
+					basedir="classes"
+					jarfile="${jar.file}.jar"
+					manifest="classes/META-INF/MANIFEST.MF"
+				/>
+			</else>
+		</if>
 	</target>
 
 	<target name="jar-javadoc" depends="javadoc">
@@ -131,7 +153,7 @@
 						String buildRevision = "";
 
 						try {
-							File projectDir = new File(project.getProperty("project.dir"));
+							File projectDir = new File(project.getBaseDir(), project.getProperty("project.dir"));
 
 							File svnDir = new File(projectDir, ".svn");
 

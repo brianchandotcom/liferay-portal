@@ -6,7 +6,7 @@
 	<property name="deploy.dir" value="${app.server.lib.global.dir}" />
 	<property name="jar.file" value="${ant.project.name}" />
 	<property name="manifest.bundle.name" value="Liferay Portal Service" />
-	<property name="manifest.bundle.symbolic.name" value="com.liferay.portal.service;singleton:=true" />
+	<property name="manifest.bundle.symbolic.name" value="portal-service" />
 
 	<target name="compile">
 		<mkdir dir="classes" />

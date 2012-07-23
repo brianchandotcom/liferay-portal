@@ -457,10 +457,20 @@
 			<finder-column name="categoryId" />
 			<finder-column name="lastPostDate" />
 		</finder>
+		<finder name="G_C_NotS" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="categoryId" arrayable-operator="OR" />
+			<finder-column name="status" comparator="!=" />
+		</finder>
 		<finder name="G_C_S" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="categoryId" arrayable-operator="OR" />
 			<finder-column name="status" />
+		</finder>
+		<finder name="G_NotC_NotS" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="categoryId" comparator="!=" />
+			<finder-column name="status" comparator="!=" />
 		</finder>
 		<finder name="G_NotC_S" return-type="Collection">
 			<finder-column name="groupId" />

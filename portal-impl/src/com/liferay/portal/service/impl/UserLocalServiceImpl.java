@@ -116,8 +116,6 @@ import com.liferay.portal.security.pwd.PwdEncryptor;
 import com.liferay.portal.security.pwd.PwdToolkitUtil;
 import com.liferay.portal.service.BaseServiceImpl;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.TeamLocalServiceUtil;
-import com.liferay.portal.service.UserServiceUtil;
 import com.liferay.portal.service.base.UserLocalServiceBaseImpl;
 import com.liferay.portal.spring.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.util.PortalUtil;
@@ -3478,6 +3476,26 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	}
 
 	/**
+	 * Removes the users from the teams of a group.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  userIds the primary keys of the users
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void unsetGroupTeamsUsers(long groupId, long[] userIds)
+		throws PortalException, SystemException {
+
+		List<Team> teams = teamPersistence.findByGroupId(groupId);
+
+		for (Team team : teams) {
+			unsetTeamUsers(team.getTeamId(), userIds);
+		}
+
+		PermissionCacheUtil.clearCache();
+	}
+
+	/**
 	 * Removes the users from the group.
 	 *
 	 * @param  groupId the primary key of the group
@@ -3632,28 +3650,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(User.class);
 
 		indexer.reindex(userIds);
-
-		PermissionCacheUtil.clearCache();
-	}
-
-	/**
-	 * Removes the user from the teams of a group.
-	 *
-	 * @param  groupId the primary key of the group
-	 * @param  userIds the primary keys of the users
-	 * @throws PortalException if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
-	 */
-	public void unsetUserTeams(long groupId, long[] userIds)
-		throws PortalException, SystemException {
-
-		List<Team> teams = TeamLocalServiceUtil.getGroupTeams(groupId);
-
-		if ((teams != null) && (teams.size() > 0)) {
-			for (Team team : teams) {
-				UserServiceUtil.unsetTeamUsers(team.getTeamId(), userIds);
-			}
-		}
 
 		PermissionCacheUtil.clearCache();
 	}
@@ -5434,7 +5430,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			if (!ArrayUtil.contains(newGroupIds, oldGroupId)) {
 				unsetGroupUsers(
 					oldGroupId, new long[] {userId}, serviceContext);
-				unsetUserTeams(oldGroupId, new long[] {userId});
+				unsetGroupTeamsUsers(oldGroupId, new long[] {userId});
 			}
 		}
 

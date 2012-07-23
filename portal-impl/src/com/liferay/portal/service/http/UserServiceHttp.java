@@ -1227,6 +1227,40 @@ public class UserServiceHttp {
 		}
 	}
 
+	public static void unsetGroupTeamsUsers(HttpPrincipal httpPrincipal,
+		long groupId, long[] userIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(UserServiceUtil.class.getName(),
+					"unsetGroupTeamsUsers",
+					_unsetGroupTeamsUsersParameterTypes31);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					userIds);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static void unsetGroupUsers(HttpPrincipal httpPrincipal,
 		long groupId, long[] userIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -1234,7 +1268,7 @@ public class UserServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(UserServiceUtil.class.getName(),
-					"unsetGroupUsers", _unsetGroupUsersParameterTypes31);
+					"unsetGroupUsers", _unsetGroupUsersParameterTypes32);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					userIds, serviceContext);
@@ -1268,7 +1302,7 @@ public class UserServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(UserServiceUtil.class.getName(),
 					"unsetOrganizationUsers",
-					_unsetOrganizationUsersParameterTypes32);
+					_unsetOrganizationUsersParameterTypes33);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					organizationId, userIds);
@@ -1302,7 +1336,7 @@ public class UserServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(UserServiceUtil.class.getName(),
 					"unsetPasswordPolicyUsers",
-					_unsetPasswordPolicyUsersParameterTypes33);
+					_unsetPasswordPolicyUsersParameterTypes34);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					passwordPolicyId, userIds);
@@ -1335,7 +1369,7 @@ public class UserServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(UserServiceUtil.class.getName(),
-					"unsetRoleUsers", _unsetRoleUsersParameterTypes34);
+					"unsetRoleUsers", _unsetRoleUsersParameterTypes35);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, roleId,
 					userIds);
@@ -1368,7 +1402,7 @@ public class UserServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(UserServiceUtil.class.getName(),
-					"unsetTeamUsers", _unsetTeamUsersParameterTypes35);
+					"unsetTeamUsers", _unsetTeamUsersParameterTypes36);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, teamId,
 					userIds);
@@ -1401,43 +1435,10 @@ public class UserServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(UserServiceUtil.class.getName(),
-					"unsetUserGroupUsers", _unsetUserGroupUsersParameterTypes36);
+					"unsetUserGroupUsers", _unsetUserGroupUsersParameterTypes37);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					userGroupId, userIds);
-
-			try {
-				TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static void unsetUserTeams(HttpPrincipal httpPrincipal,
-		long groupId, long[] userIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		try {
-			MethodKey methodKey = new MethodKey(UserServiceUtil.class.getName(),
-					"unsetUserTeams", _unsetUserTeamsParameterTypes37);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					userIds);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -2148,26 +2149,26 @@ public class UserServiceHttp {
 	private static final Class<?>[] _setUserGroupUsersParameterTypes30 = new Class[] {
 			long.class, long[].class
 		};
-	private static final Class<?>[] _unsetGroupUsersParameterTypes31 = new Class[] {
+	private static final Class<?>[] _unsetGroupTeamsUsersParameterTypes31 = new Class[] {
+			long.class, long[].class
+		};
+	private static final Class<?>[] _unsetGroupUsersParameterTypes32 = new Class[] {
 			long.class, long[].class,
 			com.liferay.portal.service.ServiceContext.class
 		};
-	private static final Class<?>[] _unsetOrganizationUsersParameterTypes32 = new Class[] {
+	private static final Class<?>[] _unsetOrganizationUsersParameterTypes33 = new Class[] {
 			long.class, long[].class
 		};
-	private static final Class<?>[] _unsetPasswordPolicyUsersParameterTypes33 = new Class[] {
+	private static final Class<?>[] _unsetPasswordPolicyUsersParameterTypes34 = new Class[] {
 			long.class, long[].class
 		};
-	private static final Class<?>[] _unsetRoleUsersParameterTypes34 = new Class[] {
+	private static final Class<?>[] _unsetRoleUsersParameterTypes35 = new Class[] {
 			long.class, long[].class
 		};
-	private static final Class<?>[] _unsetTeamUsersParameterTypes35 = new Class[] {
+	private static final Class<?>[] _unsetTeamUsersParameterTypes36 = new Class[] {
 			long.class, long[].class
 		};
-	private static final Class<?>[] _unsetUserGroupUsersParameterTypes36 = new Class[] {
-			long.class, long[].class
-		};
-	private static final Class<?>[] _unsetUserTeamsParameterTypes37 = new Class[] {
+	private static final Class<?>[] _unsetUserGroupUsersParameterTypes37 = new Class[] {
 			long.class, long[].class
 		};
 	private static final Class<?>[] _updateAgreedToTermsOfUseParameterTypes38 = new Class[] {

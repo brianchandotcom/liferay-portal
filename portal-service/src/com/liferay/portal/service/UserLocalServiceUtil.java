@@ -2225,6 +2225,20 @@ public class UserLocalServiceUtil {
 	}
 
 	/**
+	* Removes the users from the teams of a group.
+	*
+	* @param groupId the primary key of the group
+	* @param userIds the primary keys of the users
+	* @throws PortalException if a portal exception occurred
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void unsetGroupTeamsUsers(long groupId, long[] userIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().unsetGroupTeamsUsers(groupId, userIds);
+	}
+
+	/**
 	* Removes the users from the group.
 	*
 	* @param groupId the primary key of the group
@@ -2323,20 +2337,6 @@ public class UserLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().unsetUserGroupUsers(userGroupId, userIds);
-	}
-
-	/**
-	* Removes the user from the teams of a group.
-	*
-	* @param groupId the primary key of the group
-	* @param userIds the primary keys of the users
-	* @throws PortalException if a portal exception occurred
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void unsetUserTeams(long groupId, long[] userIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		getService().unsetUserTeams(groupId, userIds);
 	}
 
 	/**

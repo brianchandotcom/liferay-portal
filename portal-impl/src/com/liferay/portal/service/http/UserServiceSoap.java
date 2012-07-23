@@ -1022,6 +1022,27 @@ public class UserServiceSoap {
 	}
 
 	/**
+	* Removes the users from the teams of a group.
+	*
+	* @param groupId the primary key of the group
+	* @param userIds the primary keys of the users
+	* @throws PortalException if the current user did not have permission to
+	modify user group assignments
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void unsetGroupTeamsUsers(long groupId, long[] userIds)
+		throws RemoteException {
+		try {
+			UserServiceUtil.unsetGroupTeamsUsers(groupId, userIds);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
 	* Removes the users from the group.
 	*
 	* @param groupId the primary key of the group
@@ -1141,27 +1162,6 @@ public class UserServiceSoap {
 		throws RemoteException {
 		try {
 			UserServiceUtil.unsetUserGroupUsers(userGroupId, userIds);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	/**
-	* Removes the users from the teams of a group.
-	*
-	* @param groupId the primary key of the group
-	* @param userIds the primary keys of the users
-	* @throws PortalException if the current user did not have permission to
-	modify user group assignments
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void unsetUserTeams(long groupId, long[] userIds)
-		throws RemoteException {
-		try {
-			UserServiceUtil.unsetUserTeams(groupId, userIds);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

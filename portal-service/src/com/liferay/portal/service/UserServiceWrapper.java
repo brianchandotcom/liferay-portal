@@ -760,6 +760,21 @@ public class UserServiceWrapper implements UserService,
 	}
 
 	/**
+	* Removes the users from the teams of a group.
+	*
+	* @param groupId the primary key of the group
+	* @param userIds the primary keys of the users
+	* @throws PortalException if the current user did not have permission to
+	modify user group assignments
+	* @throws SystemException if a system exception occurred
+	*/
+	public void unsetGroupTeamsUsers(long groupId, long[] userIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_userService.unsetGroupTeamsUsers(groupId, userIds);
+	}
+
+	/**
 	* Removes the users from the group.
 	*
 	* @param groupId the primary key of the group
@@ -849,21 +864,6 @@ public class UserServiceWrapper implements UserService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_userService.unsetUserGroupUsers(userGroupId, userIds);
-	}
-
-	/**
-	* Removes the users from the teams of a group.
-	*
-	* @param groupId the primary key of the group
-	* @param userIds the primary keys of the users
-	* @throws PortalException if the current user did not have permission to
-	modify user group assignments
-	* @throws SystemException if a system exception occurred
-	*/
-	public void unsetUserTeams(long groupId, long[] userIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		_userService.unsetUserTeams(groupId, userIds);
 	}
 
 	/**

@@ -22,13 +22,6 @@ import com.liferay.portal.kernel.template.TemplateResource;
  */
 public interface TemplateResourceParser {
 
-	public static final String JOURNAL_SEPARATOR = "_JOURNAL_CONTEXT_";
-
-	public static final String SERVLET_SEPARATOR = "_SERVLET_CONTEXT_";
-
-	public static final String THEME_LOADER_SEPARATOR =
-		"_THEME_LOADER_CONTEXT_";
-
 	public TemplateResource getTemplateResource(String templateId)
 		throws TemplateException;
 

@@ -17,6 +17,7 @@ package com.liferay.portal.freemarker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
+import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -38,7 +39,7 @@ public class FreeMarkerServletResourceParser extends URLResourceParser {
 	public URL getURL(String name) throws IOException {
 		URL url = null;
 
-		int pos = name.indexOf(SERVLET_SEPARATOR);
+		int pos = name.indexOf(TemplateResource.SERVLET_SEPARATOR);
 
 		if (pos != -1) {
 			String servletContextName = name.substring(0, pos);
@@ -59,7 +60,7 @@ public class FreeMarkerServletResourceParser extends URLResourceParser {
 
 			if (servletContext != null) {
 				String templateName = name.substring(
-					pos + SERVLET_SEPARATOR.length());
+					pos + TemplateResource.SERVLET_SEPARATOR.length());
 
 				if (_log.isDebugEnabled()) {
 					_log.debug(

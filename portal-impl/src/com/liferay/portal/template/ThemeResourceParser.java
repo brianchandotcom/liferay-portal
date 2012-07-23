@@ -16,6 +16,7 @@ package com.liferay.portal.template;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.theme.ThemeLoader;
 import com.liferay.portal.theme.ThemeLoaderFactory;
 
@@ -31,7 +32,7 @@ public class ThemeResourceParser extends URLResourceParser {
 
 	@Override
 	public URL getURL(String templateId) throws IOException {
-		int pos = templateId.indexOf(THEME_LOADER_SEPARATOR);
+		int pos = templateId.indexOf(TemplateResource.THEME_LOADER_SEPARATOR);
 
 		if (pos == -1) {
 			return null;
@@ -51,7 +52,7 @@ public class ThemeResourceParser extends URLResourceParser {
 		}
 
 		String templateName = templateId.substring(
-			pos + THEME_LOADER_SEPARATOR.length());
+			pos + TemplateResource.THEME_LOADER_SEPARATOR.length());
 
 		String themesPath = themeLoader.getThemesPath();
 

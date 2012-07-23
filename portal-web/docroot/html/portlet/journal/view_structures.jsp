@@ -98,11 +98,11 @@ portletURL.setParameter("struts_action", "/journal/view_structures");
 
 		// Name
 
-		row.addText(HtmlUtil.escape(structure.getName(locale)), rowURL);
+		row.addText(structure.getName(locale), rowURL);
 
 		// Description
 
-		row.addText(HtmlUtil.escape(structure.getDescription(locale)), rowURL);
+		row.addText(structure.getDescription(locale), rowURL);
 
 		// Action
 

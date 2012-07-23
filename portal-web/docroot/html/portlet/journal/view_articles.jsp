@@ -56,7 +56,7 @@ boolean showAddArticleButton = JournalPermission.contains(permissionChecker, sco
 				<portlet:param name="structureId" value="<%= displayTerms.getStructureId() %>" />
 			</liferay-portlet:renderURL>
 
-			<liferay-ui:message arguments="<%= structure.getName(locale) %>" key="showing-content-filtered-by-structure-x" /> (<a href="<%= addArticlesURL.toString() %>"><liferay-ui:message arguments="<%= structure.getName(locale) %>" key="add-new-x" /></a>)
+			<liferay-ui:message arguments="<%= HtmlUtil.escape(structure.getName(locale)) %>" key="showing-content-filtered-by-structure-x" /> (<a href="<%= addArticlesURL.toString() %>"><liferay-ui:message arguments="<%= HtmlUtil.escape(structure.getName(locale)) %>" key="add-new-x" /></a>)
 		</div>
 	</c:if>
 </c:if>

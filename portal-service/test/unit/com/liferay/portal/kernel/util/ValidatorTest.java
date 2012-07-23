@@ -96,4 +96,5 @@ public class ValidatorTest extends TestCase {
 			}
 		}
 	}
+
 }

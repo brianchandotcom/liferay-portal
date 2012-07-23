@@ -35,11 +35,11 @@ if (SessionMessages.contains(portletRequest, portletDisplay.getId() + SessionMes
 %>
 
 		<div class="portlet-msg-success taglib-trash-undo">
-			<liferay-ui:message arguments='<%= trashedEntriesCount %>' key='<%= trashedEntriesCount > 1 ? "x-items-were-moved-to-the-recycle-bin" : "the-selected-item-was-moved-to-the-recycle-bin" %>' />
+			<aui:form action="<%= portletURL %>" name="undoForm">
+				<liferay-ui:message arguments='<%= trashedEntriesCount %>' key='<%= trashedEntriesCount > 1 ? "x-items-were-moved-to-the-recycle-bin" : "the-selected-item-was-moved-to-the-recycle-bin" %>' />
 
-			<a class="trash-undo-link" href="javascript:;" id="<%= namespace %>undo"><liferay-ui:message key="undo" /></a>
+				<a class="trash-undo-link" href="javascript:;" id="<%= namespace %>undo"><liferay-ui:message key="undo" /></a>
 
-			<aui:form action="<%= portletURL %>" cssClass="trash-undo-form" name="undoForm">
 				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 				<%
@@ -53,7 +53,7 @@ if (SessionMessages.contains(portletRequest, portletDisplay.getId() + SessionMes
 				}
 				%>
 
-				<aui:button type="submit" value="undo" />
+				<aui:button cssClass="trash-undo-button" type="submit" value="undo" />
 			</aui:form>
 		</div>
 

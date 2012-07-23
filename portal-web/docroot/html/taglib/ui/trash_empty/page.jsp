@@ -26,18 +26,18 @@ int totalEntries = GetterUtil.getInteger(request.getAttribute("liferay-ui:trash-
 %>
 
 <div class="lfr-message-info taglib-trash-empty">
-	<liferay-ui:message arguments="<%= TrashUtil.getMaxAge(themeDisplay.getScopeGroup()) %>" key="entries-that-have-been-in-recycle-bin-for-more-than-x-days-will-be-automatically-deleted" />
+	<aui:form action="<%= portletURL %>" name="emptyForm">
+		<liferay-ui:message arguments="<%= TrashUtil.getMaxAge(themeDisplay.getScopeGroup()) %>" key="entries-that-have-been-in-recycle-bin-for-more-than-x-days-will-be-automatically-deleted" />
 
-	<c:if test="<%= totalEntries > 0 %>">
-		<a class="trash-empty-link" href="javascript:;" id="<%= namespace %>empty"><liferay-ui:message key="<%= emptyMessage %>" /></a>
+		<c:if test="<%= totalEntries > 0 %>">
+			<a class="trash-empty-link" href="javascript:;" id="<%= namespace %>empty"><liferay-ui:message key="<%= emptyMessage %>" /></a>
 
-		<aui:form action="<%= portletURL %>" cssClass="trash-empty-form" name="emptyForm">
 			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.EMPTY_TRASH %>" />
 			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
-			<aui:button type="submit" value="empty" />
-		</aui:form>
-	</c:if>
+			<aui:button cssClass="trash-empty-button" type="submit" value="<%= emptyMessage %>" />
+		</c:if>
+	</aui:form>
 </div>
 
 <aui:script use="aui-base">

@@ -28,7 +28,9 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.lar.DLPortletDataHandlerImpl;
 import com.liferay.portlet.journal.NoSuchArticleException;
@@ -302,16 +304,6 @@ public class JournalContentPortletDataHandlerImpl
 		String articleId = portletPreferences.getValue("articleId", null);
 
 		if (Validator.isNotNull(articleId) && (articleElement != null)) {
-			String importedArticleGroupId = articleElement.attributeValue(
-				"imported-article-group-id");
-
-			if (Validator.isNull(importedArticleGroupId)) {
-				importedArticleGroupId = String.valueOf(
-					portletDataContext.getScopeGroupId());
-			}
-
-			portletPreferences.setValue("groupId", importedArticleGroupId);
-
 			Map<String, String> articleIds =
 				(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
 					JournalArticle.class + ".articleId");
@@ -319,6 +311,21 @@ public class JournalContentPortletDataHandlerImpl
 			articleId = MapUtil.getString(articleIds, articleId, articleId);
 
 			portletPreferences.setValue("articleId", articleId);
+
+			String importedArticleGroupId = String.valueOf(
+				portletDataContext.getScopeGroupId());
+
+			if (portletDataContext.isGlobalReference(
+				JournalArticle.class, articleId)) {
+
+				Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
+					portletDataContext.getCompanyId());
+
+				importedArticleGroupId = String.valueOf(
+					companyGroup.getGroupId());
+			}
+
+			portletPreferences.setValue("groupId", importedArticleGroupId);
 
 			Layout layout = LayoutLocalServiceUtil.getLayout(
 				portletDataContext.getPlid());

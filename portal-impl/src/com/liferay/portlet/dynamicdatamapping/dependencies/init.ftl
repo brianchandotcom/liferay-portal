@@ -6,7 +6,7 @@
 
 <#-- CSS class -->
 
-<#assign cssClass = fieldStructure.fieldCssClass!"">
+<#assign cssClass = escapeAttribute(fieldStructure.fieldCssClass!"")>
 
 <#-- Field name -->
 
@@ -63,10 +63,20 @@
 
 <#-- Util -->
 
-<#assign jsonFactoryUtil = utilLocator.findUtil("com.liferay.portal.kernel.json.JSONFactory")>
+<#function escape value="">
+	<#return htmlUtil.escape(value)>
+</#function>
 
-<#function getFileJSONObject fieldValue>
-	<#return jsonFactoryUtil.createJSONObject(fieldValue)>>
+<#function escapeAttribute value="">
+	<#return htmlUtil.escapeAttribute(value)>
+</#function>
+
+<#function escapeCSS value="">
+	<#return htmlUtil.escapeCSS(value)>
+</#function>
+
+<#function escapeJS value="">
+	<#return htmlUtil.escapeJS(value)>
 </#function>
 
 <#assign dlAppServiceUtil = serviceLocator.findService("com.liferay.portlet.documentlibrary.service.DLAppService")>
@@ -79,4 +89,10 @@
 
 <#function getFileEntryURL fileEntry>
 	<#return themeDisplay.getPathContext() + "/documents/" + fileEntry.getRepositoryId()?c + "/" + fileEntry.getFolderId()?c + "/" +  httpUtil.encodeURL(htmlUtil.unescape(fileEntry.getTitle()), true) + "/" + fileEntry.getUuid()>
+</#function>
+
+<#assign jsonFactoryUtil = utilLocator.findUtil("com.liferay.portal.kernel.json.JSONFactory")>
+
+<#function getFileJSONObject fieldValue>
+	<#return jsonFactoryUtil.createJSONObject(fieldValue)>>
 </#function>

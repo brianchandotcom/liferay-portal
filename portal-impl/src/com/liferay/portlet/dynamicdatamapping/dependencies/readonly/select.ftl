@@ -4,8 +4,8 @@
 	<@aui.input name=namespacedFieldName type="hidden" value=fieldValue />
 
 	<label class="aui-field-label">
-		<@liferay_ui.message key=label />
+		<@liferay_ui.message key=escape(label) />
 	</label>
 
-	${fieldValue}
+	${escape(fieldValue)}
 </div>

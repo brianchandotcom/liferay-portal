@@ -1,9 +1,9 @@
 <#include "../init.ftl">
 
 <div class="aui-field-wrapper-content lfr-forms-field-wrapper">
-	<@aui.input cssClass=cssClass helpMessage=fieldStructure.tip label=label name=namespacedFieldName type="file">
+	<@aui.input cssClass=cssClass helpMessage=escape(fieldStructure.tip) label=escape(label) name=namespacedFieldName type="file">
 		<@aui.validator name="acceptFiles">
-			'${fieldStructure.acceptFiles}'
+			'${escapeJS(fieldStructure.acceptFiles)}'
 		</@aui.validator>
 
 		<#if required && !(fields??)>

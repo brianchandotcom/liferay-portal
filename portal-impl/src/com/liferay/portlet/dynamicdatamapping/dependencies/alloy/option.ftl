@@ -11,9 +11,9 @@
 <#assign selected = jsonFactoryUtil.looseDeserialize(fieldRawValue)?seq_contains(fieldStructure.value)>
 
 <#if parentType == "select">
-	<@aui.option cssClass=cssClass label=fieldStructure.label selected=selected value=fieldStructure.value />
+	<@aui.option cssClass=cssClass label=escapeAttribute(fieldStructure.label) selected=selected value=escape(fieldStructure.value) />
 <#else>
-	<@aui.input checked=selected cssClass=cssClass label=fieldStructure.label name=namespacedParentName type="radio" value=fieldStructure.value>
+	<@aui.input checked=selected cssClass=cssClass label=escape(fieldStructure.label) name=namespacedParentName type="radio" value=fieldStructure.value>
 		<#if parentFieldStructure.required?? && (parentFieldStructure.required == "true")>
 			<@aui.validator name="required" />
 		</#if>

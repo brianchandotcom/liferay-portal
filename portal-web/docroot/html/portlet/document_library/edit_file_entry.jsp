@@ -305,7 +305,7 @@ else if (dlFileEntryType != null) {
 							for (DLFileEntryType curDLFileEntryType : dlFileEntryTypes) {
 							%>
 
-								<aui:option label="<%= curDLFileEntryType.getName() %>" selected="<%= (fileEntryTypeId == curDLFileEntryType.getPrimaryKey()) %>" value="<%= curDLFileEntryType.getPrimaryKey() %>" />
+								<aui:option label="<%= HtmlUtil.escapeAttribute(curDLFileEntryType.getName()) %>" selected="<%= (fileEntryTypeId == curDLFileEntryType.getPrimaryKey()) %>" value="<%= curDLFileEntryType.getPrimaryKey() %>" />
 
 							<%
 							}

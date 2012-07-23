@@ -14,7 +14,7 @@
 	</#if>
 </#if>
 
-<@aui["field-wrapper"] label=label>
+<@aui["field-wrapper"] label=escape(label)>
 	<a href="${fileEntryURL}">${fileEntryTitle}</a>
 </@>
 

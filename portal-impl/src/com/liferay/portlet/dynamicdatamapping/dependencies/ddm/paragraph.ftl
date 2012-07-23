@@ -2,8 +2,8 @@
 
 <#assign style = fieldStructure.style!"">
 
-<p style="${htmlUtil.escape(style)}">
-	${label}
+<p style="${escapeAttribute(style)}">
+	${escape(label)}
 
 	${fieldStructure.children}
 </p>

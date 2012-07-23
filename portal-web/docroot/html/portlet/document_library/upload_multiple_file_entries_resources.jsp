@@ -126,7 +126,7 @@ long assetClassPK = 0;
 									cssClass="upload-multiple-document-types"
 									id='<%= "fileEntryType_" + String.valueOf(curFileEntryType.getFileEntryTypeId()) %>'
 									image="copy"
-									message="<%= curFileEntryType.getName() %>"
+									message="<%= HtmlUtil.escape(curFileEntryType.getName()) %>"
 									method="get"
 									url="<%= viewFileEntryTypeURL %>"
 								/>

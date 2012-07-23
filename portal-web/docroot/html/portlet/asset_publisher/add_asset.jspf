@@ -104,7 +104,7 @@ addPortletURLs = getAddPortletURLs(liferayPortletRequest, liferayPortletResponse
 		%>
 
 			<liferay-ui:icon
-				message="<%= message %>"
+				message="<%= HtmlUtil.escape(message) %>"
 				src="<%= assetRendererFactory.getIconPath(renderRequest) %>"
 				url="<%= taglibEditURL %>"
 			/>

@@ -1,6 +1,6 @@
 <#include "../init.ftl">
 
-<@aui["field-wrapper"] label=label>
+<@aui["field-wrapper"] label=escape(label)>
 	<#if (fields??) && (fieldValue != "")>
 		<#assign fileJSONObject = getFileJSONObject(fieldRawValue)>
 

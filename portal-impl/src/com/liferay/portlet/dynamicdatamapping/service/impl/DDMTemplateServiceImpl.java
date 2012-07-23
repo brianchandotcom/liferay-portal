@@ -50,7 +50,12 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			serviceContext, "ddmResourceActionId");
 
 		if (Validator.isNull(ddmResourceActionId)) {
-			ddmResourceActionId = ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE;
+			if (ddmResource.equals(DDL_CLASS_NAME)) {
+				ddmResourceActionId = ActionKeys.ADD_TEMPLATE;
+			}
+			else {
+				ddmResourceActionId = ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE;
+			}
 		}
 
 		DDMPermission.check(
@@ -229,5 +234,8 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			templateId, nameMap, descriptionMap, type, mode, language, script,
 			serviceContext);
 	}
+
+	private final String DDL_CLASS_NAME =
+		"com.liferay.portlet.dynamicdatalists";
 
 }

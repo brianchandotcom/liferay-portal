@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.templateparser.TransformException;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.template.TemplateResourceParser;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.util.ContentUtil;
 import com.liferay.util.PwdGenerator;
@@ -56,7 +55,7 @@ public class VelocityTemplateParser extends BaseTemplateParser {
 	protected String getJournalTemplatesPath() {
 		StringBundler sb = new StringBundler(5);
 
-		sb.append(TemplateResourceParser.JOURNAL_SEPARATOR);
+		sb.append(TemplateResource.JOURNAL_SEPARATOR);
 		sb.append(StringPool.SLASH);
 		sb.append(getCompanyId());
 		sb.append(StringPool.SLASH);

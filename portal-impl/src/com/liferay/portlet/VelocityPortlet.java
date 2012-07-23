@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.struts.StrutsUtil;
-import com.liferay.portal.template.TemplateResourceParser;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -159,7 +158,7 @@ public class VelocityPortlet extends GenericPortlet {
 		StringBundler sb = new StringBundler(4);
 
 		sb.append(_portletContextName);
-		sb.append(TemplateResourceParser.SERVLET_SEPARATOR);
+		sb.append(TemplateResource.SERVLET_SEPARATOR);
 		sb.append(StrutsUtil.TEXT_HTML_DIR);
 		sb.append(name);
 

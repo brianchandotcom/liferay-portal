@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.templateparser.TemplateContext;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.template.TemplateResourceParser;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.util.ContentUtil;
 
@@ -47,7 +46,7 @@ public class FreeMarkerTemplateParser extends VelocityTemplateParser {
 	protected String getJournalTemplatesPath() {
 		StringBundler sb = new StringBundler(5);
 
-		sb.append(TemplateResourceParser.JOURNAL_SEPARATOR);
+		sb.append(TemplateResource.JOURNAL_SEPARATOR);
 		sb.append(StringPool.SLASH);
 		sb.append(getCompanyId());
 		sb.append(StringPool.SLASH);

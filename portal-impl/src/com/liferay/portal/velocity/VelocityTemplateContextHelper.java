@@ -16,6 +16,7 @@ package com.liferay.portal.velocity;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.templateparser.TemplateContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -24,7 +25,6 @@ import com.liferay.portal.model.Theme;
 import com.liferay.portal.service.permission.RolePermissionUtil;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.TemplatePortletPreferences;
-import com.liferay.portal.template.TemplateResourceParser;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
@@ -121,7 +121,7 @@ public class VelocityTemplateContextHelper extends TemplateContextHelper {
 			templateContext.put(
 				"init",
 				themeDisplay.getPathContext() +
-					TemplateResourceParser.SERVLET_SEPARATOR +
+					TemplateResource.SERVLET_SEPARATOR +
 						"/html/themes/_unstyled/templates/init.vm");
 		}
 

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
+import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -30,7 +31,6 @@ import com.liferay.portal.model.Plugin;
 import com.liferay.portal.model.SpriteImage;
 import com.liferay.portal.model.Theme;
 import com.liferay.portal.model.ThemeSetting;
-import com.liferay.portal.template.TemplateResourceParser;
 import com.liferay.portal.theme.ThemeCompanyId;
 import com.liferay.portal.theme.ThemeCompanyLimit;
 import com.liferay.portal.theme.ThemeGroupLimit;
@@ -198,10 +198,10 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 
 	public String getFreeMarkerTemplateLoader() {
 		if (_loadFromServletContext) {
-			return TemplateResourceParser.SERVLET_SEPARATOR;
+			return TemplateResource.SERVLET_SEPARATOR;
 		}
 		else {
-			return TemplateResourceParser.THEME_LOADER_SEPARATOR;
+			return TemplateResource.THEME_LOADER_SEPARATOR;
 		}
 	}
 
@@ -355,10 +355,10 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 
 	public String getVelocityResourceListener() {
 		if (_loadFromServletContext) {
-			return TemplateResourceParser.SERVLET_SEPARATOR;
+			return TemplateResource.SERVLET_SEPARATOR;
 		}
 		else {
-			return TemplateResourceParser.THEME_LOADER_SEPARATOR;
+			return TemplateResource.THEME_LOADER_SEPARATOR;
 		}
 	}
 

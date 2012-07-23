@@ -34,7 +34,8 @@ public class JournalTemplateResourceParser implements TemplateResourceParser {
 	public TemplateResource getTemplateResource(String templateId)
 		throws TemplateException {
 
-		int pos = templateId.indexOf(JOURNAL_SEPARATOR + StringPool.SLASH);
+		int pos = templateId.indexOf(
+			TemplateResource.JOURNAL_SEPARATOR + StringPool.SLASH);
 
 		if (pos == -1) {
 			return null;

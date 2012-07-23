@@ -648,8 +648,8 @@ public class DLUtil {
 		Group group = themeDisplay.getScopeGroup();
 
 		return themeDisplay.getPortalURL() + themeDisplay.getPathContext() +
-			"/api/secure/webdav" + group.getFriendlyURL() +
-				"/document_library" + sb.toString();
+			"/api/webdav" + group.getFriendlyURL() + "/document_library" +
+				sb.toString();
 	}
 
 	public static boolean hasWorkflowDefinitionLink(

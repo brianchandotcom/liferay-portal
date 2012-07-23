@@ -81,27 +81,7 @@ public class JSONWebServiceServlet extends JSONServlet {
 			return;
 		}
 
-		String uri = request.getRequestURI();
 
-		int pos = uri.indexOf("/secure/");
-
-		if (pos != -1) {
-			uri = uri.substring(0, pos) + uri.substring(pos + 7);
-
-			String queryString = request.getQueryString();
-
-			if (queryString != null) {
-				uri = uri.concat(StringPool.QUESTION).concat(queryString);
-			}
-
-			if (_log.isDebugEnabled()) {
-				_log.debug("Redirect from secure to public");
-			}
-
-			response.sendRedirect(uri);
-
-			return;
-		}
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Servlet context " + request.getContextPath());

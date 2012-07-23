@@ -1,0 +1,4 @@
+Bundle-SymbolicName: util-taglib
+Export-Package: com.liferay.taglib.*
+Import-Package: *;resolution:=optional
+Private-Package: *

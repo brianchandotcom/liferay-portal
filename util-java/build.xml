@@ -6,7 +6,7 @@
 	<property name="deploy.dir" value="${app.server.lib.portal.dir}" />
 	<property name="jar.file" value="${ant.project.name}" />
 	<property name="manifest.bundle.name" value="Liferay Util Java" />
-	<property name="manifest.bundle.symbolic.name" value="com.liferay.util.java;singleton:=true" />
+	<property name="manifest.bundle.symbolic.name" value="util-java" />
 
 	<target name="jar" depends="build-common-java.jar">
 		<copy file="${jar.file}.jar" todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" />

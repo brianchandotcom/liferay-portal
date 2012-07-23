@@ -153,7 +153,7 @@
 						String buildRevision = "";
 
 						try {
-							File projectDir = new File(project.getProperty("project.dir"));
+							File projectDir = new File(project.getBaseDir(), project.getProperty("project.dir"));
 
 							File svnDir = new File(projectDir, ".svn");
 

@@ -58,7 +58,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		</java>
 	</target>-->
 
-    <target name="build-creole-parser">
+	<target name="build-creole-parser">
 		<delete>
 			<fileset
 				dir="src/com/liferay/portal/parsers/creole/parser"
@@ -83,25 +83,25 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 			<arg path="src/com/liferay/portal/parsers/creole/grammar/Creole10.g" />
 		</java>
 
-        <replace file="src/com/liferay/portal/parsers/creole/parser/Creole10Lexer.java">
+		<replace file="src/com/liferay/portal/parsers/creole/parser/Creole10Lexer.java">
 			<replacetoken>public class Creole10Lexer</replacetoken>
 			<replacevalue><![CDATA[@SuppressWarnings("all")
 public class Creole10Lexer]]></replacevalue>
-        </replace>
+		</replace>
 
 		<replace file="src/com/liferay/portal/parsers/creole/parser/Creole10Parser.java">
 			<replacetoken>public class Creole10Parser</replacetoken>
 			<replacevalue><![CDATA[@SuppressWarnings("all")
 public class Creole10Parser]]></replacevalue>
-        </replace>
+		</replace>
 
-        <fixcrlf
+		<fixcrlf
 			includes="*.java"
 			javafiles="yes"
 			srcdir="src/com/liferay/portal/parsers/creole/parser"
 			tab="add"
 		/>
-    </target>
+	</target>
 
 	<target name="build-css">
 		<ant dir="../portal-web" target="build-css" />

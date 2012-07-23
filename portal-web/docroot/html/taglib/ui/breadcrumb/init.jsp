@@ -107,7 +107,30 @@ private void _buildLayoutBreadcrumb(Layout selLayout, String selLayoutParam, boo
 	Layout layoutParent = null;
 
 	if (selLayout.getParentLayoutId() != LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
-		layoutParent = LayoutLocalServiceUtil.getLayout(selLayout.getGroupId(), selLayout.isPrivateLayout(), selLayout.getParentLayoutId());
+		long groupId = 0;
+
+		long parentLayoutId = 0;
+
+		if (selLayout instanceof VirtualLayout) {
+			Layout virtualLayout = ((VirtualLayout)selLayout).getSourceLayout();
+
+			groupId = virtualLayout.getGroupId();
+
+			parentLayoutId = virtualLayout.getParentLayoutId();
+
+			layoutParent = LayoutLocalServiceUtil.getLayout(groupId, selLayout.isPrivateLayout(), parentLayoutId);
+
+			VirtualLayout virtualParentLayout = new VirtualLayout(layoutParent, selLayout.getGroup());
+
+			layoutParent = virtualParentLayout;
+		}
+		else {
+			groupId = selLayout.getGroupId();
+
+			parentLayoutId = selLayout.getParentLayoutId();
+
+			layoutParent = LayoutLocalServiceUtil.getLayout(groupId, selLayout.isPrivateLayout(), parentLayoutId);
+		}
 
 		_buildLayoutBreadcrumb(layoutParent, selLayoutParam, false, portletURL, themeDisplay, sb);
 

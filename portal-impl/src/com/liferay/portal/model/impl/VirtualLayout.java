@@ -119,6 +119,10 @@ public class VirtualLayout extends LayoutWrapper {
 		return _sourceLayout.getGroupId();
 	}
 
+	public Layout getSourceLayout() {
+		return _sourceLayout;
+	}
+
 	public long getVirtualGroupId() {
 		return _targetGroup.getGroupId();
 	}

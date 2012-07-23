@@ -3554,6 +3554,14 @@ public class SourceFormatter {
 
 			String value = s.substring(0, y);
 
+			if ((delimeter == CharPool.APOSTROPHE) &&
+				!value.contains(StringPool.QUOTE)) {
+
+				return StringUtil.replace(
+					line, StringPool.APOSTROPHE + value + StringPool.APOSTROPHE,
+					StringPool.QUOTE + value + StringPool.QUOTE);
+			}
+
 			if (value.contains("<%") && !value.contains("%>")) {
 				int z = s.indexOf("%>");
 

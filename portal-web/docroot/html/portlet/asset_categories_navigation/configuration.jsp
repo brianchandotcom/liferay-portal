@@ -28,8 +28,8 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 	<aui:fieldset>
 		<aui:select label="vocabularies" name="preferences--allAssetVocabularies--">
-			<aui:option label="all" selected='<%= allAssetVocabularies %>' value="<%= true %>" />
-			<aui:option label="filter[action]" selected='<%= !allAssetVocabularies %>' value="<%= false %>" />
+			<aui:option label="all" selected="<%= allAssetVocabularies %>" value="<%= true %>" />
+			<aui:option label="filter[action]" selected="<%= !allAssetVocabularies %>" value="<%= false %>" />
 		</aui:select>
 
 		<aui:input name="preferences--assetVocabularyIds--" type="hidden" />

@@ -79,7 +79,7 @@ long parentFolderId = BeanParamUtil.getLong(folder, request, "parentFolderId", J
 			String taglibOpenFolderWindow = "var folderWindow = window.open('" + selectFolderURL + "','folder', 'directories=no,height=640,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,width=680'); void(''); folderWindow.focus();";
 			%>
 
-			<aui:button onClick='<%= taglibOpenFolderWindow %>' value="select" />
+			<aui:button onClick="<%= taglibOpenFolderWindow %>" value="select" />
 
 			<%
 			String taglibRemoveFolder = "Liferay.Util.removeFolderSelection('parentFolderId', 'parentFolderName', '" + renderResponse.getNamespace() + "');";

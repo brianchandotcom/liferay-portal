@@ -95,7 +95,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 						<portlet:param name="parentCategoryId" value="<%= String.valueOf(categoryId) %>" />
 					</portlet:renderURL>
 
-					<aui:button href='<%= editCategoryURL %>' value='<%= (category == null) ? "add-category" : "add-subcategory" %>' />
+					<aui:button href="<%= editCategoryURL %>" value='<%= (category == null) ? "add-category" : "add-subcategory" %>' />
 				</c:if>
 
 				<c:if test="<%= showAddMessageButton %>">
@@ -105,7 +105,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 						<portlet:param name="mbCategoryId" value="<%= String.valueOf(categoryId) %>" />
 					</portlet:renderURL>
 
-					<aui:button href='<%= editMessageURL %>' value="post-new-thread" />
+					<aui:button href="<%= editMessageURL %>" value="post-new-thread" />
 				</c:if>
 
 				<c:if test="<%= showPermissionsButton %>">

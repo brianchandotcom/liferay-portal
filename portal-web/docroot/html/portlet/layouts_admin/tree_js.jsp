@@ -179,7 +179,7 @@ if (!selectableTree) {
 
 						alwaysShowHitArea: node.hasChildren,
 
-						<c:if test='<%= !saveState && defaultStateChecked %>'>
+						<c:if test="<%= !saveState && defaultStateChecked %>">
 							checked: true,
 						</c:if>
 
@@ -445,7 +445,7 @@ if (!selectableTree) {
 
 			alwaysShowHitArea: true,
 
-			<c:if test='<%= !saveState && defaultStateChecked %>'>
+			<c:if test="<%= !saveState && defaultStateChecked %>">
 				checked: true,
 			</c:if>
 

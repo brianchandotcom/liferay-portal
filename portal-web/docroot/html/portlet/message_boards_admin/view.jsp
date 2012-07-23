@@ -89,7 +89,7 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 						<portlet:param name="parentCategoryId" value="<%= String.valueOf(categoryId) %>" />
 					</portlet:renderURL>
 
-					<aui:button href='<%= editCategoryURL %>' value='<%= (category == null) ? "add-category" : "add-subcategory" %>' />
+					<aui:button href="<%= editCategoryURL %>" value='<%= (category == null) ? "add-category" : "add-subcategory" %>' />
 				</c:if>
 
 				<c:if test="<%= showAddMessageButton %>">
@@ -99,7 +99,7 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 						<portlet:param name="mbCategoryId" value="<%= String.valueOf(categoryId) %>" />
 					</portlet:renderURL>
 
-					<aui:button href='<%= editMessageURL %>' value="post-new-thread" />
+					<aui:button href="<%= editMessageURL %>" value="post-new-thread" />
 				</c:if>
 
 				<c:if test="<%= showPermissionsButton %>">
@@ -395,7 +395,7 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 		}
 		%>
 
-		<c:if test='<%= (groupThreadsUserId > 0) %>'>
+		<c:if test="<%= (groupThreadsUserId > 0) %>">
 			<div class="portlet-msg-info">
 				<liferay-ui:message key="filter-by-user" />: <%= HtmlUtil.escape(PortalUtil.getUserName(groupThreadsUserId, StringPool.BLANK)) %>
 			</div>

@@ -434,7 +434,7 @@ Element contentEl = (Element)request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTEN
 				<liferay-ui:message key="this-field-is-required" />
 			</div>
 
-			<c:if test='<%= (Validator.isNotNull(elInstructions) && !displayAsTooltip) %>'>
+			<c:if test="<%= (Validator.isNotNull(elInstructions) && !displayAsTooltip) %>">
 				<div class="journal-article-instructions-container journal-article-instructions-message portlet-msg-info">
 					<%= elInstructions %>
 				</div>

@@ -200,7 +200,7 @@ for (int i = 0 ; i < groupMappingArray.length ; i++) {
 			String taglibOnClick = renderResponse.getNamespace() + "testSettings('ldapConnection');";
 			%>
 
-			<aui:button onClick='<%= taglibOnClick %>' value="test-ldap-connection" />
+			<aui:button onClick="<%= taglibOnClick %>" value="test-ldap-connection" />
 		</aui:button-row>
 	</aui:fieldset>
 
@@ -296,7 +296,7 @@ for (int i = 0 ; i < groupMappingArray.length ; i++) {
 		String taglibOnClick = renderResponse.getNamespace() + "saveLdap();";
 		%>
 
-		<aui:button name="saveButton" onClick='<%= taglibOnClick %>' value="save" />
+		<aui:button name="saveButton" onClick="<%= taglibOnClick %>" value="save" />
 
 		<aui:button href="<%= redirect %>" name="cancelButton" type="cancel" />
 	</aui:button-row>

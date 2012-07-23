@@ -59,7 +59,7 @@ String casNoSuchUserRedirectURL = PrefsPropsUtil.getString(company.getCompanyId(
 		String taglibOnClick = renderResponse.getNamespace() + "testCasSettings();";
 		%>
 
-		<aui:button onClick='<%= taglibOnClick %>' value="test-cas-configuration" />
+		<aui:button onClick="<%= taglibOnClick %>" value="test-cas-configuration" />
 	</aui:button-row>
 </aui:fieldset>
 

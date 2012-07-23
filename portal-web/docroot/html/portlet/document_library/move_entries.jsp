@@ -170,7 +170,7 @@ for (DLFileShortcut curFileShortcut : fileShortcuts) {
 		</div>
 	</c:if>
 
-	<aui:input name="folderIds" type="hidden" value='<%= ListUtil.toString(validMoveFolders, Folder.FOLDER_ID_ACCESSOR) %>' />
+	<aui:input name="folderIds" type="hidden" value="<%= ListUtil.toString(validMoveFolders, Folder.FOLDER_ID_ACCESSOR) %>" />
 
 	<c:if test="<%= !validMoveFileEntries.isEmpty() %>">
 		<div class="move-list-info">
@@ -236,7 +236,7 @@ for (DLFileShortcut curFileShortcut : fileShortcuts) {
 		</div>
 	</c:if>
 
-	<aui:input name="fileEntryIds" type="hidden" value='<%= ListUtil.toString(validMoveFileEntries, FileEntry.FILE_ENTRY_ID_ACCESSOR) %>' />
+	<aui:input name="fileEntryIds" type="hidden" value="<%= ListUtil.toString(validMoveFileEntries, FileEntry.FILE_ENTRY_ID_ACCESSOR) %>" />
 
 	<c:if test="<%= !validShortcutEntries.isEmpty() %>">
 		<div class="move-list-info">
@@ -330,7 +330,7 @@ for (DLFileShortcut curFileShortcut : fileShortcuts) {
 			String taglibOpenFolderWindow = "var folderWindow = window.open('" + selectFolderURL + "','folder', 'directories=no,height=640,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,width=680'); void(''); folderWindow.focus();";
 			%>
 
-			<aui:button onClick='<%= taglibOpenFolderWindow %>' value="select" />
+			<aui:button onClick="<%= taglibOpenFolderWindow %>" value="select" />
 		</aui:field-wrapper>
 
 		<aui:button-row>

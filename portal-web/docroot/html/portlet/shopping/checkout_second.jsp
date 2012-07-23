@@ -482,7 +482,7 @@ ShoppingOrder order = (ShoppingOrder)request.getAttribute(WebKeys.SHOPPING_ORDER
 				String taglibOpenCouponWindow = "var viewCouponWindow = window.open('" + viewCouponURL + "', 'viewCoupon', 'directories=no,height=200,location=no,menubar=no,resizable=no,scrollbars=yes,status=no,toolbar=no,width=280'); void(''); viewCouponWindow.focus();";
 				%>
 
-				<aui:a href='<%= taglibOpenCouponWindow %>' label='<%= "(" + coupon.getCouponId() + ")" %>' />
+				<aui:a href="<%= taglibOpenCouponWindow %>" label='<%= "(" + coupon.getCouponId() + ")" %>' />
 			</td>
 		</tr>
 	</c:if>

@@ -369,7 +369,7 @@
 
 							<aui:form action="<%= loginURL %>" method="post" name="fm">
 								<aui:input name="login" type="hidden" value="<%= emailAddress %>" />
-								<aui:input name="password" type="hidden" value='<%= PropsValues.DEFAULT_ADMIN_PASSWORD %>' />
+								<aui:input name="password" type="hidden" value="<%= PropsValues.DEFAULT_ADMIN_PASSWORD %>" />
 
 								<p>
 									<span class="portlet-msg-success">

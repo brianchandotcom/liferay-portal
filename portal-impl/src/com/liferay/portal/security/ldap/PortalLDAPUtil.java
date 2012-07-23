@@ -357,21 +357,22 @@ public class PortalLDAPUtil {
 				}
 
 				curAttribute = enu.nextElement();
+
+				for (int i = 0; i < curAttribute.size(); i++) {
+					attribute.add(curAttribute.get(i));
+				}
+
+				if (StringUtil.endsWith(
+						curAttribute.getID(), StringPool.STAR) ||
+					(curAttribute.size() < PropsValues.LDAP_RANGE_SIZE)) {
+
+					break;
+				}
 			}
 			finally {
 				if (enu != null) {
 					enu.close();
 				}
-			}
-
-			for (int i = 0; i < curAttribute.size(); i++) {
-				attribute.add(curAttribute.get(i));
-			}
-
-			if (StringUtil.endsWith(curAttribute.getID(), StringPool.STAR) ||
-				(curAttribute.size() < PropsValues.LDAP_RANGE_SIZE)) {
-
-				break;
 			}
 
 			attributeIds[0] = _getNextRange(attributeIds[0]);
@@ -809,14 +810,15 @@ public class PortalLDAPUtil {
 
 			NamingEnumeration<? extends Attribute> enu = null;
 
-			try{
-				enu = ldapContext.getAttributes(fullDN, auditAttributeIds).getAll();
+			try {
+				enu = ldapContext.getAttributes(
+					fullDN, auditAttributeIds).getAll();
 
 				while (enu.hasMoreElements()) {
 					attributes.put(enu.nextElement());
 				}
 			}
-			finally{
+			finally {
 				if (enu != null) {
 					enu.close();
 				}

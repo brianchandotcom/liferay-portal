@@ -66,7 +66,7 @@ public class ConfirmNotificationsAddConnnectionTest extends BaseTestCase {
 		assertTrue(selenium.isVisible(
 				"//div[contains(@class, 'user-notification-events-container')]"));
 		assertEquals(RuntimeVariables.replace(
-				"Social01 would like to add you as a connection."),
+				"Social01 Office01 User01 would like to add you as a connection."),
 			selenium.getText(
 				"//div[contains(@class, 'user-notification-event-content')]/div[2]/div/span"));
 		assertEquals(RuntimeVariables.replace("Confirm"),

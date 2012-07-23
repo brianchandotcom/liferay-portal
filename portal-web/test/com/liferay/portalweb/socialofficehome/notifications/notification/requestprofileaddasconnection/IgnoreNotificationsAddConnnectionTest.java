@@ -48,7 +48,7 @@ public class IgnoreNotificationsAddConnnectionTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace(
-				"Social01 would like to add you as a connection."),
+				"Social01 Office01 User01 would like to add you as a connection."),
 			selenium.getText("//div[@class='title']"));
 		assertEquals(RuntimeVariables.replace("Ignore"),
 			selenium.getText(
@@ -61,6 +61,6 @@ public class IgnoreNotificationsAddConnnectionTest extends BaseTestCase {
 			selenium.getText("//span[@class='notification-count']"));
 		selenium.mouseOver("//li[@id='_145_notificationsMenu']");
 		assertFalse(selenium.isTextPresent(
-				"Social01 would like to add you as a connection."));
+				"Social01 Office01 User01 would like to add you as a connection."));
 	}
 }

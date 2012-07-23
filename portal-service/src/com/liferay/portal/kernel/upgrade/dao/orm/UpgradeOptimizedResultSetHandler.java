@@ -94,7 +94,59 @@ public class UpgradeOptimizedResultSetHandler implements InvocationHandler {
 				column = columnString.toLowerCase();
 			}
 
-			return _columnValues.get(column);
+			Object returnValue = _columnValues.get(column);
+
+			if (methodName.equals("getDouble")) {
+				if ((returnValue == null) || !(returnValue instanceof Number)) {
+					return GetterUtil.getDouble(returnValue);
+				}
+				else {
+					return ((Number) returnValue).doubleValue();
+				}
+			}
+			else if (methodName.equals("getFloat")) {
+				if ((returnValue == null) || !(returnValue instanceof Number)) {
+					return GetterUtil.getFloat(returnValue);
+				}
+				else {
+					return ((Number) returnValue).floatValue();
+				}
+			}
+			else if (methodName.equals("getInt")) {
+				if ((returnValue == null) || !(returnValue instanceof Number)) {
+					return GetterUtil.getInteger(returnValue);
+				}
+				else {
+					return ((Number) returnValue).intValue();
+				}
+			}
+			else if (methodName.equals("getLong")) {
+				if ((returnValue == null) || !(returnValue instanceof Number)) {
+					return GetterUtil.getLong(returnValue);
+				}
+				else {
+					return ((Number) returnValue).longValue();
+				}
+			}
+			else if (methodName.equals("getShort")) {
+				if ((returnValue == null) || !(returnValue instanceof Number)) {
+					return GetterUtil.getShort(returnValue);
+				}
+				else {
+					return ((Number) returnValue).shortValue();
+				}
+			}
+			else if (methodName.equals("getString")) {
+				if ((returnValue == null) || (returnValue instanceof String)) {
+					return returnValue;
+				}
+				else {
+					return String.valueOf(returnValue);
+				}
+			}
+			else {
+				return returnValue;
+			}
 		}
 	}
 

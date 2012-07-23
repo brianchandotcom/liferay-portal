@@ -46,13 +46,23 @@ public class ProcessOutputStream extends UnsyncByteArrayOutputStream {
 		if (index > 0) {
 			byte[] bytes = toByteArray();
 
+			byte[] logData = new byte[_logPrefix.length + bytes.length];
+
+			System.arraycopy(_logPrefix, 0, logData, 0, _logPrefix.length);
+			System.arraycopy(
+				bytes, 0, logData, _logPrefix.length, bytes.length);
+
 			LoggingProcessCallable loggingProcessCallable =
-				new LoggingProcessCallable(bytes, _error);
+				new LoggingProcessCallable(logData, _error);
 
 			writeProcessCallable(loggingProcessCallable);
 
 			reset();
 		}
+	}
+
+	public void setLogPrefix(byte[] logPrefix) {
+		_logPrefix = logPrefix;
 	}
 
 	public void writeProcessCallable(ProcessCallable<?> processCallable)
@@ -64,6 +74,7 @@ public class ProcessOutputStream extends UnsyncByteArrayOutputStream {
 	}
 
 	private final boolean _error;
+	private byte[] _logPrefix;
 	private final ObjectOutputStream _objectOutputStream;
 
 }

@@ -421,6 +421,9 @@ public class Table {
 		else if (t == Types.INTEGER) {
 			value = GetterUtil.getInteger(rs.getInt(name));
 		}
+		else if (t == Types.NUMERIC) {
+			value = GetterUtil.getLong(rs.getLong(name));
+		}
 		else if (t == Types.SMALLINT) {
 			value = GetterUtil.getShort(rs.getShort(name));
 		}

@@ -149,6 +149,9 @@ public class UpgradeOptimizedResultSetHandler implements InvocationHandler {
 		else if (t == Types.INTEGER) {
 			value = GetterUtil.getInteger(_resultSet.getInt(name));
 		}
+		else if (t == Types.NUMERIC) {
+			value = GetterUtil.getLong(_resultSet.getLong(name));
+		}
 		else if (t == Types.SMALLINT) {
 			value = GetterUtil.getShort(_resultSet.getShort(name));
 		}

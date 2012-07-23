@@ -102,7 +102,7 @@ viewURL = _checkViewURL(viewURL, currentURL, themeDisplay);
 
 				<c:choose>
 					<c:when test="<%= path == null %>">
-						<%= summary %>
+						<%= HtmlUtil.escape(summary) %>
 					</c:when>
 					<c:otherwise>
 						<liferay-util:include page="<%= path %>" portletId="<%= assetRendererFactory.getPortletId() %>" />

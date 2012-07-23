@@ -157,22 +157,24 @@ public class PortalLDAPUtil {
 				SearchControls.SUBTREE_SCOPE, 1, 0, null, false, false);
 
 			enu = ldapContext.search(baseDN, filter.toString(), searchControls);
+
+			if (enu.hasMoreElements()) {
+				Binding binding = enu.nextElement();
+
+				return binding;
+			}
+			else {
+				return null;
+			}
 		}
 		finally {
+			if (enu != null) {
+				enu.close();
+			}
+
 			if (ldapContext != null) {
 				ldapContext.close();
 			}
-		}
-
-		if (enu.hasMoreElements()) {
-			Binding binding = enu.nextElement();
-
-			enu.close();
-
-			return binding;
-		}
-		else {
-			return null;
 		}
 	}
 
@@ -343,22 +345,34 @@ public class PortalLDAPUtil {
 				break;
 			}
 
-			NamingEnumeration<? extends Attribute> enu = attributes.getAll();
+			Attribute curAttribute = null;
 
-			if (!enu.hasMoreElements()) {
-				break;
+			NamingEnumeration<? extends Attribute> enu = null;
+
+			try {
+				enu = attributes.getAll();
+
+				if (!enu.hasMoreElements()) {
+					break;
+				}
+
+				curAttribute = enu.nextElement();
+
+				for (int i = 0; i < curAttribute.size(); i++) {
+					attribute.add(curAttribute.get(i));
+				}
+
+				if (StringUtil.endsWith(
+						curAttribute.getID(), StringPool.STAR) ||
+					(curAttribute.size() < PropsValues.LDAP_RANGE_SIZE)) {
+
+					break;
+				}
 			}
-
-			Attribute curAttribute = enu.nextElement();
-
-			for (int i = 0; i < curAttribute.size(); i++) {
-				attribute.add(curAttribute.get(i));
-			}
-
-			if (StringUtil.endsWith(curAttribute.getID(), StringPool.STAR) ||
-				(curAttribute.size() < PropsValues.LDAP_RANGE_SIZE)) {
-
-				break;
+			finally {
+				if (enu != null) {
+					enu.close();
+				}
 			}
 
 			attributeIds[0] = _getNextRange(attributeIds[0]);
@@ -472,22 +486,24 @@ public class PortalLDAPUtil {
 				SearchControls.SUBTREE_SCOPE, 1, 0, null, false, false);
 
 			enu = ldapContext.search(baseDN, filter, searchControls);
+
+			if (enu.hasMoreElements()) {
+				Binding binding = enu.nextElement();
+
+				return binding;
+			}
+			else {
+				return null;
+			}
 		}
 		finally {
+			if (enu != null) {
+				enu.close();
+			}
+
 			if (ldapContext != null) {
 				ldapContext.close();
 			}
-		}
-
-		if (enu.hasMoreElements()) {
-			Binding binding = enu.nextElement();
-
-			enu.close();
-
-			return binding;
-		}
-		else {
-			return null;
 		}
 	}
 
@@ -792,14 +808,21 @@ public class PortalLDAPUtil {
 
 			attributes = ldapContext.getAttributes(fullDN);
 
-			NamingEnumeration<? extends Attribute> enu =
-				ldapContext.getAttributes(fullDN, auditAttributeIds).getAll();
+			NamingEnumeration<? extends Attribute> enu = null;
 
-			while (enu.hasMoreElements()) {
-				attributes.put(enu.nextElement());
+			try {
+				enu = ldapContext.getAttributes(
+					fullDN, auditAttributeIds).getAll();
+
+				while (enu.hasMoreElements()) {
+					attributes.put(enu.nextElement());
+				}
 			}
-
-			enu.close();
+			finally {
+				if (enu != null) {
+					enu.close();
+				}
+			}
 		}
 		else {
 

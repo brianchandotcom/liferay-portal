@@ -69,6 +69,7 @@ import com.liferay.portlet.documentlibrary.SourceFileNameException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
+import com.liferay.portlet.dynamicdatamapping.StorageFieldRequiredException;
 
 import java.io.InputStream;
 
@@ -217,7 +218,8 @@ public class EditFileEntryAction extends PortletAction {
 					 e instanceof FileNameException ||
 					 e instanceof FileSizeException ||
 					 e instanceof NoSuchFolderException ||
-					 e instanceof SourceFileNameException) {
+					 e instanceof SourceFileNameException ||
+					 e instanceof StorageFieldRequiredException) {
 
 				if (!cmd.equals(Constants.ADD_MULTIPLE) &&
 					!cmd.equals(Constants.ADD_TEMP)) {

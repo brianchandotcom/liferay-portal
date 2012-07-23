@@ -88,7 +88,7 @@ portletURL.setParameter("struts_action", "/journal/view_templates");
 
 		// Name
 
-		row.addText(HtmlUtil.escape(template.getName(locale)), rowURL);
+		row.addText(template.getName(locale), rowURL);
 
 		// Description and image
 

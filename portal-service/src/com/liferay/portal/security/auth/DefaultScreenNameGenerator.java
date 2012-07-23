@@ -44,10 +44,10 @@ public class DefaultScreenNameGenerator implements ScreenNameGenerator {
 		if (Validator.isNotNull(emailAddress)) {
 			screenName = StringUtil.extractFirst(
 				emailAddress, CharPool.AT).toLowerCase();
-			
+
 			for (char c : screenName.toCharArray()) {
-				if ((!Validator.isDigit(c)) && (!Validator.isChar(c) &&
-						(c != CharPool.DASH) && (c != CharPool.PERIOD))) {
+				if (!Validator.isDigit(c) && !Validator.isChar(c) &&
+					(c != CharPool.DASH) && (c != CharPool.PERIOD)) {
 
 					screenName = StringUtil.replace(
 						screenName, c, CharPool.PERIOD);
@@ -63,9 +63,11 @@ public class DefaultScreenNameGenerator implements ScreenNameGenerator {
 		else {
 			screenName = String.valueOf(userId);
 		}
-		
-		if (!_USERS_SCREEN_NAME_ALLOW_NUMERIC && Validator.isNumber(screenName)){
-			screenName = "user_".concat(screenName);
+
+		if (!_USERS_SCREEN_NAME_ALLOW_NUMERIC &&
+			Validator.isNumber(screenName)) {
+
+			screenName = _NON_NUMERICAL_PREFIX + screenName;
 		}
 
 		String[] reservedScreenNames = PrefsPropsUtil.getStringArray(
@@ -123,6 +125,8 @@ public class DefaultScreenNameGenerator implements ScreenNameGenerator {
 	private static final String[] _ADMIN_RESERVED_SCREEN_NAMES =
 		StringUtil.splitLines(
 			PropsUtil.get(PropsKeys.ADMIN_RESERVED_SCREEN_NAMES));
+
+	private static final String _NON_NUMERICAL_PREFIX = "user.";
 
 	private static final boolean _USERS_SCREEN_NAME_ALLOW_NUMERIC =
 		GetterUtil.getBoolean(

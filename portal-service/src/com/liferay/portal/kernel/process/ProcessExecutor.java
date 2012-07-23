@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.process.log.ProcessOutputStream;
 import com.liferay.portal.kernel.util.NamedThreadFactory;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.EOFException;
 import java.io.FileDescriptor;
@@ -173,6 +174,16 @@ public class ProcessExecutor {
 
 			ProcessCallable<?> processCallable =
 				(ProcessCallable<?>)objectInputStream.readObject();
+
+			String logPrefixString =
+				StringPool.OPEN_BRACKET.concat(
+					processCallable.toString()).concat(
+						StringPool.CLOSE_BRACKET);
+
+			byte[] logPrefix = logPrefixString.getBytes(StringPool.UTF8);
+
+			outProcessOutputStream.setLogPrefix(logPrefix);
+			errProcessOutputStream.setLogPrefix(logPrefix);
 
 			Serializable result = processCallable.call();
 

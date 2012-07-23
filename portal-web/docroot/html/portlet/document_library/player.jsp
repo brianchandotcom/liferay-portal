@@ -51,7 +51,8 @@ for (String previewFileURL : previewFileURLs) {
 				{
 					contentBox: '#<portlet:namespace />previewFileContent',
 					fixedAttributes: {
-						allowfullscreen: 'true'
+						allowfullscreen: 'true',
+						wmode: 'opaque'
 					}
 
 					<c:if test="<%= Validator.isNotNull(oggPreviewFileURL) %>">
@@ -72,11 +73,12 @@ for (String previewFileURL : previewFileURLs) {
 					contentBox: '#<portlet:namespace />previewFileContent',
 					fixedAttributes: {
 						allowfullscreen: 'true',
-						bgColor: '#000000'
-					},
+						bgColor: '#000000',
+						wmode: 'opaque'
+					}
 
 					<c:if test="<%= Validator.isNotNull(ogvPreviewFileURL) %>">
-						ogvUrl: '<%= ogvPreviewFileURL %>',
+						, ogvUrl: '<%= ogvPreviewFileURL %>',
 					</c:if>
 
 					poster: '<%= videoThumbnailURL %>'

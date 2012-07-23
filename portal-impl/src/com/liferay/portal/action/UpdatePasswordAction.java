@@ -136,7 +136,7 @@ public class UpdatePasswordAction extends Action {
 		try {
 			Ticket ticket = TicketLocalServiceUtil.getTicket(ticketKey);
 
-			if (ticket.getType() != TicketConstants.TYPE_EMAIL_ADDRESS) {
+			if (ticket.getType() != TicketConstants.TYPE_PASSWORD) {
 				return null;
 			}
 

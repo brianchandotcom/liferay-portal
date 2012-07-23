@@ -34,6 +34,8 @@ import java.sql.SQLException;
 public class VerifyOracle extends VerifyProcess {
 
 	protected void alterColumns() throws Exception {
+		int buildNumber = getBuildNumber();
+
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -53,9 +55,7 @@ public class VerifyOracle extends VerifyProcess {
 				String columnName = rs.getString(2);
 				int dataLength = rs.getInt(3);
 
-				int buildNumber = getBuildNumber();
-
-				if ((buildNumber >= ReleaseInfo.RELEASE_6_0_0_BUILD_NUMBER) &&
+				if ((buildNumber >= ReleaseInfo.RELEASE_5_2_9_BUILD_NUMBER) &&
 					(buildNumber < ReleaseInfo.RELEASE_6_1_20_BUILD_NUMBER)) {
 
 					if (dataLength != 4000) {

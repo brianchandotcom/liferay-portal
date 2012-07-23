@@ -104,35 +104,21 @@ private void _buildLayoutBreadcrumb(Layout selLayout, String selLayoutParam, boo
 
 	breadcrumbSB.append("</a></span></li>");
 
-	Layout layoutParent = null;
+	Layout parentLayout = null;
 
 	if (selLayout.getParentLayoutId() != LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
-		long groupId = 0;
-
-		long parentLayoutId = 0;
-
 		if (selLayout instanceof VirtualLayout) {
-			Layout virtualLayout = ((VirtualLayout)selLayout).getSourceLayout();
+			Layout sourceLayout = ((VirtualLayout)selLayout).getSourceLayout();
 
-			groupId = virtualLayout.getGroupId();
+			parentLayout = LayoutLocalServiceUtil.getLayout(sourceLayout.getGroupId(), sourceLayout.isPrivateLayout(), sourceLayout.getParentLayoutId());
 
-			parentLayoutId = virtualLayout.getParentLayoutId();
-
-			layoutParent = LayoutLocalServiceUtil.getLayout(groupId, selLayout.isPrivateLayout(), parentLayoutId);
-
-			VirtualLayout virtualParentLayout = new VirtualLayout(layoutParent, selLayout.getGroup());
-
-			layoutParent = virtualParentLayout;
+			parentLayout = new VirtualLayout(parentLayout, selLayout.getGroup());
 		}
 		else {
-			groupId = selLayout.getGroupId();
-
-			parentLayoutId = selLayout.getParentLayoutId();
-
-			layoutParent = LayoutLocalServiceUtil.getLayout(groupId, selLayout.isPrivateLayout(), parentLayoutId);
+			parentLayout = LayoutLocalServiceUtil.getLayout(selLayout.getGroupId(), selLayout.isPrivateLayout(), selLayout.getParentLayoutId());
 		}
 
-		_buildLayoutBreadcrumb(layoutParent, selLayoutParam, false, portletURL, themeDisplay, sb);
+		_buildLayoutBreadcrumb(parentLayout, selLayoutParam, false, portletURL, themeDisplay, sb);
 
 		sb.append(breadcrumbSB.toString());
 	}

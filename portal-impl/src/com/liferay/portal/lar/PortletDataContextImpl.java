@@ -398,7 +398,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 		}
 	}
 
-	public void addGlobalReference(Class<?> clazz, String uuid) {
+	public void addGlobalReference(Class<?> clazz, String id) {
 		List<String> values = _globalReferencesMap.get(clazz.getName());
 
 		if (values == null) {
@@ -407,11 +407,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 			_globalReferencesMap.put(clazz.getName(), values);
 		}
 
-		values.add(uuid);
-	}
-
-	public void addGlobalReference(Class<?> clazz, long classPK) {
-		addGlobalReference(clazz, String.valueOf(classPK));
+		values.add(id);
 	}
 
 	public void addLocks(Class<?> clazz, String key)
@@ -1186,26 +1182,14 @@ public class PortletDataContextImpl implements PortletDataContext {
 		}
 	}
 
-	public boolean isGlobalReference(Class<?> clazz, String uuid) {
-		return isGlobalReference(clazz.getName(), uuid);
-	}
+	public boolean isGlobalReference(Class<?> clazz, String id) {
+		List<String> values = _globalReferencesMap.get(clazz.getName());
 
-	public boolean isGlobalReference(String className, String uuid) {
-		List<String> values = _globalReferencesMap.get(className);
-
-		if (values != null && values.contains(uuid)) {
+		if ((values != null) && (values.contains(id))) {
 			return true;
 		}
 
 		return false;
-	}
-
-	public boolean isGlobalReference(Class<?> clazz, long classPK) {
-		return isGlobalReference(clazz, String.valueOf(classPK));
-	}
-
-	public boolean isGlobalReference(String className, long classPK) {
-		return isGlobalReference(className, String.valueOf(classPK));
 	}
 
 	public boolean isPathNotProcessed(String path) {

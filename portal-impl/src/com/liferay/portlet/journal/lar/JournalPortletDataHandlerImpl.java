@@ -784,8 +784,6 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		if (importedArticle.getGroupId() == companyGroup.getGroupId()) {
 			portletDataContext.addGlobalReference(
-				JournalArticle.class, importedArticle.getArticleId());
-			portletDataContext.addGlobalReference(
 				JournalArticle.class, articleId);
 		}
 

@@ -73,11 +73,11 @@ for (int i = 0; i < results.size(); i++) {
 			%>
 
 			<span class="nobr <%= layoutRevision == null ? "page-not-exportable" : StringPool.BLANK %>">
-				<%= curLayout.getName(locale) %>
+				<%= HtmlUtil.escape(curLayout.getName(locale)) %>
 
 				<c:if test="<%= Validator.isNotNull(layoutBranchName) %>">
 					<span class="layout-variation-name">
-						[<liferay-ui:message key="<%= layoutBranchName %>" />]
+						[<liferay-ui:message key="<%= HtmlUtil.escape(layoutBranchName) %>" />]
 					</span>
 				</c:if>
 
@@ -91,7 +91,7 @@ for (int i = 0; i < results.size(); i++) {
 		row.addText("left", "top", layoutDetails);
 	}
 	else {
-		row.addText("left", "top", curLayout.getName(locale));
+		row.addText("left", "top", HtmlUtil.escape(curLayout.getName(locale)));
 	}
 
 	JSPSearchEntry jspSearchEntry = new JSPSearchEntry();

@@ -113,7 +113,7 @@ request.setAttribute("view_layout_branches.jsp-currenttLayoutBranchId", String.v
 					buffer.append("<strong>");
 				}
 
-				buffer.append(LanguageUtil.get(pageContext, layoutBranchName));
+				buffer.append(LanguageUtil.get(pageContext, HtmlUtil.escape(layoutBranchName)));
 
 				if (layoutBranch.isMaster()) {
 					buffer.append(" (*)");
@@ -128,7 +128,7 @@ request.setAttribute("view_layout_branches.jsp-currenttLayoutBranchId", String.v
 
 			<liferay-ui:search-container-column-text
 				name="description"
-				value="<%= layoutBranch.getDescription() %>"
+				value="<%= HtmlUtil.escape(layoutBranch.getDescription()) %>"
 			/>
 
 			<liferay-ui:search-container-column-jsp

@@ -116,7 +116,7 @@ String[][] categorySections = {mainSections};
 
 	<c:choose>
 		<c:when test="<%= incomplete %>">
-			<liferay-ui:message arguments="<%= new Object[] {selLayout.getName(locale), layoutSetBranchName} %>" key="the-page-x-is-not-enabled-in-x,-but-is-available-in-other-pages-variations" />
+			<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(selLayout.getName(locale)), HtmlUtil.escape(layoutSetBranchName)} %>" key="the-page-x-is-not-enabled-in-x,-but-is-available-in-other-pages-variations" />
 
 			<aui:input name="incompleteLayoutRevisionId" type="hidden" value="<%= layoutRevision.getLayoutRevisionId() %>" />
 
@@ -127,7 +127,7 @@ String[][] categorySections = {mainSections};
 			%>
 
 			<aui:button-row>
-				<aui:button name="enableLayout" onClick="<%= taglibEnableOnClick %>" value='<%= LanguageUtil.format(pageContext, "enable-in-x", layoutSetBranchName) %>' />
+				<aui:button name="enableLayout" onClick="<%= taglibEnableOnClick %>" value='<%= LanguageUtil.format(pageContext, "enable-in-x", HtmlUtil.escape(layoutSetBranchName)) %>' />
 
 				<aui:button name="deleteLayout" onClick="<%= taglibDeleteOnClick %>" value="delete-in-all-pages-variations" />
 			</aui:button-row>
@@ -188,7 +188,7 @@ String[][] categorySections = {mainSections};
 						%>
 
 						<div class="portlet-msg-alert">
-							<liferay-ui:message arguments="<%= userGroup.getName() %>" key="this-page-cannot-be-modified-because-it-belongs-to-the-user-group-x" />
+							<liferay-ui:message arguments="<%= HtmlUtil.escape(userGroup.getName()) %>" key="this-page-cannot-be-modified-because-it-belongs-to-the-user-group-x" />
 						</div>
 					</c:when>
 					<c:otherwise>

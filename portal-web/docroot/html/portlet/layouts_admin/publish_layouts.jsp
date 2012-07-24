@@ -296,7 +296,7 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 			%>
 
 			<li>
-				<%= ResourceActionsUtil.getModelResource(locale, layoutPrototypeClassName) %>: <strong><%= layoutPrototypeName %></strong> (<%= layoutPrototypeUuid %>)
+				<%= ResourceActionsUtil.getModelResource(locale, layoutPrototypeClassName) %>: <strong><%= HtmlUtil.escape(layoutPrototypeName) %></strong> (<%= layoutPrototypeUuid %>)
 			</li>
 
 			<%

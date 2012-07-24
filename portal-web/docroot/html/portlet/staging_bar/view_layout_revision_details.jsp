@@ -40,7 +40,7 @@ if (workflowEnabled) {
 String taglibHelpMessage = null;
 
 if (layoutRevision.isHead()) {
-	taglibHelpMessage = LanguageUtil.format(pageContext, "this-version-will-be-published-when-x-is-published-to-live", layoutSetBranch.getName());
+	taglibHelpMessage = LanguageUtil.format(pageContext, "this-version-will-be-published-when-x-is-published-to-live", HtmlUtil.escape(layoutSetBranch.getName()));
 }
 else if (hasWorkflowTask) {
 	taglibHelpMessage = "you-are-currently-reviewing-this-page.-you-can-make-changes-and-send-them-to-the-next-step-in-the-workflow-when-ready";
@@ -53,7 +53,7 @@ else {
 <div class="layout-actions">
 	<c:choose>
 		<c:when test="<%= layoutRevision.getStatus() == WorkflowConstants.STATUS_INCOMPLETE %>">
-			<liferay-ui:message arguments="<%= new Object[] {layoutRevision.getName(locale), layoutSetBranch.getName()} %>" key="the-page-x-is-not-enabled-in-x,-but-is-available-in-other-pages-variations" />
+			<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(layoutRevision.getName(locale)), HtmlUtil.escape(layoutSetBranch.getName())} %>" key="the-page-x-is-not-enabled-in-x,-but-is-available-in-other-pages-variations" />
 		</c:when>
 		<c:otherwise>
 			<aui:model-context bean="<%= layoutRevision %>" model="<%= LayoutRevision.class %>" />

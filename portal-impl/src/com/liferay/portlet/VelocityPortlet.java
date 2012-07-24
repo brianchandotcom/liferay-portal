@@ -174,6 +174,11 @@ public class VelocityPortlet extends GenericPortlet {
 			TemplateResourceLoaderUtil.getTemplateResource(
 				TemplateManager.VELOCITY, templateId);
 
+		if (templateResource == null) {
+			throw new Exception(
+				"Failed to load TemplateResource " + templateId);
+		}
+
 		Template template = TemplateManagerUtil.getTemplate(
 			TemplateManager.VELOCITY, templateResource,
 			TemplateContextType.STANDARD);

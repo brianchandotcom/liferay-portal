@@ -34,6 +34,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -166,9 +167,33 @@ public class PortletDisplayTemplatesUtil {
 		contextObjects.put(
 			PortletDisplayTemplatesConstants.THEME_DISPLAY, themeDisplay);
 
+		contextObjects.putAll(getPortletPreferences(renderRequest));
+
 		return _transformer.transform(
 			themeDisplay, contextObjects, ddmTemplate.getScript(),
 			ddmTemplate.getLanguage());
+	}
+
+	private static Map<String, Object> getPortletPreferences(
+		RenderRequest renderRequest) {
+
+		Map<String, Object> contextPreferences = new HashMap<String, Object>();
+		PortletPreferences preferences = renderRequest.getPreferences();
+
+		Map<String, String[]> preferencesMap = preferences.getMap();
+
+		for (Map.Entry<String, String[]> preference :
+			preferencesMap.entrySet()) {
+
+			if ((preference.getValue()!= null) &&
+				(preference.getValue()[0] != null)) {
+
+				contextPreferences.put(
+					preference.getKey(), preference.getValue()[0]);
+			}
+		}
+
+		return contextPreferences;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

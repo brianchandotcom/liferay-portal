@@ -60,6 +60,10 @@ public class InputEditorTag extends IncludeTag {
 		_onChangeMethod = onChangeMethod;
 	}
 
+	public void setResizable(boolean resizable) {
+		_resizable = resizable;
+	}
+
 	public void setSkipEditorLoading(boolean skipEditorLoading) {
 		_skipEditorLoading = skipEditorLoading;
 	}
@@ -83,6 +87,7 @@ public class InputEditorTag extends IncludeTag {
 		_name = "editor";
 		_onChangeMethod = null;
 		_page = null;
+		_resizable = true;
 		_skipEditorLoading = false;
 		_toolbarSet = "liferay";
 		_width = null;
@@ -119,6 +124,8 @@ public class InputEditorTag extends IncludeTag {
 		request.setAttribute("liferay-ui:input-editor:name", _name);
 		request.setAttribute(
 			"liferay-ui:input-editor:onChangeMethod", _onChangeMethod);
+		request.setAttribute("" +
+			"liferay-ui:input-editor:resizable", String.valueOf(_resizable));
 		request.setAttribute(
 			"liferay-ui:input-editor:skipEditorLoading",
 			String.valueOf(_skipEditorLoading));
@@ -135,6 +142,7 @@ public class InputEditorTag extends IncludeTag {
 	private String _name = "editor";
 	private String _onChangeMethod;
 	private String _page;
+	private boolean _resizable = true;
 	private boolean _skipEditorLoading;
 	private String _toolbarSet = "liferay";
 	private String _width;

@@ -27,10 +27,10 @@ if (Validator.isNotNull(onChangeMethod)) {
 	onChangeMethod = namespace + onChangeMethod;
 }
 
-String format = GetterUtil.getString((String)request.getAttribute("wiki.jsp-format"));
+boolean resizable = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:resizable"));
 %>
 
-<aui:script use="resize">
+<aui:script use='<%= resizable ? "resize" : "aui-base" %>'>
 	window['<%= name %>'] = {
 		destroy: function() {
 			var editorEl = document.getElementById('<%= name %>');
@@ -54,7 +54,7 @@ String format = GetterUtil.getString((String)request.getAttribute("wiki.jsp-form
 			<c:if test="<%= Validator.isNotNull(initMethod) %>">
 				<%= name %>.setHTML(<%= namespace + initMethod %>());
 
-				<c:if test='<%= !format.equalsIgnoreCase("mediawiki") %>'>
+				<c:if test="<%= resizable %>">
 					new A.Resize(
 						{
 							handles: 'br',

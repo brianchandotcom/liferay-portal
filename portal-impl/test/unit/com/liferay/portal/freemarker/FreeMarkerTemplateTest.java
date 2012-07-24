@@ -20,7 +20,11 @@ import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.templateparser.TemplateContext;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.template.TemplateContextHelper;
+import com.liferay.portal.util.InitUtil;
+
+import freemarker.cache.TemplateCache;
 
 import freemarker.core.ParseException;
 
@@ -29,6 +33,8 @@ import freemarker.template.Configuration;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
+
+import java.lang.reflect.Field;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -46,7 +52,23 @@ public class FreeMarkerTemplateTest extends TestCase {
 
 	@Override
 	public void setUp() throws Exception {
+		InitUtil.initWithSpring();
+
 		_configuration = new Configuration();
+
+		try {
+			Field field = ReflectionUtil.getDeclaredField(
+				Configuration.class, "cache");
+
+			TemplateCache templateCache = new LiferayTemplateCache(
+				_configuration);
+
+			field.set(_configuration, templateCache);
+		}
+		catch (Exception e) {
+			throw new TemplateException(
+				"Unable to Initialize Freemarker manager");
+		}
 
 		_configuration.setLocalizedLookup(false);
 

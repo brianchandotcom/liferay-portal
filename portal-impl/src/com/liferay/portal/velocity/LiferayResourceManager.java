@@ -45,13 +45,9 @@ import org.apache.velocity.runtime.resource.ResourceManagerImpl;
 public class LiferayResourceManager extends ResourceManagerImpl {
 
 	public LiferayResourceManager() {
-		String loaderName =
-			TemplateResourceLoaderUtil.getTemplateResourceLoader(
-				TemplateManager.VELOCITY).getName();
-
 		_portalCache = SingleVMPoolUtil.getCache(
 			TemplateResource.class.getName().concat(StringPool.POUND).concat(
-				loaderName));
+				TemplateManager.VELOCITY));
 	}
 
 	@Override

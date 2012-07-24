@@ -26,12 +26,13 @@ import java.io.Serializable;
 public interface TemplateResource extends Serializable {
 
 	public static final String DEFAUT_ENCODING = StringPool.UTF8;
-	public static final String TEMPLATE_RESOURCE_UUID_PREFIX =
-		"TEMPLATE_RESOURCE_UUID";
 
 	public static final String JOURNAL_SEPARATOR = "_JOURNAL_CONTEXT_";
 
 	public static final String SERVLET_SEPARATOR = "_SERVLET_CONTEXT_";
+
+	public static final String TEMPLATE_RESOURCE_UUID_PREFIX =
+		"TEMPLATE_RESOURCE_UUID";
 
 	public static final String THEME_LOADER_SEPARATOR =
 		"_THEME_LOADER_CONTEXT_";

@@ -53,13 +53,9 @@ public class LiferayTemplateCache extends TemplateCache {
 			throw new TemplateException(e);
 		}
 
-		String loaderName =
-			TemplateResourceLoaderUtil.getTemplateResourceLoader(
-				TemplateManager.FREEMARKER).getName();
-
 		_portalCache = SingleVMPoolUtil.getCache(
 			TemplateResource.class.getName().concat(StringPool.POUND).concat(
-				loaderName));
+				TemplateManager.FREEMARKER));
 	}
 
 	@Override

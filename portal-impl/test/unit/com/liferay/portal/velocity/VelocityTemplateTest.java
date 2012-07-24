@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.templateparser.TemplateContext;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.template.TemplateContextHelper;
+import com.liferay.portal.util.InitUtil;
 import com.liferay.portal.util.PropsUtil;
 
 import freemarker.core.ParseException;
@@ -49,11 +50,17 @@ public class VelocityTemplateTest extends TestCase {
 
 	@Override
 	public void setUp() throws Exception {
+		InitUtil.initWithSpring();
+
 		_templateContextHelper = new MockTemplateContextHelper();
 
 		_velocityEngine = new VelocityEngine();
 
 		ExtendedProperties extendedProperties = new FastExtendedProperties();
+
+		extendedProperties.setProperty(
+			VelocityEngine.RESOURCE_MANAGER_CLASS,
+			PropsUtil.get(PropsKeys.VELOCITY_ENGINE_RESOURCE_MANAGER));
 
 		extendedProperties.setProperty(
 			VelocityEngine.RUNTIME_LOG_LOGSYSTEM_CLASS,

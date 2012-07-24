@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.template.TemplateContextType;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
-import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
+import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -108,6 +108,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
+import java.net.URL;
 
 import java.text.Format;
 
@@ -1109,17 +1111,12 @@ public class WebServerServlet extends HttpServlet {
 			List<WebServerEntry> webServerEntries)
 		throws Exception {
 
-		TemplateResource templateResource =
-			TemplateResourceLoaderUtil.getTemplateResource(
-				TemplateManager.FREEMARKER, _TEMPLATE_FTL);
-
-		if (templateResource == null) {
-			throw new Exception(
-				"Failed to load TemplateResource " + _TEMPLATE_FTL);
+		if (_templateResource == null) {
+			return;
 		}
 
 		Template template = TemplateManagerUtil.getTemplate(
-			TemplateManager.FREEMARKER, templateResource,
+			TemplateManager.FREEMARKER, _templateResource,
 			TemplateContextType.RESTRICTED);
 
 		template.put("dateFormat", _dateFormat);
@@ -1289,9 +1286,6 @@ public class WebServerServlet extends HttpServlet {
 
 	private static final String _PATH_DDM = "ddm";
 
-	private static final String _TEMPLATE_FTL =
-		"com/liferay/portal/webserver/dependencies/template.ftl";
-
 	private static final boolean _WEB_SERVER_SERVLET_VERSION_VERBOSITY_DEFAULT =
 		PropsValues.WEB_SERVER_SERVLET_VERSION_VERBOSITY.equalsIgnoreCase(
 			ReleaseInfo.getName());
@@ -1308,6 +1302,25 @@ public class WebServerServlet extends HttpServlet {
 	private static Format _dateFormat =
 		FastDateFormatFactoryUtil.getSimpleDateFormat(_DATE_FORMAT_PATTERN);
 
+	private static TemplateResource _templateResource;
+
 	private boolean _lastModified = true;
+
+	static {
+		try {
+			String templateId =
+				"com/liferay/portal/webserver/dependencies/template.ftl";
+
+			ClassLoader classLoader = WebServerServlet.class.getClassLoader();
+
+			URL templateURL = classLoader.getResource(templateId);
+
+			_templateResource = new URLTemplateResource(
+				templateId, templateURL);
+		}
+		catch (Exception e) {
+			_templateResource = null;
+		}
+	}
 
 }

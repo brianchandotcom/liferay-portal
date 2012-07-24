@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.template.TemplateContextType;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
-import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
+import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -54,6 +54,8 @@ import freemarker.template.TemplateHashModel;
 
 import java.io.IOException;
 import java.io.Writer;
+
+import java.net.URL;
 
 import java.util.HashMap;
 import java.util.List;
@@ -146,7 +148,7 @@ public class DDMXSDImpl implements DDMXSD {
 			String fieldNamespace = dynamicElementElement.attributeValue(
 				"fieldNamespace", _DEFAULT_NAMESPACE);
 
-			String defaultResourcePath = _TPL_DEFAULT_PATH;
+			TemplateResource templateResource = _defaultTemplateResource;
 
 			boolean fieldReadOnly = GetterUtil.getBoolean(
 				field.get("readOnly"));
@@ -157,7 +159,7 @@ public class DDMXSDImpl implements DDMXSD {
 
 				fieldNamespace = _DEFAULT_READ_ONLY_NAMESPACE;
 
-				defaultResourcePath = _TPL_DEFAULT_READ_ONLY_PATH;
+				templateResource = _defaultReadonlyTemplateResource;
 			}
 
 			String type = dynamicElementElement.attributeValue("type");
@@ -175,15 +177,14 @@ public class DDMXSDImpl implements DDMXSD {
 
 			String resource = resourcePath.toString();
 
-			if (!TemplateResourceLoaderUtil.hasTemplateResource(
-					TemplateManager.FREEMARKER, resource)) {
+			ClassLoader classLoader = DDMXSDImpl.class.getClassLoader();
 
-				resource = defaultResourcePath;
+			URL templateURL = classLoader.getResource(resource);
+
+			if (templateURL != null) {
+				templateResource = new URLTemplateResource(
+					resource, templateURL);
 			}
-
-			TemplateResource templateResource =
-				TemplateResourceLoaderUtil.getTemplateResource(
-					TemplateManager.FREEMARKER, resource);
 
 			if (templateResource == null) {
 				throw new Exception(
@@ -512,16 +513,39 @@ public class DDMXSDImpl implements DDMXSD {
 
 	private static final String _DEFAULT_READ_ONLY_NAMESPACE = "readonly";
 
-	private static final String _TPL_DEFAULT_PATH =
-		"com/liferay/portlet/dynamicdatamapping/dependencies/alloy/text.ftl";
-
-	private static final String _TPL_DEFAULT_READ_ONLY_PATH =
-		"com/liferay/portlet/dynamicdatamapping/dependencies/readonly/" +
-			"default.ftl";
-
 	private static final String _TPL_EXT = ".ftl";
 
 	private static final String _TPL_PATH =
 		"com/liferay/portlet/dynamicdatamapping/dependencies/";
+
+	private static TemplateResource _defaultReadonlyTemplateResource;
+	private static TemplateResource _defaultTemplateResource;
+
+	static {
+		try {
+			ClassLoader classLoader = DDMXSDImpl.class.getClassLoader();
+
+			String templateDefaultPath =
+				"com/liferay/portlet/dynamicdatamapping/dependencies/alloy/" +
+					"text.ftl";
+
+			URL templateURL = classLoader.getResource(templateDefaultPath);
+
+			_defaultTemplateResource = new URLTemplateResource(
+				templateDefaultPath, templateURL);
+
+			String templateDefaultReadonlyPath =
+				"com/liferay/portlet/dynamicdatamapping/dependencies/readonly" +
+					"/default.ftl";
+
+			templateURL = classLoader.getResource(templateDefaultReadonlyPath);
+
+			_defaultReadonlyTemplateResource = new URLTemplateResource(
+				templateDefaultReadonlyPath, templateURL);
+		}
+		catch (Exception e) {
+			throw new ExceptionInInitializerError(e);
+		}
+	}
 
 }

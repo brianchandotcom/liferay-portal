@@ -34,7 +34,6 @@ import javax.xml.transform.stream.StreamSource;
  */
 public class XSLTemplateParser extends VelocityTemplateParser {
 
-	@Override
 	protected String getErrorTemplateContent() {
 		return ContentUtil.get(PropsValues.JOURNAL_ERROR_TEMPLATE_XSL);
 	}

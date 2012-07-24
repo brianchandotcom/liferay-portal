@@ -14,18 +14,13 @@
 
 package com.liferay.portlet.journal.util;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.template.StringTemplateResource;
-import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateContextType;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.templateparser.TemplateContext;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.util.ContentUtil;
 
 /**
  * @author Mika Koivisto
@@ -33,49 +28,18 @@ import com.liferay.util.ContentUtil;
 public class FreeMarkerTemplateParser extends VelocityTemplateParser {
 
 	@Override
-	protected String getErrorTemplateContent() {
-		return ContentUtil.get(PropsValues.JOURNAL_ERROR_TEMPLATE_FREEMARKER);
-	}
-
-	@Override
 	protected String getErrorTemplateId() {
 		return PropsValues.JOURNAL_ERROR_TEMPLATE_FREEMARKER;
-	}
-
-	@Override
-	protected String getJournalTemplatesPath() {
-		StringBundler sb = new StringBundler(5);
-
-		sb.append(TemplateResource.JOURNAL_SEPARATOR);
-		sb.append(StringPool.SLASH);
-		sb.append(getCompanyId());
-		sb.append(StringPool.SLASH);
-		sb.append(getGroupId());
-
-		return sb.toString();
 	}
 
 	@Override
 	protected TemplateContext getTemplateContext() throws Exception {
 		TemplateResource templateResource = new StringTemplateResource(
 			getTemplateId(), getScript());
-		TemplateResource errorTemplateResource = new StringTemplateResource(
-			getErrorTemplateId(), getErrorTemplateContent());
 
 		return TemplateManagerUtil.getTemplate(
-			TemplateManager.FREEMARKER, templateResource, errorTemplateResource,
-			TemplateContextType.RESTRICTED);
-	}
-
-	@Override
-	protected boolean mergeTemplate(
-			TemplateContext templateContext,
-			UnsyncStringWriter unsyncStringWriter)
-		throws Exception {
-
-		Template template = (Template)templateContext;
-
-		return template.processTemplate(unsyncStringWriter);
+			TemplateManager.FREEMARKER, templateResource,
+			getErrorTemplateResource(), TemplateContextType.RESTRICTED);
 	}
 
 }

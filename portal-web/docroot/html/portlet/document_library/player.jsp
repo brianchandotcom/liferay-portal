@@ -75,10 +75,10 @@ for (String previewFileURL : previewFileURLs) {
 						allowfullscreen: 'true',
 						bgColor: '#000000',
 						wmode: 'opaque'
-					}
+					},
 
 					<c:if test="<%= Validator.isNotNull(ogvPreviewFileURL) %>">
-						, ogvUrl: '<%= ogvPreviewFileURL %>',
+						ogvUrl: '<%= ogvPreviewFileURL %>',
 					</c:if>
 
 					poster: '<%= videoThumbnailURL %>'

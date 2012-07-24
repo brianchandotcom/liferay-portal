@@ -415,7 +415,7 @@
 		<concat destfile="docroot/html/js/editor/ckeditor_diffs/plugins/bbcode/bbcode_parser.js">
 			<filelist
 				dir="docroot/html/js/editor/ckeditor_diffs/plugins/bbcode"
-				files="lexer.js,parser.js,converter.js"
+				files="bbcode_utils.js,lexer.js,parser.js,converter.js"
 			/>
 		</concat>
 	</target>

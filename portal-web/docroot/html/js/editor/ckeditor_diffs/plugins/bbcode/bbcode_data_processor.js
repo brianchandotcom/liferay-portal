@@ -440,9 +440,12 @@
 					data = data.replace(REGEX_NEWLINE, '');
 				}
 				else if (instance._checkParentElement(element, TAG_LINK) &&
-					data.indexOf(STR_MAILTO) == 0) {
+					data.indexOf(STR_MAILTO) === 0) {
 
 					data = data.substring(STR_MAILTO.length);
+				}
+				else if (instance._checkParentElement(element, TAG_CITE)) {
+					data = Liferay.BBCodeUtil.escape(data);
 				}
 
 				instance._endResult.push(data);

@@ -39,7 +39,7 @@ PluginPackage pluginPackage = PluginPackageUtil.getPluginPackageByModuleId(modul
 		<liferay-ui:message key="name" />:
 	</td>
 	<td>
-		<strong><aui:a href="<%= pluginPackage.getPageURL() %>" label="<%= pluginPackage.getName() %>" /></strong> (v<%= pluginPackage.getVersion() %>) <aui:a href="<%= pluginPackage.getDownloadURL() %>" label='<%= "[" + LanguageUtil.get(pageContext, "download") + "]" %>' />
+		<strong><aui:a href="<%= pluginPackage.getPageURL() %>" label="<%= HtmlUtil.escape(pluginPackage.getName()) %>" /></strong> (v<%= HtmlUtil.escape(pluginPackage.getVersion()) %>) <aui:a href="<%= pluginPackage.getDownloadURL() %>" label='<%= "[" + LanguageUtil.get(pageContext, "download") + "]" %>' />
 	</td>
 </tr>
 <tr>
@@ -47,7 +47,7 @@ PluginPackage pluginPackage = PluginPackageUtil.getPluginPackageByModuleId(modul
 		<liferay-ui:message key="author" />:
 	</td>
 	<td>
-		<%= pluginPackage.getAuthor() %>
+		<%= HtmlUtil.escape(pluginPackage.getAuthor()) %>
 	</td>
 </tr>
 <tr>
@@ -84,7 +84,7 @@ PluginPackage pluginPackage = PluginPackageUtil.getPluginPackageByModuleId(modul
 			String tag = pluginPackageTags.get(i);
 		%>
 
-			<%= tag %><c:if test="<%= i < pluginPackageTags.size() - 1 %>">, </c:if>
+			<%= HtmlUtil.escape(tag) %><c:if test="<%= i < pluginPackageTags.size() - 1 %>">, </c:if>
 
 		<%
 		}
@@ -106,7 +106,7 @@ PluginPackage pluginPackage = PluginPackageUtil.getPluginPackageByModuleId(modul
 		%>
 
 			<c:if test="<%= Validator.isNotNull(license.getUrl()) %>">
-				<aui:a href="<%= license.getUrl() %>" label="<%= license.getName() %>" />
+				<aui:a href="<%= license.getUrl() %>" label="<%= HtmlUtil.escape(license.getName()) %>" />
 			</c:if>
 
 			<c:if test="<%= license.isOsiApproved() %>">
@@ -134,7 +134,7 @@ PluginPackage pluginPackage = PluginPackageUtil.getPluginPackageByModuleId(modul
 			String liferayVersion = liferayVersions.get(i);
 		%>
 
-			<%= liferayVersion %><c:if test="<%= i < liferayVersions.size() - 1 %>">, </c:if>
+			<%= HtmlUtil.escape(liferayVersion) %><c:if test="<%= i < liferayVersions.size() - 1 %>">, </c:if>
 
 		<%
 		}
@@ -147,7 +147,7 @@ PluginPackage pluginPackage = PluginPackageUtil.getPluginPackageByModuleId(modul
 		<liferay-ui:message key="repository" />:
 	</td>
 	<td>
-		<a href="<%= pluginPackage.getRepositoryURL() %>"><%= pluginPackage.getRepositoryURL() %></a>
+		<a href="<%= HtmlUtil.escapeHREF(pluginPackage.getRepositoryURL()) %>"><%= HtmlUtil.escape(pluginPackage.getRepositoryURL()) %></a>
 
 		<c:choose>
 			<c:when test="<%= PluginPackageUtil.isTrusted(pluginPackage.getRepositoryURL()) %>">
@@ -169,7 +169,7 @@ PluginPackage pluginPackage = PluginPackageUtil.getPluginPackageByModuleId(modul
 		<liferay-ui:message key="short-description" />:
 	</td>
 	<td>
-		<%= pluginPackage.getShortDescription() %>
+		<%= HtmlUtil.escape(pluginPackage.getShortDescription()) %>
 	</td>
 </tr>
 
@@ -179,7 +179,7 @@ PluginPackage pluginPackage = PluginPackageUtil.getPluginPackageByModuleId(modul
 			<liferay-ui:message key="long-description" />:
 		</td>
 		<td>
-			<%= pluginPackage.getLongDescription() %>
+			<%= HtmlUtil.escape(pluginPackage.getLongDescription()) %>
 		</td>
 	</tr>
 </c:if>
@@ -190,7 +190,7 @@ PluginPackage pluginPackage = PluginPackageUtil.getPluginPackageByModuleId(modul
 			<liferay-ui:message key="change-log" />:
 		</td>
 		<td>
-			<%= pluginPackage.getChangeLog() %>
+			<%= HtmlUtil.escape(pluginPackage.getChangeLog()) %>
 		</td>
 	</tr>
 </c:if>

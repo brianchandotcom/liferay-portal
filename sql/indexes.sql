@@ -248,6 +248,7 @@ create index IX_C68DC967 on DLFileVersion (fileEntryId);
 create index IX_D47BB14D on DLFileVersion (fileEntryId, status);
 create unique index IX_E2815081 on DLFileVersion (fileEntryId, version);
 create index IX_DFD809D3 on DLFileVersion (groupId, folderId, status);
+create index IX_9BE769ED on DLFileVersion (groupId, folderId, title, version);
 create index IX_4BFABB9A on DLFileVersion (uuid_);
 create index IX_95E9E44E on DLFileVersion (uuid_, companyId);
 create unique index IX_C99B2650 on DLFileVersion (uuid_, groupId);

@@ -444,6 +444,12 @@
 			<finder-column name="folderId" />
 			<finder-column name="status" />
 		</finder>
+		<finder name="G_F_T_V" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="folderId" />
+			<finder-column name="title" />
+			<finder-column name="version" />
+		</finder>
 	</entity>
 	<entity name="DLFolder" human-name="document library folder" uuid="true" local-service="true" remote-service="true">
 

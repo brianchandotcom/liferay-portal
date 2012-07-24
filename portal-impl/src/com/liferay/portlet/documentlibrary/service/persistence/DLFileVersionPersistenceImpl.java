@@ -208,6 +208,37 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName()
 			});
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_F_T_V = new FinderPath(DLFileVersionModelImpl.ENTITY_CACHE_ENABLED,
+			DLFileVersionModelImpl.FINDER_CACHE_ENABLED,
+			DLFileVersionImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByG_F_T_V",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				String.class.getName(), String.class.getName(),
+				
+			"java.lang.Integer", "java.lang.Integer",
+				"com.liferay.portal.kernel.util.OrderByComparator"
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_F_T_V =
+		new FinderPath(DLFileVersionModelImpl.ENTITY_CACHE_ENABLED,
+			DLFileVersionModelImpl.FINDER_CACHE_ENABLED,
+			DLFileVersionImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByG_F_T_V",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				String.class.getName(), String.class.getName()
+			},
+			DLFileVersionModelImpl.GROUPID_COLUMN_BITMASK |
+			DLFileVersionModelImpl.FOLDERID_COLUMN_BITMASK |
+			DLFileVersionModelImpl.TITLE_COLUMN_BITMASK |
+			DLFileVersionModelImpl.VERSION_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_G_F_T_V = new FinderPath(DLFileVersionModelImpl.ENTITY_CACHE_ENABLED,
+			DLFileVersionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_F_T_V",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				String.class.getName(), String.class.getName()
+			});
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_ALL = new FinderPath(DLFileVersionModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileVersionModelImpl.FINDER_CACHE_ENABLED,
 			DLFileVersionImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
@@ -566,6 +597,35 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_F_S, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_F_S,
+					args);
+			}
+
+			if ((dlFileVersionModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_F_T_V.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(dlFileVersionModelImpl.getOriginalGroupId()),
+						Long.valueOf(dlFileVersionModelImpl.getOriginalFolderId()),
+						
+						dlFileVersionModelImpl.getOriginalTitle(),
+						
+						dlFileVersionModelImpl.getOriginalVersion()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_F_T_V, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_F_T_V,
+					args);
+
+				args = new Object[] {
+						Long.valueOf(dlFileVersionModelImpl.getGroupId()),
+						Long.valueOf(dlFileVersionModelImpl.getFolderId()),
+						
+						dlFileVersionModelImpl.getTitle(),
+						
+						dlFileVersionModelImpl.getVersion()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_F_T_V, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_F_T_V,
 					args);
 			}
 		}
@@ -3165,6 +3225,515 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	}
 
 	/**
+	 * Returns all the document library file versions where groupId = &#63; and folderId = &#63; and title = &#63; and version = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param folderId the folder ID
+	 * @param title the title
+	 * @param version the version
+	 * @return the matching document library file versions
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<DLFileVersion> findByG_F_T_V(long groupId, long folderId,
+		String title, String version) throws SystemException {
+		return findByG_F_T_V(groupId, folderId, title, version,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the document library file versions where groupId = &#63; and folderId = &#63; and title = &#63; and version = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param folderId the folder ID
+	 * @param title the title
+	 * @param version the version
+	 * @param start the lower bound of the range of document library file versions
+	 * @param end the upper bound of the range of document library file versions (not inclusive)
+	 * @return the range of matching document library file versions
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<DLFileVersion> findByG_F_T_V(long groupId, long folderId,
+		String title, String version, int start, int end)
+		throws SystemException {
+		return findByG_F_T_V(groupId, folderId, title, version, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the document library file versions where groupId = &#63; and folderId = &#63; and title = &#63; and version = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param folderId the folder ID
+	 * @param title the title
+	 * @param version the version
+	 * @param start the lower bound of the range of document library file versions
+	 * @param end the upper bound of the range of document library file versions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching document library file versions
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<DLFileVersion> findByG_F_T_V(long groupId, long folderId,
+		String title, String version, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_F_T_V;
+			finderArgs = new Object[] { groupId, folderId, title, version };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_F_T_V;
+			finderArgs = new Object[] {
+					groupId, folderId, title, version,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<DLFileVersion> list = (List<DLFileVersion>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (DLFileVersion dlFileVersion : list) {
+				if ((groupId != dlFileVersion.getGroupId()) ||
+						(folderId != dlFileVersion.getFolderId()) ||
+						!Validator.equals(title, dlFileVersion.getTitle()) ||
+						!Validator.equals(version, dlFileVersion.getVersion())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(6 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(6);
+			}
+
+			query.append(_SQL_SELECT_DLFILEVERSION_WHERE);
+
+			query.append(_FINDER_COLUMN_G_F_T_V_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_F_T_V_FOLDERID_2);
+
+			if (title == null) {
+				query.append(_FINDER_COLUMN_G_F_T_V_TITLE_1);
+			}
+			else {
+				if (title.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_G_F_T_V_TITLE_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_G_F_T_V_TITLE_2);
+				}
+			}
+
+			if (version == null) {
+				query.append(_FINDER_COLUMN_G_F_T_V_VERSION_1);
+			}
+			else {
+				if (version.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_G_F_T_V_VERSION_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_G_F_T_V_VERSION_2);
+				}
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+
+			else {
+				query.append(DLFileVersionModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(folderId);
+
+				if (title != null) {
+					qPos.add(title);
+				}
+
+				if (version != null) {
+					qPos.add(version);
+				}
+
+				list = (List<DLFileVersion>)QueryUtil.list(q, getDialect(),
+						start, end);
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (list == null) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
+				else {
+					cacheResult(list);
+
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
+
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first document library file version in the ordered set where groupId = &#63; and folderId = &#63; and title = &#63; and version = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param folderId the folder ID
+	 * @param title the title
+	 * @param version the version
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching document library file version
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a matching document library file version could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLFileVersion findByG_F_T_V_First(long groupId, long folderId,
+		String title, String version, OrderByComparator orderByComparator)
+		throws NoSuchFileVersionException, SystemException {
+		DLFileVersion dlFileVersion = fetchByG_F_T_V_First(groupId, folderId,
+				title, version, orderByComparator);
+
+		if (dlFileVersion != null) {
+			return dlFileVersion;
+		}
+
+		StringBundler msg = new StringBundler(10);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", folderId=");
+		msg.append(folderId);
+
+		msg.append(", title=");
+		msg.append(title);
+
+		msg.append(", version=");
+		msg.append(version);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchFileVersionException(msg.toString());
+	}
+
+	/**
+	 * Returns the first document library file version in the ordered set where groupId = &#63; and folderId = &#63; and title = &#63; and version = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param folderId the folder ID
+	 * @param title the title
+	 * @param version the version
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching document library file version, or <code>null</code> if a matching document library file version could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLFileVersion fetchByG_F_T_V_First(long groupId, long folderId,
+		String title, String version, OrderByComparator orderByComparator)
+		throws SystemException {
+		List<DLFileVersion> list = findByG_F_T_V(groupId, folderId, title,
+				version, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last document library file version in the ordered set where groupId = &#63; and folderId = &#63; and title = &#63; and version = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param folderId the folder ID
+	 * @param title the title
+	 * @param version the version
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching document library file version
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a matching document library file version could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLFileVersion findByG_F_T_V_Last(long groupId, long folderId,
+		String title, String version, OrderByComparator orderByComparator)
+		throws NoSuchFileVersionException, SystemException {
+		DLFileVersion dlFileVersion = fetchByG_F_T_V_Last(groupId, folderId,
+				title, version, orderByComparator);
+
+		if (dlFileVersion != null) {
+			return dlFileVersion;
+		}
+
+		StringBundler msg = new StringBundler(10);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", folderId=");
+		msg.append(folderId);
+
+		msg.append(", title=");
+		msg.append(title);
+
+		msg.append(", version=");
+		msg.append(version);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchFileVersionException(msg.toString());
+	}
+
+	/**
+	 * Returns the last document library file version in the ordered set where groupId = &#63; and folderId = &#63; and title = &#63; and version = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param folderId the folder ID
+	 * @param title the title
+	 * @param version the version
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching document library file version, or <code>null</code> if a matching document library file version could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLFileVersion fetchByG_F_T_V_Last(long groupId, long folderId,
+		String title, String version, OrderByComparator orderByComparator)
+		throws SystemException {
+		int count = countByG_F_T_V(groupId, folderId, title, version);
+
+		List<DLFileVersion> list = findByG_F_T_V(groupId, folderId, title,
+				version, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the document library file versions before and after the current document library file version in the ordered set where groupId = &#63; and folderId = &#63; and title = &#63; and version = &#63;.
+	 *
+	 * @param fileVersionId the primary key of the current document library file version
+	 * @param groupId the group ID
+	 * @param folderId the folder ID
+	 * @param title the title
+	 * @param version the version
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next document library file version
+	 * @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a document library file version with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public DLFileVersion[] findByG_F_T_V_PrevAndNext(long fileVersionId,
+		long groupId, long folderId, String title, String version,
+		OrderByComparator orderByComparator)
+		throws NoSuchFileVersionException, SystemException {
+		DLFileVersion dlFileVersion = findByPrimaryKey(fileVersionId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			DLFileVersion[] array = new DLFileVersionImpl[3];
+
+			array[0] = getByG_F_T_V_PrevAndNext(session, dlFileVersion,
+					groupId, folderId, title, version, orderByComparator, true);
+
+			array[1] = dlFileVersion;
+
+			array[2] = getByG_F_T_V_PrevAndNext(session, dlFileVersion,
+					groupId, folderId, title, version, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected DLFileVersion getByG_F_T_V_PrevAndNext(Session session,
+		DLFileVersion dlFileVersion, long groupId, long folderId, String title,
+		String version, OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_DLFILEVERSION_WHERE);
+
+		query.append(_FINDER_COLUMN_G_F_T_V_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_F_T_V_FOLDERID_2);
+
+		if (title == null) {
+			query.append(_FINDER_COLUMN_G_F_T_V_TITLE_1);
+		}
+		else {
+			if (title.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_F_T_V_TITLE_3);
+			}
+			else {
+				query.append(_FINDER_COLUMN_G_F_T_V_TITLE_2);
+			}
+		}
+
+		if (version == null) {
+			query.append(_FINDER_COLUMN_G_F_T_V_VERSION_1);
+		}
+		else {
+			if (version.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_G_F_T_V_VERSION_3);
+			}
+			else {
+				query.append(_FINDER_COLUMN_G_F_T_V_VERSION_2);
+			}
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+
+		else {
+			query.append(DLFileVersionModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(folderId);
+
+		if (title != null) {
+			qPos.add(title);
+		}
+
+		if (version != null) {
+			qPos.add(version);
+		}
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(dlFileVersion);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<DLFileVersion> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
 	 * Returns all the document library file versions.
 	 *
 	 * @return the document library file versions
@@ -3372,6 +3941,23 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	public void removeByG_F_S(long groupId, long folderId, int status)
 		throws SystemException {
 		for (DLFileVersion dlFileVersion : findByG_F_S(groupId, folderId, status)) {
+			remove(dlFileVersion);
+		}
+	}
+
+	/**
+	 * Removes all the document library file versions where groupId = &#63; and folderId = &#63; and title = &#63; and version = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param folderId the folder ID
+	 * @param title the title
+	 * @param version the version
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void removeByG_F_T_V(long groupId, long folderId, String title,
+		String version) throws SystemException {
+		for (DLFileVersion dlFileVersion : findByG_F_T_V(groupId, folderId,
+				title, version)) {
 			remove(dlFileVersion);
 		}
 	}
@@ -3842,6 +4428,99 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	}
 
 	/**
+	 * Returns the number of document library file versions where groupId = &#63; and folderId = &#63; and title = &#63; and version = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param folderId the folder ID
+	 * @param title the title
+	 * @param version the version
+	 * @return the number of matching document library file versions
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByG_F_T_V(long groupId, long folderId, String title,
+		String version) throws SystemException {
+		Object[] finderArgs = new Object[] { groupId, folderId, title, version };
+
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_BY_G_F_T_V,
+				finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(5);
+
+			query.append(_SQL_COUNT_DLFILEVERSION_WHERE);
+
+			query.append(_FINDER_COLUMN_G_F_T_V_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_F_T_V_FOLDERID_2);
+
+			if (title == null) {
+				query.append(_FINDER_COLUMN_G_F_T_V_TITLE_1);
+			}
+			else {
+				if (title.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_G_F_T_V_TITLE_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_G_F_T_V_TITLE_2);
+				}
+			}
+
+			if (version == null) {
+				query.append(_FINDER_COLUMN_G_F_T_V_VERSION_1);
+			}
+			else {
+				if (version.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_G_F_T_V_VERSION_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_G_F_T_V_VERSION_2);
+				}
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(folderId);
+
+				if (title != null) {
+					qPos.add(title);
+				}
+
+				if (version != null) {
+					qPos.add(version);
+				}
+
+				count = (Long)q.uniqueResult();
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (count == null) {
+					count = Long.valueOf(0);
+				}
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_F_T_V,
+					finderArgs, count);
+
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
 	 * Returns the number of document library file versions.
 	 *
 	 * @return the number of document library file versions
@@ -3955,6 +4634,14 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	private static final String _FINDER_COLUMN_G_F_S_GROUPID_2 = "dlFileVersion.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_F_S_FOLDERID_2 = "dlFileVersion.folderId = ? AND ";
 	private static final String _FINDER_COLUMN_G_F_S_STATUS_2 = "dlFileVersion.status = ?";
+	private static final String _FINDER_COLUMN_G_F_T_V_GROUPID_2 = "dlFileVersion.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_F_T_V_FOLDERID_2 = "dlFileVersion.folderId = ? AND ";
+	private static final String _FINDER_COLUMN_G_F_T_V_TITLE_1 = "dlFileVersion.title IS NULL AND ";
+	private static final String _FINDER_COLUMN_G_F_T_V_TITLE_2 = "dlFileVersion.title = ? AND ";
+	private static final String _FINDER_COLUMN_G_F_T_V_TITLE_3 = "(dlFileVersion.title IS NULL OR dlFileVersion.title = ?) AND ";
+	private static final String _FINDER_COLUMN_G_F_T_V_VERSION_1 = "dlFileVersion.version IS NULL";
+	private static final String _FINDER_COLUMN_G_F_T_V_VERSION_2 = "dlFileVersion.version = ?";
+	private static final String _FINDER_COLUMN_G_F_T_V_VERSION_3 = "(dlFileVersion.version IS NULL OR dlFileVersion.version = ?)";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "dlFileVersion.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No DLFileVersion exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No DLFileVersion exists with the key {";

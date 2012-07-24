@@ -65,6 +65,9 @@
 	<bean id="destination.live_users" class="com.liferay.portal.kernel.messaging.SerialDestination">
 		<property name="name" value="liferay/live_users" />
 	</bean>
+	<bean id="destination.marketplace_hot_deploy" class="com.liferay.portal.kernel.messaging.ParallelDestination">
+		<property name="name" value="liferay/marketplace_hot_deploy" />
+	</bean>
 	<bean id="destination.message_boards_mailing_list" class="com.liferay.portal.kernel.messaging.ParallelDestination">
 		<property name="name" value="liferay/message_boards_mailing_list" />
 	</bean>
@@ -138,6 +141,7 @@
 				<ref bean="destination.layouts_local_publisher" />
 				<ref bean="destination.layouts_remote_publisher" />
 				<ref bean="destination.live_users" />
+				<ref bean="destination.marketplace_hot_deploy" />
 				<ref bean="destination.message_boards_mailing_list" />
 				<ref bean="destination.subscription_sender" />
 			</list>

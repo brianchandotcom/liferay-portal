@@ -167,7 +167,7 @@ if (layout != null) {
 						<li class="<%= cssClass %>">
 							<span class="aui-tab-content">
 								<span class="aui-tab-label">
-									<aui:a href="<%= selected ? null : layoutSetBranchURL %>" label='<%= layoutSetBranches.size() == 1 ? "staging" : curLayoutSetBranch.getName() %>' />
+									<aui:a href="<%= selected ? null : layoutSetBranchURL %>" label='<%= layoutSetBranches.size() == 1 ? "staging" : HtmlUtil.escape(curLayoutSetBranch.getName()) %>' />
 
 									<liferay-ui:staging extended="<%= false %>" layoutSetBranchId="<%= curLayoutSetBranch.getLayoutSetBranchId() %>" />
 								</span>
@@ -207,7 +207,7 @@ if (layout != null) {
 									<liferay-ui:icon
 										cssClass='<%= selected ? "disabled" : StringPool.BLANK %>'
 										image='<%= selected ? "../arrows/01_right" : "copy"  %>'
-										message="<%= curLayoutSetBranch.getName() %>"
+										message="<%= HtmlUtil.escape(curLayoutSetBranch.getName()) %>"
 										url="<%= selected ? null : layoutSetBranchURL %>"
 									/>
 
@@ -276,7 +276,7 @@ if (layout != null) {
 					<c:when test="<%= (group.isStagingGroup() || group.isStagedRemotely()) && branchingEnabled %>">
 						<div class="layout-set-branch-info">
 							<c:if test="<%= Validator.isNotNull(layoutSetBranch.getDescription()) %>">
-								<span class="layout-set-branch-description"><%= layoutSetBranch.getDescription() %></span>
+								<span class="layout-set-branch-description"><%= HtmlUtil.escape(layoutSetBranch.getDescription()) %></span>
 							</c:if>
 
 							<span class="layout-set-branch-pages">
@@ -357,7 +357,7 @@ if (layout != null) {
 
 												<li class="<%= cssClass %>">
 													<span class="aui-tab-content">
-														<aui:a cssClass="aui-tab-label" href="<%= selected ? null : layoutBranchURL %>" label="<%= curLayoutBranch.getName() %>" />
+														<aui:a cssClass="aui-tab-label" href="<%= selected ? null : layoutBranchURL %>" label="<%= HtmlUtil.escape(curLayoutBranch.getName()) %>" />
 													</span>
 												</li>
 
@@ -394,7 +394,7 @@ if (layout != null) {
 																<liferay-ui:icon
 																	cssClass='<%= selected ? "disabled" : StringPool.BLANK %>'
 																	image='<%= selected ? "../arrows/01_right" : "copy"  %>'
-																	message="<%= curLayoutBranch.getName() %>"
+																	message="<%= HtmlUtil.escape(curLayoutBranch.getName()) %>"
 																	url="<%= selected ? null : rootLayoutRevisionURL %>"
 																/>
 
@@ -425,7 +425,7 @@ if (layout != null) {
 									<div class="aui-tabview-content variations-tabview-content">
 										<c:if test="<%= Validator.isNotNull(layoutBranch.getDescription()) %>">
 											<div class="layout-branch-description">
-												<%= layoutBranch.getDescription() %>
+												<%= HtmlUtil.escape(layoutBranch.getDescription()) %>
 											</div>
 										</c:if>
 
@@ -486,7 +486,7 @@ if (layout != null) {
 							<c:choose>
 								<c:when test="<%= liveLayout == null %>">
 									<span class="last-publication-branch">
-										<liferay-ui:message arguments='<%= "<strong>" + layout.getName(locale) + "</strong>" %>' key="page-x-has-not-been-published-to-live-yet" />
+										<liferay-ui:message arguments='<%= "<strong>" + HtmlUtil.escape(layout.getName(locale)) + "</strong>" %>' key="page-x-has-not-been-published-to-live-yet" />
 									</span>
 								</c:when>
 								<c:otherwise>
@@ -567,13 +567,13 @@ if (layout != null) {
 
 												<c:if test="<%= Validator.isNotNull(lastImportLayoutSetBranchName) && Validator.isNotNull(publisherName) %>">
 													<span class="last-publication-branch">
-														<liferay-ui:message arguments='<%= new String[] {"<strong>" + layout.getName(locale) + "</strong>", "<em>" + LanguageUtil.get(pageContext, lastImportLayoutSetBranchName) + "</em>"} %>' key='<%= (group.isStagingGroup() || group.isStagedRemotely()) ? "page-x-was-last-published-to-live" : "page-x-was-last-published-from-x" %>' />
+														<liferay-ui:message arguments='<%= new String[] {"<strong>" + HtmlUtil.escape(layout.getName(locale)) + "</strong>", "<em>" + LanguageUtil.get(pageContext, HtmlUtil.escape(lastImportLayoutSetBranchName)) + "</em>"} %>' key='<%= (group.isStagingGroup() || group.isStagedRemotely()) ? "page-x-was-last-published-to-live" : "page-x-was-last-published-from-x" %>' />
 
 														<c:if test="<%= (Validator.isNotNull(lastImportLayoutBranchName) && (layoutRevisions.size() > 1)) || Validator.isNotNull(lastImportLayoutRevisionId) %>">
 															<span class="last-publication-variation-details">(
 																<c:if test="<%= Validator.isNotNull(lastImportLayoutBranchName) && (layoutRevisions.size() > 1) %>">
 																	<span class="variation-name">
-																		<liferay-ui:message key="variation" />: <strong><liferay-ui:message key="<%= lastImportLayoutBranchName %>" /></strong>
+																		<liferay-ui:message key="variation" />: <strong><liferay-ui:message key="<%= HtmlUtil.escape(lastImportLayoutBranchName) %>" /></strong>
 																	</span>
 																</c:if>
 
@@ -593,11 +593,11 @@ if (layout != null) {
 											</c:when>
 											<c:otherwise>
 												<span class="staging-live-group-name">
-													<liferay-ui:message arguments="<%= liveGroup.getDescriptiveName(locale) %>" key="x-is-staged" />
+													<liferay-ui:message arguments="<%= HtmlUtil.escape(liveGroup.getDescriptiveName(locale)) %>" key="x-is-staged" />
 												</span>
 
 												<span class="staging-live-help">
-													<liferay-ui:message arguments="<%= liveGroup.getDescriptiveName(locale) %>" key='<%= (group.isStagingGroup() || group.isStagedRemotely()) ? "staging-staging-help-x" : "staging-live-help-x" %>' />
+													<liferay-ui:message arguments="<%= HtmlUtil.escape(liveGroup.getDescriptiveName(locale)) %>" key='<%= (group.isStagingGroup() || group.isStagedRemotely()) ? "staging-staging-help-x" : "staging-live-help-x" %>' />
 												</span>
 											</c:otherwise>
 										</c:choose>

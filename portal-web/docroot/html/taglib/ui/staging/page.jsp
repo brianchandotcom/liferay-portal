@@ -190,8 +190,8 @@ String publishScheduleMessage = LanguageUtil.get(pageContext, publishScheduleDia
 								publishRenderURL.setParameter("layoutSetBranchId", String.valueOf(layoutSetBranchId));
 								publishRenderURL.setParameter("layoutSetBranchName", layoutSetBranch.getName());
 
-								publishNowMessage = LanguageUtil.format(pageContext, publishNowDialogTitle, layoutSetBranch.getName());
-								publishScheduleMessage = LanguageUtil.format(pageContext, publishScheduleDialogTitle, layoutSetBranch.getName());
+								publishNowMessage = LanguageUtil.format(pageContext, publishNowDialogTitle, HtmlUtil.escape(layoutSetBranch.getName()));
+								publishScheduleMessage = LanguageUtil.format(pageContext, publishScheduleDialogTitle, HtmlUtil.escape(layoutSetBranch.getName()));
 								%>
 
 							</c:when>

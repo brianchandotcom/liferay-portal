@@ -45,7 +45,6 @@ portletURL.setParameter("tabs1", tabs1);
 </liferay-portlet:renderURL>
 
 <liferay-ui:search-container
-	rowChecker="<%= new RowChecker(renderResponse) %>"
 	searchContainer="<%= new EntrySearch(renderRequest, portletURL) %>"
 >
 
@@ -210,12 +209,6 @@ portletURL.setParameter("tabs1", tabs1);
 			<liferay-ui:search-form
 				page="/html/portlet/trash/entry_search.jsp"
 			/>
-
-			<c:if test="<%= total > 0 %>">
-				<aui:button name="deleteButton" onClick='<%= renderResponse.getNamespace() + "deleteEntries();" %>' value="delete" />
-
-				<aui:button name="restoreButton" onClick='<%= renderResponse.getNamespace() + "restoreEntries();" %>' value="restore" />
-			</c:if>
 		</aui:button-row>
 	</aui:form>
 

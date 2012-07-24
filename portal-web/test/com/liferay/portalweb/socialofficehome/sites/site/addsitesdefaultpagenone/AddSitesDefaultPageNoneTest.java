@@ -125,19 +125,19 @@ public class AddSitesDefaultPageNoneTest extends BaseTestCase {
 		selenium.select("//select[@id='_5_WAR_soportlet_typeSelect']",
 			RuntimeVariables.replace("Open"));
 		Thread.sleep(5000);
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//div[2]/div/div/div/div/div/div[contains(.,'Home')]/input"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//div[2]/div/div/div/div/div/div[contains(.,'Calendar')]/input"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//div[2]/div/div/div/div/div/div[contains(.,'Documents')]/input"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//div[2]/div/div/div/div/div/div[contains(.,'Forums')]/input"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//div[2]/div/div/div/div/div/div[contains(.,'Blog')]/input"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//div[2]/div/div/div/div/div/div[contains(.,'Wiki')]/input"));
-		assertFalse(selenium.isElementPresent(
+		assertTrue(selenium.isElementNotPresent(
 				"//div[2]/div/div/div/div/div/div[contains(.,'Members')]/input"));
 		assertEquals("Save", selenium.getValue("//input[@value='Save']"));
 		selenium.clickAt("//input[@value='Save']",

@@ -112,6 +112,7 @@ public class SOUs_SearchSitesSiteTypePrivateRestrictedTest extends BaseTestCase 
 			RuntimeVariables.replace("Private Restricted Site Name"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertFalse(selenium.isElementPresent("//div[@class='community-title']"));
+		assertTrue(selenium.isElementNotPresent(
+				"//div[@class='community-title']"));
 	}
 }

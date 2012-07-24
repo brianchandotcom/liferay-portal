@@ -20,8 +20,6 @@ WikiPage wikiPage = (WikiPage)request.getAttribute("edit_page.jsp-wikiPage");
 
 String format = BeanParamUtil.getString(wikiPage, request, "format", WikiPageConstants.DEFAULT_FORMAT);
 
-request.setAttribute("wiki.jsp-format", format);
-
 String content = BeanParamUtil.getString(wikiPage, request, "content");
 
 String toggleId = renderResponse.getNamespace() + "toggle_id_wiki_editor_help";
@@ -83,6 +81,7 @@ boolean showSyntaxHelp = ((toggleValue != null) && toggleValue.equals("block"));
 					editorImpl="<%= EDITOR_SIMPLE_IMPL_KEY %>"
 					fileBrowserParams="<%= fileBrowserParams %>"
 					name="content"
+					resizable="<%= false %>"
 					width="100%"
 				/>
 			</c:otherwise>

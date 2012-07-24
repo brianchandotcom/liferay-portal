@@ -93,7 +93,7 @@
 			'token-list': ['aui-base', 'aui-template'],
 			'translation-manager': ['aui-base'],
 			'undo-manager': ['aui-data-set', 'base'],
-			'upload': ['aui-io-request', 'aui-swf', 'collection', 'swfupload', 'uploader', 'uploader-html5'],
+			'upload': ['aui-io-request', 'aui-template', 'aui-swf', 'collection', 'swfupload', 'uploader', 'uploader-html5'],
 			'util-list-fields': ['aui-base'],
 			'util-window': ['aui-dialog', 'aui-dialog-iframe']
 		};

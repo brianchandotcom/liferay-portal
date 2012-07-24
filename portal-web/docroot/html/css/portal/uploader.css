@@ -1,37 +1,24 @@
-.lfr-dynamic-uploader .lfr-upload-container .upload-target {
-	background-image: none;
-	margin-right: 1.5em;
+.lfr-dynamic-uploader {
+	display: table;
+	table-layout: fixed;
+	width: 100%;
 }
 
 .lfr-upload-container {
 	margin-bottom: 1em;
 
-	.drag-drop-area {
-		background: none repeat scroll 0 0 #EBEBEB;
-		border: 4px dashed #DDDDDD;
-		font-size: 20;
-		margin-left: 0;
-		margin-top: 0;
-		padding-bottom: 30px;
-		padding-top: 30px;
-		text-align: center;
-
-		&.drag-highlight {
-			background: none repeat scroll 0 0 #DDEDDE;
-			border: 4px dashed #7D7;
-		}
-
-		.yui3-uploader{
-			margin-left: auto;
-			margin-right: auto;
-		}
-	}
-
 	.upload-target {
-		border: 1px solid transparent;
-		margin-right: 1.5em;
+		border: 2px solid transparent;
+		margin-bottom: 1em;
 		min-height: 30px;
+		padding: 30px 0;
+		position: relative;
 		text-align: center;
+
+		h4 span {
+			display: block;
+			margin: 5px 0;
+		}
 	}
 
 	.manage-upload-target {
@@ -51,6 +38,7 @@
 
 		&.clear-uploads {
 			float: right;
+			padding-left: 16px;
 		}
 	}
 
@@ -64,12 +52,17 @@
 		position: relative;
 
 		&.upload-complete.file-saved {
-			opacity: 0.6;
 			padding-left: 25px;
 		}
 
 		.file-title {
+			display: inline-block;
+			max-width: 95%;
+			overflow: hidden;
 			padding-right: 16px;
+			text-overflow: ellipsis;
+			vertical-align: middle;
+			white-space: nowrap;
 		}
 	}
 
@@ -84,6 +77,18 @@
 	.cancel-button {
 		position: absolute;
 		right: 5px;
+		margin-top: -0.85em;
+		overflow: hidden;
+		position: absolute;
+		top: 50%;
+		white-space: nowrap;
+		width: 0;
+
+		&:hover {
+			padding-right: 5px;
+			white-space: normal;
+			width: auto;
+		}
 	}
 
 	.delete-button {
@@ -114,7 +119,10 @@
 		padding-left: 5px;
 
 		.select-file {
-			margin-right: 25px;
+			left: 5px;
+			margin-top: -7px;
+			position: absolute;
+			top: 50%;
 		}
 
 		.error-message, .success-message {
@@ -133,13 +141,14 @@
 	}
 
 	.progress {
-		display: block;
+		display: inline-block;
 		height: 15px;
-		width: 0;
+		min-width: 20px;
 	}
 
 	.file-uploading {
 		.cancel-button {
+			margin-top: 1px;
 			top: 0;
 		}
 
@@ -189,13 +198,22 @@
 	}
 }
 
+.upload-drop-intent .lfr-upload-container .upload-target {
+	z-index: 100;
+}
+
 /* Skin */
 
 .lfr-upload-container {
 	.upload-target {
-		background-color: #8FBE31;
-		border-width: 0;
-		text-shadow: 1px 1px #656565;
+		background-color: #EBEBEB;
+		border-color: #DDD;
+		font-weight: bold;
+		text-shadow: 1px 1px #FFF;
+
+		h4 span {
+			text-transform: lowercase;
+		}
 	}
 
 	a {
@@ -209,7 +227,7 @@
 		}
 
 		&.clear-uploads {
-			background-image: url(@theme_image_path@/portlet/refresh.png);
+			background-image: url(@theme_image_path@/common/remove.png);
 			background-repeat: no-repeat;
 		}
 
@@ -225,8 +243,13 @@
 		font-weight: bold;
 		text-shadow: 1px 1px #FFF;
 
+		.file-title {
+			font-weight: bold;
+		}
+
 		&.upload-complete {
 			background-position: 22px 50%;
+			padding-left: 45px;
 
 			&.file-saved, &.upload-error {
 				background-position: 5px 50%;
@@ -236,6 +259,7 @@
 				background-color: #B4DDAD;
 				background-image: url(@theme_image_path@/common/check.png);
 				font-weight: bold;
+				opacity: 0.6;
 			}
 		}
 	}
@@ -254,6 +278,9 @@
 	.cancel-button {
 		background-image: url(@theme_image_path@/common/delete.png);
 		background-repeat: no-repeat;
+		background-color: #800;
+		color: #FFF;
+		text-shadow: 1px 1px #500;
 	}
 
 	.delete-button {
@@ -275,7 +302,13 @@
 	.upload-error {
 		background-color: #FDD;
 		background-image: url(@theme_image_path@/messages/error.png);
+		border-color: #900;
+		color: #900;
 		font-weight: normal;
+
+		.error-message {
+			display: block;
+		}
 	}
 
 	.upload-complete {
@@ -296,6 +329,12 @@
 	.progress {
 		background: #8db2e3;
 	}
+}
+
+.upload-drop-active .lfr-upload-container .upload-target {
+	background-color: #DDEDDE;
+	border-color: #7D7;
+	border-style: dashed;
 }
 
 .select-files {

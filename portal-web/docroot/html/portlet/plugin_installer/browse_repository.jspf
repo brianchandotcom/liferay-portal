@@ -51,7 +51,7 @@ try {
 			for (String curTag : pluginPackageTags) {
 			%>
 
-				<aui:option label="<%= curTag %>" selected="<%= tag.equals(curTag) %>" />
+				<aui:option label="<%= HtmlUtil.escape(curTag) %>" selected="<%= tag.equals(curTag) %>" />
 
 			<%
 			}
@@ -69,7 +69,7 @@ try {
 				String curRepositoryURL = repositoryURLs[i];
 			%>
 
-				<aui:option label="<%= curRepositoryURL %>" selected="<%= searchRepositoryURL.equals(curRepositoryURL) %>" />
+				<aui:option label="<%= HtmlUtil.escape(curRepositoryURL) %>" selected="<%= searchRepositoryURL.equals(curRepositoryURL) %>" />
 
 			<%
 			}
@@ -181,7 +181,7 @@ try {
 
 		PluginPackage installedPluginPackage = PluginPackageUtil.getLatestInstalledPluginPackage(pluginPackageGroupId, pluginPackageArtifactId);
 
-		ResultRow row = new ResultRow(doc, pluginPackageModuleId, i);
+		ResultRow row = new ResultRow(doc, HtmlUtil.escapeAttribute(pluginPackageModuleId), i);
 
 		PortletURL rowURL = renderResponse.createRenderURL();
 
@@ -215,9 +215,9 @@ try {
 		}
 
 		sb.append("<strong>");
-		sb.append(pluginPackageName);
+		sb.append(HtmlUtil.escape(pluginPackageName));
 		sb.append("</strong> ");
-		sb.append(pluginPackageAvailableVersion);
+		sb.append(HtmlUtil.escape(pluginPackageAvailableVersion));
 
 		if (pluginPackage != null) {
 			sb.append("</a>");
@@ -227,9 +227,9 @@ try {
 			sb.append("<br />");
 			sb.append(LanguageUtil.get(pageContext, "id"));
 			sb.append(": ");
-			sb.append(pluginPackageModuleId);
+			sb.append(HtmlUtil.escape(pluginPackageModuleId));
 			sb.append("<br />");
-			sb.append(pluginPackageShortDescription);
+			sb.append(HtmlUtil.escape(pluginPackageShortDescription));
 		}
 
 		row.addText(sb.toString());
@@ -247,14 +247,14 @@ try {
 
 		TextSearchEntry rowTextEntry = new TextSearchEntry();
 
-		rowTextEntry.setName(pluginPackageTags);
+		rowTextEntry.setName(HtmlUtil.escape(pluginPackageTags));
 
 		row.addText(rowTextEntry);
 
 		// Installed version
 
 		if (installedPluginPackage != null) {
-			row.addText(installedPluginPackage.getVersion());
+			row.addText(HtmlUtil.escape(installedPluginPackage.getVersion()));
 		}
 		else {
 			row.addText(StringPool.DASH);
@@ -264,12 +264,12 @@ try {
 
 		sb.setIndex(0);
 
-		sb.append(pluginPackageAvailableVersion);
+		sb.append(HtmlUtil.escape(pluginPackageAvailableVersion));
 		sb.append("&nbsp;<img align=\"absmiddle\" border=\"0\" src='");
 		sb.append(themeDisplay.getPathThemeImages());
 		sb.append("/document_library/page.png");
 		sb.append("' onmouseover=\"Liferay.Portal.ToolTip.show(this, '");
-		sb.append(pluginPackageChangeLog);
+		sb.append(HtmlUtil.escapeJS(HtmlUtil.escape(pluginPackageChangeLog)));
 		sb.append("')\" />");
 
 		row.addText(sb.toString());

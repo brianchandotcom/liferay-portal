@@ -165,9 +165,9 @@ public class SassToCssBuilder {
 
 		PortalUtil portalUtil = new PortalUtil();
 
-		portalUtil.setPortal(new PortalImpl());
-
 		PropsUtil.setProps(new PropsImpl());
+
+		portalUtil.setPortal(new PortalImpl());
 	}
 
 	private void _parseSassDirectory(String dirName) throws Exception {

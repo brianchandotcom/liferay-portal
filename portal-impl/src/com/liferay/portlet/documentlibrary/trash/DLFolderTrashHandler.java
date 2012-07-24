@@ -29,6 +29,7 @@ import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFolderServiceUtil;
 import com.liferay.portlet.trash.DuplicateEntryException;
 import com.liferay.portlet.trash.model.TrashEntry;
 
@@ -86,10 +87,10 @@ public class DLFolderTrashHandler extends BaseTrashHandler {
 
 		for (long classPK : classPKs) {
 			if (checkPermission) {
-				DLAppServiceUtil.deleteFolder(classPK);
+				DLFolderServiceUtil.deleteFolder(classPK, false);
 			}
 			else {
-				DLAppLocalServiceUtil.deleteFolder(classPK);
+				DLFolderLocalServiceUtil.deleteFolder(classPK, false);
 			}
 		}
 	}

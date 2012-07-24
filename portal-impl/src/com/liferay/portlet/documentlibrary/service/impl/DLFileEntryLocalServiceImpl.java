@@ -556,6 +556,13 @@ public class DLFileEntryLocalServiceImpl
 	public void deleteFileEntries(long groupId, long folderId)
 		throws PortalException, SystemException {
 
+		deleteFileEntries(groupId, folderId, true);
+	}
+
+	public void deleteFileEntries(
+			long groupId, long folderId, boolean includeTrashedEntries)
+		throws PortalException, SystemException {
+
 		int count = dlFileEntryPersistence.countByG_F(groupId, folderId);
 
 		int pages = count / _DELETE_INTERVAL;
@@ -568,10 +575,14 @@ public class DLFileEntryLocalServiceImpl
 				groupId, folderId, start, end);
 
 			for (DLFileEntry dlFileEntry : dlFileEntries) {
-				dlAppHelperLocalService.deleteFileEntry(
-					new LiferayFileEntry(dlFileEntry));
+				if (includeTrashedEntries ||
+					!dlFileEntry.getLatestFileVersion(true).isInTrash()) {
 
-				dlFileEntryLocalService.deleteFileEntry(dlFileEntry);
+					dlAppHelperLocalService.deleteFileEntry(
+						new LiferayFileEntry(dlFileEntry));
+
+					dlFileEntryLocalService.deleteFileEntry(dlFileEntry);
+				}
 			}
 		}
 	}

@@ -381,23 +381,36 @@ public class DLAppHelperLocalServiceImpl
 
 		FileVersion fileVersion = new LiferayFileVersion(dlFileVersions.get(0));
 
-		dlFileEntryLocalService.updateStatus(
-			userId, fileVersion.getFileVersionId(), fileVersion.getStatus(),
-			new HashMap<String, Serializable>(), serviceContext);
+		if (fileVersion.isInTrash()) {
+			restoreFileEntryFromTrash(userId, fileEntry);
 
-		// File rank
+			DLFileEntry dlFileEntry = dlFileEntryLocalService.moveFileEntry(
+				userId, fileEntry.getFileEntryId(), newFolderId,
+				serviceContext);
 
-		dlFileRankLocalService.enableFileRanks(fileEntry.getFileEntryId());
+			dlFileRankLocalService.enableFileRanks(fileEntry.getFileEntryId());
 
-		// File shortcut
+			return new LiferayFileEntry(dlFileEntry);
+		}
+		else {
+			dlFileEntryLocalService.updateStatus(
+				userId, fileVersion.getFileVersionId(), fileVersion.getStatus(),
+				new HashMap<String, Serializable>(), serviceContext);
 
-		dlFileShortcutLocalService.enableFileShortcuts(
-			fileEntry.getFileEntryId());
+			// File rank
 
-		// App helper
+			dlFileRankLocalService.enableFileRanks(fileEntry.getFileEntryId());
 
-		return dlAppService.moveFileEntry(
-			fileEntry.getFileEntryId(), newFolderId, serviceContext);
+			// File shortcut
+
+			dlFileShortcutLocalService.enableFileShortcuts(
+				fileEntry.getFileEntryId());
+
+			// App helper
+
+			return dlAppService.moveFileEntry(
+				fileEntry.getFileEntryId(), newFolderId, serviceContext);
+		}
 	}
 
 	public FileEntry moveFileEntryToTrash(long userId, FileEntry fileEntry)

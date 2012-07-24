@@ -60,6 +60,12 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 	public void deleteFolder(long folderId)
 		throws PortalException, SystemException {
 
+		deleteFolder(folderId, true);
+	}
+
+	public void deleteFolder(long folderId, boolean includeTrashedEntries)
+		throws PortalException, SystemException {
+
 		DLFolder dlFolder = dlFolderLocalService.getFolder(folderId);
 
 		DLFolderPermission.check(
@@ -78,7 +84,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 		}
 
 		try {
-			dlFolderLocalService.deleteFolder(folderId);
+			dlFolderLocalService.deleteFolder(folderId, includeTrashedEntries);
 		}
 		finally {
 			if (!hasLock) {

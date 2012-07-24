@@ -157,9 +157,15 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	public void deleteFolder(long folderId)
 		throws PortalException, SystemException {
 
+		deleteFolder(folderId, true);
+	}
+
+	public void deleteFolder(long folderId, boolean includeTrashedEntries)
+		throws PortalException, SystemException {
+
 		DLFolder dlFolder = dlFolderPersistence.findByPrimaryKey(folderId);
 
-		deleteFolder(dlFolder);
+		deleteFolder(dlFolder, includeTrashedEntries);
 	}
 
 	public DLFolder fetchFolder(long groupId, long parentFolderId, String name)
@@ -660,6 +666,13 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	protected void deleteFolder(DLFolder dlFolder)
 		throws PortalException, SystemException {
 
+		deleteFolder(dlFolder, true);
+	}
+
+	protected void deleteFolder(
+			DLFolder dlFolder, boolean includeTrashedEntries)
+		throws PortalException, SystemException {
+
 		// Folders
 
 		List<DLFolder> dlFolders = dlFolderPersistence.findByG_P(
@@ -683,7 +696,8 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		// File entries
 
 		dlFileEntryLocalService.deleteFileEntries(
-			dlFolder.getGroupId(), dlFolder.getFolderId());
+			dlFolder.getGroupId(), dlFolder.getFolderId(),
+			includeTrashedEntries);
 
 		// File entry types
 

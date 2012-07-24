@@ -1,0 +1,50 @@
+<%--
+/**
+ * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%
+TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(entry.getClassName());
+
+TrashRenderer trashRenderer = trashHandler.getTrashRenderer(entry.getClassPK());
+
+String restorePath = trashRenderer.getRestorePath(renderRequest);
+%>
+
+<c:choose>
+	<c:when test="<%= Validator.isNotNull(restorePath) %>">
+		<liferay-util:include page="<%= restorePath %>" portletId="<%= trashRenderer.getPortletId() %>">
+			<liferay-util:param name="showHeader" value="<%= Boolean.FALSE.toString() %>" />
+		</liferay-util:include>
+	</c:when>
+	<c:otherwise>
+		<portlet:actionURL var="restoreEntryURL">
+			<portlet:param name="struts_action" value="/trash/edit_entry" />
+			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
+			<portlet:param name="redirect" value="<%= redirect %>" />
+			<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
+		</portlet:actionURL>
+
+		<%
+		String taglibOnClick = "Liferay.fire('" + renderResponse.getNamespace() + "checkEntry', {entryId: " + entry.getEntryId() + ", uri: '" + restoreEntryURL.toString() + "'});";
+		%>
+
+		<liferay-ui:icon
+			image="undo"
+			message="restore"
+			onClick="<%= taglibOnClick %>"
+			url="javascript:;"
+		/>
+	</c:otherwise>
+</c:choose>

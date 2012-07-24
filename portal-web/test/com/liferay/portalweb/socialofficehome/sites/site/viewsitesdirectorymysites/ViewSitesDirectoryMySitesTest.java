@@ -52,7 +52,7 @@ public class ViewSitesDirectoryMySitesTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//button[contains(.,'More Sites')]/span[2]")) {
+							"//button[contains(.,'Site Directory')]/span[2]")) {
 					break;
 				}
 			}
@@ -62,10 +62,10 @@ public class ViewSitesDirectoryMySitesTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("More Sites"),
-			selenium.getText("//button[contains(.,'More Sites')]/span[2]"));
-		selenium.clickAt("//button[contains(.,'More Sites')]/span[2]",
-			RuntimeVariables.replace("More Sites"));
+		assertEquals(RuntimeVariables.replace("Site Directory"),
+			selenium.getText("//button[contains(.,'Site Directory')]/span[2]"));
+		selenium.clickAt("//button[contains(.,'Site Directory')]/span[2]",
+			RuntimeVariables.replace("Site Directory"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -89,23 +89,31 @@ public class ViewSitesDirectoryMySitesTest extends BaseTestCase {
 		selenium.select("//span[@class='sites-tabs']/span/span/span/select",
 			RuntimeVariables.replace("My Sites"));
 		Thread.sleep(5000);
-		assertEquals(RuntimeVariables.replace("Liferay, Inc."),
-			selenium.getText("xPath=(//span[@class='name']/a)[1]"));
-		assertEquals(RuntimeVariables.replace("Liferay Los Angeles"),
-			selenium.getText("xPath=(//span[@class='name'])[2]"));
-		assertEquals(RuntimeVariables.replace("Liferay"),
-			selenium.getText("xPath=(//span[@class='name']/a)[2]"));
 		assertEquals(RuntimeVariables.replace("Open Site1 Name"),
-			selenium.getText("xPath=(//span[@class='name']/a)[3]"));
+			selenium.getText(
+				"xPath=(//span[@class='name']/a)[contains(.,'Open Site1 Name')]"));
 		assertEquals(RuntimeVariables.replace("Open Site1 Description"),
-			selenium.getText("xPath=(//span[@class='description'])[4]"));
-		assertEquals(RuntimeVariables.replace("Private Site2 Name"),
-			selenium.getText("xPath=(//span[@class='name']/a)[4]"));
-		assertEquals(RuntimeVariables.replace("Private Site2 Description"),
-			selenium.getText("xPath=(//span[@class='description'])[5]"));
-		assertEquals(RuntimeVariables.replace("Restricted Site3 Name"),
-			selenium.getText("xPath=(//span[@class='name']/a)[5]"));
-		assertEquals(RuntimeVariables.replace("Restricted Site3 Description"),
-			selenium.getText("xPath=(//span[@class='description'])[6]"));
+			selenium.getText(
+				"xPath=(//span[@class='description'])[contains(.,'Open Site1 Description')]"));
+		assertEquals(RuntimeVariables.replace("Private Restricted Site2 Name"),
+			selenium.getText(
+				"xPath=(//span[@class='name']/a)[contains(.,'Private Restricted Site2 Name')]"));
+		assertEquals(RuntimeVariables.replace(
+				"Private Restricted Site2 Description"),
+			selenium.getText(
+				"xPath=(//span[@class='description'])[contains(.,'Private Restricted Site2 Description')]"));
+		assertEquals(RuntimeVariables.replace("Private Site3 Name"),
+			selenium.getText(
+				"xPath=(//span[@class='name']/a)[contains(.,'Private Site3 Name')]"));
+		assertEquals(RuntimeVariables.replace("Private Site3 Description"),
+			selenium.getText(
+				"xPath=(//span[@class='description'])[contains(.,'Private Site3 Description')]"));
+		assertEquals(RuntimeVariables.replace("Public Restricted Site4 Name"),
+			selenium.getText(
+				"xPath=(//span[@class='name']/a)[contains(.,'Public Restricted Site4 Name')]"));
+		assertEquals(RuntimeVariables.replace(
+				"Public Restricted Site4 Description"),
+			selenium.getText(
+				"xPath=(//span[@class='description'])[contains(.,'Public Restricted Site4 Description')]"));
 	}
 }

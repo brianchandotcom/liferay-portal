@@ -45,13 +45,13 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>xPath=(//h1[@class='header-title']/span)[1]</td>
-	<td>Information</td>
+	<td>//label[contains(@for,'_5_WAR_soportlet')]</td>
+	<td>Name (Required)</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>xPath=(//h1[@class='header-title']/span)[1]</td>
-	<td>Information</td>
+	<td>assertVisible</td>
+	<td>//label[contains(@for,'_5_WAR_soportlet')]</td>
+	<td>Name (Required)</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
@@ -85,13 +85,8 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>xPath=(//h1[@class='header-title']/span)[2]</td>
-	<td>Settings</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>xPath=(//h1[@class='header-title']/span)[2]</td>
-	<td>Settings</td>
+	<td>//select[@id='_5_WAR_soportlet_layoutSetPrototypeSelect']</td>
+	<td>None Default Social Office Site</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
@@ -105,68 +100,53 @@
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//select[@id='_5_WAR_soportlet_type']</td>
-	<td>Open Restricted Private</td>
+	<td>//select[@id='_5_WAR_soportlet_typeSelect']</td>
+	<td>Open Public Restricted Private Restricted Private</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>//select[@id='_5_WAR_soportlet_type']</td>
+	<td>//select[@id='_5_WAR_soportlet_typeSelect']</td>
 	<td>Open</td>
 </tr>
 <tr>
-	<td>assertValue</td>
-	<td>//input[@value='Next']</td>
-	<td>Next</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//input[@value='Next']</td>
-	<td>Next</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>xPath=(//h1[@class='header-title']/span)[3]</td>
-	<td>Customization</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>xPath=(//h1[@class='header-title']/span)[3]</td>
-	<td>Customization</td>
-</tr>
-<tr>
 	<td>assertChecked</td>
-	<td>//div[4]/span[1]/input</td>
+	<td>//div[2]/div/div/div/div/div/div[contains(.,'Home')]/input</td>
 	<td>Home</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>//span[2]/input</td>
+	<td>//div[2]/div/div/div/div/div/div[contains(.,'Calendar')]/input</td>
 	<td>Calendar</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>//span[3]/input</td>
+	<td>//div[2]/div/div/div/div/div/div[contains(.,'Documents')]/input</td>
 	<td>Documents</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>//span[4]/input</td>
+	<td>//div[2]/div/div/div/div/div/div[contains(.,'Forums')]/input</td>
 	<td>Forums</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>//span[5]/input</td>
+	<td>//div[2]/div/div/div/div/div/div[contains(.,'Blog')]/input</td>
 	<td>Blog</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>//span[6]/input</td>
+	<td>//div[2]/div/div/div/div/div/div[contains(.,'Wiki')]/input</td>
 	<td>Wiki</td>
 </tr>
 <tr>
 	<td>assertChecked</td>
-	<td>//span[7]/input</td>
+	<td>//div[2]/div/div/div/div/div/div[contains(.,'Members')]/input</td>
 	<td>Members</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='message']</td>
+	<td>Open sites are listed, pages are public, and users are free to join and collaborate.</td>
 </tr>
 <tr>
 	<td>assertValue</td>

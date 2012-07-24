@@ -61,7 +61,7 @@ public class SOUs_SearchSitesSiteTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//button[contains(.,'More Sites')]/span[2]")) {
+							"//button[contains(.,'Site Directory')]/span[2]")) {
 					break;
 				}
 			}
@@ -71,10 +71,10 @@ public class SOUs_SearchSitesSiteTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("More Sites"),
-			selenium.getText("//button[contains(.,'More Sites')]/span[2]"));
-		selenium.clickAt("//button[contains(.,'More Sites')]/span[2]",
-			RuntimeVariables.replace("More Sites"));
+		assertEquals(RuntimeVariables.replace("Site Directory"),
+			selenium.getText("//button[contains(.,'Site Directory')]/span[2]"));
+		selenium.clickAt("//button[contains(.,'Site Directory')]/span[2]",
+			RuntimeVariables.replace("Site Directory"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -95,6 +95,8 @@ public class SOUs_SearchSitesSiteTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Directory"),
 			selenium.getText("xPath=(//h1[@class='header-title']/span)[1]"));
+		selenium.select("//span[@class='sites-tabs']/span/span/span/select",
+			RuntimeVariables.replace("All Sites"));
 		assertTrue(selenium.isVisible(
 				"//input[@id='_5_WAR_soportlet_dialogKeywords']"));
 		selenium.type("//input[@id='_5_WAR_soportlet_dialogKeywords']",

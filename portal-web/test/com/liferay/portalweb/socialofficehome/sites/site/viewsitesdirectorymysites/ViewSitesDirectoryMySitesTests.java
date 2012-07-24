@@ -26,8 +26,9 @@ public class ViewSitesDirectoryMySitesTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddSitesSite1Test.class);
-		testSuite.addTestSuite(AddSitesSite2TypePrivateTest.class);
-		testSuite.addTestSuite(AddSitesSite3TypeRestrictedTest.class);
+		testSuite.addTestSuite(AddSitesSite2TypePrivateRestrictedTest.class);
+		testSuite.addTestSuite(AddSitesSite3TypePrivateTest.class);
+		testSuite.addTestSuite(AddSitesSite4TypePublicRestrictedTest.class);
 		testSuite.addTestSuite(ViewSitesDirectoryMySitesTest.class);
 		testSuite.addTestSuite(TearDownSOSitesTest.class);
 

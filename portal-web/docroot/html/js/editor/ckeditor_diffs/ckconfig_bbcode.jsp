@@ -25,6 +25,7 @@ String cssClasses = ParamUtil.getString(request, "cssClasses");
 String imagesPath = ParamUtil.getString(request, "imagesPath");
 String languageId = ParamUtil.getString(request, "languageId");
 String emoticonsPath = ParamUtil.getString(request, "emoticonsPath");
+boolean resizable = ParamUtil.getBoolean(request, "resizable");
 %>
 
 CKEDITOR.config.height = 265;
@@ -87,6 +88,8 @@ CKEDITOR.config.imagesPath = '<%= HtmlUtil.escapeJS(imagesPath) %>/message_board
 CKEDITOR.config.language = '<%= HtmlUtil.escapeJS(languageId) %>';
 
 CKEDITOR.config.newThreadURL = '<%= BBCodeTranslatorUtil.NEW_THREAD_URL %>';
+
+CKEDITOR.config.resize_enabled = '<%= resizable %>';
 
 CKEDITOR.config.smiley_descriptions = ['<%= StringUtil.merge(BBCodeTranslatorUtil.getEmoticonDescriptions(), "','") %>'];
 

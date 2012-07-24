@@ -26,9 +26,11 @@ String onChangeMethod = (String)request.getAttribute("liferay-ui:input-editor:on
 if (Validator.isNotNull(onChangeMethod)) {
 	onChangeMethod = namespace + onChangeMethod;
 }
+
+boolean resizable = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:resizable"));
 %>
 
-<aui:script use="resize">
+<aui:script use='<%= resizable ? "resize" : "aui-base" %>'>
 	window['<%= name %>'] = {
 		destroy: function() {
 			var editorEl = document.getElementById('<%= name %>');
@@ -52,13 +54,15 @@ if (Validator.isNotNull(onChangeMethod)) {
 			<c:if test="<%= Validator.isNotNull(initMethod) %>">
 				<%= name %>.setHTML(<%= namespace + initMethod %>());
 
-				new A.Resize(
-					{
-						handles: 'br',
-						node: '#<%= name %>_container',
-						wrap: true
-					}
-				);
+				<c:if test="<%= resizable %>">
+					new A.Resize(
+						{
+							handles: 'br',
+							node: '#<%= name %>_container',
+							wrap: true
+						}
+					);
+				</c:if>
 			</c:if>
 		},
 

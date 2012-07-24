@@ -23,6 +23,7 @@ String cssClasses = ParamUtil.getString(request, "cssClasses");
 String languageId = ParamUtil.getString(request, "languageId");
 long wikiPageResourcePrimKey = ParamUtil.getLong(request, "wikiPageResourcePrimKey");
 String attachmentURLPrefix = ParamUtil.getString(request, "attachmentURLPrefix");
+boolean resizable = ParamUtil.getBoolean(request, "resizable");
 
 String linkButtonBar = "['Link', 'Unlink']";
 
@@ -76,6 +77,8 @@ CKEDITOR.config.removePlugins = [
 	'templates',
 	'wsc'
 ].join();
+
+CKEDITOR.config.resize_enabled = '<%= resizable %>';
 
 CKEDITOR.config.toolbar_creole = [
 	['Cut','Copy','Paste','PasteText','PasteFromWord'],

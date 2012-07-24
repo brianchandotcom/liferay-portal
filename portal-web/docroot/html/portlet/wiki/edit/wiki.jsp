@@ -65,13 +65,27 @@ boolean showSyntaxHelp = ((toggleValue != null) && toggleValue.equals("block"));
 			fileBrowserParams.put("wikiPageResourcePrimKey", String.valueOf(resourcePrimKey));
 			%>
 
-			<liferay-ui:input-editor
-				configParams="<%= configParams %>"
-				editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>"
-				fileBrowserParams="<%= fileBrowserParams %>"
-				toolbarSet="creole"
-				width="100%"
-			/>
+		<c:choose>
+			<c:when test='<%= format.equals("creole") %>'>
+				<liferay-ui:input-editor
+					configParams="<%= configParams %>"
+					editorImpl="<%= EDITOR_WYSIWYG_IMPL_KEY %>"
+					fileBrowserParams="<%= fileBrowserParams %>"
+					toolbarSet="creole"
+					width="100%"
+				/>
+			</c:when>
+			<c:otherwise>
+				<liferay-ui:input-editor
+					configParams="<%= configParams %>"
+					editorImpl="<%= EDITOR_SIMPLE_IMPL_KEY %>"
+					fileBrowserParams="<%= fileBrowserParams %>"
+					name="content"
+					resizable="<%= false %>"
+					width="100%"
+				/>
+			</c:otherwise>
+		</c:choose>
 
 			<aui:input name="content" type="hidden" />
 		</aui:column>
@@ -140,7 +154,8 @@ boolean showSyntaxHelp = ((toggleValue != null) && toggleValue.equals("block"));
 		}
 	);
 </aui:script>
-
 <%!
 public static final String EDITOR_WYSIWYG_IMPL_KEY = "editor.wysiwyg.portal-web.docroot.html.portlet.wiki.edit.creole.jsp";
+
+public static final String EDITOR_SIMPLE_IMPL_KEY = "editor.wysiwyg.portal-web.docroot.html.portlet.wiki.edit.mediawiki.jsp";
 %>

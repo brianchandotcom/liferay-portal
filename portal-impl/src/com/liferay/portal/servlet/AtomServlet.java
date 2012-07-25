@@ -15,16 +15,10 @@
 package com.liferay.portal.servlet;
 
 import com.liferay.portal.atom.AtomProvider;
-import com.liferay.portal.atom.AtomUtil;
 import com.liferay.portal.kernel.atom.AtomCollectionAdapter;
 import com.liferay.portal.kernel.atom.AtomCollectionAdapterRegistryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.model.User;
-import com.liferay.portal.security.auth.CompanyThreadLocal;
-import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.security.permission.PermissionThreadLocal;
 
 import java.util.List;
 
@@ -64,25 +58,6 @@ public class AtomServlet extends AbderaServlet {
 		throws ServletException {
 
 		try {
-			UserResolver userResolver = new UserResolver(request);
-
-			CompanyThreadLocal.setCompanyId(userResolver.getCompanyId());
-
-			User user = userResolver.getUser();
-
-			if (user != null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug("User " + user.getUserId());
-				}
-
-				PermissionChecker permissionChecker =
-					PermissionCheckerFactoryUtil.create(user);
-
-				PermissionThreadLocal.setPermissionChecker(permissionChecker);
-
-				AtomUtil.saveUserInRequest(request, user);
-			}
-
 			super.service(request, response);
 		}
 		catch (Exception e) {

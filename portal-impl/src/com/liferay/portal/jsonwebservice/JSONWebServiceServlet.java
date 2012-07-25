@@ -24,13 +24,7 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.User;
-import com.liferay.portal.security.auth.CompanyThreadLocal;
-import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.servlet.JSONServlet;
-import com.liferay.portal.servlet.UserResolver;
 import com.liferay.portal.struts.JSONAction;
 import com.liferay.portal.upload.UploadServletRequestImpl;
 import com.liferay.portal.util.PortalUtil;
@@ -149,29 +143,6 @@ public class JSONWebServiceServlet extends JSONServlet {
 		_jsonWebServiceServiceAction.setServletContext(servletContext);
 
 		return _jsonWebServiceServiceAction;
-	}
-
-	@Override
-	protected void resolveRemoteUser(HttpServletRequest request)
-		throws Exception {
-
-		UserResolver userResolver = new UserResolver(request);
-
-		CompanyThreadLocal.setCompanyId(userResolver.getCompanyId());
-
-		request.setAttribute("companyId", userResolver.getCompanyId());
-
-		User user = userResolver.getUser();
-
-		if (user != null) {
-			PermissionChecker permissionChecker =
-				PermissionCheckerFactoryUtil.create(user);
-
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
-
-			request.setAttribute("user", user);
-			request.setAttribute("userId", user.getUserId());
-		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

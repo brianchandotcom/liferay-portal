@@ -40,6 +40,7 @@ import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.base.DLFolderLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
+import com.liferay.portlet.documentlibrary.util.DLAppUtil;
 
 import java.io.Serializable;
 
@@ -590,6 +591,12 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 		DLFolder dlFolder = dlFolderPersistence.findByPrimaryKey(folderId);
 
+		if (dlFolder.isInTrash() &&
+			(status == WorkflowConstants.STATUS_APPROVED)) {
+
+			dlFolder.setName(DLAppUtil.stripTrashNamespace(dlFolder.getName()));
+		}
+
 		dlFolder.setStatus(status);
 		dlFolder.setStatusByUserId(user.getUserId());
 		dlFolder.setStatusByUserName(user.getFullName());
@@ -679,7 +686,9 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			dlFolder.getGroupId(), dlFolder.getFolderId());
 
 		for (DLFolder curDLFolder : dlFolders) {
-			deleteFolder(curDLFolder);
+			if (includeTrashedEntries || !curDLFolder.isInTrash()) {
+				deleteFolder(curDLFolder, includeTrashedEntries);
+			}
 		}
 
 		// Resources

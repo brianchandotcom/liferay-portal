@@ -649,9 +649,7 @@ public class LiferayRepository
 
 		searchContext.setSearchEngineId(indexer.getSearchEngineId());
 
-		BooleanQuery fullQuery = indexer.getFullQuery(searchContext);
-
-		return SearchEngineUtil.search(searchContext, fullQuery);
+		return indexer.search(searchContext);
 	}
 
 	public Hits search(SearchContext searchContext, Query query)

@@ -44,6 +44,10 @@ public class WikiActivityInterpreter extends BaseSocialActivityInterpreter {
 			SocialActivity activity, ThemeDisplay themeDisplay)
 		throws Exception {
 
+		if (activity.getUserId() == themeDisplay.getDefaultUserId()) {
+			return null;
+		}
+
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 

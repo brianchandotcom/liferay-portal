@@ -27,10 +27,6 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.HttpPrincipal;
-import com.liferay.portal.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalInstances;
 
@@ -129,13 +125,6 @@ public class TunnelServlet extends HttpServlet {
 				}
 
 				if (user != null) {
-					PrincipalThreadLocal.setName(user.getUserId());
-
-					PermissionChecker permissionChecker =
-						PermissionCheckerFactoryUtil.create(user);
-
-					PermissionThreadLocal.setPermissionChecker(
-						permissionChecker);
 				}
 			}
 

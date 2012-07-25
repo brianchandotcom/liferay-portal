@@ -17,15 +17,7 @@ package com.liferay.portal.servlet;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.PluginContextListener;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.model.User;
-import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
-import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.security.permission.PermissionThreadLocal;
-import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.util.PortalInstances;
 
 import java.io.IOException;
 
@@ -71,27 +63,6 @@ public class AxisServlet extends com.liferay.util.axis.AxisServlet {
 		throws IOException, ServletException {
 
 		try {
-			PortalInstances.getCompanyId(request);
-
-			String remoteUser = request.getRemoteUser();
-
-			if (_log.isDebugEnabled()) {
-				_log.debug("Remote user " + remoteUser);
-			}
-
-			if (remoteUser != null) {
-				PrincipalThreadLocal.setName(remoteUser);
-
-				long userId = GetterUtil.getLong(remoteUser);
-
-				User user = UserLocalServiceUtil.getUserById(userId);
-
-				PermissionChecker permissionChecker =
-					PermissionCheckerFactoryUtil.create(user);
-
-				PermissionThreadLocal.setPermissionChecker(permissionChecker);
-			}
-
 			if (_pluginClassLoader == null) {
 				super.service(request, response);
 			}

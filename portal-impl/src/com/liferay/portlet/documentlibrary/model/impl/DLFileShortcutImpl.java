@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
+import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 
 /**
@@ -30,20 +31,25 @@ public class DLFileShortcutImpl extends DLFileShortcutBaseImpl {
 	}
 
 	public Folder getFolder() {
-		Folder folder = null;
+		Folder folder = new LiferayFolder(new DLFolderImpl());
 
 		if (getFolderId() > 0) {
 			try {
 				folder = DLAppLocalServiceUtil.getFolder(getFolderId());
 			}
-			catch (Exception e) {
-				folder = new LiferayFolder(new DLFolderImpl());
-
-				_log.error(e);
+			catch (NoSuchFolderException nsfe) {
+				try {
+					if (!isInTrash()) {
+						_log.error(nsfe, nsfe);
+					}
+				}
+				catch (Exception e) {
+					_log.error(e, e);
+				}
 			}
-		}
-		else {
-			folder = new LiferayFolder(new DLFolderImpl());
+			catch (Exception e) {
+				_log.error(e, e);
+			}
 		}
 
 		return folder;
@@ -59,7 +65,7 @@ public class DLFileShortcutImpl extends DLFileShortcutBaseImpl {
 			toTitle = fileEntry.getTitle();
 		}
 		catch (Exception e) {
-			_log.error(e);
+			_log.error(e, e);
 		}
 
 		return toTitle;

@@ -708,7 +708,8 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		// File shortcuts
 
 		dlFileShortcutLocalService.deleteFileShortcuts(
-			dlFolder.getGroupId(), dlFolder.getFolderId());
+			dlFolder.getGroupId(), dlFolder.getFolderId(),
+			includeTrashedEntries);
 
 		// File entries
 

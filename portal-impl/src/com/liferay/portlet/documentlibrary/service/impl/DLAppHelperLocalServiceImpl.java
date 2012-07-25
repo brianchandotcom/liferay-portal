@@ -484,6 +484,10 @@ public class DLAppHelperLocalServiceImpl
 			long toFileEntryId, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
+		if (dlFileShortcut.isInTrash()) {
+			restoreFileShortcutFromTrash(userId, dlFileShortcut);
+		}
+
 		return dlAppService.updateFileShortcut(
 			dlFileShortcut.getFileShortcutId(), newFolderId, toFileEntryId,
 			serviceContext);

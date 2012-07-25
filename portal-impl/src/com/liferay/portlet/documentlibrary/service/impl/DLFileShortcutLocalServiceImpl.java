@@ -205,11 +205,20 @@ public class DLFileShortcutLocalServiceImpl
 	public void deleteFileShortcuts(long groupId, long folderId)
 		throws PortalException, SystemException {
 
+		deleteFileShortcuts(groupId, folderId, true);
+	}
+
+	public void deleteFileShortcuts(
+			long groupId, long folderId, boolean includeTrashedEntries)
+		throws PortalException, SystemException {
+
 		List<DLFileShortcut> fileShortcuts =
 			dlFileShortcutPersistence.findByG_F(groupId, folderId);
 
 		for (DLFileShortcut fileShortcut : fileShortcuts) {
-			deleteFileShortcut(fileShortcut);
+			if (includeTrashedEntries || !fileShortcut.isInTrash()) {
+				deleteFileShortcut(fileShortcut);
+			}
 		}
 	}
 

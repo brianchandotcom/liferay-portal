@@ -136,7 +136,7 @@ try {
 	}
 
 	if (orderByCol.equals("modified-date")) {
-		docComparator.addOrderBy("modified-date");
+		docComparator.addOrderBy(Field.MODIFIED_DATE);
 	}
 	else {
 		docComparator.addOrderBy(Field.TITLE);

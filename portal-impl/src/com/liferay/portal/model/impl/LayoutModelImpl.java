@@ -1452,6 +1452,19 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		layoutModelImpl._columnBitmask = 0;
 	}
 
+	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale) {
+		setName(getName(defaultImportLocale), defaultImportLocale,
+			defaultImportLocale);
+		setTitle(getTitle(defaultImportLocale), defaultImportLocale,
+			defaultImportLocale);
+		setDescription(getDescription(defaultImportLocale),
+			defaultImportLocale, defaultImportLocale);
+		setKeywords(getKeywords(defaultImportLocale), defaultImportLocale,
+			defaultImportLocale);
+		setRobots(getRobots(defaultImportLocale), defaultImportLocale,
+			defaultImportLocale);
+	}
+
 	@Override
 	public CacheModel<Layout> toCacheModel() {
 		LayoutCacheModel layoutCacheModel = new LayoutCacheModel();

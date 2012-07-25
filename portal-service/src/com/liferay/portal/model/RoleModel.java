@@ -391,6 +391,8 @@ public interface RoleModel extends AttachedModel, BaseModel<Role> {
 
 	public int hashCode();
 
+	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale);
+
 	public CacheModel<Role> toCacheModel();
 
 	public Role toEscapedModel();

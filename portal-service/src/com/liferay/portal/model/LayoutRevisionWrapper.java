@@ -1603,6 +1603,11 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 		return _layoutRevision.hashCode();
 	}
 
+	public void prepareLocalizedFieldsForImport(
+		java.util.Locale defaultImportLocale) {
+		_layoutRevision.prepareLocalizedFieldsForImport(defaultImportLocale);
+	}
+
 	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.LayoutRevision> toCacheModel() {
 		return _layoutRevision.toCacheModel();
 	}

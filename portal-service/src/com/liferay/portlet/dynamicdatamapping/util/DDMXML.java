@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.xml.DocumentException;
 
 import java.io.IOException;
 
+import java.util.Locale;
+
 /**
  * @author Bruno Basto
  * @author Brian Wing Shun Chan
@@ -28,5 +30,10 @@ public interface DDMXML {
 	public String formatXML(Document document) throws IOException;
 
 	public String formatXML(String xml) throws DocumentException, IOException;
+
+	public String updateXMLDefaultLocale(
+			String xml, Locale contentDefaultLocale,
+			Locale contentNewDefaultLocale)
+		throws DocumentException, IOException;
 
 }

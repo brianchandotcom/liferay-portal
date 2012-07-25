@@ -1328,6 +1328,12 @@ public class JournalArticleWrapper implements JournalArticle,
 		return _journalArticle.hashCode();
 	}
 
+	public void prepareLocalizedFieldsForImport(
+		java.util.Locale defaultImportLocale)
+		throws com.liferay.portal.LocaleException {
+		_journalArticle.prepareLocalizedFieldsForImport(defaultImportLocale);
+	}
+
 	public com.liferay.portal.model.CacheModel<com.liferay.portlet.journal.model.JournalArticle> toCacheModel() {
 		return _journalArticle.toCacheModel();
 	}

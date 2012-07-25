@@ -4,6 +4,9 @@ package ${packagePath}.model;
 	import ${packagePath}.service.persistence.${entity.name}PK;
 </#if>
 
+<#if entity.hasLocalizedColumn()>
+	import com.liferay.portal.LocaleException;
+</#if>
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.AttachedModel;
@@ -350,6 +353,10 @@ public interface ${entity.name}Model extends
 	public int compareTo(${entity.name} ${entity.varName});
 
 	public int hashCode();
+
+	<#if entity.hasLocalizedColumn()>
+		public void prepareLocalizedFieldsForImport(Locale defaultImportLocale) throws LocaleException;
+	</#if>
 
 	public CacheModel<${entity.name}> toCacheModel();
 

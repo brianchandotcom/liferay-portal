@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.dynamicdatamapping.action;
 
+import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -101,7 +102,8 @@ public class EditStructureAction extends PortletAction {
 
 				setForward(actionRequest, "portlet.dynamic_data_mapping.error");
 			}
-			else if (e instanceof RequiredStructureException ||
+			else if (e instanceof LocaleException ||
+					 e instanceof RequiredStructureException ||
 					 e instanceof StructureDuplicateElementException ||
 					 e instanceof StructureNameException ||
 					 e instanceof StructureXsdException) {

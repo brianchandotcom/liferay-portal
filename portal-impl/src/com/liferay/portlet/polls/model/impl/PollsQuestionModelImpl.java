@@ -705,6 +705,13 @@ public class PollsQuestionModelImpl extends BaseModelImpl<PollsQuestion>
 		pollsQuestionModelImpl._columnBitmask = 0;
 	}
 
+	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale) {
+		setTitle(getTitle(defaultImportLocale), defaultImportLocale,
+			defaultImportLocale);
+		setDescription(getDescription(defaultImportLocale),
+			defaultImportLocale, defaultImportLocale);
+	}
+
 	@Override
 	public CacheModel<PollsQuestion> toCacheModel() {
 		PollsQuestionCacheModel pollsQuestionCacheModel = new PollsQuestionCacheModel();

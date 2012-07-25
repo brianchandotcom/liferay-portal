@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.dynamicdatamapping.model.impl;
 
+import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -33,6 +34,7 @@ import com.liferay.portal.model.CacheField;
 import com.liferay.portlet.dynamicdatamapping.StructureFieldException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -211,6 +213,25 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		Map<String, Map<String, String>> fieldsMap = getFieldsMap();
 
 		return fieldsMap.containsKey(fieldName);
+	}
+
+	@Override
+	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
+		throws LocaleException {
+
+		super.prepareLocalizedFieldsForImport(defaultImportLocale);
+
+		Locale ddmStructureDefaultLocale = LocaleUtil.fromLanguageId(
+			getDefaultLocale());
+
+		try {
+			setXsd(
+				DDMXMLUtil.updateXMLDefaultLocale(
+					getXsd(), ddmStructureDefaultLocale, defaultImportLocale));
+		}
+		catch (Exception e) {
+			throw new LocaleException(e);
+		}
 	}
 
 	@Override

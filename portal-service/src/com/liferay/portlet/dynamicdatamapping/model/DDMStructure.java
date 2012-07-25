@@ -82,6 +82,10 @@ public interface DDMStructure extends DDMStructureModel, PersistedModel {
 
 	public boolean hasField(java.lang.String fieldName);
 
+	public void prepareLocalizedFieldsForImport(
+		java.util.Locale defaultImportLocale)
+		throws com.liferay.portal.LocaleException;
+
 	public void setDocument(com.liferay.portal.kernel.xml.Document document);
 
 	public void setLocalizedFieldsMap(

@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.journal.model;
 
+import com.liferay.portal.LocaleException;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -54,6 +55,9 @@ public interface JournalArticle extends JournalArticleModel, PersistedModel {
 	public java.util.Map<java.util.Locale, java.lang.String> getTitleMap();
 
 	public boolean isTemplateDriven();
+
+	public void prepareLocalizedFieldsForImport(
+		java.util.Locale defaultImportLocale) throws LocaleException;
 
 	public void setSmallImageType(java.lang.String smallImageType);
 }

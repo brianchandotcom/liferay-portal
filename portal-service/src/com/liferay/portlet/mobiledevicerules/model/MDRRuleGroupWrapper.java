@@ -610,6 +610,11 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 		return _mdrRuleGroup.hashCode();
 	}
 
+	public void prepareLocalizedFieldsForImport(
+		java.util.Locale defaultImportLocale) {
+		_mdrRuleGroup.prepareLocalizedFieldsForImport(defaultImportLocale);
+	}
+
 	public com.liferay.portal.model.CacheModel<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup> toCacheModel() {
 		return _mdrRuleGroup.toCacheModel();
 	}

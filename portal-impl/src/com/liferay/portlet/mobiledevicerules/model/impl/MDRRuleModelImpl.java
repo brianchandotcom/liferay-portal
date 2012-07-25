@@ -745,6 +745,13 @@ public class MDRRuleModelImpl extends BaseModelImpl<MDRRule>
 		mdrRuleModelImpl._columnBitmask = 0;
 	}
 
+	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale) {
+		setName(getName(defaultImportLocale), defaultImportLocale,
+			defaultImportLocale);
+		setDescription(getDescription(defaultImportLocale),
+			defaultImportLocale, defaultImportLocale);
+	}
+
 	@Override
 	public CacheModel<MDRRule> toCacheModel() {
 		MDRRuleCacheModel mdrRuleCacheModel = new MDRRuleCacheModel();

@@ -748,6 +748,12 @@ public class DDMStructureWrapper implements DDMStructure,
 		return _ddmStructure.hashCode();
 	}
 
+	public void prepareLocalizedFieldsForImport(
+		java.util.Locale defaultImportLocale)
+		throws com.liferay.portal.LocaleException {
+		_ddmStructure.prepareLocalizedFieldsForImport(defaultImportLocale);
+	}
+
 	public com.liferay.portal.model.CacheModel<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> toCacheModel() {
 		return _ddmStructure.toCacheModel();
 	}

@@ -1179,6 +1179,15 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		assetEntryModelImpl._columnBitmask = 0;
 	}
 
+	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale) {
+		setTitle(getTitle(defaultImportLocale), defaultImportLocale,
+			defaultImportLocale);
+		setDescription(getDescription(defaultImportLocale),
+			defaultImportLocale, defaultImportLocale);
+		setSummary(getSummary(defaultImportLocale), defaultImportLocale,
+			defaultImportLocale);
+	}
+
 	@Override
 	public CacheModel<AssetEntry> toCacheModel() {
 		AssetEntryCacheModel assetEntryCacheModel = new AssetEntryCacheModel();

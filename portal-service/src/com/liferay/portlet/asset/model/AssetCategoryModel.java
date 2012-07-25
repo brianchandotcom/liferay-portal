@@ -488,6 +488,8 @@ public interface AssetCategoryModel extends BaseModel<AssetCategory>,
 
 	public int hashCode();
 
+	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale);
+
 	public CacheModel<AssetCategory> toCacheModel();
 
 	public AssetCategory toEscapedModel();

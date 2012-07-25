@@ -499,6 +499,8 @@ public interface MDRActionModel extends AttachedModel, BaseModel<MDRAction>,
 
 	public int hashCode();
 
+	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale);
+
 	public CacheModel<MDRAction> toCacheModel();
 
 	public MDRAction toEscapedModel();

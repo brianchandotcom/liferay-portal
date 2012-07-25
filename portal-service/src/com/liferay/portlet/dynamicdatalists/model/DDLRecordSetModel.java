@@ -472,6 +472,8 @@ public interface DDLRecordSetModel extends BaseModel<DDLRecordSet>, GroupedModel
 
 	public int hashCode();
 
+	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale);
+
 	public CacheModel<DDLRecordSet> toCacheModel();
 
 	public DDLRecordSet toEscapedModel();

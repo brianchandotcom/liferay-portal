@@ -522,6 +522,11 @@ public class LayoutPrototypeModelImpl extends BaseModelImpl<LayoutPrototype>
 		layoutPrototypeModelImpl._columnBitmask = 0;
 	}
 
+	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale) {
+		setName(getName(defaultImportLocale), defaultImportLocale,
+			defaultImportLocale);
+	}
+
 	@Override
 	public CacheModel<LayoutPrototype> toCacheModel() {
 		LayoutPrototypeCacheModel layoutPrototypeCacheModel = new LayoutPrototypeCacheModel();

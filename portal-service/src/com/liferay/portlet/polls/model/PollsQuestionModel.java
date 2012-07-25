@@ -445,6 +445,8 @@ public interface PollsQuestionModel extends BaseModel<PollsQuestion>,
 
 	public int hashCode();
 
+	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale);
+
 	public CacheModel<PollsQuestion> toCacheModel();
 
 	public PollsQuestion toEscapedModel();

@@ -685,6 +685,12 @@ public class JournalStructureWrapper implements JournalStructure,
 		return _journalStructure.hashCode();
 	}
 
+	public void prepareLocalizedFieldsForImport(
+		java.util.Locale defaultImportLocale)
+		throws com.liferay.portal.LocaleException {
+		_journalStructure.prepareLocalizedFieldsForImport(defaultImportLocale);
+	}
+
 	public com.liferay.portal.model.CacheModel<com.liferay.portlet.journal.model.JournalStructure> toCacheModel() {
 		return _journalStructure.toCacheModel();
 	}

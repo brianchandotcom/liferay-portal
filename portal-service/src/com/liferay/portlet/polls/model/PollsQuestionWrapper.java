@@ -660,6 +660,11 @@ public class PollsQuestionWrapper implements PollsQuestion,
 		return _pollsQuestion.hashCode();
 	}
 
+	public void prepareLocalizedFieldsForImport(
+		java.util.Locale defaultImportLocale) {
+		_pollsQuestion.prepareLocalizedFieldsForImport(defaultImportLocale);
+	}
+
 	public com.liferay.portal.model.CacheModel<com.liferay.portlet.polls.model.PollsQuestion> toCacheModel() {
 		return _pollsQuestion.toCacheModel();
 	}

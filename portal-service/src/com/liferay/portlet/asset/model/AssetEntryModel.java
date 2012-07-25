@@ -747,6 +747,8 @@ public interface AssetEntryModel extends AttachedModel, BaseModel<AssetEntry>,
 
 	public int hashCode();
 
+	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale);
+
 	public CacheModel<AssetEntry> toCacheModel();
 
 	public AssetEntry toEscapedModel();

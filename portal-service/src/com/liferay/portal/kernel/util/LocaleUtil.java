@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
@@ -29,8 +30,16 @@ import java.util.TreeMap;
  */
 public class LocaleUtil {
 
+	public static boolean equals(Locale locale1, Locale locale2) {
+		return getInstance()._equals(locale1, locale2);
+	}
+
 	public static Locale fromLanguageId(String languageId) {
 		return getInstance()._fromLanguageId(languageId);
+	}
+
+	public static Locale[] fromLanguageIds(List<String> languageIds) {
+		return getInstance()._fromLanguageIds(languageIds);
 	}
 
 	public static Locale[] fromLanguageIds(String[] languageIds) {
@@ -87,6 +96,13 @@ public class LocaleUtil {
 
 	private LocaleUtil() {
 		_locale = new Locale("en", "US");
+	}
+
+	private boolean _equals(Locale locale1, Locale locale2) {
+		String languageId1 = _toLanguageId(locale1);
+		String languageId2 = _toLanguageId(locale2);
+
+		return languageId1.equalsIgnoreCase(languageId2);
 	}
 
 	private Locale _fromLanguageId(String languageId) {
@@ -147,6 +163,16 @@ public class LocaleUtil {
 		}
 
 		return locale;
+	}
+
+	private Locale[] _fromLanguageIds(List<String> languageIds) {
+		Locale[] locales = new Locale[languageIds.size()];
+
+		for (int i = 0; i < languageIds.size(); i++) {
+			locales[i] = _fromLanguageId(languageIds.get(i));
+		}
+
+		return locales;
 	}
 
 	private Locale[] _fromLanguageIds(String[] languageIds) {

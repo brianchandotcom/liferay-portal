@@ -660,6 +660,11 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 		return _assetVocabulary.hashCode();
 	}
 
+	public void prepareLocalizedFieldsForImport(
+		java.util.Locale defaultImportLocale) {
+		_assetVocabulary.prepareLocalizedFieldsForImport(defaultImportLocale);
+	}
+
 	public com.liferay.portal.model.CacheModel<com.liferay.portlet.asset.model.AssetVocabulary> toCacheModel() {
 		return _assetVocabulary.toCacheModel();
 	}

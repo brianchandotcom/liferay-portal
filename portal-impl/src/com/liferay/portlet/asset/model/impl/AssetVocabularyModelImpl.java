@@ -723,6 +723,13 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 		assetVocabularyModelImpl._columnBitmask = 0;
 	}
 
+	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale) {
+		setTitle(getTitle(defaultImportLocale), defaultImportLocale,
+			defaultImportLocale);
+		setDescription(getDescription(defaultImportLocale),
+			defaultImportLocale, defaultImportLocale);
+	}
+
 	@Override
 	public CacheModel<AssetVocabulary> toCacheModel() {
 		AssetVocabularyCacheModel assetVocabularyCacheModel = new AssetVocabularyCacheModel();

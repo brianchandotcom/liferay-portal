@@ -460,6 +460,8 @@ public interface MDRRuleModel extends BaseModel<MDRRule>, GroupedModel {
 
 	public int hashCode();
 
+	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale);
+
 	public CacheModel<MDRRule> toCacheModel();
 
 	public MDRRule toEscapedModel();

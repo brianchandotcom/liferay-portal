@@ -14,15 +14,19 @@
 
 package com.liferay.portlet.dynamicdatamapping.service.impl;
 
+import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
@@ -37,7 +41,6 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatamapping.RequiredStructureException;
 import com.liferay.portlet.dynamicdatamapping.StructureDuplicateElementException;
 import com.liferay.portlet.dynamicdatamapping.StructureDuplicateStructureKeyException;
-import com.liferay.portlet.dynamicdatamapping.StructureNameException;
 import com.liferay.portlet.dynamicdatamapping.StructureXsdException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
@@ -642,8 +645,6 @@ public class DDMStructureLocalServiceImpl
 	protected void validate(Map<Locale, String> nameMap, String xsd)
 		throws PortalException {
 
-		validateName(nameMap);
-
 		if (Validator.isNull(xsd)) {
 			throw new StructureXsdException();
 		}
@@ -659,11 +660,20 @@ public class DDMStructureLocalServiceImpl
 					throw new StructureXsdException();
 				}
 
+				Locale[] contentAvailableLocales = LocaleUtil.fromLanguageIds(
+					StringUtil.split(
+						rootElement.attributeValue("available-locales")));
+
+				validateLanguages(contentAvailableLocales);
+
 				elements.addAll(rootElement.elements());
 
 				Set<String> elNames = new HashSet<String>();
 
 				validate(elements, elNames);
+			}
+			catch (LocaleException le) {
+				throw le;
 			}
 			catch (StructureDuplicateElementException sdee) {
 				throw sdee;
@@ -677,14 +687,23 @@ public class DDMStructureLocalServiceImpl
 		}
 	}
 
-	protected void validateName(Map<Locale, String> nameMap)
+	protected void validateLanguages(Locale[] contentAvailableLocales)
 		throws PortalException {
 
-		String name = nameMap.get(LocaleUtil.getDefault());
+		Locale[] availableLocales = LanguageUtil.getAvailableLocales();
 
-		if (Validator.isNull(name)) {
-			throw new StructureNameException();
+		for (Locale contentAvailableLocale : contentAvailableLocales) {
+			if (ArrayUtil.contains(availableLocales, contentAvailableLocale)) {
+				return;
+			}
 		}
+
+		LocaleException le = new LocaleException();
+
+		le.setSourceAvailableLocales(contentAvailableLocales);
+		le.setTargetAvailableLocales(availableLocales);
+
+		throw le;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

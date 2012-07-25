@@ -1081,6 +1081,8 @@ public interface LayoutRevisionModel extends BaseModel<LayoutRevision>,
 
 	public int hashCode();
 
+	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale);
+
 	public CacheModel<LayoutRevision> toCacheModel();
 
 	public LayoutRevision toEscapedModel();

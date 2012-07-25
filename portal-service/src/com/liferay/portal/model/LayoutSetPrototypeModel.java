@@ -304,6 +304,8 @@ public interface LayoutSetPrototypeModel extends BaseModel<LayoutSetPrototype> {
 
 	public int hashCode();
 
+	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale);
+
 	public CacheModel<LayoutSetPrototype> toCacheModel();
 
 	public LayoutSetPrototype toEscapedModel();

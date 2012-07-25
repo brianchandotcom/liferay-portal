@@ -957,6 +957,8 @@ public interface LayoutModel extends BaseModel<Layout> {
 
 	public int hashCode();
 
+	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale);
+
 	public CacheModel<Layout> toCacheModel();
 
 	public Layout toEscapedModel();

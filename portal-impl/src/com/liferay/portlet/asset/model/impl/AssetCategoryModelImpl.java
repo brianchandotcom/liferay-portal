@@ -820,6 +820,13 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 		assetCategoryModelImpl._columnBitmask = 0;
 	}
 
+	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale) {
+		setTitle(getTitle(defaultImportLocale), defaultImportLocale,
+			defaultImportLocale);
+		setDescription(getDescription(defaultImportLocale),
+			defaultImportLocale, defaultImportLocale);
+	}
+
 	@Override
 	public CacheModel<AssetCategory> toCacheModel() {
 		AssetCategoryCacheModel assetCategoryCacheModel = new AssetCategoryCacheModel();

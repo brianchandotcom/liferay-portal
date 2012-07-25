@@ -45,6 +45,14 @@ public class LocalizationUtil {
 		return getLocalization().getAvailableLocales(xml);
 	}
 
+	public static Locale getDefaultImportLocale(
+		String className, long classPK, Locale contentDefaultLocale,
+		Locale[] contentAvailableLocales) {
+
+		return getLocalization().getDefaultImportLocale(
+			className, classPK, contentDefaultLocale, contentAvailableLocales);
+	}
+
 	public static String getDefaultLocale(String xml) {
 		return getLocalization().getDefaultLocale(xml);
 	}

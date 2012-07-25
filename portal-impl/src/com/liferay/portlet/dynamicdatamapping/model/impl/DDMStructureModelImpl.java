@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.dynamicdatamapping.model.impl;
 
+import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSON;
@@ -850,6 +851,14 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		ddmStructureModelImpl._originalDescription = ddmStructureModelImpl._description;
 
 		ddmStructureModelImpl._columnBitmask = 0;
+	}
+
+	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
+		throws LocaleException {
+		setName(getName(defaultImportLocale), defaultImportLocale,
+			defaultImportLocale);
+		setDescription(getDescription(defaultImportLocale),
+			defaultImportLocale, defaultImportLocale);
 	}
 
 	@Override

@@ -684,6 +684,11 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 		return _mdrRule.hashCode();
 	}
 
+	public void prepareLocalizedFieldsForImport(
+		java.util.Locale defaultImportLocale) {
+		_mdrRule.prepareLocalizedFieldsForImport(defaultImportLocale);
+	}
+
 	public com.liferay.portal.model.CacheModel<com.liferay.portlet.mobiledevicerules.model.MDRRule> toCacheModel() {
 		return _mdrRule.toCacheModel();
 	}

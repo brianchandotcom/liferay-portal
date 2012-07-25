@@ -661,6 +661,13 @@ public class MDRRuleGroupModelImpl extends BaseModelImpl<MDRRuleGroup>
 		mdrRuleGroupModelImpl._columnBitmask = 0;
 	}
 
+	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale) {
+		setName(getName(defaultImportLocale), defaultImportLocale,
+			defaultImportLocale);
+		setDescription(getDescription(defaultImportLocale),
+			defaultImportLocale, defaultImportLocale);
+	}
+
 	@Override
 	public CacheModel<MDRRuleGroup> toCacheModel() {
 		MDRRuleGroupCacheModel mdrRuleGroupCacheModel = new MDRRuleGroupCacheModel();

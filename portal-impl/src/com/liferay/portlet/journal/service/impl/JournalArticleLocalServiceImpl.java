@@ -14,10 +14,12 @@
 
 package com.liferay.portlet.journal.service.impl;
 
+import com.liferay.portal.LocaleException;
 import com.liferay.portal.NoSuchImageException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
@@ -28,6 +30,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -3467,12 +3470,25 @@ public class JournalArticleLocalServiceImpl
 			String smallImageURL, File smallImageFile, byte[] smallImageBytes)
 		throws PortalException, SystemException {
 
-		Locale defaultLocale = LocaleUtil.fromLanguageId(
+		Locale articleDefaultLocale = LocaleUtil.fromLanguageId(
 			LocalizationUtil.getDefaultLocale(content));
+
+		Locale[] availableLocales = LanguageUtil.getAvailableLocales();
+
+		if (!ArrayUtil.contains(availableLocales, articleDefaultLocale)) {
+			LocaleException le = new LocaleException();
+
+			Locale[] sourceAvailableLocales = {articleDefaultLocale};
+
+			le.setSourceAvailableLocales(sourceAvailableLocales);
+			le.setTargetAvailableLocales(availableLocales);
+
+			throw le;
+		}
 
 		if ((classNameId == 0) &&
 			(titleMap.isEmpty() ||
-			 Validator.isNull(titleMap.get(defaultLocale)))) {
+			 Validator.isNull(titleMap.get(articleDefaultLocale)))) {
 
 			throw new ArticleTitleException();
 		}

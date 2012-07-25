@@ -416,6 +416,8 @@ public interface MDRRuleGroupModel extends BaseModel<MDRRuleGroup>, GroupedModel
 
 	public int hashCode();
 
+	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale);
+
 	public CacheModel<MDRRuleGroup> toCacheModel();
 
 	public MDRRuleGroup toEscapedModel();

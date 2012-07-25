@@ -447,6 +447,8 @@ public interface AssetVocabularyModel extends BaseModel<AssetVocabulary>,
 
 	public int hashCode();
 
+	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale);
+
 	public CacheModel<AssetVocabulary> toCacheModel();
 
 	public AssetVocabulary toEscapedModel();

@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.journal.model.impl;
 
+import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -188,6 +189,24 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		else {
 			return true;
 		}
+	}
+
+	@Override
+	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
+		throws LocaleException {
+
+		super.prepareLocalizedFieldsForImport(defaultImportLocale);
+
+		String defaultImportLanguageId = LocaleUtil.toLanguageId(
+			defaultImportLocale);
+
+		String content = LocalizationUtil.updateLocalization(
+			getContent(), "static-content",
+			LocalizationUtil.getLocalization(
+				getContent(), defaultImportLanguageId),
+			defaultImportLanguageId, defaultImportLanguageId, true, true);
+
+		setContent(content);
 	}
 
 	public void setSmallImageType(String smallImageType) {

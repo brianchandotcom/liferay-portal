@@ -573,6 +573,11 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 		return _role.hashCode();
 	}
 
+	public void prepareLocalizedFieldsForImport(
+		java.util.Locale defaultImportLocale) {
+		_role.prepareLocalizedFieldsForImport(defaultImportLocale);
+	}
+
 	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.Role> toCacheModel() {
 		return _role.toCacheModel();
 	}

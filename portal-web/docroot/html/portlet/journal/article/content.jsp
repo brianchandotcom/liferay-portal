@@ -177,6 +177,14 @@ if (Validator.isNotNull(content)) {
 		<liferay-ui:error exception="<%= ArticleTitleException.class %>" message="please-enter-a-valid-name" />
 		<liferay-ui:error exception="<%= ArticleVersionException.class %>" message="another-user-has-made-changes-since-you-started-editing-please-copy-your-changes-and-try-again" />
 		<liferay-ui:error exception="<%= DuplicateArticleIdException.class %>" message="please-enter-a-unique-id" />
+		<liferay-ui:error exception="<%= LocaleException.class %>">
+
+			<%
+			LocaleException le = (LocaleException)errorException;
+			%>
+
+			<liferay-ui:message arguments="<%= new String[] {StringUtil.merge(le.getSourceAvailableLocales()), StringUtil.merge(le.getTargetAvailableLocales())} %>" key="the-default-language-x-does-not-match-the-portal's-available-languages-x" />
+		</liferay-ui:error>
 
 		<table class="lfr-table journal-article-header-edit" id="<portlet:namespace />articleHeaderEdit">
 		<tr>

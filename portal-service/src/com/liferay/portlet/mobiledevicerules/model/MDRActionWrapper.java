@@ -747,6 +747,11 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 		return _mdrAction.hashCode();
 	}
 
+	public void prepareLocalizedFieldsForImport(
+		java.util.Locale defaultImportLocale) {
+		_mdrAction.prepareLocalizedFieldsForImport(defaultImportLocale);
+	}
+
 	public com.liferay.portal.model.CacheModel<com.liferay.portlet.mobiledevicerules.model.MDRAction> toCacheModel() {
 		return _mdrAction.toCacheModel();
 	}

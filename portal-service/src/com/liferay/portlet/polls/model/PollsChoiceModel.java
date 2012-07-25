@@ -243,6 +243,8 @@ public interface PollsChoiceModel extends BaseModel<PollsChoice> {
 
 	public int hashCode();
 
+	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale);
+
 	public CacheModel<PollsChoice> toCacheModel();
 
 	public PollsChoice toEscapedModel();

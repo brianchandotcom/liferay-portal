@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.journal.action;
 
+import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -247,7 +248,8 @@ public class EditArticleAction extends PortletAction {
 					 e instanceof ArticleTitleException ||
 					 e instanceof ArticleTypeException ||
 					 e instanceof ArticleVersionException ||
-					 e instanceof DuplicateArticleIdException) {
+					 e instanceof DuplicateArticleIdException ||
+					 e instanceof LocaleException) {
 
 				SessionErrors.add(actionRequest, e.getClass());
 			}

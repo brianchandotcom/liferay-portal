@@ -1497,6 +1497,19 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 		layoutRevisionModelImpl._columnBitmask = 0;
 	}
 
+	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale) {
+		setName(getName(defaultImportLocale), defaultImportLocale,
+			defaultImportLocale);
+		setTitle(getTitle(defaultImportLocale), defaultImportLocale,
+			defaultImportLocale);
+		setDescription(getDescription(defaultImportLocale),
+			defaultImportLocale, defaultImportLocale);
+		setKeywords(getKeywords(defaultImportLocale), defaultImportLocale,
+			defaultImportLocale);
+		setRobots(getRobots(defaultImportLocale), defaultImportLocale,
+			defaultImportLocale);
+	}
+
 	@Override
 	public CacheModel<LayoutRevision> toCacheModel() {
 		LayoutRevisionCacheModel layoutRevisionCacheModel = new LayoutRevisionCacheModel();

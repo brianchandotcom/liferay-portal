@@ -3510,6 +3510,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		userGroupRoleLocalService.deleteUserGroupRoles(userIds, groupId);
 
+		userLocalService.unsetGroupTeamsUsers(groupId, userIds);
+
 		groupPersistence.removeUsers(groupId, userIds);
 
 		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(User.class);
@@ -5430,7 +5432,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			if (!ArrayUtil.contains(newGroupIds, oldGroupId)) {
 				unsetGroupUsers(
 					oldGroupId, new long[] {userId}, serviceContext);
-				unsetGroupTeamsUsers(oldGroupId, new long[] {userId});
 			}
 		}
 

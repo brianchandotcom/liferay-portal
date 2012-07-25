@@ -175,7 +175,6 @@ public class EditGroupAssignmentsAction extends PortletAction {
 
 		UserServiceUtil.addGroupUsers(groupId, addUserIds, serviceContext);
 		UserServiceUtil.unsetGroupUsers(groupId, removeUserIds, serviceContext);
-		UserServiceUtil.unsetGroupTeamsUsers(groupId, removeUserIds);
 
 		LiveUsers.joinGroup(themeDisplay.getCompanyId(), groupId, addUserIds);
 		LiveUsers.leaveGroup(

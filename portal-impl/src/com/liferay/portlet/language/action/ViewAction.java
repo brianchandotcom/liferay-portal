@@ -124,10 +124,8 @@ public class ViewAction extends PortletAction {
 			}
 		}
 		else {
-			String layoutURL = PortalUtil.getLayoutFriendlyURL(
+			redirect = PortalUtil.getLayoutFriendlyURL(
 				layout, themeDisplay, locale);
-
-			redirect = layoutURL;
 		}
 
 		redirect = redirect + queryString;

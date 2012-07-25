@@ -96,7 +96,22 @@ public class UpgradeOptimizedResultSetHandler implements InvocationHandler {
 
 			Object returnValue = _columnValues.get(column);
 
-			if (methodName.equals("getDouble")) {
+			if (methodName.equals("getBoolean")) {
+				if ((returnValue == null) || !(returnValue instanceof Number)) {
+					return GetterUtil.getBoolean(returnValue);
+				}
+				else {
+					double doubleValue = ((Number) returnValue).doubleValue();
+
+					if (doubleValue == 0.0) {
+						return false;
+					}
+					else {
+						return true;
+					}
+				}
+			}
+			else if (methodName.equals("getDouble")) {
 				if ((returnValue == null) || !(returnValue instanceof Number)) {
 					return GetterUtil.getDouble(returnValue);
 				}

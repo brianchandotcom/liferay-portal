@@ -364,6 +364,10 @@
 		<finder name="ToFileEntryId" return-type="Collection">
 			<finder-column name="toFileEntryId" />
 		</finder>
+		<finder name="G_F" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="folderId" />
+		</finder>
 		<finder name="G_F_A" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="folderId" />

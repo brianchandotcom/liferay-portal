@@ -202,6 +202,17 @@ public class DLFileShortcutLocalServiceImpl
 		}
 	}
 
+	public void deleteFileShortcuts(long groupId, long folderId)
+		throws PortalException, SystemException {
+
+		List<DLFileShortcut> fileShortcuts =
+			dlFileShortcutPersistence.findByG_F(groupId, folderId);
+
+		for (DLFileShortcut fileShortcut : fileShortcuts) {
+			deleteFileShortcut(fileShortcut);
+		}
+	}
+
 	public void disableFileShortcuts(long toFileEntryId)
 		throws SystemException {
 

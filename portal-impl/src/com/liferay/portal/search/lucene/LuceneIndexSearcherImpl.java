@@ -544,15 +544,11 @@ public class LuceneIndexSearcherImpl implements IndexSearcher {
 				start = end;
 			}
 
-			int subsetTotal = end - start;
+			List<Document> subsetDocs = new ArrayList<Document>();
+			List<String> subsetSnippets = new ArrayList<String>();
+			List<Float> subsetScores = new ArrayList<Float>();
 
-			if (subsetTotal > PropsValues.INDEX_SEARCH_LIMIT) {
-				subsetTotal = PropsValues.INDEX_SEARCH_LIMIT;
-			}
-
-			List<Document> subsetDocs = new ArrayList<Document>(subsetTotal);
-			List<String> subsetSnippets = new ArrayList<String>(subsetTotal);
-			List<Float> subsetScores = new ArrayList<Float>(subsetTotal);
+			int subsetTotal = 0;
 
 			QueryConfig queryConfig = query.getQueryConfig();
 
@@ -574,11 +570,19 @@ public class LuceneIndexSearcherImpl implements IndexSearcher {
 					subsetSnippet = getSnippet(
 						document, query, Field.CONTENT,
 						queryConfig.getLocale());
+
+					if (Validator.isNull(subsetSnippet)) {
+						subsetSnippet = getSnippet(
+							document, query, Field.TITLE,
+							queryConfig.getLocale());
+
+						if (Validator.isNull(subsetSnippet)) {
+							continue;
+						}
+					}
 				}
 
 				subsetDocument.addText(Field.SNIPPET, subsetSnippet);
-
-				subsetSnippets.add(subsetSnippet);
 
 				subsetDocs.add(subsetDocument);
 
@@ -589,6 +593,10 @@ public class LuceneIndexSearcherImpl implements IndexSearcher {
 				}
 
 				subsetScores.add(subsetScore);
+
+				subsetSnippets.add(subsetSnippet);
+
+				subsetTotal++;
 
 				if (_log.isDebugEnabled()) {
 					try {
@@ -602,16 +610,14 @@ public class LuceneIndexSearcherImpl implements IndexSearcher {
 				}
 			}
 
-			hits.setStart(startTime);
-			hits.setSearchTime(searchTime);
+			hits.setDocs(subsetDocs.toArray(new Document[subsetTotal]));
+			hits.setLength(subsetTotal);
 			hits.setQuery(query);
 			hits.setQueryTerms(queryTerms);
-			hits.setDocs(subsetDocs.toArray(new Document[subsetDocs.size()]));
-			hits.setLength(length);
-			hits.setSnippets(
-				subsetSnippets.toArray(new String[subsetSnippets.size()]));
-			hits.setScores(
-				subsetScores.toArray(new Float[subsetScores.size()]));
+			hits.setScores(subsetScores.toArray(new Float[subsetTotal]));
+			hits.setSnippets(subsetSnippets.toArray(new String[subsetTotal]));
+			hits.setSearchTime(searchTime);
+			hits.setStart(startTime);
 		}
 
 		return hits;

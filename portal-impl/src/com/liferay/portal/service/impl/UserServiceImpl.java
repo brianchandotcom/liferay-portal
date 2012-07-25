@@ -982,6 +982,24 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	}
 
 	/**
+	 * Removes the users from the teams of a group.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  userIds the primary keys of the users
+	 * @throws PortalException if the current user did not have permission to
+	 *         modify user group assignments
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void unsetGroupTeamsUsers(long groupId, long[] userIds)
+		throws PortalException, SystemException {
+
+		UserGroupPermissionUtil.check(
+			getPermissionChecker(), groupId, ActionKeys.ASSIGN_MEMBERS);
+
+		userLocalService.unsetGroupTeamsUsers(groupId, userIds);
+	}
+
+	/**
 	 * Removes the users from the group.
 	 *
 	 * @param  groupId the primary key of the group

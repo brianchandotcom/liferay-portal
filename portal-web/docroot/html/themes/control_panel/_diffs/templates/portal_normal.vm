@@ -12,6 +12,8 @@
 
 <body class="$css_class">
 
+$theme.include($body_top_include)
+
 #if ($control_panel_category == "")
 	#dockbar()
 #end

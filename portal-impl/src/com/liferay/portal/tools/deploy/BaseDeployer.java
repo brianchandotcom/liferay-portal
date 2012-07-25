@@ -863,10 +863,9 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 							previousVersion + " to version " + version);
 				}
 
-				if (pluginPackage.isLaterVersionThan(previousPluginPackage)) {
-					overwrite = true;
-				}
-				else {
+				if (pluginPackage.isPreviousVersionThan(
+						previousPluginPackage)) {
+
 					if (_log.isInfoEnabled()) {
 						_log.info(
 							"Not updating " + name + " because version " +
@@ -876,6 +875,8 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 
 					return AutoDeployer.CODE_SKIP_NEWER_VERSION;
 				}
+
+				overwrite = true;
 			}
 
 			File mergeDirFile = new File(

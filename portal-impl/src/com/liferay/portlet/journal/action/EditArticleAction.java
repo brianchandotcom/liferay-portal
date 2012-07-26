@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -168,27 +169,29 @@ public class EditArticleAction extends PortletAction {
 					portletConfig, actionRequest, article, redirect);
 			}
 
-			if (redirect.contains("/content/" + oldUrlTitle + "?")) {
-				int pos = redirect.indexOf("?");
+			if (Validator.isNotNull(oldUrlTitle)) {
+				String portletId = HttpUtil.getParameter(
+					redirect, "p_p_id", false);
 
-				if (pos == -1) {
-					pos = redirect.length();
+				String oldRedirectParamName =
+					PortalUtil.getPortletNamespace(portletId) + "redirect";
+
+				String oldRedirect = HttpUtil.getParameter(
+					redirect, oldRedirectParamName, false);
+
+				String newRedirect = null;
+
+				if (Validator.isNotNull(oldRedirect)) {
+					newRedirect = HttpUtil.decodeURL(oldRedirect);
+
+					newRedirect = StringUtil.replace(
+						newRedirect, oldUrlTitle, article.getUrlTitle());
+
+					newRedirect = newRedirect.replace(
+						oldRedirectParamName, "redirect");
+
+					redirect = redirect.replace(oldRedirect, newRedirect);
 				}
-
-				String newRedirect = redirect.substring(
-					0, pos - oldUrlTitle.length());
-
-				newRedirect += article.getUrlTitle();
-
-				if (oldUrlTitle.contains("/maximized")) {
-					newRedirect += "/maximized";
-				}
-
-				if (pos < redirect.length()) {
-					newRedirect += "?" + redirect.substring(pos + 1);
-				}
-
-				redirect = newRedirect;
 			}
 
 			WindowState windowState = actionRequest.getWindowState();

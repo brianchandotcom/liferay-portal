@@ -26,12 +26,8 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.model.AssetRenderer;
-import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
-import com.liferay.portlet.documentlibrary.model.DLFolder;
-import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileShortcutPermission;
 
 import java.util.Locale;
@@ -69,29 +65,7 @@ public class DLFileShortcutTrashRenderer extends BaseTrashRenderer {
 	public String getRestorePath(RenderRequest renderRequest)
 		throws PortalException, SystemException {
 
-		boolean trashedFolder = false;
-
-		try {
-			long folderId = _fileShortcut.getFolderId();
-
-			while (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-				DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(
-					folderId);
-
-				if (dlFolder.isInTrash()) {
-					trashedFolder = true;
-
-					break;
-				}
-
-				folderId = dlFolder.getParentFolderId();
-			}
-		}
-		catch (NoSuchFolderException nsfe) {
-			trashedFolder = true;
-		}
-
-		if (trashedFolder) {
+		if (_fileShortcut.isInTrashFolder()) {
 			renderRequest.setAttribute(
 				WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY, _fileEntry);
 			renderRequest.setAttribute(

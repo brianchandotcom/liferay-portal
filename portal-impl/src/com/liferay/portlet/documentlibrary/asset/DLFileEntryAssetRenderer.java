@@ -33,11 +33,8 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseAssetRenderer;
-import com.liferay.portlet.documentlibrary.NoSuchFolderException;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
-import com.liferay.portlet.documentlibrary.model.DLFolder;
-import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 
@@ -110,29 +107,9 @@ public class DLFileEntryAssetRenderer
 	public String getRestorePath(RenderRequest renderRequest)
 		throws PortalException, SystemException {
 
-		boolean trashedFolder = false;
+		DLFileEntry dlFileEntry = (DLFileEntry)_fileEntry.getModel();
 
-		try {
-			long folderId = _fileEntry.getFolderId();
-
-			while (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-				DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(
-					folderId);
-
-				if (dlFolder.isInTrash()) {
-					trashedFolder = true;
-
-					break;
-				}
-
-				folderId = dlFolder.getParentFolderId();
-			}
-		}
-		catch (NoSuchFolderException nsfe) {
-			trashedFolder = true;
-		}
-
-		if (trashedFolder) {
+		if ((dlFileEntry != null) && dlFileEntry.isInTrashFolder()) {
 			renderRequest.setAttribute(
 				WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY, _fileEntry);
 			renderRequest.setAttribute(

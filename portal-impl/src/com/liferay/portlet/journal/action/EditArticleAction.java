@@ -761,8 +761,10 @@ public class EditArticleAction extends PortletAction {
 						JournalStructureLocalServiceUtil.getStructure(
 							groupId, structureId, true);
 
+					boolean translate = cmd.equals(Constants.TRANSLATE);
+
 					content = JournalUtil.mergeArticleContent(
-						curArticle.getContent(), content, true);
+						curArticle.getContent(), content, !translate);
 					content = JournalUtil.removeOldContent(
 						content, structure.getMergedXsd());
 				}

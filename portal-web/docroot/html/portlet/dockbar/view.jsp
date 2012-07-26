@@ -406,18 +406,16 @@ boolean hasLayoutUpdatePermission = LayoutPermissionUtil.contains(permissionChec
 
 		<liferay-ui:message key="this-page-has-been-changed-since-the-last-update-from-the-site-template" />
 
-		<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, layout.getGroupId(), ActionKeys.UPDATE) %>">
-			<liferay-portlet:actionURL portletName="<%= PortletKeys.LAYOUTS_ADMIN %>" var="resetPrototypeURL">
-				<portlet:param name="struts_action" value="/layouts_admin/edit_layouts" />
-				<portlet:param name="<%= Constants.CMD %>" value="reset_prototype" />
-				<portlet:param name="redirect" value="<%= PortalUtil.getLayoutURL(themeDisplay) %>" />
-				<portlet:param name="groupId" value="<%= String.valueOf(themeDisplay.getParentGroupId()) %>" />
-			</liferay-portlet:actionURL>
+		<liferay-portlet:actionURL portletName="<%= PortletKeys.LAYOUTS_ADMIN %>" var="resetPrototypeURL">
+			<portlet:param name="struts_action" value="/layouts_admin/edit_layouts" />
+			<portlet:param name="<%= Constants.CMD %>" value="reset_prototype" />
+			<portlet:param name="redirect" value="<%= PortalUtil.getLayoutURL(themeDisplay) %>" />
+			<portlet:param name="groupId" value="<%= String.valueOf(themeDisplay.getParentGroupId()) %>" />
+		</liferay-portlet:actionURL>
 
-			<aui:form action="<%= resetPrototypeURL %>" cssClass="reset-prototype" name="resetFm">
-				<aui:button name="submit" type="submit" value="reset" />
-			</aui:form>
-		</c:if>
+		<aui:form action="<%= resetPrototypeURL %>" cssClass="reset-prototype" name="resetFm">
+			<aui:button name="submit" type="submit" value="reset" />
+		</aui:form>
 	</div>
 </c:if>
 

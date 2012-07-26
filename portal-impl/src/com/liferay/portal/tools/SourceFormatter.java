@@ -1162,18 +1162,7 @@ public class SourceFormatter {
 				}
 			}
 
-			String oldContent = content;
-			String newContent = StringPool.BLANK;
-
-			for (;;) {
-				newContent = _formatJavaContent(fileName, oldContent);
-
-				if (oldContent.equals(newContent)) {
-					break;
-				}
-
-				oldContent = newContent;
-			}
+			String newContent = content;
 
 			if (newContent.contains("$\n */")) {
 				_sourceFormatterHelper.printError(fileName, "*: " + fileName);
@@ -1297,6 +1286,18 @@ public class SourceFormatter {
 					_sourceFormatterHelper.printError(
 						fileName, "Use getInt(1) for count: " + fileName);
 				}
+			}
+
+			String oldContent = newContent;
+
+			for (;;) {
+				newContent = _formatJavaContent(fileName, oldContent);
+
+				if (oldContent.equals(newContent)) {
+					break;
+				}
+
+				oldContent = newContent;
 			}
 
 			if ((newContent != null) && !content.equals(newContent)) {

@@ -10,6 +10,26 @@
 	<short-name>liferay-ui</short-name>
 	<uri>http://liferay.com/tld/ui</uri>
 	<tag>
+		<name>app-view-display-style</name>
+		<tag-class>com.liferay.taglib.ui.AppViewDisplayStyleTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>requestParams</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>displayStyle</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>displayStyles</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<name>app-view-entry</name>
 		<tag-class>com.liferay.taglib.ui.AppViewEntryTag</tag-class>
 		<body-content>empty</body-content>

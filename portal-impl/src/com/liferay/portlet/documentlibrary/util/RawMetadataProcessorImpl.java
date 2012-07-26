@@ -55,7 +55,7 @@ import java.util.Map;
  * @author Miguel Pastor
  */
 public class RawMetadataProcessorImpl
-	implements DLProcessor, RawMetadataProcessor {
+	extends BaseDLProcessorImpl implements RawMetadataProcessor {
 
 	public static RawMetadataProcessorImpl getInstance() {
 		return _instance;
@@ -81,6 +81,10 @@ public class RawMetadataProcessorImpl
 
 	public void generateMetadata(FileVersion fileVersion)
 		throws SystemException {
+
+		if (!isEnabled()) {
+			return;
+		}
 
 		long fileEntryMetadataCount =
 			DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadataCount(
@@ -109,6 +113,10 @@ public class RawMetadataProcessorImpl
 
 	public void saveMetadata(FileVersion fileVersion)
 		throws PortalException, SystemException {
+
+		if (!isEnabled()) {
+			return;
+		}
 
 		Map<String, Fields> rawMetadataMap = null;
 
@@ -175,6 +183,10 @@ public class RawMetadataProcessorImpl
 
 	public void trigger(
 		FileVersion sourceFileVersion, FileVersion destinationFileVersion) {
+
+		if (!isEnabled()) {
+			return;
+		}
 
 		if (PropsValues.DL_FILE_ENTRY_PROCESSORS_TRIGGER_SYNCHRONOUSLY) {
 			try {

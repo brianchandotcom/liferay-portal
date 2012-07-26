@@ -450,7 +450,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		if (count == 0) {
 			long defaultUserId = userLocalService.getDefaultUserId(companyId);
 
-			groupLocalService.addGroup(
+			addGroup(
 				defaultUserId, GroupConstants.DEFAULT_PARENT_GROUP_ID,
 				Company.class.getName(), companyId, null, null, 0, null, false,
 				true, null);
@@ -513,7 +513,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 					site = false;
 				}
 
-				group = groupLocalService.addGroup(
+				group = addGroup(
 					defaultUserId, GroupConstants.DEFAULT_PARENT_GROUP_ID,
 					className, classPK, name, null, type, friendlyURL, site,
 					true, null);
@@ -827,7 +827,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			return group;
 		}
 
-		return groupLocalService.loadFetchGroup(companyId, name);
+		return loadFetchGroup(companyId, name);
 	}
 
 	/**
@@ -942,7 +942,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			return group;
 		}
 
-		return groupLocalService.loadGetGroup(companyId, name);
+		return loadGetGroup(companyId, name);
 	}
 
 	public String getGroupDescriptiveName(Group group, Locale locale)

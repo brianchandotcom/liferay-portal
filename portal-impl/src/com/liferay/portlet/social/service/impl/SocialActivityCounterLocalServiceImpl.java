@@ -197,7 +197,7 @@ public class SocialActivityCounterLocalServiceImpl
 					}
 					else {
 						activityCounter =
-							socialActivityCounterLocalService.
+
 								createActivityCounter(
 									groupId, classNameId, classPK, name,
 									ownerType, currentValue, totalValue,

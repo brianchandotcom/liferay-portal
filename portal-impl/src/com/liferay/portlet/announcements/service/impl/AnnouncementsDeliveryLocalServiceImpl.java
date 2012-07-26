@@ -135,8 +135,7 @@ public class AnnouncementsDeliveryLocalServiceImpl
 			announcementsDeliveryPersistence.fetchByU_T(userId, type);
 
 		if (delivery == null) {
-			delivery = announcementsDeliveryLocalService.addUserDelivery(
-				userId, type);
+			delivery = addUserDelivery(userId, type);
 		}
 
 		return delivery;

@@ -150,7 +150,7 @@ public class SocialActivityLocalServiceImpl
 			mirrorActivity.setAssetEntry(assetEntry);
 		}
 
-		socialActivityLocalService.addActivity(activity, mirrorActivity);
+		addActivity(activity, mirrorActivity);
 	}
 
 	/**

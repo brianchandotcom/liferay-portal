@@ -267,7 +267,7 @@ public class AssetVocabularyLocalServiceImpl
 
 		serviceContext.setScopeGroupId(groupId);
 
-		AssetVocabulary vocabulary = assetVocabularyLocalService.addVocabulary(
+		AssetVocabulary vocabulary = addVocabulary(
 			defaultUserId, StringPool.BLANK, titleMap, null, StringPool.BLANK,
 			serviceContext);
 

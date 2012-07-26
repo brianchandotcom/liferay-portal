@@ -115,7 +115,7 @@ public class BookmarksEntryLocalServiceImpl
 			groupId, folderId);
 
 		for (BookmarksEntry entry : entries) {
-			bookmarksEntryLocalService.deleteEntry(entry);
+			deleteEntry(entry);
 		}
 	}
 

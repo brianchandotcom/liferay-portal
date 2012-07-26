@@ -1927,7 +1927,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		User userModel = _defaultUsers.get(companyId);
 
 		if (userModel == null) {
-			userModel = userLocalService.loadGetDefaultUser(companyId);
+			userModel = loadGetDefaultUser(companyId);
 
 			_defaultUsers.put(companyId, userModel);
 		}
@@ -2858,7 +2858,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			if (user.getPasswordModifiedDate() == null) {
 				user.setPasswordModifiedDate(now);
 
-				userLocalService.updateUser(user, false);
+				updateUser(user, false);
 			}
 
 			long passwordStartTime = user.getPasswordModifiedDate().getTime();
@@ -2896,7 +2896,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			if (user.getPasswordModifiedDate() == null) {
 				user.setPasswordModifiedDate(now);
 
-				userLocalService.updateUser(user, false);
+				updateUser(user, false);
 			}
 
 			long timeModified = user.getPasswordModifiedDate().getTime();
@@ -3510,7 +3510,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		userGroupRoleLocalService.deleteUserGroupRoles(userIds, groupId);
 
-		userLocalService.unsetGroupTeamsUsers(groupId, userIds);
+		unsetGroupTeamsUsers(groupId, userIds);
 
 		groupPersistence.removeUsers(groupId, userIds);
 

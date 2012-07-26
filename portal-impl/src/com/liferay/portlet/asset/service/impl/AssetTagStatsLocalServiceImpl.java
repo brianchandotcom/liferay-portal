@@ -176,8 +176,7 @@ public class AssetTagStatsLocalServiceImpl
 			tagId, classNameId);
 
 		if (tagStats == null) {
-			tagStats = assetTagStatsLocalService.addTagStats(
-				tagId, classNameId);
+			tagStats = addTagStats(tagId, classNameId);
 		}
 
 		return tagStats;

@@ -160,7 +160,7 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 		if (GetterUtil.getBoolean(
 				PropsUtil.get(PropsKeys.SCHEMA_RUN_ENABLED))) {
 
-			releaseLocalService.createTablesAndPopulate();
+			createTablesAndPopulate();
 
 			testSupportsStringCaseSensitiveQuery();
 

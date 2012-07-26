@@ -108,7 +108,7 @@ public class PortalServiceImpl extends PortalServiceBaseImpl {
 	}
 
 	public int testGetBuildNumber() {
-		return portalService.getBuildNumber();
+		return getBuildNumber();
 	}
 
 	public void testGetUserId() {

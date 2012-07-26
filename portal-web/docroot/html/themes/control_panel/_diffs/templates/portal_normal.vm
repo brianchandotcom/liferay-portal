@@ -12,6 +12,8 @@
 
 <body class="$css_class">
 
+$theme.include($body_top_include)
+
 #if ($control_panel_category == "")
 	#dockbar()
 #end
@@ -55,6 +57,9 @@
 
 		<div class="clear"></div>
 	</div>
+
+$theme.include($body_bottom_include)
+
 </body>
 
 $theme.include($bottom_include)

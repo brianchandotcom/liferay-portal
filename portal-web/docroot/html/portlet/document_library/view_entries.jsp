@@ -82,7 +82,7 @@ searchContainer.setHeaderNames(headerNames);
 
 EntriesChecker entriesChecker = new EntriesChecker(liferayPortletRequest, liferayPortletResponse);
 
-entriesChecker.setCssClass("document-selector");
+entriesChecker.setCssClass("entry-selector");
 
 searchContainer.setRowChecker(entriesChecker);
 
@@ -263,18 +263,7 @@ for (int i = 0; i < results.size(); i++) {
 						rowURL.setParameter("struts_action", "/document_library/view_file_entry");
 						rowURL.setParameter("redirect", HttpUtil.removeParameter(currentURL, liferayPortletResponse.getNamespace() + "ajax"));
 						rowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
-						%>
 
-						<liferay-ui:icon
-							cssClass="document-display-style selectable"
-							image='<%= "../file_system/small/" + DLUtil.getFileIcon(fileEntry.getExtension()) %>'
-							label="<%= true %>"
-							message="<%= fileEntry.getTitle() %>"
-							method="get"
-							url="<%= rowURL.toString() %>"
-						/>
-
-						<%
 						FileVersion latestFileVersion = fileEntry.getFileVersion();
 
 						if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE)) {
@@ -282,16 +271,14 @@ for (int i = 0; i < results.size(); i++) {
 						}
 						%>
 
-						<c:if test="<%= latestFileVersion.isDraft() || latestFileVersion.isPending() %>">
-
-							<%
-							String statusLabel = WorkflowConstants.toLabel(latestFileVersion.getStatus());
-							%>
-
-							<span class="workflow-status-<%= statusLabel %>">
-								(<liferay-ui:message key="<%= statusLabel %>" />)
-							</span>
-						</c:if>
+						<liferay-ui:app-view-entry
+							displayStyle="list"
+							showCheckbox="<%= true %>"
+							status="<%= latestFileVersion.getStatus() %>"
+							thumbnailSrc='<%= "../file_system/small/" + DLUtil.getFileIcon(fileEntry.getExtension()) %>'
+							title="<%= fileEntry.getTitle() %>"
+							url="<%= rowURL.toString() %>"
+						/>
 					</liferay-util:buffer>
 
 					<%
@@ -306,7 +293,7 @@ for (int i = 0; i < results.size(); i++) {
 						row = new ResultRow(fileShortcut, fileShortcut.getFileShortcutId(), i);
 					}
 
-					row.setClassName("document-display-style");
+					row.setClassName("app-view-entry-taglib entry-display-style");
 
 					Map<String, Object> data = new HashMap<String, Object>();
 
@@ -410,12 +397,13 @@ for (int i = 0; i < results.size(); i++) {
 						rowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
 						%>
 
-						<liferay-ui:icon
+						<liferay-ui:app-view-entry
 							data="<%= data %>"
-							image="<%= folderImage %>"
-							label="<%= true %>"
-							message="<%= curFolder.getName() %>"
-							method="get"
+							displayStyle="list"
+							isFolder="<%= true %>"
+							showCheckbox="<%= false %>"
+							thumbnailSrc="<%= folderImage %>"
+							title="<%= curFolder.getName() %>"
 							url="<%= rowURL.toString() %>"
 						/>
 					</liferay-util:buffer>
@@ -425,7 +413,7 @@ for (int i = 0; i < results.size(); i++) {
 
 					ResultRow row = new ResultRow(curFolder, curFolder.getPrimaryKey(), i);
 
-					row.setClassName("document-display-style");
+					row.setClassName("app-view-entry-taglib entry-display-style");
 
 					Map<String, Object> data = new HashMap<String, Object>();
 

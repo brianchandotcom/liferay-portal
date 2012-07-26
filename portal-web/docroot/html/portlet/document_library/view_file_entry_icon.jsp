@@ -30,67 +30,33 @@ DLFileShortcut fileShortcut = (DLFileShortcut)request.getAttribute("view_entries
 PortletURL tempRowURL = (PortletURL)request.getAttribute("view_entries.jsp-tempRowURL");
 
 boolean showCheckBox = DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE);
+
+String rowCheckerName = FileEntry.class.getSimpleName();
+long rowCheckerId = fileEntry.getFileEntryId();
+
+if (fileShortcut != null) {
+	rowCheckerName = DLFileShortcut.class.getSimpleName();
+	rowCheckerId = fileShortcut.getFileShortcutId();
+}
+
+String thumbnailDivStyle = DLUtil.getThumbnailStyle(false, 4);
+String thumbnailSrc = DLUtil.getThumbnailSrc(fileEntry, fileShortcut, themeDisplay);
+String thumbnailStyle = DLUtil.getThumbnailStyle();
 %>
 
-<div class="document-display-style display-icon <%= showCheckBox ? "selectable" : StringPool.BLANK %>" data-draggable="<%= showCheckBox ? Boolean.TRUE.toString() : Boolean.FALSE.toString() %>" data-title="<%= StringUtil.shorten(fileEntry.getTitle(), 60) %>">
-	<c:if test="<%= showCheckBox %>">
-
-		<%
-		String rowCheckerName = FileEntry.class.getSimpleName();
-		long rowCheckerId = fileEntry.getFileEntryId();
-
-		if (fileShortcut != null) {
-			rowCheckerName = DLFileShortcut.class.getSimpleName();
-			rowCheckerId = fileShortcut.getFileShortcutId();
-		}
-		%>
-
-		<aui:input cssClass="overlay document-selector" label="" name="<%= RowChecker.ROW_IDS + rowCheckerName %>" type="checkbox" value="<%= rowCheckerId %>" />
-	</c:if>
-
-	<%
-	request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
-	%>
-
-	<liferay-util:include page="/html/portlet/document_library/file_entry_action.jsp" />
-
-	<a class="document-link" data-folder="<%= Boolean.FALSE.toString() %>" href="<%= tempRowURL.toString() %>" title="<%= HtmlUtil.escapeAttribute(HtmlUtil.unescape(fileEntry.getTitle()) + " - " + HtmlUtil.unescape(fileEntry.getDescription())) %>">
-
-		<%
-		String thumbnailDivStyle = DLUtil.getThumbnailStyle(false, 4);
-		%>
-
-		<div class="document-thumbnail" style="<%= thumbnailDivStyle %>">
-
-			<%
-			String thumbnailSrc = DLUtil.getThumbnailSrc(fileEntry, fileShortcut, themeDisplay);
-			String thumbnailStyle = DLUtil.getThumbnailStyle();
-			%>
-
-			<img alt="" border="no" src="<%= thumbnailSrc %>" style="<%= thumbnailStyle %>" />
-
-			<c:if test="<%= fileShortcut != null %>">
-				<img alt="<liferay-ui:message key="shortcut" />" class="shortcut-icon" src="<%= themeDisplay.getPathThemeImages() %>/file_system/large/overlay_link.png" />
-			</c:if>
-
-			<c:if test="<%= fileEntry.isCheckedOut() %>">
-				<img alt="<liferay-ui:message key="locked" />" class="locked-icon" src="<%= themeDisplay.getPathThemeImages() %>/file_system/large/overlay_lock.png" />
-			</c:if>
-		</div>
-
-		<span class="entry-title">
-			<%= StringUtil.shorten(fileEntry.getTitle(), 60) %>
-
-			<c:if test="<%= latestFileVersion.isDraft() || latestFileVersion.isPending() %>">
-
-				<%
-				String statusLabel = WorkflowConstants.toLabel(latestFileVersion.getStatus());
-				%>
-
-				<span class="workflow-status-<%= statusLabel %>">
-					(<liferay-ui:message key="<%= statusLabel %>" />)
-				</span>
-			</c:if>
-		</span>
-	</a>
-</div>
+<liferay-ui:app-view-entry
+	actionJsp="/html/portlet/document_library/file_entry_action.jsp"
+	description="<%= fileEntry.getDescription() %>"
+	displayStyle="icon"
+	isLocked="<%= fileEntry.isCheckedOut() %>"
+	isShortcut="<%= fileShortcut != null %>"
+	rowCheckerId="<%= String.valueOf(rowCheckerId) %>"
+	rowCheckerName="<%= rowCheckerName %>"
+	showCheckbox="<%= showCheckBox %>"
+	status="<%= latestFileVersion.getStatus() %>"
+	thumbnailDivStyle="<%= thumbnailDivStyle %>"
+	thumbnailSrc="<%= thumbnailSrc %>"
+	thumbnailStyle="<%= thumbnailStyle %>"
+	title="<%= fileEntry.getTitle() %>"
+	url="<%= tempRowURL.toString() %>"
+/>

@@ -183,182 +183,11 @@
 		}
 	}
 
-	.document-display-style {
-		a {
-			color: #333;
-		}
-
-		.document-link {
-			display: block;
-			text-align: center;
-			text-decoration: none;
-		}
-
-		.document-thumbnail {
-			img {
-				background: #EAEAEA;
-				border: 1px solid #CCC;
-				margin: 0;
-				padding: 5px;
-			}
-		}
-
-		&:hover .document-thumbnail img {
-			background-color: #B0D2E1;
-			border-color: #7ABFDD;
-		}
-
-		&.selected .document-thumbnail img {
-			background-color: #B0D2E1;
-			border-color: #057CB0;
-		}
-
-		&.display-descriptive {
-			display: block;
-			margin: 5px;
-			padding: 5px 0;
-			padding-left: 20px;
-			position: relative;
-			text-align: left;
-
-			&:after {
-				clear: both;
-				content: ".";
-				display: block;
-				height: 0;
-				visibility: hidden;
-			}
-
-			.entry-title {
-				display: block;
-				font-size: 1.15em;
-				font-weight: bold;
-				padding: 5px 0 0;
-			}
-
-			.document-description {
-				display: block;
-				height: 100px;
-				overflow: hidden;
-				word-wrap: break-word;
-			}
-
-			.document-action {
-				height: 20px;
-				overflow: hidden;
-				position: absolute;
-				right: 6px;
-				top: 10px;
-				width: 22px;
-			}
-
-			.document-selector {
-				left: 5px;
-				position: absolute;
-				top: 10px;
-			}
-
-			.document-thumbnail {
-				display: inline-block;
-				float: left;
-				margin: 5px 10px 5px 5px;
-				position: relative;
-				text-align: center;
-			}
-
-			.document-link {
-				display: block;
-				text-align: left;
-				text-decoration: none;
-			}
-
-			&:hover .document-selector, &.selected .document-selector {
-				clip: rect(auto auto auto auto);
-				position: absolute;
-			}
-
-			&.selected, .selected:hover {
-				background-color: #00A2EA;
-			}
-		}
-
-		&.display-icon {
-			display: inline-block;
-			float: left;
-			margin: 5px;
-			padding: 10px 0;
-			position: relative;
-			vertical-align: top;
-			width: 200px;
-			height: 160px;
-
-			.document-action {
-				overflow: hidden;
-				position: absolute;
-				right: 5px;
-				width: 22px;
-			}
-
-			.document-selector {
-				left: 10px;
-				position: absolute;
-				top: 10px;
-			}
-
-			.document-thumbnail {
-				display: inline-block;
-				position: relative;
-				text-align: center;
-			}
-
-			.entry-title {
-				clear: both;
-				display: block;
-				padding: 0 10px;
-				word-wrap: break-word;
-			}
-
-			&.selected, &.selected:hover {
-				background-color: #00A2EA;
-			}
-
-			.document-selector, &:hover .document-selector, &.selected .document-selector {
-				position: absolute;
-			}
-		}
-
-		.document-action .direction-down {
-			height: 20px;
-		}
-
-		&.selected a {
-			color: #FFF;
-		}
-
-		&.active-area, &.active-area.hover, &.active-area td {
-			background-color: #5AD300;
-		}
-
-		.overlay.document-action a {
-			display: block;
-			float: right;
-			min-height: 15px;
-		}
-
-		&:hover, &.hover {
-			background-color: #D3E8F1;
-		}
-
-		&:hover .overlay, &.hover .overlay, &.selected .document-selector {
-			clip: rect(auto auto auto auto);
-		}
-	}
-
 	.taglib-search-iterator .results-header input {
 		display: none;
 	}
 
-	.document-display-style, .lfr-search-container {
+	.entry-display-style, .lfr-search-container {
 		.overlay {
 			clip: rect(0, 0, 0, 0);
 		}
@@ -789,7 +618,7 @@
 
 .ie6, .ie7 {
 	.portlet-document-library, .portlet-document-library-display {
-		.document-display-style.display-descriptive, .document-info {
+		.entry-display-style.display-descriptive, .document-info {
 			zoom: 1;
 		}
 

@@ -35,6 +35,8 @@ boolean print = ((Boolean)request.getAttribute("view.jsp-print")).booleanValue()
 request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
 
 request.setAttribute("view.jsp-showIconLabel", true);
+
+request.setAttribute("view.jsp-fullContentRedirect", currentURL);
 %>
 
 <c:if test="<%= showAssetTitle %>">

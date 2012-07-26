@@ -94,6 +94,32 @@ public class DLFolderImpl extends DLFolderBaseImpl {
 		return StringUtil.split(path, CharPool.SLASH);
 	}
 
+	public DLFolder getTrashFolder() {
+		DLFolder dlFolder = null;
+
+		try {
+			dlFolder = getParentFolder();
+		}
+		catch (Exception e) {
+			return null;
+		}
+
+		while (dlFolder != null) {
+			if (dlFolder.isInTrash()) {
+				return dlFolder;
+			}
+
+			try {
+				dlFolder = dlFolder.getParentFolder();
+			}
+			catch (Exception e) {
+				return null;
+			}
+		}
+
+		return null;
+	}
+
 	public boolean hasInheritableLock() {
 		try {
 			return DLFolderServiceUtil.hasInheritableLock(getFolderId());
@@ -112,6 +138,15 @@ public class DLFolderImpl extends DLFolderBaseImpl {
 		}
 
 		return false;
+	}
+
+	public boolean isInTrashFolder() {
+		if (getTrashFolder() != null) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	public boolean isLocked() {

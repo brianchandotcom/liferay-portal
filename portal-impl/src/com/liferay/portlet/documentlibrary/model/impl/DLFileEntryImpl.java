@@ -252,6 +252,16 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 		return sb.toString();
 	}
 
+	public DLFolder getTrashFolder() {
+		DLFolder dlFolder = getFolder();
+
+		if (dlFolder.isInTrash()) {
+			return dlFolder;
+		}
+
+		return dlFolder.getTrashFolder();
+	}
+
 	public boolean hasLock() {
 		try {
 			return DLFileEntryServiceUtil.hasFileEntryLock(getFileEntryId());
@@ -271,6 +281,15 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 		}
 
 		return false;
+	}
+
+	public boolean isInTrashFolder() {
+		if (getTrashFolder() != null) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	@Override

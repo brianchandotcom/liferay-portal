@@ -224,6 +224,12 @@ boolean hasLayoutUpdatePermission = LayoutPermissionUtil.contains(permissionChec
 				if (refererLayout != null) {
 					Group refererGroup = refererLayout.getGroup();
 
+					if (refererGroup.isUserGroup() && themeDisplay.getScopeGroup().isUser()) {
+						refererGroup = themeDisplay.getScopeGroup();
+
+						refererLayout = new VirtualLayout(refererLayout, refererGroup);
+					}
+
 					refererGroupDescriptiveName = refererGroup.getDescriptiveName(locale);
 
 					if (refererGroup.isUser() && (refererGroup.getClassPK() == user.getUserId())) {

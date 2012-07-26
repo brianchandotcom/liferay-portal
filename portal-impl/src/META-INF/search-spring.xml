@@ -156,17 +156,17 @@
 				<entry key="type" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
 				<entry key="userName" value-ref="com.liferay.portal.search.lucene.LikeKeywordAnalyzer" />
 				<entry key=".*_ar" value-ref="org.apache.lucene.analysis.ar.ArabicAnalyzer" />
-				<entry key=".*_pt_BR" value-ref="org.apache.lucene.analysis.br.BrazilianAnalyzer" />
-				<entry key=".*_zh_CN" value-ref="org.apache.lucene.analysis.cjk.CJKAnalyzer" />
-				<entry key=".*_ja_JP" value-ref="org.apache.lucene.analysis.cjk.CJKAnalyzer" />
-				<entry key=".*_ko_KR" value-ref="org.apache.lucene.analysis.cjk.CJKAnalyzer" />
-				<entry key=".*_nl_NL" value-ref="org.apache.lucene.analysis.nl.DutchAnalyzer" />
-				<entry key=".*_fr_[A-Z]{2}" value-ref="org.apache.lucene.analysis.fr.FrenchAnalyzer" />
 				<entry key=".*_de_DE" value-ref="org.apache.lucene.analysis.de.GermanAnalyzer" />
 				<entry key=".*_el_GR" value-ref="org.apache.lucene.analysis.el.GreekAnalyzer" />
 				<entry key=".*_fa_IR" value-ref="org.apache.lucene.analysis.fa.PersianAnalyzer" />
+				<entry key=".*_fr_[A-Z]{2}" value-ref="org.apache.lucene.analysis.fr.FrenchAnalyzer" />
+				<entry key=".*_ja_JP" value-ref="org.apache.lucene.analysis.cjk.CJKAnalyzer" />
+				<entry key=".*_ko_KR" value-ref="org.apache.lucene.analysis.cjk.CJKAnalyzer" />
+				<entry key=".*_nl_NL" value-ref="org.apache.lucene.analysis.nl.DutchAnalyzer" />
+				<entry key=".*_pt_BR" value-ref="org.apache.lucene.analysis.br.BrazilianAnalyzer" />
 				<entry key=".*_ru_RU" value-ref="org.apache.lucene.analysis.ru.RussianAnalyzer" />
-				<entry key=".*_zh_TW" value-ref="org.apache.lucene.analysis.th.ThaiAnalyzer" />
+				<entry key=".*_zh_CN" value-ref="org.apache.lucene.analysis.cjk.CJKAnalyzer" />
+				<entry key=".*_zh_TW" value-ref="org.apache.lucene.analysis.cjk.CJKAnalyzer" />
 			</util:map>
 		</constructor-arg>
 	</bean>

@@ -152,7 +152,7 @@ public abstract class AbstractTemplate implements Template {
 
 		String cacheName = TemplateResourceLoader.class.getName();
 
-		cacheName = cacheName.concat(StringPool.POUND).concat(
+		cacheName = cacheName.concat(StringPool.PERIOD).concat(
 			templateManagerName);
 
 		PortalCache portalCache = MultiVMPoolUtil.getCache(cacheName);

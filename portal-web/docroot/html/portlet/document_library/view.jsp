@@ -89,21 +89,14 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 		</aui:column>
 
 		<aui:column columnWidth="<%= showFolderMenu ? 80 : 100 %>" cssClass="context-pane" last="<%= true %>">
-			<div class="lfr-header-row">
-				<div class="lfr-header-row-content">
-					<c:if test="<%= showFoldersSearch %>">
-						<liferay-util:include page="/html/portlet/document_library/file_entry_search.jsp" />
-					</c:if>
+			<liferay-ui:app-view-toolbar
+				includeDisplayStyle="<%= true %>"
+				includeSelectAll="<%= true %>"
+				searchJsp='<%= showFoldersSearch ? "/html/portlet/document_library/file_entry_search.jsp" : StringPool.BLANK %>'
+			>
 
-					<div class="toolbar">
-						<liferay-util:include page="/html/portlet/document_library/toolbar.jsp" />
-					</div>
-
-					<div class="display-style">
-						<span class="toolbar" id="<portlet:namespace />displayStyleToolbar"></span>
-					</div>
-				</div>
-			</div>
+				<liferay-util:include page="/html/portlet/document_library/toolbar.jsp" />
+			</liferay-ui:app-view-toolbar>
 
 			<%
 			boolean showSyncMessage = GetterUtil.getBoolean(SessionClicks.get(request, liferayPortletResponse.getNamespace() + "show-sync-message", "true"));

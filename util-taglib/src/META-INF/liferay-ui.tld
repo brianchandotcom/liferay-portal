@@ -190,6 +190,26 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>app-view-toolbar</name>
+		<tag-class>com.liferay.taglib.ui.AppViewToolbarTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>includeDisplayStyle</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>includeSelectAll</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>searchJsp</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<name>asset-categories-error</name>
 		<tag-class>com.liferay.taglib.ui.AssetCategoriesErrorTag</tag-class>
 		<body-content>JSP</body-content>

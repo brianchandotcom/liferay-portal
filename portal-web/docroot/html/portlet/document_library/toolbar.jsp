@@ -20,10 +20,6 @@
 Folder folder = (Folder)request.getAttribute("view.jsp-folder");
 %>
 
-<c:if test="<%= !user.isDefaultUser() %>">
-	<aui:input cssClass="select-documents aui-state-default" inline="<%= true %>" label="" name="<%= RowChecker.ALL_ROW_IDS %>" type="checkbox" />
-</c:if>
-
 <liferay-ui:icon-menu align="left" cssClass="actions-button aui-helper-hidden" direction="down" icon="" id="actionsButtonContainer" message="actions" showExpanded="<%= false %>" showWhenSingleIcon="<%= true %>">
 
 	<%

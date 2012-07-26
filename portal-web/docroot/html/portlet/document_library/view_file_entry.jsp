@@ -128,11 +128,9 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 	<aui:layout>
 		<aui:column columnWidth="<%= 65 %>" cssClass="lfr-asset-column-details" first="<%= true %>">
 			<c:if test="<%= showActions %>">
-				<div class="lfr-header-row">
-					<div class="lfr-header-row-content">
-						<aui:button-row cssClass="edit-toolbar" id='<%= renderResponse.getNamespace() + "fileEntryToolbar" %>' />
-					</div>
-				</div>
+				<liferay-ui:app-view-toolbar>
+					<aui:button-row cssClass="edit-toolbar" id='<%= renderResponse.getNamespace() + "fileEntryToolbar" %>' />
+				</liferay-ui:app-view-toolbar>
 			</c:if>
 
 			<c:if test="<%= (fileEntry.getLock() != null) && DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) %>">
@@ -432,9 +430,9 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 
 		<aui:column columnWidth="<%= 35 %>" cssClass="lfr-asset-column-details context-pane" last="<%= true %>">
 			<c:if test="<%= showActions %>">
-				<div class="lfr-header-row">
-					<div class="lfr-header-row-content"></div>
-				</div>
+				<liferay-ui:app-view-toolbar>
+					<aui:button-row cssClass="edit-toolbar" id='<%= renderResponse.getNamespace() + "fileEntryToolbar" %>' />
+				</liferay-ui:app-view-toolbar>
 			</c:if>
 
 			<div class="body-row asset-details">

@@ -2238,6 +2238,8 @@ public class JournalArticleLocalServiceImpl
 
 		validateContent(content);
 
+		boolean incrementVersion = false;
+
 		JournalArticle oldArticle = getLatestArticle(
 			groupId, articleId, WorkflowConstants.STATUS_ANY);
 
@@ -2245,6 +2247,10 @@ public class JournalArticleLocalServiceImpl
 
 		if ((version > 0) && (version != oldVersion)) {
 			throw new ArticleVersionException();
+		}
+
+		if (oldArticle.isApproved() || oldArticle.isExpired()) {
+			incrementVersion = true;
 		}
 
 		if (serviceContext != null) {
@@ -2256,8 +2262,7 @@ public class JournalArticleLocalServiceImpl
 
 		User user = userPersistence.findByPrimaryKey(oldArticle.getUserId());
 
-		// LPS-28811
-		if (!oldArticle.isDraft() && !oldArticle.isPending()) {
+		if (incrementVersion) {
 			double newVersion = MathUtil.format(oldVersion + 0.1, 1, 1);
 
 			long id = counterLocalService.increment();

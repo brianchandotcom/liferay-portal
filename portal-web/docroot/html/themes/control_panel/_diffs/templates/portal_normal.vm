@@ -57,6 +57,9 @@ $theme.include($body_top_include)
 
 		<div class="clear"></div>
 	</div>
+
+$theme.include($body_bottom_include)
+
 </body>
 
 $theme.include($bottom_include)

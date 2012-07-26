@@ -66,6 +66,12 @@ public class DLFolderServiceWrapper implements DLFolderService,
 		_dlFolderService.deleteFolder(folderId);
 	}
 
+	public void deleteFolder(long folderId, boolean includeTrashedEntries)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_dlFolderService.deleteFolder(folderId, includeTrashedEntries);
+	}
+
 	public void deleteFolder(long groupId, long parentFolderId,
 		java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException,

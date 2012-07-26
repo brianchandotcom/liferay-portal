@@ -80,6 +80,10 @@ public interface DLFileEntry extends DLFileEntryModel, PersistedModel {
 
 	public java.lang.String getLuceneProperties();
 
+	public com.liferay.portlet.documentlibrary.model.DLFolder getTrashFolder();
+
+	public boolean isInTrashFolder();
+
 	public boolean hasLock();
 
 	public boolean isCheckedOut();

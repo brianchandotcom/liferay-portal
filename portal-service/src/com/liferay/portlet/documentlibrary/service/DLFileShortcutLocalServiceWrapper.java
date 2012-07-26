@@ -343,6 +343,20 @@ public class DLFileShortcutLocalServiceWrapper
 		_dlFileShortcutLocalService.deleteFileShortcuts(toFileEntryId);
 	}
 
+	public void deleteFileShortcuts(long groupId, long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_dlFileShortcutLocalService.deleteFileShortcuts(groupId, folderId);
+	}
+
+	public void deleteFileShortcuts(long groupId, long folderId,
+		boolean includeTrashedEntries)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_dlFileShortcutLocalService.deleteFileShortcuts(groupId, folderId,
+			includeTrashedEntries);
+	}
+
 	public void disableFileShortcuts(long toFileEntryId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_dlFileShortcutLocalService.disableFileShortcuts(toFileEntryId);

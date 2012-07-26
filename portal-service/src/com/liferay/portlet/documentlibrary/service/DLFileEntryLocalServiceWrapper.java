@@ -400,6 +400,14 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 		_dlFileEntryLocalService.deleteFileEntries(groupId, folderId);
 	}
 
+	public void deleteFileEntries(long groupId, long folderId,
+		boolean includeTrashedEntries)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_dlFileEntryLocalService.deleteFileEntries(groupId, folderId,
+			includeTrashedEntries);
+	}
+
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry deleteFileEntry(
 		com.liferay.portlet.documentlibrary.model.DLFileEntry dlFileEntry)
 		throws com.liferay.portal.kernel.exception.PortalException,

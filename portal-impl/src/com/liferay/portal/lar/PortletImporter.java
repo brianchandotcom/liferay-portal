@@ -338,7 +338,9 @@ public class PortletImporter {
 		PortletDataHandler portletDataHandler =
 			portlet.getPortletDataHandlerInstance();
 
-		if (portletDataHandler.isDataLocalized()) {
+		if ((portletDataHandler != null) &&
+			portletDataHandler.isDataLocalized()) {
+
 			Element sourceAvailableLocalesElement = rootElement.element(
 				"locale");
 

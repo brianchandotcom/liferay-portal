@@ -49,6 +49,8 @@ AUI.add(
 
 		var STRUTS_ACTION = 'struts_action';
 
+		var SRC_ENTRIES_PAGINATOR = 1;
+
 		var SRC_HISTORY = 2;
 
 		var SRC_SEARCH = 3;
@@ -588,6 +590,8 @@ AUI.add(
 				}
 			}
 		);
+
+		Liferay.DL_ENTRIES_PAGINATOR = SRC_ENTRIES_PAGINATOR;
 
 		Liferay.DL_SEARCH = SRC_SEARCH;
 

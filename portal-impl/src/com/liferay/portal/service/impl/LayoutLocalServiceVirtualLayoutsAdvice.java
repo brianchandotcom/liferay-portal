@@ -152,7 +152,7 @@ public class LayoutLocalServiceVirtualLayoutsAdvice
 
 				List<Layout> layouts = (List<Layout>)methodInvocation.proceed();
 
-				if (!PropsValues.
+				if (PropsValues.
 						USER_GROUPS_COPY_LAYOUTS_TO_USER_PERSONAL_SITE) {
 
 					return layouts;

@@ -248,13 +248,13 @@ public class EditArticleAction extends PortletAction {
 					 e instanceof ArticleTitleException ||
 					 e instanceof ArticleTypeException ||
 					 e instanceof ArticleVersionException ||
-					 e instanceof DuplicateArticleIdException ||
-					 e instanceof LocaleException) {
+					 e instanceof DuplicateArticleIdException) {
 
 				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else if (e instanceof AssetCategoryException ||
-					 e instanceof AssetTagException) {
+					 e instanceof AssetTagException ||
+					 e instanceof LocaleException) {
 
 				SessionErrors.add(actionRequest, e.getClass(), e);
 			}
@@ -561,8 +561,13 @@ public class EditArticleAction extends PortletAction {
 		boolean localized = ParamUtil.getBoolean(
 			uploadPortletRequest, "localized");
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)uploadPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		String defaultLanguageId = ParamUtil.getString(
-			uploadPortletRequest, "defaultLanguageId");
+			uploadPortletRequest, "defaultLanguageId",
+			themeDisplay.getUser().getLanguageId());
 
 		Locale defaultLocale = LocaleUtil.fromLanguageId(defaultLanguageId);
 

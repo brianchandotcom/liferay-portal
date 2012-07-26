@@ -55,7 +55,7 @@ if (Validator.isNotNull(script)) {
 		LocaleException le = (LocaleException)errorException;
 		%>
 
-		<liferay-ui:message arguments="<%= new String[] {StringUtil.merge(le.getSourceAvailableLocales()), StringUtil.merge(le.getTargetAvailableLocales())} %>" key="the-default-language-x-does-not-match-the-portal's-available-languages-x" />
+		<liferay-ui:message arguments="<%= new String[] {StringUtil.merge(le.getSourceAvailableLocales(), StringPool.COMMA_AND_SPACE), StringUtil.merge(le.getTargetAvailableLocales(), StringPool.COMMA_AND_SPACE)} %>" key="the-default-language-x-does-not-match-the-portal's-available-languages-x" />
 	</liferay-ui:error>
 
 	<liferay-ui:error exception="<%= StructureDuplicateElementException.class %>" message="please-enter-unique-structure-field-names-(including-field-names-inherited-from-the-parent-structure)" />

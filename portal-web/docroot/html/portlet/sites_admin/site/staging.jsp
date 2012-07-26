@@ -49,7 +49,7 @@ LayoutSet publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(liveGroup.get
 			LocaleException le = (LocaleException)errorException;
 			%>
 
-			<liferay-ui:message arguments="<%= new String[] {StringUtil.merge(le.getSourceAvailableLocales()), StringUtil.merge(le.getTargetAvailableLocales())} %>" key="the-default-language-x-does-not-match-the-portal's-available-languages-x" />
+			<liferay-ui:message arguments="<%= new String[] {StringUtil.merge(le.getSourceAvailableLocales(), StringPool.COMMA_AND_SPACE), StringUtil.merge(le.getTargetAvailableLocales(), StringPool.COMMA_AND_SPACE)} %>" key="the-default-language-x-does-not-match-the-portal's-available-languages-x" />
 		</liferay-ui:error>
 
 		<liferay-ui:error exception="<%= SystemException.class %>">

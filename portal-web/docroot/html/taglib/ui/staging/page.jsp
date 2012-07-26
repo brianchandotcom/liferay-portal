@@ -63,6 +63,7 @@ else if (group.isStagingGroup()) {
 else if (group.isStaged()) {
 	if (group.isStagedRemotely()) {
 		stagingGroup = group;
+		liveGroup = group;
 	}
 	else {
 		liveGroup = group;

@@ -325,7 +325,7 @@ public class PortletPreferencesLocalServiceImpl
 			}
 
 			portletPreferences =
-				portletPreferencesLocalService.addPortletPreferences(
+				addPortletPreferences(
 					companyId, ownerId, ownerType, plid, portletId, portlet,
 					defaultPreferences);
 		}

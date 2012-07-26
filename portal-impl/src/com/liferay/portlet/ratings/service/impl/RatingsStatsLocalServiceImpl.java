@@ -103,7 +103,7 @@ public class RatingsStatsLocalServiceImpl
 			classNameId, classPK);
 
 		if (stats == null) {
-			stats = ratingsStatsLocalService.addStats(classNameId, classPK);
+			stats = addStats(classNameId, classPK);
 		}
 
 		return stats;

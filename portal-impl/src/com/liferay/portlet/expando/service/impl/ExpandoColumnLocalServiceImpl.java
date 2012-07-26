@@ -360,8 +360,7 @@ public class ExpandoColumnLocalServiceImpl
 	public ExpandoColumn updateColumn(long columnId, String name, int type)
 		throws PortalException, SystemException {
 
-		return expandoColumnLocalService.updateColumn(
-			columnId, name, type, null);
+		return updateColumn(columnId, name, type, null);
 	}
 
 	public ExpandoColumn updateColumn(

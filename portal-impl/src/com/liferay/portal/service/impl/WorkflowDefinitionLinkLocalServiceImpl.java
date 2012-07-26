@@ -196,7 +196,7 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 		}
 
 		try {
-			workflowDefinitionLinkLocalService.getWorkflowDefinitionLink(
+			getWorkflowDefinitionLink(
 				companyId, groupId, className, classPK, typePK);
 
 			return true;

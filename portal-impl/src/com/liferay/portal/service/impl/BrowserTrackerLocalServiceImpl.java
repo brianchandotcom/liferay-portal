@@ -42,8 +42,7 @@ public class BrowserTrackerLocalServiceImpl
 			userId);
 
 		if (browserTracker == null) {
-			browserTracker = browserTrackerLocalService.updateBrowserTracker(
-				userId, browserKey);
+			browserTracker = updateBrowserTracker(userId, browserKey);
 		}
 
 		return browserTracker;

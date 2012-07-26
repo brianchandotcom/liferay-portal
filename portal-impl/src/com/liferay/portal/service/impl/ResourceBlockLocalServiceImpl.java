@@ -768,7 +768,7 @@ public class ResourceBlockLocalServiceImpl
 		String permissionsHash =
 			resourceBlockPermissionsContainer.getPermissionsHash();
 
-		resourceBlockLocalService.updateResourceBlockId(
+		updateResourceBlockId(
 			companyId, groupId, name, permissionedModel, permissionsHash,
 			resourceBlockPermissionsContainer);
 

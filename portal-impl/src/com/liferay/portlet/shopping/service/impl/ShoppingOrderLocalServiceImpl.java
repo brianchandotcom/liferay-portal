@@ -278,7 +278,7 @@ public class ShoppingOrderLocalServiceImpl
 			order = orders.get(0);
 		}
 		else {
-			order = shoppingOrderLocalService.addLatestOrder(userId, groupId);
+			order = addLatestOrder(userId, groupId);
 		}
 
 		return order;

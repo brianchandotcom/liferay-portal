@@ -160,7 +160,7 @@ public class ServiceComponentLocalServiceImpl
 
 			serviceComponentPersistence.update(serviceComponent, false);
 
-			serviceComponentLocalService.upgradeDB(
+			upgradeDB(
 				classLoader, buildNamespace, buildNumber, buildAutoUpgrade,
 				previousServiceComponent, tablesSQL, sequencesSQL, indexesSQL);
 
@@ -220,7 +220,7 @@ public class ServiceComponentLocalServiceImpl
 			String indexesSQL = serviceComponent.getIndexesSQL();
 
 			try {
-				serviceComponentLocalService.upgradeDB(
+				upgradeDB(
 					null, buildNamespace, 0, false, null, tablesSQL,
 					sequencesSQL, indexesSQL);
 			}

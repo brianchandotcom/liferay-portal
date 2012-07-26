@@ -317,7 +317,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 			User user = userPersistence.fetchByPrimaryKey(event.getUserId());
 
 			if (user == null) {
-				calEventLocalService.deleteEvent(event);
+				deleteEvent(event);
 
 				continue;
 			}
@@ -432,7 +432,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 		List<CalEvent> events = calEventPersistence.findByGroupId(groupId);
 
 		for (CalEvent event : events) {
-			calEventLocalService.deleteEvent(event);
+			deleteEvent(event);
 		}
 	}
 
@@ -1148,7 +1148,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 		if (existingEvent == null) {
 			serviceContext.setUuid(uuid);
 
-			calEventLocalService.addEvent(
+			addEvent(
 				userId, title, description, location, startDateMonth,
 				startDateDay, startDateYear, startDateHour, startDateMinute,
 				endDateMonth, endDateDay, endDateYear, durationHour,
@@ -1157,7 +1157,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 				serviceContext);
 		}
 		else {
-			calEventLocalService.updateEvent(
+			updateEvent(
 				userId, existingEvent.getEventId(), title, description,
 				location, startDateMonth, startDateDay, startDateYear,
 				startDateHour, startDateMinute, endDateMonth, endDateDay,

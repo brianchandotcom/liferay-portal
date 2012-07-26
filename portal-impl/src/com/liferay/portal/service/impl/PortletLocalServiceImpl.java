@@ -193,7 +193,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 		// Refresh company portlets
 
-		portletLocalService.clearCompanyPortletsPool();
+		clearCompanyPortletsPool();
 	}
 
 	@Clusterable
@@ -597,7 +597,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 		// Clear pools every time initEAR is called. See LEP-5452.
 
-		portletLocalService.clearCompanyPortletsPool();
+		clearCompanyPortletsPool();
 
 		_portletAppsPool.clear();
 		_portletsPool.clear();
@@ -834,7 +834,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		portlet.setRoles(roles);
 		portlet.setActive(active);
 
-		portletLocalService.removeCompanyPortletsPool(companyId);
+		removeCompanyPortletsPool(companyId);
 
 		return portlet;
 	}
@@ -979,7 +979,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		Map<String, Portlet> portletsPool = _companyPortletsPool.get(companyId);
 
 		if (portletsPool == null) {
-			portletsPool = portletLocalService.loadGetPortletsPool(companyId);
+			portletsPool = loadGetPortletsPool(companyId);
 
 			_companyPortletsPool.put(companyId, portletsPool);
 		}

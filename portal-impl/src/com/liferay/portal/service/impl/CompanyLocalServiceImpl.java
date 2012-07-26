@@ -154,8 +154,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		String mx = webId;
 
-		return companyLocalService.checkCompany(
-			webId, mx, PropsValues.SHARD_DEFAULT_NAME);
+		return checkCompany(webId, mx, PropsValues.SHARD_DEFAULT_NAME);
 	}
 
 	/**

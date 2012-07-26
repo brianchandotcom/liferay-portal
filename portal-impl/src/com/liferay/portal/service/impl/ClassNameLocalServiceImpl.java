@@ -125,7 +125,7 @@ public class ClassNameLocalServiceImpl
 		ClassName className = _classNames.get(value);
 
 		if (className == null) {
-			className = classNameLocalService.addClassName(value);
+			className = addClassName(value);
 
 			_classNames.put(value, className);
 		}

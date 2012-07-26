@@ -387,7 +387,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			return role;
 		}
 
-		return roleLocalService.loadFetchRole(companyId, name);
+		return loadFetchRole(companyId, name);
 	}
 
 	/**
@@ -537,7 +537,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			return role;
 		}
 
-		return roleLocalService.loadGetRole(companyId, name);
+		return loadGetRole(companyId, name);
 	}
 
 	/**
@@ -1210,12 +1210,11 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			if (!descriptionMap.equals(role.getDescriptionMap())) {
 				role.setDescriptionMap(descriptionMap);
 
-				roleLocalService.updateRole(role, false);
+				updateRole(role, false);
 			}
 		}
 		catch (NoSuchRoleException nsre) {
-			role = roleLocalService.addRole(
-				0, companyId, name, null, descriptionMap, type);
+			role = addRole(0, companyId, name, null, descriptionMap, type);
 		}
 
 		if (name.equals(RoleConstants.USER)) {

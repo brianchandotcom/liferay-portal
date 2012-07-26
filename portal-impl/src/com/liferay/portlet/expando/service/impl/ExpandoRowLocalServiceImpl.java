@@ -82,7 +82,7 @@ public class ExpandoRowLocalServiceImpl extends ExpandoRowLocalServiceBaseImpl {
 		ExpandoTable table = expandoTableLocalService.getTable(
 			companyId, classNameId, tableName);
 
-		expandoRowLocalService.deleteRow(table.getTableId(), classPK);
+		deleteRow(table.getTableId(), classPK);
 	}
 
 	public void deleteRow(
@@ -91,15 +91,14 @@ public class ExpandoRowLocalServiceImpl extends ExpandoRowLocalServiceBaseImpl {
 
 		long classNameId = PortalUtil.getClassNameId(className);
 
-		expandoRowLocalService.deleteRow(
-			companyId, classNameId, tableName, classPK);
+		deleteRow(companyId, classNameId, tableName, classPK);
 	}
 
 	public List<ExpandoRow> getDefaultTableRows(
 			long companyId, long classNameId, int start, int end)
 		throws SystemException {
 
-		return expandoRowLocalService.getRows(
+		return getRows(
 			companyId, classNameId, ExpandoTableConstants.DEFAULT_TABLE_NAME,
 			start, end);
 	}
@@ -110,14 +109,13 @@ public class ExpandoRowLocalServiceImpl extends ExpandoRowLocalServiceBaseImpl {
 
 		long classNameId = PortalUtil.getClassNameId(className);
 
-		return expandoRowLocalService.getDefaultTableRows(
-			companyId, classNameId, start, end);
+		return getDefaultTableRows(companyId, classNameId, start, end);
 	}
 
 	public int getDefaultTableRowsCount(long companyId, long classNameId)
 		throws SystemException {
 
-		return expandoRowLocalService.getRowsCount(
+		return getRowsCount(
 			companyId, classNameId, ExpandoTableConstants.DEFAULT_TABLE_NAME);
 	}
 
@@ -126,8 +124,7 @@ public class ExpandoRowLocalServiceImpl extends ExpandoRowLocalServiceBaseImpl {
 
 		long classNameId = PortalUtil.getClassNameId(className);
 
-		return expandoRowLocalService.getDefaultTableRowsCount(
-			companyId, classNameId);
+		return getDefaultTableRowsCount(companyId, classNameId);
 	}
 
 	public ExpandoRow getRow(long rowId)
@@ -162,8 +159,7 @@ public class ExpandoRowLocalServiceImpl extends ExpandoRowLocalServiceBaseImpl {
 
 		long classNameId = PortalUtil.getClassNameId(className);
 
-		return expandoRowLocalService.getRow(
-			companyId, classNameId, tableName, classPK);
+		return getRow(companyId, classNameId, tableName, classPK);
 	}
 
 	public List<ExpandoRow> getRows(long tableId, int start, int end)
@@ -195,8 +191,7 @@ public class ExpandoRowLocalServiceImpl extends ExpandoRowLocalServiceBaseImpl {
 
 		long classNameId = PortalUtil.getClassNameId(className);
 
-		return expandoRowLocalService.getRows(
-			companyId, classNameId, tableName, start, end);
+		return getRows(companyId, classNameId, tableName, start, end);
 	}
 
 	/**
@@ -208,8 +203,7 @@ public class ExpandoRowLocalServiceImpl extends ExpandoRowLocalServiceBaseImpl {
 
 		long companyId = CompanyThreadLocal.getCompanyId();
 
-		return expandoRowLocalService.getRows(
-			companyId, className, tableName, start, end);
+		return getRows(companyId, className, tableName, start, end);
 	}
 
 	public int getRowsCount(long tableId) throws SystemException {
@@ -234,8 +228,7 @@ public class ExpandoRowLocalServiceImpl extends ExpandoRowLocalServiceBaseImpl {
 
 		long classNameId = PortalUtil.getClassNameId(className);
 
-		return expandoRowLocalService.getRowsCount(
-			companyId, classNameId, tableName);
+		return getRowsCount(companyId, classNameId, tableName);
 	}
 
 	/**
@@ -246,8 +239,7 @@ public class ExpandoRowLocalServiceImpl extends ExpandoRowLocalServiceBaseImpl {
 
 		long companyId = CompanyThreadLocal.getCompanyId();
 
-		return expandoRowLocalService.getRowsCount(
-			companyId, className, tableName);
+		return getRowsCount(companyId, className, tableName);
 	}
 
 }

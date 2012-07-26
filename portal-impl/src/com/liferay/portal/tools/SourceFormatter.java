@@ -1162,18 +1162,7 @@ public class SourceFormatter {
 				}
 			}
 
-			String oldContent = content;
-			String newContent = StringPool.BLANK;
-
-			for (;;) {
-				newContent = _formatJavaContent(fileName, oldContent);
-
-				if (oldContent.equals(newContent)) {
-					break;
-				}
-
-				oldContent = newContent;
-			}
+			String newContent = content;
 
 			if (newContent.contains("$\n */")) {
 				_sourceFormatterHelper.printError(fileName, "*: " + fileName);
@@ -1297,6 +1286,40 @@ public class SourceFormatter {
 					_sourceFormatterHelper.printError(
 						fileName, "Use getInt(1) for count: " + fileName);
 				}
+			}
+
+			if (className.endsWith("ServiceImpl")) {
+				String serviceVariable =
+					StringUtil.lowerCase(className.substring(0, 1)) +
+						className.substring(1, className.length() - 4);
+
+				if (newContent.contains(
+						StringPool.SPACE + serviceVariable +
+							StringPool.PERIOD) ||
+					newContent.contains(
+						StringPool.TAB + serviceVariable + StringPool.PERIOD)) {
+
+					newContent = StringUtil.replace(
+						newContent,
+						new String[] {
+							StringPool.SPACE + serviceVariable +
+								StringPool.PERIOD,
+							StringPool.TAB + serviceVariable + StringPool.PERIOD
+						},
+						new String[] {StringPool.SPACE, StringPool.TAB});
+				}
+			}
+
+			String oldContent = newContent;
+
+			for (;;) {
+				newContent = _formatJavaContent(fileName, oldContent);
+
+				if (oldContent.equals(newContent)) {
+					break;
+				}
+
+				oldContent = newContent;
 			}
 
 			if ((newContent != null) && !content.equals(newContent)) {

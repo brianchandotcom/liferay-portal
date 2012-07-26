@@ -1892,7 +1892,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		Layout layout = layoutPersistence.findByG_P_L(
 			groupId, privateLayout, layoutId);
 
-		return layoutLocalService.updateName(layout, name, languageId);
+		return updateName(layout, name, languageId);
 	}
 
 	/**
@@ -1912,7 +1912,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		Layout layout = layoutPersistence.findByPrimaryKey(plid);
 
-		return layoutLocalService.updateName(layout, name, languageId);
+		return updateName(layout, name, languageId);
 	}
 
 	/**

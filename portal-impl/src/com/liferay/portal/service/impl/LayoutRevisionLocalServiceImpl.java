@@ -129,7 +129,7 @@ public class LayoutRevisionLocalServiceImpl
 		throws PortalException, SystemException {
 
 		for (LayoutRevision layoutRevision : getLayoutRevisions(plid)) {
-			layoutRevisionLocalService.deleteLayoutRevision(layoutRevision);
+			deleteLayoutRevision(layoutRevision);
 		}
 	}
 
@@ -180,7 +180,7 @@ public class LayoutRevisionLocalServiceImpl
 		for (LayoutRevision layoutRevision : getLayoutRevisions(
 				layoutSetBranchId, plid)) {
 
-			layoutRevisionLocalService.deleteLayoutRevision(layoutRevision);
+			deleteLayoutRevision(layoutRevision);
 		}
 	}
 
@@ -193,7 +193,7 @@ public class LayoutRevisionLocalServiceImpl
 				layoutSetBranchId, layoutBranchId, plid);
 
 		for (LayoutRevision layoutRevision : layoutRevisions) {
-			layoutRevisionLocalService.deleteLayoutRevision(layoutRevision);
+			deleteLayoutRevision(layoutRevision);
 		}
 	}
 
@@ -205,7 +205,7 @@ public class LayoutRevisionLocalServiceImpl
 				layoutSetBranchId);
 
 		for (LayoutRevision layoutRevision : layoutRevisions) {
-			layoutRevisionLocalService.deleteLayoutRevision(layoutRevision);
+			deleteLayoutRevision(layoutRevision);
 		}
 	}
 
@@ -586,8 +586,7 @@ public class LayoutRevisionLocalServiceImpl
 			}
 
 			if (!fork) {
-				layoutRevisionLocalService.deleteLayoutRevision(
-					parentLayoutRevision);
+				deleteLayoutRevision(parentLayoutRevision);
 			}
 		}
 

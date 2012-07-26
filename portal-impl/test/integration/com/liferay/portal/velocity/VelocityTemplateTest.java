@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.freemarker;
+package com.liferay.portal.velocity;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.template.StringTemplateResource;
@@ -20,83 +20,85 @@ import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.templateparser.TemplateContext;
-import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.template.TemplateContextHelper;
-import com.liferay.portal.util.InitUtil;
-
-import freemarker.cache.TemplateCache;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.util.PropsUtil;
 
 import freemarker.core.ParseException;
-
-import freemarker.template.Configuration;
 
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 
-import java.lang.reflect.Field;
-
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
-import junit.framework.TestCase;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.apache.commons.collections.ExtendedProperties;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.VelocityEngine;
+import org.junit.runner.RunWith;
 
 /**
  * @author Tina Tian
  */
-public class FreeMarkerTemplateTest extends TestCase {
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class VelocityTemplateTest {
 
-	@Override
+	@Before
 	public void setUp() throws Exception {
-		InitUtil.initWithSpring();
-
-		_configuration = new Configuration();
-
-		try {
-			Field field = ReflectionUtil.getDeclaredField(
-				Configuration.class, "cache");
-
-			TemplateCache templateCache = new LiferayTemplateCache(
-				_configuration);
-
-			field.set(_configuration, templateCache);
-		}
-		catch (Exception e) {
-			throw new TemplateException(
-				"Unable to initialize FreeMarker manager");
-		}
-
-		_configuration.setLocalizedLookup(false);
-
 		_templateContextHelper = new MockTemplateContextHelper();
+
+		_velocityEngine = new VelocityEngine();
+
+		ExtendedProperties extendedProperties = new FastExtendedProperties();
+
+		extendedProperties.setProperty(
+			VelocityEngine.RESOURCE_MANAGER_CLASS,
+			PropsUtil.get(PropsKeys.VELOCITY_ENGINE_RESOURCE_MANAGER));
+		extendedProperties.setProperty(
+			VelocityEngine.RUNTIME_LOG_LOGSYSTEM_CLASS,
+			PropsUtil.get(PropsKeys.VELOCITY_ENGINE_LOGGER));
+		extendedProperties.setProperty(
+			VelocityEngine.RUNTIME_LOG_LOGSYSTEM + ".log4j.category",
+			PropsUtil.get(PropsKeys.VELOCITY_ENGINE_LOGGER_CATEGORY));
+
+		_velocityEngine.setExtendedProperties(extendedProperties);
+
+		_velocityEngine.init();
 	}
 
+	@Test
 	public void testGet() throws Exception {
-		Template template = new FreeMarkerTemplate(
+		Template template = new VelocityTemplate(
 			new MockTemplateResource(_TEMPLATE_FILE_NAME), null, null,
-			_configuration, _templateContextHelper);
+			_velocityEngine, _templateContextHelper);
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
 		Object result = template.get(_TEST_KEY);
 
-		assertNotNull(result);
+		Assert.assertNotNull(result);
 
-		assertTrue(result instanceof String);
+		Assert.assertTrue(result instanceof String);
 
 		String stringResult = (String)result;
 
-		assertEquals(_TEST_VALUE, stringResult);
+		Assert.assertEquals(_TEST_VALUE, stringResult);
 	}
 
+	@Test
 	public void testPrepare() throws Exception {
-		Template template = new FreeMarkerTemplate(
+		Template template = new VelocityTemplate(
 			new MockTemplateResource(_TEMPLATE_FILE_NAME), null, null,
-			_configuration, _templateContextHelper);
+			_velocityEngine, _templateContextHelper);
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -104,19 +106,20 @@ public class FreeMarkerTemplateTest extends TestCase {
 
 		Object result = template.get(_TEST_VALUE);
 
-		assertNotNull(result);
+		Assert.assertNotNull(result);
 
-		assertTrue(result instanceof String);
+		Assert.assertTrue(result instanceof String);
 
 		String stringResult = (String)result;
 
-		assertEquals(_TEST_VALUE, stringResult);
+		Assert.assertEquals(_TEST_VALUE, stringResult);
 	}
 
+	@Test
 	public void testProcessTemplate1() throws Exception {
-		Template template = new FreeMarkerTemplate(
+		Template template = new VelocityTemplate(
 			new MockTemplateResource(_TEMPLATE_FILE_NAME), null, null,
-			_configuration, _templateContextHelper);
+			_velocityEngine, _templateContextHelper);
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -126,13 +129,14 @@ public class FreeMarkerTemplateTest extends TestCase {
 
 		String result = unsyncStringWriter.toString();
 
-		assertEquals(_TEST_VALUE, result);
+		Assert.assertEquals(_TEST_VALUE, result);
 	}
 
+	@Test
 	public void testProcessTemplate2() throws Exception {
-		Template template = new FreeMarkerTemplate(
+		Template template = new VelocityTemplate(
 			new MockTemplateResource(_WRONG_TEMPLATE_ID), null, null,
-			_configuration, _templateContextHelper);
+			_velocityEngine, _templateContextHelper);
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -141,26 +145,27 @@ public class FreeMarkerTemplateTest extends TestCase {
 		try {
 			template.processTemplate(unsyncStringWriter);
 
-			fail();
+			Assert.fail();
 		}
 		catch (Exception e) {
 			if (e instanceof TemplateException) {
 				String message = e.getMessage();
 
-				assertTrue(message.contains(_WRONG_TEMPLATE_ID));
+				Assert.assertTrue(message.contains(_WRONG_TEMPLATE_ID));
 
 				return;
 			}
 
-			fail();
+			Assert.fail();
 		}
 	}
 
+	@Test
 	public void testProcessTemplate3() throws Exception {
-		Template template = new FreeMarkerTemplate(
+		Template template = new VelocityTemplate(
 			new StringTemplateResource(
-				_WRONG_TEMPLATE_ID, _TEST_TEMPLATE_CONTENT), null, null,
-			_configuration, _templateContextHelper);
+				_WRONG_TEMPLATE_ID, _TEST_TEMPLATE_CONTENT),
+			null, null, _velocityEngine, _templateContextHelper);
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -170,14 +175,15 @@ public class FreeMarkerTemplateTest extends TestCase {
 
 		String result = unsyncStringWriter.toString();
 
-		assertEquals(_TEST_VALUE, result);
+		Assert.assertEquals(_TEST_VALUE, result);
 	}
 
+	@Test
 	public void testProcessTemplate4() throws Exception {
-		Template template = new FreeMarkerTemplate(
+		Template template = new VelocityTemplate(
 			new MockTemplateResource(_TEMPLATE_FILE_NAME),
 			new MockTemplateResource(_WRONG_ERROR_TEMPLATE_ID), null,
-			_configuration, _templateContextHelper);
+			_velocityEngine, _templateContextHelper);
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -187,14 +193,15 @@ public class FreeMarkerTemplateTest extends TestCase {
 
 		String result = unsyncStringWriter.toString();
 
-		assertEquals(_TEST_VALUE, result);
+		Assert.assertEquals(_TEST_VALUE, result);
 	}
 
+	@Test
 	public void testProcessTemplate5() throws Exception {
-		Template template = new FreeMarkerTemplate(
+		Template template = new VelocityTemplate(
 			new MockTemplateResource(_WRONG_TEMPLATE_ID),
-			new MockTemplateResource(_TEMPLATE_FILE_NAME), null, _configuration,
-			_templateContextHelper);
+			new MockTemplateResource(_TEMPLATE_FILE_NAME), null,
+			_velocityEngine, _templateContextHelper);
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -204,14 +211,15 @@ public class FreeMarkerTemplateTest extends TestCase {
 
 		String result = unsyncStringWriter.toString();
 
-		assertEquals(_TEST_VALUE, result);
+		Assert.assertEquals(_TEST_VALUE, result);
 	}
 
+	@Test
 	public void testProcessTemplate6() throws Exception {
-		Template template = new FreeMarkerTemplate(
+		Template template = new VelocityTemplate(
 			new MockTemplateResource(_WRONG_TEMPLATE_ID),
 			new MockTemplateResource(_WRONG_ERROR_TEMPLATE_ID), null,
-			_configuration, _templateContextHelper);
+			_velocityEngine, _templateContextHelper);
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -220,27 +228,28 @@ public class FreeMarkerTemplateTest extends TestCase {
 		try {
 			template.processTemplate(unsyncStringWriter);
 
-			fail();
+			Assert.fail();
 		}
 		catch (Exception e) {
 			if (e instanceof TemplateException) {
 				String message = e.getMessage();
 
-				assertTrue(message.contains(_WRONG_ERROR_TEMPLATE_ID));
+				Assert.assertTrue(message.contains(_WRONG_ERROR_TEMPLATE_ID));
 
 				return;
 			}
 
-			fail();
+			Assert.fail();
 		}
 	}
 
+	@Test
 	public void testProcessTemplate7() throws Exception {
-		Template template = new FreeMarkerTemplate(
+		Template template = new VelocityTemplate(
 			new MockTemplateResource(_WRONG_TEMPLATE_ID),
 			new StringTemplateResource(
 				_WRONG_ERROR_TEMPLATE_ID, _TEST_TEMPLATE_CONTENT),
-			null, _configuration, _templateContextHelper);
+			null, _velocityEngine, _templateContextHelper);
 
 		template.put(_TEST_KEY, _TEST_VALUE);
 
@@ -250,17 +259,18 @@ public class FreeMarkerTemplateTest extends TestCase {
 
 		String result = unsyncStringWriter.toString();
 
-		assertEquals(_TEST_VALUE, result);
+		Assert.assertEquals(_TEST_VALUE, result);
 	}
 
+	@Test
 	public void testProcessTemplate8() throws Exception {
-		Map<String, Object> context = new HashMap<String, Object>();
+		VelocityContext velocityContext = new VelocityContext();
 
-		context.put(_TEST_KEY, _TEST_VALUE);
+		velocityContext.put(_TEST_KEY, _TEST_VALUE);
 
-		Template template = new FreeMarkerTemplate(
-			new MockTemplateResource(_TEMPLATE_FILE_NAME), null, context,
-			_configuration, _templateContextHelper);
+		Template template = new VelocityTemplate(
+			new MockTemplateResource(_TEMPLATE_FILE_NAME), null,
+			velocityContext, _velocityEngine, _templateContextHelper);
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
@@ -268,14 +278,14 @@ public class FreeMarkerTemplateTest extends TestCase {
 
 		String result = unsyncStringWriter.toString();
 
-		assertEquals(_TEST_VALUE, result);
+		Assert.assertEquals(_TEST_VALUE, result);
 	}
 
-	private static final String _TEMPLATE_FILE_NAME = "test.ftl";
+	private static final String _TEMPLATE_FILE_NAME = "test.vm";
 
 	private static final String _TEST_KEY = "TEST_KEY";
 
-	private static final String _TEST_TEMPLATE_CONTENT = "${" + _TEST_KEY + "}";
+	private static final String _TEST_TEMPLATE_CONTENT = "$" + _TEST_KEY;
 
 	private static final String _TEST_VALUE = "TEST_VALUE";
 
@@ -284,8 +294,8 @@ public class FreeMarkerTemplateTest extends TestCase {
 
 	private static final String _WRONG_TEMPLATE_ID = "WRONG_TEMPLATE_ID";
 
-	private Configuration _configuration;
 	private TemplateContextHelper _templateContextHelper;
+	private VelocityEngine _velocityEngine;
 
 	private class MockTemplateContextHelper extends TemplateContextHelper {
 

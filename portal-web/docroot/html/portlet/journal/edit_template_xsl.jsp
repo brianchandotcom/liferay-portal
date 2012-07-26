@@ -63,7 +63,7 @@ else if (langType.equals("xml") || langType.equals("xsl") || langType.equals("xs
 	</aui:button-row>
 </aui:form>
 
-<aui:script use='<%= "aui-ace-editor-base,aui-ace-editor-mode-" + editorMode + ",aui-dialog,aui-io-request" %>'>
+<aui:script use='<%= "aui-ace-editor,aui-dialog,aui-io-request" %>'>
 	var editorType = '<%= HtmlUtil.escapeJS(editorType) %>';
 
 	var openerAUI = Liferay.Util.getOpener().AUI();

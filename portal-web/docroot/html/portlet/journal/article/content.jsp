@@ -791,7 +791,7 @@ if (Validator.isNotNull(content)) {
 			'click',
 			function(event) {
 				if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "changing-the-default-language-will-delete-all-unsaved-content") %>')) {
-					languageSelector.attr('disabled',<%= Boolean.FALSE %>);
+					languageSelector.attr('disabled', <%= Boolean.FALSE %>);
 					languageSelector.show();
 					languageSelector.focus();
 

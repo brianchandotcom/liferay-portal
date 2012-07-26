@@ -363,7 +363,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 			}
 
 			User user = importLDAPUser(
-					ldapServerId, companyId, emailAddress, screenName);
+				ldapServerId, companyId, emailAddress, screenName);
 
 			if (user != null) {
 				return user;

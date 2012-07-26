@@ -354,40 +354,6 @@
 		}
 	}
 
-	.folder-display-style li {
-		.overlay.document-action {
-			display: block;
-			height: 16px;
-			overflow: hidden;
-			position: absolute;
-			right: 15px;
-			top: 5px;
-			width: 25px;
-
-			a {
-				display: block;
-				float: right;
-				min-height: 15px;
-			}
-		}
-
-		.lfr-actions.show-arrow.direction-down .lfr-trigger strong a {
-			background-position: 100% -25px;
-
-			&:hover {
-				background-position: 100% -5px;
-			}
-		}
-	}
-
-	.body-row li.selected {
-		background-color: #00A2EA;
-
-		a {
-			color: #FFF;
-		}
-	}
-
 	.taglib-search-iterator .results-header input {
 		display: none;
 	}
@@ -517,13 +483,6 @@
 		.edit-toolbar {
 			margin: 0;
 		}
-
-		.parent-folder-title {
-			color: #FFF;
-			font-weight: bold;
-			padding: 6px 10px 6px 25px;
-			text-shadow: -1px -1px #505050;
-		}
 	}
 
 	.lfr-app-column-view {
@@ -614,51 +573,6 @@
 
 	.sync-message-hidden {
 		display: none;
-	}
-
-	.lfr-list-view-content {
-		ul .expand-folder {
-			height: 10px;
-			overflow: hidden;
-			padding-left: 5px;
-			padding-right: 5px;
-			position: absolute;
-			right: 0;
-			top: 5px;
-			width: 10px;
-
-			.expand-folder-arrow {
-				left: 2px;
-				position: absolute;
-				top: 1px;
-			}
-		}
-
-		li a, li.folder.error {
-			display: block;
-			padding: 6px 8px;
-		}
-
-		ul li a, ul li.folder.error {
-			color: #34404F;
-			text-decoration: none;
-		}
-
-		li.selected {
-			background-color: #00a2ea;
-
-			a {
-				font-weight: bold;
-			}
-		}
-	}
-
-	.lfr-list-view-data-container {
-		background-color: #FAFAFA;
-		height: 100%;
-		position: absolute;
-		width: 100%;
-		z-index: 9999;
 	}
 
 	.lfr-document-library-comments.lfr-panel.lfr-extended {

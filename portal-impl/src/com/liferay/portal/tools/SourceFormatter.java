@@ -1299,6 +1299,28 @@ public class SourceFormatter {
 				}
 			}
 
+			if (className.endsWith("ServiceImpl")) {
+				String serviceVariable =
+					StringUtil.lowerCase(className.substring(0, 1)) +
+						className.substring(1, className.length() - 4);
+
+				if (newContent.contains(
+						StringPool.SPACE + serviceVariable +
+							StringPool.PERIOD) ||
+					newContent.contains(
+						StringPool.TAB + serviceVariable + StringPool.PERIOD)) {
+
+					newContent = StringUtil.replace(
+						newContent,
+						new String[] {
+							StringPool.SPACE + serviceVariable +
+								StringPool.PERIOD,
+							StringPool.TAB + serviceVariable + StringPool.PERIOD
+						},
+						new String[] {StringPool.SPACE, StringPool.TAB});
+				}
+			}
+
 			if ((newContent != null) && !content.equals(newContent)) {
 				_fileUtil.write(file, newContent);
 

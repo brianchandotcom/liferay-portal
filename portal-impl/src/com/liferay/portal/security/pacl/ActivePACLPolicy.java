@@ -17,6 +17,8 @@ package com.liferay.portal.security.pacl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.permission.PortalServicePermission;
+import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.SortedProperties;
 import com.liferay.portal.security.pacl.checker.Checker;
 import com.liferay.portal.security.pacl.checker.JNDIChecker;
 import com.liferay.portal.security.pacl.checker.PortalServiceChecker;
@@ -26,6 +28,7 @@ import java.lang.reflect.Method;
 
 import java.security.Permission;
 
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -71,6 +74,47 @@ public class ActivePACLPolicy extends BasePACLPolicy {
 
 	public boolean isActive() {
 		return true;
+	}
+
+	@Override
+	protected void initCheckers() throws Exception 	{
+		Class<?> clazz = getClass();
+
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		Properties portalProperties = PropsUtil.getProperties(
+			"portal.security.manager.pacl.policy.checker", false);
+
+		portalProperties = new SortedProperties(portalProperties);
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"Registering " + portalProperties.size() +
+					" PACL policy checkers");
+		}
+
+		for (Map.Entry<Object, Object> entry : portalProperties.entrySet()) {
+			String key = (String)entry.getKey();
+
+			int x = key.indexOf("[");
+			int y = key.indexOf("]");
+
+			String permissionClassName = key.substring(x + 1, y);
+
+			String checkerClassName = (String)entry.getValue();
+
+			Class<?> checkerClass = classLoader.loadClass(checkerClassName);
+
+			Checker checker = (Checker)checkerClass.newInstance();
+
+			initChecker(permissionClassName, checker);
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Registering permission " + permissionClassName +
+						" with PACL policy " + checkerClassName);
+			}
+		}
 	}
 
 	protected void initJNDIChecker() {

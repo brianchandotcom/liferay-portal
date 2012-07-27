@@ -35,6 +35,7 @@ import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.staging.StagingAdvicesThreadLocal;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 
 import java.lang.reflect.InvocationTargetException;
@@ -90,6 +91,10 @@ public class LayoutLocalServiceStagingAdvice
 	}
 
 	public Object invoke(MethodInvocation methodInvocation) throws Throwable {
+		if (!StagingAdvicesThreadLocal.isEnabled()) {
+			return methodInvocation.proceed();
+		}
+
 		Method method = methodInvocation.getMethod();
 
 		String methodName = method.getName();

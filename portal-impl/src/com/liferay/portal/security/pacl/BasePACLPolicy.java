@@ -17,9 +17,7 @@ package com.liferay.portal.security.pacl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.SortedProperties;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.pacl.checker.Checker;
@@ -105,55 +103,19 @@ public abstract class BasePACLPolicy implements PACLPolicy {
 		return _checkers.get(clazz.getName());
 	}
 
-	protected Checker initChecker(Checker checker) {
+	protected void initChecker(Checker checker) {
 		checker.setPACLPolicy(this);
 
 		checker.afterPropertiesSet();
-
-		return checker;
 	}
 
-	protected void initCheckers() throws Exception {
-		Class<?> clazz = getClass();
+	protected void initChecker(String permissionClassName, Checker checker) {
+		initChecker(checker);
 
-		ClassLoader classLoader = clazz.getClassLoader();
-
-		Properties portalProperties = PropsUtil.getProperties(
-			"portal.security.manager.pacl.policy.checker", false);
-
-		portalProperties = new SortedProperties(portalProperties);
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				"Registering " + portalProperties.size() +
-					" PACL policy checkers");
-		}
-
-		for (Map.Entry<Object, Object> entry : portalProperties.entrySet()) {
-			String key = (String)entry.getKey();
-
-			int x = key.indexOf("[");
-			int y = key.indexOf("]");
-
-			String permissionClassName = key.substring(x + 1, y);
-
-			String checkerClassName = (String)entry.getValue();
-
-			Class<?> checkerClass = classLoader.loadClass(checkerClassName);
-
-			Checker checker = (Checker)checkerClass.newInstance();
-
-			initChecker(checker);
-
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Registering permission " + permissionClassName +
-						" with PACL policy " + checkerClassName);
-			}
-
-			_checkers.put(permissionClassName, checker);
-		}
+		_checkers.put(permissionClassName, checker);
 	}
+
+	protected abstract void initCheckers() throws Exception;
 
 	private static Log _log = LogFactoryUtil.getLog(BasePACLPolicy.class);
 

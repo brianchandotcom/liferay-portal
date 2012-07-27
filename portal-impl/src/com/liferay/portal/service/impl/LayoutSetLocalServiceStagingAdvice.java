@@ -26,6 +26,7 @@ import com.liferay.portal.model.LayoutSetStagingHandler;
 import com.liferay.portal.model.impl.ColorSchemeImpl;
 import com.liferay.portal.model.impl.ThemeImpl;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
+import com.liferay.portal.staging.StagingAdvicesThreadLocal;
 
 import java.io.InputStream;
 
@@ -44,11 +45,16 @@ import org.aopalliance.intercept.MethodInvocation;
 /**
  * @author Julio Camarero
  * @author Brian Wing Shun Chan
+ * @author Raymond Augé
  */
 public class LayoutSetLocalServiceStagingAdvice
 	extends LayoutSetLocalServiceImpl implements MethodInterceptor {
 
 	public Object invoke(MethodInvocation methodInvocation) throws Throwable {
+		if (!StagingAdvicesThreadLocal.isEnabled()) {
+			return methodInvocation.proceed();
+		}
+
 		Method method = methodInvocation.getMethod();
 
 		String methodName = method.getName();

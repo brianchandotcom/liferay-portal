@@ -41,6 +41,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatamapping.RequiredStructureException;
 import com.liferay.portlet.dynamicdatamapping.StructureDuplicateElementException;
 import com.liferay.portlet.dynamicdatamapping.StructureDuplicateStructureKeyException;
+import com.liferay.portlet.dynamicdatamapping.StructureNameException;
 import com.liferay.portlet.dynamicdatamapping.StructureXsdException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
@@ -660,11 +661,10 @@ public class DDMStructureLocalServiceImpl
 					throw new StructureXsdException();
 				}
 
-				Locale[] contentAvailableLocales = LocaleUtil.fromLanguageIds(
-					StringUtil.split(
-						rootElement.attributeValue("available-locales")));
+				Locale contentDefaultLocale = LocaleUtil.fromLanguageId(
+					rootElement.attributeValue("default-locale"));
 
-				validateLanguages(contentAvailableLocales);
+				validateLanguages(nameMap, contentDefaultLocale);
 
 				elements.addAll(rootElement.elements());
 
@@ -678,6 +678,9 @@ public class DDMStructureLocalServiceImpl
 			catch (StructureDuplicateElementException sdee) {
 				throw sdee;
 			}
+			catch(StructureNameException sne) {
+				throw sne;
+			}
 			catch (StructureXsdException sxe) {
 				throw sxe;
 			}
@@ -687,23 +690,28 @@ public class DDMStructureLocalServiceImpl
 		}
 	}
 
-	protected void validateLanguages(Locale[] contentAvailableLocales)
+	protected void validateLanguages(
+			Map<Locale, String> nameMap, Locale contentDefaultLocale)
 		throws PortalException {
+
+		String name = nameMap.get(contentDefaultLocale);
+
+		if (Validator.isNull(name)) {
+			throw new StructureNameException();
+		}
 
 		Locale[] availableLocales = LanguageUtil.getAvailableLocales();
 
-		for (Locale contentAvailableLocale : contentAvailableLocales) {
-			if (ArrayUtil.contains(availableLocales, contentAvailableLocale)) {
-				return;
-			}
+		if (!ArrayUtil.contains(availableLocales, contentDefaultLocale)) {
+			LocaleException le = new LocaleException();
+
+			Locale[] sourceAvailableLocales = {contentDefaultLocale};
+
+			le.setSourceAvailableLocales(sourceAvailableLocales);
+			le.setTargetAvailableLocales(availableLocales);
+
+			throw le;
 		}
-
-		LocaleException le = new LocaleException();
-
-		le.setSourceAvailableLocales(contentAvailableLocales);
-		le.setTargetAvailableLocales(availableLocales);
-
-		throw le;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

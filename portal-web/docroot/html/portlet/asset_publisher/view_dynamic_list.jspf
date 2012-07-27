@@ -104,6 +104,9 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 
 		searchContainer.setTotal(total);
 
+		end = searchContainer.getEnd();
+		start = searchContainer.getStart();
+
 		assetEntryQuery.setEnd(end);
 		assetEntryQuery.setStart(start);
 

@@ -61,6 +61,7 @@ public class SearchContainerTag<R> extends ParamAndPropertyAncestorTagImpl {
 		_rowChecker = null;
 		_searchContainer = null;
 		_searchTerms = null;
+		_total = 0;
 		_var = DEFAULT_VAR;
 
 		return EVAL_PAGE;
@@ -87,14 +88,18 @@ public class SearchContainerTag<R> extends ParamAndPropertyAncestorTagImpl {
 					getDelta(), _iteratorURL, null, _emptyResultsMessage);
 			}
 
+			if (!isDeltaConfigurable()) {
+				_searchContainer.setDelta(_delta);
+			}
+
 			_searchContainer.setDeltaConfigurable(_deltaConfigurable);
-			_searchContainer.setId(_id);
 
 			if (_headerNames != null) {
 				_searchContainer.setHeaderNames(_headerNames);
 			}
 
 			_searchContainer.setHover(_hover);
+			_searchContainer.setId(_id);
 
 			if (Validator.isNotNull(_orderByColParam)) {
 				_searchContainer.setOrderByColParam(_orderByColParam);
@@ -118,6 +123,10 @@ public class SearchContainerTag<R> extends ParamAndPropertyAncestorTagImpl {
 
 			if (_rowChecker != null) {
 				_searchContainer.setRowChecker(_rowChecker);
+			}
+
+			if (_total > 0) {
+				_searchContainer.setTotal(_total);
 			}
 
 			pageContext.setAttribute(_var, _searchContainer);
@@ -277,6 +286,10 @@ public class SearchContainerTag<R> extends ParamAndPropertyAncestorTagImpl {
 		_searchTerms = searchTerms;
 	}
 
+	public void setTotal(int total) {
+		_total = total;
+	}
+
 	public void setVar(String var) {
 		_var = var;
 	}
@@ -303,6 +316,7 @@ public class SearchContainerTag<R> extends ParamAndPropertyAncestorTagImpl {
 	private RowChecker _rowChecker;
 	private SearchContainer<R> _searchContainer;
 	private DisplayTerms _searchTerms;
+	private int _total;
 	private String _var = DEFAULT_VAR;
 
 }

@@ -185,7 +185,8 @@ public class PortletDisplayTemplatesUtil {
 		for (Map.Entry<String, String[]> preference :
 			preferencesMap.entrySet()) {
 
-			if ((preference.getValue()!= null) &&
+			if ((preference.getValue() != null) &&
+				(preference.getValue().length > 0) &&
 				(preference.getValue()[0] != null)) {
 
 				contextPreferences.put(

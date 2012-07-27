@@ -313,7 +313,7 @@
 						<replace file="docroot/html/js/editor/ckeditor/_source/core/htmlparser/fragment.js">
 							<replacetoken><![CDATA[function sendPendingBRs()]]></replacetoken>
 							<replacevalue><![CDATA[function sendPendingBRs( brsToIgnore )]]></replacevalue>
-						</replace>						
+						</replace>
 
 						<replace file="docroot/html/js/editor/ckeditor/_source/core/htmlparser/fragment.js">
 							<replacetoken><![CDATA[while ( pendingBRs.length )]]></replacetoken>

@@ -43,8 +43,9 @@ public class Gmail_ReplyMBCategoryThreadMessageEmailTest extends BaseTestCase {
 				}
 
 				assertEquals(RuntimeVariables.replace("Sign out"),
-					selenium.getText("//td/a"));
-				selenium.clickAt("//td/a", RuntimeVariables.replace("Sign out"));
+					selenium.getText("//td[2]/a"));
+				selenium.clickAt("//td[2]/a",
+					RuntimeVariables.replace("Sign out"));
 				selenium.clickAt("//span/a",
 					RuntimeVariables.replace("Sign in to Gmail"));
 				selenium.waitForPageToLoad("30000");
@@ -74,7 +75,7 @@ public class Gmail_ReplyMBCategoryThreadMessageEmailTest extends BaseTestCase {
 					}
 
 					try {
-						if (selenium.isVisible("//input[@id='Email']")) {
+						if (selenium.isElementPresent("//input[@id='Email']")) {
 							break;
 						}
 					}
@@ -84,8 +85,19 @@ public class Gmail_ReplyMBCategoryThreadMessageEmailTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
+				boolean usernamePopulated = selenium.isElementPresent(
+						"//input[@value='liferay.qa.testing.trunk@gmail.com']");
+
+				if (usernamePopulated) {
+					label = 4;
+
+					continue;
+				}
+
 				selenium.type("//input[@id='Email']",
 					RuntimeVariables.replace("liferay.qa.testing.trunk"));
+
+			case 4:
 				selenium.type("//input[@id='Passwd']",
 					RuntimeVariables.replace("loveispatient"));
 
@@ -93,7 +105,7 @@ public class Gmail_ReplyMBCategoryThreadMessageEmailTest extends BaseTestCase {
 						"PersistentCookie");
 
 				if (staySignedInChecked) {
-					label = 4;
+					label = 5;
 
 					continue;
 				}
@@ -102,9 +114,9 @@ public class Gmail_ReplyMBCategoryThreadMessageEmailTest extends BaseTestCase {
 						"//input[@id='PersistentCookie']"));
 				selenium.clickAt("//input[@id='PersistentCookie']",
 					RuntimeVariables.replace("Stay signed in"));
-
-			case 4:
 				assertTrue(selenium.isChecked("//input[@id='PersistentCookie']"));
+
+			case 5:
 				selenium.clickAt("//input[@id='signIn']",
 					RuntimeVariables.replace("Sign In"));
 				selenium.waitForPageToLoad("30000");
@@ -117,9 +129,9 @@ public class Gmail_ReplyMBCategoryThreadMessageEmailTest extends BaseTestCase {
 					}
 
 					try {
-						if (RuntimeVariables.replace("Administrator")
-												.equals(selenium.getText(
-										"//span[@email='liferay.qa.server.trunk@gmail.com']"))) {
+						if (selenium.isPartialText(
+									"//span[@email='liferay.qa.server.trunk@gmail.com']",
+									"Admin")) {
 							break;
 						}
 					}
@@ -129,11 +141,11 @@ public class Gmail_ReplyMBCategoryThreadMessageEmailTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				assertEquals(RuntimeVariables.replace("Administrator"),
-					selenium.getText(
-						"//span[@email='liferay.qa.server.trunk@gmail.com']"));
+				assertTrue(selenium.isPartialText(
+						"//span[@email='liferay.qa.server.trunk@gmail.com']",
+						"Admin"));
 				selenium.clickAt("//span[@email='liferay.qa.server.trunk@gmail.com']",
-					RuntimeVariables.replace("Administrator"));
+					RuntimeVariables.replace("Admin"));
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -141,9 +153,8 @@ public class Gmail_ReplyMBCategoryThreadMessageEmailTest extends BaseTestCase {
 					}
 
 					try {
-						if (RuntimeVariables.replace("MB Message Subject")
-												.equals(selenium.getText(
-										"//h1/span[1]"))) {
+						if (selenium.isPartialText("//h1/span[1]",
+									"MB Message Subject")) {
 							break;
 						}
 					}
@@ -153,8 +164,8 @@ public class Gmail_ReplyMBCategoryThreadMessageEmailTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				assertEquals(RuntimeVariables.replace("MB Message Subject"),
-					selenium.getText("//h1/span[1]"));
+				assertTrue(selenium.isPartialText("//h1/span[1]",
+						"MB Message Subject"));
 				assertTrue(selenium.isPartialText(
 						"//div[contains(child::text(),'MB Message Body')]",
 						"MB Message Body"));
@@ -192,16 +203,17 @@ public class Gmail_ReplyMBCategoryThreadMessageEmailTest extends BaseTestCase {
 				boolean signedIn2 = selenium.isElementPresent("link=Sign out");
 
 				if (!signedIn2) {
-					label = 5;
+					label = 6;
 
 					continue;
 				}
 
 				assertEquals(RuntimeVariables.replace("Sign out"),
-					selenium.getText("//td/a"));
-				selenium.clickAt("//td/a", RuntimeVariables.replace("Sign out"));
+					selenium.getText("//td[2]/a"));
+				selenium.clickAt("//td[2]/a",
+					RuntimeVariables.replace("Sign out"));
 
-			case 5:
+			case 6:
 				Thread.sleep(10000);
 				selenium.close();
 				selenium.selectWindow("null");

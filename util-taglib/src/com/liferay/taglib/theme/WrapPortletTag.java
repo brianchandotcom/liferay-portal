@@ -15,6 +15,7 @@
 package com.liferay.taglib.theme;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
+import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.util.ThemeHelper;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -53,7 +54,8 @@ public class WrapPortletTag
 		// Portlet content
 
 		RequestDispatcher requestDispatcher =
-			servletContext.getRequestDispatcher(portletPage);
+				DirectRequestDispatcherFactoryUtil.getRequestDispatcher(
+					servletContext, portletPage);
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 

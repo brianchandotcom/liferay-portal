@@ -40,12 +40,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td/a</td>
+	<td>//td[2]/a</td>
 	<td>Sign out</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//td/a</td>
+	<td>//td[2]/a</td>
 	<td>Sign out</td>
 </tr>
 <tr>
@@ -79,14 +79,29 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
+	<td>waitForElementPresent</td>
 	<td>//input[@id='Email']</td>
 	<td>Username:</td>
+</tr>
+<tr>
+	<td>storeElementPresent</td>
+	<td>//input[@value='liferay.qa.testing.trunk@gmail.com']</td>
+	<td>usernamePopulated</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${usernamePopulated}</td>
+	<td>UsernamePopulated</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//input[@id='Email']</td>
 	<td>liferay.qa.testing.trunk</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>UsernamePopulated</td>
+	<td></td>
 </tr>
 <tr>
 	<td>type</td>
@@ -114,14 +129,14 @@
 	<td>Stay signed in</td>
 </tr>
 <tr>
-	<td>label</td>
-	<td>StaySignedInChecked</td>
-	<td></td>
-</tr>
-<tr>
 	<td>assertChecked</td>
 	<td>//input[@id='PersistentCookie']</td>
 	<td>Stay signed in</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>StaySignedInChecked</td>
+	<td></td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -134,27 +149,27 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForText</td>
+	<td>waitForPartialText</td>
 	<td>//span[@email='liferay.qa.server.trunk@gmail.com']</td>
-	<td>Administrator</td>
+	<td>Admin</td>
 </tr>
 <tr>
-	<td>assertText</td>
+	<td>assertPartialText</td>
 	<td>//span[@email='liferay.qa.server.trunk@gmail.com']</td>
-	<td>Administrator</td>
+	<td>Admin</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//span[@email='liferay.qa.server.trunk@gmail.com']</td>
-	<td>Administrator</td>
+	<td>Admin</td>
 </tr>
 <tr>
-	<td>waitForText</td>
+	<td>waitForPartialText</td>
 	<td>//h1/span[1]</td>
 	<td>MB Message Subject</td>
 </tr>
 <tr>
-	<td>assertText</td>
+	<td>assertPartialText</td>
 	<td>//h1/span[1]</td>
 	<td>MB Message Subject</td>
 </tr>
@@ -225,12 +240,12 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//td/a</td>
+	<td>//td[2]/a</td>
 	<td>Sign out</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//td/a</td>
+	<td>//td[2]/a</td>
 	<td>Sign out</td>
 </tr>
 <tr>

@@ -92,6 +92,12 @@ public class JournalStructureServiceWrapper implements JournalStructureService,
 		return _journalStructureService.getStructures(groupId);
 	}
 
+	public java.util.List<com.liferay.portlet.journal.model.JournalStructure> getStructures(
+		long[] groupIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _journalStructureService.getStructures(groupIds);
+	}
+
 	public java.util.List<com.liferay.portlet.journal.model.JournalStructure> search(
 		long companyId, long[] groupIds, java.lang.String keywords, int start,
 		int end, com.liferay.portal.kernel.util.OrderByComparator obc)

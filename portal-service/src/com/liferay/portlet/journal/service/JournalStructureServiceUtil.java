@@ -99,6 +99,12 @@ public class JournalStructureServiceUtil {
 		return getService().getStructures(groupId);
 	}
 
+	public static java.util.List<com.liferay.portlet.journal.model.JournalStructure> getStructures(
+		long[] groupIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getStructures(groupIds);
+	}
+
 	public static java.util.List<com.liferay.portlet.journal.model.JournalStructure> search(
 		long companyId, long[] groupIds, java.lang.String keywords, int start,
 		int end, com.liferay.portal.kernel.util.OrderByComparator obc)

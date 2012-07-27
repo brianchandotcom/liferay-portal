@@ -105,6 +105,10 @@ body > .lfr-menu-list, body > .lfr-menu-list ul, .lfr-actions, .aui-dialog-conte
 	@include box-shadow(none);
 }
 
+.taglib-logo-selector .lfr-change-logo.show-background {
+	@include box-shadow(inset 0 0 3px #000, 0 1px 0 #FFF);
+}
+
 .staging-tabview-list {
 	@include border-radius(0);
 	@include box-shadow(inset 0 0.75em 0.75em rgba(255, 255, 255, 0.55));

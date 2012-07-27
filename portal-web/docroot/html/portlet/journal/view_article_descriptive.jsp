@@ -24,43 +24,17 @@ PortletURL tempRowURL = (PortletURL)request.getAttribute("view_entries.jsp-tempR
 boolean showCheckBox = JournalArticlePermission.contains(permissionChecker, article, ActionKeys.DELETE) || JournalArticlePermission.contains(permissionChecker, article, ActionKeys.UPDATE);
 %>
 
-<div class="article-display-style display-descriptive <%= showCheckBox ? "selectable" : StringPool.BLANK %>" data-draggable="<%= showCheckBox ? Boolean.TRUE.toString() : Boolean.FALSE.toString() %>" data-title="<%= StringUtil.shorten(article.getTitle(locale), 60) %>">
-	<a class="article-link" data-folder="<%= Boolean.FALSE.toString() %>" href="<%= tempRowURL.toString() %>" title="<%= HtmlUtil.escapeAttribute(HtmlUtil.unescape(article.getTitle(locale)) + " - " + HtmlUtil.unescape(article.getDescription())) %>">
-		<div class="article-thumbnail" style="height: 136px; width: 136px;">
-			<img alt="" border="no" src="<%= themeDisplay.getPathThemeImages() + "/file_system/large/default.png" %>" style="max-height: 128px; max-width: 128px;" />
-		</div>
-
-		<span class="article-title">
-			<%= article.getTitle(locale) %>
-
-			<c:if test="<%= article.isDraft() || article.isPending() %>">
-
-				<%
-				String statusLabel = WorkflowConstants.toLabel(article.getStatus());
-				%>
-
-				<span class="workflow-status-<%= statusLabel %>">
-					(<liferay-ui:message key="<%= statusLabel %>" />)
-				</span>
-			</c:if>
-		</span>
-
-		<span class="article-description"><%= article.getDescription() %></span>
-	</a>
-
-	<%
-	request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
-	%>
-
-	<liferay-util:include page="/html/portlet/journal/article_action.jsp" />
-
-	<c:if test="<%= showCheckBox %>">
-
-		<%
-		String rowCheckerName = JournalArticle.class.getSimpleName();
-		String rowCheckerId = article.getArticleId();
-		%>
-
-		<aui:input cssClass="overlay article-selector" label="" name="<%= RowChecker.ROW_IDS + rowCheckerName %>" type="checkbox" value="<%= rowCheckerId %>" />
-	</c:if>
-</div>
+<liferay-ui:app-view-entry
+	actionJsp="/html/portlet/journal/article_action.jsp"
+	description="<%= article.getDescription(locale) %>"
+	displayStyle="descriptive"
+	rowCheckerId="<%= String.valueOf(article.getArticleId()) %>"
+	rowCheckerName="<%= JournalArticle.class.getSimpleName() %>"
+	showCheckbox="<%= showCheckBox %>"
+	status="<%= article.getStatus() %>"
+	thumbnailDivStyle="height: 136px; width: 136px;"
+	thumbnailSrc='<%= themeDisplay.getPathThemeImages() + "/file_system/large/default.png" %>'
+	thumbnailStyle="max-height: 128px; max-width: 128px;"
+	title="<%= article.getTitle(locale) %>"
+	url="<%= tempRowURL.toString() %>"
+/>

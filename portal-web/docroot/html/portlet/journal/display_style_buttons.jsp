@@ -17,120 +17,41 @@
 <%@ include file="/html/portlet/journal/init.jsp" %>
 
 <%
-String navigation = ParamUtil.getString(liferayPortletRequest, "navigation", "home");
+String navigation = ParamUtil.getString(request, "navigation", "home");
 
-long folderId = GetterUtil.getLong((String)liferayPortletRequest.getAttribute("view.jsp-folderId"));
+long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
 
-String structureId = ParamUtil.getString(liferayPortletRequest, "structureId");
+String structureId = ParamUtil.getString(request, "structureId");
 
-String displayStyle = ParamUtil.getString(liferayPortletRequest, "displayStyle");
+String displayStyle = ParamUtil.getString(request, "displayStyle");
 
 if (Validator.isNull(displayStyle)) {
 	displayStyle = portalPreferences.getValue(PortletKeys.JOURNAL, "display-style", PropsValues.JOURNAL_DEFAULT_DISPLAY_VIEW);
 }
 
-String keywords = ParamUtil.getString(liferayPortletRequest, "keywords");
+String keywords = ParamUtil.getString(request, "keywords");
 
-boolean advancedSearch = ParamUtil.getBoolean(liferayPortletRequest, DisplayTerms.ADVANCED_SEARCH, false);
+Map<String, String> requestParams = new HashMap<String, String>();
+
+requestParams.put("struts_action", Validator.isNull(keywords) ? "/journal/view" : "/journal/search");
+requestParams.put("navigation", HtmlUtil.escapeJS(navigation));
+requestParams.put("folderId", String.valueOf(folderId));
+requestParams.put("searchType", String.valueOf(JournalSearchConstants.FRAGMENT));
+requestParams.put("viewEntriesPage", Boolean.TRUE.toString());
+requestParams.put("viewFolders", Boolean.FALSE.toString());
+
+if (Validator.isNull(keywords)) {
+	requestParams.put("viewEntries", Boolean.TRUE.toString());
+}
+else {
+	requestParams.put("viewEntries", Boolean.FALSE.toString());
+	requestParams.put("keywords", HtmlUtil.escapeJS(keywords));
+	requestParams.put("searchFolderId", String.valueOf(folderId));
+}
+
+if (!structureId.equals("0")) {
+	requestParams.put("structureId", structureId);
+}
 %>
 
-<c:if test="<%= displayViews.length > 1 %>">
-	<aui:script use="aui-base,aui-toolbar">
-		var buttonRow = A.one('#<portlet:namespace />displayStyleToolbar');
-
-		function onButtonClick(displayStyle) {
-			var config = {
-				'<portlet:namespace />struts_action': '<%= Validator.isNull(keywords) ? "/journal/view" : "/journal/search" %>',
-				'<portlet:namespace />navigation': '<%= HtmlUtil.escapeJS(navigation) %>',
-				'<portlet:namespace />folderId': '<%= folderId %>',
-				'<portlet:namespace />displayStyle': displayStyle,
-				'<portlet:namespace />viewEntries': <%= Boolean.FALSE.toString() %>,
-				'<portlet:namespace />viewEntriesPage': <%= Boolean.TRUE.toString() %>,
-				'<portlet:namespace />viewFolders': <%= Boolean.FALSE.toString() %>,
-				'<portlet:namespace />searchType': <%= JournalSearchConstants.FRAGMENT %>,
-				'<portlet:namespace />saveDisplayStyle': <%= Boolean.TRUE.toString() %>
-			};
-
-			if (<%= Validator.isNull(keywords) %>) {
-				config['<portlet:namespace />viewEntries'] = <%= Boolean.TRUE.toString() %>;
-			}
-			else {
-				config['<portlet:namespace />keywords'] = '<%= HtmlUtil.escapeJS(keywords) %>';
-				config['<portlet:namespace />searchFolderId'] = '<%= folderId %>';
-			}
-
-			if (<%= !structureId.equals("0") %>) {
-				config['<portlet:namespace />structureId'] = '<%= HtmlUtil.escapeJS(structureId) %>';
-			}
-
-			updateDisplayStyle(config);
-		}
-
-		function updateDisplayStyle(config) {
-			var displayStyle = config['<portlet:namespace />displayStyle'];
-
-			<%
-			for (int i = 0; i < displayViews.length; i++) {
-			%>
-
-				displayStyleToolbar.item(<%= i %>).StateInteraction.set('active', (displayStyle === '<%= displayViews[i] %>'));
-
-			<%
-			}
-			%>
-
-			Liferay.fire(
-				'<portlet:namespace />dataRequest',
-				{
-					requestParams: config,
-					src: Liferay.JOURNAL_ENTRIES_PAGINATOR
-				}
-			);
-		};
-
-		var displayStyleToolbarChildren = [];
-
-		<%
-		for (int i = 0; i < displayViews.length; i++) {
-		%>
-
-			displayStyleToolbarChildren.push(
-				{
-					handler: A.bind(onButtonClick, null, '<%= displayViews[i] %>'),
-					icon: 'display-<%= displayViews[i] %>',
-					title: '<%= UnicodeLanguageUtil.get(pageContext, displayViews[i] + "-view") %>'
-				}
-			);
-
-		<%
-		}
-		%>
-
-		var displayStyleToolbar = new A.Toolbar(
-			{
-				activeState: true,
-				boundingBox: buttonRow,
-				children: displayStyleToolbarChildren
-			}
-		).render();
-
-		var index = 0;
-
-		<%
-		for (int i = 0; i < displayViews.length; i++) {
-			if (displayStyle.equals(displayViews[i])) {
-		%>
-
-				index = <%= i %>;
-
-		<%
-				break;
-			}
-		}
-		%>
-
-		displayStyleToolbar.item(index).StateInteraction.set('active', true);
-
-		buttonRow.setData('displayStyleToolbar', displayStyleToolbar);
-	</aui:script>
-</c:if>
+<liferay-ui:app-view-display-style displayStyle="<%= displayStyle %>" displayStyles="<%= displayViews %>" requestParams="<%= requestParams %>" />

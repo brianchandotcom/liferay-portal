@@ -294,7 +294,7 @@ boolean advancedSearch = ParamUtil.getBoolean(liferayPortletRequest, ArticleDisp
 								%>
 
 								<liferay-ui:icon
-									cssClass="article-display-style selectable"
+									cssClass="entry-display-style selectable"
 									image="../file_system/small/html"
 									label="<%= true %>"
 									message="<%= curArticle.getTitle(locale) %>"

@@ -172,62 +172,101 @@
 		}
 	}
 
+	.lfr-search-combobox {
+		.advanced-search-column-content {
+			border-right: 0;
+		}
+
+		.article-advanced-search-icon {
+			background: #D4D4D4 url(@theme_image_path@/portlet/header_bg.png) repeat-x scroll 0 0;
+
+			&:hover {
+				background: #B9CED9 url(@theme_image_path@/application/state_hover_bg.png) repeat-x scroll 0 0;
+				border-color: #627782;
+				color: #369;
+			}
+
+			input {
+				background: url(@theme_image_path@/arrows/05_down.png) no-repeat scroll 9px 60% transparent;
+				width: 28px;
+
+				&.close-advanced-search {
+					background-image: url(@theme_image_path@/arrows/05_up.png);
+					background-position: 8px 50%;
+				}
+			}
+		}
+
+		.aui-button {
+			margin-left: 0;
+		}
+
+		.search input {
+			border-radius: 1px;
+		}
+	}
+
 	.journal-article-container ul {
 		margin: 0;
+	}
+
+	.move-list {
+		.move-article, .move-folder {
+			background: #F0FAF0 url() no-repeat 5px 50%;
+			border-bottom: 1px solid #CCC;
+			display: block;
+			font-weight: bold;
+			margin-bottom: 1px;
+			padding: 5px;
+			padding-left: 25px;
+			position: relative;
+		}
+
+		.move-article {
+			background-image: url(@theme_image_path@/file_system/small/html.png);
+		}
+
+		.move-folder {
+			background-image: url(@theme_image_path@/common/folder.png);
+		}
+
+		.move-error {
+			background-color: #FDD;
+			background-image: url(@theme_image_path@/messages/error.png);
+			font-weight: normal;
+			opacity: 0.6;
+
+			.error-message {
+				position: absolute;
+				right: 5px;
+			}
+		}
+
+		.lfr-component {
+			margin: 0;
+		}
+	}
+
+	.journal-breadcrumb {
+		background-color: #EBEBEB;
+		background-image: url(@theme_image_path@/application/button_bg_selected.png);
+
+		ul {
+			margin-bottom: 0;
+		}
+	}
+
+	.move-list-info {
+		margin: 5px 0;
+
+		h4 {
+			font-size: 1.3em;
+		}
 	}
 
 	li {
 		list-style: none;
 		position: relative;
-	}
-
-	.body-row li.selected {
-		background-color: #00A2EA;
-
-		a {
-			color: #FFF;
-		}
-	}
-
-	.overlay.article-action a, .overlay.folder-action a {
-		display: block;
-		float: right;
-		min-height: 15px;
-	}
-
-	.folder {
-		margin-top: 2px;
-		position: relative;
-
-		&:hover {
-			background-color: #D3E8F1;
-		}
-	}
-
-	.folder-display-style li {
-		.overlay.article-action, .overlay.folder-action {
-			display: block;
-			height: 16px;
-			overflow: hidden;
-			position: absolute;
-			right: 15px;
-			top: 5px;
-			width: 24px;
-
-			a {
-				display: block;
-				float: right;
-				min-height: 15px;
-			}
-		}
-
-		.lfr-actions.show-arrow.direction-down .lfr-trigger strong a {
-			background-position: 100% -25px;
-
-			&:hover {
-				background-position: 100% -5px;
-			}
-		}
 	}
 
 	.structure-tree {
@@ -349,7 +388,73 @@
 		}
 	}
 
-	.journal-article-instructions-container {
+	.journal-container {
+		.search-info {
+			background-color: #D3E8F1;
+			padding: 10px;
+			padding-right: 50px;
+			position: relative;
+
+			.keywords {
+				float: none;
+				font-size: 1.4em;
+				font-weight: bold;
+			}
+
+			.change-search-folder {
+				font-size: 0.8em;
+				font-weight: normal;
+			}
+
+			.close-search {
+				margin-top: -8px;
+				position: absolute;
+				right: 15px;
+				top: 50%;
+			}
+		}
+	}
+
+	.journal-container, .article-entries-paginator {
+		clear: both;
+	}
+
+	.context-pane {
+		overflow: hidden;
+
+		.context-pane-content {
+			border-left: 1px solid #7B7B7B;
+			position: relative;
+		}
+	}
+
+	.taglib-search-iterator-page-iterator-top, .taglib-search-iterator-page-iterator-bottom, .aui-paginator-container, .journal-breadcrumb {
+		background: #D9D9D9 url(@theme_image_path@/application/subheader_bg.png) 0 0 repeat-x;
+		clear: both;
+		padding: 5px;
+		position: relative;
+	}
+
+	.taglib-search-iterator-page-iterator-top, .taglib-search-iterator-page-iterator-bottom, .aui-paginator-container {
+		text-align: center;
+	}
+
+	.taglib-search-iterator-page-iterator-top.page-iterator-bottom, .lfr-app-column-view .taglib-search-iterator-page-iterator-bottom {
+		bottom: 0;
+		left: 0;
+		position: absolute;
+		right: 0;
+	}
+
+	.taglib-search-iterator {
+		table-layout: fixed;
+
+		.align-left {
+			word-wrap: break-word;
+		}
+	}
+
+.journal-article-instructions-container {
 		display: normal;
 	}
 
@@ -434,48 +539,8 @@
 		width: 350px;
 	}
 
-	.lfr-header-row-content .parent-folder-title {
-		color: #FFF;
-		font-weight: bold;
-		padding: 6px 10px 6px 25px;
-		text-shadow: -1px -1px #505050;
-	}
-
-	.lfr-list-view-content {
-		ul .expand-folder {
-			height: 10px;
-			overflow: hidden;
-			padding-left: 5px;
-			padding-right: 5px;
-			position: absolute;
-			right: 0;
-			top: 5px;
-			width: 10px;
-
-			.expand-folder-arrow {
-				left: 2px;
-				position: absolute;
-				top: 1px;
-			}
-		}
-
-		li a {
-			display: block;
-			padding: 6px 8px;
-		}
-
-		ul li a {
-			color: #34404F;
-			text-decoration: none;
-		}
-
-		li.selected {
-			background-color: #00A2EA;
-
-			a {
-				font-weight: bold;
-			}
-		}
+	.lfr-header-row-content .add-button {
+		float: left;
 	}
 
 	.lfr-menu-list ul {
@@ -981,3 +1046,18 @@
 		}
 	}
 }
+
+.active-area-proxy {
+	background: #FFFFE0 url(@theme_image_path@/portlet/pop_up.png) no-repeat 10px 50%;
+	font-size: 1.2em;
+	padding: 0.3em 0.3em 0.3em 2em;
+}
+
+.ie7 {
+	.portlet-journal {
+		.lfr-actions .lfr-trigger strong {
+			min-width: 0px;
+		}
+	}
+}
+

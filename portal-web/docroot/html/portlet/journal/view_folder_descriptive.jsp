@@ -26,20 +26,16 @@ PortletURL tempRowURL = (PortletURL)request.getAttribute("view_entries.jsp-tempR
 boolean showCheckBox = JournalFolderPermission.contains(permissionChecker, folder, ActionKeys.DELETE) || JournalFolderPermission.contains(permissionChecker, folder, ActionKeys.UPDATE);
 %>
 
-<div class="article-display-style display-descriptive <%= showCheckBox ? "selectable" : StringPool.BLANK %>" data-draggable="<%= showCheckBox ? Boolean.TRUE.toString() : Boolean.FALSE.toString() %>" data-title="<%= StringUtil.shorten(folder.getName(), 60) %>">
-	<a class="article-link" data-folder="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= folder.getFolderId() %>" href="<%= tempRowURL.toString() %>" title="<%= HtmlUtil.escape(folder.getName()) + " - " + HtmlUtil.escape(folder.getDescription()) %>">
-		<span class="article-thumbnail">
-			<img alt="" border="no" src="<%= themeDisplay.getPathThemeImages() + "/file_system/large/" + folderImage + ".png" %>" style="width: 128px" />
-		</span>
-
-		<span class="article-title"><%= HtmlUtil.escape(folder.getName()) %></span>
-
-		<span class="article-description"><%= HtmlUtil.escape(folder.getDescription()) %></span>
-	</a>
-
-	<liferay-util:include page="/html/portlet/journal/folder_action.jsp" />
-
-	<c:if test="<%= showCheckBox %>">
-		<aui:input cssClass="overlay article-selector" label="" name="<%= RowChecker.ROW_IDS + JournalFolder.class.getSimpleName() %>" type="checkbox" value="<%= folder.getFolderId() %>" />
-	</c:if>
-</div>
+<liferay-ui:app-view-entry
+	actionJsp="/html/portlet/journal/folder_action.jsp"
+	description="<%= folder.getDescription() %>"
+	displayStyle="descriptive"
+	isFolder="<%= true %>"
+	rowCheckerId="<%= String.valueOf(folder.getFolderId()) %>"
+	rowCheckerName="<%= JournalFolder.class.getSimpleName() %>"
+	showCheckbox="<%= showCheckBox %>"
+	thumbnailSrc='<%= themeDisplay.getPathThemeImages() + "/file_system/large/" + folderImage + ".png" %>'
+	thumbnailStyle="width: 128px"
+	title="<%= folder.getName() %>"
+	url="<%= tempRowURL.toString() %>"
+/>

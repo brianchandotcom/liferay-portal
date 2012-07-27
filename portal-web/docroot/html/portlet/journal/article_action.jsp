@@ -29,7 +29,7 @@ else {
 }
 %>
 
-<span class="overlay article-action">
+<span class="overlay entry-action">
 	<liferay-ui:icon-menu align="auto" direction="down" extended="<%= false %>" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 		<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.UPDATE) %>">
 			<portlet:renderURL var="editURL">

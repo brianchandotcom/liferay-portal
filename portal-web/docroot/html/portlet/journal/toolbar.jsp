@@ -16,10 +16,6 @@
 
 <%@ include file="/html/portlet/journal/init.jsp" %>
 
-<c:if test="<%= !user.isDefaultUser() %>">
-	<aui:input cssClass="select-entries aui-state-default" inline="<%= true %>" label="" name='<%= RowChecker.ALL_ROW_IDS %>' type="checkbox" />
-</c:if>
-
 <liferay-ui:icon-menu align="left" cssClass="actions-button" direction="down" icon="" id="actionsButtonContainer" message="actions" showExpanded="<%= false %>" showWhenSingleIcon="<%= true %>">
 
 	<%

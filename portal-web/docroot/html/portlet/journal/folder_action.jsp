@@ -50,7 +50,7 @@ else {
 }
 %>
 
-<span class="overlay article-action">
+<span class="overlay entry-action">
 	<liferay-ui:icon-menu align="auto" direction="down" extended="<%= false %>" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 		<c:choose>
 			<c:when test="<%= folder != null %>">

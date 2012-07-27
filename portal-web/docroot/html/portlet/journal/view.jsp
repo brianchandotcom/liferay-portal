@@ -66,19 +66,14 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 		</aui:column>
 
 		<aui:column columnWidth="80" cssClass="context-pane" last="<%= true %>">
-			<div class="lfr-header-row">
-				<div class="lfr-header-row-content">
-					<liferay-util:include page="/html/portlet/journal/article_toolbar_search.jsp" />
+			<liferay-ui:app-view-toolbar
+				includeDisplayStyle="<%= true %>"
+				includeSelectAll="<%= true %>"
+				searchJsp="/html/portlet/journal/article_toolbar_search.jsp"
+			>
 
-					<div class="toolbar">
-						<liferay-util:include page="/html/portlet/journal/toolbar.jsp" />
-					</div>
-
-					<div class="display-style">
-						<span class="toolbar" id="<portlet:namespace />displayStyleToolbar"></span>
-					</div>
-				</div>
-			</div>
+				<liferay-util:include page="/html/portlet/journal/toolbar.jsp" />
+			</liferay-ui:app-view-toolbar>
 
 			<div class="journal-breadcrumb" id="<portlet:namespace />breadcrumbContainer">
 				<liferay-util:include page="/html/portlet/journal/breadcrumb.jsp" />

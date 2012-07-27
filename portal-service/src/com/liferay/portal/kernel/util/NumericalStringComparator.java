@@ -42,13 +42,39 @@ public class NumericalStringComparator
 			s2 = StringPool.BLANK;
 		}
 
+		int startsWithWeight = StringUtil.startsWithWeight(s1, s2);
+
+		boolean lastMatchingCharIsDigit = false;
+
+		if ((startsWithWeight > 0) &&
+			Validator.isDigit(s1.charAt(startsWithWeight - 1))) {
+
+			lastMatchingCharIsDigit = true;
+		}
+
+		s1 = s1.substring(startsWithWeight);
+		s2 = s2.substring(startsWithWeight);
+
+		String leadingDigits1 = StringUtil.extractLeadingDigits(s1);
+		String leadingDigits2 = StringUtil.extractLeadingDigits(s2);
+
 		int value = 0;
 
-		int i1 = GetterUtil.getInteger(StringUtil.extractLeadingDigits(s1), -1);
-		int i2 = GetterUtil.getInteger(StringUtil.extractLeadingDigits(s2), -1);
+		if ((lastMatchingCharIsDigit &&
+			 (Validator.isNotNull(leadingDigits1) ||
+			  Validator.isNotNull(leadingDigits2))) ||
+			(Validator.isNotNull(leadingDigits1) &&
+			 Validator.isNotNull(leadingDigits2))) {
 
-		if ((i1 != -1) && (i2 != -1) && (i1 != i2)) {
-			value = i1 - i2;
+			if (leadingDigits1.length() != leadingDigits2.length()) {
+				value = leadingDigits1.length() - leadingDigits2.length();
+			}
+			else {
+				int i1 = GetterUtil.getInteger(leadingDigits1);
+				int i2 = GetterUtil.getInteger(leadingDigits2);
+
+				value = i1 - i2;
+			}
 		}
 		else {
 			if (_caseSensitive) {

@@ -310,6 +310,16 @@
 							</replacevalue>
 						</replace>
 
+						<replace file="docroot/html/js/editor/ckeditor/_source/core/htmlparser/fragment.js">
+							<replacetoken><![CDATA[function sendPendingBRs()]]></replacetoken>
+							<replacevalue><![CDATA[function sendPendingBRs( brsToIgnore )]]></replacevalue>
+						</replace>						
+
+						<replace file="docroot/html/js/editor/ckeditor/_source/core/htmlparser/fragment.js">
+							<replacetoken><![CDATA[while ( pendingBRs.length )]]></replacetoken>
+							<replacevalue><![CDATA[while ( pendingBRs.length - ( brsToIgnore || 0 ) > 0 )]]></replacevalue>
+						</replace>
+
 						<replace file="docroot/html/js/editor/ckeditor/_source/plugins/popup/plugin.js">
 							<replacetoken><![CDATA[popupWindow.moveTo( left, top );]]></replacetoken>
 							<replacevalue><![CDATA[// Chrome is problematic, but it's not really needed here (#8855)]]></replacevalue>

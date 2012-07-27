@@ -307,7 +307,7 @@ else if (((folderId != rootFolderId) && (parentFolderId == 0)) || ((folderId == 
 						catch (Exception e) {
 					%>
 
-							<li class="folder error" title="<%= LanguageUtil.get(pageContext, "an-unexpected-error-occurred-while-connecting-to-the-repository") %>">
+							<li class="app-view-navigation-entry folder error" title="<%= LanguageUtil.get(pageContext, "an-unexpected-error-occurred-while-connecting-to-the-repository") %>">
 
 								<%
 								request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);

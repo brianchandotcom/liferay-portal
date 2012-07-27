@@ -47,7 +47,7 @@ if (browseUp) {
 }
 %>
 
-<li class="<%= selected ? cssClassName + " selected" : cssClassName %>">
+<li class="app-view-navigation-entry <%= selected ? cssClassName + " selected" : cssClassName %>">
 
 	<%
 	request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);

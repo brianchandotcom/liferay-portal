@@ -111,21 +111,8 @@
 		clear: both;
 	}
 
-	.folder {
-		margin-top: 2px;
-		position: relative;
-
-		&:hover {
-			background-color: #D3E8F1;
-		}
-
-		&.error:hover {
-			background-color: #FDD;
-		}
-
-		.active-area, .active-area.hover {
-			background-color: #5AD300;
-		}
+	.folder.error:hover {
+		background-color: #FDD;
 	}
 
 	.expand-folder {
@@ -178,18 +165,6 @@
 	.aui-button-holder.toolbar {
 		display: inline;
 		margin: 0;
-	}
-
-	.body-row {
-		height: 100%;
-		overflow: hidden;
-		position: relative;
-		width: 100%;
-
-		ul li a .icon {
-			float: left;
-			margin-right: 5px;
-		}
 	}
 
 	.lfr-header-row {

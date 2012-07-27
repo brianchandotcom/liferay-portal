@@ -798,12 +798,12 @@ public class SitesUtil {
 			if (_log.isWarnEnabled()) {
 				StringBundler sb = new StringBundler(6);
 
-				sb.append("Merge not performed because the fail threshold was");
-				sb.append("reached for layoutPrototypeId ");
+				sb.append("Merge not performed because the fail threshold ");
+				sb.append("was reached for layoutPrototypeId ");
 				sb.append(layoutPrototype.getLayoutPrototypeId());
 				sb.append(" and layoutId ");
 				sb.append(layoutPrototypeLayout.getLayoutId());
-				sb.append(". Update the count in the database to try again.");
+				sb.append(". Update the count in the database and try again.");
 
 				_log.warn(sb.toString());
 			}

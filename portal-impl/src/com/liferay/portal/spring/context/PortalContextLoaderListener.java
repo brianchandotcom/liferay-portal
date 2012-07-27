@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
 import com.liferay.portal.module.framework.ModuleFrameworkUtil;
+import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
@@ -137,6 +138,7 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 	@Override
 	public void contextInitialized(ServletContextEvent servletContextEvent) {
+		PortalSecurityManagerThreadLocal.setEnabled(false);
 		InstancePool.reset();
 		MethodCache.reset();
 		PortletBagPool.reset();
@@ -170,6 +172,8 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		}
 		finally {
 			PortalContextLoaderLifecycleThreadLocal.setInitializing(false);
+
+			PortalSecurityManagerThreadLocal.setEnabled(true);
 		}
 
 		FinderCacheUtil.clearCache();

@@ -3,6 +3,7 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 		var History = Liferay.HistoryManager;
+		var Util = Liferay.Util;
 
 		var WIN = A.config.win;
 
@@ -20,13 +21,11 @@ AUI.add(
 
 		var DISPLAY_STYLE_TOOLBAR = 'displayStyleToolbar';
 
-		var SRC_DISPLAY_STYLE_BUTTONS = 0;
-
-		var SRC_ENTRIES_PAGINATOR = 1;
-
 		var STR_ACTIVE = 'active';
 
 		var STR_CLICK = 'click';
+
+		var STR_DISPLAY_STYLE = 'displayStyle';
 
 		var STR_DOT = '.';
 
@@ -91,9 +90,9 @@ AUI.add(
 
 						instance._portletContainer = instance.byId(instance.get('portletContainerId'));
 
-						instance._displayStyle = instance.ns('displayStyle');
+						instance._displayStyle = instance.ns(STR_DISPLAY_STYLE);
 
-						instance._displayStyleToolbar = instance.get('displayStyleToolbar');
+						instance._displayStyleToolbar = instance.get(DISPLAY_STYLE_TOOLBAR);
 
 						instance._entriesContainer = instance.byId('entriesContainer');
 
@@ -149,7 +148,7 @@ AUI.add(
 					_getDisplayStyle: function(currentDisplayStyle, style) {
 						var instance = this;
 
-						var displayStyle = History.get(currentDisplayStyle) || instance.get('displayStyle');
+						var displayStyle = History.get(currentDisplayStyle) || instance.get(STR_DISPLAY_STYLE);
 
 						if (style) {
 							displayStyle = (displayStyle == style);
@@ -218,20 +217,16 @@ AUI.add(
 					_onDataRequest: function(event) {
 						var instance = this;
 
-						var src = event.src;
+						var entriesSelector = STR_DOT + instance._displayStyleCSSClass + '.selected' + ' :checkbox';
 
-						if (src === SRC_DISPLAY_STYLE_BUTTONS || src === SRC_ENTRIES_PAGINATOR) {
-							var entriesSelector = STR_DOT + instance._displayStyleCSSClass + '.selected' + ' :checkbox';
+						if (instance._getDisplayStyle(instance._displayStyle, DISPLAY_STYLE_LIST)) {
+							entriesSelector = 'td > :checkbox:checked';
+						}
 
-							if (instance._getDisplayStyle(instance._displayStyle, DISPLAY_STYLE_LIST)) {
-								entriesSelector = 'td > :checkbox:checked';
-							}
+						var selectedEntries = instance._entriesContainer.all(entriesSelector);
 
-							var selectedEntries = instance._entriesContainer.all(entriesSelector);
-
-							if (selectedEntries.size()) {
-								instance._setSelectedEntries(selectedEntries.val());
-							}
+						if (selectedEntries.size()) {
+							instance._setSelectedEntries(selectedEntries.val());
 						}
 					},
 
@@ -254,7 +249,7 @@ AUI.add(
 
 						WIN[instance.ns(STR_TOGGLE_ACTIONS_BUTTON)]();
 
-						Liferay.Util.checkAllBox(
+						Util.checkAllBox(
 							instance._entriesContainer,
 							instance._checkBoxesId,
 							instance._selectAllCheckbox
@@ -273,7 +268,7 @@ AUI.add(
 						var selectAllCheckbox = instance._selectAllCheckbox;
 
 						for (var i = 0, length = instance._checkBoxesId.length; i < length; i++) {
-							Liferay.Util.checkAll(instance._portletContainer, instance._checkBoxesId[i], selectAllCheckbox, CSS_RESULT_ROW);
+							Util.checkAll(instance._portletContainer, instance._checkBoxesId[i], selectAllCheckbox, CSS_RESULT_ROW);
 						}
 
 						WIN[instance.ns(STR_TOGGLE_ACTIONS_BUTTON)]();
@@ -315,7 +310,7 @@ AUI.add(
 
 								selectElement.attr(ATTR_CHECKED, !selectElement.attr(ATTR_CHECKED));
 
-								Liferay.Util.updateCheckboxValue(selectElement);
+								Util.updateCheckboxValue(selectElement);
 							}
 						}
 
@@ -350,6 +345,12 @@ AUI.add(
 							);
 
 							selectedEntries.length = 0;
+
+							Util.checkAllBox(
+								instance._entriesContainer,
+								instance._checkBoxesId,
+								instance._selectAllCheckbox
+							);
 						}
 					}
 				}

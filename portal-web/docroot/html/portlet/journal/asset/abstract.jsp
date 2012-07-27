@@ -56,7 +56,7 @@ else {
 </c:if>
 
 <%
-String summary = articleDisplay.getDescription();
+String summary = HtmlUtil.escape(articleDisplay.getDescription());
 
 if (Validator.isNull(summary)) {
 	summary = HtmlUtil.stripHtml(articleDisplay.getContent());

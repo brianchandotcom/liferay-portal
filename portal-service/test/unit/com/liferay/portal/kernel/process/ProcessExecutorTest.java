@@ -671,6 +671,7 @@ public class ProcessExecutorTest extends BaseTestCase {
 	}
 
 	public void testLeadingLog() throws Exception {
+		boolean isCodeCoverageOn = Boolean.getBoolean("junit.code.coverage");
 
 		// Warn level
 
@@ -703,13 +704,26 @@ public class ProcessExecutorTest extends BaseTestCase {
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			assertEquals(1, logRecords.size());
+			if (isCodeCoverageOn) {
+				assertEquals(2, logRecords.size());
+			}
+			else {
+				assertEquals(1, logRecords.size());
+			}
 
 			LogRecord logRecord = logRecords.get(0);
 
 			assertEquals(
 				"Found corrupt leading log " + leadingLog,
 				logRecord.getMessage());
+
+			if (isCodeCoverageOn) {
+				logRecord = logRecords.get(1);
+
+				String message = logRecord.getMessage();
+
+				_assertBrokenPiping(message);
+			}
 		}
 		finally {
 			logger.removeHandler(captureHandler);
@@ -741,7 +755,12 @@ public class ProcessExecutorTest extends BaseTestCase {
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			assertEquals(2, logRecords.size());
+			if (isCodeCoverageOn) {
+				assertEquals(3, logRecords.size());
+			}
+			else {
+				assertEquals(2, logRecords.size());
+			}
 
 			LogRecord logRecord1 = logRecords.get(0);
 
@@ -754,6 +773,14 @@ public class ProcessExecutorTest extends BaseTestCase {
 			String message = logRecord2.getMessage();
 
 			assertTrue(message.contains("Invoked generic process callable "));
+
+			if (isCodeCoverageOn) {
+				LogRecord logRecord3 = logRecords.get(2);
+
+				message = logRecord3.getMessage();
+
+				_assertBrokenPiping(message);
+			}
 		}
 		finally {
 			logger.removeHandler(captureHandler);
@@ -785,7 +812,16 @@ public class ProcessExecutorTest extends BaseTestCase {
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			assertEquals(0, logRecords.size());
+			if (isCodeCoverageOn) {
+				assertEquals(1, logRecords.size());
+
+				LogRecord logRecord = logRecords.get(0);
+
+				_assertBrokenPiping(logRecord.getMessage());
+			}
+			else {
+				assertEquals(0, logRecords.size());
+			}
 		}
 		finally {
 			logger.removeHandler(captureHandler);
@@ -992,6 +1028,23 @@ public class ProcessExecutorTest extends BaseTestCase {
 
 			assertTrue(throwable instanceof IOException);
 		}
+	}
+
+	private static void _assertBrokenPiping(String message) {
+		int index = message.lastIndexOf(' ');
+
+		assertTrue(index != -1);
+
+		String prefix = message.substring(0, index);
+
+		assertEquals(
+			"Corrupted ObjectInputStream, dumping left content into", prefix);
+
+		File logFile = new File(message.substring(index + 1));
+
+		assertTrue(logFile.exists());
+
+		logFile.delete();
 	}
 
 	private static List<String> _createArguments() {

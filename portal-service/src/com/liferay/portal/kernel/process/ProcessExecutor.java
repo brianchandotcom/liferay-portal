@@ -23,9 +23,11 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.process.log.ProcessOutputStream;
 import com.liferay.portal.kernel.util.NamedThreadFactory;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.EOFException;
+import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -501,11 +503,11 @@ public class ProcessExecutor {
 		public ProcessCallable<? extends Serializable> call() throws Exception {
 			ProcessCallable<?> resultProcessCallable = null;
 
+			UnsyncBufferedInputStream unsyncBufferedInputStream =
+				new UnsyncBufferedInputStream(_process.getInputStream());
+
 			try {
 				ObjectInputStream objectInputStream = null;
-
-				UnsyncBufferedInputStream unsyncBufferedInputStream =
-					new UnsyncBufferedInputStream(_process.getInputStream());
 
 				UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 					new UnsyncByteArrayOutputStream();
@@ -568,6 +570,23 @@ public class ProcessExecutor {
 									returnValue);
 					}
 				}
+			}
+			catch (StreamCorruptedException sce) {
+				File dumpFile = File.createTempFile(
+					"corrupted-stream-dump-" + System.currentTimeMillis(),
+					".log");
+
+				_log.error(
+					"Corrupted ObjectInputStream, dumping left content into " +
+						dumpFile.getAbsolutePath(), sce);
+
+				FileOutputStream fileOutputStream = new FileOutputStream(
+					dumpFile);
+
+				StreamUtil.transfer(
+					unsyncBufferedInputStream, fileOutputStream);
+
+				throw new ProcessException("Corrupted ObjectInputStream", sce);
 			}
 			catch (EOFException eofe) {
 				throw new ProcessException(

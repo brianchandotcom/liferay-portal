@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.PersistentHttpServletRequestWrapper;
 import com.liferay.portal.kernel.util.Mergeable;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collections;
@@ -45,7 +47,7 @@ public class RestrictPortletServletRequest
 	public Object getAttribute(String name) {
 		Object value = _attributes.get(name);
 
-		if (value == _nullValue) {
+		if (value == _NULL_VALUE) {
 			return null;
 		}
 
@@ -113,13 +115,13 @@ public class RestrictPortletServletRequest
 
 	@Override
 	public void removeAttribute(String name) {
-		_attributes.put(name, _nullValue);
+		_attributes.put(name, _NULL_VALUE);
 	}
 
 	@Override
 	public void setAttribute(String name, Object value) {
 		if (value == null) {
-			value = _nullValue;
+			value = _NULL_VALUE;
 		}
 
 		_attributes.put(name, value);
@@ -137,8 +139,8 @@ public class RestrictPortletServletRequest
 	protected void doMergeSharedAttributes(
 		ServletRequest servletRequest, String name, Object value) {
 
-		if (name.startsWith(LIFERAY_SHARED_PREFIX)) {
-			if (value == _nullValue) {
+		if (_isSharedRequestAttribute(name)) {
+			if (value == _NULL_VALUE) {
 				servletRequest.removeAttribute(name);
 
 				if (_log.isDebugEnabled()) {
@@ -169,18 +171,32 @@ public class RestrictPortletServletRequest
 			}
 		}
 		else {
-			if ((value != _nullValue) && _log.isDebugEnabled()) {
+			if ((value != _NULL_VALUE) && _log.isDebugEnabled()) {
 				_log.debug("Ignore setting restricted attribute " + name);
 			}
 		}
 	}
 
-	private static final String LIFERAY_SHARED_PREFIX = "LIFERAY_SHARED_";
+	private static boolean _isSharedRequestAttribute(
+		String requestAttributeName) {
+
+		for (String requestSharedAttributePrefix : _REQUEST_SHARED_ATTRIBUTES) {
+
+			if (requestAttributeName.startsWith(requestSharedAttributePrefix)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private static final Object _NULL_VALUE = new Object();
+
+	private static final String[] _REQUEST_SHARED_ATTRIBUTES =
+		PropsUtil.getArray(PropsKeys.REQUEST_SHARED_ATTRIBUTES);
 
 	private static Log _log = LogFactoryUtil.getLog(
 		RestrictPortletServletRequest.class);
-
-	private static Object _nullValue = new Object();
 
 	private Map<String, Object> _attributes = new HashMap<String, Object>();
 

@@ -64,19 +64,35 @@
 <#-- Util -->
 
 <#function escape value="">
-	<#return htmlUtil.escape(value)>
+	<#if value?is_string>
+		<#return htmlUtil.escape(value)>
+	<#else>
+		<#return value>
+	</#if>
 </#function>
 
 <#function escapeAttribute value="">
-	<#return htmlUtil.escapeAttribute(value)>
+	<#if value?is_string>
+		<#return htmlUtil.escapeAttribute(value)>
+	<#else>
+		<#return value>
+	</#if>
 </#function>
 
 <#function escapeCSS value="">
-	<#return htmlUtil.escapeCSS(value)>
+	<#if value?is_string>
+		<#return htmlUtil.escapeCSS(value)>
+	<#else>
+		<#return value>
+	</#if>
 </#function>
 
 <#function escapeJS value="">
-	<#return htmlUtil.escapeJS(value)>
+	<#if value?is_string>
+		<#return htmlUtil.escapeJS(value)>
+	<#else>
+		<#return value>
+	</#if>
 </#function>
 
 <#assign dlAppServiceUtil = serviceLocator.findService("com.liferay.portlet.documentlibrary.service.DLAppService")>

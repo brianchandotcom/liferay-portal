@@ -5,8 +5,6 @@ AUI.add(
 		var Lang = A.Lang;
 		var History = Liferay.HistoryManager;
 
-		var DEFAULT_FOLDER_ID = 0;
-
 		var DISPLAY_STYLE_TOOLBAR = 'displayStyleToolbar';
 
 		var SEARCH_TYPE = 'searchType';
@@ -22,8 +20,6 @@ AUI.add(
 		var STR_CONTENT = 'content';
 
 		var STR_DESCRIPTION = 'description';
-
-		var STR_FOLDER_CONTAINER = 'folderContainer';
 
 		var STR_FOLDER_ID = 'folderId';
 
@@ -257,8 +253,6 @@ AUI.add(
 						event.preventDefault();
 
 						var selectedFolder = instance._appViewSelect._getSelectedFolder();
-
-						var showTabs = (selectedFolder.id == DEFAULT_FOLDER_ID);
 
 						var searchData = {
 							advancedSearch: true,

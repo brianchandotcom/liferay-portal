@@ -55,14 +55,6 @@
 		border: 1px solid #979798;
 		border-color: #979798 #FAFAFB #FAFAFB #BDBDBE;
 		min-height: 1.8em;
-
-		-moz-border-radius: 4px;
-		-webkit-border-radius: 4px;
-		border-radius: 4px;
-
-		-moz-box-shadow: 1px 1px 8px #CCC inset;
-		-webkit-box-shadow: 1px 1px 8px #CCC inset;
-		box-shadow: 1px 1px 8px #CCC inset;
 	}
 
 	.lfr-table .article-structure-template-toolbar {
@@ -199,10 +191,6 @@
 
 		.aui-button {
 			margin-left: 0;
-		}
-
-		.search input {
-			border-radius: 1px;
 		}
 	}
 
@@ -612,13 +600,11 @@
 
 		.display-page-item {
 			background-color: #DEE7F8;
-			border-radius: 14px;
 			border: 1px solid #CAD8F3;
 			padding: 5px 28px 5px 11px;
 			position: relative;
 
 			.display-page-item-remove {
-				border-radius: 14px;
 				cursor: pointer;
 				display: block;
 				height: 16px;
@@ -1060,4 +1046,3 @@
 		}
 	}
 }
-

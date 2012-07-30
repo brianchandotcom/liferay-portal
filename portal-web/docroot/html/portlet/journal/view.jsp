@@ -143,6 +143,7 @@ int foldersTotal = GetterUtil.getInteger((String)request.getAttribute("view_fold
 
 	new Liferay.Portlet.JournalNavigation(
 		{
+			advancedSearch: '<%= DisplayTerms.ADVANCED_SEARCH %>',
 			displayStyle: '<%= HtmlUtil.escapeJS(displayStyle) %>',
 			folders: {
 				defaultParams: {
@@ -183,8 +184,7 @@ int foldersTotal = GetterUtil.getInteger((String)request.getAttribute("view_fold
 			rowIds: '<%= RowChecker.ROW_IDS %>',
 			select: {
 				displayViews: ['<%= StringUtil.merge(displayViews, "','") %>']
-			},
-			advancedSearch: '<%= DisplayTerms.ADVANCED_SEARCH %>'
+			}
 		}
 	);
 </aui:script>

@@ -37,11 +37,11 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 			</aui:column>
 
 			<aui:column>
-				<aui:button cssClass="search lfr-search-combobox-item" name="search" type="submit" value="search" />
+				<aui:button cssClass="lfr-search-combobox-item search" name="search" type="submit" value="search" />
 			</aui:column>
 
 			<aui:column cssClass="advanced-search-column">
-				<aui:button cssClass="lfr-search-combobox-item article-advanced-search-icon" inputCssClass='<%= advancedSearch ? "close-advanced-search" : StringPool.BLANK %>' name="showAdvancedSearch" type="button" />
+				<aui:button cssClass="article-advanced-search-icon lfr-search-combobox-item" inputCssClass='<%= advancedSearch ? "close-advanced-search" : StringPool.BLANK %>' name="showAdvancedSearch" type="button" />
 			</aui:column>
 		</aui:layout>
 	</aui:form>

@@ -4,25 +4,25 @@
 		background-repeat: no-repeat;
 	}
 
-	.aui-icon-display-list {
-		background-position: 0 100%;
+	.aui-icon-display-descriptive {
+		background-position: -32px 0;
 	}
 
 	.aui-icon-display-icon {
 		background-position: -16px 0;
 	}
 
-	.aui-icon-display-descriptive {
-		background-position: -32px 0;
+	.aui-icon-display-list {
+		background-position: 0 100%;
 	}
 
 	.aui-state-active {
-		.aui-icon-display-icon {
-			background-position: -16px 100%;
-		}
-
 		.aui-icon-display-descriptive {
 			background-position: -32px 100%;
+		}
+
+		.aui-icon-display-icon {
+			background-position: -16px 100%;
 		}
 	}
 
@@ -56,7 +56,6 @@
 		}
 	}
 }
-
 
 .ie6 {
 	.app-view-taglib.lfr-header-row .lfr-header-row-content {

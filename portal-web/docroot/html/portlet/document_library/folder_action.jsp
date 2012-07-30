@@ -409,7 +409,7 @@ if ((row == null) && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY) |
 
 	</c:when>
 	<c:otherwise>
-		<span class="overlay entry-action">
+		<span class="entry-action overlay">
 
 			<%= iconMenu %>
 

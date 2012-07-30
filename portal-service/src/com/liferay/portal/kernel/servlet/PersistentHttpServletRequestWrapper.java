@@ -21,10 +21,19 @@ import javax.servlet.http.HttpServletRequestWrapper;
  * @author Shuyang Zhou
  */
 public class PersistentHttpServletRequestWrapper
-	extends HttpServletRequestWrapper {
+	extends HttpServletRequestWrapper implements Cloneable {
 
 	public PersistentHttpServletRequestWrapper(HttpServletRequest request) {
 		super(request);
+	}
+
+	public PersistentHttpServletRequestWrapper clone() {
+		try {
+			return (PersistentHttpServletRequestWrapper)super.clone();
+		}
+		catch (CloneNotSupportedException cnse) {
+			throw new RuntimeException(cnse);
+		}
 	}
 
 }

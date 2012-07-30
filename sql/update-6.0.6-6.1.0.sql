@@ -12,7 +12,7 @@ alter table BlogsEntry add smallImageURL STRING null;
 
 alter table BookmarksEntry add userName VARCHAR(75) null;
 alter table BookmarksEntry add resourceBlockId LONG;
-alter table BookmarksEntry add description VARCHAR(75) null;
+alter table BookmarksEntry add description STRING null;
 
 COMMIT_TRANSACTION;
 

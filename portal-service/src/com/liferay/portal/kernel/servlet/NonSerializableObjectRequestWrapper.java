@@ -15,13 +15,12 @@
 package com.liferay.portal.kernel.servlet;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
 
 /**
  * @author Igor Spasic
  */
 public class NonSerializableObjectRequestWrapper extends
-	HttpServletRequestWrapper {
+	PersistentHttpServletRequestWrapper {
 
 	public NonSerializableObjectRequestWrapper(HttpServletRequest request) {
 		super(request);

@@ -2751,11 +2751,6 @@ public class PortalImpl implements Portal {
 			originalRequest = httpServletRequestWrapper;
 		}
 
-		if (ServerDetector.isWebLogic()) {
-			originalRequest = new NonSerializableObjectRequestWrapper(
-				originalRequest);
-		}
-
 		return originalRequest;
 	}
 

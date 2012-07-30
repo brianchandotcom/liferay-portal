@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.io.Serializable;
+
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
@@ -29,7 +31,7 @@ import java.util.concurrent.ConcurrentMap;
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
  */
-public class ScriptData implements Mergeable<ScriptData> {
+public class ScriptData implements Mergeable<ScriptData>, Serializable {
 
 	public void append(String portletId, String content, String use) {
 		PortletData portletData = _getPortletData(portletId);
@@ -102,10 +104,12 @@ public class ScriptData implements Mergeable<ScriptData> {
 		return portletData;
 	}
 
+	private static final long serialVersionUID = 1L;
+
 	private ConcurrentMap<String, PortletData> _portletDataMap =
 		new ConcurrentHashMap<String, PortletData>();
 
-	private class PortletData {
+	private class PortletData implements Serializable {
 
 		public void append(String content, String use) {
 			if (Validator.isNull(use)) {
@@ -140,6 +144,8 @@ public class ScriptData implements Mergeable<ScriptData> {
 				}
 			}
 		}
+
+		private static final long serialVersionUID = 1L;
 
 		private StringBundler _callbackSB = new StringBundler();
 		private StringBundler _rawSB = new StringBundler();

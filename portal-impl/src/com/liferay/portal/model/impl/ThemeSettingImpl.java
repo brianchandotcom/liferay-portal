@@ -17,11 +17,13 @@ package com.liferay.portal.model.impl;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.ThemeSetting;
 
+import java.io.Serializable;
+
 /**
  * @author Julio Camarero
  * @author Raymond Augé
  */
-public class ThemeSettingImpl implements ThemeSetting {
+public class ThemeSettingImpl implements Serializable, ThemeSetting {
 
 	public static String namespaceProperty(String device) {
 		return _PROPERTY_NAMESPACE.concat(device);
@@ -83,6 +85,8 @@ public class ThemeSettingImpl implements ThemeSetting {
 	}
 
 	private static final String _PROPERTY_NAMESPACE = "lfr-theme:";
+
+	private static final long serialVersionUID = 1L;
 
 	private boolean _configurable;
 	private String[] _options;

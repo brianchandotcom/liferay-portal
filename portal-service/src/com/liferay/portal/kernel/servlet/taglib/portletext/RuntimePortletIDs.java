@@ -16,13 +16,16 @@ package com.liferay.portal.kernel.servlet.taglib.portletext;
 
 import com.liferay.portal.kernel.util.Mergeable;
 
+import java.io.Serializable;
+
 import java.util.HashSet;
 import java.util.Set;
 
 /**
  * @author Shuyang Zhou
  */
-public class RuntimePortletIDs implements Mergeable<RuntimePortletIDs> {
+public class RuntimePortletIDs
+	implements Mergeable<RuntimePortletIDs>, Serializable {
 
 	public void addRuntimePortletID(String runtimePortletID) {
 		_runtimePortletIDs.add(runtimePortletID);
@@ -39,6 +42,8 @@ public class RuntimePortletIDs implements Mergeable<RuntimePortletIDs> {
 
 		return this;
 	}
+
+	private static final long serialVersionUID = 1L;
 
 	private Set<String> _runtimePortletIDs = new HashSet<String>();
 

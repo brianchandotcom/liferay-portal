@@ -33,7 +33,6 @@ row.addText(String.valueOf(curFolder.getFolderId()), rowURL);
 	/>
 </liferay-util:buffer>
 
-
 <%
 TextSearchEntry folderTitleSearchEntry = new TextSearchEntry();
 

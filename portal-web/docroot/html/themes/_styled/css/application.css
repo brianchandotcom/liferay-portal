@@ -164,7 +164,6 @@
 	opacity: 0.65;
 	position: absolute;
 
-
 	&.generic-portlet {
 		height: 200px;
 		width: 300px;
@@ -292,7 +291,6 @@
 	font-weight: bold;
 	text-decoration: none;
 }
-
 
 .tag-cloud {
 	line-height: 2.5em;

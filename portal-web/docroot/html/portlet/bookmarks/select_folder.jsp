@@ -134,6 +134,5 @@ if (folder != null) {
 		<br />
 	</c:if>
 
-
 	<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
 </aui:form>

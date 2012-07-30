@@ -246,8 +246,6 @@ boolean hasExportImportLayoutsPermission = GroupPermissionUtil.contains(permissi
 							uri: '<%= importPagesURL.toString() %>'
 						}
 					);
-
-
 				},
 				icon: 'arrowthick-1-t',
 				label: '<%= UnicodeLanguageUtil.get(pageContext, "import") %>'

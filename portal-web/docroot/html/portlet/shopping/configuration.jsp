@@ -185,7 +185,6 @@ else if (tabs3.equals("shipping-email")) {
 
 					<aui:input label="" maxlength="6" name='<%= "shipping" + i %>' size="6" type="text" value="<%= GetterUtil.getString(shoppingPrefs.getShipping()[i]) %>" />
 
-
 					<%
 					}
 					%>

@@ -456,7 +456,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 					try {
 						DLProcessor dlProcessor =
 							DLProcessorRegistryUtil.getDLProcessor(
-							DLProcessorConstants.IMAGE_PROCESSOR);
+								DLProcessorConstants.IMAGE_PROCESSOR);
 
 						if (dlProcessor == null) {
 							return;

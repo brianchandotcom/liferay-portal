@@ -112,7 +112,7 @@ public class ActionUtil {
 			}
 
 			DLProcessor dlProcessor = DLProcessorRegistryUtil.getDLProcessor(
-					DLProcessorConstants.RAW_METADATA_PROCESSOR);
+				DLProcessorConstants.RAW_METADATA_PROCESSOR);
 
 			if (dlProcessor != null) {
 				RawMetadataProcessor rawMetadataProcessor =

@@ -329,20 +329,21 @@ public class JournalRSSUtil {
 			DLProcessor dlProcessor = DLProcessorRegistryUtil.getDLProcessor(
 				DLProcessorConstants.IMAGE_PROCESSOR);
 
-			if (dlProcessor != null) {
-				ImageProcessor imageProcessor = (ImageProcessor)dlProcessor;
-
-				Set<String> imageMimeTypes = imageProcessor.getImageMimeTypes();
-
-				if ((fileEntry != null) &&
-					imageMimeTypes.contains(fileEntry.getMimeType())) {
-
-					type = fileEntry.getExtension();
-					size = fileEntry.getSize();
-				}
+			if (dlProcessor == null) {
+				return null;
 			}
 
-	}
+			ImageProcessor imageProcessor = (ImageProcessor)dlProcessor;
+
+			Set<String> imageMimeTypes = imageProcessor.getImageMimeTypes();
+
+			if ((fileEntry != null) &&
+				imageMimeTypes.contains(fileEntry.getMimeType())) {
+
+				type = fileEntry.getExtension();
+				size = fileEntry.getSize();
+			}
+		}
 
 		if (Validator.isNotNull(type)) {
 			return new Object[] {type, size};

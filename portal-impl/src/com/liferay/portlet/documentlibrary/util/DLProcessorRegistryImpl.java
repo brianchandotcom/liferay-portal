@@ -119,7 +119,7 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 	}
 
 	public void register(DLProcessor dlProcessor) {
-		String type = getType(dlProcessor);
+		String type = _getType(dlProcessor);
 
 		_dlProcessors.put(type, dlProcessor);
 	}
@@ -147,31 +147,9 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 	}
 
 	public void unregister(DLProcessor dlProcessor) {
-		String type = getType(dlProcessor);
+		String type = _getType(dlProcessor);
 
 		_dlProcessors.remove(type);
-	}
-
-	protected String getType(DLProcessor dlProcessor) {
-		String type = null;
-
-		if (dlProcessor instanceof AudioProcessor) {
-			type = DLProcessorConstants.AUDIO_PROCESSOR;
-		}
-		else if (dlProcessor instanceof ImageProcessor) {
-			type = DLProcessorConstants.IMAGE_PROCESSOR;
-		}
-		else if (dlProcessor instanceof PDFProcessor) {
-			type = DLProcessorConstants.PDF_PROCESSOR;
-		}
-		else if (dlProcessor instanceof RawMetadataProcessor) {
-			type = DLProcessorConstants.RAW_METADATA_PROCESSOR;
-		}
-		else if (dlProcessor instanceof VideoProcessor) {
-			type = DLProcessorConstants.VIDEO_PROCESSOR;
-		}
-
-		return type;
 	}
 
 	private FileVersion _getLatestFileVersion(FileEntry fileEntry) {
@@ -195,6 +173,26 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 
 			return null;
 		}
+	}
+
+	private String _getType(DLProcessor dlProcessor) {
+		if (dlProcessor instanceof AudioProcessor) {
+			return DLProcessorConstants.AUDIO_PROCESSOR;
+		}
+		else if (dlProcessor instanceof ImageProcessor) {
+			return DLProcessorConstants.IMAGE_PROCESSOR;
+		}
+		else if (dlProcessor instanceof PDFProcessor) {
+			return DLProcessorConstants.PDF_PROCESSOR;
+		}
+		else if (dlProcessor instanceof RawMetadataProcessor) {
+			return DLProcessorConstants.RAW_METADATA_PROCESSOR;
+		}
+		else if (dlProcessor instanceof VideoProcessor) {
+			return DLProcessorConstants.VIDEO_PROCESSOR;
+		}
+
+		return null;
 	}
 
 	private static final String[] _DL_FILE_ENTRY_PROCESSORS =

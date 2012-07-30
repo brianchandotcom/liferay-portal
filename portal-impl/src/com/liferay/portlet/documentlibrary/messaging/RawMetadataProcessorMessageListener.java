@@ -39,6 +39,10 @@ public class RawMetadataProcessorMessageListener extends BaseMessageListener {
 			DLProcessor dlProcessor = DLProcessorRegistryUtil.getDLProcessor(
 				DLProcessorConstants.RAW_METADATA_PROCESSOR);
 
+			if (dlProcessor == null) {
+				return;
+			}
+
 			RawMetadataProcessor rawMetadataProcessor =
 				(RawMetadataProcessor)dlProcessor;
 

@@ -177,7 +177,7 @@ public class XugglerRawMetadataProcessor extends BaseRawMetadataProcessor {
 			}
 
 			dlProcessor = DLProcessorRegistryUtil.getDLProcessor(
-					DLProcessorConstants.VIDEO_PROCESSOR);
+				DLProcessorConstants.VIDEO_PROCESSOR);
 
 			if (dlProcessor != null) {
 				VideoProcessor videoProcessor = (VideoProcessor)dlProcessor;

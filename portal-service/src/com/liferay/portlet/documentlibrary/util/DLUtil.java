@@ -561,7 +561,7 @@ public class DLUtil {
 			}
 		}
 
-		if (thumbnailQueryString == null) {
+		if (Validator.isNull(thumbnailQueryString)) {
 			dlProcessor = DLProcessorRegistryUtil.getDLProcessor(
 				DLProcessorConstants.PDF_PROCESSOR);
 
@@ -574,9 +574,9 @@ public class DLUtil {
 			}
 		}
 
-		if (thumbnailQueryString == null) {
+		if (Validator.isNull(thumbnailQueryString)) {
 			dlProcessor = DLProcessorRegistryUtil.getDLProcessor(
-					DLProcessorConstants.VIDEO_PROCESSOR);
+				DLProcessorConstants.VIDEO_PROCESSOR);
 
 			if (dlProcessor != null) {
 				VideoProcessor videoProcessor = (VideoProcessor)dlProcessor;
@@ -587,7 +587,7 @@ public class DLUtil {
 			}
 		}
 
-		if (thumbnailQueryString != null) {
+		if (Validator.isNotNull(thumbnailQueryString)) {
 			thumbnailSrc = getPreviewURL(
 				fileEntry, fileVersion, themeDisplay, thumbnailQueryString,
 				true, true);

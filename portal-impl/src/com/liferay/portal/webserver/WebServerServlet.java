@@ -959,48 +959,46 @@ public class WebServerServlet extends HttpServlet {
 				converted = true;
 			}
 		}
-		else if (audioPreview || videoPreview) {
-			if (audioPreview) {
-				DLProcessor dlProcessor =
-					DLProcessorRegistryUtil.getDLProcessor(
-						DLProcessorConstants.AUDIO_PROCESSOR);
+		else if (audioPreview) {
+			DLProcessor dlProcessor =
+				DLProcessorRegistryUtil.getDLProcessor(
+					DLProcessorConstants.AUDIO_PROCESSOR);
 
-				if (dlProcessor != null) {
-					String type = ParamUtil.getString(request, "type");
+			if (dlProcessor != null) {
+				String type = ParamUtil.getString(request, "type");
 
-					fileName = FileUtil.stripExtension(fileName).concat(
-						StringPool.PERIOD).concat(type);
+				fileName = FileUtil.stripExtension(fileName).concat(
+					StringPool.PERIOD).concat(type);
 
-					AudioProcessor audioProcessor = (AudioProcessor)dlProcessor;
+				AudioProcessor audioProcessor = (AudioProcessor)dlProcessor;
 
-					inputStream = audioProcessor.getPreviewAsStream(
-						fileVersion, type);
-					contentLength = audioProcessor.getPreviewFileSize(
-						fileVersion, type);
+				inputStream = audioProcessor.getPreviewAsStream(
+					fileVersion, type);
+				contentLength = audioProcessor.getPreviewFileSize(
+					fileVersion, type);
 
-					converted = true;
-				}
+				converted = true;
 			}
-			else {
-				DLProcessor dlProcessor =
-					DLProcessorRegistryUtil.getDLProcessor(
-						DLProcessorConstants.VIDEO_PROCESSOR);
+		}
+		else if (videoPreview) {
+			DLProcessor dlProcessor =
+				DLProcessorRegistryUtil.getDLProcessor(
+					DLProcessorConstants.VIDEO_PROCESSOR);
 
-				if (dlProcessor != null) {
-					String type = ParamUtil.getString(request, "type");
+			if (dlProcessor != null) {
+				String type = ParamUtil.getString(request, "type");
 
-					fileName = FileUtil.stripExtension(fileName).concat(
-						StringPool.PERIOD).concat(type);
+				fileName = FileUtil.stripExtension(fileName).concat(
+					StringPool.PERIOD).concat(type);
 
-					VideoProcessor videoProcessor = (VideoProcessor)dlProcessor;
+				VideoProcessor videoProcessor = (VideoProcessor)dlProcessor;
 
-					inputStream = videoProcessor.getPreviewAsStream(
-						fileVersion, type);
-					contentLength = videoProcessor.getPreviewFileSize(
-						fileVersion, type);
+				inputStream = videoProcessor.getPreviewAsStream(
+					fileVersion, type);
+				contentLength = videoProcessor.getPreviewFileSize(
+					fileVersion, type);
 
-					converted = true;
-				}
+				converted = true;
 			}
 		}
 		else if (imagePreview) {

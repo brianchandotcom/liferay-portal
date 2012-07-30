@@ -140,6 +140,20 @@ public class DLFolderTrashHandlerTest extends BaseDLTrashHandlerTestCase {
 
 		Assert.assertEquals(initialNotInTrashCount, getNotInTrashCount());
 
+		int documentsInDLCount = 0;
+
+		int documentsInTrashCount = 0;
+
+		if (file && !moveFileFromTrash) {
+			documentsInDLCount = searchFileEntriesCount();
+
+			Assert.assertEquals(0, documentsInDLCount);
+
+			documentsInTrashCount = searchTrashEntriesCount("File");
+
+			Assert.assertEquals(1, documentsInTrashCount);
+		}
+
 		if (trashFile) {
 			Assert.assertEquals(
 				initialTrashEntriesCount + 2, getTrashEntriesCount());
@@ -191,6 +205,14 @@ public class DLFolderTrashHandlerTest extends BaseDLTrashHandlerTestCase {
 				initialNotInTrashCount + 1, getNotInTrashCount());
 
 			if (file) {
+				documentsInDLCount = searchFileEntriesCount();
+
+				Assert.assertEquals(1, documentsInDLCount);
+
+				documentsInTrashCount = searchTrashEntriesCount("File");
+
+				Assert.assertEquals(0, documentsInTrashCount);
+
 				if (trashFile) {
 					Assert.assertEquals(
 						initialTrashEntriesCount + 1, getTrashEntriesCount());

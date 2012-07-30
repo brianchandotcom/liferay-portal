@@ -15,68 +15,66 @@
 package com.liferay.util.servlet;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.servlet.ServletInputStream;
 
 /**
- * @author Brian Wing Shun Chan
+ * Adapt any InputStream to ServletInputStream
+ *
+ * @author Shuyang Zhou
  */
-public class ServletInputStreamWrapper extends ServletInputStream {
+public class ServletInputStreamAdapter extends ServletInputStream {
 
-	public ServletInputStreamWrapper(ServletInputStream is) {
-		_is = is;
+	public ServletInputStreamAdapter(InputStream inputStream) {
+		this.inputStream = inputStream;
 	}
 
 	@Override
 	public int available() throws IOException {
-		return _is.available();
+		return inputStream.available();
 	}
 
 	@Override
 	public void close() throws IOException {
-		_is.close();
+		inputStream.close();
 	}
 
 	@Override
-	public void mark(int readlimit) {
-		_is.mark(readlimit);
+	public void mark(int readLimit) {
+		inputStream.mark(readLimit);
 	}
 
 	@Override
 	public boolean markSupported() {
-		return _is.markSupported();
+		return inputStream.markSupported();
 	}
 
 	@Override
 	public int read() throws IOException {
-		return _is.read();
+		return inputStream.read();
 	}
 
 	@Override
-	public int read(byte[] b) throws IOException {
-		return _is.read(b);
+	public int read(byte[] bytes) throws IOException {
+		return inputStream.read(bytes);
 	}
 
 	@Override
-	public int read(byte[] b, int off, int len) throws IOException {
-		return _is.read(b, off, len);
-	}
-
-	@Override
-	public int readLine(byte[] b, int off, int len) throws IOException {
-		return _is.readLine(b, off, len);
+	public int read(byte[] bytes, int offset, int length) throws IOException {
+		return inputStream.read(bytes, offset, length);
 	}
 
 	@Override
 	public void reset() throws IOException {
-		_is.reset();
+		inputStream.reset();
 	}
 
 	@Override
-	public long skip(long n) throws IOException {
-		return _is.skip(n);
+	public long skip(long skip) throws IOException {
+		return inputStream.skip(skip);
 	}
 
-	private ServletInputStream _is;
+	protected InputStream inputStream;
 
 }

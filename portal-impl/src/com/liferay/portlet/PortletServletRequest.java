@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
-import com.liferay.util.servlet.GenericServletInputStream;
+import com.liferay.util.servlet.ServletInputStreamAdapter;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -220,7 +220,7 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 				clientDataRequest.getPortletInputStream();
 
 			ServletInputStream servletInputStream =
-				new GenericServletInputStream(portletInputStream);
+				new ServletInputStreamAdapter(portletInputStream);
 
 			return servletInputStream;
 		}

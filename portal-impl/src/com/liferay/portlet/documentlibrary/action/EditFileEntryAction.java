@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary.action;
 
 import com.liferay.portal.DuplicateLockException;
+import com.liferay.portal.NoSuchRepositoryEntryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -283,6 +284,7 @@ public class EditFileEntryAction extends PortletAction {
 		catch (Exception e) {
 			if (e instanceof NoSuchFileEntryException ||
 				e instanceof NoSuchFileVersionException ||
+				e instanceof NoSuchRepositoryEntryException ||
 				e instanceof PrincipalException) {
 
 				SessionErrors.add(renderRequest, e.getClass());

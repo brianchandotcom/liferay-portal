@@ -27,6 +27,8 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
+import com.liferay.portlet.documentlibrary.NoSuchFileException;
+import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -95,17 +97,22 @@ public class ActionUtil {
 		String version = ParamUtil.getString(request, "version");
 
 		if (fileEntry != null) {
+			FileVersion fileVersion = null;
+
 			if (Validator.isNotNull(version)) {
-				FileVersion fileVersion = fileEntry.getFileVersion(version);
+				fileVersion = fileEntry.getFileVersion(version);
 
 				request.setAttribute(
 					WebKeys.DOCUMENT_LIBRARY_FILE_VERSION, fileVersion);
-
-				RawMetadataProcessorUtil.generateMetadata(fileVersion);
 			}
 			else {
-				RawMetadataProcessorUtil.generateMetadata(
-					fileEntry.getFileVersion());
+				fileVersion = fileEntry.getFileVersion();
+			}
+
+			RawMetadataProcessorUtil.generateMetadata(fileVersion);
+
+			if (fileVersion.isInTrash()) {
+				throw new NoSuchFileException();
 			}
 		}
 	}

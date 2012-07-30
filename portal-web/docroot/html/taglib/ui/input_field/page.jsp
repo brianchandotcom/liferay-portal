@@ -393,8 +393,8 @@ Map<String, String> hints = ModelHintsUtil.getHints(model, field);
 
 			String xml = StringPool.BLANK;
 
-			if (localized){
-				if(Validator.isNotNull(bean)) {
+			if (localized) {
+				if (Validator.isNotNull(bean)) {
 					xml = BeanPropertiesUtil.getString(bean, field);
 				}
 				else {

@@ -30,7 +30,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("liferay-ui:breadcrumb:
 
 String displayStyle = GetterUtil.getString((String)request.getAttribute("liferay-ui:breadcrumb:displayStyle"), "horizontal");
 
-if (!ArrayUtil.contains(PropsValues.BREADCRUMB_DISPLAY_STYLE_OPTIONS, displayStyle)){
+if (!ArrayUtil.contains(PropsValues.BREADCRUMB_DISPLAY_STYLE_OPTIONS, displayStyle)) {
 	displayStyle = "horizontal";
 }
 

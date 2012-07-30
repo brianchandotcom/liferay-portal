@@ -167,7 +167,7 @@ if (Validator.isNull(mainLanguageValue)) {
 									languageValue = LocalizationUtil.getLocalization(xml, curLanguageId, false);
 								}
 
-								if (!ignoreRequestValue){
+								if (!ignoreRequestValue) {
 									languageValue = ParamUtil.getString(request, name + StringPool.UNDERLINE + curLanguageId, languageValue);
 								}
 								%>

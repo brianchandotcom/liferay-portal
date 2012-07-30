@@ -429,7 +429,7 @@ Group parentGroup = themeDisplay.getParentGroup();
 				if (publicPages && treeViewPublic) {
 					tree = treeViewPublic;
 				}
-				else if (treeViewPrivate){
+				else if (treeViewPrivate) {
 					tree = treeViewPrivate;
 				}
 

@@ -29,7 +29,7 @@ if (portletName.equals(PortletKeys.WORKFLOW_TASKS)) {
 
 	allTasks = true;
 
-	if (searchTerms.isAdvancedSearch()){
+	if (searchTerms.isAdvancedSearch()) {
 		resultsTasks = WorkflowTaskManagerUtil.search(company.getCompanyId(), 0, searchTerms.getName(), searchTerms.getType(), null, null, null, null, null, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 		totalTasks = WorkflowTaskManagerUtil.searchCount(company.getCompanyId(), 0, searchTerms.getName(), searchTerms.getType(), null, null, null, null, null, searchTerms.isAndOperator());
 	}
@@ -41,7 +41,7 @@ if (portletName.equals(PortletKeys.WORKFLOW_TASKS)) {
 else if (type.equals("assigned-to-my-roles")) {
 	searchContainer.setEmptyResultsMessage("there-are-no-pending-tasks-assigned-to-your-roles");
 
-	if (searchTerms.isAdvancedSearch()){
+	if (searchTerms.isAdvancedSearch()) {
 		resultsTasks = WorkflowTaskManagerUtil.search(company.getCompanyId(), user.getUserId(), searchTerms.getName(), searchTerms.getType(), null, null, null, false, true, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 		totalTasks = WorkflowTaskManagerUtil.searchCount(company.getCompanyId(), user.getUserId(), searchTerms.getName(), searchTerms.getType(), null, null, null, false, true, searchTerms.isAndOperator());
 	}
@@ -62,7 +62,7 @@ else {
 		searchContainer.setEmptyResultsMessage("there-are-no-pending-tasks-assigned-to-you");
 	}
 
-	if (searchTerms.isAdvancedSearch()){
+	if (searchTerms.isAdvancedSearch()) {
 		resultsTasks = WorkflowTaskManagerUtil.search(company.getCompanyId(), user.getUserId(), searchTerms.getName(), searchTerms.getType(), null, null, null, completedTasks, false, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 		totalTasks = WorkflowTaskManagerUtil.searchCount(company.getCompanyId(), user.getUserId(), searchTerms.getName(), searchTerms.getType(), null, null, null, completedTasks, false, searchTerms.isAndOperator());
 	}

@@ -146,7 +146,6 @@ if (Validator.isNull(yearlyMonth0Param) && (event != null)) {
 	}
 }
 
-
 int yearlyDay0 = ParamUtil.getInteger(request, "yearlyDay0", 15);
 String yearlyDay0Param = ParamUtil.getString(request, "yearlyDay0");
 if (Validator.isNull(yearlyDay0Param) && (event != null)) {

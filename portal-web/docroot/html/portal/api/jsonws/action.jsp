@@ -88,7 +88,6 @@ String signature = ParamUtil.getString(request, "signature");
 						String
 					</span>
 
-
 					<p class="lfr-api-param-comment">
 						authentication token used to validate the request
 					</p>

@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Mergeable;
 import com.liferay.portal.kernel.util.StringBundler;
 
+import java.io.Serializable;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -26,7 +28,7 @@ import java.util.Set;
 /**
  * @author Shuyang Zhou
  */
-public class OutputData implements Mergeable<OutputData> {
+public class OutputData implements Mergeable<OutputData>, Serializable {
 
 	public void addData(String outputKey, String webKey, StringBundler sb) {
 		DataKey dataKey = new DataKey(outputKey, webKey);
@@ -97,11 +99,13 @@ public class OutputData implements Mergeable<OutputData> {
 		return this;
 	}
 
+	private static final long serialVersionUID = 1L;
+
 	private Map<DataKey, StringBundler> _dataMap =
 		new HashMap<DataKey, StringBundler>();
 	private Set<String> _outputKeys = new HashSet<String>();
 
-	private class DataKey {
+	private class DataKey implements Serializable {
 
 		public DataKey(String outputKey, String webKey) {
 			_outputKey = GetterUtil.getString(outputKey);
@@ -125,6 +129,8 @@ public class OutputData implements Mergeable<OutputData> {
 		public int hashCode() {
 			return _outputKey.hashCode() * 11 + _webKey.hashCode();
 		}
+
+		private static final long serialVersionUID = 1L;
 
 		private String _outputKey;
 		private String _webKey;

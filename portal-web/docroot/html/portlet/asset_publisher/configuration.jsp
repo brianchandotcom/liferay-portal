@@ -430,7 +430,7 @@ List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<Asse
 									<optgroup label="<liferay-ui:message key="subtype" />">
 
 										<%
-										for(Long classTypeId : assetAvailableClassTypes.keySet()) {
+										for (Long classTypeId : assetAvailableClassTypes.keySet()) {
 											if (Arrays.binarySearch(assetSelectedClassTypeIds, classTypeId) < 0) {
 												subTypesRightList.add(new KeyValuePair(String.valueOf(classTypeId), HtmlUtil.escape(assetAvailableClassTypes.get(classTypeId))));
 											}

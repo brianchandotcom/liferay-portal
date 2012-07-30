@@ -455,7 +455,7 @@ if (Validator.isNotNull(content)) {
 
 										<%
 										for (int i = 0; i < translations.length; i++) {
-											if (translations[i].equals(defaultLanguageId)){
+											if (translations[i].equals(defaultLanguageId)) {
 												continue;
 											}
 

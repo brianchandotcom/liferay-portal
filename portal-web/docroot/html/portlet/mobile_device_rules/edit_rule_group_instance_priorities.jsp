@@ -92,7 +92,7 @@ List<MDRRuleGroupInstance> ruleGroupInstances = MDRRuleGroupInstanceServiceUtil.
 	Liferay.provide(
 		window,
 		'<portlet:namespace />saveRuleGroupInstancesPriorities',
-		function(){
+		function() {
 			var A = AUI();
 
 			var nodes = A.all('#<portlet:namespace />ruleGroupInstancesPriorities .rule-group-instance');

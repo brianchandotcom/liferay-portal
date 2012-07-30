@@ -20,7 +20,7 @@
 for (int displayActivityCounterNameIndex : displayActivityCounterNameIndexes) {
 	String displayActivityCounterName = PrefsParamUtil.getString(preferences, request, "displayActivityCounterName" + displayActivityCounterNameIndex);
 
-	if (Validator.isNull(displayActivityCounterName)){
+	if (Validator.isNull(displayActivityCounterName)) {
 		continue;
 	}
 

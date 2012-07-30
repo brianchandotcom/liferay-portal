@@ -86,7 +86,7 @@ portletURL.setParameter("struts_action", "/layout_set_prototypes/view");
 <aui:script use="aui-base,aui-dialog">
 	A.getBody().delegate(
 		'click',
-		function(event){
+		function(event) {
 			event.preventDefault();
 
 			var link = event.currentTarget;

@@ -29,16 +29,16 @@ String oggPreviewFileURL = null;
 String ogvPreviewFileURL = null;
 
 for (String previewFileURL : previewFileURLs) {
-	if (previewFileURL.endsWith("mp3")){
+	if (previewFileURL.endsWith("mp3")) {
 		mp3PreviewFileURL = previewFileURL;
 	}
-	else if (previewFileURL.endsWith("mp4")){
+	else if (previewFileURL.endsWith("mp4")) {
 		mp4PreviewFileURL = previewFileURL;
 	}
-	else if (previewFileURL.endsWith("ogg")){
+	else if (previewFileURL.endsWith("ogg")) {
 		oggPreviewFileURL = previewFileURL;
 	}
-	else if (previewFileURL.endsWith("ogv")){
+	else if (previewFileURL.endsWith("ogv")) {
 		ogvPreviewFileURL = previewFileURL;
 	}
 }

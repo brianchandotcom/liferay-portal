@@ -187,7 +187,7 @@ else {
 
 						Liferay.Util.focusFormField(reminderQueryCustomQuestion);
 					}
-					else{
+					else {
 						if (customQuestionDiv) {
 							customQuestionDiv.hide();
 						}

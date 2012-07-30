@@ -26,7 +26,7 @@ List<UserGroupRole> communityRoles = (List<UserGroupRole>)request.getAttribute("
 List<UserGroupRole> organizationRoles = (List<UserGroupRole>)request.getAttribute("user.organizationRoles");
 List<Group> allGroups = (List<Group>)request.getAttribute("user.allGroups");
 
-List <UserGroupRole> userGroupRoles = new ArrayList<UserGroupRole>();
+List<UserGroupRole> userGroupRoles = new ArrayList<UserGroupRole>();
 
 userGroupRoles.addAll(communityRoles);
 userGroupRoles.addAll(organizationRoles);

@@ -25,7 +25,7 @@ if (message.isFormatBBCode()) {
 	body = BBCodeTranslatorUtil.getHTML(message.getBody());
 	body = StringUtil.replace(body, "@theme_images_path@/emoticons", themeDisplay.getPathThemeImages() + "/emoticons");
 }
-else{
+else {
 	body = message.getBody();
 }
 %>

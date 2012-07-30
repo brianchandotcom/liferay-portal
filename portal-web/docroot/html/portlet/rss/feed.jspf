@@ -127,7 +127,7 @@ catch (Exception e) {
 						contents.add(content);
 					}
 
-					List <SyndEnclosure> enclosures = (List<SyndEnclosure>)entry.getEnclosures();
+					List<SyndEnclosure> enclosures = (List<SyndEnclosure>)entry.getEnclosures();
 
 					String enclosureLink = StringPool.BLANK;
 					String enclosureLinkTitle = entry.getTitle();

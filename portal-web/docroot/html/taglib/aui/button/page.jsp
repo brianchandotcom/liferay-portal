@@ -30,7 +30,7 @@ if (Validator.isNotNull(href)) {
 else if (onClick.startsWith(Http.HTTP_WITH_SLASH) || onClick.startsWith(Http.HTTPS_WITH_SLASH) || onClick.startsWith(StringPool.SLASH)) {
 	onClick = "location.href = '" + HtmlUtil.escape(PortalUtil.escapeRedirect(onClick)) + "';";
 }
-else if (onClick.startsWith("wsrp_rewrite?")){
+else if (onClick.startsWith("wsrp_rewrite?")) {
 	onClick = "location.href = '" + HtmlUtil.escape(onClick) + "';";
 }
 %>

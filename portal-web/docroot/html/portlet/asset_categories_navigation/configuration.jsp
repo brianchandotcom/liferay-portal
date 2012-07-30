@@ -94,7 +94,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 	Liferay.provide(
 		window,
 		'<portlet:namespace />saveConfiguration',
-		function(){
+		function() {
 			if (document.<portlet:namespace />fm.<portlet:namespace />assetVocabularyIds) {
 				document.<portlet:namespace />fm.<portlet:namespace />assetVocabularyIds.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentAssetVocabularyIds);
 			}

@@ -28,7 +28,7 @@ if (scriptJSONArray != null) {
 
 String namespace = renderResponse.getNamespace();
 
-if (Validator.isNotNull(portletResourceNamespace)){
+if (Validator.isNotNull(portletResourceNamespace)) {
 	namespace = portletResourceNamespace;
 }
 %>

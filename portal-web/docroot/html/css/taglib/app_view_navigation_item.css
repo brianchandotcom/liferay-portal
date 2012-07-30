@@ -1,0 +1,60 @@
+.app-view-navigation-taglib {
+	.app-view-navigation-entry {
+		margin-top: 2px;
+		position: relative;
+	}
+
+	.body-row {
+		height: 100%;
+		overflow: hidden;
+		position: relative;
+		width: 100%;
+
+		ul li a .icon {
+			float: left;
+			margin-right: 5px;
+		}
+	}
+
+	.lfr-list-view-content li {
+		&.folder.error, a {
+			color: #34404F;
+			display: block;
+			padding: 6px 8px;
+			text-decoration: none;
+		}
+
+		&.selected {
+			background-color: #00a2ea;
+
+			a {
+				color: #FFF;
+				font-weight: bold;
+			}
+		}
+
+		.overlay.entry-action {
+			display: block;
+			height: 16px;
+			overflow: hidden;
+			position: absolute;
+			right: 15px;
+			top: 5px;
+			width: 24px;
+
+			a {
+				display: block;
+				float: right;
+				min-height: 15px;
+			}
+		}
+
+		.lfr-actions.show-arrow.direction-down .lfr-trigger strong a {
+			background-position: 100% -25px;
+
+			&:hover {
+				background-position: 100% -5px;
+			}
+		}
+	}
+}

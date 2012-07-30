@@ -380,6 +380,21 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		return article;
 	}
 
+	public void moveArticle(long groupId, String articleId, long newFolderId)
+		throws PortalException, SystemException {
+
+		List<JournalArticle> articles = journalArticlePersistence.findByG_A(
+			groupId, articleId);
+
+		for (JournalArticle article : articles) {
+			JournalArticlePermission.check(
+				getPermissionChecker(), article, ActionKeys.UPDATE);
+
+			journalArticleLocalService.moveArticle(
+				groupId, articleId, newFolderId);
+		}
+	}
+
 	public void removeArticleLocale(long companyId, String languageId)
 		throws PortalException, SystemException {
 

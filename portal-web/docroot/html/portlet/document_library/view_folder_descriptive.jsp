@@ -26,20 +26,16 @@ PortletURL tempRowURL = (PortletURL)request.getAttribute("view_entries.jsp-tempR
 boolean showCheckBox = DLFolderPermission.contains(permissionChecker, folder, ActionKeys.DELETE) || DLFolderPermission.contains(permissionChecker, folder, ActionKeys.UPDATE);
 %>
 
-<div class="document-display-style display-descriptive <%= showCheckBox ? "selectable" : StringPool.BLANK %>" data-draggable="<%= showCheckBox ? Boolean.TRUE.toString() : Boolean.FALSE.toString() %>" data-title="<%= StringUtil.shorten(folder.getName(), 60) %>">
-	<a class="document-link" data-folder="<%= Boolean.TRUE.toString() %>" data-folder-id="<%= folder.getFolderId() %>" href="<%= tempRowURL.toString() %>" title="<%= HtmlUtil.escape(folder.getName()) + " - " + HtmlUtil.escape(folder.getDescription()) %>">
-		<span class="document-thumbnail">
-			<img alt="" border="no" src="<%= themeDisplay.getPathThemeImages() + "/file_system/large/" + folderImage + ".png" %>" style="width: <%= PrefsPropsUtil.getLong(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH) %>;" />
-		</span>
-
-		<span class="entry-title"><%= HtmlUtil.escape(folder.getName()) %></span>
-
-		<span class="document-description"><%= HtmlUtil.escape(folder.getDescription()) %></span>
-	</a>
-
-	<liferay-util:include page="/html/portlet/document_library/folder_action.jsp" />
-
-	<c:if test="<%= showCheckBox %>">
-		<aui:input cssClass="overlay document-selector" label="" name="<%= RowChecker.ROW_IDS + Folder.class.getSimpleName() %>" type="checkbox" value="<%= folder.getFolderId() %>" />
-	</c:if>
-</div>
+<liferay-ui:app-view-entry
+	actionJsp="/html/portlet/document_library/folder_action.jsp"
+	description="<%= folder.getDescription() %>"
+	displayStyle="descriptive"
+	isFolder="<%= true %>"
+	rowCheckerId="<%= String.valueOf(folder.getFolderId()) %>"
+	rowCheckerName="<%= Folder.class.getSimpleName() %>"
+	showCheckbox="<%= showCheckBox %>"
+	thumbnailSrc='<%= themeDisplay.getPathThemeImages() + "/file_system/large/" + folderImage + ".png" %>'
+	thumbnailStyle='<%= "width: " + PrefsPropsUtil.getLong(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH) + "px" %>'
+	title="<%= folder.getName() %>"
+	url="<%= tempRowURL.toString() %>"
+/>

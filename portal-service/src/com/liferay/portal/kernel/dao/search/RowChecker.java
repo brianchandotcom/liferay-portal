@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.PortletResponse;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -93,7 +95,8 @@ public class RowChecker {
 	}
 
 	public String getRowCheckBox(
-		boolean checked, boolean disabled, String primaryKey) {
+		HttpServletRequest request, boolean checked, boolean disabled,
+		String primaryKey) {
 
 		return getRowCheckBox(
 			checked, disabled, _rowIds, primaryKey, StringUtil.quote(_rowIds),

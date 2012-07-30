@@ -87,6 +87,12 @@ public class JournalStructureServiceImpl
 		return journalStructurePersistence.filterFindByGroupId(groupId);
 	}
 
+	public List<JournalStructure> getStructures(long[] groupIds)
+		throws SystemException {
+
+		return journalStructurePersistence.filterFindByGroupId(groupIds);
+	}
+
 	public List<JournalStructure> search(
 			long companyId, long[] groupIds, String keywords, int start,
 			int end, OrderByComparator obc)

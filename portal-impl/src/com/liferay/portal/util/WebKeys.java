@@ -152,9 +152,13 @@ public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 
 	public static final String JOURNAL_ARTICLE_GROUP_ID = "JOURNAL_ARTICLE_GROUP_ID";
 
+	public static final String JOURNAL_ARTICLES = "JOURNAL_ARTICLES";
+
 	public static final String JOURNAL_FEED = "JOURNAL_FEED";
 
 	public static final String JOURNAL_FOLDER = "JOURNAL_FOLDER";
+
+	public static final String JOURNAL_FOLDERS = "JOURNAL_FOLDERS";
 
 	public static final String JOURNAL_RECENT_ARTICLES = "JOURNAL_RECENT_ARTICLES";
 

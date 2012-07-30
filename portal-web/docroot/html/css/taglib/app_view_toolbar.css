@@ -1,0 +1,74 @@
+.app-view-taglib.lfr-header-row {
+	.display-style .aui-icon {
+		background-image: url(@theme_image_path@/application/layouts.png);
+		background-repeat: no-repeat;
+	}
+
+	.aui-icon-display-descriptive {
+		background-position: -32px 0;
+	}
+
+	.aui-icon-display-icon {
+		background-position: -16px 0;
+	}
+
+	.aui-icon-display-list {
+		background-position: 0 100%;
+	}
+
+	.aui-state-active {
+		.aui-icon-display-descriptive {
+			background-position: -32px 100%;
+		}
+
+		.aui-icon-display-icon {
+			background-position: -16px 100%;
+		}
+	}
+
+	.lfr-header-row-content {
+		position: relative;
+
+		.toolbar, .add-button {
+			float: left;
+		}
+
+		.display-style {
+			float: right;
+		}
+
+		.select-all-entries {
+			border-color: #5F5F5F;
+			float: left;
+			line-height: 0;
+			margin-right: 2px;
+			padding: 0;
+
+			.aui-field-element {
+				padding: 5px 4px 4px;
+				border: 1px solid #FFF;
+				border-color: #F0F1F2 #B2B2B2 #949494 #F0F1F1;
+
+				.aui-field-input-choice {
+					margin: 0;
+				}
+			}
+		}
+	}
+}
+
+.ie6 {
+	.app-view-taglib.lfr-header-row .lfr-header-row-content {
+		.toolbar {
+			position: relative;
+
+			.aui-field-choice {
+				width: 24px;
+			}
+		}
+
+		.display-style {
+			position: relative;
+		}
+	}
+}

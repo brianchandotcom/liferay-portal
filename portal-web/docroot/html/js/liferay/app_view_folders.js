@@ -197,7 +197,7 @@ AUI.add(
 						instance._setButtons(data);
 						instance._setEntries(data);
 						instance._setFolders(data);
-						instance._setParentFolderTitle(data);
+						instance._setParentTitle(data);
 
 						WIN[instance.ns(STR_TOGGLE_ACTIONS_BUTTON)]();
 					},
@@ -596,15 +596,15 @@ AUI.add(
 						}
 					},
 
-					_setParentFolderTitle: function(content) {
+					_setParentTitle: function(content) {
 						var instance = this;
 
-						var parentFolderTitle = instance.one('#parentFolderTitle', content);
+						var parentTitle = instance.one('#parentTitle', content);
 
-						if (parentFolderTitle) {
-							var parentFolderTitleContainer = instance.byId('parentFolderTitleContainer');
+						if (parentTitle) {
+							var parentTitleContainer = instance.byId('parentTitleContainer');
 
-							parentFolderTitleContainer.setContent(parentFolderTitle);
+							parentTitleContainer.setContent(parentTitle);
 						}
 					},
 

@@ -2740,6 +2740,11 @@ public class PortalImpl implements Portal {
 				(HttpServletRequest)httpServletRequestWrapper.getRequest();
 		}
 
+		if (ServerDetector.isWebLogic()) {
+			originalRequest = new NonSerializableObjectRequestWrapper(
+				originalRequest);
+		}
+
 		for (int i = persistentHttpServletRequestWrappers.size() - 1; i >= 0;
 				i--) {
 
@@ -2749,11 +2754,6 @@ public class PortalImpl implements Portal {
 			httpServletRequestWrapper.setRequest(originalRequest);
 
 			originalRequest = httpServletRequestWrapper;
-		}
-
-		if (ServerDetector.isWebLogic()) {
-			originalRequest = new NonSerializableObjectRequestWrapper(
-				originalRequest);
 		}
 
 		return originalRequest;

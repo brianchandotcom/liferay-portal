@@ -45,10 +45,7 @@ public class HeaderCacheServletResponse extends HttpServletResponseWrapper {
 			_headers.put("cookies", values);
 		}
 
-		Header header = new Header();
-
-		header.setCookieValue(cookie);
-		header.setType(Header.COOKIE_TYPE);
+		Header header = new Header(cookie);
 
 		if (values.contains(header)) {
 			return;
@@ -69,10 +66,7 @@ public class HeaderCacheServletResponse extends HttpServletResponseWrapper {
 			_headers.put(name, values);
 		}
 
-		Header header = new Header();
-
-		header.setDateValue(value);
-		header.setType(Header.DATE_TYPE);
+		Header header = new Header(value);
 
 		if (values.contains(header)) {
 			return;
@@ -93,10 +87,7 @@ public class HeaderCacheServletResponse extends HttpServletResponseWrapper {
 			_headers.put(name, values);
 		}
 
-		Header header = new Header();
-
-		header.setStringValue(value);
-		header.setType(Header.STRING_TYPE);
+		Header header = new Header(value);
 
 		if (values.contains(header)) {
 			return;
@@ -121,10 +112,7 @@ public class HeaderCacheServletResponse extends HttpServletResponseWrapper {
 			_headers.put(name, values);
 		}
 
-		Header header = new Header();
-
-		header.setIntValue(value);
-		header.setType(Header.INTEGER_TYPE);
+		Header header = new Header(value);
 
 		if (values.contains(header)) {
 			return;
@@ -220,10 +208,7 @@ public class HeaderCacheServletResponse extends HttpServletResponseWrapper {
 
 		_headers.put(name, values);
 
-		Header header = new Header();
-
-		header.setDateValue(value);
-		header.setType(Header.DATE_TYPE);
+		Header header = new Header(value);
 
 		values.add(header);
 
@@ -236,10 +221,7 @@ public class HeaderCacheServletResponse extends HttpServletResponseWrapper {
 
 		_headers.put(name, values);
 
-		Header header = new Header();
-
-		header.setStringValue(value);
-		header.setType(Header.STRING_TYPE);
+		Header header = new Header(value);
 
 		values.add(header);
 
@@ -256,10 +238,7 @@ public class HeaderCacheServletResponse extends HttpServletResponseWrapper {
 
 		_headers.put(name, values);
 
-		Header header = new Header();
-
-		header.setIntValue(value);
-		header.setType(Header.INTEGER_TYPE);
+		Header header = new Header(value);
 
 		values.add(header);
 

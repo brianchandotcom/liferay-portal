@@ -38,20 +38,7 @@ public class CacheResponseUtil {
 			List<Header> headerValues = ListUtil.copy(entry.getValue());
 
 			for (Header header : headerValues) {
-				int type = header.getType();
-
-				if (type == Header.COOKIE_TYPE) {
-					response.addCookie(header.getCookieValue());
-				}
-				else if (type == Header.DATE_TYPE) {
-					response.setDateHeader(headerKey, header.getDateValue());
-				}
-				else if (type == Header.INTEGER_TYPE) {
-					response.setIntHeader(headerKey, header.getIntValue());
-				}
-				else if (type == Header.STRING_TYPE) {
-					response.setHeader(headerKey, header.getStringValue());
-				}
+				header.setToResponse(headerKey, response);
 			}
 		}
 	}

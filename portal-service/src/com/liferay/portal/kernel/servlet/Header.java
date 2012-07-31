@@ -19,19 +19,41 @@ import com.liferay.portal.kernel.util.StringBundler;
 import java.io.Serializable;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Michael Young
+ * @author Shuyang Zhou
  */
 public class Header implements Serializable {
 
-	public static final int COOKIE_TYPE = 4;
+	private static enum Type {
+		COOKIE, DATE, INTEGER, STRING
+	}
 
-	public static final int DATE_TYPE = 2;
+	public Header(Cookie cookie) {
+		_type = Type.COOKIE;
 
-	public static final int INTEGER_TYPE = 1;
+		_cookieValue = cookie;
+	}
 
-	public static final int STRING_TYPE = 3;
+	public Header(long date) {
+		_type = Type.DATE;
+
+		_dateValue = date;
+	}
+
+	public Header(int integer) {
+		_type = Type.INTEGER;
+
+		_intValue = integer;
+	}
+
+	public Header(String string) {
+		_type = Type.STRING;
+
+		_stringValue = string;
+	}
 
 	@Override
 	public boolean equals(Object obj) {
@@ -45,7 +67,7 @@ public class Header implements Serializable {
 
 		Header header = (Header)obj;
 
-		if (_type != header.getType()) {
+		if (_type != header._type) {
 			return false;
 		}
 
@@ -54,79 +76,64 @@ public class Header implements Serializable {
 		return string.equals(header.toString());
 	}
 
-	public Cookie getCookieValue() {
-		return _cookieValue;
-	}
+	public void setToResponse(String key, HttpServletResponse response) {
+		switch (_type) {
+			case COOKIE :
+				response.addCookie(_cookieValue);
 
-	public long getDateValue() {
-		return _dateValue;
-	}
+				break;
+			case DATE :
+				response.setDateHeader(key, _dateValue);
 
-	public int getIntValue() {
-		return _intValue;
-	}
+				break;
+			case INTEGER :
+				response.setIntHeader(key, _intValue);
 
-	public String getStringValue() {
-		return _stringValue;
-	}
+				break;
+			case STRING :
+				response.setHeader(key, _stringValue);
 
-	public int getType() {
-		return _type;
-	}
-
-	public void setCookieValue(Cookie cookieValue) {
-		_cookieValue = cookieValue;
-	}
-
-	public void setDateValue(long dateValue) {
-		_dateValue = dateValue;
-	}
-
-	public void setIntValue(int intValue) {
-		_intValue = intValue;
-	}
-
-	public void setStringValue(String stringValue) {
-		_stringValue = stringValue;
-	}
-
-	public void setType(int type) {
-		_type = type;
+				break;
+		}
 	}
 
 	@Override
 	public String toString() {
-		if (_type == COOKIE_TYPE) {
-			StringBundler sb = new StringBundler(17);
+		switch (_type) {
+			case COOKIE :
+				StringBundler sb = new StringBundler(17);
 
-			sb.append("{comment=");
-			sb.append(_cookieValue.getComment());
-			sb.append(", domain=");
-			sb.append(_cookieValue.getDomain());
-			sb.append(", maxAge=");
-			sb.append(_cookieValue.getMaxAge());
-			sb.append(", name=");
-			sb.append(_cookieValue.getName());
-			sb.append(", path=");
-			sb.append(_cookieValue.getPath());
-			sb.append(", secure=");
-			sb.append(_cookieValue.getSecure());
-			sb.append(", value=");
-			sb.append(_cookieValue.getValue());
-			sb.append(", version=");
-			sb.append(_cookieValue.getVersion());
-			sb.append("}");
+				sb.append("{comment=");
+				sb.append(_cookieValue.getComment());
+				sb.append(", domain=");
+				sb.append(_cookieValue.getDomain());
+				sb.append(", maxAge=");
+				sb.append(_cookieValue.getMaxAge());
+				sb.append(", name=");
+				sb.append(_cookieValue.getName());
+				sb.append(", path=");
+				sb.append(_cookieValue.getPath());
+				sb.append(", secure=");
+				sb.append(_cookieValue.getSecure());
+				sb.append(", value=");
+				sb.append(_cookieValue.getValue());
+				sb.append(", version=");
+				sb.append(_cookieValue.getVersion());
+				sb.append("}");
 
-			return sb.toString();
-		}
-		else if (_type == DATE_TYPE) {
-			return String.valueOf(_dateValue);
-		}
-		else if (_type == INTEGER_TYPE) {
-			return String.valueOf(_intValue);
-		}
-		else {
-			return _stringValue;
+				return sb.toString();
+
+			case DATE :
+				return String.valueOf(_dateValue);
+
+			case INTEGER :
+				return String.valueOf(_intValue);
+
+			case STRING :
+				return _stringValue;
+
+			default :
+				throw new IllegalStateException("Unknow Type " + _type);
 		}
 	}
 
@@ -134,6 +141,6 @@ public class Header implements Serializable {
 	private long _dateValue;
 	private int _intValue;
 	private String _stringValue;
-	private int _type;
+	private Type _type;
 
 }

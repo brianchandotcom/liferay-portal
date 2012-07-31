@@ -23,18 +23,10 @@ public interface LockListener {
 
 	public void onAfterExpire(String key);
 
-	public void onAfterLock(String key);
-
 	public void onAfterRefresh(String key);
-
-	public void onAfterUnlock(String key);
 
 	public void onBeforeExpire(String key);
 
-	public void onBeforeLock(String key);
-
 	public void onBeforeRefresh(String key);
-
-	public void onBeforeUnlock(String key);
 
 }

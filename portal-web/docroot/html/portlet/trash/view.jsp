@@ -19,6 +19,10 @@
 <%
 String tabs1 = ParamUtil.getString(request, "tabs1", "staging");
 
+String keywords = ParamUtil.getString(request, "keywords");
+
+String redirect = ParamUtil.getString(request, "redirect");
+
 long groupId = themeDisplay.getScopeGroupId();
 
 Group group = GroupLocalServiceUtil.getGroup(groupId);
@@ -40,8 +44,16 @@ portletURL.setParameter("tabs1", tabs1);
 	/>
 </c:if>
 
+<c:if test="<%= Validator.isNotNull(keywords) %>">
+	<liferay-ui:header
+		backURL="<%= redirect %>"
+		title="search"
+	/>
+</c:if>
+
 <liferay-portlet:renderURL varImpl="searchURL">
 	<portlet:param name="struts_action" value="/trash/view" />
+	<portlet:param name="redirect" value="<%= redirect %>" />
 </liferay-portlet:renderURL>
 
 <liferay-ui:search-container
@@ -269,3 +281,9 @@ portletURL.setParameter("tabs1", tabs1);
 		}
 	);
 </aui:script>
+
+<%
+if (Validator.isNotNull(keywords)) {
+	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "search") + ": " + keywords, currentURL);
+}
+%>

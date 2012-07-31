@@ -75,6 +75,7 @@ AUI.add(
 
 						instance._documentLibraryContainer = documentLibraryContainer;
 
+						instance._eventDataProcessed = instance.ns('dataProcessed');
 						instance._eventDataRequest = instance.ns('dataRequest');
 						instance._eventDataRetrieveSuccess = instance.ns('dataRetrieveSuccess');
 						instance._eventOpenDocument = instance.ns('openDocument');
@@ -315,6 +316,10 @@ AUI.add(
 
 							instance._setSearchResults(content);
 						}
+
+						Liferay.fire(instance._eventDataProcessed);
+
+						WIN[instance.ns('toggleActionsButton')]();
 					},
 
 					_onPageLoaded: function(event) {
@@ -429,16 +434,6 @@ AUI.add(
 					_searchFileEntry: function(searchData) {
 						var instance = this;
 
-						if (searchData.showRepositoryTabs || searchData.showSearchInfo) {
-							var entriesContainer = instance._entriesContainer;
-
-							entriesContainer.empty();
-
-							var searchingTPL = Lang.sub(TPL_MESSAGE_SEARCHING, [Liferay.Language.get('searching,-please-wait')]);
-
-							entriesContainer.html(searchingTPL);
-						}
-
 						instance._documentLibraryContainer.all('.document-entries-paginator').hide();
 
 						var requestParams = {};
@@ -460,6 +455,16 @@ AUI.add(
 								src: Liferay.DL_SEARCH
 							}
 						);
+
+						if (searchData.showRepositoryTabs || searchData.showSearchInfo) {
+							var entriesContainer = instance._entriesContainer;
+
+							entriesContainer.empty();
+
+							var searchingTPL = Lang.sub(TPL_MESSAGE_SEARCHING, [Liferay.Language.get('searching,-please-wait')]);
+
+							entriesContainer.html(searchingTPL);
+						}
 					},
 
 					_setSearchResults: function(content) {

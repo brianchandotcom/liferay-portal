@@ -67,7 +67,7 @@ public class ByteBufferServletResponse extends HeaderCacheServletResponse {
 
 		if (_servletOutputStream == null) {
 			_unsyncByteArrayOutputStream = new UnsyncByteArrayOutputStream();
-			_servletOutputStream = new PipingServletOutputStream(
+			_servletOutputStream = new ServletOutputStreamAdapter(
 				_unsyncByteArrayOutputStream);
 		}
 
@@ -86,7 +86,7 @@ public class ByteBufferServletResponse extends HeaderCacheServletResponse {
 		}
 
 		_unsyncByteArrayOutputStream = new UnsyncByteArrayOutputStream();
-		_servletOutputStream = new PipingServletOutputStream(
+		_servletOutputStream = new ServletOutputStreamAdapter(
 			_unsyncByteArrayOutputStream);
 		_printWriter = UnsyncPrintWriterPool.borrow(
 			_unsyncByteArrayOutputStream);

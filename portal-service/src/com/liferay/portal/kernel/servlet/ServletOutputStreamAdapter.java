@@ -12,60 +12,53 @@
  * details.
  */
 
-package com.liferay.portal.servlet.filters.gzip;
-
-import com.liferay.portal.util.PropsValues;
+package com.liferay.portal.kernel.servlet;
 
 import java.io.IOException;
 import java.io.OutputStream;
-
-import java.util.zip.GZIPOutputStream;
 
 import javax.servlet.ServletOutputStream;
 
 /**
  * @author Shuyang Zhou
- * @author Raymond Augé
  */
-public class GZipServletOutputStream extends ServletOutputStream {
+public class ServletOutputStreamAdapter extends ServletOutputStream {
 
-	public GZipServletOutputStream(OutputStream outputStream)
-		throws IOException {
-
-		_gZipOutputStream = new GZIPOutputStream(outputStream) {
-
-			{
-				def.setLevel(PropsValues.GZIP_COMPRESSION_LEVEL);
-			}
-
-		};
+	public ServletOutputStreamAdapter(OutputStream outputStream) {
+		this.outputStream = outputStream;
 	}
 
 	@Override
 	public void close() throws IOException {
-		_gZipOutputStream.close();
+		try {
+			flush();
+		}
+		catch (IOException ioe) {
+		}
+
+		outputStream.close();
 	}
 
 	@Override
 	public void flush() throws IOException {
-		_gZipOutputStream.flush();
+		outputStream.flush();
 	}
 
 	@Override
 	public void write(byte[] bytes) throws IOException {
-		_gZipOutputStream.write(bytes);
+		outputStream.write(bytes, 0, bytes.length);
 	}
 
 	@Override
 	public void write(byte[] bytes, int offset, int length) throws IOException {
-		_gZipOutputStream.write(bytes, offset, length);
+		outputStream.write(bytes, offset, length);
 	}
 
 	@Override
 	public void write(int b) throws IOException {
-		_gZipOutputStream.write(b);
+		outputStream.write(b);
 	}
 
-	private GZIPOutputStream _gZipOutputStream;
+	protected OutputStream outputStream;
 
 }

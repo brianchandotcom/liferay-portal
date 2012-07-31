@@ -19,14 +19,19 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.servlet.ServletOutputStreamAdapter;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.util.RSSThreadLocal;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+
+import java.util.zip.GZIPOutputStream;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -99,11 +104,11 @@ public class GZipResponse extends HttpServletResponseWrapper {
 					_unsyncByteArrayOutputStream =
 						new UnsyncByteArrayOutputStream();
 
-					_servletOutputStream = new GZipServletOutputStream(
+					_servletOutputStream = _createGZipServletOutputStream(
 						_unsyncByteArrayOutputStream);
 				}
 				else {
-					_servletOutputStream = new GZipServletOutputStream(
+					_servletOutputStream = _createGZipServletOutputStream(
 						_response.getOutputStream());
 				}
 			}
@@ -150,6 +155,19 @@ public class GZipResponse extends HttpServletResponseWrapper {
 				_gZipContentType = true;
 			}
 		}
+	}
+
+	private ServletOutputStream _createGZipServletOutputStream(
+			OutputStream outputStream)
+		throws IOException {
+
+		GZIPOutputStream gzipOutputStream = new GZIPOutputStream(outputStream) {
+			{
+				def.setLevel(PropsValues.GZIP_COMPRESSION_LEVEL);
+			}
+		};
+
+		return new ServletOutputStreamAdapter(gzipOutputStream);
 	}
 
 	private static final String _GZIP = "gzip";

@@ -90,21 +90,21 @@ if (Validator.isNotNull(toLanguageId)) {
 	languageId = toLanguageId;
 }
 
-if ((article == null) && Validator.isNull(defaultLanguageId)) {
-	Locale[] availableLocales = LanguageUtil.getAvailableLocales();
-
-	Locale defaultContentLocale = LocaleUtil.fromLanguageId(languageId);
-
-	if (ArrayUtil.contains(availableLocales, defaultContentLocale)) {
-		defaultLanguageId = languageId;
+if (Validator.isNull(defaultLanguageId)) {
+	if (article != null) {
+		defaultLanguageId = article.getDefaultLocale();
 	}
 	else {
-		defaultLanguageId = LocaleUtil.toLanguageId(LocaleUtil.getDefault());
-	}
-}
-else {
-	if (Validator.isNull(defaultLanguageId)) {
-		defaultLanguageId = article.getDefaultLocale();
+		Locale[] availableLocales = LanguageUtil.getAvailableLocales();
+
+		Locale defaultContentLocale = LocaleUtil.fromLanguageId(languageId);
+
+		if (ArrayUtil.contains(availableLocales, defaultContentLocale)) {
+			defaultLanguageId = languageId;
+		}
+		else {
+			defaultLanguageId = LocaleUtil.toLanguageId(LocaleUtil.getDefault());
+		}
 	}
 }
 

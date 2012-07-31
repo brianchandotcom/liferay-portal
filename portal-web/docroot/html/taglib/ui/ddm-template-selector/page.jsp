@@ -22,7 +22,7 @@ String icon = GetterUtil.getString((String)request.getAttribute("liferay-ui:ddm-
 String message = (String)request.getAttribute("liferay-ui:ddm-template-selector:message");
 String refreshURL = (String)request.getAttribute("liferay-ui:ddm-template-selector:refreshURL");
 
-long controlPanelPlid = PortalUtil.getControlPanelPlid(themeDisplay.getCompanyId());
+long controlPanelPlid = PortalUtil.getControlPanelPlid(company.getCompanyId());
 
 LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(request, PortletKeys.PORTLET_DISPLAY_TEMPLATES, controlPanelPlid, PortletRequest.RENDER_PHASE);
 

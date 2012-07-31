@@ -128,7 +128,7 @@ renderPortletURL.setParameter("resourceGroupId", String.valueOf(resourceGroupId)
 renderPortletURL.setParameter("resourcePrimKey", resourcePrimKey);
 renderPortletURL.setParameter("roleTypes", roleTypesParam);
 
-long controlPanelPlid = PortalUtil.getControlPanelPlid(themeDisplay.getCompanyId());
+long controlPanelPlid = PortalUtil.getControlPanelPlid(company.getCompanyId());
 
 PortletURLImpl definePermissionsURL = new PortletURLImpl(request, PortletKeys.ROLES_ADMIN, controlPanelPlid, PortletRequest.RENDER_PHASE);
 

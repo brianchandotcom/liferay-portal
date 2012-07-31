@@ -51,7 +51,7 @@ else {
 	}
 }
 
-long controlPanelPlid = PortalUtil.getControlPanelPlid(themeDisplay.getCompanyId());
+long controlPanelPlid = PortalUtil.getControlPanelPlid(company.getCompanyId());
 
 PortletURL assetBrowserURL = PortletURLFactoryUtil.create(request, PortletKeys.ASSET_BROWSER, controlPanelPlid, PortletRequest.RENDER_PHASE);
 

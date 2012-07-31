@@ -857,8 +857,7 @@ public class ServicePreAction extends Action {
 		long controlPanelPlid = 0;
 
 		if (signedIn) {
-			controlPanelPlid = PortalUtil.getControlPanelPlid(
-				themeDisplay.getCompanyId());
+			controlPanelPlid = PortalUtil.getControlPanelPlid(companyId);
 
 			List<Portlet> siteContentPortlets =
 				PortalUtil.getControlPanelPortlets(

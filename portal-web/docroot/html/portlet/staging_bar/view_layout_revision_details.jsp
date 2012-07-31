@@ -92,7 +92,7 @@ else {
 					handler: function(event) {
 
 						<%
-						long controlPanelPlid = PortalUtil.getControlPanelPlid(themeDisplay.getCompanyId());
+						long controlPanelPlid = PortalUtil.getControlPanelPlid(company.getCompanyId());
 
 						PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(controlPanelPlid, PortletKeys.MY_WORKFLOW_TASKS, PortletRequest.RENDER_PHASE);
 

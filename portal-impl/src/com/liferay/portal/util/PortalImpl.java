@@ -1362,7 +1362,7 @@ public class PortalImpl implements Portal {
 		throws PortalException, SystemException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			com.liferay.portal.kernel.util.WebKeys.THEME_DISPLAY);
+			WebKeys.THEME_DISPLAY);
 
 		return getControlPanelPlid(themeDisplay.getCompanyId());
 	}

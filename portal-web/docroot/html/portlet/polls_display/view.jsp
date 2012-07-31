@@ -112,7 +112,7 @@ boolean showIconsActions = themeDisplay.isSignedIn() && (hasConfigurationPermiss
 <c:if test="<%= hasViewPermission && showIconsActions %>">
 
 	<%
-	long controlPanelPlid = PortalUtil.getControlPanelPlid(themeDisplay.getCompanyId());
+	long controlPanelPlid = PortalUtil.getControlPanelPlid(company.getCompanyId());
 
 	PortletURL redirectURL = liferayPortletResponse.createRenderURL();
 

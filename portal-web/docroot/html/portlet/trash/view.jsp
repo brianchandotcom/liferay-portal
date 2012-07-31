@@ -112,7 +112,15 @@ portletURL.setParameter("tabs1", tabs1);
 
 			viewContentURL.setParameter("struts_action", "/trash/view_content");
 			viewContentURL.setParameter("redirect", currentURL);
-			viewContentURL.setParameter("entryId", String.valueOf(entry.getEntryId()));
+
+			if (entry.getRootEntry() != null) {
+				viewContentURL.setParameter("className", entry.getClassName());
+				viewContentURL.setParameter("classPK", String.valueOf(entry.getClassPK()));
+			}
+			else {
+				viewContentURL.setParameter("entryId", String.valueOf(entry.getEntryId()));
+			}
+
 			viewContentURL.setParameter("type", trashRenderer.getType());
 			viewContentURL.setParameter("showActions", Boolean.FALSE.toString());
 			viewContentURL.setParameter("showAssetMetadata", Boolean.TRUE.toString());

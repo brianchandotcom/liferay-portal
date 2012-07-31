@@ -273,9 +273,3 @@
 	background: url(@theme_image_path@/common/checkerboard.png);
 	border-color: #555;
 }
-
-.ie6, .ie7 {
-	.lfr-preview-file-image-container {
-		font-size: 398.2px;
-	}
-}

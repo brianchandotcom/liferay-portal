@@ -55,7 +55,8 @@ public class GenericServletResponse extends HttpServletResponseWrapper {
 
 	@Override
 	public PrintWriter getWriter() {
-		return UnsyncPrintWriterPool.borrow(getOutputStream());
+		return UnsyncPrintWriterPool.borrow(
+			getOutputStream(), getCharacterEncoding());
 	}
 
 	@Override

@@ -207,7 +207,8 @@ public class PortletServletResponse extends HttpServletResponseWrapper {
 			return mimeResponse.getWriter();
 		}
 		else {
-			return UnsyncPrintWriterPool.borrow(new NullServletOutputStream());
+			return UnsyncPrintWriterPool.borrow(
+				new NullServletOutputStream(), getCharacterEncoding());
 		}
 	}
 

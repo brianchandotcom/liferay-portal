@@ -89,7 +89,7 @@ public class ByteBufferServletResponse extends HeaderCacheServletResponse {
 		_servletOutputStream = new ServletOutputStreamAdapter(
 			_unsyncByteArrayOutputStream);
 		_printWriter = UnsyncPrintWriterPool.borrow(
-			_unsyncByteArrayOutputStream);
+			_unsyncByteArrayOutputStream, getCharacterEncoding());
 
 		return _printWriter;
 	}

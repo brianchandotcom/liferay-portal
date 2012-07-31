@@ -111,7 +111,8 @@ public class PipingServletResponse extends HttpServletResponseWrapper {
 						"not recommended because it is slow");
 			}
 
-			_printWriter = UnsyncPrintWriterPool.borrow(_servletOutputStream);
+			_printWriter = UnsyncPrintWriterPool.borrow(
+				_servletOutputStream, getCharacterEncoding());
 		}
 
 		return _printWriter;

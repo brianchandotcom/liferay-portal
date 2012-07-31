@@ -184,6 +184,11 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 			repositoryDir + StringPool.SLASH + sb.toString() +
 				StringPool.SLASH + fileNameFragment + ext);
 
+		File parnetFile = new File(
+			repositoryDir + StringPool.SLASH + sb.toString());
+
+		parnetFile.mkdirs();
+
 		return fileNameDir;
 	}
 

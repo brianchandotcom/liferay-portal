@@ -2715,8 +2715,9 @@ public class PortalImpl implements Portal {
 	public HttpServletRequest getOriginalServletRequest(
 		HttpServletRequest request) {
 
-		List<HttpServletRequestWrapper> persistentHttpServletRequestWrappers =
-			new ArrayList<HttpServletRequestWrapper>();
+		List<PersistentHttpServletRequestWrapper>
+			persistentHttpServletRequestWrappers =
+				new ArrayList<PersistentHttpServletRequestWrapper>();
 
 		HttpServletRequest originalRequest = request;
 
@@ -2726,8 +2727,12 @@ public class PortalImpl implements Portal {
 			if (originalRequest instanceof
 					PersistentHttpServletRequestWrapper) {
 
+				PersistentHttpServletRequestWrapper
+					persistentHttpServletRequestWrapper =
+						(PersistentHttpServletRequestWrapper)originalRequest;
+
 				persistentHttpServletRequestWrappers.add(
-					(HttpServletRequestWrapper)originalRequest);
+					persistentHttpServletRequestWrapper.clone());
 			}
 
 			// Get original request so that portlets inside portlets render

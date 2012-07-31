@@ -91,7 +91,16 @@ if (Validator.isNotNull(toLanguageId)) {
 }
 
 if ((article == null) && Validator.isNull(defaultLanguageId)) {
-	defaultLanguageId = languageId;
+	Locale[] availableLocales = LanguageUtil.getAvailableLocales();
+
+	Locale defaultContentLocale = LocaleUtil.fromLanguageId(languageId);
+
+	if (ArrayUtil.contains(availableLocales, defaultContentLocale)) {
+		defaultLanguageId = languageId;
+	}
+	else {
+		defaultLanguageId = LocaleUtil.toLanguageId(LocaleUtil.getDefault());
+	}
 }
 else {
 	if (Validator.isNull(defaultLanguageId)) {

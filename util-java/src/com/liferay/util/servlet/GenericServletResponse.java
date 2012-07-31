@@ -15,6 +15,7 @@
 package com.liferay.util.servlet;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.portal.kernel.servlet.ServletOutputStreamAdapter;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 
 import java.io.PrintWriter;
@@ -49,12 +50,13 @@ public class GenericServletResponse extends HttpServletResponseWrapper {
 
 	@Override
 	public ServletOutputStream getOutputStream() {
-		return new GenericServletOutputStream(_ubaos);
+		return new ServletOutputStreamAdapter(_ubaos);
 	}
 
 	@Override
 	public PrintWriter getWriter() {
-		return UnsyncPrintWriterPool.borrow(getOutputStream());
+		return UnsyncPrintWriterPool.borrow(
+			getOutputStream(), getCharacterEncoding());
 	}
 
 	@Override

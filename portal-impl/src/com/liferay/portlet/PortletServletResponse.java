@@ -14,8 +14,8 @@
 
 package com.liferay.portlet;
 
+import com.liferay.portal.kernel.servlet.ServletOutputStreamAdapter;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
-import com.liferay.util.servlet.GenericServletOutputStream;
 import com.liferay.util.servlet.NullServletOutputStream;
 
 import java.io.IOException;
@@ -188,7 +188,7 @@ public class PortletServletResponse extends HttpServletResponseWrapper {
 				mimeResponse.getPortletOutputStream();
 
 			ServletOutputStream servletOutputStream =
-				new GenericServletOutputStream(portletOutputStream);
+				new ServletOutputStreamAdapter(portletOutputStream);
 
 			return servletOutputStream;
 		}
@@ -207,7 +207,8 @@ public class PortletServletResponse extends HttpServletResponseWrapper {
 			return mimeResponse.getWriter();
 		}
 		else {
-			return UnsyncPrintWriterPool.borrow(new NullServletOutputStream());
+			return UnsyncPrintWriterPool.borrow(
+				new NullServletOutputStream(), getCharacterEncoding());
 		}
 	}
 

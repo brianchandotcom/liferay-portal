@@ -57,7 +57,7 @@ public class StringServletResponse extends HeaderCacheServletResponse {
 
 		if (_servletOutputStream == null) {
 			_unsyncByteArrayOutputStream = new UnsyncByteArrayOutputStream();
-			_servletOutputStream = new PipingServletOutputStream(
+			_servletOutputStream = new ServletOutputStreamAdapter(
 				_unsyncByteArrayOutputStream);
 		}
 

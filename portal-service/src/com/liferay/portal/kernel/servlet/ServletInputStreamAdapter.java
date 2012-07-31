@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.util.servlet;
+package com.liferay.portal.kernel.servlet;
 
 import java.io.IOException;
 import java.io.InputStream;

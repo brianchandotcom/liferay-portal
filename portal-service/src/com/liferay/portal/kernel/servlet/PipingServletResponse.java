@@ -42,7 +42,7 @@ public class PipingServletResponse extends HttpServletResponseWrapper {
 			throw new NullPointerException("Output stream is null");
 		}
 
-		_servletOutputStream = new PipingServletOutputStream(outputStream);
+		_servletOutputStream = new ServletOutputStreamAdapter(outputStream);
 	}
 
 	public PipingServletResponse(
@@ -94,7 +94,7 @@ public class PipingServletResponse extends HttpServletResponseWrapper {
 						"not recommended because it is slow");
 			}
 
-			_servletOutputStream = new PipingServletOutputStream(
+			_servletOutputStream = new ServletOutputStreamAdapter(
 				new WriterOutputStream(
 					_printWriter, getCharacterEncoding(), true));
 		}
@@ -111,7 +111,8 @@ public class PipingServletResponse extends HttpServletResponseWrapper {
 						"not recommended because it is slow");
 			}
 
-			_printWriter = UnsyncPrintWriterPool.borrow(_servletOutputStream);
+			_printWriter = UnsyncPrintWriterPool.borrow(
+				_servletOutputStream, getCharacterEncoding());
 		}
 
 		return _printWriter;

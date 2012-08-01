@@ -294,7 +294,8 @@ public class PortletRequestProcessor extends TilesRequestProcessor {
 
 				if (StrutsActionRegistryUtil.getAction(parentPath) != null) {
 					actionMapping =
-						(ActionMapping)moduleConfig.findActionConfig(path);
+						(ActionMapping)moduleConfig.findActionConfig(
+							parentPath);
 
 					if (actionMapping == null) {
 						actionMapping = new ActionMapping();

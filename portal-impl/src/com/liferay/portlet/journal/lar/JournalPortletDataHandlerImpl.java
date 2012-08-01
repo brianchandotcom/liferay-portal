@@ -1104,12 +1104,12 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		String parentStructureUuid = GetterUtil.getString(
 			structureElement.attributeValue("parent-structure-uuid"));
-		
-		String parentPath =
-				getStructurePath(portletDataContext, parentStructureUuid);
+
+		String parentPath = getStructurePath(
+			portletDataContext, parentStructureUuid);
 
 		Element parentStructureElement = (Element)rootElement.selectSingleNode(
-				"//structure[@path='".concat(parentPath).concat("']"));
+			"//structure[@path='".concat(parentPath).concat("']"));
 
 		if ((parentStructureElement != null) &&
 			Validator.isNotNull(parentStructureId)) {
@@ -1952,7 +1952,7 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 			JournalStructure structure)
 		throws Exception {
 
-		String path = getStructurePath(portletDataContext, structure);
+		String path = getStructurePath(portletDataContext, structure.getUuid());
 
 		if (!portletDataContext.isPathNotProcessed(path)) {
 			return;
@@ -2132,12 +2132,6 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 		return sb.toString();
 	}
 
-	protected static String getStructurePath(
-		PortletDataContext portletDataContext, JournalStructure structure) {
-		
-		return getStructurePath(portletDataContext, structure.getUuid());
-	}
-	
 	protected static String getStructurePath(
 		PortletDataContext portletDataContext, String uuid) {
 

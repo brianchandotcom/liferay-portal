@@ -99,6 +99,7 @@ public class DLFolderTrashHandlerTest extends BaseDLTrashHandlerTestCase {
 		int initialNotInTrashCount = getNotInTrashCount();
 		int initialTrashEntriesCount = getTrashEntriesCount();
 		int initialSearchFileEntriesCount = searchFileEntriesCount();
+		int initialSearchTrashEntriesCount = searchTrashEntriesCount("File");
 
 		Folder folder = addFolder(false, "Test Folder");
 
@@ -119,6 +120,9 @@ public class DLFolderTrashHandlerTest extends BaseDLTrashHandlerTestCase {
 			Assert.assertTrue(
 				isAssetEntryVisible(
 					DLFileEntryConstants.getClassName(), fileEntryId));
+			Assert.assertEquals(
+				initialSearchTrashEntriesCount,
+				searchTrashEntriesCount("File"));
 
 			if (trashFile) {
 				DLAppServiceUtil.moveFileEntryToTrash(fileEntryId);
@@ -140,20 +144,6 @@ public class DLFolderTrashHandlerTest extends BaseDLTrashHandlerTestCase {
 
 		Assert.assertEquals(initialNotInTrashCount, getNotInTrashCount());
 
-		int documentsInDLCount = 0;
-
-		int documentsInTrashCount = 0;
-
-		if (file && !moveFileFromTrash) {
-			documentsInDLCount = searchFileEntriesCount();
-
-			Assert.assertEquals(0, documentsInDLCount);
-
-			documentsInTrashCount = searchTrashEntriesCount("File");
-
-			Assert.assertEquals(1, documentsInTrashCount);
-		}
-
 		if (trashFile) {
 			Assert.assertEquals(
 				initialTrashEntriesCount + 2, getTrashEntriesCount());
@@ -171,6 +161,9 @@ public class DLFolderTrashHandlerTest extends BaseDLTrashHandlerTestCase {
 				isAssetEntryVisible(
 					DLFileEntryConstants.getClassName(), fileEntryId));
 			Assert.assertEquals(0, getActiveFileRanksCount(fileEntryId));
+			Assert.assertEquals(
+				initialSearchTrashEntriesCount + 1,
+				searchTrashEntriesCount("File"));
 		}
 
 		if (delete) {
@@ -205,14 +198,6 @@ public class DLFolderTrashHandlerTest extends BaseDLTrashHandlerTestCase {
 				initialNotInTrashCount + 1, getNotInTrashCount());
 
 			if (file) {
-				documentsInDLCount = searchFileEntriesCount();
-
-				Assert.assertEquals(1, documentsInDLCount);
-
-				documentsInTrashCount = searchTrashEntriesCount("File");
-
-				Assert.assertEquals(0, documentsInTrashCount);
-
 				if (trashFile) {
 					Assert.assertEquals(
 						initialTrashEntriesCount + 1, getTrashEntriesCount());
@@ -222,6 +207,9 @@ public class DLFolderTrashHandlerTest extends BaseDLTrashHandlerTestCase {
 					Assert.assertFalse(
 						isAssetEntryVisible(
 							DLFileEntryConstants.getClassName(), fileEntryId));
+					Assert.assertEquals(
+						initialSearchTrashEntriesCount + 1,
+						searchTrashEntriesCount("File"));
 
 					return;
 				}
@@ -234,9 +222,16 @@ public class DLFolderTrashHandlerTest extends BaseDLTrashHandlerTestCase {
 							DLFileEntryConstants.getClassName(), fileEntryId));
 					Assert.assertEquals(
 						1, getActiveFileRanksCount(fileEntryId));
+					Assert.assertEquals(
+						initialSearchTrashEntriesCount,
+						searchTrashEntriesCount("File"));
 				}
 			}
 		}
+
+		Assert.assertEquals(
+			initialSearchTrashEntriesCount,
+			searchTrashEntriesCount("File"));
 
 		if (moveFileFromTrash) {
 			Assert.assertEquals(

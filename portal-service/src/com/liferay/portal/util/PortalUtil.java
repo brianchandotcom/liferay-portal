@@ -778,10 +778,6 @@ public class PortalUtil {
 		return getPortal().getOriginalServletRequest(request);
 	}
 
-	public static String getOuterPortletId(HttpServletRequest request) {
-		return getPortal().getOuterPortletId(request);
-	}
-
 	public static long getParentGroupId(long scopeGroupId)
 		throws PortalException, SystemException {
 

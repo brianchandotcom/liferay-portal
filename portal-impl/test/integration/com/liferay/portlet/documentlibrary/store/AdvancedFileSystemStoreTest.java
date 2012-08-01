@@ -14,12 +14,10 @@
 
 package com.liferay.portlet.documentlibrary.store;
 
-import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.ExecutionTestListeners;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
-import com.liferay.portal.test.TransactionalExecutionTestListener;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -28,26 +26,19 @@ import org.junit.runner.RunWith;
 /**
  * @author Vilmos Papp
  */
-@ExecutionTestListeners(
-	listeners = {
-		EnvironmentExecutionTestListener.class,
-		TransactionalExecutionTestListener.class
-	})
+@ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-@Transactional
 public class AdvancedFileSystemStoreTest {
 
 	@Test
 	public void testUpdateFileWithMoveFiles() throws Exception {
-		Object[] data = setupStoreFolders();
+		Object[] data = initStoreData();
+
 		long companyId = (Long)data[0];
 		long repositoryId = (Long)data[1];
 		long newRepositoryId = (Long)data[2];
-		String[] fileNames = new String[] {
-			"1" + _FILE_NAME_EXTENSION, "10" + _FILE_NAME_EXTENSION,
-			"101" + _FILE_NAME_EXTENSION, "110" + _FILE_NAME_EXTENSION,
-			"150" + _FILE_NAME_EXTENSION
-		};
+
+		String[] fileNames = _store.getFileNames(companyId, repositoryId);
 
 		for (String fileName : fileNames) {
 			_store.updateFile(
@@ -60,27 +51,26 @@ public class AdvancedFileSystemStoreTest {
 		}
 	}
 
-	protected Object[] setupStoreFolders() throws Exception {
+	protected Object[] initStoreData() throws Exception {
 		long companyId = ServiceTestUtil.nextLong();
 		long repositoryId = ServiceTestUtil.nextLong();
 		long newRepositoryId = ServiceTestUtil.nextLong();
 
-		String fileName;
 		for (int i = 0; i < _FILE_COUNT; i++) {
-			fileName = String.valueOf(i) + _FILE_NAME_EXTENSION;
+			String fileName = String.valueOf(i) + _FILE_NAME_EXTENSION;
 
-			_store.addFile(companyId, repositoryId, fileName, _DATA_VERSION_1);
+			_store.addFile(companyId, repositoryId, fileName, _FILE_DATA);
 		}
 
 		return new Object[] {
 			companyId, repositoryId, newRepositoryId};
 	}
 
-	private static final int _DATA_SIZE = 1024 * 65;
-
-	private static final byte[] _DATA_VERSION_1 = new byte[_DATA_SIZE];
+	private static final int _DATA_SIZE = 100;
 
 	private static final int _FILE_COUNT = 200;
+
+	private static final byte[] _FILE_DATA = new byte[_DATA_SIZE];
 
 	private static final String _FILE_NAME_EXTENSION = ".txt";
 
@@ -88,7 +78,7 @@ public class AdvancedFileSystemStoreTest {
 
 	static {
 		for (int i = 0; i < _DATA_SIZE; i++) {
-			_DATA_VERSION_1[i] = (byte)i;
+			_FILE_DATA[i] = (byte)i;
 		}
 	}
 

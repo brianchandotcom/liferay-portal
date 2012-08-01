@@ -115,6 +115,9 @@ import com.liferay.portal.security.auth.ScreenNameGenerator;
 import com.liferay.portal.security.auth.ScreenNameGeneratorFactory;
 import com.liferay.portal.security.auth.ScreenNameValidator;
 import com.liferay.portal.security.auth.ScreenNameValidatorFactory;
+import com.liferay.portal.security.auth.verifier.AuthVerifier;
+import com.liferay.portal.security.auth.verifier.AuthVerifierConfiguration;
+import com.liferay.portal.security.auth.verifier.AuthVerifierPipeline;
 import com.liferay.portal.security.ldap.AttributesTransformer;
 import com.liferay.portal.security.ldap.AttributesTransformerFactory;
 import com.liferay.portal.security.pwd.PwdToolkitUtil;
@@ -231,11 +234,12 @@ public class HookHotDeployListener
 		"portlet.add.default.resource.check.enabled",
 		"portlet.add.default.resource.check.whitelist",
 		"portlet.add.default.resource.check.whitelist.actions",
-		"sanitizer.impl", "servlet.session.create.events",
-		"servlet.session.destroy.events", "servlet.service.events.post",
-		"servlet.service.events.pre", "session.max.allowed",
-		"session.phishing.protected.attributes", "session.store.password",
-		"sites.form.add.advanced", "sites.form.add.main", "sites.form.add.seo",
+		"portal.authentication.verifier.pipeline", "sanitizer.impl",
+		"servlet.session.create.events", "servlet.session.destroy.events",
+		"servlet.service.events.post", "servlet.service.events.pre",
+		"session.max.allowed", "session.phishing.protected.attributes",
+		"session.store.password", "sites.form.add.advanced",
+		"sites.form.add.main", "sites.form.add.seo",
 		"sites.form.update.advanced", "sites.form.update.main",
 		"sites.form.update.seo", "social.bookmark.*", "terms.of.use.required",
 		"theme.css.fast.load", "theme.images.fast.load",
@@ -730,6 +734,13 @@ public class HookHotDeployListener
 			authPublicPathsContainer.unregisterPaths();
 		}
 
+		AuthVerifierConfigurationContainer authVerifierConfigurationContainer =
+			_authVerifierConfigurationContainerMap.remove(servletContextName);
+
+		if (authVerifierConfigurationContainer != null) {
+			authVerifierConfigurationContainer.unregisterConfigurations();
+		}
+
 		AutoDeployListenersContainer autoDeployListenersContainer =
 			_autoDeployListenersContainerMap.remove(servletContextName);
 
@@ -995,6 +1006,50 @@ public class HookHotDeployListener
 			portalProperties.getProperty(AUTH_PUBLIC_PATHS));
 
 		authPublicPathsContainer.registerPaths(publicPaths);
+	}
+
+	protected void initAuthVerifiers(
+		String servletContextName, ClassLoader portletClassLoader,
+		Properties portalProperties)
+		throws Exception {
+
+		AuthVerifierConfigurationContainer authVerifierConfigurationContainer =
+			new AuthVerifierConfigurationContainer();
+
+		_authVerifierConfigurationContainerMap.put(
+			servletContextName, authVerifierConfigurationContainer);
+
+		String[] authVerifierClassNames = StringUtil.split(
+			portalProperties.getProperty(
+				PORTAL_AUTHENTICATION_VERIFIER_PIPELINE));
+
+		for (String authVerifierClassName : authVerifierClassNames) {
+			AuthVerifierConfiguration authVerifierConfiguration =
+				new AuthVerifierConfiguration();
+
+			AuthVerifier authVerifier = (AuthVerifier)newInstance(
+				portletClassLoader, AuthVerifier.class, authVerifierClassName);
+
+			String verifierSimpleName = null;
+			if (authVerifierClassName.indexOf('.')>-1) {
+				verifierSimpleName = authVerifierClassName.substring(
+					authVerifierClassName.lastIndexOf('.')+1);
+			} else {
+				verifierSimpleName = authVerifierClassName;
+			}
+
+			String verifierConfigPrefix = _PORTAL_AUTHENTICATION_VERIFIER +
+				verifierSimpleName + ".";
+
+			Properties verifierConfiguration = PropertiesUtil.getProperties(
+				portalProperties, verifierConfigPrefix, true);
+
+			authVerifierConfiguration.setAuthVerifier(authVerifier);
+			authVerifierConfiguration.setConfiguration(verifierConfiguration);
+
+			authVerifierConfigurationContainer.
+				registerAuthVerifierConfiguration(authVerifierConfiguration);
+		}
 	}
 
 	protected void initAutoDeployListeners(
@@ -1593,6 +1648,8 @@ public class HookHotDeployListener
 		initAutoLogins(
 			servletContextName, portletClassLoader, portalProperties);
 		initAuthenticators(
+			servletContextName, portletClassLoader, portalProperties);
+		initAuthVerifiers(
 			servletContextName, portletClassLoader, portalProperties);
 		initHotDeployListeners(
 			servletContextName, portletClassLoader, portalProperties);
@@ -2468,6 +2525,9 @@ public class HookHotDeployListener
 			release.getReleaseId(), buildNumber, null, true);
 	}
 
+	private static final String _PORTAL_AUTHENTICATION_VERIFIER =
+		"portal.authentication.verifier.";
+
 	private static final String[] _PROPS_KEYS_EVENTS = {
 		LOGIN_EVENTS_POST, LOGIN_EVENTS_PRE, LOGOUT_EVENTS_POST,
 		LOGOUT_EVENTS_PRE, SERVLET_SERVICE_EVENTS_POST,
@@ -2566,6 +2626,9 @@ public class HookHotDeployListener
 		new HashMap<String, AuthFailuresContainer>();
 	private Map<String, AuthPublicPathsContainer> _authPublicPathsContainerMap =
 		new HashMap<String, AuthPublicPathsContainer>();
+	private Map<String, AuthVerifierConfigurationContainer>
+		_authVerifierConfigurationContainerMap =
+		new HashMap<String, AuthVerifierConfigurationContainer>();
 	private Map<String, AutoDeployListenersContainer>
 		_autoDeployListenersContainerMap =
 			new HashMap<String, AutoDeployListenersContainer>();
@@ -2695,6 +2758,29 @@ public class HookHotDeployListener
 		}
 
 		private Set<String> _paths = new HashSet<String>();
+
+	}
+
+	private class AuthVerifierConfigurationContainer {
+
+		public void registerAuthVerifierConfiguration(
+			AuthVerifierConfiguration authVerifierConfiguration) {
+
+			AuthVerifierPipeline.register(authVerifierConfiguration);
+
+			_authVerifierConfigurations.add(authVerifierConfiguration);
+		}
+
+		public void unregisterConfigurations() {
+			for (AuthVerifierConfiguration entry :
+				_authVerifierConfigurations) {
+
+				AuthVerifierPipeline.unregister(entry);
+			}
+		}
+
+		private List<AuthVerifierConfiguration> _authVerifierConfigurations =
+			new ArrayList<AuthVerifierConfiguration>();
 
 	}
 

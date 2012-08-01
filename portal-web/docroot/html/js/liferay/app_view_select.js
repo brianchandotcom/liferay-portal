@@ -108,7 +108,7 @@ AUI.add(
 
 						instance._eventHandles = [
 							Liferay.on('liferay-app-view-folders:dataRequest', instance._onDataRequest, instance),
-							Liferay.on('liferay-app-view-folders:setEntries', instance._updateSelectedEntriesStatus, instance),
+							Liferay.on(instance.ns('dataProcessed'), instance._updateSelectedEntriesStatus, instance),
 							Liferay.on('liferay-app-view-move:dragStart', instance._onDragStart, instance)
 						];
 
@@ -226,7 +226,7 @@ AUI.add(
 						var selectedEntries = instance._entriesContainer.all(entriesSelector);
 
 						if (selectedEntries.size()) {
-							instance._setSelectedEntries(selectedEntries.val());
+							instance._selectedEntries = selectedEntries.val();
 						}
 					},
 
@@ -254,12 +254,6 @@ AUI.add(
 							instance._checkBoxesId,
 							instance._selectAllCheckbox
 						);
-					},
-
-					_setSelectedEntries: function(selectedEntries) {
-						var instance = this;
-
-						instance._selectedEntries = selectedEntries;
 					},
 
 					_toggleEntriesSelection: function() {

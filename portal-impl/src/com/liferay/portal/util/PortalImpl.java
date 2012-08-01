@@ -121,6 +121,7 @@ import com.liferay.portal.service.GroupServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.service.ResourceLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.TicketLocalServiceUtil;
@@ -444,10 +445,6 @@ public class PortalImpl implements Portal {
 		// Portal virtual layout
 
 		_reservedParams.add("p_v_l_s_g_id"); // LPS-23010
-
-		// Portal outer portlet
-
-		_reservedParams.add("p_o_p_id"); // LPS-12097
 
 		// Portal fragment
 
@@ -2777,17 +2774,6 @@ public class PortalImpl implements Portal {
 		return originalRequest;
 	}
 
-	public String getOuterPortletId(HttpServletRequest request) {
-		String outerPortletId = (String)request.getAttribute(
-			WebKeys.OUTER_PORTLET_ID);
-
-		if (outerPortletId == null) {
-			outerPortletId = request.getParameter("p_o_p_id");
-		}
-
-		return outerPortletId;
-	}
-
 	public long getParentGroupId(long groupId)
 		throws PortalException, SystemException {
 
@@ -4543,25 +4529,17 @@ public class PortalImpl implements Portal {
 		}
 
 		if (layout.isTypePortlet()) {
-			String checkPortletId = portletId;
-
-			String outerPortletId = getOuterPortletId(request);
-
-			if (outerPortletId != null) {
-				checkPortletId = outerPortletId;
-			}
-
-			if (layoutTypePortlet.hasPortletId(checkPortletId)) {
+			if (layoutTypePortlet.hasPortletId(portletId)) {
 				return true;
 			}
 
-			String resourcePrimKey = PortletPermissionUtil.getPrimaryKey(
-				themeDisplay.getPlid(), portletId);
+			// works only for portlets rendered at least once
+			List portletPreferences = PortletPreferencesLocalServiceUtil
+				.getPortletPreferences(
+					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
+					portletId);
 
-			if (ResourcePermissionLocalServiceUtil.getResourcePermissionsCount(
-					themeDisplay.getCompanyId(), portlet.getPortletName(),
-					ResourceConstants.SCOPE_INDIVIDUAL, resourcePrimKey) > 0) {
-
+			if (portletPreferences.size() > 0) {
 				return true;
 			}
 		}

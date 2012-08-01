@@ -591,6 +591,15 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 		dlFolderPersistence.update(dlFolder, false);
 
+		// Trash
+
+		if (status == WorkflowConstants.STATUS_IN_TRASH) {
+			trashEntryLocalService.addTrashEntry(
+				userId, dlFolder.getGroupId(), DLFolderConstants.getClassName(),
+				dlFolder.getFolderId(), WorkflowConstants.STATUS_APPROVED, null,
+				null);
+		}
+
 		// Folders, file entries, and file shortcuts
 
 		QueryDefinition queryDefinition = new QueryDefinition(
@@ -602,15 +611,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 		dlAppHelperLocalService.updateStatuses(
 			user, foldersAndFileEntriesAndFileShortcuts, status);
-
-		// Trash
-
-		if (status == WorkflowConstants.STATUS_IN_TRASH) {
-			trashEntryLocalService.addTrashEntry(
-				userId, dlFolder.getGroupId(), DLFolderConstants.getClassName(),
-				dlFolder.getFolderId(), WorkflowConstants.STATUS_APPROVED, null,
-				null);
-		}
 
 		return dlFolder;
 	}

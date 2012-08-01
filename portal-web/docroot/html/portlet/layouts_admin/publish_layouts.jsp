@@ -228,7 +228,7 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 
 <style type="text/css">
 	.aui-tree-node-content .incomplete-layout {
-		color: #CCCCCC;
+		color: #CCC;
 	}
 
 	#<portlet:namespace />pane th.col-3 {

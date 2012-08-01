@@ -121,7 +121,7 @@ long[] selectedLayoutIds = new long[0];
 boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout", tabs1.equals("private-pages"));
 
 if (selPlid > 0) {
-	treeKey = treeKey + privateLayout;
+	treeKey = treeKey + privateLayout + layoutSetBranchId;
 
 	selectedLayoutIds = GetterUtil.getLongValues(StringUtil.split(SessionTreeJSClicks.getOpenNodes(request, treeKey + "SelectedNode"), ','));
 }
@@ -227,6 +227,10 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 </c:if>
 
 <style type="text/css">
+	.aui-tree-node-content .incomplete-layout {
+		color: #CCC;
+	}
+
 	#<portlet:namespace />pane th.col-3 {
 		text-align: left;
 		width: 74%;

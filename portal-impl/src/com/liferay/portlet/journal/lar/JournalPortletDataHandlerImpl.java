@@ -1102,12 +1102,14 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		Element rootElement = document.getRootElement();
 
-		Element parentStructureElement = (Element)rootElement.selectSingleNode(
-			"./structures/structure[@structure-id='" + parentStructureId +
-				"']");
-
 		String parentStructureUuid = GetterUtil.getString(
 			structureElement.attributeValue("parent-structure-uuid"));
+		
+		String parentPath =
+				getStructurePath(portletDataContext, parentStructureUuid);
+
+		Element parentStructureElement = (Element)rootElement.selectSingleNode(
+				"//structure[@path='".concat(parentPath).concat("']"));
 
 		if ((parentStructureElement != null) &&
 			Validator.isNotNull(parentStructureId)) {
@@ -1115,14 +1117,6 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 			importStructure(portletDataContext, parentStructureElement);
 
 			parentStructureId = structureIds.get(parentStructureId);
-		}
-		else if (Validator.isNotNull(parentStructureUuid)) {
-			JournalStructure parentStructure =
-				JournalStructureLocalServiceUtil.
-					getJournalStructureByUuidAndGroupId(
-						parentStructureUuid, portletDataContext.getGroupId());
-
-			parentStructureId = parentStructure.getStructureId();
 		}
 
 		boolean addGroupPermissions = creationStrategy.addGroupPermissions(
@@ -2140,12 +2134,18 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 
 	protected static String getStructurePath(
 		PortletDataContext portletDataContext, JournalStructure structure) {
+		
+		return getStructurePath(portletDataContext, structure.getUuid());
+	}
+	
+	protected static String getStructurePath(
+		PortletDataContext portletDataContext, String uuid) {
 
 		StringBundler sb = new StringBundler(4);
 
 		sb.append(portletDataContext.getPortletPath(PortletKeys.JOURNAL));
 		sb.append("/structures/");
-		sb.append(structure.getUuid());
+		sb.append(uuid);
 		sb.append(".xml");
 
 		return sb.toString();

@@ -16,7 +16,7 @@ package com.liferay.portlet.documentlibrary.util;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portlet.documentlibrary.model.DLProcessorConstants;
 
 import java.io.InputStream;
 
@@ -28,78 +28,155 @@ import java.util.Set;
 public class ImageProcessorUtil {
 
 	public static void cleanUp(FileEntry fileEntry) {
-		getImageProcessor().cleanUp(fileEntry);
+		ImageProcessor imageProcessor = getImageProcessor();
+
+		if (imageProcessor != null) {
+			imageProcessor.cleanUp(fileEntry);
+		}
 	}
 
 	public static void cleanUp(FileVersion fileVersion) {
-		getImageProcessor().cleanUp(fileVersion);
+		ImageProcessor imageProcessor = getImageProcessor();
+
+		if (imageProcessor != null) {
+			imageProcessor.cleanUp(fileVersion);
+		}
 	}
 
 	public static void generateImages(
 			FileVersion sourceFileVersion, FileVersion destinationFileVersion)
 		throws Exception {
 
-		getImageProcessor().generateImages(
-			sourceFileVersion, destinationFileVersion);
+		ImageProcessor imageProcessor = getImageProcessor();
+
+		if (imageProcessor != null) {
+			imageProcessor.generateImages(
+				sourceFileVersion, destinationFileVersion);
+		}
 	}
 
 	public static Set<String> getImageMimeTypes() {
-		return getImageProcessor().getImageMimeTypes();
+		ImageProcessor imageProcessor = getImageProcessor();
+
+		if (imageProcessor == null) {
+			return null;
+		}
+
+		return imageProcessor.getImageMimeTypes();
 	}
 
 	public static ImageProcessor getImageProcessor() {
-		PortalRuntimePermission.checkGetBeanProperty(ImageProcessorUtil.class);
-
-		return _imageProcessor;
+		return (ImageProcessor)DLProcessorRegistryUtil.getDLProcessor(
+			DLProcessorConstants.IMAGE_PROCESSOR);
 	}
 
 	public static InputStream getPreviewAsStream(FileVersion fileVersion)
 		throws Exception {
 
-		return getImageProcessor().getPreviewAsStream(fileVersion);
+		ImageProcessor imageProcessor = getImageProcessor();
+
+		if (imageProcessor == null) {
+			return null;
+		}
+
+		return imageProcessor.getPreviewAsStream(fileVersion);
 	}
 
 	public static long getPreviewFileSize(FileVersion fileVersion)
 		throws Exception {
 
-		return getImageProcessor().getPreviewFileSize(fileVersion);
+		ImageProcessor imageProcessor = getImageProcessor();
+
+		if (imageProcessor == null) {
+			return 0;
+		}
+
+		return imageProcessor.getPreviewFileSize(fileVersion);
 	}
 
 	public static String getPreviewType(FileVersion fileVersion) {
-		return getImageProcessor().getPreviewType(fileVersion);
+		ImageProcessor imageProcessor = getImageProcessor();
+
+		if (imageProcessor == null) {
+			return null;
+		}
+
+		return imageProcessor.getPreviewType(fileVersion);
 	}
 
 	public static InputStream getThumbnailAsStream(
 			FileVersion fileVersion, int index)
 		throws Exception {
 
-		return getImageProcessor().getThumbnailAsStream(fileVersion, index);
+		ImageProcessor imageProcessor = getImageProcessor();
+
+		if (imageProcessor == null) {
+			return null;
+		}
+
+		return imageProcessor.getThumbnailAsStream(fileVersion, index);
 	}
 
 	public static long getThumbnailFileSize(FileVersion fileVersion, int index)
 		throws Exception {
 
-		return getImageProcessor().getThumbnailFileSize(fileVersion, index);
+		ImageProcessor imageProcessor = getImageProcessor();
+
+		if (imageProcessor == null) {
+			return 0;
+		}
+
+		return imageProcessor.getThumbnailFileSize(fileVersion, index);
 	}
 
 	public static String getThumbnailType(FileVersion fileVersion) {
-		return getImageProcessor().getThumbnailType(fileVersion);
+		ImageProcessor imageProcessor = getImageProcessor();
+
+		if (imageProcessor == null) {
+			return null;
+		}
+
+		return imageProcessor.getThumbnailType(fileVersion);
 	}
 
 	public static boolean hasImages(FileVersion fileVersion) {
-		return getImageProcessor().hasImages(fileVersion);
+		ImageProcessor imageProcessor = getImageProcessor();
+
+		if (imageProcessor == null) {
+			return false;
+		}
+
+		return imageProcessor.hasImages(fileVersion);
 	}
 
 	public static boolean isImageSupported(FileVersion fileVersion) {
-		return getImageProcessor().isImageSupported(fileVersion);
+		ImageProcessor imageProcessor = getImageProcessor();
+
+		if (imageProcessor == null) {
+			return false;
+		}
+
+		return imageProcessor.isImageSupported(fileVersion);
 	}
 
 	public static boolean isImageSupported(String mimeType) {
-		return getImageProcessor().isImageSupported(mimeType);
+		ImageProcessor imageProcessor = getImageProcessor();
+
+		if (imageProcessor == null) {
+			return false;
+		}
+
+		return imageProcessor.isImageSupported(mimeType);
 	}
 
 	public static boolean isSupported(String mimeType) {
-		return getImageProcessor().isSupported(mimeType);
+		ImageProcessor imageProcessor = getImageProcessor();
+
+		if (imageProcessor == null) {
+			return false;
+		}
+
+		return imageProcessor.isSupported(mimeType);
 	}
 
 	public static void storeThumbnail(
@@ -108,23 +185,29 @@ public class ImageProcessorUtil {
 			String type)
 		throws Exception {
 
-		getImageProcessor().storeThumbnail(
-			companyId, groupId, fileEntryId, fileVersionId, custom1ImageId,
-			custom2ImageId, is, type);
+		ImageProcessor imageProcessor = getImageProcessor();
+
+		if (imageProcessor != null) {
+			imageProcessor.storeThumbnail(
+				companyId, groupId, fileEntryId, fileVersionId, custom1ImageId,
+				custom2ImageId, is, type);
+		}
 	}
 
 	public static void trigger(
 		FileVersion sourceFileVersion, FileVersion destinationFileVersion) {
 
-		getImageProcessor().trigger(sourceFileVersion, destinationFileVersion);
+		ImageProcessor imageProcessor = getImageProcessor();
+
+		if (imageProcessor != null) {
+			imageProcessor.trigger(sourceFileVersion, destinationFileVersion);
+		}
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public void setImageProcessor(ImageProcessor imageProcessor) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
-		_imageProcessor = imageProcessor;
 	}
-
-	private static ImageProcessor _imageProcessor;
 
 }

@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
@@ -55,10 +54,9 @@ import java.util.Map;
  * @author Miguel Pastor
  */
 public class RawMetadataProcessorImpl
-	extends BaseDLProcessorImpl implements RawMetadataProcessor {
+	implements DLProcessor, RawMetadataProcessor {
 
-	public static RawMetadataProcessorImpl getInstance() {
-		return _instance;
+	public RawMetadataProcessorImpl() {
 	}
 
 	public void cleanUp(FileEntry fileEntry) {
@@ -82,16 +80,12 @@ public class RawMetadataProcessorImpl
 	public void generateMetadata(FileVersion fileVersion)
 		throws SystemException {
 
-		if (!isEnabled()) {
-			return;
-		}
-
 		long fileEntryMetadataCount =
 			DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadataCount(
 				fileVersion.getFileEntryId(), fileVersion.getFileVersionId());
 
 		if (fileEntryMetadataCount == 0) {
-			_instance.trigger(fileVersion);
+			trigger(fileVersion);
 		}
 	}
 
@@ -113,10 +107,6 @@ public class RawMetadataProcessorImpl
 
 	public void saveMetadata(FileVersion fileVersion)
 		throws PortalException, SystemException {
-
-		if (!isEnabled()) {
-			return;
-		}
 
 		Map<String, Fields> rawMetadataMap = null;
 
@@ -184,10 +174,6 @@ public class RawMetadataProcessorImpl
 	public void trigger(
 		FileVersion sourceFileVersion, FileVersion destinationFileVersion) {
 
-		if (!isEnabled()) {
-			return;
-		}
-
 		if (PropsValues.DL_FILE_ENTRY_PROCESSORS_TRIGGER_SYNCHRONOUSLY) {
 			try {
 				MessageBusUtil.sendSynchronousMessage(
@@ -207,17 +193,7 @@ public class RawMetadataProcessorImpl
 		}
 	}
 
-	private RawMetadataProcessorImpl() {
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(
 		RawMetadataProcessorImpl.class);
-
-	private static RawMetadataProcessorImpl _instance =
-		new RawMetadataProcessorImpl();
-
-	static {
-		InstancePool.put(RawMetadataProcessorImpl.class.getName(), _instance);
-	}
 
 }

@@ -50,7 +50,7 @@ import java.io.InputStream;
 /**
  * @author Alexander Chow
  */
-public abstract class DLPreviewableProcessor extends BaseDLProcessorImpl {
+public abstract class DLPreviewableProcessor implements DLProcessor {
 
 	public static final String PREVIEW_PATH = "document_preview/";
 

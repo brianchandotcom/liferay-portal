@@ -15,7 +15,7 @@
 package com.liferay.portlet.documentlibrary.util;
 
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portlet.documentlibrary.model.DLProcessorConstants;
 
 import java.io.InputStream;
 
@@ -28,74 +28,131 @@ public class PDFProcessorUtil {
 			FileVersion sourceFileVersion, FileVersion destinationFileVersion)
 		throws Exception {
 
-		getPDFProcessor().generateImages(
-			sourceFileVersion, destinationFileVersion);
+		PDFProcessor pdfProcessor = getPDFProcessor();
+
+		if (pdfProcessor != null) {
+			pdfProcessor.generateImages(
+				sourceFileVersion, destinationFileVersion);
+		}
 	}
 
 	public static PDFProcessor getPDFProcessor() {
-		PortalRuntimePermission.checkGetBeanProperty(PDFProcessorUtil.class);
-
-		return _pdfProcessor;
+		return (PDFProcessor)DLProcessorRegistryUtil.getDLProcessor(
+			DLProcessorConstants.PDF_PROCESSOR);
 	}
 
 	public static InputStream getPreviewAsStream(
 			FileVersion fileVersion, int index)
 		throws Exception {
 
-		return getPDFProcessor().getPreviewAsStream(fileVersion, index);
+		PDFProcessor pdfProcessor = getPDFProcessor();
+
+		if (pdfProcessor == null) {
+			return null;
+		}
+
+		return pdfProcessor.getPreviewAsStream(fileVersion, index);
 	}
 
 	public static int getPreviewFileCount(FileVersion fileVersion) {
-		return getPDFProcessor().getPreviewFileCount(fileVersion);
+		PDFProcessor pdfProcessor = getPDFProcessor();
+
+		if (pdfProcessor == null) {
+			return 0;
+		}
+
+		return pdfProcessor.getPreviewFileCount(fileVersion);
 	}
 
 	public static long getPreviewFileSize(FileVersion fileVersion, int index)
 		throws Exception {
 
-		return getPDFProcessor().getPreviewFileSize(fileVersion, index);
+		PDFProcessor pdfProcessor = getPDFProcessor();
+
+		if (pdfProcessor == null) {
+			return 0;
+		}
+
+		return pdfProcessor.getPreviewFileSize(fileVersion, index);
 	}
 
 	public static InputStream getThumbnailAsStream(
 			FileVersion fileVersion, int index)
 		throws Exception {
 
-		return getPDFProcessor().getThumbnailAsStream(fileVersion, index);
+		PDFProcessor pdfProcessor = getPDFProcessor();
+
+		if (pdfProcessor == null) {
+			return null;
+		}
+
+		return pdfProcessor.getThumbnailAsStream(fileVersion, index);
 	}
 
 	public static long getThumbnailFileSize(FileVersion fileVersion, int index)
 		throws Exception {
 
-		return getPDFProcessor().getThumbnailFileSize(fileVersion, index);
+		PDFProcessor pdfProcessor = getPDFProcessor();
+
+		if (pdfProcessor == null) {
+			return 0;
+		}
+
+		return pdfProcessor.getThumbnailFileSize(fileVersion, index);
 	}
 
 	public static boolean hasImages(FileVersion fileVersion) {
-		return getPDFProcessor().hasImages(fileVersion);
+		PDFProcessor pdfProcessor = getPDFProcessor();
+
+		if (pdfProcessor == null) {
+			return false;
+		}
+
+		return pdfProcessor.hasImages(fileVersion);
 	}
 
 	public static boolean isDocumentSupported(FileVersion fileVersion) {
-		return getPDFProcessor().isDocumentSupported(fileVersion);
+		PDFProcessor pdfProcessor = getPDFProcessor();
+
+		if (pdfProcessor == null) {
+			return false;
+		}
+
+		return pdfProcessor.isDocumentSupported(fileVersion);
 	}
 
 	public static boolean isDocumentSupported(String mimeType) {
-		return getPDFProcessor().isDocumentSupported(mimeType);
+		PDFProcessor pdfProcessor = getPDFProcessor();
+
+		if (pdfProcessor == null) {
+			return false;
+		}
+
+		return pdfProcessor.isDocumentSupported(mimeType);
 	}
 
 	public static boolean isSupported(String mimeType) {
-		return getPDFProcessor().isSupported(mimeType);
+		PDFProcessor pdfProcessor = getPDFProcessor();
+
+		if (pdfProcessor == null) {
+			return false;
+		}
+
+		return pdfProcessor.isSupported(mimeType);
 	}
 
 	public static void trigger(
 		FileVersion sourceFileVersion, FileVersion destinationFileVersion) {
 
-		getPDFProcessor().trigger(sourceFileVersion, destinationFileVersion);
+		PDFProcessor pdfProcessor = getPDFProcessor();
+
+		pdfProcessor.trigger(sourceFileVersion, destinationFileVersion);
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public void setPDFProcessor(PDFProcessor pdfProcessor) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
-		_pdfProcessor = pdfProcessor;
 	}
-
-	private static PDFProcessor _pdfProcessor;
 
 }

@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -66,29 +65,34 @@ import org.im4java.core.IMOperation;
 public class PDFProcessorImpl
 	extends DLPreviewableProcessor implements PDFProcessor {
 
-	public static PDFProcessorImpl getInstance() {
-		return _instance;
+	public PDFProcessorImpl() {
+		try {
+			FileUtil.mkdirs(PREVIEW_TMP_PATH);
+			FileUtil.mkdirs(THUMBNAIL_TMP_PATH);
+
+			ImageMagickUtil.reset();
+		}
+		catch (Exception e) {
+			_log.warn(e, e);
+		}
 	}
 
 	public void generateImages(
 			FileVersion sourceFileVersion, FileVersion destinationFileVersion)
 		throws Exception {
 
-		Initializer._initializedInstance._generateImages(
-			sourceFileVersion, destinationFileVersion);
+		_generateImages(sourceFileVersion, destinationFileVersion);
 	}
 
 	public InputStream getPreviewAsStream(FileVersion fileVersion, int index)
 		throws Exception {
 
-		return Initializer._initializedInstance.doGetPreviewAsStream(
-			fileVersion, index, PREVIEW_TYPE);
+		return doGetPreviewAsStream(fileVersion, index, PREVIEW_TYPE);
 	}
 
 	public int getPreviewFileCount(FileVersion fileVersion) {
 		try {
-			return Initializer._initializedInstance.doGetPreviewFileCount(
-				fileVersion);
+			return doGetPreviewFileCount(fileVersion);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -100,8 +104,7 @@ public class PDFProcessorImpl
 	public long getPreviewFileSize(FileVersion fileVersion, int index)
 		throws Exception {
 
-		return Initializer._initializedInstance.doGetPreviewFileSize(
-			fileVersion, index);
+		return doGetPreviewFileSize(fileVersion, index);
 	}
 
 	public InputStream getThumbnailAsStream(FileVersion fileVersion, int index)
@@ -123,8 +126,7 @@ public class PDFProcessorImpl
 			hasImages = _hasImages(fileVersion);
 
 			if (!hasImages && isSupported(fileVersion)) {
-				Initializer._initializedInstance._queueGeneration(
-					null, fileVersion);
+				_queueGeneration(null, fileVersion);
 			}
 		}
 		catch (Exception e) {
@@ -135,11 +137,11 @@ public class PDFProcessorImpl
 	}
 
 	public boolean isDocumentSupported(FileVersion fileVersion) {
-		return Initializer._initializedInstance.isSupported(fileVersion);
+		return isSupported(fileVersion);
 	}
 
 	public boolean isDocumentSupported(String mimeType) {
-		return Initializer._initializedInstance.isSupported(mimeType);
+		return isSupported(mimeType);
 	}
 
 	public boolean isSupported(String mimeType) {
@@ -174,8 +176,7 @@ public class PDFProcessorImpl
 	public void trigger(
 		FileVersion sourceFileVersion, FileVersion destinationFileVersion) {
 
-		Initializer._initializedInstance._queueGeneration(
-			sourceFileVersion, destinationFileVersion);
+		_queueGeneration(sourceFileVersion, destinationFileVersion);
 	}
 
 	@Override
@@ -248,8 +249,7 @@ public class PDFProcessorImpl
 		}
 
 		if (!portletDataContext.isPerformDirectBinaryImport()) {
-			int previewFileCount = PDFProcessorUtil.getPreviewFileCount(
-				fileVersion);
+			int previewFileCount = getPreviewFileCount(fileVersion);
 
 			fileEntryElement.addAttribute(
 				"bin-path-pdf-preview-count", String.valueOf(previewFileCount));
@@ -299,21 +299,6 @@ public class PDFProcessorImpl
 				portletDataContext, fileEntry, importedFileEntry,
 				fileEntryElement, "pdf", PREVIEW_TYPE, i);
 		}
-	}
-
-	protected void initialize() {
-		try {
-			FileUtil.mkdirs(PREVIEW_TMP_PATH);
-			FileUtil.mkdirs(THUMBNAIL_TMP_PATH);
-
-			ImageMagickUtil.reset();
-		}
-		catch (Exception e) {
-			_log.warn(e, e);
-		}
-	}
-
-	private PDFProcessorImpl() {
 	}
 
 	private void _generateImages(FileVersion fileVersion, File file)
@@ -730,24 +715,6 @@ public class PDFProcessorImpl
 
 	private static Log _log = LogFactoryUtil.getLog(PDFProcessorImpl.class);
 
-	private static PDFProcessorImpl _instance = new PDFProcessorImpl();
-
-	static {
-		InstancePool.put(PDFProcessorImpl.class.getName(), _instance);
-	}
-
 	private List<Long> _fileVersionIds = new Vector<Long>();
-
-	private static class Initializer {
-
-		private static PDFProcessorImpl _initializedInstance;
-
-		static {
-			_instance.initialize();
-
-			_initializedInstance = _instance;
-		}
-
-	}
 
 }

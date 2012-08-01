@@ -15,7 +15,7 @@
 package com.liferay.portlet.documentlibrary.util;
 
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portlet.documentlibrary.model.DLProcessorConstants;
 
 import java.io.InputStream;
 
@@ -30,61 +30,110 @@ public class AudioProcessorUtil {
 			FileVersion sourceFileVersion, FileVersion destinationFileVersion)
 		throws Exception {
 
-		getAudioProcessor().generateAudio(
-			sourceFileVersion, destinationFileVersion);
+		AudioProcessor audioProcessor = getAudioProcessor();
+
+		if (audioProcessor != null) {
+			audioProcessor.generateAudio(
+				sourceFileVersion, destinationFileVersion);
+		}
 	}
 
 	public static Set<String> getAudioMimeTypes() {
-		return getAudioProcessor().getAudioMimeTypes();
+		AudioProcessor audioProcessor = getAudioProcessor();
+
+		if (audioProcessor == null) {
+			return null;
+		}
+
+		return audioProcessor.getAudioMimeTypes();
 	}
 
 	public static AudioProcessor getAudioProcessor() {
-		PortalRuntimePermission.checkGetBeanProperty(AudioProcessorUtil.class);
-
-		return _audioProcessor;
+		return (AudioProcessor)DLProcessorRegistryUtil.getDLProcessor(
+			DLProcessorConstants.AUDIO_PROCESSOR);
 	}
 
 	public static InputStream getPreviewAsStream(
 			FileVersion fileVersion, String type)
 		throws Exception {
 
-		return getAudioProcessor().getPreviewAsStream(fileVersion, type);
+		AudioProcessor audioProcessor = getAudioProcessor();
+
+		if (audioProcessor == null) {
+			return null;
+		}
+
+		return audioProcessor.getPreviewAsStream(fileVersion, type);
 	}
 
 	public static long getPreviewFileSize(FileVersion fileVersion, String type)
 		throws Exception {
 
-		return getAudioProcessor().getPreviewFileSize(fileVersion, type);
+		AudioProcessor audioProcessor = getAudioProcessor();
+
+		if (audioProcessor == null) {
+			return 0;
+		}
+
+		return audioProcessor.getPreviewFileSize(fileVersion, type);
 	}
 
 	public static boolean hasAudio(FileVersion fileVersion) {
-		return getAudioProcessor().hasAudio(fileVersion);
+		AudioProcessor audioProcessor = getAudioProcessor();
+
+		if (audioProcessor == null) {
+			return false;
+		}
+
+		return audioProcessor.hasAudio(fileVersion);
 	}
 
 	public static boolean isAudioSupported(FileVersion fileVersion) {
-		return getAudioProcessor().isAudioSupported(fileVersion);
+		AudioProcessor audioProcessor = getAudioProcessor();
+
+		if (audioProcessor == null) {
+			return false;
+		}
+
+		return audioProcessor.isAudioSupported(fileVersion);
 	}
 
 	public static boolean isAudioSupported(String mimeType) {
-		return getAudioProcessor().isAudioSupported(mimeType);
+		AudioProcessor audioProcessor = getAudioProcessor();
+
+		if (audioProcessor == null) {
+			return false;
+		}
+
+		return audioProcessor.isAudioSupported(mimeType);
 	}
 
 	public static boolean isSupported(String mimeType) {
-		return getAudioProcessor().isSupported(mimeType);
+		AudioProcessor audioProcessor = getAudioProcessor();
+
+		if (audioProcessor == null) {
+			return false;
+		}
+
+		return audioProcessor.isSupported(mimeType);
 	}
 
 	public static void trigger(
 		FileVersion sourceFileVersion, FileVersion destinationFileVersion) {
 
-		getAudioProcessor().trigger(sourceFileVersion, destinationFileVersion);
+		AudioProcessor audioProcessor = getAudioProcessor();
+
+		if (audioProcessor == null) {
+			return;
+		}
+
+		audioProcessor.trigger(sourceFileVersion, destinationFileVersion);
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public void setAudioProcessor(AudioProcessor audioProcessor) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
-		_audioProcessor = audioProcessor;
 	}
-
-	private static AudioProcessor _audioProcessor;
 
 }

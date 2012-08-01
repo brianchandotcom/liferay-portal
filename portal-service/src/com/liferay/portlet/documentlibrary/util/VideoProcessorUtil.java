@@ -15,7 +15,7 @@
 package com.liferay.portlet.documentlibrary.util;
 
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portlet.documentlibrary.model.DLProcessorConstants;
 
 import java.io.InputStream;
 
@@ -30,74 +30,133 @@ public class VideoProcessorUtil {
 			FileVersion sourceFileVersion, FileVersion destinationFileVersion)
 		throws Exception {
 
-		getVideoProcessor().generateVideo(
-			sourceFileVersion, destinationFileVersion);
+		VideoProcessor videoProcessor = getVideoProcessor();
+
+		if (videoProcessor != null) {
+			videoProcessor.generateVideo(
+				sourceFileVersion, destinationFileVersion);
+		}
 	}
 
 	public static InputStream getPreviewAsStream(
 			FileVersion fileVersion, String type)
 		throws Exception {
 
-		return getVideoProcessor().getPreviewAsStream(fileVersion, type);
+		VideoProcessor videoProcessor = getVideoProcessor();
+
+		if (videoProcessor == null) {
+			return null;
+		}
+
+		return videoProcessor.getPreviewAsStream(fileVersion, type);
 	}
 
 	public static long getPreviewFileSize(FileVersion fileVersion, String type)
 		throws Exception {
 
-		return getVideoProcessor().getPreviewFileSize(fileVersion, type);
+		VideoProcessor videoProcessor = getVideoProcessor();
+
+		if (videoProcessor == null) {
+			return 0;
+		}
+
+		return videoProcessor.getPreviewFileSize(fileVersion, type);
 	}
 
 	public static InputStream getThumbnailAsStream(
 			FileVersion fileVersion, int index)
 		throws Exception {
 
-		return getVideoProcessor().getThumbnailAsStream(fileVersion, index);
+		VideoProcessor videoProcessor = getVideoProcessor();
+
+		if (videoProcessor == null) {
+			return null;
+		}
+
+		return videoProcessor.getThumbnailAsStream(fileVersion, index);
 	}
 
 	public static long getThumbnailFileSize(FileVersion fileVersion, int index)
 		throws Exception {
 
-		return getVideoProcessor().getThumbnailFileSize(fileVersion, index);
+		VideoProcessor videoProcessor = getVideoProcessor();
+
+		if (videoProcessor == null) {
+			return 0;
+		}
+
+		return videoProcessor.getThumbnailFileSize(fileVersion, index);
 	}
 
 	public static Set<String> getVideoMimeTypes() {
-		return getVideoProcessor().getVideoMimeTypes();
+		VideoProcessor videoProcessor = getVideoProcessor();
+
+		if (videoProcessor == null) {
+			return null;
+		}
+
+		return videoProcessor.getVideoMimeTypes();
 	}
 
 	public static VideoProcessor getVideoProcessor() {
-		PortalRuntimePermission.checkGetBeanProperty(VideoProcessorUtil.class);
-
-		return _videoProcessor;
+		return (VideoProcessor)DLProcessorRegistryUtil.getDLProcessor(
+			DLProcessorConstants.VIDEO_PROCESSOR);
 	}
 
 	public static boolean hasVideo(FileVersion fileVersion) {
-		return getVideoProcessor().hasVideo(fileVersion);
+		VideoProcessor videoProcessor = getVideoProcessor();
+
+		if (videoProcessor == null) {
+			return false;
+		}
+
+		return videoProcessor.hasVideo(fileVersion);
 	}
 
 	public static boolean isSupported(String mimeType) {
-		return getVideoProcessor().isSupported(mimeType);
+		VideoProcessor videoProcessor = getVideoProcessor();
+
+		if (videoProcessor == null) {
+			return false;
+		}
+
+		return videoProcessor.isSupported(mimeType);
 	}
 
 	public static boolean isVideoSupported(FileVersion fileVersion) {
-		return getVideoProcessor().isVideoSupported(fileVersion);
+		VideoProcessor videoProcessor = getVideoProcessor();
+
+		if (videoProcessor == null) {
+			return false;
+		}
+
+		return videoProcessor.isVideoSupported(fileVersion);
 	}
 
 	public static boolean isVideoSupported(String mimeType) {
-		return getVideoProcessor().isVideoSupported(mimeType);
+		VideoProcessor videoProcessor = getVideoProcessor();
+
+		if (videoProcessor == null) {
+			return false;
+		}
+
+		return videoProcessor.isVideoSupported(mimeType);
 	}
 
 	public static void trigger(
 		FileVersion sourceFileVersion, FileVersion destinationFileVersion) {
 
-		getVideoProcessor().trigger(sourceFileVersion, destinationFileVersion);
+		VideoProcessor videoProcessor = getVideoProcessor();
+
+		if (videoProcessor != null) {
+			videoProcessor.trigger(sourceFileVersion, destinationFileVersion);
+		}
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public void setVideoProcessor(VideoProcessor videoProcessor) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
-		_videoProcessor = videoProcessor;
 	}
-
-	private static VideoProcessor _videoProcessor;
 
 }

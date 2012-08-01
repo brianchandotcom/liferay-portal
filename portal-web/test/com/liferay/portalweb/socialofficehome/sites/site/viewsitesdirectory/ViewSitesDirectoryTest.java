@@ -51,7 +51,7 @@ public class ViewSitesDirectoryTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//button[contains(.,'Site Directory')]/span[2]")) {
+							"//button[contains(.,'Sites Directory')]/span[2]")) {
 					break;
 				}
 			}
@@ -61,10 +61,10 @@ public class ViewSitesDirectoryTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Site Directory"),
-			selenium.getText("//button[contains(.,'Site Directory')]/span[2]"));
-		selenium.clickAt("//button[contains(.,'Site Directory')]/span[2]",
-			RuntimeVariables.replace("Site Directory"));
+		assertEquals(RuntimeVariables.replace("Sites Directory"),
+			selenium.getText("//button[contains(.,'Sites Directory')]/span[2]"));
+		selenium.clickAt("//button[contains(.,'Sites Directory')]/span[2]",
+			RuntimeVariables.replace("Sites Directory"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -101,12 +101,6 @@ public class ViewSitesDirectoryTest extends BaseTestCase {
 				"Private Restricted Site2 Description"),
 			selenium.getText(
 				"xPath=(//span[@class='description'])[contains(.,'Private Restricted Site2 Description')]"));
-		assertEquals(RuntimeVariables.replace("Private Site3 Name"),
-			selenium.getText(
-				"xPath=(//span[@class='name']/a)[contains(.,'Private Site3 Name')]"));
-		assertEquals(RuntimeVariables.replace("Private Site3 Description"),
-			selenium.getText(
-				"xPath=(//span[@class='description'])[contains(.,'Private Site3 Description')]"));
 		assertEquals(RuntimeVariables.replace("Public Restricted Site4 Name"),
 			selenium.getText(
 				"xPath=(//span[@class='name']/a)[contains(.,'Public Restricted Site4 Name')]"));
@@ -114,5 +108,16 @@ public class ViewSitesDirectoryTest extends BaseTestCase {
 				"Public Restricted Site4 Description"),
 			selenium.getText(
 				"xPath=(//span[@class='description'])[contains(.,'Public Restricted Site4 Description')]"));
+		assertEquals(RuntimeVariables.replace("All Sites My Sites My Favorites"),
+			selenium.getText("//select[@id='_5_WAR_soportlet_tabs1']"));
+		selenium.select("//select[@id='_5_WAR_soportlet_tabs1']",
+			RuntimeVariables.replace("My Sites"));
+		Thread.sleep(5000);
+		assertEquals(RuntimeVariables.replace("Private Site3 Description"),
+			selenium.getText(
+				"xPath=(//span[@class='description'])[contains(.,'Private Site3 Description')]"));
+		assertEquals(RuntimeVariables.replace("Private Site3 Name"),
+			selenium.getText(
+				"xPath=(//span[@class='name']/a)[contains(.,'Private Site3 Name')]"));
 	}
 }

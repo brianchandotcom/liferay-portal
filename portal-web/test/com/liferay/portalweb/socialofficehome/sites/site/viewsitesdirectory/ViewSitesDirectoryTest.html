@@ -25,18 +25,18 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//button[contains(.,'Site Directory')]/span[2]</td>
-	<td>Site Directory</td>
+	<td>//button[contains(.,'Sites Directory')]/span[2]</td>
+	<td>Sites Directory</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//button[contains(.,'Site Directory')]/span[2]</td>
-	<td>Site Directory</td>
+	<td>//button[contains(.,'Sites Directory')]/span[2]</td>
+	<td>Sites Directory</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//button[contains(.,'Site Directory')]/span[2]</td>
-	<td>Site Directory</td>
+	<td>//button[contains(.,'Sites Directory')]/span[2]</td>
+	<td>Sites Directory</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -80,8 +80,28 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//span[@class='name']/a)[contains(.,'Private Site3 Name')]</td>
-	<td>Private Site3 Name</td>
+	<td>xPath=(//span[@class='name']/a)[contains(.,'Public Restricted Site4 Name')]</td>
+	<td>Public Restricted Site4 Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>xPath=(//span[@class='description'])[contains(.,'Public Restricted Site4 Description')]</td>
+	<td>Public Restricted Site4 Description</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//select[@id='_5_WAR_soportlet_tabs1']</td>
+	<td>All Sites My Sites My Favorites</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>//select[@id='_5_WAR_soportlet_tabs1']</td>
+	<td>My Sites</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -90,13 +110,8 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//span[@class='name']/a)[contains(.,'Public Restricted Site4 Name')]</td>
-	<td>Public Restricted Site4 Name</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>xPath=(//span[@class='description'])[contains(.,'Public Restricted Site4 Description')]</td>
-	<td>Public Restricted Site4 Description</td>
+	<td>xPath=(//span[@class='name']/a)[contains(.,'Private Site3 Name')]</td>
+	<td>Private Site3 Name</td>
 </tr>
 </tbody></table>
 </body>

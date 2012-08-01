@@ -22,9 +22,9 @@ String icon = GetterUtil.getString((String)request.getAttribute("liferay-ui:ddm-
 String message = (String)request.getAttribute("liferay-ui:ddm-template-selector:message");
 String refreshURL = (String)request.getAttribute("liferay-ui:ddm-template-selector:refreshURL");
 
-Group controlPanelGroup = GroupLocalServiceUtil.getGroup(themeDisplay.getCompanyId(), GroupConstants.CONTROL_PANEL);
+long controlPanelPlid = PortalUtil.getControlPanelPlid(company.getCompanyId());
 
-LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(request, PortletKeys.PORTLET_DISPLAY_TEMPLATES, LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.getGroupId(), true), PortletRequest.RENDER_PHASE);
+LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(request, PortletKeys.PORTLET_DISPLAY_TEMPLATES, controlPanelPlid, PortletRequest.RENDER_PHASE);
 
 liferayPortletURL.setDoAsGroupId(scopeGroupId);
 liferayPortletURL.setParameter("struts_action", "/dynamic_data_mapping/view_template");

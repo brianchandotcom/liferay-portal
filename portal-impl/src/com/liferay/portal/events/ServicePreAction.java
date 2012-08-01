@@ -857,11 +857,7 @@ public class ServicePreAction extends Action {
 		long controlPanelPlid = 0;
 
 		if (signedIn) {
-			Group controlPanelGroup = GroupLocalServiceUtil.getGroup(
-				companyId, GroupConstants.CONTROL_PANEL);
-
-			controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(
-				controlPanelGroup.getGroupId(), true);
+			controlPanelPlid = PortalUtil.getControlPanelPlid(companyId);
 
 			List<Portlet> siteContentPortlets =
 				PortalUtil.getControlPanelPortlets(

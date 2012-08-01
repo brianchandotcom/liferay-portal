@@ -339,6 +339,18 @@ public class PortalUtil {
 		return getPortal().getControlPanelFullURL(scopeGroupId, ppid, params);
 	}
 
+	public static long getControlPanelPlid(long companyId)
+		throws PortalException, SystemException {
+
+		return getPortal().getControlPanelPlid(companyId);
+	}
+
+	public static long getControlPanelPlid(PortletRequest portletRequest)
+		throws PortalException, SystemException {
+
+		return getPortal().getControlPanelPlid(portletRequest);
+	}
+
 	public static Set<Portlet> getControlPanelPortlets(
 			long companyId, String category)
 		throws SystemException {

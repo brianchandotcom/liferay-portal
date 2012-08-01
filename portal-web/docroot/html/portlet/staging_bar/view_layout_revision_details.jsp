@@ -92,9 +92,7 @@ else {
 					handler: function(event) {
 
 						<%
-						Group controlPanelGroup = GroupLocalServiceUtil.getGroup(themeDisplay.getCompanyId(), GroupConstants.CONTROL_PANEL);
-
-						long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.getGroupId(), true);
+						long controlPanelPlid = PortalUtil.getControlPanelPlid(company.getCompanyId());
 
 						PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(controlPanelPlid, PortletKeys.MY_WORKFLOW_TASKS, PortletRequest.RENDER_PHASE);
 

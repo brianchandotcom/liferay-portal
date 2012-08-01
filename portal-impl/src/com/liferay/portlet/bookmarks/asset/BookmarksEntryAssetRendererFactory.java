@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLFactoryUtil;
@@ -86,7 +87,8 @@ public class BookmarksEntryAssetRendererFactory
 		}
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-			request, PortletKeys.BOOKMARKS, getControlPanelPlid(themeDisplay),
+			request, PortletKeys.BOOKMARKS,
+			PortalUtil.getControlPanelPlid(themeDisplay.getCompanyId()),
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("struts_action", "/bookmarks/edit_entry");

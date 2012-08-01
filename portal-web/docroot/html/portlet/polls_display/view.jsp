@@ -112,9 +112,7 @@ boolean showIconsActions = themeDisplay.isSignedIn() && (hasConfigurationPermiss
 <c:if test="<%= hasViewPermission && showIconsActions %>">
 
 	<%
-	Group controlPanelGroup = GroupLocalServiceUtil.getGroup(themeDisplay.getCompanyId(), GroupConstants.CONTROL_PANEL);
-
-	long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.getGroupId(), true);
+	long controlPanelPlid = PortalUtil.getControlPanelPlid(company.getCompanyId());
 
 	PortletURL redirectURL = liferayPortletResponse.createRenderURL();
 

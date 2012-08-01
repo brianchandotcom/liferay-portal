@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
@@ -82,8 +83,8 @@ public class CalEventAssetRenderer extends BaseAssetRenderer {
 		throws Exception {
 
 		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
-			getControlPanelPlid(liferayPortletRequest), PortletKeys.CALENDAR,
-			PortletRequest.RENDER_PHASE);
+			PortalUtil.getControlPanelPlid(liferayPortletRequest),
+			PortletKeys.CALENDAR, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("struts_action", "/calendar/edit_event");
 		portletURL.setParameter("eventId", String.valueOf(_event.getEventId()));

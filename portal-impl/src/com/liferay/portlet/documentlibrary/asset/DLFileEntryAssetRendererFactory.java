@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLFactoryUtil;
@@ -139,7 +140,8 @@ public class DLFileEntryAssetRendererFactory extends BaseAssetRendererFactory {
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
 			request, PortletKeys.DOCUMENT_LIBRARY,
-			getControlPanelPlid(themeDisplay), PortletRequest.RENDER_PHASE);
+			PortalUtil.getControlPanelPlid(themeDisplay.getCompanyId()),
+			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(
 			"struts_action", "/document_library/edit_file_entry");

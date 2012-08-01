@@ -56,9 +56,7 @@ String language = BeanParamUtil.getString(template, request, "language", DDMTemp
 			title: '<%= UnicodeLanguageUtil.get(pageContext, "editor") %>',
 
 			<%
-			Group controlPanelGroup = GroupLocalServiceUtil.getGroup(company.getCompanyId(), GroupConstants.CONTROL_PANEL);
-
-			long controlPanelPlid = LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.getGroupId(), true);
+			long controlPanelPlid = PortalUtil.getControlPanelPlid(company.getCompanyId());
 
 			PortletURL portletURL = PortletURLFactoryUtil.create(request, PortletKeys.JOURNAL, controlPanelPlid, PortletRequest.RENDER_PHASE);
 

@@ -1348,6 +1348,25 @@ public class PortalImpl implements Portal {
 		return sb.toString();
 	}
 
+	public long getControlPanelPlid(long companyId)
+		throws PortalException, SystemException {
+
+		Group controlPanelGroup = GroupLocalServiceUtil.getGroup(
+			companyId, GroupConstants.CONTROL_PANEL);
+
+		return LayoutLocalServiceUtil.getDefaultPlid(
+			controlPanelGroup.getGroupId(), true);
+	}
+
+	public long getControlPanelPlid(PortletRequest portletRequest)
+		throws PortalException, SystemException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return getControlPanelPlid(themeDisplay.getCompanyId());
+	}
+
 	public Set<Portlet> getControlPanelPortlets(long companyId, String category)
 		throws SystemException {
 

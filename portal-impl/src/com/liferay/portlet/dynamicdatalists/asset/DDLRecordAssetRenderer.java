@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.model.BaseAssetRenderer;
@@ -89,7 +90,7 @@ public class DDLRecordAssetRenderer extends BaseAssetRenderer {
 		throws Exception {
 
 		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
-			getControlPanelPlid(liferayPortletRequest),
+			PortalUtil.getControlPanelPlid(liferayPortletRequest),
 			PortletKeys.DYNAMIC_DATA_LISTS, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(

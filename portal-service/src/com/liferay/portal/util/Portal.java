@@ -452,6 +452,12 @@ public interface Portal {
 			long scopeGroupId, String ppid, Map<String, String[]> params)
 		throws PortalException, SystemException;
 
+	public long getControlPanelPlid(long companyId)
+		throws PortalException, SystemException;
+
+	public long getControlPanelPlid(PortletRequest portletRequest)
+		throws PortalException, SystemException;
+
 	public Set<Portlet> getControlPanelPortlets(long companyId, String category)
 		throws SystemException;
 

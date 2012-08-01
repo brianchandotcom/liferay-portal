@@ -51,9 +51,9 @@ else {
 	}
 }
 
-Group controlPanelGroup = GroupLocalServiceUtil.getGroup(themeDisplay.getCompanyId(), GroupConstants.CONTROL_PANEL);
+long controlPanelPlid = PortalUtil.getControlPanelPlid(company.getCompanyId());
 
-PortletURL assetBrowserURL = PortletURLFactoryUtil.create(request, PortletKeys.ASSET_BROWSER, LayoutLocalServiceUtil.getDefaultPlid(controlPanelGroup.getGroupId(), true), PortletRequest.RENDER_PHASE);
+PortletURL assetBrowserURL = PortletURLFactoryUtil.create(request, PortletKeys.ASSET_BROWSER, controlPanelPlid, PortletRequest.RENDER_PHASE);
 
 assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 assetBrowserURL.setPortletMode(PortletMode.VIEW);

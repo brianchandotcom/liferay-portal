@@ -110,8 +110,8 @@ public class JournalArticleAssetRenderer extends BaseAssetRenderer {
 		throws Exception {
 
 		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
-			getControlPanelPlid(liferayPortletRequest), PortletKeys.JOURNAL,
-			PortletRequest.RENDER_PHASE);
+			PortalUtil.getControlPanelPlid(liferayPortletRequest),
+			PortletKeys.JOURNAL, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("struts_action", "/journal/edit_article");
 		portletURL.setParameter(

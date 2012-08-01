@@ -656,7 +656,7 @@ public class LayoutExporter {
 			portletDataContext, layoutElement, layoutElement, layoutElement,
 			dlFileEntryTypesElement, dlFoldersElement, dlFilesElement,
 			dlFileRanksElement, dlRepositoriesElement,
-			dlRepositoryEntriesElement, article, null, false);
+			dlRepositoryEntriesElement, article, false);
 	}
 
 	protected void exportLayout(

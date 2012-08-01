@@ -243,7 +243,7 @@ public class RSSPortletDataHandlerImpl extends JournalPortletDataHandlerImpl {
 				portletDataContext, rootElement, rootElement, rootElement,
 				dlFileEntryTypesElement, dlFoldersElement, dlFilesElement,
 				dlFileRanksElement, dlRepositoriesElement,
-				dlRepositoryEntriesElement, article, null, false);
+				dlRepositoryEntriesElement, article, false);
 		}
 
 		return document.formattedString();

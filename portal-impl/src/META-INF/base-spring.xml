@@ -16,7 +16,13 @@
 		<property name="dataSource" ref="liferayDataSource" />
 		<property name="sessionFactory" ref="liferaySessionFactory" />
 	</bean>
-	<bean id="serviceAdvice" class="com.liferay.portal.security.pacl.PACLAdvice">
+	<bean id="serviceAdvice" class="com.liferay.portal.security.ac.AccessControlAdvice">
+		<property name="nextMethodInterceptor" ref="paclAdvice" />
+		<property name="accessControlAdvisor">
+			<bean class="com.liferay.portal.security.ac.AccessControlAdvisorImpl" />
+		</property>
+	</bean>
+	<bean id="paclAdvice" class="com.liferay.portal.security.pacl.PACLAdvice">
 		<property name="nextMethodInterceptor" ref="asyncAdvice" />
 	</bean>
 	<bean id="asyncAdvice" class="com.liferay.portal.messaging.async.AsyncAdvice">

@@ -523,6 +523,11 @@
 			</bean>
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.security.ac.AccessControlUtil" class="com.liferay.portal.security.ac.AccessControlUtil">
+		<property name="accessControl">
+			<bean class="com.liferay.portal.security.ac.AccessControlImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.security.auth.AuthenticatedUserUUIDStoreUtil" class="com.liferay.portal.security.auth.AuthenticatedUserUUIDStoreUtil">
 		<property name="authenticatedUserUUIDStore">
 			<bean class="com.liferay.portal.security.auth.DefaultAuthenticatedUserUUIDStoreImpl" />

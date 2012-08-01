@@ -15,7 +15,7 @@
 package com.liferay.portlet.documentlibrary.util;
 
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portlet.documentlibrary.model.DLProcessorConstants;
 
 import java.io.InputStream;
 
@@ -26,6 +26,9 @@ import java.util.Set;
  */
 public class AudioProcessorUtil {
 
+	/**
+	 * @deprecated
+	 */
 	public static void generateAudio(
 			FileVersion sourceFileVersion, FileVersion destinationFileVersion)
 		throws Exception {
@@ -34,16 +37,23 @@ public class AudioProcessorUtil {
 			sourceFileVersion, destinationFileVersion);
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public static Set<String> getAudioMimeTypes() {
 		return getAudioProcessor().getAudioMimeTypes();
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public static AudioProcessor getAudioProcessor() {
-		PortalRuntimePermission.checkGetBeanProperty(AudioProcessorUtil.class);
-
 		return _audioProcessor;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public static InputStream getPreviewAsStream(
 			FileVersion fileVersion, String type)
 		throws Exception {
@@ -51,40 +61,61 @@ public class AudioProcessorUtil {
 		return getAudioProcessor().getPreviewAsStream(fileVersion, type);
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public static long getPreviewFileSize(FileVersion fileVersion, String type)
 		throws Exception {
 
 		return getAudioProcessor().getPreviewFileSize(fileVersion, type);
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public static boolean hasAudio(FileVersion fileVersion) {
 		return getAudioProcessor().hasAudio(fileVersion);
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public static boolean isAudioSupported(FileVersion fileVersion) {
 		return getAudioProcessor().isAudioSupported(fileVersion);
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public static boolean isAudioSupported(String mimeType) {
 		return getAudioProcessor().isAudioSupported(mimeType);
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public static boolean isSupported(String mimeType) {
 		return getAudioProcessor().isSupported(mimeType);
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public static void trigger(
 		FileVersion sourceFileVersion, FileVersion destinationFileVersion) {
 
 		getAudioProcessor().trigger(sourceFileVersion, destinationFileVersion);
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public void setAudioProcessor(AudioProcessor audioProcessor) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
 		_audioProcessor = audioProcessor;
 	}
 
-	private static AudioProcessor _audioProcessor;
+	private static AudioProcessor _audioProcessor =
+		(AudioProcessor)DLProcessorRegistryUtil.getDLProcessor(
+			DLProcessorConstants.AUDIO_PROCESSOR);
 
 }

@@ -31,9 +31,12 @@ import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.model.DLProcessorConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
-import com.liferay.portlet.documentlibrary.util.RawMetadataProcessorUtil;
+import com.liferay.portlet.documentlibrary.util.DLProcessor;
+import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
+import com.liferay.portlet.documentlibrary.util.RawMetadataProcessor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -108,7 +111,15 @@ public class ActionUtil {
 				fileVersion = fileEntry.getFileVersion();
 			}
 
-			RawMetadataProcessorUtil.generateMetadata(fileVersion);
+			DLProcessor dlProcessor = DLProcessorRegistryUtil.getDLProcessor(
+				DLProcessorConstants.RAW_METADATA_PROCESSOR);
+
+			if (dlProcessor != null) {
+				RawMetadataProcessor rawMetadataProcessor =
+					(RawMetadataProcessor)dlProcessor;
+
+				rawMetadataProcessor.generateMetadata(fileVersion);
+			}
 
 			if (fileVersion.isInTrash()) {
 				throw new NoSuchFileException();

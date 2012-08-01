@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portlet.documentlibrary.model.DLProcessorConstants;
 
 /**
  * Document library processor responsible for the generation of raw metadata
@@ -37,21 +37,22 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermissio
  */
 public class RawMetadataProcessorUtil {
 
+	/**
+	 * @deprecated
+	 */
 	public static void cleanUp(FileEntry fileEntry) {
 		getRawMetadataProcessor().cleanUp(fileEntry);
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public static void cleanUp(FileVersion fileVersion) {
 		getRawMetadataProcessor().cleanUp(fileVersion);
 	}
 
 	/**
-	 * Generates the raw metadata associated with the file entry.
-	 *
-	 * @param  fileVersion the file version from which the raw metatada is to be
-	 *         generated
-	 * @throws PortalException if an error occurred in the metadata extraction
-	 * @throws SystemException if a system exception occurred
+	 * @deprecated
 	 */
 	public static void generateMetadata(FileVersion fileVersion)
 		throws PortalException, SystemException {
@@ -59,10 +60,10 @@ public class RawMetadataProcessorUtil {
 		getRawMetadataProcessor().generateMetadata(fileVersion);
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public static RawMetadataProcessor getRawMetadataProcessor() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			RawMetadataProcessorUtil.class);
-
 		return _rawMetadataProcessor;
 	}
 
@@ -75,17 +76,7 @@ public class RawMetadataProcessorUtil {
 	}
 
 	/**
-	 * Saves the raw metadata present in the file version.
-	 *
-	 * <p>
-	 * The raw metadata present in the file version is extracted and persisted
-	 * using {@link com.liferay.portal.metadata.TikaRawMetadataProcessor}.
-	 * </p>
-	 *
-	 * @param  fileVersion the file version from which the raw metatada is to be
-	 *         extracted and persisted
-	 * @throws PortalException if an error occurred in the metadata extraction
-	 * @throws SystemException if a system exception occurred
+	 * @deprecated
 	 */
 	public static void saveMetadata(FileVersion fileVersion)
 		throws PortalException, SystemException {
@@ -94,27 +85,23 @@ public class RawMetadataProcessorUtil {
 	}
 
 	/**
-	 * Launches extraction of raw metadata from the file version.
-	 *
-	 * <p>
-	 * The raw metadata extraction is done asynchronously.
-	 * </p>
-	 *
-	 * @param fileVersion the latest file version from which the raw metadata is
-	 *        to be generated
+	 * @deprecated
 	 */
 	public static void trigger(FileVersion fileVersion) {
 		getRawMetadataProcessor().trigger(fileVersion);
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public void setRawMetadataProcessor(
 		RawMetadataProcessor rawMetadataProcessor) {
-
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_rawMetadataProcessor = rawMetadataProcessor;
 	}
 
-	private static RawMetadataProcessor _rawMetadataProcessor;
+	private static RawMetadataProcessor _rawMetadataProcessor =
+		(RawMetadataProcessor)DLProcessorRegistryUtil.getDLProcessor(
+			DLProcessorConstants.RAW_METADATA_PROCESSOR);
 
 }

@@ -34,8 +34,11 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.model.DLProcessorConstants;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
-import com.liferay.portlet.documentlibrary.util.ImageProcessorUtil;
+import com.liferay.portlet.documentlibrary.util.DLProcessor;
+import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
+import com.liferay.portlet.documentlibrary.util.ImageProcessor;
 
 import java.io.InputStream;
 
@@ -444,7 +447,17 @@ public class UpgradeImageGallery extends UpgradeProcess {
 				if (rs.next()) {
 					long fileVersionId = rs.getLong(1);
 
-					ImageProcessorUtil.storeThumbnail(
+					DLProcessor dlProcessor =
+						DLProcessorRegistryUtil.getDLProcessor(
+							DLProcessorConstants.IMAGE_PROCESSOR);
+
+					if (dlProcessor == null) {
+						return;
+					}
+
+					ImageProcessor imageProcessor = (ImageProcessor)dlProcessor;
+
+					imageProcessor.storeThumbnail(
 						companyId, groupId, fileEntryId, fileVersionId,
 						custom1ImageId, custom2ImageId, is,
 						thumbnailImage.getType());

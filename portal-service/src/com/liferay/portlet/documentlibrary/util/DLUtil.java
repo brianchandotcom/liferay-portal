@@ -52,6 +52,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.model.DLProcessorConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelCreateDateComparator;
@@ -423,17 +424,24 @@ public class DLUtil {
 			sb.append(fileVersion.getVersion());
 		}
 
-		if (ImageProcessorUtil.isImageSupported(fileVersion)) {
-			if (appendVersion) {
-				sb.append("&t=");
-			}
-			else {
-				sb.append("?t=");
-			}
+		DLProcessor dlProcessor = DLProcessorRegistryUtil.getDLProcessor(
+			DLProcessorConstants.IMAGE_PROCESSOR);
 
-			Date modifiedDate = fileVersion.getModifiedDate();
+		if (dlProcessor != null) {
+			ImageProcessor imageProcessor = (ImageProcessor)dlProcessor;
 
-			sb.append(modifiedDate.getTime());
+			if (imageProcessor.isImageSupported(fileVersion)) {
+				if (appendVersion) {
+					sb.append("&t=");
+				}
+				else {
+					sb.append("?t=");
+				}
+
+				Date modifiedDate = fileVersion.getModifiedDate();
+
+				sb.append(modifiedDate.getTime());
+			}
 		}
 
 		sb.append(queryString);
@@ -542,14 +550,41 @@ public class DLUtil {
 
 		String thumbnailQueryString = null;
 
-		if (ImageProcessorUtil.hasImages(fileVersion)) {
-			thumbnailQueryString = "&imageThumbnail=1";
+		DLProcessor dlProcessor = DLProcessorRegistryUtil.getDLProcessor(
+			DLProcessorConstants.IMAGE_PROCESSOR);
+
+		if (dlProcessor != null) {
+			ImageProcessor imageProcessor = (ImageProcessor)dlProcessor;
+
+			if (imageProcessor.hasImages(fileVersion)) {
+				thumbnailQueryString = "&imageThumbnail=1";
+			}
 		}
-		else if (PDFProcessorUtil.hasImages(fileVersion)) {
-			thumbnailQueryString = "&documentThumbnail=1";
+
+		if (Validator.isNull(thumbnailQueryString)) {
+			dlProcessor = DLProcessorRegistryUtil.getDLProcessor(
+				DLProcessorConstants.PDF_PROCESSOR);
+
+			if (dlProcessor != null) {
+				PDFProcessor pdfProcessor = (PDFProcessor)dlProcessor;
+
+				if (pdfProcessor.hasImages(fileVersion)) {
+					thumbnailQueryString = "&documentThumbnail=1";
+				}
+			}
 		}
-		else if (VideoProcessorUtil.hasVideo(fileVersion)) {
-			thumbnailQueryString = "&videoThumbnail=1";
+
+		if (Validator.isNull(thumbnailQueryString)) {
+			dlProcessor = DLProcessorRegistryUtil.getDLProcessor(
+				DLProcessorConstants.VIDEO_PROCESSOR);
+
+			if (dlProcessor != null) {
+				VideoProcessor videoProcessor = (VideoProcessor)dlProcessor;
+
+				if (videoProcessor.hasVideo(fileVersion)) {
+					thumbnailQueryString = "&documentThumbnail=1";
+				}
+			}
 		}
 
 		if (Validator.isNotNull(thumbnailQueryString)) {

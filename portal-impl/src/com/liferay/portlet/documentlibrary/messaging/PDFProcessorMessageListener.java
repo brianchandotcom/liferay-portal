@@ -15,7 +15,10 @@
 package com.liferay.portlet.documentlibrary.messaging;
 
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portlet.documentlibrary.util.PDFProcessorUtil;
+import com.liferay.portlet.documentlibrary.model.DLProcessorConstants;
+import com.liferay.portlet.documentlibrary.util.DLProcessor;
+import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
+import com.liferay.portlet.documentlibrary.util.PDFProcessor;
 
 /**
  * @author Alexander Chow
@@ -27,8 +30,16 @@ public class PDFProcessorMessageListener extends BaseProcessorMessageListener {
 			FileVersion sourceFileVersion, FileVersion destinationFileVersion)
 		throws Exception {
 
-		PDFProcessorUtil.generateImages(
-			sourceFileVersion, destinationFileVersion);
+		DLProcessor dlProcessor = DLProcessorRegistryUtil.getDLProcessor(
+			DLProcessorConstants.PDF_PROCESSOR);
+
+		if (dlProcessor == null) {
+			return;
+		}
+
+		PDFProcessor pdfProcessor = (PDFProcessor)dlProcessor;
+
+		pdfProcessor.generateImages(sourceFileVersion, destinationFileVersion);
 	}
 
 }

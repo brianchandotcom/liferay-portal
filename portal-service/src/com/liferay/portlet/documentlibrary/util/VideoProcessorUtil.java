@@ -15,7 +15,7 @@
 package com.liferay.portlet.documentlibrary.util;
 
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portlet.documentlibrary.model.DLProcessorConstants;
 
 import java.io.InputStream;
 
@@ -26,6 +26,9 @@ import java.util.Set;
  */
 public class VideoProcessorUtil {
 
+	/**
+	 * @deprecated
+	 */
 	public static void generateVideo(
 			FileVersion sourceFileVersion, FileVersion destinationFileVersion)
 		throws Exception {
@@ -34,6 +37,9 @@ public class VideoProcessorUtil {
 			sourceFileVersion, destinationFileVersion);
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public static InputStream getPreviewAsStream(
 			FileVersion fileVersion, String type)
 		throws Exception {
@@ -41,12 +47,18 @@ public class VideoProcessorUtil {
 		return getVideoProcessor().getPreviewAsStream(fileVersion, type);
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public static long getPreviewFileSize(FileVersion fileVersion, String type)
 		throws Exception {
 
 		return getVideoProcessor().getPreviewFileSize(fileVersion, type);
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public static InputStream getThumbnailAsStream(
 			FileVersion fileVersion, int index)
 		throws Exception {
@@ -54,50 +66,75 @@ public class VideoProcessorUtil {
 		return getVideoProcessor().getThumbnailAsStream(fileVersion, index);
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public static long getThumbnailFileSize(FileVersion fileVersion, int index)
 		throws Exception {
 
 		return getVideoProcessor().getThumbnailFileSize(fileVersion, index);
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public static Set<String> getVideoMimeTypes() {
 		return getVideoProcessor().getVideoMimeTypes();
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public static VideoProcessor getVideoProcessor() {
-		PortalRuntimePermission.checkGetBeanProperty(VideoProcessorUtil.class);
-
 		return _videoProcessor;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public static boolean hasVideo(FileVersion fileVersion) {
 		return getVideoProcessor().hasVideo(fileVersion);
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public static boolean isSupported(String mimeType) {
 		return getVideoProcessor().isSupported(mimeType);
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public static boolean isVideoSupported(FileVersion fileVersion) {
 		return getVideoProcessor().isVideoSupported(fileVersion);
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public static boolean isVideoSupported(String mimeType) {
 		return getVideoProcessor().isVideoSupported(mimeType);
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public static void trigger(
 		FileVersion sourceFileVersion, FileVersion destinationFileVersion) {
 
 		getVideoProcessor().trigger(sourceFileVersion, destinationFileVersion);
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public void setVideoProcessor(VideoProcessor videoProcessor) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
 		_videoProcessor = videoProcessor;
 	}
 
-	private static VideoProcessor _videoProcessor;
+	private static VideoProcessor _videoProcessor =
+		(VideoProcessor)DLProcessorRegistryUtil.getDLProcessor(
+			DLProcessorConstants.VIDEO_PROCESSOR);
 
 }

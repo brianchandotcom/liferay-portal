@@ -55,10 +55,45 @@
 					<%
 					FileVersion fileVersion = fileEntry.getFileVersion();
 
-					boolean hasAudio = AudioProcessorUtil.hasAudio(fileVersion);
-					boolean hasImages = ImageProcessorUtil.hasImages(fileVersion);
-					boolean hasPDFImages = PDFProcessorUtil.hasImages(fileVersion);
-					boolean hasVideo = VideoProcessorUtil.hasVideo(fileVersion);
+					DLProcessor dlProcessor = DLProcessorRegistryUtil.getDLProcessor(DLProcessorConstants.AUDIO_PROCESSOR);
+
+					boolean hasAudio = false;
+
+					if (dlProcessor != null) {
+						AudioProcessor audioProcessor = (AudioProcessor)dlProcessor;
+
+						hasAudio = audioProcessor.hasAudio(fileVersion);
+					}
+
+					dlProcessor = DLProcessorRegistryUtil.getDLProcessor(DLProcessorConstants.IMAGE_PROCESSOR);
+
+					boolean hasImages = false;
+
+					if (dlProcessor != null) {
+						ImageProcessor imageProcessor = (ImageProcessor)dlProcessor;
+
+						hasImages = imageProcessor.hasImages(fileVersion);
+					}
+
+					dlProcessor = DLProcessorRegistryUtil.getDLProcessor(DLProcessorConstants.PDF_PROCESSOR);
+
+					boolean hasPDFImages = false;
+
+					if (dlProcessor != null) {
+						PDFProcessor pdfProcessor = (PDFProcessor)dlProcessor;
+
+						hasPDFImages = pdfProcessor.hasImages(fileVersion);
+					}
+
+					dlProcessor = DLProcessorRegistryUtil.getDLProcessor(DLProcessorConstants.VIDEO_PROCESSOR);
+
+					boolean hasVideo = false;
+
+					if (dlProcessor != null) {
+						VideoProcessor videoProcessor = (VideoProcessor)dlProcessor;
+
+						hasVideo = videoProcessor.hasVideo(fileVersion);
+					}
 
 					String href = themeDisplay.getPathThemeImages() + "/file_system/large/" + DLUtil.getGenericName(fileEntry.getExtension()) + ".png";
 					String src = themeDisplay.getPathThemeImages() + "/file_system/large/" + DLUtil.getGenericName(fileEntry.getExtension()) + ".png";

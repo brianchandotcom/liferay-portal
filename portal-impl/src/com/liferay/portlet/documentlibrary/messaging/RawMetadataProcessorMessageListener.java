@@ -21,7 +21,10 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.documentlibrary.util.RawMetadataProcessorUtil;
+import com.liferay.portlet.documentlibrary.model.DLProcessorConstants;
+import com.liferay.portlet.documentlibrary.util.DLProcessor;
+import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
+import com.liferay.portlet.documentlibrary.util.RawMetadataProcessor;
 
 /**
  * @author Miguel Pastor
@@ -33,7 +36,17 @@ public class RawMetadataProcessorMessageListener extends BaseMessageListener {
 		FileVersion fileVersion = (FileVersion)message.getPayload();
 
 		try {
-			RawMetadataProcessorUtil.saveMetadata(fileVersion);
+			DLProcessor dlProcessor = DLProcessorRegistryUtil.getDLProcessor(
+				DLProcessorConstants.RAW_METADATA_PROCESSOR);
+
+			if (dlProcessor == null) {
+				return;
+			}
+
+			RawMetadataProcessor rawMetadataProcessor =
+				(RawMetadataProcessor)dlProcessor;
+
+			rawMetadataProcessor.saveMetadata(fileVersion);
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {

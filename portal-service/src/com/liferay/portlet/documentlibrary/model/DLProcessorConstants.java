@@ -12,23 +12,21 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.util;
-
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
+package com.liferay.portlet.documentlibrary.model;
 
 /**
  * @author Shinn Lok
  */
-public abstract class BaseDLProcessorImpl implements DLProcessor {
+public class DLProcessorConstants {
 
-	public boolean isEnabled() {
-		Class<?> clazz = getClass();
+	public static final String AUDIO_PROCESSOR = "AudioProcessor";
 
-		return _DL_FILE_ENTRY_PROCESSORS.contains(clazz.getName());
-	}
+	public static final String IMAGE_PROCESSOR = "ImageProcessor";
 
-	private static final String _DL_FILE_ENTRY_PROCESSORS = PropsUtil.get(
-		PropsKeys.DL_FILE_ENTRY_PROCESSORS);
+	public static final String PDF_PROCESSOR = "PDFProcessor";
+
+	public static final String RAW_METADATA_PROCESSOR = "RawMetadataProcessor";
+
+	public static final String VIDEO_PROCESSOR = "VideoProcessor";
 
 }

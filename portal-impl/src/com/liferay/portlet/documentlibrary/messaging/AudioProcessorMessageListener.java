@@ -15,7 +15,10 @@
 package com.liferay.portlet.documentlibrary.messaging;
 
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portlet.documentlibrary.util.AudioProcessorUtil;
+import com.liferay.portlet.documentlibrary.model.DLProcessorConstants;
+import com.liferay.portlet.documentlibrary.util.AudioProcessor;
+import com.liferay.portlet.documentlibrary.util.DLProcessor;
+import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
 
 /**
  * @author Juan González
@@ -29,8 +32,16 @@ public class AudioProcessorMessageListener
 			FileVersion sourceFileVersion, FileVersion destinationFileVersion)
 		throws Exception {
 
-		AudioProcessorUtil.generateAudio(
-			sourceFileVersion, destinationFileVersion);
+		DLProcessor dlProcessor = DLProcessorRegistryUtil.getDLProcessor(
+			DLProcessorConstants.AUDIO_PROCESSOR);
+
+		if (dlProcessor == null) {
+			return;
+		}
+
+		AudioProcessor audioProcessor = (AudioProcessor)dlProcessor;
+
+		audioProcessor.generateAudio(sourceFileVersion, destinationFileVersion);
 	}
 
 }

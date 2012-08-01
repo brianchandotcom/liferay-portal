@@ -713,34 +713,9 @@
 			<bean class="com.liferay.portlet.documentlibrary.store.StoreProxyImpl" />
 		</constructor-arg>
 	</bean>
-	<bean id="com.liferay.portlet.documentlibrary.util.AudioProcessorUtil" class="com.liferay.portlet.documentlibrary.util.AudioProcessorUtil">
-		<property name="audioProcessor">
-			<bean class="com.liferay.portlet.documentlibrary.util.AudioProcessorImpl" factory-method="getInstance" />
-		</property>
-	</bean>
 	<bean id="com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil" class="com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil">
 		<property name="dLProcessorRegistry">
-			<bean class="com.liferay.portlet.documentlibrary.util.DLProcessorRegistryImpl" />
-		</property>
-	</bean>
-	<bean id="com.liferay.portlet.documentlibrary.util.ImageProcessorUtil" class="com.liferay.portlet.documentlibrary.util.ImageProcessorUtil">
-		<property name="imageProcessor">
-			<bean class="com.liferay.portlet.documentlibrary.util.ImageProcessorImpl" factory-method="getInstance" />
-		</property>
-	</bean>
-	<bean id="com.liferay.portlet.documentlibrary.util.PDFProcessorUtil" class="com.liferay.portlet.documentlibrary.util.PDFProcessorUtil">
-		<property name="pDFProcessor">
-			<bean class="com.liferay.portlet.documentlibrary.util.PDFProcessorImpl" factory-method="getInstance" />
-		</property>
-	</bean>
-	<bean id="com.liferay.portlet.documentlibrary.util.RawMetadataProcessorUtil" class="com.liferay.portlet.documentlibrary.util.RawMetadataProcessorUtil">
-		<property name="rawMetadataProcessor">
-			<bean class="com.liferay.portlet.documentlibrary.util.RawMetadataProcessorImpl" factory-method="getInstance" />
-		</property>
-	</bean>
-	<bean id="com.liferay.portlet.documentlibrary.util.VideoProcessorUtil" class="com.liferay.portlet.documentlibrary.util.VideoProcessorUtil">
-		<property name="videoProcessor">
-			<bean class="com.liferay.portlet.documentlibrary.util.VideoProcessorImpl" factory-method="getInstance" />
+			<bean class="com.liferay.portlet.documentlibrary.util.DLProcessorRegistryImpl" init-method="init" />
 		</property>
 	</bean>
 	<bean id="com.liferay.portlet.dynamicdatalists.util.DDLExporterFactory" class="com.liferay.portlet.dynamicdatalists.util.DDLExporterFactory">

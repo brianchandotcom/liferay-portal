@@ -82,10 +82,56 @@ if (portletDisplay.isWebDAVEnabled()) {
 	webDavUrl = DLUtil.getWebDavURL(themeDisplay, folder, fileEntry);
 }
 
-boolean hasAudio = AudioProcessorUtil.hasAudio(fileVersion);
-boolean hasImages = ImageProcessorUtil.hasImages(fileVersion);
-boolean hasPDFImages = PDFProcessorUtil.hasImages(fileVersion);
-boolean hasVideo = VideoProcessorUtil.hasVideo(fileVersion);
+DLProcessor dlProcessor = DLProcessorRegistryUtil.getDLProcessor(DLProcessorConstants.AUDIO_PROCESSOR);
+
+boolean fileEntrySupported = false;
+
+boolean hasAudio = false;
+
+
+if (dlProcessor != null) {
+	AudioProcessor audioProcessor = (AudioProcessor)dlProcessor;
+
+	fileEntrySupported = audioProcessor.isAudioSupported(fileVersion);
+
+	hasAudio = audioProcessor.hasAudio(fileVersion);
+}
+
+dlProcessor = DLProcessorRegistryUtil.getDLProcessor(DLProcessorConstants.IMAGE_PROCESSOR);
+
+boolean hasImages = false;
+
+if (dlProcessor != null) {
+	ImageProcessor imageProcessor = (ImageProcessor)dlProcessor;
+
+	fileEntrySupported = imageProcessor.isImageSupported(fileVersion);
+
+	hasImages = imageProcessor.hasImages(fileVersion);
+}
+
+dlProcessor = DLProcessorRegistryUtil.getDLProcessor(DLProcessorConstants.PDF_PROCESSOR);
+
+boolean hasPDFImages = false;
+
+if (dlProcessor != null) {
+	PDFProcessor pdfProcessor = (PDFProcessor)dlProcessor;
+
+	fileEntrySupported = pdfProcessor.isDocumentSupported(fileVersion);
+
+	hasPDFImages = pdfProcessor.hasImages(fileVersion);
+}
+
+dlProcessor = DLProcessorRegistryUtil.getDLProcessor(DLProcessorConstants.VIDEO_PROCESSOR);
+
+boolean hasVideo = false;
+
+if (dlProcessor != null) {
+	VideoProcessor videoProcessor = (VideoProcessor)dlProcessor;
+
+	fileEntrySupported = videoProcessor.isVideoSupported(fileVersion);
+
+	hasVideo = videoProcessor.hasVideo(fileVersion);
+}
 
 AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.fetchEntry(DLFileEntryConstants.getClassName(), assetClassPK);
 
@@ -272,7 +318,13 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 							previewQueryString = "&imagePreview=1";
 						}
 						else if (hasPDFImages) {
-							previewFileCount = PDFProcessorUtil.getPreviewFileCount(fileVersion);
+							dlProcessor = DLProcessorRegistryUtil.getDLProcessor(DLProcessorConstants.PDF_PROCESSOR);
+
+							if (dlProcessor != null) {
+								PDFProcessor pdfProcessor = (PDFProcessor)dlProcessor;
+
+								previewFileCount = pdfProcessor.getPreviewFileCount(fileVersion);
+							}
 
 							previewQueryString = "&previewFileIndex=";
 
@@ -328,7 +380,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 
 						<c:choose>
 							<c:when test="<%= previewFileCount == 0 %>">
-								<c:if test="<%= AudioProcessorUtil.isAudioSupported(fileVersion) || ImageProcessorUtil.isImageSupported(fileVersion) || PDFProcessorUtil.isDocumentSupported(fileVersion) || VideoProcessorUtil.isVideoSupported(fileVersion) %>">
+								<c:if test="<%= fileEntrySupported %>">
 									<div class="portlet-msg-info">
 										<liferay-ui:message key="generating-preview-will-take-a-few-minutes" />
 									</div>

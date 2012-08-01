@@ -19,15 +19,17 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.kernel.util.InstancePool;
+import com.liferay.portal.kernel.util.InstanceFactory;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLProcessorConstants;
 
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Mika Koivisto
@@ -39,14 +41,7 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 			return;
 		}
 
-		for (String dlProcessorClassName : _DL_FILE_ENTRY_PROCESSORS) {
-			DLProcessor dlProcessor = (DLProcessor)InstancePool.get(
-				dlProcessorClassName);
-
-			dlProcessor.cleanUp(fileEntry);
-		}
-
-		for (DLProcessor dlProcessor : _dlProcessors) {
+		for (DLProcessor dlProcessor : _dlProcessors.values()) {
 			dlProcessor.cleanUp(fileEntry);
 		}
 	}
@@ -56,14 +51,7 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 			return;
 		}
 
-		for (String dlProcessorClassName : _DL_FILE_ENTRY_PROCESSORS) {
-			DLProcessor dlProcessor = (DLProcessor)InstancePool.get(
-				dlProcessorClassName);
-
-			dlProcessor.cleanUp(fileVersion);
-		}
-
-		for (DLProcessor dlProcessor : _dlProcessors) {
+		for (DLProcessor dlProcessor : _dlProcessors.values()) {
 			dlProcessor.cleanUp(fileVersion);
 		}
 	}
@@ -83,22 +71,16 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 			return;
 		}
 
-		for (String dlProcessorClassName : _DL_FILE_ENTRY_PROCESSORS) {
-			DLProcessor dlProcessor = (DLProcessor)InstancePool.get(
-				dlProcessorClassName);
-
+		for (DLProcessor dlProcessor : _dlProcessors.values()) {
 			if (dlProcessor.isSupported(latestFileVersion)) {
 				dlProcessor.exportGeneratedFiles(
 					portletDataContext, fileEntry, fileEntryElement);
 			}
 		}
+	}
 
-		for (DLProcessor dlProcessor : _dlProcessors) {
-			if (dlProcessor.isSupported(latestFileVersion)) {
-				dlProcessor.exportGeneratedFiles(
-					portletDataContext, fileEntry, fileEntryElement);
-			}
-		}
+	public DLProcessor getDLProcessor(String dlProcessorType) {
+		return _dlProcessors.get(dlProcessorType);
 	}
 
 	public void importGeneratedFiles(
@@ -116,18 +98,7 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 			return;
 		}
 
-		for (String dlProcessorClassName : _DL_FILE_ENTRY_PROCESSORS) {
-			DLProcessor dlProcessor = (DLProcessor)InstancePool.get(
-				dlProcessorClassName);
-
-			if (dlProcessor.isSupported(fileVersion)) {
-				dlProcessor.importGeneratedFiles(
-					portletDataContext, fileEntry, importedFileEntry,
-					fileEntryElement);
-			}
-		}
-
-		for (DLProcessor dlProcessor : _dlProcessors) {
+		for (DLProcessor dlProcessor : _dlProcessors.values()) {
 			if (dlProcessor.isSupported(fileVersion)) {
 				dlProcessor.importGeneratedFiles(
 					portletDataContext, fileEntry, importedFileEntry,
@@ -136,8 +107,21 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 		}
 	}
 
+	public void init() throws Exception {
+		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
+
+		for (String dlProcessorClassName : _DL_FILE_ENTRY_PROCESSORS) {
+			DLProcessor dlProcessor = (DLProcessor)InstanceFactory.newInstance(
+				classLoader, dlProcessorClassName);
+
+			register(dlProcessor);
+		}
+	}
+
 	public void register(DLProcessor dlProcessor) {
-		_dlProcessors.add(dlProcessor);
+		String type = _getType(dlProcessor);
+
+		_dlProcessors.put(type, dlProcessor);
 	}
 
 	public void trigger(FileEntry fileEntry, FileVersion fileVersion) {
@@ -155,24 +139,17 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 			return;
 		}
 
-		for (String dlProcessorClassName : _DL_FILE_ENTRY_PROCESSORS) {
-			DLProcessor dlProcessor = (DLProcessor)InstancePool.get(
-				dlProcessorClassName);
-
+		for (DLProcessor dlProcessor : _dlProcessors.values()) {
 			if (dlProcessor.isSupported(latestFileVersion)) {
 				dlProcessor.trigger(fileVersion, latestFileVersion);
-			}
-		}
-
-		for (DLProcessor dlProcessor : _dlProcessors) {
-			if (dlProcessor.isSupported(latestFileVersion)) {
-				dlProcessor.trigger(latestFileVersion, fileVersion);
 			}
 		}
 	}
 
 	public void unregister(DLProcessor dlProcessor) {
-		_dlProcessors.remove(dlProcessor);
+		String type = _getType(dlProcessor);
+
+		_dlProcessors.remove(type);
 	}
 
 	private FileVersion _getLatestFileVersion(FileEntry fileEntry) {
@@ -198,13 +175,33 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 		}
 	}
 
+	private String _getType(DLProcessor dlProcessor) {
+		if (dlProcessor instanceof AudioProcessor) {
+			return DLProcessorConstants.AUDIO_PROCESSOR;
+		}
+		else if (dlProcessor instanceof ImageProcessor) {
+			return DLProcessorConstants.IMAGE_PROCESSOR;
+		}
+		else if (dlProcessor instanceof PDFProcessor) {
+			return DLProcessorConstants.PDF_PROCESSOR;
+		}
+		else if (dlProcessor instanceof RawMetadataProcessor) {
+			return DLProcessorConstants.RAW_METADATA_PROCESSOR;
+		}
+		else if (dlProcessor instanceof VideoProcessor) {
+			return DLProcessorConstants.VIDEO_PROCESSOR;
+		}
+
+		return null;
+	}
+
 	private static final String[] _DL_FILE_ENTRY_PROCESSORS =
 		PropsUtil.getArray(PropsKeys.DL_FILE_ENTRY_PROCESSORS);
 
 	private static Log _log = LogFactoryUtil.getLog(
 		DLProcessorRegistryImpl.class);
 
-	private List<DLProcessor> _dlProcessors =
-		new CopyOnWriteArrayList<DLProcessor>();
+	private Map<String, DLProcessor> _dlProcessors =
+		new ConcurrentHashMap<String, DLProcessor>();
 
 }

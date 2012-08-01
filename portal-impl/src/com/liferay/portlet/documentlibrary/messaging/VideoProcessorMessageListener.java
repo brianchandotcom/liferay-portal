@@ -15,7 +15,10 @@
 package com.liferay.portlet.documentlibrary.messaging;
 
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portlet.documentlibrary.util.VideoProcessorUtil;
+import com.liferay.portlet.documentlibrary.model.DLProcessorConstants;
+import com.liferay.portlet.documentlibrary.util.DLProcessor;
+import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
+import com.liferay.portlet.documentlibrary.util.VideoProcessor;
 
 /**
  * @author Juan González
@@ -29,8 +32,16 @@ public class VideoProcessorMessageListener
 			FileVersion sourceFileVersion, FileVersion destinationFileVersion)
 		throws Exception {
 
-		VideoProcessorUtil.generateVideo(
-			sourceFileVersion, destinationFileVersion);
+		DLProcessor dlProcessor = DLProcessorRegistryUtil.getDLProcessor(
+			DLProcessorConstants.VIDEO_PROCESSOR);
+
+		if (dlProcessor == null) {
+			return;
+		}
+
+		VideoProcessor videoProcessor = (VideoProcessor)dlProcessor;
+
+		videoProcessor.generateVideo(sourceFileVersion, destinationFileVersion);
 	}
 
 }

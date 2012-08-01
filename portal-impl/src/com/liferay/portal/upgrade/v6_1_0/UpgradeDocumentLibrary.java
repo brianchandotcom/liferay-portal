@@ -30,8 +30,11 @@ import com.liferay.portal.upgrade.v6_1_0.util.DLFileVersionTable;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
+import com.liferay.portlet.documentlibrary.model.DLProcessorConstants;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileVersionImpl;
-import com.liferay.portlet.documentlibrary.util.ImageProcessorUtil;
+import com.liferay.portlet.documentlibrary.util.DLProcessor;
+import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
+import com.liferay.portlet.documentlibrary.util.ImageProcessor;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -451,7 +454,18 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 						dlFileVersion);
 
 					try {
-						ImageProcessorUtil.generateImages(null, fileVersion);
+						DLProcessor dlProcessor =
+							DLProcessorRegistryUtil.getDLProcessor(
+								DLProcessorConstants.IMAGE_PROCESSOR);
+
+						if (dlProcessor == null) {
+							return;
+						}
+
+						ImageProcessor imageProcessor =
+							(ImageProcessor)dlProcessor;
+
+						imageProcessor.generateImages(null, fileVersion);
 					}
 					catch (Exception e) {
 						if (_log.isWarnEnabled()) {

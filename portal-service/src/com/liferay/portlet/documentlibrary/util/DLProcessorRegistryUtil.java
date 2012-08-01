@@ -42,6 +42,10 @@ public class DLProcessorRegistryUtil {
 			portletDataContext, fileEntry, fileEntryElement);
 	}
 
+	public static DLProcessor getDLProcessor(String dlProcessorType) {
+		return getDLProcessorRegistry().getDLProcessor(dlProcessorType);
+	}
+
 	public static DLProcessorRegistry getDLProcessorRegistry() {
 		PortalRuntimePermission.checkGetBeanProperty(
 			DLProcessorRegistryUtil.class);

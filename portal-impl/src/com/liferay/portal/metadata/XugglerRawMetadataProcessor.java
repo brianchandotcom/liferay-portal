@@ -25,8 +25,11 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xuggler.XugglerUtil;
-import com.liferay.portlet.documentlibrary.util.AudioProcessorUtil;
-import com.liferay.portlet.documentlibrary.util.VideoProcessorUtil;
+import com.liferay.portlet.documentlibrary.model.DLProcessorConstants;
+import com.liferay.portlet.documentlibrary.util.AudioProcessor;
+import com.liferay.portlet.documentlibrary.util.DLProcessor;
+import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
+import com.liferay.portlet.documentlibrary.util.VideoProcessor;
 
 import com.xuggle.xuggler.IContainer;
 
@@ -162,12 +165,26 @@ public class XugglerRawMetadataProcessor extends BaseRawMetadataProcessor {
 
 	protected boolean isSupported(String mimeType) {
 		if (XugglerUtil.isEnabled()) {
-			if (AudioProcessorUtil.isAudioSupported(mimeType)) {
-				return true;
+			DLProcessor dlProcessor = DLProcessorRegistryUtil.getDLProcessor(
+				DLProcessorConstants.AUDIO_PROCESSOR);
+
+			if (dlProcessor != null) {
+				AudioProcessor audioProcessor = (AudioProcessor)dlProcessor;
+
+				if (audioProcessor.isAudioSupported(mimeType)) {
+					return true;
+				}
 			}
 
-			if (VideoProcessorUtil.isVideoSupported(mimeType)) {
-				return true;
+			dlProcessor = DLProcessorRegistryUtil.getDLProcessor(
+				DLProcessorConstants.VIDEO_PROCESSOR);
+
+			if (dlProcessor != null) {
+				VideoProcessor videoProcessor = (VideoProcessor)dlProcessor;
+
+				if (videoProcessor.isVideoSupported(mimeType)) {
+					return true;
+				}
 			}
 		}
 

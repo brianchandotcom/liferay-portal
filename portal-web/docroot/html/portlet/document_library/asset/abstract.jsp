@@ -33,6 +33,36 @@ boolean showThumbnail = false;
 if (fileEntry.getVersion().equals(fileVersion.getVersion())) {
 	showThumbnail = true;
 }
+
+DLProcessor dlProcessor = DLProcessorRegistryUtil.getDLProcessor(DLProcessorConstants.IMAGE_PROCESSOR);
+
+boolean hasImages = false;
+
+if (dlProcessor != null) {
+	ImageProcessor imageProcessor = (ImageProcessor)dlProcessor;
+
+	hasImages = imageProcessor.hasImages(fileVersion);
+}
+
+dlProcessor = DLProcessorRegistryUtil.getDLProcessor(DLProcessorConstants.PDF_PROCESSOR);
+
+boolean hasPDFImages = false;
+
+if (dlProcessor != null) {
+	PDFProcessor pdfProcessor = (PDFProcessor)dlProcessor;
+
+	hasPDFImages = pdfProcessor.hasImages(fileVersion);
+}
+
+dlProcessor = DLProcessorRegistryUtil.getDLProcessor(DLProcessorConstants.VIDEO_PROCESSOR);
+
+boolean hasVideo = false;
+
+if (dlProcessor != null) {
+	VideoProcessor videoProcessor = (VideoProcessor)dlProcessor;
+
+	hasVideo = videoProcessor.hasVideo(fileVersion);
+}
 %>
 
 <p class="asset-description">
@@ -42,17 +72,17 @@ if (fileEntry.getVersion().equals(fileVersion.getVersion())) {
 <c:if test="<%= fileVersion.isApproved() %>">
 	<div class="asset-resource-info">
 		<c:choose>
-			<c:when test="<%= showThumbnail && ImageProcessorUtil.hasImages(fileVersion) %>">
+			<c:when test="<%= showThumbnail && hasImages %>">
 				<div>
 					<img alt="" src="<%= DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&imageThumbnail=1") %>" />
 				</div>
 			</c:when>
-			<c:when test="<%= showThumbnail && PDFProcessorUtil.hasImages(fileVersion) %>">
+			<c:when test="<%= showThumbnail && hasPDFImages %>">
 				<div>
 					<img alt="" src="<%= DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&documentThumbnail=1") %>" />
 				</div>
 			</c:when>
-			<c:when test="<%= showThumbnail && VideoProcessorUtil.hasVideo(fileVersion) %>">
+			<c:when test="<%= showThumbnail && hasVideo %>">
 				<div>
 					<img alt="" src="<%= DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoThumbnail=1") %>" />
 				</div>

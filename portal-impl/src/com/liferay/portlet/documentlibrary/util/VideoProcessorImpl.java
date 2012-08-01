@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.process.ProcessExecutor;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -68,53 +67,81 @@ import org.apache.commons.lang.time.StopWatch;
 public class VideoProcessorImpl
 	extends DLPreviewableProcessor implements VideoProcessor {
 
-	public static VideoProcessorImpl getInstance() {
-		return _instance;
+	public VideoProcessorImpl() {
+		boolean valid = true;
+
+		if ((_PREVIEW_TYPES.length == 0) || (_PREVIEW_TYPES.length > 2)) {
+			valid = false;
+		}
+		else {
+			for (String previewType : _PREVIEW_TYPES) {
+				if (!previewType.equals("mp4") && !previewType.equals("ogv")) {
+					valid = false;
+
+					break;
+				}
+			}
+		}
+
+		if (!valid && _log.isWarnEnabled()) {
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("Liferay is incorrectly configured to generate video ");
+			sb.append("previews using video containers other than MP4 or ");
+			sb.append("OGV. Please change the property ");
+			sb.append(PropsKeys.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS);
+			sb.append(" in portal-ext.properties.");
+
+			_log.warn(sb.toString());
+		}
+
+		FileUtil.mkdirs(PREVIEW_TMP_PATH);
+		FileUtil.mkdirs(THUMBNAIL_TMP_PATH);
 	}
 
 	public void generateVideo(
 			FileVersion sourceFileVersion, FileVersion destinationFileVersion)
 		throws Exception {
 
-		_instance._generateVideo(sourceFileVersion, destinationFileVersion);
+		_generateVideo(sourceFileVersion, destinationFileVersion);
 	}
 
 	public InputStream getPreviewAsStream(FileVersion fileVersion, String type)
 		throws Exception {
 
-		return _instance.doGetPreviewAsStream(fileVersion, type);
+		return doGetPreviewAsStream(fileVersion, type);
 	}
 
 	public long getPreviewFileSize(FileVersion fileVersion, String type)
 		throws Exception {
 
-		return _instance.doGetPreviewFileSize(fileVersion, type);
+		return doGetPreviewFileSize(fileVersion, type);
 	}
 
 	public InputStream getThumbnailAsStream(FileVersion fileVersion, int index)
 		throws Exception {
 
-		return _instance.doGetThumbnailAsStream(fileVersion, index);
+		return doGetThumbnailAsStream(fileVersion, index);
 	}
 
 	public long getThumbnailFileSize(FileVersion fileVersion, int index)
 		throws Exception {
 
-		return _instance.doGetThumbnailFileSize(fileVersion, index);
+		return doGetThumbnailFileSize(fileVersion, index);
 	}
 
 	public Set<String> getVideoMimeTypes() {
-		return _instance._videoMimeTypes;
+		return _videoMimeTypes;
 	}
 
 	public boolean hasVideo(FileVersion fileVersion) {
 		boolean hasVideo = false;
 
 		try {
-			hasVideo = _instance._hasVideo(fileVersion);
+			hasVideo = _hasVideo(fileVersion);
 
-			if (!hasVideo && _instance.isSupported(fileVersion)) {
-				_instance._queueGeneration(null, fileVersion);
+			if (!hasVideo && isSupported(fileVersion)) {
+				_queueGeneration(null, fileVersion);
 			}
 		}
 		catch (Exception e) {
@@ -141,17 +168,17 @@ public class VideoProcessorImpl
 	}
 
 	public boolean isVideoSupported(FileVersion fileVersion) {
-		return _instance.isSupported(fileVersion);
+		return isSupported(fileVersion);
 	}
 
 	public boolean isVideoSupported(String mimeType) {
-		return _instance.isSupported(mimeType);
+		return isSupported(mimeType);
 	}
 
 	public void trigger(
 		FileVersion sourceFileVersion, FileVersion destinationFileVersion) {
 
-		_instance._queueGeneration(sourceFileVersion, destinationFileVersion);
+		_queueGeneration(sourceFileVersion, destinationFileVersion);
 	}
 
 	@Override
@@ -262,38 +289,6 @@ public class VideoProcessorImpl
 			storeThumbnailmage(
 				fileVersion, renderedImage, THUMBNAIL_INDEX_CUSTOM_2);
 		}
-	}
-
-	private VideoProcessorImpl() {
-		boolean valid = true;
-
-		if ((_PREVIEW_TYPES.length == 0) || (_PREVIEW_TYPES.length > 2)) {
-			valid = false;
-		}
-		else {
-			for (String previewType : _PREVIEW_TYPES) {
-				if (!previewType.equals("mp4") && !previewType.equals("ogv")) {
-					valid = false;
-
-					break;
-				}
-			}
-		}
-
-		if (!valid && _log.isWarnEnabled()) {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append("Liferay is incorrectly configured to generate video ");
-			sb.append("previews using video containers other than MP4 or ");
-			sb.append("OGV. Please change the property ");
-			sb.append(PropsKeys.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS);
-			sb.append(" in portal-ext.properties.");
-
-			_log.warn(sb.toString());
-		}
-
-		FileUtil.mkdirs(PREVIEW_TMP_PATH);
-		FileUtil.mkdirs(THUMBNAIL_TMP_PATH);
 	}
 
 	private void _generateThumbnailXuggler(
@@ -562,12 +557,6 @@ public class VideoProcessorImpl
 		PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS;
 
 	private static Log _log = LogFactoryUtil.getLog(VideoProcessorImpl.class);
-
-	private static VideoProcessorImpl _instance = new VideoProcessorImpl();
-
-	static {
-		InstancePool.put(VideoProcessorImpl.class.getName(), _instance);
-	}
 
 	private List<Long> _fileVersionIds = new Vector<Long>();
 	private Set<String> _videoMimeTypes = SetUtil.fromArray(

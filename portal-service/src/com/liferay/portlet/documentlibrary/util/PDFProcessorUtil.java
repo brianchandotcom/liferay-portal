@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.util;
 
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portlet.documentlibrary.model.DLProcessorConstants;
 
 import java.io.InputStream;
 
@@ -24,6 +25,9 @@ import java.io.InputStream;
  */
 public class PDFProcessorUtil {
 
+	/**
+	 * @deprecated
+	 */
 	public static void generateImages(
 			FileVersion sourceFileVersion, FileVersion destinationFileVersion)
 		throws Exception {
@@ -32,12 +36,18 @@ public class PDFProcessorUtil {
 			sourceFileVersion, destinationFileVersion);
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public static PDFProcessor getPDFProcessor() {
 		PortalRuntimePermission.checkGetBeanProperty(PDFProcessorUtil.class);
 
 		return _pdfProcessor;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public static InputStream getPreviewAsStream(
 			FileVersion fileVersion, int index)
 		throws Exception {
@@ -45,16 +55,25 @@ public class PDFProcessorUtil {
 		return getPDFProcessor().getPreviewAsStream(fileVersion, index);
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public static int getPreviewFileCount(FileVersion fileVersion) {
 		return getPDFProcessor().getPreviewFileCount(fileVersion);
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public static long getPreviewFileSize(FileVersion fileVersion, int index)
 		throws Exception {
 
 		return getPDFProcessor().getPreviewFileSize(fileVersion, index);
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public static InputStream getThumbnailAsStream(
 			FileVersion fileVersion, int index)
 		throws Exception {
@@ -62,40 +81,63 @@ public class PDFProcessorUtil {
 		return getPDFProcessor().getThumbnailAsStream(fileVersion, index);
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public static long getThumbnailFileSize(FileVersion fileVersion, int index)
 		throws Exception {
 
 		return getPDFProcessor().getThumbnailFileSize(fileVersion, index);
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public static boolean hasImages(FileVersion fileVersion) {
 		return getPDFProcessor().hasImages(fileVersion);
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public static boolean isDocumentSupported(FileVersion fileVersion) {
 		return getPDFProcessor().isDocumentSupported(fileVersion);
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public static boolean isDocumentSupported(String mimeType) {
 		return getPDFProcessor().isDocumentSupported(mimeType);
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public static boolean isSupported(String mimeType) {
 		return getPDFProcessor().isSupported(mimeType);
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public static void trigger(
 		FileVersion sourceFileVersion, FileVersion destinationFileVersion) {
 
 		getPDFProcessor().trigger(sourceFileVersion, destinationFileVersion);
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public void setPDFProcessor(PDFProcessor pdfProcessor) {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_pdfProcessor = pdfProcessor;
 	}
 
-	private static PDFProcessor _pdfProcessor;
+	private static PDFProcessor _pdfProcessor =
+		(PDFProcessor)DLProcessorRegistryUtil.getDLProcessor(
+			DLProcessorConstants.PDF_PROCESSOR);
 
 }

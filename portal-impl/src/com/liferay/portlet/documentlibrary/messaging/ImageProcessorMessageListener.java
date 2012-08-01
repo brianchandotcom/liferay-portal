@@ -15,7 +15,10 @@
 package com.liferay.portlet.documentlibrary.messaging;
 
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portlet.documentlibrary.util.ImageProcessorUtil;
+import com.liferay.portlet.documentlibrary.model.DLProcessorConstants;
+import com.liferay.portlet.documentlibrary.util.DLProcessor;
+import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
+import com.liferay.portlet.documentlibrary.util.ImageProcessor;
 
 /**
  * @author Sergio González
@@ -28,7 +31,16 @@ public class ImageProcessorMessageListener
 			FileVersion sourceFileVersion, FileVersion destinationFileVersion)
 		throws Exception {
 
-		ImageProcessorUtil.generateImages(
+		DLProcessor dlProcessor = DLProcessorRegistryUtil.getDLProcessor(
+			DLProcessorConstants.IMAGE_PROCESSOR);
+
+		if (dlProcessor == null) {
+			return;
+		}
+
+		ImageProcessor imageProcessor = (ImageProcessor)dlProcessor;
+
+		imageProcessor.generateImages(
 			sourceFileVersion, destinationFileVersion);
 	}
 

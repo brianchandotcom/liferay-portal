@@ -46,6 +46,7 @@ public class PortletDisplay implements Serializable {
 		_content = master.getContent();
 		_customCSSClassName = master.getCustomCSSClassName();
 		_description = master.getDescription();
+		_focused = master.isFocused();
 		_id = master.getId();
 		_instanceId = master.getInstanceId();
 		_modeAbout = master.isModeAbout();
@@ -107,6 +108,7 @@ public class PortletDisplay implements Serializable {
 		slave.setContent(_content);
 		slave.setCustomCSSClassName(_customCSSClassName);
 		slave.setDescription(_description);
+		slave.setFocused(_focused);
 		slave.setId(_id);
 		slave.setInstanceId(_instanceId);
 		slave.setModeAbout(_modeAbout);
@@ -303,6 +305,10 @@ public class PortletDisplay implements Serializable {
 		return _active;
 	}
 
+	public boolean isFocused() {
+		return _focused;
+	}
+
 	public boolean isModeAbout() {
 		return _modeAbout;
 	}
@@ -438,6 +444,7 @@ public class PortletDisplay implements Serializable {
 		_content.setIndex(0);
 		_customCSSClassName = StringPool.BLANK;
 		_description = StringPool.BLANK;
+		_focused = false;
 		_id = StringPool.BLANK;
 		_instanceId = StringPool.BLANK;
 		_modeAbout = false;
@@ -528,6 +535,10 @@ public class PortletDisplay implements Serializable {
 		description = HtmlUtil.escape(description);
 
 		_description = description;
+	}
+
+	public void setFocused(boolean focused) {
+		_focused = focused;
 	}
 
 	public void setId(String id) {
@@ -771,6 +782,7 @@ public class PortletDisplay implements Serializable {
 	private StringBundler _content = _blankStringBundler;
 	private String _customCSSClassName = StringPool.BLANK;
 	private String _description = StringPool.BLANK;
+	private boolean _focused;
 	private String _id = StringPool.BLANK;
 	private String _instanceId = StringPool.BLANK;
 	private boolean _modeAbout;

@@ -15,9 +15,6 @@
 --%>
 
 <%
-int end = searchContainer.getEnd();
-int start = searchContainer.getStart();
-
 assetEntryQuery.setGroupIds(groupIds);
 assetEntryQuery.setExcludeZeroViewCount(excludeZeroViewCount);
 assetEntryQuery.setOrderByCol1(orderByColumn1);
@@ -49,8 +46,8 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 
 			total += groupTotal;
 
-			assetEntryQuery.setEnd(end);
-			assetEntryQuery.setStart(start);
+			assetEntryQuery.setEnd(searchContainer.getEnd());
+			assetEntryQuery.setStart(searchContainer.getStart());
 
 			results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
 
@@ -74,22 +71,6 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 <%
 			}
 
-			if (groupTotal > 0) {
-				if ((end > 0) && (end > groupTotal)) {
-					end -= groupTotal;
-				}
-				else {
-					end = 0;
-				}
-
-				if ((start > 0) && (start > groupTotal)) {
-					start -= groupTotal;
-				}
-				else {
-					start = 0;
-				}
-			}
-
 			assetEntryQuery.setAllCategoryIds(oldAllCategoryIds);
 			assetEntryQuery.setEnd(QueryUtil.ALL_POS);
 			assetEntryQuery.setStart(QueryUtil.ALL_POS);
@@ -104,8 +85,8 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 
 		searchContainer.setTotal(total);
 
-		assetEntryQuery.setEnd(end);
-		assetEntryQuery.setStart(start);
+		assetEntryQuery.setEnd(searchContainer.getEnd());
+		assetEntryQuery.setStart(searchContainer.getStart());
 
 		results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
 
@@ -141,8 +122,8 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 
 			total += groupTotal;
 
-			assetEntryQuery.setEnd(end);
-			assetEntryQuery.setStart(start);
+			assetEntryQuery.setEnd(searchContainer.getEnd());
+			assetEntryQuery.setStart(searchContainer.getStart());
 
 			results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
 
@@ -165,22 +146,6 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 				</c:choose>
 
 <%
-			}
-
-			if (groupTotal > 0) {
-				if ((end > 0) && (end > groupTotal)) {
-					end -= groupTotal;
-				}
-				else {
-					end = 0;
-				}
-
-				if ((start > 0) && (start > groupTotal)) {
-					start -= groupTotal;
-				}
-				else {
-					start = 0;
-				}
 			}
 
 			assetEntryQuery.setClassNameIds(oldGroupClassNameIds);

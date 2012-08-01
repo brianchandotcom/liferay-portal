@@ -16,12 +16,11 @@ package com.liferay.util.servlet.filters;
 
 import com.liferay.portal.kernel.servlet.Header;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 
 import java.io.IOException;
 
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -31,11 +30,11 @@ import javax.servlet.http.HttpServletResponse;
 public class CacheResponseUtil {
 
 	public static void setHeaders(
-		HttpServletResponse response, Map<String, List<Header>> headers) {
+		HttpServletResponse response, Map<String, Set<Header>> headers) {
 
-		for (Map.Entry<String, List<Header>> entry : headers.entrySet()) {
+		for (Map.Entry<String, Set<Header>> entry : headers.entrySet()) {
 			String headerKey = entry.getKey();
-			List<Header> headerValues = ListUtil.copy(entry.getValue());
+			Set<Header> headerValues = entry.getValue();
 
 			for (Header header : headerValues) {
 				header.setToResponse(headerKey, response);

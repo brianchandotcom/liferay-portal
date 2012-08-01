@@ -22,8 +22,8 @@ import java.io.Serializable;
 import java.nio.ByteBuffer;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Michael Young
@@ -54,7 +54,7 @@ public class CacheResponseData implements Serializable {
 		return _contentType;
 	}
 
-	public Map<String, List<Header>> getHeaders() {
+	public Map<String, Set<Header>> getHeaders() {
 		return _headers;
 	}
 
@@ -66,6 +66,6 @@ public class CacheResponseData implements Serializable {
 	private transient ByteBuffer _byteBuffer;
 	private byte[] _content;
 	private String _contentType;
-	private Map<String, List<Header>> _headers;
+	private Map<String, Set<Header>> _headers;
 
 }

@@ -14,7 +14,9 @@
 
 package com.liferay.portal.kernel.servlet;
 
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -28,6 +30,10 @@ import javax.servlet.http.HttpServletResponse;
 public class Header implements Serializable {
 
 	public Header(Cookie cookie) {
+		if (cookie == null) {
+			throw new IllegalArgumentException("cookie is null");
+		}
+
 		_type = Type.COOKIE;
 
 		_cookieValue = cookie;
@@ -46,6 +52,10 @@ public class Header implements Serializable {
 	}
 
 	public Header(String string) {
+		if (string == null) {
+			throw new IllegalArgumentException("string is null");
+		}
+
 		_type = Type.STRING;
 
 		_stringValue = string;
@@ -67,9 +77,40 @@ public class Header implements Serializable {
 			return false;
 		}
 
-		String string = toString();
+		if (_type == Type.COOKIE) {
+			return _cookieEquals(_cookieValue, header._cookieValue);
+		}
+		else if (_type == Type.DATE) {
+			return _dateValue == header._dateValue;
+		}
+		else if (_type == Type.INTEGER) {
+			return _intValue == header._intValue;
+		}
+		else if (_type == Type.STRING) {
+			return _stringValue.equals(header._stringValue);
+		}
+		else {
+			throw new IllegalStateException("Invalid type " + _type);
+		}
+	}
 
-		return string.equals(header.toString());
+	@Override
+	public int hashCode() {
+		if (_type == Type.COOKIE) {
+			return _cookieHashCode(_cookieValue);
+		}
+		else if (_type == Type.DATE) {
+			return (int)(_dateValue ^ (_dateValue >>> 32));
+		}
+		else if (_type == Type.INTEGER) {
+			return _intValue;
+		}
+		else if (_type == Type.STRING) {
+			return _stringValue.hashCode();
+		}
+		else {
+			throw new IllegalStateException("Invalid type " + _type);
+		}
 	}
 
 	public void setToResponse(String key, HttpServletResponse response) {
@@ -127,6 +168,60 @@ public class Header implements Serializable {
 		else {
 			throw new IllegalStateException("Invalid type " + _type);
 		}
+	}
+
+	private boolean _cookieEquals(Cookie cookie1, Cookie cookie2) {
+		if (cookie1 == cookie2) {
+			return true;
+		}
+
+		if (!Validator.equals(cookie1.getComment(), cookie2.getComment())) {
+			return false;
+		}
+
+		if (!Validator.equals(cookie1.getDomain(), cookie2.getDomain())) {
+			return false;
+		}
+
+		if (cookie1.getMaxAge() != cookie2.getMaxAge()) {
+			return false;
+		}
+
+		if (!Validator.equals(cookie1.getName(), cookie2.getName())) {
+			return false;
+		}
+
+		if (!Validator.equals(cookie1.getPath(), cookie2.getPath())) {
+			return false;
+		}
+
+		if (cookie1.getSecure() != cookie2.getSecure()) {
+			return false;
+		}
+
+		if (!Validator.equals(cookie1.getValue(), cookie2.getValue())) {
+			return false;
+		}
+
+		if (cookie1.getVersion() != cookie2.getVersion()) {
+			return false;
+		}
+
+		return true;
+	}
+
+	private int _cookieHashCode(Cookie cookie) {
+		int hashCode = HashUtil.hash(0, cookie.getComment());
+
+		hashCode = HashUtil.hash(hashCode, cookie.getDomain());
+		hashCode = HashUtil.hash(hashCode, cookie.getMaxAge());
+		hashCode = HashUtil.hash(hashCode, cookie.getName());
+		hashCode = HashUtil.hash(hashCode, cookie.getPath());
+		hashCode = HashUtil.hash(hashCode, cookie.getSecure());
+		hashCode = HashUtil.hash(hashCode, cookie.getValue());
+		hashCode = HashUtil.hash(hashCode, cookie.getVersion());
+
+		return hashCode;
 	}
 
 	private Cookie _cookieValue;

@@ -16,10 +16,10 @@ package com.liferay.portal.kernel.servlet;
 
 import java.io.IOException;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
@@ -37,19 +37,15 @@ public class HeaderCacheServletResponse extends HttpServletResponseWrapper {
 
 	@Override
 	public void addCookie(Cookie cookie) {
-		List<Header> values = _headers.get("cookies");
+		Set<Header> values = _headers.get("cookies");
 
 		if (values == null) {
-			values = new ArrayList<Header>();
+			values = new HashSet<Header>();
 
 			_headers.put("cookies", values);
 		}
 
 		Header header = new Header(cookie);
-
-		if (values.contains(header)) {
-			return;
-		}
 
 		values.add(header);
 
@@ -58,19 +54,15 @@ public class HeaderCacheServletResponse extends HttpServletResponseWrapper {
 
 	@Override
 	public void addDateHeader(String name, long value) {
-		List<Header> values = _headers.get(name);
+		Set<Header> values = _headers.get(name);
 
 		if (values == null) {
-			values = new ArrayList<Header>();
+			values = new HashSet<Header>();
 
 			_headers.put(name, values);
 		}
 
 		Header header = new Header(value);
-
-		if (values.contains(header)) {
-			return;
-		}
 
 		values.add(header);
 
@@ -79,19 +71,15 @@ public class HeaderCacheServletResponse extends HttpServletResponseWrapper {
 
 	@Override
 	public void addHeader(String name, String value) {
-		List<Header> values = _headers.get(name);
+		Set<Header> values = _headers.get(name);
 
 		if (values == null) {
-			values = new ArrayList<Header>();
+			values = new HashSet<Header>();
 
 			_headers.put(name, values);
 		}
 
 		Header header = new Header(value);
-
-		if (values.contains(header)) {
-			return;
-		}
 
 		values.add(header);
 
@@ -104,19 +92,15 @@ public class HeaderCacheServletResponse extends HttpServletResponseWrapper {
 
 	@Override
 	public void addIntHeader(String name, int value) {
-		List<Header> values = _headers.get(name);
+		Set<Header> values = _headers.get(name);
 
 		if (values == null) {
-			values = new ArrayList<Header>();
+			values = new HashSet<Header>();
 
 			_headers.put(name, values);
 		}
 
 		Header header = new Header(value);
-
-		if (values.contains(header)) {
-			return;
-		}
 
 		values.add(header);
 
@@ -134,18 +118,18 @@ public class HeaderCacheServletResponse extends HttpServletResponseWrapper {
 	}
 
 	public String getHeader(String name) {
-		List<Header> values = _headers.get(name);
+		Set<Header> values = _headers.get(name);
 
 		if ((values == null) || values.isEmpty()) {
 			return null;
 		}
 
-		Header header = values.get(0);
+		Header header = values.iterator().next();
 
 		return header.toString();
 	}
 
-	public Map<String, List<Header>> getHeaders() {
+	public Map<String, Set<Header>> getHeaders() {
 		return _headers;
 	}
 
@@ -204,7 +188,7 @@ public class HeaderCacheServletResponse extends HttpServletResponseWrapper {
 
 	@Override
 	public void setDateHeader(String name, long value) {
-		List<Header> values = new ArrayList<Header>();
+		Set<Header> values = new HashSet<Header>();
 
 		_headers.put(name, values);
 
@@ -217,7 +201,7 @@ public class HeaderCacheServletResponse extends HttpServletResponseWrapper {
 
 	@Override
 	public void setHeader(String name, String value) {
-		List<Header> values = new ArrayList<Header>();
+		Set<Header> values = new HashSet<Header>();
 
 		_headers.put(name, values);
 
@@ -234,7 +218,7 @@ public class HeaderCacheServletResponse extends HttpServletResponseWrapper {
 
 	@Override
 	public void setIntHeader(String name, int value) {
-		List<Header> values = new ArrayList<Header>();
+		Set<Header> values = new HashSet<Header>();
 
 		_headers.put(name, values);
 
@@ -254,8 +238,8 @@ public class HeaderCacheServletResponse extends HttpServletResponseWrapper {
 
 	private boolean _committed;
 	private String _contentType;
-	private Map<String, List<Header>> _headers =
-		new HashMap<String, List<Header>>();
+	private Map<String, Set<Header>> _headers =
+		new HashMap<String, Set<Header>>();
 	private int _status = SC_OK;
 
 }

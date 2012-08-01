@@ -63,9 +63,9 @@ public class ViewSitesSiteTypePrivateTest extends BaseTestCase {
 		}
 
 		assertTrue(selenium.isPartialText(
-				"//select[@id='_5_WAR_soportlet_tabs1']", "All Sites"));
+				"//select[@id='_5_WAR_soportlet_tabs1']", "My Sites"));
 		selenium.select("//select[@id='_5_WAR_soportlet_tabs1']",
-			RuntimeVariables.replace("All Sites"));
+			RuntimeVariables.replace("My Sites"));
 		assertTrue(selenium.isVisible("//input[@class='search-input']"));
 		selenium.type("//input[@class='search-input']",
 			RuntimeVariables.replace("Private"));
@@ -86,7 +86,7 @@ public class ViewSitesSiteTypePrivateTest extends BaseTestCase {
 			selenium.getText("//nav/ul/li[3]/a/span"));
 		assertEquals(RuntimeVariables.replace("Forums"),
 			selenium.getText("//nav/ul/li[4]/a/span"));
-		assertEquals(RuntimeVariables.replace("Blog"),
+		assertEquals(RuntimeVariables.replace("Blogs"),
 			selenium.getText("//nav/ul/li[5]/a/span"));
 		assertEquals(RuntimeVariables.replace("Wiki"),
 			selenium.getText("//nav/ul/li[6]/a/span"));
@@ -121,7 +121,7 @@ public class ViewSitesSiteTypePrivateTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//button[contains(.,'Site Directory')]/span[2]")) {
+							"//button[contains(.,'Sites Directory')]/span[2]")) {
 					break;
 				}
 			}
@@ -131,10 +131,10 @@ public class ViewSitesSiteTypePrivateTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Site Directory"),
-			selenium.getText("//button[contains(.,'Site Directory')]/span[2]"));
-		selenium.clickAt("//button[contains(.,'Site Directory')]/span[2]",
-			RuntimeVariables.replace("Site Directory"));
+		assertEquals(RuntimeVariables.replace("Sites Directory"),
+			selenium.getText("//button[contains(.,'Sites Directory')]/span[2]"));
+		selenium.clickAt("//button[contains(.,'Sites Directory')]/span[2]",
+			RuntimeVariables.replace("Sites Directory"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -179,7 +179,7 @@ public class ViewSitesSiteTypePrivateTest extends BaseTestCase {
 			selenium.getText("//nav/ul/li[3]/a/span"));
 		assertEquals(RuntimeVariables.replace("Forums"),
 			selenium.getText("//nav/ul/li[4]/a/span"));
-		assertEquals(RuntimeVariables.replace("Blog"),
+		assertEquals(RuntimeVariables.replace("Blogs"),
 			selenium.getText("//nav/ul/li[5]/a/span"));
 		assertEquals(RuntimeVariables.replace("Wiki"),
 			selenium.getText("//nav/ul/li[6]/a/span"));

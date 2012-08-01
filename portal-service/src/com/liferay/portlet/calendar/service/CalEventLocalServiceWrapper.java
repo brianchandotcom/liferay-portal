@@ -361,6 +361,14 @@ public class CalEventLocalServiceWrapper implements CalEventLocalService,
 		return _calEventLocalService.exportEvent(userId, eventId);
 	}
 
+	public java.io.File exportEvents(long userId,
+		java.util.List<com.liferay.portlet.calendar.model.CalEvent> events,
+		java.lang.String fileName)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _calEventLocalService.exportEvents(userId, events, fileName);
+	}
+
 	public java.io.File exportGroupEvents(long userId, long groupId,
 		java.lang.String fileName)
 		throws com.liferay.portal.kernel.exception.PortalException,

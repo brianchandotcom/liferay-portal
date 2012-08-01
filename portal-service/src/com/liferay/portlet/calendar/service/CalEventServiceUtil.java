@@ -87,6 +87,14 @@ public class CalEventServiceUtil {
 		return getService().exportEvent(eventId);
 	}
 
+	public static java.io.File exportEvents(
+		java.util.List<com.liferay.portlet.calendar.model.CalEvent> events,
+		java.lang.String fileName)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().exportEvents(events, fileName);
+	}
+
 	public static java.io.File exportGroupEvents(long groupId,
 		java.lang.String fileName)
 		throws com.liferay.portal.kernel.exception.PortalException,

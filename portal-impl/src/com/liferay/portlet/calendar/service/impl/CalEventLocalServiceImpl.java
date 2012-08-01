@@ -445,8 +445,14 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 
 		events.add(event);
 
-		return exportICal4j(toICalCalendar(userId, events), null);
+		return exportEvents(userId, events, null);
 	}
+
+    public File exportEvents(long userId, List<CalEvent> events, String fileName)
+            throws PortalException, SystemException {
+
+        return exportICal4j(toICalCalendar(userId, events), fileName);
+    }
 
 	public File exportGroupEvents(long userId, long groupId, String fileName)
 		throws PortalException, SystemException {
@@ -849,7 +855,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 			String extension = ".ics";
 
 			if (Validator.isNull(fileName)) {
-				fileName = "liferay.";
+				fileName = "liferay_calendar.";
 			}
 			else {
 				int pos = fileName.lastIndexOf(CharPool.PERIOD);

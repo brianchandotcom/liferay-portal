@@ -80,6 +80,12 @@ public interface CalEventService extends BaseService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public java.io.File exportEvents(
+		java.util.List<com.liferay.portlet.calendar.model.CalEvent> events,
+		java.lang.String fileName)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public java.io.File exportGroupEvents(long groupId,
 		java.lang.String fileName)
 		throws com.liferay.portal.kernel.exception.PortalException,

@@ -277,5 +277,6 @@
 .ie6, .ie7 {
 	.lfr-preview-file-image-container {
 		font-size: 398.2px;
+		line-height: 1;
 	}
 }

@@ -6,6 +6,7 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.security.ac.AccessControlled;
 import com.liferay.portal.service.Base${sessionTypeName}Service;
 import com.liferay.portal.service.Invokable${sessionTypeName}Service;
 import com.liferay.portal.service.PermissionedModelLocalService;
@@ -43,6 +44,7 @@ import com.liferay.portal.service.PersistedModelLocalService;
 
 <#if entity.hasRemoteService() && sessionTypeName != "Local">
 	@JSONWebService
+	@AccessControlled
 </#if>
 
 @Transactional(isolation = Isolation.PORTAL, rollbackFor = {PortalException.class, SystemException.class})

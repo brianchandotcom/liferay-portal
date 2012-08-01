@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.ac.AccessControlThreadLocal;
 import com.liferay.portal.security.auth.AuthSettingsUtil;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -85,8 +86,8 @@ public class SecureFilter extends BasePortalFilter {
 				PropsUtil.get(propertyPrefix + "https.required"));
 		}
 
-		for (int i = 0; i < hostsAllowedArray.length; i++) {
-			_hostsAllowed.add(hostsAllowedArray[i]);
+		for (String element : hostsAllowedArray) {
+			_hostsAllowed.add(element);
 		}
 	}
 
@@ -270,7 +271,24 @@ public class SecureFilter extends BasePortalFilter {
 			}
 
 			if (request != null) {
-				processFilter(getClass(), request, response, filterChain);
+				boolean remoteAccess =
+					AccessControlThreadLocal.isRemoteAccess();
+
+				try {
+					AccessControlThreadLocal.setRemoteAccess(true);
+
+					processFilter(getClass(), request, response, filterChain);
+				}
+				catch(SecurityException se) {
+					response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+
+					if (_log.isErrorEnabled()) {
+						_log.error("Access denied: ", se);
+					}
+				}
+				finally {
+					AccessControlThreadLocal.setRemoteAccess(remoteAccess);
+				}
 			}
 		}
 	}

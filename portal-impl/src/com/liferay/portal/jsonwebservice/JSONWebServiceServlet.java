@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.ac.AccessControlThreadLocal;
 import com.liferay.portal.servlet.JSONServlet;
 import com.liferay.portal.struts.JSONAction;
 import com.liferay.portal.upload.UploadServletRequestImpl;
@@ -85,6 +86,11 @@ public class JSONWebServiceServlet extends JSONServlet {
 
 		ServletContext servletContext = session.getServletContext();
 
+		boolean remoteAccess = AccessControlThreadLocal.isRemoteAccess();
+
+		try {
+			AccessControlThreadLocal.setRemoteAccess(true);
+
 		if (servletContext.getContext(PropsValues.PORTAL_CTX) != null) {
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher(
 				apiPath);
@@ -128,7 +134,13 @@ public class JSONWebServiceServlet extends JSONServlet {
 			}
 			finally {
 				StreamUtil.cleanUp(inputStream);
+
+				AccessControlThreadLocal.setRemoteAccess(remoteAccess);
 			}
+		}
+		}
+		finally {
+			AccessControlThreadLocal.setRemoteAccess(remoteAccess);
 		}
 	}
 

@@ -19,8 +19,11 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.security.auth.verifier.AuthVerifier;
+import com.liferay.portal.security.auth.verifier.AuthVerifierResult;
 import com.liferay.portlet.login.util.LoginUtil;
 
+import java.util.Properties;
 import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
@@ -57,8 +60,9 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Britt Courtney
  * @author Brian Wing Shun Chan
+ * @author Tomas Polesovsky
  */
-public class BasicAuthHeaderAutoLogin implements AutoLogin {
+public class BasicAuthHeaderAutoLogin implements AutoLogin, AuthVerifier {
 
 	public String[] login(
 			HttpServletRequest request, HttpServletResponse response)
@@ -124,7 +128,7 @@ public class BasicAuthHeaderAutoLogin implements AutoLogin {
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(login + " is not a valid login");
+					_log.warn(login + " is not a valid login", e);
 				}
 			}
 
@@ -133,6 +137,42 @@ public class BasicAuthHeaderAutoLogin implements AutoLogin {
 		catch (Exception e) {
 			throw new AutoLoginException(e);
 		}
+	}
+
+	/**
+	 * Reuse existing
+	 * {@link AutoLogin#login(HttpServletRequest, HttpServletResponse)}
+	 * implementation to obtain user from request based on provided
+	 * 'Authorization: Basic base64credentials' HTTP Header.
+	 *
+	 * @param accessControlContext Authentication context with
+	 *                             	request and response.
+	 * @param configuration Optional AuthVerifier configuration
+	 * @return
+	 * @throws AuthException with internal system exception
+	 */
+	public AuthVerifierResult verify(
+			AccessControlContext accessControlContext, Properties configuration)
+		throws AuthException {
+
+		AuthVerifierResult result = new AuthVerifierResult();
+
+		try {
+			String[] loginResult = login(
+				accessControlContext.getHttpServletRequest(),
+				accessControlContext.getHttpServletResponse());
+
+			if (loginResult != null) {
+				result.setState(AuthVerifierResult.State.SUCCESS);
+				result.setUserId(Long.valueOf(loginResult[0]));
+				result.setPassword(loginResult[1]);
+			}
+		}
+		catch (AutoLoginException e) {
+			throw new AuthException(e);
+		}
+
+		return result;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

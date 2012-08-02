@@ -190,6 +190,8 @@ public class DDMPortletDataHandlerImpl extends BasePortletDataHandler {
 		DDMTemplate template =
 			(DDMTemplate)portletDataContext.getZipEntryAsObject(path);
 
+		template.prepareLocalizedFieldsForImport();
+
 		long userId = portletDataContext.getUserId(template.getUserUuid());
 
 		Map<Long, Long> structureIds =

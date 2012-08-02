@@ -102,6 +102,8 @@ public class DDLPortletDataHandlerImpl
 		DDLRecordSet recordSet =
 			(DDLRecordSet)portletDataContext.getZipEntryAsObject(path);
 
+		recordSet.prepareLocalizedFieldsForImport();
+
 		long userId = portletDataContext.getUserId(recordSet.getUserUuid());
 
 		Map<Long, Long> structureIds =

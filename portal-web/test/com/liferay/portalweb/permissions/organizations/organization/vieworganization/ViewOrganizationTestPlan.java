@@ -14,7 +14,7 @@
 
 package com.liferay.portalweb.permissions.organizations.organization.vieworganization;
 
-import com.liferay.portalweb.permissions.organizations.organization.vieworganization.orgrole.OrgRoleViewOrganizationTests;
+import com.liferay.portalweb.permissions.organizations.organization.vieworganization.orgrole.OrgRoleTests;
 import com.liferay.portalweb.portal.BaseTestSuite;
 
 import junit.framework.Test;
@@ -28,7 +28,7 @@ public class ViewOrganizationTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(OrgRoleViewOrganizationTests.suite());
+		testSuite.addTest(OrgRoleTests.suite());
 
 		return testSuite;
 	}

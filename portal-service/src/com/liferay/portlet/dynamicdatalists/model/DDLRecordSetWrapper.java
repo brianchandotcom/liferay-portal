@@ -695,6 +695,19 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 		_ddlRecordSet.setExpandoBridgeAttributes(serviceContext);
 	}
 
+	public java.lang.String[] getAvailableLocales() {
+		return _ddlRecordSet.getAvailableLocales();
+	}
+
+	public java.lang.String getDefaultLocale() {
+		return _ddlRecordSet.getDefaultLocale();
+	}
+
+	public void prepareLocalizedFieldsForImport()
+		throws com.liferay.portal.LocaleException {
+		_ddlRecordSet.prepareLocalizedFieldsForImport();
+	}
+
 	public void prepareLocalizedFieldsForImport(
 		java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.LocaleException {

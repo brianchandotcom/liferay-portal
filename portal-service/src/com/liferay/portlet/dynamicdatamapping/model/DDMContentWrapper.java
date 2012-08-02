@@ -509,6 +509,19 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 		_ddmContent.setExpandoBridgeAttributes(serviceContext);
 	}
 
+	public java.lang.String[] getAvailableLocales() {
+		return _ddmContent.getAvailableLocales();
+	}
+
+	public java.lang.String getDefaultLocale() {
+		return _ddmContent.getDefaultLocale();
+	}
+
+	public void prepareLocalizedFieldsForImport()
+		throws com.liferay.portal.LocaleException {
+		_ddmContent.prepareLocalizedFieldsForImport();
+	}
+
 	public void prepareLocalizedFieldsForImport(
 		java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.LocaleException {

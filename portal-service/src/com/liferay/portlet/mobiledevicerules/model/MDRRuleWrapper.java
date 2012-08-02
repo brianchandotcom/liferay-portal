@@ -669,6 +669,19 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 		_mdrRule.setExpandoBridgeAttributes(serviceContext);
 	}
 
+	public java.lang.String[] getAvailableLocales() {
+		return _mdrRule.getAvailableLocales();
+	}
+
+	public java.lang.String getDefaultLocale() {
+		return _mdrRule.getDefaultLocale();
+	}
+
+	public void prepareLocalizedFieldsForImport()
+		throws com.liferay.portal.LocaleException {
+		_mdrRule.prepareLocalizedFieldsForImport();
+	}
+
 	public void prepareLocalizedFieldsForImport(
 		java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.LocaleException {

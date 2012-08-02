@@ -20,9 +20,6 @@ import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentry.AddBlogsEntr
 import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentry.AddBlogsEntry2Test;
 import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentry.AddBlogsEntry3Test;
 import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentry.TearDownBlogsEntryTest;
-import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentry.ViewBlogsEntry1Test;
-import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentry.ViewBlogsEntry2Test;
-import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentry.ViewBlogsEntry3Test;
 import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPageBlogsTest;
 import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPortletBlogsTest;
 

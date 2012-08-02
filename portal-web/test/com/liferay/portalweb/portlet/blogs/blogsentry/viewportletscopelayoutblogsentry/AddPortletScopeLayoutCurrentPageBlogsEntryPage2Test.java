@@ -26,8 +26,8 @@ public class AddPortletScopeLayoutCurrentPageBlogsEntryPage2Test
 		throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
-		selenium.clickAt("link=Blogs2 Test2 Page2",
-			RuntimeVariables.replace("Blogs2 Test2 Page2"));
+		selenium.clickAt("link=Blogs Test Page2",
+			RuntimeVariables.replace("Blogs Test Page2"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		selenium.clickAt("//input[@value='Add Blog Entry']",

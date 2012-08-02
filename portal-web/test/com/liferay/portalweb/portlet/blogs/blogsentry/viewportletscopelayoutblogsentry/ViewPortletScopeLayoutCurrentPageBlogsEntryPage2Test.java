@@ -26,28 +26,11 @@ public class ViewPortletScopeLayoutCurrentPageBlogsEntryPage2Test
 		throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Blogs2 Test2 Page2")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.clickAt("link=Blogs2 Test2 Page2",
-			RuntimeVariables.replace("Blogs2 Test2 Page2"));
+		selenium.clickAt("link=Blogs Test Page2",
+			RuntimeVariables.replace("Blogs Test Page2"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Blogs (Blogs2 Test2 Page2)"),
+		assertEquals(RuntimeVariables.replace("Blogs (Blogs Test Page2)"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
 			selenium.getText("//div[@class='entry-title']/h2/a"));
@@ -72,7 +55,29 @@ public class ViewPortletScopeLayoutCurrentPageBlogsEntryPage2Test
 			Thread.sleep(1000);
 		}
 
+		assertEquals(RuntimeVariables.replace("Configuration"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//iframe[@id='_33_configurationIframeDialog']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.selectFrame("//iframe[@id='_33_configurationIframeDialog']");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -110,7 +115,8 @@ public class ViewPortletScopeLayoutCurrentPageBlogsEntryPage2Test
 			Thread.sleep(1000);
 		}
 
-		assertEquals("Current Page (Blogs2 Test2 Page2)",
+		assertEquals("Current Page (Blogs Test Page2)",
 			selenium.getSelectedLabel("//select[@id='_86_scopeLayoutUuid']"));
+		selenium.selectFrame("relative=top");
 	}
 }

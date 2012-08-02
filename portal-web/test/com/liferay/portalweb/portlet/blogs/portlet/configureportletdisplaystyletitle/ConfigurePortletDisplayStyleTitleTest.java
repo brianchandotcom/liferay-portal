@@ -25,23 +25,6 @@ public class ConfigurePortletDisplayStyleTitleTest extends BaseTestCase {
 		throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Blogs Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -94,6 +77,25 @@ public class ConfigurePortletDisplayStyleTitleTest extends BaseTestCase {
 			}
 
 			try {
+				if (selenium.isVisible(
+							"//iframe[@id='_33_configurationIframeDialog']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.selectFrame("//iframe[@id='_33_configurationIframeDialog']");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
 				if (selenium.isVisible("link=Display Settings")) {
 					break;
 				}
@@ -106,6 +108,7 @@ public class ConfigurePortletDisplayStyleTitleTest extends BaseTestCase {
 
 		selenium.clickAt("link=Display Settings",
 			RuntimeVariables.replace("Display Settings"));
+		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -152,5 +155,6 @@ public class ConfigurePortletDisplayStyleTitleTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals("Title",
 			selenium.getSelectedLabel("//select[@id='_86_pageDisplayStyle']"));
+		selenium.selectFrame("relative=top");
 	}
 }

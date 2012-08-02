@@ -26,25 +26,8 @@ public class ConfigurePortletScopeLayoutCurrentPagePage2Test
 		throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Blogs2 Test2 Page2")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.clickAt("link=Blogs2 Test2 Page2",
-			RuntimeVariables.replace("Blogs2 Test2 Page2"));
+		selenium.clickAt("link=Blogs Test Page2",
+			RuntimeVariables.replace("Blogs Test Page2"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		Thread.sleep(5000);
@@ -73,6 +56,25 @@ public class ConfigurePortletScopeLayoutCurrentPagePage2Test
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//iframe[@id='_33_configurationIframeDialog']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.selectFrame("//iframe[@id='_33_configurationIframeDialog']");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -129,9 +131,11 @@ public class ConfigurePortletScopeLayoutCurrentPagePage2Test
 		}
 
 		selenium.select("//select[@id='_86_scopeLayoutUuid']",
-			RuntimeVariables.replace("Current Page (Blogs2 Test2 Page2)"));
+			RuntimeVariables.replace("Current Page (Blogs Test Page2)"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -152,8 +156,9 @@ public class ConfigurePortletScopeLayoutCurrentPagePage2Test
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals("Current Page (Blogs2 Test2 Page2)",
+		assertEquals("Current Page (Blogs Test Page2)",
 			selenium.getSelectedLabel("//select[@id='_86_scopeLayoutUuid']"));
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 
@@ -163,7 +168,7 @@ public class ConfigurePortletScopeLayoutCurrentPagePage2Test
 			}
 
 			try {
-				if (selenium.isVisible("link=Blogs2 Test2 Page2")) {
+				if (selenium.isVisible("//li[@id='_145_mySites']/a/span")) {
 					break;
 				}
 			}
@@ -173,12 +178,24 @@ public class ConfigurePortletScopeLayoutCurrentPagePage2Test
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Blogs2 Test2 Page2",
-			RuntimeVariables.replace("Blogs2 Test2 Page2"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Blogs (Blogs2 Test2 Page2)"),
-			selenium.getText("//span[@class='portlet-title-text']"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("link=Control Panel")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
@@ -209,7 +226,7 @@ public class ConfigurePortletScopeLayoutCurrentPagePage2Test
 		assertEquals(RuntimeVariables.replace("Default"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
-		assertEquals(RuntimeVariables.replace("Blogs2 Test2 Page2"),
+		assertEquals(RuntimeVariables.replace("Blogs Test Page2"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 	}

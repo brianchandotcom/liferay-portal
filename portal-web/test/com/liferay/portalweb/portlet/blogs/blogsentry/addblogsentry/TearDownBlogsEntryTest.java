@@ -47,8 +47,6 @@ public class TearDownBlogsEntryTest extends BaseTestCase {
 						"link=Move to the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to move this to the Recycle Bin[\\s\\S]$"));
 
 				boolean blogsEntry2Present = selenium.isElementPresent(
 						"link=Move to the Recycle Bin");
@@ -63,8 +61,6 @@ public class TearDownBlogsEntryTest extends BaseTestCase {
 						"link=Move to the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to move this to the Recycle Bin[\\s\\S]$"));
 
 				boolean blogsEntry3Present = selenium.isElementPresent(
 						"link=Move to the Recycle Bin");
@@ -79,8 +75,6 @@ public class TearDownBlogsEntryTest extends BaseTestCase {
 						"link=Move to the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to move this to the Recycle Bin[\\s\\S]$"));
 
 				boolean blogsEntry4Present = selenium.isElementPresent(
 						"link=Move to the Recycle Bin");
@@ -95,8 +89,6 @@ public class TearDownBlogsEntryTest extends BaseTestCase {
 						"link=Move to the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to move this to the Recycle Bin[\\s\\S]$"));
 
 				boolean blogsEntry5Present = selenium.isElementPresent(
 						"link=Move to the Recycle Bin");
@@ -111,8 +103,6 @@ public class TearDownBlogsEntryTest extends BaseTestCase {
 						"link=Move to the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to move this to the Recycle Bin[\\s\\S]$"));
 
 			case 2:
 			case 3:
@@ -184,8 +174,6 @@ public class TearDownBlogsEntryTest extends BaseTestCase {
 						"//input[@value='Empty the Recycle Bin']"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to empty the Recycle Bin[\\s\\S]$"));
 
 			case 7:
 			case 100:

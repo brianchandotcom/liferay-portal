@@ -47,23 +47,8 @@ public class ConfigurePortletDisplayStyleAbstractTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		Thread.sleep(5000);
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//strong/a")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		assertEquals(RuntimeVariables.replace("Options"),
+			selenium.getText("//strong/a"));
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
 
 		for (int second = 0;; second++) {
@@ -94,6 +79,25 @@ public class ConfigurePortletDisplayStyleAbstractTest extends BaseTestCase {
 			}
 
 			try {
+				if (selenium.isVisible(
+							"//iframe[@id='_33_configurationIframeDialog']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.selectFrame("//iframe[@id='_33_configurationIframeDialog']");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
 				if (selenium.isVisible("link=Display Settings")) {
 					break;
 				}
@@ -106,6 +110,7 @@ public class ConfigurePortletDisplayStyleAbstractTest extends BaseTestCase {
 
 		selenium.clickAt("link=Display Settings",
 			RuntimeVariables.replace("Display Settings"));
+		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -127,6 +132,8 @@ public class ConfigurePortletDisplayStyleAbstractTest extends BaseTestCase {
 			RuntimeVariables.replace("Abstract"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
+		selenium.waitForPageToLoad("30000");
+		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -152,5 +159,6 @@ public class ConfigurePortletDisplayStyleAbstractTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals("Abstract",
 			selenium.getSelectedLabel("//select[@id='_86_pageDisplayStyle']"));
+		selenium.selectFrame("relative=top");
 	}
 }

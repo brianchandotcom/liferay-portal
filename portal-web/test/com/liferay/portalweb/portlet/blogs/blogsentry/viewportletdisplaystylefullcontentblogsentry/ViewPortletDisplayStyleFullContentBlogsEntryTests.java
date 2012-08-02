@@ -20,6 +20,8 @@ import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentry.AddBlogsEntr
 import com.liferay.portalweb.portlet.blogs.blogsentry.addblogsentry.TearDownBlogsEntryTest;
 import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPageBlogsTest;
 import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPortletBlogsTest;
+import com.liferay.portalweb.portlet.blogs.portlet.configureportletdisplaystyleabstract.TearDownPortletDisplayStyleTest;
+import com.liferay.portalweb.portlet.blogs.portlet.configureportletdisplaystylefullcontent.ConfigurePortletDisplayStyleFullContentTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

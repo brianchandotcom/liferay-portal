@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.permissionscp.organizations.organization.vieworganization.orgrole;
+package com.liferay.portalweb.permissions.organizations.organization.vieworganization.orgrole;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.organizations.organization.addorganization.AddOrganizationTest;
@@ -34,7 +34,7 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class OrgRoleViewOrganizationTests extends BaseTestSuite {
+public class OrgRoleTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddUserTest.class);

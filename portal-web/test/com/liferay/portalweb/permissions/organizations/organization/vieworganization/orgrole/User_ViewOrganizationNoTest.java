@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.permissionscp.organizations.organization.vieworganization.orgrole;
+package com.liferay.portalweb.permissions.organizations.organization.vieworganization.orgrole;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class User_ViewOrganizationTest extends BaseTestCase {
-	public void testUser_ViewOrganization() throws Exception {
+public class User_ViewOrganizationNoTest extends BaseTestCase {
+	public void testUser_ViewOrganizationNo() throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Go to"),
@@ -48,12 +48,6 @@ public class User_ViewOrganizationTest extends BaseTestCase {
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		selenium.clickAt("link=Users and Organizations",
-			RuntimeVariables.replace("Users and Organizations"));
-		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Organization Name"),
-			selenium.getText(
-				"//td[@id='_125_organizationsSearchContainer_col-name_row-1']/strong"));
+		assertFalse(selenium.isTextPresent("Users and Organizations"));
 	}
 }

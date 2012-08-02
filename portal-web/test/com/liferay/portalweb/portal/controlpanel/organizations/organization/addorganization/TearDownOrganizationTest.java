@@ -122,9 +122,6 @@ public class TearDownOrganizationTest extends BaseTestCase {
 					RuntimeVariables.replace("Update Associations"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
-				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
-					selenium.getText("//div[@class='portlet-msg-success']"));
 
 			case 2:
 				assertEquals(RuntimeVariables.replace("\u00ab Back"),
@@ -160,9 +157,6 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
-				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
-					selenium.getText("//div[@class='portlet-msg-success']"));
 				selenium.clickAt("link=Users and Organizations",
 					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
@@ -232,9 +226,6 @@ public class TearDownOrganizationTest extends BaseTestCase {
 					RuntimeVariables.replace("Update Associations"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
-				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
-					selenium.getText("//div[@class='portlet-msg-success']"));
 
 			case 3:
 				assertEquals(RuntimeVariables.replace("\u00ab Back"),
@@ -270,9 +261,6 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
-				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
-					selenium.getText("//div[@class='portlet-msg-success']"));
 				selenium.clickAt("link=Users and Organizations",
 					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
@@ -342,9 +330,6 @@ public class TearDownOrganizationTest extends BaseTestCase {
 					RuntimeVariables.replace("Update Associations"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
-				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
-					selenium.getText("//div[@class='portlet-msg-success']"));
 
 			case 4:
 				assertEquals(RuntimeVariables.replace("\u00ab Back"),
@@ -380,9 +365,6 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
-				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
-					selenium.getText("//div[@class='portlet-msg-success']"));
 				selenium.clickAt("link=Users and Organizations",
 					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
@@ -452,9 +434,6 @@ public class TearDownOrganizationTest extends BaseTestCase {
 					RuntimeVariables.replace("Update Associations"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
-				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
-					selenium.getText("//div[@class='portlet-msg-success']"));
 
 			case 5:
 				assertEquals(RuntimeVariables.replace("\u00ab Back"),
@@ -490,9 +469,6 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
-				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
-					selenium.getText("//div[@class='portlet-msg-success']"));
 				selenium.clickAt("link=Users and Organizations",
 					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
@@ -562,9 +538,6 @@ public class TearDownOrganizationTest extends BaseTestCase {
 					RuntimeVariables.replace("Update Associations"));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
-				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
-					selenium.getText("//div[@class='portlet-msg-success']"));
 
 			case 6:
 				assertEquals(RuntimeVariables.replace("\u00ab Back"),
@@ -600,9 +573,6 @@ public class TearDownOrganizationTest extends BaseTestCase {
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
-				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
-					selenium.getText("//div[@class='portlet-msg-success']"));
 
 			case 7:
 			case 8:

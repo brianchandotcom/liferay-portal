@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portalweb.permissionscp.organizations.organization.vieworganization;
+package com.liferay.portalweb.permissions.organizations;
 
-import com.liferay.portalweb.permissionscp.organizations.organization.vieworganization.orgrole.OrgRoleViewOrganizationTests;
+import com.liferay.portalweb.permissions.organizations.organization.OrganizationTestPlan;
 import com.liferay.portalweb.portal.BaseTestSuite;
 
 import junit.framework.Test;
@@ -23,12 +23,12 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ViewOrganizationTestPlan extends BaseTestSuite {
+public class OrganizationsTestPlan extends BaseTestSuite {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(OrgRoleViewOrganizationTests.suite());
+		testSuite.addTest(OrganizationTestPlan.suite());
 
 		return testSuite;
 	}

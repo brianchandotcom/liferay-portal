@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.permissionscp.organizations.organization.vieworganization.orgrole;
+package com.liferay.portalweb.permissions.organizations.organization.vieworganization.orgrole;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;

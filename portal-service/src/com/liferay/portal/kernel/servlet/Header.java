@@ -61,6 +61,24 @@ public class Header implements Serializable {
 		_stringValue = string;
 	}
 
+	public void addToResponse(String key, HttpServletResponse response) {
+		if (_type == Type.COOKIE) {
+			response.addCookie(_cookieValue);
+		}
+		else if (_type == Type.DATE) {
+			response.addDateHeader(key, _dateValue);
+		}
+		else if (_type == Type.INTEGER) {
+			response.addIntHeader(key, _intValue);
+		}
+		else if (_type == Type.STRING) {
+			response.addHeader(key, _stringValue);
+		}
+		else {
+			throw new IllegalStateException("Invalid type " + _type);
+		}
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == null) {

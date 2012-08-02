@@ -36,8 +36,17 @@ public class CacheResponseUtil {
 			String headerKey = entry.getKey();
 			Set<Header> headerValues = entry.getValue();
 
+			boolean first = true;
+
 			for (Header header : headerValues) {
-				header.setToResponse(headerKey, response);
+				if (first) {
+					header.setToResponse(headerKey, response);
+
+					first = false;
+				}
+				else {
+					header.addToResponse(headerKey, response);
+				}
 			}
 		}
 	}

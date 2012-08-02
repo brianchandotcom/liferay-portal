@@ -220,11 +220,12 @@ public class WikiPageServiceWrapper implements WikiPageService,
 			deletedFileName);
 	}
 
-	public void movePageAttachmentToTrash(long nodeId, java.lang.String title,
-		java.lang.String fileName)
+	public java.lang.String movePageAttachmentToTrash(long nodeId,
+		java.lang.String title, java.lang.String fileName)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_wikiPageService.movePageAttachmentToTrash(nodeId, title, fileName);
+		return _wikiPageService.movePageAttachmentToTrash(nodeId, title,
+			fileName);
 	}
 
 	public com.liferay.portlet.wiki.model.WikiPage revertPage(long nodeId,

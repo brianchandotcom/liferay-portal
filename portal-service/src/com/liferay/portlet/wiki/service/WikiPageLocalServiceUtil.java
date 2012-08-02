@@ -681,11 +681,11 @@ public class WikiPageLocalServiceUtil {
 		getService().movePageAttachmentFromTrash(nodeId, title, deletedFileName);
 	}
 
-	public static void movePageAttachmentToTrash(long nodeId,
+	public static java.lang.String movePageAttachmentToTrash(long nodeId,
 		java.lang.String title, java.lang.String fileName)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().movePageAttachmentToTrash(nodeId, title, fileName);
+		return getService().movePageAttachmentToTrash(nodeId, title, fileName);
 	}
 
 	public static com.liferay.portlet.wiki.model.WikiPage revertPage(

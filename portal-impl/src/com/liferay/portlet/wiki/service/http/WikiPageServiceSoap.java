@@ -349,12 +349,14 @@ public class WikiPageServiceSoap {
 		}
 	}
 
-	public static void movePageAttachmentToTrash(long nodeId,
+	public static java.lang.String movePageAttachmentToTrash(long nodeId,
 		java.lang.String title, java.lang.String fileName)
 		throws RemoteException {
 		try {
-			WikiPageServiceUtil.movePageAttachmentToTrash(nodeId, title,
-				fileName);
+			java.lang.String returnValue = WikiPageServiceUtil.movePageAttachmentToTrash(nodeId,
+					title, fileName);
+
+			return returnValue;
 		}
 		catch (Exception e) {
 			_log.error(e, e);

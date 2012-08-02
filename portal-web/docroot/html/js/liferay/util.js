@@ -1810,18 +1810,25 @@
 				var dialogWindow = dialog.iframe.node.get('contentWindow').getDOM();
 
 				var openingWindow = dialogWindow.Liferay.Util.getOpener();
-				var refresh = event.refresh;
+				var redirect = event.redirect;
 
-				if (refresh && openingWindow) {
-					var data;
+				if (redirect) {
+					openingWindow.location = redirect;
+				}
+				else {
+					var refresh = event.refresh;
 
-					if (!event.portletAjaxable) {
-						data = {
-							portletAjaxable: false
-						};
+					if (refresh && openingWindow) {
+						var data;
+
+						if (!event.portletAjaxable) {
+							data = {
+								portletAjaxable: false
+							};
+						}
+
+						openingWindow.Liferay.Portlet.refresh('#p_p_id_' + refresh + '_', data);
 					}
-
-					openingWindow.Liferay.Portlet.refresh('#p_p_id_' + refresh + '_', data);
 				}
 
 				dialog.close();

@@ -18,9 +18,9 @@ import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -52,7 +52,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	public DDMStructureImpl() {
 	}
 
-	public List<String> getAvailableLocales() {
+	public String[] getAvailableLocales() {
 		Document document = getDocument();
 
 		Element rootElement = document.getRootElement();
@@ -60,7 +60,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		String availableLocales = rootElement.attributeValue(
 			"available-locales");
 
-		return ListUtil.fromArray(StringUtil.split(availableLocales));
+		return StringUtil.split(availableLocales);
 	}
 
 	public String getDefaultLocale() {
@@ -256,9 +256,9 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	private Map<String, String> _getField(Element element, String locale) {
 		Map<String, String> field = new HashMap<String, String>();
 
-		List<String> availableLocales = getAvailableLocales();
+		String[] availableLocales = getAvailableLocales();
 
-		if ((locale != null) && !availableLocales.contains(locale)) {
+		if ((locale != null) && !ArrayUtil.contains(availableLocales, locale)) {
 			locale = getDefaultLocale();
 		}
 

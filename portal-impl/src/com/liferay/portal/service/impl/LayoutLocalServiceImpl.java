@@ -1137,7 +1137,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		int count = layoutSet.getPageCount();
 
 		if (group.isUser()) {
-
 			List<UserGroup> userGroups = userPersistence.getUserGroups(
 				group.getClassPK());
 
@@ -1239,7 +1238,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		}
 
 		if (group.isUser()) {
-
 			List<UserGroup> userGroups = userPersistence.getUserGroups(
 				group.getClassPK());
 

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
@@ -290,9 +291,10 @@ public class EditEntryAction extends PortletAction {
 		}
 
 		if (moveToTrash && (deleteEntryIds.length > 0)) {
-			Map<String, long[]> data = new HashMap<String, long[]>();
+			Map<String, String[]> data = new HashMap<String, String[]>();
 
-			data.put("restoreEntryIds", deleteEntryIds);
+			data.put(
+				"restoreEntryIds", ArrayUtil.toStringArray(deleteEntryIds));
 
 			SessionMessages.add(
 				actionRequest,

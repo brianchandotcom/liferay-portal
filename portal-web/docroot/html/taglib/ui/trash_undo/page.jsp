@@ -20,7 +20,7 @@
 String portletURL = (String)request.getAttribute("liferay-ui:trash-undo:portletURL");
 
 if (SessionMessages.contains(portletRequest, portletDisplay.getId() + SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA)) {
-	Map<String, long[]> data = (HashMap<String, long[]>)SessionMessages.get(portletRequest, portletDisplay.getId() + SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA);
+	Map<String, String[]> data = (HashMap<String, String[]>)SessionMessages.get(portletRequest, portletDisplay.getId() + SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA);
 
 	if (data != null) {
 		int trashedEntriesCount = 0;
@@ -28,7 +28,7 @@ if (SessionMessages.contains(portletRequest, portletDisplay.getId() + SessionMes
 		Set<String> keys = data.keySet();
 
 		for (String key : keys) {
-			long[] primaryKeys = data.get(key);
+			String[] primaryKeys = data.get(key);
 
 			trashedEntriesCount += primaryKeys.length;
 		}
@@ -44,7 +44,7 @@ if (SessionMessages.contains(portletRequest, portletDisplay.getId() + SessionMes
 
 				<%
 				for (String key : keys) {
-					long[] primaryKeys = data.get(key);
+					String[] primaryKeys = data.get(key);
 				%>
 
 					<aui:input name="<%= key %>" type="hidden" value="<%= StringUtil.merge(primaryKeys) %>" />

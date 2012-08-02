@@ -134,9 +134,11 @@ public class EditFileShortcutAction extends PortletAction {
 		if (moveToTrash) {
 			DLAppServiceUtil.moveFileShortcutToTrash(fileShortcutId);
 
-			Map<String, long[]> data = new HashMap<String, long[]>();
+			Map<String, String[]> data = new HashMap<String, String[]>();
 
-			data.put("restoreddFileShortcutIds", new long[] {fileShortcutId});
+			data.put(
+				"restoreddFileShortcutIds",
+				new String[] {String.valueOf(fileShortcutId)});
 
 			SessionMessages.add(
 				actionRequest,

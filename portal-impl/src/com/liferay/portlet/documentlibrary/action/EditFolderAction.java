@@ -17,6 +17,7 @@ package com.liferay.portlet.documentlibrary.action;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -163,9 +164,10 @@ public class EditFolderAction extends PortletAction {
 		}
 
 		if (moveToTrash && (deleteFolderIds.length > 0)) {
-			Map<String, long[]> data = new HashMap<String, long[]>();
+			Map<String, String[]> data = new HashMap<String, String[]>();
 
-			data.put("restoreFolderIds", deleteFolderIds);
+			data.put(
+				"restoreFolderIds", ArrayUtil.toStringArray(deleteFolderIds));
 
 			SessionMessages.add(
 				actionRequest,

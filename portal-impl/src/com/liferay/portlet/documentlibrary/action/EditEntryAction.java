@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -275,11 +276,16 @@ public class EditEntryAction extends PortletAction {
 			 (deleteFileShortcutIds.length > 0) ||
 			 (deleteFolderIds.length > 0))) {
 
-			Map<String, long[]> data = new HashMap<String, long[]>();
+			Map<String, String[]> data = new HashMap<String, String[]>();
 
-			data.put("restoreFileEntryIds", deleteFileEntryIds);
-			data.put("restoreFileShortcutIds", deleteFileShortcutIds);
-			data.put("restoreFolderIds", deleteFolderIds);
+			data.put(
+				"restoreFileEntryIds",
+				ArrayUtil.toStringArray(deleteFileEntryIds));
+			data.put(
+				"restoreFileShortcutIds",
+				ArrayUtil.toStringArray(deleteFileShortcutIds));
+			data.put(
+				"restoreFolderIds", ArrayUtil.toStringArray(deleteFolderIds));
 
 			SessionMessages.add(
 				actionRequest,

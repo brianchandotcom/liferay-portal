@@ -36,6 +36,7 @@ import com.liferay.portal.security.lang.PortalSecurityManager;
 import com.liferay.portal.service.LockLocalServiceUtil;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
 import com.liferay.portlet.messageboards.util.MBIndexer;
 
 /**
@@ -179,6 +180,10 @@ public class StartupAction extends SimpleAction {
 		// Jericho
 
 		CachedLoggerProvider.install();
+
+		// DL Processors
+
+		DLProcessorRegistryUtil.init();
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(StartupAction.class);

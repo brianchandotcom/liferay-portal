@@ -40,6 +40,8 @@ public interface DLProcessorRegistry {
 			FileEntry importedFileEntry, Element fileEntryElement)
 		throws Exception;
 
+	public void init() throws Exception;
+
 	public void register(DLProcessor dlProcessor);
 
 	public void trigger(FileEntry fileEntry, FileVersion fileVersion);

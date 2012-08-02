@@ -62,6 +62,10 @@ public class DLProcessorRegistryUtil {
 			portletDataContext, fileEntry, importedFileEntry, fileEntryElement);
 	}
 
+	public static void init() throws Exception {
+		getDLProcessorRegistry().init();
+	}
+
 	public static void register(DLProcessor dlProcessor) {
 		getDLProcessorRegistry().register(dlProcessor);
 	}

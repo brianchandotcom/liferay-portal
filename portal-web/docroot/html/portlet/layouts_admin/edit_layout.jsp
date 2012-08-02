@@ -79,6 +79,10 @@ if (layoutRevision != null) {
 
 String[] mainSections = PropsValues.LAYOUT_FORM_UPDATE;
 
+if(selLayout.isTypePortlet()){
+	mainSections = ArrayUtil.append(mainSections, "portlets");
+}
+
 if (!group.isUser() && selLayout.isTypePortlet()) {
 	mainSections = ArrayUtil.append(mainSections, "customization-settings");
 }

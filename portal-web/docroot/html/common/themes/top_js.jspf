@@ -250,7 +250,7 @@
 
 		String alloyRootPath = javaScriptRootPath + "/aui/";
 
-		String alloyBaseURL = PortalUtil.getPortalURL(request) + alloyRootPath;
+		String alloyBaseURL = PortalUtil.getPortalURL(request, themeDisplay.isSecure()) + alloyRootPath;
 
 		String alloyComboPath = PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathContext() + "/combo/", "minifierType=", javaScriptLastModified);
 		%>

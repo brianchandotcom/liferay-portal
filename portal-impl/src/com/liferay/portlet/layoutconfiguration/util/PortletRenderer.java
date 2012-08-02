@@ -21,9 +21,9 @@ import com.liferay.portal.kernel.portlet.PortletContainerUtil;
 import com.liferay.portal.kernel.portlet.RestrictPortletServletRequest;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.WebKeys;
 
 import java.util.concurrent.Callable;
 
@@ -112,7 +112,17 @@ public class PortletRenderer {
 		PipingServletResponse pipingServletResponse =
 			new PipingServletResponse(response, unsyncStringWriter);
 
-		PortletContainerUtil.render(request, pipingServletResponse, _portlet);
+		Object oldValue = request.getAttribute(WebKeys.PORTLET_PARALLEL_RENDER);
+
+		request.setAttribute(WebKeys.PORTLET_PARALLEL_RENDER, Boolean.FALSE);
+
+		try {
+			PortletContainerUtil.render(
+				request, pipingServletResponse, _portlet);
+		}
+		finally {
+			request.setAttribute(WebKeys.PORTLET_PARALLEL_RENDER, oldValue);
+		}
 
 		return unsyncStringWriter.getStringBundler();
 	}

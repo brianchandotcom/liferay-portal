@@ -14,14 +14,9 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Blogs Test Page</td>
-	<td>Blogs Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
-	<td>link=Blogs Test Page</td>
-	<td>Blogs Test Page</td>
+	<td>link=Blogs Test Page1</td>
+	<td>Blogs Test Page1</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -60,6 +55,16 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
+	<td>//iframe[@id='_33_configurationIframeDialog']</td>
+	<td>Blogs - Configuration</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[@id='_33_configurationIframeDialog']</td>
+	<td>Blogs - Configuration</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>link=Scope</td>
 	<td>Scope</td>
 </tr>
@@ -86,10 +91,10 @@
 <tr>
 	<td>select</td>
 	<td>//select[@id='_86_scopeLayoutUuid']</td>
-	<td>Blogs2 Test2 Page2</td>
+	<td>Blogs Test Page2</td>
 </tr>
 <tr>
-	<td>clickAt</td>
+	<td>clickAtAndWait</td>
 	<td>//input[@value='Save']</td>
 	<td>Save</td>
 </tr>
@@ -106,7 +111,12 @@
 <tr>
 	<td>assertSelectedLabel</td>
 	<td>//select[@id='_86_scopeLayoutUuid']</td>
-	<td>Blogs2 Test2 Page2</td>
+	<td>Blogs Test Page2</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
 </tr>
 <tr>
 	<td>open</td>
@@ -114,19 +124,14 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Blogs Test Page</td>
-	<td>Blogs Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
-	<td>link=Blogs Test Page</td>
-	<td>Blogs Test Page</td>
+	<td>link=Blogs Test Page1</td>
+	<td>Blogs Test Page1</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//span[@class='portlet-title-text']</td>
-	<td>Blogs (Blogs2 Test2 Page2)</td>
+	<td>Blogs (Blogs Test Page2)</td>
 </tr>
 </tbody></table>
 </body>

@@ -16,6 +16,10 @@ package com.liferay.portalweb.portlet.blogs.blogsentry.viewportletscopelayoutblo
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPageBlogs1Test;
+import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPageBlogs2Test;
+import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPortletBlogs1Test;
+import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPortletBlogs2Test;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

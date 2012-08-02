@@ -38,31 +38,9 @@ public class DeleteBlogsEntryTitleEscapeCharactersTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace("//td[3]/span/a/span"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to move this to the Recycle Bin[\\s\\S]$"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace(
-							"Your request completed successfully.")
-										.equals(selenium.getText(
-								"//div[@class='portlet-msg-success']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		assertEquals(RuntimeVariables.replace(
-				"Your request completed successfully."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
+				"The selected item was moved to the Recycle Bin. Undo"),
+			selenium.getText("//form[@id='_33_undoForm']"));
 		assertFalse(selenium.isTextPresent("<!--Blogs Entry Title-->"));
 		assertFalse(selenium.isTextPresent("Blogs Entry Content"));
 	}

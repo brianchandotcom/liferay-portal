@@ -26,25 +26,8 @@ public class ViewPortletScopeLayoutDefaultBlogsEntryPage1Test
 		throws Exception {
 		selenium.open("/web/guest/home/");
 		loadRequiredJavaScriptModules();
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Blogs Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		selenium.clickAt("link=Blogs Test Page",
-			RuntimeVariables.replace("Blogs Test Page"));
+		selenium.clickAt("link=Blogs Test Page1",
+			RuntimeVariables.replace("Blogs Test Page1"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Blogs"),
@@ -70,7 +53,29 @@ public class ViewPortletScopeLayoutDefaultBlogsEntryPage1Test
 			Thread.sleep(1000);
 		}
 
+		assertEquals(RuntimeVariables.replace("Configuration"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 		selenium.click("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//iframe[@id='_33_configurationIframeDialog']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.selectFrame("//iframe[@id='_33_configurationIframeDialog']");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -110,5 +115,6 @@ public class ViewPortletScopeLayoutDefaultBlogsEntryPage1Test
 
 		assertEquals("Default",
 			selenium.getSelectedLabel("//select[@id='_86_scopeType']"));
+		selenium.selectFrame("relative=top");
 	}
 }

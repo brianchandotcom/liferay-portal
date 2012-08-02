@@ -100,6 +100,26 @@ public class TearDownPortletDisplayStyleTest extends BaseTestCase {
 					}
 
 					try {
+						if (selenium.isVisible(
+									"//iframe[@id='_33_configurationIframeDialog']")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				selenium.selectFrame(
+					"//iframe[@id='_33_configurationIframeDialog']");
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
 						if (selenium.isVisible("link=Display Settings")) {
 							break;
 						}
@@ -112,6 +132,7 @@ public class TearDownPortletDisplayStyleTest extends BaseTestCase {
 
 				selenium.clickAt("link=Display Settings",
 					RuntimeVariables.replace("Display Settings"));
+				Thread.sleep(5000);
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -131,6 +152,24 @@ public class TearDownPortletDisplayStyleTest extends BaseTestCase {
 
 				selenium.select("//select[@id='_86_pageDelta']",
 					RuntimeVariables.replace("5"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//select[@id='_86_pageDisplayStyle']")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
 				selenium.select("//select[@id='_86_pageDisplayStyle']",
 					RuntimeVariables.replace("Full Content"));
 
@@ -193,6 +232,7 @@ public class TearDownPortletDisplayStyleTest extends BaseTestCase {
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
+				selenium.selectFrame("relative=top");
 
 			case 100:
 				label = -1;

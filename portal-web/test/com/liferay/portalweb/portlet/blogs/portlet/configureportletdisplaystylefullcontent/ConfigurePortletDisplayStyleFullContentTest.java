@@ -94,6 +94,25 @@ public class ConfigurePortletDisplayStyleFullContentTest extends BaseTestCase {
 			}
 
 			try {
+				if (selenium.isVisible(
+							"//iframe[@id='_33_configurationIframeDialog']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.selectFrame("//iframe[@id='_33_configurationIframeDialog']");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
 				if (selenium.isVisible("link=Display Settings")) {
 					break;
 				}
@@ -106,6 +125,7 @@ public class ConfigurePortletDisplayStyleFullContentTest extends BaseTestCase {
 
 		selenium.clickAt("link=Display Settings",
 			RuntimeVariables.replace("Display Settings"));
+		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -152,5 +172,6 @@ public class ConfigurePortletDisplayStyleFullContentTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertEquals("Full Content",
 			selenium.getSelectedLabel("//select[@id='_86_pageDisplayStyle']"));
+		selenium.selectFrame("relative=top");
 	}
 }

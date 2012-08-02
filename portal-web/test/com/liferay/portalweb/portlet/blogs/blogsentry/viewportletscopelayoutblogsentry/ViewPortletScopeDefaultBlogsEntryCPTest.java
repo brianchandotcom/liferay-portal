@@ -32,7 +32,25 @@ public class ViewPortletScopeDefaultBlogsEntryCPTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("//li[@id='_145_mySites']/a/span")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}

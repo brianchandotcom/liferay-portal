@@ -14,14 +14,9 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Blogs Test Page</td>
-	<td>Blogs Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
-	<td>link=Blogs Test Page</td>
-	<td>Blogs Test Page</td>
+	<td>link=Blogs Test Page1</td>
+	<td>Blogs Test Page1</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -49,9 +44,24 @@
 	<td>Configuration</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
+	<td>Configuration</td>
+</tr>
+<tr>
 	<td>click</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a</td>
 	<td>Configuration</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//iframe[@id='_33_configurationIframeDialog']</td>
+	<td>Blogs - Configuration</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[@id='_33_configurationIframeDialog']</td>
+	<td>Blogs - Configuration</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -73,7 +83,11 @@
 	<td>//select[@id='_86_scopeType']</td>
 	<td>Default</td>
 </tr>
-
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
+</tr>
 </tbody></table>
 </body>
 </html>

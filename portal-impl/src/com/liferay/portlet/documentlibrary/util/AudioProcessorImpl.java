@@ -58,6 +58,7 @@ import org.apache.commons.lang.time.StopWatch;
  * @author Juan González
  * @author Sergio González
  * @author Mika Koivisto
+ * @author Ivica Cardic
  */
 public class AudioProcessorImpl
 	extends DLPreviewableProcessor implements AudioProcessor {
@@ -160,6 +161,8 @@ public class AudioProcessorImpl
 	public void trigger(
 		FileVersion sourceFileVersion, FileVersion destinationFileVersion) {
 
+		super.trigger(sourceFileVersion, destinationFileVersion);
+
 		_queueGeneration(sourceFileVersion, destinationFileVersion);
 	}
 
@@ -206,6 +209,11 @@ public class AudioProcessorImpl
 				}
 			}
 		}
+	}
+
+	@Override
+	protected List<Long> getFileVersionIds() {
+		return _fileVersionIds;
 	}
 
 	@Override
@@ -352,6 +360,11 @@ public class AudioProcessorImpl
 
 				Future<String> future = ProcessExecutor.execute(
 					ClassPathUtil.getPortalClassPath(), processCallable);
+
+				String processIdentity = Long.toString(
+					fileVersion.getFileVersionId());
+
+				managedProcesses.put(processIdentity, future);
 
 				future.get();
 			}

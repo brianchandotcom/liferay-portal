@@ -12,31 +12,27 @@
  * details.
  */
 
-package com.liferay.portal.kernel.image;
+package com.liferay.portal.kernel.process;
 
-import java.util.List;
-import java.util.Properties;
-import java.util.concurrent.Future;
+import java.io.InputStream;
 
 /**
- * @author Alexander Chow
+ * An <class>OutputConsumer</class> instance reads output from a process'
+ * stdout.
+ *
+ * @param <V> desired return value of the output from the process' stdout
+ *
  * @author Ivica Cardic
  */
-public interface ImageMagick {
+public interface NativeProcessOutputConsumer<V> {
 
-	public Future convert(List<String> arguments) throws Exception;
-
-	public void destroy();
-
-	public String getGlobalSearchPath() throws Exception;
-
-	public Properties getResourceLimitsProperties() throws Exception;
-
-	public String[] identify(List<String> arguments)
-		throws Exception;
-
-	public boolean isEnabled();
-
-	public void reset();
+	/**
+	 * Reads the output of a process from the given <class>InputStream</class>
+	 *
+	 * @param inputStream  the input stream of the process
+	 * @return the output from the input stream of the process
+	 * @throws Exception if an unexpected error occurred
+	 */
+	public V consumeOutput(InputStream inputStream) throws Exception;
 
 }

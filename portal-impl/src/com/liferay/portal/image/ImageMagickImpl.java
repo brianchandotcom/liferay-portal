@@ -18,31 +18,27 @@ import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.image.ImageMagick;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.process.ClassPathUtil;
-import com.liferay.portal.kernel.process.ProcessCallable;
-import com.liferay.portal.kernel.process.ProcessException;
-import com.liferay.portal.kernel.process.ProcessExecutor;
 import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.SystemEnv;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.log.Log4jLogFactoryImpl;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsUtil;
-import com.liferay.util.log4j.Log4JUtil;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Future;
 
 import javax.portlet.PortletPreferences;
 
+import org.im4java.process.ArrayListOutputConsumer;
+import org.im4java.process.ProcessExecutor;
+import org.im4java.process.ProcessTask;
+
 /**
  * @author Alexander Chow
+ * @author Ivica Cardic
  */
 public class ImageMagickImpl implements ImageMagick {
 
@@ -50,29 +46,35 @@ public class ImageMagickImpl implements ImageMagick {
 		return _instance;
 	}
 
-	public void convert(List<String> arguments, boolean fork) throws Exception {
+	public Future convert(List<String> arguments) throws Exception {
+
 		if (!isEnabled()) {
 			throw new IllegalStateException(
 				"Cannot call \"convert\" when ImageMagick is disabled");
 		}
 
-		if (fork) {
-			ProcessCallable<String[]> processCallable =
-				new ImageMagickProcessCallable(
-					ServerDetector.getServerId(),
-					PropsUtil.get(PropsKeys.LIFERAY_HOME),
-					Log4JUtil.getCustomLogSettings(), _globalSearchPath,
-					getResourceLimits(), arguments, true);
+		ProcessExecutor exec = _getProcessExecutor();
 
-			Future<String[]> future = ProcessExecutor.execute(
-				ClassPathUtil.getPortalClassPath(), processCallable);
+		LiferayConvertCmd convertCmd = new LiferayConvertCmd();
 
-			future.get();
+		ProcessTask processTask = convertCmd.getProcessTask(
+			_globalSearchPath, getResourceLimits(), arguments);
+
+		exec.execute(processTask);
+
+		return processTask;
+	}
+
+	public void destroy() {
+		if (_processExecutor == null) {
+			return;
 		}
-		else {
-			LiferayConvertCmd.run(
-				_globalSearchPath, getResourceLimits(), arguments);
+
+		synchronized (ProcessExecutor.class) {
+			_processExecutor.shutdownNow();
 		}
+
+		_processExecutor = null;
 	}
 
 	public String getGlobalSearchPath() throws Exception {
@@ -113,30 +115,35 @@ public class ImageMagickImpl implements ImageMagick {
 		return resourceLimitsProperties;
 	}
 
-	public String[] identify(List<String> arguments, boolean fork)
-		throws Exception {
-
+	public String[] identify(List<String> arguments) throws Exception {
 		if (!isEnabled()) {
 			throw new IllegalStateException(
 				"Cannot call \"identify\" when ImageMagick is disabled");
 		}
 
-		if (fork) {
-			ProcessCallable<String[]> processCallable =
-				new ImageMagickProcessCallable(
-					ServerDetector.getServerId(),
-					PropsUtil.get(PropsKeys.LIFERAY_HOME),
-					Log4JUtil.getCustomLogSettings(), _globalSearchPath,
-					getResourceLimits(), arguments, false);
+		ProcessExecutor exec = _getProcessExecutor();
 
-			Future<String[]> future = ProcessExecutor.execute(
-				ClassPathUtil.getPortalClassPath(), processCallable);
+		LiferayIdentifyCmd identifyCmd = new LiferayIdentifyCmd();
 
-			return future.get();
+		ArrayListOutputConsumer arrayListOutputConsumer =
+			new ArrayListOutputConsumer();
+
+		identifyCmd.setOutputConsumer(arrayListOutputConsumer);
+
+		ProcessTask processTask = identifyCmd.getProcessTask(
+			_globalSearchPath, getResourceLimits(), arguments);
+
+		exec.execute(processTask);
+
+		processTask.get();
+
+		List<String> output = arrayListOutputConsumer.getOutput();
+
+		if (output != null) {
+			return output.toArray(new String[0]);
 		}
 		else {
-			return LiferayIdentifyCmd.run(
-				_globalSearchPath, getResourceLimits(), arguments);
+			return new String[0];
 		}
 	}
 
@@ -153,10 +160,11 @@ public class ImageMagickImpl implements ImageMagick {
 		if (!enabled && !_warned) {
 			StringBundler sb = new StringBundler(6);
 
-			sb.append("Liferay is not configured to use ImageMagick. For ");
-			sb.append("better quality document and image previews, install ");
-			sb.append("ImageMagick and enable it in portal-ext.properties or ");
-			sb.append("in the Server Administration control panel at: ");
+			sb.append("Liferay is not configured to use ImageMagick and ");
+			sb.append("GhostScript. For better quality document and image ");
+			sb.append("previews, install ImageMagick alongside GhostScript ");
+			sb.append("and enable it in portal-ext.properties or in the ");
+			sb.append("Server Administration control panel at: ");
 			sb.append("http://<server>/group/control_panel/manage/-/server/");
 			sb.append("external-services");
 
@@ -203,70 +211,28 @@ public class ImageMagickImpl implements ImageMagick {
 		return resourceLimits;
 	}
 
+	private ProcessExecutor _getProcessExecutor() {
+		if (_processExecutor != null) {
+			return _processExecutor;
+		}
+
+		synchronized (ProcessExecutor.class) {
+			if (_processExecutor == null) {
+				_processExecutor = new ProcessExecutor();
+			}
+		}
+
+		return _processExecutor;
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(ImageMagickImpl.class);
 
 	private static ImageMagickImpl _instance = new ImageMagickImpl();
 
 	private String _globalSearchPath;
+
+	private volatile ProcessExecutor _processExecutor;
 	private Properties _resourceLimitsProperties;
 	private boolean _warned;
-
-	private static class ImageMagickProcessCallable
-		implements ProcessCallable<String[]> {
-
-		public ImageMagickProcessCallable(
-			String serverId, String liferayHome,
-			Map<String, String> customLogSettings, String globalSearchPath,
-			List<String> resourceLimits, List<String> commandArguments,
-			boolean convert) {
-
-			_serverId = serverId;
-			_liferayHome = liferayHome;
-			_customLogSettings = customLogSettings;
-			_globalSearchPath = globalSearchPath;
-			_commandArguments = commandArguments;
-			_resourceLimits = resourceLimits;
-			_convert = convert;
-		}
-
-		public String[] call() throws ProcessException {
-			Class<?> clazz = getClass();
-
-			ClassLoader classLoader = clazz.getClassLoader();
-
-			Properties systemProperties = System.getProperties();
-
-			SystemEnv.setProperties(systemProperties);
-
-			Log4JUtil.initLog4J(
-				_serverId, _liferayHome, classLoader, new Log4jLogFactoryImpl(),
-				_customLogSettings);
-
-			try {
-				if (_convert) {
-					LiferayConvertCmd.run(
-						_globalSearchPath, _resourceLimits, _commandArguments);
-				}
-				else {
-					return LiferayIdentifyCmd.run(
-						_globalSearchPath, _resourceLimits, _commandArguments);
-				}
-			}
-			catch (Exception e) {
-				throw new ProcessException(e);
-			}
-
-			return null;
-		}
-
-		private List<String> _commandArguments;
-		private boolean _convert;
-		private Map<String, String> _customLogSettings;
-		private String _globalSearchPath;
-		private String _liferayHome;
-		private List<String> _resourceLimits;
-		private String _serverId;
-
-	}
 
 }

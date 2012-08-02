@@ -40,8 +40,7 @@ public interface ImageTool {
 
 	public static final String TYPE_TIFF = "tiff";
 
-	public RenderedImage convertCMYKtoRGB(
-		byte[] bytes, String type, boolean fork);
+	public RenderedImage convertCMYKtoRGB(byte[] bytes, String type);
 
 	public BufferedImage convertImageType(BufferedImage sourceImage, int type);
 

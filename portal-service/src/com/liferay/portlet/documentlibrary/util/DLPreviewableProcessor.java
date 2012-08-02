@@ -47,8 +47,14 @@ import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.InputStream;
 
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Future;
+
 /**
  * @author Alexander Chow
+ * @author Ivica Cardic
  */
 public abstract class DLPreviewableProcessor implements DLProcessor {
 
@@ -153,6 +159,22 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		}
 
 		return isSupported(fileVersion.getMimeType());
+	}
+
+	public void trigger(
+		FileVersion sourceFileVersion, FileVersion destinationFileVersion) {
+
+		if (getFileVersionIds().contains(
+			destinationFileVersion.getFileVersionId())) {
+
+			String processIdentity = Long.toString(
+				destinationFileVersion.getFileVersionId());
+
+			destroyProcess(processIdentity);
+
+			getFileVersionIds().remove(
+				destinationFileVersion.getFileVersionId());
+		}
 	}
 
 	protected static void deleteFiles(
@@ -336,6 +358,18 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		}
 		catch (Exception e) {
 			_log.error(e, e);
+		}
+	}
+
+	protected void destroyProcess(String processIdentity) {
+		synchronized (DLPreviewableProcessor.class) {
+			Future future = managedProcesses.get(processIdentity);
+
+			if (future != null) {
+				future.cancel(true);
+
+				managedProcesses.remove(processIdentity);
+			}
 		}
 	}
 
@@ -605,6 +639,8 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 
 		return sb.toString();
 	}
+
+	protected abstract List<Long> getFileVersionIds();
 
 	protected String getPreviewFilePath(FileVersion fileVersion) {
 		return getPreviewFilePath(fileVersion, 0);
@@ -1200,6 +1236,9 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 			FileUtil.delete(file);
 		}
 	}
+
+	protected Map<String, Future> managedProcesses =
+		new ConcurrentHashMap<String, Future>();
 
 	private static Log _log = LogFactoryUtil.getLog(
 		DLPreviewableProcessor.class);

@@ -63,6 +63,7 @@ import org.apache.commons.lang.time.StopWatch;
  * @author Juan González
  * @author Sergio González
  * @author Mika Koivisto
+ * @author Ivica Cardic
  */
 public class VideoProcessorImpl
 	extends DLPreviewableProcessor implements VideoProcessor {
@@ -178,6 +179,8 @@ public class VideoProcessorImpl
 	public void trigger(
 		FileVersion sourceFileVersion, FileVersion destinationFileVersion) {
 
+		super.trigger(sourceFileVersion, destinationFileVersion);
+
 		_queueGeneration(sourceFileVersion, destinationFileVersion);
 	}
 
@@ -231,6 +234,11 @@ public class VideoProcessorImpl
 				}
 			}
 		}
+	}
+
+	@Override
+	protected List<Long> getFileVersionIds() {
+		return _fileVersionIds;
 	}
 
 	@Override
@@ -323,6 +331,11 @@ public class VideoProcessorImpl
 
 					Future<String> future = ProcessExecutor.execute(
 						ClassPathUtil.getPortalClassPath(), processCallable);
+
+					String processIdentity = Long.toString(
+						fileVersion.getFileVersionId());
+
+					managedProcesses.put(processIdentity, future);
 
 					future.get();
 				}
@@ -486,6 +499,11 @@ public class VideoProcessorImpl
 
 			Future<String> future = ProcessExecutor.execute(
 				ClassPathUtil.getPortalClassPath(), processCallable);
+
+			String processIdentity = Long.toString(
+				fileVersion.getFileVersionId());
+
+			managedProcesses.put(processIdentity, future);
 
 			future.get();
 		}

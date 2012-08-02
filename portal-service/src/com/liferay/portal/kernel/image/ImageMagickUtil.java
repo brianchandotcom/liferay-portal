@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermissio
 
 import java.util.List;
 import java.util.Properties;
+import java.util.concurrent.Future;
 
 /**
  * The ImageMagick utility class.
@@ -31,15 +32,16 @@ public class ImageMagickUtil {
 	 *
 	 * @param  arguments the command arguments being passed to <code>convert
 	 *         </code>
-	 * @param  fork whether to fork the process
 	 * @throws Exception if an unexpected error occurred while executing command
 	 * @see    <a href="http://www.imagemagick.org/script/convert.php">Convert
 	 *         documentation</a>
 	 */
-	public static void convert(List<String> arguments, boolean fork)
-		throws Exception {
+	public static Future convert(List<String> arguments) throws Exception {
+		return getImageMagick().convert(arguments);
+	}
 
-		getImageMagick().convert(arguments, fork);
+	public static void destroy() {
+		getImageMagick().destroy();
 	}
 
 	/**
@@ -73,16 +75,13 @@ public class ImageMagickUtil {
 	 *
 	 * @param  arguments the command arguments being passed to <code>identify
 	 *         </code>
-	 * @param  fork whether to fork the process
 	 * @return the results of the <code>identify</code> call
 	 * @throws Exception if an unexpected error occurred while executing command
 	 * @see    <a href="http://www.imagemagick.org/script/identify.php">Identify
 	 *         documentation</a>
 	 */
-	public static String[] identify(List<String> arguments, boolean fork)
-		throws Exception {
-
-		return getImageMagick().identify(arguments, fork);
+	public static String[] identify(List<String> arguments) throws Exception {
+		return getImageMagick().identify(arguments);
 	}
 
 	/**

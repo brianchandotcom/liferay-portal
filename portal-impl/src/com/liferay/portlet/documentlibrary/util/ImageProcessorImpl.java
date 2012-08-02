@@ -48,6 +48,7 @@ import java.util.Vector;
 /**
  * @author Sergio González
  * @author Alexander Chow
+ * @author Ivica Cardic
  */
 public class ImageProcessorImpl
 	extends DLPreviewableProcessor implements ImageProcessor {
@@ -233,6 +234,11 @@ public class ImageProcessorImpl
 			getPreviewType(fileVersion));
 	}
 
+	@Override
+	protected List<Long> getFileVersionIds() {
+		return _fileVersionIds;
+	}
+
 	private void _generateImages(
 			FileVersion sourceFileVersion, FileVersion destinationFileVersion)
 		throws Exception {
@@ -266,9 +272,7 @@ public class ImageProcessorImpl
 
 			if (renderedImage.getColorModel().getNumComponents() == 4) {
 				RenderedImage convertedRenderedImage =
-					ImageToolUtil.convertCMYKtoRGB(
-						bytes, imageBag.getType(),
-						PropsValues.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED);
+					ImageToolUtil.convertCMYKtoRGB(bytes, imageBag.getType());
 
 				if (convertedRenderedImage != null) {
 					renderedImage = convertedRenderedImage;

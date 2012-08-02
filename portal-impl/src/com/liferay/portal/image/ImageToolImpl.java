@@ -44,6 +44,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import java.util.Enumeration;
+import java.util.concurrent.Future;
 
 import javax.imageio.ImageIO;
 
@@ -63,9 +64,7 @@ public class ImageToolImpl implements ImageTool {
 		return _instance;
 	}
 
-	public RenderedImage convertCMYKtoRGB(
-		byte[] bytes, String type, boolean fork) {
-
+	public RenderedImage convertCMYKtoRGB(byte[] bytes, String type) {
 		ImageMagick imageMagick = getImageMagick();
 
 		if (!imageMagick.isEnabled()) {
@@ -83,8 +82,7 @@ public class ImageToolImpl implements ImageTool {
 			imOperation.addRawArgs("-format", "%[colorspace]");
 			imOperation.addImage(inputFile.getPath());
 
-			String[] output = imageMagick.identify(
-				imOperation.getCmdArgs(), fork);
+			String[] output = imageMagick.identify(imOperation.getCmdArgs());
 
 			if ((output.length == 1) && output[0].equalsIgnoreCase("CMYK")) {
 				if (_log.isInfoEnabled()) {
@@ -97,7 +95,9 @@ public class ImageToolImpl implements ImageTool {
 				imOperation.addImage(inputFile.getPath());
 				imOperation.addImage(outputFile.getPath());
 
-				imageMagick.convert(imOperation.getCmdArgs(), fork);
+				Future future = imageMagick.convert(imOperation.getCmdArgs());
+
+				future.get();
 
 				bytes = _fileUtil.getBytes(outputFile);
 

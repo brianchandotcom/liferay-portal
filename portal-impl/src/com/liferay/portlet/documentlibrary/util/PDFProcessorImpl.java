@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
-import com.liferay.portal.kernel.image.ImageMagickUtil;
+import com.liferay.portal.kernel.image.GhostScriptUtil;
 import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.log.Log;
@@ -42,10 +42,12 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.Vector;
+import java.util.concurrent.Future;
 
 import javax.imageio.ImageIO;
 
@@ -54,13 +56,12 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentCatalog;
 import org.apache.pdfbox.pdmodel.PDPage;
 
-import org.im4java.core.IMOperation;
-
 /**
  * @author Alexander Chow
  * @author Mika Koivisto
  * @author Juan González
  * @author Sergio González
+ * @author Ivica Cardic
  */
 public class PDFProcessorImpl
 	extends DLPreviewableProcessor implements PDFProcessor {
@@ -68,8 +69,6 @@ public class PDFProcessorImpl
 	public void afterPropertiesSet() throws Exception {
 		FileUtil.mkdirs(PREVIEW_TMP_PATH);
 		FileUtil.mkdirs(THUMBNAIL_TMP_PATH);
-
-		ImageMagickUtil.reset();
 	}
 
 	public void generateImages(
@@ -171,6 +170,8 @@ public class PDFProcessorImpl
 	public void trigger(
 		FileVersion sourceFileVersion, FileVersion destinationFileVersion) {
 
+		super.trigger(sourceFileVersion, destinationFileVersion);
+
 		_queueGeneration(sourceFileVersion, destinationFileVersion);
 	}
 
@@ -258,6 +259,11 @@ public class PDFProcessorImpl
 	}
 
 	@Override
+	protected List<Long> getFileVersionIds() {
+		return _fileVersionIds;
+	}
+
+	@Override
 	protected String getPreviewType(FileVersion fileVersion) {
 		return PREVIEW_TYPE;
 	}
@@ -299,8 +305,8 @@ public class PDFProcessorImpl
 	private void _generateImages(FileVersion fileVersion, File file)
 		throws Exception {
 
-		if (ImageMagickUtil.isEnabled()) {
-			_generateImagesIM(fileVersion, file);
+		if (GhostScriptUtil.isEnabled()) {
+			_generateImagesGS(fileVersion, file);
 		}
 		else {
 			_generateImagesPB(fileVersion, file);
@@ -372,15 +378,15 @@ public class PDFProcessorImpl
 			FileVersion fileVersion, InputStream inputStream)
 		throws Exception {
 
-		if (ImageMagickUtil.isEnabled()) {
-			_generateImagesIM(fileVersion, inputStream);
+		if (GhostScriptUtil.isEnabled()) {
+			_generateImagesGS(fileVersion, inputStream);
 		}
 		else {
 			_generateImagesPB(fileVersion, inputStream);
 		}
 	}
 
-	private void _generateImagesIM(FileVersion fileVersion, File file)
+	private void _generateImagesGS(FileVersion fileVersion, File file)
 		throws Exception {
 
 		if (_isGeneratePreview(fileVersion)) {
@@ -392,13 +398,13 @@ public class PDFProcessorImpl
 				stopWatch.start();
 			}
 
-			_generateImagesIM(fileVersion, file, false);
+			_generateImagesGS(fileVersion, file, false);
 
 			if (_log.isInfoEnabled()) {
 				int previewFileCount = getPreviewFileCount(fileVersion);
 
 				_log.info(
-					"ImageMagick generated " + previewFileCount +
+					"GhostScript generated " + previewFileCount +
 						" preview pages for " + fileVersion.getTitle() +
 							" in " + stopWatch);
 			}
@@ -413,17 +419,17 @@ public class PDFProcessorImpl
 				stopWatch.start();
 			}
 
-			_generateImagesIM(fileVersion, file, true);
+			_generateImagesGS(fileVersion, file, true);
 
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					"ImageMagick generated a thumbnail for " +
+					"GhostScript generated a thumbnail for " +
 						fileVersion.getTitle() + " in " + stopWatch);
 			}
 		}
 	}
 
-	private void _generateImagesIM(
+	private void _generateImagesGS(
 			FileVersion fileVersion, File file, boolean thumbnail)
 		throws Exception {
 
@@ -432,38 +438,75 @@ public class PDFProcessorImpl
 		String tempFileId = DLUtil.getTempFileId(
 			fileVersion.getFileEntryId(), fileVersion.getVersion());
 
-		IMOperation imOperation = new IMOperation();
+		String type = getPreviewType(fileVersion);
 
-		imOperation.alpha("off");
+		List<String> args = new ArrayList<String>();
 
-		imOperation.density(
-			PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_DPI,
-			PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_DPI);
-
-		if (PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT != 0) {
-			imOperation.adaptiveResize(
-				PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_WIDTH,
-				PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT);
-		}
-		else {
-			imOperation.adaptiveResize(
-				PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_WIDTH);
-		}
-
-		imOperation.depth(PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_DEPTH);
+		args.add("-sDEVICE=png16m");
 
 		if (thumbnail) {
-			imOperation.addImage(file.getPath() + "[0]");
-			imOperation.addImage(getThumbnailTempFilePath(tempFileId));
-		}
-		else {
-			imOperation.addImage(file.getPath());
-			imOperation.addImage(getPreviewTempFilePath(tempFileId, -1));
+			args.add("-sOutputFile=" + getThumbnailTempFilePath(tempFileId));
+			args.add("-dFirstPage=1");
+			args.add("-dLastPage=1");
+		}else {
+			String outputFile = getPreviewTempFilePath(tempFileId, -1).replace(
+				"." + type, "-%d." + type);
+
+			args.add("-sOutputFile=" + outputFile);
 		}
 
-		ImageMagickUtil.convert(
-			imOperation.getCmdArgs(),
-			PropsValues.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED);
+		args.add("-dPDFFitPage");
+		args.add("-dTextAlphaBits=4");
+		args.add("-dGraphicsAlphaBits=4");
+		args.add(
+			"-r" + PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_DPI + "x" +
+			PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_DPI);
+
+		int width = PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_WIDTH;
+		int height = PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT;
+
+		if (height == 0) {
+			PDDocument pdDocument = null;
+
+			try {
+				pdDocument = PDDocument.load(new FileInputStream(file));
+
+				PDDocumentCatalog pdDocumentCatalog =
+					pdDocument.getDocumentCatalog();
+
+				PDPage pdPage = (PDPage)pdDocumentCatalog.getAllPages().get(0);
+
+				float pdfWidth = pdPage.getMediaBox().getWidth();
+				float pdfHeight = (int)pdPage.getMediaBox().getHeight();
+
+				float ratio = pdfHeight / pdfWidth;
+
+				height = (int)(width * ratio);
+			}
+			finally {
+				if (pdDocument != null) {
+					pdDocument.close();
+				}
+			}
+		}
+
+		args.add("-g" + width + "x" + height);
+
+		args.add(file.getPath());
+
+		if (!_ghostScriptInitialized) {
+			GhostScriptUtil.reset();
+
+			_ghostScriptInitialized = true;
+		}
+
+		Future future = GhostScriptUtil.convert(args);
+
+		String processIdentity = Long.toString(fileVersion.getFileVersionId());
+
+		managedProcesses.put(processIdentity, future);
+
+		future.get();
 
 		// Store images
 
@@ -478,21 +521,10 @@ public class PDFProcessorImpl
 			}
 		}
 		else {
-
-			// ImageMagick converts single page PDFs without appending an
-			// index. Rename file for consistency.
-
-			File singlePagePreviewFile = getPreviewTempFile(tempFileId, -1);
-
-			if (singlePagePreviewFile.exists()) {
-				singlePagePreviewFile.renameTo(
-					getPreviewTempFile(tempFileId, 1));
-			}
-
 			int total = getPreviewTempFileCount(fileVersion);
 
 			for (int i = 0; i < total; i++) {
-				File previewTempFile = getPreviewTempFile(tempFileId, i + 1);
+				File previewTempFile = getPreviewTempFile(tempFileId, i + 2);
 
 				try {
 					addFileToStore(
@@ -507,8 +539,8 @@ public class PDFProcessorImpl
 		}
 	}
 
-	private void _generateImagesIM(
-			FileVersion fileVersion, InputStream inputStream)
+	private void _generateImagesGS(
+		FileVersion fileVersion, InputStream inputStream)
 		throws Exception {
 
 		File file = null;
@@ -516,7 +548,7 @@ public class PDFProcessorImpl
 		try {
 			file = FileUtil.createTempFile(inputStream);
 
-			_generateImagesIM(fileVersion, file);
+			_generateImagesGS(fileVersion, file);
 		}
 		finally {
 			FileUtil.delete(file);
@@ -711,5 +743,6 @@ public class PDFProcessorImpl
 	private static Log _log = LogFactoryUtil.getLog(PDFProcessorImpl.class);
 
 	private List<Long> _fileVersionIds = new Vector<Long>();
+	private boolean _ghostScriptInitialized = false;
 
 }

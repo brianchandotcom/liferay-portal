@@ -52,9 +52,7 @@ public class ViewEventSiteEDTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Open Site Name"),
 			selenium.getText("//a[@title='Go to Open Site Name']"));
-		assertEquals("Add Event",
-			selenium.getValue("//input[@value='Add Event']"));
 		assertEquals(RuntimeVariables.replace("Calendar Event Title"),
-			selenium.getText("//div[@class='event-title']"));
+			selenium.getText("//h1[@class='header-title']"));
 	}
 }

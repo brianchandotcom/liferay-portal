@@ -52,10 +52,8 @@ public class ViewEventMultipleSiteEDTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Open Site Name"),
 			selenium.getText("//a[@title='Go to Open Site Name']"));
-		assertEquals("Add Event",
-			selenium.getValue("//input[@value='Add Event']"));
 		assertEquals(RuntimeVariables.replace("Calendar Event1 Title"),
-			selenium.getText("xPath=(//div[@class='event-title'])[1]"));
+			selenium.getText("//h1[@class='header-title']"));
 		selenium.open("/user/joebloggs/so/dashboard/");
 
 		for (int second = 0;; second++) {
@@ -87,10 +85,8 @@ public class ViewEventMultipleSiteEDTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Open Site Name"),
 			selenium.getText("//a[@title='Go to Open Site Name']"));
-		assertEquals("Add Event",
-			selenium.getValue("//input[@value='Add Event']"));
 		assertEquals(RuntimeVariables.replace("Calendar Event2 Title"),
-			selenium.getText("xPath=(//div[@class='event-title'])[2]"));
+			selenium.getText("//h1[@class='header-title']"));
 		selenium.open("/user/joebloggs/so/dashboard/");
 
 		for (int second = 0;; second++) {
@@ -122,9 +118,7 @@ public class ViewEventMultipleSiteEDTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Open Site Name"),
 			selenium.getText("//a[@title='Go to Open Site Name']"));
-		assertEquals("Add Event",
-			selenium.getValue("//input[@value='Add Event']"));
 		assertEquals(RuntimeVariables.replace("Calendar Event3 Title"),
-			selenium.getText("xPath=(//div[@class='event-title'])[3]"));
+			selenium.getText("//h1[@class='header-title']"));
 	}
 }

@@ -127,9 +127,9 @@ public class RuntimePageImpl implements RuntimePage {
 		RuntimeLogic actionURLLogic = new ActionURLLogic(renderResponse);
 		RuntimeLogic renderURLLogic = new RenderURLLogic(renderResponse);
 
-		content = RuntimePageUtil.processXML(request, content, portletLogic);
-		content = RuntimePageUtil.processXML(request, content, actionURLLogic);
-		content = RuntimePageUtil.processXML(request, content, renderURLLogic);
+		content = processXML(request, content, portletLogic);
+		content = processXML(request, content, actionURLLogic);
+		content = processXML(request, content, renderURLLogic);
 
 		return content;
 	}

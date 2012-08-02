@@ -118,6 +118,20 @@ public abstract class AbstractMessagingConfigurator
 			destination.close();
 		}
 
+		for (Map.Entry<String, List<DestinationEventListener>>
+				destinationEventListeners :
+					_specificDestinationEventListeners.entrySet()) {
+
+			String destinationName = destinationEventListeners.getKey();
+
+			for (DestinationEventListener destinationEventListener :
+					destinationEventListeners.getValue()) {
+
+				messageBus.removeDestinationEventListener(
+					destinationName, destinationEventListener);
+			}
+		}
+
 		for (DestinationEventListener destinationEventListener :
 				_globalDestinationEventListeners) {
 

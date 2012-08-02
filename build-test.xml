@@ -1895,22 +1895,9 @@
 		</antcall>
 
 		<antcall target="build-test-ant-script">
-			<param name="test.ant.script.command" value="social-office-profile-my-contacts" />
-			<param name="test.ant.script.social.office" value="true" />
-			<param name="test.ant.script.suite" value="SocialOfficeProfileMyContactsTestSuite" />
-		</antcall>
-
-		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="social-office-profile-profile" />
 			<param name="test.ant.script.social.office" value="true" />
 			<param name="test.ant.script.suite" value="SocialOfficeProfileProfileTestSuite" />
-		</antcall>
-
-		<antcall target="build-test-ant-script">
-			<param name="test.ant.script.command" value="social-office-sevencogs-smoke" />
-			<param name="test.ant.script.evaluate.logs" value="true" />
-			<param name="test.ant.script.social.office.sevencogs" value="true" />
-			<param name="test.ant.script.suite" value="SocialOfficeSevencogsSmokeTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">

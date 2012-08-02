@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.journal.util;
 
+import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -89,6 +91,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Stack;
 
@@ -955,6 +958,59 @@ public class JournalUtil {
 		}
 
 		return curContent;
+	}
+
+	public static String prepareLanguageContentForImport(
+			String content, Locale defaultImportLocale)
+		throws LocaleException {
+
+		try {
+			Document curDocument = SAXReaderUtil.read(content);
+
+			Document updatedDocument = SAXReaderUtil.read(content);
+
+			Element updatedRootElement = updatedDocument.getRootElement();
+
+			Attribute availableLocales = updatedRootElement.attribute(
+				"available-locales");
+
+			String defaultImportLocaleId = LocaleUtil.toLanguageId(
+				defaultImportLocale);
+
+			if (!availableLocales.getValue().contains(defaultImportLocaleId)) {
+				StringBundler sb = new StringBundler(3);
+
+				sb.append(availableLocales.getValue());
+				sb.append(StringPool.COMMA);
+				sb.append(defaultImportLocaleId);
+
+				availableLocales.setValue(sb.toString());
+
+				_mergeArticleContentUpdate(
+					curDocument, updatedRootElement,
+					LocaleUtil.toLanguageId(defaultImportLocale));
+
+				content = DDMXMLUtil.formatXML(updatedDocument);
+			}
+
+			Attribute defaultLocale = updatedRootElement.attribute(
+				"default-locale");
+
+			Locale contentDefaultLocale = LocaleUtil.fromLanguageId(
+				defaultLocale.getValue());
+
+			if (!LocaleUtil.equals(contentDefaultLocale, defaultImportLocale)) {
+				defaultLocale.setValue(defaultImportLocaleId);
+
+				content = DDMXMLUtil.formatXML(updatedDocument);
+			}
+		}
+
+		catch(Exception e) {
+			throw new LocaleException(e);
+		}
+
+		return content;
 	}
 
 	public static String processXMLAttributes(String xsd)

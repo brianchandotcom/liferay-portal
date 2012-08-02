@@ -14,10 +14,13 @@
 
 package com.liferay.portlet.journal.service.impl;
 
+import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -653,12 +656,11 @@ public class JournalTemplateLocalServiceImpl
 			String smallImageURL, File smallImageFile, byte[] smallImageBytes)
 		throws PortalException, SystemException {
 
-		Locale locale = LocaleUtil.getDefault();
+		Locale contentDefaultLocale = LocaleUtil.getDefault();
 
-		if (nameMap.isEmpty() || Validator.isNull(nameMap.get(locale))) {
-			throw new TemplateNameException();
-		}
-		else if (Validator.isNull(xsl)) {
+		validateLanguages(nameMap, contentDefaultLocale);
+
+		if (Validator.isNull(xsl)) {
 			throw new TemplateXslException();
 		}
 
@@ -707,6 +709,28 @@ public class JournalTemplateLocalServiceImpl
 			(templateId.indexOf(CharPool.SPACE) != -1)) {
 
 			throw new TemplateIdException();
+		}
+	}
+
+	protected void validateLanguages(
+			Map<Locale, String> nameMap, Locale contentDefaultLocale)
+		throws PortalException {
+
+		Locale[] availableLocales = LanguageUtil.getAvailableLocales();
+
+		if (!ArrayUtil.contains(availableLocales, contentDefaultLocale)) {
+			LocaleException le = new LocaleException();
+
+			le.setSourceAvailableLocales(new Locale[] {contentDefaultLocale});
+			le.setTargetAvailableLocales(availableLocales);
+
+			throw le;
+		}
+
+		String name = nameMap.get(contentDefaultLocale);
+
+		if (nameMap.isEmpty() || Validator.isNull(name)) {
+			throw new TemplateNameException();
 		}
 	}
 

@@ -366,14 +366,15 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 			nodeId, title, deletedFileName);
 	}
 
-	public void movePageAttachmentToTrash(
+	public String movePageAttachmentToTrash(
 			long nodeId, String title, String fileName)
 		throws PortalException, SystemException {
 
 		WikiPagePermission.check(
 			getPermissionChecker(), nodeId, title, ActionKeys.DELETE);
 
-		wikiPageLocalService.movePageAttachmentToTrash(nodeId, title, fileName);
+		return wikiPageLocalService.movePageAttachmentToTrash(
+			nodeId, title, fileName);
 	}
 
 	public WikiPage revertPage(

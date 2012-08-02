@@ -1163,12 +1163,12 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		}
 	}
 
-	public void movePageAttachmentToTrash(
+	public String movePageAttachmentToTrash(
 			long nodeId, String title, String fileName)
 		throws PortalException, SystemException {
 
 		if (Validator.isNull(fileName)) {
-			return;
+			return StringPool.BLANK;
 		}
 
 		WikiPage page = getPage(nodeId, title);
@@ -1202,6 +1202,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			DLStoreUtil.deleteDirectory(
 				companyId, repositoryId, deletedAttachmentsDir);
 		}
+
+		return deletedFileName;
 	}
 
 	public WikiPage revertPage(

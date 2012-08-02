@@ -645,6 +645,19 @@ public class PollsQuestionWrapper implements PollsQuestion,
 		_pollsQuestion.setExpandoBridgeAttributes(serviceContext);
 	}
 
+	public java.lang.String[] getAvailableLocales() {
+		return _pollsQuestion.getAvailableLocales();
+	}
+
+	public java.lang.String getDefaultLocale() {
+		return _pollsQuestion.getDefaultLocale();
+	}
+
+	public void prepareLocalizedFieldsForImport()
+		throws com.liferay.portal.LocaleException {
+		_pollsQuestion.prepareLocalizedFieldsForImport();
+	}
+
 	public void prepareLocalizedFieldsForImport(
 		java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.LocaleException {

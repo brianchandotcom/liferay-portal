@@ -47,6 +47,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * The base model implementation for the LayoutRevision service. Represents a row in the &quot;LayoutRevision&quot; database table, with each column mapped to a property of this class.
@@ -1370,19 +1372,133 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 		expandoBridge.setAttributes(serviceContext);
 	}
 
+	public String[] getAvailableLocales() {
+		Set<String> availableLocales = new TreeSet<String>();
+
+		Map<Locale, String> nameMap = getNameMap();
+
+		for (Map.Entry<Locale, String> entry : nameMap.entrySet()) {
+			Locale locale = entry.getKey();
+			String value = entry.getValue();
+
+			if (Validator.isNotNull(value)) {
+				availableLocales.add(locale.toString());
+			}
+		}
+
+		Map<Locale, String> titleMap = getTitleMap();
+
+		for (Map.Entry<Locale, String> entry : titleMap.entrySet()) {
+			Locale locale = entry.getKey();
+			String value = entry.getValue();
+
+			if (Validator.isNotNull(value)) {
+				availableLocales.add(locale.toString());
+			}
+		}
+
+		Map<Locale, String> descriptionMap = getDescriptionMap();
+
+		for (Map.Entry<Locale, String> entry : descriptionMap.entrySet()) {
+			Locale locale = entry.getKey();
+			String value = entry.getValue();
+
+			if (Validator.isNotNull(value)) {
+				availableLocales.add(locale.toString());
+			}
+		}
+
+		Map<Locale, String> keywordsMap = getKeywordsMap();
+
+		for (Map.Entry<Locale, String> entry : keywordsMap.entrySet()) {
+			Locale locale = entry.getKey();
+			String value = entry.getValue();
+
+			if (Validator.isNotNull(value)) {
+				availableLocales.add(locale.toString());
+			}
+		}
+
+		Map<Locale, String> robotsMap = getRobotsMap();
+
+		for (Map.Entry<Locale, String> entry : robotsMap.entrySet()) {
+			Locale locale = entry.getKey();
+			String value = entry.getValue();
+
+			if (Validator.isNotNull(value)) {
+				availableLocales.add(locale.toString());
+			}
+		}
+
+		return availableLocales.toArray(new String[availableLocales.size()]);
+	}
+
+	public String getDefaultLocale() {
+		String xml = getName();
+
+		if (xml == null) {
+			return StringPool.BLANK;
+		}
+
+		return LocalizationUtil.getDefaultLocale(xml);
+	}
+
+	@SuppressWarnings("unused")
+	public void prepareLocalizedFieldsForImport() throws LocaleException {
+		prepareLocalizedFieldsForImport(null);
+	}
+
 	@SuppressWarnings("unused")
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException {
-		setName(getName(defaultImportLocale), defaultImportLocale,
-			defaultImportLocale);
-		setTitle(getTitle(defaultImportLocale), defaultImportLocale,
-			defaultImportLocale);
-		setDescription(getDescription(defaultImportLocale),
-			defaultImportLocale, defaultImportLocale);
-		setKeywords(getKeywords(defaultImportLocale), defaultImportLocale,
-			defaultImportLocale);
-		setRobots(getRobots(defaultImportLocale), defaultImportLocale,
-			defaultImportLocale);
+		Locale defaultLocale = LocaleUtil.getDefault();
+		String contentDefaultLocale = getDefaultLocale();
+
+		String name = getName(defaultLocale);
+
+		if (Validator.isNull(name)) {
+			setName(getName(contentDefaultLocale), defaultLocale);
+		}
+		else {
+			setName(getName(defaultLocale), defaultLocale, defaultLocale);
+		}
+
+		String title = getTitle(defaultLocale);
+
+		if (Validator.isNull(title)) {
+			setTitle(getTitle(contentDefaultLocale), defaultLocale);
+		}
+		else {
+			setTitle(getTitle(defaultLocale), defaultLocale, defaultLocale);
+		}
+
+		String description = getDescription(defaultLocale);
+
+		if (Validator.isNull(description)) {
+			setDescription(getDescription(contentDefaultLocale), defaultLocale);
+		}
+		else {
+			setDescription(getDescription(defaultLocale), defaultLocale,
+				defaultLocale);
+		}
+
+		String keywords = getKeywords(defaultLocale);
+
+		if (Validator.isNull(keywords)) {
+			setKeywords(getKeywords(contentDefaultLocale), defaultLocale);
+		}
+		else {
+			setKeywords(getKeywords(defaultLocale), defaultLocale, defaultLocale);
+		}
+
+		String robots = getRobots(defaultLocale);
+
+		if (Validator.isNull(robots)) {
+			setRobots(getRobots(contentDefaultLocale), defaultLocale);
+		}
+		else {
+			setRobots(getRobots(defaultLocale), defaultLocale, defaultLocale);
+		}
 	}
 
 	@Override

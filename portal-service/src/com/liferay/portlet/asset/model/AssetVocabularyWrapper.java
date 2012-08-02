@@ -645,6 +645,19 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 		_assetVocabulary.setExpandoBridgeAttributes(serviceContext);
 	}
 
+	public java.lang.String[] getAvailableLocales() {
+		return _assetVocabulary.getAvailableLocales();
+	}
+
+	public java.lang.String getDefaultLocale() {
+		return _assetVocabulary.getDefaultLocale();
+	}
+
+	public void prepareLocalizedFieldsForImport()
+		throws com.liferay.portal.LocaleException {
+		_assetVocabulary.prepareLocalizedFieldsForImport();
+	}
+
 	public void prepareLocalizedFieldsForImport(
 		java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.LocaleException {

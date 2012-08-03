@@ -38,7 +38,7 @@ import org.aopalliance.intercept.MethodInvocation;
  * @author Raymond Augé
  */
 public class PortletPreferencesLocalServiceStagingAdvice
-	extends LayoutLocalServiceImpl implements MethodInterceptor {
+	implements MethodInterceptor {
 
 	public Object invoke(MethodInvocation methodInvocation) throws Throwable {
 		if (!StagingAdvicesThreadLocal.isEnabled()) {

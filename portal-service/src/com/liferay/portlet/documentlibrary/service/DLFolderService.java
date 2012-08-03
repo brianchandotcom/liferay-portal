@@ -71,6 +71,10 @@ public interface DLFolderService extends BaseService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public void deleteFolder(long folderId, boolean includeTrashedEntries)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public void deleteFolder(long groupId, long parentFolderId,
 		java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException,

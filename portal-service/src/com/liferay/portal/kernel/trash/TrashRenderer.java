@@ -33,6 +33,9 @@ public interface TrashRenderer {
 
 	public String getPortletId();
 
+	public String getRestorePath(RenderRequest renderRequest)
+		throws PortalException, SystemException;
+
 	public String getSummary(Locale locale);
 
 	public String getTitle(Locale locale);

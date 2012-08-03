@@ -24,6 +24,7 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
@@ -99,15 +100,22 @@ public class DLFileEntryPermission {
 			if (dlFileEntry.getFolderId() !=
 					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
-				DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(
-					dlFileEntry.getFolderId());
+				try {
+					DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(
+						dlFileEntry.getFolderId());
 
-				if (!DLFolderPermission.contains(
-						permissionChecker, dlFolder, ActionKeys.ACCESS) &&
-					!DLFolderPermission.contains(
-						permissionChecker, dlFolder, ActionKeys.VIEW)) {
+					if (!DLFolderPermission.contains(
+							permissionChecker, dlFolder, ActionKeys.ACCESS) &&
+						!DLFolderPermission.contains(
+							permissionChecker, dlFolder, ActionKeys.VIEW)) {
 
-					return false;
+						return false;
+					}
+				}
+				catch (NoSuchFolderException nsfe) {
+					if (!latestDLFileVersion.isInTrash()) {
+						throw nsfe;
+					}
 				}
 			}
 		}

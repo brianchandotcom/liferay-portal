@@ -23,6 +23,7 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
@@ -83,24 +84,34 @@ public class DLFolderPermission {
 
 		if (actionId.equals(ActionKeys.VIEW)) {
 			while (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-				dlFolder = DLFolderLocalServiceUtil.getFolder(folderId);
+				try {
+					dlFolder = DLFolderLocalServiceUtil.getFolder(folderId);
 
-				folderId = dlFolder.getParentFolderId();
+					folderId = dlFolder.getParentFolderId();
 
-				if (!permissionChecker.hasOwnerPermission(
-						dlFolder.getCompanyId(), DLFolder.class.getName(),
-						dlFolder.getFolderId(), dlFolder.getUserId(),
-						actionId) &&
-					!permissionChecker.hasPermission(
-						dlFolder.getGroupId(), DLFolder.class.getName(),
-						dlFolder.getFolderId(), actionId)) {
+					if (!permissionChecker.hasOwnerPermission(
+							dlFolder.getCompanyId(), DLFolder.class.getName(),
+							dlFolder.getFolderId(), dlFolder.getUserId(),
+							actionId) &&
+						!permissionChecker.hasPermission(
+							dlFolder.getGroupId(), DLFolder.class.getName(),
+							dlFolder.getFolderId(), actionId)) {
 
-					return false;
+						return false;
+					}
+
+					if (!PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
+						break;
+					}
+				}
+				catch (NoSuchFolderException nsfe) {
+					if (dlFolder.isInTrash()) {
+						break;
+					}
+
+					throw nsfe;
 				}
 
-				if (!PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
-					break;
-				}
 			}
 
 			return true;

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.trash;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 
@@ -35,6 +37,12 @@ public abstract class BaseTrashRenderer implements TrashRenderer {
 
 	public String getIconPath(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPathThemeImages() + "/common/page.png";
+	}
+
+	public String getRestorePath(RenderRequest renderRequest)
+		throws PortalException, SystemException {
+
+		return null;
 	}
 
 	public String renderActions(

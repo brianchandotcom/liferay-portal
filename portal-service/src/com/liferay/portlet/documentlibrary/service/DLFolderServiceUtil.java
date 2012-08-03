@@ -73,6 +73,12 @@ public class DLFolderServiceUtil {
 		getService().deleteFolder(folderId);
 	}
 
+	public static void deleteFolder(long folderId, boolean includeTrashedEntries)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteFolder(folderId, includeTrashedEntries);
+	}
+
 	public static void deleteFolder(long groupId, long parentFolderId,
 		java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException,

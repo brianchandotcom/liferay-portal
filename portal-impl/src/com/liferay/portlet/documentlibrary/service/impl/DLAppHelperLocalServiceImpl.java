@@ -381,23 +381,36 @@ public class DLAppHelperLocalServiceImpl
 
 		FileVersion fileVersion = new LiferayFileVersion(dlFileVersions.get(0));
 
-		dlFileEntryLocalService.updateStatus(
-			userId, fileVersion.getFileVersionId(), fileVersion.getStatus(),
-			new HashMap<String, Serializable>(), serviceContext);
+		if (fileVersion.isInTrash()) {
+			restoreFileEntryFromTrash(userId, fileEntry);
 
-		// File rank
+			DLFileEntry dlFileEntry = dlFileEntryLocalService.moveFileEntry(
+				userId, fileEntry.getFileEntryId(), newFolderId,
+				serviceContext);
 
-		dlFileRankLocalService.enableFileRanks(fileEntry.getFileEntryId());
+			dlFileRankLocalService.enableFileRanks(fileEntry.getFileEntryId());
 
-		// File shortcut
+			return new LiferayFileEntry(dlFileEntry);
+		}
+		else {
+			dlFileEntryLocalService.updateStatus(
+				userId, fileVersion.getFileVersionId(), fileVersion.getStatus(),
+				new HashMap<String, Serializable>(), serviceContext);
 
-		dlFileShortcutLocalService.enableFileShortcuts(
-			fileEntry.getFileEntryId());
+			// File rank
 
-		// App helper
+			dlFileRankLocalService.enableFileRanks(fileEntry.getFileEntryId());
 
-		return dlAppService.moveFileEntry(
-			fileEntry.getFileEntryId(), newFolderId, serviceContext);
+			// File shortcut
+
+			dlFileShortcutLocalService.enableFileShortcuts(
+				fileEntry.getFileEntryId());
+
+			// App helper
+
+			return dlAppService.moveFileEntry(
+				fileEntry.getFileEntryId(), newFolderId, serviceContext);
+		}
 	}
 
 	public FileEntry moveFileEntryToTrash(long userId, FileEntry fileEntry)
@@ -471,6 +484,10 @@ public class DLAppHelperLocalServiceImpl
 			long toFileEntryId, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
+		if (dlFileShortcut.isInTrash()) {
+			restoreFileShortcutFromTrash(userId, dlFileShortcut);
+		}
+
 		return dlAppService.updateFileShortcut(
 			dlFileShortcut.getFileShortcutId(), newFolderId, toFileEntryId,
 			serviceContext);
@@ -520,15 +537,24 @@ public class DLAppHelperLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		// Folder
+		DLFolder dlFolder = (DLFolder)folder.getModel();
 
-		dlFolderLocalService.updateStatus(
-			userId, folder.getFolderId(), WorkflowConstants.STATUS_APPROVED,
-			new HashMap<String, Serializable>(), new ServiceContext());
+		if (dlFolder.isInTrash()) {
+			restoreFolderFromTrash(userId, folder);
+		}
+		else {
 
-		// File rank
+			// Folder
 
-		dlFileRankLocalService.enableFileRanksByFolderId(folder.getFolderId());
+			dlFolderLocalService.updateStatus(
+				userId, folder.getFolderId(), WorkflowConstants.STATUS_APPROVED,
+				new HashMap<String, Serializable>(), new ServiceContext());
+
+			// File rank
+
+			dlFileRankLocalService.enableFileRanksByFolderId(
+				folder.getFolderId());
+		}
 
 		return dlAppService.moveFolder(
 			folder.getFolderId(), parentFolderId, serviceContext);
@@ -644,13 +670,9 @@ public class DLAppHelperLocalServiceImpl
 		TrashEntry trashEntry = trashEntryLocalService.getEntry(
 			DLFolderConstants.getClassName(), folder.getFolderId());
 
-		DLFolder dlFolder = dlFolderLocalService.updateStatus(
+		dlFolderLocalService.updateStatus(
 			userId, folder.getFolderId(), WorkflowConstants.STATUS_APPROVED,
 			new HashMap<String, Serializable>(), new ServiceContext());
-
-		dlFolder.setName(DLAppUtil.stripTrashNamespace(dlFolder.getName()));
-
-		dlFolderPersistence.update(dlFolder, false);
 
 		// File rank
 

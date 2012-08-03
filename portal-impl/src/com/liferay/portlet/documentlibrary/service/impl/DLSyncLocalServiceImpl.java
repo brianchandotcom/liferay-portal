@@ -14,10 +14,13 @@
 
 package com.liferay.portlet.documentlibrary.service.impl;
 
+import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.model.DLSync;
 import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
@@ -50,7 +53,7 @@ public class DLSyncLocalServiceImpl extends DLSyncLocalServiceBaseImpl {
 			String version)
 		throws PortalException, SystemException {
 
-		if (!isDefaultRepository(parentFolderId)) {
+		if (!isDefaultRepository(fileId, parentFolderId)) {
 			return null;
 		}
 
@@ -96,7 +99,7 @@ public class DLSyncLocalServiceImpl extends DLSyncLocalServiceBaseImpl {
 			String event, String version)
 		throws PortalException, SystemException {
 
-		if (!isDefaultRepository(parentFolderId)) {
+		if (!isDefaultRepository(fileId, parentFolderId)) {
 			return null;
 		}
 
@@ -125,16 +128,34 @@ public class DLSyncLocalServiceImpl extends DLSyncLocalServiceBaseImpl {
 		return dlSync;
 	}
 
-	protected boolean isDefaultRepository(long folderId)
+	protected boolean isDefaultRepository(long fileId, long folderId)
 		throws PortalException, SystemException {
 
 		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			return true;
 		}
 
-		Folder folder = dlAppLocalService.getFolder(folderId);
+		try {
+			Folder folder = dlAppLocalService.getFolder(folderId);
 
-		return folder.isDefaultRepository();
+			return folder.isDefaultRepository();
+		}
+		catch (NoSuchModelException nsfe) {
+			try {
+				Folder folder = dlAppLocalService.getFolder(fileId);
+
+				return folder.isDefaultRepository();
+			}
+			catch (NoSuchModelException nsfe2) {
+				FileEntry fileEntry = dlAppLocalService.getFileEntry(fileId);
+
+				if (fileEntry instanceof LiferayFileEntry) {
+					return true;
+				}
+			}
+		}
+
+		return false;
 	}
 
 }

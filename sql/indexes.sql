@@ -237,6 +237,7 @@ create index IX_BAFB116E on DLFileRank (groupId, userId);
 create index IX_4E96195B on DLFileRank (groupId, userId, active_);
 create index IX_EED06670 on DLFileRank (userId);
 
+create index IX_B0051937 on DLFileShortcut (groupId, folderId);
 create index IX_348DC3B2 on DLFileShortcut (groupId, folderId, active_);
 create index IX_17EE3098 on DLFileShortcut (groupId, folderId, active_, status);
 create index IX_4B7247F6 on DLFileShortcut (toFileEntryId);

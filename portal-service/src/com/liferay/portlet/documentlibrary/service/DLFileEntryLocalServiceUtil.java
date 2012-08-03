@@ -409,6 +409,13 @@ public class DLFileEntryLocalServiceUtil {
 		getService().deleteFileEntries(groupId, folderId);
 	}
 
+	public static void deleteFileEntries(long groupId, long folderId,
+		boolean includeTrashedEntries)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteFileEntries(groupId, folderId, includeTrashedEntries);
+	}
+
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntry deleteFileEntry(
 		com.liferay.portlet.documentlibrary.model.DLFileEntry dlFileEntry)
 		throws com.liferay.portal.kernel.exception.PortalException,

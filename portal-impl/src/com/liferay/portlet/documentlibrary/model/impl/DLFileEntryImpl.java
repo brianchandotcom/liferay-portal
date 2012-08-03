@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.service.LockLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
@@ -179,20 +180,25 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 	}
 
 	public DLFolder getFolder() {
-		DLFolder dlFolder = null;
+		DLFolder dlFolder = new DLFolderImpl();
 
 		if (getFolderId() > 0) {
 			try {
 				dlFolder = DLFolderLocalServiceUtil.getFolder(getFolderId());
 			}
+			catch (NoSuchFolderException nsfe) {
+				try {
+					if (!getLatestFileVersion(true).isInTrash()) {
+						_log.error(nsfe, nsfe);
+					}
+				}
+				catch (Exception e) {
+					_log.error(e, e);
+				}
+			}
 			catch (Exception e) {
-				dlFolder = new DLFolderImpl();
-
 				_log.error(e, e);
 			}
-		}
-		else {
-			dlFolder = new DLFolderImpl();
 		}
 
 		return dlFolder;
@@ -246,6 +252,16 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 		return sb.toString();
 	}
 
+	public DLFolder getTrashFolder() {
+		DLFolder dlFolder = getFolder();
+
+		if (dlFolder.isInTrash()) {
+			return dlFolder;
+		}
+
+		return dlFolder.getTrashFolder();
+	}
+
 	public boolean hasLock() {
 		try {
 			return DLFileEntryServiceUtil.hasFileEntryLock(getFileEntryId());
@@ -265,6 +281,15 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 		}
 
 		return false;
+	}
+
+	public boolean isInTrashFolder() {
+		if (getTrashFolder() != null) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	@Override

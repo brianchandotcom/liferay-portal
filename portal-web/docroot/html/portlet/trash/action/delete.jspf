@@ -14,19 +14,13 @@
  */
 --%>
 
-<%@ include file="/html/portlet/trash/init.jsp" %>
+<portlet:actionURL var="deleteEntryURL">
+	<portlet:param name="struts_action" value="/trash/edit_entry" />
+	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+	<portlet:param name="redirect" value="<%= redirect %>" />
+	<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
+</portlet:actionURL>
 
-<%
-SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay-ui:search:searchContainer");
-
-String redirect = searchContainer.getIteratorURL().toString();
-
-ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
-
-TrashEntry entry = (TrashEntry)row.getObject();
-%>
-
-<liferay-ui:icon-menu>
-	<%@ include file="/html/portlet/trash/action/restore.jspf" %>
-	<%@ include file="/html/portlet/trash/action/delete.jspf" %>
-</liferay-ui:icon-menu>
+<liferay-ui:icon-delete
+	url="<%= deleteEntryURL %>"
+/>

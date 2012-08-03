@@ -33,6 +33,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseAssetRenderer;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
@@ -101,6 +102,25 @@ public class DLFileEntryAssetRenderer
 		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
 
 		return assetRendererFactory.getPortletId();
+	}
+
+	public String getRestorePath(RenderRequest renderRequest)
+		throws PortalException, SystemException {
+
+		DLFileEntry dlFileEntry = (DLFileEntry)_fileEntry.getModel();
+
+		if ((dlFileEntry != null) && dlFileEntry.isInTrashFolder()) {
+			renderRequest.setAttribute(
+				WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY, _fileEntry);
+			renderRequest.setAttribute(
+				WebKeys.DOCUMENT_LIBRARY_FILE_VERSION, _fileVersion);
+
+			return
+				"/html/portlet/document_library/trash/file_entry_restore.jsp";
+		}
+		else {
+			return null;
+		}
 	}
 
 	public String getSummary(Locale locale) {

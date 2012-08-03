@@ -14,19 +14,16 @@
  */
 --%>
 
-<%@ include file="/html/portlet/trash/init.jsp" %>
+<%@ include file="/html/portlet/document_library_display/init.jsp" %>
 
 <%
-SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay-ui:search:searchContainer");
+FileEntry fileEntry = (FileEntry)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY);
 
-String redirect = searchContainer.getIteratorURL().toString();
+DLFileShortcut fileShortcut = (DLFileShortcut)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_SHORTCUT);
 
-ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+boolean restore = true;
 
-TrashEntry entry = (TrashEntry)row.getObject();
+String viewFolderURL = null;
 %>
 
-<liferay-ui:icon-menu>
-	<%@ include file="/html/portlet/trash/action/restore.jspf" %>
-	<%@ include file="/html/portlet/trash/action/delete.jspf" %>
-</liferay-ui:icon-menu>
+<%@ include file="/html/portlet/document_library/action/move.jspf" %>

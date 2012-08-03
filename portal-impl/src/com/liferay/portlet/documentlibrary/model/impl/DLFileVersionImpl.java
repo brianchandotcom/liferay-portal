@@ -114,20 +114,11 @@ public class DLFileVersionImpl extends DLFileVersionBaseImpl {
 	public DLFolder getTrashFolder() {
 		DLFolder dlFolder = getFolder();
 
-		while (dlFolder != null) {
-			if (dlFolder.isInTrash()) {
-				return dlFolder;
-			}
-
-			try {
-				dlFolder = dlFolder.getParentFolder();
-			}
-			catch (Exception e) {
-				return null;
-			}
+		if (dlFolder.isInTrash()) {
+			return dlFolder;
 		}
 
-		return null;
+		return dlFolder.getTrashFolder();
 	}
 
 	public boolean isInTrashFolder() {

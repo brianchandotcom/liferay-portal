@@ -689,6 +689,14 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 		return _dlFileShortcut.getToTitle();
 	}
 
+	public com.liferay.portlet.documentlibrary.model.DLFolder getTrashFolder() {
+		return _dlFileShortcut.getTrashFolder();
+	}
+
+	public boolean isInTrashFolder() {
+		return _dlFileShortcut.isInTrashFolder();
+	}
+
 	/**
 	 * @deprecated Renamed to {@link #getWrappedModel}
 	 */

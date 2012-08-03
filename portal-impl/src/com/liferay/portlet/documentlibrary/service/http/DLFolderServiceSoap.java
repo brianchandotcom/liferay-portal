@@ -96,6 +96,18 @@ public class DLFolderServiceSoap {
 		}
 	}
 
+	public static void deleteFolder(long folderId, boolean includeTrashedEntries)
+		throws RemoteException {
+		try {
+			DLFolderServiceUtil.deleteFolder(folderId, includeTrashedEntries);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static void deleteFolder(long groupId, long parentFolderId,
 		java.lang.String name) throws RemoteException {
 		try {

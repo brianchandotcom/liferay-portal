@@ -1628,7 +1628,9 @@ public class SourceFormatter {
 					fileName, "line break: " + fileName + " " + lineCount);
 			}
 
-			if (line.endsWith(StringPool.PLUS)) {
+			if (line.endsWith(" +") || line.endsWith(" -") ||
+				line.endsWith(" *") || line.endsWith(" /")) {
+
 				int x = line.indexOf(" = ");
 
 				if (x != -1) {

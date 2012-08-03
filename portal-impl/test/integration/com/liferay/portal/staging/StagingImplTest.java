@@ -53,20 +53,20 @@ import org.junit.runner.RunWith;
  * @author Julio Camarero
  */
 @ExecutionTestListeners(listeners = {
-	TransactionalExecutionTestListener.class,
-	MainServletExecutionTestListener.class
+	MainServletExecutionTestListener.class,
+	TransactionalExecutionTestListener.class
 })
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class StagingImplTest {
 
 	@Test
 	public void testLocalStagingJournal() throws Exception {
-		testEnableLocalStaging(true, false);
+		enableLocalStaging(true, false);
 	}
 
 	@Test
 	public void testLocalStagingPolls() throws Exception {
-		testEnableLocalStaging(false, true);
+		enableLocalStaging(false, true);
 	}
 
 	protected JournalArticle addArticle(
@@ -75,7 +75,7 @@ public class StagingImplTest {
 
 		Map<Locale, String> titleMap = new HashMap<Locale, String>();
 
-		for (Locale locale : getLocales()) {
+		for (Locale locale : _locales) {
 			titleMap.put(locale, name.concat(LocaleUtil.toLanguageId(locale)));
 		}
 
@@ -83,12 +83,12 @@ public class StagingImplTest {
 
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(3 + 6 * _locales.length);
 
 		sb.append("<?xml version=\"1.0\"?><root available-locales=");
 		sb.append("\"en_US,es_ES,de_DE\" default-locale=\"en_US\">");
 
-		for (Locale locale : getLocales()) {
+		for (Locale locale : _locales) {
 			sb.append("<static-content language-id=\"");
 			sb.append(LocaleUtil.toLanguageId(locale));
 			sb.append("\"><![CDATA[<p>");
@@ -111,7 +111,7 @@ public class StagingImplTest {
 	protected PollsChoice addChoice(String name, String description) {
 		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
 
-		for (Locale locale : getLocales()) {
+		for (Locale locale : _locales) {
 			descriptionMap.put(
 				locale, description.concat(LocaleUtil.toLanguageId(locale)));
 		}
@@ -131,7 +131,7 @@ public class StagingImplTest {
 		Map<Locale, String> titleMap = new HashMap<Locale, String>();
 		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
 
-		for (Locale locale : getLocales()) {
+		for (Locale locale : _locales) {
 			titleMap.put(locale, title.concat(LocaleUtil.toLanguageId(locale)));
 			descriptionMap.put(
 				locale, description.concat(LocaleUtil.toLanguageId(locale)));
@@ -150,22 +150,7 @@ public class StagingImplTest {
 			0, true, choices, serviceContext);
 	}
 
-	protected Locale[] getLocales() {
-		if (_locales != null) {
-			return _locales;
-		}
-
-		Locale englishLocale = new Locale("en", "US");
-		Locale spanishLocale = new Locale("es", "ES");
-		Locale germanLocale = new Locale("de", "DE");
-
-		_locales = new Locale[] {
-			englishLocale, spanishLocale, germanLocale};
-
-		return _locales;
-	}
-
-	protected void testEnableLocalStaging(
+	protected void enableLocalStaging(
 			boolean stageJournal, boolean stagePolls)
 		throws Exception {
 
@@ -260,14 +245,14 @@ public class StagingImplTest {
 			question.getQuestionId());
 
 		if (stagePolls) {
-			for (Locale locale : getLocales()) {
+			for (Locale locale : _locales) {
 				Assert.assertEquals(
 					question.getTitle(locale),
 					stagingQuestion.getTitle(locale));
 			}
 		}
 		else {
-			for (Locale locale : getLocales()) {
+			for (Locale locale : _locales) {
 				Assert.assertFalse(
 					question.getTitle(locale).equals(
 						stagingQuestion.getTitle(locale)));
@@ -275,13 +260,13 @@ public class StagingImplTest {
 		}
 
 		if (stageJournal) {
-			for (Locale locale : getLocales()) {
+			for (Locale locale : _locales) {
 				Assert.assertEquals(
 					article.getTitle(locale), stagingArticle.getTitle(locale));
 			}
 		}
 		else {
-			for (Locale locale : getLocales()) {
+			for (Locale locale : _locales) {
 				Assert.assertFalse(
 					article.getTitle(locale).equals(
 						stagingArticle.getTitle(locale)));
@@ -295,7 +280,7 @@ public class StagingImplTest {
 
 		Map<Locale, String> titleMap = new HashMap<Locale, String>();
 
-		for (Locale locale : getLocales()) {
+		for (Locale locale : _locales) {
 			titleMap.put(locale, name.concat(LocaleUtil.toLanguageId(locale)));
 		}
 
@@ -313,8 +298,9 @@ public class StagingImplTest {
 		Map<Locale, String> titleMap = new HashMap<Locale, String>();
 		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
 
-		for (Locale locale : getLocales()) {
+		for (Locale locale : _locales) {
 			titleMap.put(locale, title.concat(LocaleUtil.toLanguageId(locale)));
+
 			descriptionMap.put(
 				locale, description.concat(LocaleUtil.toLanguageId(locale)));
 		}
@@ -325,6 +311,8 @@ public class StagingImplTest {
 			ServiceTestUtil.getServiceContext());
 	}
 
-	private Locale[] _locales;
+	private Locale[] _locales =  new Locale[] { 
+		new Locale("en", "US"), new Locale("es", "ES"), 
+		new Locale("de", "DE") };
 
 }

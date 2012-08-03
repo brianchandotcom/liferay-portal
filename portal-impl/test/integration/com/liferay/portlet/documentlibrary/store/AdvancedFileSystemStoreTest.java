@@ -14,10 +14,12 @@
 
 package com.liferay.portlet.documentlibrary.store;
 
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.ExecutionTestListeners;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -36,25 +38,43 @@ public class AdvancedFileSystemStoreTest {
 
 		long companyId = (Long)data[0];
 		long repositoryId = (Long)data[1];
-		long newRepositoryId = (Long)data[2];
+		long newRepositoryId = ServiceTestUtil.nextLong();
 
-		String[] fileNames = _store.getFileNames(companyId, repositoryId);
+		try {
+			String[] fileNames = _store.getFileNames(companyId, repositoryId);
 
-		for (String fileName : fileNames) {
-			_store.updateFile(
-				companyId, repositoryId, newRepositoryId, fileName);
+			for (String fileName : fileNames) {
+				_store.updateFile(
+					companyId, repositoryId, newRepositoryId, fileName);
 
-			Assert.assertTrue(
-				_store.hasFile(companyId, newRepositoryId, fileName));
-			Assert.assertFalse(
-				_store.hasFile(companyId, repositoryId, fileName));
+				Assert.assertTrue(
+					fileName + " was not found in " + newRepositoryId,
+					_store.hasFile(companyId, newRepositoryId, fileName));
+				Assert.assertFalse(
+					fileName + " was found in " + repositoryId,
+					_store.hasFile(companyId, repositoryId, fileName));
+			}
+		}
+		finally {
+			try {
+				_store.deleteDirectory(
+					companyId, repositoryId, StringPool.BLANK);
+			}
+			catch (NoSuchDirectoryException nsde) {
+			}
+
+			try {
+				_store.deleteDirectory(
+					companyId, newRepositoryId, StringPool.BLANK);
+			}
+			catch (NoSuchDirectoryException nsde) {
+			}
 		}
 	}
 
 	protected Object[] initStoreData() throws Exception {
 		long companyId = ServiceTestUtil.nextLong();
 		long repositoryId = ServiceTestUtil.nextLong();
-		long newRepositoryId = ServiceTestUtil.nextLong();
 
 		for (int i = 0; i < _FILE_COUNT; i++) {
 			String fileName = String.valueOf(i) + _FILE_NAME_EXTENSION;
@@ -62,8 +82,7 @@ public class AdvancedFileSystemStoreTest {
 			_store.addFile(companyId, repositoryId, fileName, _FILE_DATA);
 		}
 
-		return new Object[] {
-			companyId, repositoryId, newRepositoryId};
+		return new Object[] {companyId, repositoryId};
 	}
 
 	private static final int _DATA_SIZE = 100;

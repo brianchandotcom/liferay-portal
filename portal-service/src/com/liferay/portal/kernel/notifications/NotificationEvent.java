@@ -46,7 +46,7 @@ public class NotificationEvent implements Serializable {
 
 		NotificationEvent notificationEvent = (NotificationEvent)obj;
 
-		if (Validator.equals(_uuid, notificationEvent._uuid)) {
+		if (Validator.equals(getUuid(), notificationEvent.getUuid())) {
 			return true;
 		}
 
@@ -79,12 +79,7 @@ public class NotificationEvent implements Serializable {
 
 	@Override
 	public int hashCode() {
-		if (_uuid != null) {
-			return _uuid.hashCode();
-		}
-		else {
-			return 0;
-		}
+		return getUuid().hashCode();
 	}
 
 	public boolean isArchived() {

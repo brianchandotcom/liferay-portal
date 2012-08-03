@@ -61,9 +61,6 @@ import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetBranch;
 import com.liferay.portal.model.LayoutTypePortlet;
-import com.liferay.portal.model.PortletConstants;
-import com.liferay.portal.model.PortletPreferences;
-import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.Theme;
 import com.liferay.portal.model.ThemeSetting;
 import com.liferay.portal.model.User;
@@ -78,8 +75,7 @@ import com.liferay.portal.service.LayoutRevisionLocalServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
-import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
-import com.liferay.portal.service.ResourceLocalServiceUtil;
+import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.ThemeLocalServiceUtil;
@@ -89,7 +85,6 @@ import com.liferay.portal.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.service.permission.LayoutPrototypePermissionUtil;
 import com.liferay.portal.service.permission.LayoutSetPrototypePermissionUtil;
 import com.liferay.portal.service.permission.OrganizationPermissionUtil;
-import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.service.permission.UserPermissionUtil;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -652,38 +647,6 @@ public class EditLayoutsAction extends PortletAction {
 		return _CHECK_METHOD_ON_PROCESS_ACTION;
 	}
 
-	protected void removePortletByPreferences(
-		long plid, long companyId, String portletId) {
-
-		try {
-			String rootPortletId = PortletConstants.getRootPortletId(portletId);
-
-			ResourceLocalServiceUtil.deleteResource(
-				companyId, rootPortletId, ResourceConstants.SCOPE_INDIVIDUAL,
-				PortletPermissionUtil.getPrimaryKey(plid, portletId));
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		try {
-			List<PortletPreferences> portletPreferencesList =
-				PortletPreferencesLocalServiceUtil.
-					getPortletPreferences(plid, portletId);
-
-			for (PortletPreferences portletPreferences :
-				portletPreferencesList) {
-
-				PortletPreferencesLocalServiceUtil.
-					deletePortletPreferences(
-						portletPreferences.getPortletPreferencesId());
-			}
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-	}
-
 	protected void selectLayoutBranch(ActionRequest actionRequest)
 		throws Exception {
 
@@ -949,7 +912,7 @@ public class EditLayoutsAction extends PortletAction {
 				actionRequest, "removeEmbeddedPortletIds");
 
 			for (String portletId : removeEmbeddedPortletIds) {
-				removePortletByPreferences(
+				PortletLocalServiceUtil.removePortletByPreferences(
 					layout.getPlid(), themeDisplay.getCompanyId(),
 					portletId);
 			}

@@ -52,6 +52,7 @@ import com.liferay.portal.model.PortletCategory;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.PortletFilter;
 import com.liferay.portal.model.PortletInfo;
+import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.model.PortletURLListener;
 import com.liferay.portal.model.PublicRenderParameter;
 import com.liferay.portal.model.ResourceConstants;
@@ -65,6 +66,7 @@ import com.liferay.portal.model.impl.PublicRenderParameterImpl;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.base.PortletLocalServiceBaseImpl;
+import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
@@ -805,6 +807,26 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	@Transactional(enabled = false)
 	public void removeCompanyPortletsPool(long companyId) {
 		_companyPortletsPool.remove(companyId);
+	}
+
+	public void removePortletByPreferences(
+			long plid, long companyId, String portletId)
+		throws PortalException, SystemException {
+
+		String rootPortletId = PortletConstants.getRootPortletId(portletId);
+
+		resourceLocalService.deleteResource(
+			companyId, rootPortletId, ResourceConstants.SCOPE_INDIVIDUAL,
+			PortletPermissionUtil.getPrimaryKey(plid, portletId));
+
+		List<PortletPreferences> portletPreferencesList =
+			portletPreferencesLocalService.getPortletPreferences(
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid, portletId);
+
+		for (PortletPreferences portletPreferences : portletPreferencesList) {
+			portletPreferencesLocalService.deletePortletPreferences(
+				portletPreferences.getPortletPreferencesId());
+		}
 	}
 
 	public Portlet updatePortlet(

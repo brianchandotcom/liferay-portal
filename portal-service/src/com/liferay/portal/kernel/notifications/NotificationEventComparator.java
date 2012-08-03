@@ -49,8 +49,8 @@ public class NotificationEventComparator
 		}
 
 		if (value == 0) {
-			value = notificationEvent1.hashCode() -
-				notificationEvent2.hashCode();
+			value =
+				notificationEvent1.hashCode() - notificationEvent2.hashCode();
 		}
 
 		if (_ascending) {

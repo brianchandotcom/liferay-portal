@@ -31,4 +31,7 @@ public interface WikiNode extends WikiNodeModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.wiki.model.impl.WikiNodeImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public java.util.List<com.liferay.portal.kernel.util.Tuple> getDeletedAttachmentsFiles()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 }

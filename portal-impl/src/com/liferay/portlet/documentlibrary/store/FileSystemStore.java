@@ -297,7 +297,7 @@ public class FileSystemStore extends BaseStore {
 	public void updateFile(
 			long companyId, long repositoryId, long newRepositoryId,
 			String fileName)
-		throws PortalException {
+		throws PortalException, SystemException {
 
 		File fileNameDir = getFileNameDir(companyId, repositoryId, fileName);
 		File newFileNameDir = getFileNameDir(
@@ -309,7 +309,13 @@ public class FileSystemStore extends BaseStore {
 
 		File parentFile = fileNameDir.getParentFile();
 
-		fileNameDir.renameTo(newFileNameDir);
+		boolean renamed = fileNameDir.renameTo(newFileNameDir);
+
+		if (!renamed) {
+			throw new SystemException(
+				"File name directory was not renamed from " +
+					fileNameDir.getPath() + " to " + newFileNameDir.getPath());
+		}
 
 		deleteEmptyAncestors(companyId, repositoryId, parentFile);
 	}
@@ -317,7 +323,7 @@ public class FileSystemStore extends BaseStore {
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
 			String newFileName)
-		throws PortalException {
+		throws PortalException, SystemException {
 
 		File fileNameDir = getFileNameDir(companyId, repositoryId, fileName);
 		File newFileNameDir = getFileNameDir(
@@ -329,7 +335,13 @@ public class FileSystemStore extends BaseStore {
 
 		File parentFile = fileNameDir.getParentFile();
 
-		fileNameDir.renameTo(newFileNameDir);
+		boolean renamed = fileNameDir.renameTo(newFileNameDir);
+
+		if (!renamed) {
+			throw new SystemException(
+				"File name directory was not renamed from " +
+					fileNameDir.getPath() + " to " + newFileNameDir.getPath());
+		}
 
 		deleteEmptyAncestors(companyId, repositoryId, parentFile);
 	}
@@ -359,7 +371,7 @@ public class FileSystemStore extends BaseStore {
 	public void updateFileVersion(
 			long companyId, long repositoryId, String fileName,
 			String fromVersionLabel, String toVersionLabel)
-		throws PortalException {
+		throws PortalException, SystemException {
 
 		File fromFileNameVersionFile = getFileNameVersionFile(
 			companyId, repositoryId, fileName, fromVersionLabel);
@@ -371,7 +383,15 @@ public class FileSystemStore extends BaseStore {
 			throw new DuplicateFileException(toFileNameVersionFile.getPath());
 		}
 
-		fromFileNameVersionFile.renameTo(toFileNameVersionFile);
+		boolean renamed = fromFileNameVersionFile.renameTo(
+			toFileNameVersionFile);
+
+		if (!renamed) {
+			throw new SystemException(
+				"File name version file was not renamed from " +
+					fromFileNameVersionFile.getPath() + " to " +
+						toFileNameVersionFile.getPath());
+		}
 	}
 
 	protected void deleteEmptyAncestors(File file) {

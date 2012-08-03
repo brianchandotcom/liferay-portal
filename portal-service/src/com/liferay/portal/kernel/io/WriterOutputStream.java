@@ -23,6 +23,7 @@ import java.io.Writer;
 
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
+import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CoderResult;
 
@@ -30,6 +31,9 @@ import java.nio.charset.CoderResult;
  * @author Shuyang Zhou
  */
 public class WriterOutputStream extends OutputStream {
+
+	public static final String DEFAULT_CHARSET_NAME =
+		Charset.defaultCharset().name();
 
 	public WriterOutputStream(Writer writer) {
 		this(
@@ -71,6 +75,10 @@ public class WriterOutputStream extends OutputStream {
 			throw new IllegalArgumentException(
 				"Output buffer size " + outputBufferSize +
 					" must be a positive number");
+		}
+
+		if (charsetName == null) {
+			charsetName = DEFAULT_CHARSET_NAME;
 		}
 
 		_writer = writer;

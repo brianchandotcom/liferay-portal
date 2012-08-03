@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.io;
 
 import com.liferay.portal.kernel.nio.charset.CharsetEncoderUtil;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -23,6 +22,7 @@ import java.io.Writer;
 
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
+import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;
 
 /**
@@ -30,11 +30,18 @@ import java.nio.charset.CharsetEncoder;
  */
 public class OutputStreamWriter extends Writer {
 
+	public static final String DEFAULT_CHARSET_NAME =
+		Charset.defaultCharset().name();
+
 	public OutputStreamWriter(OutputStream outputStream) {
-		this(outputStream, StringPool.UTF8);
+		this(outputStream, DEFAULT_CHARSET_NAME);
 	}
 
 	public OutputStreamWriter(OutputStream outputStream, String charsetName) {
+		if (charsetName == null) {
+			charsetName = DEFAULT_CHARSET_NAME;
+		}
+
 		_outputStream = outputStream;
 		_charsetName = charsetName;
 		_charsetEncoder = CharsetEncoderUtil.getCharsetEncoder(charsetName);

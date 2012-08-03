@@ -68,7 +68,7 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 			<label class="inline-label" for="<%= namespace %>inputPermissionsViewRole">
 				<liferay-ui:message key="viewable-by" />
 
-				<select id="<%= namespace %>inputPermissionsViewRole" name="<%= namespace %>inputPermissionsViewRole" onChange="<%= randomNamespace + "updatePermissionsView();" %>">
+				<select id="<%= randomNamespace %>inputPermissionsViewRole" name="<%= namespace %>inputPermissionsViewRole" onChange="<%= randomNamespace + "updatePermissionsView();" %>">
 
 					<%
 					String guestRoleLabel = LanguageUtil.format(pageContext, "x-role", guestRole.getTitle(themeDisplay.getLocale()));
@@ -164,15 +164,18 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 					}
 
 					String checkboxFieldName = null;
+					String checkboxFieldId = null;
 
 					if (roleName.equals(RoleConstants.GUEST)) {
 						checkboxFieldName = namespace + "guestPermissions";
+						checkboxFieldId = randomNamespace + "guestPermissions";
 					}
 					else {
 						checkboxFieldName = namespace + "groupPermissions";
+						checkboxFieldId = randomNamespace + "groupPermissions";
 					}
 
-					String checkboxFieldId = checkboxFieldName + StringPool.UNDERLINE + action;
+					checkboxFieldId = checkboxFieldId + StringPool.UNDERLINE + action;
 				%>
 
 					<td style="text-align: center;" <%= (action.equals(ActionKeys.VIEW)) ? "class=\"aui-helper-hidden-accessible\"" : "" %>>
@@ -230,9 +233,9 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 				function() {
 					var A = AUI();
 
-					var viewableBySelect = A.one("#<%= namespace %>inputPermissionsViewRole");
-					var guestViewCheckbox = A.one('input[name="<%= namespace %>guestPermissions"][value="VIEW"]');
-					var groupViewCheckbox = A.one('input[name="<%= namespace %>groupPermissions"][value="VIEW"]');
+					var viewableBySelect = A.one("#<%= randomNamespace %>inputPermissionsViewRole");
+					var guestViewCheckbox = A.one("#<%= randomNamespace %>guestPermissions_VIEW");
+					var groupViewCheckbox = A.one("#<%= randomNamespace %>groupPermissions_VIEW");
 
 					if (viewableBySelect.val() == '<%= RoleConstants.GUEST %>') {
 						guestViewCheckbox.set("checked", true);

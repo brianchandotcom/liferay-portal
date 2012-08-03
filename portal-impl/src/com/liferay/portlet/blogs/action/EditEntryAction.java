@@ -128,11 +128,11 @@ public class EditEntryAction extends PortletAction {
 				String portletId = HttpUtil.getParameter(
 					redirect, "p_p_id", false);
 
-				String oldRedirectParamName =
+				String oldRedirectParam =
 					PortalUtil.getPortletNamespace(portletId) + "redirect";
 
 				String oldRedirect = HttpUtil.getParameter(
-					redirect, oldRedirectParamName, false);
+					redirect, oldRedirectParam, false);
 
 				String newRedirect = null;
 
@@ -142,10 +142,11 @@ public class EditEntryAction extends PortletAction {
 					newRedirect = StringUtil.replace(
 						newRedirect, oldUrlTitle, entry.getUrlTitle());
 
-					newRedirect = newRedirect.replace(
-						oldRedirectParamName, "redirect");
+					newRedirect = StringUtil.replace(
+						newRedirect, oldRedirectParam, "redirect");
 
-					redirect = redirect.replace(oldRedirect, newRedirect);
+					redirect = StringUtil.replace(
+						redirect, oldRedirect, newRedirect);
 				}
 				else if (redirect.endsWith("/blogs/" + oldUrlTitle) ||
 						redirect.contains("/blogs/" + oldUrlTitle + "?") ||

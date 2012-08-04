@@ -52,6 +52,10 @@
 	.search-pages {
 		float: right;
 
+		.delta-selector, .page-selector, .page-links {
+			float: left;
+		}
+
 		.page-links {
 			a, span {
 				border-left: 1px solid transparent;
@@ -71,17 +75,13 @@
 					padding-left: 5px;
 				}
 			}
+		}
 
-			.delta-selector, .page-selector, .page-links {
-				float: left;
-			}
-
-			.page-selector {
-				margin-left: 10px;
-				margin-right: 10px;
-				padding-left: 10px;
-				padding-right: 10px;
-			}
+		.page-selector {
+			margin-left: 10px;
+			margin-right: 10px;
+			padding-left: 10px;
+			padding-right: 10px;
 		}
 	}
 }

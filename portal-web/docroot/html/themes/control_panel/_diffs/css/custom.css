@@ -714,6 +714,10 @@ body.portal-popup:after, body.portal-popup:before {
 	}
 }
 
+.taglib-page-iterator .search-pages .page-links {
+	padding: 5px 0 0;
+}
+
 /*----- Extras -----*/
 
 input[type="text"], input[type="password"], select, textarea, .textarea, .aui-tagselector-content .aui-textboxlistentry-holder {

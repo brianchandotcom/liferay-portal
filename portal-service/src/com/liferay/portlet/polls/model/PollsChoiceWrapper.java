@@ -341,6 +341,19 @@ public class PollsChoiceWrapper implements PollsChoice,
 		_pollsChoice.setExpandoBridgeAttributes(serviceContext);
 	}
 
+	public java.lang.String[] getAvailableLocales() {
+		return _pollsChoice.getAvailableLocales();
+	}
+
+	public java.lang.String getDefaultLocale() {
+		return _pollsChoice.getDefaultLocale();
+	}
+
+	public void prepareLocalizedFieldsForImport()
+		throws com.liferay.portal.LocaleException {
+		_pollsChoice.prepareLocalizedFieldsForImport();
+	}
+
 	public void prepareLocalizedFieldsForImport(
 		java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.LocaleException {

@@ -605,6 +605,8 @@ public class PortletImporter {
 			Element assetCategoryElement, AssetCategory assetCategory)
 		throws Exception {
 
+		assetCategory.prepareLocalizedFieldsForImport();
+
 		long userId = portletDataContext.getUserId(assetCategory.getUserUuid());
 		long groupId = portletDataContext.getGroupId();
 		long assetVocabularyId = MapUtil.getLong(
@@ -863,6 +865,8 @@ public class PortletImporter {
 			Map<Long, Long> assetVocabularyPKs, Element assetVocabularyElement,
 			AssetVocabulary assetVocabulary)
 		throws Exception {
+
+		assetVocabulary.prepareLocalizedFieldsForImport();
 
 		long userId = portletDataContext.getUserId(
 			assetVocabulary.getUserUuid());
@@ -1282,6 +1286,8 @@ public class PortletImporter {
 
 			AssetCategory assetCategory =
 				(AssetCategory)portletDataContext.getZipEntryAsObject(path);
+
+			assetCategory.prepareLocalizedFieldsForImport();
 
 			importAssetCategory(
 				portletDataContext, assetVocabularyPKs, assetCategoryPKs,

@@ -720,6 +720,19 @@ public class AssetCategoryWrapper implements AssetCategory,
 		_assetCategory.setExpandoBridgeAttributes(serviceContext);
 	}
 
+	public java.lang.String[] getAvailableLocales() {
+		return _assetCategory.getAvailableLocales();
+	}
+
+	public java.lang.String getDefaultLocale() {
+		return _assetCategory.getDefaultLocale();
+	}
+
+	public void prepareLocalizedFieldsForImport()
+		throws com.liferay.portal.LocaleException {
+		_assetCategory.prepareLocalizedFieldsForImport();
+	}
+
 	public void prepareLocalizedFieldsForImport(
 		java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.LocaleException {

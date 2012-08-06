@@ -733,6 +733,19 @@ public class DDMStructureWrapper implements DDMStructure,
 		_ddmStructure.setExpandoBridgeAttributes(serviceContext);
 	}
 
+	public java.lang.String[] getAvailableLocales() {
+		return _ddmStructure.getAvailableLocales();
+	}
+
+	public java.lang.String getDefaultLocale() {
+		return _ddmStructure.getDefaultLocale();
+	}
+
+	public void prepareLocalizedFieldsForImport()
+		throws com.liferay.portal.LocaleException {
+		_ddmStructure.prepareLocalizedFieldsForImport();
+	}
+
 	public void prepareLocalizedFieldsForImport(
 		java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.LocaleException {
@@ -774,14 +787,6 @@ public class DDMStructureWrapper implements DDMStructure,
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_ddmStructure.persist();
-	}
-
-	public java.util.List<java.lang.String> getAvailableLocales() {
-		return _ddmStructure.getAvailableLocales();
-	}
-
-	public java.lang.String getDefaultLocale() {
-		return _ddmStructure.getDefaultLocale();
 	}
 
 	public com.liferay.portal.kernel.xml.Document getDocument() {

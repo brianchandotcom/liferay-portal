@@ -120,8 +120,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.portlet.PortletPreferences;
 
@@ -3126,34 +3124,29 @@ public class JournalArticleLocalServiceImpl
 
 		String urlTitle = null;
 
-		if (isMatchesServiceContextUrlTitle(serviceContextUrlTitle)) {
+		if (Validator.isNotNull(serviceContextUrlTitle)) {
 			urlTitle = JournalUtil.getUrlTitle(id, serviceContextUrlTitle);
-
-			JournalArticle urlTitleArticle = null;
-
-			try {
-				urlTitleArticle = getArticleByUrlTitle(
-					serviceContext.getScopeGroupId(), urlTitle);
-			}
-			catch (NoSuchArticleException nsae) {
-			}
-
-			if ((urlTitleArticle != null) &&
-				!Validator.equals(
-					urlTitleArticle.getArticleId(), articleId)) {
-
-				urlTitle = getUniqueUrlTitle(
-					id, serviceContext.getScopeGroupId(), articleId, urlTitle);
-			}
 		}
 		else {
-			if (isMatchesServiceContextUrlTitle(oldUrlTitle)) {
-				urlTitle = oldUrlTitle;
-			}
-			else {
-				urlTitle = getUniqueUrlTitle(
-					id, serviceContext.getScopeGroupId(), articleId, title);
-			}
+			urlTitle = getUniqueUrlTitle(
+				id, serviceContext.getScopeGroupId(), articleId, title);
+		}
+
+		JournalArticle urlTitleArticle = null;
+
+		try {
+			urlTitleArticle = getArticleByUrlTitle(
+				serviceContext.getScopeGroupId(), urlTitle);
+		}
+		catch (NoSuchArticleException nsae) {
+		}
+
+		if ((urlTitleArticle != null) &&
+			!Validator.equals(
+				urlTitleArticle.getArticleId(), articleId)) {
+
+			urlTitle = getUniqueUrlTitle(
+				id, serviceContext.getScopeGroupId(), articleId, urlTitle);
 		}
 
 		return urlTitle;
@@ -3179,21 +3172,6 @@ public class JournalArticleLocalServiceImpl
 		catch (NoSuchArticleException nsae) {
 			return true;
 		}
-	}
-
-	protected boolean isMatchesServiceContextUrlTitle(String urlTitle) {
-		if (Validator.isNotNull(urlTitle) &&
-			Validator.isNotNull(PropsValues.JOURNAL_ARTICLE_URL_TITLE_REGEXP)) {
-
-			Pattern pattern = Pattern.compile(
-				PropsValues.JOURNAL_ARTICLE_URL_TITLE_REGEXP);
-
-			Matcher matcher = pattern.matcher(urlTitle);
-
-			return matcher.matches();
-		}
-
-		return false;
 	}
 
 	protected void notifySubscribers(

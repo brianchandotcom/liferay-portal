@@ -732,6 +732,19 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 		_mdrAction.setExpandoBridgeAttributes(serviceContext);
 	}
 
+	public java.lang.String[] getAvailableLocales() {
+		return _mdrAction.getAvailableLocales();
+	}
+
+	public java.lang.String getDefaultLocale() {
+		return _mdrAction.getDefaultLocale();
+	}
+
+	public void prepareLocalizedFieldsForImport()
+		throws com.liferay.portal.LocaleException {
+		_mdrAction.prepareLocalizedFieldsForImport();
+	}
+
 	public void prepareLocalizedFieldsForImport(
 		java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.LocaleException {

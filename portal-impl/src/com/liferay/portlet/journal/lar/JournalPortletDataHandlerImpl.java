@@ -681,6 +681,8 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 			"article-resource-uuid");
 
 		if (portletDataContext.isDataStrategyMirror()) {
+			serviceContext.setAttribute("urlTitle", article.getUrlTitle());
+
 			JournalArticleResource articleResource =
 				JournalArticleResourceUtil.fetchByUUID_G(
 					articleResourceUuid, portletDataContext.getScopeGroupId());
@@ -1063,6 +1065,8 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 		JournalStructure structure =
 			(JournalStructure)portletDataContext.getZipEntryAsObject(path);
 
+		structure.prepareLocalizedFieldsForImport();
+
 		long userId = portletDataContext.getUserId(structure.getUserUuid());
 
 		JournalCreationStrategy creationStrategy =
@@ -1196,6 +1200,8 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		JournalTemplate template =
 			(JournalTemplate)portletDataContext.getZipEntryAsObject(path);
+
+		template.prepareLocalizedFieldsForImport();
 
 		long userId = portletDataContext.getUserId(template.getUserUuid());
 

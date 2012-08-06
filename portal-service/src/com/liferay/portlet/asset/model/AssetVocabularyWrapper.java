@@ -688,6 +688,11 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 		_assetVocabulary.persist();
 	}
 
+	public java.util.List<com.liferay.portlet.asset.model.AssetCategory> getCategories()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _assetVocabulary.getCategories();
+	}
+
 	public com.liferay.portal.kernel.util.UnicodeProperties getSettingsProperties() {
 		return _assetVocabulary.getSettingsProperties();
 	}

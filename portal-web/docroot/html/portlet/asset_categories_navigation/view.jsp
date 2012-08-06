@@ -17,15 +17,24 @@
 <%@ include file="/html/portlet/asset_categories_navigation/init.jsp" %>
 
 <c:choose>
-	<c:when test="<%= allAssetVocabularies %>">
-		<liferay-ui:asset-categories-navigation
-			hidePortletWhenEmpty="<%= true %>"
-		/>
+	<c:when test="<%= portletDisplayDDMTemplateId > 0 %>">
+
+		<%= PortletDisplayTemplatesUtil.renderDDMTemplate(renderRequest, renderResponse, portletDisplayDDMTemplateId, templateVocabularies) %>
+
 	</c:when>
 	<c:otherwise>
-		<liferay-ui:asset-categories-navigation
-			hidePortletWhenEmpty="<%= true %>"
-			vocabularyIds="<%= assetVocabularyIds %>"
-		/>
+		<c:choose>
+			<c:when test="<%= allAssetVocabularies %>">
+				<liferay-ui:asset-categories-navigation
+					hidePortletWhenEmpty="<%= true %>"
+				/>
+			</c:when>
+			<c:otherwise>
+				<liferay-ui:asset-categories-navigation
+					hidePortletWhenEmpty="<%= true %>"
+					vocabularyIds="<%= assetVocabularyIds %>"
+				/>
+			</c:otherwise>
+		</c:choose>
 	</c:otherwise>
 </c:choose>

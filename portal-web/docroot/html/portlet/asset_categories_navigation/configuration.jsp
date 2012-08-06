@@ -17,6 +17,8 @@
 <%@ include file="/html/portlet/asset_categories_navigation/init.jsp" %>
 
 <%
+PortletDisplayTemplateHandler portletDisplayTemplateHandler = PortletDisplayTemplateHandlerRegistryUtil.getPortletDisplayTemplateHandler(AssetCategory.class.getName());
+
 String redirect = ParamUtil.getString(request, "redirect");
 %>
 
@@ -81,6 +83,21 @@ String redirect = ParamUtil.getString(request, "redirect");
 				rightBoxName="availableAssetVocabularyIds"
 				rightList="<%= typesRightList %>"
 				rightTitle="available"
+			/>
+		</div>
+
+		<div class="display-template">
+			<liferay-ui:ddm-template-menu
+				classNameId="<%= PortalUtil.getClassNameId(portletDisplayTemplateHandler.getClassName()) %>"
+				preferenceName="displayTemplate"
+				preferenceValue="<%= displayTemplate %>"
+				showDefaultOption="<%= true %>"
+			/>
+
+			<liferay-ui:ddm-template-selector
+				classNameId="<%= PortalUtil.getClassNameId(portletDisplayTemplateHandler.getClassName()) %>"
+				message='<%= LanguageUtil.format(pageContext, "manage-display-templates-for-x", themeDisplay.getScopeGroupName(), false) %>'
+				refreshURL="<%= configurationURL%>"
 			/>
 		</div>
 	</aui:fieldset>

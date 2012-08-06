@@ -16,66 +16,19 @@
 
 <%
 PortletDisplayTemplateHandler portletDisplayTemplateHandler = PortletDisplayTemplateHandlerRegistryUtil.getPortletDisplayTemplateHandler(AssetEntry.class.getName());
-
-long portletDisplayTemplateHandlerClassNameId = PortalUtil.getClassNameId(portletDisplayTemplateHandler.getClassName());
 %>
 
 <aui:fieldset cssClass="general-display-settings">
 	<div class="display-style">
-		<aui:select id="displayStyle" label="display-template" name="preferences--displayStyle--">
-			<optgroup label="<liferay-ui:message key="default" />">
-
-				<%
-				for (String curDisplayStyle : PropsValues.ASSET_PUBLISHER_DISPLAY_STYLES) {
-				%>
-
-					<aui:option label="<%= HtmlUtil.escape(curDisplayStyle) %>" selected="<%= displayStyle.equals(curDisplayStyle) %>" />
-
-				<%
-				}
-				%>
-
-			</optgroup>
-			<optgroup label="<liferay-ui:message key="global" />">
-
-				<%
-				List<DDMTemplate> companyAssetPublisherDDMTemplates = DDMTemplateLocalServiceUtil.getTemplates(themeDisplay.getCompanyGroupId(), portletDisplayTemplateHandlerClassNameId, 0);
-
-				for (DDMTemplate companyAssetPublisherDDMTemplate : companyAssetPublisherDDMTemplates) {
-					if (!DDMTemplatePermission.contains(permissionChecker, companyAssetPublisherDDMTemplate, ActionKeys.VIEW)) {
-						continue;
-					}
-				%>
-
-					<aui:option label="<%= HtmlUtil.escape(companyAssetPublisherDDMTemplate.getName(locale)) %>" selected="<%= (portletDisplayDDMTemplate != null) && (companyAssetPublisherDDMTemplate.getTemplateId() == portletDisplayDDMTemplate.getTemplateId()) %>" value='<%= "ddmTemplate_" + companyAssetPublisherDDMTemplate.getUuid() %>' />
-
-				<%
-				}
-				%>
-
-			</optgroup>
-			<optgroup label="<%= themeDisplay.getScopeGroupName() %>">
-
-				<%
-				List<DDMTemplate> groupAssetPublisherDDMTemplates = DDMTemplateLocalServiceUtil.getTemplates(portletDisplayDDMTemplateGroupId, portletDisplayTemplateHandlerClassNameId, 0);
-
-				for (DDMTemplate groupAssetPublisherDDMTemplate : groupAssetPublisherDDMTemplates) {
-					if (!DDMTemplatePermission.contains(permissionChecker, groupAssetPublisherDDMTemplate, ActionKeys.VIEW)) {
-						continue;
-					}
-				%>
-
-					<aui:option label="<%= HtmlUtil.escape(groupAssetPublisherDDMTemplate.getName(locale)) %>" selected="<%= (portletDisplayDDMTemplate != null) && (groupAssetPublisherDDMTemplate.getTemplateId() == portletDisplayDDMTemplate.getTemplateId()) %>" value='<%= "ddmTemplate_" + groupAssetPublisherDDMTemplate.getUuid() %>' />
-
-				<%
-				}
-				%>
-
-			</optgroup>
-		</aui:select>
+		<liferay-ui:ddm-template-menu
+			classNameId="<%= PortalUtil.getClassNameId(portletDisplayTemplateHandler.getClassName()) %>"
+			defaultOptions="<%= Arrays.asList(PropsValues.ASSET_PUBLISHER_DISPLAY_STYLES) %>"
+			label="display-template"
+			preferenceValue="<%= displayStyle %>"
+		/>
 
 		<liferay-ui:ddm-template-selector
-			classNameId="<%= portletDisplayTemplateHandlerClassNameId %>"
+			classNameId="<%= PortalUtil.getClassNameId(portletDisplayTemplateHandler.getClassName()) %>"
 			message='<%= LanguageUtil.format(pageContext, "manage-display-templates-for-x", themeDisplay.getScopeGroupName(), false) %>'
 			refreshURL="<%= configurationRenderURL.toString() %>"
 		/>

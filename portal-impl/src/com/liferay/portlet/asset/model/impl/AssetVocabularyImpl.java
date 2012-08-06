@@ -14,11 +14,17 @@
 
 package com.liferay.portlet.asset.model.impl;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portlet.asset.model.AssetCategory;
+import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
+
+import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
@@ -27,6 +33,11 @@ import com.liferay.portal.kernel.util.Validator;
 public class AssetVocabularyImpl extends AssetVocabularyBaseImpl {
 
 	public AssetVocabularyImpl() {
+	}
+
+	public List<AssetCategory> getCategories() throws SystemException {
+		return AssetCategoryLocalServiceUtil.getVocabularyCategories(
+			getVocabularyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	@Override

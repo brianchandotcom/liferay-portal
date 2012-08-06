@@ -318,6 +318,22 @@
 		</permissions>
 	</portlet-resource>
 	<model-resource>
+        <model-name>com.liferay.portlet.tags.categories.navigation</model-name>
+        <portlet-ref>
+            <portlet-name>122</portlet-name>
+        </portlet-ref>
+        <permissions>
+            <supports>
+                <action-key>ADD_PORTLET_DISPLAY_TEMPLATE</action-key>
+            </supports>
+            <site-member-defaults />
+            <guest-defaults />
+            <guest-unsupported>
+                <action-key>ADD_PORTLET_DISPLAY_TEMPLATE</action-key>
+            </guest-unsupported>
+        </permissions>
+    </model-resource>
+	<model-resource>
 		<model-name>com.liferay.portal.model.Group</model-name>
 		<portlet-ref>
 			<portlet-name>125</portlet-name>

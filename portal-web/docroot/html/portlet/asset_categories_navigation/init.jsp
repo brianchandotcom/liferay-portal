@@ -16,10 +16,15 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.asset.NoSuchVocabularyException" %><%@
+<%@ page import="com.liferay.portal.kernel.template.PortletDisplayTemplateHandler" %><%@
+page import="com.liferay.portal.kernel.template.PortletDisplayTemplateHandlerRegistryUtil" %><%@
+page import="com.liferay.portlet.asset.NoSuchVocabularyException" %><%@
+page import="com.liferay.portlet.asset.model.AssetCategory" %><%@
 page import="com.liferay.portlet.asset.model.AssetVocabulary" %><%@
 page import="com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil" %><%@
-page import="com.liferay.portlet.asset.service.AssetVocabularyServiceUtil" %>
+page import="com.liferay.portlet.asset.service.AssetVocabularyServiceUtil" %><%@
+page import="com.liferay.portlet.dynamicdatamapping.model.DDMTemplate" %><%@
+page import="com.liferay.portlet.portletdisplaytemplates.util.PortletDisplayTemplatesUtil" %>
 
 <%
 PortletPreferences preferences = renderRequest.getPreferences();
@@ -46,6 +51,37 @@ long[] assetVocabularyIds = availableAssetVocabularyIds;
 
 if (!allAssetVocabularies && (preferences.getValues("assetVocabularyIds", null) != null)) {
 	assetVocabularyIds = StringUtil.split(preferences.getValue("assetVocabularyIds", null), 0L);
+}
+
+String displayTemplate = preferences.getValue("displayTemplate", StringPool.BLANK);
+
+DDMTemplate portletDisplayDDMTemplate = null;
+long portletDisplayDDMTemplateId = 0;
+long portletDisplayDDMTemplateGroupId = PortletDisplayTemplatesUtil.getDDMTemplateGroupId(themeDisplay);
+
+List<AssetVocabulary> templateVocabularies = new ArrayList<AssetVocabulary>();
+
+if (displayTemplate.startsWith("ddmTemplate_")) {
+	portletDisplayDDMTemplate = PortletDisplayTemplatesUtil.fetchDDMTemplate(portletDisplayDDMTemplateGroupId, displayTemplate);
+
+	if (portletDisplayDDMTemplate != null) {
+		portletDisplayDDMTemplateId = portletDisplayDDMTemplate.getTemplateId();
+	}
+}
+
+if (portletDisplayDDMTemplateId > 0) {
+	if (allAssetVocabularies) {
+		templateVocabularies = vocabularies;
+	}
+	else {
+		for (long vocabularyId : assetVocabularyIds) {
+			try {
+				templateVocabularies.add(AssetVocabularyServiceUtil.getVocabulary(vocabularyId));
+			}
+			catch (NoSuchVocabularyException nsve) {
+			}
+		}
+	}
 }
 %>
 

@@ -31,6 +31,9 @@ public interface AssetVocabulary extends AssetVocabularyModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.asset.model.impl.AssetVocabularyImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public java.util.List<com.liferay.portlet.asset.model.AssetCategory> getCategories()
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public java.lang.String getSettings();
 
 	public com.liferay.portal.kernel.util.UnicodeProperties getSettingsProperties();

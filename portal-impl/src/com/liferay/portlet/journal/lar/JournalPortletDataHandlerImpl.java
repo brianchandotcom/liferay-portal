@@ -681,6 +681,8 @@ public class JournalPortletDataHandlerImpl extends BasePortletDataHandler {
 			"article-resource-uuid");
 
 		if (portletDataContext.isDataStrategyMirror()) {
+			serviceContext.setAttribute("urlTitle", article.getUrlTitle());
+
 			JournalArticleResource articleResource =
 				JournalArticleResourceUtil.fetchByUUID_G(
 					articleResourceUuid, portletDataContext.getScopeGroupId());

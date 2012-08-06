@@ -53,8 +53,10 @@ import com.liferay.portlet.documentlibrary.DuplicateDirectoryException;
 import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
+import com.liferay.portlet.documentlibrary.util.DLAppUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.social.model.SocialActivityConstants;
+import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.portlet.wiki.DuplicatePageException;
 import com.liferay.portlet.wiki.NoSuchPageException;
 import com.liferay.portlet.wiki.NoSuchPageResourceException;
@@ -1147,7 +1149,10 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		sb.append(attachmentsDir);
 		sb.append(StringPool.FORWARD_SLASH);
-		sb.append(FileUtil.getShortFileName(deletedFileName));
+		sb.append(
+			DLAppUtil.stripTrashNamespace(
+				FileUtil.getShortFileName(deletedFileName),
+				TrashUtil.TRASH_SEPARATOR));
 
 		String fileName = sb.toString();
 
@@ -1184,7 +1189,10 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		sb.append(deletedAttachmentsDir);
 		sb.append(StringPool.FORWARD_SLASH);
-		sb.append(FileUtil.getShortFileName(fileName));
+		sb.append(
+			DLAppUtil.appendTrashNamespace(
+				FileUtil.getShortFileName(fileName),
+				TrashUtil.TRASH_SEPARATOR));
 
 		String deletedFileName = sb.toString();
 

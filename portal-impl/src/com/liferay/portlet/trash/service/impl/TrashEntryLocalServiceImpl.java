@@ -21,12 +21,19 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
+import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
+import com.liferay.portlet.documentlibrary.util.DLAppUtil;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashVersion;
 import com.liferay.portlet.trash.service.base.TrashEntryLocalServiceBaseImpl;
@@ -108,6 +115,23 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 		}
 
 		return trashEntry;
+	}
+
+	public void checkAttachments() throws PortalException, SystemException {
+		int count = groupPersistence.countAll();
+
+		int pages = count / Indexer.DEFAULT_INTERVAL;
+
+		for (int i = 0; i <= pages; i++) {
+			int start = (i * Indexer.DEFAULT_INTERVAL);
+			int end = start + Indexer.DEFAULT_INTERVAL;
+
+			List<Group> groups = groupPersistence.findAll(start, end);
+
+			for (Group group : groups) {
+				checkAttachments(group);
+			}
+		}
 	}
 
 	public void checkEntries() throws PortalException, SystemException {
@@ -330,6 +354,48 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 		long classNameId = PortalUtil.getClassNameId(className);
 
 		return trashVersionPersistence.findByC_C(classNameId, classPK);
+	}
+
+	protected void checkAttachments(Group group)
+		throws PortalException, SystemException {
+
+		long companyId = group.getCompanyId();
+		long repositoryId = CompanyConstants.SYSTEM;
+
+		Date date = getMaxAge(group);
+
+		String[] fileNames = null;
+
+		try {
+			fileNames = DLStoreUtil.getFileNames(
+				companyId, repositoryId, "wiki");
+		}
+		catch (NoSuchDirectoryException nsde) {
+			return;
+		}
+
+		for (String fileName : fileNames) {
+			String fileTitle = StringUtil.extractLast(
+				fileName, StringPool.FORWARD_SLASH);
+
+			if (fileTitle.startsWith(".trashed_")) {
+				String[] attachmentFileNames = DLStoreUtil.getFileNames(
+					companyId, repositoryId, "wiki/" + fileTitle);
+
+				for (String attachmentFileName : attachmentFileNames) {
+					String trashNamespace = DLAppUtil.getTrashNamespace(
+						attachmentFileName, TrashUtil.TRASH_SEPARATOR);
+
+					long timeStamp = GetterUtil.getLong(trashNamespace);
+
+					if (timeStamp < date.getTime()) {
+						DLStoreUtil.deleteDirectory(
+							companyId, repositoryId, attachmentFileName);
+					}
+				}
+			}
+		}
+
 	}
 
 	protected Date getMaxAge(Group group)

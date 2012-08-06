@@ -84,6 +84,18 @@ public class DLAppUtil {
 		return mimeType;
 	}
 
+	public static String getTrashNamespace(String title, String separator) {
+		int index = title.lastIndexOf(separator);
+
+		String trashNamespace = StringPool.BLANK;
+
+		if (index >= 0) {
+			trashNamespace = title.substring(index + 1, title.length());
+		}
+
+		return trashNamespace;
+	}
+
 	public static boolean isMajorVersion(
 		FileVersion previousFileVersion, FileVersion currentFileVersion) {
 

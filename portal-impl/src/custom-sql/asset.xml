@@ -173,7 +173,7 @@
 			FROM
 				AssetEntries_AssetTags
 			WHERE
-				([$TAG_ID])
+				([$TAG_ID$])
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.asset.service.persistence.AssetLinkFinder.findByE1_V">

@@ -39,6 +39,8 @@ public class TrashUtil {
 
 	public static final int TRASH_ENABLED_BY_DEFAULT = 2;
 
+	public static final String TRASH_SEPARATOR = "_trash-date_";
+
 	public static List<TrashEntry> getEntries(Hits hits)
 		throws PortalException, SystemException {
 

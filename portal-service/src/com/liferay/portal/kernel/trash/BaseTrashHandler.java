@@ -16,10 +16,13 @@ package com.liferay.portal.kernel.trash;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.trash.model.TrashEntry;
+
+import javax.portlet.PortletRequest;
 
 /**
  * Represents the base class for basic operations with the Trash.
@@ -63,6 +66,18 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		throws PortalException, SystemException {
 
 		deleteTrashEntries(new long[] {classPK}, checkPermission);
+	}
+
+	public String getRestoreLink(PortletRequest PortletRequest, long classPK)
+		throws PortalException, SystemException {
+
+		return StringPool.BLANK;
+	}
+
+	public String getRestoreMessage(PortletRequest portletRequest, long classPK)
+		throws PortalException, SystemException {
+
+		return StringPool.BLANK;
 	}
 
 	public TrashRenderer getTrashRenderer(long classPK)

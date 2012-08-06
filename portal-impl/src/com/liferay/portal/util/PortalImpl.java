@@ -809,7 +809,7 @@ public class PortalImpl implements Portal {
 						groupId, mainPath, friendlyURL, params, requestContext);
 				}
 				catch (Exception e) {
-					friendlyURL = null;
+					throw new NoSuchLayoutException(e);
 				}
 			}
 			else if (friendlyURL.startsWith(
@@ -821,7 +821,7 @@ public class PortalImpl implements Portal {
 						requestContext);
 				}
 				catch (Exception e) {
-					friendlyURL = null;
+					throw new NoSuchLayoutException(e);
 				}
 			}
 		}

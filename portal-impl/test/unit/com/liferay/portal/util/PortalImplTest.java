@@ -35,7 +35,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 @PowerMockIgnore("javax.xml.datatype.*")
 @PrepareForTest({HttpUtil.class})
 @RunWith(PowerMockRunner.class)
-public class PortalmplTest extends PowerMockito {
+public class PortalImplTest extends PowerMockito {
 
 	@Test
 	public void testUpdateRedirectRemoveLayoutURL() {

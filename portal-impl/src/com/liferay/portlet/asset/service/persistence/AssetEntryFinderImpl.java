@@ -539,11 +539,11 @@ public class AssetEntryFinderImpl
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(classNameIds.length + 2);
+		StringBundler sb = new StringBundler(classNameIds.length + 1);
 
 		sb.append(" AND (AssetEntry.classNameId = ?");
 
-		for (int i = 1; i < classNameIds.length; i++) {
+		for (int i = 0; i < (classNameIds.length - 1); i++) {
 			sb.append(" OR AssetEntry.classNameId = ?");
 		}
 
@@ -573,11 +573,11 @@ public class AssetEntryFinderImpl
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(groupIds.length + 2);
+		StringBundler sb = new StringBundler(groupIds.length + 1);
 
 		sb.append(" AND (AssetEntry.groupId = ?");
 
-		for (int i = 1; i < groupIds.length; i++) {
+		for (int i = 0; i < (groupIds.length - 1); i++) {
 			sb.append(" OR AssetEntry.groupId = ?");
 		}
 
@@ -587,7 +587,7 @@ public class AssetEntryFinderImpl
 	}
 
 	protected String getTagIds(long[] tagIds) {
-		StringBundler sb = new StringBundler(tagIds.length * 4 - 1);
+		StringBundler sb = new StringBundler((tagIds.length * 3) - 1);
 
 		for (int i = 0; i < tagIds.length; i++) {
 			sb.append("tagId = ");

@@ -360,6 +360,8 @@ public class BlogsPortletDataHandlerImpl extends BasePortletDataHandler {
 			BlogsEntry importedEntry = null;
 
 			if (portletDataContext.isDataStrategyMirror()) {
+				serviceContext.setAttribute("urlTitle", entry.getUrlTitle());
+
 				BlogsEntry existingEntry = BlogsEntryUtil.fetchByUUID_G(
 					entry.getUuid(), portletDataContext.getScopeGroupId());
 

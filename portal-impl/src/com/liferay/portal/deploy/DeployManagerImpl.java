@@ -95,10 +95,6 @@ public class DeployManagerImpl implements DeployManager {
 	public void undeploy(String context) throws Exception {
 		File deployDir = new File(getDeployDir(), context);
 
-		if (!deployDir.exists()) {
-			deployDir = new File(getDeployDir(), context + ".war");
-		}
-
 		DeployUtil.undeploy(ServerDetector.getServerId(), deployDir);
 	}
 

@@ -14,6 +14,8 @@
 
 package com.liferay.portalweb.portal.util.liferayselenium;
 
+import com.liferay.portalweb.portal.util.RuntimeVariables;
+
 import com.thoughtworks.selenium.Selenium;
 
 /**
@@ -498,6 +500,8 @@ public class SeleniumWrapper implements Selenium {
 	}
 
 	public void open(String url) {
+		url = RuntimeVariables.replace(url);
+
 		_selenium.open(url);
 	}
 

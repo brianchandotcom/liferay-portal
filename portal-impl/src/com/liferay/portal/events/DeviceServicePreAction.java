@@ -22,7 +22,9 @@ import com.liferay.portal.kernel.mobile.device.DeviceDetectionUtil;
 import com.liferay.portal.kernel.mobile.device.UnknownDevice;
 import com.liferay.portal.kernel.mobile.device.rulegroup.ActionHandlerManagerUtil;
 import com.liferay.portal.kernel.mobile.device.rulegroup.RuleGroupProcessorUtil;
+import com.liferay.portal.kernel.servlet.NonSerializableObjectHandler;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.mobiledevicerules.model.MDRAction;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
@@ -46,12 +48,22 @@ public class DeviceServicePreAction extends Action {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Device device = (Device)session.getAttribute(WebKeys.DEVICE);
+        Device device = null;
+
+        if (PropsValues.MOBILE_DEVICE_SESSION_CACHE_ENABLED) {
+	        Object cachedDevice = session.getAttribute(WebKeys.DEVICE);
+
+	        device = (Device)NonSerializableObjectHandler.getValue(
+		        cachedDevice);
+        }
 
 		if (device == null) {
 			device = DeviceDetectionUtil.detectDevice(request);
 
-			session.setAttribute(WebKeys.DEVICE, device);
+            if (PropsValues.MOBILE_DEVICE_SESSION_CACHE_ENABLED) {
+    			session.setAttribute(
+				    WebKeys.DEVICE, new NonSerializableObjectHandler(device));
+            }
 		}
 
 		themeDisplay.setDevice(device);

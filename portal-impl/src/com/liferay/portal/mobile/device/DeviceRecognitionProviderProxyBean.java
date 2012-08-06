@@ -16,6 +16,7 @@ package com.liferay.portal.mobile.device;
 
 import com.liferay.portal.kernel.messaging.proxy.BaseProxyBean;
 import com.liferay.portal.kernel.mobile.device.Device;
+import com.liferay.portal.kernel.mobile.device.DeviceCapabilityFilter;
 import com.liferay.portal.kernel.mobile.device.DeviceRecognitionProvider;
 import com.liferay.portal.kernel.mobile.device.KnownDevices;
 
@@ -39,4 +40,9 @@ public class DeviceRecognitionProviderProxyBean
 		throw new UnsupportedOperationException();
 	}
 
+	public void setDeviceCapabilityFilter(
+		DeviceCapabilityFilter deviceCapabilityFilter) {
+
+		throw new UnsupportedOperationException();
+	}
 }

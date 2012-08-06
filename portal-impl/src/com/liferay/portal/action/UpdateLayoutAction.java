@@ -16,9 +16,9 @@ package com.liferay.portal.action;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
-import com.liferay.portal.kernel.servlet.StringServletResponse;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -328,14 +328,15 @@ public class UpdateLayoutAction extends JSONAction {
 		if (dataType.equals("json")) {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-			StringServletResponse stringResponse = new StringServletResponse(
-				response);
+			BufferCacheServletResponse bufferCacheServletResponse =
+				new BufferCacheServletResponse(response);
 
 			renderPortletAction.execute(
-				mapping, form, dynamicRequest, stringResponse);
+				mapping, form, dynamicRequest, bufferCacheServletResponse);
 
-			populatePortletJSONObject(
-				request, stringResponse, portlet, jsonObject);
+			String content = bufferCacheServletResponse.getString().trim();
+
+			populatePortletJSONObject(request, content, portlet, jsonObject);
 
 			response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 
@@ -358,8 +359,8 @@ public class UpdateLayoutAction extends JSONAction {
 	}
 
 	protected void populatePortletJSONObject(
-			HttpServletRequest request, StringServletResponse stringResponse,
-			Portlet portlet, JSONObject jsonObject)
+			HttpServletRequest request, String content, Portlet portlet,
+			JSONObject jsonObject)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
@@ -369,7 +370,7 @@ public class UpdateLayoutAction extends JSONAction {
 			themeDisplay.getLayoutTypePortlet();
 
 		jsonObject.put("refresh", !portlet.isAjaxable());
-		jsonObject.put("portletHTML", stringResponse.getString().trim());
+		jsonObject.put("portletHTML", content);
 
 		Set<String> footerCssSet = new LinkedHashSet<String>();
 		Set<String> footerJavaScriptSet = new LinkedHashSet<String>();

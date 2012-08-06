@@ -16,8 +16,8 @@ package com.liferay.util.axis;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
-import com.liferay.portal.kernel.servlet.StringServletResponse;
 import com.liferay.portal.kernel.servlet.UncommittedServletResponse;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -172,16 +172,16 @@ public class AxisServlet extends org.apache.axis.transport.http.AxisServlet {
 				return;
 			}
 
-			StringServletResponse stringResponse = new StringServletResponse(
-				response);
+			BufferCacheServletResponse bufferCacheServletResponse =
+				new BufferCacheServletResponse(response);
 
-			super.service(request, stringResponse);
+			super.service(request, bufferCacheServletResponse);
 
-			String contentType = stringResponse.getContentType();
+			String contentType = bufferCacheServletResponse.getContentType();
 
 			response.setContentType(contentType);
 
-			String content = stringResponse.getString();
+			String content = bufferCacheServletResponse.getString();
 
 			if (_fixContent) {
 				if (contentType.contains(ContentTypes.TEXT_HTML)) {

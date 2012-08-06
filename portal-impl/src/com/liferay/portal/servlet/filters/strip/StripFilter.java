@@ -23,9 +23,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.scripting.ScriptingException;
+import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
-import com.liferay.portal.kernel.servlet.StringServletResponse;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -332,13 +332,15 @@ public class StripFilter extends BasePortalFilter {
 
 		request.setAttribute(SKIP_FILTER, Boolean.TRUE);
 
-		StringServletResponse stringResponse = new StringServletResponse(
-			response);
+		BufferCacheServletResponse bufferCacheServletResponse =
+			new BufferCacheServletResponse(response);
 
-		processFilter(StripFilter.class, request, stringResponse, filterChain);
+		processFilter(
+			StripFilter.class, request, bufferCacheServletResponse,
+			filterChain);
 
 		String contentType = GetterUtil.getString(
-			stringResponse.getContentType()).toLowerCase();
+			bufferCacheServletResponse.getContentType()).toLowerCase();
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Stripping content of type " + contentType);
@@ -347,10 +349,11 @@ public class StripFilter extends BasePortalFilter {
 		response.setContentType(contentType);
 
 		if (contentType.startsWith(ContentTypes.TEXT_HTML) &&
-			(stringResponse.getStatus() == HttpServletResponse.SC_OK)) {
+			(bufferCacheServletResponse.getStatus() ==
+				HttpServletResponse.SC_OK)) {
 
-			CharBuffer oldCharBuffer = CharBuffer.wrap(
-				stringResponse.getString());
+			CharBuffer oldCharBuffer =
+				bufferCacheServletResponse.getCharBuffer();
 
 			boolean ensureContentLength = ParamUtil.getBoolean(
 				request, _ENSURE_CONTENT_LENGTH);
@@ -372,7 +375,7 @@ public class StripFilter extends BasePortalFilter {
 			}
 		}
 		else {
-			ServletResponseUtil.write(response, stringResponse);
+			ServletResponseUtil.write(response, bufferCacheServletResponse);
 		}
 	}
 

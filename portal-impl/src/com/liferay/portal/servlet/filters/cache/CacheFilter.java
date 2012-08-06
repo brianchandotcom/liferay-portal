@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
-import com.liferay.portal.kernel.servlet.ByteBufferServletResponse;
+import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.struts.LastPath;
 import com.liferay.portal.kernel.util.CharPool;
@@ -383,10 +383,11 @@ public class CacheFilter extends BasePortalFilter {
 	}
 
 	protected boolean isCacheableResponse(
-		ByteBufferServletResponse byteBufferResponse) {
+		BufferCacheServletResponse bufferCacheServletResponse) {
 
-		if ((byteBufferResponse.getStatus() == HttpServletResponse.SC_OK) &&
-			(byteBufferResponse.getBufferSize() <
+		if ((bufferCacheServletResponse.getStatus() ==
+				HttpServletResponse.SC_OK) &&
+			(bufferCacheServletResponse.getBufferSize() <
 				PropsValues.CACHE_CONTENT_THRESHOLD_SIZE)) {
 
 			return true;
@@ -439,13 +440,15 @@ public class CacheFilter extends BasePortalFilter {
 				_log.info("Caching request " + key);
 			}
 
-			ByteBufferServletResponse byteBufferResponse =
-				new ByteBufferServletResponse(response);
+			BufferCacheServletResponse bufferCacheServletResponse =
+				new BufferCacheServletResponse(response);
 
 			processFilter(
-				CacheFilter.class, request, byteBufferResponse, filterChain);
+				CacheFilter.class, request, bufferCacheServletResponse,
+				filterChain);
 
-			cacheResponseData = new CacheResponseData(byteBufferResponse);
+			cacheResponseData = new CacheResponseData(
+				bufferCacheServletResponse);
 
 			LastPath lastPath = (LastPath)request.getAttribute(
 				WebKeys.LAST_PATH);
@@ -460,12 +463,14 @@ public class CacheFilter extends BasePortalFilter {
 			// initial test.
 
 			String cacheControl = GetterUtil.getString(
-				byteBufferResponse.getHeader(HttpHeaders.CACHE_CONTROL));
+				bufferCacheServletResponse.getHeader(
+					HttpHeaders.CACHE_CONTROL));
 
-			if ((byteBufferResponse.getStatus() == HttpServletResponse.SC_OK) &&
+			if ((bufferCacheServletResponse.getStatus() ==
+					HttpServletResponse.SC_OK) &&
 				!cacheControl.contains(HttpHeaders.PRAGMA_NO_CACHE_VALUE) &&
 				isCacheableRequest(request) &&
-				isCacheableResponse(byteBufferResponse)) {
+				isCacheableResponse(bufferCacheServletResponse)) {
 
 				CacheUtil.putCacheResponseData(
 					companyId, key, cacheResponseData);

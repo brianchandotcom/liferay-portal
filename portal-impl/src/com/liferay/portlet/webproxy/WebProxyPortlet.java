@@ -16,7 +16,7 @@ package com.liferay.portlet.webproxy;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.servlet.StringServletResponse;
+import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
@@ -70,15 +70,16 @@ public class WebProxyPortlet extends PortletBridgePortlet {
 			RenderResponseImpl renderResponseImpl =
 				(RenderResponseImpl)renderResponse;
 
-			StringServletResponse stringResponse = (StringServletResponse)
-				renderResponseImpl.getHttpServletResponse();
+			BufferCacheServletResponse bufferCacheServletResponse =
+				(BufferCacheServletResponse)
+					renderResponseImpl.getHttpServletResponse();
 
-			String output = stringResponse.getString();
+			String output = bufferCacheServletResponse.getString();
 
 			output = StringUtil.replace(
 				output, "//pbhs/", PortalUtil.getPathContext() + "/pbhs/");
 
-			stringResponse.setString(output);
+			bufferCacheServletResponse.setString(output);
 		}
 	}
 

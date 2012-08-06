@@ -14,11 +14,11 @@
 
 package com.liferay.portal.servlet.filters.etag;
 
-import com.liferay.portal.kernel.servlet.ByteBufferServletResponse;
-import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
-import com.liferay.util.servlet.filters.CacheResponseUtil;
+
+import java.nio.ByteBuffer;
 
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
@@ -50,18 +50,17 @@ public class ETagFilter extends BasePortalFilter {
 			FilterChain filterChain)
 		throws Exception {
 
-		ByteBufferServletResponse byteBufferResponse =
-			new ByteBufferServletResponse(response);
+		BufferCacheServletResponse bufferCacheServletResponse =
+			new BufferCacheServletResponse(response);
 
 		processFilter(
-			ETagFilter.class, request, byteBufferResponse, filterChain);
+			ETagFilter.class, request, bufferCacheServletResponse, filterChain);
 
-		if (!ETagUtil.processETag(request, response, byteBufferResponse)) {
-			CacheResponseUtil.setHeaders(
-				response, byteBufferResponse.getHeaders());
+		ByteBuffer byteBuffer = bufferCacheServletResponse.getByteBuffer();
 
-			ServletResponseUtil.write(
-				response, byteBufferResponse.getByteBuffer());
+		if (!ETagUtil.processETag(request, response, byteBuffer)) {
+			bufferCacheServletResponse.finishResponse();
+			bufferCacheServletResponse.outputBuffer();
 		}
 	}
 

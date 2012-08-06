@@ -23,7 +23,6 @@ import java.io.Writer;
 
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
-import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CoderResult;
 
@@ -75,7 +74,7 @@ public class WriterOutputStream extends OutputStream {
 		}
 
 		if (charsetName == null) {
-			charsetName = _DEFAULT_CHARSET_NAME;
+			charsetName = StringPool.DEFAULT_CHARSET_NAME;
 		}
 
 		_writer = writer;
@@ -161,9 +160,6 @@ public class WriterOutputStream extends OutputStream {
 			_outputBuffer.rewind();
 		}
 	}
-
-	private static final String _DEFAULT_CHARSET_NAME =
-		Charset.defaultCharset().name();
 
 	private static final int _DEFAULT_INTPUT_BUFFER_SIZE = 128;
 

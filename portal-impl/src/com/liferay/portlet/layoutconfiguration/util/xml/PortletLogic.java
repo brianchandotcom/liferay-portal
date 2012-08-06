@@ -15,8 +15,8 @@
 package com.liferay.portlet.layoutconfiguration.util.xml;
 
 import com.liferay.portal.kernel.portlet.PortletContainerUtil;
+import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
-import com.liferay.portal.kernel.servlet.StringServletResponse;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -75,8 +75,8 @@ public class PortletLogic extends RuntimeLogic {
 			portletId += PortletConstants.INSTANCE_SEPARATOR + instanceId;
 		}
 
-		StringServletResponse stringServletResponse =
-			new StringServletResponse(_response);
+		BufferCacheServletResponse bufferCacheServletResponse =
+			new BufferCacheServletResponse(_response);
 
 		HttpServletRequest request = DynamicServletRequest.addQueryString(
 			_request, queryString);
@@ -87,9 +87,10 @@ public class PortletLogic extends RuntimeLogic {
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
 			themeDisplay.getCompanyId(), portletId);
 
-		PortletContainerUtil.render(request, stringServletResponse, portlet);
+		PortletContainerUtil.render(
+			request, bufferCacheServletResponse, portlet);
 
-		return stringServletResponse.getString();
+		return bufferCacheServletResponse.getString();
 	}
 
 	private HttpServletRequest _request;

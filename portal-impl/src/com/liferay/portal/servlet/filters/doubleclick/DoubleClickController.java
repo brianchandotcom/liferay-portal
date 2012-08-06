@@ -14,7 +14,7 @@
 
 package com.liferay.portal.servlet.filters.doubleclick;
 
-import com.liferay.portal.kernel.servlet.ByteBufferServletResponse;
+import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.util.servlet.filters.CacheResponseData;
 import com.liferay.util.servlet.filters.CacheResponseUtil;
 
@@ -39,29 +39,30 @@ public class DoubleClickController implements Serializable {
 
 		boolean firstRequest = false;
 
-		ByteBufferServletResponse byteBufferResponse = null;
+		BufferCacheServletResponse bufferCacheServletResponse = null;
 
 		synchronized (this) {
-			if (_byteBufferResponse == null) {
+			if (_bufferCacheServletResponse == null) {
 				firstRequest = true;
 
-				_byteBufferResponse = new ByteBufferServletResponse(response);
+				_bufferCacheServletResponse = new BufferCacheServletResponse(
+					response);
 				_throwable = null;
 			}
 
-			byteBufferResponse = _byteBufferResponse;
+			bufferCacheServletResponse = _bufferCacheServletResponse;
 		}
 
 		if (firstRequest) {
 			try {
-				filterChain.doFilter(request, _byteBufferResponse);
+				filterChain.doFilter(request, _bufferCacheServletResponse);
 			}
 			catch (Throwable t) {
 				_throwable = t;
 			}
 			finally {
 				synchronized (this) {
-					_byteBufferResponse = null;
+					_bufferCacheServletResponse = null;
 
 					notifyAll();
 				}
@@ -69,7 +70,7 @@ public class DoubleClickController implements Serializable {
 		}
 		else {
 			synchronized (this) {
-				while (_byteBufferResponse != null) {
+				while (_bufferCacheServletResponse != null) {
 					try {
 						wait();
 					}
@@ -104,12 +105,12 @@ public class DoubleClickController implements Serializable {
 		}
 
 		CacheResponseData cacheResponseData = new CacheResponseData(
-			byteBufferResponse);
+			bufferCacheServletResponse);
 
 		CacheResponseUtil.write(response, cacheResponseData);
 	}
 
-	private ByteBufferServletResponse _byteBufferResponse;
+	private BufferCacheServletResponse _bufferCacheServletResponse;
 	private Throwable _throwable;
 
 }

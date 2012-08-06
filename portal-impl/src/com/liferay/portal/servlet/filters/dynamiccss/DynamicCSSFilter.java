@@ -18,9 +18,9 @@ import com.liferay.portal.kernel.cache.key.CacheKeyGenerator;
 import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
-import com.liferay.portal.kernel.servlet.StringServletResponse;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 import com.liferay.portal.util.PropsUtil;
-import com.liferay.util.servlet.filters.CacheResponseUtil;
 
 import java.io.File;
 
@@ -149,25 +148,23 @@ public class DynamicCSSFilter extends BasePortalFilter {
 					_log.info("Parsing SASS on JSP or servlet " + requestPath);
 				}
 
-				StringServletResponse stringResponse =
-					new StringServletResponse(response);
+				BufferCacheServletResponse bufferCacheServletResponse =
+					new BufferCacheServletResponse(response);
 
 				processFilter(
-					DynamicCSSFilter.class, request, stringResponse,
+					DynamicCSSFilter.class, request, bufferCacheServletResponse,
 					filterChain);
 
-				CacheResponseUtil.setHeaders(
-					response, stringResponse.getHeaders());
+				bufferCacheServletResponse.finishResponse();
 
-				response.setContentType(stringResponse.getContentType());
-
-				content = stringResponse.getString();
+				content = bufferCacheServletResponse.getString();
 
 				dynamicContent = DynamicCSSUtil.parseSass(
 					_servletContext, request, requestPath, content);
 
 				FileUtil.write(
-					cacheContentTypeFile, stringResponse.getContentType());
+					cacheContentTypeFile,
+					bufferCacheServletResponse.getContentType());
 			}
 			else {
 				return null;

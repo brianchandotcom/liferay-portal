@@ -14,7 +14,6 @@
 
 package com.liferay.portal.servlet.filters.etag;
 
-import com.liferay.portal.kernel.servlet.ByteBufferServletResponse;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -55,9 +54,7 @@ public class ETagUtil {
 
 	public static boolean processETag(
 		HttpServletRequest request, HttpServletResponse response,
-		ByteBufferServletResponse byteBufferResponse) {
-
-		ByteBuffer byteBuffer = byteBufferResponse.getByteBuffer();
+		ByteBuffer byteBuffer) {
 
 		return processETag(
 			request, response, byteBuffer.array(), byteBuffer.position(),

@@ -16,10 +16,10 @@ package com.liferay.util.bridges.php;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.servlet.DynamicServletConfig;
 import com.liferay.portal.kernel.servlet.PortletServletObjectsFactory;
 import com.liferay.portal.kernel.servlet.ServletObjectsFactory;
-import com.liferay.portal.kernel.servlet.StringServletResponse;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.util.bridges.common.ScriptPostProcess;
@@ -189,18 +189,20 @@ public class PHPPortlet extends GenericPortlet {
 				request, servletConfig, renderRequest, renderResponse,
 				getPortletConfig(), phpURI, addPortletParams);
 
-			StringServletResponse stringResponse = new StringServletResponse(
-				response);
+			BufferCacheServletResponse bufferCacheServletResponse =
+				new BufferCacheServletResponse(response);
 
-			quercusServlet.service(phpRequest, stringResponse);
+			quercusServlet.service(phpRequest, bufferCacheServletResponse);
 
-			String result = stringResponse.getString();
+			String result = bufferCacheServletResponse.getString();
 
-			if (stringResponse.getContentType().startsWith("text/")) {
+			String contentType = bufferCacheServletResponse.getContentType();
+
+			if (contentType.startsWith("text/")) {
 				result = rewriteURLs(result, renderResponse.createRenderURL());
 			}
 
-			renderResponse.setContentType(stringResponse.getContentType());
+			renderResponse.setContentType(contentType);
 
 			PrintWriter writer = renderResponse.getWriter();
 

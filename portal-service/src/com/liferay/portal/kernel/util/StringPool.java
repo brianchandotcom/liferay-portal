@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import java.nio.charset.Charset;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -54,6 +56,9 @@ public class StringPool {
 	public static final String COMMA_AND_SPACE = ", ";
 
 	public static final String DASH = "-";
+
+	public static final String DEFAULT_CHARSET_NAME =
+		Charset.defaultCharset().name();
 
 	public static final String DOLLAR = "$";
 

@@ -18,9 +18,9 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.language.UnicodeLanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
-import com.liferay.portal.kernel.servlet.StringServletResponse;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -78,11 +78,12 @@ public class LanguageFilter extends BasePortalFilter {
 			FilterChain filterChain)
 		throws Exception {
 
-		StringServletResponse stringResponse = new StringServletResponse(
-			response);
+		BufferCacheServletResponse bufferCacheServletResponse =
+			new BufferCacheServletResponse(response);
 
 		processFilter(
-			LanguageFilter.class, request, stringResponse, filterChain);
+			LanguageFilter.class, request, bufferCacheServletResponse,
+			filterChain);
 
 		if (_log.isDebugEnabled()) {
 			String completeURL = HttpUtil.getCompleteURL(request);
@@ -90,18 +91,18 @@ public class LanguageFilter extends BasePortalFilter {
 			_log.debug("Translating response " + completeURL);
 		}
 
-		String content = translateResponse(request, stringResponse);
+		String content = bufferCacheServletResponse.getString();
+
+		content = translateResponse(request, content);
 
 		ServletResponseUtil.write(response, content);
 	}
 
 	protected String translateResponse(
-		HttpServletRequest request, StringServletResponse stringResponse) {
+		HttpServletRequest request, String content) {
 
 		String languageId = LanguageUtil.getLanguageId(request);
 		Locale locale = LocaleUtil.fromLanguageId(languageId);
-
-		String content = stringResponse.getString();
 
 		StringBundler sb = new StringBundler();
 

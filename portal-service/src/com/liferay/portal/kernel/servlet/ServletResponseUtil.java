@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.servlet;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.nio.charset.CharsetEncoderUtil;
@@ -42,6 +41,7 @@ import java.io.OutputStream;
 import java.net.SocketException;
 
 import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
 import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
 
@@ -323,6 +323,19 @@ public class ServletResponseUtil {
 		}
 	}
 
+	public static void write(
+			HttpServletResponse response,
+			BufferCacheServletResponse bufferCacheServletResponse)
+		throws IOException {
+
+		if (bufferCacheServletResponse.isByteMode()) {
+			write(response, bufferCacheServletResponse.getByteBuffer());
+		}
+		else if (bufferCacheServletResponse.isCharMode()) {
+			write(response, bufferCacheServletResponse.getCharBuffer());
+		}
+	}
+
 	public static void write(HttpServletResponse response, byte[] bytes)
 		throws IOException {
 
@@ -350,11 +363,11 @@ public class ServletResponseUtil {
 
 				response.flushBuffer();
 
-				if (response instanceof ByteBufferServletResponse) {
-					ByteBufferServletResponse byteBufferResponse =
-						(ByteBufferServletResponse)response;
+				if (response instanceof BufferCacheServletResponse) {
+					BufferCacheServletResponse bufferCacheServletResponse =
+						(BufferCacheServletResponse)response;
 
-					byteBufferResponse.setByteBuffer(
+					bufferCacheServletResponse.setByteBuffer(
 						ByteBuffer.wrap(bytes, offset, contentLength));
 				}
 				else {
@@ -427,11 +440,11 @@ public class ServletResponseUtil {
 			HttpServletResponse response, ByteBuffer byteBuffer)
 		throws IOException {
 
-		if (response instanceof ByteBufferServletResponse) {
-			ByteBufferServletResponse byteBufferResponse =
-				(ByteBufferServletResponse)response;
+		if (response instanceof BufferCacheServletResponse) {
+			BufferCacheServletResponse bufferCacheServletResponse =
+				(BufferCacheServletResponse)response;
 
-			byteBufferResponse.setByteBuffer(byteBuffer);
+			bufferCacheServletResponse.setByteBuffer(byteBuffer);
 		}
 		else {
 			write(
@@ -440,24 +453,34 @@ public class ServletResponseUtil {
 		}
 	}
 
+	public static void write(
+			HttpServletResponse response, CharBuffer charBuffer)
+		throws IOException {
+
+		if (response instanceof BufferCacheServletResponse) {
+			BufferCacheServletResponse bufferCacheServletResponse =
+				(BufferCacheServletResponse)response;
+
+			bufferCacheServletResponse.setCharBuffer(charBuffer);
+		}
+		else {
+			ByteBuffer byteBuffer = CharsetEncoderUtil.encode(
+				StringPool.UTF8, charBuffer);
+
+			write(response, byteBuffer);
+		}
+	}
+
 	public static void write(HttpServletResponse response, File file)
 		throws IOException {
 
-		if (response instanceof ByteBufferServletResponse) {
-			ByteBufferServletResponse byteBufferResponse =
-				(ByteBufferServletResponse)response;
+		if (response instanceof BufferCacheServletResponse) {
+			BufferCacheServletResponse bufferCacheServletResponse =
+				(BufferCacheServletResponse)response;
 
 			ByteBuffer byteBuffer = ByteBuffer.wrap(FileUtil.getBytes(file));
 
-			byteBufferResponse.setByteBuffer(byteBuffer);
-		}
-		else if (response instanceof StringServletResponse) {
-			StringServletResponse stringResponse =
-				(StringServletResponse)response;
-
-			String s = FileUtil.read(file);
-
-			stringResponse.setString(s);
+			bufferCacheServletResponse.setByteBuffer(byteBuffer);
 		}
 		else {
 			FileInputStream fileInputStream = new FileInputStream(file);
@@ -508,35 +531,17 @@ public class ServletResponseUtil {
 	public static void write(HttpServletResponse response, String s)
 		throws IOException {
 
-		if (response instanceof StringServletResponse) {
-			StringServletResponse stringResponse =
-				(StringServletResponse)response;
+		if (response instanceof BufferCacheServletResponse) {
+			BufferCacheServletResponse bufferCacheServletResponse =
+				(BufferCacheServletResponse)response;
 
-			stringResponse.setString(s);
+			bufferCacheServletResponse.setString(s);
 		}
 		else {
 			ByteBuffer byteBuffer = CharsetEncoderUtil.encode(
 				StringPool.UTF8, s);
 
 			write(response, byteBuffer);
-		}
-	}
-
-	public static void write(
-			HttpServletResponse response, StringServletResponse stringResponse)
-		throws IOException {
-
-		if (stringResponse.isCalledGetOutputStream()) {
-			UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
-				stringResponse.getUnsyncByteArrayOutputStream();
-
-			ByteBuffer byteBuffer =
-				unsyncByteArrayOutputStream.unsafeGetByteBuffer();
-
-			write(response, byteBuffer);
-		}
-		else {
-			write(response, stringResponse.getString());
 		}
 	}
 

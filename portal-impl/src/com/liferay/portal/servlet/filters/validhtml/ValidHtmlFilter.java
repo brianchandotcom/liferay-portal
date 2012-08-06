@@ -16,8 +16,8 @@ package com.liferay.portal.servlet.filters.validhtml;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
-import com.liferay.portal.kernel.servlet.StringServletResponse;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -82,25 +82,24 @@ public class ValidHtmlFilter extends BasePortalFilter {
 			_log.debug("Ensuring valid HTML " + completeURL);
 		}
 
-		StringServletResponse stringServerResponse = new StringServletResponse(
-			response);
+		BufferCacheServletResponse bufferCacheServletResponse =
+			new BufferCacheServletResponse(response);
 
 		processFilter(
-			ValidHtmlFilter.class, request, stringServerResponse, filterChain);
+			ValidHtmlFilter.class, request, bufferCacheServletResponse,
+			filterChain);
+
+		String content = bufferCacheServletResponse.getString();
 
 		String contentType = response.getContentType();
 
 		if ((contentType != null) &&
 			contentType.startsWith(ContentTypes.TEXT_HTML)) {
 
-			String content = getContent(
-				request, stringServerResponse.getString());
+			content = getContent(request, content);
+		}
 
-			ServletResponseUtil.write(response, content);
-		}
-		else {
-			ServletResponseUtil.write(response, stringServerResponse);
-		}
+		ServletResponseUtil.write(response, content);
 	}
 
 	private static final String _CLOSE_BODY = "</body>";

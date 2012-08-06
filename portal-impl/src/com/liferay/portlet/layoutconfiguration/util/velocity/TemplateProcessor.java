@@ -16,7 +16,7 @@ package com.liferay.portlet.layoutconfiguration.util.velocity;
 
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.PortletContainerUtil;
-import com.liferay.portal.kernel.servlet.StringServletResponse;
+import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -167,26 +167,26 @@ public class TemplateProcessor implements ColumnProcessor {
 	}
 
 	public String processMax() throws Exception {
-		StringServletResponse stringServletResponse =
-			new StringServletResponse(_response);
+		BufferCacheServletResponse bufferCacheServletResponse =
+			new BufferCacheServletResponse(_response);
 
-		PortletContainerUtil.render(_request, stringServletResponse, _portlet);
+		PortletContainerUtil.render(
+			_request, bufferCacheServletResponse, _portlet);
 
-		return stringServletResponse.getString();
+		return bufferCacheServletResponse.getString();
 	}
 
 	public String processPortlet(String portletId) throws Exception {
+		_request.setAttribute(WebKeys.RENDER_PORTLET_RESOURCE, Boolean.TRUE);
+
+		BufferCacheServletResponse bufferCacheServletResponse =
+			new BufferCacheServletResponse(_response);
+
 		try {
-			_request.setAttribute(
-				WebKeys.RENDER_PORTLET_RESOURCE, Boolean.TRUE);
-
-			StringServletResponse stringServletResponse =
-				new StringServletResponse(_response);
-
 			PortletContainerUtil.render(
-				_request, stringServletResponse, _portlet);
+				_request, bufferCacheServletResponse, _portlet);
 
-			return stringServletResponse.getString();
+			return bufferCacheServletResponse.getString();
 		}
 		finally {
 			_request.removeAttribute(WebKeys.RENDER_PORTLET_RESOURCE);

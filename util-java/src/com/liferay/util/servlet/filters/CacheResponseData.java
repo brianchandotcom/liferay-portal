@@ -14,9 +14,10 @@
 
 package com.liferay.util.servlet.filters;
 
-import com.liferay.portal.kernel.servlet.ByteBufferServletResponse;
+import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.servlet.Header;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 import java.nio.ByteBuffer;
@@ -31,11 +32,14 @@ import java.util.Set;
  */
 public class CacheResponseData implements Serializable {
 
-	public CacheResponseData(ByteBufferServletResponse byteBufferResponse) {
-		_byteBuffer = byteBufferResponse.getByteBuffer();
+	public CacheResponseData(
+			BufferCacheServletResponse bufferCacheServletResponse)
+		throws IOException {
+
+		_byteBuffer = bufferCacheServletResponse.getByteBuffer();
 		_content = _byteBuffer.array();
-		_contentType = byteBufferResponse.getContentType();
-		_headers = byteBufferResponse.getHeaders();
+		_contentType = bufferCacheServletResponse.getContentType();
+		_headers = bufferCacheServletResponse.getHeaders();
 	}
 
 	public Object getAttribute(String name) {

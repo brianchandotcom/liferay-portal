@@ -24,9 +24,9 @@ import com.liferay.portal.kernel.portlet.PortletContainer;
 import com.liferay.portal.kernel.portlet.PortletContainerException;
 import com.liferay.portal.kernel.portlet.PortletModeFactory;
 import com.liferay.portal.kernel.portlet.WindowStateFactory;
+import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
-import com.liferay.portal.kernel.servlet.StringServletResponse;
 import com.liferay.portal.kernel.servlet.TempAttributesServletRequest;
 import com.liferay.portal.kernel.struts.LastPath;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.webdav.WebDAVStorage;
@@ -836,20 +835,21 @@ public class PortletContainerImpl implements PortletContainer {
 			DirectRequestDispatcherFactoryUtil.getRequestDispatcher(
 				request, path);
 
-		StringServletResponse stringServletResponse = null;
+		BufferCacheServletResponse bufferCacheServletResponse = null;
 
 		boolean writeOutput = false;
 
-		if (response instanceof StringServletResponse) {
-			stringServletResponse = (StringServletResponse)response;
+		if (response instanceof BufferCacheServletResponse) {
+			bufferCacheServletResponse = (BufferCacheServletResponse)response;
 		}
 		else {
 			writeOutput = true;
-			stringServletResponse = new StringServletResponse(response);
+			bufferCacheServletResponse = new BufferCacheServletResponse(
+				response);
 		}
 
 		try {
-			requestDispatcher.include(request, stringServletResponse);
+			requestDispatcher.include(request, bufferCacheServletResponse);
 
 			Boolean portletConfiguratorVisibility =
 				(Boolean)request.getAttribute(
@@ -870,18 +870,15 @@ public class PortletContainerImpl implements PortletContainer {
 						themeDisplay.getPlid(), portlet.getPortletId(),
 						ActionKeys.CONFIGURATION)) {
 
-					response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-
-					stringServletResponse.setString(StringPool.BLANK);
+					bufferCacheServletResponse.setCharBuffer(null);
 
 					return;
 				}
 			}
 
 			if (writeOutput) {
-				response.setContentType(ContentTypes.TEXT_HTML_UTF8);
-
-				stringServletResponse.writeTo(response.getWriter());
+				response.getWriter().write(
+					bufferCacheServletResponse.getString());
 			}
 		}
 		finally {

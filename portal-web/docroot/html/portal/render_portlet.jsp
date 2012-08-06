@@ -157,9 +157,9 @@ HttpServletRequest originalRequest = PortalUtil.getOriginalServletRequest(reques
 
 RenderRequestImpl renderRequestImpl = RenderRequestFactory.create(originalRequest, portlet, invokerPortlet, portletCtx, windowState, portletMode, portletPreferences, plid);
 
-StringServletResponse stringResponse = new StringServletResponse(response);
+BufferCacheServletResponse bufferCacheServletResponse = new BufferCacheServletResponse(response);
 
-RenderResponseImpl renderResponseImpl = RenderResponseFactory.create(renderRequestImpl, stringResponse, portletId, company.getCompanyId(), plid);
+RenderResponseImpl renderResponseImpl = RenderResponseFactory.create(renderRequestImpl, bufferCacheServletResponse, portletId, company.getCompanyId(), plid);
 
 if (stateMin) {
 	renderResponseImpl.setUseDefaultTemplate(true);
@@ -762,7 +762,7 @@ if (portlet.isActive() && portlet.isReady() && access && supportsMimeType && (in
 			request.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, portletVisibility);
 		}
 
-		renderResponseImpl.transferHeaders(stringResponse);
+		renderResponseImpl.transferHeaders(bufferCacheServletResponse);
 	}
 	catch (UnavailableException ue) {
 		portletException = true;
@@ -935,7 +935,7 @@ if ((layout.isTypePanel() || layout.isTypeControlPanel()) && !portletDisplay.get
 			}
 			else {
 				if (useDefaultTemplate) {
-					renderRequestImpl.setAttribute(WebKeys.PORTLET_CONTENT, stringResponse.getString());
+					renderRequestImpl.setAttribute(WebKeys.PORTLET_CONTENT, bufferCacheServletResponse.getString());
 		%>
 
 					<tiles:insert flush="false" template='<%= StrutsUtil.TEXT_HTML_DIR + "/common/themes/portlet.jsp" %>'>
@@ -945,12 +945,12 @@ if ((layout.isTypePanel() || layout.isTypeControlPanel()) && !portletDisplay.get
 		<%
 				}
 				else {
-					stringResponse.writeTo(pageContext.getOut());
+					pageContext.getOut().write(bufferCacheServletResponse.getString());
 				}
 			}
 		}
 		else {
-			renderRequestImpl.setAttribute(WebKeys.PORTLET_CONTENT, stringResponse.getString());
+			renderRequestImpl.setAttribute(WebKeys.PORTLET_CONTENT, bufferCacheServletResponse.getString());
 
 			String portletContent = StringPool.BLANK;
 

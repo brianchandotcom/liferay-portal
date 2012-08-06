@@ -20,9 +20,9 @@ import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.BrowserSniffer;
+import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
-import com.liferay.portal.kernel.servlet.StringServletResponse;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -41,7 +41,6 @@ import com.liferay.portal.util.LimitedFilesCache;
 import com.liferay.portal.util.MinifierUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.util.servlet.filters.CacheResponseUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -406,17 +405,16 @@ public class AggregateFilter extends BasePortalFilter {
 				_log.info("Minifying JSP " + resourcePath);
 			}
 
-			StringServletResponse stringResponse = new StringServletResponse(
-				response);
+			BufferCacheServletResponse bufferCacheServletResponse =
+				new BufferCacheServletResponse(response);
 
 			processFilter(
-				AggregateFilter.class, request, stringResponse, filterChain);
+				AggregateFilter.class, request, bufferCacheServletResponse,
+				filterChain);
 
-			CacheResponseUtil.setHeaders(response, stringResponse.getHeaders());
+			bufferCacheServletResponse.finishResponse();
 
-			response.setContentType(stringResponse.getContentType());
-
-			content = stringResponse.getString();
+			content = bufferCacheServletResponse.getString();
 
 			if (minifierType.equals("css")) {
 				content = getCssContent(
@@ -427,7 +425,8 @@ public class AggregateFilter extends BasePortalFilter {
 			}
 
 			FileUtil.write(
-				cacheContentTypeFile, stringResponse.getContentType());
+				cacheContentTypeFile,
+				bufferCacheServletResponse.getContentType());
 		}
 		else {
 			return null;

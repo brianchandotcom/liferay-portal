@@ -26,7 +26,7 @@ ServiceContext#deriveDefaultPermissions(long, String).
 <%@ page import="com.liferay.taglib.ui.InputPermissionsParamsTag" %>
 
 <%
-String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_input_permissions_page") + StringPool.UNDERLINE;
+String uniqueNamespace = PortalUtil.getUniqueElementId(request, namespace, namespace) + StringPool.UNDERLINE;
 
 String formName = namespace + request.getAttribute("liferay-ui:input-permissions:formName");
 String modelName = (String)request.getAttribute("liferay-ui:input-permissions:modelName");
@@ -62,13 +62,13 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 		String inputPermissionsViewRole = ParamUtil.getString(request, "inputPermissionsViewRole", InputPermissionsParamsTag.getDefaultViewRole(modelName, themeDisplay));
 		%>
 
-		<input id="<%= randomNamespace %>inputPermissionsShowOptions" name="<%= namespace %>inputPermissionsShowOptions" type="hidden" value="<%= inputPermissionsShowOptions %>" />
+		<input id="<%= uniqueNamespace %>inputPermissionsShowOptions" name="<%= namespace %>inputPermissionsShowOptions" type="hidden" value="<%= inputPermissionsShowOptions %>" />
 
 		<p>
 			<label class="inline-label" for="<%= namespace %>inputPermissionsViewRole">
 				<liferay-ui:message key="viewable-by" />
 
-				<select id="<%= namespace %>inputPermissionsViewRole" name="<%= namespace %>inputPermissionsViewRole" onChange="<%= randomNamespace + "updatePermissionsView();" %>">
+				<select id="<%= uniqueNamespace %>inputPermissionsViewRole" name="<%= namespace %>inputPermissionsViewRole" onChange="<%= uniqueNamespace + "updatePermissionsView();" %>">
 
 					<%
 					String guestRoleLabel = LanguageUtil.format(pageContext, "x-role", guestRole.getTitle(themeDisplay.getLocale()));
@@ -96,14 +96,14 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 				</select>
 			</label>
 
-			<span <%= inputPermissionsShowOptions ? "class=\"aui-helper-hidden\"" : "" %> id="<%= randomNamespace %>inputPermissionsShowOptionsLink">
-				<a href="javascript:<%= randomNamespace %>inputPermissionsShowOptions();" style="margin-left: 10px;"><liferay-ui:message key="more-options" /> &raquo;</a> <liferay-ui:icon-help message="input-permissions-more-options-help" />
+			<span <%= inputPermissionsShowOptions ? "class=\"aui-helper-hidden\"" : "" %> id="<%= uniqueNamespace %>inputPermissionsShowOptionsLink">
+				<a href="javascript:<%= uniqueNamespace %>inputPermissionsShowOptions();" style="margin-left: 10px;"><liferay-ui:message key="more-options" /> &raquo;</a> <liferay-ui:icon-help message="input-permissions-more-options-help" />
 			</span>
 
-			<a <%= inputPermissionsShowOptions ? "" : "class=\"aui-helper-hidden\"" %> href="javascript:<%= randomNamespace %>inputPermissionsHideOptions();" id="<%= randomNamespace %>inputPermissionsHideOptionsLink" style="margin-left: 10px;">&laquo; <liferay-ui:message key="hide-options" /></a>
+			<a <%= inputPermissionsShowOptions ? "" : "class=\"aui-helper-hidden\"" %> href="javascript:<%= uniqueNamespace %>inputPermissionsHideOptions();" id="<%= uniqueNamespace %>inputPermissionsHideOptionsLink" style="margin-left: 10px;">&laquo; <liferay-ui:message key="hide-options" /></a>
 		</p>
 
-		<table class="lfr-table <%= inputPermissionsShowOptions ? "" : "aui-helper-hidden" %>" id="<%= randomNamespace %>inputPermissionsTable">
+		<table class="lfr-table <%= inputPermissionsShowOptions ? "" : "aui-helper-hidden" %>" id="<%= uniqueNamespace %>inputPermissionsTable">
 		<tr>
 			<th>
 				<liferay-ui:message key="roles" />
@@ -164,15 +164,18 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 					}
 
 					String checkboxFieldName = null;
+					String checkboxFieldId = null;
 
 					if (roleName.equals(RoleConstants.GUEST)) {
 						checkboxFieldName = namespace + "guestPermissions";
+						checkboxFieldId = uniqueNamespace + "guestPermissions";
 					}
 					else {
 						checkboxFieldName = namespace + "groupPermissions";
+						checkboxFieldId = uniqueNamespace + "groupPermissions";
 					}
 
-					String checkboxFieldId = checkboxFieldName + StringPool.UNDERLINE + action;
+					checkboxFieldId = checkboxFieldId + StringPool.UNDERLINE + action;
 				%>
 
 					<td style="text-align: center;" <%= (action.equals(ActionKeys.VIEW)) ? "class=\"aui-helper-hidden-accessible\"" : "" %>>
@@ -196,43 +199,43 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 		<aui:script>
 			Liferay.provide(
 				window,
-				'<%= randomNamespace %>inputPermissionsShowOptions',
+				'<%= uniqueNamespace %>inputPermissionsShowOptions',
 				function() {
 					var A = AUI();
 
-					A.one("#<%= randomNamespace %>inputPermissionsHideOptionsLink").show();
-					A.one("#<%= randomNamespace %>inputPermissionsTable").show();
+					A.one("#<%= uniqueNamespace %>inputPermissionsHideOptionsLink").show();
+					A.one("#<%= uniqueNamespace %>inputPermissionsTable").show();
 
-					A.one("#<%= randomNamespace %>inputPermissionsShowOptionsLink").hide();
-					A.one("#<%= randomNamespace %>inputPermissionsShowOptions").val("true");
+					A.one("#<%= uniqueNamespace %>inputPermissionsShowOptionsLink").hide();
+					A.one("#<%= uniqueNamespace %>inputPermissionsShowOptions").val("true");
 				},
 				['aui-base']
 			);
 
 			Liferay.provide(
 				window,
-				'<%= randomNamespace %>inputPermissionsHideOptions',
+				'<%= uniqueNamespace %>inputPermissionsHideOptions',
 				function() {
 					var A = AUI();
 
-					A.one("#<%= randomNamespace %>inputPermissionsShowOptionsLink").show();
-					A.one("#<%= randomNamespace %>inputPermissionsTable").hide();
+					A.one("#<%= uniqueNamespace %>inputPermissionsShowOptionsLink").show();
+					A.one("#<%= uniqueNamespace %>inputPermissionsTable").hide();
 
-					A.one("#<%= randomNamespace %>inputPermissionsHideOptionsLink").hide();
-					A.one("#<%= randomNamespace %>inputPermissionsShowOptions").val("false");
+					A.one("#<%= uniqueNamespace %>inputPermissionsHideOptionsLink").hide();
+					A.one("#<%= uniqueNamespace %>inputPermissionsShowOptions").val("false");
 				},
 				['aui-base']
 			);
 
 			Liferay.provide(
 				window,
-				'<%= randomNamespace %>updatePermissionsView',
+				'<%= uniqueNamespace %>updatePermissionsView',
 				function() {
 					var A = AUI();
 
-					var viewableBySelect = A.one("#<%= namespace %>inputPermissionsViewRole");
-					var guestViewCheckbox = A.one('input[name="<%= namespace %>guestPermissions"][value="VIEW"]');
-					var groupViewCheckbox = A.one('input[name="<%= namespace %>groupPermissions"][value="VIEW"]');
+					var viewableBySelect = A.one("#<%= uniqueNamespace %>inputPermissionsViewRole");
+					var guestViewCheckbox = A.one("#<%= uniqueNamespace %>guestPermissions_VIEW");
+					var groupViewCheckbox = A.one("#<%= uniqueNamespace %>groupPermissions_VIEW");
 
 					if (viewableBySelect.val() == '<%= RoleConstants.GUEST %>') {
 						guestViewCheckbox.set("checked", true);

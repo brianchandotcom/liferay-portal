@@ -26,6 +26,9 @@ public class ViewWebContentScopeMyCommunityAssignedToMyRolesTest
 		throws Exception {
 		selenium.open("/user/joebloggs/home/");
 		loadRequiredJavaScriptModules();
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -33,7 +36,7 @@ public class ViewWebContentScopeMyCommunityAssignedToMyRolesTest
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -47,8 +50,8 @@ public class ViewWebContentScopeMyCommunityAssignedToMyRolesTest
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Joe Bloggs's Personal..."),
-			selenium.getText("//strong/a/span"));
+		assertTrue(selenium.isPartialText("//strong/a/span",
+				"Joe Bloggs's Personal"));
 		selenium.clickAt("link=My Workflow Tasks",
 			RuntimeVariables.replace("My Workflow Tasks"));
 		selenium.waitForPageToLoad("30000");

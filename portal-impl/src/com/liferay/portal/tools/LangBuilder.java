@@ -111,6 +111,8 @@ public class LangBuilder {
 		// rewritten to use the rignt line separator
 
 		_orderProperties(
+			new File(_langDir + "/" + _langFile + "_en_AU.properties"));
+		_orderProperties(
 			new File(_langDir + "/" + _langFile + "_en_GB.properties"));
 		_orderProperties(
 			new File(_langDir + "/" + _langFile + "_fr_CA.properties"));

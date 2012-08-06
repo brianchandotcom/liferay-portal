@@ -96,6 +96,8 @@ public class RuntimeVariables {
 		if (TestPropsValues.TEST_DATABASE_MINIMAL) {
 			text = StringUtil.replace(text, "Joe", "Test");
 			text = StringUtil.replace(text, "Bloggs", "Test");
+			text = StringUtil.replace(text, "joebloggs", "test");
+			text = StringUtil.replace(text, "Liferay", "liferay.com");
 		}
 
 		if (Validator.isNotNull(TestPropsValues.CLUSTER_NODE_1)) {

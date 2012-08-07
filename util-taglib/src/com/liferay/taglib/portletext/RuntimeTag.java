@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.portlet.PortletContainerUtil;
 import com.liferay.portal.kernel.portlet.RestrictPortletServletRequest;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
-import com.liferay.portal.kernel.servlet.taglib.portletext.RuntimePortletIDs;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
@@ -30,9 +29,6 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
-import java.util.Set;
-
-import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
@@ -113,37 +109,10 @@ public class RuntimeTag extends TagSupport {
 			portlet.setStatic(true);
 
 			PortletContainerUtil.render(request, response, portlet);
-
-			RuntimePortletIDs runtimePortletIDs =
-				(RuntimePortletIDs)request.getAttribute(
-					WebKeys.RUNTIME_PORTLET_IDS);
-
-			if (runtimePortletIDs == null) {
-				runtimePortletIDs = new RuntimePortletIDs();
-
-				request.setAttribute(
-					WebKeys.RUNTIME_PORTLET_IDS, runtimePortletIDs);
-			}
-
-			runtimePortletIDs.addRuntimePortletID(portletName);
 		}
 		finally {
 			restrictPortletServletRequest.mergeSharedAttributes();
 		}
-	}
-
-	public static Set<String> getRuntimePortletIDs(
-		ServletRequest servletRequest) {
-
-		RuntimePortletIDs runtimePortletIDs =
-			(RuntimePortletIDs)servletRequest.getAttribute(
-				WebKeys.RUNTIME_PORTLET_IDS);
-
-		if (runtimePortletIDs == null) {
-			return null;
-		}
-
-		return runtimePortletIDs.getRuntimePortletIDs();
 	}
 
 	@Override

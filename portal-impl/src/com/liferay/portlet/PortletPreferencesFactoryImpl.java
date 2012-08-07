@@ -421,14 +421,10 @@ public class PortletPreferencesFactoryImpl
 		int ownerType = PortletKeys.PREFS_OWNER_TYPE_LAYOUT;
 		long plid = layout.getPlid();
 
-		try {
-			Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
+		Group group = GroupLocalServiceUtil.fetchGroup(scopeGroupId);
 
-			if (group.isLayout()) {
-				plid = group.getClassPK();
-			}
-		}
-		catch (PortalException pe) {
+		if ((group != null) && (group.isLayout())) {
+			plid = group.getClassPK();
 		}
 
 		if (!uniquePerLayout) {

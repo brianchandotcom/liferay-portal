@@ -271,14 +271,14 @@ public class LayoutTypePortletImpl
 		}
 
 		try {
-			PortletLayoutListener portletLayoutListener =
-				portlet.getPortletLayoutListenerInstance();
+			if (_enablePortletLayoutListener) {
+				PortletLayoutListener portletLayoutListener =
+					portlet.getPortletLayoutListenerInstance();
 
-			if (_enablePortletLayoutListener &&
-				(portletLayoutListener != null)) {
-
-				portletLayoutListener.onAddToLayout(
-					portletId, layout.getPlid());
+				if (portletLayoutListener != null) {
+					portletLayoutListener.onAddToLayout(
+						portletId, layout.getPlid());
+				}
 			}
 		}
 		catch (Exception e) {

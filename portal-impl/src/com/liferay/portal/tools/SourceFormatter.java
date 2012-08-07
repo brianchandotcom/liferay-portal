@@ -2305,6 +2305,8 @@ public class SourceFormatter {
 				line = StringPool.BLANK;
 			}
 
+			line = StringUtil.trimTrailing(line);
+
 			if (Validator.isNotNull(line) && !line.startsWith(StringPool.TAB)) {
 				String sqlCommand = StringUtil.split(line, CharPool.SPACE)[0];
 

@@ -58,7 +58,7 @@ CKEDITOR.config.toolbar_bbcode = [
 	['Image', 'Smiley', '-', 'TextColor', '-', 'NumberedList', 'BulletedList'],
 	['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'Blockquote', '-', 'Code'],
 	'/',
-	['Font', 'FontSize', '-', 'Format', '-', 'Table', '-', 'Undo', 'Redo', '-', 'Source']
+	['Font', 'FontSize', '-', 'Format', '-', 'Undo', 'Redo', '-', 'Source']
 ];
 
 CKEDITOR.config.bodyClass = 'html-editor <%= HtmlUtil.escapeJS(cssClasses) %>';

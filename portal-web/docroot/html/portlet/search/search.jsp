@@ -130,7 +130,7 @@ request.setAttribute("search.jsp-returnToFullPageURL", portletDisplay.getURLBack
 </aui:form>
 
 <aui:script use="aui-base">
-	var pageLinks = A.one('.portlet-search .result .page-links');
+	var pageLinks = A.one('.portlet-search .result .lfr-search-container ');
 
 	if (pageLinks) {
 		pageLinks.delegate(

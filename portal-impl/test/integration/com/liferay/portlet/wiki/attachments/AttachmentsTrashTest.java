@@ -49,7 +49,7 @@ public class AttachmentsTrashTest extends BaseDLTrashHandlerTestCase {
 
 	@Test
 	@Transactional
-	public void testTrash() throws Exception {
+	public void testTrashWikiAttachments() throws Exception {
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setScopeGroupId(TestPropsValues.getGroupId());

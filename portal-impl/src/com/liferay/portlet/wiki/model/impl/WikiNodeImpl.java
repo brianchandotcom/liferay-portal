@@ -41,7 +41,6 @@ public class WikiNodeImpl extends WikiNodeBaseImpl {
 		List<Tuple> deletedNodeAttachments = new ArrayList<Tuple>();
 
 		for (WikiPage wikiPage : wikiPages) {
-
 			String[] deletedPageAttachments =
 				wikiPage.getDeletedAttachmentsFiles();
 

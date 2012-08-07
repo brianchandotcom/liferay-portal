@@ -45,7 +45,7 @@ iteratorURL.setParameter("viewTrashAttachments", Boolean.TRUE.toString());
 
 <liferay-ui:header
 	backURL="<%= redirect %>"
-	title="attachments-recycle-bin"
+	title="deleted-attachments"
 />
 
 <portlet:actionURL var="emptyTrashURL">

@@ -36,7 +36,13 @@ public class CharsetEncoderUtil {
 		try {
 			CharsetEncoder charsetEncoder = getCharsetEncoder(charsetName);
 
-			return charsetEncoder.encode(charBuffer);
+			charBuffer.mark();
+
+			ByteBuffer byteBuffer = charsetEncoder.encode(charBuffer);
+
+			charBuffer.reset();
+
+			return byteBuffer;
 		}
 		catch (CharacterCodingException cce) {
 			throw new Error(cce);

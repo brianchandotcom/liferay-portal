@@ -27,7 +27,7 @@ List<String> displayStyles = (List<String>)request.getAttribute("liferay-ui:ddm-
 String label = (String)request.getAttribute("liferay-ui:ddm-template-menu:label");
 String preferenceName = (String)request.getAttribute("liferay-ui:ddm-template-menu:preferenceName");
 String preferenceValue = (String)request.getAttribute("liferay-ui:ddm-template-menu:preferenceValue");
-boolean showDisplayStyle = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:ddm-template-menu:showDisplayStyle"));
+boolean showEmptyOption = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:ddm-template-menu:showEmptyOption"));
 
 DDMTemplate ddmTemplate = null;
 
@@ -42,7 +42,7 @@ List<DDMTemplate> groupPortletDDMTemplates = DDMTemplateLocalServiceUtil.getTemp
 %>
 
 <aui:select id="displayStyle" label="<%= label %>" name='<%= "preferences--" + preferenceName + "--" %>'>
-	<c:if test="<%= showDisplayStyle %>">
+	<c:if test="<%= showEmptyOption %>">
 		<aui:option label="default" selected="<%= Validator.isNull(preferenceValue) %>" />
 	</c:if>
 

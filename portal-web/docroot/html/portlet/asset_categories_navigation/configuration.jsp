@@ -91,7 +91,7 @@ PortletDisplayTemplateHandler portletDisplayTemplateHandler = PortletDisplayTemp
 				classNameId="<%= PortalUtil.getClassNameId(portletDisplayTemplateHandler.getClassName()) %>"
 				preferenceName="displayTemplate"
 				preferenceValue="<%= displayTemplate %>"
-				showDisplayStyle="<%= true %>"
+				showEmptyOption="<%= true %>"
 			/>
 
 			<liferay-ui:ddm-template-selector

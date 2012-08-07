@@ -45,8 +45,8 @@ public class DDMTemplateMenuTag extends IncludeTag {
 		_preferenceValue = preferenceValue;
 	}
 
-	public void setShowDisplayStyle(boolean showDisplayStyle) {
-		_showDisplayStyle = showDisplayStyle;
+	public void setShowEmptyOption(boolean showEmptyOption) {
+		_showEmptyOption = showEmptyOption;
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class DDMTemplateMenuTag extends IncludeTag {
 		_label = "display-template";
 		_preferenceName = "displayStyle";
 		_preferenceValue = null;
-		_showDisplayStyle = false;
+		_showEmptyOption = false;
 	}
 
 	@Override
@@ -77,8 +77,8 @@ public class DDMTemplateMenuTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:ddm-template-menu:preferenceValue", _preferenceValue);
 		request.setAttribute(
-			"liferay-ui:ddm-template-menu:showDisplayStyle",
-			String.valueOf(_showDisplayStyle));
+			"liferay-ui:ddm-template-menu:showEmptyOption",
+			String.valueOf(_showEmptyOption));
 	}
 
 	private static final String _PAGE =
@@ -89,6 +89,6 @@ public class DDMTemplateMenuTag extends IncludeTag {
 	private String _label = "display-template";
 	private String _preferenceName = "displayStyle";
 	private String _preferenceValue;
-	private boolean _showDisplayStyle;
+	private boolean _showEmptyOption;
 
 }

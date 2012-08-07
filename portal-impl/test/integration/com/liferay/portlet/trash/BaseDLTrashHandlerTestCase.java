@@ -51,12 +51,12 @@ public abstract class BaseDLTrashHandlerTestCase extends BaseDLAppTestCase {
 
 	@Test
 	public void testTrashSubEntryAndDeleteFolder() throws Exception {
-		testTrashSubEntry(true);
+		trashSubEntry(true);
 	}
 
 	@Test
 	public void testTrashSubEntryAndRestoreSubEntry() throws Exception {
-		testTrashSubEntry(false);
+		trashSubEntry(false);
 	}
 
 	protected abstract long doAddSubEntry(long folderId1, long folderId2)
@@ -136,7 +136,7 @@ public abstract class BaseDLTrashHandlerTestCase extends BaseDLAppTestCase {
 		return hits.getLength();
 	}
 
-	protected void testTrashSubEntry(boolean deleteFolder) throws Exception {
+	protected void trashSubEntry(boolean deleteFolder) throws Exception {
 		int initialNotInTrashCount = getNotInTrashCount();
 		int initialTrashEntriesCount = getTrashEntriesCount();
 

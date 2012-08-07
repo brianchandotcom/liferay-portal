@@ -35,17 +35,17 @@ public class DLTrashHandlerTest extends BaseDLTrashHandlerTestCase {
 
 	@Test
 	public void testDuplicateFileEntry() throws Exception {
-		testDuplicate(true, false);
+		checkDuplicate(true, false);
 	}
 
 	@Test
 	public void testDuplicateFolder() throws Exception {
-		testDuplicate(false, true);
+		checkDuplicate(false, true);
 	}
 
 	@Test
 	public void testDuplicateFolderAndFileEntry() throws Exception {
-		testDuplicate(true, true);
+		checkDuplicate(true, true);
 	}
 
 	protected void addAndTrashFileEntry() throws Exception {
@@ -77,7 +77,7 @@ public class DLTrashHandlerTest extends BaseDLTrashHandlerTestCase {
 	protected void doMoveSubEntryToTrash(long subEntryId) throws Exception {
 	}
 
-	protected void testDuplicate(
+	protected void checkDuplicate(
 			boolean duplicateFileEntry, boolean duplicateFolder)
 		throws Exception {
 
@@ -120,7 +120,7 @@ public class DLTrashHandlerTest extends BaseDLTrashHandlerTestCase {
 	}
 
 	@Override
-	protected void testTrashSubEntry(boolean deleteFolder) throws Exception {
+	protected void trashSubEntry(boolean deleteFolder) throws Exception {
 	}
 
 	private static final String _NAME = "Test Name";

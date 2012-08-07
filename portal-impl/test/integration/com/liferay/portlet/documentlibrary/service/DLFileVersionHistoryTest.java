@@ -41,42 +41,42 @@ public class DLFileVersionHistoryTest extends BaseDLAppTestCase {
 
 	@Test
 	public void testDeleteOneVersion() throws Exception {
-		testDeleteVersion(false, false);
+		deleteVersion(false, false);
 	}
 
 	@Test
 	public void testDeleteOneVersionOnePWC() throws Exception {
-		testDeleteVersion(false, true);
+		deleteVersion(false, true);
 	}
 
 	@Test
 	public void testDeleteTwoVersions() throws Exception {
-		testDeleteVersion(true, false);
+		deleteVersion(true, false);
 	}
 
 	@Test
 	public void testDeleteTwoVersionsOnePWC() throws Exception {
-		testDeleteVersion(true, true);
+		deleteVersion(true, true);
 	}
 
 	@Test
 	public void testRevertOneVersion() throws Exception {
-		testRevertVersion(false, false);
+		revertVersion(false, false);
 	}
 
 	@Test
 	public void testRevertOneVersionOnePWC() throws Exception {
-		testRevertVersion(false, true);
+		revertVersion(false, true);
 	}
 
 	@Test
 	public void testRevertTwoVersions() throws Exception {
-		testRevertVersion(true, false);
+		revertVersion(true, false);
 	}
 
 	@Test
 	public void testRevertTwoVersionsOnePWC() throws Exception {
-		testRevertVersion(true, true);
+		revertVersion(true, true);
 	}
 
 	protected void assertFileEntryTitle(String fileName)
@@ -157,7 +157,7 @@ public class DLFileVersionHistoryTest extends BaseDLAppTestCase {
 		}
 	}
 
-	protected void testDeleteVersion(boolean versioned, boolean leaveCheckedOut)
+	protected void deleteVersion(boolean versioned, boolean leaveCheckedOut)
 		throws Exception {
 
 		_fileEntry = addFileEntry(false, _VERSION_1_0);
@@ -209,7 +209,7 @@ public class DLFileVersionHistoryTest extends BaseDLAppTestCase {
 		}
 	}
 
-	protected void testRevertVersion(boolean versioned, boolean leaveCheckedOut)
+	protected void revertVersion(boolean versioned, boolean leaveCheckedOut)
 		throws Exception {
 
 		_fileEntry = addFileEntry(false, _VERSION_1_0);

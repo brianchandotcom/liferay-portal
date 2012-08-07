@@ -36,12 +36,12 @@ public class DLFileShortcutTrashHandlerTest extends BaseDLTrashHandlerTestCase {
 
 	@Test
 	public void testTrashAndDelete() throws Exception {
-		testTrash(true);
+		trashDLFileShortcut(true);
 	}
 
 	@Test
 	public void testTrashAndRestore() throws Exception {
-		testTrash(false);
+		trashDLFileShortcut(false);
 	}
 
 	protected long doAddSubEntry(long folderId1, long folderId2)
@@ -63,7 +63,7 @@ public class DLFileShortcutTrashHandlerTest extends BaseDLTrashHandlerTestCase {
 		DLAppServiceUtil.moveFileShortcutToTrash(subEntryId);
 	}
 
-	protected void testTrash(boolean delete) throws Exception {
+	protected void trashDLFileShortcut(boolean delete) throws Exception {
 		int initialNotInTrashCount = getNotInTrashCount();
 		int initialTrashEntriesCount = getTrashEntriesCount();
 

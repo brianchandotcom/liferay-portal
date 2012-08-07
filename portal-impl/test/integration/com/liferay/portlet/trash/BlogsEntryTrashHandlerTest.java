@@ -72,19 +72,19 @@ public class BlogsEntryTrashHandlerTest {
 	@Test
 	@Transactional
 	public void testTrashAndDelete() throws Exception {
-		testTrash(false, true);
+		trashBlogEntry(false, true);
 	}
 
 	@Test
 	@Transactional
 	public void testTrashAndRestoreApproved() throws Exception {
-		testTrash(true, false);
+		trashBlogEntry(true, false);
 	}
 
 	@Test
 	@Transactional
 	public void testTrashAndRestoreDraft() throws Exception {
-		testTrash(false, false);
+		trashBlogEntry(false, false);
 	}
 
 	protected BlogsEntry addBlogsEntry(
@@ -182,7 +182,7 @@ public class BlogsEntryTrashHandlerTest {
 		return results.getLength();
 	}
 
-	protected void testTrash(boolean approved, boolean delete)
+	protected void trashBlogEntry(boolean approved, boolean delete)
 		throws Exception {
 
 		Group group = ServiceTestUtil.addGroup(

@@ -58,31 +58,31 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 	@Test
 	@Transactional
 	public void testLSPLinkDisabled() throws Exception {
-		testLayoutSetPrototype(false, false, false, false, false);
+		runLayoutSetPrototype(false, false, false, false, false);
 	}
 
 	@Test
 	@Transactional
 	public void testLSPLinkDisabledWithPageAddition() throws Exception {
-		testLayoutSetPrototype(false, false, true, false, false);
+		runLayoutSetPrototype(false, false, true, false, false);
 	}
 
 	@Test
 	@Transactional
 	public void testLSPLinkDisabledWithPageDeletion() throws Exception {
-		testLayoutSetPrototype(false, false, true, true, false);
+		runLayoutSetPrototype(false, false, true, true, false);
 	}
 
 	@Test
 	@Transactional
 	public void testLSPLinkEnabled() throws Exception {
-		testLayoutSetPrototype(true, false, false, false, false);
+		runLayoutSetPrototype(true, false, false, false, false);
 	}
 
 	@Test
 	@Transactional
 	public void testLSPLinkEnabledwithPageAddition() throws Exception {
-		testLayoutSetPrototype(true, false, true, false, false);
+		runLayoutSetPrototype(true, false, true, false, false);
 	}
 
 	@Test
@@ -90,7 +90,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 	public void testLSPLinkEnabledwithPageAdditionFromLPLinkDisabled()
 		throws Exception {
 
-		testLayoutSetPrototype(true, false, true, false, true);
+		runLayoutSetPrototype(true, false, true, false, true);
 	}
 
 	@Test
@@ -98,24 +98,24 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 	public void testLSPLinkEnabledwithPageAdditionFromLPLinkEnabled()
 		throws Exception {
 
-		testLayoutSetPrototype(true, true, true, false, true);
+		runLayoutSetPrototype(true, true, true, false, true);
 	}
 
 	@Test
 	@Transactional
 	public void testLSPLinkEnabledwithPageDeletion() throws Exception {
-		testLayoutSetPrototype(true, false, true, true, false);
+		runLayoutSetPrototype(true, false, true, true, false);
 	}
 
 	@Test
 	@Transactional
 	public void testLSPLinkEnabledwithPageDeletionFromLP() throws Exception {
-		testLayoutSetPrototype(true, false, true, true, true);
+		runLayoutSetPrototype(true, false, true, true, true);
 	}
 
-	protected void testLayoutSetPrototype(
-			boolean layoutSetLinkEnabled, boolean layoutLinkEnabled,
-			boolean addPage, boolean deletePage, boolean useLayoutPrototype)
+	protected void runLayoutSetPrototype(
+		boolean layoutSetLinkEnabled, boolean layoutLinkEnabled,
+		boolean addPage, boolean deletePage, boolean useLayoutPrototype)
 		throws Exception {
 
 		LayoutSetPrototype layoutSetPrototype =

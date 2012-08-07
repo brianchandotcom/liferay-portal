@@ -59,37 +59,37 @@ public class DLFolderTrashHandlerTest extends BaseDLTrashHandlerTestCase {
 
 	@Test
 	public void testTrashAndDelete() throws Exception {
-		testTrash(true, false, false, false);
+		trashDLFolder(true, false, false, false);
 	}
 
 	@Test
 	public void testTrashAndDeleteAndAddFile() throws Exception {
-		testTrash(true, true, false, false);
+		trashDLFolder(true, true, false, false);
 	}
 
 	@Test
 	public void testTrashAndDeleteAndTrashFile() throws Exception {
-		testTrash(true, true, true, false);
+		trashDLFolder(true, true, true, false);
 	}
 
 	@Test
 	public void testTrashAndMoveFile() throws Exception {
-		testTrash(false, true, false, true);
+		trashDLFolder(false, true, false, true);
 	}
 
 	@Test
 	public void testTrashAndRestore() throws Exception {
-		testTrash(false, false, false, false);
+		trashDLFolder(false, false, false, false);
 	}
 
 	@Test
 	public void testTrashAndRestoreAndAddFile() throws Exception {
-		testTrash(false, true, false, false);
+		trashDLFolder(false, true, false, false);
 	}
 
 	@Test
 	public void testTrashAndRestoreAndTrashFile() throws Exception {
-		testTrash(false, true, true, false);
+		trashDLFolder(false, true, true, false);
 	}
 
 	protected long doAddSubEntry(long folderId1, long folderId2)
@@ -109,7 +109,7 @@ public class DLFolderTrashHandlerTest extends BaseDLTrashHandlerTestCase {
 		DLAppServiceUtil.moveFolderToTrash(subEntryId);
 	}
 
-	protected void testTrash(
+	protected void trashDLFolder(
 			boolean delete, boolean file, boolean trashFile,
 			boolean moveFileFromTrash)
 		throws Exception {

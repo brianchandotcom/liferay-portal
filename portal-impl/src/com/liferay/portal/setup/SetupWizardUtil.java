@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.CentralizedThreadLocal;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -360,7 +361,8 @@ public class SetupWizardUtil {
 		ScreenNameGenerator screenNameGenerator =
 			ScreenNameGeneratorFactory.getInstance();
 
-		String screenName = PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX;
+		String screenName = GetterUtil.get(
+			PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX, "test");
 
 		try {
 			screenName = screenNameGenerator.generate(0, 0, emailAddress);

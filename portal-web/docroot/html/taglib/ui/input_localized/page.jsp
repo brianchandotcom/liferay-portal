@@ -82,7 +82,7 @@ if (Validator.isNull(mainLanguageValue)) {
 		</aui:script>
 	</c:if>
 
-	<c:if test="<%= Validator.isNull(languageId) %>">
+	<c:if test="<%= (locales.length > 1) && Validator.isNull(languageId) %>">
 		<span class="flag-selector nobr">
 			<img alt="<%= defaultLocale.getDisplayName() %>" class="default-language" src="<%= themeDisplay.getPathThemeImages() %>/language/<%= mainLanguageId %>.png" />
 
@@ -204,7 +204,7 @@ if (Validator.isNull(mainLanguageValue)) {
 	</c:if>
 </span>
 
-<c:if test="<%= Validator.isNull(languageId) %>">
+<c:if test="<%= (locales.length > 1) && Validator.isNull(languageId) %>">
 	<aui:script use="liferay-auto-fields,liferay-panel-floating">
 		var updateLanguageFlag = function(event) {
 			var target = event.target;

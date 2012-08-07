@@ -96,9 +96,7 @@ public class TearDownContactTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete " +
-						RuntimeVariables.getValue("contact1Name") +
-						" from your contacts[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete ${contact1Name} from your contacts[\\s\\S]$"));
 
 			case 2:
 				selenium.type("//input[@id='_1_WAR_contactsportlet_name']",
@@ -144,9 +142,7 @@ public class TearDownContactTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete " +
-						RuntimeVariables.getValue("contact2Name") +
-						" from your contacts[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete ${contact2Name} from your contacts[\\s\\S]$"));
 
 			case 3:
 				selenium.type("//input[@id='_1_WAR_contactsportlet_name']",
@@ -192,9 +188,7 @@ public class TearDownContactTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete " +
-						RuntimeVariables.getValue("contact3Name") +
-						" from your contacts[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete ${contact3Name} from your contacts[\\s\\S]$"));
 
 			case 4:
 				selenium.type("//input[@id='_1_WAR_contactsportlet_name']",
@@ -240,9 +234,7 @@ public class TearDownContactTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete " +
-						RuntimeVariables.getValue("contact4Name") +
-						" from your contacts[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete ${contact4Name} from your contacts[\\s\\S]$"));
 
 			case 5:
 				selenium.type("//input[@id='_1_WAR_contactsportlet_name']",
@@ -288,9 +280,7 @@ public class TearDownContactTest extends BaseTestCase {
 				selenium.waitForPageToLoad("30000");
 				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete " +
-						RuntimeVariables.getValue("contact5Name") +
-						" from your contacts[\\s\\S]$"));
+								   .matches("^Are you sure you want to delete ${contact5Name} from your contacts[\\s\\S]$"));
 
 			case 6:
 			case 100:

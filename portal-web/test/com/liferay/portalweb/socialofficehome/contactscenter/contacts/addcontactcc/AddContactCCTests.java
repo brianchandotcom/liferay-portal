@@ -26,6 +26,7 @@ public class AddContactCCTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddContactCCTest.class);
+		testSuite.addTestSuite(ViewContactCCTest.class);
 		testSuite.addTestSuite(TearDownContactTest.class);
 
 		return testSuite;

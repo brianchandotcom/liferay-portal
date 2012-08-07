@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.socialofficehome.contactscenter.contacts.viewcontactcc;
+package com.liferay.portalweb.socialofficehome.contactscenter.contacts.addcontactcc;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddContactCCTest extends BaseTestCase {
-	public void testAddContactCC() throws Exception {
+public class ViewContactCCTest extends BaseTestCase {
+	public void testViewContactCC() throws Exception {
 		selenium.open("/user/joebloggs/so/dashboard/");
 		loadRequiredJavaScriptModules();
 
@@ -46,10 +46,15 @@ public class AddContactCCTest extends BaseTestCase {
 			RuntimeVariables.replace("Contacts Center"));
 		selenium.waitForPageToLoad("30000");
 		loadRequiredJavaScriptModules();
-		assertEquals(RuntimeVariables.replace("Add"),
-			selenium.getText("//span[@class='add-contact']/a"));
-		selenium.clickAt("//span[@class='add-contact']/a",
-			RuntimeVariables.replace("Add"));
+		assertTrue(selenium.isVisible(
+				"//input[@id='_1_WAR_contactsportlet_name']"));
+		selenium.type("//input[@id='_1_WAR_contactsportlet_name']",
+			RuntimeVariables.replace("social"));
+		Thread.sleep(5000);
+		assertEquals(RuntimeVariables.replace("Social01 Office01 Contact01"),
+			selenium.getText("//div[@class='lfr-contact-name']"));
+		selenium.clickAt("//div[@class='lfr-contact-name']",
+			RuntimeVariables.replace("Social01 Office01 Contact01"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -58,7 +63,7 @@ public class AddContactCCTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//input[@id='_1_WAR_contactsportlet_fullName']")) {
+							"xPath=(//div[@class='lfr-contact-name'])[2]")) {
 					break;
 				}
 			}
@@ -68,34 +73,13 @@ public class AddContactCCTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.type("//input[@id='_1_WAR_contactsportlet_fullName']",
-			RuntimeVariables.replace("Social01 Office01 Contact01"));
-		selenium.type("//input[@id='_1_WAR_contactsportlet_emailAddress']",
-			RuntimeVariables.replace("socialofficecontact01@liferay.com"));
-		selenium.type("//textarea[@id='_1_WAR_contactsportlet_comments']",
-			RuntimeVariables.replace("Social01 Office01 Contact01 Comments"));
-		Thread.sleep(5000);
-		selenium.clickAt("//input[@value='Save']",
-			RuntimeVariables.replace("Save"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//span[@class='portlet-msg-success']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
+		assertEquals(RuntimeVariables.replace("Social01 Office01 Contact01"),
+			selenium.getText("xPath=(//div[@class='lfr-contact-name'])[2]"));
 		assertEquals(RuntimeVariables.replace(
-				"You have successfully added a new contact."),
-			selenium.getText("//span[@class='portlet-msg-success']"));
+				"socialofficecontact01@liferay.com"),
+			selenium.getText("xPath=(//div[@class='lfr-contact-extra'])[2]"));
+		assertEquals(RuntimeVariables.replace(
+				"Social01 Office01 Contact01 Comments"),
+			selenium.getText("//div[@class='comments']"));
 	}
 }

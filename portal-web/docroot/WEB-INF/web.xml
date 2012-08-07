@@ -793,6 +793,10 @@
 		<servlet-name>Tunnel Servlet</servlet-name>
 		<url-pattern>/api/liferay/*</url-pattern>
 	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>WebDAV Servlet</servlet-name>
+		<url-pattern>/api/webdav/*</url-pattern>
+	</servlet-mapping>
 	<session-config>
 		<session-timeout>30</session-timeout>
 	</session-config>

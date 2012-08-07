@@ -15,7 +15,7 @@
 package com.liferay.portalweb.socialofficehome.contactscenter.contacts;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.socialofficehome.contactscenter.contacts.blockccconnection.BlockCCConnectionTests;
+import com.liferay.portalweb.socialofficehome.contactscenter.contacts.addcontactcc.AddContactCCTests;
 import com.liferay.portalweb.socialofficehome.contactscenter.contacts.blockccuser.BlockCCUserTests;
 import com.liferay.portalweb.socialofficehome.contactscenter.contacts.searchconnectiondropdownconnectionscc.SearchConnectionDropDownConnectionsCCTests;
 import com.liferay.portalweb.socialofficehome.contactscenter.contacts.searchfollowingdropdownfollowingcc.SearchFollowingDropDownFollowingCCTests;
@@ -38,7 +38,7 @@ public class ContactsTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(BlockCCConnectionTests.suite());
+		testSuite.addTest(AddContactCCTests.suite());
 		testSuite.addTest(BlockCCUserTests.suite());
 		testSuite.addTest(SearchConnectionDropDownConnectionsCCTests.suite());
 		testSuite.addTest(SearchFollowingDropDownFollowingCCTests.suite());

@@ -130,10 +130,10 @@ request.setAttribute("search.jsp-returnToFullPageURL", portletDisplay.getURLBack
 </aui:form>
 
 <aui:script use="aui-base">
-	var pageLinks = A.one('.portlet-search .result .page-links');
+	var searchContainer = A.one('.portlet-search .result .lfr-search-container');
 
-	if (pageLinks) {
-		pageLinks.delegate(
+	if (searchContainer) {
+		searchContainer.delegate(
 			'click',
 			function(event) {
 				document.<portlet:namespace />fm.<portlet:namespace /><%= SearchContainer.DEFAULT_CUR_PARAM %>.value = 1;
@@ -142,10 +142,10 @@ request.setAttribute("search.jsp-returnToFullPageURL", portletDisplay.getURLBack
 
 				event.preventDefault();
 			},
-			'a.first'
+			'.page-links a.first'
 		);
 
-		pageLinks.delegate(
+		searchContainer.delegate(
 			'click',
 			function(event) {
 				document.<portlet:namespace />fm.<portlet:namespace /><%= SearchContainer.DEFAULT_CUR_PARAM %>.value = parseInt(document.<portlet:namespace />fm.<portlet:namespace /><%= SearchContainer.DEFAULT_CUR_PARAM %>.value) - 1;
@@ -154,10 +154,10 @@ request.setAttribute("search.jsp-returnToFullPageURL", portletDisplay.getURLBack
 
 				event.preventDefault();
 			},
-			'a.previous'
+			'.page-links a.previous'
 		);
 
-		pageLinks.delegate(
+		searchContainer.delegate(
 			'click',
 			function(event) {
 				document.<portlet:namespace />fm.<portlet:namespace /><%= SearchContainer.DEFAULT_CUR_PARAM %>.value = parseInt(document.<portlet:namespace />fm.<portlet:namespace /><%= SearchContainer.DEFAULT_CUR_PARAM %>.value) + 1;
@@ -166,7 +166,7 @@ request.setAttribute("search.jsp-returnToFullPageURL", portletDisplay.getURLBack
 
 				event.preventDefault();
 			},
-			'a.next'
+			'.page-links a.next'
 		);
 	}
 

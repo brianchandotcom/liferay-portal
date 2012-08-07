@@ -70,6 +70,7 @@ import com.liferay.portlet.messageboards.workflow.MBMessageWorkflowHandler;
 import com.liferay.portlet.trash.util.TrashIndexer;
 import com.liferay.portlet.usersadmin.util.ContactIndexer;
 import com.liferay.portlet.usersadmin.util.UserIndexer;
+import com.liferay.portlet.wiki.workflow.WikiPageWorkflowHandler;
 import com.liferay.util.PwdGenerator;
 
 import java.util.Calendar;
@@ -362,6 +363,7 @@ public class ServiceTestUtil {
 		WorkflowHandlerRegistryUtil.register(new MBDiscussionWorkflowHandler());
 		WorkflowHandlerRegistryUtil.register(new MBMessageWorkflowHandler());
 		WorkflowHandlerRegistryUtil.register(new UserWorkflowHandler());
+		WorkflowHandlerRegistryUtil.register(new WikiPageWorkflowHandler());
 
 		// Company
 

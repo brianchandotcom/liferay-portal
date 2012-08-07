@@ -1689,6 +1689,10 @@
 		<put name="portlet_content" value="/portlet/wiki/view_categorized_pages.jsp" />
 	</definition>
 
+	<definition name="portlet.wiki.view_node_deleted_attachments" extends="portlet.wiki">
+		<put name="portlet_content" value="/portlet/wiki/view_node_deleted_attachments.jsp" />
+	</definition>
+
 	<definition name="portlet.wiki.view_draft_pages" extends="portlet.wiki">
 		<put name="portlet_content" value="/portlet/wiki/view_draft_pages.jsp" />
 	</definition>

@@ -113,4 +113,19 @@ WikiNode node = (WikiNode)row.getObject();
 			url="<%= deleteURL %>"
 		/>
 	</c:if>
+
+	<c:if test="<%= WikiNodePermission.contains(permissionChecker, node, ActionKeys.UPDATE) %>">
+		<portlet:renderURL var="viewDeletedAttachmentsURL">
+			<portlet:param name="struts_action" value="/wiki/view_node_deleted_attachments" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
+			<portlet:param name="viewTrashAttachments" value="<%= Boolean.TRUE.toString() %>" />
+		</portlet:renderURL>
+
+		<liferay-ui:icon
+			image="delete_attachment"
+			message="view-deleted-attachments"
+			url="<%= viewDeletedAttachmentsURL %>"
+		/>
+	</c:if>
 </liferay-ui:icon-menu>

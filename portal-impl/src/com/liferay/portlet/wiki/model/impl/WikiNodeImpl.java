@@ -14,12 +14,44 @@
 
 package com.liferay.portlet.wiki.model.impl;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.Tuple;
+import com.liferay.portlet.wiki.model.WikiPage;
+import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Brian Wing Shun Chan
  */
 public class WikiNodeImpl extends WikiNodeBaseImpl {
 
 	public WikiNodeImpl() {
+	}
+
+	public List<Tuple> getDeletedAttachmentsFiles()
+		throws PortalException, SystemException {
+
+		List<WikiPage> wikiPages = WikiPageLocalServiceUtil.getPages(
+			getNodeId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		List<Tuple> deletedNodeAttachments = new ArrayList<Tuple>();
+
+		for (WikiPage wikiPage : wikiPages) {
+			String[] deletedPageAttachments =
+				wikiPage.getDeletedAttachmentsFiles();
+
+			for (String deletedPageAttachment : deletedPageAttachments) {
+				deletedNodeAttachments.add(
+					new Tuple(
+						wikiPage.getResourcePrimKey(), deletedPageAttachment));
+			}
+		}
+
+		return deletedNodeAttachments;
 	}
 
 }

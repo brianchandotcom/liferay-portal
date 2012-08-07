@@ -18,7 +18,8 @@ import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.socialofficehome.notifications.notification.requestccaddasconnection.RequestCCAddConnnectionTests;
 import com.liferay.portalweb.socialofficehome.notifications.notification.requestprofileaddasconnection.RequestProfileAddConnnectionTests;
 import com.liferay.portalweb.socialofficehome.notifications.notification.sousconfirmnotificationjoinprivatesite.SOUs_ConfirmNotificationJoinPrivateSiteTests;
-import com.liferay.portalweb.socialofficehome.notifications.notification.sousconfirmnotificationjoinrestrictedsite.SOUs_ConfirmNotificationJoinRestrictedSiteTests;
+import com.liferay.portalweb.socialofficehome.notifications.notification.sousconfirmnotificationjoinprivrstrsite.SOUs_ConfirmNotificationJoinPrivRstrSiteTests;
+import com.liferay.portalweb.socialofficehome.notifications.notification.sousconfirmnotificationjoinpubrstrsite.SOUs_ConfirmNotificationJoinPubRstrSiteTests;
 import com.liferay.portalweb.socialofficehome.notifications.notification.sousconfirmnotificationjoinsite.SOUs_ConfirmNotificationJoinSiteTests;
 import com.liferay.portalweb.socialofficehome.notifications.notification.sousviewnotificationannouncementsite.SOUs_ViewNotificationAnnouncementSiteTests;
 
@@ -37,7 +38,9 @@ public class NotificationTestPlan extends BaseTestSuite {
 		testSuite.addTest(RequestProfileAddConnnectionTests.suite());
 		testSuite.addTest(SOUs_ConfirmNotificationJoinPrivateSiteTests.suite());
 		testSuite.addTest(
-			SOUs_ConfirmNotificationJoinRestrictedSiteTests.suite());
+			SOUs_ConfirmNotificationJoinPrivRstrSiteTests.suite());
+		testSuite.addTest(
+			SOUs_ConfirmNotificationJoinPubRstrSiteTests.suite());
 		testSuite.addTest(SOUs_ConfirmNotificationJoinSiteTests.suite());
 		testSuite.addTest(SOUs_ViewNotificationAnnouncementSiteTests.suite());
 

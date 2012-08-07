@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.socialofficehome.notifications.notification.sousconfirmnotificationjoinrestrictedsite;
+package com.liferay.portalweb.socialofficehome.notifications.notification.sousconfirmnotificationjoinpubrstrsite;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.socialoffice.users.user.addsouser.AddSOUserTest;
@@ -24,6 +24,9 @@ import com.liferay.portalweb.socialoffice.users.user.signinso.SignInSOTest;
 import com.liferay.portalweb.socialoffice.users.user.signinso.SignOutSOTest;
 import com.liferay.portalweb.socialofficehome.contactscenter.contacts.sousaddasconnectionccuser.ConfirmNotificationsAddConnectionTest;
 import com.liferay.portalweb.socialofficehome.contactscenter.contacts.sousaddasconnectionccuser.SOUs_AddAsConnectionCCUserTest;
+import com.liferay.portalweb.socialofficehome.notifications.notification.sousconfirmnotificationjoinsite.TearDownNotificationsTest;
+import com.liferay.portalweb.socialofficehome.sites.site.addsitessite.TearDownSOSitesTest;
+import com.liferay.portalweb.socialofficehome.sites.site.addsitessitetypepublicrestricted.AddSitesSiteTypePublicRestrictedTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -31,25 +34,24 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SOUs_ConfirmNotificationJoinRestrictedSiteTests
-	extends BaseTestSuite {
+public class SOUs_ConfirmNotificationJoinPubRstrSiteTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddSOUserTest.class);
 		testSuite.addTestSuite(SelectRegularRolesSOUserTest.class);
 		testSuite.addTestSuite(EditSOUserPasswordTest.class);
-		testSuite.addTestSuite(AddSitesSiteTypeRestrictedTest.class);
+		testSuite.addTestSuite(AddSitesSiteTypePublicRestrictedTest.class);
 		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SOUs_SignInSOTest.class);
 		testSuite.addTestSuite(SOUs_AddAsConnectionCCUserTest.class);
 		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SignInSOTest.class);
 		testSuite.addTestSuite(ConfirmNotificationsAddConnectionTest.class);
-		testSuite.addTestSuite(SendMembersInvitationRestrictedSiteTest.class);
+		testSuite.addTestSuite(SendMembersInvitationPubRstrSiteTest.class);
 		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SOUs_SignInSOTest.class);
-		testSuite.addTestSuite(SOUs_ConfirmNotificationJoinRestrictedSiteTest.class);
-		testSuite.addTestSuite(SOUs_ViewSitesSiteTypeRestrictedTest.class);
+		testSuite.addTestSuite(SOUs_ConfirmNotificationJoinPubRstrSiteTest.class);
+		testSuite.addTestSuite(SOUs_ViewSitesSiteTypePubRstrTest.class);
 		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SignInSOTest.class);
 		testSuite.addTestSuite(TearDownNotificationsTest.class);

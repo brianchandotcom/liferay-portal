@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.socialofficehome.notifications.notification.sousconfirmnotificationjoinrestrictedsite;
+package com.liferay.portalweb.socialofficehome.notifications.notification.sousconfirmnotificationjoinpubrstrsite;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SendMembersInvitationRestrictedSiteTest extends BaseTestCase {
-	public void testSendMembersInvitationRestrictedSite()
+public class SendMembersInvitationPubRstrSiteTest extends BaseTestCase {
+	public void testSendMembersInvitationPubRstrSite()
 		throws Exception {
 		selenium.open("/user/joebloggs/so/dashboard/");
 
@@ -64,13 +64,13 @@ public class SendMembersInvitationRestrictedSiteTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Restricted Site Name"),
+		assertEquals(RuntimeVariables.replace("Public Restricted Site Name"),
 			selenium.getText(
 				"//li[contains(@class, 'social-office-enabled')]/span[2]/a"));
 		selenium.clickAt("//li[contains(@class, 'social-office-enabled')]/span[2]/a",
-			RuntimeVariables.replace("Restricted Site Name"));
+			RuntimeVariables.replace("Public Restricted Site Name"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Restricted Site Name"),
+		assertEquals(RuntimeVariables.replace("Public Restricted Site Name"),
 			selenium.getText("//div[@class='community-title']/a/span"));
 		assertEquals(RuntimeVariables.replace("Members"),
 			selenium.getText("//nav/ul/li[contains(.,'Members')]/a/span"));

@@ -86,8 +86,8 @@ public class SOUs_ViewSitesSiteTest extends BaseTestCase {
 			selenium.getText("//nav/ul/li[contains(.,'Documents')]/a/span"));
 		assertEquals(RuntimeVariables.replace("Forums"),
 			selenium.getText("//nav/ul/li[contains(.,'Forums')]/a/span"));
-		assertEquals(RuntimeVariables.replace("Blog"),
-			selenium.getText("//nav/ul/li[contains(.,'Blog')]/a/span"));
+		assertEquals(RuntimeVariables.replace("Blogs"),
+			selenium.getText("//nav/ul/li[contains(.,'Blogs')]/a/span"));
 		assertEquals(RuntimeVariables.replace("Wiki"),
 			selenium.getText("//nav/ul/li[contains(.,'Wiki')]/a/span"));
 		assertEquals(RuntimeVariables.replace("Members"),

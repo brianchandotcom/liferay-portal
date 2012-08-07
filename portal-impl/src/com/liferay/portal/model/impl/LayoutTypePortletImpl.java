@@ -381,7 +381,10 @@ public class LayoutTypePortletImpl
 		List<Portlet> staticPortlets = getStaticPortlets(
 			PropsKeys.LAYOUT_STATIC_PORTLETS_ALL);
 
-		return addStaticPortlets(portlets, staticPortlets, null);
+		List<Portlet> embeddedPortlets = getEmbeddedPortlets(
+			portlets, staticPortlets);
+
+		return addStaticPortlets(portlets, staticPortlets, embeddedPortlets);
 	}
 
 	public List<Portlet> getAllPortlets(String columnId)
@@ -654,7 +657,14 @@ public class LayoutTypePortletImpl
 
 		Layout layout = getLayout();
 
-		if (layout.isTypeControlPanel() || layout.isTypePanel()) {
+		if (layout.isTypeControlPanel()) {
+			return true;
+		}
+
+		if (PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
+				portletId) > 0) {
+
 			return true;
 		}
 
@@ -1296,12 +1306,18 @@ public class LayoutTypePortletImpl
 
 	protected List<String> getColumns() {
 		LayoutTemplate layoutTemplate = getLayoutTemplate();
+		Layout layout = getLayout();
 
 		List<String> columns = new ArrayList<String>();
 
-		columns.addAll(layoutTemplate.getColumns());
-		columns.addAll(getNestedColumns());
-		columns.addAll(getRuntimeColumns());
+		if (layout.isTypePortlet()) {
+			columns.addAll(layoutTemplate.getColumns());
+			columns.addAll(getNestedColumns());
+			columns.addAll(getRuntimeColumns());
+		}
+		else if (layout.isTypePanel()) {
+			columns.add("panelSelectedPortlets");
+		}
 
 		return columns;
 	}
@@ -1337,6 +1353,67 @@ public class LayoutTypePortletImpl
 		Layout layout = getLayout();
 
 		return layout.getCompanyId();
+	}
+
+	protected List<Portlet> getEmbeddedPortlets(
+			List<Portlet> columnPortlets, List<Portlet> staticPortlets)
+		throws PortalException, SystemException {
+
+		if (_embeddedPortlets != null) {
+			return _embeddedPortlets;
+		}
+
+		List<Portlet> portlets = new ArrayList<Portlet>();
+
+		Layout layout = getLayout();
+
+		List<PortletPreferences> portletPreferences =
+			PortletPreferencesLocalServiceUtil.getPortletPreferences(
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid());
+
+		for (PortletPreferences portletPreference : portletPreferences) {
+			String portletId = portletPreference.getPortletId();
+
+			Portlet portlet = PortletLocalServiceUtil.getPortletById(
+				getCompanyId(), portletId);
+
+			if (Validator.isNull(portletId) ||
+				columnPortlets.contains(portlet) ||
+				staticPortlets.contains(portlet) ||
+				portlet.isSystem() || portlet.isUndeployedPortlet() ||
+				!portlet.isActive()) {
+
+				continue;
+			}
+
+			if (portlet != null) {
+				Portlet embeddedPortlet = portlet;
+
+				if (portlet.isInstanceable()) {
+
+					// Instanceable portlets do not need to be cloned because
+					// they are already cloned. See the method getPortletById in
+					// the class PortletLocalServiceImpl and how it references
+					// the method getClonedInstance in the class PortletImpl.
+
+				}
+				else {
+					embeddedPortlet = (Portlet)embeddedPortlet.clone();
+				}
+
+				// We set embedded portlets as static on order to avoid adding
+				// the close and/or move icons.
+
+				embeddedPortlet.setStatic(true);
+
+				portlets.add(embeddedPortlet);
+			}
+		}
+
+		_embeddedPortlets = portlets;
+
+		return _embeddedPortlets;
 	}
 
 	protected List<String> getNestedColumns() {
@@ -1671,6 +1748,7 @@ public class LayoutTypePortletImpl
 	private boolean _customizedView;
 	private Format _dateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(
 		PropsValues.INDEX_DATE_FORMAT_PATTERN);
+	private List<Portlet> _embeddedPortlets;
 	private boolean _enablePortletLayoutListener = true;
 	private Layout _layoutSetPrototypeLayout;
 	private PortalPreferences _portalPreferences;

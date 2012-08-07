@@ -1,8 +1,26 @@
+/**
+ * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 package com.liferay.portal.security.auth;
 
-
-
-import java.util.List;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.test.EnvironmentExecutionTestListener;
+import com.liferay.portal.test.ExecutionTestListeners;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.util.TestPropsValues;
 
 import junit.framework.Assert;
 
@@ -10,70 +28,62 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.model.Company;
-import com.liferay.portal.service.CompanyLocalServiceUtil;
-import com.liferay.portal.test.EnvironmentExecutionTestListener;
-import com.liferay.portal.test.ExecutionTestListeners;
-import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
-
 /**
  * @author Riccardo Ferrari
+ * @author Daniel Reuther
  */
 @ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class DefaultScreenNameGeneratorTest {
 
-	private ScreenNameGenerator _defaultScreenNameGenerator;
-	private boolean _users_screen_name_allow_numeric = false;
-	private long _companyId;
-
 	@Before
-	public void setUp() throws SystemException{
-		_defaultScreenNameGenerator = ScreenNameGeneratorFactory.getInstance();
-		_users_screen_name_allow_numeric = GetterUtil.getBoolean(
-				PropsUtil.get(PropsKeys.USERS_SCREEN_NAME_ALLOW_NUMERIC));
-		_companyId = 0;
-
-		List<Company> companies =  CompanyLocalServiceUtil.getCompanies(0, 1);
-		for (Company company : companies){
-			_companyId = company.getCompanyId();
-		}
-	}
-
-	@Test
-	public void testUsingDefaultScreenNameGeneratorClass(){
-		Assert.assertEquals("com.liferay.portal.security.auth.DefaultScreenNameGenerator", _defaultScreenNameGenerator.getClass().getName());
+	public void setUp() throws Exception {
+		_companyId = TestPropsValues.getCompanyId();
+		_screenNameGenerator = ScreenNameGeneratorFactory.getInstance();
+		_usersScreenNameAllowNumeric = GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.USERS_SCREEN_NAME_ALLOW_NUMERIC));
 	}
 
 	@Test
 	public void testGenerate() throws Exception {
+		String generatedScreenName = _screenNameGenerator.generate(
+			_companyId, 0, "user123@liferay.com");
 
-		String generatedScreenName = _defaultScreenNameGenerator.generate(_companyId, 0, "user123@liferay.com");
 		Assert.assertEquals("user123", generatedScreenName);
-
 	}
 
 	@Test
-	public void testGenerateWithAllowNumeric() throws Exception{
-		String generatedScreenName = _defaultScreenNameGenerator.generate(_companyId, 0, "123@liferay.com");
-		if (_users_screen_name_allow_numeric){
+	public void testGenerateAlreadyExisting() throws Exception {
+		String generatedScreenName = _screenNameGenerator.generate(
+			_companyId, 0, "test@liferay.com");
+
+		Assert.assertNotSame("test", generatedScreenName);
+		Assert.assertEquals("test.1", generatedScreenName);
+	}
+
+	@Test
+	public void testGenerateNumeric() throws Exception {
+		String generatedScreenName = _screenNameGenerator.generate(
+			_companyId, 0, "123@liferay.com");
+
+		if (_usersScreenNameAllowNumeric) {
 			Assert.assertNotSame("user.123", generatedScreenName);
 			Assert.assertEquals("123", generatedScreenName);
-		} else {
+		}
+		else {
 			Assert.assertNotSame("123", generatedScreenName);
 			Assert.assertEquals("user.123", generatedScreenName);
 		}
 	}
 
 	@Test
-	public void testGenerateAlreadyExisting() throws Exception {
-		String generatedScreenName = _defaultScreenNameGenerator.generate(_companyId, 0, "test@liferay.com");
-		Assert.assertNotSame("test", generatedScreenName);
-		Assert.assertEquals("test.1", generatedScreenName);
+	public void testVerifyScreenNameGeneratorClass() {
+		Assert.assertEquals(
+			DefaultScreenNameGenerator.class, _screenNameGenerator.getClass());
 	}
+
+	private long _companyId;
+	private ScreenNameGenerator _screenNameGenerator;
+	private boolean _usersScreenNameAllowNumeric = false;
 
 }

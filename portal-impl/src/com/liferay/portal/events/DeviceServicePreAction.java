@@ -61,7 +61,7 @@ public class DeviceServicePreAction extends Action {
 
 			if (PropsValues.MOBILE_DEVICE_SESSION_CACHE_ENABLED) {
 				session.setAttribute(
-				WebKeys.DEVICE, new NonSerializableObjectHandler(device));
+					WebKeys.DEVICE, new NonSerializableObjectHandler(device));
 			}
 		}
 

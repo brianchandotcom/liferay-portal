@@ -17,6 +17,12 @@
 <%@ include file="/html/portlet/asset_publisher/init.jsp" %>
 
 <%
+String returnToFullPageURL = ParamUtil.getString(request, "returnToFullPageURL");
+
+if (Validator.isNotNull(returnToFullPageURL)) {
+	portletDisplay.setURLBack(returnToFullPageURL);
+}
+
 long assetEntryId = ParamUtil.getLong(request, "assetEntryId");
 String type = ParamUtil.getString(request, "type");
 long groupId = ParamUtil.getLong(request, "groupId", scopeGroupId);

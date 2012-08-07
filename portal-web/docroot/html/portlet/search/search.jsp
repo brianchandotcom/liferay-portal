@@ -50,6 +50,7 @@ portletURL.setParameter("keywords", keywords);
 portletURL.setParameter("format", format);
 
 request.setAttribute("search.jsp-portletURL", portletURL);
+request.setAttribute("search.jsp-returnToFullPageURL", portletDisplay.getURLBack());
 %>
 
 <liferay-portlet:renderURL varImpl="searchURL">

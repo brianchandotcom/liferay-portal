@@ -3127,6 +3127,9 @@ public class JournalArticleLocalServiceImpl
 		if (Validator.isNotNull(serviceContextUrlTitle)) {
 			urlTitle = JournalUtil.getUrlTitle(id, serviceContextUrlTitle);
 		}
+		else if (Validator.isNotNull(oldUrlTitle)) {
+			return oldUrlTitle;
+		}
 		else {
 			urlTitle = getUniqueUrlTitle(
 				id, serviceContext.getScopeGroupId(), articleId, title);

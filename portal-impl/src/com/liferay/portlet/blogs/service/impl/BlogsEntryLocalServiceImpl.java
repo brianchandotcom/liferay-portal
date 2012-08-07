@@ -1212,6 +1212,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		if (Validator.isNotNull(serviceContextUrlTitle)) {
 			urlTitle = BlogsUtil.getUrlTitle(entryId, serviceContextUrlTitle);
 		}
+		else if (Validator.isNotNull(oldUrlTitle)) {
+			return oldUrlTitle;
+		}
 		else {
 			urlTitle = getUniqueUrlTitle(
 				entryId, serviceContext.getScopeGroupId(), title);

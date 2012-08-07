@@ -48,7 +48,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "att
 %>
 
 <portlet:actionURL var="undoTrashURL">
-	<portlet:param name="struts_action" value="/wiki_admin/edit_page_attachment" />
+	<portlet:param name="struts_action" value="/wiki/edit_page_attachment" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 </portlet:actionURL>
 

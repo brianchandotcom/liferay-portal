@@ -120,7 +120,7 @@ public class EditPageAttachmentAction extends EditFileEntryAction {
 					(LiferayPortletConfig)portletConfig, actionRequest, true);
 			}
 			else if (cmd.equals(Constants.RESTORE)) {
-				restoreEntry(actionRequest);
+				restoreAttachment(actionRequest);
 			}
 
 			if (cmd.equals(Constants.ADD_TEMP) ||
@@ -331,12 +331,12 @@ public class EditPageAttachmentAction extends EditFileEntryAction {
 		if (moveToTrash && Validator.isNotNull(deletedFileName)) {
 			Map<String, String[]> data = new HashMap<String, String[]>();
 
-			String[] restoreEntryId =
+			String[] restoreAttachmentId =
 				new String[]{String.valueOf(nodeId), title, deletedFileName};
 
 			data.put(
-				"restoreEntryId",
-				new String[]{StringUtil.merge(restoreEntryId)});
+				"restoreAttachmentId",
+				new String[]{StringUtil.merge(restoreAttachmentId)});
 
 			SessionMessages.add(
 				actionRequest,
@@ -394,28 +394,22 @@ public class EditPageAttachmentAction extends EditFileEntryAction {
 		String title = ParamUtil.getString(actionRequest, "title");
 		String attachment = ParamUtil.getString(actionRequest, "fileName");
 
-		moveAttachmentFromTrash(nodeId, title, attachment);
-	}
-
-	protected void moveAttachmentFromTrash(
-			long nodeId, String title, String attachment)
-		throws Exception {
-
 		WikiPageServiceUtil.movePageAttachmentFromTrash(
 			nodeId, title, attachment);
 	}
 
-	protected void restoreEntry(ActionRequest actionRequest) throws Exception {
-		String[] restoreEntryId = StringUtil.split(ParamUtil.getString(
-			actionRequest, "restoreEntryId"));
+	protected void restoreAttachment(ActionRequest actionRequest) throws Exception {
+		String[] restoreAttachmentId = StringUtil.split(ParamUtil.getString(
+			actionRequest, "restoreAttachmentId"));
 
-		long nodeId = GetterUtil.getLong(restoreEntryId[0], 0L);
+		long nodeId = GetterUtil.getLong(restoreAttachmentId[0], 0L);
 		String title = GetterUtil.getString(
-			restoreEntryId[1], StringPool.BLANK);
+			restoreAttachmentId[1], StringPool.BLANK);
 		String attachment = GetterUtil.getString(
-			restoreEntryId[2], StringPool.BLANK);
+			restoreAttachmentId[2], StringPool.BLANK);
 
-		moveAttachmentFromTrash(nodeId, title, attachment);
+		WikiPageServiceUtil.movePageAttachmentFromTrash(
+			nodeId, title, attachment);
 	}
 
 	private static final String _TEMP_FOLDER_NAME =

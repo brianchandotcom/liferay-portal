@@ -21,7 +21,8 @@ import java.util.concurrent.Future;
  * @author Ivica Cardic
  */
 public interface GhostScript {
-	public Future convert(List<String> arguments) throws Exception;
+
+	public Future<?> convert(List<String> arguments) throws Exception;
 
 	public boolean isEnabled();
 

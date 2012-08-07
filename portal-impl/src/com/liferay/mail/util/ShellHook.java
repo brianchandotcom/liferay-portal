@@ -17,14 +17,14 @@ package com.liferay.mail.util;
 import com.liferay.mail.model.Filter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ProcessUtil;
+import com.liferay.portal.kernel.process.ProcessUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsUtil;
 
 import java.util.List;
+import java.util.concurrent.Future;
 
 /**
  * @author Michael Lawrence
@@ -127,24 +127,10 @@ public class ShellHook implements Hook {
 		}
 
 		try {
-			Runtime rt = Runtime.getRuntime();
+			Future<?> future = ProcessUtil.execute(
+				ProcessUtil.LOGGING_OUTPUT_PROCESSOR, cmdLine);
 
-			Process p = rt.exec(cmdLine);
-
-			ProcessUtil.close(p);
-
-			int exitValue = p.exitValue();
-
-			if (exitValue != 0) {
-				StringBundler sb = new StringBundler(cmdLine.length * 2);
-
-				for (int i = 0; i < cmdLine.length; i++) {
-					sb.append(cmdLine[i]);
-					sb.append(StringPool.SPACE);
-				}
-
-				throw new IllegalArgumentException(sb.toString());
-			}
+			future.get();
 		}
 		catch (Exception e) {
 			_log.error(e);

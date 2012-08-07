@@ -17,22 +17,14 @@ package com.liferay.portal.kernel.process;
 import java.io.InputStream;
 
 /**
- * An <class>OutputConsumer</class> instance reads output from a process'
- * stdout.
- *
- * @param <V> desired return value of the output from the process' stdout
- *
- * @author Ivica Cardic
+ * @author Shuyang Zhou
  */
-public interface NativeProcessOutputConsumer<V> {
+public interface OutputProcessor<O, E> {
 
-	/**
-	 * Reads the output of a process from the given <class>InputStream</class>
-	 *
-	 * @param inputStream  the input stream of the process
-	 * @return the output from the input stream of the process
-	 * @throws Exception if an unexpected error occurred
-	 */
-	public V consumeOutput(InputStream inputStream) throws Exception;
+	public E processStdErr(InputStream stdErrInputStream)
+		throws ProcessException;
+
+	public O processStdOut(InputStream stdOutInputStream)
+		throws ProcessException;
 
 }

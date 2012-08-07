@@ -14,7 +14,13 @@
 
 package com.liferay.portal.kernel.util;
 
-import java.io.IOException;
+import com.liferay.portal.kernel.process.ProcessUtil;
+
+import java.lang.management.ManagementFactory;
+import java.lang.management.RuntimeMXBean;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Shuyang Zhou
@@ -22,11 +28,11 @@ import java.io.IOException;
 public class HeapUtil {
 
 	public static void heapDump(boolean live, boolean binary, String file) {
-		int processId = ProcessUtil.getProcessId();
+		int processId = _getProcessId();
 
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(5);
 
-		sb.append("jmap -dump:");
+		sb.append("-dump:");
 
 		if (live) {
 			sb.append("live,");
@@ -38,16 +44,41 @@ public class HeapUtil {
 
 		sb.append("file=");
 		sb.append(file);
-		sb.append(StringPool.SPACE);
-		sb.append(processId);
+
+		List<String> arguments = new ArrayList<String>();
+
+		arguments.add("jmap");
+		arguments.add(sb.toString());
+		arguments.add(String.valueOf(processId));
 
 		try {
-			Runtime runtime = Runtime.getRuntime();
-
-			runtime.exec(sb.toString());
+			ProcessUtil.execute(
+				ProcessUtil.LOGGING_OUTPUT_PROCESSOR, arguments);
 		}
-		catch (IOException ioe) {
-			throw new RuntimeException("Unable to perform heap dump", ioe);
+		catch (Exception e) {
+			throw new RuntimeException("Unable to perform heap dump", e);
+		}
+	}
+
+	private static int _getProcessId() {
+		RuntimeMXBean runtimeMXBean = ManagementFactory.getRuntimeMXBean();
+
+		String name = runtimeMXBean.getName();
+
+		int index = name.indexOf(CharPool.AT);
+
+		if (index == -1) {
+			throw new RuntimeException("Unable to parse process name " + name);
+		}
+
+		String id = name.substring(0, index);
+
+		try {
+			return GetterUtil.getInteger(id);
+		}
+		catch (NumberFormatException nfe) {
+			throw new RuntimeException(
+				"Unable to parse process name " + name, nfe);
 		}
 	}
 

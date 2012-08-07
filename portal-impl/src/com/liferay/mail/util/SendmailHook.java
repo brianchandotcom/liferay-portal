@@ -18,8 +18,8 @@ import com.liferay.mail.model.Filter;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.process.ProcessUtil;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.ProcessUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -29,6 +29,7 @@ import java.io.File;
 import java.io.FileReader;
 
 import java.util.List;
+import java.util.concurrent.Future;
 
 /**
  * @author Brian Wing Shun Chan
@@ -82,12 +83,11 @@ public class SendmailHook implements Hook {
 		addUserCmd = StringUtil.replace(
 			addUserCmd, "%1%", String.valueOf(userId));
 
-		Runtime rt = Runtime.getRuntime();
-
 		try {
-			Process p = rt.exec(addUserCmd);
+			Future<?> future = ProcessUtil.execute(
+				ProcessUtil.LOGGING_OUTPUT_PROCESSOR, addUserCmd);
 
-			ProcessUtil.close(p);
+			future.get();
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -119,12 +119,11 @@ public class SendmailHook implements Hook {
 		deleteUserCmd = StringUtil.replace(
 			deleteUserCmd, "%1%", String.valueOf(userId));
 
-		Runtime rt = Runtime.getRuntime();
-
 		try {
-			Process p = rt.exec(deleteUserCmd);
+			Future<?> future = ProcessUtil.execute(
+				ProcessUtil.LOGGING_OUTPUT_PROCESSOR, deleteUserCmd);
 
-			ProcessUtil.close(p);
+			future.get();
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -209,11 +208,10 @@ public class SendmailHook implements Hook {
 			String virtusertableRefreshCmd = PropsUtil.get(
 				PropsKeys.MAIL_HOOK_SENDMAIL_VIRTUSERTABLE_REFRESH);
 
-			Runtime rt = Runtime.getRuntime();
+			Future<?> future = ProcessUtil.execute(
+				ProcessUtil.LOGGING_OUTPUT_PROCESSOR, virtusertableRefreshCmd);
 
-			Process p = rt.exec(virtusertableRefreshCmd);
-
-			ProcessUtil.close(p);
+			future.get();
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -237,12 +235,11 @@ public class SendmailHook implements Hook {
 		changePasswordCmd = StringUtil.replace(
 			changePasswordCmd, "%2%", password);
 
-		Runtime rt = Runtime.getRuntime();
-
 		try {
-			Process p = rt.exec(changePasswordCmd);
+			Future<?> future = ProcessUtil.execute(
+				ProcessUtil.LOGGING_OUTPUT_PROCESSOR, changePasswordCmd);
 
-			ProcessUtil.close(p);
+			future.get();
 		}
 		catch (Exception e) {
 			_log.error(e, e);

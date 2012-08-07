@@ -17,7 +17,7 @@ package com.liferay.portal.image;
 import com.liferay.portal.kernel.image.GhostScript;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.process.NativeProcessExecutor;
+import com.liferay.portal.kernel.process.ProcessUtil;
 import com.liferay.portal.kernel.util.OSDetector;
 
 import java.io.File;
@@ -32,7 +32,7 @@ import java.util.concurrent.Future;
  */
 public class GhostScriptImpl implements GhostScript {
 
-	public Future convert(List<String> arguments) throws Exception {
+	public Future<?> convert(List<String> arguments) throws Exception {
 
 		if (!isEnabled()) {
 			throw new IllegalStateException(
@@ -52,7 +52,8 @@ public class GhostScriptImpl implements GhostScript {
 
 		commands.addAll(arguments);
 
-		return NativeProcessExecutor.execute(commands);
+		return ProcessUtil.execute(
+			ProcessUtil.LOGGING_OUTPUT_PROCESSOR, commands);
 	}
 
 	public boolean isEnabled() {

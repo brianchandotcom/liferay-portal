@@ -18,8 +18,8 @@ import com.liferay.mail.model.Filter;
 import com.liferay.mail.service.CyrusServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.process.ProcessUtil;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.ProcessUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -29,6 +29,7 @@ import com.liferay.portal.util.PropsUtil;
 import java.io.File;
 
 import java.util.List;
+import java.util.concurrent.Future;
 
 /**
  * @author Brian Wing Shun Chan
@@ -110,11 +111,10 @@ public class CyrusHook implements Hook {
 			addUserCmd = StringUtil.replace(
 				addUserCmd, "%1%", String.valueOf(userId));
 
-			Runtime rt = Runtime.getRuntime();
+			Future<?> future = ProcessUtil.execute(
+				ProcessUtil.LOGGING_OUTPUT_PROCESSOR, addUserCmd);
 
-			Process p = rt.exec(addUserCmd);
-
-			ProcessUtil.close(p);
+			future.get();
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -169,11 +169,10 @@ public class CyrusHook implements Hook {
 			deleteUserCmd = StringUtil.replace(
 				deleteUserCmd, "%1%", String.valueOf(userId));
 
-			Runtime rt = Runtime.getRuntime();
+			Future<?> future = ProcessUtil.execute(
+				ProcessUtil.LOGGING_OUTPUT_PROCESSOR, deleteUserCmd);
 
-			Process p = rt.exec(deleteUserCmd);
-
-			ProcessUtil.close(p);
+			future.get();
 
 			// Procmail
 

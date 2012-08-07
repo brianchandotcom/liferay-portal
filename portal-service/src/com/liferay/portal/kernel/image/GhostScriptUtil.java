@@ -33,7 +33,7 @@ public class GhostScriptUtil {
 	 *         </code>
 	 * @throws Exception if an unexpected error occurred while executing command
 	 */
-	public static Future convert(List<String> arguments) throws Exception {
+	public static Future<?> convert(List<String> arguments) throws Exception {
 		return _ghostScript.convert(arguments);
 	}
 

@@ -306,6 +306,10 @@
 		<priority value="ERROR" />
 	</category>
 
+	<category name="com.liferay.portal.kernel.process">
+		<priority value="INFO" />
+	</category>
+
 	<category name="com.liferay.portal.kernel.messaging.config.AbstractMessagingConfigurator">
 		<priority value="INFO" />
 	</category>

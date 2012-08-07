@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/wiki/init.jsp" %>
 
 <%
-String tabs2 = ParamUtil.getString(request, "tabs2", "email-from");
+String tabs2 = ParamUtil.getString(request, "tabs2", "display-settings");
 
 String redirect = ParamUtil.getString(request, "redirect");
 
@@ -64,7 +64,7 @@ else if (tabs2.equals("page-updated-email")) {
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
 	<liferay-ui:tabs
-		names="email-from,page-added-email,page-updated-email,display-settings,rss"
+		names="display-settings,email-from,page-added-email,page-updated-email,rss"
 		param="tabs2"
 		url="<%= portletURL %>"
 	/>
@@ -80,6 +80,9 @@ else if (tabs2.equals("page-updated-email")) {
 	<liferay-ui:error key="visibleNodesCount" message="please-specify-at-least-one-visible-node" />
 
 	<c:choose>
+		<c:when test='<%= tabs2.equals("display-settings") %>'>
+			<%@ include file="/html/portlet/wiki/display_settings.jspf" %>
+		</c:when>
 		<c:when test='<%= tabs2.equals("email-from") %>'>
 			<aui:fieldset>
 				<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" value="<%= emailFromName %>" />
@@ -293,75 +296,6 @@ else if (tabs2.equals("page-updated-email")) {
 					</dd>
 				</dl>
 			</div>
-		</c:when>
-		<c:when test='<%= tabs2.equals("display-settings") %>'>
-			<aui:fieldset>
-				<aui:input name="preferences--enableRelatedAssets--" type="checkbox" value="<%= enableRelatedAssets %>" />
-
-				<c:if test="<%= PropsValues.WIKI_PAGE_RATINGS_ENABLED || PropsValues.WIKI_PAGE_COMMENTS_ENABLED %>">
-					<c:if test="<%= PropsValues.WIKI_PAGE_RATINGS_ENABLED %>">
-						<aui:input name="preferences--enablePageRatings--" type="checkbox" value="<%= enablePageRatings %>" />
-					</c:if>
-
-					<c:if test="<%= PropsValues.WIKI_PAGE_COMMENTS_ENABLED %>">
-						<aui:input name="preferences--enableComments--" type="checkbox" value="<%= enableComments %>" />
-
-						<aui:input name="preferences--enableCommentRatings--" type="checkbox" value="<%= enableCommentRatings %>" />
-					</c:if>
-				</c:if>
-			</aui:fieldset>
-
-			<aui:fieldset label="visible-wikis">
-				<aui:input name="preferences--visibleNodes--" type="hidden" />
-				<aui:input name="preferences--hiddenNodes--" type="hidden" />
-
-				<%
-				Set<String> currentVisibleNodes = new HashSet<String>(allNodeNames);
-
-				// Left list
-
-				List<KeyValuePair> leftList = new ArrayList<KeyValuePair>();
-
-				for (String folderColumn : visibleNodes) {
-					if (currentVisibleNodes.contains(folderColumn)) {
-						leftList.add(new KeyValuePair(folderColumn, LanguageUtil.get(pageContext, folderColumn)));
-					}
-				}
-
-				Arrays.sort(visibleNodes);
-				Arrays.sort(hiddenNodes);
-
-				for (String folderColumn : currentVisibleNodes) {
-					if ((Arrays.binarySearch(hiddenNodes, folderColumn) < 0) && (Arrays.binarySearch(visibleNodes, folderColumn) < 0)) {
-						leftList.add(new KeyValuePair(folderColumn, LanguageUtil.get(pageContext, folderColumn)));
-					}
-				}
-
-				// Right list
-
-				List<KeyValuePair> rightList = new ArrayList<KeyValuePair>();
-
-				for (String folderColumn : hiddenNodes) {
-					if (currentVisibleNodes.contains(folderColumn)) {
-						if (Arrays.binarySearch(visibleNodes, folderColumn) < 0) {
-							rightList.add(new KeyValuePair(folderColumn, LanguageUtil.get(pageContext, folderColumn)));
-						}
-					}
-				}
-
-				rightList = ListUtil.sort(rightList, new KeyValuePairComparator(false, true));
-				%>
-
-				<liferay-ui:input-move-boxes
-					leftBoxName="currentVisibleNodes"
-					leftList="<%= leftList %>"
-					leftReorder="true"
-					leftTitle="visible"
-					rightBoxName="availableVisibleNodes"
-					rightList="<%= rightList %>"
-					rightTitle="hidden"
-				/>
-			</aui:fieldset>
 		</c:when>
 		<c:when test='<%= tabs2.equals("rss") %>'>
 			<aui:fieldset>

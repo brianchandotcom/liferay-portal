@@ -18,15 +18,20 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -45,7 +50,9 @@ import com.liferay.portlet.wiki.service.WikiPageServiceUtil;
 import java.io.InputStream;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -96,7 +103,8 @@ public class EditPageAttachmentAction extends EditFileEntryAction {
 				addTempAttachment(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteAttachment(actionRequest, false);
+				deleteAttachment(
+					(LiferayPortletConfig)portletConfig, actionRequest, false);
 			}
 			else if (cmd.equals(Constants.DELETE_TEMP)) {
 				deleteTempAttachment(actionRequest, actionResponse);
@@ -108,7 +116,11 @@ public class EditPageAttachmentAction extends EditFileEntryAction {
 				moveAttachmentFromTrash(actionRequest);
 			}
 			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
-				deleteAttachment(actionRequest, true);
+				deleteAttachment(
+					(LiferayPortletConfig)portletConfig, actionRequest, true);
+			}
+			else if (cmd.equals(Constants.RESTORE)) {
+				restoreAttachment(actionRequest);
 			}
 
 			if (cmd.equals(Constants.ADD_TEMP) ||
@@ -298,6 +310,7 @@ public class EditPageAttachmentAction extends EditFileEntryAction {
 	}
 
 	protected void deleteAttachment(
+			LiferayPortletConfig liferayPortletConfig,
 			ActionRequest actionRequest, boolean moveToTrash)
 		throws Exception {
 
@@ -305,12 +318,35 @@ public class EditPageAttachmentAction extends EditFileEntryAction {
 		String title = ParamUtil.getString(actionRequest, "title");
 		String attachment = ParamUtil.getString(actionRequest, "fileName");
 
+		String deletedFileName = StringPool.BLANK;
+
 		if (moveToTrash) {
-			WikiPageServiceUtil.movePageAttachmentToTrash(
+			deletedFileName = WikiPageServiceUtil.movePageAttachmentToTrash(
 				nodeId, title, attachment);
 		}
 		else {
 			WikiPageServiceUtil.deletePageAttachment(nodeId, title, attachment);
+		}
+
+		if (moveToTrash && Validator.isNotNull(deletedFileName)) {
+			Map<String, String[]> data = new HashMap<String, String[]>();
+
+			String[] restoreAttachmentId =
+				new String[]{String.valueOf(nodeId), title, deletedFileName};
+
+			data.put(
+				"restoreAttachmentId",
+				new String[]{StringUtil.merge(restoreAttachmentId)});
+
+			SessionMessages.add(
+				actionRequest,
+				liferayPortletConfig.getPortletId() +
+					SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA, data);
+
+			SessionMessages.add(
+				actionRequest,
+				liferayPortletConfig.getPortletId() +
+					SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE);
 		}
 	}
 
@@ -357,6 +393,20 @@ public class EditPageAttachmentAction extends EditFileEntryAction {
 		long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
 		String title = ParamUtil.getString(actionRequest, "title");
 		String attachment = ParamUtil.getString(actionRequest, "fileName");
+
+		WikiPageServiceUtil.movePageAttachmentFromTrash(
+			nodeId, title, attachment);
+	}
+
+	protected void restoreAttachment(ActionRequest actionRequest) throws Exception {
+		String[] restoreAttachmentId = StringUtil.split(ParamUtil.getString(
+			actionRequest, "restoreAttachmentId"));
+
+		long nodeId = GetterUtil.getLong(restoreAttachmentId[0], 0L);
+		String title = GetterUtil.getString(
+			restoreAttachmentId[1], StringPool.BLANK);
+		String attachment = GetterUtil.getString(
+			restoreAttachmentId[2], StringPool.BLANK);
 
 		WikiPageServiceUtil.movePageAttachmentFromTrash(
 			nodeId, title, attachment);

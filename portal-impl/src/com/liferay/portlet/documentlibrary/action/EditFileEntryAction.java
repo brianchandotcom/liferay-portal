@@ -530,9 +530,10 @@ public class EditFileEntryAction extends PortletAction {
 
 		DLAppServiceUtil.moveFileEntryToTrash(fileEntryId);
 
-		Map<String, long[]> data = new HashMap<String, long[]>();
+		Map<String, String[]> data = new HashMap<String, String[]>();
 
-		data.put("restoreFileEntryIds", new long[] {fileEntryId});
+		data.put(
+			"restoreFileEntryIds", new String[] {String.valueOf(fileEntryId)});
 
 		SessionMessages.add(
 			actionRequest,

@@ -47,6 +47,13 @@ portletURL.setParameter("struts_action", "/wiki/view_page_attachments");
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "attachments"), portletURL.toString());
 %>
 
+<portlet:actionURL var="undoTrashURL">
+	<portlet:param name="struts_action" value="/wiki/edit_page_attachment" />
+	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
+</portlet:actionURL>
+
+<liferay-ui:trash-undo portletURL="<%= undoTrashURL %>" />
+
 <liferay-util:include page="/html/portlet/wiki/top_links.jsp" />
 
 <liferay-util:include page="/html/portlet/wiki/page_tabs.jsp">

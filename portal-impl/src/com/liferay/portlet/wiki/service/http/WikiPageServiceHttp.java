@@ -853,8 +853,9 @@ public class WikiPageServiceHttp {
 		}
 	}
 
-	public static void movePageAttachmentToTrash(HttpPrincipal httpPrincipal,
-		long nodeId, java.lang.String title, java.lang.String fileName)
+	public static java.lang.String movePageAttachmentToTrash(
+		HttpPrincipal httpPrincipal, long nodeId, java.lang.String title,
+		java.lang.String fileName)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -865,8 +866,10 @@ public class WikiPageServiceHttp {
 			MethodHandler methodHandler = new MethodHandler(methodKey, nodeId,
 					title, fileName);
 
+			Object returnObj = null;
+
 			try {
-				TunnelUtil.invoke(httpPrincipal, methodHandler);
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
 				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
@@ -879,6 +882,8 @@ public class WikiPageServiceHttp {
 
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
+
+			return (java.lang.String)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);

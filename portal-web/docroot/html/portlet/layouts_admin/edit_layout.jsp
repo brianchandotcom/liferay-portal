@@ -79,8 +79,8 @@ if (layoutRevision != null) {
 
 String[] mainSections = PropsValues.LAYOUT_FORM_UPDATE;
 
-if(selLayout.isTypePortlet()){
-	mainSections = ArrayUtil.append(mainSections, "portlets");
+if (selLayout.isTypeArticle() || selLayout.isTypeEmbedded() || selLayout.isTypePortlet() || selLayout.isTypePanel()) {
+	mainSections = ArrayUtil.append(mainSections, "embedded-portlets");
 }
 
 if (!group.isUser() && selLayout.isTypePortlet()) {

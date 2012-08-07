@@ -945,24 +945,18 @@ public class EditLayoutsAction extends PortletAction {
 				PropertiesParamUtil.getProperties(
 					actionRequest, "TypeSettingsProperties--");
 
+			String[] removeEmbeddedPortletIds = ParamUtil.getParameterValues(
+				actionRequest, "removeEmbeddedPortletIds");
+
+			for (String portletId : removeEmbeddedPortletIds) {
+				removePortletByPreferences(
+					layout.getPlid(), themeDisplay.getCompanyId(),
+					portletId);
+			}
+
 			if (type.equals(LayoutConstants.TYPE_PORTLET)) {
 				LayoutTypePortlet layoutTypePortlet =
 					(LayoutTypePortlet)layout.getLayoutType();
-
-				String[] removedPortlets = ParamUtil.getParameterValues(
-					actionRequest, "removePortlet");
-
-				List<String> layoutPortlets = layoutTypePortlet.getPortletIds();
-				for (String portletId : removedPortlets) {
-					if (layoutPortlets.contains(portletId)) {
-						layoutTypePortlet.removePortletId(0, portletId);
-					} else
-					{
-						removePortletByPreferences(
-							layout.getPlid(), themeDisplay.getCompanyId(),
-							portletId);
-					}
-				}
 
 				String layoutTemplateId = ParamUtil.getString(
 					uploadPortletRequest, "layoutTemplateId",

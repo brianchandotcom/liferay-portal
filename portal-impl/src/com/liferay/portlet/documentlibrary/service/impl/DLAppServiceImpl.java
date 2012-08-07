@@ -2141,7 +2141,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	public DLFileShortcut moveFileShortcutFromTrash(
-			long fileShortcutId, long newFolderId, long toFileEntryId,
+			long fileShortcutId, long newFolderId,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
@@ -2151,8 +2151,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			getPermissionChecker(), fileShortcut, ActionKeys.UPDATE);
 
 		return dlAppHelperLocalService.moveFileShortcutFromTrash(
-			getUserId(), fileShortcut, newFolderId, toFileEntryId,
-			serviceContext);
+			getUserId(), fileShortcut, newFolderId, serviceContext);
 	}
 
 	/**

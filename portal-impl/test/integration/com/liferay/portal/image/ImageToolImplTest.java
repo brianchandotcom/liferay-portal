@@ -46,30 +46,30 @@ public class ImageToolImplTest {
 
 	@Test
 	public void testReadBMP() throws Exception {
-		testRead("liferay.bmp");
+		read("liferay.bmp");
 	}
 
 	@Test
 	public void testReadGIF() throws Exception {
-		testRead("liferay.gif");
+		read("liferay.gif");
 	}
 
 	@Test
 	public void testReadJPEG() throws Exception {
-		testRead("liferay.jpeg");
+		read("liferay.jpeg");
 	}
 
 	@Test
 	public void testReadJPG() throws Exception {
-		testRead("liferay.jpg");
+		read("liferay.jpg");
 	}
 
 	@Test
 	public void testReadPNG() throws Exception {
-		testRead("liferay.png");
+		read("liferay.png");
 	}
 
-	protected void testRead(String fileName) throws Exception {
+	protected void read(String fileName) throws Exception {
 		fileName =
 			"portal-impl/test/integration/com/liferay/portal/image/" +
 				"dependencies/" + fileName;

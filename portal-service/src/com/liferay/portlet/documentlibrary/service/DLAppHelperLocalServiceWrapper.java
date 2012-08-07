@@ -177,12 +177,12 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut moveFileShortcutFromTrash(
 		long userId,
 		com.liferay.portlet.documentlibrary.model.DLFileShortcut dlFileShortcut,
-		long newFolderId, long toFileEntryId,
+		long newFolderId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _dlAppHelperLocalService.moveFileShortcutFromTrash(userId,
-			dlFileShortcut, newFolderId, toFileEntryId, serviceContext);
+			dlFileShortcut, newFolderId, serviceContext);
 	}
 
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut moveFileShortcutToTrash(

@@ -1807,12 +1807,12 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut moveFileShortcutFromTrash(
-		long fileShortcutId, long newFolderId, long toFileEntryId,
+		long fileShortcutId, long newFolderId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _dlAppService.moveFileShortcutFromTrash(fileShortcutId,
-			newFolderId, toFileEntryId, serviceContext);
+			newFolderId, serviceContext);
 	}
 
 	/**

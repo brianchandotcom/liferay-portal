@@ -911,16 +911,16 @@ public class DLFileEntryWrapper implements DLFileEntry,
 		return _dlFileEntry.getTrashFolder();
 	}
 
-	public boolean isInTrashFolder() {
-		return _dlFileEntry.isInTrashFolder();
-	}
-
 	public boolean hasLock() {
 		return _dlFileEntry.hasLock();
 	}
 
 	public boolean isCheckedOut() {
 		return _dlFileEntry.isCheckedOut();
+	}
+
+	public boolean isInTrashFolder() {
+		return _dlFileEntry.isInTrashFolder();
 	}
 
 	public void setExtraSettingsProperties(

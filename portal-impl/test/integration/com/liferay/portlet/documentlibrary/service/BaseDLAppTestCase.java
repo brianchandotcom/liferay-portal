@@ -127,14 +127,20 @@ public abstract class BaseDLAppTestCase {
 	protected DLFileShortcut addFileShortcut(FileEntry fileEntry)
 		throws Exception {
 
+		return addFileShortcut(fileEntry, fileEntry.getFolderId());
+	}
+
+	protected DLFileShortcut addFileShortcut(FileEntry fileEntry, long folderId)
+		throws Exception {
+
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 
 		return DLAppServiceUtil.addFileShortcut(
-			TestPropsValues.getGroupId(), fileEntry.getFolderId(),
-			fileEntry.getFileEntryId(), serviceContext);
+			TestPropsValues.getGroupId(), folderId, fileEntry.getFileEntryId(),
+			serviceContext);
 	}
 
 	protected Folder addFolder(boolean rootFolder, String name)

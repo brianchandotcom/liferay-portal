@@ -2924,7 +2924,6 @@ public class DLAppServiceHttp {
 
 	public static com.liferay.portlet.documentlibrary.model.DLFileShortcut moveFileShortcutFromTrash(
 		HttpPrincipal httpPrincipal, long fileShortcutId, long newFolderId,
-		long toFileEntryId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -2934,7 +2933,7 @@ public class DLAppServiceHttp {
 					_moveFileShortcutFromTrashParameterTypes76);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					fileShortcutId, newFolderId, toFileEntryId, serviceContext);
+					fileShortcutId, newFolderId, serviceContext);
 
 			Object returnObj = null;
 
@@ -4199,7 +4198,7 @@ public class DLAppServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _moveFileShortcutFromTrashParameterTypes76 = new Class[] {
-			long.class, long.class, long.class,
+			long.class, long.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _moveFileShortcutToTrashParameterTypes77 = new Class[] {

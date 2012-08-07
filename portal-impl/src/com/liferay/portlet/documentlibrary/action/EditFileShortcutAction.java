@@ -170,8 +170,7 @@ public class EditFileShortcutAction extends PortletAction {
 
 		if (moveFromTrash) {
 			DLAppServiceUtil.moveFileShortcutFromTrash(
-				fileShortcutId, newFolderId, fileShortcut.getToFileEntryId(),
-				serviceContext);
+				fileShortcutId, newFolderId, serviceContext);
 		}
 		else {
 			DLAppServiceUtil.updateFileShortcut(

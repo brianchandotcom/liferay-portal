@@ -819,16 +819,16 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 		return _dlFolder.getTrashFolder();
 	}
 
-	public boolean isInTrashFolder() {
-		return _dlFolder.isInTrashFolder();
-	}
-
 	public boolean hasInheritableLock() {
 		return _dlFolder.hasInheritableLock();
 	}
 
 	public boolean hasLock() {
 		return _dlFolder.hasLock();
+	}
+
+	public boolean isInTrashFolder() {
+		return _dlFolder.isInTrashFolder();
 	}
 
 	public boolean isLocked() {

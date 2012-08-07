@@ -372,12 +372,12 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 	@Test
 	public void testSearchFileInRootFolder() throws Exception {
-		testSearchFile(true);
+		searchFile(true);
 	}
 
 	@Test
 	public void testSearchFileInSubFolder() throws Exception {
-		testSearchFile(false);
+		searchFile(false);
 	}
 
 	@Test
@@ -467,7 +467,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		}
 	}
 
-	protected void testSearchFile(boolean rootFolder) throws Exception {
+	protected void searchFile(boolean rootFolder) throws Exception {
 		addFileEntry(rootFolder);
 
 		Thread.sleep(1000 * TestPropsValues.JUNIT_DELAY_FACTOR);

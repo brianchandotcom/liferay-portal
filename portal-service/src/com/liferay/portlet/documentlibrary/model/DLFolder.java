@@ -49,11 +49,11 @@ public interface DLFolder extends DLFolderModel, PersistedModel {
 
 	public com.liferay.portlet.documentlibrary.model.DLFolder getTrashFolder();
 
-	public boolean isInTrashFolder();
-
 	public boolean hasInheritableLock();
 
 	public boolean hasLock();
+
+	public boolean isInTrashFolder();
 
 	public boolean isLocked();
 

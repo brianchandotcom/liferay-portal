@@ -1844,13 +1844,13 @@ public class DLAppServiceUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileShortcut moveFileShortcutFromTrash(
-		long fileShortcutId, long newFolderId, long toFileEntryId,
+		long fileShortcutId, long newFolderId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .moveFileShortcutFromTrash(fileShortcutId, newFolderId,
-			toFileEntryId, serviceContext);
+			serviceContext);
 	}
 
 	/**

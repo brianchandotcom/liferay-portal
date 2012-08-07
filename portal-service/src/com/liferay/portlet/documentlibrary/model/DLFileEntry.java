@@ -82,11 +82,11 @@ public interface DLFileEntry extends DLFileEntryModel, PersistedModel {
 
 	public com.liferay.portlet.documentlibrary.model.DLFolder getTrashFolder();
 
-	public boolean isInTrashFolder();
-
 	public boolean hasLock();
 
 	public boolean isCheckedOut();
+
+	public boolean isInTrashFolder();
 
 	public void setExtraSettings(java.lang.String extraSettings);
 

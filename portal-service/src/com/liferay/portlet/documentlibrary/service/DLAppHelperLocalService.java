@@ -151,7 +151,7 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut moveFileShortcutFromTrash(
 		long userId,
 		com.liferay.portlet.documentlibrary.model.DLFileShortcut dlFileShortcut,
-		long newFolderId, long toFileEntryId,
+		long newFolderId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

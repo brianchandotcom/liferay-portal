@@ -25,7 +25,5 @@ if (result instanceof JournalFolder) {
 }
 else {
 	curArticle = (JournalArticle)result;
-
-	curArticle = curArticle.toEscapedModel();
 }
 %>

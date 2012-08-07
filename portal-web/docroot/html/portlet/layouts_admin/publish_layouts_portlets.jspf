@@ -196,7 +196,7 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 								if (controls != null) {
 									String rootPortletId = portlet.getRootPortletId();
 
-									boolean checked = portletDataHandler.isPublishToLiveByDefault();
+									boolean checked = GetterUtil.getBoolean(liveGroupTypeSettings.getProperty(StagingConstants.STAGED_PORTLET + portlet.getRootPortletId()), portletDataHandler.isPublishToLiveByDefault());
 
 									boolean showRenderControls = true;
 

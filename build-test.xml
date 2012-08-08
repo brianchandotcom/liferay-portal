@@ -2545,20 +2545,20 @@ setup.wizard.enabled=false
 
 discussion.subscribe.by.default=false
 
-dl.store.cmis.credentials.username=${dl.hook.cmis.credentials.username}
-dl.store.cmis.credentials.password=${dl.hook.cmis.credentials.password}
-dl.store.cmis.repository.url=${dl.hook.cmis.repository.url}
-dl.store.cmis.system.root.dir=${dl.hook.cmis.system.root.dir}
+#dl.store.cmis.credentials.username=${dl.hook.cmis.credentials.username}
+#dl.store.cmis.credentials.password=${dl.hook.cmis.credentials.password}
+#dl.store.cmis.repository.url=${dl.hook.cmis.repository.url}
+#dl.store.cmis.system.root.dir=${dl.hook.cmis.system.root.dir}
 
-dl.store.file.system.root.dir=${dl.hook.file.system.root.dir}
+dl.store.file.system.root.dir=${liferay.home}/data/document_library
 
-dl.store.jcr.fetch.delay=${dl.hook.jcr.fetch.delay}
-dl.store.jcr.fetch.max.failures=${dl.hook.jcr.fetch.max.failures}
-dl.store.jcr.move.version.labels=${dl.hook.jcr.move.version.labels}
+dl.store.jcr.fetch.delay=500
+dl.store.jcr.fetch.max.failures=5
+dl.store.jcr.move.version.labels=false
 
-dl.store.s3.access.key=${dl.hook.s3.access.key}
-dl.store.s3.secret.key=${dl.hook.s3.secret.key}
-dl.store.s3.bucket.name=${dl.hook.s3.bucket.name}
+dl.store.s3.access.key=
+dl.store.s3.secret.key=
+dl.store.s3.bucket.name=
 
 message.boards.subscribe.by.default=false</echo>
 			</then>
@@ -2618,20 +2618,20 @@ setup.wizard.enabled=false
 
 discussion.subscribe.by.default=false
 
-dl.store.cmis.credentials.username=${dl.hook.cmis.credentials.username}
-dl.store.cmis.credentials.password=${dl.hook.cmis.credentials.password}
-dl.store.cmis.repository.url=${dl.hook.cmis.repository.url}
-dl.store.cmis.system.root.dir=${dl.hook.cmis.system.root.dir}
+#dl.store.cmis.credentials.username=${dl.hook.cmis.credentials.username}
+#dl.store.cmis.credentials.password=${dl.hook.cmis.credentials.password}
+#dl.store.cmis.repository.url=${dl.hook.cmis.repository.url}
+#dl.store.cmis.system.root.dir=${dl.hook.cmis.system.root.dir}
 
-dl.store.file.system.root.dir=${dl.hook.file.system.root.dir}
+dl.store.file.system.root.dir=${liferay.home}/data/document_library
 
-dl.store.jcr.fetch.delay=${dl.hook.jcr.fetch.delay}
-dl.store.jcr.fetch.max.failures=${dl.hook.jcr.fetch.max.failures}
-dl.store.jcr.move.version.labels=${dl.hook.jcr.move.version.labels}
+dl.store.jcr.fetch.delay=500
+dl.store.jcr.fetch.max.failures=5
+dl.store.jcr.move.version.labels=false
 
-dl.store.s3.access.key=${dl.hook.s3.access.key}
-dl.store.s3.secret.key=${dl.hook.s3.secret.key}
-dl.store.s3.bucket.name=${dl.hook.s3.bucket.name}
+dl.store.s3.access.key=
+dl.store.s3.secret.key=
+dl.store.s3.bucket.name=
 
 message.boards.subscribe.by.default=false</echo>
 				</then>
@@ -2663,20 +2663,20 @@ setup.wizard.enabled=false
 
 discussion.subscribe.by.default=false
 
-dl.store.cmis.credentials.username=${dl.hook.cmis.credentials.username}
-dl.store.cmis.credentials.password=${dl.hook.cmis.credentials.password}
-dl.store.cmis.repository.url=${dl.hook.cmis.repository.url}
-dl.store.cmis.system.root.dir=${dl.hook.cmis.system.root.dir}
+#dl.store.cmis.credentials.username=${dl.hook.cmis.credentials.username}
+#dl.store.cmis.credentials.password=${dl.hook.cmis.credentials.password}
+#dl.store.cmis.repository.url=${dl.hook.cmis.repository.url}
+#dl.store.cmis.system.root.dir=${dl.hook.cmis.system.root.dir}
 
-dl.store.file.system.root.dir=${dl.hook.file.system.root.dir}
+dl.store.file.system.root.dir=${liferay.home}/data/document_library
 
-dl.store.jcr.fetch.delay=${dl.hook.jcr.fetch.delay}
-dl.store.jcr.fetch.max.failures=${dl.hook.jcr.fetch.max.failures}
-dl.store.jcr.move.version.labels=${dl.hook.jcr.move.version.labels}
+dl.store.jcr.fetch.delay=500
+dl.store.jcr.fetch.max.failures=5
+dl.store.jcr.move.version.labels=false
 
-dl.store.s3.access.key=${dl.hook.s3.access.key}
-dl.store.s3.secret.key=${dl.hook.s3.secret.key}
-dl.store.s3.bucket.name=${dl.hook.s3.bucket.name}
+dl.store.s3.access.key=
+dl.store.s3.secret.key=
+dl.store.s3.bucket.name=
 
 message.boards.subscribe.by.default=false</echo>
 				</then>

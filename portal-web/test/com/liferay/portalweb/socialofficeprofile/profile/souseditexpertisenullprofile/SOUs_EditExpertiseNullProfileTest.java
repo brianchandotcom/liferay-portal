@@ -59,7 +59,7 @@ public class SOUs_EditExpertiseNullProfileTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//input[contains(@id,'_125_projectsEntryTitle')]")) {
+							"//input[contains(@id,'_2_projectsEntryTitle0')]")) {
 					break;
 				}
 			}
@@ -69,7 +69,7 @@ public class SOUs_EditExpertiseNullProfileTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.type("//input[contains(@id,'_125_projectsEntryTitle')]",
+		selenium.type("//input[contains(@id,'_2_projectsEntryTitle0')]",
 			RuntimeVariables.replace(""));
 
 		for (int second = 0;; second++) {
@@ -79,7 +79,7 @@ public class SOUs_EditExpertiseNullProfileTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//textarea[contains(@id,'_125_projectsEntryDescription')]")) {
+							"//textarea[@id='_2_projectsEntryDescription0']")) {
 					break;
 				}
 			}
@@ -89,7 +89,7 @@ public class SOUs_EditExpertiseNullProfileTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.type("//textarea[contains(@id,'_125_projectsEntryDescription')]",
+		selenium.type("//textarea[@id='_2_projectsEntryDescription0']",
 			RuntimeVariables.replace(""));
 		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Save']",

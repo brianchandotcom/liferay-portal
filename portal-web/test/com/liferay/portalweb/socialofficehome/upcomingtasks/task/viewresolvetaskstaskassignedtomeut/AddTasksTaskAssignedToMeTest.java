@@ -94,8 +94,7 @@ public class AddTasksTaskAssignedToMeTest extends BaseTestCase {
 				}
 
 				selenium.clickAt("//input[@id='_1_WAR_tasksportlet_neverDueCheckbox']",
-					RuntimeVariables.replace(
-						"Enable propagation of changes from the site template."));
+					RuntimeVariables.replace("Never Due"));
 
 			case 2:
 				assertTrue(selenium.isChecked(

@@ -1,3 +1,5 @@
+<%@ page import="com.liferay.portlet.trash.util.TrashUtil" %>
+
 <%--
 /**
  * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
@@ -245,7 +247,12 @@ if (Validator.isNull(redirect)) {
 							<aui:input cssClass="aui-helper-hidden" label="" name='<%= "msgFile" + (i + 1) %>' size="70" type="file" />
 						</td>
 						<td>
-							<img id="<portlet:namespace />removeExisting<%= i + 1 %>" src="<%= themeDisplay.getPathThemeImages() %>/arrows/02_x.png" />
+
+							<%
+							String imagePath = (!TrashUtil.isTrashEnabled(themeDisplay.getScopeGroupId())) ? themeDisplay.getPathThemeImages() + "/arrows/02_x.png" : "/html/icons/trash.png";
+							%>
+
+							<img id="<portlet:namespace />removeExisting<%= i + 1 %>" src="<%= imagePath %>" />
 						</td>
 					</tr>
 
@@ -270,6 +277,28 @@ if (Validator.isNull(redirect)) {
 
 				</table>
 			</aui:field-wrapper>
+		</c:if>
+
+		<c:if test="<%= TrashUtil.isTrashEnabled(themeDisplay.getScopeGroupId()) %>">
+			<portlet:renderURL var="viewTrashAttachmentsURL">
+				<portlet:param name="struts_action" value="/message_boards/view_deleted_message_attachments" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
+			</portlet:renderURL>
+
+			<%
+			String[] deletedAttachments = message.getDeletedAttachmentsFiles();
+			%>
+
+			<c:if test="<%= deletedAttachments.length > 0 %>">
+				<liferay-ui:icon
+					cssClass="trash-attachments"
+					image="delete"
+					label="<%= true %>"
+					message='<%= LanguageUtil.format(pageContext, "x-attachments-in-the-recycle-bin", deletedAttachments.length) %>'
+					url="<%= viewTrashAttachmentsURL %>"
+				/>
+			</c:if>
 		</c:if>
 
 		<c:if test="<%= curParentMessage == null %>">

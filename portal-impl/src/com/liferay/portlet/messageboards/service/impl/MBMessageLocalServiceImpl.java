@@ -88,6 +88,7 @@ import com.liferay.portlet.messageboards.util.comparator.MessageThreadComparator
 import com.liferay.portlet.messageboards.util.comparator.ThreadLastPostDateComparator;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityConstants;
+import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.util.SerializableUtil;
 
 import java.io.InputStream;
@@ -1403,7 +1404,15 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 			for (String fileName : fileNames) {
 				if (!existingFiles.contains(fileName)) {
-					DLStoreUtil.deleteFile(companyId, repositoryId, fileName);
+					if (!TrashUtil.isTrashEnabled(message.getGroupId())) {
+						DLStoreUtil.deleteFile(
+							companyId, repositoryId, fileName);
+					}
+					else {
+						TrashUtil.moveAttachmentToTrash(
+							companyId, repositoryId, fileName,
+							message.getDeletedAttachmentsDir());
+					}
 				}
 			}
 
@@ -1425,6 +1434,17 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 		else {
 			try {
+				if (TrashUtil.isTrashEnabled(message.getGroupId())) {
+					String[] fileNames = DLStoreUtil.getFileNames(
+						companyId, repositoryId, dirName);
+
+					for (String fileName : fileNames) {
+						TrashUtil.moveAttachmentToTrash(
+							companyId, repositoryId, fileName,
+							message.getDeletedAttachmentsDir());
+					}
+				}
+
 				DLStoreUtil.deleteDirectory(companyId, repositoryId, dirName);
 			}
 			catch (NoSuchDirectoryException nsde) {

@@ -48,7 +48,7 @@ public class SOUs3_ConfirmNotificationsAddConnectionTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace(
-				"Joe would like to add you as a connection."),
+				"Joe Bloggs would like to add you as a connection."),
 			selenium.getText("//div[@class='notification-entry']/div/span"));
 		assertEquals(RuntimeVariables.replace("Confirm"),
 			selenium.getText("//div[@class='request']/span/a"));

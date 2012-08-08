@@ -100,6 +100,30 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 		return category;
 	}
 
+	public String getDeletedAttachmentsDir() {
+		if (_deletedAttachmentDirs == null) {
+			_deletedAttachmentDirs = "messageboards/.trashed_" + getMessageId();
+		}
+
+		return _deletedAttachmentDirs;
+	}
+
+	public String[] getDeletedAttachmentsFiles()
+			throws PortalException, SystemException {
+
+		String[] fileNames = new String[0];
+
+		try {
+			fileNames = DLStoreUtil.getFileNames(
+				getCompanyId(), CompanyConstants.SYSTEM,
+				getDeletedAttachmentsDir());
+		}
+		catch (NoSuchDirectoryException nsde) {
+		}
+
+		return fileNames;
+	}
+
 	public MBThread getThread() throws PortalException, SystemException {
 		return MBThreadLocalServiceUtil.getThread(getThreadId());
 	}
@@ -159,5 +183,7 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 	private static Log _log = LogFactoryUtil.getLog(MBMessageImpl.class);
 
 	private String _attachmentDirs;
+
+	private String _deletedAttachmentDirs;
 
 }

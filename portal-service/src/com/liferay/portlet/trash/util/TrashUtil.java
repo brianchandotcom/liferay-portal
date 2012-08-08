@@ -71,6 +71,44 @@ public class TrashUtil {
 		return getTrash().isTrashEnabled(groupId);
 	}
 
+	public static void moveAttachmentFromTrash(
+			long companyId, long repositoryId, String deletedFileName,
+			String attachmentsDir)
+		throws PortalException, SystemException {
+
+		getTrash().moveAttachmentFromTrash(
+			companyId, repositoryId, deletedFileName, attachmentsDir);
+	}
+
+	public static void moveAttachmentFromTrash(
+			long companyId, long repositoryId, String deletedFileName,
+			String attachmentsDir, String separator)
+		throws PortalException, SystemException {
+
+		getTrash().moveAttachmentFromTrash(
+			companyId, repositoryId, deletedFileName, attachmentsDir,
+			separator);
+	}
+
+	public static String moveAttachmentToTrash(
+			long companyId, long repositoryId, String fileName,
+			String deletedAttachmentsDir)
+		throws PortalException, SystemException {
+
+		return getTrash().moveAttachmentToTrash(
+			companyId, repositoryId, fileName, deletedAttachmentsDir);
+	}
+
+	public static String moveAttachmentToTrash(
+			long companyId, long repositoryId, String fileName,
+			String deletedAttachmentsDir, String separator)
+		throws PortalException, SystemException {
+
+		return getTrash().moveAttachmentToTrash(
+			companyId, repositoryId, fileName, deletedAttachmentsDir,
+			separator);
+	}
+
 	public void setTrash(Trash trash) {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 

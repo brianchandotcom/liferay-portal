@@ -22,6 +22,7 @@ import com.liferay.portalweb.socialoffice.users.user.selectregularrolessouser.Se
 import com.liferay.portalweb.socialoffice.users.user.signinso.SOUs_SignInSOTest;
 import com.liferay.portalweb.socialoffice.users.user.signinso.SignInSOTest;
 import com.liferay.portalweb.socialoffice.users.user.signinso.SignOutSOTest;
+import com.liferay.portalweb.socialofficehome.microblogs.mbentry.addmicroblogscontent150character.TearDownWHEntryContentTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -44,8 +45,8 @@ public class SOUs_RepostMicroblogsContentProfileTests extends BaseTestSuite {
 		testSuite.addTestSuite(SOUs_ViewRepostMicroblogsContentTest.class);
 		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SignInSOTest.class);
-		testSuite.addTestSuite(ViewReplyMicroblogsContentTest.class);
-		testSuite.addTestSuite(ViewReplyMicroblogsContentNotificationsTest.class);
+		testSuite.addTestSuite(ViewRepostActivitiesProfileTest.class);
+		testSuite.addTestSuite(ViewSOURepostMBContentProfileTest.class);
 		testSuite.addTestSuite(TearDownWHEntryContentTest.class);
 		testSuite.addTestSuite(TearDownSOUserTest.class);
 

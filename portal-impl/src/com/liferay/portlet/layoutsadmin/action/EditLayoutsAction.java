@@ -75,6 +75,7 @@ import com.liferay.portal.service.LayoutRevisionLocalServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
+import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.ThemeLocalServiceUtil;
@@ -98,6 +99,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -905,6 +907,15 @@ public class EditLayoutsAction extends PortletAction {
 			UnicodeProperties formTypeSettingsProperties =
 				PropertiesParamUtil.getProperties(
 					actionRequest, "TypeSettingsProperties--");
+
+			String[] removeEmbeddedPortletIds = ParamUtil.getParameterValues(
+				actionRequest, "removeEmbeddedPortletIds");
+
+			for (String portletId : removeEmbeddedPortletIds) {
+				PortletLocalServiceUtil.removePortletByPreferences(
+					layout.getPlid(), themeDisplay.getCompanyId(),
+					portletId);
+			}
 
 			if (type.equals(LayoutConstants.TYPE_PORTLET)) {
 				LayoutTypePortlet layoutTypePortlet =

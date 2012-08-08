@@ -608,8 +608,7 @@ AUI.add(
 												doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
 												p_l_id: themeDisplay.getPlid(),
 												p_p_id: 87,
-												p_p_state: 'exclusive',
-												runtimePortletIds: Liferay.Portlet.runtimePortletIds.join()
+												p_p_state: 'exclusive'
 											},
 											uri: themeDisplay.getPathMain() + '/portal/render_portlet'
 										},

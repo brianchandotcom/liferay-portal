@@ -14,6 +14,11 @@
 
 package com.liferay.portalweb.demo.media.dmkaleo2workflow;
 
+import com.liferay.portalweb.demo.media.dmdocumenttypemusic.AddDMDocumentTypeMusicTest;
+import com.liferay.portalweb.demo.media.dmdocumenttypemusic.AddDMMetadataSetSongInformationTest;
+import com.liferay.portalweb.demo.media.dmdocumenttypemusic.ConfigureDMMaximumFileSizeCPTest;
+import com.liferay.portalweb.demo.media.dmdocumenttypemusic.TearDownDMDocumentTypeTest;
+import com.liferay.portalweb.demo.media.dmdocumenttypemusic.TearDownDMMetadataSetTest;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.AddUserTest;
 import com.liferay.portalweb.portal.controlpanel.users.user.adduser.TearDownUserTest;
@@ -34,6 +39,7 @@ import junit.framework.TestSuite;
 public class DMKaleo2WorkflowTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
+		testSuite.addTestSuite(ConfigureDMMaximumFileSizeCPTest.class);
 		testSuite.addTestSuite(AddPageDMTest.class);
 		testSuite.addTestSuite(AddPortletDMTest.class);
 		testSuite.addTestSuite(AddUserTest.class);
@@ -64,8 +70,16 @@ public class DMKaleo2WorkflowTests extends BaseTestSuite {
 		testSuite.addTestSuite(User_ViewApproveDMFolderDocumentDocTest.class);
 		testSuite.addTestSuite(User_SignOutTest.class);
 		testSuite.addTestSuite(SignInTest.class);
+		testSuite.addTestSuite(AddDMFolderMusicTest.class);
+		testSuite.addTestSuite(AddDMFolderMusicSubfolderTest.class);
+		testSuite.addTestSuite(AddDMMetadataSetSongInformationTest.class);
+		testSuite.addTestSuite(AddDMDocumentTypeMusicTest.class);
+		testSuite.addTestSuite(EditDMFolderMusicSubfolderDefaultWorkflowSingleApproverTest.class);
+		testSuite.addTestSuite(AddDMFolderMusicSubfolderMusicTest.class);
 		testSuite.addTestSuite(TearDownDMHomeFolderTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);
+		testSuite.addTestSuite(TearDownDMDocumentTypeTest.class);
+		testSuite.addTestSuite(TearDownDMMetadataSetTest.class);
 		testSuite.addTestSuite(TearDownDMFolderTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

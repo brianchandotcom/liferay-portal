@@ -18,7 +18,7 @@
 	<property name="gpg.executable" value="gpg${gpg.extension}" />
 	<property name="mvn.goal.deploy-file" value="deploy:deploy-file" />
 	<property name="mvn.goal.install-file" value="install:install-file" />
-	<property name="mvn.goal.sign-and-deploy" value="gpg:sign-and-deploy-file" />
+	<property name="mvn.goal.sign-and-deploy" value="org.apache.maven.plugins:maven-gpg-plugin:1.4:sign-and-deploy-file" />
 
 	<condition property="maven.extension" value=".bat" else="">
 		<contains string="${os.name}" substring="Windows" casesensitive="false" />

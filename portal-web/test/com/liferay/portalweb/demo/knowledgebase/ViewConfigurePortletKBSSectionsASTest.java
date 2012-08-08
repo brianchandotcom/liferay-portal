@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.demo.fundamentals.knowledgebase;
+package com.liferay.portalweb.demo.knowledgebase;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ViewSelectKBAArticleSectionsCMKBArTest extends BaseTestCase {
-	public void testViewSelectKBAArticleSectionsCMKBAr()
+public class ViewConfigurePortletKBSSectionsASTest extends BaseTestCase {
+	public void testViewConfigurePortletKBSSectionsAS()
 		throws Exception {
 		selenium.open("/web/guest/home/");
 
@@ -31,7 +31,7 @@ public class ViewSelectKBAArticleSectionsCMKBArTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("link=Knowledge Base Article Test Page")) {
+				if (selenium.isVisible("link=Knowledge Base Section Test Page")) {
 					break;
 				}
 			}
@@ -41,13 +41,20 @@ public class ViewSelectKBAArticleSectionsCMKBArTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Knowledge Base Article Test Page",
-			RuntimeVariables.replace("Knowledge Base Article Test Page"));
+		selenium.clickAt("link=Knowledge Base Section Test Page",
+			RuntimeVariables.replace("Knowledge Base Section Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Knowledge Base Article 1"),
+		assertEquals(RuntimeVariables.replace("Application Server"),
+			selenium.getText("//div[@class='kb-articles-sections-title']"));
+		assertEquals(RuntimeVariables.replace("The third"),
+			selenium.getText("//div[@class='kb-articles']/div/span/a/span"));
+		selenium.clickAt("//div[@class='kb-articles']/div/span/a/span",
+			RuntimeVariables.replace("The third"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("The third"),
 			selenium.getText("//div[@class='kb-title']"));
 		assertEquals(RuntimeVariables.replace(
-				"This is the content of Article 1"),
+				"Number three detailing the specifics of Tomcat and Jboss"),
 			selenium.getText("//div[@class='kb-entity-body']/p"));
 	}
 }

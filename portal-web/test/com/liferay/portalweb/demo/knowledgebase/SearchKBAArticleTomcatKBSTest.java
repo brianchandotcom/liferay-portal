@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.demo.fundamentals.knowledgebase;
+package com.liferay.portalweb.demo.knowledgebase;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,10 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ViewEditKBAArticleSectionsPortletsAttachmentTest
-	extends BaseTestCase {
-	public void testViewEditKBAArticleSectionsPortletsAttachment()
-		throws Exception {
+public class SearchKBAArticleTomcatKBSTest extends BaseTestCase {
+	public void testSearchKBAArticleTomcatKBS() throws Exception {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -32,7 +30,7 @@ public class ViewEditKBAArticleSectionsPortletsAttachmentTest
 			}
 
 			try {
-				if (selenium.isVisible("link=Knowledge Base Display Test Page")) {
+				if (selenium.isVisible("link=Knowledge Base Search Test Page")) {
 					break;
 				}
 			}
@@ -42,16 +40,17 @@ public class ViewEditKBAArticleSectionsPortletsAttachmentTest
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("link=Knowledge Base Display Test Page",
-			RuntimeVariables.replace("Knowledge Base Display Test Page"));
+		selenium.clickAt("link=Knowledge Base Search Test Page",
+			RuntimeVariables.replace("Knowledge Base Search Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("KB Admin Article"),
-			selenium.getText("//tr[3]/td[2]/a"));
-		selenium.clickAt("//tr[3]/td[2]/a",
-			RuntimeVariables.replace("KB Admin Article"));
+		selenium.type("//input[@id='_5_WAR_knowledgebaseportlet_keywords']",
+			RuntimeVariables.replace("tomcat"));
+		selenium.clickAt("//input[@value='Search']",
+			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("test_image.jpg (12.9k)"),
-			selenium.getText(
-				"//div[@class='kb-article-attachments']/div/span/a/span"));
+		assertEquals(RuntimeVariables.replace("The third"),
+			selenium.getText("//td[1]/a"));
+		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
+			selenium.getText("//td[2]/a"));
 	}
 }

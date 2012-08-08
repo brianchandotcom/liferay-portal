@@ -736,7 +736,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 				SearchEngineUtil.getEntryClassNames());
 
 			if (groupId > 0) {
-				searchContext.setGroupIds(new long[]{groupId});
+				searchContext.setGroupIds(new long[] {groupId});
 			}
 
 			searchContext.setKeywords(keywords);

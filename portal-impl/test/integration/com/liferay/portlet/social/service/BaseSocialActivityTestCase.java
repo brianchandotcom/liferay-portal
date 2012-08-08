@@ -47,7 +47,8 @@ public class BaseSocialActivityTestCase {
 
 		String xml = new String(FileUtil.getBytes(inputStream));
 
-		SocialConfigurationUtil.read(clazz.getClassLoader(), new String[]{xml});
+		SocialConfigurationUtil.read(
+			clazz.getClassLoader(), new String[] {xml});
 	}
 
 	public static void tearDown() throws Exception {

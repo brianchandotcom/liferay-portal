@@ -215,7 +215,7 @@ public class SitesUtil {
 
 		parameterMap.put(
 			PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS,
-			new String[]{Boolean.FALSE.toString()});
+			new String[] {Boolean.FALSE.toString()});
 
 		File file = LayoutLocalServiceUtil.exportLayoutsAsFile(
 			sourceLayout.getGroupId(), sourceLayout.isPrivateLayout(),

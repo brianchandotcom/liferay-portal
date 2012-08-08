@@ -24,6 +24,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import java.util.concurrent.Future;
+
 /**
  * The Image utility class.
  *
@@ -46,7 +48,9 @@ public class ImageToolUtil {
 	 *         to begin with or (2) there was an error in the conversion
 	 *         process.
 	 */
-	public static RenderedImage convertCMYKtoRGB(byte[] bytes, String type) {
+	public static Future<RenderedImage> convertCMYKtoRGB(
+			byte[] bytes, String type) {
+
 		return getImageTool().convertCMYKtoRGB(bytes, type);
 	}
 

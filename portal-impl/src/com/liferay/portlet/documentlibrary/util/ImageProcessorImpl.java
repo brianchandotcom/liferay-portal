@@ -44,6 +44,7 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Set;
 import java.util.Vector;
+import java.util.concurrent.Future;
 
 /**
  * @author Sergio González
@@ -179,6 +180,8 @@ public class ImageProcessorImpl
 	public void trigger(
 		FileVersion sourceFileVersion, FileVersion destinationFileVersion) {
 
+		super.trigger(sourceFileVersion, destinationFileVersion);
+
 		_queueGeneration(sourceFileVersion, destinationFileVersion);
 	}
 
@@ -271,8 +274,15 @@ public class ImageProcessorImpl
 			}
 
 			if (renderedImage.getColorModel().getNumComponents() == 4) {
-				RenderedImage convertedRenderedImage =
-					ImageToolUtil.convertCMYKtoRGB(bytes, imageBag.getType());
+				Future<RenderedImage> future = ImageToolUtil.convertCMYKtoRGB(
+					bytes, imageBag.getType());
+
+				String processIdentity = Long.toString(
+					destinationFileVersion.getFileVersionId());
+
+				managedProcesses.put(processIdentity, future);
+
+				RenderedImage convertedRenderedImage = future.get();
 
 				if (convertedRenderedImage != null) {
 					renderedImage = convertedRenderedImage;

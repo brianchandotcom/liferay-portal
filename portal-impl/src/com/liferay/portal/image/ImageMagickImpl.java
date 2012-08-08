@@ -18,7 +18,9 @@ import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.image.ImageMagick;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.NamedThreadFactory;
 import com.liferay.portal.kernel.util.OSDetector;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -219,6 +221,11 @@ public class ImageMagickImpl implements ImageMagick {
 		synchronized (ProcessExecutor.class) {
 			if (_processExecutor == null) {
 				_processExecutor = new ProcessExecutor();
+
+				_processExecutor.setThreadFactory(
+					new NamedThreadFactory(
+						ImageMagickImpl.class.getName(), Thread.MIN_PRIORITY,
+						PortalClassLoaderUtil.getClassLoader()));
 			}
 		}
 

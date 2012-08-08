@@ -44,7 +44,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import java.util.Enumeration;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import javax.imageio.ImageIO;
 
@@ -64,7 +67,7 @@ public class ImageToolImpl implements ImageTool {
 		return _instance;
 	}
 
-	public RenderedImage convertCMYKtoRGB(byte[] bytes, String type) {
+	public Future<RenderedImage> convertCMYKtoRGB(byte[] bytes, String type) {
 		ImageMagick imageMagick = getImageMagick();
 
 		if (!imageMagick.isEnabled()) {
@@ -95,13 +98,10 @@ public class ImageToolImpl implements ImageTool {
 				imOperation.addImage(inputFile.getPath());
 				imOperation.addImage(outputFile.getPath());
 
-				Future future = imageMagick.convert(imOperation.getCmdArgs());
+				Future<?> future = imageMagick.convert(
+					imOperation.getCmdArgs());
 
-				future.get();
-
-				bytes = _fileUtil.getBytes(outputFile);
-
-				return read(bytes, type);
+				return new RenderedImageFuture(future, outputFile, type);
 			}
 		}
 		catch (Exception e) {
@@ -460,5 +460,69 @@ public class ImageToolImpl implements ImageTool {
 
 	private static FileImpl _fileUtil = FileImpl.getInstance();
 	private static ImageMagick _imageMagick;
+
+	private class RenderedImageFuture implements Future<RenderedImage> {
+
+		public RenderedImageFuture(
+			Future<?> future, File outputFile, String type) {
+
+			_future = future;
+			_outputFile = outputFile;
+			_type = type;
+		}
+
+		public boolean cancel(boolean mayInterruptIfRunning) {
+			if (_future.isCancelled() || _future.isDone()) {
+				return false;
+			}
+
+			_future.cancel(true);
+
+			return true;
+		}
+
+		public boolean isCancelled() {
+			return _future.isCancelled();
+		}
+
+		public boolean isDone() {
+			return _future.isDone();
+		}
+
+		public RenderedImage get()
+			throws ExecutionException, InterruptedException {
+
+			_future.get();
+
+			byte[] bytes = new byte[0];
+			try {
+				bytes = _fileUtil.getBytes(_outputFile);
+			} catch (IOException e) {
+				throw new ExecutionException(e);
+			}
+
+			return read(bytes, _type);
+		}
+
+		public RenderedImage get(long timeout, TimeUnit unit)
+			throws ExecutionException, InterruptedException, TimeoutException {
+
+			_future.get(timeout, unit);
+
+			byte[] bytes = new byte[0];
+			try {
+				bytes = _fileUtil.getBytes(_outputFile);
+			} catch (IOException e) {
+				throw new ExecutionException(e);
+			}
+
+			return read(bytes, _type);
+		}
+
+		private final Future<?> _future;
+		private final File _outputFile;
+		private final String _type;
+
+	}
 
 }

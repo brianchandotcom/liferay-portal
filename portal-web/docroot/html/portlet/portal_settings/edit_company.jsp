@@ -77,6 +77,7 @@ request.setAttribute("websites.classPK", company.getAccountId());
 
 		<portlet:namespace />saveLdap();
 		<portlet:namespace />saveEmails();
+		<portlet:namespace />saveLocales();
 
 		submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/portal_settings/edit_company" /></portlet:actionURL>");
 	}

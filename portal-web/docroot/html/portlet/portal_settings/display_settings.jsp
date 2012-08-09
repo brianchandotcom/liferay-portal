@@ -57,7 +57,47 @@ String defaultControlPanelThemeId = PrefsPropsUtil.getString(company.getCompanyI
 
 	</aui:select>
 
-	<aui:input cssClass="lfr-input-text-container" label="available-languages" name='<%= "settings--" + PropsKeys.LOCALES + "--" %>' type="text" value="<%= availableLocales %>" />
+	<aui:fieldset cssClass="available-languages" label="available-languages">
+		<aui:input name='<%= "settings--" + PropsKeys.LOCALES + "--" %>' type="hidden" value="<%= availableLocales %>" />
+
+		<%
+		Set<String> availableLanguageIdsSet = SetUtil.fromArray(PropsValues.LOCALES);
+
+		// Left list
+
+		List leftList = new ArrayList();
+
+		for (int i = 0; i < languageIds.length; i++) {
+			String curLanguageId = languageIds[i];
+
+			leftList.add(new KeyValuePair(curLanguageId, LocaleUtil.fromLanguageId(curLanguageId).getDisplayName(locale)));
+		}
+
+		// Right list
+
+		List rightList = new ArrayList();
+
+		Arrays.sort(languageIds);
+
+		for (String curLanguageId : availableLanguageIdsSet) {
+			if (Arrays.binarySearch(languageIds, curLanguageId) < 0) {
+				rightList.add(new KeyValuePair(curLanguageId, LocaleUtil.fromLanguageId(curLanguageId).getDisplayName(locale)));
+			}
+		}
+
+		rightList = ListUtil.sort(rightList, new KeyValuePairComparator(false, true));
+		%>
+
+		<liferay-ui:input-move-boxes
+			leftBoxName="currentLanguageIds"
+			leftList="<%= leftList %>"
+			leftReorder="true"
+			leftTitle="current"
+			rightBoxName="availableLanguageIds"
+			rightList="<%= rightList %>"
+			rightTitle="available"
+		/>
+	</aui:fieldset>
 
 	<aui:input label="time-zone" name="timeZoneId" type="timeZone" value="<%= timeZoneId %>" />
 </aui:fieldset>
@@ -163,3 +203,14 @@ boolean deployed = false;
 		</c:if>
 	</aui:select>
 </aui:fieldset>
+
+<aui:script use="liferay-util-list-fields">
+	Liferay.provide(
+		window,
+		'<portlet:namespace />saveLocales',
+		function() {
+			document.<portlet:namespace />fm.<portlet:namespace /><%= PropsKeys.LOCALES %>.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentLanguageIds);
+		},
+		['liferay-util-list-fields']
+	);
+</aui:script>

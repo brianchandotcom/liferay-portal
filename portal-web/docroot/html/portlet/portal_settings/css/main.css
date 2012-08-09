@@ -1,0 +1,18 @@
+.portlet-users-admin {
+	.available-languages {
+		margin-top: 1em;
+
+		.aui-fieldset-legend {
+			font-size: 100%;
+		}
+
+		.aui-legend {
+			border-bottom-width: 0;
+		}
+
+		legend {
+			padding: 0;
+			padding-bottom: 0.5em;
+		}
+	}
+}

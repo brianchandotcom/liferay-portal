@@ -38,6 +38,7 @@ import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashVersion;
 import com.liferay.portlet.trash.service.base.TrashEntryLocalServiceBaseImpl;
 import com.liferay.portlet.trash.util.TrashUtil;
+import com.liferay.portlet.wiki.model.WikiPageConstants;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -378,15 +379,16 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 			String fileTitle = StringUtil.extractLast(
 				fileName, StringPool.FORWARD_SLASH);
 
-			if (fileTitle.startsWith(".trashed_")) {
+			if (fileTitle.startsWith(TrashUtil.TRASH_ATTACHMENTS_DIR)) {
 				String[] attachmentFileNames = DLStoreUtil.getFileNames(
-					companyId, repositoryId, "wiki/" + fileTitle);
+					companyId, repositoryId,
+					WikiPageConstants.BASE_ATTACHMENTS_DIR + fileTitle);
 
 				for (String attachmentFileName : attachmentFileNames) {
-					String trashNamespace = DLAppUtil.getTrashNamespace(
+					String trashTime = DLAppUtil.getTrashTime(
 						attachmentFileName, TrashUtil.TRASH_SEPARATOR);
 
-					long timeStamp = GetterUtil.getLong(trashNamespace);
+					long timeStamp = GetterUtil.getLong(trashTime);
 
 					if (timeStamp < date.getTime()) {
 						DLStoreUtil.deleteDirectory(

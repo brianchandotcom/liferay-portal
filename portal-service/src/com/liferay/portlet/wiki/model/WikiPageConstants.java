@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.util.PropsUtil;
  */
 public class WikiPageConstants {
 
+	public static final String BASE_ATTACHMENTS_DIR = "wiki/";
+
 	public static final String DEFAULT_FORMAT = PropsUtil.get(
 		PropsKeys.WIKI_FORMATS_DEFAULT);
 

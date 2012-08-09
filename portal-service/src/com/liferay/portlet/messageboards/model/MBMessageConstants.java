@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.util.PropsUtil;
  */
 public class MBMessageConstants {
 
+	public static final String BASE_ATTACHMENTS_DIR = "messageboards/";
+
 	public static final String DEFAULT_FORMAT = PropsUtil.get(
 		PropsKeys.MESSAGE_BOARDS_MESSAGE_FORMATS_DEFAULT);
 

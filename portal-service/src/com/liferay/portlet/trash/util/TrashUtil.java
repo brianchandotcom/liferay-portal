@@ -29,6 +29,8 @@ import java.util.List;
  */
 public class TrashUtil {
 
+	public static final String TRASH_ATTACHMENTS_DIR = ".trashed_";
+
 	public static final int TRASH_DEFAULT_VALUE = -1;
 
 	public static final int TRASH_DISABLED = 0;

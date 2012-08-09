@@ -57,7 +57,7 @@ public class AddWCARoleTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Regular Role')]")) {
 					break;
 				}
 			}
@@ -69,9 +69,9 @@ public class AddWCARoleTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Regular Role"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Regular Role')]"));
 		selenium.click(RuntimeVariables.replace(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Regular Role')]"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_128_name']",
 			RuntimeVariables.replace("Web Content Administrator"));

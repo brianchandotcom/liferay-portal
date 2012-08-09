@@ -87,7 +87,7 @@ public class EditEntryAction extends PortletAction {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
-			TrashEntry[] trashEntries = null;
+			TrashEntry[] entries = null;
 
 			if (cmd.equals(Constants.DELETE)) {
 				deleteEntries(actionRequest);
@@ -96,13 +96,13 @@ public class EditEntryAction extends PortletAction {
 				emptyTrash(actionRequest);
 			}
 			else if (cmd.equals(Constants.RENAME)) {
-				trashEntries = restoreRename(actionRequest);
+				entries = restoreRename(actionRequest);
 			}
 			else if (cmd.equals(Constants.RESTORE)) {
-				trashEntries = restoreEntries(actionRequest);
+				entries = restoreEntries(actionRequest);
 			}
 			else if (cmd.equals(Constants.OVERRIDE)) {
-				trashEntries = restoreOverride(actionRequest);
+				entries = restoreOverride(actionRequest);
 			}
 			else if (cmd.equals("checkEntry")) {
 				checkEntry(actionRequest, actionResponse);
@@ -114,8 +114,8 @@ public class EditEntryAction extends PortletAction {
 				cmd.equals(Constants.OVERRIDE)) {
 
 				addRestoreData(
-					(LiferayPortletConfig) portletConfig, actionRequest,
-					trashEntries);
+					(LiferayPortletConfig)portletConfig, actionRequest,
+					entries);
 			}
 
 			sendRedirect(actionRequest, actionResponse);
@@ -147,16 +147,16 @@ public class EditEntryAction extends PortletAction {
 		List<String> restoreLinks = new ArrayList<String>();
 		List<String> restoreMessages = new ArrayList<String>();
 
-		for (TrashEntry trashEntry : trashEntries) {
+		for (TrashEntry entry : trashEntries) {
 			TrashHandler trashHandler =
 				TrashHandlerRegistryUtil.getTrashHandler(
-					trashEntry.getClassName());
+					entry.getClassName());
 
 			String restoreLink = trashHandler.getRestoreLink(
-				actionRequest, trashEntry.getClassPK());
+				actionRequest, entry.getClassPK());
 
 			String restoreMessage = trashHandler.getRestoreMessage(
-				actionRequest, trashEntry.getClassPK());
+				actionRequest, entry.getClassPK());
 
 			if (Validator.isNull(restoreLink) ||
 				Validator.isNull(restoreMessage)) {
@@ -251,23 +251,23 @@ public class EditEntryAction extends PortletAction {
 
 		long entryId = ParamUtil.getLong(actionRequest, "entryId");
 
-		TrashEntry[] trashEntry = null;
+		TrashEntry[] entry = null;
 
 		if (entryId > 0) {
-			trashEntry = restoreEntry(entryId);
+			entry = restoreEntry(entryId);
 		}
 		else {
 			long[] restoreEntryIds = StringUtil.split(
 				ParamUtil.getString(actionRequest, "restoreEntryIds"), 0L);
 
-			trashEntry = new TrashEntry[restoreEntryIds.length];
+			entry = new TrashEntry[restoreEntryIds.length];
 
 			for (int i = 0; i < restoreEntryIds.length; i++) {
-				trashEntry[i] = restoreEntry(restoreEntryIds[i])[0];
+				entry[i] = restoreEntry(restoreEntryIds[i])[0];
 			}
 		}
 
-		return trashEntry;
+		return entry;
 	}
 
 	protected TrashEntry[] restoreEntry(long entryId) throws Exception {

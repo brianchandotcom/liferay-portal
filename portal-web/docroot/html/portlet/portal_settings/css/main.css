@@ -7,11 +7,12 @@
 		}
 
 		.aui-legend {
-			border-bottom: 0;
+			border-bottom-width: 0;
 		}
 
 		legend {
-			padding: 0 0 .5em 0;
+			padding: 0;
+			padding-bottom: 0.5em;
 		}
 	}
 }

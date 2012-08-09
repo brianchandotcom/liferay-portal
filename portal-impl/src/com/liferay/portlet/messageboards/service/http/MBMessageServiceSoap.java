@@ -322,6 +322,18 @@ public class MBMessageServiceSoap {
 		}
 	}
 
+	public static void emptyMessageAttachments(long messageId)
+		throws RemoteException {
+		try {
+			MBMessageServiceUtil.emptyMessageAttachments(messageId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.messageboards.model.MBMessageSoap updateMessage(
 		long messageId, java.lang.String subject, java.lang.String body,
 		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs,

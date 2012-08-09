@@ -61,7 +61,7 @@ public class FinderCacheImpl implements CacheRegistryItem, FinderCache {
 	public void clearCache(String className) {
 		clearLocalCache();
 
-		PortalCache portalCache = _getPortalCache(className, false);
+		PortalCache portalCache = _getPortalCache(className, true);
 
 		if (portalCache != null) {
 			portalCache.removeAll();

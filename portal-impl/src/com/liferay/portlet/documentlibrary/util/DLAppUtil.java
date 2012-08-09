@@ -84,6 +84,16 @@ public class DLAppUtil {
 		return mimeType;
 	}
 
+	public static String getTrashTime(String title, String separator) {
+		int index = title.lastIndexOf(separator);
+
+		if (index < 0) {
+			return StringPool.BLANK;
+		}
+
+		return title.substring(index + 1, title.length());
+	}
+
 	public static boolean isMajorVersion(
 		FileVersion previousFileVersion, FileVersion currentFileVersion) {
 
@@ -102,11 +112,11 @@ public class DLAppUtil {
 	public static String stripTrashNamespace(String title, String separator) {
 		int index = title.lastIndexOf(separator);
 
-		if (index >= 0) {
-			title = title.substring(0, index);
+		if (index < 0) {
+			return title;
 		}
 
-		return title;
+		return title.substring(0, index);
 	}
 
 }

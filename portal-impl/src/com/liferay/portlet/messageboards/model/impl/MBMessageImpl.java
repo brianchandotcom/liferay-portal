@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
@@ -31,6 +32,7 @@ import com.liferay.portlet.messageboards.model.MBMessageConstants;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
+import com.liferay.portlet.trash.util.TrashUtil;
 
 /**
  * @author Brian Wing Shun Chan
@@ -47,7 +49,9 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 
 	public String getAttachmentsDir() {
 		if (_attachmentDirs == null) {
-			_attachmentDirs = getThreadAttachmentsDir() + "/" + getMessageId();
+			_attachmentDirs =
+				getThreadAttachmentsDir() + StringPool.FORWARD_SLASH +
+					getMessageId();
 		}
 
 		return _attachmentDirs;
@@ -100,12 +104,38 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 		return category;
 	}
 
+	public String getDeletedAttachmentsDir() {
+		if (_deletedAttachmentDirs == null) {
+			_deletedAttachmentDirs =
+				getThreadAttachmentsDir() + StringPool.FORWARD_SLASH +
+					TrashUtil.TRASH_ATTACHMENTS_DIR + getMessageId();
+		}
+
+		return _deletedAttachmentDirs;
+	}
+
+	public String[] getDeletedAttachmentsFiles()
+			throws PortalException, SystemException {
+
+		String[] fileNames = new String[0];
+
+		try {
+			fileNames = DLStoreUtil.getFileNames(
+				getCompanyId(), CompanyConstants.SYSTEM,
+				getDeletedAttachmentsDir());
+		}
+		catch (NoSuchDirectoryException nsde) {
+		}
+
+		return fileNames;
+	}
+
 	public MBThread getThread() throws PortalException, SystemException {
 		return MBThreadLocalServiceUtil.getThread(getThreadId());
 	}
 
 	public String getThreadAttachmentsDir() {
-		return "messageboards/" + getThreadId();
+		return MBMessageConstants.BASE_ATTACHMENTS_DIR + getThreadId();
 	}
 
 	public String getWorkflowClassName() {
@@ -159,5 +189,7 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 	private static Log _log = LogFactoryUtil.getLog(MBMessageImpl.class);
 
 	private String _attachmentDirs;
+
+	private String _deletedAttachmentDirs;
 
 }

@@ -1146,6 +1146,11 @@
 			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
 		</action>
 
+		<action path="/message_boards/edit_message_attachments" type="com.liferay.portlet.messageboards.action.EditMessageAttachmentsAction">
+			<forward name="portlet.message_boards.edit_message_attachments" path="portlet.message_boards.edit_message_attachments" />
+			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
+		</action>
+
 		<action path="/message_boards/find_category" type="com.liferay.portlet.messageboards.action.FindCategoryAction" />
 
 		<action path="/message_boards/find_message" type="com.liferay.portlet.messageboards.action.FindMessageAction" />
@@ -1176,6 +1181,11 @@
 		<action path="/message_boards/view" type="com.liferay.portlet.messageboards.action.ViewAction">
 			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
 			<forward name="portlet.message_boards.view" path="portlet.message_boards.view" />
+		</action>
+
+		<action path="/message_boards/view_deleted_message_attachments" type="com.liferay.portlet.messageboards.action.EditMessageAttachmentsAction">
+			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
+			<forward name="portlet.message_boards.view_deleted_message_attachments" path="portlet.message_boards.view_deleted_message_attachments" />
 		</action>
 
 		<action path="/message_boards/view_message" type="com.liferay.portlet.messageboards.action.ViewMessageAction">
@@ -1210,6 +1220,11 @@
 			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
 		</action>
 
+		<action path="/message_boards_admin/edit_message_attachments" type="com.liferay.portlet.messageboards.action.EditMessageAttachmentsAction">
+			<forward name="portlet.message_boards.edit_message_attachments" path="portlet.message_boards.edit_message_attachments" />
+			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
+		</action>
+
 		<action path="/message_boards_admin/find_category" type="com.liferay.portlet.messageboards.action.FindCategoryAction" />
 
 		<action path="/message_boards_admin/find_message" type="com.liferay.portlet.messageboards.action.FindMessageAction" />
@@ -1238,6 +1253,11 @@
 		<action path="/message_boards_admin/view" type="com.liferay.portlet.messageboards.action.ViewAction">
 			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
 			<forward name="portlet.message_boards.view" path="portlet.message_boards_admin.view" />
+		</action>
+
+		<action path="/message_boards_admin/view_deleted_message_attachments" type="com.liferay.portlet.messageboards.action.EditMessageAttachmentsAction">
+			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
+			<forward name="portlet.message_boards.view_deleted_message_attachments" path="portlet.message_boards.view_deleted_message_attachments" />
 		</action>
 
 		<action path="/message_boards_admin/view_message" type="com.liferay.portlet.messageboards.action.ViewMessageAction">
@@ -2063,7 +2083,7 @@
 			<forward name="portlet.wiki.view_categorized_pages" path="portlet.wiki.view_categorized_pages" />
 		</action>
 
-		<action path="/wiki/edit_page_attachment" type="com.liferay.portlet.wiki.action.EditPageAttachmentAction">
+		<action path="/wiki/edit_page_attachment" type="com.liferay.portlet.wiki.action.EditPageAttachmentsAction">
 			<forward name="portlet.wiki.edit_page_attachment" path="portlet.wiki.edit_page_attachment" />
 			<forward name="portlet.wiki.error" path="portlet.wiki.error" />
 			<forward name="portlet.wiki.view_categorized_pages" path="portlet.wiki.view_categorized_pages" />
@@ -2211,7 +2231,7 @@
 			<forward name="portlet.wiki.error" path="portlet.wiki.error" />
 		</action>
 
-		<action path="/wiki_admin/edit_page_attachment" type="com.liferay.portlet.wiki.action.EditPageAttachmentAction">
+		<action path="/wiki_admin/edit_page_attachment" type="com.liferay.portlet.wiki.action.EditPageAttachmentsAction">
 			<forward name="portlet.wiki.edit_page_attachment" path="portlet.wiki.edit_page_attachment" />
 			<forward name="portlet.wiki.error" path="portlet.wiki.error" />
 		</action>
@@ -2334,7 +2354,7 @@
 			<forward name="portlet.wiki.error" path="portlet.wiki.error" />
 		</action>
 
-		<action path="/wiki_display/edit_page_attachment" type="com.liferay.portlet.wiki.action.EditPageAttachmentAction">
+		<action path="/wiki_display/edit_page_attachment" type="com.liferay.portlet.wiki.action.EditPageAttachmentsAction">
 			<forward name="portlet.wiki.edit_page_attachment" path="portlet.wiki.edit_page_attachment" />
 			<forward name="portlet.wiki.error" path="portlet.wiki.error" />
 		</action>

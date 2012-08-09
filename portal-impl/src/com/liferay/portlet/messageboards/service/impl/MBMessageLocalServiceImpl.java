@@ -735,6 +735,25 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		return message;
 	}
 
+	public void emptyMessageAttachments(long messageId)
+		throws PortalException, SystemException {
+
+		MBMessage message = getMessage(messageId);
+
+		long companyId = message.getCompanyId();
+		long repositoryId = CompanyConstants.SYSTEM;
+		String dirName = message.getDeletedAttachmentsDir();
+
+		try {
+			DLStoreUtil.deleteDirectory(companyId, repositoryId, dirName);
+		}
+		catch (NoSuchDirectoryException nsde) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(nsde.getMessage());
+			}
+		}
+	}
+
 	public List<MBMessage> getCategoryMessages(
 			long groupId, long categoryId, int status, int start, int end)
 		throws SystemException {

@@ -1,6 +1,3 @@
-<%@ page import="com.liferay.portlet.documentlibrary.util.DLAppUtil" %>
-<%@ page import="com.liferay.portlet.documentlibrary.util.DLUtil" %>
-
 <%--
 /**
  * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
@@ -55,6 +52,18 @@ List attachmentsList = ListUtil.fromArray(attachments);
 	title="deleted-attachments"
 />
 
+<portlet:actionURL var="emptyTrashURL">
+	<portlet:param name="struts_action" value="/message_boards/edit_message_attachments" />
+	<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
+</portlet:actionURL>
+
+<liferay-ui:trash-empty
+	confirmMessage="are-you-sure-you-want-to-delete-the-attachments-for-this-message"
+	emptyMessage="delete-the-attachments-for-this-message"
+	portletURL="<%= emptyTrashURL.toString() %>"
+	totalEntries="<%= attachments.length %>"
+/>
+
 <liferay-ui:search-container
 	emptyResultsMessage="this-message-does-not-have-any-file-attachments-in-the-recycle-bin"
 	iteratorURL="<%= iteratorURL %>"
@@ -79,12 +88,14 @@ List attachmentsList = ListUtil.fromArray(attachments);
 		row.setObject(new Object[] {categoryId, messageId, fileName});
 
 		row.setPrimaryKey(fileName);
+
+		String displayName = DLAppUtil.stripTrashNamespace(shortFileName, StringPool.UNDERLINE);
 		%>
 
 		<liferay-ui:search-container-column-text
 			name="file-name"
 		>
-			<img align="left" border="0" src="<%= themeDisplay.getPathThemeImages() %>/file_system/small/<%= DLUtil.getFileIcon(shortFileName) %>.png"> <%= DLAppUtil.stripTrashNamespace(shortFileName, StringPool.UNDERLINE) %>
+			<img align="left" border="0" src="<%= themeDisplay.getPathThemeImages() %>/file_system/small/<%= DLUtil.getFileIcon(FileUtil.getExtension(displayName)) %>.png"> <%= displayName %>
 		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-text

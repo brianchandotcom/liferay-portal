@@ -112,7 +112,14 @@ PortletDisplayTemplateHandler portletDisplayTemplateHandler = PortletDisplayTemp
 
 	<aui:input name="preferences--enablePermissions--" type="checkbox" value="<%= enablePermissions %>" />
 
-	<aui:input name="preferences--enableRelatedAssets--" type="checkbox" value="<%= enableRelatedAssets %>" />
+	<c:choose>
+		<c:when test="<%= rootPortletId.equals(PortletKeys.RELATED_ASSETS) %>">
+			<aui:input name="preferences--enableRelatedAssets--" type="hidden" value="<%= enableRelatedAssets %>" />
+		</c:when>
+		<c:otherwise>
+			<aui:input name="preferences--enableRelatedAssets--" type="checkbox" value="<%= enableRelatedAssets %>" />
+		</c:otherwise>
+	</c:choose>
 
 	<aui:input name="preferences--enableRatings--" type="checkbox" value="<%= enableRatings %>" />
 

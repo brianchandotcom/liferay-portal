@@ -42,7 +42,7 @@ row.addText(dateFormatDateTime.format(curArticle.getDisplayDate()));
 
 // Author
 
-row.addText(HtmlUtil.escape(PortalUtil.getUserName(curArticle.getUserId(), curArticle.getUserName())));
+row.addText(PortalUtil.getUserName(curArticle));
 
 // Action
 

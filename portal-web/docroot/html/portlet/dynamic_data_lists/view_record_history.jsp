@@ -89,7 +89,7 @@ portletURL.setParameter("recordId", String.valueOf(record.getRecordId()));
 
 		// Author
 
-		row.addText(HtmlUtil.escape(PortalUtil.getUserName(recordVersion.getUserId(), recordVersion.getUserName())), rowURL);
+		row.addText(PortalUtil.getUserName(recordVersion), rowURL);
 
 		// Action
 

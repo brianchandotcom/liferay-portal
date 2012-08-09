@@ -100,7 +100,7 @@ for (int i = 0; i < results.size(); i++) {
 
 	// Author
 
-	row.addText(HtmlUtil.escape(PortalUtil.getUserName(article.getUserId(), article.getUserName())), rowHREF);
+	row.addText(HtmlUtil.escape(PortalUtil.getUserName(article)), rowHREF);
 
 	// Add result row
 

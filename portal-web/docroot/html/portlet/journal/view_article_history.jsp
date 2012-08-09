@@ -148,7 +148,7 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 
 				// Author
 
-				row.addText(HtmlUtil.escape(PortalUtil.getUserName(articleVersion.getUserId(), articleVersion.getUserName())), rowURL);
+				row.addText(PortalUtil.getUserName(articleVersion), rowURL);
 
 				// Action
 

@@ -69,7 +69,7 @@ if (treeWalker.isOdd()) {
 				</c:choose>
 			</c:when>
 			<c:otherwise>
-				<%= HtmlUtil.escape(PortalUtil.getUserName(message.getUserId(), message.getUserName())) %>
+				<%= HtmlUtil.escape(PortalUtil.getUserName(message)) %>
 			</c:otherwise>
 		</c:choose>
 

@@ -22,6 +22,9 @@ import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileShortcutLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.util.DLUtil;
+
+import javax.portlet.PortletRequest;
 
 /**
  * Represents the trash handler for the file shortcut entity.
@@ -63,6 +66,26 @@ public class DLFileShortcutTrashHandler extends BaseTrashHandler {
 	 */
 	public String getClassName() {
 		return CLASS_NAME;
+	}
+
+	public String getRestoreLink(PortletRequest portletRequest, long classPK)
+		throws PortalException, SystemException {
+
+		DLFileShortcut fileShortcut =
+			DLFileShortcutLocalServiceUtil.getDLFileShortcut(classPK);
+
+		return DLUtil.getDLControlPanelLink(
+			portletRequest, fileShortcut.getFolderId());
+	}
+
+	public String getRestoreMessage(PortletRequest portletRequest, long classPK)
+		throws PortalException, SystemException {
+
+		DLFileShortcut fileShortcut =
+			DLFileShortcutLocalServiceUtil.getDLFileShortcut(classPK);
+
+		return DLUtil.getAbsolutePath(
+			portletRequest, fileShortcut.getFolderId());
 	}
 
 	/**

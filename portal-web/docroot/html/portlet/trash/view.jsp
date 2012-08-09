@@ -37,6 +37,39 @@ portletURL.setParameter("struts_action", "/trash/view");
 portletURL.setParameter("tabs1", tabs1);
 %>
 
+<c:if test="<%= SessionMessages.contains(renderRequest, portletDisplay.getId() + SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA) %>">
+
+	<%
+	Map<String, List<String>> data = (HashMap<String, List<String>>)SessionMessages.get(renderRequest, portletDisplay.getId() + SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA);
+
+	String successMessage = null;
+
+	List<String> restoreLinks = data.get("restoreLinks");
+	List<String> restoreMessages = data.get("restoreMessages");
+
+	if ((data != null) && (restoreLinks != null) && (restoreMessages != null) && (restoreLinks.size() > 0) && (restoreMessages.size() > 0)) {
+		StringBundler sb = new StringBundler(5 * restoreMessages.size());
+
+		for (int i = 0; i < restoreLinks.size(); i++) {
+			sb.append("<a href=\"");
+			sb.append(restoreLinks.get(i));
+			sb.append("\">");
+			sb.append(restoreMessages.get(i));
+			sb.append("</a> ");
+		}
+
+		successMessage = LanguageUtil.format(pageContext, "the-item-has-been-restored-to-x", sb.toString());
+	}
+	else {
+		successMessage = LanguageUtil.get(pageContext, "the-item-has-been-restored");
+	}
+	%>
+
+	<div class="portlet-msg-success">
+		<%= successMessage %>
+	</div>
+</c:if>
+
 <c:if test="<%= group.isStagingGroup() %>">
 	<liferay-ui:tabs
 		names="staging,live"

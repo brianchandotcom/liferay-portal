@@ -1183,14 +1183,14 @@
 			<forward name="portlet.message_boards.view" path="portlet.message_boards.view" />
 		</action>
 
-		<action path="/message_boards/view_message" type="com.liferay.portlet.messageboards.action.ViewMessageAction">
-			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
-			<forward name="portlet.message_boards.view_message" path="portlet.message_boards.view_message" />
-		</action>
-
 		<action path="/message_boards/view_deleted_message_attachments" type="com.liferay.portlet.messageboards.action.EditMessageAttachmentsAction">
 			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
 			<forward name="portlet.message_boards.view_deleted_message_attachments" path="portlet.message_boards.view_deleted_message_attachments" />
+		</action>
+
+		<action path="/message_boards/view_message" type="com.liferay.portlet.messageboards.action.ViewMessageAction">
+			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
+			<forward name="portlet.message_boards.view_message" path="portlet.message_boards.view_message" />
 		</action>
 
 		<!-- Message Boards Admin -->
@@ -1255,14 +1255,14 @@
 			<forward name="portlet.message_boards.view" path="portlet.message_boards_admin.view" />
 		</action>
 
-		<action path="/message_boards_admin/view_message" type="com.liferay.portlet.messageboards.action.ViewMessageAction">
-			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
-			<forward name="portlet.message_boards.view_message" path="portlet.message_boards.view_message" />
-		</action>
-
 		<action path="/message_boards_admin/view_deleted_message_attachments" type="com.liferay.portlet.messageboards.action.EditMessageAttachmentsAction">
 			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
 			<forward name="portlet.message_boards.view_deleted_message_attachments" path="portlet.message_boards.view_deleted_message_attachments" />
+		</action>
+
+		<action path="/message_boards_admin/view_message" type="com.liferay.portlet.messageboards.action.ViewMessageAction">
+			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
+			<forward name="portlet.message_boards.view_message" path="portlet.message_boards.view_message" />
 		</action>
 
 		<!-- Mobile Device Rules -->

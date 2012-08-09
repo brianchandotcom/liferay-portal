@@ -363,7 +363,74 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 		long companyId = group.getCompanyId();
 		long repositoryId = CompanyConstants.SYSTEM;
 
-		Date date = getMaxAge(group);
+		Date maxAge = getMaxAge(group);
+
+		deleteMessageBoardAttachments(companyId, repositoryId, maxAge);
+		deleteWikiAttachments(companyId, repositoryId, maxAge);
+	}
+
+	protected void deleteAttachments(
+			long companyId, long repositoryId, Date maxAge,
+			String[] attachmentFileNames)
+		throws PortalException, SystemException {
+
+		for (String attachmentFileName : attachmentFileNames) {
+			String trashTime = DLAppUtil.getTrashTime(
+				attachmentFileName, TrashUtil.TRASH_SEPARATOR);
+
+			long timeStamp = GetterUtil.getLong(trashTime);
+
+			if (timeStamp < maxAge.getTime()) {
+				DLStoreUtil.deleteDirectory(
+					companyId, repositoryId, attachmentFileName);
+			}
+		}
+	}
+
+	protected void deleteMessageBoardAttachments(
+			long companyId, long repositoryId, Date maxAge)
+		throws PortalException, SystemException {
+
+		String[] threadFileNames = null;
+
+		try {
+			threadFileNames = DLStoreUtil.getFileNames(
+				companyId, repositoryId, "messageboards");
+		}
+		catch (NoSuchDirectoryException nsde) {
+			return;
+		}
+
+		for (String threadFileName : threadFileNames) {
+			String[] messageFileNames = null;
+
+			try {
+				messageFileNames = DLStoreUtil.getFileNames(
+					companyId, repositoryId, threadFileName);
+			}
+			catch (NoSuchDirectoryException nsde) {
+				continue;
+			}
+
+			for (String messageFileName : messageFileNames) {
+				String fileTitle = StringUtil.extractLast(
+					messageFileName, StringPool.FORWARD_SLASH);
+
+				if (fileTitle.startsWith(TrashUtil.TRASH_ATTACHMENTS_DIR)) {
+					String[] attachmentFileNames = DLStoreUtil.getFileNames(
+						companyId, repositoryId, threadFileName +
+							StringPool.FORWARD_SLASH + fileTitle);
+
+					deleteAttachments(
+						companyId, repositoryId, maxAge, attachmentFileNames);
+				}
+			}
+		}
+	}
+
+	protected void deleteWikiAttachments(
+			long companyId, long repositoryId, Date maxAge)
+		throws PortalException, SystemException {
 
 		String[] fileNames = null;
 
@@ -384,20 +451,10 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 					companyId, repositoryId,
 					WikiPageConstants.BASE_ATTACHMENTS_DIR + fileTitle);
 
-				for (String attachmentFileName : attachmentFileNames) {
-					String trashTime = DLAppUtil.getTrashTime(
-						attachmentFileName, TrashUtil.TRASH_SEPARATOR);
-
-					long timeStamp = GetterUtil.getLong(trashTime);
-
-					if (timeStamp < date.getTime()) {
-						DLStoreUtil.deleteDirectory(
-							companyId, repositoryId, attachmentFileName);
-					}
-				}
+				deleteAttachments(
+					companyId, repositoryId, maxAge, attachmentFileNames);
 			}
 		}
-
 	}
 
 	protected Date getMaxAge(Group group)

@@ -27,6 +27,7 @@ import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.messageboards.NoSuchMessageException;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBMessageServiceUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import javax.portlet.ActionRequest;
@@ -40,9 +41,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Daniel Sanz
- * @author Shuyang Zhou
+ * @author Eudaldo Alonso
  */
 public class EditMessageAttachmentsAction extends PortletAction {
 
@@ -56,10 +55,13 @@ public class EditMessageAttachmentsAction extends PortletAction {
 
 		try {
 			if (cmd.equals(Constants.DELETE)) {
-				deleteMessageAttachment(actionRequest);
+				deleteAttachment(actionRequest);
 			}
 			else if (cmd.equals(Constants.MOVE_FROM_TRASH)) {
-				moveFromTrashAttachment(actionRequest);
+				moveAttachmentFromTrash(actionRequest);
+			}
+			else if (cmd.equals(Constants.EMPTY_TRASH)) {
+				emptyTrash(actionRequest);
 			}
 
 			if (Validator.isNotNull(cmd)) {
@@ -108,7 +110,7 @@ public class EditMessageAttachmentsAction extends PortletAction {
 			"portlet.message_boards.view_deleted_message_attachments"));
 	}
 
-	protected void deleteMessageAttachment(ActionRequest actionRequest)
+	protected void deleteAttachment(ActionRequest actionRequest)
 		throws PortalException, SystemException {
 
 		long messageId = ParamUtil.getLong(actionRequest, "messageId");
@@ -121,14 +123,20 @@ public class EditMessageAttachmentsAction extends PortletAction {
 			message.getCompanyId(), CompanyConstants.SYSTEM, fileName);
 	}
 
-	protected void moveFromTrashAttachment(ActionRequest actionRequest)
+	protected void emptyTrash(ActionRequest actionRequest) throws Exception {
+		long messageId = ParamUtil.getLong(actionRequest, "messageId");
+
+		MBMessageServiceUtil.emptyMessageAttachments(messageId);
+	}
+
+	protected void moveAttachmentFromTrash(ActionRequest actionRequest)
 		throws PortalException, SystemException {
 
 		long messageId = ParamUtil.getLong(actionRequest, "messageId");
 
 		String fileName = ParamUtil.getString(actionRequest, "fileName");
 
-		MBMessage message = MBMessageLocalServiceUtil.getMessage(messageId);
+		MBMessage message = MBMessageServiceUtil.getMessage(messageId);
 
 		TrashUtil.moveAttachmentFromTrash(
 			message.getCompanyId(), CompanyConstants.SYSTEM, fileName,

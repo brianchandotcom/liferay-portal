@@ -301,12 +301,10 @@
 					}
 					%>
 
-					<table class="lfr-table">
-					<tr>
-						<td class="lfr-top">
-							<strong><liferay-ui:message key="attachments" />:</strong>
-						</td>
-						<td>
+					<div class="message-attachments">
+						<h3><liferay-ui:message key="attachments" />:</h3>
+
+						<ul>
 
 							<%
 							for (int j = 0; j < attachmentsFiles.length; j++) {
@@ -314,15 +312,28 @@
 								long fileSize = DLStoreUtil.getFileSize(company.getCompanyId(), CompanyConstants.SYSTEM, attachmentsFiles[j]);
 							%>
 
-								<a href="<portlet:actionURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="struts_action" value="/message_boards/get_message_attachment" /><portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" /><portlet:param name="attachment" value="<%= fileName %>" /></portlet:actionURL>"><%= fileName %></a> (<%= TextFormatter.formatStorageSize(fileSize, locale) %>)<%= (j < (attachmentsFiles.length - 1)) ? ", " : "" %>
+								<portlet:actionURL var="attachmentURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+									<portlet:param name="struts_action" value="/message_boards/get_message_attachment" />
+									<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
+									<portlet:param name="attachment" value="<%= fileName %>" />
+								</portlet:actionURL>
+
+								<li class="message-attachment">
+									<a href="<%= attachmentURL %>">
+										<img align="left" border="0" src="<%= themeDisplay.getPathThemeImages() %>/file_system/small/<%= DLUtil.getFileIcon(FileUtil.getExtension(fileName)) %>.png">
+
+										<%= fileName %>
+
+										(<%= TextFormatter.formatStorageSize(fileSize, locale) %>)
+									</a>
+								</li>
 
 							<%
 							}
 							%>
 
-						</td>
-					</tr>
-					</table>
+						</ul>
+					</div>
 				</c:if>
 			</div>
 		</td>

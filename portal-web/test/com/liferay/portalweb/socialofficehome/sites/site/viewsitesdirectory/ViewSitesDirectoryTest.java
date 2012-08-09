@@ -101,6 +101,10 @@ public class ViewSitesDirectoryTest extends BaseTestCase {
 				"Private Restricted Site2 Description"),
 			selenium.getText(
 				"xPath=(//span[@class='description'])[contains(.,'Private Restricted Site2 Description')]"));
+		assertFalse(selenium.isTextPresent(
+				"xPath=(//span[@class='name']/a)[contains(.,'Private Site3 Name')]"));
+		assertFalse(selenium.isTextPresent(
+				"xPath=(//span[@class='description'])[contains(.,'Private Site3 Description')]"));
 		assertEquals(RuntimeVariables.replace("Public Restricted Site4 Name"),
 			selenium.getText(
 				"xPath=(//span[@class='name']/a)[contains(.,'Public Restricted Site4 Name')]"));
@@ -113,11 +117,11 @@ public class ViewSitesDirectoryTest extends BaseTestCase {
 		selenium.select("//select[@id='_5_WAR_soportlet_tabs1']",
 			RuntimeVariables.replace("My Sites"));
 		Thread.sleep(5000);
-		assertEquals(RuntimeVariables.replace("Private Site3 Description"),
-			selenium.getText(
-				"xPath=(//span[@class='description'])[contains(.,'Private Site3 Description')]"));
 		assertEquals(RuntimeVariables.replace("Private Site3 Name"),
 			selenium.getText(
 				"xPath=(//span[@class='name']/a)[contains(.,'Private Site3 Name')]"));
+		assertEquals(RuntimeVariables.replace("Private Site3 Description"),
+			selenium.getText(
+				"xPath=(//span[@class='description'])[contains(.,'Private Site3 Description')]"));
 	}
 }

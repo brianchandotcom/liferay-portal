@@ -129,7 +129,6 @@ public class RSSAction extends PortletAction {
 
 		for (JournalArticle article : articles) {
 			String author = PortalUtil.getUserName(article);
-
 			String link = getEntryURL(
 				resourceRequest, feed, article, layout, themeDisplay);
 

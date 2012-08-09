@@ -445,7 +445,6 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 
 		for (WikiPage page : pages) {
 			String author = PortalUtil.getUserName(page);
-
 			String title =
 				page.getTitle() + StringPool.SPACE + page.getVersion();
 

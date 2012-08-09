@@ -4249,16 +4249,23 @@ public class PortalImpl implements Portal {
 	}
 
 	public String getUserName(BaseModel baseModel) {
-		String userName;
-		long userId;
+		long userId = 0;
+		String userName = StringPool.BLANK;
 
-		if (!(baseModel instanceof AuditedModel)) {
-			userName = BeanPropertiesUtil.
-					getStringSilent(baseModel, "userName");
+		if (baseModel instanceof AuditedModel) {
+			AuditedModel auditedModel = (AuditedModel)baseModel;
+
+			userId = auditedModel.getUserId();
+			userName = auditedModel.getUserName();
+		}
+		else {
 			userId = BeanPropertiesUtil.getLongSilent(baseModel, "userId");
-		}else {
-			userName = ((AuditedModel)baseModel).getUserName();
-			userId = ((AuditedModel)baseModel).getUserId();
+			userName = BeanPropertiesUtil.getStringSilent(
+				baseModel, "userName");
+		}
+
+		if (userId == 0) {
+			return StringPool.BLANK;
 		}
 
 		if (baseModel.isEscapedModel()) {

@@ -27,7 +27,7 @@ String fileName = (String)objArray[2];
 %>
 
 <liferay-ui:icon-menu>
-	<c:if test="<%=MBCategoryPermission.contains(permissionChecker, scopeGroupId, categoryId, ActionKeys.ADD_FILE) %>">
+	<c:if test="<%= MBCategoryPermission.contains(permissionChecker, scopeGroupId, categoryId, ActionKeys.ADD_FILE) %>">
 		<portlet:actionURL var="restoreEntryURL">
 			<portlet:param name="struts_action" value="/message_boards/edit_message_attachments" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.MOVE_FROM_TRASH %>" />

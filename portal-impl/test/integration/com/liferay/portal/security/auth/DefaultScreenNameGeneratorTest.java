@@ -38,9 +38,7 @@ public class DefaultScreenNameGeneratorTest {
 
 	@BeforeClass
 	public static void setUp() throws Exception {
-		_companyId = TestPropsValues.getCompanyId();
 		_screenNameGenerator = ScreenNameGeneratorFactory.getInstance();
-		_userId = TestPropsValues.getUserId();
 		_usersScreenNameAllowNumeric = GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.USERS_SCREEN_NAME_ALLOW_NUMERIC));
 	}
@@ -48,7 +46,8 @@ public class DefaultScreenNameGeneratorTest {
 	@Test
 	public void testGenerate() throws Exception {
 		String generatedScreenName = _screenNameGenerator.generate(
-			_companyId, _userId, "user123@liferay.com");
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			"user123@liferay.com");
 
 		Assert.assertEquals("user123", generatedScreenName);
 	}
@@ -56,7 +55,8 @@ public class DefaultScreenNameGeneratorTest {
 	@Test
 	public void testGenerateAlreadyExisting() throws Exception {
 		String generatedScreenName = _screenNameGenerator.generate(
-			_companyId, _userId, "test@liferay.com");
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			"test@liferay.com");
 
 		Assert.assertNotSame("test", generatedScreenName);
 		Assert.assertEquals("test.1", generatedScreenName);
@@ -65,7 +65,8 @@ public class DefaultScreenNameGeneratorTest {
 	@Test
 	public void testGenerateNumeric() throws Exception {
 		String generatedScreenName = _screenNameGenerator.generate(
-			_companyId, _userId, "123@liferay.com");
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			"123@liferay.com");
 
 		if (_usersScreenNameAllowNumeric) {
 			Assert.assertNotSame("user.123", generatedScreenName);
@@ -83,9 +84,7 @@ public class DefaultScreenNameGeneratorTest {
 			DefaultScreenNameGenerator.class, _screenNameGenerator.getClass());
 	}
 
-	private static long _companyId;
 	private static ScreenNameGenerator _screenNameGenerator;
-	private static long _userId;
 	private static boolean _usersScreenNameAllowNumeric = false;
 
 }

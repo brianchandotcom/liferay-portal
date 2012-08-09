@@ -132,7 +132,7 @@ portletURL.setParameter("tabs1", tabs1);
 		<liferay-ui:search-container-column-text
 			name="name"
 		>
-			<liferay-ui:icon label="<%= true %>" message="<%= trashRenderer.getTitle(locale) %>" src="<%= trashRenderer.getIconPath(renderRequest) %>" url="<%= viewContentURLString %>" />
+			<liferay-ui:icon label="<%= true %>" message="<%= HtmlUtil.escape(trashRenderer.getTitle(locale)) %>" src="<%= trashRenderer.getIconPath(renderRequest) %>" url="<%= viewContentURLString %>" />
 
 			<c:if test="<%= entry.getRootEntry() != null %>">
 
@@ -196,7 +196,7 @@ portletURL.setParameter("tabs1", tabs1);
 		<liferay-ui:search-container-column-text
 			name="removed-by"
 			orderable="<%= true %>"
-			value="<%= entry.getUserName() %>"
+			value="<%= HtmlUtil.escape(entry.getUserName()) %>"
 		/>
 
 		<c:choose>

@@ -84,16 +84,14 @@ public class DLAppUtil {
 		return mimeType;
 	}
 
-	public static String getTrashNamespace(String title, String separator) {
+	public static String getTrashTime(String title, String separator) {
 		int index = title.lastIndexOf(separator);
 
-		String trashNamespace = StringPool.BLANK;
-
-		if (index >= 0) {
-			trashNamespace = title.substring(index + 1, title.length());
+		if (index < 0) {
+			return StringPool.BLANK;
 		}
 
-		return trashNamespace;
+		return title.substring(index + 1, title.length());
 	}
 
 	public static boolean isMajorVersion(
@@ -114,11 +112,11 @@ public class DLAppUtil {
 	public static String stripTrashNamespace(String title, String separator) {
 		int index = title.lastIndexOf(separator);
 
-		if (index >= 0) {
-			title = title.substring(0, index);
+		if (index < 0) {
+			return title;
 		}
 
-		return title;
+		return title.substring(0, index);
 	}
 
 }

@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewActivityBlogsEntryXSSTest extends BaseTestCase {
 	public void testViewActivityBlogsEntryXSS() throws Exception {
 		selenium.open("/group/joebloggs/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,7 +43,6 @@ public class ViewActivityBlogsEntryXSSTest extends BaseTestCase {
 		selenium.clickAt("link=Activities Test Page",
 			RuntimeVariables.replace("Activities Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Powered By Liferay"),
 			selenium.getText("//footer[@id='footer']"));
 		assertEquals(RuntimeVariables.replace(

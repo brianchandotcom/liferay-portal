@@ -25,7 +25,6 @@ public class WCA_RemoveMemberWCLConfigurationPermissionsTest
 	public void testWCA_RemoveMemberWCLConfigurationPermissions()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -47,7 +46,6 @@ public class WCA_RemoveMemberWCLConfigurationPermissionsTest
 		selenium.clickAt("link=Web Content List Permissions Page",
 			RuntimeVariables.replace("Web Content List Permissions Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		Thread.sleep(5000);
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
 
@@ -89,7 +87,6 @@ public class WCA_RemoveMemberWCLConfigurationPermissionsTest
 		selenium.clickAt("link=Permissions",
 			RuntimeVariables.replace("Permissions"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

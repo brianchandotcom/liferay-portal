@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewOrganizationPrivatePageTest extends BaseTestCase {
 	public void testViewOrganizationPrivatePage() throws Exception {
 		selenium.open("/group/organization-name/");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Organization Name"),
 			selenium.getText("//h1[@class='site-title']/span"));
 		assertEquals(RuntimeVariables.replace("Private Page"),

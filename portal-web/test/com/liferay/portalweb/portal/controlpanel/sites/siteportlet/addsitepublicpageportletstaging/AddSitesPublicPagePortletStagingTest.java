@@ -24,7 +24,6 @@ public class AddSitesPublicPagePortletStagingTest extends BaseTestCase {
 	public void testAddSitesPublicPagePortletStaging()
 		throws Exception {
 		selenium.open("/web/community-name/public-page");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,7 +43,6 @@ public class AddSitesPublicPagePortletStagingTest extends BaseTestCase {
 
 		selenium.clickAt("link=Staging", RuntimeVariables.replace("Staging"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
 

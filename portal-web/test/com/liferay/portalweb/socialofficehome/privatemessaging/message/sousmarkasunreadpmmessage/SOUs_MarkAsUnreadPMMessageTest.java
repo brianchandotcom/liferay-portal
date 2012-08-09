@@ -28,7 +28,6 @@ public class SOUs_MarkAsUnreadPMMessageTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/user/socialoffice01/home");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -50,7 +49,6 @@ public class SOUs_MarkAsUnreadPMMessageTest extends BaseTestCase {
 				selenium.clickAt("//nav/ul/li[contains(.,'Messages')]/a/span",
 					RuntimeVariables.replace("Messages"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isElementNotPresent(
 						"//tr[contains(@class, 'unread')]"));
 				assertEquals(RuntimeVariables.replace("Private Messaging"),
@@ -95,7 +93,6 @@ public class SOUs_MarkAsUnreadPMMessageTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Mark as Unread']",
 					RuntimeVariables.replace("Mark as Unread"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isElementPresent(
 						"//tr[contains(@class, 'unread')]"));
 

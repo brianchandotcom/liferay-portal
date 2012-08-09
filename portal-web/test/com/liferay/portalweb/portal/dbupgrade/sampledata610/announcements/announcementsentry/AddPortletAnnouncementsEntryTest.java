@@ -24,11 +24,9 @@ public class AddPortletAnnouncementsEntryTest extends BaseTestCase {
 	public void testAddPortletAnnouncementsEntry() throws Exception {
 		selenium.open(
 			"/web/announcements-entry-community/announcements-entry-page");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Announcements Entry Page",
 			RuntimeVariables.replace("Announcements Entry Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
 

@@ -24,7 +24,6 @@ public class SOUs_ConfirmNotificationJoinSiteTest extends BaseTestCase {
 	public void testSOUs_ConfirmNotificationJoinSite()
 		throws Exception {
 		selenium.open("/user/socialoffice01/so/dashboard/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -97,7 +96,6 @@ public class SOUs_ConfirmNotificationJoinSiteTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("0"),
 			selenium.getText("//span[@class='notification-count']"));
 		selenium.open("/user/socialoffice01/so/dashboard/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

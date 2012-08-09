@@ -25,7 +25,6 @@ public class SOUs_ViewWHContentViewableByEveryoneProfileTest
 	public void testSOUs_ViewWHContentViewableByEveryoneProfile()
 		throws Exception {
 		selenium.open("/web/joebloggs/so/profile");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Microblogs Post"),
 			selenium.getText("//div[@class='content']"));
 		assertEquals(RuntimeVariables.replace("Microblogs Post"),
@@ -51,7 +50,6 @@ public class SOUs_ViewWHContentViewableByEveryoneProfileTest
 		selenium.clickAt("//nav/ul/li[contains(.,'Microblogs')]/a/span",
 			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText("//div[@class='user-name']/span"));
 		assertEquals(RuntimeVariables.replace("Microblogs Post"),

@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 	public void testUser_ViewHistoryVersionNumbers() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,7 +42,6 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 
 		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent(
 				"//body[contains(@class,'live-view')]"));
 		assertTrue(selenium.isElementNotPresent(
@@ -53,7 +51,6 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='staging-bar']/ul/li[2]/span/a",
 			RuntimeVariables.replace("Staging"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent(
 				"//body[contains(@class,'local-staging')]"));
 		assertTrue(selenium.isElementNotPresent(
@@ -106,7 +103,6 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 		RuntimeVariables.setValue("versionNumberPublication3",
 			versionNumberPublication3);
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -126,7 +122,6 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 
 		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent(
 				"//body[contains(@class,'live-view')]"));
 		assertTrue(selenium.isElementNotPresent(
@@ -136,7 +131,6 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='staging-bar']/ul/li[2]/span/a",
 			RuntimeVariables.replace("Staging"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent(
 				"//body[contains(@class,'local-staging')]"));
 		assertTrue(selenium.isElementNotPresent(
@@ -185,7 +179,6 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 		assertTrue(selenium.isVisible(
 				"//div[@id='column-2']/div/div[contains(@class,'portlet-message-boards')]"));
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -205,7 +198,6 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 
 		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent(
 				"//body[contains(@class,'live-view')]"));
 		assertTrue(selenium.isElementNotPresent(
@@ -215,7 +207,6 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='staging-bar']/ul/li[2]/span/a",
 			RuntimeVariables.replace("Staging"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent(
 				"//body[contains(@class,'local-staging')]"));
 		assertTrue(selenium.isElementNotPresent(
@@ -258,7 +249,6 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("${versionNumberPublication3}"),
 			selenium.getText("//tr[4]/td[3]/a"));
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -278,7 +268,6 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 
 		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent(
 				"//body[contains(@class,'live-view')]"));
 		assertTrue(selenium.isElementNotPresent(
@@ -288,7 +277,6 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='staging-bar']/ul/li[2]/span/a",
 			RuntimeVariables.replace("Staging"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent(
 				"//body[contains(@class,'local-staging')]"));
 		assertTrue(selenium.isElementNotPresent(
@@ -337,7 +325,6 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 		assertTrue(selenium.isVisible(
 				"//div[@id='column-1']/div/div[contains(@class,'portlet-message-boards')]"));
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -357,7 +344,6 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 
 		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent(
 				"//body[contains(@class,'live-view')]"));
 		assertTrue(selenium.isElementNotPresent(
@@ -367,7 +353,6 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='staging-bar']/ul/li[2]/span/a",
 			RuntimeVariables.replace("Staging"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent(
 				"//body[contains(@class,'local-staging')]"));
 		assertTrue(selenium.isElementNotPresent(
@@ -416,7 +401,6 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("${versionNumberPublication3}"),
 			selenium.getText("//tr[5]/td[3]/a"));
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -436,7 +420,6 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 
 		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent(
 				"//body[contains(@class,'live-view')]"));
 		assertTrue(selenium.isElementNotPresent(
@@ -446,7 +429,6 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='staging-bar']/ul/li[2]/span/a",
 			RuntimeVariables.replace("Staging"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent(
 				"//body[contains(@class,'local-staging')]"));
 		assertTrue(selenium.isElementNotPresent(
@@ -518,12 +500,10 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully. The page will be refreshed when you close this dialog. Alternatively you can hide this dialog."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -543,7 +523,6 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 
 		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent(
 				"//body[contains(@class,'live-view')]"));
 		assertTrue(selenium.isElementNotPresent(
@@ -553,7 +532,6 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='staging-bar']/ul/li[2]/span/a",
 			RuntimeVariables.replace("Staging"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent(
 				"//body[contains(@class,'local-staging')]"));
 		assertTrue(selenium.isElementNotPresent(
@@ -581,7 +559,6 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 		assertTrue(selenium.isElementNotPresent(
 				"//div[@id='column-2']/div/div[contains(@class,'portlet-document-library')]"));
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -601,7 +578,6 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 
 		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent(
 				"//body[contains(@class,'live-view')]"));
 		assertTrue(selenium.isElementNotPresent(
@@ -611,7 +587,6 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='staging-bar']/ul/li[2]/span/a",
 			RuntimeVariables.replace("Staging"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent(
 				"//body[contains(@class,'local-staging')]"));
 		assertTrue(selenium.isElementNotPresent(

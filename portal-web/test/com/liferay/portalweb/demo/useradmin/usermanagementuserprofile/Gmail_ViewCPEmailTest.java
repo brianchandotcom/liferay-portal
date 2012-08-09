@@ -71,7 +71,6 @@ public class Gmail_ViewCPEmailTest extends BaseTestCase {
 				selenium.clickAt("//a[@id='button']",
 					RuntimeVariables.replace("Sign in to Gmail"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 			case 3:
 			case 4:
@@ -92,7 +91,6 @@ public class Gmail_ViewCPEmailTest extends BaseTestCase {
 					RuntimeVariables.replace(
 						"Sign out and sign in as a different user"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 			case 5:
 
@@ -136,7 +134,6 @@ public class Gmail_ViewCPEmailTest extends BaseTestCase {
 				selenium.clickAt("//input[@id='signIn']",
 					RuntimeVariables.replace("Sign In"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				Thread.sleep(5000);
 				assertEquals(RuntimeVariables.replace(
 						"http://localhost:8080: Your New Account"),

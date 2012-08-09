@@ -23,11 +23,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddPage2PortletDLTest extends BaseTestCase {
 	public void testAddPage2PortletDL() throws Exception {
 		selenium.open("/web/document-library-page-scope-community/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=DL Page2 Name",
 			RuntimeVariables.replace("DL Page2 Name"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
 

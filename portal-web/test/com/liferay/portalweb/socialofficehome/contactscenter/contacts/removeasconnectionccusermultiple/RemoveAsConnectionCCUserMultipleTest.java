@@ -24,7 +24,6 @@ public class RemoveAsConnectionCCUserMultipleTest extends BaseTestCase {
 	public void testRemoveAsConnectionCCUserMultiple()
 		throws Exception {
 		selenium.open("/user/joebloggs/so/dashboard/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -46,7 +45,6 @@ public class RemoveAsConnectionCCUserMultipleTest extends BaseTestCase {
 		selenium.clickAt("//nav/ul/li[contains(.,'Contacts Center')]/a/span",
 			RuntimeVariables.replace("Contacts Center"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("You have 3 connections."),
 			selenium.getText("link=You have 3 connections."));
 		selenium.clickAt("link=You have 3 connections.",

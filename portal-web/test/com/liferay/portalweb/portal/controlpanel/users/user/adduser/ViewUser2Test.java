@@ -28,7 +28,6 @@ public class ViewUser2Test extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("Go to"),
 					selenium.getText("//li[@id='_145_mySites']/a/span"));
 				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -52,15 +51,12 @@ public class ViewUser2Test extends BaseTestCase {
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("link=Users and Organizations",
 					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("link=Search All Users",
 					RuntimeVariables.replace("Search All Users"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				boolean basicVisible = selenium.isVisible("link=\u00ab Basic");
 
@@ -95,7 +91,6 @@ public class ViewUser2Test extends BaseTestCase {
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("userfn2"),
 					selenium.getText(
 						"//tr[contains(.,'userfn2')]/td[@headers='_125_usersSearchContainer_col-first-name']/a"));
@@ -108,7 +103,6 @@ public class ViewUser2Test extends BaseTestCase {
 				selenium.clickAt("//tr[contains(.,'userfn2')]/td[@headers='_125_usersSearchContainer_col-first-name']/a",
 					RuntimeVariables.replace("userfn2"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("userfn2 userln2"),
 					selenium.getText("//h1[@class='header-title']"));
 				assertEquals(RuntimeVariables.replace("\u00ab Back"),

@@ -23,11 +23,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewMBCategoryThread3Test extends BaseTestCase {
 	public void testViewMBCategoryThread3() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("MB Category Name"),
 			selenium.getText("//td[1]/a/strong"));
 		assertEquals(RuntimeVariables.replace("0"),
@@ -39,7 +37,6 @@ public class ViewMBCategoryThread3Test extends BaseTestCase {
 		selenium.clickAt("//td[1]/a/strong",
 			RuntimeVariables.replace("MB Category Name"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"MB Category Thread3 Message Subject"),
 			selenium.getText("//tr[3]/td[1]/a"));
@@ -82,7 +79,6 @@ public class ViewMBCategoryThread3Test extends BaseTestCase {
 		selenium.clickAt("//tr[3]/td[1]/a",
 			RuntimeVariables.replace("MB Category Thread3 Message Subject"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"MB Category Thread3 Message Subject"),
 			selenium.getText("//h1[@class='header-title']"));

@@ -24,7 +24,6 @@ public class LoginBakerTest extends BaseTestCase {
 	public void testLoginBaker() throws Exception {
 		selenium.setTimeout("180000");
 		selenium.open("/web/guest/home");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,7 +43,6 @@ public class LoginBakerTest extends BaseTestCase {
 
 		selenium.click(RuntimeVariables.replace("link=Sign In"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_58_login']",
 			RuntimeVariables.replace("test@baker.com"));
 		selenium.type("//input[@id='_58_password']",
@@ -72,7 +70,6 @@ public class LoginBakerTest extends BaseTestCase {
 
 		selenium.click(RuntimeVariables.replace("//input[@value='Sign In']"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -92,7 +89,6 @@ public class LoginBakerTest extends BaseTestCase {
 
 		selenium.click(RuntimeVariables.replace("//input[@value='I Agree']"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("reminderQueryAnswer", RuntimeVariables.replace("Test"));
 
 		for (int second = 0;; second++) {
@@ -113,6 +109,5 @@ public class LoginBakerTest extends BaseTestCase {
 
 		selenium.click(RuntimeVariables.replace("//input[@value='Save']"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 	}
 }

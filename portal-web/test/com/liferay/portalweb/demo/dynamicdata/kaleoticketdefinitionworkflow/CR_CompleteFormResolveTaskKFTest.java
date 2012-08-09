@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class CR_CompleteFormResolveTaskKFTest extends BaseTestCase {
 	public void testCR_CompleteFormResolveTaskKF() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,7 +43,6 @@ public class CR_CompleteFormResolveTaskKFTest extends BaseTestCase {
 		selenium.clickAt("link=Kaleo Forms Test Page",
 			RuntimeVariables.replace("Kaleo Forms Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Ticket Process"),
 			selenium.getText("//div[@id='workflowMyTasksPanel']//tr[3]/td[2]"));
 		Thread.sleep(5000);
@@ -95,7 +93,6 @@ public class CR_CompleteFormResolveTaskKFTest extends BaseTestCase {
 		selenium.clickAt("//input[@id='_1_WAR_kaleoformsportlet_saveButton']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
@@ -148,7 +145,6 @@ public class CR_CompleteFormResolveTaskKFTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='aui-panel-content aui-dialog-content yui3-widget-stdmod']/div[3]/span/span/button[1]"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

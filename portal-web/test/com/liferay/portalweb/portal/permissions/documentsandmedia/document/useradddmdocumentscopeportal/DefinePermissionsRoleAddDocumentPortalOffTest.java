@@ -24,7 +24,6 @@ public class DefinePermissionsRoleAddDocumentPortalOffTest extends BaseTestCase 
 	public void testDefinePermissionsRoleAddDocumentPortalOff()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,16 +44,13 @@ public class DefinePermissionsRoleAddDocumentPortalOffTest extends BaseTestCase 
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Roles", RuntimeVariables.replace("Roles"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_128_keywords']",
 			RuntimeVariables.replace("RegularRole Name"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("RegularRole Name"),
 			selenium.getText("//td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Regular"),
@@ -88,11 +84,9 @@ public class DefinePermissionsRoleAddDocumentPortalOffTest extends BaseTestCase 
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.select("//select[@id='_128_add-permissions']",
 			RuntimeVariables.replace("Documents and Media"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Document Library"),
 			selenium.getText("//h3"));
 		assertFalse(selenium.isChecked(
@@ -100,7 +94,6 @@ public class DefinePermissionsRoleAddDocumentPortalOffTest extends BaseTestCase 
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"The role permissions were updated."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

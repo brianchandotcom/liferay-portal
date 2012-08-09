@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddPageAMSTest extends BaseTestCase {
 	public void testAddPageAMS() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//nav[@id='navigation']",
 			RuntimeVariables.replace("Navigation"));
 
@@ -86,6 +85,5 @@ public class AddPageAMSTest extends BaseTestCase {
 		selenium.clickAt("link=Asset Management System Test Page",
 			RuntimeVariables.replace("Asset Management System Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 	}
 }

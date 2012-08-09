@@ -24,7 +24,6 @@ public class ViewTasksTaskAssignedToMeMultipleUTTest extends BaseTestCase {
 	public void testViewTasksTaskAssignedToMeMultipleUT()
 		throws Exception {
 		selenium.open("/user/joebloggs/so/dashboard/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -78,7 +77,6 @@ public class ViewTasksTaskAssignedToMeMultipleUTTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Normal"),
 			selenium.getText("//div[@class='task-data normal']"));
 		selenium.open("/user/joebloggs/so/dashboard/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -132,7 +130,6 @@ public class ViewTasksTaskAssignedToMeMultipleUTTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Normal"),
 			selenium.getText("//div[@class='task-data normal']"));
 		selenium.open("/user/joebloggs/so/dashboard/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -186,7 +183,6 @@ public class ViewTasksTaskAssignedToMeMultipleUTTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Normal"),
 			selenium.getText("//div[@class='task-data normal']"));
 		selenium.open("/user/joebloggs/so/dashboard/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -213,7 +209,6 @@ public class ViewTasksTaskAssignedToMeMultipleUTTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='view-all-tasks']/a",
 			RuntimeVariables.replace("View All Tasks"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Task1 Description"),
 			selenium.getText("link=Task1 Description"));
 		assertEquals(RuntimeVariables.replace("Task2 Description"),

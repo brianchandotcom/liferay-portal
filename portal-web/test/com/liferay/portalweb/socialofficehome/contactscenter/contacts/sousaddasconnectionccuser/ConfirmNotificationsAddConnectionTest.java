@@ -24,7 +24,6 @@ public class ConfirmNotificationsAddConnectionTest extends BaseTestCase {
 	public void testConfirmNotificationsAddConnection()
 		throws Exception {
 		selenium.open("/user/joebloggs/so/dashboard/");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent(
 				"//li[@id='_145_notificationsMenu']"));
 		assertEquals(RuntimeVariables.replace("1"),

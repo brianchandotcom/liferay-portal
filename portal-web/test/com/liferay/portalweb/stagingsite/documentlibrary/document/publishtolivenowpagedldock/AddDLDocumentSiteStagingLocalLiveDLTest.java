@@ -24,7 +24,6 @@ public class AddDLDocumentSiteStagingLocalLiveDLTest extends BaseTestCase {
 	public void testAddDLDocumentSiteStagingLocalLiveDL()
 		throws Exception {
 		selenium.open("/web/site-name-staging/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,7 +44,6 @@ public class AddDLDocumentSiteStagingLocalLiveDLTest extends BaseTestCase {
 		selenium.clickAt("link=Document Library Test Page",
 			RuntimeVariables.replace("Document Library Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent(
 				"//body[contains(@class,'local-staging')]"));
 		assertTrue(selenium.isElementNotPresent(
@@ -83,7 +81,6 @@ public class AddDLDocumentSiteStagingLocalLiveDLTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertFalse(selenium.isTextPresent(
 				"The data of this portlet is not staged. Any data changes are immediately available to the Local Live site. The portlet's own workflow is still honored. Portlet setup is still managed from staging."));
 		assertTrue(selenium.isElementNotPresent(
@@ -97,7 +94,6 @@ public class AddDLDocumentSiteStagingLocalLiveDLTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -126,7 +122,6 @@ public class AddDLDocumentSiteStagingLocalLiveDLTest extends BaseTestCase {
 		selenium.clickAt("//a[@class='document-link']",
 			RuntimeVariables.replace("DL Document Title"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("DL Document Title"),
 			selenium.getText("//h2[@class='document-title']"));
 		assertEquals(RuntimeVariables.replace("DL Document Description"),

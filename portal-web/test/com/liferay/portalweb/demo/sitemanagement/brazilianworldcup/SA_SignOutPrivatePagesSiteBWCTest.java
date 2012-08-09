@@ -47,7 +47,6 @@ public class SA_SignOutPrivatePagesSiteBWCTest extends BaseTestCase {
 
 		selenium.click(RuntimeVariables.replace("link=Sign Out"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		Thread.sleep(5000);
 		Thread.sleep(5000);
 		selenium.close();

@@ -29,7 +29,6 @@ public class AddVocabularyAssetTypeCalendarEventTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("Go to"),
 					selenium.getText("//li[@id='_145_mySites']/a/span"));
 				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -53,11 +52,9 @@ public class AddVocabularyAssetTypeCalendarEventTest extends BaseTestCase {
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("link=Categories",
 					RuntimeVariables.replace("Categories"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("//input[@value='Add Vocabulary']",
 					RuntimeVariables.replace("Add Vocabulary"));
 

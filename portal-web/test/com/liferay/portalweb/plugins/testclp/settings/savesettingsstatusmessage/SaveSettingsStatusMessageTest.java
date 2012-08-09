@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SaveSettingsStatusMessageTest extends BaseTestCase {
 	public void testSaveSettingsStatusMessage() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,7 +43,6 @@ public class SaveSettingsStatusMessageTest extends BaseTestCase {
 		selenium.clickAt("link=Test CLP Test Page",
 			RuntimeVariables.replace("Test CLP Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(""),
 			selenium.getText(
 				"//div[@class='portlet-body']/table/tbody/tr[2]/td[7]"));
@@ -93,7 +91,6 @@ public class SaveSettingsStatusMessageTest extends BaseTestCase {
 		assertTrue(selenium.isElementNotPresent(
 				"//li[@class='chat-settings saved']"));
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -114,7 +111,6 @@ public class SaveSettingsStatusMessageTest extends BaseTestCase {
 		selenium.clickAt("link=Test CLP Test Page",
 			RuntimeVariables.replace("Test CLP Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("status message."),
 			selenium.getText(
 				"//div[@class='portlet-body']/table/tbody/tr[2]/td[7]"));

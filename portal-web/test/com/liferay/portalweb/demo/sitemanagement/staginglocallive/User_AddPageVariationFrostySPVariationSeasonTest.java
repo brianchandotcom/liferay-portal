@@ -30,7 +30,6 @@ public class User_AddPageVariationFrostySPVariationSeasonTest
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -51,7 +50,6 @@ public class User_AddPageVariationFrostySPVariationSeasonTest
 				selenium.clickAt("link=Site Name",
 					RuntimeVariables.replace("Site Name"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isElementPresent(
 						"//body[contains(@class,'live-view')]"));
 				assertTrue(selenium.isElementNotPresent(
@@ -62,7 +60,6 @@ public class User_AddPageVariationFrostySPVariationSeasonTest
 				selenium.clickAt("//div[@class='staging-bar']/ul/li[2]/span/a",
 					RuntimeVariables.replace("Staging"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isElementPresent(
 						"//body[contains(@class,'local-staging')]"));
 				assertTrue(selenium.isElementNotPresent(
@@ -79,7 +76,6 @@ public class User_AddPageVariationFrostySPVariationSeasonTest
 				selenium.clickAt("link=Season",
 					RuntimeVariables.replace("Season"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 			case 2:
 				assertEquals(RuntimeVariables.replace(
@@ -136,7 +132,6 @@ public class User_AddPageVariationFrostySPVariationSeasonTest
 				selenium.clickAt("//input[@value='Add']",
 					RuntimeVariables.replace("Add"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("Frosty"),
 					selenium.getText("//tr[5]/td[1]"));
 				assertEquals(RuntimeVariables.replace("Frosty Description"),
@@ -145,7 +140,6 @@ public class User_AddPageVariationFrostySPVariationSeasonTest
 						"Page variation was added."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -166,7 +160,6 @@ public class User_AddPageVariationFrostySPVariationSeasonTest
 				selenium.clickAt("link=Site Name",
 					RuntimeVariables.replace("Site Name"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isElementPresent(
 						"//body[contains(@class,'live-view')]"));
 				assertTrue(selenium.isElementNotPresent(
@@ -177,7 +170,6 @@ public class User_AddPageVariationFrostySPVariationSeasonTest
 				selenium.clickAt("//div[@class='staging-bar']/ul/li[2]/span/a",
 					RuntimeVariables.replace("Staging"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isElementPresent(
 						"//body[contains(@class,'local-staging')]"));
 				assertTrue(selenium.isElementNotPresent(

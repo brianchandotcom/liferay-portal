@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddPageDDLFormTest extends BaseTestCase {
 	public void testAddPageDDLForm() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//nav[@id='navigation']",
 			RuntimeVariables.replace("Navigation"));
 
@@ -86,6 +85,5 @@ public class AddPageDDLFormTest extends BaseTestCase {
 		selenium.clickAt("link=Dynamic Data List Form Test Page",
 			RuntimeVariables.replace("Dynamic Data List Form Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 	}
 }

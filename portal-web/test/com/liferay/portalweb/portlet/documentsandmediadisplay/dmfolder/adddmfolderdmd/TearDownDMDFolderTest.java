@@ -28,12 +28,10 @@ public class TearDownDMDFolderTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("link=Documents and Media Display Test Page",
 					RuntimeVariables.replace(
 						"Documents and Media Display Test Page"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				boolean dmdFolder1Present = selenium.isElementPresent(
 						"//a[contains(@id,'foldersSearchContainer_1_menuButton')]/span");
@@ -73,7 +71,6 @@ public class TearDownDMDFolderTest extends BaseTestCase {
 				selenium.clickAt("//a[contains(@id,'foldersSearchContainer_1_menu_delete')]",
 					RuntimeVariables.replace("Delete"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 				assertEquals(RuntimeVariables.replace(
@@ -118,7 +115,6 @@ public class TearDownDMDFolderTest extends BaseTestCase {
 				selenium.clickAt("//a[contains(@id,'foldersSearchContainer_1_menu_delete')]",
 					RuntimeVariables.replace("Delete"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 				assertEquals(RuntimeVariables.replace(
@@ -163,7 +159,6 @@ public class TearDownDMDFolderTest extends BaseTestCase {
 				selenium.clickAt("//a[contains(@id,'foldersSearchContainer_1_menu_delete')]",
 					RuntimeVariables.replace("Delete"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 				assertEquals(RuntimeVariables.replace(
@@ -208,7 +203,6 @@ public class TearDownDMDFolderTest extends BaseTestCase {
 				selenium.clickAt("//a[contains(@id,'foldersSearchContainer_1_menu_delete')]",
 					RuntimeVariables.replace("Delete"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 				assertEquals(RuntimeVariables.replace(
@@ -253,7 +247,6 @@ public class TearDownDMDFolderTest extends BaseTestCase {
 				selenium.clickAt("//a[contains(@id,'foldersSearchContainer_1_menu_delete')]",
 					RuntimeVariables.replace("Delete"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 				assertEquals(RuntimeVariables.replace(

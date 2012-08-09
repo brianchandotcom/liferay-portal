@@ -24,11 +24,9 @@ public class DeleteBlogsEntryTitleEscapeCharactersTest extends BaseTestCase {
 	public void testDeleteBlogsEntryTitleEscapeCharacters()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("<!--Blogs Entry Title-->"),
 			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),
@@ -37,7 +35,6 @@ public class DeleteBlogsEntryTitleEscapeCharactersTest extends BaseTestCase {
 			selenium.getText("//td[3]/span/a/span"));
 		selenium.click(RuntimeVariables.replace("//td[3]/span/a/span"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"The selected item was moved to the Recycle Bin. Undo"),
 			selenium.getText("//form[@id='_33_undoForm']"));

@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SOUs_ViewAddAsConnectionCCUserTest extends BaseTestCase {
 	public void testSOUs_ViewAddAsConnectionCCUser() throws Exception {
 		selenium.open("/user/socialoffice01/so/dashboard/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,7 +44,6 @@ public class SOUs_ViewAddAsConnectionCCUserTest extends BaseTestCase {
 		selenium.clickAt("//nav/ul/li[contains(.,'Contacts Center')]/a/span",
 			RuntimeVariables.replace("Contacts Center"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("You have 1 connections."),
 			selenium.getText("link=You have 1 connections."));
 		selenium.clickAt("link=You have 1 connections.",

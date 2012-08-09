@@ -24,7 +24,6 @@ public class ViewUserStatisticsAddBlogsEntry2Test extends BaseTestCase {
 	public void testViewUserStatisticsAddBlogsEntry2()
 		throws Exception {
 		selenium.open("/web/site-name/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,7 +44,6 @@ public class ViewUserStatisticsAddBlogsEntry2Test extends BaseTestCase {
 		selenium.clickAt("link=User Statistics Test Page",
 			RuntimeVariables.replace("User Statistics Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

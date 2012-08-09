@@ -24,7 +24,6 @@ public class AddPublicPagePortletDLSiteStagingLocalLiveTest extends BaseTestCase
 	public void testAddPublicPagePortletDLSiteStagingLocalLive()
 		throws Exception {
 		selenium.open("/web/site-name-staging/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,7 +44,6 @@ public class AddPublicPagePortletDLSiteStagingLocalLiveTest extends BaseTestCase
 		selenium.clickAt("link=Document Library Test Page",
 			RuntimeVariables.replace("Document Library Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
 				"More"));
 		selenium.clickAt("//a[@id='_145_addApplication']",

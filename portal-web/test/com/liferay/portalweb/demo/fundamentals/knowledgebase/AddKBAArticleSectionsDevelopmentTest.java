@@ -24,7 +24,6 @@ public class AddKBAArticleSectionsDevelopmentTest extends BaseTestCase {
 	public void testAddKBAArticleSectionsDevelopment()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,15 +44,12 @@ public class AddKBAArticleSectionsDevelopmentTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Knowledge Base (Admin)",
 			RuntimeVariables.replace("Knowledge Base (Admin)"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//input[@value='Add Article']",
 			RuntimeVariables.replace("Add Article"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_1_WAR_knowledgebaseportlet_title']",
 			RuntimeVariables.replace("Knowledge Base Article 2"));
 
@@ -184,7 +180,6 @@ public class AddKBAArticleSectionsDevelopmentTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -206,7 +201,6 @@ public class AddKBAArticleSectionsDevelopmentTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -227,17 +221,14 @@ public class AddKBAArticleSectionsDevelopmentTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Knowledge Base (Admin)",
 			RuntimeVariables.replace("Knowledge Base (Admin)"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("//input[@name='_1_WAR_knowledgebaseportlet_keywords']",
 			RuntimeVariables.replace("2"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals("1.0",
 			selenium.getValue("//tr[3]/td[2]/span/span/span/input"));
 		assertEquals(RuntimeVariables.replace("Knowledge Base Article 2"),

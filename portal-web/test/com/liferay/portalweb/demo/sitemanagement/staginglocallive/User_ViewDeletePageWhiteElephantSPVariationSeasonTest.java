@@ -30,7 +30,6 @@ public class User_ViewDeletePageWhiteElephantSPVariationSeasonTest
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -51,7 +50,6 @@ public class User_ViewDeletePageWhiteElephantSPVariationSeasonTest
 				selenium.clickAt("link=Site Name",
 					RuntimeVariables.replace("Site Name"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isElementPresent(
 						"//body[contains(@class,'live-view')]"));
 				assertTrue(selenium.isElementNotPresent(
@@ -62,7 +60,6 @@ public class User_ViewDeletePageWhiteElephantSPVariationSeasonTest
 				selenium.clickAt("//div[@class='staging-bar']/ul/li[2]/span/a",
 					RuntimeVariables.replace("Staging"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isElementPresent(
 						"//body[contains(@class,'local-staging')]"));
 				assertTrue(selenium.isElementNotPresent(
@@ -79,7 +76,6 @@ public class User_ViewDeletePageWhiteElephantSPVariationSeasonTest
 				selenium.clickAt("link=Season",
 					RuntimeVariables.replace("Season"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 			case 2:
 				assertEquals(RuntimeVariables.replace(
@@ -94,7 +90,6 @@ public class User_ViewDeletePageWhiteElephantSPVariationSeasonTest
 				selenium.clickAt("//li[1]/span/span/a",
 					RuntimeVariables.replace("Christmas"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"Christmas Site Pages Variation of Site Name"),
 					selenium.getText(
@@ -119,7 +114,6 @@ public class User_ViewDeletePageWhiteElephantSPVariationSeasonTest
 				selenium.clickAt("link=White Elephant",
 					RuntimeVariables.replace("White Elephant"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isVisible(
 						"//div[@id='column-1']/div/div[contains(@class,'portlet-navigation')]"));
 

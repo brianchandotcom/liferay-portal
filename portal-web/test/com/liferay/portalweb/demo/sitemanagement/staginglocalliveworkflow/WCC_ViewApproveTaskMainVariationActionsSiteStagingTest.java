@@ -25,7 +25,6 @@ public class WCC_ViewApproveTaskMainVariationActionsSiteStagingTest
 	public void testWCC_ViewApproveTaskMainVariationActionsSiteStaging()
 		throws Exception {
 		selenium.open("/web/community-site-test/home/");
-		loadRequiredJavaScriptModules();
 		assertFalse(selenium.isTextPresent("This is a Web Content article"));
 
 		for (int second = 0;; second++) {
@@ -46,11 +45,9 @@ public class WCC_ViewApproveTaskMainVariationActionsSiteStagingTest
 
 		selenium.clickAt("link=Staging", RuntimeVariables.replace("Staging"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Ready for Publication"),
 			selenium.getText("//span[@class='workflow-status']/strong"));
 		selenium.open("/web/community-site-test/home/");
-		loadRequiredJavaScriptModules();
 		assertFalse(selenium.isTextPresent("This is a Web Content article"));
 	}
 }

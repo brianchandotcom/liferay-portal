@@ -24,7 +24,6 @@ public class ConfigurePortlet2MaximumItemsToDisplay1Test extends BaseTestCase {
 	public void testConfigurePortlet2MaximumItemsToDisplay1()
 		throws Exception {
 		selenium.open("/web/blogs-page-scope-community/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,7 +44,6 @@ public class ConfigurePortlet2MaximumItemsToDisplay1Test extends BaseTestCase {
 		selenium.clickAt("link=Blogs Test Page2",
 			RuntimeVariables.replace("Blogs Test Page2"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -113,7 +111,6 @@ public class ConfigurePortlet2MaximumItemsToDisplay1Test extends BaseTestCase {
 		selenium.clickAt("link=Display Settings",
 			RuntimeVariables.replace("Display Settings"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -136,7 +133,6 @@ public class ConfigurePortlet2MaximumItemsToDisplay1Test extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

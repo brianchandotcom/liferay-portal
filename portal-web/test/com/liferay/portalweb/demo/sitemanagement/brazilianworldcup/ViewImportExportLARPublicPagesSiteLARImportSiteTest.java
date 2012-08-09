@@ -25,7 +25,6 @@ public class ViewImportExportLARPublicPagesSiteLARImportSiteTest
 	public void testViewImportExportLARPublicPagesSiteLARImportSite()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//ul[contains(.,'Go to')]/li/a"));
 		Thread.sleep(5000);
@@ -55,7 +54,6 @@ public class ViewImportExportLARPublicPagesSiteLARImportSiteTest
 		selenium.clickAt("//li[contains(.,'LAR Import Site')]/a/span[contains(.,'Public')]",
 			RuntimeVariables.replace("Public"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -85,7 +83,6 @@ public class ViewImportExportLARPublicPagesSiteLARImportSiteTest
 		assertTrue(selenium.isVisible("link=Home"));
 		selenium.clickAt("link=Home", RuntimeVariables.replace("Home"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Home"),
 			selenium.getText("//nav/ul/li[3]/span/a"));
 		assertEquals(RuntimeVariables.replace("Welcome to Brazil"),
@@ -93,7 +90,6 @@ public class ViewImportExportLARPublicPagesSiteLARImportSiteTest
 		assertTrue(selenium.isVisible("link=Arenas"));
 		selenium.clickAt("link=Arenas", RuntimeVariables.replace("Arenas"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Arenas"),
 			selenium.getText("//nav/ul/li[3]/span/a"));
 		assertEquals(RuntimeVariables.replace("Welcome to Brazil"),
@@ -103,7 +99,6 @@ public class ViewImportExportLARPublicPagesSiteLARImportSiteTest
 		selenium.clickAt("link=Arena Pernambuco",
 			RuntimeVariables.replace("Arena Pernambuco"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Arenas"),
 			selenium.getText("//nav/ul/li[3]/span/a"));
 		assertEquals(RuntimeVariables.replace("Arena Pernambuco"),
@@ -115,7 +110,6 @@ public class ViewImportExportLARPublicPagesSiteLARImportSiteTest
 		selenium.clickAt("link=Arena da Baixada",
 			RuntimeVariables.replace("Arena da Baixada"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Arenas"),
 			selenium.getText("//nav/ul/li[3]/span/a"));
 		assertEquals(RuntimeVariables.replace("Arena da Baixada"),
@@ -126,7 +120,6 @@ public class ViewImportExportLARPublicPagesSiteLARImportSiteTest
 		assertTrue(selenium.isVisible("link=Maracana"));
 		selenium.clickAt("link=Maracana", RuntimeVariables.replace("Maracana"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Arenas"),
 			selenium.getText("//nav/ul/li[3]/span/a"));
 		assertEquals(RuntimeVariables.replace("Maracana"),

@@ -24,11 +24,9 @@ public class ConfigurePortletEPLinkPortletURLsPageECTest extends BaseTestCase {
 	public void testConfigurePortletEPLinkPortletURLsPageEC()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Event Producer Test Page",
 			RuntimeVariables.replace("Event Producer Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//span[@title='Options']/ul/li/strong/a"));

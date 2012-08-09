@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class User_LeaveSitesTest extends BaseTestCase {
 	public void testUser_LeaveSites() throws Exception {
 		selenium.open("/user/selenium01/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,13 +42,11 @@ public class User_LeaveSitesTest extends BaseTestCase {
 
 		selenium.clickAt("link=My Sites", RuntimeVariables.replace("My Sites"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_29_name']",
 			RuntimeVariables.replace("Test Open Community"));
 		selenium.clickAt("xPath=(//input[@value='Search'])[2]",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Test Open Community"),
 			selenium.getText("//div[1]/div/table/tbody/tr[3]/td[1]"));
 		assertEquals(RuntimeVariables.replace("2"),
@@ -58,12 +55,10 @@ public class User_LeaveSitesTest extends BaseTestCase {
 			selenium.getText("//span/a/span"));
 		selenium.clickAt("//span/a/span", RuntimeVariables.replace("Leave"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.open("/user/selenium01/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -83,7 +78,6 @@ public class User_LeaveSitesTest extends BaseTestCase {
 
 		selenium.clickAt("link=My Sites", RuntimeVariables.replace("My Sites"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("No sites were found."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 	}

@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewEventMultipleEDTest extends BaseTestCase {
 	public void testViewEventMultipleED() throws Exception {
 		selenium.open("/user/joebloggs/so/dashboard/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -51,13 +50,11 @@ public class ViewEventMultipleEDTest extends BaseTestCase {
 		selenium.clickAt("xPath=(//span[@class='event-name']/a)[1]",
 			RuntimeVariables.replace("Calendar Event1 Title"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Calendar Event1 Title"),
 			selenium.getText("//h1[@class='header-title']"));
 		assertEquals(RuntimeVariables.replace("Calendar Event1 Description"),
 			selenium.getText("//p[2]"));
 		selenium.open("/user/joebloggs/so/dashboard/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -85,13 +82,11 @@ public class ViewEventMultipleEDTest extends BaseTestCase {
 		selenium.clickAt("xPath=(//span[@class='event-name']/a)[2]",
 			RuntimeVariables.replace("Calendar Event2 Title"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Calendar Event2 Title"),
 			selenium.getText("//h1[@class='header-title']"));
 		assertEquals(RuntimeVariables.replace("Calendar Event2 Description"),
 			selenium.getText("//p[2]"));
 		selenium.open("/user/joebloggs/so/dashboard/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -119,7 +114,6 @@ public class ViewEventMultipleEDTest extends BaseTestCase {
 		selenium.clickAt("xPath=(//span[@class='event-name']/a)[3]",
 			RuntimeVariables.replace("Calendar Event3 Title"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Calendar Event3 Title"),
 			selenium.getText("//h1[@class='header-title']"));
 		assertEquals(RuntimeVariables.replace("Calendar Event3 Description"),

@@ -24,7 +24,6 @@ public class ViewUserStatisticsAddMessageBoardThreadTest extends BaseTestCase {
 	public void testViewUserStatisticsAddMessageBoardThread()
 		throws Exception {
 		selenium.open("/web/site-name/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,7 +44,6 @@ public class ViewUserStatisticsAddMessageBoardThreadTest extends BaseTestCase {
 		selenium.clickAt("link=User Statistics Test Page",
 			RuntimeVariables.replace("User Statistics Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText("//span[@class='user-name']"));
 		assertEquals(RuntimeVariables.replace("Rank: 1"),

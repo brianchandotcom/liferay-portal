@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class TranslateSpanishEnglishTest extends BaseTestCase {
 	public void testTranslateSpanishEnglish() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,7 +43,6 @@ public class TranslateSpanishEnglishTest extends BaseTestCase {
 		selenium.clickAt("link=Translator Test Page",
 			RuntimeVariables.replace("Translator Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("//textarea[@id='_26_text']",
 			RuntimeVariables.replace(
 				"Mi nombre es traductor de Liferay, fluido adentro sobre 6 millones de formas de comunicaci\u00f3n."));
@@ -53,7 +51,6 @@ public class TranslateSpanishEnglishTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Translate']",
 			RuntimeVariables.replace("Translate"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isTextPresent(
 				"My name is translator of Liferay, fluid inside on 6 million communication forms."));
 	}

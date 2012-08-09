@@ -25,7 +25,6 @@ public class ConfigurePortletAddCounter4BlogEntryUpdatesTest
 	public void testConfigurePortletAddCounter4BlogEntryUpdates()
 		throws Exception {
 		selenium.open("/web/site-name/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -46,7 +45,6 @@ public class ConfigurePortletAddCounter4BlogEntryUpdatesTest
 		selenium.clickAt("link=User Statistics Test Page",
 			RuntimeVariables.replace("User Statistics Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("User Statistics"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		selenium.clickAt("//span[@class='portlet-title-text']",
@@ -156,7 +154,6 @@ public class ConfigurePortletAddCounter4BlogEntryUpdatesTest
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

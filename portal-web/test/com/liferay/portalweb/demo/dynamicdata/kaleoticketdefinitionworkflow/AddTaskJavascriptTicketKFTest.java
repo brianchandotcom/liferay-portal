@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddTaskJavascriptTicketKFTest extends BaseTestCase {
 	public void testAddTaskJavascriptTicketKF() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,7 +43,6 @@ public class AddTaskJavascriptTicketKFTest extends BaseTestCase {
 		selenium.clickAt("link=Kaleo Forms Test Page",
 			RuntimeVariables.replace("Kaleo Forms Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		Thread.sleep(5000);
 		selenium.click("//span[@title='Submit New']/ul/li/strong/a");
 
@@ -71,7 +69,6 @@ public class AddTaskJavascriptTicketKFTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a",
 			RuntimeVariables.replace("Ticket Process"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.select("//select[@id='_1_WAR_kaleoformsportlet_priority']",
 			RuntimeVariables.replace("Critical"));
 		selenium.select("//select[@id='_1_WAR_kaleoformsportlet_component_name']",
@@ -89,7 +86,6 @@ public class AddTaskJavascriptTicketKFTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

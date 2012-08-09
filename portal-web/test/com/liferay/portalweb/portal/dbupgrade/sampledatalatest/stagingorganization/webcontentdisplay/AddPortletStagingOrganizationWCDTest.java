@@ -24,12 +24,10 @@ public class AddPortletStagingOrganizationWCDTest extends BaseTestCase {
 	public void testAddPortletStagingOrganizationWCD()
 		throws Exception {
 		selenium.open("/web/staging-organization-wcd/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Page Staging Organization Web Content Display",
 			RuntimeVariables.replace(
 				"Page Staging Organization Web Content Display"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
 

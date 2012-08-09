@@ -24,7 +24,6 @@ public class AddSchedulerEventStagingCommunityQuartzTest extends BaseTestCase {
 	public void testAddSchedulerEventStagingCommunityQuartz()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,17 +44,14 @@ public class AddSchedulerEventStagingCommunityQuartzTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Communities",
 			RuntimeVariables.replace("Communities"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_134_name']",
 			RuntimeVariables.replace("Community Staging Community Quartz"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isPartialText("//tr[3]/td[1]",
 				"Community Staging Community Quartz"));
 		assertEquals(RuntimeVariables.replace("Actions"),
@@ -85,7 +81,6 @@ public class AddSchedulerEventStagingCommunityQuartzTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//input[@value='Publish to Live']",
 			RuntimeVariables.replace("Publish to Live"));
 

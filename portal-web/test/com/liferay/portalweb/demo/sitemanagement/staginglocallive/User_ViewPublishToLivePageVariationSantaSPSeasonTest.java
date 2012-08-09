@@ -30,7 +30,6 @@ public class User_ViewPublishToLivePageVariationSantaSPSeasonTest
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -51,7 +50,6 @@ public class User_ViewPublishToLivePageVariationSantaSPSeasonTest
 				selenium.clickAt("link=Site Name",
 					RuntimeVariables.replace("Site Name"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isElementPresent(
 						"//body[contains(@class,'live-view')]"));
 				assertTrue(selenium.isElementNotPresent(
@@ -73,7 +71,6 @@ public class User_ViewPublishToLivePageVariationSantaSPSeasonTest
 				selenium.clickAt("//td[1]/a/strong",
 					RuntimeVariables.replace("MB Category Name"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("MB Category Name"),
 					selenium.getText("//h1[@class='header-title']/span"));
 
@@ -99,7 +96,6 @@ public class User_ViewPublishToLivePageVariationSantaSPSeasonTest
 					RuntimeVariables.replace(
 						"MB Category Thread Message2 Subject"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"MB Category Thread Message2 Subject"),
 					selenium.getText("//div[@class='subject']/a/strong"));
@@ -109,7 +105,6 @@ public class User_ViewPublishToLivePageVariationSantaSPSeasonTest
 				selenium.clickAt("//a[@id='_19_TabsBack']",
 					RuntimeVariables.replace("Back to MB Category Name"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				boolean thread2Visible = selenium.isVisible("//td[1]/a");
 
@@ -133,7 +128,6 @@ public class User_ViewPublishToLivePageVariationSantaSPSeasonTest
 					RuntimeVariables.replace(
 						"MB Category Thread Message1 Subject"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"MB Category Thread Message1 Subject"),
 					selenium.getText("//div[@class='subject']/a/strong"));
@@ -152,7 +146,6 @@ public class User_ViewPublishToLivePageVariationSantaSPSeasonTest
 				selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 					RuntimeVariables.replace("DL Image Title"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {

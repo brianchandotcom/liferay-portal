@@ -24,7 +24,6 @@ public class SOUs_ViewTasksTaskAssignedToConnectionUTTest extends BaseTestCase {
 	public void testSOUs_ViewTasksTaskAssignedToConnectionUT()
 		throws Exception {
 		selenium.open("/user/socialoffice01/so/dashboard/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -79,7 +78,6 @@ public class SOUs_ViewTasksTaskAssignedToConnectionUTTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Normal"),
 			selenium.getText("//div[@class='task-data normal']"));
 		selenium.open("/user/socialoffice01/so/dashboard/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -106,7 +104,6 @@ public class SOUs_ViewTasksTaskAssignedToConnectionUTTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='view-all-tasks']/a",
 			RuntimeVariables.replace("View All Tasks"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Task Description"),
 			selenium.getText("link=Task Description"));
 	}

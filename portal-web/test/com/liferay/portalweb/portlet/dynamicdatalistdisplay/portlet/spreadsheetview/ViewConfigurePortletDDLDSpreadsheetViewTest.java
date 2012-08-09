@@ -25,7 +25,6 @@ public class ViewConfigurePortletDDLDSpreadsheetViewTest extends BaseTestCase {
 		throws Exception {
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -47,7 +46,6 @@ public class ViewConfigurePortletDDLDSpreadsheetViewTest extends BaseTestCase {
 		selenium.clickAt("link=Dynamic Data List Display Test Page",
 			RuntimeVariables.replace("Dynamic Data List Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isVisible(
 				"//div[@class='lfr-spreadsheet-container']/div/div/div/div/table"));
 	}

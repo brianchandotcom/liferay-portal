@@ -24,7 +24,6 @@ public class ViewExpireEditWCWebContentActionsTest extends BaseTestCase {
 	public void testViewExpireEditWCWebContentActions()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
 
@@ -68,11 +67,9 @@ public class ViewExpireEditWCWebContentActionsTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("WC WebContent Title Edit"),
 			selenium.getText("//td[3]/a"));
 		assertEquals(RuntimeVariables.replace("Expired"),
@@ -80,7 +77,6 @@ public class ViewExpireEditWCWebContentActionsTest extends BaseTestCase {
 		selenium.clickAt("//td[3]/a",
 			RuntimeVariables.replace("WC WebContent Title Edit"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Version: 1.1"),
 			selenium.getText("//span[@class='workflow-version']"));
 		assertEquals(RuntimeVariables.replace("Status: Expired"),
@@ -91,7 +87,6 @@ public class ViewExpireEditWCWebContentActionsTest extends BaseTestCase {
 		selenium.clickAt("//div[@id='_15_articleToolbar']/span/button[3]/span[2]",
 			RuntimeVariables.replace("View History"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("WC WebContent Title Edit"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("WC WebContent Title"),

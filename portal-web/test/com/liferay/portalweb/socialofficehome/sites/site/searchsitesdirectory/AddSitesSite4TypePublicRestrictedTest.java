@@ -24,7 +24,6 @@ public class AddSitesSite4TypePublicRestrictedTest extends BaseTestCase {
 	public void testAddSitesSite4TypePublicRestricted()
 		throws Exception {
 		selenium.open("/user/joebloggs/so/dashboard/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

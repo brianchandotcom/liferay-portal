@@ -28,7 +28,6 @@ public class AdvancedSearchStructureIDTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -49,15 +48,12 @@ public class AdvancedSearchStructureIDTest extends BaseTestCase {
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("link=Web Content",
 					RuntimeVariables.replace("Web Content"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("link=Structures",
 					RuntimeVariables.replace("Structures"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				String structureID = selenium.getText("//td[2]/a");
 				RuntimeVariables.setValue("structureID", structureID);
@@ -99,7 +95,6 @@ public class AdvancedSearchStructureIDTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.type("//input[@id='_15_searchStructureId']",
 					RuntimeVariables.replace(""));
 				assertEquals(RuntimeVariables.replace(
@@ -113,7 +108,6 @@ public class AdvancedSearchStructureIDTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.type("//input[@id='_15_searchStructureId']",
 					RuntimeVariables.replace(""));
 				assertFalse(selenium.isTextPresent("Web Content Structure Name"));

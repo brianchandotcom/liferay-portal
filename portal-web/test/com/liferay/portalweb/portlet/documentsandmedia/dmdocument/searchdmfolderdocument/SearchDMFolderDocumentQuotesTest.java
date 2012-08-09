@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SearchDMFolderDocumentQuotesTest extends BaseTestCase {
 	public void testSearchDMFolderDocumentQuotes() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,7 +43,6 @@ public class SearchDMFolderDocumentQuotesTest extends BaseTestCase {
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_20_keywords']",
 			RuntimeVariables.replace("\"DM Folder Document Title\""));
 		selenium.clickAt("//input[@value='Search']",
@@ -73,7 +71,6 @@ public class SearchDMFolderDocumentQuotesTest extends BaseTestCase {
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -94,7 +91,6 @@ public class SearchDMFolderDocumentQuotesTest extends BaseTestCase {
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_20_keywords']",
 			RuntimeVariables.replace("\"DM Folder Document Title 1\""));
 		selenium.clickAt("//input[@value='Search']",

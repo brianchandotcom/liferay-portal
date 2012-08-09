@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class MoveCategory1ItemToCategory2Test extends BaseTestCase {
 	public void testMoveCategory1ItemToCategory2() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,11 +43,9 @@ public class MoveCategory1ItemToCategory2Test extends BaseTestCase {
 		selenium.clickAt("link=Shopping Test Page",
 			RuntimeVariables.replace("Shopping Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Categories",
 			RuntimeVariables.replace("Categories"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Shopping Category1 Name\nShopping Category1 Description"),
 			selenium.getText("//td[1]/a"));
@@ -56,7 +53,6 @@ public class MoveCategory1ItemToCategory2Test extends BaseTestCase {
 			RuntimeVariables.replace(
 				"Shopping Category1 Name\nShopping Category1 Description"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Shopping Category1 Item Name\nShopping Category1 Item Description\nShopping: Category1 Item Properties"),
 			selenium.getText("//td[2]/a"));
@@ -88,7 +84,6 @@ public class MoveCategory1ItemToCategory2Test extends BaseTestCase {
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a",
 			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Shopping Category1 Name"),
 			selenium.getText("//a[@id='_34_categoryName']"));
 		selenium.clickAt("//input[@value='Select']",
@@ -116,14 +111,12 @@ public class MoveCategory1ItemToCategory2Test extends BaseTestCase {
 			selenium.getText("//span[1]/a"));
 		selenium.clickAt("//span[1]/a", RuntimeVariables.replace("Categories"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.click("xPath=(//input[@type='button'])[2]");
 		selenium.selectWindow("null");
 		assertEquals(RuntimeVariables.replace("Shopping Category2 Name"),
 			selenium.getText("//a[@id='_34_categoryName']"));
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
@@ -149,11 +142,9 @@ public class MoveCategory1ItemToCategory2Test extends BaseTestCase {
 		selenium.clickAt("link=Shopping Test Page",
 			RuntimeVariables.replace("Shopping Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Categories",
 			RuntimeVariables.replace("Categories"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Shopping Category2 Name\nShopping Category2 Description"),
 			selenium.getText("//tr[4]/td[1]/a"));
@@ -161,7 +152,6 @@ public class MoveCategory1ItemToCategory2Test extends BaseTestCase {
 			RuntimeVariables.replace(
 				"Shopping Category2 Name\nShopping Category2 Description"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Shopping Category1 Item Name\nShopping Category1 Item Description\nShopping: Category1 Item Properties"),
 			selenium.getText("//td[2]/a"));

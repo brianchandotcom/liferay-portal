@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewTransactionTest extends BaseTestCase {
 	public void testViewTransaction() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,7 +43,6 @@ public class ViewTransactionTest extends BaseTestCase {
 		selenium.clickAt("link=Test Transaction Page",
 			RuntimeVariables.replace("Test Transaction Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isPartialText("//p[1]",
 				"BarLocalServiceUtil.addBar_Success=PASSED"));
 		assertTrue(selenium.isPartialText("//p[1]",

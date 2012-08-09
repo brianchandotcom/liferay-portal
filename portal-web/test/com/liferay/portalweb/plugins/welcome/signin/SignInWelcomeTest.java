@@ -23,10 +23,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SignInWelcomeTest extends BaseTestCase {
 	public void testSignInWelcome() throws Exception {
 		selenium.open("/web/guest/what-we-do/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Sign In", RuntimeVariables.replace("Sign In"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_58_login']",
 			RuntimeVariables.replace("test@liferay.com"));
 		selenium.type("//input[@id='_58_password']",
@@ -38,11 +36,9 @@ public class SignInWelcomeTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Sign In']",
 			RuntimeVariables.replace("Sign In"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//input[@value='I Agree']",
 			RuntimeVariables.replace("I Agree"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Please choose a reminder query."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		selenium.type("//input[@id='reminderQueryAnswer']",
@@ -50,7 +46,6 @@ public class SignInWelcomeTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText("//a[contains(@class,'user-fullname')]"));
 	}

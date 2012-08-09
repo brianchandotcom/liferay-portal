@@ -24,7 +24,6 @@ public class PermissionsPage2DLFolder1GuestViewOffTest extends BaseTestCase {
 	public void testPermissionsPage2DLFolder1GuestViewOff()
 		throws Exception {
 		selenium.open("/web/document-library-page-scope-community/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,7 +44,6 @@ public class PermissionsPage2DLFolder1GuestViewOffTest extends BaseTestCase {
 		selenium.clickAt("link=DL Page1 Name",
 			RuntimeVariables.replace("DL Page1 Name"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -97,7 +95,6 @@ public class PermissionsPage2DLFolder1GuestViewOffTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("DL Folder1 Name"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertTrue(selenium.isChecked("//input[@name='16_ACTION_VIEW']"));
@@ -107,7 +104,6 @@ public class PermissionsPage2DLFolder1GuestViewOffTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

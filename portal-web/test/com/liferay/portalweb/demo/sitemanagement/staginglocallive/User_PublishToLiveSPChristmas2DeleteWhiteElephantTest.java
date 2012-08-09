@@ -30,7 +30,6 @@ public class User_PublishToLiveSPChristmas2DeleteWhiteElephantTest
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -51,7 +50,6 @@ public class User_PublishToLiveSPChristmas2DeleteWhiteElephantTest
 				selenium.clickAt("link=Site Name",
 					RuntimeVariables.replace("Site Name"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isElementPresent(
 						"//body[contains(@class,'live-view')]"));
 				assertTrue(selenium.isElementNotPresent(
@@ -62,7 +60,6 @@ public class User_PublishToLiveSPChristmas2DeleteWhiteElephantTest
 				selenium.clickAt("//div[@class='staging-bar']/ul/li[2]/span/a",
 					RuntimeVariables.replace("Staging"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isElementPresent(
 						"//body[contains(@class,'local-staging')]"));
 				assertTrue(selenium.isElementNotPresent(
@@ -80,7 +77,6 @@ public class User_PublishToLiveSPChristmas2DeleteWhiteElephantTest
 				selenium.clickAt("link=Christmas 2",
 					RuntimeVariables.replace("Christmas 2"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 			case 2:
 				assertEquals(RuntimeVariables.replace(
@@ -91,7 +87,6 @@ public class User_PublishToLiveSPChristmas2DeleteWhiteElephantTest
 				assertTrue(selenium.isVisible("link=Home"));
 				selenium.clickAt("link=Home", RuntimeVariables.replace("Home"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("//span[2]/span/ul/li/strong/a",
 					RuntimeVariables.replace("Christmas 2 Staging"));
 

@@ -23,11 +23,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddPortletBlogsScopeDefaultTest extends BaseTestCase {
 	public void testAddPortletBlogsScopeDefault() throws Exception {
 		selenium.open("/web/group-page-scope-community/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Blogs Page Scope Default",
 			RuntimeVariables.replace("Blogs Page Scope Default"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
 

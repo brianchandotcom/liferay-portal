@@ -25,7 +25,6 @@ public class ViewDeleteReplyMicroblogsContentNotificationsTest
 	public void testViewDeleteReplyMicroblogsContentNotifications()
 		throws Exception {
 		selenium.open("/user/joebloggs/so/dashboard/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -73,7 +72,6 @@ public class ViewDeleteReplyMicroblogsContentNotificationsTest
 			RuntimeVariables.replace(
 				"Social01 Office01 User01 commented on your post."));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText(
 				"xPath=(//div[@class='user-name']/span)[contains(.,'Joe Bloggs')]"));
@@ -87,7 +85,6 @@ public class ViewDeleteReplyMicroblogsContentNotificationsTest
 				"xPath=(//div[@class='content'])[2]"));
 		assertFalse(selenium.isTextPresent("1 Comment"));
 		selenium.open("/user/joebloggs/so/dashboard/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -136,7 +133,6 @@ public class ViewDeleteReplyMicroblogsContentNotificationsTest
 		selenium.clickAt("//span[@class='dismiss-notifications']/a",
 			RuntimeVariables.replace("Mark as Read"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

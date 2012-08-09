@@ -24,7 +24,6 @@ public class SOUs_EditInstantMessengerNullProfileTest extends BaseTestCase {
 	public void testSOUs_EditInstantMessengerNullProfile()
 		throws Exception {
 		selenium.open("/web/socialoffice01/so/profile");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

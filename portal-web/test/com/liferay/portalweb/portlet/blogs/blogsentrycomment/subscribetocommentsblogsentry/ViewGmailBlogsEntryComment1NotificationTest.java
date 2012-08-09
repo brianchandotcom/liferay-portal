@@ -34,7 +34,6 @@ public class ViewGmailBlogsEntryComment1NotificationTest extends BaseTestCase {
 		selenium.clickAt("//input[@id='signIn']",
 			RuntimeVariables.replace("Sign In"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		Thread.sleep(10000);
 		assertEquals(RuntimeVariables.replace("me"),
 			selenium.getText("//tbody/tr[1]/td[5]/div/span"));
@@ -93,7 +92,6 @@ public class ViewGmailBlogsEntryComment1NotificationTest extends BaseTestCase {
 			selenium.getText("//td[2]/a"));
 		selenium.clickAt("//td[2]/a", RuntimeVariables.replace("Sign out"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.close();
 		selenium.selectWindow("null");
 	}

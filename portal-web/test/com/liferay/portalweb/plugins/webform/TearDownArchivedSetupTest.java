@@ -28,7 +28,6 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -49,7 +48,6 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 				selenium.clickAt("link=Web Form Test Page",
 					RuntimeVariables.replace("Web Form Test Page"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				Thread.sleep(5000);
 				assertEquals(RuntimeVariables.replace("Options"),
 					selenium.getText("//strong/a"));
@@ -99,7 +97,6 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 				selenium.click(RuntimeVariables.replace(
 						"//a[@id='_86_rjus']/span"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				boolean archiveSetup1Present = selenium.isElementPresent(
 						"//div[@class='portlet-msg-info']");
@@ -136,7 +133,6 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 				selenium.click(RuntimeVariables.replace(
 						"//a[@id='_86_ocerSearchContainer_1_menu_delete']"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 
@@ -175,7 +171,6 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 				selenium.click(RuntimeVariables.replace(
 						"//a[@id='_86_ocerSearchContainer_1_menu_delete']"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 
@@ -211,7 +206,6 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 					selenium.getText("//a[@id='_86_ctvk']"));
 				selenium.click(RuntimeVariables.replace("//a[@id='_86_ctvk']"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 
@@ -247,7 +241,6 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 					selenium.getText("//a[@id='_86_ctvk']"));
 				selenium.click(RuntimeVariables.replace("//a[@id='_86_ctvk']"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 
@@ -286,7 +279,6 @@ public class TearDownArchivedSetupTest extends BaseTestCase {
 				selenium.click(RuntimeVariables.replace(
 						"//a[@id='_86_ocerSearchContainer_1_menu_delete']"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 

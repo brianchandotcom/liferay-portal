@@ -25,7 +25,6 @@ public class ViewImportExportLARPrivatePagesSiteLARImportSiteTest
 	public void testViewImportExportLARPrivatePagesSiteLARImportSite()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//ul[contains(.,'Go to')]/li/a"));
 		Thread.sleep(5000);
@@ -55,7 +54,6 @@ public class ViewImportExportLARPrivatePagesSiteLARImportSiteTest
 		selenium.clickAt("//li[contains(.,'LAR Import Site')]/a/span[contains(.,'Private')]",
 			RuntimeVariables.replace("Private"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -86,7 +84,6 @@ public class ViewImportExportLARPrivatePagesSiteLARImportSiteTest
 		selenium.clickAt("link=Accommodations",
 			RuntimeVariables.replace("Accommodations"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Accommodations"),
 			selenium.getText("//nav/ul/li[3]/span/a"));
 		assertEquals(RuntimeVariables.replace("Powered By Liferay"),
@@ -94,7 +91,6 @@ public class ViewImportExportLARPrivatePagesSiteLARImportSiteTest
 		assertTrue(selenium.isVisible("link=Maps"));
 		selenium.clickAt("link=Maps", RuntimeVariables.replace("Maps"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Maps"),
 			selenium.getText("//nav/ul/li[3]/span/a"));
 		assertEquals(RuntimeVariables.replace("Powered By Liferay"),

@@ -30,7 +30,6 @@ public class User_AddPageWhiteElephantSPVariationChristmasTest
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -51,7 +50,6 @@ public class User_AddPageWhiteElephantSPVariationChristmasTest
 				selenium.clickAt("link=Site Name",
 					RuntimeVariables.replace("Site Name"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isElementPresent(
 						"//body[contains(@class,'live-view')]"));
 				assertTrue(selenium.isElementNotPresent(
@@ -62,7 +60,6 @@ public class User_AddPageWhiteElephantSPVariationChristmasTest
 				selenium.clickAt("//div[@class='staging-bar']/ul/li[2]/span/a",
 					RuntimeVariables.replace("Staging"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isElementPresent(
 						"//body[contains(@class,'local-staging')]"));
 				assertTrue(selenium.isElementNotPresent(
@@ -80,7 +77,6 @@ public class User_AddPageWhiteElephantSPVariationChristmasTest
 				selenium.clickAt("link=Christmas",
 					RuntimeVariables.replace("Christmas"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 			case 2:
 				assertEquals(RuntimeVariables.replace("Christmas"),
@@ -171,7 +167,6 @@ public class User_AddPageWhiteElephantSPVariationChristmasTest
 				selenium.clickAt("link=White Elephant",
 					RuntimeVariables.replace("White Elephant"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 			case 100:
 				label = -1;

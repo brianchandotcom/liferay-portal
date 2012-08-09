@@ -23,15 +23,12 @@ public class N1_AssertRefreshMBContentTest extends BaseTestCase {
 	public void testN1_AssertRefreshMBContent() throws Exception {
 		selenium.refresh();
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent("link=Test Category 2"));
 		selenium.refresh();
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent("link=Test Category 2"));
 		selenium.refresh();
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent("link=Test Category 2"));
 	}
 }

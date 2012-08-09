@@ -24,7 +24,6 @@ public class AddPublisherTest extends BaseTestCase {
 	public void testAddPublisher() throws Exception {
 		selenium.clickAt("link=Users", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,7 +43,6 @@ public class AddPublisherTest extends BaseTestCase {
 
 		selenium.clickAt("link=Add", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -82,7 +80,6 @@ public class AddPublisherTest extends BaseTestCase {
 		selenium.select("_125_male", RuntimeVariables.replace("label=Female"));
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("passwordLink", RuntimeVariables.replace(""));
 
 		for (int second = 0;; second++) {
@@ -105,7 +102,6 @@ public class AddPublisherTest extends BaseTestCase {
 		selenium.type("_125_password2", RuntimeVariables.replace("test"));
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("rolesLink", RuntimeVariables.replace(""));
 
 		for (int second = 0;; second++) {
@@ -149,7 +145,6 @@ public class AddPublisherTest extends BaseTestCase {
 		selenium.selectWindow("null");
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isTextPresent(
 				"Your request completed successfully."));
 		assertTrue(selenium.isTextPresent("Publisher"));

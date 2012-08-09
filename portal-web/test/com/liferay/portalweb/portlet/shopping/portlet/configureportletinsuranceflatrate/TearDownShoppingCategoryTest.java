@@ -28,15 +28,12 @@ public class TearDownShoppingCategoryTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("link=Shopping Test Page",
 					RuntimeVariables.replace("Shopping Test Page"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("link=Categories",
 					RuntimeVariables.replace("Categories"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				boolean shoppingCategory1Present = selenium.isElementPresent(
 						"//span[@title='Actions']/ul/li/strong/a/span");
@@ -77,7 +74,6 @@ public class TearDownShoppingCategoryTest extends BaseTestCase {
 				selenium.click(RuntimeVariables.replace(
 						"//a[@id='_34_ocerSearchContainer_1_menu_delete']"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 
@@ -122,7 +118,6 @@ public class TearDownShoppingCategoryTest extends BaseTestCase {
 				selenium.click(RuntimeVariables.replace(
 						"//a[@id='_34_ocerSearchContainer_1_menu_delete']"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 
@@ -167,7 +162,6 @@ public class TearDownShoppingCategoryTest extends BaseTestCase {
 				selenium.click(RuntimeVariables.replace(
 						"//a[@id='_34_ocerSearchContainer_1_menu_delete']"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 
@@ -212,7 +206,6 @@ public class TearDownShoppingCategoryTest extends BaseTestCase {
 				selenium.click(RuntimeVariables.replace(
 						"//a[@id='_34_ocerSearchContainer_1_menu_delete']"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 
@@ -257,7 +250,6 @@ public class TearDownShoppingCategoryTest extends BaseTestCase {
 				selenium.click(RuntimeVariables.replace(
 						"//a[@id='_34_ocerSearchContainer_1_menu_delete']"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 

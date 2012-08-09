@@ -25,7 +25,6 @@ public class Guest_ViewPermissionsShoppingItemGuestViewOffTest
 	public void testGuest_ViewPermissionsShoppingItemGuestViewOff()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -46,7 +45,6 @@ public class Guest_ViewPermissionsShoppingItemGuestViewOffTest
 		selenium.clickAt("link=Shopping Test Page",
 			RuntimeVariables.replace("Shopping Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertFalse(selenium.isTextPresent("Shopping Item Name"));
 	}
 }

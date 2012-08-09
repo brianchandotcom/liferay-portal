@@ -24,7 +24,6 @@ public class ViewTasksTaskAssignedToConnectionUTTest extends BaseTestCase {
 	public void testViewTasksTaskAssignedToConnectionUT()
 		throws Exception {
 		selenium.open("/user/joebloggs/so/dashboard/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -54,13 +53,11 @@ public class ViewTasksTaskAssignedToConnectionUTTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='view-all-tasks']/a",
 			RuntimeVariables.replace("View All Tasks"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Assigned to Me"),
 			selenium.getText("link=Assigned to Me"));
 		selenium.clickAt("link=Assigned to Me",
 			RuntimeVariables.replace("Assigned to Me"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("No tasks were found."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertEquals(RuntimeVariables.replace("I Have Created"),
@@ -68,7 +65,6 @@ public class ViewTasksTaskAssignedToConnectionUTTest extends BaseTestCase {
 		selenium.clickAt("link=I Have Created",
 			RuntimeVariables.replace("I Have Created"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Task Description"),
 			selenium.getText("link=Task Description"));
 		selenium.clickAt("link=Task Description",

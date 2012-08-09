@@ -23,11 +23,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewPageLiferayBenefitsTest extends BaseTestCase {
 	public void testViewPageLiferayBenefits() throws Exception {
 		selenium.open("/web/guest/what-we-do/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Liferay Benefits",
 			RuntimeVariables.replace("Liferay Benefits"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//nav[@id='navigation']",
 			RuntimeVariables.replace("Navigation"));
 

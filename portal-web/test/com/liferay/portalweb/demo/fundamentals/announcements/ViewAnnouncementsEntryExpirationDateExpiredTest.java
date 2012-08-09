@@ -25,7 +25,6 @@ public class ViewAnnouncementsEntryExpirationDateExpiredTest
 	public void testViewAnnouncementsEntryExpirationDateExpired()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -46,12 +45,10 @@ public class ViewAnnouncementsEntryExpirationDateExpiredTest
 		selenium.clickAt("link=Announcements Test Page",
 			RuntimeVariables.replace("Announcements Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isTextPresent("Announcements Entry Expired Title"));
 		assertTrue(selenium.isTextPresent("Announcements Entry Expired Content"));
 		Thread.sleep(60000);
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -72,7 +69,6 @@ public class ViewAnnouncementsEntryExpirationDateExpiredTest
 		selenium.clickAt("link=Announcements Test Page",
 			RuntimeVariables.replace("Announcements Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertFalse(selenium.isTextPresent("Announcements Entry Expired Title"));
 		assertFalse(selenium.isTextPresent(
 				"Announcements Entry Expired Content"));

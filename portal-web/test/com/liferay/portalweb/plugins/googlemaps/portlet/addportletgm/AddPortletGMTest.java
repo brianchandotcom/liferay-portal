@@ -23,10 +23,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddPortletGMTest extends BaseTestCase {
 	public void testAddPortletGM() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.click(RuntimeVariables.replace("link=Google Maps Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
 

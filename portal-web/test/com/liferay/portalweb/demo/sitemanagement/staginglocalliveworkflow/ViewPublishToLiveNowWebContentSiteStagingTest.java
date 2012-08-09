@@ -24,7 +24,6 @@ public class ViewPublishToLiveNowWebContentSiteStagingTest extends BaseTestCase 
 	public void testViewPublishToLiveNowWebContentSiteStaging()
 		throws Exception {
 		selenium.open("/web/community-site-test/home");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("This is a Web Content article"),
 			selenium.getText("//div[@class='journal-content-article']/p"));
 	}

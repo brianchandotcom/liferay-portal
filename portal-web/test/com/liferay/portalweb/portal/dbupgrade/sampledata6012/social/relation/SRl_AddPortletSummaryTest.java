@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SRl_AddPortletSummaryTest extends BaseTestCase {
 	public void testSRl_AddPortletSummary() throws Exception {
 		selenium.open("/web/socialrelationsn1/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,7 +42,6 @@ public class SRl_AddPortletSummaryTest extends BaseTestCase {
 
 		selenium.click(RuntimeVariables.replace("link=Summary Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
 				"More"));
 		selenium.clickAt("//a[@id='_145_addApplication']",

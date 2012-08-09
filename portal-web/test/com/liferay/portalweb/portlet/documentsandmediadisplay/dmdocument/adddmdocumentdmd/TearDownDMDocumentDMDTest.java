@@ -28,12 +28,10 @@ public class TearDownDMDocumentDMDTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("link=Documents and Media Display Test Page",
 					RuntimeVariables.replace(
 						"Documents and Media Display Test Page"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				boolean dmDocument1Present = selenium.isElementPresent(
 						"//span[@class='entry-title']");
@@ -73,7 +71,6 @@ public class TearDownDMDocumentDMDTest extends BaseTestCase {
 				selenium.clickAt("//a[contains(@id,'objectsSearchContainer_1_menu_move-to-the-recycle-bin')]",
 					RuntimeVariables.replace("Move to the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to move this to the Recycle Bin[\\s\\S]$"));
 				assertEquals(RuntimeVariables.replace(
@@ -118,7 +115,6 @@ public class TearDownDMDocumentDMDTest extends BaseTestCase {
 				selenium.clickAt("//a[contains(@id,'objectsSearchContainer_1_menu_move-to-the-recycle-bin')]",
 					RuntimeVariables.replace("Move to the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to move this to the Recycle Bin[\\s\\S]$"));
 				assertEquals(RuntimeVariables.replace(
@@ -163,7 +159,6 @@ public class TearDownDMDocumentDMDTest extends BaseTestCase {
 				selenium.clickAt("//a[contains(@id,'objectsSearchContainer_1_menu_move-to-the-recycle-bin')]",
 					RuntimeVariables.replace("Move to the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to move this to the Recycle Bin[\\s\\S]$"));
 				assertEquals(RuntimeVariables.replace(
@@ -208,7 +203,6 @@ public class TearDownDMDocumentDMDTest extends BaseTestCase {
 				selenium.clickAt("//a[contains(@id,'objectsSearchContainer_1_menu_move-to-the-recycle-bin')]",
 					RuntimeVariables.replace("Move to the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to move this to the Recycle Bin[\\s\\S]$"));
 				assertEquals(RuntimeVariables.replace(
@@ -253,7 +247,6 @@ public class TearDownDMDocumentDMDTest extends BaseTestCase {
 				selenium.clickAt("//a[contains(@id,'objectsSearchContainer_1_menu_move-to-the-recycle-bin')]",
 					RuntimeVariables.replace("Move to the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to move this to the Recycle Bin[\\s\\S]$"));
 				assertEquals(RuntimeVariables.replace(
@@ -269,7 +262,6 @@ public class TearDownDMDocumentDMDTest extends BaseTestCase {
 						"There are no documents or media files in this folder."),
 					selenium.getText("//div[@class='portlet-msg-info']"));
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("Go to"),
 					selenium.getText("//li[@id='_145_mySites']/a/span"));
 				selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -293,11 +285,9 @@ public class TearDownDMDocumentDMDTest extends BaseTestCase {
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("link=Recycle Bin",
 					RuntimeVariables.replace("Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				boolean dmDocumentNotDeleted = selenium.isElementPresent(
 						"//input[@name='_182_rowIds']");
@@ -334,7 +324,6 @@ public class TearDownDMDocumentDMDTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Delete']",
 					RuntimeVariables.replace("Delete"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected entries[\\s\\S] They will be deleted immediately.$"));
 				assertEquals(RuntimeVariables.replace(

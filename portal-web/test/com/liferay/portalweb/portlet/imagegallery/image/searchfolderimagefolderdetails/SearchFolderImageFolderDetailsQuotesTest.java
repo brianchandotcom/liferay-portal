@@ -24,7 +24,6 @@ public class SearchFolderImageFolderDetailsQuotesTest extends BaseTestCase {
 	public void testSearchFolderImageFolderDetailsQuotes()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,13 +44,11 @@ public class SearchFolderImageFolderDetailsQuotesTest extends BaseTestCase {
 		selenium.clickAt("link=Image Gallery Test Page",
 			RuntimeVariables.replace("Image Gallery Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("MG Folder Name"),
 			selenium.getText("//span[@class='image-title']"));
 		selenium.clickAt("//span[@class='image-title']",
 			RuntimeVariables.replace("MG Folder Name"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("MG Folder Name"),
 			selenium.getText("//div/h1/span"));
 		selenium.type("//input[@id='_31_keywords1']",
@@ -59,13 +56,11 @@ public class SearchFolderImageFolderDetailsQuotesTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isVisible(
 				"//a[@class='image-thumbnail preview aui-image-viewer-link']/img"));
 		assertEquals(RuntimeVariables.replace("MG Folder Image Title"),
 			selenium.getText("//span[@class='image-title']"));
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -86,13 +81,11 @@ public class SearchFolderImageFolderDetailsQuotesTest extends BaseTestCase {
 		selenium.clickAt("link=Image Gallery Test Page",
 			RuntimeVariables.replace("Image Gallery Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_31_keywords1']",
 			RuntimeVariables.replace("\"Image2\""));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementNotPresent(
 				"//a[@class='image-thumbnail preview aui-image-viewer-link']/img"));
 		assertFalse(selenium.isTextPresent("MG Folder Image Title"));

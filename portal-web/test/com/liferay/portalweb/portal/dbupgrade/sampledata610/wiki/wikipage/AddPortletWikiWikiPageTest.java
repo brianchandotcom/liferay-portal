@@ -23,11 +23,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddPortletWikiWikiPageTest extends BaseTestCase {
 	public void testAddPortletWikiWikiPage() throws Exception {
 		selenium.open("/web/wiki-wiki-page-community/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Wiki Page Test",
 			RuntimeVariables.replace("Wiki Page Test"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
 

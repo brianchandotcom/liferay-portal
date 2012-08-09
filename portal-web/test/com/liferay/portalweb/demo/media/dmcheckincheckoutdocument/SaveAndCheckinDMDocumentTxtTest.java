@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SaveAndCheckinDMDocumentTxtTest extends BaseTestCase {
 	public void testSaveAndCheckinDMDocumentTxt() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,19 +43,16 @@ public class SaveAndCheckinDMDocumentTxtTest extends BaseTestCase {
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("DM Document Title (Draft)"),
 			selenium.getText("//div[@data-title='DM Document Title']/a/span[2]"));
 		assertTrue(selenium.isVisible("//img[@alt='Locked']"));
 		selenium.clickAt("//div[@data-title='DM Document Title']/a/span[2]",
 			RuntimeVariables.replace("DM Document Title (Draft)"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText("//button[.='Edit']"));
 		selenium.clickAt("//button[.='Edit']", RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.uploadCommonFile("//input[@id='_20_file']",
 			RuntimeVariables.replace("Document_2.txt"));
 		selenium.type("//input[@id='_20_title']",
@@ -64,7 +60,6 @@ public class SaveAndCheckinDMDocumentTxtTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save and Checkin']",
 			RuntimeVariables.replace("Save and Checkin"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

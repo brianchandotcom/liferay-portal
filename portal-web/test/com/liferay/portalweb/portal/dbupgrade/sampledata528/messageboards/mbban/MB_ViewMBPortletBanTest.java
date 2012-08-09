@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class MB_ViewMBPortletBanTest extends BaseTestCase {
 	public void testMB_ViewMBPortletBan() throws Exception {
 		selenium.open("/web/mb-ban-community/message-boards-test-page/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,7 +43,6 @@ public class MB_ViewMBPortletBanTest extends BaseTestCase {
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"You have been banned by the moderator."),
 			selenium.getText("//span[@class='portlet-msg-error']"));

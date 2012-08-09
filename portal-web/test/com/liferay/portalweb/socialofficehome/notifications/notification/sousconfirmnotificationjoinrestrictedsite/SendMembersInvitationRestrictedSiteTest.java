@@ -24,7 +24,6 @@ public class SendMembersInvitationRestrictedSiteTest extends BaseTestCase {
 	public void testSendMembersInvitationRestrictedSite()
 		throws Exception {
 		selenium.open("/user/joebloggs/so/dashboard/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -71,7 +70,6 @@ public class SendMembersInvitationRestrictedSiteTest extends BaseTestCase {
 		selenium.clickAt("//li[contains(@class, 'social-office-enabled')]/span[2]/a",
 			RuntimeVariables.replace("Restricted Site Name"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Restricted Site Name"),
 			selenium.getText("//div[@class='community-title']/a/span"));
 		assertEquals(RuntimeVariables.replace("Members"),
@@ -79,7 +77,6 @@ public class SendMembersInvitationRestrictedSiteTest extends BaseTestCase {
 		selenium.clickAt("//nav/ul/li[contains(.,'Members')]/a/span",
 			RuntimeVariables.replace("Members"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Invite members to this site."),
 			selenium.getText(
 				"//a[contains(text(),'Invite members to this site.')]"));

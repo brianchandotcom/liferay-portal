@@ -24,7 +24,6 @@ public class Scope_AssertCannotAddSiteScopeEntryTest extends BaseTestCase {
 	public void testScope_AssertCannotAddSiteScopeEntry()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,7 +44,6 @@ public class Scope_AssertCannotAddSiteScopeEntryTest extends BaseTestCase {
 		selenium.clickAt("link=Blogs Permissions Page",
 			RuntimeVariables.replace("Blogs Permissions Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementNotPresent(
 				"//input[@value='Add Blog Entry']"));
 	}

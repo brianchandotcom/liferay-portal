@@ -29,7 +29,6 @@ public class SOUs_DeleteReplyMicroblogsContentProfileTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/joebloggs/so/profile");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -51,7 +50,6 @@ public class SOUs_DeleteReplyMicroblogsContentProfileTest extends BaseTestCase {
 				selenium.clickAt("//nav/ul/li[contains(.,'Microblogs')]/a/span",
 					RuntimeVariables.replace("Microblogs"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				boolean microblogReplyPresent = selenium.isElementPresent(
 						"xPath=(//div[@class='content'])[2]");

@@ -29,7 +29,6 @@ public class AdvancedSearchOrganizationStreetQuotesTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -50,11 +49,9 @@ public class AdvancedSearchOrganizationStreetQuotesTest extends BaseTestCase {
 				selenium.clickAt("link=Directory Test Page",
 					RuntimeVariables.replace("Directory Test Page"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("link=Organizations",
 					RuntimeVariables.replace("Organizations"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				boolean advancedVisible = selenium.isVisible(
 						"link=Advanced \u00bb");
@@ -94,7 +91,6 @@ public class AdvancedSearchOrganizationStreetQuotesTest extends BaseTestCase {
 				selenium.clickAt("//div[2]/span[2]/span/input",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.type("//input[@id='_11_street']",
 					RuntimeVariables.replace(""));
 				assertTrue(selenium.isElementPresent("link=Test Organization"));
@@ -103,7 +99,6 @@ public class AdvancedSearchOrganizationStreetQuotesTest extends BaseTestCase {
 				selenium.clickAt("//div[2]/span[2]/span/input",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.type("//input[@id='_11_street']",
 					RuntimeVariables.replace(""));
 				selenium.select("//select[@id='_11_andOperator']",

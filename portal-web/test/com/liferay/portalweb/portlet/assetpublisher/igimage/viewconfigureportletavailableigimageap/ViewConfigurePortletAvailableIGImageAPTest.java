@@ -24,7 +24,6 @@ public class ViewConfigurePortletAvailableIGImageAPTest extends BaseTestCase {
 	public void testViewConfigurePortletAvailableIGImageAP()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,7 +44,6 @@ public class ViewConfigurePortletAvailableIGImageAPTest extends BaseTestCase {
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertFalse(selenium.isTextPresent("IG Folder Image Name"));
 		assertTrue(selenium.isElementNotPresent(
 				"//div[@class='asset-resource-info']/div/img"));

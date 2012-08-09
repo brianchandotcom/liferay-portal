@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class CompareVersionsDMDocumentTxtTest extends BaseTestCase {
 	public void testCompareVersionsDMDocumentTxt() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,14 +43,12 @@ public class CompareVersionsDMDocumentTxtTest extends BaseTestCase {
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("DM Document Title Edit"),
 			selenium.getText(
 				"//div[@data-title='DM Document Title Edit']/a/span[2]"));
 		selenium.clickAt("//div[@data-title='DM Document Title Edit']/a/span[2]",
 			RuntimeVariables.replace("DM Document Title Edit"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertFalse(selenium.isChecked("//tr[3]/td[1]/input"));
 		selenium.clickAt("//tr[3]/td[1]/input", RuntimeVariables.replace("1.1"));
 		assertTrue(selenium.isChecked("//tr[3]/td[1]/input"));
@@ -61,7 +58,6 @@ public class CompareVersionsDMDocumentTxtTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Compare Versions']",
 			RuntimeVariables.replace("Compare Versions"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("DM Document Title 1.0"),
 			selenium.getText("//td"));
 		assertEquals(RuntimeVariables.replace("DM Document Title Edit 1.1"),

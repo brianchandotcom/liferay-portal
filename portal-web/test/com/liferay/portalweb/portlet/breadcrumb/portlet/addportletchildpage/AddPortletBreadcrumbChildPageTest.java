@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddPortletBreadcrumbChildPageTest extends BaseTestCase {
 	public void testAddPortletBreadcrumbChildPage() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.mouseOver("link=Breadcrumb Test Page");
 
 		for (int second = 0;; second++) {
@@ -45,7 +44,6 @@ public class AddPortletBreadcrumbChildPageTest extends BaseTestCase {
 		selenium.clickAt("link=Child Test Page",
 			RuntimeVariables.replace("Child Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
 

@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SOUs_AddAsConnectionProfileUserTest extends BaseTestCase {
 	public void testSOUs_AddAsConnectionProfileUser() throws Exception {
 		selenium.open("/web/joebloggs/so/profile/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,7 +44,6 @@ public class SOUs_AddAsConnectionProfileUserTest extends BaseTestCase {
 		selenium.clickAt("//nav/ul/li[contains(.,'Profile')]/a/span",
 			RuntimeVariables.replace("Profile"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText("//div[@class='lfr-contact-name']/a"));
 		assertEquals(RuntimeVariables.replace("test@liferay.com"),

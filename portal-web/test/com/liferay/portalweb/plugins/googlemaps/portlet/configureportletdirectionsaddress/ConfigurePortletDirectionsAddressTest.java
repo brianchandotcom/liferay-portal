@@ -24,10 +24,8 @@ public class ConfigurePortletDirectionsAddressTest extends BaseTestCase {
 	public void testConfigurePortletDirectionsAddress()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.click(RuntimeVariables.replace("link=Google Maps Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Google Maps"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		selenium.clickAt("//span[@class='portlet-title-text']",
@@ -119,7 +117,6 @@ public class ConfigurePortletDirectionsAddressTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

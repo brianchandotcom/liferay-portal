@@ -28,7 +28,6 @@ public class SOUs1_SignOutSOTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 
 				boolean socialOfficeSignOutPresent = selenium.isElementPresent(
 						"//li[@id='_145_userMenu']");
@@ -63,7 +62,6 @@ public class SOUs1_SignOutSOTest extends BaseTestCase {
 				selenium.clickAt("link=Sign Out",
 					RuntimeVariables.replace("Sign Out"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {

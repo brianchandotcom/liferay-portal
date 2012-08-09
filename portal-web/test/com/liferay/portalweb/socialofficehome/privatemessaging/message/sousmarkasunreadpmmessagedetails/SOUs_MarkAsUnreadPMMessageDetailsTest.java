@@ -24,7 +24,6 @@ public class SOUs_MarkAsUnreadPMMessageDetailsTest extends BaseTestCase {
 	public void testSOUs_MarkAsUnreadPMMessageDetails()
 		throws Exception {
 		selenium.open("/user/socialoffice01/home");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -46,7 +45,6 @@ public class SOUs_MarkAsUnreadPMMessageDetailsTest extends BaseTestCase {
 		selenium.clickAt("//nav/ul/li[contains(.,'Messages')]/a/span",
 			RuntimeVariables.replace("Messages"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementNotPresent(
 				"//tr[contains(@class, 'unread')]"));
 		assertEquals(RuntimeVariables.replace("Private Messaging"),
@@ -67,7 +65,6 @@ public class SOUs_MarkAsUnreadPMMessageDetailsTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='subject']",
 			RuntimeVariables.replace("Message Subject"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Message Subject"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("Between Joe Bloggs And you"),
@@ -82,7 +79,6 @@ public class SOUs_MarkAsUnreadPMMessageDetailsTest extends BaseTestCase {
 		selenium.clickAt("//input[@id='_1_WAR_privatemessagingportlet_markAsUnread']",
 			RuntimeVariables.replace("Mark as Unread"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

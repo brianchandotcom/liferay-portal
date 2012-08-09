@@ -24,7 +24,6 @@ public class SOUs_ViewReplyMicroblogsContentMentionsTest extends BaseTestCase {
 	public void testSOUs_ViewReplyMicroblogsContentMentions()
 		throws Exception {
 		selenium.open("/user/socialoffice01/so/dashboard");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,7 +43,6 @@ public class SOUs_ViewReplyMicroblogsContentMentionsTest extends BaseTestCase {
 
 		selenium.clickAt("link=Me", RuntimeVariables.replace("Me"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"@Joe Bloggs: Microblogs Post Comment [@joebloggs]"),
 			selenium.getText("xPath=(//div[@class='activity-title'])[1]"));

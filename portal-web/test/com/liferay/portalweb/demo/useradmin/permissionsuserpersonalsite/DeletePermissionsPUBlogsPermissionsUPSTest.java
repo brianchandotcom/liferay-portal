@@ -24,7 +24,6 @@ public class DeletePermissionsPUBlogsPermissionsUPSTest extends BaseTestCase {
 	public void testDeletePermissionsPUBlogsPermissionsUPS()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,16 +44,13 @@ public class DeletePermissionsPUBlogsPermissionsUPSTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Roles", RuntimeVariables.replace("Roles"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_128_keywords']",
 			RuntimeVariables.replace("Power"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Power User"),
 			selenium.getText("//td/a"));
 		assertEquals(RuntimeVariables.replace("Actions"),
@@ -85,7 +81,6 @@ public class DeletePermissionsPUBlogsPermissionsUPSTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a",
 			RuntimeVariables.replace("Define Permissions"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Blogs"),
 			selenium.getText("//tr[3]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Blogs"),
@@ -99,7 +94,6 @@ public class DeletePermissionsPUBlogsPermissionsUPSTest extends BaseTestCase {
 		selenium.clickAt("//tr[3]/td[5]/span/a/span",
 			RuntimeVariables.replace("Delete"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("The permission was deleted."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertNotEquals(RuntimeVariables.replace("Permissions"),

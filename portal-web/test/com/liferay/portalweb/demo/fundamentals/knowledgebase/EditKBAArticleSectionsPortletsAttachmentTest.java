@@ -24,7 +24,6 @@ public class EditKBAArticleSectionsPortletsAttachmentTest extends BaseTestCase {
 	public void testEditKBAArticleSectionsPortletsAttachment()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,11 +44,9 @@ public class EditKBAArticleSectionsPortletsAttachmentTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Knowledge Base (Admin)",
 			RuntimeVariables.replace("Knowledge Base (Admin)"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("KB Admin Article"),
 			selenium.getText("//tr[3]/td[3]"));
 		assertEquals(RuntimeVariables.replace("Actions"),
@@ -80,7 +77,6 @@ public class EditKBAArticleSectionsPortletsAttachmentTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
 			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Add Attachments \u00bb"),
 			selenium.getText(
 				"//div[@id='_1_WAR_knowledgebaseportlet_attachments']/div/div/a"));
@@ -157,7 +153,6 @@ public class EditKBAArticleSectionsPortletsAttachmentTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

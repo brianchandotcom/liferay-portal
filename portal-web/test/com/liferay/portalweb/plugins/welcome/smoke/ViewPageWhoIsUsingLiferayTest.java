@@ -23,11 +23,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewPageWhoIsUsingLiferayTest extends BaseTestCase {
 	public void testViewPageWhoIsUsingLiferay() throws Exception {
 		selenium.open("/web/guest/what-we-do/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Who Is Using Liferay",
 			RuntimeVariables.replace("Who Is Using Liferay"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//nav[@id='navigation']",
 			RuntimeVariables.replace("Navigation"));
 

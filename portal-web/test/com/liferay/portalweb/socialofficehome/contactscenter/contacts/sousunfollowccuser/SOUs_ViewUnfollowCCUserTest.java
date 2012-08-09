@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SOUs_ViewUnfollowCCUserTest extends BaseTestCase {
 	public void testSOUs_ViewUnfollowCCUser() throws Exception {
 		selenium.open("/user/socialoffice01/so/dashboard/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,7 +44,6 @@ public class SOUs_ViewUnfollowCCUserTest extends BaseTestCase {
 		selenium.clickAt("//nav/ul/li[contains(.,'Contacts Center')]/a/span",
 			RuntimeVariables.replace("Contacts Center"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isVisible(
 				"//input[@id='_1_WAR_contactsportlet_name']"));
 		assertTrue(selenium.isVisible(
@@ -107,7 +105,6 @@ public class SOUs_ViewUnfollowCCUserTest extends BaseTestCase {
 			selenium.getText(
 				"//button[@id='_1_WAR_contactsportlet_followButton']"));
 		selenium.open("/user/socialoffice01/so/dashboard/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -129,7 +126,6 @@ public class SOUs_ViewUnfollowCCUserTest extends BaseTestCase {
 		selenium.clickAt("//nav/ul/li[contains(.,'Contacts Center')]/a/span",
 			RuntimeVariables.replace("Contacts Center"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("You are following 0 people."),
 			selenium.getText("link=You are following 0 people."));
 		selenium.clickAt("link=You are following 0 people.",

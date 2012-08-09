@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewSaveAndCheckinDMDocumentTxtTest extends BaseTestCase {
 	public void testViewSaveAndCheckinDMDocumentTxt() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,14 +43,12 @@ public class ViewSaveAndCheckinDMDocumentTxtTest extends BaseTestCase {
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("DM Document Title Edit"),
 			selenium.getText(
 				"//div[@data-title='DM Document Title Edit']/a/span[2]"));
 		selenium.clickAt("//div[@data-title='DM Document Title Edit']/a/span[2]",
 			RuntimeVariables.replace("DM Document Title Edit"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Version 1.1"),
 			selenium.getText("//h3[contains(@class,'version')]"));
 		assertEquals(RuntimeVariables.replace("Status: Approved"),

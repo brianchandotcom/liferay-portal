@@ -29,7 +29,6 @@ public class ViewResolveTasksTaskAssignedToMeTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/user/joebloggs/so/dashboard/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -53,7 +52,6 @@ public class ViewResolveTasksTaskAssignedToMeTest extends BaseTestCase {
 				selenium.clickAt("//nav/ul/li[contains(.,'Tasks')]/a/span",
 					RuntimeVariables.replace("Tasks"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("Tasks"),
 					selenium.getText("//span[@class='portlet-title-default']"));
 				assertEquals(RuntimeVariables.replace("Assigned to Me"),
@@ -61,7 +59,6 @@ public class ViewResolveTasksTaskAssignedToMeTest extends BaseTestCase {
 				selenium.clickAt("link=Assigned to Me",
 					RuntimeVariables.replace("Assigned to Me"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {

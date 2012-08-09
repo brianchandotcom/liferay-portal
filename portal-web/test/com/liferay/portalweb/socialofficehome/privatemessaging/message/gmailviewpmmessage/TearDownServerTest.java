@@ -28,7 +28,6 @@ public class TearDownServerTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -49,14 +48,11 @@ public class TearDownServerTest extends BaseTestCase {
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("link=Server Administration",
 					RuntimeVariables.replace("Server Administration"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("link=Mail", RuntimeVariables.replace("Mail"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.type("//input[@id='_137_pop3Host']",
 					RuntimeVariables.replace(""));
 				selenium.type("//input[@id='_137_pop3Port']",
@@ -103,9 +99,7 @@ public class TearDownServerTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -126,17 +120,14 @@ public class TearDownServerTest extends BaseTestCase {
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("link=Portal Instances",
 					RuntimeVariables.replace("Portal Instances"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("liferay.com"),
 					selenium.getText("//td[2]/a"));
 				selenium.clickAt("//td[2]/a",
 					RuntimeVariables.replace("liferay.com"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.type("//input[@id='_135_virtualHostname']",
 					RuntimeVariables.replace("localhost"));
 				selenium.type("//input[@id='_135_mx']",
@@ -146,7 +137,6 @@ public class TearDownServerTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 			case 100:
 				label = -1;

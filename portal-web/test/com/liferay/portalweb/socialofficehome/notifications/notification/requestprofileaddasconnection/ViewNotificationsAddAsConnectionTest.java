@@ -24,7 +24,6 @@ public class ViewNotificationsAddAsConnectionTest extends BaseTestCase {
 	public void testViewNotificationsAddAsConnection()
 		throws Exception {
 		selenium.open("/user/joebloggs/so/dashboard/");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent(
 				"//li[@id='_145_notificationsMenu']"));
 		assertEquals(RuntimeVariables.replace("1"),
@@ -56,7 +55,6 @@ public class ViewNotificationsAddAsConnectionTest extends BaseTestCase {
 		selenium.clickAt("//span[@class='lfr-user-action-item lfr-user-action-confirm']/a",
 			RuntimeVariables.replace("Confirm"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

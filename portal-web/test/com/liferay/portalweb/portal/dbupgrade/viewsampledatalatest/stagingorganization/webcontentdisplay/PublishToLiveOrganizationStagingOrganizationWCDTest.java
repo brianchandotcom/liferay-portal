@@ -25,7 +25,6 @@ public class PublishToLiveOrganizationStagingOrganizationWCDTest
 	public void testPublishToLiveOrganizationStagingOrganizationWCD()
 		throws Exception {
 		selenium.open("/web/staging-organization-wcd/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -48,13 +47,11 @@ public class PublishToLiveOrganizationStagingOrganizationWCDTest
 			RuntimeVariables.replace(
 				"Page Staging Organization Web Content Display"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Staging"),
 			selenium.getText("//div[@class='staging-bar']/ul/li[2]/span/a"));
 		selenium.clickAt("//div[@class='staging-bar']/ul/li[2]/span/a",
 			RuntimeVariables.replace("Staging"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

@@ -30,7 +30,6 @@ public class CheckoutOrderCreditCardNumberInvalidDiscoverTest
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -51,17 +50,14 @@ public class CheckoutOrderCreditCardNumberInvalidDiscoverTest
 				selenium.clickAt("link=Shopping Test Page",
 					RuntimeVariables.replace("Shopping Test Page"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("link=Cart", RuntimeVariables.replace("Cart"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"Shopping Category Item Name\nShopping Category Item Description\n\nAvailability: In Stock\n\n\nPrice for 1 to 1 Items:$9.99"),
 					selenium.getText("//td[2]/a"));
 				selenium.clickAt("//input[@value='Checkout']",
 					RuntimeVariables.replace("Checkout"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.type("//input[@id='_34_billingStreet']",
 					RuntimeVariables.replace("1234 Sesame Street"));
 				selenium.type("//input[@id='_34_billingCity']",
@@ -101,7 +97,6 @@ public class CheckoutOrderCreditCardNumberInvalidDiscoverTest
 				selenium.clickAt("//input[@value='Continue']",
 					RuntimeVariables.replace("Continue"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"Your request failed to complete."),
 					selenium.getText(

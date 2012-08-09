@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SendForm2Test extends BaseTestCase {
 	public void testSendForm2() throws Exception {
 		selenium.open("/web/expando-web-form-community/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,7 +43,6 @@ public class SendForm2Test extends BaseTestCase {
 		selenium.clickAt("link=Web Form Page",
 			RuntimeVariables.replace("Web Form Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("//input[@type='text']",
 			RuntimeVariables.replace("Saechang"));
 		selenium.clickAt("//input[@type='checkbox']",
@@ -57,7 +55,6 @@ public class SendForm2Test extends BaseTestCase {
 		selenium.clickAt("//input[@value='Send']",
 			RuntimeVariables.replace("Send"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

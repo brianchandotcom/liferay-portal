@@ -24,7 +24,6 @@ public class WCC_ViewPublishToLiveNowWebContentNullSiteStagingTest
 	public void testWCC_ViewPublishToLiveNowWebContentNullSiteStaging()
 		throws Exception {
 		selenium.open("/web/community-site-test/home");
-		loadRequiredJavaScriptModules();
 		assertFalse(selenium.isTextPresent("Web Content Display"));
 		assertFalse(selenium.isTextPresent("This is a Web Content article"));
 	}

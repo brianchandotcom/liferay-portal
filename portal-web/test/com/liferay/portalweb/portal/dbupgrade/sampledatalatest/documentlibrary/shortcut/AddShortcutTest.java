@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddShortcutTest extends BaseTestCase {
 	public void testAddShortcut() throws Exception {
 		selenium.open("/web/document-library-shortcut-community/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,7 +43,6 @@ public class AddShortcutTest extends BaseTestCase {
 		selenium.clickAt("link=Document Library Page",
 			RuntimeVariables.replace("Document Library Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Test2 Folder2"),
 			selenium.getText("//div[3]/a/span[2]"));
 		selenium.clickAt("//div[3]/a/span[2]",
@@ -117,7 +115,6 @@ public class AddShortcutTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Shortcut')]/a"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div/span[2]/span/input",
 			RuntimeVariables.replace("Select Site"));
 		selenium.waitForPopUp("Document Library",
@@ -188,7 +185,6 @@ public class AddShortcutTest extends BaseTestCase {
 
 		selenium.click(RuntimeVariables.replace("link=Test1 Folder1"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Test1 Document1.txt\nThis is test1 document1."),
 			selenium.getText("//td[1]/a"));
@@ -216,7 +212,6 @@ public class AddShortcutTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

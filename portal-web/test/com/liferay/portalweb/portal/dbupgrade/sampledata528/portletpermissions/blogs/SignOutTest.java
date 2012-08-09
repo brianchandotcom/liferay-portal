@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SignOutTest extends BaseTestCase {
 	public void testSignOut() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Welcome Joe Bloggs!"),
 			selenium.getText("//h2[@class='user-greeting']/span"));
 		selenium.mouseOver("//h2[@class='user-greeting']/span");
@@ -48,7 +47,6 @@ public class SignOutTest extends BaseTestCase {
 
 		selenium.clickAt("link=Sign Out", RuntimeVariables.replace("Sign Out"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

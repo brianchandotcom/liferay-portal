@@ -24,7 +24,6 @@ public class SOUs2_ConfirmNotificationsAddConnectionTest extends BaseTestCase {
 	public void testSOUs2_ConfirmNotificationsAddConnection()
 		throws Exception {
 		selenium.open("/user/socialoffice02/so/dashboard/");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent(
 				"//li[@id='_145_notificationsMenu']"));
 		assertEquals(RuntimeVariables.replace("1"),

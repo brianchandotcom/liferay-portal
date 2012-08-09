@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddCommentReply3Test extends BaseTestCase {
 	public void testAddCommentReply3() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,7 +43,6 @@ public class AddCommentReply3Test extends BaseTestCase {
 		selenium.clickAt("link=Page Comments Test Page",
 			RuntimeVariables.replace("Page Comments Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Post Reply"),
 			selenium.getText("//div[3]/div[3]/div/div[2]/ul/li[1]/span/a/span"));
 		selenium.clickAt("//div[3]/div[3]/div/div[2]/ul/li[1]/span/a/span",

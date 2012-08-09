@@ -23,11 +23,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddPortletCalendarEventTest extends BaseTestCase {
 	public void testAddPortletCalendarEvent() throws Exception {
 		selenium.open("/web/calendar-event-community/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Calendar Event Page",
 			RuntimeVariables.replace("Calendar Event Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
 

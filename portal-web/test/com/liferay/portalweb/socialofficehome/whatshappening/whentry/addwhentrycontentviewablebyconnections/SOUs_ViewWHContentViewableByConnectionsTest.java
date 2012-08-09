@@ -24,7 +24,6 @@ public class SOUs_ViewWHContentViewableByConnectionsTest extends BaseTestCase {
 	public void testSOUs_ViewWHContentViewableByConnections()
 		throws Exception {
 		selenium.open("/user/socialoffice01/so/dashboard");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Microblogs Status Update"),
 			selenium.getText("//span[@class='portlet-title-default']"));
 		assertTrue(selenium.isElementPresent(
@@ -38,7 +37,6 @@ public class SOUs_ViewWHContentViewableByConnectionsTest extends BaseTestCase {
 		selenium.clickAt("link=Connections",
 			RuntimeVariables.replace("Connections"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("There are no recent activities."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[2]"));
 		assertFalse(selenium.isTextPresent("Microblogs Post"));
@@ -63,7 +61,6 @@ public class SOUs_ViewWHContentViewableByConnectionsTest extends BaseTestCase {
 		selenium.clickAt("//nav/ul/li[contains(.,'Microblogs')]/a/span",
 			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertFalse(selenium.isTextPresent("Microblogs Post"));
 	}
 }

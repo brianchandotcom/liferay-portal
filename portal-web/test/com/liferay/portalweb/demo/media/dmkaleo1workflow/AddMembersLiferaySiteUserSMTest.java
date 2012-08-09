@@ -28,7 +28,6 @@ public class AddMembersLiferaySiteUserSMTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("//div[@id='dockbar']",
 					RuntimeVariables.replace("Dockbar"));
 				assertEquals(RuntimeVariables.replace("Go to"),
@@ -55,10 +54,8 @@ public class AddMembersLiferaySiteUserSMTest extends BaseTestCase {
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("Liferay"),
 					selenium.getText("//td[1]/a"));
 				assertEquals(RuntimeVariables.replace("Actions"),
@@ -89,7 +86,6 @@ public class AddMembersLiferaySiteUserSMTest extends BaseTestCase {
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Memberships')]/a"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("Add Members"),
 					selenium.getText(
 						"//span[@title='Add Members']/ul/li/strong/a/span"));
@@ -119,7 +115,6 @@ public class AddMembersLiferaySiteUserSMTest extends BaseTestCase {
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'User')]/a"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				boolean basicVisible = selenium.isVisible("link=\u00ab Basic");
 
@@ -155,7 +150,6 @@ public class AddMembersLiferaySiteUserSMTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertFalse(selenium.isChecked("//tr[3]/td[1]/input"));
 				selenium.clickAt("//tr[3]/td[1]/input",
 					RuntimeVariables.replace("usersn"));
@@ -167,7 +161,6 @@ public class AddMembersLiferaySiteUserSMTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));

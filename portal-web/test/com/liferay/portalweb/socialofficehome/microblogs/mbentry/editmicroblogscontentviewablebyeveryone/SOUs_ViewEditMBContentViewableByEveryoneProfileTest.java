@@ -25,7 +25,6 @@ public class SOUs_ViewEditMBContentViewableByEveryoneProfileTest
 	public void testSOUs_ViewEditMBContentViewableByEveryoneProfile()
 		throws Exception {
 		selenium.open("/web/joebloggs/so/profile");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Microblogs PostEdit"),
 			selenium.getText("//div[@class='content']"));
 		assertEquals(RuntimeVariables.replace("Microblogs PostEdit"),
@@ -51,7 +50,6 @@ public class SOUs_ViewEditMBContentViewableByEveryoneProfileTest
 		selenium.clickAt("//nav/ul/li[contains(.,'Microblogs')]/a/span",
 			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText("//div[@class='user-name']/span"));
 		assertEquals(RuntimeVariables.replace("Microblogs PostEdit"),

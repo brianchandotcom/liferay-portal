@@ -24,7 +24,6 @@ public class AssignToMeTaskDMFolderDocumentDocTest extends BaseTestCase {
 	public void testAssignToMeTaskDMFolderDocumentDoc()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
 		assertEquals(RuntimeVariables.replace("Go to"),
@@ -51,11 +50,9 @@ public class AssignToMeTaskDMFolderDocumentDocTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=My Workflow Tasks",
 			RuntimeVariables.replace("My Workflow Tasks"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("DM Document Title"),
 			selenium.getText("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace(
@@ -109,7 +106,6 @@ public class AssignToMeTaskDMFolderDocumentDocTest extends BaseTestCase {
 			selenium.getText("//button[.='OK']"));
 		selenium.clickAt("//button[.='OK']", RuntimeVariables.replace("OK"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

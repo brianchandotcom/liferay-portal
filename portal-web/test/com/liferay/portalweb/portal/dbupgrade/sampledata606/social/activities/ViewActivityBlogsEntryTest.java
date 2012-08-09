@@ -23,11 +23,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewActivityBlogsEntryTest extends BaseTestCase {
 	public void testViewActivityBlogsEntry() throws Exception {
 		selenium.open("/web/joebloggs/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Activities Page",
 			RuntimeVariables.replace("Activities Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Joe wrote a new blog entry, Blogs Entry Title, in Liferay."),
 			selenium.getText("xPath=(//div[@class='activity-title'])[2]"));

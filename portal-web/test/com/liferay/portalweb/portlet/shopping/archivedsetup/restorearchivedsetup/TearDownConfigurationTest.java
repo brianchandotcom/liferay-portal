@@ -29,7 +29,6 @@ public class TearDownConfigurationTest extends BaseTestCase {
 			case 1:
 				selenium.selectFrame("relative=top");
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -50,7 +49,6 @@ public class TearDownConfigurationTest extends BaseTestCase {
 				selenium.clickAt("link=Shopping Test Page",
 					RuntimeVariables.replace("Shopping Test Page"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				Thread.sleep(5000);
 				assertEquals(RuntimeVariables.replace("Options"),
 					selenium.getText("//strong/a"));
@@ -99,7 +97,6 @@ public class TearDownConfigurationTest extends BaseTestCase {
 				selenium.clickAt("link=Payment Settings",
 					RuntimeVariables.replace("Payment Settings"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -387,11 +384,9 @@ public class TearDownConfigurationTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("link=Shipping Calculation",
 					RuntimeVariables.replace("Shipping Calculation"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.select("//select[@id='_86_shippingFormula']",
 					RuntimeVariables.replace("Flat Amount"));
 				selenium.type("//input[@id='_86_shipping0']",
@@ -407,11 +402,9 @@ public class TearDownConfigurationTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("link=Insurance Calculation",
 					RuntimeVariables.replace("Insurance Calculation"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.select("//select[@id='_86_insuranceFormula']",
 					RuntimeVariables.replace("Flat Amount"));
 				selenium.type("//input[@id='_86_insurance0']",
@@ -427,7 +420,6 @@ public class TearDownConfigurationTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 			case 100:
 				label = -1;

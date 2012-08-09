@@ -24,7 +24,6 @@ public class Member_AssertCannotAccessInControlPanelTest extends BaseTestCase {
 	public void testMember_AssertCannotAccessInControlPanel()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,7 +44,6 @@ public class Member_AssertCannotAccessInControlPanelTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementNotPresent("link=Web Content"));
 	}
 }

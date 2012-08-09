@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddMessage4Test extends BaseTestCase {
 	public void testAddMessage4() throws Exception {
 		selenium.open("/user/joebloggs/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,16 +44,13 @@ public class AddMessage4Test extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"link=M\u00e9ssag\u00e9 Boards T\u00e9st Pag\u00e9"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Test Category"),
 			selenium.getText("//tr[3]/td/a"));
 		selenium.click(RuntimeVariables.replace("//tr[3]/td/a"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.click(RuntimeVariables.replace(
 				"//input[@value='Post New Thread']"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_19_subject']",
 			RuntimeVariables.replace("Test Message 4 Subject"));
 		Thread.sleep(5000);
@@ -82,7 +78,6 @@ public class AddMessage4Test extends BaseTestCase {
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Test Message 4 Content"),
 			selenium.getText("//div[@class='thread-body']"));
 		assertEquals(RuntimeVariables.replace("Test Message 4 Subject"),
@@ -92,7 +87,6 @@ public class AddMessage4Test extends BaseTestCase {
 		selenium.clickAt("//nav[@id='breadcrumbs']/ul/li[5]/span/a",
 			RuntimeVariables.replace("Test Category"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Test Message 4 Subject"),
 			selenium.getText("//tr[3]/td/a"));
 		System.out.println("Sample data 4 added successfully.\\");

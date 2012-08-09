@@ -23,11 +23,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewPortletDMDShowFolderMenuTest extends BaseTestCase {
 	public void testViewPortletDMDShowFolderMenu() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Documents and Media Display Test Page",
 			RuntimeVariables.replace("Documents and Media Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isVisible("//div[@class='lfr-asset-summary']"));
 		assertEquals(RuntimeVariables.replace("Access from Desktop"),
 			selenium.getText(

@@ -47,7 +47,6 @@ public class SA_SignInPrivatePagesSiteBWCTest extends BaseTestCase {
 
 		selenium.clickAt("link=Sign In", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -106,7 +105,6 @@ public class SA_SignInPrivatePagesSiteBWCTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Sign In']",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		Thread.sleep(5000);
 		Thread.sleep(5000);
 		selenium.close();

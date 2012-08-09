@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SA_AddPortletScopeSiteTest extends BaseTestCase {
 	public void testSA_AddPortletScopeSite() throws Exception {
 		selenium.open("/web/scope-site/scope-site-test-page/");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
 				"More"));
 		selenium.clickAt("//a[@id='_145_addApplication']",

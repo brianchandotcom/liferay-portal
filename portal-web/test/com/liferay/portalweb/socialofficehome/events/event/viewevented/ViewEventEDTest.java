@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewEventEDTest extends BaseTestCase {
 	public void testViewEventED() throws Exception {
 		selenium.open("/user/joebloggs/so/dashboard/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -51,7 +50,6 @@ public class ViewEventEDTest extends BaseTestCase {
 		selenium.clickAt("//span[@class='event-name']/a",
 			RuntimeVariables.replace("Calendar Event Title"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Calendar Event Title"),
 			selenium.getText("//h1[@class='header-title']"));
 		assertEquals(RuntimeVariables.replace("Calendar Event Description"),

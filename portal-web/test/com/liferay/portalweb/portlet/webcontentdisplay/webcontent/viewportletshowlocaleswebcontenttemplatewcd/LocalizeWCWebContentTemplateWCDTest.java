@@ -28,7 +28,6 @@ public class LocalizeWCWebContentTemplateWCDTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -50,7 +49,6 @@ public class LocalizeWCWebContentTemplateWCDTest extends BaseTestCase {
 				selenium.clickAt("link=Web Content Display Test Page",
 					RuntimeVariables.replace("Web Content Display Test Page"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -71,7 +69,6 @@ public class LocalizeWCWebContentTemplateWCDTest extends BaseTestCase {
 				selenium.clickAt("//img[@alt='Edit Web Content']",
 					RuntimeVariables.replace("Edit Web Content"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"Hello World Localized Article"),
 					selenium.getText("//h1[@class='header-title']"));
@@ -121,7 +118,6 @@ public class LocalizeWCWebContentTemplateWCDTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save as Draft']",
 					RuntimeVariables.replace("Save as Draft"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("Status: Draft"),
 					selenium.getText("//span[@class='workflow-status']"));
 				assertEquals("Hello World Page Name",
@@ -199,7 +195,6 @@ public class LocalizeWCWebContentTemplateWCDTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.selectFrame("relative=top");
 				assertEquals(RuntimeVariables.replace("Chinese (China)"),
 					selenium.getText(
@@ -208,7 +203,6 @@ public class LocalizeWCWebContentTemplateWCDTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Publish']",
 					RuntimeVariables.replace("Publish"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("Hello World Page Name"),
 					selenium.getText("//td[@class='page-name']"));
 				assertEquals(RuntimeVariables.replace(

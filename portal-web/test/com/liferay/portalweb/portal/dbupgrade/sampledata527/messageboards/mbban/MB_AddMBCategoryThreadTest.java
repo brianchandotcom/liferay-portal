@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class MB_AddMBCategoryThreadTest extends BaseTestCase {
 	public void testMB_AddMBCategoryThread() throws Exception {
 		selenium.open("/web/mb-ban-community/message-boards-test-page/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,16 +43,13 @@ public class MB_AddMBCategoryThreadTest extends BaseTestCase {
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("MB Ban Category"),
 			selenium.getText("//b"));
 		selenium.clickAt("//b", RuntimeVariables.replace("MB Ban Category"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//input[@value='Post New Thread']",
 			RuntimeVariables.replace("Post New Thread"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_19_subject']",
 			RuntimeVariables.replace("MB Ban Thread"));
 		selenium.type("//textarea[@id='_19_textArea']",
@@ -61,7 +57,6 @@ public class MB_AddMBCategoryThreadTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("MB Ban Thread"),
 			selenium.getText("//b"));
 		assertEquals(RuntimeVariables.replace(

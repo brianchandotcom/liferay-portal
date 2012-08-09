@@ -24,7 +24,6 @@ public class ImportExportPortletLARWikiUseCaseTest extends BaseTestCase {
 	public void testImportExportPortletLARWikiUseCase()
 		throws Exception {
 		selenium.open("/web/wiki-use-case-community/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,7 +44,6 @@ public class ImportExportPortletLARWikiUseCaseTest extends BaseTestCase {
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Wiki"),
 			selenium.getText("//span[@class='portlet-title-text']"));
@@ -76,10 +74,8 @@ public class ImportExportPortletLARWikiUseCaseTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Import", RuntimeVariables.replace("Import"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.uploadTempFile("//input[@id='_86_importFileName']",
 			RuntimeVariables.replace("Wiki_Use_Case.Portlet.lar"));
 		assertFalse(selenium.isChecked(
@@ -116,7 +112,6 @@ public class ImportExportPortletLARWikiUseCaseTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Import']",
 			RuntimeVariables.replace("Import"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

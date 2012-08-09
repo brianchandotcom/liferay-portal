@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class InvoiceOrderTest extends BaseTestCase {
 	public void testInvoiceOrder() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,17 +43,14 @@ public class InvoiceOrderTest extends BaseTestCase {
 		selenium.clickAt("link=Shopping Test Page",
 			RuntimeVariables.replace("Shopping Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Orders", RuntimeVariables.replace("Orders"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText("//tr[3]/td[5]"));
 		assertEquals(RuntimeVariables.replace("Checkout"),
 			selenium.getText("//td[4]/a"));
 		selenium.clickAt("//td[4]/a", RuntimeVariables.replace("Checkout"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isTextPresent("Shopping Category Item Comments"));
 		selenium.clickAt("//input[@value='Invoice']",
 			RuntimeVariables.replace("Invoice"));

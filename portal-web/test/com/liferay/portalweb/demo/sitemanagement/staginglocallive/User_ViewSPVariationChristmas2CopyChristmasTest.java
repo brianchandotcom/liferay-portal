@@ -30,7 +30,6 @@ public class User_ViewSPVariationChristmas2CopyChristmasTest
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -51,7 +50,6 @@ public class User_ViewSPVariationChristmas2CopyChristmasTest
 				selenium.clickAt("link=Site Name",
 					RuntimeVariables.replace("Site Name"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isElementPresent(
 						"//body[contains(@class,'live-view')]"));
 				assertTrue(selenium.isElementNotPresent(
@@ -62,7 +60,6 @@ public class User_ViewSPVariationChristmas2CopyChristmasTest
 				selenium.clickAt("//div[@class='staging-bar']/ul/li[2]/span/a",
 					RuntimeVariables.replace("Staging"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isElementPresent(
 						"//body[contains(@class,'local-staging')]"));
 				assertTrue(selenium.isElementNotPresent(
@@ -80,7 +77,6 @@ public class User_ViewSPVariationChristmas2CopyChristmasTest
 				selenium.clickAt("link=Christmas",
 					RuntimeVariables.replace("Christmas"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 			case 2:
 				assertEquals(RuntimeVariables.replace(
@@ -99,7 +95,6 @@ public class User_ViewSPVariationChristmas2CopyChristmasTest
 				selenium.clickAt("//td[1]/a/strong",
 					RuntimeVariables.replace("MB Category Name"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("MB Category Name"),
 					selenium.getText("//h1[@class='header-title']/span"));
 
@@ -125,7 +120,6 @@ public class User_ViewSPVariationChristmas2CopyChristmasTest
 					RuntimeVariables.replace(
 						"MB Category Thread Message2 Subject"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"MB Category Thread Message2 Subject"),
 					selenium.getText("//div[@class='subject']/a/strong"));
@@ -135,7 +129,6 @@ public class User_ViewSPVariationChristmas2CopyChristmasTest
 				selenium.clickAt("//a[@id='_19_TabsBack']",
 					RuntimeVariables.replace("Back to MB Category Name"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				boolean thread2Visible = selenium.isVisible("//td[1]/a");
 
@@ -159,7 +152,6 @@ public class User_ViewSPVariationChristmas2CopyChristmasTest
 					RuntimeVariables.replace(
 						"MB Category Thread Message1 Subject"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"MB Category Thread Message1 Subject"),
 					selenium.getText("//div[@class='subject']/a/strong"));
@@ -178,7 +170,6 @@ public class User_ViewSPVariationChristmas2CopyChristmasTest
 				selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 					RuntimeVariables.replace("DL Image Title"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -242,7 +233,6 @@ public class User_ViewSPVariationChristmas2CopyChristmasTest
 				selenium.clickAt("link=Calendar",
 					RuntimeVariables.replace("Calendar"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isVisible(
 						"//div[@id='column-1']/div/div[contains(@class,'portlet-calendar')]"));
 
@@ -267,7 +257,6 @@ public class User_ViewSPVariationChristmas2CopyChristmasTest
 				selenium.clickAt("//nav/ul/li[3]/a/span",
 					RuntimeVariables.replace("Wiki"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isVisible(
 						"//div[@id='column-1']/div/div[contains(@class,'portlet-wiki')]"));
 
@@ -290,7 +279,6 @@ public class User_ViewSPVariationChristmas2CopyChristmasTest
 				selenium.clickAt("link=White Elephant",
 					RuntimeVariables.replace("White Elephant"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isVisible(
 						"//div[@id='column-1']/div/div[contains(@class,'portlet-navigation')]"));
 
@@ -312,7 +300,6 @@ public class User_ViewSPVariationChristmas2CopyChristmasTest
 
 				selenium.clickAt("link=Home", RuntimeVariables.replace("Home"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("Christmas"),
 					selenium.getText("//li[1]/span/span/span[1]"));
 				assertEquals(RuntimeVariables.replace("Christmas 2"),
@@ -320,7 +307,6 @@ public class User_ViewSPVariationChristmas2CopyChristmasTest
 				selenium.clickAt("//li[2]/span/span/a",
 					RuntimeVariables.replace("Christmas 2"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"Christmas 2 Site Pages Variation of Site Name"),
 					selenium.getText(
@@ -337,7 +323,6 @@ public class User_ViewSPVariationChristmas2CopyChristmasTest
 				selenium.clickAt("//td[1]/a/strong",
 					RuntimeVariables.replace("MB Category Name"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("MB Category Name"),
 					selenium.getText("//h1[@class='header-title']/span"));
 
@@ -363,7 +348,6 @@ public class User_ViewSPVariationChristmas2CopyChristmasTest
 					RuntimeVariables.replace(
 						"MB Category Thread Message2 Subject"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"MB Category Thread Message2 Subject"),
 					selenium.getText("//div[@class='subject']/a/strong"));
@@ -373,7 +357,6 @@ public class User_ViewSPVariationChristmas2CopyChristmasTest
 				selenium.clickAt("//a[@id='_19_TabsBack']",
 					RuntimeVariables.replace("Back to MB Category Name"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				boolean thread4Visible = selenium.isVisible("//td[1]/a");
 
@@ -397,7 +380,6 @@ public class User_ViewSPVariationChristmas2CopyChristmasTest
 					RuntimeVariables.replace(
 						"MB Category Thread Message1 Subject"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"MB Category Thread Message1 Subject"),
 					selenium.getText("//div[@class='subject']/a/strong"));
@@ -416,7 +398,6 @@ public class User_ViewSPVariationChristmas2CopyChristmasTest
 				selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 					RuntimeVariables.replace("DL Image Title"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -480,7 +461,6 @@ public class User_ViewSPVariationChristmas2CopyChristmasTest
 				selenium.clickAt("link=Calendar",
 					RuntimeVariables.replace("Calendar"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isVisible(
 						"//div[@id='column-1']/div/div[contains(@class,'portlet-calendar')]"));
 
@@ -505,7 +485,6 @@ public class User_ViewSPVariationChristmas2CopyChristmasTest
 				selenium.clickAt("//nav/ul/li[3]/a/span",
 					RuntimeVariables.replace("Wiki"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isVisible(
 						"//div[@id='column-1']/div/div[contains(@class,'portlet-wiki')]"));
 
@@ -528,7 +507,6 @@ public class User_ViewSPVariationChristmas2CopyChristmasTest
 				selenium.clickAt("link=White Elephant",
 					RuntimeVariables.replace("White Elephant"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isVisible(
 						"//div[@id='column-1']/div/div[contains(@class,'portlet-navigation')]"));
 

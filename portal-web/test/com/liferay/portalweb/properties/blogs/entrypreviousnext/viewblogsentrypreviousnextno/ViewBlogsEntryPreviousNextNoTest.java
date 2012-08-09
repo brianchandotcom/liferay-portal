@@ -23,31 +23,25 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewBlogsEntryPreviousNextNoTest extends BaseTestCase {
 	public void testViewBlogsEntryPreviousNextNo() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Title"),
 			selenium.getText("xPath=(//div[@class='entry-title']/h2/a)[1]"));
 		selenium.clickAt("xPath=(//div[@class='entry-title']/h2/a)[1]",
 			RuntimeVariables.replace("Blogs Entry2 Title"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertFalse(selenium.isTextPresent("Previous"));
 		assertFalse(selenium.isTextPresent("Next"));
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Title"),
 			selenium.getText("xPath=(//div[@class='entry-title']/h2/a)[2]"));
 		selenium.clickAt("xPath=(//div[@class='entry-title']/h2/a)[2]",
 			RuntimeVariables.replace("Blogs Entry1 Title"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertFalse(selenium.isTextPresent("Previous"));
 		assertFalse(selenium.isTextPresent("Next"));
 	}

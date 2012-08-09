@@ -24,7 +24,6 @@ public class User_UnsubscribeMessageBoardThreadSiteTest extends BaseTestCase {
 	public void testUser_UnsubscribeMessageBoardThreadSite()
 		throws Exception {
 		selenium.open("/web/site-name/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,7 +44,6 @@ public class User_UnsubscribeMessageBoardThreadSiteTest extends BaseTestCase {
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -91,6 +89,5 @@ public class User_UnsubscribeMessageBoardThreadSiteTest extends BaseTestCase {
 		selenium.clickAt("//a[@id='_19_mbThreadsSearchContainer_1_menu_unsubscribe']",
 			RuntimeVariables.replace("Unsubscribe"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 	}
 }

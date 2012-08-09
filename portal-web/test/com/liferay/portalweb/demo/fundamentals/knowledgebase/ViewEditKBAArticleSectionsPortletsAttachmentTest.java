@@ -25,7 +25,6 @@ public class ViewEditKBAArticleSectionsPortletsAttachmentTest
 	public void testViewEditKBAArticleSectionsPortletsAttachment()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -46,13 +45,11 @@ public class ViewEditKBAArticleSectionsPortletsAttachmentTest
 		selenium.clickAt("link=Knowledge Base Display Test Page",
 			RuntimeVariables.replace("Knowledge Base Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("KB Admin Article"),
 			selenium.getText("//tr[3]/td[2]/a"));
 		selenium.clickAt("//tr[3]/td[2]/a",
 			RuntimeVariables.replace("KB Admin Article"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("test_image.jpg (12.9k)"),
 			selenium.getText(
 				"//div[@class='kb-article-attachments']/div/span/a/span"));

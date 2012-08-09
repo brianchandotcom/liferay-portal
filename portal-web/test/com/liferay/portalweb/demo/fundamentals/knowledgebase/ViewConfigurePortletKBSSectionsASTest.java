@@ -24,7 +24,6 @@ public class ViewConfigurePortletKBSSectionsASTest extends BaseTestCase {
 	public void testViewConfigurePortletKBSSectionsAS()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,7 +44,6 @@ public class ViewConfigurePortletKBSSectionsASTest extends BaseTestCase {
 		selenium.clickAt("link=Knowledge Base Section Test Page",
 			RuntimeVariables.replace("Knowledge Base Section Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Application Server"),
 			selenium.getText("//div[@class='kb-articles-sections-title']"));
 		assertEquals(RuntimeVariables.replace("The third"),
@@ -53,7 +51,6 @@ public class ViewConfigurePortletKBSSectionsASTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='kb-articles']/div/span/a/span",
 			RuntimeVariables.replace("The third"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("The third"),
 			selenium.getText("//div[@class='kb-title']"));
 		assertEquals(RuntimeVariables.replace(

@@ -24,7 +24,6 @@ public class ViewCompletedTaskJavascriptTicketKFTest extends BaseTestCase {
 	public void testViewCompletedTaskJavascriptTicketKF()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,11 +44,9 @@ public class ViewCompletedTaskJavascriptTicketKFTest extends BaseTestCase {
 		selenium.clickAt("link=Kaleo Forms Test Page",
 			RuntimeVariables.replace("Kaleo Forms Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=My Completed Requests",
 			RuntimeVariables.replace("My Completed Requests"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Ticket Process"),
 			selenium.getText("//tr[4]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("EndNode"),
@@ -57,7 +54,6 @@ public class ViewCompletedTaskJavascriptTicketKFTest extends BaseTestCase {
 		selenium.clickAt("//tr[4]/td[1]/a",
 			RuntimeVariables.replace("Ticket Process"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Priority Critical"),
 			selenium.getText("//div[@class='lfr-panel-content']/div[1]"));
 		assertEquals(RuntimeVariables.replace("Component Javascript"),

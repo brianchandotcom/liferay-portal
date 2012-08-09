@@ -57,7 +57,6 @@ public class Guest_ViewPublicPagesSiteBWCTest extends BaseTestCase {
 		assertTrue(selenium.isVisible("link=Home"));
 		selenium.clickAt("link=Home", RuntimeVariables.replace("Home"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Home"),
 			selenium.getText("//li[3]/span/a"));
 		assertEquals(RuntimeVariables.replace("Welcome to Brazil"),
@@ -65,7 +64,6 @@ public class Guest_ViewPublicPagesSiteBWCTest extends BaseTestCase {
 		assertTrue(selenium.isVisible("link=Arenas"));
 		selenium.clickAt("link=Arenas", RuntimeVariables.replace("Arenas"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Arenas"),
 			selenium.getText("//li[3]/span/a"));
 		assertEquals(RuntimeVariables.replace("Welcome to Brazil"),
@@ -75,7 +73,6 @@ public class Guest_ViewPublicPagesSiteBWCTest extends BaseTestCase {
 		selenium.clickAt("link=Arena Pernambuco",
 			RuntimeVariables.replace("Arena Pernambuco"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Arenas"),
 			selenium.getText("//li[3]/span/a"));
 		assertEquals(RuntimeVariables.replace("Arena Pernambuco"),
@@ -87,7 +84,6 @@ public class Guest_ViewPublicPagesSiteBWCTest extends BaseTestCase {
 		selenium.clickAt("link=Arena da Baixada",
 			RuntimeVariables.replace("Arena da Baixada"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Arenas"),
 			selenium.getText("//li[3]/span/a"));
 		assertEquals(RuntimeVariables.replace("Arena da Baixada"),
@@ -98,7 +94,6 @@ public class Guest_ViewPublicPagesSiteBWCTest extends BaseTestCase {
 		assertTrue(selenium.isVisible("link=Maracana"));
 		selenium.clickAt("link=Maracana", RuntimeVariables.replace("Maracana"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Arenas"),
 			selenium.getText("//li[3]/span/a"));
 		assertEquals(RuntimeVariables.replace("Maracana"),

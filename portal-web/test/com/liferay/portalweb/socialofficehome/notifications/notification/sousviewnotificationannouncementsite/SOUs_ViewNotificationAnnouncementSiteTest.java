@@ -24,7 +24,6 @@ public class SOUs_ViewNotificationAnnouncementSiteTest extends BaseTestCase {
 	public void testSOUs_ViewNotificationAnnouncementSite()
 		throws Exception {
 		selenium.open("/user/socialoffice01/so/dashboard/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

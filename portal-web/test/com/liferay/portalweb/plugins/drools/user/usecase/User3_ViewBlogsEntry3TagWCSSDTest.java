@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class User3_ViewBlogsEntry3TagWCSSDTest extends BaseTestCase {
 	public void testUser3_ViewBlogsEntry3TagWCSSD() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,7 +43,6 @@ public class User3_ViewBlogsEntry3TagWCSSDTest extends BaseTestCase {
 		selenium.clickAt("link=Sample Drools Test Page",
 			RuntimeVariables.replace("Sample Drools Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("West Coast Symposium"),
 			selenium.getText("//strong"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),

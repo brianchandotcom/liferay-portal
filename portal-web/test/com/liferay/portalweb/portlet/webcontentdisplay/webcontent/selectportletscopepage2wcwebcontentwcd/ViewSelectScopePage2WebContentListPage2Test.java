@@ -24,7 +24,6 @@ public class ViewSelectScopePage2WebContentListPage2Test extends BaseTestCase {
 	public void testViewSelectScopePage2WebContentListPage2()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,7 +44,6 @@ public class ViewSelectScopePage2WebContentListPage2Test extends BaseTestCase {
 		selenium.clickAt("link=Web Content Display Test Page3",
 			RuntimeVariables.replace("Web Content Display Test Page3"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		Thread.sleep(5000);
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
 
@@ -89,7 +87,6 @@ public class ViewSelectScopePage2WebContentListPage2Test extends BaseTestCase {
 
 		selenium.clickAt("link=Setup", RuntimeVariables.replace("Setup"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isPartialText("//div[@class='portlet-msg-info']",
 				"Displaying Content: WC WebContent Title"));
 		assertEquals(RuntimeVariables.replace("WC WebContent Title"),

@@ -28,7 +28,6 @@ public class CheckOutOrderTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/shopping-order-community/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -49,14 +48,11 @@ public class CheckOutOrderTest extends BaseTestCase {
 				selenium.clickAt("link=Shopping Order Page",
 					RuntimeVariables.replace("Shopping Order Page"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("link=Cart", RuntimeVariables.replace("Cart"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("//input[@value='Checkout']",
 					RuntimeVariables.replace("Checkout"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.type("//input[@id='_34_billingStreet']",
 					RuntimeVariables.replace("1234 Sesame Street"));
 				selenium.type("//input[@id='_34_billingCity']",
@@ -96,16 +92,13 @@ public class CheckOutOrderTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Continue']",
 					RuntimeVariables.replace("Continue"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isTextPresent("1234 Sesame Street"));
 				selenium.clickAt("//input[@value='Finished']",
 					RuntimeVariables.replace("Finished"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isTextPresent(
 						"Thank you for your purchase."));
 				selenium.open("/web/shopping-order-community/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -126,15 +119,12 @@ public class CheckOutOrderTest extends BaseTestCase {
 				selenium.clickAt("link=Shopping Order Page",
 					RuntimeVariables.replace("Shopping Order Page"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("link=Orders",
 					RuntimeVariables.replace("Orders"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("link=Checkout",
 					RuntimeVariables.replace("Checkout"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isTextPresent(
 						"Please take care of my order."));
 

@@ -30,7 +30,6 @@ public class PublishToLiveCommunityStagingCommunityWCDTest extends BaseTestCase 
 			case 1:
 				selenium.open(
 					"/web/community-staging-community-web-content-display-staging/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -53,7 +52,6 @@ public class PublishToLiveCommunityStagingCommunityWCDTest extends BaseTestCase 
 					RuntimeVariables.replace(
 						"Page Staging Community Web Content Display"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				boolean markAsReadyPresent = selenium.isElementPresent(
 						"//button[3]");

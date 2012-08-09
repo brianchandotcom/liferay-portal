@@ -24,7 +24,6 @@ public class AddWHEntryContentViewableByEveryoneTest extends BaseTestCase {
 	public void testAddWHEntryContentViewableByEveryone()
 		throws Exception {
 		selenium.open("/user/joebloggs/so/dashboard");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Microblogs Status Update"),
 			selenium.getText("//span[@class='portlet-title-default']"));
 		assertTrue(selenium.isElementPresent(

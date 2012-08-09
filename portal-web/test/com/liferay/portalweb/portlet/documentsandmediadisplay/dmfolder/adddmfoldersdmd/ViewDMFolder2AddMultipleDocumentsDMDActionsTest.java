@@ -25,11 +25,9 @@ public class ViewDMFolder2AddMultipleDocumentsDMDActionsTest
 	public void testViewDMFolder2AddMultipleDocumentsDMDActions()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Documents and Media Display Test Page",
 			RuntimeVariables.replace("Documents and Media Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("DM Folder2 Name"),
 			selenium.getText("//tr[4]/td[1]/a[2]/strong"));
 		assertEquals(RuntimeVariables.replace("Actions"),
@@ -61,7 +59,6 @@ public class ViewDMFolder2AddMultipleDocumentsDMDActionsTest
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Multiple Documents')]/a",
 			RuntimeVariables.replace("Multiple Documents"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Add Multiple Documents"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("\u00ab Back"),

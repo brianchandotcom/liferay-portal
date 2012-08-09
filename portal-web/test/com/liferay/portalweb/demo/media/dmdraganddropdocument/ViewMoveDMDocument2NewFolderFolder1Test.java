@@ -24,7 +24,6 @@ public class ViewMoveDMDocument2NewFolderFolder1Test extends BaseTestCase {
 	public void testViewMoveDMDocument2NewFolderFolder1()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,7 +44,6 @@ public class ViewMoveDMDocument2NewFolderFolder1Test extends BaseTestCase {
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementNotPresent(
 				"//div[@data-title='DM Document1 Title']/a/span[2]"));
 		assertEquals(RuntimeVariables.replace("DM Folder1 Name"),

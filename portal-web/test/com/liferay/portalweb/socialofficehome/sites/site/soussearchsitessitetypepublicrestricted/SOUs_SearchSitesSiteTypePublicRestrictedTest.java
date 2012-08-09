@@ -24,7 +24,6 @@ public class SOUs_SearchSitesSiteTypePublicRestrictedTest extends BaseTestCase {
 	public void testSOUs_SearchSitesSiteTypePublicRestricted()
 		throws Exception {
 		selenium.open("/user/socialoffice01/so/dashboard");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -111,7 +110,6 @@ public class SOUs_SearchSitesSiteTypePublicRestrictedTest extends BaseTestCase {
 		selenium.clickAt("//span[@class='name']/a",
 			RuntimeVariables.replace("Public Restricted Site Name"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Public Restricted Site Name"),
 			selenium.getText("//div[@class='community-title']"));
 	}

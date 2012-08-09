@@ -24,7 +24,6 @@ public class Guest_AssertNoBlogsEntryPreApprovalTest extends BaseTestCase {
 	public void testGuest_AssertNoBlogsEntryPreApproval()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,7 +44,6 @@ public class Guest_AssertNoBlogsEntryPreApprovalTest extends BaseTestCase {
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isVisible("//section"));
 		assertFalse(selenium.isTextPresent("Pending Approval"));
 		assertFalse(selenium.isTextPresent("Blogs Entry Title"));

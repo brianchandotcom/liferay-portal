@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ExecuteGenerateCustomRolesTest extends BaseTestCase {
 	public void testExecuteGenerateCustomRoles() throws Exception {
 		selenium.open("/web/guest/home");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isPartialText("//h2[@class='user-greeting']/span",
 				"Welcome"));
 		selenium.mouseOver("//h2[@class='user-greeting']/span");
@@ -49,15 +48,12 @@ public class ExecuteGenerateCustomRolesTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Server Administration",
 			RuntimeVariables.replace("Server Administration"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Data Migration",
 			RuntimeVariables.replace("Data Migration"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Convert legacy permission algorithm."),
 			selenium.getText("//fieldset[3]/legend"));

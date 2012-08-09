@@ -24,7 +24,6 @@ public class N2_AssertMessageBoardsContentPresentTest extends BaseTestCase {
 	public void testN2_AssertMessageBoardsContentPresent()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -48,7 +47,6 @@ public class N2_AssertMessageBoardsContentPresentTest extends BaseTestCase {
 			RuntimeVariables.replace("test"));
 		selenium.click(RuntimeVariables.replace("//input[@value='Sign In']"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent("link=Test Category 1"));
 		assertEquals(RuntimeVariables.replace("Node: [$CLUSTER_NODE_2$]"),
 			selenium.getText("//div[@id='content']/div[3]"));

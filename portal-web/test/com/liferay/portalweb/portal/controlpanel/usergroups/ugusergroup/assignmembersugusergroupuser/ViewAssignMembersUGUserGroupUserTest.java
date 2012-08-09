@@ -24,7 +24,6 @@ public class ViewAssignMembersUGUserGroupUserTest extends BaseTestCase {
 	public void testViewAssignMembersUGUserGroupUser()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
 
@@ -68,11 +67,9 @@ public class ViewAssignMembersUGUserGroupUserTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=User Groups",
 			RuntimeVariables.replace("User Groups"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
@@ -101,7 +98,6 @@ public class ViewAssignMembersUGUserGroupUserTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Assign Members')]/a"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Current"),
 			selenium.getText("//ul[@class='aui-tabview-list']/li/span/a/strong"));
 		assertTrue(selenium.isChecked("//input[@name='_127_allRowIds']"));
@@ -115,13 +111,11 @@ public class ViewAssignMembersUGUserGroupUserTest extends BaseTestCase {
 		selenium.clickAt("//ul[@class='aui-tabview-list']/li[2]/span/a",
 			RuntimeVariables.replace("Available"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("//input[@name='_127_keywords']",
 			RuntimeVariables.replace("user"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isChecked("//input[@name='_127_allRowIds']"));
 		assertTrue(selenium.isChecked("//input[@name='_127_rowIds']"));
 		assertEquals(RuntimeVariables.replace("userfn userln"),

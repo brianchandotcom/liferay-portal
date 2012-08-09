@@ -90,10 +90,16 @@ public class BufferCacheServletResponseTest extends TestCase {
 			stubHttpServletResponse);
 
 		bufferCacheServletResponse.setCharacterEncoding(StringPool.UTF8);
+
+		CharBuffer charBuffer = CharBuffer.wrap(_TEST_STRING);
+
 		bufferCacheServletResponse.setCharBuffer(CharBuffer.wrap(_TEST_STRING));
 
 		assertEquals(
 			_TEST_STRING.length(), bufferCacheServletResponse.getBufferSize());
+		assertEquals(0, charBuffer.position());
+		assertEquals(_TEST_STRING.length(), charBuffer.limit());
+		assertEquals(_TEST_STRING.length(), charBuffer.capacity());
 
 		// Servlet output stream
 
@@ -196,11 +202,16 @@ public class BufferCacheServletResponseTest extends TestCase {
 		bufferCacheServletResponse = new BufferCacheServletResponse(
 			stubHttpServletResponse);
 
-		bufferCacheServletResponse.setCharBuffer(CharBuffer.wrap(_TEST_STRING));
+		CharBuffer charBuffer = CharBuffer.wrap(_TEST_STRING);
+
+		bufferCacheServletResponse.setCharBuffer(charBuffer);
 
 		byteBuffer = bufferCacheServletResponse.getByteBuffer();
 
 		assertEquals(ByteBuffer.wrap(_TEST_BYTES), byteBuffer);
+		assertEquals(0, charBuffer.position());
+		assertEquals(_TEST_STRING.length(), charBuffer.limit());
+		assertEquals(_TEST_STRING.length(), charBuffer.capacity());
 
 		// Servlet output stream
 
@@ -274,11 +285,16 @@ public class BufferCacheServletResponseTest extends TestCase {
 
 		bufferCacheServletResponse.setCharacterEncoding(StringPool.UTF8);
 
-		bufferCacheServletResponse.setByteBuffer(ByteBuffer.wrap(_TEST_BYTES));
+		ByteBuffer byteBuffer = ByteBuffer.wrap(_TEST_BYTES);
+
+		bufferCacheServletResponse.setByteBuffer(byteBuffer);
 
 		charBuffer = bufferCacheServletResponse.getCharBuffer();
 
 		assertEquals(_TEST_STRING, charBuffer.toString());
+		assertEquals(0, byteBuffer.position());
+		assertEquals(_TEST_BYTES.length, byteBuffer.limit());
+		assertEquals(_TEST_BYTES.length, byteBuffer.capacity());
 
 		// Print writer
 
@@ -378,9 +394,14 @@ public class BufferCacheServletResponseTest extends TestCase {
 
 		bufferCacheServletResponse.setCharacterEncoding(StringPool.UTF8);
 
-		bufferCacheServletResponse.setByteBuffer(ByteBuffer.wrap(_TEST_BYTES));
+		ByteBuffer byteBuffer = ByteBuffer.wrap(_TEST_BYTES);
+
+		bufferCacheServletResponse.setByteBuffer(byteBuffer);
 
 		assertEquals(_TEST_STRING, bufferCacheServletResponse.getString());
+		assertEquals(0, byteBuffer.position());
+		assertEquals(_TEST_BYTES.length, byteBuffer.limit());
+		assertEquals(_TEST_BYTES.length, byteBuffer.capacity());
 
 		// Print writer
 
@@ -453,13 +474,18 @@ public class BufferCacheServletResponseTest extends TestCase {
 
 		bufferCacheServletResponse.setCharacterEncoding(StringPool.UTF8);
 
-		bufferCacheServletResponse.setByteBuffer(ByteBuffer.wrap(_TEST_BYTES));
+		ByteBuffer byteBuffer = ByteBuffer.wrap(_TEST_BYTES);
+
+		bufferCacheServletResponse.setByteBuffer(byteBuffer);
 
 		sb = bufferCacheServletResponse.getStringBundler();
 
 		assertEquals(1, sb.capacity());
 		assertEquals(1, sb.index());
 		assertEquals(_TEST_STRING, sb.toString());
+		assertEquals(0, byteBuffer.position());
+		assertEquals(_TEST_BYTES.length, byteBuffer.limit());
+		assertEquals(_TEST_BYTES.length, byteBuffer.capacity());
 
 		// Print writer
 

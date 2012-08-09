@@ -54,7 +54,7 @@ public class BufferCacheServletResponse extends MetaInfoCacheServletResponse {
 
 		if (_charBuffer != null) {
 			ByteBuffer byteBuffer = CharsetEncoderUtil.encode(
-				getCharacterEncoding(), _charBuffer);
+				getCharacterEncoding(), _charBuffer.duplicate());
 
 			return byteBuffer.limit();
 		}
@@ -96,7 +96,7 @@ public class BufferCacheServletResponse extends MetaInfoCacheServletResponse {
 
 		if (_charBuffer != null) {
 			return CharsetEncoderUtil.encode(
-				getCharacterEncoding(), _charBuffer);
+				getCharacterEncoding(), _charBuffer.duplicate());
 		}
 
 		_flushInternalBuffer();
@@ -130,7 +130,7 @@ public class BufferCacheServletResponse extends MetaInfoCacheServletResponse {
 
 		if (_byteBuffer != null) {
 			return CharsetDecoderUtil.decode(
-				getCharacterEncoding(), _byteBuffer);
+				getCharacterEncoding(), _byteBuffer.duplicate());
 		}
 
 		_flushInternalBuffer();
@@ -183,7 +183,7 @@ public class BufferCacheServletResponse extends MetaInfoCacheServletResponse {
 
 		if (_byteBuffer != null) {
 			CharBuffer charBuffer = CharsetDecoderUtil.decode(
-				getCharacterEncoding(), _byteBuffer);
+				getCharacterEncoding(), _byteBuffer.duplicate());
 
 			return charBuffer.toString();
 		}
@@ -221,7 +221,7 @@ public class BufferCacheServletResponse extends MetaInfoCacheServletResponse {
 
 		if (_byteBuffer != null) {
 			CharBuffer charBuffer = CharsetDecoderUtil.decode(
-				getCharacterEncoding(), _byteBuffer);
+				getCharacterEncoding(), _byteBuffer.duplicate());
 
 			StringBundler sb = new StringBundler(1);
 

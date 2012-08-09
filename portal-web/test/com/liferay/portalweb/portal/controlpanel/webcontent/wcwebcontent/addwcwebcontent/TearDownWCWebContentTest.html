@@ -14,16 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>//div[@id='dockbar']</td>
-	<td>Dockbar</td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
-	<td>AUI Editable Min</td>
-</tr>
-<tr>
 	<td>assertText</td>
 	<td>//li[@id='_145_mySites']/a/span</td>
 	<td>Go to</td>
@@ -74,33 +64,13 @@
 	<td>Select All</td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//tr[contains(@class,'results-row selected')]</td>
-	<td>Entries Selected</td>
+	<td>waitForElementNotPresent</td>
+	<td>//span[contains(@class,'aui-button-disabled')]/span/input[@value='Delete']</td>
+	<td>Disabled Delete Button</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
-	<td>Actions</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//span[@title='Actions']/ul/li/strong/a/span</td>
-	<td>Actions</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete')]/a</td>
+	<td>clickAndWait</td>
+	<td>//input[@value='Delete']</td>
 	<td>Delete</td>
 </tr>
 <tr>
@@ -109,19 +79,9 @@
 	<td></td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
-</tr>
-<tr>
 	<td>label</td>
 	<td>WebContentNotPresent</td>
 	<td></td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='portlet-msg-info']</td>
-	<td>No Web Content was found.</td>
 </tr>
 </tbody></table>
 </body>

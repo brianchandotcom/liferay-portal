@@ -159,21 +159,9 @@ public class TearDownUserTest extends BaseTestCase {
 					selenium.getText("//div[@class='portlet-msg-success']"));
 
 			case 4:
-				assertEquals(RuntimeVariables.replace("No users were found."),
-					selenium.getText("//div[@class='portlet-msg-info']"));
-
-				boolean basicVisible = selenium.isVisible("link=\u00ab Basic");
-
-				if (!basicVisible) {
-					label = 5;
-
-					continue;
-				}
-
 				selenium.clickAt("link=\u00ab Basic",
 					RuntimeVariables.replace("Basic"));
 
-			case 5:
 			case 100:
 				label = -1;
 			}

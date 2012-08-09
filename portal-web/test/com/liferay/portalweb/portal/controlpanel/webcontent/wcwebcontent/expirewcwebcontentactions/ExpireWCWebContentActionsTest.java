@@ -23,26 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ExpireWCWebContentActionsTest extends BaseTestCase {
 	public void testExpireWCWebContentActions() throws Exception {
 		selenium.open("/web/guest/home/");
-		selenium.clickAt("//div[@id='dockbar']",
-			RuntimeVariables.replace("Dockbar"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -69,11 +49,22 @@ public class ExpireWCWebContentActionsTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
+
+		String webContentID = selenium.getText("//td[2]/a");
+		RuntimeVariables.setValue("webContentID", webContentID);
+		assertEquals(RuntimeVariables.replace("${webContentID}"),
+			selenium.getText("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
 			selenium.getText("//td[3]/a"));
 		assertEquals(RuntimeVariables.replace("Approved"),
 			selenium.getText("//td[4]/a"));
-		selenium.clickAt("//a[contains(@id,'_1_menuButton')]",
+		assertTrue(selenium.isVisible("//td[5]/a"));
+		assertTrue(selenium.isVisible("//td[6]/a"));
+		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
+			selenium.getText("//td[7]/a"));
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText("//td[8]/span/ul/li/strong/a/span"));
+		selenium.clickAt("//td[8]/span/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
@@ -82,7 +73,8 @@ public class ExpireWCWebContentActionsTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//a[contains(@id,'_1_menu_expire')]")) {
+				if (selenium.isVisible(
+							"//a[contains(@id,'SearchContainer_1_menu_expire')]")) {
 					break;
 				}
 			}
@@ -93,16 +85,23 @@ public class ExpireWCWebContentActionsTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("Expire"),
-			selenium.getText("//a[contains(@id,'_1_menu_expire')]"));
-		selenium.clickAt("//a[contains(@id,'_1_menu_expire')]",
-			RuntimeVariables.replace("Expire"));
+			selenium.getText(
+				"//a[contains(@id,'SearchContainer_1_menu_expire')]"));
+		selenium.click(RuntimeVariables.replace(
+				"//a[contains(@id,'SearchContainer_1_menu_expire')]"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals(RuntimeVariables.replace("${webContentID}"),
+			selenium.getText("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
 			selenium.getText("//td[3]/a"));
 		assertEquals(RuntimeVariables.replace("Expired"),
 			selenium.getText("//td[4]/a"));
+		assertTrue(selenium.isVisible("//td[5]/a"));
+		assertTrue(selenium.isVisible("//td[6]/a"));
+		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
+			selenium.getText("//td[7]/a"));
 	}
 }

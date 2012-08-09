@@ -14,16 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>//div[@id='dockbar']</td>
-	<td>Dockbar</td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
-	<td>AUI Editable Min</td>
-</tr>
-<tr>
 	<td>assertText</td>
 	<td>//li[@id='_145_mySites']/a/span</td>
 	<td>Go to</td>
@@ -49,89 +39,99 @@
 	<td>Web Content</td>
 </tr>
 <tr>
-	<td>assertVisible</td>
-	<td>//tr[1]/th[1]/input</td>
-	<td>Select All</td>
+	<td>storeText</td>
+	<td>//td[2]/a</td>
+	<td>webcontentID</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[1]/th[2]/span/a</td>
-	<td>ID</td>
+	<td>//td[2]/a</td>
+	<td>${webcontentID}</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[1]/th[3]</td>
-	<td>Title</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr[1]/th[4]</td>
-	<td>Status</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr[1]/th[5]/span/a</td>
-	<td>Modified Date</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr[1]/th[6]/span/a</td>
-	<td>Display Date</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr[1]/th[7]</td>
-	<td>Author</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr[1]/th[8]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>//tr[3]/td[1]/input</td>
-	<td>Check Box</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>//tr[3]/td[2]/a</td>
-	<td>ID</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr[3]/td[3]/a</td>
+	<td>//td[3]/a</td>
 	<td>WC WebContent Title</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[4]/a</td>
+	<td>//td[4]/a</td>
 	<td>Approved</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//tr[3]/td[5]/a</td>
+	<td>//td[5]/a</td>
 	<td>Modified Date</td>
 </tr>
 <tr>
 	<td>assertVisible</td>
-	<td>//tr[3]/td[6]/a</td>
+	<td>//td[6]/a</td>
 	<td>Display Date</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[3]/td[7]/a</td>
+	<td>//td[7]/a</td>
 	<td>Joe Bloggs</td>
 </tr>
 <tr>
-	<td>assertVisible</td>
-	<td>//tr[3]/td[8]/span/span/ul/li/strong/a</td>
+	<td>assertText</td>
+	<td>//td[8]/span/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//td[8]/span/ul/li/strong/a/span</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//a[contains(@id,'SearchContainer_1_menu_edit')]</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[contains(@id,'SearchContainer_1_menu_edit')]</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[contains(@id,'SearchContainer_1_menu_permissions')]</td>
+	<td>Permissions</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[contains(@id,'SearchContainer_1_menu_view')]</td>
+	<td>View (Opens New Window)</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[contains(@id,'SearchContainer_1_menu_copy')]</td>
+	<td>Copy</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[contains(@id,'SearchContainer_1_menu_expire')]</td>
+	<td>Expire</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[contains(@id,'SearchContainer_1_menu_delete')]</td>
+	<td>Delete</td>
+</tr>
+<tr>
 	<td>clickAtAndWait</td>
-	<td>//td[3]/a</td>
-	<td>WC WebContent Title</td>
+	<td>//td[2]/a</td>
+	<td>WC WebContent ID</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='portlet-title-text']</td>
+	<td>Web Content</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='cpContextPanelTemplate']</td>
+	<td>Web Content can be any content you would like to add to a site, such as articles, a FAQ, or a news item. Administrators can manage content, as well as assign user roles and permissions. Users may add, edit, approve, or view content depending on their role. Or disable for all portlets.</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -139,14 +139,9 @@
 	<td>WC WebContent Title</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//a[@id='_15_TabsBack']</td>
-	<td>« Back</td>
-</tr>
-<tr>
 	<td>assertPartialText</td>
 	<td>//span[@class='workflow-id']</td>
-	<td>ID:</td>
+	<td>${webcontentID}</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -159,69 +154,24 @@
 	<td>Status: Approved</td>
 </tr>
 <tr>
-	<td>assertVisible</td>
-	<td>xPath=(//span[@class='taglib-icon-help']/img)[1]</td>
-	<td>Help Icon</td>
-</tr>
-<tr>
 	<td>assertText</td>
-	<td>xPath=(//span[@class='taglib-icon-help']/span)[1]</td>
-	<td>A new version will be created automatically if this content is modified.</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@id='_15_articleToolbar']/span/button[1]/span[2]</td>
+	<td>//button[.='Permissions']</td>
 	<td>Permissions</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@id='_15_articleToolbar']/span/button[2]/span[2]</td>
+	<td>//button[.='View History']</td>
 	<td>View History</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='aui-column-content article-structure-content ']/label</td>
-	<td>Structure:</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='aui-column-content article-structure-content ']/fieldset/div/div/span</td>
+	<td>//span[@id='_15_structureNameLabel']</td>
 	<td>Default</td>
 </tr>
 <tr>
-	<td>assertVisible</td>
-	<td>//a[@id='_15_editStructureLink']/img</td>
-	<td>Edit Structure</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>//a[@id='_15_changeStructureButton']/img</td>
-	<td>Change Structure</td>
-</tr>
-<tr>
 	<td>assertText</td>
-	<td>//div[@class='aui-column-content article-template-content ']/label</td>
-	<td>Template:</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='aui-column-content article-template-content ']/fieldset/div/div/span</td>
+	<td>//span[@class='template-name-label']</td>
 	<td>None</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>//a[@id='_15_selectTemplateLink']/img</td>
-	<td>Select Template</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//td[@class='article-translation-toolbar journal-metadata']/div/label</td>
-	<td>Default Language</td>
-</tr>
-<tr>
-	<td>assertVisible</td>
-	<td>//span[@id='_15_textLanguageId']/img[contains(@src,'en_US.png')]</td>
-	<td>United States Flag</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -229,29 +179,14 @@
 	<td>English (United States)</td>
 </tr>
 <tr>
-	<td>assertVisible</td>
-	<td>xPath=(//span[@class='taglib-icon-help']/img)[2]</td>
-	<td>Help Icon</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>xPath=(//span[@class='taglib-icon-help']/span)[2]</td>
-	<td>The default language is the language that will appear when there are no translations available in the user's language.</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//a[@id='_15_changeLanguageId']</td>
-	<td>Change</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//span[@title='Add Translation']/ul/li/strong/a/span</td>
-	<td>Add Translation</td>
-</tr>
-<tr>
 	<td>assertValue</td>
 	<td>//input[@id='_15_title_en_US']</td>
 	<td>WC WebContent Title</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//textarea[@id='_15__15_structure_el_TextAreaField_content' and @style='display: none;']</td>
+	<td>Text Area</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -262,6 +197,11 @@
 	<td>selectFrame</td>
 	<td>//td[@id='cke_contents__15__15_structure_el_TextAreaField_content']/iframe</td>
 	<td>CK Editor</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//body</td>
+	<td>WC WebContent Content</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -276,52 +216,47 @@
 <tr>
 	<td>assertChecked</td>
 	<td>//input[@id='_15_indexableCheckbox']</td>
-	<td>Searchable Check Box</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[2]/span/span/label</td>
 	<td>Searchable</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//div[@class='article-info']/div/span</td>
+	<td>//span[@class='article-name']</td>
 	<td>WC WebContent Title</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
-	<td>//div[@class='menu-group']/ul/li[1]/a</td>
-	<td>Content</td>
+	<td>assertText</td>
+	<td>//a[@id='_15_contentLink']</td>
+	<td>Content (Modified)</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
-	<td>//div[@class='menu-group']/ul/li[2]/a</td>
-	<td>Abstract</td>
+	<td>assertText</td>
+	<td>//a[@id='_15_abstractLink']</td>
+	<td>Abstract (Modified)</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
-	<td>//div[@class='menu-group']/ul/li[3]/a</td>
-	<td>Categorization</td>
+	<td>assertText</td>
+	<td>//a[@id='_15_categorizationLink']</td>
+	<td>Categorization (Modified)</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
-	<td>//div[@class='menu-group']/ul/li[4]/a</td>
-	<td>Schedule</td>
+	<td>assertText</td>
+	<td>//a[@id='_15_scheduleLink']</td>
+	<td>Schedule (Modified)</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
-	<td>//div[@class='menu-group']/ul/li[5]/a</td>
-	<td>Display Page</td>
+	<td>assertText</td>
+	<td>//a[@id='_15_displayPageLink']</td>
+	<td>Display Page (Modified)</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
-	<td>//div[@class='menu-group']/ul/li[6]/a</td>
-	<td>Related Assets</td>
+	<td>assertText</td>
+	<td>//a[@id='_15_relatedAssetsLink']</td>
+	<td>Related Assets (Modified)</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
-	<td>//div[@class='menu-group']/ul/li[7]/a</td>
-	<td>Custom Fields</td>
+	<td>assertText</td>
+	<td>//a[@id='_15_customFieldsLink']</td>
+	<td>Custom Fields (Modified)</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -329,18 +264,18 @@
 	<td>A new version will be created automatically if this content is modified.</td>
 </tr>
 <tr>
-	<td>assertVisible</td>
+	<td>assertValue</td>
 	<td>//input[@value='Save as Draft']</td>
 	<td>Save as Draft</td>
 </tr>
 <tr>
-	<td>assertVisible</td>
+	<td>assertValue</td>
 	<td>//input[@value='Publish']</td>
 	<td>Publish</td>
 </tr>
 <tr>
-	<td>assertVisible</td>
-	<td>xPath=(//input[@value='Cancel'])[2]</td>
+	<td>assertValue</td>
+	<td>//input[@value='Cancel']</td>
 	<td>Cancel</td>
 </tr>
 </tbody></table>

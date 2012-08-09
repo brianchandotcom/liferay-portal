@@ -15,8 +15,8 @@
 package com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.usereditwcwebcontent;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwebcontent.AddWebContentTest;
-import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwebcontent.TearDownWebContentTest;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontent.AddWCWebContentTest;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcwebcontent.addwcwebcontent.TearDownWCWebContentTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -31,14 +31,14 @@ public class UserEditWCWebContentTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddWCARoleTest.class);
 		testSuite.addTestSuite(DefineWCARoleTest.class);
 		testSuite.addTestSuite(AssignUserRoleWCATest.class);
-		testSuite.addTestSuite(AddWebContentTest.class);
+		testSuite.addTestSuite(AddWCWebContentTest.class);
 		testSuite.addTestSuite(LogoutTest.class);
 		testSuite.addTestSuite(User_LoginTest.class);
 		testSuite.addTestSuite(User_EditWCWebContentTest.class);
 		testSuite.addTestSuite(User_ViewEditWCWebContentTest.class);
 		testSuite.addTestSuite(LogoutTest.class);
 		testSuite.addTestSuite(LoginTest.class);
-		testSuite.addTestSuite(TearDownWebContentTest.class);
+		testSuite.addTestSuite(TearDownWCWebContentTest.class);
 		testSuite.addTestSuite(TearDownWCARoleTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);
 

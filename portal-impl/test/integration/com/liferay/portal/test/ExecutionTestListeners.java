@@ -24,6 +24,6 @@ import java.lang.annotation.*;
 @Target(ElementType.TYPE)
 public @interface ExecutionTestListeners {
 
-	Class<? extends ExecutionTestListener>[] listeners() default {};
+	public Class<? extends ExecutionTestListener>[] listeners() default {};
 
 }

@@ -30,6 +30,6 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD, ElementType.TYPE})
 public @interface MessagingProxy {
 
-	ProxyMode mode();
+	public ProxyMode mode();
 
 }

@@ -28,6 +28,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface Indexable {
 
-	IndexableType type();
+	public IndexableType type();
 
 }

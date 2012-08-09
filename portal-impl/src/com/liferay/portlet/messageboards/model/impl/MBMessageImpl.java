@@ -31,6 +31,7 @@ import com.liferay.portlet.messageboards.model.MBMessageConstants;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
+import com.liferay.portlet.trash.util.TrashUtil;
 
 /**
  * @author Brian Wing Shun Chan
@@ -102,7 +103,9 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 
 	public String getDeletedAttachmentsDir() {
 		if (_deletedAttachmentDirs == null) {
-			_deletedAttachmentDirs = "messageboards/.trashed_" + getMessageId();
+			_deletedAttachmentDirs =
+				MBMessageConstants.BASE_ATTACHMENTS_DIR +
+					TrashUtil.TRASH_ATTACHMENTS_DIR + getMessageId();
 		}
 
 		return _deletedAttachmentDirs;
@@ -129,7 +132,7 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 	}
 
 	public String getThreadAttachmentsDir() {
-		return "messageboards/" + getThreadId();
+		return MBMessageConstants.BASE_ATTACHMENTS_DIR + getThreadId();
 	}
 
 	public String getWorkflowClassName() {

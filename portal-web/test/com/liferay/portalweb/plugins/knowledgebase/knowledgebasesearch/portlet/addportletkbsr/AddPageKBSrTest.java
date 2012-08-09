@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddPageKBSrTest extends BaseTestCase {
 	public void testAddPageKBSr() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
 
@@ -108,6 +107,5 @@ public class AddPageKBSrTest extends BaseTestCase {
 		selenium.clickAt("link=Knowledge Base Search Test Page",
 			RuntimeVariables.replace("Knowledge Base Search Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 	}
 }

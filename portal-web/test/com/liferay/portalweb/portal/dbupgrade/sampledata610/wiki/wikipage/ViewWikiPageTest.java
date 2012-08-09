@@ -23,11 +23,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewWikiPageTest extends BaseTestCase {
 	public void testViewWikiPage() throws Exception {
 		selenium.open("/web/wiki-wiki-page-community/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Wiki Page Test",
 			RuntimeVariables.replace("Wiki Page Test"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("FrontPage"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("Front Page Text"),

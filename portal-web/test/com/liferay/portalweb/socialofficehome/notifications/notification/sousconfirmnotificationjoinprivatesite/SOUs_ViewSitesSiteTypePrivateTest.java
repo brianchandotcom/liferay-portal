@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SOUs_ViewSitesSiteTypePrivateTest extends BaseTestCase {
 	public void testSOUs_ViewSitesSiteTypePrivate() throws Exception {
 		selenium.open("/user/socialoffice01/so/dashboard/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -77,7 +76,6 @@ public class SOUs_ViewSitesSiteTypePrivateTest extends BaseTestCase {
 		selenium.clickAt("//li[contains(@class, 'social-office-enabled')]/span[2]/a",
 			RuntimeVariables.replace("Private Site Name"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Private Site Name"),
 			selenium.getText("//div[@class='community-title']/a/span"));
 		assertEquals(RuntimeVariables.replace("Home"),

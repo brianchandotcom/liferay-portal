@@ -23,11 +23,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SearchWCWebContentWCDTest extends BaseTestCase {
 	public void testSearchWCWebContentWCD() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Web Content Display Test Page",
 			RuntimeVariables.replace("Web Content Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Configuration",
 			RuntimeVariables.replace("Configuration"));
 
@@ -52,7 +50,6 @@ public class SearchWCWebContentWCDTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
 			selenium.getText("//td[contains(.,'WC WebContent Title')]/a"));
 		selenium.type("//input[@name='_86_keywords']",
@@ -60,7 +57,6 @@ public class SearchWCWebContentWCDTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("No Web Content was found."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[2]"));
 		assertTrue(selenium.isElementNotPresent(

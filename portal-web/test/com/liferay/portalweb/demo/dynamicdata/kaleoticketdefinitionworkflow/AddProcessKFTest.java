@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddProcessKFTest extends BaseTestCase {
 	public void testAddProcessKF() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,16 +43,13 @@ public class AddProcessKFTest extends BaseTestCase {
 		selenium.clickAt("link=Kaleo Forms Test Page",
 			RuntimeVariables.replace("Kaleo Forms Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Processes", RuntimeVariables.replace("Processes"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//div[@class='lfr-portlet-toolbar']/span[2]/a"));
 		selenium.clickAt("//div[@class='lfr-portlet-toolbar']/span[2]/a",
 			RuntimeVariables.replace("Add"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_1_WAR_kaleoformsportlet_name_en_US']",
 			RuntimeVariables.replace("Ticket Process"));
 		selenium.type("//textarea[@id='_1_WAR_kaleoformsportlet_description_en_US']",
@@ -842,7 +838,6 @@ public class AddProcessKFTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

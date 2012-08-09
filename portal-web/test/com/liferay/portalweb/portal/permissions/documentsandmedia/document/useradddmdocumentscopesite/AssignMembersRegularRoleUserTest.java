@@ -28,7 +28,6 @@ public class AssignMembersRegularRoleUserTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -49,16 +48,13 @@ public class AssignMembersRegularRoleUserTest extends BaseTestCase {
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("link=Roles", RuntimeVariables.replace("Roles"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.type("//input[@id='_128_keywords']",
 					RuntimeVariables.replace("RegularRole Name"));
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("RegularRole Name"),
 					selenium.getText("//td[1]/a"));
 				assertEquals(RuntimeVariables.replace("Regular"),
@@ -93,11 +89,9 @@ public class AssignMembersRegularRoleUserTest extends BaseTestCase {
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("link=Available",
 					RuntimeVariables.replace("Available"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				boolean basicVisible = selenium.isVisible("link=\u00ab Basic");
 
@@ -132,7 +126,6 @@ public class AssignMembersRegularRoleUserTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("userfn userln"),
 					selenium.getText("//tr[3]/td[2]"));
 				assertEquals(RuntimeVariables.replace("usersn"),
@@ -144,7 +137,6 @@ public class AssignMembersRegularRoleUserTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Update Associations']",
 					RuntimeVariables.replace("Update Associations"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));

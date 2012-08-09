@@ -23,11 +23,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewDeleteMBCategoryThreadTest extends BaseTestCase {
 	public void testViewDeleteMBCategoryThread() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("MB Category Name"),
 			selenium.getText("//td[1]/a/strong"));
 		assertEquals(RuntimeVariables.replace("0"),
@@ -39,7 +37,6 @@ public class ViewDeleteMBCategoryThreadTest extends BaseTestCase {
 		selenium.clickAt("//td[1]/a/strong",
 			RuntimeVariables.replace("MB Category Name"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"There are no threads in this category."),
 			selenium.getText("//div[@class='portlet-msg-info']"));

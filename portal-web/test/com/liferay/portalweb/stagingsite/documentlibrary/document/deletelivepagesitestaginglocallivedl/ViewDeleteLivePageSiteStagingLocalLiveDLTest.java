@@ -24,7 +24,6 @@ public class ViewDeleteLivePageSiteStagingLocalLiveDLTest extends BaseTestCase {
 	public void testViewDeleteLivePageSiteStagingLocalLiveDL()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,7 +43,6 @@ public class ViewDeleteLivePageSiteStagingLocalLiveDLTest extends BaseTestCase {
 
 		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent(
 				"//body[contains(@class,'live-view')]"));
 		assertTrue(selenium.isElementNotPresent(
@@ -54,7 +52,6 @@ public class ViewDeleteLivePageSiteStagingLocalLiveDLTest extends BaseTestCase {
 		assertTrue(selenium.isPartialText("//li[2]/span/a", "Staging"));
 		selenium.clickAt("//li[2]/span/a", RuntimeVariables.replace("Staging"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementNotPresent(
 				"//body[contains(@class,'live-view')]"));
 		assertTrue(selenium.isElementPresent(
@@ -62,7 +59,6 @@ public class ViewDeleteLivePageSiteStagingLocalLiveDLTest extends BaseTestCase {
 		selenium.clickAt("link=Document Library Test Page",
 			RuntimeVariables.replace("Document Library Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -87,7 +83,6 @@ public class ViewDeleteLivePageSiteStagingLocalLiveDLTest extends BaseTestCase {
 		selenium.clickAt("//a[@class='document-link']",
 			RuntimeVariables.replace("DL Document Title"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

@@ -24,7 +24,6 @@ public class SelectExistingIGFolderImageAPActionsTest extends BaseTestCase {
 	public void testSelectExistingIGFolderImageAPActions()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,7 +44,6 @@ public class SelectExistingIGFolderImageAPActionsTest extends BaseTestCase {
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//strong/a"));
@@ -118,13 +116,11 @@ public class SelectExistingIGFolderImageAPActionsTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Documents and Media Document')]/a"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("IG Folder Image Name"),
 			selenium.getText("//td[1]/a"));
 		selenium.clickAt("//td[1]/a",
 			RuntimeVariables.replace("IG Folder Image Name"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
@@ -132,7 +128,6 @@ public class SelectExistingIGFolderImageAPActionsTest extends BaseTestCase {
 			selenium.getText("//td[1]/a"));
 		assertTrue(selenium.isElementPresent("//td[2]/a"));
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -153,7 +148,6 @@ public class SelectExistingIGFolderImageAPActionsTest extends BaseTestCase {
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("IG Folder Image Name"),
 			selenium.getText("//h3[@class='asset-title']/a"));
 		assertTrue(selenium.isElementPresent(

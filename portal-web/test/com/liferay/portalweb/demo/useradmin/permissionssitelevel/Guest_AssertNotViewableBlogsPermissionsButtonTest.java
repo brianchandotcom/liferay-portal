@@ -25,7 +25,6 @@ public class Guest_AssertNotViewableBlogsPermissionsButtonTest
 	public void testGuest_AssertNotViewableBlogsPermissionsButton()
 		throws Exception {
 		selenium.open("/web/site-name/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -46,7 +45,6 @@ public class Guest_AssertNotViewableBlogsPermissionsButtonTest
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementNotPresent("//input[@value='Permissions']"));
 	}
 }

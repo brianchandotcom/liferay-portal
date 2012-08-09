@@ -28,7 +28,6 @@ public class ConfigureDMMaximumFileSizeCPTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("//div[@id='dockbar']",
 					RuntimeVariables.replace("Dock Bar"));
 
@@ -73,15 +72,12 @@ public class ConfigureDMMaximumFileSizeCPTest extends BaseTestCase {
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("link=Server Administration",
 					RuntimeVariables.replace("Server Administration"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("link=File Uploads",
 					RuntimeVariables.replace("File Uploads"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("Documents and Media"),
 					selenium.getText(
 						"//div[@id='adminDocumentLibraryPanel']/div/div/span"));
@@ -122,7 +118,6 @@ public class ConfigureDMMaximumFileSizeCPTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals("10000000",
 					selenium.getValue("//input[@id='_137_dlFileMaxSize']"));
 

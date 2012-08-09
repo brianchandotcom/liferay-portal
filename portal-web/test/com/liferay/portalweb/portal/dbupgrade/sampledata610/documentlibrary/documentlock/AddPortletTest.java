@@ -23,11 +23,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddPortletTest extends BaseTestCase {
 	public void testAddPortlet() throws Exception {
 		selenium.open("web/document-library-document-lock-community/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Document Lock Page",
 			RuntimeVariables.replace("Document Lock Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
 

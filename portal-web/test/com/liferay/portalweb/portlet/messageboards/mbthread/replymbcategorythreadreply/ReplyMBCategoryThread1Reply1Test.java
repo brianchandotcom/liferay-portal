@@ -23,27 +23,22 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ReplyMBCategoryThread1Reply1Test extends BaseTestCase {
 	public void testReplyMBCategoryThread1Reply1() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("MB Category Name"),
 			selenium.getText("//td[1]/a/strong"));
 		selenium.clickAt("//td[1]/a/strong",
 			RuntimeVariables.replace("MB Category Name"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=MB Category Thread1 Message Subject",
 			RuntimeVariables.replace("MB Category Thread1 Message Subject"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Reply"),
 			selenium.getText("//li[contains(.,'Reply')]/span/a/span"));
 		selenium.clickAt("//li[contains(.,'Reply')]/span/a/span",
 			RuntimeVariables.replace("Reply"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals("RE: MB Category Thread1 Message Subject",
 			selenium.getValue("//input[@id='_19_subject']"));
 
@@ -167,7 +162,6 @@ public class ReplyMBCategoryThread1Reply1Test extends BaseTestCase {
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

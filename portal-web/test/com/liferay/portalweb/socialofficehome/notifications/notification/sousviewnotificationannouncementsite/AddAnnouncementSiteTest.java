@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddAnnouncementSiteTest extends BaseTestCase {
 	public void testAddAnnouncementSite() throws Exception {
 		selenium.open("/user/joebloggs/so/dashboard/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -77,7 +76,6 @@ public class AddAnnouncementSiteTest extends BaseTestCase {
 		selenium.clickAt("//li[contains(@class, 'social-office-enabled')]/span[2]/a",
 			RuntimeVariables.replace("Open Site Name"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Open Site Name"),
 			selenium.getText("//div[@class='community-title']"));
 		assertEquals(RuntimeVariables.replace("Home"),
@@ -85,15 +83,12 @@ public class AddAnnouncementSiteTest extends BaseTestCase {
 		selenium.clickAt("link=Manage Entries",
 			RuntimeVariables.replace("Manage Entries"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.select("//select[@id='_84_distributionScope']",
 			RuntimeVariables.replace("General"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//input[@value='Add Entry']",
 			RuntimeVariables.replace("Add Entry"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_84_title']",
 			RuntimeVariables.replace("Announcements Entry Title"));
 		selenium.type("//input[@id='_84_url']",
@@ -202,13 +197,11 @@ public class AddAnnouncementSiteTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Announcements Entry Title"),
 			selenium.getText("//td[1]/a"));
 		assertEquals(RuntimeVariables.replace("General"),
 			selenium.getText("//td[2]/a"));
 		selenium.open("/user/joebloggs/so/dashboard/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -262,7 +255,6 @@ public class AddAnnouncementSiteTest extends BaseTestCase {
 		selenium.clickAt("//li[contains(@class, 'social-office-enabled')]/span[2]/a",
 			RuntimeVariables.replace("Open Site Name"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Open Site Name"),
 			selenium.getText("//div[@class='community-title']"));
 		assertEquals(RuntimeVariables.replace("Announcements Entry Title"),

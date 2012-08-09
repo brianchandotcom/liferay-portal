@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class User_AccessStagingTest extends BaseTestCase {
 	public void testUser_AccessStaging() throws Exception {
 		selenium.open("/web/site-name-staging");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

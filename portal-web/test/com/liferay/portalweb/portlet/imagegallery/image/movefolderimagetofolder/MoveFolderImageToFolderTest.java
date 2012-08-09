@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class MoveFolderImageToFolderTest extends BaseTestCase {
 	public void testMoveFolderImageToFolder() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,13 +43,11 @@ public class MoveFolderImageToFolderTest extends BaseTestCase {
 		selenium.clickAt("link=Image Gallery Test Page",
 			RuntimeVariables.replace("Image Gallery Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("MG Folder1 Name"),
 			selenium.getText("xPath=(//span[@class='image-title'])[1]"));
 		selenium.clickAt("xPath=(//span[@class='image-title'])[1]",
 			RuntimeVariables.replace("MG Folder1 Name"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("MG Folder1 Name"),
 			selenium.getText("//div/h1/span"));
 		assertEquals(RuntimeVariables.replace("Move"),
@@ -59,7 +56,6 @@ public class MoveFolderImageToFolderTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[2]/a"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("MG Folder1 Name"),
 			selenium.getText("//a[@id='_31_parentFolderName']"));
 		selenium.clickAt("//input[@value='Select']",
@@ -86,7 +82,6 @@ public class MoveFolderImageToFolderTest extends BaseTestCase {
 		selenium.clickAt("link=Images Home",
 			RuntimeVariables.replace("Images Home"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("MG Folder2 Name"),
 			selenium.getText("//tr[4]/td/a"));
 		selenium.click("xPath=(//input[@value='Choose'])[2]");
@@ -115,12 +110,10 @@ public class MoveFolderImageToFolderTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Move']",
 			RuntimeVariables.replace("Move"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -141,16 +134,13 @@ public class MoveFolderImageToFolderTest extends BaseTestCase {
 		selenium.clickAt("link=Image Gallery Test Page",
 			RuntimeVariables.replace("Image Gallery Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("MG Folder1 Name"),
 			selenium.getText("xPath=(//span[@class='image-title'])[1]"));
 		selenium.clickAt("xPath=(//span[@class='image-title'])[1]",
 			RuntimeVariables.replace("MG Folder1 Name"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertFalse(selenium.isTextPresent("MG Folder1 Subfolder Name"));
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -171,13 +161,11 @@ public class MoveFolderImageToFolderTest extends BaseTestCase {
 		selenium.clickAt("link=Image Gallery Test Page",
 			RuntimeVariables.replace("Image Gallery Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("MG Folder2 Name"),
 			selenium.getText("xPath=(//span[@class='image-title'])[2]"));
 		selenium.clickAt("xPath=(//span[@class='image-title'])[2]",
 			RuntimeVariables.replace("MG Folder2 Name"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("MG Folder1 Subfolder Name"),
 			selenium.getText("//span[@class='image-title']"));
 	}

@@ -24,7 +24,6 @@ public class ViewConfigurePortletAvailableWebContentAPTest extends BaseTestCase 
 	public void testViewConfigurePortletAvailableWebContentAP()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,7 +44,6 @@ public class ViewConfigurePortletAvailableWebContentAPTest extends BaseTestCase 
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertFalse(selenium.isTextPresent("WC Web Content Title"));
 		assertFalse(selenium.isTextPresent("WC Web Content Content"));
 	}

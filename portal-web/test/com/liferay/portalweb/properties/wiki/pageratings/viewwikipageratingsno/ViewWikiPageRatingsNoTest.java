@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewWikiPageRatingsNoTest extends BaseTestCase {
 	public void testViewWikiPageRatingsNo() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,7 +43,6 @@ public class ViewWikiPageRatingsNoTest extends BaseTestCase {
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertFalse(selenium.isTextPresent("Your Rating"));
 		assertFalse(selenium.isTextPresent("Average (0 Votes)"));
 	}

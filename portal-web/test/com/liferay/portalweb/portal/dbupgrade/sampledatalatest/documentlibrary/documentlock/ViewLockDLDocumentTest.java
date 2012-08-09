@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewLockDLDocumentTest extends BaseTestCase {
 	public void testViewLockDLDocument() throws Exception {
 		selenium.open("web/document-library-document-lock-community/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,7 +43,6 @@ public class ViewLockDLDocumentTest extends BaseTestCase {
 		selenium.clickAt("link=Document Lock Page",
 			RuntimeVariables.replace("Document Lock Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Test1 Folder1"),
 			selenium.getText("//div/a/span[2]"));
 		selenium.clickAt("//div/a/span[2]",

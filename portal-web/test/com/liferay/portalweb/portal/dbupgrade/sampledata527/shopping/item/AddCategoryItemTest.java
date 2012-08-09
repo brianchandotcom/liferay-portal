@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddCategoryItemTest extends BaseTestCase {
 	public void testAddCategoryItem() throws Exception {
 		selenium.open("/user/joebloggs/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,26 +42,20 @@ public class AddCategoryItemTest extends BaseTestCase {
 
 		selenium.clickAt("link=Communities I Own", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("_29_name",
 			RuntimeVariables.replace("Shopping Item Community"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//td[2]/a", RuntimeVariables.replace("Open"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Shopping Item Page", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.click(RuntimeVariables.replace("//td[1]/a"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//input[@value='Add Item']",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("_34_sku", RuntimeVariables.replace("1111"));
 		selenium.type("_34_name", RuntimeVariables.replace("Item Test"));
 		selenium.type("_34_description",
@@ -78,7 +71,6 @@ public class AddCategoryItemTest extends BaseTestCase {
 		selenium.type("_34_minQuantity0", RuntimeVariables.replace("1"));
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),
 			selenium.getText("//div[2]/div/div/div"));

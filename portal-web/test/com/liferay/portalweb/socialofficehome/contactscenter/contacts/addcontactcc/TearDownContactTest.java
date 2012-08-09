@@ -28,7 +28,6 @@ public class TearDownContactTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/user/joebloggs/so/dashboard/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -50,7 +49,6 @@ public class TearDownContactTest extends BaseTestCase {
 				selenium.clickAt("//nav/ul/li[contains(.,'Contacts Center')]/a/span",
 					RuntimeVariables.replace("Contacts Center"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isVisible(
 						"//input[@id='_1_WAR_contactsportlet_name']"));
 				selenium.type("//input[@id='_1_WAR_contactsportlet_name']",
@@ -94,7 +92,6 @@ public class TearDownContactTest extends BaseTestCase {
 				selenium.click(RuntimeVariables.replace(
 						"//button[contains(.,'Delete')]"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete ${contact1Name} from your contacts[\\s\\S]$"));
 
@@ -140,7 +137,6 @@ public class TearDownContactTest extends BaseTestCase {
 				selenium.click(RuntimeVariables.replace(
 						"//button[contains(.,'Delete')]"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete ${contact2Name} from your contacts[\\s\\S]$"));
 
@@ -186,7 +182,6 @@ public class TearDownContactTest extends BaseTestCase {
 				selenium.click(RuntimeVariables.replace(
 						"//button[contains(.,'Delete')]"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete ${contact3Name} from your contacts[\\s\\S]$"));
 
@@ -232,7 +227,6 @@ public class TearDownContactTest extends BaseTestCase {
 				selenium.click(RuntimeVariables.replace(
 						"//button[contains(.,'Delete')]"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete ${contact4Name} from your contacts[\\s\\S]$"));
 
@@ -278,7 +272,6 @@ public class TearDownContactTest extends BaseTestCase {
 				selenium.click(RuntimeVariables.replace(
 						"//button[contains(.,'Delete')]"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete ${contact5Name} from your contacts[\\s\\S]$"));
 

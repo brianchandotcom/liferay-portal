@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SignInTest extends BaseTestCase {
 	public void testSignIn() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,13 +42,11 @@ public class SignInTest extends BaseTestCase {
 
 		selenium.clickAt("link=Sign In", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("_58_login", RuntimeVariables.replace("test@liferay.com"));
 		selenium.type("_58_password", RuntimeVariables.replace("test"));
 		selenium.clickAt("_58_rememberMeCheckbox", RuntimeVariables.replace(""));
 		selenium.clickAt("//input[@value='Sign In']",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 	}
 }

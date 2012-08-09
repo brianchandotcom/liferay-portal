@@ -24,11 +24,9 @@ public class EditMBCategoryMailingListActiveActionsTest extends BaseTestCase {
 	public void testEditMBCategoryMailingListActiveActions()
 		throws Exception {
 		selenium.open("/web/site-name/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("MB Category Name"),
 			selenium.getText("//a/strong"));
@@ -60,7 +58,6 @@ public class EditMBCategoryMailingListActiveActionsTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertFalse(selenium.isChecked(
 				"//input[@id='_19_mailingListActiveCheckbox']"));
 		selenium.clickAt("//input[@id='_19_mailingListActiveCheckbox']",
@@ -143,7 +140,6 @@ public class EditMBCategoryMailingListActiveActionsTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

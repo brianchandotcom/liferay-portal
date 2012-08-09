@@ -24,23 +24,18 @@ public class AddScopedAnnouncementsEntrySiteNameTest extends BaseTestCase {
 	public void testAddScopedAnnouncementsEntrySiteName()
 		throws Exception {
 		selenium.open("/web/site-name/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Announcements Test Page",
 			RuntimeVariables.replace("Announcements Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Manage Entries",
 			RuntimeVariables.replace("Manage Entries"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.select("//select[@id='_84_distributionScope']",
 			RuntimeVariables.replace("label=Liferay"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//input[@value='Add Entry']",
 			RuntimeVariables.replace("Add Entry"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_84_title']",
 			RuntimeVariables.replace("Scoped Announcements Entry Title"));
 		selenium.type("//input[@id='_84_url']",
@@ -150,7 +145,6 @@ public class AddScopedAnnouncementsEntrySiteNameTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Scoped Announcements Entry Title"),
 			selenium.getText("//td[1]/a"));

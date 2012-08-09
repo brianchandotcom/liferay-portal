@@ -23,15 +23,12 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewMBCategoryThreadRecentPostsTest extends BaseTestCase {
 	public void testViewMBCategoryThreadRecentPosts() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Recent Posts",
 			RuntimeVariables.replace("Recent Posts"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"MB Category Thread Message Subject"),
 			selenium.getText("//td[1]/a"));
@@ -44,7 +41,6 @@ public class ViewMBCategoryThreadRecentPostsTest extends BaseTestCase {
 		selenium.clickAt("//td[1]/a",
 			RuntimeVariables.replace("MB Category Thread Message Subject"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"MB Category Thread Message Subject"),
 			selenium.getText("//h1[@class='header-title']"));

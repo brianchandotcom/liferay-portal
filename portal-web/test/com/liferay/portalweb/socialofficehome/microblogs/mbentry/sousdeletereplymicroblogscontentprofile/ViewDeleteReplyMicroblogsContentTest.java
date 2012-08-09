@@ -24,7 +24,6 @@ public class ViewDeleteReplyMicroblogsContentTest extends BaseTestCase {
 	public void testViewDeleteReplyMicroblogsContent()
 		throws Exception {
 		selenium.open("/user/joebloggs/so/dashboard/");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Microblogs Status Update"),
 			selenium.getText("//span[@class='portlet-title-default']"));
 		assertTrue(selenium.isElementPresent(
@@ -52,7 +51,6 @@ public class ViewDeleteReplyMicroblogsContentTest extends BaseTestCase {
 		selenium.clickAt("//nav/ul/li[contains(.,'Microblogs')]/a/span",
 			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText(
 				"xPath=(//div[@class='user-name']/span)[contains(.,'Joe Bloggs')]"));

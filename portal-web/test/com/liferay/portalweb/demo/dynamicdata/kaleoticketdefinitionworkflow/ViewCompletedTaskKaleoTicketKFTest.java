@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewCompletedTaskKaleoTicketKFTest extends BaseTestCase {
 	public void testViewCompletedTaskKaleoTicketKF() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,11 +43,9 @@ public class ViewCompletedTaskKaleoTicketKFTest extends BaseTestCase {
 		selenium.clickAt("link=Kaleo Forms Test Page",
 			RuntimeVariables.replace("Kaleo Forms Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=My Completed Requests",
 			RuntimeVariables.replace("My Completed Requests"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Ticket Process"),
 			selenium.getText("//tr[3]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("EndNode"),
@@ -56,7 +53,6 @@ public class ViewCompletedTaskKaleoTicketKFTest extends BaseTestCase {
 		selenium.clickAt("//tr[3]/td[1]/a",
 			RuntimeVariables.replace("Ticket Process"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Priority Major"),
 			selenium.getText("//div[@class='lfr-panel-content']/div[1]"));
 		assertEquals(RuntimeVariables.replace("Component Kaleo"),

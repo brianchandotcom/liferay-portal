@@ -24,7 +24,6 @@ public class MoveDMDocument2NewFolderFolder1DADTest extends BaseTestCase {
 	public void testMoveDMDocument2NewFolderFolder1DAD()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,7 +44,6 @@ public class MoveDMDocument2NewFolderFolder1DADTest extends BaseTestCase {
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("DM Document2 Title"),
 			selenium.getText(
@@ -124,7 +122,6 @@ public class MoveDMDocument2NewFolderFolder1DADTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Move']",
 			RuntimeVariables.replace("Move"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

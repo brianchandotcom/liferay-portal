@@ -25,17 +25,14 @@ public class SplitThreadMBCategoryThreadReplyExplanationTest
 	public void testSplitThreadMBCategoryThreadReplyExplanation()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("MB Category Name"),
 			selenium.getText("//td[1]/a/strong"));
 		selenium.clickAt("//td[1]/a/strong",
 			RuntimeVariables.replace("MB Category Name"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertFalse(selenium.isTextPresent(
 				"RE: MB Category Thread Message Subject"));
 		assertEquals(RuntimeVariables.replace(
@@ -44,7 +41,6 @@ public class SplitThreadMBCategoryThreadReplyExplanationTest
 		selenium.clickAt("//td[1]/a",
 			RuntimeVariables.replace("MB Category Thread Message Subject"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"RE: MB Category Thread Message Subject"),
 			selenium.getText(
@@ -65,7 +61,6 @@ public class SplitThreadMBCategoryThreadReplyExplanationTest
 		selenium.clickAt("//a/span[.='Split Thread']",
 			RuntimeVariables.replace("Split Thread"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertFalse(selenium.isChecked(
 				"//input[@id='_19_addExplanationPostCheckbox']"));
 		selenium.clickAt("//input[@id='_19_addExplanationPostCheckbox']",
@@ -151,7 +146,6 @@ public class SplitThreadMBCategoryThreadReplyExplanationTest
 		selenium.selectFrame("relative=top");
 		selenium.clickAt("//input[@value='OK']", RuntimeVariables.replace("OK"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"RE: MB Category Thread Message Subject"),
 			selenium.getText("//h1[@class='header-title']/span"));

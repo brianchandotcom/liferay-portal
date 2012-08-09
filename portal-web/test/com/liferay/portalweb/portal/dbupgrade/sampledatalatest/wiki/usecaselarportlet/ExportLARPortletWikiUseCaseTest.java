@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ExportLARPortletWikiUseCaseTest extends BaseTestCase {
 	public void testExportLARPortletWikiUseCase() throws Exception {
 		selenium.open("/web/wiki-use-case-community/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,7 +43,6 @@ public class ExportLARPortletWikiUseCaseTest extends BaseTestCase {
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Wiki"),
 			selenium.getText("//span[@class='portlet-title-text']"));
@@ -75,7 +73,6 @@ public class ExportLARPortletWikiUseCaseTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_86_exportFileName']",
 			RuntimeVariables.replace("Wiki_Use_Case.Portlet.lar"));
 		assertFalse(selenium.isChecked(

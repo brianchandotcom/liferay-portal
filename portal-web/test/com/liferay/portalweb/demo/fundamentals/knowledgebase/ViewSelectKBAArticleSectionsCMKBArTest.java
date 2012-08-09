@@ -24,7 +24,6 @@ public class ViewSelectKBAArticleSectionsCMKBArTest extends BaseTestCase {
 	public void testViewSelectKBAArticleSectionsCMKBAr()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,7 +44,6 @@ public class ViewSelectKBAArticleSectionsCMKBArTest extends BaseTestCase {
 		selenium.clickAt("link=Knowledge Base Article Test Page",
 			RuntimeVariables.replace("Knowledge Base Article Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Knowledge Base Article 1"),
 			selenium.getText("//div[@class='kb-title']"));
 		assertEquals(RuntimeVariables.replace(

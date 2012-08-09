@@ -23,11 +23,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewWCWebContent1DisplayPageAP1Test extends BaseTestCase {
 	public void testViewWCWebContent1DisplayPageAP1() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Asset Publisher Test Page1",
 			RuntimeVariables.replace("Asset Publisher Test Page1"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("WC WebContent1 Title"),
 			selenium.getText("//h3[@class='asset-title']/a"));
 		assertEquals(RuntimeVariables.replace("WC WebContent1 Content"),
@@ -37,7 +35,6 @@ public class ViewWCWebContent1DisplayPageAP1Test extends BaseTestCase {
 		selenium.clickAt("//h3[@class='asset-title']/a",
 			RuntimeVariables.replace("WC WebContent1 Title"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("WC WebContent1 Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("WC WebContent1 Content"),

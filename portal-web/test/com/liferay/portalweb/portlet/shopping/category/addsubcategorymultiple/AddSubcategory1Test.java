@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddSubcategory1Test extends BaseTestCase {
 	public void testAddSubcategory1() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,11 +43,9 @@ public class AddSubcategory1Test extends BaseTestCase {
 		selenium.clickAt("link=Shopping Test Page",
 			RuntimeVariables.replace("Shopping Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Categories",
 			RuntimeVariables.replace("Categories"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Shopping Category Name\nShopping Category Description"),
 			selenium.getText("//td[1]/a"));
@@ -56,11 +53,9 @@ public class AddSubcategory1Test extends BaseTestCase {
 			RuntimeVariables.replace(
 				"Shopping Category Name\nShopping Category Description"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//input[@value='Add Subcategory']",
 			RuntimeVariables.replace("Add Subcategory"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_34_name']",
 			RuntimeVariables.replace("Shopping Subcategory1 Name"));
 		selenium.type("//textarea[@id='_34_description']",
@@ -68,7 +63,6 @@ public class AddSubcategory1Test extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

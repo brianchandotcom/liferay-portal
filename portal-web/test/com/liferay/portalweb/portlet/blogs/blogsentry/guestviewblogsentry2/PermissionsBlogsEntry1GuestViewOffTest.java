@@ -24,17 +24,14 @@ public class PermissionsBlogsEntry1GuestViewOffTest extends BaseTestCase {
 	public void testPermissionsBlogsEntry1GuestViewOff()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Title"),
 			selenium.getText("xPath=(//div[@class='entry-title']/h2/a)[2]"));
 		selenium.clickAt("xPath=(//div[@class='entry-title']/h2/a)[2]",
 			RuntimeVariables.replace("Blogs Entry1 Title"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Title"),
 			selenium.getText("//h1[@class='header-title']"));
 		assertEquals(RuntimeVariables.replace("Permissions"),
@@ -42,7 +39,6 @@ public class PermissionsBlogsEntry1GuestViewOffTest extends BaseTestCase {
 		selenium.clickAt("//td[2]/span/a/span",
 			RuntimeVariables.replace("Permissions"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -66,7 +62,6 @@ public class PermissionsBlogsEntry1GuestViewOffTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

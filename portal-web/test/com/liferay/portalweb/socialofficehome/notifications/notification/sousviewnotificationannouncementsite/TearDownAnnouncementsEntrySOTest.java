@@ -28,7 +28,6 @@ public class TearDownAnnouncementsEntrySOTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/user/joebloggs/so/dashboard/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -84,13 +83,11 @@ public class TearDownAnnouncementsEntrySOTest extends BaseTestCase {
 				selenium.clickAt("//li[contains(@class, 'social-office-enabled')]/span[2]/a",
 					RuntimeVariables.replace("Name"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("Home"),
 					selenium.getText("//nav/ul/li[1]/a/span"));
 				selenium.clickAt("link=Entries",
 					RuntimeVariables.replace("Entries"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				boolean entry1Present = selenium.isElementPresent("link=Delete");
 
@@ -102,7 +99,6 @@ public class TearDownAnnouncementsEntrySOTest extends BaseTestCase {
 
 				selenium.click(RuntimeVariables.replace("link=Delete"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 
@@ -118,7 +114,6 @@ public class TearDownAnnouncementsEntrySOTest extends BaseTestCase {
 
 				selenium.click(RuntimeVariables.replace("link=Delete"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 
@@ -134,7 +129,6 @@ public class TearDownAnnouncementsEntrySOTest extends BaseTestCase {
 
 				selenium.click(RuntimeVariables.replace("link=Delete"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 
@@ -150,7 +144,6 @@ public class TearDownAnnouncementsEntrySOTest extends BaseTestCase {
 
 				selenium.click(RuntimeVariables.replace("link=Delete"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 
@@ -166,7 +159,6 @@ public class TearDownAnnouncementsEntrySOTest extends BaseTestCase {
 
 				selenium.click(RuntimeVariables.replace("link=Delete"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 

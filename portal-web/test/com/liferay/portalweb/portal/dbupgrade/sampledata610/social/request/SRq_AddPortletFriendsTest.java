@@ -23,11 +23,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SRq_AddPortletFriendsTest extends BaseTestCase {
 	public void testSRq_AddPortletFriends() throws Exception {
 		selenium.open("/web/socialrequestsn1/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Friends Test Page",
 			RuntimeVariables.replace("Friends Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
 

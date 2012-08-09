@@ -28,7 +28,6 @@ public class TearDownUGUserGroupTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("//div[@id='dockbar']",
 					RuntimeVariables.replace("Dockbar"));
 
@@ -72,11 +71,9 @@ public class TearDownUGUserGroupTest extends BaseTestCase {
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("link=User Groups",
 					RuntimeVariables.replace("User Groups"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				boolean UserGroupPresent = selenium.isElementPresent(
 						"//input[@name='_127_rowIds']");
@@ -113,7 +110,6 @@ public class TearDownUGUserGroupTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Delete']",
 					RuntimeVariables.replace("Delete"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 				assertEquals(RuntimeVariables.replace(

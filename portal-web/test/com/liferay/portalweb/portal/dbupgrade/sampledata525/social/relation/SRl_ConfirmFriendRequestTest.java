@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SRl_ConfirmFriendRequestTest extends BaseTestCase {
 	public void testSRl_ConfirmFriendRequest() throws Exception {
 		selenium.open("/web/socialrelationsn1/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,13 +43,11 @@ public class SRl_ConfirmFriendRequestTest extends BaseTestCase {
 		selenium.clickAt("link=Requests Test Page",
 			RuntimeVariables.replace("Requests Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"socialrelationfn2 socialrelationmn2 socialrelationln2"),
 			selenium.getText("//div/a[2]"));
 		selenium.clickAt("link=Confirm", RuntimeVariables.replace("Confirm"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertFalse(selenium.isTextPresent("link=Confirm"));
 	}
 }

@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddFormFieldParagraphTest extends BaseTestCase {
 	public void testAddFormFieldParagraph() throws Exception {
 		selenium.open("/web/expando-web-form-community/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,7 +43,6 @@ public class AddFormFieldParagraphTest extends BaseTestCase {
 		selenium.clickAt("link=Web Form Page",
 			RuntimeVariables.replace("Web Form Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
@@ -132,7 +130,6 @@ public class AddFormFieldParagraphTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -173,7 +170,6 @@ public class AddFormFieldParagraphTest extends BaseTestCase {
 		selenium.clickAt("link=Web Form Page",
 			RuntimeVariables.replace("Web Form Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("This is a test paragraph."),
 			selenium.getText("//p"));
 	}

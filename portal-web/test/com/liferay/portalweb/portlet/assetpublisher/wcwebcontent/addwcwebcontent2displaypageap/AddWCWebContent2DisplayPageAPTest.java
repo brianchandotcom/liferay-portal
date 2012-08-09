@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddWCWebContent2DisplayPageAPTest extends BaseTestCase {
 	public void testAddWCWebContent2DisplayPageAP() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
 
@@ -67,11 +66,9 @@ public class AddWCWebContent2DisplayPageAPTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
 		selenium.clickAt("//span[@title='Add']/ul/li/strong/a/span",
@@ -99,7 +96,6 @@ public class AddWCWebContent2DisplayPageAPTest extends BaseTestCase {
 		selenium.clickAt("//a[contains(@id,'_menu_basic-web-content')]",
 			RuntimeVariables.replace("Basic Web Content"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_15_title_en_US']",
 			RuntimeVariables.replace("WC WebContent2 Title"));
 
@@ -367,7 +363,6 @@ public class AddWCWebContent2DisplayPageAPTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("WC WebContent2 Title"),
 			selenium.getText("//tr[4]/td[3]/a"));
 		assertEquals(RuntimeVariables.replace("Approved"),

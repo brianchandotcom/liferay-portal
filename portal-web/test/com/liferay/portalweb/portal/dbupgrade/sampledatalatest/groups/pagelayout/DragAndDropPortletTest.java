@@ -23,11 +23,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class DragAndDropPortletTest extends BaseTestCase {
 	public void testDragAndDropPortlet() throws Exception {
 		selenium.open("/web/group-page-layout-community/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Page Layout Page",
 			RuntimeVariables.replace("Page Layout Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div[@id='main-content']",
 			RuntimeVariables.replace("Main Content"));
 

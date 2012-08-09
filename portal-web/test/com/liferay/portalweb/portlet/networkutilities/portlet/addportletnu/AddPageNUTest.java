@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddPageNUTest extends BaseTestCase {
 	public void testAddPageNU() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
 
@@ -108,6 +107,5 @@ public class AddPageNUTest extends BaseTestCase {
 		selenium.clickAt("link=Network Utilities Test Page",
 			RuntimeVariables.replace("Network Utilities Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 	}
 }

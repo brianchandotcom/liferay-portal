@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class BackToMessagesPMMessageDetailsTest extends BaseTestCase {
 	public void testBackToMessagesPMMessageDetails() throws Exception {
 		selenium.open("/user/joebloggs/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,7 +44,6 @@ public class BackToMessagesPMMessageDetailsTest extends BaseTestCase {
 		selenium.clickAt("//nav/ul/li[contains(.,'Messages')]/a/span",
 			RuntimeVariables.replace("Messages"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Private Messaging"),
 			selenium.getText("//span[@class='portlet-title-default']"));
 		assertEquals(RuntimeVariables.replace("Social01 Office01 User01"),
@@ -59,7 +57,6 @@ public class BackToMessagesPMMessageDetailsTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='subject']",
 			RuntimeVariables.replace("Message Subject"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Message Subject"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace(
@@ -75,7 +72,6 @@ public class BackToMessagesPMMessageDetailsTest extends BaseTestCase {
 		selenium.clickAt("//a[@id='_1_WAR_privatemessagingportlet_TabsBack']",
 			RuntimeVariables.replace("\u00ab Back to Messages"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Social01 Office01 User01"),
 			selenium.getText("//span[@class='author-sender']"));
 		assertEquals(RuntimeVariables.replace("Message Subject"),

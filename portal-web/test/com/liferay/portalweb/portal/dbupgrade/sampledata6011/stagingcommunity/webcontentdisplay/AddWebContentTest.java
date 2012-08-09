@@ -24,12 +24,10 @@ public class AddWebContentTest extends BaseTestCase {
 	public void testAddWebContent() throws Exception {
 		selenium.open(
 			"/web/community-staging-community-web-content-display-staging/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Page Staging Community Web Content Display",
 			RuntimeVariables.replace(
 				"Page Staging Community Web Content Display"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isVisible(
 				"//body[@class='blue staging controls-visible signed-in public-page']"));
 		assertEquals(RuntimeVariables.replace("Manage"),
@@ -55,18 +53,15 @@ public class AddWebContentTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Community Staging Community Web Content Display (Staging)"),
 			selenium.getText("//nav/ul/li[2]/span"));
 		selenium.clickAt("//input[@value='Add Web Content']",
 			RuntimeVariables.replace("Add Web Content"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_15_title']",
 			RuntimeVariables.replace("WC Web Content Name"));
 
@@ -189,7 +184,6 @@ public class AddWebContentTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

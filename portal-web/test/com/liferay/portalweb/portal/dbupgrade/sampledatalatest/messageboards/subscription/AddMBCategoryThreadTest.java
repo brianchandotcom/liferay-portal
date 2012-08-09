@@ -23,20 +23,16 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddMBCategoryThreadTest extends BaseTestCase {
 	public void testAddMBCategoryThread() throws Exception {
 		selenium.open("/web/category-thread-mb-subscription-community/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Message Boards Page",
 			RuntimeVariables.replace("Message Boards Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Category Test"),
 			selenium.getText("//a/strong"));
 		selenium.clickAt("//a/strong", RuntimeVariables.replace("Category Test"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//input[@value='Post New Thread']",
 			RuntimeVariables.replace("Post New Thread"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_19_subject']",
 			RuntimeVariables.replace("MB Category Subscription Thread"));
 
@@ -160,7 +156,6 @@ public class AddMBCategoryThreadTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

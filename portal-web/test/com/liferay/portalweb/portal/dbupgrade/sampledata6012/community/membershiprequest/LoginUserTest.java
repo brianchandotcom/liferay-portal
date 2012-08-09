@@ -24,7 +24,6 @@ public class LoginUserTest extends BaseTestCase {
 	public void testLoginUser() throws Exception {
 		selenium.setTimeout("180000");
 		selenium.open("/web/guest/home");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,7 +43,6 @@ public class LoginUserTest extends BaseTestCase {
 
 		selenium.clickAt("link=Sign In", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -102,6 +100,5 @@ public class LoginUserTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Sign In']",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 	}
 }

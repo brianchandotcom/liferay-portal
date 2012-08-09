@@ -28,7 +28,6 @@ public class AddUserSoccerAdminPasswordTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -49,23 +48,19 @@ public class AddUserSoccerAdminPasswordTest extends BaseTestCase {
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("link=Users and Organizations",
 					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isVisible("//input[@id='_125_keywords']"));
 				selenium.type("//input[@id='_125_keywords']",
 					RuntimeVariables.replace("socceradmin"));
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("Bruno"),
 					selenium.getText("//td[2]/a"));
 				selenium.clickAt("//td[2]/a", RuntimeVariables.replace("Bruno"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isPartialText(
 						"//a[@id='_125_passwordLink']", "Password"));
 				selenium.clickAt("//a[@id='_125_passwordLink']",
@@ -94,7 +89,6 @@ public class AddUserSoccerAdminPasswordTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -117,7 +111,6 @@ public class AddUserSoccerAdminPasswordTest extends BaseTestCase {
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -138,10 +131,8 @@ public class AddUserSoccerAdminPasswordTest extends BaseTestCase {
 				selenium.clickAt("link=Sign Out",
 					RuntimeVariables.replace("Sign Out"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isVisible("//input[@value='Sign In']"));
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -180,7 +171,6 @@ public class AddUserSoccerAdminPasswordTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Sign In']",
 					RuntimeVariables.replace("Sign In"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				boolean iAgreeVisible1 = selenium.isElementPresent(
 						"//span/input");
@@ -194,7 +184,6 @@ public class AddUserSoccerAdminPasswordTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='I Agree']",
 					RuntimeVariables.replace("I Agree"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 			case 3:
 
@@ -212,7 +201,6 @@ public class AddUserSoccerAdminPasswordTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 			case 4:
 
@@ -233,11 +221,9 @@ public class AddUserSoccerAdminPasswordTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 			case 5:
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -258,10 +244,8 @@ public class AddUserSoccerAdminPasswordTest extends BaseTestCase {
 				selenium.clickAt("link=Sign Out",
 					RuntimeVariables.replace("Sign Out"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isVisible("//input[@value='Sign In']"));
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -300,7 +284,6 @@ public class AddUserSoccerAdminPasswordTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Sign In']",
 					RuntimeVariables.replace("Sign In"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 			case 100:
 				label = -1;

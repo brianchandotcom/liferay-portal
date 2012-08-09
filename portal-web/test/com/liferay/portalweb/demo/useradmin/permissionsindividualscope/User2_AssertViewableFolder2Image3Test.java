@@ -24,7 +24,6 @@ public class User2_AssertViewableFolder2Image3Test extends BaseTestCase {
 	public void testUser2_AssertViewableFolder2Image3()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,7 +44,6 @@ public class User2_AssertViewableFolder2Image3Test extends BaseTestCase {
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("DL Folder 2 Name"),
 			selenium.getText(
 				"xpath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]"));

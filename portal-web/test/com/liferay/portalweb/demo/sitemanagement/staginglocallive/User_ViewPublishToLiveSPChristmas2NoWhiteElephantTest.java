@@ -30,7 +30,6 @@ public class User_ViewPublishToLiveSPChristmas2NoWhiteElephantTest
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -51,7 +50,6 @@ public class User_ViewPublishToLiveSPChristmas2NoWhiteElephantTest
 				selenium.clickAt("link=Site Name",
 					RuntimeVariables.replace("Site Name"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isElementPresent(
 						"//body[contains(@class,'live-view')]"));
 				assertTrue(selenium.isElementNotPresent(
@@ -71,7 +69,6 @@ public class User_ViewPublishToLiveSPChristmas2NoWhiteElephantTest
 				selenium.clickAt("//td[1]/a/strong",
 					RuntimeVariables.replace("MB Category Name"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("MB Category Name"),
 					selenium.getText("//h1[@class='header-title']/span"));
 
@@ -97,7 +94,6 @@ public class User_ViewPublishToLiveSPChristmas2NoWhiteElephantTest
 					RuntimeVariables.replace(
 						"MB Category Thread Message2 Subject"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"MB Category Thread Message2 Subject"),
 					selenium.getText("//div[@class='subject']/a/strong"));
@@ -107,7 +103,6 @@ public class User_ViewPublishToLiveSPChristmas2NoWhiteElephantTest
 				selenium.clickAt("//a[@id='_19_TabsBack']",
 					RuntimeVariables.replace("Back to MB Category Name"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				boolean thread2Visible = selenium.isVisible("//td[1]/a");
 
@@ -131,7 +126,6 @@ public class User_ViewPublishToLiveSPChristmas2NoWhiteElephantTest
 					RuntimeVariables.replace(
 						"MB Category Thread Message1 Subject"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"MB Category Thread Message1 Subject"),
 					selenium.getText("//div[@class='subject']/a/strong"));
@@ -150,7 +144,6 @@ public class User_ViewPublishToLiveSPChristmas2NoWhiteElephantTest
 				selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 					RuntimeVariables.replace("DL Image Title"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -213,7 +206,6 @@ public class User_ViewPublishToLiveSPChristmas2NoWhiteElephantTest
 				selenium.clickAt("link=Calendar",
 					RuntimeVariables.replace("Calendar"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isPartialText(
 						"//span[@class='last-publication-branch']",
 						"Page Calendar was last published from Christmas 2."));
@@ -241,7 +233,6 @@ public class User_ViewPublishToLiveSPChristmas2NoWhiteElephantTest
 				selenium.clickAt("//nav/ul/li[3]/a/span",
 					RuntimeVariables.replace("Wiki"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isPartialText(
 						"//span[@class='last-publication-branch']",
 						"Page Wiki was last published from Christmas 2."));
@@ -252,7 +243,6 @@ public class User_ViewPublishToLiveSPChristmas2NoWhiteElephantTest
 				selenium.clickAt("link=Prices",
 					RuntimeVariables.replace("Prices"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isPartialText(
 						"//span[@class='last-publication-branch']",
 						"Page Prices was last published from Christmas 2."));

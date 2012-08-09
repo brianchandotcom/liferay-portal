@@ -24,7 +24,6 @@ public class SOUs_ViewDeleteRepostMicroblogsContentTest extends BaseTestCase {
 	public void testSOUs_ViewDeleteRepostMicroblogsContent()
 		throws Exception {
 		selenium.open("/user/socialoffice01/so/dashboard");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,7 +43,6 @@ public class SOUs_ViewDeleteRepostMicroblogsContentTest extends BaseTestCase {
 
 		selenium.clickAt("link=Me", RuntimeVariables.replace("Me"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("There are no recent activities."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-info'])[2]"));
 		assertFalse(selenium.isTextPresent("Reposted From Joe Bloggs"));
@@ -70,7 +68,6 @@ public class SOUs_ViewDeleteRepostMicroblogsContentTest extends BaseTestCase {
 		selenium.clickAt("//nav/ul/li[contains(.,'Microblogs')]/a/span",
 			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("You have no microblogs entry."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertFalse(selenium.isTextPresent(

@@ -24,7 +24,6 @@ public class User_ViewApproveDMFolderDocumentTxtTest extends BaseTestCase {
 	public void testUser_ViewApproveDMFolderDocumentTxt()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,7 +44,6 @@ public class User_ViewApproveDMFolderDocumentTxtTest extends BaseTestCase {
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("DM Folder Name"),
 			selenium.getText(
 				"//div[@data-title='DM Folder Name']/a/span[@class='entry-title']"));

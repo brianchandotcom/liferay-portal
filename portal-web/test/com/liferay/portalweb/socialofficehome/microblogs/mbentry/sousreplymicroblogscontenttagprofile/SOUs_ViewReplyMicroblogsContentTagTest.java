@@ -29,7 +29,6 @@ public class SOUs_ViewReplyMicroblogsContentTagTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/user/socialoffice01/so/dashboard/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -51,7 +50,6 @@ public class SOUs_ViewReplyMicroblogsContentTagTest extends BaseTestCase {
 				selenium.clickAt("//nav/ul/li[contains(.,'Microblogs')]/a/span",
 					RuntimeVariables.replace("Microblogs"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				boolean replyVisible = selenium.isElementPresent(
 						"//div[@class='microblogs-entry show-comments']");
@@ -93,7 +91,6 @@ public class SOUs_ViewReplyMicroblogsContentTagTest extends BaseTestCase {
 				selenium.clickAt("//div[@class='content']/span/a",
 					RuntimeVariables.replace("Joe Bloggs"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isElementPresent(
 						"//div[@class='user-profile-detail']"));
 				assertEquals(RuntimeVariables.replace("Profile"),

@@ -24,7 +24,6 @@ public class SA_RegInlineBlogsConfigurationNotCheckedTest extends BaseTestCase {
 	public void testSA_RegInlineBlogsConfigurationNotChecked()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,7 +44,6 @@ public class SA_RegInlineBlogsConfigurationNotCheckedTest extends BaseTestCase {
 		selenium.clickAt("link=Blogs Permissions Page",
 			RuntimeVariables.replace("Blogs Permissions Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
@@ -97,7 +95,6 @@ public class SA_RegInlineBlogsConfigurationNotCheckedTest extends BaseTestCase {
 		selenium.clickAt("link=Permissions",
 			RuntimeVariables.replace("Permissions"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertFalse(selenium.isChecked(
 				"//input[@id='portlet_ACTION_CONFIGURATION']"));
 		selenium.selectFrame("relative=top");

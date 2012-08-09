@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class User_EditDMFolderDocumentDocSATest extends BaseTestCase {
 	public void testUser_EditDMFolderDocumentDocSA() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,7 +43,6 @@ public class User_EditDMFolderDocumentDocSATest extends BaseTestCase {
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Mine"),
 			selenium.getText(
 				"//span[@class='entry-title' and contains(.,'Mine')]"));
@@ -95,12 +93,10 @@ public class User_EditDMFolderDocumentDocSATest extends BaseTestCase {
 		selenium.clickAt("//div[@data-title='DM Document Title']/a/span[@class='entry-title']",
 			RuntimeVariables.replace("DM Document Title (Pending)"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText("//button[.='Edit']"));
 		selenium.clickAt("//button[.='Edit']", RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.uploadCommonFile("//input[@id='_20_file']",
 			RuntimeVariables.replace("Document_2.doc"));
 		selenium.type("//input[@id='_20_title']",
@@ -108,7 +104,6 @@ public class User_EditDMFolderDocumentDocSATest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

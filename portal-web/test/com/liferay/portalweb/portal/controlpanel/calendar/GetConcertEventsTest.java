@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class GetConcertEventsTest extends BaseTestCase {
 	public void testGetConcertEvents() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -47,40 +46,31 @@ public class GetConcertEventsTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Calendar", RuntimeVariables.replace("Calendar"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Day", RuntimeVariables.replace("Day"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.select("//select", RuntimeVariables.replace("label=Concert"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent("link=Caedmon's Call Concert!"));
 		assertTrue(selenium.isElementNotPresent("link=Off to Yosemite!"));
 		assertTrue(selenium.isElementNotPresent("link=Test Event"));
 		selenium.clickAt("link=Week", RuntimeVariables.replace("Week"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.select("//select", RuntimeVariables.replace("label=Concert"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent("link=Caedmon's Call Concert!"));
 		assertTrue(selenium.isElementNotPresent("link=Off to Yosemite!"));
 		assertTrue(selenium.isElementNotPresent("link=Test Event"));
 		selenium.clickAt("link=Month", RuntimeVariables.replace("Month"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.select("//select", RuntimeVariables.replace("label=Concert"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent("link=Caedmon's Call Concert!"));
 		assertTrue(selenium.isElementNotPresent("link=Off to Yosemite!"));
 		assertTrue(selenium.isElementNotPresent("link=Test Event"));
 		selenium.clickAt("link=Events", RuntimeVariables.replace("Events"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent("link=Caedmon's Call Concert!"));
 	}
 }

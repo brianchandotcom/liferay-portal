@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AssertLBFailoverToNodeTwoTest extends BaseTestCase {
 	public void testAssertLBFailoverToNodeTwo() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -47,7 +46,6 @@ public class AssertLBFailoverToNodeTwoTest extends BaseTestCase {
 			RuntimeVariables.replace("test"));
 		selenium.click(RuntimeVariables.replace("//input[@value='Sign In']"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Node: [$CLUSTER_NODE_2$]"),
 			selenium.getText("//div[@id='content']/div[3]"));
 	}

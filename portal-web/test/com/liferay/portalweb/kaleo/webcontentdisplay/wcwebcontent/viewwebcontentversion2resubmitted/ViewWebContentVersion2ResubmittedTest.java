@@ -24,7 +24,6 @@ public class ViewWebContentVersion2ResubmittedTest extends BaseTestCase {
 	public void testViewWebContentVersion2Resubmitted()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,11 +44,9 @@ public class ViewWebContentVersion2ResubmittedTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content Display Test Page",
 			RuntimeVariables.replace("Web Content Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("WC Web Content Content"),
 			selenium.getText("//div[@class='journal-content-article']/p"));
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -70,14 +67,11 @@ public class ViewWebContentVersion2ResubmittedTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=My Workflow Tasks",
 			RuntimeVariables.replace("My Workflow Tasks"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Pending", RuntimeVariables.replace("Pending"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"There are no pending tasks assigned to you."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
@@ -92,7 +86,6 @@ public class ViewWebContentVersion2ResubmittedTest extends BaseTestCase {
 			selenium.getText("//td[5]/a"));
 		selenium.clickAt("link=Completed", RuntimeVariables.replace("Completed"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Review"),
 			selenium.getText("xPath=(//a[.='Review'])[1]"));
 		assertEquals(RuntimeVariables.replace("WC Web Content Title"),

@@ -28,7 +28,6 @@ public class ViewOrganizationTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -49,11 +48,9 @@ public class ViewOrganizationTest extends BaseTestCase {
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("link=Organizations",
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				boolean basicVisible = selenium.isVisible("link=\u00ab Basic");
 
@@ -72,7 +69,6 @@ public class ViewOrganizationTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("//strong/span", RuntimeVariables.replace(""));
 
 				for (int second = 0;; second++) {
@@ -94,7 +90,6 @@ public class ViewOrganizationTest extends BaseTestCase {
 				selenium.clickAt("link=Assign Members",
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 					selenium.getText(
 						"//tr[@class='portlet-section-body results-row last']/td[2]"));
@@ -104,7 +99,6 @@ public class ViewOrganizationTest extends BaseTestCase {
 				selenium.clickAt("_126_tabs2TabsBack",
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("//strong/span", RuntimeVariables.replace(""));
 
 				for (int second = 0;; second++) {
@@ -125,7 +119,6 @@ public class ViewOrganizationTest extends BaseTestCase {
 
 				selenium.clickAt("link=View Users", RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("Joe"),
 					selenium.getText(
 						"//tr[@class='portlet-section-body results-row last']/td[2]"));

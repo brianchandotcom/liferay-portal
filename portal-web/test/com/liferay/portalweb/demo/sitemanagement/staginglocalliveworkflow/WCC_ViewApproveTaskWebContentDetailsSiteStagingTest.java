@@ -25,7 +25,6 @@ public class WCC_ViewApproveTaskWebContentDetailsSiteStagingTest
 	public void testWCC_ViewApproveTaskWebContentDetailsSiteStaging()
 		throws Exception {
 		selenium.open("/web/community-site-test/home/");
-		loadRequiredJavaScriptModules();
 		assertFalse(selenium.isTextPresent("This is a Web Content article"));
 
 		for (int second = 0;; second++) {
@@ -46,7 +45,6 @@ public class WCC_ViewApproveTaskWebContentDetailsSiteStagingTest
 
 		selenium.clickAt("link=Staging", RuntimeVariables.replace("Staging"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("This is a Web Content article"),
 			selenium.getText("//div[@class='journal-content-article']/p"));
 	}

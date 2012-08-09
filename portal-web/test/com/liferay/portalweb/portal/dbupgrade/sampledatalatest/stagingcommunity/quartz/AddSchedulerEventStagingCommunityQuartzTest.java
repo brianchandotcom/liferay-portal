@@ -24,7 +24,6 @@ public class AddSchedulerEventStagingCommunityQuartzTest extends BaseTestCase {
 	public void testAddSchedulerEventStagingCommunityQuartz()
 		throws Exception {
 		selenium.open("/web/community-staging-community-quartz-staging/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,7 +44,6 @@ public class AddSchedulerEventStagingCommunityQuartzTest extends BaseTestCase {
 		selenium.clickAt("link=Page Staging Community Quartz",
 			RuntimeVariables.replace("Page Staging Community Quartz"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//strong/a",
 			RuntimeVariables.replace("Staging Drop Down"));
 

@@ -24,7 +24,6 @@ public class ViewClickTasksProgressBar60PercentCompleteTest extends BaseTestCase
 	public void testViewClickTasksProgressBar60PercentComplete()
 		throws Exception {
 		selenium.open("/user/joebloggs/so/dashboard/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -46,7 +45,6 @@ public class ViewClickTasksProgressBar60PercentCompleteTest extends BaseTestCase
 		selenium.clickAt("//nav/ul/li[contains(.,'Tasks')]/a/span",
 			RuntimeVariables.replace("Tasks"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Tasks"),
 			selenium.getText("//span[@class='portlet-title-default']"));
 		assertEquals(RuntimeVariables.replace("Assigned to Me"),
@@ -54,7 +52,6 @@ public class ViewClickTasksProgressBar60PercentCompleteTest extends BaseTestCase
 		selenium.clickAt("link=Assigned to Me",
 			RuntimeVariables.replace("Assigned to Me"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

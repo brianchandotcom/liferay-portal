@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddMailAccountTest extends BaseTestCase {
 	public void testAddMailAccount() throws Exception {
 		selenium.open("/web/guest/home");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,7 +43,6 @@ public class AddMailAccountTest extends BaseTestCase {
 		selenium.clickAt("link=Mail Test Page",
 			RuntimeVariables.replace("Mail Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//input[@value='Add Mail Account']",
 			RuntimeVariables.replace("Add Mail Account"));
 

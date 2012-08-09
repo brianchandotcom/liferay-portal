@@ -23,11 +23,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddPortletActivitiesDuplicateTest extends BaseTestCase {
 	public void testAddPortletActivitiesDuplicate() throws Exception {
 		selenium.open("/group/joebloggs/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Activities Test Page",
 			RuntimeVariables.replace("Activities Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
 

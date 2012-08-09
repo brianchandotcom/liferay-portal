@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class WCA_AddMemberWCLViewPermissionsTest extends BaseTestCase {
 	public void testWCA_AddMemberWCLViewPermissions() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,7 +44,6 @@ public class WCA_AddMemberWCLViewPermissionsTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content List Permissions Page",
 			RuntimeVariables.replace("Web Content List Permissions Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		Thread.sleep(5000);
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
 
@@ -87,7 +85,6 @@ public class WCA_AddMemberWCLViewPermissionsTest extends BaseTestCase {
 		selenium.clickAt("link=Permissions",
 			RuntimeVariables.replace("Permissions"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isVisible("//tr[4]/td[2]/input"));
 		selenium.check("//tr[4]/td[2]/input");
 		selenium.clickAt("//input[@value='Save']",

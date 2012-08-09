@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SearchTagsTest extends BaseTestCase {
 	public void testSearchTags() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,28 +42,22 @@ public class SearchTagsTest extends BaseTestCase {
 
 		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Communities", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("_134_name",
 			RuntimeVariables.replace("Tags Message Board Community"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//td[2]/a", RuntimeVariables.replace("Open"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Message Boards Page",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("_19_keywords1", RuntimeVariables.replace("selenium1"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent("link=Message1 Tag1 Test1"));
 		assertTrue(selenium.isElementNotPresent("link=Message2 Tag2 Test2"));
 		assertTrue(selenium.isElementNotPresent("link=Message3 Tag3 Test3"));
@@ -91,12 +84,10 @@ public class SearchTagsTest extends BaseTestCase {
 		selenium.clickAt("link=Message Boards Page",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("_19_keywords1", RuntimeVariables.replace("selenium2"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent("link=Message2 Tag2 Test2"));
 		assertTrue(selenium.isElementNotPresent("link=Message1 Tag1 Test1"));
 		assertTrue(selenium.isElementNotPresent("link=Message3 Tag3 Test3"));
@@ -123,12 +114,10 @@ public class SearchTagsTest extends BaseTestCase {
 		selenium.clickAt("link=Message Boards Page",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("_19_keywords1", RuntimeVariables.replace("selenium3"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent("link=Message3 Tag3 Test3"));
 		assertTrue(selenium.isElementNotPresent("link=Message1 Tag1 Test1"));
 		assertTrue(selenium.isElementNotPresent("link=Message2 Tag2 Test2"));
@@ -155,12 +144,10 @@ public class SearchTagsTest extends BaseTestCase {
 		selenium.clickAt("link=Message Boards Page",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("_19_keywords1", RuntimeVariables.replace("selenium"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent("link=MessageA TagA TestA"));
 		assertTrue(selenium.isElementPresent("link=MessageB TagB TestB"));
 		assertTrue(selenium.isElementPresent("link=MessageC TagC TestC"));

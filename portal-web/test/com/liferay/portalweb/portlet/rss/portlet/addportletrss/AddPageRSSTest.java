@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddPageRSSTest extends BaseTestCase {
 	public void testAddPageRSS() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
 
@@ -108,6 +107,5 @@ public class AddPageRSSTest extends BaseTestCase {
 		selenium.clickAt("link=RSS Test Page",
 			RuntimeVariables.replace("RSS Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 	}
 }

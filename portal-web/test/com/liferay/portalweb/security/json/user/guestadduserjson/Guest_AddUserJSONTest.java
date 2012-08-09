@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class Guest_AddUserJSONTest extends BaseTestCase {
 	public void testGuest_AddUserJSON() throws Exception {
 		selenium.open("/api/jsonws");
-		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='serviceSearch']",
 			RuntimeVariables.replace("add-user"));
 
@@ -50,7 +49,6 @@ public class Guest_AddUserJSONTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='lfr-panel-content']/ul/li/a[contains(@href,'add-user-26')]",
 			RuntimeVariables.replace("add-user"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("//input[@name='companyId']",
 			RuntimeVariables.replace("1"));
 		selenium.type("//input[@name='screenName']",

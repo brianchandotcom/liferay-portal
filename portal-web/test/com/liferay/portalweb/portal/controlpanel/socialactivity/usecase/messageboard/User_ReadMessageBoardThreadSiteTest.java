@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class User_ReadMessageBoardThreadSiteTest extends BaseTestCase {
 	public void testUser_ReadMessageBoardThreadSite() throws Exception {
 		selenium.open("/web/site-name/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,10 +43,8 @@ public class User_ReadMessageBoardThreadSiteTest extends BaseTestCase {
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=MB Thread Message Subject",
 			RuntimeVariables.replace("MB Thread Message Subject"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 	}
 }

@@ -25,7 +25,6 @@ public class ViewPortletShowLocalesWebContentTemplateWCDTest
 	public void testViewPortletShowLocalesWebContentTemplateWCD()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -46,7 +45,6 @@ public class ViewPortletShowLocalesWebContentTemplateWCDTest
 		selenium.clickAt("link=Web Content Display Test Page",
 			RuntimeVariables.replace("Web Content Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -68,7 +66,6 @@ public class ViewPortletShowLocalesWebContentTemplateWCDTest
 		selenium.clickAt("//img[@title='English (United States)']",
 			RuntimeVariables.replace("English (United States)"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Hello World Page Name"),
 			selenium.getText("//td[@class='page-name']"));
 		assertEquals(RuntimeVariables.replace("Hello World Page Description"),
@@ -78,7 +75,6 @@ public class ViewPortletShowLocalesWebContentTemplateWCDTest
 		selenium.clickAt("//img[@title='\u4e2d\u6587 (\u4e2d\u56fd)']",
 			RuntimeVariables.replace("\u4e2d\u6587 (\u4e2d\u56fd)"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"\u4e16\u754c\u60a8\u597d Page Name"),
 			selenium.getText("//td[@class='page-name']"));

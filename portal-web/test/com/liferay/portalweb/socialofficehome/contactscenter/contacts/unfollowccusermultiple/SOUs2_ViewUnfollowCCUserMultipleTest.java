@@ -24,7 +24,6 @@ public class SOUs2_ViewUnfollowCCUserMultipleTest extends BaseTestCase {
 	public void testSOUs2_ViewUnfollowCCUserMultiple()
 		throws Exception {
 		selenium.open("/user/socialoffice02/so/dashboard/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -46,7 +45,6 @@ public class SOUs2_ViewUnfollowCCUserMultipleTest extends BaseTestCase {
 		selenium.clickAt("//nav/ul/li[contains(.,'Contacts Center')]/a/span",
 			RuntimeVariables.replace("Contacts Center"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("You have 0 connections."),
 			selenium.getText("link=You have 0 connections."));
 		selenium.clickAt("link=You have 0 connections.",

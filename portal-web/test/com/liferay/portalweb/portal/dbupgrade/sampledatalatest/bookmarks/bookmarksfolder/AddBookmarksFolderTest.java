@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddBookmarksFolderTest extends BaseTestCase {
 	public void testAddBookmarksFolder() throws Exception {
 		selenium.open("/web/bookmarks-folder-community/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,11 +43,9 @@ public class AddBookmarksFolderTest extends BaseTestCase {
 		selenium.clickAt("link=Bookmarks Folder Page",
 			RuntimeVariables.replace("Bookmarks Folder Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div[2]/ul/li[2]/a",
 			RuntimeVariables.replace("Add Folder"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_28_name']",
 			RuntimeVariables.replace("Bookmarks Folder Name"));
 		selenium.type("//textarea[@id='_28_description']",
@@ -56,7 +53,6 @@ public class AddBookmarksFolderTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

@@ -28,7 +28,6 @@ public class AddAnnouncementDeliveryTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -49,10 +48,8 @@ public class AddAnnouncementDeliveryTest extends BaseTestCase {
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("link=My Account", RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("announcementsLink",
 					RuntimeVariables.replace(""));
 
@@ -159,7 +156,6 @@ public class AddAnnouncementDeliveryTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"Your request processed successfully."),
 					selenium.getText("//section/div/div/div/div"));

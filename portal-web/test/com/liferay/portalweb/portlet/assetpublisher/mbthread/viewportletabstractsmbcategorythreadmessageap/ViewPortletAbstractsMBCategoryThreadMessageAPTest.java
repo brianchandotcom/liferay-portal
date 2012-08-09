@@ -25,7 +25,6 @@ public class ViewPortletAbstractsMBCategoryThreadMessageAPTest
 	public void testViewPortletAbstractsMBCategoryThreadMessageAP()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -46,7 +45,6 @@ public class ViewPortletAbstractsMBCategoryThreadMessageAPTest
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"MB Category Thread Message Subject"),
 			selenium.getText("//h3[@class='asset-title']/a"));
@@ -59,7 +57,6 @@ public class ViewPortletAbstractsMBCategoryThreadMessageAPTest
 			RuntimeVariables.replace(
 				"Read More About MB Category Thread Message Subject \u00bb"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"MB Category Thread Message Subject"),
 			selenium.getText("//h1[@class='header-title']"));
@@ -70,7 +67,6 @@ public class ViewPortletAbstractsMBCategoryThreadMessageAPTest
 		selenium.clickAt("//div[@class='asset-more']/a",
 			RuntimeVariables.replace("View in Context \u00bb"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"MB Category Thread Message Subject"),
 			selenium.getText("//h1[@class='header-title']/span"));

@@ -24,7 +24,6 @@ public class ConfirmNotificationsAddConnnectionTest extends BaseTestCase {
 	public void testConfirmNotificationsAddConnnection()
 		throws Exception {
 		selenium.open("/user/joebloggs/home1/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

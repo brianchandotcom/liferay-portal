@@ -28,7 +28,6 @@ public class AddTemplateExpandoTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/expando-web-content-community/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -49,23 +48,18 @@ public class AddTemplateExpandoTest extends BaseTestCase {
 				selenium.clickAt("link=Web Content Display Page",
 					RuntimeVariables.replace("Web Content Display Page"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("link=Web Content",
 					RuntimeVariables.replace("Web Content"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("link=Templates",
 					RuntimeVariables.replace("Templates"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("//input[@value='Add Template']",
 					RuntimeVariables.replace("Add Template"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.type("//input[@id='_15_name_en_US']",
 					RuntimeVariables.replace("Expando Template Test"));
 				selenium.type("//textarea[@id='_15_description_en_US']",
@@ -135,7 +129,6 @@ public class AddTemplateExpandoTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {

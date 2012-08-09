@@ -24,7 +24,6 @@ public class ImportExportPortletLARDefaultDLPageScopeTest extends BaseTestCase {
 	public void testImportExportPortletLARDefaultDLPageScope()
 		throws Exception {
 		selenium.open("/web/document-library-page-scope-community/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,7 +44,6 @@ public class ImportExportPortletLARDefaultDLPageScopeTest extends BaseTestCase {
 		selenium.clickAt("link=DL Page1 Name",
 			RuntimeVariables.replace("DL Page1 Name"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -94,10 +92,8 @@ public class ImportExportPortletLARDefaultDLPageScopeTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Import", RuntimeVariables.replace("Import"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -147,7 +143,6 @@ public class ImportExportPortletLARDefaultDLPageScopeTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Import']",
 			RuntimeVariables.replace("Import"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

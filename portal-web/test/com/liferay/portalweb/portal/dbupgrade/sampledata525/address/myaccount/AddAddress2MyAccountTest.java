@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddAddress2MyAccountTest extends BaseTestCase {
 	public void testAddAddress2MyAccount() throws Exception {
 		selenium.open("/web/guest/home");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,10 +42,8 @@ public class AddAddress2MyAccountTest extends BaseTestCase {
 
 		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=My Account", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("addressesLink", RuntimeVariables.replace(""));
 
 		for (int second = 0;; second++) {
@@ -134,7 +131,6 @@ public class AddAddress2MyAccountTest extends BaseTestCase {
 		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

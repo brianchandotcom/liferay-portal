@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddNullChoicePollTest extends BaseTestCase {
 	public void testAddNullChoicePoll() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -47,14 +46,11 @@ public class AddNullChoicePollTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Polls", RuntimeVariables.replace("Polls"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//input[@value='Add Question']",
 			RuntimeVariables.replace("Add Question"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_25_title_en_US']",
 			RuntimeVariables.replace("Null Choice Poll Test Title"));
 		selenium.type("//textarea[@id='_25_description_en_US']",
@@ -66,13 +62,11 @@ public class AddNullChoicePollTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Add Choice']",
 			RuntimeVariables.replace("Add Choice"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_25_choiceDescriptionc_en_US']",
 			RuntimeVariables.replace(""));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Please enter valid choices."),
 			selenium.getText("//div[@class='portlet-msg-error']"));
 	}

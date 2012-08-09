@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class DeleteEventSOTest extends BaseTestCase {
 	public void testDeleteEventSO() throws Exception {
 		selenium.open("/user/joebloggs/so/dashboard/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,7 +43,6 @@ public class DeleteEventSOTest extends BaseTestCase {
 		selenium.clickAt("link=Calendar Test Page",
 			RuntimeVariables.replace("Calendar Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Calendar Event Title"),
 			selenium.getText(
 				"//table[@class='taglib-search-iterator']/tbody/tr[3]/td[2]/a"));
@@ -77,7 +75,6 @@ public class DeleteEventSOTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 		assertEquals(RuntimeVariables.replace(

@@ -24,7 +24,6 @@ public class ViewWDFrontPageChildPageIncomingLinksTest extends BaseTestCase {
 	public void testViewWDFrontPageChildPageIncomingLinks()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,23 +44,19 @@ public class ViewWDFrontPageChildPageIncomingLinksTest extends BaseTestCase {
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage1 Title"),
 			selenium.getText("xPath=(//div[@class='child-pages']/ul/li/a)[1]"));
 		selenium.clickAt("xPath=(//div[@class='child-pages']/ul/li/a)[1]",
 			RuntimeVariables.replace("Wiki FrontPage ChildPage1 Title"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Details"),
 			selenium.getText("//div[3]/span[2]/a/span"));
 		selenium.clickAt("//div[3]/span[2]/a/span",
 			RuntimeVariables.replace("Details"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Incoming Links",
 			RuntimeVariables.replace("Incoming Links"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage2 Title"),
 			selenium.getText("//td[1]/a"));
 		assertFalse(selenium.isTextPresent(

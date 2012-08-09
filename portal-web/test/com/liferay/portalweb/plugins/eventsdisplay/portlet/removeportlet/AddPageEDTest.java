@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddPageEDTest extends BaseTestCase {
 	public void testAddPageED() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//nav[@id='navigation']",
 			RuntimeVariables.replace("Navigation"));
 
@@ -86,6 +85,5 @@ public class AddPageEDTest extends BaseTestCase {
 		selenium.clickAt("link=Events Display Test Page",
 			RuntimeVariables.replace("Events Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 	}
 }

@@ -28,7 +28,6 @@ public class TearDownNotificationsTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/user/joebloggs/so/dashboard/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -90,7 +89,6 @@ public class TearDownNotificationsTest extends BaseTestCase {
 				selenium.clickAt("link=View All\u00bb",
 					RuntimeVariables.replace("View All\u00bb"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("Notifications"),
 					selenium.getText("//span[contains(.,'Notifications')]"));
 
@@ -110,7 +108,6 @@ public class TearDownNotificationsTest extends BaseTestCase {
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Delete']"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 			case 2:
 				assertEquals(RuntimeVariables.replace(

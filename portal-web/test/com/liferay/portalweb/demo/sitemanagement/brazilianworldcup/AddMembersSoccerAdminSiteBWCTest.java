@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddMembersSoccerAdminSiteBWCTest extends BaseTestCase {
 	public void testAddMembersSoccerAdminSiteBWC() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,26 +43,21 @@ public class AddMembersSoccerAdminSiteBWCTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("//input[@name='_134_name']",
 			RuntimeVariables.replace("World Cup"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("World Cup - Brazil 2014"),
 			selenium.getText("//td/a"));
 		selenium.clickAt("//td/a",
 			RuntimeVariables.replace("World Cup - Brazil 2014"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Site Memberships",
 			RuntimeVariables.replace("Site Memberships"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Add Members"),
 			selenium.getText("//span[contains(.,'Add Members')]/ul/li/strong/a"));
 		selenium.clickAt("//span[contains(.,'Add Members')]/ul/li/strong/a",
@@ -92,14 +86,12 @@ public class AddMembersSoccerAdminSiteBWCTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'User')]/a",
 			RuntimeVariables.replace("User"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isVisible("//input[@name='_174_keywords']"));
 		selenium.type("//input[@name='_174_keywords']",
 			RuntimeVariables.replace("socceradmin"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Bruno Admin"),
 			selenium.getText("//tr[3]/td[2]"));
 		assertFalse(selenium.isChecked("//td/input"));
@@ -109,7 +101,6 @@ public class AddMembersSoccerAdminSiteBWCTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

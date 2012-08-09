@@ -24,7 +24,6 @@ public class DeleteWebContentCompletedDraftEditDetailsTest extends BaseTestCase 
 	public void testDeleteWebContentCompletedDraftEditDetails()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,11 +44,9 @@ public class DeleteWebContentCompletedDraftEditDetailsTest extends BaseTestCase 
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Web Content Name Edited"),
 			selenium.getText("//td[3]/a"));
 		assertTrue(selenium.isElementPresent("//td[5]/a"));
@@ -61,7 +58,6 @@ public class DeleteWebContentCompletedDraftEditDetailsTest extends BaseTestCase 
 		selenium.clickAt("//td[3]/a",
 			RuntimeVariables.replace("Web Content Name Edited"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		Thread.sleep(5000);
 		assertTrue(selenium.isElementPresent(
 				"//input[@value='Submit for Publication']"));
@@ -71,19 +67,16 @@ public class DeleteWebContentCompletedDraftEditDetailsTest extends BaseTestCase 
 		selenium.clickAt("//button[2]",
 			RuntimeVariables.replace("Expire this Version"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.clickAt("//td[3]/a",
 			RuntimeVariables.replace("Web Content Name Edited"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent("//button[2]"));
 		selenium.clickAt("//button[2]",
 			RuntimeVariables.replace("Delete this Version"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to delete this article version[\\s\\S]$"));
 		assertEquals(RuntimeVariables.replace(
@@ -92,7 +85,6 @@ public class DeleteWebContentCompletedDraftEditDetailsTest extends BaseTestCase 
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Web Content Name"),
 			selenium.getText("//td[3]/a"));
 		assertTrue(selenium.isElementPresent("//td[5]/a"));

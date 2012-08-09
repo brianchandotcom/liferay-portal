@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SearchKBAArticleKnowledgeKBSTest extends BaseTestCase {
 	public void testSearchKBAArticleKnowledgeKBS() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,13 +43,11 @@ public class SearchKBAArticleKnowledgeKBSTest extends BaseTestCase {
 		selenium.clickAt("link=Knowledge Base Search Test Page",
 			RuntimeVariables.replace("Knowledge Base Search Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_5_WAR_knowledgebaseportlet_keywords']",
 			RuntimeVariables.replace("knowledge"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Knowledge Base Article 2"),
 			selenium.getText("//tr[3]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Knowledge Base Article 1"),

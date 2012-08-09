@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class EditFormTest extends BaseTestCase {
 	public void testEditForm() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,7 +43,6 @@ public class EditFormTest extends BaseTestCase {
 		selenium.clickAt("link=Web Form Test Page",
 			RuntimeVariables.replace("Web Form Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Suggestions"),
 			selenium.getText("//legend/span"));
 		assertEquals(RuntimeVariables.replace(
@@ -137,7 +135,6 @@ public class EditFormTest extends BaseTestCase {
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -158,7 +155,6 @@ public class EditFormTest extends BaseTestCase {
 		selenium.clickAt("link=Web Form Test Page",
 			RuntimeVariables.replace("Web Form Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Feed Back"),
 			selenium.getText("//legend/span"));
 		assertEquals(RuntimeVariables.replace(

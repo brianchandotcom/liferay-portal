@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewCheckoutDMDocumentTxtTest extends BaseTestCase {
 	public void testViewCheckoutDMDocumentTxt() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,14 +43,12 @@ public class ViewCheckoutDMDocumentTxtTest extends BaseTestCase {
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("DM Document Title (Draft)"),
 			selenium.getText("//div[@data-title='DM Document Title']/a/span[2]"));
 		assertTrue(selenium.isVisible("//img[@alt='Locked']"));
 		selenium.clickAt("//div[@data-title='DM Document Title']/a/span[2]",
 			RuntimeVariables.replace("DM Document Title (Draft)"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"You now have an indefinite lock on this document. No one else can edit this document until you unlock it. This lock will never expire."),
 			selenium.getText(

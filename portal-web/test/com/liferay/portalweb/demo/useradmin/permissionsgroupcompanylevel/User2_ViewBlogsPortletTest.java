@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class User2_ViewBlogsPortletTest extends BaseTestCase {
 	public void testUser2_ViewBlogsPortlet() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,7 +43,6 @@ public class User2_ViewBlogsPortletTest extends BaseTestCase {
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Title"),
 			selenium.getText("xPath=(//div[@class='entry-title']/h2/a)[1]"));
 		assertEquals(RuntimeVariables.replace("Edit"),

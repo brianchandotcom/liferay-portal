@@ -24,7 +24,6 @@ public class ConfigurePortletShowAvailableLocalesTest extends BaseTestCase {
 	public void testConfigurePortletShowAvailableLocales()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,7 +44,6 @@ public class ConfigurePortletShowAvailableLocalesTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content Display Test Page",
 			RuntimeVariables.replace("Web Content Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//strong/a"));
 		Thread.sleep(5000);
@@ -98,7 +96,6 @@ public class ConfigurePortletShowAvailableLocalesTest extends BaseTestCase {
 				"//input[@id='_86_showAvailableLocalesCheckbox']"));
 		selenium.click(RuntimeVariables.replace("//input[@value='Save']"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

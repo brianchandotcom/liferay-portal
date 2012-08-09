@@ -24,7 +24,6 @@ public class AddChildPage1ChildPageDuplicateChildPage2Test extends BaseTestCase 
 	public void testAddChildPage1ChildPageDuplicateChildPage2()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,20 +44,17 @@ public class AddChildPage1ChildPageDuplicateChildPage2Test extends BaseTestCase 
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Wiki Front Page Child Page2 Title"),
 			selenium.getText("xPath=(//div[@class='child-pages']/ul/li/a)[2]"));
 		selenium.clickAt("xPath=(//div[@class='child-pages']/ul/li/a)[2]",
 			RuntimeVariables.replace("Wiki Front Page Child Page2 Title"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Add Child Page"),
 			selenium.getText("//div[6]/div[1]/span[1]/a/span"));
 		selenium.clickAt("//div[6]/div[1]/span[1]/a/span",
 			RuntimeVariables.replace("Add Child Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_36_title']",
 			RuntimeVariables.replace(
 				"Wiki Front Page Child Page1 Child Page Title"));
@@ -171,7 +167,6 @@ public class AddChildPage1ChildPageDuplicateChildPage2Test extends BaseTestCase 
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request failed to complete."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));
@@ -299,7 +294,6 @@ public class AddChildPage1ChildPageDuplicateChildPage2Test extends BaseTestCase 
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request failed to complete."),
 			selenium.getText("xPath=(//div[@class='portlet-msg-error'])[1]"));

@@ -23,11 +23,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddPage3PortletBlogsPageScopeTest extends BaseTestCase {
 	public void testAddPage3PortletBlogsPageScope() throws Exception {
 		selenium.open("/web/blogs-page-scope-community/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Blogs Test Page3",
 			RuntimeVariables.replace("Blogs Test Page3"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
 

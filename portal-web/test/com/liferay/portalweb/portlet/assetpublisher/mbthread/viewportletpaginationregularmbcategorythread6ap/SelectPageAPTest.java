@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SelectPageAPTest extends BaseTestCase {
 	public void testSelectPageAP() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,10 +43,8 @@ public class SelectPageAPTest extends BaseTestCase {
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.select("//select", RuntimeVariables.replace("3"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("First"),
 			selenium.getText("//a[@class='first']"));
 		assertEquals(RuntimeVariables.replace("Previous"),
@@ -57,7 +54,6 @@ public class SelectPageAPTest extends BaseTestCase {
 		assertEquals("3", selenium.getSelectedLabel("//select"));
 		selenium.select("//select", RuntimeVariables.replace("2"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("First"),
 			selenium.getText("//a[@class='first']"));
 		assertEquals(RuntimeVariables.replace("Previous"),
@@ -69,7 +65,6 @@ public class SelectPageAPTest extends BaseTestCase {
 		assertEquals("2", selenium.getSelectedLabel("//select"));
 		selenium.select("//select", RuntimeVariables.replace("1"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementNotPresent("//a[@class='first']"));
 		assertTrue(selenium.isElementNotPresent("//a[@class='previous']"));
 		assertEquals(RuntimeVariables.replace("Next"),

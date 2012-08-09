@@ -23,11 +23,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewPortletAPTest extends BaseTestCase {
 	public void testViewPortletAP() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Asset Publisher Test Page",
 			RuntimeVariables.replace("Asset Publisher Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isVisible("//section"));
 		assertEquals(RuntimeVariables.replace("Asset Publisher"),
 			selenium.getText("//h1[@class='portlet-title']/span[2]"));

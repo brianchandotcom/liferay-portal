@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class RestoreArchivedSetupTest extends BaseTestCase {
 	public void testRestoreArchivedSetup() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,7 +43,6 @@ public class RestoreArchivedSetupTest extends BaseTestCase {
 		selenium.clickAt("link=Polls Display Test Page",
 			RuntimeVariables.replace("Polls Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//strong/a"));
@@ -95,7 +93,6 @@ public class RestoreArchivedSetupTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='archived-setups']/span/a/span",
 			RuntimeVariables.replace("Archive/Restore Setup"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Archived Setup"),
 			selenium.getText("//tr[3]/td[1]"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
@@ -130,12 +127,10 @@ public class RestoreArchivedSetupTest extends BaseTestCase {
 		selenium.clickAt("//a[@id='_86_ocerSearchContainer_1_menu_restore']",
 			RuntimeVariables.replace("Restore"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -156,7 +151,6 @@ public class RestoreArchivedSetupTest extends BaseTestCase {
 		selenium.clickAt("link=Polls Display Test Page",
 			RuntimeVariables.replace("Polls Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementNotPresent("//div/span[1]/span/span/input"));
 		assertTrue(selenium.isElementNotPresent("//div/span[2]/span/span/input"));
 		assertTrue(selenium.isElementNotPresent("//div/span[3]/span/span/input"));

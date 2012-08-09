@@ -24,7 +24,6 @@ public class ViewPaginationTaskMBMessage10ItemsPerPageTest extends BaseTestCase 
 	public void testViewPaginationTaskMBMessage10ItemsPerPage()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,21 +44,16 @@ public class ViewPaginationTaskMBMessage10ItemsPerPageTest extends BaseTestCase 
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Workflow", RuntimeVariables.replace("Workflow"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Submissions",
 			RuntimeVariables.replace("Submissions"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Pending", RuntimeVariables.replace("Pending"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.select("//select[@name='_151_itemsPerPage']",
 			RuntimeVariables.replace("10"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Showing 1 - 10 of 21 results."),
 			selenium.getText("//div[@class='search-results']"));
 		assertEquals(RuntimeVariables.replace(
@@ -83,7 +77,6 @@ public class ViewPaginationTaskMBMessage10ItemsPerPageTest extends BaseTestCase 
 		selenium.select("//select[@name='_151_page']",
 			RuntimeVariables.replace("2"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Showing 11 - 20 of 21 results."),
 			selenium.getText("//div[@class='search-results']"));
 		assertEquals(RuntimeVariables.replace(
@@ -107,7 +100,6 @@ public class ViewPaginationTaskMBMessage10ItemsPerPageTest extends BaseTestCase 
 		selenium.select("//select[@name='_151_page']",
 			RuntimeVariables.replace("3"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Showing 21 - 21 of 21 results."),
 			selenium.getText("//div[@class='search-results']"));
 		assertEquals(RuntimeVariables.replace(
@@ -131,7 +123,6 @@ public class ViewPaginationTaskMBMessage10ItemsPerPageTest extends BaseTestCase 
 		selenium.select("//select[@name='_151_page']",
 			RuntimeVariables.replace("1"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Showing 1 - 10 of 21 results."),
 			selenium.getText("//div[@class='search-results']"));
 		assertEquals(RuntimeVariables.replace(
@@ -154,7 +145,6 @@ public class ViewPaginationTaskMBMessage10ItemsPerPageTest extends BaseTestCase 
 			selenium.getText("//a[@class='last']"));
 		selenium.clickAt("//a[@class='next']", RuntimeVariables.replace("Next"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Showing 11 - 20 of 21 results."),
 			selenium.getText("//div[@class='search-results']"));
 		assertEquals(RuntimeVariables.replace(
@@ -177,7 +167,6 @@ public class ViewPaginationTaskMBMessage10ItemsPerPageTest extends BaseTestCase 
 			selenium.getText("//a[@class='last']"));
 		selenium.clickAt("//a[@class='next']", RuntimeVariables.replace("Next"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Showing 21 - 21 of 21 results."),
 			selenium.getText("//div[@class='search-results']"));
 		assertEquals(RuntimeVariables.replace(
@@ -201,7 +190,6 @@ public class ViewPaginationTaskMBMessage10ItemsPerPageTest extends BaseTestCase 
 		selenium.clickAt("//a[@class='previous']",
 			RuntimeVariables.replace("Previous"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Showing 11 - 20 of 21 results."),
 			selenium.getText("//div[@class='search-results']"));
 		assertEquals(RuntimeVariables.replace(
@@ -225,7 +213,6 @@ public class ViewPaginationTaskMBMessage10ItemsPerPageTest extends BaseTestCase 
 		selenium.clickAt("//a[@class='previous']",
 			RuntimeVariables.replace("Previous"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Showing 1 - 10 of 21 results."),
 			selenium.getText("//div[@class='search-results']"));
 		assertEquals(RuntimeVariables.replace(
@@ -248,7 +235,6 @@ public class ViewPaginationTaskMBMessage10ItemsPerPageTest extends BaseTestCase 
 			selenium.getText("//a[@class='last']"));
 		selenium.clickAt("//a[@class='last']", RuntimeVariables.replace("Last"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Showing 21 - 21 of 21 results."),
 			selenium.getText("//div[@class='search-results']"));
 		assertEquals(RuntimeVariables.replace(
@@ -272,7 +258,6 @@ public class ViewPaginationTaskMBMessage10ItemsPerPageTest extends BaseTestCase 
 		selenium.clickAt("//a[@class='first']",
 			RuntimeVariables.replace("First"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Showing 1 - 10 of 21 results."),
 			selenium.getText("//div[@class='search-results']"));
 		assertEquals(RuntimeVariables.replace(

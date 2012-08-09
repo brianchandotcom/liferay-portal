@@ -23,17 +23,14 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class CancelAddFrontPageChildPageTest extends BaseTestCase {
 	public void testCancelAddFrontPageChildPage() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Add Child Page"),
 			selenium.getText("//div[1]/span[1]/a/span"));
 		selenium.clickAt("//div[1]/span[1]/a/span",
 			RuntimeVariables.replace("Add Child Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_36_title']",
 			RuntimeVariables.replace("Wiki Front Page Child Page Title"));
 
@@ -142,19 +139,15 @@ public class CancelAddFrontPageChildPageTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Cancel']",
 			RuntimeVariables.replace("Cancel"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertFalse(selenium.isTextPresent(
 				"Your request completed successfully."));
 		assertFalse(selenium.isTextPresent("Wiki Front Page Child Page Title"));
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=All Pages", RuntimeVariables.replace("All Pages"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertFalse(selenium.isTextPresent("Wiki Front Page Child Page Test"));
 	}
 }

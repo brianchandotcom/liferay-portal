@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class User_AssertCannotAddContentTest extends BaseTestCase {
 	public void testUser_AssertCannotAddContent() throws Exception {
 		selenium.open("/web/guest/home");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,7 +42,6 @@ public class User_AssertCannotAddContentTest extends BaseTestCase {
 
 		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementNotPresent("//a[@id='addPage']"));
 		assertTrue(selenium.isElementNotPresent(
 				"//li[contains(@class,'manage-page')]/a"));

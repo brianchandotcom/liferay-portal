@@ -23,15 +23,12 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SelectWebContentTest extends BaseTestCase {
 	public void testSelectWebContent() throws Exception {
 		selenium.open("/web/staging-organization-wcd/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Page Staging Organization Web Content Display",
 			RuntimeVariables.replace(
 				"Page Staging Organization Web Content Display"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Staging", RuntimeVariables.replace("Staging"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//img[@alt='Select Web Content']",
 			RuntimeVariables.replace("Select Web Content"));
 
@@ -83,7 +80,6 @@ public class SelectWebContentTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

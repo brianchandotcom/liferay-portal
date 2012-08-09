@@ -24,7 +24,6 @@ public class EditWebContentCompletedDraftActionsTest extends BaseTestCase {
 	public void testEditWebContentCompletedDraftActions()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,11 +44,9 @@ public class EditWebContentCompletedDraftActionsTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Web Content Name"),
 			selenium.getText("//td[3]/a"));
 		assertEquals(RuntimeVariables.replace("Approved"),
@@ -86,7 +83,6 @@ public class EditWebContentCompletedDraftActionsTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("1.0"),
 			selenium.getText("//span[2]/strong"));
 		assertEquals(RuntimeVariables.replace("Approved"),
@@ -198,7 +194,6 @@ public class EditWebContentCompletedDraftActionsTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save as Draft']",
 			RuntimeVariables.replace("Save as Draft"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
@@ -207,7 +202,6 @@ public class EditWebContentCompletedDraftActionsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Draft"),
 			selenium.getText("//span[3]/strong"));
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -228,11 +222,9 @@ public class EditWebContentCompletedDraftActionsTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Web Content Name Edited"),
 			selenium.getText("//td[3]/a"));
 		assertEquals(RuntimeVariables.replace("Draft"),

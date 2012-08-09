@@ -28,7 +28,6 @@ public class AssignUser1UserGroup1Test extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -49,17 +48,14 @@ public class AssignUser1UserGroup1Test extends BaseTestCase {
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("link=User Groups",
 					RuntimeVariables.replace("User Groups"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.type("//input[@id='_127_keywords']",
 					RuntimeVariables.replace("User Group 1"));
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("User Group 1"),
 					selenium.getText("//td[2]/a"));
 
@@ -108,13 +104,11 @@ public class AssignUser1UserGroup1Test extends BaseTestCase {
 				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[6]/a",
 					RuntimeVariables.replace("Assign Members"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("Available"),
 					selenium.getText("link=Available"));
 				selenium.clickAt("link=Available",
 					RuntimeVariables.replace("Available"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				boolean advancedVisible = selenium.isElementPresent(
 						"link=Advanced \u00bb");
@@ -134,7 +128,6 @@ public class AssignUser1UserGroup1Test extends BaseTestCase {
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Submit"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("selenium01"),
 					selenium.getText("//tr[3]/td[3]"));
 				selenium.clickAt("//input[@name='_127_rowIds']",
@@ -142,7 +135,6 @@ public class AssignUser1UserGroup1Test extends BaseTestCase {
 				selenium.clickAt("//input[@value='Update Associations']",
 					RuntimeVariables.replace("Update Associations"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
@@ -151,7 +143,6 @@ public class AssignUser1UserGroup1Test extends BaseTestCase {
 				selenium.clickAt("link=Current",
 					RuntimeVariables.replace("Current"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("selenium01"),
 					selenium.getText("//tr[3]/td[3]"));
 

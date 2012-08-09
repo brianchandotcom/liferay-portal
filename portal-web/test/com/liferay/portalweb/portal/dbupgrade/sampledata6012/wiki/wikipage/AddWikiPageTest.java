@@ -23,11 +23,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddWikiPageTest extends BaseTestCase {
 	public void testAddWikiPage() throws Exception {
 		selenium.open("/web/wiki-wiki-page-community/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Wiki Page Test",
 			RuntimeVariables.replace("Wiki Page Test"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"This page is empty. Edit it to add some text."),
 			selenium.getText("//div[@class='portlet-msg-info']/a"));
@@ -35,7 +33,6 @@ public class AddWikiPageTest extends BaseTestCase {
 			RuntimeVariables.replace(
 				"This page is empty. Edit it to add some text."));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -156,7 +153,6 @@ public class AddWikiPageTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

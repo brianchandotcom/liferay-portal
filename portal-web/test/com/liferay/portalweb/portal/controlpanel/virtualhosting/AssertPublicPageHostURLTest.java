@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AssertPublicPageHostURLTest extends BaseTestCase {
 	public void testAssertPublicPageHostURL() throws Exception {
 		selenium.open("http://www.able.com:8080/");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("http://www.able.com:8080/"),
 			selenium.getLocation());
 		assertEquals(RuntimeVariables.replace("Virtual Hosting Community"),
@@ -32,12 +31,10 @@ public class AssertPublicPageHostURLTest extends BaseTestCase {
 		selenium.clickAt("link=Public Page",
 			RuntimeVariables.replace("Public Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		Thread.sleep(5000);
 		selenium.clickAt("link=Public Page",
 			RuntimeVariables.replace("Public Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"http://www.able.com:8080/public-page"), selenium.getLocation());
 	}

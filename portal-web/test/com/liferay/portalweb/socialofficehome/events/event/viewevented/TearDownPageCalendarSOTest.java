@@ -28,7 +28,6 @@ public class TearDownPageCalendarSOTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/user/joebloggs/so/dashboard/");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("//nav[@id='navigation']",
 					RuntimeVariables.replace("Navigation"));
 

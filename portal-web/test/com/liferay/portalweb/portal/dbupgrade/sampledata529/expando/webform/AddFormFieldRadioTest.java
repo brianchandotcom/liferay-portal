@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddFormFieldRadioTest extends BaseTestCase {
 	public void testAddFormFieldRadio() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,26 +42,20 @@ public class AddFormFieldRadioTest extends BaseTestCase {
 
 		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Communities", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("_134_name",
 			RuntimeVariables.replace("Expando Web Form Community"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//tr[@class='portlet-section-body results-row last']/td[1]/a",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Web Form Page", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Configuration", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Form Fields", RuntimeVariables.replace(""));
 
 		for (int second = 0;; second++) {
@@ -123,7 +116,6 @@ public class AddFormFieldRadioTest extends BaseTestCase {
 			RuntimeVariables.replace("Male,Female"));
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isTextPresent(
 				"You have successfully updated the setup."));
 
@@ -145,7 +137,6 @@ public class AddFormFieldRadioTest extends BaseTestCase {
 
 		selenium.clickAt("link=Web Form Page", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isTextPresent("Gender"));
 		assertTrue(selenium.isElementPresent("//input[@value='Male']"));
 		assertTrue(selenium.isElementPresent("//input[@value='Female']"));

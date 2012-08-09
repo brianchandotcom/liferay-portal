@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddPageVimeoTest extends BaseTestCase {
 	public void testAddPageVimeo() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//nav[@id='navigation']",
 			RuntimeVariables.replace("Navigation"));
 
@@ -86,6 +85,5 @@ public class AddPageVimeoTest extends BaseTestCase {
 		selenium.clickAt("link=Vimeo Test Page",
 			RuntimeVariables.replace("Vimeo Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 	}
 }

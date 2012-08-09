@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewMicroblogsMentionsTest extends BaseTestCase {
 	public void testViewMicroblogsMentions() throws Exception {
 		selenium.open("/user/joebloggs/so/dashboard/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -73,7 +72,6 @@ public class ViewMicroblogsMentionsTest extends BaseTestCase {
 		selenium.clickAt("//span[@class='dismiss-notifications']/a",
 			RuntimeVariables.replace("Mark as Read"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -118,7 +116,6 @@ public class ViewMicroblogsMentionsTest extends BaseTestCase {
 		selenium.clickAt("//nav/ul/li[contains(.,'Microblogs')]/a/span",
 			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Mentions"),
 			selenium.getText("link=Mentions"));
 		selenium.clickAt("link=Mentions", RuntimeVariables.replace("Mentions"));

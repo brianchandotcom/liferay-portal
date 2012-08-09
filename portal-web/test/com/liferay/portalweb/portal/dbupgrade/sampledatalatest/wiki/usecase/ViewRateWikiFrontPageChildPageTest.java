@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewRateWikiFrontPageChildPageTest extends BaseTestCase {
 	public void testViewRateWikiFrontPageChildPage() throws Exception {
 		selenium.open("/web/wiki-use-case-community/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,13 +43,11 @@ public class ViewRateWikiFrontPageChildPageTest extends BaseTestCase {
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Wiki FrontPage ChildPage Title"),
 			selenium.getText("//div[@class='child-pages']/ul/li/a"));
 		selenium.clickAt("//div[@class='child-pages']/ul/li/a",
 			RuntimeVariables.replace("Wiki FrontPage ChildPage Title"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Average (1 Vote)"),
 			selenium.getText(
 				"xPath=(//div[@class='aui-rating-label-element'])[2]"));

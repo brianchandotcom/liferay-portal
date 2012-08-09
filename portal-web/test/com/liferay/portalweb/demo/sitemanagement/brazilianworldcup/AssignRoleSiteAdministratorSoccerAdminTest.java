@@ -24,7 +24,6 @@ public class AssignRoleSiteAdministratorSoccerAdminTest extends BaseTestCase {
 	public void testAssignRoleSiteAdministratorSoccerAdmin()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,26 +44,21 @@ public class AssignRoleSiteAdministratorSoccerAdminTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("//input[@name='_134_name']",
 			RuntimeVariables.replace("World Cup"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("World Cup - Brazil 2014"),
 			selenium.getText("//td/a"));
 		selenium.clickAt("//td/a",
 			RuntimeVariables.replace("World Cup - Brazil 2014"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Site Memberships",
 			RuntimeVariables.replace("Site Memberships"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Add Site Roles to"),
 			selenium.getText(
 				"//span[contains(.,'Add Site Roles to')]/ul/li/strong/a"));
@@ -94,7 +88,6 @@ public class AssignRoleSiteAdministratorSoccerAdminTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Users')]/a",
 			RuntimeVariables.replace("Users"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isVisible("//input[@name='_174_keywords']"));
 		selenium.type("//input[@name='_174_keywords']",
 			RuntimeVariables.replace("Administrator"));
@@ -103,19 +96,16 @@ public class AssignRoleSiteAdministratorSoccerAdminTest extends BaseTestCase {
 		selenium.clickAt("//td/a",
 			RuntimeVariables.replace("Site Administrator"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Available"),
 			selenium.getText("link=Available"));
 		selenium.clickAt("link=Available", RuntimeVariables.replace("Available"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isVisible("//input[@name='_174_keywords']"));
 		selenium.type("//input[@name='_174_keywords']",
 			RuntimeVariables.replace("socceradmin"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Bruno Admin"),
 			selenium.getText("//tr[3]/td[2]"));
 		assertFalse(selenium.isChecked("//td/input"));
@@ -125,7 +115,6 @@ public class AssignRoleSiteAdministratorSoccerAdminTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Update Associations']",
 			RuntimeVariables.replace("Update Associations"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

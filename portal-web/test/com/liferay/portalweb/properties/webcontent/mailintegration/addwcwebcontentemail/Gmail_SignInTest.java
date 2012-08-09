@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class Gmail_SignInTest extends BaseTestCase {
 	public void testGmail_SignIn() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_58_login']",
 			RuntimeVariables.replace("liferay.qa.testing.trunk@gmail.com"));
 		selenium.type("//input[@id='_58_password']",
@@ -35,6 +34,5 @@ public class Gmail_SignInTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Sign In']",
 			RuntimeVariables.replace("Sign In"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 	}
 }

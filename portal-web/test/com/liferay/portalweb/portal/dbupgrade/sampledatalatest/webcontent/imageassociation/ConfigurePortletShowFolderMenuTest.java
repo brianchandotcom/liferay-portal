@@ -23,11 +23,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ConfigurePortletShowFolderMenuTest extends BaseTestCase {
 	public void testConfigurePortletShowFolderMenu() throws Exception {
 		selenium.open("/web/web-content-image-association-community/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Image Gallery Page",
 			RuntimeVariables.replace("Image Gallery Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -101,7 +99,6 @@ public class ConfigurePortletShowFolderMenuTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

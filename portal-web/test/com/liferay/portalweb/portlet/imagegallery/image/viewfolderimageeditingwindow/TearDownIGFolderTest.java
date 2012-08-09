@@ -28,7 +28,6 @@ public class TearDownIGFolderTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -49,7 +48,6 @@ public class TearDownIGFolderTest extends BaseTestCase {
 				selenium.clickAt("link=Image Gallery Test Page",
 					RuntimeVariables.replace("Image Gallery Test Page"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				boolean igFolder1Present = selenium.isElementPresent(
 						"//div[2]/a/span");
@@ -63,7 +61,6 @@ public class TearDownIGFolderTest extends BaseTestCase {
 				selenium.clickAt("//div[2]/a/span",
 					RuntimeVariables.replace("MG Folder1 Name"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
 						"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a"));
@@ -101,7 +98,6 @@ public class TearDownIGFolderTest extends BaseTestCase {
 				selenium.clickAt("//div[2]/a/span",
 					RuntimeVariables.replace("MG Folder2 Name"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
 						"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a"));
@@ -139,7 +135,6 @@ public class TearDownIGFolderTest extends BaseTestCase {
 				selenium.clickAt("//div[2]/a/span",
 					RuntimeVariables.replace("MG Folder3 Name"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
 						"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a"));
@@ -177,7 +172,6 @@ public class TearDownIGFolderTest extends BaseTestCase {
 				selenium.clickAt("//div[2]/a/span",
 					RuntimeVariables.replace("MG Folder4 Name"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
 						"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a"));
@@ -215,7 +209,6 @@ public class TearDownIGFolderTest extends BaseTestCase {
 				selenium.clickAt("//div[2]/a/span",
 					RuntimeVariables.replace("MG Folder5 Name"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("Delete"),
 					selenium.getText(
 						"//div[contains(@class,'lfr-component lfr-menu-list')]/ul/li[4]/a"));

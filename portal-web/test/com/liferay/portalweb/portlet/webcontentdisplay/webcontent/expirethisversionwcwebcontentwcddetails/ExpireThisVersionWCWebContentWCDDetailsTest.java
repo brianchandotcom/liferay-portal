@@ -24,24 +24,20 @@ public class ExpireThisVersionWCWebContentWCDDetailsTest extends BaseTestCase {
 	public void testExpireThisVersionWCWebContentWCDDetails()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Web Content Display Test Page",
 			RuntimeVariables.replace("Web Content Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("WC WebContent Content Edit"),
 			selenium.getText("//div[@class='journal-content-article']/p"));
 		selenium.clickAt("//img[@title='Edit Web Content']",
 			RuntimeVariables.replace("Edit Web Content"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Version: 1.1"),
 			selenium.getText("//span[@class='workflow-version']"));
 		assertEquals(RuntimeVariables.replace("View History"),
 			selenium.getText("//button[2]"));
 		selenium.clickAt("//button[2]", RuntimeVariables.replace("View History"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(
 				"xPath=(//span[@title='Actions']/ul/li/strong/a/span)[2]"));
@@ -71,7 +67,6 @@ public class ExpireThisVersionWCWebContentWCDDetailsTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Expire')]/a",
 			RuntimeVariables.replace("Expire"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
 			selenium.getText("//tr[3]/td[3]"));
 		assertEquals(RuntimeVariables.replace("WC WebContent Title Edit"),
@@ -81,11 +76,9 @@ public class ExpireThisVersionWCWebContentWCDDetailsTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Expired"),
 			selenium.getText("//tr[4]/td[5]"));
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Web Content Display Test Page",
 			RuntimeVariables.replace("Web Content Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("WC WebContent Content"),
 			selenium.getText("//div[@class='journal-content-article']/p"));
 	}

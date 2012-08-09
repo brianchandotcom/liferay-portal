@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddPageBreadcrumbTest extends BaseTestCase {
 	public void testAddPageBreadcrumb() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
 
@@ -108,6 +107,5 @@ public class AddPageBreadcrumbTest extends BaseTestCase {
 		selenium.clickAt("link=Breadcrumb Test Page",
 			RuntimeVariables.replace("Breadcrumb Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 	}
 }

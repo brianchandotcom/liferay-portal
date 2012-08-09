@@ -24,7 +24,6 @@ public class AddDLDocumentSiteStagingLocalLiveNoDLTest extends BaseTestCase {
 	public void testAddDLDocumentSiteStagingLocalLiveNoDL()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,11 +43,9 @@ public class AddDLDocumentSiteStagingLocalLiveNoDLTest extends BaseTestCase {
 
 		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Document Library Test Page",
 			RuntimeVariables.replace("Document Library Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent(
 				"//body[contains(@class,'live-view')]"));
 		assertTrue(selenium.isElementNotPresent(
@@ -56,7 +53,6 @@ public class AddDLDocumentSiteStagingLocalLiveNoDLTest extends BaseTestCase {
 		assertTrue(selenium.isPartialText("//li[2]/span/a", "Staging"));
 		selenium.clickAt("//li[2]/span/a", RuntimeVariables.replace("Staging"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"The data of this portlet is not staged. Any data changes are immediately available to the Local Live site. The portlet's own workflow is still honored. Portlet setup is still managed from staging."),
 			selenium.getText("//div[@class='portlet-msg-alert']"));
@@ -89,7 +85,6 @@ public class AddDLDocumentSiteStagingLocalLiveNoDLTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"The data of this portlet is not staged. Any data changes are immediately available to the Local Live site. The portlet's own workflow is still honored. Portlet setup is still managed from staging."),
 			selenium.getText("//div[@class='portlet-msg-alert']"));
@@ -102,7 +97,6 @@ public class AddDLDocumentSiteStagingLocalLiveNoDLTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -131,7 +125,6 @@ public class AddDLDocumentSiteStagingLocalLiveNoDLTest extends BaseTestCase {
 		selenium.clickAt("//a[@class='document-link']",
 			RuntimeVariables.replace("DL Document Title"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("DL Document Title"),
 			selenium.getText("//h2[@class='document-title']"));
 		assertEquals(RuntimeVariables.replace("DL Document Description"),

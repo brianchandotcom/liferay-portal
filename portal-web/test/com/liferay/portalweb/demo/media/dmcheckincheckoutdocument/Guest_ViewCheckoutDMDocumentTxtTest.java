@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class Guest_ViewCheckoutDMDocumentTxtTest extends BaseTestCase {
 	public void testGuest_ViewCheckoutDMDocumentTxt() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,14 +43,12 @@ public class Guest_ViewCheckoutDMDocumentTxtTest extends BaseTestCase {
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("DM Document Title"),
 			selenium.getText("//div[@data-title='DM Document Title']/a/span[2]"));
 		assertTrue(selenium.isVisible("//img[@alt='Locked']"));
 		selenium.clickAt("//div[@data-title='DM Document Title']/a/span[2]",
 			RuntimeVariables.replace("DM Document Title"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Download"),
 			selenium.getText("//button[.='Download']"));
 		assertEquals(RuntimeVariables.replace("Version 1.0"),

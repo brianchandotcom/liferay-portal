@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewPageSitePagesVariationTest extends BaseTestCase {
 	public void testViewPageSitePagesVariation() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,7 +42,6 @@ public class ViewPageSitePagesVariationTest extends BaseTestCase {
 
 		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent(
 				"//body[contains(@class,'live-view')]"));
 		assertTrue(selenium.isElementNotPresent(
@@ -51,7 +49,6 @@ public class ViewPageSitePagesVariationTest extends BaseTestCase {
 		assertTrue(selenium.isPartialText("//li[2]/span/a", "Staging"));
 		selenium.clickAt("//li[2]/span/a", RuntimeVariables.replace("Staging"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Site Pages Variation Name"),
 			selenium.getText("//li[2]/span/span/span[1]"));
 		assertTrue(selenium.isVisible("link=Test Page"));
@@ -60,23 +57,19 @@ public class ViewPageSitePagesVariationTest extends BaseTestCase {
 		selenium.clickAt("//li[1]/span/span/a",
 			RuntimeVariables.replace("Main Variation"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementNotPresent("link=Test Page"));
 		assertEquals(RuntimeVariables.replace("Site Pages Variation Name"),
 			selenium.getText("//li[2]/span/span/a"));
 		selenium.clickAt("//li[2]/span/span/a",
 			RuntimeVariables.replace("Site Pages Variation Name"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Test Page", RuntimeVariables.replace("Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Main Variation"),
 			selenium.getText("//li[1]/span/span/a"));
 		selenium.clickAt("//li[1]/span/span/a",
 			RuntimeVariables.replace("Main Variation"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isPartialText(
 				"//div[@id='_170_layoutRevisionDetails']",
 				"The page Test Page is not enabled in Main Variation, but is available for other pages variations."));

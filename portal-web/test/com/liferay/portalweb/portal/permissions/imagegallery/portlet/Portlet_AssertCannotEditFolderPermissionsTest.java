@@ -24,7 +24,6 @@ public class Portlet_AssertCannotEditFolderPermissionsTest extends BaseTestCase 
 	public void testPortlet_AssertCannotEditFolderPermissions()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -46,13 +45,11 @@ public class Portlet_AssertCannotEditFolderPermissionsTest extends BaseTestCase 
 		selenium.clickAt("link=Media Gallery Permissions Test Page",
 			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Media Gallery Temporary Folder"),
 			selenium.getText("//a[@title='Media Gallery Temporary Folder - ']"));
 		selenium.clickAt("//a[@title='Media Gallery Temporary Folder - ']",
 			RuntimeVariables.replace("Media Gallery Temporary Folder"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementNotPresent("link=Permissions"));
 	}
 }

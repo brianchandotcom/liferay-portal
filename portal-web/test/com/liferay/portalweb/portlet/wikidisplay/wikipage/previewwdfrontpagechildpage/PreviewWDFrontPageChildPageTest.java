@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class PreviewWDFrontPageChildPageTest extends BaseTestCase {
 	public void testPreviewWDFrontPageChildPage() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,13 +43,11 @@ public class PreviewWDFrontPageChildPageTest extends BaseTestCase {
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Add Child Page"),
 			selenium.getText("//div[1]/span[1]/a/span"));
 		selenium.clickAt("//div[1]/span[1]/a/span",
 			RuntimeVariables.replace("Add Child Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("//input[contains(@id,'_title')]",
 			RuntimeVariables.replace("Wiki FrontPage ChildPage Title"));
 
@@ -158,7 +155,6 @@ public class PreviewWDFrontPageChildPageTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Preview']",
 			RuntimeVariables.replace("Preview"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -186,7 +182,6 @@ public class PreviewWDFrontPageChildPageTest extends BaseTestCase {
 			selenium.getText(
 				"//div[@class='preview']/div[@class='wiki-body']/p"));
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -207,7 +202,6 @@ public class PreviewWDFrontPageChildPageTest extends BaseTestCase {
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertFalse(selenium.isTextPresent("Wiki FrontPage ChildPage Title"));
 		assertFalse(selenium.isTextPresent("Wiki FrontPage ChildPage Content"));
 	}

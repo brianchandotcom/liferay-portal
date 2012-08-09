@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewKBAArticleSectionsPortletsTest extends BaseTestCase {
 	public void testViewKBAArticleSectionsPortlets() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,7 +43,6 @@ public class ViewKBAArticleSectionsPortletsTest extends BaseTestCase {
 		selenium.clickAt("link=Knowledge Base Display Test Page",
 			RuntimeVariables.replace("Knowledge Base Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("KB Admin Article"),
 			selenium.getText("//tr[3]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
@@ -57,7 +55,6 @@ public class ViewKBAArticleSectionsPortletsTest extends BaseTestCase {
 		selenium.clickAt("//tr[3]/td[2]/a",
 			RuntimeVariables.replace("KB Admin Article"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("KB Admin Article"),
 			selenium.getText("//div[@class='kb-title']"));
 		assertEquals(RuntimeVariables.replace(

@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddEventTypeConcertTest extends BaseTestCase {
 	public void testAddEventTypeConcert() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,11 +42,9 @@ public class AddEventTypeConcertTest extends BaseTestCase {
 
 		selenium.clickAt("link=Calendar Test Page", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//input[@value='Add Event']",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("_8_title",
 			RuntimeVariables.replace("Caedmon's Call Concert."));
 		selenium.type("_8_description",
@@ -58,7 +55,6 @@ public class AddEventTypeConcertTest extends BaseTestCase {
 		selenium.select("_8_type", RuntimeVariables.replace("label=Concert"));
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isTextPresent(
 				"Your request completed successfully."));
 		assertEquals(RuntimeVariables.replace("Caedmon's Call Concert."),

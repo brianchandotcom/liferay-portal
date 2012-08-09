@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewNoGenerateCustomRolesTest extends BaseTestCase {
 	public void testViewNoGenerateCustomRoles() throws Exception {
 		selenium.open("/web/guest/home");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,15 +43,12 @@ public class ViewNoGenerateCustomRolesTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Server Administration",
 			RuntimeVariables.replace("Server Administration"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Data Migration",
 			RuntimeVariables.replace("Data Migration"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertFalse(selenium.isTextPresent(
 				"Convert legacy permission algorithm."));
 		assertTrue(selenium.isElementNotPresent(

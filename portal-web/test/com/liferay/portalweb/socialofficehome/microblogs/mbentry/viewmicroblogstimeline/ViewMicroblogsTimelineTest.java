@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewMicroblogsTimelineTest extends BaseTestCase {
 	public void testViewMicroblogsTimeline() throws Exception {
 		selenium.open("/user/joebloggs/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,7 +44,6 @@ public class ViewMicroblogsTimelineTest extends BaseTestCase {
 		selenium.clickAt("//nav/ul/li[contains(.,'Microblogs')]/a/span",
 			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Timeline"),
 			selenium.getText("link=Timeline"));
 		selenium.clickAt("link=Timeline", RuntimeVariables.replace("Timeline"));

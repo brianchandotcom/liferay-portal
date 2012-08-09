@@ -28,7 +28,6 @@ public class SearchOrganizationTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -49,11 +48,9 @@ public class SearchOrganizationTest extends BaseTestCase {
 				selenium.clickAt("link=Directory Test Page",
 					RuntimeVariables.replace("Directory Test Page"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("link=Organizations",
 					RuntimeVariables.replace("Organizations"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				boolean basicVisible = selenium.isVisible("link=\u00ab Basic");
 
@@ -72,7 +69,6 @@ public class SearchOrganizationTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.type("//input[@name='_11_keywords']",
 					RuntimeVariables.replace(""));
 				assertTrue(selenium.isElementPresent("link=Test Organization"));
@@ -81,7 +77,6 @@ public class SearchOrganizationTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.type("//input[@name='_11_keywords']",
 					RuntimeVariables.replace(""));
 				assertFalse(selenium.isTextPresent("Test Organization"));

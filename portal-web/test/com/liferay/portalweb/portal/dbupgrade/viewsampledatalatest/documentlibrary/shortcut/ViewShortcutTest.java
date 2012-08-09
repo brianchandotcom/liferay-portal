@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewShortcutTest extends BaseTestCase {
 	public void testViewShortcut() throws Exception {
 		selenium.open("/web/document-library-shortcut-community/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,7 +43,6 @@ public class ViewShortcutTest extends BaseTestCase {
 		selenium.clickAt("link=Document Library Page",
 			RuntimeVariables.replace("Document Library Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div[2]/a/span[2]",
 			RuntimeVariables.replace("Test2 Folder2"));
 		Thread.sleep(3000);
@@ -53,7 +51,6 @@ public class ViewShortcutTest extends BaseTestCase {
 		selenium.clickAt("//div/a/span[2]",
 			RuntimeVariables.replace("Test1 Document1.txt"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("This is test1 document1."),
 			selenium.getText("//div[2]/div[1]/span[4]"));
 	}

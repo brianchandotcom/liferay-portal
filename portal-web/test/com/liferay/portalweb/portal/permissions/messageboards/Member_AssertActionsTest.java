@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class Member_AssertActionsTest extends BaseTestCase {
 	public void testMember_AssertActions() throws Exception {
 		selenium.open("/web/site-name/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,7 +43,6 @@ public class Member_AssertActionsTest extends BaseTestCase {
 		selenium.clickAt("link=Message Boards Permissions Page",
 			RuntimeVariables.replace("Message Boards Permissions Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent("//input[@value='Search']"));
 		assertEquals(RuntimeVariables.replace("RSS"),
 			selenium.getText("//div[2]/div/span/a/span[1]"));
@@ -63,7 +61,6 @@ public class Member_AssertActionsTest extends BaseTestCase {
 			selenium.getText("//a/strong"));
 		selenium.clickAt("//a/strong", RuntimeVariables.replace("Category Name"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Thread Subject"),
 			selenium.getText("//tr[3]/td/a"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
@@ -75,7 +72,6 @@ public class Member_AssertActionsTest extends BaseTestCase {
 		selenium.clickAt("//tr[3]/td/a",
 			RuntimeVariables.replace("Thread Subject"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Reply"),
 			selenium.getText(
 				"//ul[@class='edit-controls lfr-component']/li[2]/span/a"));

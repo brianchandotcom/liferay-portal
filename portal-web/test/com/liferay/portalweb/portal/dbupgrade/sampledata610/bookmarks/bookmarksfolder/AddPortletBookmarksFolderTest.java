@@ -23,11 +23,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddPortletBookmarksFolderTest extends BaseTestCase {
 	public void testAddPortletBookmarksFolder() throws Exception {
 		selenium.open("/web/bookmarks-folder-community/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Bookmarks Folder Page",
 			RuntimeVariables.replace("Bookmarks Folder Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
 

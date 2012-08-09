@@ -24,7 +24,6 @@ public class WCA_ViewApproveTaskMainVariationActionsSiteStagingTest
 	public void testWCA_ViewApproveTaskMainVariationActionsSiteStaging()
 		throws Exception {
 		selenium.open("/web/community-site-test/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

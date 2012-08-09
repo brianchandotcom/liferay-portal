@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class UpdateCartCategoryItemQuantityTest extends BaseTestCase {
 	public void testUpdateCartCategoryItemQuantity() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,10 +43,8 @@ public class UpdateCartCategoryItemQuantityTest extends BaseTestCase {
 		selenium.clickAt("link=Shopping Test Page",
 			RuntimeVariables.replace("Shopping Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Cart", RuntimeVariables.replace("Cart"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Shopping Category Item Name\nShopping Category Item Description\n\nAvailability: In Stock\n\n\nPrice for 1 to 1 Items:$9.99"),
 			selenium.getText("//td[2]/a"));
@@ -55,7 +52,6 @@ public class UpdateCartCategoryItemQuantityTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Update Cart']",
 			RuntimeVariables.replace("Update Cart"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
@@ -65,7 +61,6 @@ public class UpdateCartCategoryItemQuantityTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Update Cart']",
 			RuntimeVariables.replace("Update Cart"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
@@ -75,7 +70,6 @@ public class UpdateCartCategoryItemQuantityTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Update Cart']",
 			RuntimeVariables.replace("Update Cart"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

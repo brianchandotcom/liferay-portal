@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddPageActivitiesTest extends BaseTestCase {
 	public void testAddPageActivities() throws Exception {
 		selenium.open("/group/joebloggs/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
 
@@ -108,6 +107,5 @@ public class AddPageActivitiesTest extends BaseTestCase {
 		selenium.clickAt("link=Activities Test Page",
 			RuntimeVariables.replace("Activities Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 	}
 }

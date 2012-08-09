@@ -24,7 +24,6 @@ public class ViewScopeDefaultWCWebContentListDefaultCPTest extends BaseTestCase 
 	public void testViewScopeDefaultWCWebContentListDefaultCP()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,11 +44,9 @@ public class ViewScopeDefaultWCWebContentListDefaultCPTest extends BaseTestCase 
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isPartialText("//div/span/ul/li/strong/a",
 				"Scope: Default"));
 		selenium.clickAt("//div/span/ul/li/strong/a",
@@ -58,7 +55,6 @@ public class ViewScopeDefaultWCWebContentListDefaultCPTest extends BaseTestCase 
 			selenium.getText("//a"));
 		selenium.clickAt("//a", RuntimeVariables.replace("Default"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isPartialText("//div/span/ul/li/strong/a",
 				"Scope: Default"));
 		assertEquals(RuntimeVariables.replace("WC WebContent Title"),

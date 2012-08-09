@@ -23,11 +23,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewWCWebContent2DisplayPageAP2Test extends BaseTestCase {
 	public void testViewWCWebContent2DisplayPageAP2() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Asset Publisher Test Page2",
 			RuntimeVariables.replace("Asset Publisher Test Page2"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("WC WebContent2 Title"),
 			selenium.getText("xPath=(//h3[@class='asset-title']/a)[1]"));
 		assertEquals(RuntimeVariables.replace("WC WebContent2 Content"),
@@ -39,23 +37,19 @@ public class ViewWCWebContent2DisplayPageAP2Test extends BaseTestCase {
 		selenium.clickAt("xPath=(//h3[@class='asset-title']/a)[1]",
 			RuntimeVariables.replace("WC WebContent2 Title"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("WC WebContent2 Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("WC WebContent2 Content"),
 			selenium.getText("//div[@class='journal-content-article']/p"));
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Asset Publisher Test Page2",
 			RuntimeVariables.replace("Asset Publisher Test Page2"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("WC WebContent1 Title"),
 			selenium.getText("xPath=(//h3[@class='asset-title']/a)[2]"));
 		selenium.clickAt("xPath=(//h3[@class='asset-title']/a)[2]",
 			RuntimeVariables.replace("WC WebContent1 Title"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("WC WebContent1 Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("WC WebContent1 Content"),

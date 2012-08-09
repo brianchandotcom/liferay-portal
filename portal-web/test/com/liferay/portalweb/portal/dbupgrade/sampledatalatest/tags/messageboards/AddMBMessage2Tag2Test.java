@@ -23,18 +23,14 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddMBMessage2Tag2Test extends BaseTestCase {
 	public void testAddMBMessage2Tag2() throws Exception {
 		selenium.open("/web/tags-message-board-community/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Message Boards Page",
 			RuntimeVariables.replace("Message Boards Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//a/strong", RuntimeVariables.replace("Category Test"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//input[@value='Post New Thread']",
 			RuntimeVariables.replace("Post New Thread"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_19_subject']",
 			RuntimeVariables.replace("Message2 Tag2 Test2"));
 
@@ -159,7 +155,6 @@ public class AddMBMessage2Tag2Test extends BaseTestCase {
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Message2 Tag2 Test2"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("selenium2"),

@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SOUs_EditWebsiteProfileTest extends BaseTestCase {
 	public void testSOUs_EditWebsiteProfile() throws Exception {
 		selenium.open("/web/socialoffice01/so/profile");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

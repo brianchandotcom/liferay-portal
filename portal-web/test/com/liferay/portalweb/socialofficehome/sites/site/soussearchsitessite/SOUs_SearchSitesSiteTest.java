@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SOUs_SearchSitesSiteTest extends BaseTestCase {
 	public void testSOUs_SearchSitesSite() throws Exception {
 		selenium.open("/user/socialoffice01/so/dashboard/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -109,7 +108,6 @@ public class SOUs_SearchSitesSiteTest extends BaseTestCase {
 		selenium.clickAt("//span[@class='name']/a",
 			RuntimeVariables.replace("Open Site Name"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Open Site Name"),
 			selenium.getText("//div[@class='community-title']"));
 	}

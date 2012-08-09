@@ -24,7 +24,6 @@ public class User_ViewResubmitDMFolderDocumentDocMSTest extends BaseTestCase {
 	public void testUser_ViewResubmitDMFolderDocumentDocMS()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
 		assertEquals(RuntimeVariables.replace("Go to"),
@@ -51,11 +50,9 @@ public class User_ViewResubmitDMFolderDocumentDocMSTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=My Submissions",
 			RuntimeVariables.replace("My Submissions"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Single Approver"),
 			selenium.getText("//td[1]/a"));
 		assertEquals(RuntimeVariables.replace("DM Document Title Edit"),

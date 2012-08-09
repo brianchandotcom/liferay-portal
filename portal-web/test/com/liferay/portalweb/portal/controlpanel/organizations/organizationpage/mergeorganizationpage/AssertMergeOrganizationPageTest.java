@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AssertMergeOrganizationPageTest extends BaseTestCase {
 	public void testAssertMergeOrganizationPage() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -47,17 +46,14 @@ public class AssertMergeOrganizationPageTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Users and Organizations",
 			RuntimeVariables.replace("Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("//input[@name='_125_keywords']",
 			RuntimeVariables.replace("Selenium"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Global"));
 
 		for (int second = 0;; second++) {
@@ -83,7 +79,6 @@ public class AssertMergeOrganizationPageTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -103,7 +98,6 @@ public class AssertMergeOrganizationPageTest extends BaseTestCase {
 
 		selenium.clickAt("link=Site Pages", RuntimeVariables.replace("Pages"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div[2]/span/button[2]",
 			RuntimeVariables.replace("View Pages"));
 		selenium.waitForPopUp("", RuntimeVariables.replace("5000"));
@@ -114,7 +108,6 @@ public class AssertMergeOrganizationPageTest extends BaseTestCase {
 		selenium.close();
 		selenium.selectWindow("null");
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent("link=Welcome"));
 		assertTrue(selenium.isElementPresent("link=Control Panel"));
 		assertTrue(selenium.isElementPresent("link=Selenium Test Home Page"));

@@ -24,7 +24,6 @@ public class ViewSitesSiteTypePublicRestrictedTest extends BaseTestCase {
 	public void testViewSitesSiteTypePublicRestricted()
 		throws Exception {
 		selenium.open("/user/joebloggs/so/dashboard/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -78,7 +77,6 @@ public class ViewSitesSiteTypePublicRestrictedTest extends BaseTestCase {
 		selenium.clickAt("//li[contains(@class, 'social-office-enabled')]/span[2]/a",
 			RuntimeVariables.replace("Public Restricted Site Name"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Public Restricted Site Name"),
 			selenium.getText("//div[@class='community-title']"));
 		assertEquals(RuntimeVariables.replace("Home"),
@@ -96,7 +94,6 @@ public class ViewSitesSiteTypePublicRestrictedTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Members"),
 			selenium.getText("//nav/ul/li[7]/a/span"));
 		selenium.open("/user/joebloggs/so/dashboard/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -172,7 +169,6 @@ public class ViewSitesSiteTypePublicRestrictedTest extends BaseTestCase {
 		selenium.clickAt("//span[@class='name']/a",
 			RuntimeVariables.replace("Public Restricted Site Name"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Public Restricted Site Name"),
 			selenium.getText("//div[@class='community-title']"));
 		assertEquals(RuntimeVariables.replace("Home"),

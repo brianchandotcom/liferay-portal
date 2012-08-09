@@ -24,7 +24,6 @@ public class MoveDMDocument1NewFolderFolder1ActionsTest extends BaseTestCase {
 	public void testMoveDMDocument1NewFolderFolder1Actions()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,7 +44,6 @@ public class MoveDMDocument1NewFolderFolder1ActionsTest extends BaseTestCase {
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("DM Document1 Title"),
 			selenium.getText(
@@ -76,7 +74,6 @@ public class MoveDMDocument1NewFolderFolder1ActionsTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move')]/a"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.click("//input[@value='Select']");
 		Thread.sleep(5000);
 		selenium.selectWindow("title=Documents and Media");
@@ -108,7 +105,6 @@ public class MoveDMDocument1NewFolderFolder1ActionsTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Move']",
 			RuntimeVariables.replace("Move"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

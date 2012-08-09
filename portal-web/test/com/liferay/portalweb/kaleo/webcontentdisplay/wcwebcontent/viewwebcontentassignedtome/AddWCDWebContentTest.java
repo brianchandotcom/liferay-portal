@@ -23,15 +23,12 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddWCDWebContentTest extends BaseTestCase {
 	public void testAddWCDWebContent() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Web Content Display Test Page",
 			RuntimeVariables.replace("Web Content Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//img[@alt='Add Web Content']",
 			RuntimeVariables.replace("Add Web Content"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_15_title_en_US']",
 			RuntimeVariables.replace("WC Web Content Title"));
 
@@ -155,7 +152,6 @@ public class AddWCDWebContentTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Submit for Publication']",
 			RuntimeVariables.replace("Submit for Publication"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"WC Web Content Title is not approved."),
 			selenium.getText("//div[@class='portlet-msg-alert']"));

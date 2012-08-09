@@ -24,11 +24,9 @@ public class ViewActivityMBCategoryThreadMessageTest extends BaseTestCase {
 	public void testViewActivityMBCategoryThreadMessage()
 		throws Exception {
 		selenium.open("/web/joebloggs/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Activities Page",
 			RuntimeVariables.replace("Activities Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Joe wrote a new message board post, MB Category Thread Message Subject, in Guest."),
 			selenium.getText("xPath=(//div[@class='activity-title'])[1]"));

@@ -28,7 +28,6 @@ public class PermissionsUserAddDocumentOffTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -50,7 +49,6 @@ public class PermissionsUserAddDocumentOffTest extends BaseTestCase {
 				selenium.clickAt("link=Documents and Media Test Page",
 					RuntimeVariables.replace("Documents and Media Test Page"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				Thread.sleep(5000);
 				assertEquals(RuntimeVariables.replace("Home"),
 					selenium.getText("//span[@class='entry-title']"));
@@ -80,7 +78,6 @@ public class PermissionsUserAddDocumentOffTest extends BaseTestCase {
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("RegularRole Name"),
 					selenium.getText("//tr[6]/td[1]/a"));
 				assertEquals(RuntimeVariables.replace("Add Document"),
@@ -104,7 +101,6 @@ public class PermissionsUserAddDocumentOffTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));

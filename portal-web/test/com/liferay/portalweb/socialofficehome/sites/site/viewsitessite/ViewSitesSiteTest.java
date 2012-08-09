@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewSitesSiteTest extends BaseTestCase {
 	public void testViewSitesSite() throws Exception {
 		selenium.open("/user/joebloggs/so/dashboard/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -77,7 +76,6 @@ public class ViewSitesSiteTest extends BaseTestCase {
 		selenium.clickAt("//li[contains(@class, 'social-office-enabled')]/span[2]/a",
 			RuntimeVariables.replace("Open Site Name"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Open Site Name"),
 			selenium.getText("//div[@class='community-title']"));
 		assertEquals(RuntimeVariables.replace("Home"),
@@ -95,7 +93,6 @@ public class ViewSitesSiteTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Members"),
 			selenium.getText("//nav/ul/li[7]/a/span"));
 		selenium.open("/user/joebloggs/so/dashboard/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -170,7 +167,6 @@ public class ViewSitesSiteTest extends BaseTestCase {
 		selenium.clickAt("//span[@class='name']/a",
 			RuntimeVariables.replace("Open Site Name"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Open Site Name"),
 			selenium.getText("//div[@class='community-title']"));
 		assertEquals(RuntimeVariables.replace("Home"),

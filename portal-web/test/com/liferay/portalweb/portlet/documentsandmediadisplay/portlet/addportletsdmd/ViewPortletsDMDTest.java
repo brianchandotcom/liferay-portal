@@ -23,11 +23,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewPortletsDMDTest extends BaseTestCase {
 	public void testViewPortletsDMD() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Documents and Media Display Test Page",
 			RuntimeVariables.replace("Documents and Media Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isVisible("//div[1]/section"));
 		assertTrue(selenium.isVisible("//div[2]/section"));
 		assertTrue(selenium.isVisible("//div[3]/section"));

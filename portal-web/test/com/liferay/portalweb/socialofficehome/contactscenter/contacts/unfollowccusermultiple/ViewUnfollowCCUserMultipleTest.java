@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewUnfollowCCUserMultipleTest extends BaseTestCase {
 	public void testViewUnfollowCCUserMultiple() throws Exception {
 		selenium.open("/user/joebloggs/so/dashboard/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,7 +44,6 @@ public class ViewUnfollowCCUserMultipleTest extends BaseTestCase {
 		selenium.clickAt("//nav/ul/li[contains(.,'Contacts Center')]/a/span",
 			RuntimeVariables.replace("Contacts Center"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isVisible(
 				"//input[@id='_1_WAR_contactsportlet_name']"));
 		assertTrue(selenium.isVisible(
@@ -237,7 +235,6 @@ public class ViewUnfollowCCUserMultipleTest extends BaseTestCase {
 		assertFalse(selenium.isVisible(
 				"//button[@id='_1_WAR_contactsportlet_unfollowButton']"));
 		selenium.open("/user/socialoffice01/so/dashboard/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -259,7 +256,6 @@ public class ViewUnfollowCCUserMultipleTest extends BaseTestCase {
 		selenium.clickAt("//nav/ul/li[contains(.,'Contacts Center')]/a/span",
 			RuntimeVariables.replace("Contacts Center"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("You are following 0 people."),
 			selenium.getText("link=You are following 0 people."));
 		selenium.clickAt("link=You are following 0 people.",

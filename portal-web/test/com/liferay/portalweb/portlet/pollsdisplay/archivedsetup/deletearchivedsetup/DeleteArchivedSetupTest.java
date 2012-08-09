@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class DeleteArchivedSetupTest extends BaseTestCase {
 	public void testDeleteArchivedSetup() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,7 +43,6 @@ public class DeleteArchivedSetupTest extends BaseTestCase {
 		selenium.clickAt("link=Polls Display Test Page",
 			RuntimeVariables.replace("Polls Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//strong/a"));
@@ -95,7 +93,6 @@ public class DeleteArchivedSetupTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='archived-setups']/span/a/span",
 			RuntimeVariables.replace("Archive/Restore Setup"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Archived Setup"),
 			selenium.getText("//tr[3]/td[1]"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
@@ -129,7 +126,6 @@ public class DeleteArchivedSetupTest extends BaseTestCase {
 		selenium.clickAt("//a[@id='_86_ocerSearchContainer_1_menu_delete']",
 			RuntimeVariables.replace("Delete"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 		assertEquals(RuntimeVariables.replace(

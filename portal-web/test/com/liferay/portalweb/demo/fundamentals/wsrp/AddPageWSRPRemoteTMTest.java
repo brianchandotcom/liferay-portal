@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddPageWSRPRemoteTMTest extends BaseTestCase {
 	public void testAddPageWSRPRemoteTM() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
 
@@ -108,6 +107,5 @@ public class AddPageWSRPRemoteTMTest extends BaseTestCase {
 		selenium.clickAt("link=WSRP Remote Test Misc Test Page",
 			RuntimeVariables.replace("WSRP Remote Test Misc Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 	}
 }

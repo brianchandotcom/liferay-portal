@@ -25,7 +25,6 @@ public class User_ViewUserStatisticsSubscribeMessageBoardThreadTest
 	public void testUser_ViewUserStatisticsSubscribeMessageBoardThread()
 		throws Exception {
 		selenium.open("/web/site-name/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -46,7 +45,6 @@ public class User_ViewUserStatisticsSubscribeMessageBoardThreadTest
 		selenium.clickAt("link=User Statistics Test Page",
 			RuntimeVariables.replace("User Statistics Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText("xPath=(//span[@class='user-name'])[1]"));
 		assertEquals(RuntimeVariables.replace("exact:Rank: 1"),

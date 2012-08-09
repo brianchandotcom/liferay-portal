@@ -23,17 +23,14 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SendEventTest extends BaseTestCase {
 	public void testSendEvent() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Event Producer Test Page",
 			RuntimeVariables.replace("Event Producer Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Send Event"),
 			selenium.getText("//div[@class='portlet-body']/a"));
 		selenium.clickAt("//div[@class='portlet-body']/a",
 			RuntimeVariables.replace("Send Event"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Event Consumer"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace("PASSED"),

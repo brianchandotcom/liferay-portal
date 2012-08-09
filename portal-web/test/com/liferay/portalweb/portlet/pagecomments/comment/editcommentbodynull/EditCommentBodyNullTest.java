@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class EditCommentBodyNullTest extends BaseTestCase {
 	public void testEditCommentBodyNull() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,7 +43,6 @@ public class EditCommentBodyNullTest extends BaseTestCase {
 		selenium.clickAt("link=Page Comments Test Page",
 			RuntimeVariables.replace("Page Comments Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("PC Comment"),
 			selenium.getText("//div[@class='lfr-discussion-message']"));
 		assertEquals(RuntimeVariables.replace("Edit"),
@@ -99,7 +97,6 @@ public class EditCommentBodyNullTest extends BaseTestCase {
 		assertTrue(selenium.isVisible("//textarea[@name='_107_editReplyBody1']"));
 		assertTrue(selenium.isVisible("//input[@value='Publish']"));
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -120,7 +117,6 @@ public class EditCommentBodyNullTest extends BaseTestCase {
 		selenium.clickAt("link=Page Comments Test Page",
 			RuntimeVariables.replace("Page Comments Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("PC Comment"),
 			selenium.getText("//div[@class='lfr-discussion-message']"));
 	}

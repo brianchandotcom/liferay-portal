@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class Guest_NoAccessDmFolderTest extends BaseTestCase {
 	public void testGuest_NoAccessDmFolder() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,7 +43,6 @@ public class Guest_NoAccessDmFolderTest extends BaseTestCase {
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Home"),
 			selenium.getText("//li[@class='folder selected']/a/span[2]"));
 		assertEquals(RuntimeVariables.replace("DM Folder Name"),
@@ -79,7 +77,6 @@ public class Guest_NoAccessDmFolderTest extends BaseTestCase {
 		selenium.clickAt("//a[@class='document-link']/span[@class='entry-title']",
 			RuntimeVariables.replace("DM Folder Image Title"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("URL"),
 			selenium.getText("//a[@class='show-url-file']"));
 		selenium.clickAt("//a[@class='show-url-file']",
@@ -106,7 +103,6 @@ public class Guest_NoAccessDmFolderTest extends BaseTestCase {
 				"//div[contains(@class,'url-file-container')]/input");
 		RuntimeVariables.setValue("imageURL", imageURL);
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -126,7 +122,6 @@ public class Guest_NoAccessDmFolderTest extends BaseTestCase {
 
 		selenium.clickAt("link=Sign Out", RuntimeVariables.replace("Sign Out"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -146,7 +141,6 @@ public class Guest_NoAccessDmFolderTest extends BaseTestCase {
 
 		assertTrue(selenium.isVisible("//input[@id='_58_login']"));
 		selenium.open(RuntimeVariables.getValue("imageURL"));
-		loadRequiredJavaScriptModules();
 		Thread.sleep(5000);
 		assertTrue(selenium.isVisible("//input[@id='_58_login']"));
 		assertTrue(selenium.isVisible("//input[@id='_58_password']"));

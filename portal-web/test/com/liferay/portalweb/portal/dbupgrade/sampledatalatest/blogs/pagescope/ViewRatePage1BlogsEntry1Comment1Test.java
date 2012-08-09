@@ -24,7 +24,6 @@ public class ViewRatePage1BlogsEntry1Comment1Test extends BaseTestCase {
 	public void testViewRatePage1BlogsEntry1Comment1()
 		throws Exception {
 		selenium.open("/web/blogs-page-scope-community/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,7 +44,6 @@ public class ViewRatePage1BlogsEntry1Comment1Test extends BaseTestCase {
 		selenium.clickAt("link=Blogs Test Page1",
 			RuntimeVariables.replace("Blogs Test Page1"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Blogs"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Title"),
@@ -53,7 +51,6 @@ public class ViewRatePage1BlogsEntry1Comment1Test extends BaseTestCase {
 		selenium.clickAt("//div[@class='entry-title']/h2/a",
 			RuntimeVariables.replace("Blogs Entry1 Title"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -80,7 +77,6 @@ public class ViewRatePage1BlogsEntry1Comment1Test extends BaseTestCase {
 			selenium.getText(
 				"xPath=(//div[@class='aui-rating-label-element'])[3]"));
 		selenium.open("/web/blogs-page-scope-community/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -101,7 +97,6 @@ public class ViewRatePage1BlogsEntry1Comment1Test extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -121,7 +116,6 @@ public class ViewRatePage1BlogsEntry1Comment1Test extends BaseTestCase {
 
 		selenium.clickAt("link=Blogs", RuntimeVariables.replace("Blogs"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Scope: Default"),
 			selenium.getText("//div/span/ul/li/strong/a/span"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Title"),
@@ -129,9 +123,7 @@ public class ViewRatePage1BlogsEntry1Comment1Test extends BaseTestCase {
 		selenium.clickAt("//td[2]/a",
 			RuntimeVariables.replace("Blogs Entry1 Title"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.open("/web/blogs-page-scope-community/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -152,7 +144,6 @@ public class ViewRatePage1BlogsEntry1Comment1Test extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -172,7 +163,6 @@ public class ViewRatePage1BlogsEntry1Comment1Test extends BaseTestCase {
 
 		selenium.clickAt("link=Blogs", RuntimeVariables.replace("Blogs"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Scope: Default"),
 			selenium.getText("//div/span/ul/li/strong/a/span"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Title"),
@@ -180,7 +170,6 @@ public class ViewRatePage1BlogsEntry1Comment1Test extends BaseTestCase {
 		selenium.clickAt("//td[2]/a",
 			RuntimeVariables.replace("Blogs Entry1 Title"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Blogs Entry1 Comment1 Body"),
 			selenium.getText(
 				"xPath=(//div[@class='lfr-discussion-message'])[1]"));

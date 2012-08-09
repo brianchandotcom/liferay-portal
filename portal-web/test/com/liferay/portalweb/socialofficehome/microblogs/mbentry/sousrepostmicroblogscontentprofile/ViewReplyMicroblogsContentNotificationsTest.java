@@ -29,7 +29,6 @@ public class ViewReplyMicroblogsContentNotificationsTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/user/joebloggs/so/dashboard/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -77,7 +76,6 @@ public class ViewReplyMicroblogsContentNotificationsTest extends BaseTestCase {
 					RuntimeVariables.replace(
 						"Social01 Office01 User01 commented on your post."));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 					selenium.getText(
 						"xPath=(//div[@class='user-name']/span)[contains(.,'Joe Bloggs')]"));
@@ -123,7 +121,6 @@ public class ViewReplyMicroblogsContentNotificationsTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace("Microblogs Post Comment"),
 					selenium.getText("xPath=(//div[@class='content'])[2]"));
 				selenium.open("/user/joebloggs/so/dashboard/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -172,7 +169,6 @@ public class ViewReplyMicroblogsContentNotificationsTest extends BaseTestCase {
 				selenium.clickAt("//span[@class='dismiss-notifications']/a",
 					RuntimeVariables.replace("Mark as Read"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {

@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewSitesPublicPageDropDownTest extends BaseTestCase {
 	public void testViewSitesPublicPageDropDown() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -48,7 +47,6 @@ public class ViewSitesPublicPageDropDownTest extends BaseTestCase {
 		selenium.clickAt("//li[6]/a/span",
 			RuntimeVariables.replace("Community Name"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Public Page"),
 			selenium.getText("//nav/ul/li/a/span"));
 		assertEquals(RuntimeVariables.replace("Public Page"),

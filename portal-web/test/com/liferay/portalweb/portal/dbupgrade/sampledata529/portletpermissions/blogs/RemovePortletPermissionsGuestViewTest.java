@@ -29,7 +29,6 @@ public class RemovePortletPermissionsGuestViewTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -51,15 +50,12 @@ public class RemovePortletPermissionsGuestViewTest extends BaseTestCase {
 				selenium.clickAt("link=Blogs Portlet Permissions Page",
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("link=Configuration",
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("link=Permissions",
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				boolean guestViewChecked = selenium.isChecked("15_ACTION_VIEW");
 
@@ -75,7 +71,6 @@ public class RemovePortletPermissionsGuestViewTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Submit']",
 					RuntimeVariables.replace(""));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isTextPresent(
 						"Your request processed successfully."));
 				assertFalse(selenium.isChecked("15_ACTION_VIEW"));

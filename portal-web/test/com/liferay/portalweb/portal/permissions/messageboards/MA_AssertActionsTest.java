@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class MA_AssertActionsTest extends BaseTestCase {
 	public void testMA_AssertActions() throws Exception {
 		selenium.open("/web/site-name/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,7 +43,6 @@ public class MA_AssertActionsTest extends BaseTestCase {
 		selenium.clickAt("link=Message Boards Permissions Page",
 			RuntimeVariables.replace("Message Boards Permissions Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Category Name"),
 			selenium.getText("//a/strong"));
 		assertTrue(selenium.isElementPresent("//input[@value='Add Category']"));
@@ -76,11 +74,9 @@ public class MA_AssertActionsTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isVisible("//input[@id='_19_name']"));
 		assertTrue(selenium.isVisible("//textarea[@id='_19_description']"));
 		selenium.open("/web/site-name/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -101,7 +97,6 @@ public class MA_AssertActionsTest extends BaseTestCase {
 		selenium.clickAt("link=Message Boards Permissions Page",
 			RuntimeVariables.replace("Message Boards Permissions Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isVisible("//input[@value='Permissions']"));
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
@@ -131,12 +126,10 @@ public class MA_AssertActionsTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
 			RuntimeVariables.replace("Permissions"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Category Name"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertTrue(selenium.isVisible("//input[@value='Save']"));
 		selenium.open("/web/site-name/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -157,7 +150,6 @@ public class MA_AssertActionsTest extends BaseTestCase {
 		selenium.clickAt("link=Message Boards Permissions Page",
 			RuntimeVariables.replace("Message Boards Permissions Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("RSS"),
 			selenium.getText("//div[2]/div/span/a/span[1]"));
 		assertEquals(RuntimeVariables.replace("Banned Users"),
@@ -165,18 +157,15 @@ public class MA_AssertActionsTest extends BaseTestCase {
 		selenium.clickAt("//ul[@class='top-links-navigation']/li[6]/span/a",
 			RuntimeVariables.replace("Banned Users"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("There are no banned users."),
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		selenium.clickAt("//ul[@class='top-links-navigation']/li/span/a/span",
 			RuntimeVariables.replace("Message Boards Home"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Category Name"),
 			selenium.getText("//a/strong"));
 		selenium.clickAt("//a/strong", RuntimeVariables.replace("Category Name"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//span[@title='Actions']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a",
@@ -219,7 +208,6 @@ public class MA_AssertActionsTest extends BaseTestCase {
 		selenium.clickAt("//tr[3]/td/a",
 			RuntimeVariables.replace("Thread Subject"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Reply"),
 			selenium.getText(
 				"//ul[@class='edit-controls lfr-component']/li[2]/span/a"));

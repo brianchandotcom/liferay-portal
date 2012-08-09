@@ -24,7 +24,6 @@ public class SOUs_DeleteRepostMicroblogsContentTest extends BaseTestCase {
 	public void testSOUs_DeleteRepostMicroblogsContent()
 		throws Exception {
 		selenium.open("/user/socialoffice01/so/dashboard");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,7 +43,6 @@ public class SOUs_DeleteRepostMicroblogsContentTest extends BaseTestCase {
 
 		selenium.clickAt("link=Me", RuntimeVariables.replace("Me"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Reposted From Joe Bloggs: Microblogs Post"),
 			selenium.getText("//div[@class='activity-title']"));
@@ -69,7 +67,6 @@ public class SOUs_DeleteRepostMicroblogsContentTest extends BaseTestCase {
 		selenium.clickAt("//nav/ul/li[contains(.,'Microblogs')]/a/span",
 			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

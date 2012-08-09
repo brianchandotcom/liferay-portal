@@ -23,11 +23,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewPageWhatWeDoTest extends BaseTestCase {
 	public void testViewPageWhatWeDo() throws Exception {
 		selenium.open("/web/guest/what-we-do/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=What We Do",
 			RuntimeVariables.replace("What We Do"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//nav[@id='navigation']",
 			RuntimeVariables.replace("Navigation"));
 

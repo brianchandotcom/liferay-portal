@@ -41,7 +41,6 @@ public class AssignScopeMemberToScopeCommunityTest extends BaseTestCase {
 
 		selenium.clickAt("link=Communities", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -63,7 +62,6 @@ public class AssignScopeMemberToScopeCommunityTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//strong", RuntimeVariables.replace(""));
 
 		for (int second = 0;; second++) {
@@ -86,7 +84,6 @@ public class AssignScopeMemberToScopeCommunityTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -106,17 +103,14 @@ public class AssignScopeMemberToScopeCommunityTest extends BaseTestCase {
 
 		selenium.clickAt("link=Available", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("_134_keywords", RuntimeVariables.replace("scope"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("_134_allRowIds", RuntimeVariables.replace(""));
 		selenium.clickAt("//input[@value='Update Associations']",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isTextPresent(
 				"Your request completed successfully."));
 	}

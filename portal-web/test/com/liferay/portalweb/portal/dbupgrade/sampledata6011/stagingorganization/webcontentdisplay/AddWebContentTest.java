@@ -23,12 +23,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddWebContentTest extends BaseTestCase {
 	public void testAddWebContent() throws Exception {
 		selenium.open("/web/staging-organization-wcd/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Page Staging Organization Web Content Display",
 			RuntimeVariables.replace(
 				"Page Staging Organization Web Content Display"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isVisible(
 				"//body[@class='blue live-view controls-visible signed-in public-page']"));
 		assertTrue(selenium.isElementNotPresent(
@@ -56,7 +54,6 @@ public class AddWebContentTest extends BaseTestCase {
 		selenium.clickAt("link=View Staged Page",
 			RuntimeVariables.replace("View Staged Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementNotPresent(
 				"//body[@class='blue live-view controls-visible signed-in public-page']"));
 		assertTrue(selenium.isVisible(
@@ -84,15 +81,12 @@ public class AddWebContentTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//input[@value='Add Web Content']",
 			RuntimeVariables.replace("Add Web Content"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_15_title']",
 			RuntimeVariables.replace("WC Web Content Name"));
 
@@ -215,7 +209,6 @@ public class AddWebContentTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request processed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

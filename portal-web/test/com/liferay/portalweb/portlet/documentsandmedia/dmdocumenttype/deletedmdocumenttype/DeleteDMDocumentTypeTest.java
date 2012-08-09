@@ -23,11 +23,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class DeleteDMDocumentTypeTest extends BaseTestCase {
 	public void testDeleteDMDocumentType() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Manage"),
 			selenium.getText("//span[@title='Manage']/ul/li/strong/a"));
@@ -96,7 +94,6 @@ public class DeleteDMDocumentTypeTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("DM DocumentType Name"),
 			selenium.getText("//tr[contains(.,'DM DocumentType Name')]/td[1]"));
@@ -129,7 +126,6 @@ public class DeleteDMDocumentTypeTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Delete')]"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 		assertFalse(selenium.isTextPresent("DM DocumentType Name"));

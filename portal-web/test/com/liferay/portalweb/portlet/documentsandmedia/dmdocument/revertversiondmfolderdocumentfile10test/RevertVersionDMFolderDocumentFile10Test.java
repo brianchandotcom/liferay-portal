@@ -24,11 +24,9 @@ public class RevertVersionDMFolderDocumentFile10Test extends BaseTestCase {
 	public void testRevertVersionDMFolderDocumentFile10()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("DM Folder Name"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
@@ -61,7 +59,6 @@ public class RevertVersionDMFolderDocumentFile10Test extends BaseTestCase {
 		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DM Folder Document Title"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
 			selenium.getText("//h2[@class='document-title']"));
 		assertEquals(RuntimeVariables.replace("Version 1.1"),
@@ -102,7 +99,6 @@ public class RevertVersionDMFolderDocumentFile10Test extends BaseTestCase {
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Revert')]/a",
 			RuntimeVariables.replace("Revert"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

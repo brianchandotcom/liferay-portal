@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddEventDurationInvalidTest extends BaseTestCase {
 	public void testAddEventDurationInvalid() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,11 +42,9 @@ public class AddEventDurationInvalidTest extends BaseTestCase {
 
 		selenium.clickAt("link=Calendar Test Page", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//input[@value='Add Event']",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("_8_title",
 			RuntimeVariables.replace("Invalid Duration Test Entry"));
 		selenium.select("_8_durationHour", RuntimeVariables.replace("label=0"));
@@ -55,7 +52,6 @@ public class AddEventDurationInvalidTest extends BaseTestCase {
 			RuntimeVariables.replace("label=:00"));
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isTextPresent("Your request failed to complete."));
 		assertTrue(selenium.isTextPresent("Please enter a longer duration."));
 	}

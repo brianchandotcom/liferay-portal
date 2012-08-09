@@ -24,7 +24,6 @@ public class Member_AssertCannotEditPermissionsTest extends BaseTestCase {
 	public void testMember_AssertCannotEditPermissions()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -46,7 +45,6 @@ public class Member_AssertCannotEditPermissionsTest extends BaseTestCase {
 		selenium.clickAt("link=Media Gallery Permissions Test Page",
 			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Permissions Image 2 Test"),
 			selenium.getText("//a[@title='Permissions Image 2 Test - ']"));
 		selenium.clickAt("//a[@title='Permissions Image 2 Test - ']",

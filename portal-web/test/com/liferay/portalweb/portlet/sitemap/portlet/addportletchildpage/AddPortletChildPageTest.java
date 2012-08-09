@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddPortletChildPageTest extends BaseTestCase {
 	public void testAddPortletChildPage() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.mouseOver("link=Site Map Test Page");
 
 		for (int second = 0;; second++) {
@@ -45,7 +44,6 @@ public class AddPortletChildPageTest extends BaseTestCase {
 		selenium.clickAt("link=Site Map Test Child Page",
 			RuntimeVariables.replace("Site Map Test Child Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
 

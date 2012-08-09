@@ -28,7 +28,6 @@ public class ViewReplyMicroblogsContentTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/user/joebloggs/so/dashboard/");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"Microblogs Status Update"),
 					selenium.getText("//span[@class='portlet-title-default']"));
@@ -57,7 +56,6 @@ public class ViewReplyMicroblogsContentTest extends BaseTestCase {
 				selenium.clickAt("//nav/ul/li[contains(.,'Microblogs')]/a/span",
 					RuntimeVariables.replace("Microblogs"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 					selenium.getText(
 						"xPath=(//div[@class='user-name']/span)[contains(.,'Joe Bloggs')]"));

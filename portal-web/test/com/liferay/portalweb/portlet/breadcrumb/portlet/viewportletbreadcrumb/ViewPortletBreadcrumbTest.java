@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewPortletBreadcrumbTest extends BaseTestCase {
 	public void testViewPortletBreadcrumb() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,7 +43,6 @@ public class ViewPortletBreadcrumbTest extends BaseTestCase {
 		selenium.clickAt("link=Breadcrumb Test Page",
 			RuntimeVariables.replace("Breadcrumb Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Liferay"),
 			selenium.getText(
 				"//div/ul[@class='breadcrumbs breadcrumbs-horizontal lfr-component']/li[1]/span/a"));
@@ -56,7 +54,6 @@ public class ViewPortletBreadcrumbTest extends BaseTestCase {
 		selenium.clickAt("link=Child Test Page",
 			RuntimeVariables.replace("Child Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Liferay"),
 			selenium.getText(
 				"//div/ul[@class='breadcrumbs breadcrumbs-horizontal lfr-component']/li[1]/span/a"));

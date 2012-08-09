@@ -28,7 +28,6 @@ public class TearDownUserTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -49,11 +48,9 @@ public class TearDownUserTest extends BaseTestCase {
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("link=Users and Organizations",
 					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -76,7 +73,6 @@ public class TearDownUserTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				boolean usersPresent = selenium.isElementPresent(
 						"xPath=(//input[@name='_125_allRowIds'])[2]");
@@ -117,7 +113,6 @@ public class TearDownUserTest extends BaseTestCase {
 				selenium.clickAt("link=Users and Organizations",
 					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -140,13 +135,11 @@ public class TearDownUserTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("Selenium"),
 					selenium.getText("//tr/td[contains(.,'Selenium')]/a/strong"));
 				selenium.clickAt("//tr/td[contains(.,'Selenium')]/a/strong",
 					RuntimeVariables.replace("Selenium"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				boolean users1Present = selenium.isElementPresent(
 						"//input[@name='_125_allRowIds']");
@@ -207,11 +200,9 @@ public class TearDownUserTest extends BaseTestCase {
 				selenium.clickAt("link=Users and Organizations",
 					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("link=Search All Users",
 					RuntimeVariables.replace("Search All Users"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				boolean advancedVisible = selenium.isVisible(
 						"link=Advanced \u00bb");
@@ -248,7 +239,6 @@ public class TearDownUserTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				boolean usersNotDeleted = selenium.isElementPresent(
 						"//input[@name='_125_allRowIds']");
@@ -267,7 +257,6 @@ public class TearDownUserTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Delete']",
 					RuntimeVariables.replace("Delete"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to permanently delete the selected users[\\s\\S]$"));
 				assertEquals(RuntimeVariables.replace(

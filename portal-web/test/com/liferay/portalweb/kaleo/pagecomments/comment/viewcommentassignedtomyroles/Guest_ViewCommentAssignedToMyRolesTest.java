@@ -24,7 +24,6 @@ public class Guest_ViewCommentAssignedToMyRolesTest extends BaseTestCase {
 	public void testGuest_ViewCommentAssignedToMyRoles()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,7 +44,6 @@ public class Guest_ViewCommentAssignedToMyRolesTest extends BaseTestCase {
 		selenium.clickAt("link=Page Comments Test Page",
 			RuntimeVariables.replace("Page Comments Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertFalse(selenium.isTextPresent("Pending (Review)"));
 		assertFalse(selenium.isTextPresent("PC Comment"));
 	}

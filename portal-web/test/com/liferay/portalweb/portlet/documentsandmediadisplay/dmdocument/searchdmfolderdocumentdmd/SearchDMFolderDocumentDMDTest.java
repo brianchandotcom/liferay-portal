@@ -23,17 +23,14 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SearchDMFolderDocumentDMDTest extends BaseTestCase {
 	public void testSearchDMFolderDocumentDMD() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Documents and Media Display Test Page",
 			RuntimeVariables.replace("Documents and Media Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("//input[@title='Search Documents']",
 			RuntimeVariables.replace("DL Folder Document Title"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("DM Folder Name"),
 			selenium.getText("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("DM Folder Document Title"),
@@ -43,7 +40,6 @@ public class SearchDMFolderDocumentDMDTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"No documents were found that matched the keywords: DM2 Folder2 Document2 Title2."),
 			selenium.getText("//div[@class='portlet-msg-info']"));

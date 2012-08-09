@@ -28,7 +28,6 @@ public class AddUserPasswordTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -49,17 +48,14 @@ public class AddUserPasswordTest extends BaseTestCase {
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("link=Users and Organizations",
 					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("Search All Users"),
 					selenium.getText("//a[@id='_125_allUsersLink']"));
 				selenium.clickAt("//a[@id='_125_allUsersLink']",
 					RuntimeVariables.replace("Search All Users"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				boolean basic1Visible = selenium.isVisible("link=\u00ab Basic");
 
@@ -78,13 +74,11 @@ public class AddUserPasswordTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("selen01"),
 					selenium.getText("//td[2]/a"));
 				selenium.clickAt("//td[2]/a",
 					RuntimeVariables.replace("selen01"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isPartialText(
 						"//a[@id='_125_passwordLink']", "Password"));
 				selenium.clickAt("//a[@id='_125_passwordLink']",
@@ -113,7 +107,6 @@ public class AddUserPasswordTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));

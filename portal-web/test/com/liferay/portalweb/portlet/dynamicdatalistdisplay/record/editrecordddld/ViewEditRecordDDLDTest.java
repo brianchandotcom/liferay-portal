@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewEditRecordDDLDTest extends BaseTestCase {
 	public void testViewEditRecordDDLD() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,7 +44,6 @@ public class ViewEditRecordDDLDTest extends BaseTestCase {
 		selenium.clickAt("link=Dynamic Data List Display Test Page",
 			RuntimeVariables.replace("Dynamic Data List Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Boolean"),
 			selenium.getText("//tr[1]/th[1]"));
 		assertEquals(RuntimeVariables.replace("false"),
@@ -118,7 +116,6 @@ public class ViewEditRecordDDLDTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Boolean false"),
 			selenium.getText("//div[@class='aui-fieldset-content ']/div[1]"));
 		assertEquals(RuntimeVariables.replace("Date 8/9/10"),

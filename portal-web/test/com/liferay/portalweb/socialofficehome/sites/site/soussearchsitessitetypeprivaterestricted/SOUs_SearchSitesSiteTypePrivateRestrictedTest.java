@@ -24,7 +24,6 @@ public class SOUs_SearchSitesSiteTypePrivateRestrictedTest extends BaseTestCase 
 	public void testSOUs_SearchSitesSiteTypePrivateRestricted()
 		throws Exception {
 		selenium.open("/user/socialoffice01/so/dashboard");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -111,7 +110,6 @@ public class SOUs_SearchSitesSiteTypePrivateRestrictedTest extends BaseTestCase 
 		selenium.clickAt("//span[@class='name']/a",
 			RuntimeVariables.replace("Private Restricted Site Name"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementNotPresent(
 				"//div[@class='community-title']"));
 	}

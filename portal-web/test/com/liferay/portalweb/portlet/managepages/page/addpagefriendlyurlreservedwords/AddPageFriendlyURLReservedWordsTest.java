@@ -28,7 +28,6 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("//div[@id='dockbar']",
 					RuntimeVariables.replace("Dockbar"));
 
@@ -139,7 +138,6 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"Your request failed to complete."),
 					selenium.getText(
@@ -153,7 +151,6 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"Your request failed to complete."),
 					selenium.getText(
@@ -167,7 +164,6 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"Your request failed to complete."),
 					selenium.getText(
@@ -181,7 +177,6 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"Your request failed to complete."),
 					selenium.getText(
@@ -195,7 +190,6 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"Your request failed to complete."),
 					selenium.getText(
@@ -209,7 +203,6 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"Your request failed to complete."),
 					selenium.getText(
@@ -223,7 +216,6 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"Your request failed to complete."),
 					selenium.getText(
@@ -237,7 +229,6 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"Your request failed to complete."),
 					selenium.getText(
@@ -251,7 +242,6 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"Your request failed to complete."),
 					selenium.getText(
@@ -265,7 +255,6 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"Your request failed to complete."),
 					selenium.getText(
@@ -279,7 +268,6 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"Your request failed to complete."),
 					selenium.getText(
@@ -293,7 +281,6 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"Your request failed to complete."),
 					selenium.getText(
@@ -307,7 +294,6 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"Your request failed to complete."),
 					selenium.getText(
@@ -321,7 +307,6 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"Your request failed to complete."),
 					selenium.getText(
@@ -335,7 +320,6 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"Your request failed to complete."),
 					selenium.getText(
@@ -349,7 +333,6 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"Your request failed to complete."),
 					selenium.getText(
@@ -363,7 +346,6 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"Your request failed to complete."),
 					selenium.getText(
@@ -377,7 +359,6 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"Your request failed to complete."),
 					selenium.getText(
@@ -391,7 +372,6 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"Your request failed to complete."),
 					selenium.getText(
@@ -405,7 +385,6 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"Your request failed to complete."),
 					selenium.getText(
@@ -419,7 +398,6 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"Your request failed to complete."),
 					selenium.getText(
@@ -433,7 +411,6 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"Your request failed to complete."),
 					selenium.getText(
@@ -447,7 +424,6 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"Your request failed to complete."),
 					selenium.getText(
@@ -461,7 +437,6 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"Your request failed to complete."),
 					selenium.getText(
@@ -475,7 +450,6 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"Your request failed to complete."),
 					selenium.getText(
@@ -489,7 +463,6 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"Your request failed to complete."),
 					selenium.getText(
@@ -503,7 +476,6 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"Your request failed to complete."),
 					selenium.getText(
@@ -517,7 +489,6 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"Your request failed to complete."),
 					selenium.getText(
@@ -531,7 +502,6 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"Your request failed to complete."),
 					selenium.getText(
@@ -545,7 +515,6 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"Your request failed to complete."),
 					selenium.getText(
@@ -559,7 +528,6 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"Your request failed to complete."),
 					selenium.getText(
@@ -573,7 +541,6 @@ public class AddPageFriendlyURLReservedWordsTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"Your request failed to complete."),
 					selenium.getText(

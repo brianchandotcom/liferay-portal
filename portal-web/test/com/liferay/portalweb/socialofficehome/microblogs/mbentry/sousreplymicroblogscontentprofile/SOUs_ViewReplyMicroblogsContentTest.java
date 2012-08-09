@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SOUs_ViewReplyMicroblogsContentTest extends BaseTestCase {
 	public void testSOUs_ViewReplyMicroblogsContent() throws Exception {
 		selenium.open("/user/socialoffice01/so/dashboard");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,7 +42,6 @@ public class SOUs_ViewReplyMicroblogsContentTest extends BaseTestCase {
 
 		selenium.clickAt("link=Me", RuntimeVariables.replace("Me"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"@Joe Bloggs: Microblogs Post Comment"),
 			selenium.getText("xPath=(//div[@class='activity-title'])[1]"));

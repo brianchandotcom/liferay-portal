@@ -23,11 +23,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewPortletTPTest extends BaseTestCase {
 	public void testViewPortletTP() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Test PACL Test Page",
 			RuntimeVariables.replace("Test PACL Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isVisible("//section"));
 		assertEquals(RuntimeVariables.replace("Test PACL"),
 			selenium.getText("//h1[@class='portlet-title']/span"));

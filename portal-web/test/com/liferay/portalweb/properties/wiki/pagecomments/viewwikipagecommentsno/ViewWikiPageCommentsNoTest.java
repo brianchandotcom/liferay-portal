@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewWikiPageCommentsNoTest extends BaseTestCase {
 	public void testViewWikiPageCommentsNo() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,7 +43,6 @@ public class ViewWikiPageCommentsNoTest extends BaseTestCase {
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertFalse(selenium.isTextPresent("Be the first"));
 		assertFalse(selenium.isTextPresent("Comments"));
 		assertFalse(selenium.isTextPresent("Subscribe to Comments"));

@@ -24,7 +24,6 @@ public class ViewScopeDefaultWebContentListDefaultTest extends BaseTestCase {
 	public void testViewScopeDefaultWebContentListDefault()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,7 +44,6 @@ public class ViewScopeDefaultWebContentListDefaultTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content Display Test Page1",
 			RuntimeVariables.replace("Web Content Display Test Page1"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//strong/a"));
 		Thread.sleep(5000);
@@ -91,7 +89,6 @@ public class ViewScopeDefaultWebContentListDefaultTest extends BaseTestCase {
 
 		selenium.clickAt("link=Setup", RuntimeVariables.replace("Setup"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isPartialText("//div[@class='portlet-msg-info']",
 				"Displaying Content: WC WebContent Title"));
 		assertEquals(RuntimeVariables.replace("WC WebContent Title"),

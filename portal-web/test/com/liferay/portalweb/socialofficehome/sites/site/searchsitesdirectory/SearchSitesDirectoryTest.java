@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SearchSitesDirectoryTest extends BaseTestCase {
 	public void testSearchSitesDirectory() throws Exception {
 		selenium.open("/user/joebloggs/so/dashboard/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -98,11 +97,9 @@ public class SearchSitesDirectoryTest extends BaseTestCase {
 		selenium.clickAt("//span[@class='name']/a",
 			RuntimeVariables.replace("Open Site1 Name"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Open Site1 Name"),
 			selenium.getText("//div[@class='community-title']"));
 		selenium.open("/user/joebloggs/so/dashboard/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -178,11 +175,9 @@ public class SearchSitesDirectoryTest extends BaseTestCase {
 		selenium.clickAt("//span[@class='name']/a",
 			RuntimeVariables.replace("Private Restricted Site2 Name"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Private Restricted Site2 Name"),
 			selenium.getText("//div[@class='community-title']"));
 		selenium.open("/user/joebloggs/so/dashboard/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -259,11 +254,9 @@ public class SearchSitesDirectoryTest extends BaseTestCase {
 		selenium.clickAt("//span[@class='name']/a",
 			RuntimeVariables.replace("Private Site3 Name"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Private Site3 Name"),
 			selenium.getText("//div[@class='community-title']"));
 		selenium.open("/user/joebloggs/so/dashboard/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -339,7 +332,6 @@ public class SearchSitesDirectoryTest extends BaseTestCase {
 		selenium.clickAt("//span[@class='name']/a",
 			RuntimeVariables.replace("Public Restricted Site4 Name"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Public Restricted Site4 Name"),
 			selenium.getText("//div[@class='community-title']"));
 	}

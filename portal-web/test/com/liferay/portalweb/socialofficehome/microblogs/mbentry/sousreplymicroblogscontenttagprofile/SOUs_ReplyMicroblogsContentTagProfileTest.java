@@ -24,7 +24,6 @@ public class SOUs_ReplyMicroblogsContentTagProfileTest extends BaseTestCase {
 	public void testSOUs_ReplyMicroblogsContentTagProfile()
 		throws Exception {
 		selenium.open("/web/joebloggs/so/profile/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -46,7 +45,6 @@ public class SOUs_ReplyMicroblogsContentTagProfileTest extends BaseTestCase {
 		selenium.clickAt("//nav/ul/li[contains(.,'Microblogs')]/a/span",
 			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText("//div[@class='user-name']/span"));
 		assertEquals(RuntimeVariables.replace("Microblogs Post"),

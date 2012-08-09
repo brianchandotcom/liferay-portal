@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SearchBlogsTest extends BaseTestCase {
 	public void testSearchBlogs() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
 
@@ -128,7 +127,6 @@ public class SearchBlogsTest extends BaseTestCase {
 
 		assertTrue(selenium.isVisible("//div[@title='Blogs']"));
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
 
@@ -233,7 +231,6 @@ public class SearchBlogsTest extends BaseTestCase {
 
 		assertTrue(selenium.isVisible("//div[@title='Blogs']"));
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
 
@@ -338,7 +335,6 @@ public class SearchBlogsTest extends BaseTestCase {
 
 		assertTrue(selenium.isVisible("//div[@title='Blogs']"));
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
 
@@ -443,7 +439,6 @@ public class SearchBlogsTest extends BaseTestCase {
 
 		assertTrue(selenium.isVisible("//div[@title='Blogs']"));
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
 
@@ -548,7 +543,6 @@ public class SearchBlogsTest extends BaseTestCase {
 
 		assertTrue(selenium.isVisible("//div[@title='Blogs']"));
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
 

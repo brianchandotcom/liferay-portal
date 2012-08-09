@@ -23,18 +23,15 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewCalendarEventRatingsNoTest extends BaseTestCase {
 	public void testViewCalendarEventRatingsNo() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Calendar Test Page",
 			RuntimeVariables.replace("Calendar Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Test Event"),
 			selenium.getText(
 				"//table[contains(@data-searchcontainerid,'SearchContainer')]/tbody/tr[3]/td[2]/a"));
 		selenium.clickAt("//table[contains(@data-searchcontainerid,'SearchContainer')]/tbody/tr[3]/td[2]/a",
 			RuntimeVariables.replace("Test Event"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertFalse(selenium.isTextPresent("Your Rating"));
 		assertFalse(selenium.isTextPresent("Average (0 Votes)"));
 	}

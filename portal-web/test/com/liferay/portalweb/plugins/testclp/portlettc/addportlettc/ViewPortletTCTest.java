@@ -23,11 +23,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewPortletTCTest extends BaseTestCase {
 	public void testViewPortletTC() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Test CLP Test Page",
 			RuntimeVariables.replace("Test CLP Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isVisible("//section"));
 		assertTrue(selenium.isPartialText(
 				"//div[@class='portlet-content']/div", "There are 1 statuses."));

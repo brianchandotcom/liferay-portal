@@ -24,11 +24,9 @@ public class DeleteVersionDMFolderDocumentTitle11Test extends BaseTestCase {
 	public void testDeleteVersionDMFolderDocumentTitle11()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("DM Folder Name"),
 			selenium.getText(
 				"//a[contains(@class,'document-link')]/span[@class='entry-title']"));
@@ -61,7 +59,6 @@ public class DeleteVersionDMFolderDocumentTitle11Test extends BaseTestCase {
 		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("DM Folder Document Title Edit"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("DM Folder Document Title Edit"),
 			selenium.getText("//h2[@class='document-title']"));
 		assertEquals(RuntimeVariables.replace("Version 1.1"),
@@ -102,7 +99,6 @@ public class DeleteVersionDMFolderDocumentTitle11Test extends BaseTestCase {
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Delete Version')]/a",
 			RuntimeVariables.replace("Delete Version"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 

@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ActivateStagingOrganizationTest extends BaseTestCase {
 	public void testActivateStagingOrganization() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,16 +42,13 @@ public class ActivateStagingOrganizationTest extends BaseTestCase {
 
 		selenium.clickAt("link=Control Panel", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Organizations", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("_126_keywords",
 			RuntimeVariables.replace("Web Content Display"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText("//strong/a"));
@@ -81,16 +77,13 @@ public class ActivateStagingOrganizationTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Settings"),
 			selenium.getText("//ul[1]/li[3]/span/span/a"));
 		selenium.clickAt("//ul[1]/li[3]/span/span/a",
 			RuntimeVariables.replace("Settings"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Staging", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.select("_126_stagingType",
 			RuntimeVariables.replace("label=Local Live"));
 
@@ -118,7 +111,6 @@ public class ActivateStagingOrganizationTest extends BaseTestCase {
 			selenium.getText("//div[4]/fieldset/div/div[1]"));
 		selenium.clickAt("//input[@value='Save']", RuntimeVariables.replace(""));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to activate local staging for Organization Staging Organization Web Content Display[\\s\\S]$"));
 		assertEquals(RuntimeVariables.replace(

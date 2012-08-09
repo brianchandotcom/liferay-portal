@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewEditWCWebContentTest extends BaseTestCase {
 	public void testViewEditWCWebContent() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
 
@@ -67,11 +66,9 @@ public class ViewEditWCWebContentTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isVisible("//td[1]/input"));
 		assertTrue(selenium.isVisible("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("WC WebContent Title Edit"),
@@ -86,7 +83,6 @@ public class ViewEditWCWebContentTest extends BaseTestCase {
 		selenium.clickAt("//td[3]/a",
 			RuntimeVariables.replace("WC WebContent Title Edit"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("WC WebContent Title Edit"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertTrue(selenium.isPartialText("//span[@class='workflow-id']", "ID:"));

@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class EditSubfolderImageTest extends BaseTestCase {
 	public void testEditSubfolderImage() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,19 +43,16 @@ public class EditSubfolderImageTest extends BaseTestCase {
 		selenium.clickAt("link=Image Gallery Test Page",
 			RuntimeVariables.replace("Image Gallery Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("MG Folder Name"),
 			selenium.getText("//span[@class='image-title']"));
 		selenium.clickAt("//span[@class='image-title']",
 			RuntimeVariables.replace("MG Folder Name"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("MG Subfolder Name"),
 			selenium.getText("//span[@class='image-title']"));
 		selenium.clickAt("//span[@class='image-title']",
 			RuntimeVariables.replace("MG Subfolder Name"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("MG Subfolder Image Title"),
 			selenium.getText("//span[@class='image-title']"));
 		selenium.clickAt("//span[@class='image-title']",
@@ -104,7 +100,6 @@ public class EditSubfolderImageTest extends BaseTestCase {
 			selenium.getText("//div/div[2]/div"));
 		selenium.clickAt("//img[@alt='Edit']", RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("MG Subfolder Image Title"),
 			selenium.getText("//div[2]/h1/span"));
 		selenium.type("//input[@id='_31_title']",
@@ -114,7 +109,6 @@ public class EditSubfolderImageTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

@@ -23,11 +23,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddPortletBlogsScopeCurrentPageTest extends BaseTestCase {
 	public void testAddPortletBlogsScopeCurrentPage() throws Exception {
 		selenium.open("/web/group-page-scope-community/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Blogs Page Scope Current Page",
 			RuntimeVariables.replace("Blogs Page Scope Current Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
 

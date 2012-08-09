@@ -29,7 +29,6 @@ public class AdvancedSearchTemplateDescriptionTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -50,15 +49,12 @@ public class AdvancedSearchTemplateDescriptionTest extends BaseTestCase {
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("link=Web Content",
 					RuntimeVariables.replace("Web Content"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("link=Templates",
 					RuntimeVariables.replace("Templates"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				boolean advancedVisible = selenium.isVisible(
 						"link=Advanced \u00bb");
@@ -95,7 +91,6 @@ public class AdvancedSearchTemplateDescriptionTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.type("//input[@id='_15_description']",
 					RuntimeVariables.replace(""));
 				assertEquals(RuntimeVariables.replace(
@@ -110,7 +105,6 @@ public class AdvancedSearchTemplateDescriptionTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.type("//input[@id='_15_description']",
 					RuntimeVariables.replace(""));
 				assertFalse(selenium.isTextPresent("Web Content Template Name"));

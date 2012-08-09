@@ -24,7 +24,6 @@ public class ViewWHEntryContentViewableByConnectionsTest extends BaseTestCase {
 	public void testViewWHEntryContentViewableByConnections()
 		throws Exception {
 		selenium.open("/user/joebloggs/so/dashboard");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Microblogs Status Update"),
 			selenium.getText("//span[@class='portlet-title-default']"));
 		assertTrue(selenium.isElementPresent(
@@ -52,7 +51,6 @@ public class ViewWHEntryContentViewableByConnectionsTest extends BaseTestCase {
 		selenium.clickAt("//nav/ul/li[contains(.,'Microblogs')]/a/span",
 			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText("//div[@class='user-name']/span"));
 		assertEquals(RuntimeVariables.replace("Microblogs Post"),

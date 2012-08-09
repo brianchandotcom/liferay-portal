@@ -30,7 +30,6 @@ public class Administrator_PublishToLiveStagedBlogsEntryTest
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isElementPresent(
 						"//div[@class='staging-bar']"));
 				assertEquals(RuntimeVariables.replace("Live"),
@@ -40,7 +39,6 @@ public class Administrator_PublishToLiveStagedBlogsEntryTest
 				selenium.clickAt("//li[2]/span/a",
 					RuntimeVariables.replace("Staging"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -61,7 +59,6 @@ public class Administrator_PublishToLiveStagedBlogsEntryTest
 				selenium.clickAt("link=Blogs Test Page",
 					RuntimeVariables.replace("Blogs Test Page"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
 					selenium.getText("//div[@class='entry-title']/h2/a"));
 				assertEquals(RuntimeVariables.replace("Blogs Entry Content"),

@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SearchWCWebContentWCSTest extends BaseTestCase {
 	public void testSearchWCWebContentWCS() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,17 +43,14 @@ public class SearchWCWebContentWCSTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content Search Test Page",
 			RuntimeVariables.replace("Web Content Search Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_77_keywords']",
 			RuntimeVariables.replace("WC WebContent Title"));
 		selenium.clickAt("//input[@type='image']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isTextPresent("WC WebContent Title"));
 		assertTrue(selenium.isTextPresent("WC WebContent Content"));
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -75,13 +71,11 @@ public class SearchWCWebContentWCSTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content Search Test Page",
 			RuntimeVariables.replace("Web Content Search Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_77_keywords']",
 			RuntimeVariables.replace("WC1 WebContent1 Title1"));
 		selenium.clickAt("//input[@type='image']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertFalse(selenium.isTextPresent("WC WebContent Title"));
 		assertFalse(selenium.isTextPresent("WC WebContent Content"));
 	}

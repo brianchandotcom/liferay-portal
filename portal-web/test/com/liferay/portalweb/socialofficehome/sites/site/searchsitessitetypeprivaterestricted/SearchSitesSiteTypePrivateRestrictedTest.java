@@ -24,7 +24,6 @@ public class SearchSitesSiteTypePrivateRestrictedTest extends BaseTestCase {
 	public void testSearchSitesSiteTypePrivateRestricted()
 		throws Exception {
 		selenium.open("/user/joebloggs/so/dashboard/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

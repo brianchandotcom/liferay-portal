@@ -24,7 +24,6 @@ public class AssertCannotAddListNameNullTest extends BaseTestCase {
 	public void testAssertCannotAddListNameNull() throws Exception {
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -48,14 +47,11 @@ public class AssertCannotAddListNameNullTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Dynamic Data Lists",
 			RuntimeVariables.replace("Dynamic Data Lists"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("//textarea[@id='_167_description_en_US']",
 			RuntimeVariables.replace("List Description"));
 		selenium.clickAt("link=Select", RuntimeVariables.replace("Select"));
@@ -99,7 +95,6 @@ public class AssertCannotAddListNameNullTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isPartialText("//td[2]/a", "Data Definition"));
 		selenium.clickAt("//td[2]/a",
 			RuntimeVariables.replace("Data Definition"));

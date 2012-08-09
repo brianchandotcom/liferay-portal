@@ -24,7 +24,6 @@ public class User1_AssertNotViewableBlogsAddEntryButtonTest extends BaseTestCase
 	public void testUser1_AssertNotViewableBlogsAddEntryButton()
 		throws Exception {
 		selenium.open("/web/site-name/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,7 +44,6 @@ public class User1_AssertNotViewableBlogsAddEntryButtonTest extends BaseTestCase
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementNotPresent(
 				"//input[@value='Add Blog Entry']"));
 	}

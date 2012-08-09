@@ -23,17 +23,14 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddFrontPageChildPageTest extends BaseTestCase {
 	public void testAddFrontPageChildPage() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Add Child Page"),
 			selenium.getText("//div[@class='article-actions']/span/a/span"));
 		selenium.clickAt("//div[@class='article-actions']/span/a/span",
 			RuntimeVariables.replace("Add Child Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_36_title']",
 			RuntimeVariables.replace("Wiki Front Page Child Page Title"));
 
@@ -142,7 +139,6 @@ public class AddFrontPageChildPageTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
@@ -152,7 +148,6 @@ public class AddFrontPageChildPageTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='child-pages']/ul/li/a",
 			RuntimeVariables.replace("Wiki Front Page Child Page Title"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Wiki Front Page Child Page Title"),
 			selenium.getText("//h1[@class='header-title']/span"));

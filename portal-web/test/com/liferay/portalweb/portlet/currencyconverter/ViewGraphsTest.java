@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewGraphsTest extends BaseTestCase {
 	public void testViewGraphs() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,7 +44,6 @@ public class ViewGraphsTest extends BaseTestCase {
 		selenium.clickAt("link=Currency Converter Test Page",
 			RuntimeVariables.replace("Currency Converter Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -66,18 +64,14 @@ public class ViewGraphsTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Convert']",
 			RuntimeVariables.replace("Convert"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=1y", RuntimeVariables.replace("1y"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isVisible("//td/img"));
 		selenium.clickAt("link=2y", RuntimeVariables.replace("2y"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isVisible("//td/img"));
 		selenium.clickAt("link=3m", RuntimeVariables.replace("3m"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isVisible("//td/img"));
 	}
 }

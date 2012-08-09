@@ -28,7 +28,6 @@ public class TearDownCouponTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -49,11 +48,9 @@ public class TearDownCouponTest extends BaseTestCase {
 				selenium.clickAt("link=Shopping Test Page",
 					RuntimeVariables.replace("Shopping Test Page"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("link=Coupons",
 					RuntimeVariables.replace("Coupons"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				boolean couponPresent = selenium.isElementPresent("_34_rowIds");
 
@@ -68,7 +65,6 @@ public class TearDownCouponTest extends BaseTestCase {
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Delete']"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected coupons.$"));
 

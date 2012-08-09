@@ -28,11 +28,9 @@ public class TearDownBlogsEntryTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("link=Blogs Test Page",
 					RuntimeVariables.replace("Blogs Test Page"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				boolean blogsEntry1Present = selenium.isElementPresent(
 						"link=Move to the Recycle Bin");
@@ -46,7 +44,6 @@ public class TearDownBlogsEntryTest extends BaseTestCase {
 				selenium.click(RuntimeVariables.replace(
 						"link=Move to the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				boolean blogsEntry2Present = selenium.isElementPresent(
 						"link=Move to the Recycle Bin");
@@ -60,7 +57,6 @@ public class TearDownBlogsEntryTest extends BaseTestCase {
 				selenium.click(RuntimeVariables.replace(
 						"link=Move to the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				boolean blogsEntry3Present = selenium.isElementPresent(
 						"link=Move to the Recycle Bin");
@@ -74,7 +70,6 @@ public class TearDownBlogsEntryTest extends BaseTestCase {
 				selenium.click(RuntimeVariables.replace(
 						"link=Move to the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				boolean blogsEntry4Present = selenium.isElementPresent(
 						"link=Move to the Recycle Bin");
@@ -88,7 +83,6 @@ public class TearDownBlogsEntryTest extends BaseTestCase {
 				selenium.click(RuntimeVariables.replace(
 						"link=Move to the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				boolean blogsEntry5Present = selenium.isElementPresent(
 						"link=Move to the Recycle Bin");
@@ -102,7 +96,6 @@ public class TearDownBlogsEntryTest extends BaseTestCase {
 				selenium.click(RuntimeVariables.replace(
 						"link=Move to the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 			case 2:
 			case 3:
@@ -110,7 +103,6 @@ public class TearDownBlogsEntryTest extends BaseTestCase {
 			case 5:
 			case 6:
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -150,11 +142,9 @@ public class TearDownBlogsEntryTest extends BaseTestCase {
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("link=Recycle Bin",
 					RuntimeVariables.replace("Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				boolean assetPresent = selenium.isElementPresent(
 						"//input[@name='_182_rowIds']");
@@ -173,7 +163,6 @@ public class TearDownBlogsEntryTest extends BaseTestCase {
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Empty the Recycle Bin']"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 			case 7:
 			case 100:

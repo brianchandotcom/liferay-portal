@@ -24,18 +24,15 @@ public class AddPortletScopeCurrentPageWCWebContentWCDTest extends BaseTestCase 
 	public void testAddPortletScopeCurrentPageWCWebContentWCD()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Web Content Display Test Page2",
 			RuntimeVariables.replace("Web Content Display Test Page2"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Web Content Display (Web Content Display Test Page2)"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		selenium.clickAt("//img[@alt='Add Web Content']",
 			RuntimeVariables.replace("Add Web Content"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_15_title_en_US']",
 			RuntimeVariables.replace("WC WebContent Title"));
 
@@ -159,7 +156,6 @@ public class AddPortletScopeCurrentPageWCWebContentWCDTest extends BaseTestCase 
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertFalse(selenium.isTextPresent(
 				"Select existing web content or add some web content to be displayed in this portlet."));
 		assertEquals(RuntimeVariables.replace("WC WebContent Content"),

@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SRl_AddPageSummaryTest extends BaseTestCase {
 	public void testSRl_AddPageSummary() throws Exception {
 		selenium.open("/web/socialrelationsn1/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
 
@@ -108,6 +107,5 @@ public class SRl_AddPageSummaryTest extends BaseTestCase {
 		selenium.clickAt("link=Summary Test Page",
 			RuntimeVariables.replace("Summary Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 	}
 }

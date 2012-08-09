@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class DeleteMicroblogsContentTest extends BaseTestCase {
 	public void testDeleteMicroblogsContent() throws Exception {
 		selenium.open("/user/joebloggs/so/dashboard");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,7 +44,6 @@ public class DeleteMicroblogsContentTest extends BaseTestCase {
 		selenium.clickAt("//nav/ul/li[contains(.,'Microblogs')]/a/span",
 			RuntimeVariables.replace("Microblogs"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Microblogs Post"),
 			selenium.getText("//div[@class='content']"));
 		assertEquals(RuntimeVariables.replace("Comment"),

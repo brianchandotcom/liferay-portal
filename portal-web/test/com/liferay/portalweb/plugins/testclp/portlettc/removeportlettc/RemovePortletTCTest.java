@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class RemovePortletTCTest extends BaseTestCase {
 	public void testRemovePortletTC() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,7 +43,6 @@ public class RemovePortletTCTest extends BaseTestCase {
 		selenium.clickAt("link=Test CLP Test Page",
 			RuntimeVariables.replace("Test CLP Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

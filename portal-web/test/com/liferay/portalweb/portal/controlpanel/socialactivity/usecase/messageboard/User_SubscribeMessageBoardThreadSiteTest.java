@@ -24,7 +24,6 @@ public class User_SubscribeMessageBoardThreadSiteTest extends BaseTestCase {
 	public void testUser_SubscribeMessageBoardThreadSite()
 		throws Exception {
 		selenium.open("/web/site-name/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,7 +44,6 @@ public class User_SubscribeMessageBoardThreadSiteTest extends BaseTestCase {
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -91,9 +89,7 @@ public class User_SubscribeMessageBoardThreadSiteTest extends BaseTestCase {
 		selenium.clickAt("//a[@id='_19_mbThreadsSearchContainer_1_menu_subscribe']",
 			RuntimeVariables.replace("Subscribe"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.open("/web/site-name/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -114,7 +110,6 @@ public class User_SubscribeMessageBoardThreadSiteTest extends BaseTestCase {
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

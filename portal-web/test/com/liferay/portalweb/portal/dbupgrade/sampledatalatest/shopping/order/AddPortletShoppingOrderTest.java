@@ -23,11 +23,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddPortletShoppingOrderTest extends BaseTestCase {
 	public void testAddPortletShoppingOrder() throws Exception {
 		selenium.open("/web/shopping-order-community/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Shopping Order Page",
 			RuntimeVariables.replace("Shopping Order Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
 

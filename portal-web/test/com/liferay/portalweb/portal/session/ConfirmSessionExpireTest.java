@@ -83,7 +83,6 @@ public class ConfirmSessionExpireTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"link=Session Expiration Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Sign In"),
 			selenium.getText("sign-in"));
 	}

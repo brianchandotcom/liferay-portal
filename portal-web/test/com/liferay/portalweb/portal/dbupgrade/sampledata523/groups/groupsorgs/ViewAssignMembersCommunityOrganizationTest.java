@@ -24,7 +24,6 @@ public class ViewAssignMembersCommunityOrganizationTest extends BaseTestCase {
 	public void testViewAssignMembersCommunityOrganization()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,17 +44,14 @@ public class ViewAssignMembersCommunityOrganizationTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Communities",
 			RuntimeVariables.replace("Communities"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_134_name']",
 			RuntimeVariables.replace("Community Groups Orgs"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Community Groups Orgs"),
 			selenium.getText("//tr[3]/td[1]"));
 		assertEquals(RuntimeVariables.replace("Actions"),
@@ -85,13 +81,11 @@ public class ViewAssignMembersCommunityOrganizationTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Organizations"),
 			selenium.getText("//li[@id='_134_tabs1organizationsTabsId']/a"));
 		selenium.clickAt("//li[@id='_134_tabs1organizationsTabsId']/a",
 			RuntimeVariables.replace("Organizations"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isChecked("//input[@name='_134_rowIds']"));
 		assertEquals(RuntimeVariables.replace("Organization Groups Orgs"),
 			selenium.getText("//div[5]/table/tbody/tr[3]/td[2]"));

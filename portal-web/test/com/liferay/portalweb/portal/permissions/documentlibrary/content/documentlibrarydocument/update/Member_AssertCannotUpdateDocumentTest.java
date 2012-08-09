@@ -24,7 +24,6 @@ public class Member_AssertCannotUpdateDocumentTest extends BaseTestCase {
 	public void testMember_AssertCannotUpdateDocument()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,11 +44,9 @@ public class Member_AssertCannotUpdateDocumentTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Documents and Media",
 			RuntimeVariables.replace("Documents and Media"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementNotPresent("link=Edit"));
 		assertFalse(selenium.isVisible("link=Move"));
 		assertFalse(selenium.isVisible("link=Checkout"));
@@ -59,7 +56,6 @@ public class Member_AssertCannotUpdateDocumentTest extends BaseTestCase {
 		selenium.clickAt("//a[contains(@class,'document-link')]/span[@class='entry-title']",
 			RuntimeVariables.replace("TestDocument.txt"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Download"),
 			selenium.getText("//div[@id='_20_fileEntryToolbar']/span/button[1]"));
 		assertTrue(selenium.isElementNotPresent(

@@ -24,7 +24,6 @@ public class ViewPortletApplicationAdapterNoneTest extends BaseTestCase {
 	public void testViewPortletApplicationAdapterNone()
 		throws Exception {
 		selenium.open("/web/community-name/public-page");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,7 +44,6 @@ public class ViewPortletApplicationAdapterNoneTest extends BaseTestCase {
 		selenium.clickAt("link=Public Page",
 			RuntimeVariables.replace("Public Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

@@ -28,7 +28,6 @@ public class AddUserOrganizationUserTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -49,11 +48,9 @@ public class AddUserOrganizationUserTest extends BaseTestCase {
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("link=Users and Organizations",
 					RuntimeVariables.replace("Users and Organizations"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("link=Add", RuntimeVariables.replace("Add"));
 
 				for (int second = 0;; second++) {
@@ -79,7 +76,6 @@ public class AddUserOrganizationUserTest extends BaseTestCase {
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li/a"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.select("//select[@id='_125_prefixId']",
 					RuntimeVariables.replace("label=Mr."));
 				selenium.type("//input[@id='_125_screenName']",
@@ -105,7 +101,6 @@ public class AddUserOrganizationUserTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -165,7 +160,6 @@ public class AddUserOrganizationUserTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -249,14 +243,12 @@ public class AddUserOrganizationUserTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("Selenium"),
 					selenium.getText("//tr[3]/td[1]"));
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -277,10 +269,8 @@ public class AddUserOrganizationUserTest extends BaseTestCase {
 				selenium.clickAt("link=Sign Out",
 					RuntimeVariables.replace("Sign Out"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isVisible("//input[@value='Sign In']"));
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -319,7 +309,6 @@ public class AddUserOrganizationUserTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Sign In']",
 					RuntimeVariables.replace("Sign In"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				boolean iAgreeVisible1 = selenium.isElementPresent(
 						"//span/input");
@@ -333,7 +322,6 @@ public class AddUserOrganizationUserTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='I Agree']",
 					RuntimeVariables.replace("I Agree"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 			case 3:
 				Thread.sleep(5000);
@@ -342,7 +330,6 @@ public class AddUserOrganizationUserTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				boolean passwordReminderVisible1 = selenium.isElementPresent(
 						"reminderQueryAnswer");
@@ -361,11 +348,9 @@ public class AddUserOrganizationUserTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Save']",
 					RuntimeVariables.replace("Save"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 			case 4:
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -386,10 +371,8 @@ public class AddUserOrganizationUserTest extends BaseTestCase {
 				selenium.clickAt("link=Sign Out",
 					RuntimeVariables.replace("Sign Out"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isVisible("//input[@value='Sign In']"));
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -428,7 +411,6 @@ public class AddUserOrganizationUserTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Sign In']",
 					RuntimeVariables.replace("Sign In"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 			case 100:
 				label = -1;

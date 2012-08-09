@@ -24,7 +24,6 @@ public class ImportExportLARPrivatePagesSiteBWCTest extends BaseTestCase {
 	public void testImportExportLARPrivatePagesSiteBWC()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,29 +44,23 @@ public class ImportExportLARPrivatePagesSiteBWCTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_134_name']",
 			RuntimeVariables.replace("LAR Import Site"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("LAR Import Site"),
 			selenium.getText("//td/a"));
 		selenium.clickAt("//td/a", RuntimeVariables.replace("LAR Import Site"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Site Pages",
 			RuntimeVariables.replace("Site Pages"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Private Pages",
 			RuntimeVariables.replace("Private Pages"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Import"),
 			selenium.getText("//button[3]"));
 		selenium.clickAt("//button[3]", RuntimeVariables.replace("Import"));
@@ -132,7 +125,6 @@ public class ImportExportLARPrivatePagesSiteBWCTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Import']",
 			RuntimeVariables.replace("Import"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class DeleteFrontPageAttachmentTest extends BaseTestCase {
 	public void testDeleteFrontPageAttachment() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,20 +43,17 @@ public class DeleteFrontPageAttachmentTest extends BaseTestCase {
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("1 Attachment"),
 			selenium.getText("//div[6]/div[1]/span[2]/a/span"));
 		selenium.clickAt("//div[6]/div[1]/span[2]/a/span",
 			RuntimeVariables.replace("1 Attachment"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Wiki_Attachment.jpg"),
 			selenium.getText("//td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Delete"),
 			selenium.getText("//td[3]/span/a/span"));
 		selenium.click(RuntimeVariables.replace("//td[3]/span/a/span"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.getConfirmation()
 						   .matches("^Are you sure you want to delete this[\\s\\S]$"));
 
@@ -108,7 +104,6 @@ public class DeleteFrontPageAttachmentTest extends BaseTestCase {
 			selenium.getText("//div[@class='portlet-msg-info']"));
 		assertTrue(selenium.isElementNotPresent("//td[1]/a"));
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -129,7 +124,6 @@ public class DeleteFrontPageAttachmentTest extends BaseTestCase {
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("0 Attachments"),
 			selenium.getText("//div[6]/div[1]/span[2]/a/span"));
 		assertFalse(selenium.isTextPresent("1 Attachment"));

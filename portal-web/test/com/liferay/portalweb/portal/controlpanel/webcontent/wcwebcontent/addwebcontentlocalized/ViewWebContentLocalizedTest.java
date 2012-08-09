@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewWebContentLocalizedTest extends BaseTestCase {
 	public void testViewWebContentLocalized() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,17 +43,14 @@ public class ViewWebContentLocalizedTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Hello World Localized Article"),
 			selenium.getText("//td[3]/a"));
 		selenium.clickAt("//td[3]/a",
 			RuntimeVariables.replace("Hello World Localized Article"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		Thread.sleep(5000);
 		assertEquals("Hello World Localized Article",
 			selenium.getValue("//input[@id='_15_title_en_US']"));

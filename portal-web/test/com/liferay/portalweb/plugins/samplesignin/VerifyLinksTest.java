@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class VerifyLinksTest extends BaseTestCase {
 	public void testVerifyLinks() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -43,7 +42,6 @@ public class VerifyLinksTest extends BaseTestCase {
 
 		selenium.click(RuntimeVariables.replace("link=Sample Sign In Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -67,7 +65,6 @@ public class VerifyLinksTest extends BaseTestCase {
 		selenium.clickAt("//section/div/div/div/a",
 			RuntimeVariables.replace("Joe Bloggs"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals("test@liferay.com", selenium.getValue("_2_emailAddress"));
 	}
 }

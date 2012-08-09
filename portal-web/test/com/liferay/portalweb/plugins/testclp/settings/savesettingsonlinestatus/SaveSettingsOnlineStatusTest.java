@@ -28,7 +28,6 @@ public class SaveSettingsOnlineStatusTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -49,7 +48,6 @@ public class SaveSettingsOnlineStatusTest extends BaseTestCase {
 				selenium.clickAt("link=Test CLP Test Page",
 					RuntimeVariables.replace("Test CLP Test Page"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("true"),
 					selenium.getText(
 						"//div[@class='portlet-body']/table/tbody/tr[2]/td[4]"));
@@ -110,7 +108,6 @@ public class SaveSettingsOnlineStatusTest extends BaseTestCase {
 				assertTrue(selenium.isElementNotPresent(
 						"//li[@class='chat-settings saved']"));
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -131,7 +128,6 @@ public class SaveSettingsOnlineStatusTest extends BaseTestCase {
 				selenium.clickAt("link=Test CLP Test Page",
 					RuntimeVariables.replace("Test CLP Test Page"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("false"),
 					selenium.getText(
 						"//div[@class='portlet-body']/table/tbody/tr[2]/td[4]"));

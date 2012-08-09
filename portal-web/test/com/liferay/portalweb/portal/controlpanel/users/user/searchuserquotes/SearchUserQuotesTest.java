@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SearchUserQuotesTest extends BaseTestCase {
 	public void testSearchUserQuotes() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,23 +43,19 @@ public class SearchUserQuotesTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Users and Organizations",
 			RuntimeVariables.replace("Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Search All Users"),
 			selenium.getText("//a[@id='_125_allUsersLink']"));
 		selenium.clickAt("//a[@id='_125_allUsersLink']",
 			RuntimeVariables.replace("Search All Users"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("//input[@name='_125_keywords']",
 			RuntimeVariables.replace("\"john smith\""));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isTextPresent("johnsmith"));
 		assertFalse(selenium.isTextPresent("johndoe"));
 		assertFalse(selenium.isTextPresent("joesmith"));
@@ -71,7 +66,6 @@ public class SearchUserQuotesTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isTextPresent("johndoe"));
 		assertFalse(selenium.isTextPresent("johnsmith"));
 		assertFalse(selenium.isTextPresent("joesmith"));
@@ -82,7 +76,6 @@ public class SearchUserQuotesTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isTextPresent("joesmith"));
 		assertFalse(selenium.isTextPresent("johnsmith"));
 		assertFalse(selenium.isTextPresent("johndoe"));
@@ -93,7 +86,6 @@ public class SearchUserQuotesTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isTextPresent("janesmith"));
 		assertFalse(selenium.isTextPresent("johnsmith"));
 		assertFalse(selenium.isTextPresent("joesmith"));
@@ -104,7 +96,6 @@ public class SearchUserQuotesTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isTextPresent("janedoe"));
 		assertFalse(selenium.isTextPresent("johnsmith"));
 		assertFalse(selenium.isTextPresent("joesmith"));
@@ -115,7 +106,6 @@ public class SearchUserQuotesTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isTextPresent("janedoe"));
 		assertTrue(selenium.isTextPresent("johnsmith"));
 		assertFalse(selenium.isTextPresent("joesmith"));
@@ -126,7 +116,6 @@ public class SearchUserQuotesTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isTextPresent("johndoe"));
 		assertFalse(selenium.isTextPresent("joesmith"));
 		assertFalse(selenium.isTextPresent("johnsmith"));
@@ -137,7 +126,6 @@ public class SearchUserQuotesTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isTextPresent("joesmith"));
 		assertFalse(selenium.isTextPresent("janedoe"));
 		assertFalse(selenium.isTextPresent("johnsmith"));
@@ -148,7 +136,6 @@ public class SearchUserQuotesTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isTextPresent("janesmith"));
 		assertFalse(selenium.isTextPresent("joesmith"));
 		assertFalse(selenium.isTextPresent("johnsmith"));
@@ -159,7 +146,6 @@ public class SearchUserQuotesTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isTextPresent("johnsmith"));
 		assertTrue(selenium.isTextPresent("johndoe"));
 		assertFalse(selenium.isTextPresent("janesmith"));
@@ -170,7 +156,6 @@ public class SearchUserQuotesTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isTextPresent("johnsmith"));
 		assertTrue(selenium.isTextPresent("janedoe"));
 		assertTrue(selenium.isTextPresent("joesmith"));
@@ -181,7 +166,6 @@ public class SearchUserQuotesTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isTextPresent("johnsmith"));
 		assertTrue(selenium.isTextPresent("janedoe"));
 		assertTrue(selenium.isTextPresent("joesmith"));
@@ -192,7 +176,6 @@ public class SearchUserQuotesTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isTextPresent("janesmith"));
 		assertTrue(selenium.isTextPresent("johnsmith"));
 		assertFalse(selenium.isTextPresent("johndoe"));

@@ -25,7 +25,6 @@ public class ViewWSRPClickToInvokeResourceServingPhaseDPTest
 	public void testViewWSRPClickToInvokeResourceServingPhaseDP()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -46,7 +45,6 @@ public class ViewWSRPClickToInvokeResourceServingPhaseDPTest
 		selenium.clickAt("link=Test Misc Test Page",
 			RuntimeVariables.replace("Test Misc Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Portlet Response (ResourceResponse)"),
 			selenium.getText("//div[@class='portlet-body']/h3[4]"));
@@ -56,7 +54,6 @@ public class ViewWSRPClickToInvokeResourceServingPhaseDPTest
 			RuntimeVariables.replace("Download File"));
 		selenium.downloadTempFile("logo.png");
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -77,7 +74,6 @@ public class ViewWSRPClickToInvokeResourceServingPhaseDPTest
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
@@ -107,13 +103,11 @@ public class ViewWSRPClickToInvokeResourceServingPhaseDPTest
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.uploadTempFile("//input[@id='_20_file']",
 			RuntimeVariables.replace("logo.png"));
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -142,7 +136,6 @@ public class ViewWSRPClickToInvokeResourceServingPhaseDPTest
 		selenium.clickAt("//a[@class='document-link']/span[2]",
 			RuntimeVariables.replace("logo.png"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("logo.png"),
 			selenium.getText("//h2[@class='document-title']"));
 

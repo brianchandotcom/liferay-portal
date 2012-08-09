@@ -24,7 +24,6 @@ public class User_ViewOffPermissionsBlogsGuestCommunityTest extends BaseTestCase
 	public void testUser_ViewOffPermissionsBlogsGuestCommunity()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,7 +44,6 @@ public class User_ViewOffPermissionsBlogsGuestCommunityTest extends BaseTestCase
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementNotPresent(
 				"//div[@class='subscribe']/span[2]/a/span"));
 		assertTrue(selenium.isElementNotPresent(

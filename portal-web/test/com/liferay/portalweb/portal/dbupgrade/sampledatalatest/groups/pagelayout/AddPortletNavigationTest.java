@@ -23,11 +23,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddPortletNavigationTest extends BaseTestCase {
 	public void testAddPortletNavigation() throws Exception {
 		selenium.open("/web/group-page-layout-community/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Page Layout Page",
 			RuntimeVariables.replace("Page Layout Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
 

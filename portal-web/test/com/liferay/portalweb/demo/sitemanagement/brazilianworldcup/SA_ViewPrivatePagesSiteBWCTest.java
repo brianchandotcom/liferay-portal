@@ -66,7 +66,6 @@ public class SA_ViewPrivatePagesSiteBWCTest extends BaseTestCase {
 				selenium.clickAt("link=Accommodations",
 					RuntimeVariables.replace("Accommodations"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("Accommodations"),
 					selenium.getText("//nav/ul/li[3]/span/a"));
 				assertEquals(RuntimeVariables.replace("Powered By Liferay"),
@@ -74,7 +73,6 @@ public class SA_ViewPrivatePagesSiteBWCTest extends BaseTestCase {
 				assertTrue(selenium.isVisible("link=Maps"));
 				selenium.clickAt("link=Maps", RuntimeVariables.replace("Maps"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("Maps"),
 					selenium.getText("//nav/ul/li[3]/span/a"));
 				assertEquals(RuntimeVariables.replace("Powered By Liferay"),
@@ -101,13 +99,11 @@ public class SA_ViewPrivatePagesSiteBWCTest extends BaseTestCase {
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("World Cup - Brazil 2014"),
 					selenium.getText("//strong/a/span"));
 				assertEquals(RuntimeVariables.replace("Site Settings"),
 					selenium.getText("link=Site Settings"));
 				selenium.open("http://www.baker.com:8080");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("//nav[@id='navigation']",
 					RuntimeVariables.replace("Navigation"));
 
@@ -171,7 +167,6 @@ public class SA_ViewPrivatePagesSiteBWCTest extends BaseTestCase {
 				selenium.clickAt("link=Web Content Display Test Page",
 					RuntimeVariables.replace("Web Content Display Test Page"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.isPartialText(
 						"//a[@id='_145_addApplication']", "More"));
 				selenium.clickAt("//a[@id='_145_addApplication']",
@@ -342,7 +337,6 @@ public class SA_ViewPrivatePagesSiteBWCTest extends BaseTestCase {
 					selenium.getText("//button[3]"));
 				selenium.click(RuntimeVariables.replace("//button[3]"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected page[\\s\\S]$"));
 				assertEquals(RuntimeVariables.replace(

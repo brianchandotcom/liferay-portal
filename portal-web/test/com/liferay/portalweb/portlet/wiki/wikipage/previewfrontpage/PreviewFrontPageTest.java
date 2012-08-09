@@ -23,11 +23,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class PreviewFrontPageTest extends BaseTestCase {
 	public void testPreviewFrontPage() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Wiki Test Page",
 			RuntimeVariables.replace("Wiki Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"This page is empty. Edit it to add some text."),
 			selenium.getText("//div[@class='wiki-body']/div/a"));
@@ -35,7 +33,6 @@ public class PreviewFrontPageTest extends BaseTestCase {
 			RuntimeVariables.replace(
 				"This page is empty. Edit it to add some text."));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -141,13 +138,11 @@ public class PreviewFrontPageTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Preview']",
 			RuntimeVariables.replace("Preview"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Wiki FrontPage Content"),
 			selenium.getText("//div[@class='preview']/div/p"));
 		selenium.clickAt("//input[@value='Cancel']",
 			RuntimeVariables.replace("Cancel"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"This page is empty. Edit it to add some text."),
 			selenium.getText("//div[@class='portlet-msg-info']"));

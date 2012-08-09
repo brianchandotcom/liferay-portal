@@ -24,7 +24,6 @@ public class AddWHEntryContentViewableByConnectionsTest extends BaseTestCase {
 	public void testAddWHEntryContentViewableByConnections()
 		throws Exception {
 		selenium.open("/user/joebloggs/so/dashboard");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Microblogs Status Update"),
 			selenium.getText("//span[@class='portlet-title-default']"));
 		assertTrue(selenium.isElementPresent(

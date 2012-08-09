@@ -23,17 +23,14 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddDMFolderDocument3DMDTest extends BaseTestCase {
 	public void testAddDMFolderDocument3DMD() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Documents and Media Display Test Page",
 			RuntimeVariables.replace("Documents and Media Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("DM Folder Name"),
 			selenium.getText("//tr[3]/td[1]/a[2]/strong"));
 		selenium.clickAt("//tr[3]/td[1]/a[2]/strong",
 			RuntimeVariables.replace("DM Folder Name"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("DM Folder Name"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("Add Document"),
@@ -96,7 +93,6 @@ public class AddDMFolderDocument3DMDTest extends BaseTestCase {
 		selenium.clickAt("//tr[3]/td[1]/a",
 			RuntimeVariables.replace("Basic Document"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.selectFrame("relative=top");
 		selenium.uploadCommonFile("//span[@class='aui-field aui-field-text']/span/span/input[contains(@id,'_file')]",
 			RuntimeVariables.replace("Document_3.txt"));
@@ -105,7 +101,6 @@ public class AddDMFolderDocument3DMDTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

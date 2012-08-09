@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SOUs_FollowCCUserTest extends BaseTestCase {
 	public void testSOUs_FollowCCUser() throws Exception {
 		selenium.open("/user/socialoffice01/so/dashboard/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,7 +44,6 @@ public class SOUs_FollowCCUserTest extends BaseTestCase {
 		selenium.clickAt("//nav/ul/li[contains(.,'Contacts Center')]/a/span",
 			RuntimeVariables.replace("Contacts Center"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isVisible(
 				"//input[@id='_1_WAR_contactsportlet_name']"));
 		assertTrue(selenium.isVisible(

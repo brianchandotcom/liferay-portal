@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SA_RemoveEditFolderPermissionsTest extends BaseTestCase {
 	public void testSA_RemoveEditFolderPermissions() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,7 +44,6 @@ public class SA_RemoveEditFolderPermissionsTest extends BaseTestCase {
 		selenium.clickAt("link=Media Gallery Permissions Test Page",
 			RuntimeVariables.replace("Media Gallery Permissions Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Media Gallery Temporary Folder Edited"),
 			selenium.getText(
@@ -53,14 +51,12 @@ public class SA_RemoveEditFolderPermissionsTest extends BaseTestCase {
 		selenium.clickAt("//a[@title='Media Gallery Temporary Folder Edited - ']",
 			RuntimeVariables.replace("Media Gallery Temporary Folder Edited"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Permissions"),
 			selenium.getText(
 				"//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[3]/a"));
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list lfr-menu-expanded align-right null']/ul/li[3]/a",
 			RuntimeVariables.replace("Permissions"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isChecked("//tr[5]/td[8]/input"));
 		selenium.clickAt("//tr[5]/td[8]/input",
 			RuntimeVariables.replace("Media Gallery Update"));
@@ -68,7 +64,6 @@ public class SA_RemoveEditFolderPermissionsTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

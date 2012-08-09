@@ -23,11 +23,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class MoveDMSubfolderToFolder2Test extends BaseTestCase {
 	public void testMoveDMSubfolderToFolder2() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("DM Folder1 Name"),
 			selenium.getText(
 				"xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]"));
@@ -86,7 +84,6 @@ public class MoveDMSubfolderToFolder2Test extends BaseTestCase {
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a",
 			RuntimeVariables.replace("Move"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Home"),
 			selenium.getText("//a[@id='_20_folderName']"));
 		assertEquals(RuntimeVariables.replace("DM Folder1 Subfolder Name"),
@@ -117,7 +114,6 @@ public class MoveDMSubfolderToFolder2Test extends BaseTestCase {
 			selenium.getText("//tr[4]/td[1]/a"));
 		selenium.click(RuntimeVariables.replace("//tr[4]/td[1]/a"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.click("//input[@value='Choose This Folder']");
 		Thread.sleep(5000);
 		selenium.selectWindow("null");
@@ -145,7 +141,6 @@ public class MoveDMSubfolderToFolder2Test extends BaseTestCase {
 		selenium.clickAt("//input[@value='Move']",
 			RuntimeVariables.replace("Move"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

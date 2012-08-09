@@ -28,7 +28,6 @@ public class SOUs_AddExpertiseProfileTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/socialoffice01/so/profile");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {

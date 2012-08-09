@@ -24,7 +24,6 @@ public class ConfigurePortletScopeCurrentPageTest extends BaseTestCase {
 	public void testConfigurePortletScopeCurrentPage()
 		throws Exception {
 		selenium.open("/web/group-page-scope-community/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,7 +44,6 @@ public class ConfigurePortletScopeCurrentPageTest extends BaseTestCase {
 		selenium.clickAt("link=Blogs Page Scope Current Page",
 			RuntimeVariables.replace("Blogs Page Scope Current Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		Thread.sleep(5000);
 		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
 
@@ -89,7 +87,6 @@ public class ConfigurePortletScopeCurrentPageTest extends BaseTestCase {
 
 		selenium.clickAt("link=Scope", RuntimeVariables.replace("Scope"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.select("//select[@id='_86_scopeType']",
 			RuntimeVariables.replace("label=Select Layout"));
 		selenium.select("//select[@id='_86_scopeLayoutUuid']",
@@ -98,7 +95,6 @@ public class ConfigurePortletScopeCurrentPageTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

@@ -25,7 +25,6 @@ public class ViewWSRPClickToInvokeResourceServingPhaseRDPTest
 	public void testViewWSRPClickToInvokeResourceServingPhaseRDP()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -46,7 +45,6 @@ public class ViewWSRPClickToInvokeResourceServingPhaseRDPTest
 		selenium.clickAt("link=WSRP Remote Test Misc Test Page",
 			RuntimeVariables.replace("WSRP Remote Test Misc Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Portlet Response (ResourceResponse)"),
 			selenium.getText("//div[@class='portlet-body']/h3[4]"));
@@ -56,7 +54,6 @@ public class ViewWSRPClickToInvokeResourceServingPhaseRDPTest
 			RuntimeVariables.replace("Download File"));
 		selenium.downloadTempFile("logo(1).png");
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -77,7 +74,6 @@ public class ViewWSRPClickToInvokeResourceServingPhaseRDPTest
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Add"),
 			selenium.getText("//span[@title='Add']/ul/li/strong/a/span"));
@@ -107,13 +103,11 @@ public class ViewWSRPClickToInvokeResourceServingPhaseRDPTest
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.uploadTempFile("//input[@id='_20_file']",
 			RuntimeVariables.replace("logo(1).png"));
 		selenium.clickAt("//input[@value='Publish']",
 			RuntimeVariables.replace("Publish"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -146,7 +140,6 @@ public class ViewWSRPClickToInvokeResourceServingPhaseRDPTest
 		selenium.clickAt("xPath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[1]",
 			RuntimeVariables.replace("logo(1).png"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("logo(1).png"),
 			selenium.getText("//h2[@class='document-title']"));
 

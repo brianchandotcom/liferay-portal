@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SRq_ViewRequestsTest extends BaseTestCase {
 	public void testSRq_ViewRequests() throws Exception {
 		selenium.open("/web/socialrequestsn1/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,7 +43,6 @@ public class SRq_ViewRequestsTest extends BaseTestCase {
 		selenium.clickAt("link=Requests Test Page",
 			RuntimeVariables.replace("Requests Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"socialrequestfn2 socialrequestmn2 socialrequestln2 wants to be your friend."),
 			selenium.getText("//td[2]/div"));

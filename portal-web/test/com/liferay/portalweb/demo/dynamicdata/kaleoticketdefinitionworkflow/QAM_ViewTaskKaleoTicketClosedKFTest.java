@@ -23,9 +23,7 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class QAM_ViewTaskKaleoTicketClosedKFTest extends BaseTestCase {
 	public void testQAM_ViewTaskKaleoTicketClosedKF() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -46,13 +44,11 @@ public class QAM_ViewTaskKaleoTicketClosedKFTest extends BaseTestCase {
 		selenium.clickAt("link=Kaleo Forms Test Page",
 			RuntimeVariables.replace("Kaleo Forms Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Ticket Process"),
 			selenium.getText("//div[@id='workflowMyTasksPanel']//tr[3]/td[2]"));
 		selenium.clickAt("//div[@id='workflowMyTasksPanel']//tr[3]/td[2]/a",
 			RuntimeVariables.replace("Ticket Process"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Priority Major"),
 			selenium.getText("//div[@class='lfr-panel-content']/div[1]"));
 		assertEquals(RuntimeVariables.replace("Component Kaleo"),
@@ -105,7 +101,6 @@ public class QAM_ViewTaskKaleoTicketClosedKFTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='aui-panel-content aui-dialog-content yui3-widget-stdmod']/div[3]/span/span/button[1]"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

@@ -28,7 +28,6 @@ public class AdvancedSearchWebContentStatusTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -49,11 +48,9 @@ public class AdvancedSearchWebContentStatusTest extends BaseTestCase {
 				selenium.clickAt("link=Control Panel",
 					RuntimeVariables.replace("Control Panel"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.clickAt("link=Web Content",
 					RuntimeVariables.replace("Web Content"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				String webContentID = selenium.getText("//td[2]/a");
 				RuntimeVariables.setValue("webContentID", webContentID);
@@ -93,7 +90,6 @@ public class AdvancedSearchWebContentStatusTest extends BaseTestCase {
 				selenium.clickAt("//div[2]/span[2]/span/input",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.select("//select[@id='_15_status']",
 					RuntimeVariables.replace("label="));
 				assertEquals(RuntimeVariables.replace("Web Content Name"),
@@ -103,7 +99,6 @@ public class AdvancedSearchWebContentStatusTest extends BaseTestCase {
 				selenium.clickAt("//div[2]/span[2]/span/input",
 					RuntimeVariables.replace("Search"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.select("//select[@id='_15_status']",
 					RuntimeVariables.replace("label="));
 				assertTrue(selenium.isElementNotPresent("link=Web Content Name"));

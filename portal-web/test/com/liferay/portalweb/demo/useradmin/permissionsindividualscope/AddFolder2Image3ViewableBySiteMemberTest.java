@@ -29,7 +29,6 @@ public class AddFolder2Image3ViewableBySiteMemberTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -51,7 +50,6 @@ public class AddFolder2Image3ViewableBySiteMemberTest extends BaseTestCase {
 				selenium.clickAt("link=Documents and Media Test Page",
 					RuntimeVariables.replace("Documents and Media Test Page"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("DL Folder 2 Name"),
 					selenium.getText(
 						"xpath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]"));
@@ -106,7 +104,6 @@ public class AddFolder2Image3ViewableBySiteMemberTest extends BaseTestCase {
 				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[4]/a",
 					RuntimeVariables.replace("Basic Document"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				selenium.uploadCommonFile("//input[@id='_20_file']",
 					RuntimeVariables.replace("Document_3.jpg"));
 				selenium.type("//input[@id='_20_title']",
@@ -187,7 +184,6 @@ public class AddFolder2Image3ViewableBySiteMemberTest extends BaseTestCase {
 				selenium.clickAt("xpath=(//a[contains(@class,'document-link')]/span[@class='entry-title'])[2]",
 					RuntimeVariables.replace("DL Folder 2 Image 3 Title"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {

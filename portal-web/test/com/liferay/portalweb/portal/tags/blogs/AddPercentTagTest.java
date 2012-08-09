@@ -28,7 +28,6 @@ public class AddPercentTagTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -49,19 +48,16 @@ public class AddPercentTagTest extends BaseTestCase {
 				selenium.clickAt("link=Blogs Tags Test Page",
 					RuntimeVariables.replace("Blogs Tags Test Page"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("Tags Blog Entry1 Title"),
 					selenium.getText(
 						"xPath=(//div[@class='entry-title']/h2/a)[3]"));
 				selenium.clickAt("xPath=(//div[@class='entry-title']/h2/a)[3]",
 					RuntimeVariables.replace("Tags Blog Entry1 Title"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("Edit"),
 					selenium.getText("//span/a/span"));
 				selenium.click(RuntimeVariables.replace("//span/a/span"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -121,7 +117,6 @@ public class AddPercentTagTest extends BaseTestCase {
 				selenium.clickAt("//input[@value='Publish']",
 					RuntimeVariables.replace("Publish"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace(
 						"Your request failed to complete."),
 					selenium.getText(

@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewImportMBLARTest extends BaseTestCase {
 	public void testViewImportMBLAR() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,7 +43,6 @@ public class ViewImportMBLARTest extends BaseTestCase {
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"T\u00e9st Cat\u00e9gory\nThis is a t\u00e9st cat\u00e9gory!"),
 			selenium.getText("//tr[3]/td[1]/a"));
@@ -67,7 +65,6 @@ public class ViewImportMBLARTest extends BaseTestCase {
 			RuntimeVariables.replace(
 				"T\u00e9st Cat\u00e9gory\nThis is a t\u00e9st cat\u00e9gory!"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("T\u00e9st Subcat\u00e9gory"),
 			selenium.getText("//td[1]/a/strong"));
 		assertEquals(RuntimeVariables.replace("1"),
@@ -79,7 +76,6 @@ public class ViewImportMBLARTest extends BaseTestCase {
 		selenium.clickAt("//td[1]/a/strong",
 			RuntimeVariables.replace("T\u00e9st Subcat\u00e9gory"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"S\u00e9cond T\u00e9st Subcat\u00e9gory"),
 			selenium.getText("//td[1]/a/strong"));
@@ -102,12 +98,10 @@ public class ViewImportMBLARTest extends BaseTestCase {
 		selenium.clickAt("//div[2]/div[2]/div/div[1]/div/table/tbody/tr[3]/td[1]/a",
 			RuntimeVariables.replace("T\u00e9st M\u00e9ssag\u00e9 Edited"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"This is a t\u00e9st m\u00e9ssag\u00e9 edited!"),
 			selenium.getText("//div[@class='thread-body']"));
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -128,7 +122,6 @@ public class ViewImportMBLARTest extends BaseTestCase {
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"T\u00e9st Cat\u00e9gory\nThis is a t\u00e9st cat\u00e9gory!"),
 			selenium.getText("//td[1]/a"));
@@ -136,13 +129,11 @@ public class ViewImportMBLARTest extends BaseTestCase {
 			RuntimeVariables.replace(
 				"T\u00e9st Cat\u00e9gory\nThis is a t\u00e9st cat\u00e9gory!"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("T\u00e9st Subcat\u00e9gory"),
 			selenium.getText("//a/strong"));
 		selenium.clickAt("//a/strong",
 			RuntimeVariables.replace("T\u00e9st Subcat\u00e9gory"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("RE: T\u00e9st M\u00e9ssag\u00e9"),
 			selenium.getText("//tr[4]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
@@ -152,7 +143,6 @@ public class ViewImportMBLARTest extends BaseTestCase {
 		selenium.clickAt("//tr[4]/td[1]/a",
 			RuntimeVariables.replace("RE: T\u00e9st M\u00e9ssag\u00e9"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"This is a t\u00e9st r\u00e9ply m\u00e9ssag\u00e9!"),
 			selenium.getText("xPath=(//div[@class='thread-body'])[1]"));
@@ -161,7 +151,6 @@ public class ViewImportMBLARTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("This is a third reply message."),
 			selenium.getText("xPath=(//div[@class='thread-body'])[3]"));
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -182,14 +171,12 @@ public class ViewImportMBLARTest extends BaseTestCase {
 		selenium.clickAt("link=Message Boards Test Page",
 			RuntimeVariables.replace("Message Boards Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"T\u00e9st Cat\u00e9gory Edit\u00e9d"),
 			selenium.getText("//tr[4]/td[1]/a/strong"));
 		selenium.clickAt("//tr[4]/td[1]/a/strong",
 			RuntimeVariables.replace("T\u00e9st Cat\u00e9gory Edit\u00e9d"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Moved to Sujr"),
 			selenium.getText("//td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
@@ -198,7 +185,6 @@ public class ViewImportMBLARTest extends BaseTestCase {
 			selenium.getText("//td[4]/a"));
 		selenium.clickAt("//td[1]/a", RuntimeVariables.replace("Moved to Sujr"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Trust and paths will be straightened."),
 			selenium.getText("//div[@class='thread-body']"));

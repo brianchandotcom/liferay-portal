@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class TearDownLanguageTest extends BaseTestCase {
 	public void testTearDownLanguage() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,11 +43,9 @@ public class TearDownLanguageTest extends BaseTestCase {
 		selenium.clickAt("link=Language Test Page",
 			RuntimeVariables.replace("Language Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//img[@title='English (United States)']",
 			RuntimeVariables.replace("English (United States)"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Language"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 	}

@@ -28,7 +28,6 @@ public class AddDMFolderMusicTagMP3Test extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/web/guest/home/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -50,7 +49,6 @@ public class AddDMFolderMusicTagMP3Test extends BaseTestCase {
 				selenium.clickAt("link=Documents and Media Test Page",
 					RuntimeVariables.replace("Documents and Media Test Page"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("DM Folder Name"),
 					selenium.getText(
 						"//div[@data-title='DM Folder Name']/a/span[@class='entry-title']"));
@@ -84,13 +82,11 @@ public class AddDMFolderMusicTagMP3Test extends BaseTestCase {
 				selenium.clickAt("//div[@data-title='DM Music Title']/a/span[@class='entry-title']",
 					RuntimeVariables.replace("DM Music Title"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("Edit"),
 					selenium.getText("//button[.='Edit']"));
 				selenium.clickAt("//button[.='Edit']",
 					RuntimeVariables.replace("Edit"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 				assertEquals(RuntimeVariables.replace("Categorization"),
 					selenium.getText(
 						"//div[@id='dlFileEntryCategorizationPanel']/div/div/span"));
@@ -130,7 +126,6 @@ public class AddDMFolderMusicTagMP3Test extends BaseTestCase {
 				selenium.clickAt("//input[@value='Publish']",
 					RuntimeVariables.replace("Publish"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {

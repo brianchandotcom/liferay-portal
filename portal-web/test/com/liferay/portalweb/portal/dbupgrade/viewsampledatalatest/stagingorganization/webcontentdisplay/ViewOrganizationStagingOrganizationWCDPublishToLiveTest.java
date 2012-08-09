@@ -25,7 +25,6 @@ public class ViewOrganizationStagingOrganizationWCDPublishToLiveTest
 	public void testViewOrganizationStagingOrganizationWCDPublishToLive()
 		throws Exception {
 		selenium.open("/web/staging-organization-wcd/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -48,21 +47,17 @@ public class ViewOrganizationStagingOrganizationWCDPublishToLiveTest
 			RuntimeVariables.replace(
 				"Page Staging Organization Web Content Display"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//li[2]/span/a",
 			RuntimeVariables.replace("Staged Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("WC Web Content Content"),
 			selenium.getText("//p"));
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("WC Web Content Name"),
 			selenium.getText("//td[3]/a"));
@@ -73,7 +68,6 @@ public class ViewOrganizationStagingOrganizationWCDPublishToLiveTest
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
 			selenium.getText("//td[7]/a"));
 		selenium.open("/web/staging-organization-wcd/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -96,17 +90,14 @@ public class ViewOrganizationStagingOrganizationWCDPublishToLiveTest
 			RuntimeVariables.replace(
 				"Page Staging Organization Web Content Display"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("WC Web Content Content"),
 			selenium.getText("//p"));
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("WC Web Content Name"),
 			selenium.getText("//td[3]/a"));

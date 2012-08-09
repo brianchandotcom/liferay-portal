@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewMoveDMFolder1ImageToFolder2Test extends BaseTestCase {
 	public void testViewMoveDMFolder1ImageToFolder2() throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,7 +43,6 @@ public class ViewMoveDMFolder1ImageToFolder2Test extends BaseTestCase {
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -94,7 +92,6 @@ public class ViewMoveDMFolder1ImageToFolder2Test extends BaseTestCase {
 			selenium.getText("//div[@class='entries-empty portlet-msg-info']"));
 		assertFalse(selenium.isTextPresent("DM Folder1 Image Title"));
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -115,7 +112,6 @@ public class ViewMoveDMFolder1ImageToFolder2Test extends BaseTestCase {
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

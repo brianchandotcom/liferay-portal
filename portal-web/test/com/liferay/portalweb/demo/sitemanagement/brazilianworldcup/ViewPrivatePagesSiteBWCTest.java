@@ -58,7 +58,6 @@ public class ViewPrivatePagesSiteBWCTest extends BaseTestCase {
 		selenium.clickAt("link=Accommodations",
 			RuntimeVariables.replace("Accommodations"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Accommodations"),
 			selenium.getText("//nav/ul/li[3]/span/a"));
 		assertEquals(RuntimeVariables.replace("Powered By Liferay"),
@@ -66,7 +65,6 @@ public class ViewPrivatePagesSiteBWCTest extends BaseTestCase {
 		assertTrue(selenium.isVisible("link=Maps"));
 		selenium.clickAt("link=Maps", RuntimeVariables.replace("Maps"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Maps"),
 			selenium.getText("//nav/ul/li[3]/span/a"));
 		assertEquals(RuntimeVariables.replace("Powered By Liferay"),

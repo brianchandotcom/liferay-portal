@@ -24,7 +24,6 @@ public class AddPage2DLFolder2Document2Comment1Test extends BaseTestCase {
 	public void testAddPage2DLFolder2Document2Comment1()
 		throws Exception {
 		selenium.open("/web/document-library-page-scope-community/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,7 +44,6 @@ public class AddPage2DLFolder2Document2Comment1Test extends BaseTestCase {
 		selenium.clickAt("link=DL Page2 Name",
 			RuntimeVariables.replace("DL Page2 Name"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

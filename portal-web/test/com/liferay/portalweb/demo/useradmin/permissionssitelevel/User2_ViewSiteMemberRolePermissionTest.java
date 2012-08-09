@@ -24,7 +24,6 @@ public class User2_ViewSiteMemberRolePermissionTest extends BaseTestCase {
 	public void testUser2_ViewSiteMemberRolePermission()
 		throws Exception {
 		selenium.open("/web/site-name/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,7 +44,6 @@ public class User2_ViewSiteMemberRolePermissionTest extends BaseTestCase {
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Edit"),
 			selenium.getText("//td[1]/span/a/span"));
 		assertEquals(RuntimeVariables.replace("Permissions"),

@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewDMMusicSiteTest extends BaseTestCase {
 	public void testViewDMMusicSite() throws Exception {
 		selenium.open("/web/site-name/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,14 +43,12 @@ public class ViewDMMusicSiteTest extends BaseTestCase {
 		selenium.clickAt("link=Documents and Media Test Page",
 			RuntimeVariables.replace("Documents and Media Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("DM Music Title"),
 			selenium.getText(
 				"//div[@data-title='DM Music Title']/a/span[@class='entry-title']"));
 		selenium.clickAt("//div[@data-title='DM Music Title']/a/span[@class='entry-title']",
 			RuntimeVariables.replace("DM Music Title"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("DM Music Title"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("DM Music Title"),

@@ -24,7 +24,6 @@ public class AddFriendlyURLVirtualHostsSiteBWCTest extends BaseTestCase {
 	public void testAddFriendlyURLVirtualHostsSiteBWC()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,22 +44,18 @@ public class AddFriendlyURLVirtualHostsSiteBWCTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=Sites", RuntimeVariables.replace("Sites"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("//input[@name='_134_name']",
 			RuntimeVariables.replace("World Cup"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("World Cup - Brazil 2014"),
 			selenium.getText("//td/a"));
 		selenium.clickAt("//td/a",
 			RuntimeVariables.replace("World Cup - Brazil 2014"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isPartialText("//a[@id='_165_siteUrlLink']",
 				"Site URL"));
 		selenium.clickAt("//a[@id='_165_siteUrlLink']",
@@ -91,7 +86,6 @@ public class AddFriendlyURLVirtualHostsSiteBWCTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

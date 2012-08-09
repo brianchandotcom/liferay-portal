@@ -25,7 +25,6 @@ public class WCC_SubmitForPublicationMainVariationHomeSiteStagingTest
 	public void testWCC_SubmitForPublicationMainVariationHomeSiteStaging()
 		throws Exception {
 		selenium.open("/web/community-site-test/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,7 +44,6 @@ public class WCC_SubmitForPublicationMainVariationHomeSiteStagingTest
 
 		selenium.clickAt("link=Staging", RuntimeVariables.replace("Staging"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Submit for Publication"),
 			selenium.getText("//button[3]"));
 		selenium.clickAt("//button[3]",
@@ -72,7 +70,6 @@ public class WCC_SubmitForPublicationMainVariationHomeSiteStagingTest
 		assertEquals(RuntimeVariables.replace("Pending (Review)"),
 			selenium.getText("//span[@class='workflow-status']/strong"));
 		selenium.open("/web/community-site-test/home");
-		loadRequiredJavaScriptModules();
 		assertFalse(selenium.isTextPresent("This is a Web Content article"));
 	}
 }

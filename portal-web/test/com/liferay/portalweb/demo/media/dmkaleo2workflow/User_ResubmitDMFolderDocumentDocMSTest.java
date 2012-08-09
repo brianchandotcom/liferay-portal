@@ -24,7 +24,6 @@ public class User_ResubmitDMFolderDocumentDocMSTest extends BaseTestCase {
 	public void testUser_ResubmitDMFolderDocumentDocMS()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
 		assertEquals(RuntimeVariables.replace("Go to"),
@@ -51,11 +50,9 @@ public class User_ResubmitDMFolderDocumentDocMSTest extends BaseTestCase {
 		selenium.clickAt("link=Control Panel",
 			RuntimeVariables.replace("Control Panel"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("link=My Submissions",
 			RuntimeVariables.replace("My Submissions"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Single Approver"),
 			selenium.getText("//td[1]/a"));
 		assertEquals(RuntimeVariables.replace("DM Document Title Edit"),
@@ -71,7 +68,6 @@ public class User_ResubmitDMFolderDocumentDocMSTest extends BaseTestCase {
 			selenium.getText("//td[7]/span/a/span"));
 		selenium.clickAt("//td[4]/a", RuntimeVariables.replace("Update"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Single Approver: DM Document Title Edit"),
 			selenium.getText("//h1[@class='header-title']/span"));
@@ -116,7 +112,6 @@ public class User_ResubmitDMFolderDocumentDocMSTest extends BaseTestCase {
 			selenium.getText("//button[.='OK']"));
 		selenium.clickAt("//button[.='OK']", RuntimeVariables.replace("OK"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));

@@ -23,7 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class SOUs_AddSMSProfileTest extends BaseTestCase {
 	public void testSOUs_AddSMSProfile() throws Exception {
 		selenium.open("/web/socialoffice01/so/profile");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

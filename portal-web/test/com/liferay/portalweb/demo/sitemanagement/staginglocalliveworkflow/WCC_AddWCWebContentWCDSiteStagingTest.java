@@ -24,7 +24,6 @@ public class WCC_AddWCWebContentWCDSiteStagingTest extends BaseTestCase {
 	public void testWCC_AddWCWebContentWCDSiteStaging()
 		throws Exception {
 		selenium.open("/web/community-site-test/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -44,11 +43,9 @@ public class WCC_AddWCWebContentWCDSiteStagingTest extends BaseTestCase {
 
 		selenium.clickAt("link=Staging", RuntimeVariables.replace("Staging"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.clickAt("//img[@alt='Add Web Content']",
 			RuntimeVariables.replace("Add Web Content"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		selenium.type("//input[@id='_15_title_en_US']",
 			RuntimeVariables.replace("This is a Web Content article"));
 		Thread.sleep(5000);
@@ -78,7 +75,6 @@ public class WCC_AddWCWebContentWCDSiteStagingTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Submit for Publication']",
 			RuntimeVariables.replace("Submit for Publication"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace(
 				"This is a Web Content article is not approved."),
 			selenium.getText("//div[@class='portlet-msg-alert']/a"));

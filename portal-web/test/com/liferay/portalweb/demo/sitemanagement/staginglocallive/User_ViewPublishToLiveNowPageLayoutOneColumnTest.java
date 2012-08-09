@@ -25,7 +25,6 @@ public class User_ViewPublishToLiveNowPageLayoutOneColumnTest
 	public void testUser_ViewPublishToLiveNowPageLayoutOneColumn()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,7 +44,6 @@ public class User_ViewPublishToLiveNowPageLayoutOneColumnTest
 
 		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertTrue(selenium.isElementPresent(
 				"//body[contains(@class,'live-view')]"));
 		assertTrue(selenium.isElementNotPresent(

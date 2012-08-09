@@ -25,7 +25,6 @@ public class WCC_PublishToLiveNowWebContentNullSiteStagingTest
 	public void testWCC_PublishToLiveNowWebContentNullSiteStaging()
 		throws Exception {
 		selenium.open("/web/community-site-test/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,7 +44,6 @@ public class WCC_PublishToLiveNowWebContentNullSiteStagingTest
 
 		selenium.clickAt("link=Staging", RuntimeVariables.replace("Staging"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		Thread.sleep(5000);
 		selenium.clickAt("//span[@class='staging-icon-menu-container']/span/ul/li/strong/a",
 			RuntimeVariables.replace("Staging Drop Down"));

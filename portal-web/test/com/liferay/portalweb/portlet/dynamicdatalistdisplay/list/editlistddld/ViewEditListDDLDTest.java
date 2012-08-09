@@ -24,7 +24,6 @@ public class ViewEditListDDLDTest extends BaseTestCase {
 	public void testViewEditListDDLD() throws Exception {
 		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -46,7 +45,6 @@ public class ViewEditListDDLDTest extends BaseTestCase {
 		selenium.clickAt("link=Dynamic Data List Display Test Page",
 			RuntimeVariables.replace("Dynamic Data List Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("List Name Edited"),
 			selenium.getText("//h1[@class='header-title']"));
 	}

@@ -24,7 +24,6 @@ public class Guest_AssertBlogsEntryOrganizationSiteTest extends BaseTestCase {
 	public void testGuest_AssertBlogsEntryOrganizationSite()
 		throws Exception {
 		selenium.open("/web/selenium/home/");
-		loadRequiredJavaScriptModules();
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -45,7 +44,6 @@ public class Guest_AssertBlogsEntryOrganizationSiteTest extends BaseTestCase {
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
-		loadRequiredJavaScriptModules();
 		assertEquals(RuntimeVariables.replace("Blogs Entry Title"),
 			selenium.getText("//div[@class='entry-title']/h2/a"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry Content"),

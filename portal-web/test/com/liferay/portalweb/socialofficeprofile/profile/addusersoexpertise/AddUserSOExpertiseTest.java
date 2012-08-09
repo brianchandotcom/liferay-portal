@@ -96,7 +96,7 @@ public class AddUserSOExpertiseTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//input[@id=\"_125_projectsEntryTitle0\"]")) {
+									"//input[@id='_125_projectsEntryTitle0']")) {
 							break;
 						}
 					}
@@ -106,7 +106,7 @@ public class AddUserSOExpertiseTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				selenium.type("//input[@id=\"_125_projectsEntryTitle0\"]",
+				selenium.type("//input[@id='_125_projectsEntryTitle0']",
 					RuntimeVariables.replace("Expertise Title"));
 
 				for (int second = 0;; second++) {

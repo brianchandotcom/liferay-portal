@@ -426,8 +426,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		syndFeed.setEntries(syndEntries);
 
 		for (BlogsEntry entry : blogsEntries) {
-			String author = HtmlUtil.escape(
-				PortalUtil.getUserName(entry.getUserId(), entry.getUserName()));
+			String author = PortalUtil.getUserName(entry);
 
 			StringBundler link = new StringBundler(4);
 

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -110,9 +109,7 @@ public class RSSAction extends PortletAction {
 			String link = getEntryURL(
 				portletRequest, portletResponse, linkBehavior, assetEntry);
 
-			String author = HtmlUtil.escape(
-				PortalUtil.getUserName(
-					assetEntry.getUserId(), assetEntry.getUserName()));
+			String author = PortalUtil.getUserName(assetEntry);
 
 			String value = null;
 

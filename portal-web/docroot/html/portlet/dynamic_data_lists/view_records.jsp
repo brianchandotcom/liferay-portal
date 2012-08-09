@@ -139,7 +139,7 @@ portletURL.setParameter("recordSetId", String.valueOf(recordSet.getRecordSetId()
 			if (editable) {
 				row.addText(LanguageUtil.get(pageContext, WorkflowConstants.toLabel(recordVersion.getStatus())), rowURL);
 				row.addText(dateFormatDateTime.format(record.getModifiedDate()), rowURL);
-				row.addText(HtmlUtil.escape(PortalUtil.getUserName(recordVersion.getUserId(), recordVersion.getUserName())), rowURL);
+				row.addText(HtmlUtil.escape(PortalUtil.getUserName(recordVersion)), rowURL);
 
 				// Action
 

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
@@ -48,7 +49,9 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 
 	public String getAttachmentsDir() {
 		if (_attachmentDirs == null) {
-			_attachmentDirs = getThreadAttachmentsDir() + "/" + getMessageId();
+			_attachmentDirs =
+				getThreadAttachmentsDir() + StringPool.FORWARD_SLASH +
+					getMessageId();
 		}
 
 		return _attachmentDirs;
@@ -104,7 +107,7 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 	public String getDeletedAttachmentsDir() {
 		if (_deletedAttachmentDirs == null) {
 			_deletedAttachmentDirs =
-				MBMessageConstants.BASE_ATTACHMENTS_DIR +
+				getThreadAttachmentsDir() + StringPool.FORWARD_SLASH +
 					TrashUtil.TRASH_ATTACHMENTS_DIR + getMessageId();
 		}
 

@@ -11,6 +11,7 @@ import com.liferay.portal.model.AttachedModel;
 import com.liferay.portal.model.AuditedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.GroupedModel;
 import com.liferay.portal.model.ResourcedModel;
 import com.liferay.portal.model.WorkflowedModel;
@@ -49,6 +50,10 @@ public interface ${entity.name}Model extends
 	</#if>
 
 	BaseModel<${entity.name}>
+
+	<#if entity.isContainerModel()>
+		, ContainerModel
+	</#if>
 
 	<#if entity.isGroupedModel()>
 		, GroupedModel
@@ -321,6 +326,49 @@ public interface ${entity.name}Model extends
 		 * @return <code>true</code> if this ${entity.humanName} is scheduled; <code>false</code> otherwise
 		 */
 		public boolean isScheduled();
+	</#if>
+
+	<#if entity.isContainerModel()>
+		<#if !entity.hasColumn("containerModelId")>
+			/**
+			 * Returns the container model id of this ${entity.humanName}.
+			 *
+			 * @return the container model id of this ${entity.humanName}
+			 */
+			public long getContainerModelId();
+
+			/**
+			 * Sets the container model id of this ${entity.humanName}.
+			 *
+			 * @param container model id of this ${entity.humanName}
+			 */
+			public void setContainerModelId(long containerModelId);
+		</#if>
+
+		<#if !entity.hasColumn("name")>
+			/**
+			 * Returns the name of this ${entity.humanName}.
+			 *
+			 * @return the name of this ${entity.humanName}
+			 */
+			public long getName();
+		</#if>
+
+		<#if !entity.hasColumn("parentContainerModelId")>
+			/**
+			 * Returns the parent container model id of this ${entity.humanName}.
+			 *
+			 * @return the parent container model id of this ${entity.humanName}
+			 */
+			public long getParentContainerModelId();
+
+			/**
+			 * Sets the parent container model id of this ${entity.humanName}.
+			 *
+			 * @param parent container model id of this ${entity.humanName}
+			 */
+			public void setParentContainerModelId(long parentContainerModelId);
+		</#if>
 	</#if>
 
 	<#--

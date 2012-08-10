@@ -1,0 +1,148 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>ViewWCTemplateVMScriptTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ViewWCTemplateVMScriptTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/web/guest/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>link=Control Panel</td>
+	<td>Control Panel</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Control Panel</td>
+	<td>Control Panel</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Web Content</td>
+	<td>Web Content</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Templates</td>
+	<td>Templates</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[3]/a</td>
+	<td>WC Template Name</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//td[3]/a</td>
+	<td>WC Template Name</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@value='Launch Editor']</td>
+	<td>Launch Editor</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//iframe[@id='_15_xslContentIFrame']</td>
+	<td>Editor</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[@id='_15_xslContentIFrame']</td>
+	<td>Editor</td>
+</tr>
+<tr>
+	<td>waitForValue</td>
+	<td>//textarea[@id='_15_plainEditorField']</td>
+	<td><h3>$text.getData()</h3></td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>//textarea[@id='_15_plainEditorField']</td>
+	<td><h3>$text.getData()</h3></td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@value='Cancel']</td>
+	<td>Cancel</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
+</tr>
+<tr>
+	<td>waitForNotVisible</td>
+	<td>//iframe[@id='_15_xslContentIFrame']</td>
+	<td>Editor</td>
+</tr>
+<tr>
+	<td>assertNotVisible</td>
+	<td>//iframe[@id='_15_xslContentIFrame']</td>
+	<td>Editor</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@value='Launch Editor']</td>
+	<td>Launch Editor</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//iframe[@id='_15_xslContentIFrame']</td>
+	<td>Editor</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[@id='_15_xslContentIFrame']</td>
+	<td>Editor</td>
+</tr>
+<tr>
+	<td>waitForValue</td>
+	<td>//textarea[@id='_15_plainEditorField']</td>
+	<td><h3>$text.getData()</h3></td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>//textarea[@id='_15_plainEditorField']</td>
+	<td><h3>$text.getData()</h3></td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//button[@id='closethick']</td>
+	<td>X</td>
+</tr>
+<tr>
+	<td>waitForNotVisible</td>
+	<td>//iframe[@id='_15_xslContentIFrame']</td>
+	<td>Editor</td>
+</tr>
+<tr>
+	<td>assertNotVisible</td>
+	<td>//iframe[@id='_15_xslContentIFrame']</td>
+	<td>Editor</td>
+</tr>
+</tbody></table>
+</body>
+</html>

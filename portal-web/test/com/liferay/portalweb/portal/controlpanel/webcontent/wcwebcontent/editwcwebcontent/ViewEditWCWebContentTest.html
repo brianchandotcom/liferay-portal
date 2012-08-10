@@ -14,16 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>//div[@id='dockbar']</td>
-	<td>Dockbar</td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
-	<td>AUI Editable Min</td>
-</tr>
-<tr>
 	<td>assertText</td>
 	<td>//li[@id='_145_mySites']/a/span</td>
 	<td>Go to</td>
@@ -54,9 +44,14 @@
 	<td>Check Box</td>
 </tr>
 <tr>
-	<td>assertVisible</td>
+	<td>storeText</td>
 	<td>//td[2]/a</td>
-	<td>ID</td>
+	<td>webContentID</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//td[2]/a</td>
+	<td>${webContentID}</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -84,8 +79,8 @@
 	<td>Joe Bloggs</td>
 </tr>
 <tr>
-	<td>assertVisible</td>
-	<td>//td[8]/span/span/ul/li/strong/a</td>
+	<td>assertText</td>
+	<td>//td[8]/span/ul/li/strong/a</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -137,6 +132,86 @@
 	<td>selectFrame</td>
 	<td>relative=top</td>
 	<td>top</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//button[contains(.,'View History')]</td>
+	<td>View History</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//button[contains(.,'View History')]</td>
+	<td>View History</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[3]/td[2]</td>
+	<td>${webContentID}</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[3]/td[3]</td>
+	<td>WC WebContent Title</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[3]/td[4]</td>
+	<td>1.0</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[3]/td[5]</td>
+	<td>Approved</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//tr[3]/td[6]</td>
+	<td>Modified Date</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//tr[3]/td[7]</td>
+	<td>Dispay Date</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[3]/td[8]</td>
+	<td>Joe Bloggs</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[4]/td[2]</td>
+	<td>${webContentID}</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[4]/td[3]</td>
+	<td>WC WebContent Title Edit</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[4]/td[4]</td>
+	<td>1.1</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[4]/td[5]</td>
+	<td>Approved</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//tr[4]/td[6]</td>
+	<td>Modified Date</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//tr[4]/td[7]</td>
+	<td>Dispay Date</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[4]/td[8]</td>
+	<td>Joe Bloggs</td>
 </tr>
 </tbody></table>
 </body>

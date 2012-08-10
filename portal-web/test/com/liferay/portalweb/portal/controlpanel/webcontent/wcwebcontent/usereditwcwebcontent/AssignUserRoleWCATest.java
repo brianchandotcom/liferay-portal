@@ -23,6 +23,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AssignUserRoleWCATest extends BaseTestCase {
 	public void testAssignUserRoleWCA() throws Exception {
 		selenium.open("/web/guest/home/");
+		assertEquals(RuntimeVariables.replace("Manage"),
+			selenium.getText("//li[@id='_145_manageContent']/a/span"));
+		selenium.mouseOver("//li[@id='_145_manageContent']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -30,7 +33,7 @@ public class AssignUserRoleWCATest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -47,14 +50,13 @@ public class AssignUserRoleWCATest extends BaseTestCase {
 			RuntimeVariables.replace("Users and Organizations"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_125_keywords']",
-			RuntimeVariables.replace("test01@selenium.com"));
+			RuntimeVariables.replace("userea@liferay.com"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("selen01"),
-			selenium.getText("//tbody/tr[3]/td[2]/a"));
-		selenium.clickAt("//tbody/tr[3]/td[2]/a",
-			RuntimeVariables.replace("selen01"));
+		assertEquals(RuntimeVariables.replace("userfn"),
+			selenium.getText("//td[2]/a"));
+		selenium.clickAt("//td[2]/a", RuntimeVariables.replace("userfn"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isPartialText("//a[@id='_125_rolesLink']", "Roles"));
 		selenium.clickAt("//a[@id='_125_rolesLink']",

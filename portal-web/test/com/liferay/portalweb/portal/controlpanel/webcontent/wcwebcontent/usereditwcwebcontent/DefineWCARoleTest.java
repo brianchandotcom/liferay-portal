@@ -23,6 +23,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class DefineWCARoleTest extends BaseTestCase {
 	public void testDefineWCARole() throws Exception {
 		selenium.open("/web/guest/home/");
+		assertEquals(RuntimeVariables.replace("Manage"),
+			selenium.getText("//li[@id='_145_manageContent']/a/span"));
+		selenium.mouseOver("//li[@id='_145_manageContent']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -30,7 +33,7 @@ public class DefineWCARoleTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}

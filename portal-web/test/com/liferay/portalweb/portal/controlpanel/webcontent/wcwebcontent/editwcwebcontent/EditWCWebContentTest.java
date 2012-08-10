@@ -23,26 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class EditWCWebContentTest extends BaseTestCase {
 	public void testEditWCWebContent() throws Exception {
 		selenium.open("/web/guest/home/");
-		selenium.clickAt("//div[@id='dockbar']",
-			RuntimeVariables.replace("Dockbar"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -71,7 +51,9 @@ public class EditWCWebContentTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
 			selenium.getText("//td[3]/a"));
-		selenium.clickAt("//a[contains(@id,'_1_menuButton')]",
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText("//span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
@@ -80,7 +62,8 @@ public class EditWCWebContentTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//a[contains(@id,'_1_menu_edit')]")) {
+				if (selenium.isVisible(
+							"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]")) {
 					break;
 				}
 			}
@@ -91,8 +74,9 @@ public class EditWCWebContentTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("Edit"),
-			selenium.getText("//a[contains(@id,'_1_menu_edit')]"));
-		selenium.clickAt("//a[contains(@id,'_1_menu_edit')]",
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Edit')]",
 			RuntimeVariables.replace("Edit"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_15_title_en_US']",

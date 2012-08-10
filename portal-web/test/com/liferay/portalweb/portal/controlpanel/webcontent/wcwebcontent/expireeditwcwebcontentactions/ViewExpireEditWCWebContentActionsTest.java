@@ -24,26 +24,6 @@ public class ViewExpireEditWCWebContentActionsTest extends BaseTestCase {
 	public void testViewExpireEditWCWebContentActions()
 		throws Exception {
 		selenium.open("/web/guest/home/");
-		selenium.clickAt("//div[@id='dockbar']",
-			RuntimeVariables.replace("Dockbar"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent(
-							"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -70,10 +50,21 @@ public class ViewExpireEditWCWebContentActionsTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
+
+		String webContentID = selenium.getText("//td[2]/a");
+		RuntimeVariables.setValue("webContentID", webContentID);
+		assertEquals(RuntimeVariables.replace("${webContentID}"),
+			selenium.getText("//td[2]/a"));
 		assertEquals(RuntimeVariables.replace("WC WebContent Title Edit"),
 			selenium.getText("//td[3]/a"));
 		assertEquals(RuntimeVariables.replace("Expired"),
 			selenium.getText("//td[4]/a"));
+		assertTrue(selenium.isVisible("//td[5]/a"));
+		assertTrue(selenium.isVisible("//td[6]/a"));
+		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
+			selenium.getText("//td[7]/a"));
+		assertEquals(RuntimeVariables.replace("Actions"),
+			selenium.getText("//td[8]/span/ul/li/strong/a"));
 		selenium.clickAt("//td[3]/a",
 			RuntimeVariables.replace("WC WebContent Title Edit"));
 		selenium.waitForPageToLoad("30000");
@@ -89,17 +80,29 @@ public class ViewExpireEditWCWebContentActionsTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("WC WebContent Title Edit"),
 			selenium.getText("//h1[@class='header-title']/span"));
+		assertEquals(RuntimeVariables.replace("${webContentID}"),
+			selenium.getText("//tr[3]/td[2]"));
 		assertEquals(RuntimeVariables.replace("WC WebContent Title"),
 			selenium.getText("//tr[3]/td[3]"));
 		assertEquals(RuntimeVariables.replace("1.0"),
 			selenium.getText("//tr[3]/td[4]"));
 		assertEquals(RuntimeVariables.replace("Expired"),
 			selenium.getText("//tr[3]/td[5]"));
+		assertTrue(selenium.isVisible("//tr[3]/td[6]"));
+		assertTrue(selenium.isVisible("//tr[3]/td[7]"));
+		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
+			selenium.getText("//tr[3]/td[8]"));
+		assertEquals(RuntimeVariables.replace("${webContentID}"),
+			selenium.getText("//tr[4]/td[2]"));
 		assertEquals(RuntimeVariables.replace("WC WebContent Title Edit"),
 			selenium.getText("//tr[4]/td[3]"));
 		assertEquals(RuntimeVariables.replace("1.1"),
 			selenium.getText("//tr[4]/td[4]"));
 		assertEquals(RuntimeVariables.replace("Expired"),
 			selenium.getText("//tr[4]/td[5]"));
+		assertTrue(selenium.isVisible("//tr[4]/td[6]"));
+		assertTrue(selenium.isVisible("//tr[4]/td[7]"));
+		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
+			selenium.getText("//tr[4]/td[8]"));
 	}
 }

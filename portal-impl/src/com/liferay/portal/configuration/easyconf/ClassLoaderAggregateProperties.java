@@ -293,8 +293,8 @@ public class ClassLoaderAggregateProperties extends AggregatedProperties {
 		catch (Exception e) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Configuration source " + sourceName + " ignored: "
-						+ e.getMessage());
+					"Configuration source " + sourceName + " ignored: " +
+						e.getMessage());
 			}
 
 			return null;

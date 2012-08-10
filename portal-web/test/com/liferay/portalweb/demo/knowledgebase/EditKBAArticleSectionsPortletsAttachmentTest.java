@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.demo.fundamentals.knowledgebase;
+package com.liferay.portalweb.demo.knowledgebase;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -104,9 +104,8 @@ public class EditKBAArticleSectionsPortletsAttachmentTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.type("//input[@id='_1_WAR_knowledgebaseportlet_file']",
-			RuntimeVariables.replace(
-				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\demo\\fundamentals\\knowledgebase\\dependencies\\test_image.jpg"));
+		selenium.uploadCommonFile("//input[@id='_1_WAR_knowledgebaseportlet_file']",
+			RuntimeVariables.replace("Document_1.jpg"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -124,7 +123,7 @@ public class EditKBAArticleSectionsPortletsAttachmentTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("test_image.jpg (12.9k)"),
+		assertEquals(RuntimeVariables.replace("Document_1.jpg (12.9k)"),
 			selenium.getText("//a/span"));
 		selenium.close();
 		Thread.sleep(5000);
@@ -147,7 +146,7 @@ public class EditKBAArticleSectionsPortletsAttachmentTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("test_image.jpg (12.9k)"),
+		assertEquals(RuntimeVariables.replace("Document_1.jpg (12.9k)"),
 			selenium.getText(
 				"//div[@id='_1_WAR_knowledgebaseportlet_attachments']/div/div/span/a/span"));
 		selenium.clickAt("//input[@value='Publish']",

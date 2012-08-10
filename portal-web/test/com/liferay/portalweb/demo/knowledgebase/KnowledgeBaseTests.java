@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.demo.fundamentals.knowledgebase;
+package com.liferay.portalweb.demo.knowledgebase;
 
 import com.liferay.portalweb.plugins.knowledgebase.knowledgebasearticle.portlet.addportletkbar.AddPageKBArTest;
 import com.liferay.portalweb.plugins.knowledgebase.knowledgebasearticle.portlet.addportletkbar.AddPortletKBArTest;

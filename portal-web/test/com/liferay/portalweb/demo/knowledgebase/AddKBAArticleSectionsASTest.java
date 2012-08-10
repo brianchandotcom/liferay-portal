@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.demo.fundamentals.knowledgebase;
+package com.liferay.portalweb.demo.knowledgebase;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;

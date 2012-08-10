@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.demo.fundamentals.knowledgebase;
+package com.liferay.portalweb.demo.knowledgebase;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SearchKBAArticleTomcatKBSTest extends BaseTestCase {
-	public void testSearchKBAArticleTomcatKBS() throws Exception {
+public class SearchKBAArticleKnowledgeKBSTest extends BaseTestCase {
+	public void testSearchKBAArticleKnowledgeKBS() throws Exception {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -44,13 +44,17 @@ public class SearchKBAArticleTomcatKBSTest extends BaseTestCase {
 			RuntimeVariables.replace("Knowledge Base Search Test Page"));
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_5_WAR_knowledgebaseportlet_keywords']",
-			RuntimeVariables.replace("tomcat"));
+			RuntimeVariables.replace("knowledge"));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("The third"),
-			selenium.getText("//td[1]/a"));
+		assertEquals(RuntimeVariables.replace("Knowledge Base Article 2"),
+			selenium.getText("//tr[3]/td[1]/a"));
+		assertEquals(RuntimeVariables.replace("Knowledge Base Article 1"),
+			selenium.getText("//tr[4]/td[1]/a"));
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("//td[2]/a"));
+			selenium.getText("//tr[3]/td[2]/a"));
+		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
+			selenium.getText("//tr[4]/td[2]/a"));
 	}
 }

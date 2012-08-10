@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.demo.fundamentals.knowledgebase;
+package com.liferay.portalweb.demo.knowledgebase;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class DeleteKBAArticleSectionsCMKBArTest extends BaseTestCase {
-	public void testDeleteKBAArticleSectionsCMKBAr() throws Exception {
+public class ViewSelectKBAArticleSectionsCMKBArTest extends BaseTestCase {
+	public void testViewSelectKBAArticleSectionsCMKBAr()
+		throws Exception {
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {
@@ -45,16 +46,8 @@ public class DeleteKBAArticleSectionsCMKBArTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Knowledge Base Article 1"),
 			selenium.getText("//div[@class='kb-title']"));
-		assertEquals(RuntimeVariables.replace("Delete"),
-			selenium.getText(
-				"//div[@class='kb-article-icons']/table/tbody/tr/td[4]/span/a"));
-		selenium.clickAt("//div[@class='kb-article-icons']/table/tbody/tr/td[4]/span/a",
-			RuntimeVariables.replace("Delete"));
-		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to delete this[\\s\\S] It will be deleted immediately.$"));
 		assertEquals(RuntimeVariables.replace(
-				"The selected article no longer exists."),
-			selenium.getText("//div[@class='portlet-msg-error']"));
+				"This is the content of Article 1"),
+			selenium.getText("//div[@class='kb-entity-body']/p"));
 	}
 }

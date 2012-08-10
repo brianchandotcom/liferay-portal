@@ -313,9 +313,9 @@ public class LiferayVideoConverter extends LiferayConverter {
 					"[" + _videoContainer + "]"));
 		int denominator = GetterUtil.getInteger(
 			videoProperties.getProperty(
-				PropsKeys.DL_FILE_ENTRY_PREVIEW_VIDEO_FRAME_RATE_DENOMINATOR
-					+ StringPool.OPEN_BRACKET + _videoContainer
-						+ StringPool.CLOSE_BRACKET));
+				PropsKeys.DL_FILE_ENTRY_PREVIEW_VIDEO_FRAME_RATE_DENOMINATOR +
+					StringPool.OPEN_BRACKET + _videoContainer +
+						StringPool.CLOSE_BRACKET));
 
 		if ((numerator > 0) && (denominator > 0)) {
 			_videoFrameRate = IRational.make(numerator, denominator);

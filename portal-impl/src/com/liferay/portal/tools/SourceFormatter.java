@@ -2618,6 +2618,19 @@ public class SourceFormatter {
 			return null;
 		}
 
+		if (line.startsWith("+ ") || line.startsWith("- ") ||
+			line.startsWith("|| ") || line.startsWith("&& ")) {
+
+			int pos = line.indexOf(StringPool.SPACE);
+
+			String addToPreviousLine = line.substring(0, pos);
+
+			return new String[] {
+				previousLine + StringPool.SPACE + addToPreviousLine,
+				addToPreviousLine
+			};
+		}
+
 		int previousLineLength = _getLineLength(previousLine);
 		String trimmedPreviousLine = StringUtil.trimLeading(previousLine);
 

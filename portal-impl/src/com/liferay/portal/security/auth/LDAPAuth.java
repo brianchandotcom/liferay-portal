@@ -158,8 +158,8 @@ public class LDAPAuth implements Authenticator {
 			catch (Exception e) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
-						"Failed to bind to the LDAP server with userDN "
-							+ userDN + " and password " + password);
+						"Failed to bind to the LDAP server with userDN " +
+							userDN + " and password " + password);
 				}
 
 				_log.error("Failed to bind to the LDAP server", e);

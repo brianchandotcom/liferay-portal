@@ -305,9 +305,10 @@ public class Duration implements Cloneable, Serializable {
 	 * Method checkWeeksOkay
 	 */
 	protected void checkWeeksOkay(int f) {
-		if ((f != 0)
-			&& ((_days != 0) || (_hours != 0) || (_minutes != 0)
-				|| (_seconds != 0))) {
+		if ((f != 0) &&
+			((_days != 0) || (_hours != 0) || (_minutes != 0) ||
+			 (_seconds != 0))) {
+
 			throw new IllegalStateException(
 				"Weeks and non-weeks are incompatible");
 		}

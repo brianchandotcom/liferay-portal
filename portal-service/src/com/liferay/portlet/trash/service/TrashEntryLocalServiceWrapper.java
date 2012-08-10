@@ -287,6 +287,12 @@ public class TrashEntryLocalServiceWrapper implements TrashEntryLocalService,
 			className, classPK, status, versions, typeSettingsProperties);
 	}
 
+	public void checkAttachments()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_trashEntryLocalService.checkAttachments();
+	}
+
 	public void checkEntries()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

@@ -187,6 +187,15 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		mbMessageLocalService.deleteMessage(messageId);
 	}
 
+	public void emptyMessageAttachments(long messageId)
+		throws PortalException, SystemException {
+
+		MBMessagePermission.check(
+			getPermissionChecker(), messageId, ActionKeys.DELETE);
+
+		mbMessageLocalService.emptyMessageAttachments(messageId);
+	}
+
 	public List<MBMessage> getCategoryMessages(
 			long groupId, long categoryId, int status, int start, int end)
 		throws PortalException, SystemException {

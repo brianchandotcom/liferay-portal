@@ -69,7 +69,7 @@ import org.apache.struts.action.ActionMapping;
 /**
  * @author Jorge Ferrer
  */
-public class EditPageAttachmentAction extends EditFileEntryAction {
+public class EditPageAttachmentsAction extends EditFileEntryAction {
 
 	@Override
 	public void processAction(
@@ -412,6 +412,6 @@ public class EditPageAttachmentAction extends EditFileEntryAction {
 	}
 
 	private static final String _TEMP_FOLDER_NAME =
-		EditPageAttachmentAction.class.getName();
+		EditPageAttachmentsAction.class.getName();
 
 }

@@ -224,53 +224,87 @@ if (Validator.isNull(redirect)) {
 		</liferay-ui:custom-attributes-available>
 
 		<c:if test="<%= attachments %>">
-			<aui:field-wrapper label="attachments">
-				<table class="lfr-table">
+			<aui:fieldset cssClass="message-attachments" label="attachments">
+				<c:if test="<%= TrashUtil.isTrashEnabled(themeDisplay.getScopeGroupId()) && message != null %>">
 
-				<%
-				for (int i = 0; i < existingAttachments.length; i++) {
-					String existingPath = existingAttachments[i];
+					<%
+					String[] deletedAttachments = message.getDeletedAttachmentsFiles();
+					%>
 
-					String existingName = StringUtil.extractLast(existingPath, CharPool.SLASH);
-				%>
+					<c:if test="<%= deletedAttachments.length > 0 %>">
+						<portlet:renderURL var="viewTrashAttachmentsURL">
+							<portlet:param name="struts_action" value="/message_boards/view_deleted_message_attachments" />
+							<portlet:param name="redirect" value="<%= currentURL %>" />
+							<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
+						</portlet:renderURL>
 
-					<tr>
-						<td>
-							<span id="<portlet:namespace />existingFile<%= i + 1 %>">
-								<aui:input name='<%= "existingPath" + (i + 1) %>' type="hidden" value="<%= existingPath %>" />
+						<liferay-ui:icon
+							cssClass="trash-attachments"
+							image="delete"
+							label="<%= true %>"
+							message='<%= LanguageUtil.format(pageContext, "x-attachments-in-the-recycle-bin", deletedAttachments.length) %>'
+							url="<%= viewTrashAttachmentsURL %>"
+						/>
+					</c:if>
+				</c:if>
 
-								<%= existingName %>
-							</span>
+				<c:if test="<%= existingAttachments.length > 0 %>">
+					<ul>
 
-							<aui:input cssClass="aui-helper-hidden" label="" name='<%= "msgFile" + (i + 1) %>' size="70" type="file" />
-						</td>
-						<td>
-							<img id="<portlet:namespace />removeExisting<%= i + 1 %>" src="<%= themeDisplay.getPathThemeImages() %>/arrows/02_x.png" />
-						</td>
-					</tr>
+						<%
+						for (int i = 0; i < existingAttachments.length; i++) {
+							String existingPath = existingAttachments[i];
 
-				<%
-				}
-				%>
+							String existingName = StringUtil.extractLast(existingPath, CharPool.SLASH);
+
+							String taglibJavascript = "javascript:;";
+
+							if (!TrashUtil.isTrashEnabled(themeDisplay.getScopeGroupId())) {
+								taglibJavascript = "javascript:" + renderResponse.getNamespace() + "deleteAttachment(" + (i + 1) + ");";
+							}
+						%>
+
+							<li class="message-attachment">
+								<span id="<portlet:namespace />existingFile<%= i + 1 %>">
+									<aui:input name='<%= "existingPath" + (i + 1) %>' type="hidden" value="<%= existingPath %>" />
+
+									<img align="left" border="0" src="<%= themeDisplay.getPathThemeImages() %>/file_system/small/<%= DLUtil.getFileIcon(FileUtil.getExtension(existingName)) %>.png"> <%= existingName %>
+								</span>
+
+								<aui:input cssClass="aui-helper-hidden" label="" name='<%= "msgFile" + (i + 1) %>' size="70" type="file" />
+
+								<liferay-ui:icon-delete
+									id='<%= "removeExisting" + (i + 1) %>'
+									label="<%= true %>"
+									method="get"
+									trash="<%= TrashUtil.isTrashEnabled(themeDisplay.getScopeGroupId()) %>"
+									url="<%= taglibJavascript %>"
+								/>
+							</li>
+
+						<%
+						}
+						%>
+
+					</ul>
+				</c:if>
 
 				<%
 				for (int i = existingAttachments.length + 1; i <= 5; i++) {
 				%>
 
-					<tr>
-						<td>
-							<aui:input label="" name='<%= "msgFile" + i %>' size="70" type="file" />
-						</td>
-						<td></td>
-					</tr>
+					<div>
+						<aui:input label="" name='<%= "msgFile" + i %>' size="70" type="file" />
+					</div>
 
 				<%
 				}
 				%>
 
-				</table>
-			</aui:field-wrapper>
+			</aui:fieldset>
 		</c:if>
+
+
 
 		<c:if test="<%= curParentMessage == null %>">
 
@@ -493,47 +527,62 @@ if (Validator.isNull(redirect)) {
 		nameEl.innerHTML = categoryName + "&nbsp;";
 	}
 
+	Liferay.provide(
+		window,
+		'<portlet:namespace />deleteAttachment',
+		function(index) {
+			var A = AUI();
+
+			var button = A.one("#<portlet:namespace />removeExisting" + index);
+			var span = A.one("#<portlet:namespace />existingFile" + index);
+			var file = A.one("#<portlet:namespace />msgFile" + index);
+
+			if (button) {
+				button.remove();
+			}
+
+			if (span) {
+				span.remove();
+			}
+
+			if (file) {
+				file.ancestor('.aui-field').show();
+
+				file.ancestor('li').addClass('deleted-input');
+			}
+		},
+		['aui-base']
+	);
+
 	<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) && !themeDisplay.isFacebook() %>">
 		Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />subject);
 	</c:if>
 </aui:script>
 
-<aui:script use="aui-base">
+<c:if test="<%= TrashUtil.isTrashEnabled(themeDisplay.getScopeGroupId()) %>">
+	<aui:script use="aui-base">
 
-	<%
-	for (int i = 1; i <= existingAttachments.length; i++) {
-	%>
+		<%
+		for (int i = 1; i <= existingAttachments.length; i++) {
+		%>
 
-		var removeExisting = A.one("#<portlet:namespace />removeExisting" + <%= i %>);
+			var removeExisting = A.one("#<portlet:namespace />removeExisting" + <%= i %>);
 
-		if (removeExisting) {
-			removeExisting.on(
-				'click',
-				function(event) {
-					var button = event.target;
-					var span = A.one("#<portlet:namespace />existingFile" + <%= i %>);
-					var file = A.one("#<portlet:namespace />msgFile" + <%= i %>);
-
-					if (button) {
-						button.remove();
+			if (removeExisting) {
+				removeExisting.on(
+					'click',
+					function(event) {
+						<portlet:namespace />deleteAttachment(<%= i %>);
 					}
+				);
+			}
 
-					if (span) {
-						span.remove();
-					}
-
-					if (file) {
-						file.ancestor('.aui-field').show();
-					}
-				}
-			);
+		<%
 		}
+		%>
 
-	<%
-	}
-	%>
-
-</aui:script>
+	</aui:script>
+</c:if>
 
 <%
 if (curParentMessage != null) {

@@ -1033,18 +1033,16 @@ public class MBThreadFinderImpl
 	protected String addThreadStatusClause(
 		String sql, QueryDefinition queryDefinition) {
 
-		if (queryDefinition.getStatus() != WorkflowConstants.STATUS_ANY) {
-			if (queryDefinition.isExcludeStatus()) {
-				sql = CustomSQLUtil.appendCriteria(
-					sql, "AND (MBThread.status != ?)");
-			}
-			else {
-				sql = CustomSQLUtil.appendCriteria(
-					sql, "AND (MBThread.status = ?)");
-			}
+		if (queryDefinition.getStatus() == WorkflowConstants.STATUS_ANY) {
+			return sql;
 		}
 
-		return sql;
+		if (queryDefinition.isExcludeStatus()) {
+			return CustomSQLUtil.appendCriteria(
+				sql, "AND (MBThread.status != ?)");
+		}
+
+		return CustomSQLUtil.appendCriteria(sql, "AND (MBThread.status = ?)");
 	}
 
 	protected int doCountByG_C_S(

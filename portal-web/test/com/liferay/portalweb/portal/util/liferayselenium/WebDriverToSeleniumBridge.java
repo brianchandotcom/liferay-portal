@@ -49,7 +49,7 @@ public class WebDriverToSeleniumBridge
 
 		initKeys();
 
-		parentFrameHandle = getWindowHandle();
+		_parentFrameHandle = getWindowHandle();
 	}
 
 	public void addCustomRequestHeader(String key, String value) {
@@ -919,12 +919,12 @@ public class WebDriverToSeleniumBridge
 
 		if (locator.equals("relative=top")) {
 			targetLocator.defaultContent();
-		} 
+		}
 		else if (locator.equals("relative=parent")) {
-			targetLocator.window(parentFrameHandle);
+			targetLocator.window(_parentFrameHandle);
 		}
 		else {
-			parentFrameHandle = getWindowHandle();
+			_parentFrameHandle = getWindowHandle();
 
 			WebElement webElement = getWebElement(locator);
 
@@ -1221,6 +1221,6 @@ public class WebDriverToSeleniumBridge
 
 	private Keys[] _keysArray = new Keys[128];
 
-	private String parentFrameHandle;
+	private String _parentFrameHandle;
 
 }

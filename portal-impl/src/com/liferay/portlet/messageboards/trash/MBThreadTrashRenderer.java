@@ -50,8 +50,7 @@ public class MBThreadTrashRenderer extends BaseTrashRenderer {
 
 	@Override
 	public String getIconPath(ThemeDisplay themeDisplay) {
-		return themeDisplay.getPathThemeImages() + "/message_boards/" +
-			"thread_view_combination.png";
+		return themeDisplay.getPathThemeImages() + "/common/conversation.png";
 	}
 
 	public String getPortletId() {
@@ -59,7 +58,6 @@ public class MBThreadTrashRenderer extends BaseTrashRenderer {
 	}
 
 	public String getSummary(Locale locale) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

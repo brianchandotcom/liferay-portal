@@ -29,7 +29,6 @@ public class ViewResolveTasksTaskAssignedToMeUTTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/user/joebloggs/so/dashboard/");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -59,7 +58,6 @@ public class ViewResolveTasksTaskAssignedToMeUTTest extends BaseTestCase {
 				selenium.clickAt("//div[@class='view-all-tasks']/a",
 					RuntimeVariables.replace("View All Tasks"));
 				selenium.waitForPageToLoad("30000");
-				loadRequiredJavaScriptModules();
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {

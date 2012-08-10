@@ -78,9 +78,9 @@ public class DMKaleo2WorkflowTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddDMFolderMusicSubfolderMusicTest.class);
 		testSuite.addTestSuite(TearDownDMHomeFolderTest.class);
 		testSuite.addTestSuite(TearDownUserTest.class);
+		testSuite.addTestSuite(TearDownDMFolderTest.class);
 		testSuite.addTestSuite(TearDownDMDocumentTypeTest.class);
 		testSuite.addTestSuite(TearDownDMMetadataSetTest.class);
-		testSuite.addTestSuite(TearDownDMFolderTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

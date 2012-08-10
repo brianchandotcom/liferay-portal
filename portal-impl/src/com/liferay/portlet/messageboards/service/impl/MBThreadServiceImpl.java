@@ -315,11 +315,14 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 	public void restoreEntryFromTrash(long threadId)
 		throws PortalException, SystemException {
 
-		MBThread thread = mbThreadLocalService.getThread(threadId);
+		List<MBMessage> messages = mbMessagePersistence.findByThreadId(
+			threadId);
 
-		MBCategoryPermission.check(
-			getPermissionChecker(), thread.getGroupId(), thread.getCategoryId(),
-			ActionKeys.ADD_MESSAGE);
+		for (MBMessage message : messages) {
+			MBMessagePermission.check(
+				getPermissionChecker(), message.getMessageId(),
+				ActionKeys.DELETE);
+		}
 
 		mbThreadLocalService.restoreThreadFromTrash(getUserId(), threadId);
 	}

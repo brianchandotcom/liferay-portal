@@ -12,43 +12,42 @@
  * details.
  */
 
-package com.liferay.portlet.assetcategoriesnavigation.template;
+package com.liferay.portlet.sitemap.template;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.template.PortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.asset.model.AssetCategory;
 
 import java.util.Locale;
 
 /**
  * @author Juan Fernández
  */
-public class AssetCategoriesNavigationPortletDisplayTemplateHandler implements
+public class SiteMapPortletDisplayTemplateHandler implements
 	PortletDisplayTemplateHandler {
 
 	public String getClassName() {
-		return AssetCategory.class.getName();
+		return LayoutSet.class.getName();
 	}
 
 	public String getDefaultTemplateLocation() {
-		return PropsValues.
-			ASSET_CATEGORIES_NAVIGATION_DISPLAY_STYLES_TEMPLATE_CONTENT;
+		return PropsValues.SITES_SITEMAP_DISPLAY_STYLES_TEMPLATE_CONTENT;
 	}
 
 	public String getName(Locale locale) {
 		String portletTitle = PortalUtil.getPortletTitle(
-			PortletKeys.TAGS_CATEGORIES_NAVIGATION, locale);
+			PortletKeys.SITE_MAP, locale);
 
 		return portletTitle.concat(StringPool.SPACE).concat(
 			LanguageUtil.get(locale, "template"));
 	}
 
 	public String getResourceName() {
-		return "com.liferay.portlet.assetcategoriesnavigation";
+		return "com.liferay.portlet.sitemap";
 	}
 
 }

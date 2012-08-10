@@ -125,6 +125,28 @@ public class PortletDisplayTemplatesUtil {
 		return themeDisplay.getScopeGroupId();
 	}
 
+	public static long getPortletDisplayTemplateDDMTemplateId(
+		ThemeDisplay themeDisplay, String displayStyle) {
+
+		long portletDisplayDDMTemplateId = 0;
+
+		long portletDisplayDDMTemplateGroupId = getDDMTemplateGroupId(
+			themeDisplay);
+
+		if (displayStyle.startsWith("ddmTemplate_")) {
+			DDMTemplate portletDisplayDDMTemplate =
+				PortletDisplayTemplatesUtil.fetchDDMTemplate(
+					portletDisplayDDMTemplateGroupId, displayStyle);
+
+			if (portletDisplayDDMTemplate != null) {
+				portletDisplayDDMTemplateId =
+					portletDisplayDDMTemplate.getTemplateId();
+			}
+		}
+
+		return portletDisplayDDMTemplateId;
+	}
+
 	public static String renderDDMTemplate(
 			RenderRequest renderRequest, RenderResponse renderResponse,
 			long ddmTemplateId, List<?> entries)

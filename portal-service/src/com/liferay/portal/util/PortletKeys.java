@@ -194,6 +194,8 @@ public class PortletKeys {
 
 	public static final String SHOPPING = "34";
 
+	public static final String SITE_MAP = "85";
+
 	public static final String SITE_MEMBERSHIPS_ADMIN = "174";
 
 	public static final String SITE_REDIRECTOR = "49";

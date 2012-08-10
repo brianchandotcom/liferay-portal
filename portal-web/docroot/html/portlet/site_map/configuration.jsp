@@ -25,6 +25,7 @@ String rootNodeName = StringPool.BLANK;
 LayoutView layoutView = layoutLister.getLayoutView(layout.getGroupId(), layout.isPrivateLayout(), rootNodeName, locale);
 
 List layoutList = layoutView.getList();
+PortletDisplayTemplateHandler portletDisplayTemplateHandler = PortletDisplayTemplateHandlerRegistryUtil.getPortletDisplayTemplateHandler(LayoutSet.class.getName());
 %>
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationURL" />
@@ -101,6 +102,20 @@ List layoutList = layoutView.getList();
 		<aui:input name="preferences--useHtmlTitle--" type="checkbox" value="<%= useHtmlTitle %>" />
 
 		<aui:input name="preferences--showHiddenPages--" type="checkbox" value="<%= showHiddenPages %>" />
+
+		<div class="display-template">
+			<liferay-ui:ddm-template-menu
+				classNameId="<%= PortalUtil.getClassNameId(portletDisplayTemplateHandler.getClassName()) %>"
+				preferenceValue="<%= displayStyle %>"
+				showEmptyOption="<%= true %>"
+			/>
+
+			<liferay-ui:ddm-template-selector
+				classNameId="<%= PortalUtil.getClassNameId(portletDisplayTemplateHandler.getClassName()) %>"
+				message='<%= LanguageUtil.format(pageContext, "manage-display-templates-for-x", themeDisplay.getScopeGroupName(), false) %>'
+				refreshURL="<%= currentURL %>"
+			/>
+		</div>
 	</aui:fieldset>
 
 	<aui:button-row>

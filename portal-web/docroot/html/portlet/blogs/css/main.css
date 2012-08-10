@@ -1,13 +1,4 @@
 .portlet-blogs {
-	.display-template .aui-field-content {
-		display: inline-block;
-	}
-
-	.display-template .manage-display-templates {
-		position: relative;
-		top: -5px;
-	}
-
 	.taglib-custom-attributes-list {
 		margin-bottom: 1em;
 	}

@@ -16,11 +16,36 @@
 
 <%@ include file="/html/portlet/asset_tags_navigation/init.jsp" %>
 
-<liferay-ui:asset-tags-navigation
-	classNameId="<%= classNameId %>"
-	displayStyle="<%= displayStyle %>"
-	hidePortletWhenEmpty="<%= true %>"
-	maxAssetTags="<%= maxAssetTags %>"
-	showAssetCount="<%= showAssetCount %>"
-	showZeroAssetCount="<%= showZeroAssetCount %>"
-/>
+<%
+long portletDisplayDDMTemplateId = PortletDisplayTemplatesUtil.getPortletDisplayTemplateDDMTemplateId(themeDisplay, displayStyle);
+%>
+
+<c:choose>
+	<c:when test="<%= portletDisplayDDMTemplateId > 0 %>">
+
+		<%
+		List<AssetTag> assetTags = null;
+
+		if (classNameId > 0) {
+			assetTags = AssetTagServiceUtil.getTags(scopeGroupId, classNameId, null, 0, maxAssetTags, new AssetTagCountComparator());
+		}
+		else {
+			assetTags = AssetTagServiceUtil.getGroupTags(scopeGroupId, 0, maxAssetTags, new AssetTagCountComparator());
+		}
+
+		assetTags = ListUtil.sort(assetTags);
+		%>
+
+		<%= PortletDisplayTemplatesUtil.renderDDMTemplate(renderRequest, renderResponse, portletDisplayDDMTemplateId, assetTags) %>
+	</c:when>
+	<c:otherwise>
+		<liferay-ui:asset-tags-navigation
+			classNameId="<%= classNameId %>"
+			displayStyle="<%= displayStyle %>"
+			hidePortletWhenEmpty="<%= true %>"
+			maxAssetTags="<%= maxAssetTags %>"
+			showAssetCount="<%= showAssetCount %>"
+			showZeroAssetCount="<%= showZeroAssetCount %>"
+		/>
+	</c:otherwise>
+</c:choose>

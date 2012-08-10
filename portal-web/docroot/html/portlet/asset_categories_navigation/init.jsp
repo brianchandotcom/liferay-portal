@@ -54,18 +54,6 @@ if (!allAssetVocabularies && (preferences.getValues("assetVocabularyIds", null) 
 }
 
 String displayTemplate = preferences.getValue("displayTemplate", StringPool.BLANK);
-
-DDMTemplate portletDisplayDDMTemplate = null;
-long portletDisplayDDMTemplateId = 0;
-long portletDisplayDDMTemplateGroupId = PortletDisplayTemplatesUtil.getDDMTemplateGroupId(themeDisplay);
-
-if (displayTemplate.startsWith("ddmTemplate_")) {
-	portletDisplayDDMTemplate = PortletDisplayTemplatesUtil.fetchDDMTemplate(portletDisplayDDMTemplateGroupId, displayTemplate);
-
-	if (portletDisplayDDMTemplate != null) {
-		portletDisplayDDMTemplateId = portletDisplayDDMTemplate.getTemplateId();
-	}
-}
 %>
 
 <%@ include file="/html/portlet/asset_categories_navigation/init-ext.jsp" %>

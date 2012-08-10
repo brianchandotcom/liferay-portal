@@ -20,6 +20,7 @@
 String redirect = ParamUtil.getString(request, "redirect");
 
 List<AssetRendererFactory> assetRendererFactories = AssetRendererFactoryRegistryUtil.getAssetRendererFactories();
+PortletDisplayTemplateHandler portletDisplayTemplateHandler = PortletDisplayTemplateHandlerRegistryUtil.getPortletDisplayTemplateHandler(AssetTag.class.getName());
 %>
 
 <liferay-portlet:actionURL portletConfiguration="true" var="configurationURL" />
@@ -54,13 +55,32 @@ List<AssetRendererFactory> assetRendererFactories = AssetRendererFactoryRegistry
 
 						</aui:select>
 					</li>
+				</ul>
+			</li>
 
-					<li class="tree-item">
-						<aui:select name="preferences--displayStyle--">
-							<aui:option label="number" selected='<%= displayStyle.equals("number") %>' />
-							<aui:option label="cloud" selected='<%= displayStyle.equals("cloud") %>' />
-						</aui:select>
-					</li>
+			<li class="tree-item">
+				<ul class="lfr-tree lfr-component" id="<portlet:namespace />displayTemplateSettings">
+					<div class="display-template">
+
+						<%
+						List<String> displayStyles = new ArrayList<String>();
+
+						displayStyles.add("number");
+						displayStyles.add("cloud");
+						%>
+
+						<liferay-ui:ddm-template-menu
+							classNameId="<%= PortalUtil.getClassNameId(portletDisplayTemplateHandler.getClassName()) %>"
+							displayStyles="<%= displayStyles %>"
+							preferenceValue="<%= displayStyle %>"
+						/>
+
+						<liferay-ui:ddm-template-selector
+							classNameId="<%= PortalUtil.getClassNameId(portletDisplayTemplateHandler.getClassName()) %>"
+							message='<%= LanguageUtil.format(pageContext, "manage-display-templates-for-x", themeDisplay.getScopeGroupName(), false) %>'
+							refreshURL="<%= currentURL %>"
+						/>
+					</div>
 				</ul>
 			</li>
 

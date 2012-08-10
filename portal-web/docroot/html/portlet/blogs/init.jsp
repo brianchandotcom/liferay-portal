@@ -82,18 +82,6 @@ double rssFormatVersion = RSSUtil.getFormatVersion(rssFormat);
 boolean showSearch = true;
 boolean showEditEntryPermissions = true;
 
-DDMTemplate portletDisplayDDMTemplate = null;
-long portletDisplayDDMTemplateId = 0;
-long portletDisplayDDMTemplateGroupId = PortletDisplayTemplatesUtil.getDDMTemplateGroupId(themeDisplay);
-
-if (pageDisplayStyle.startsWith("ddmTemplate_")) {
-	portletDisplayDDMTemplate = PortletDisplayTemplatesUtil.fetchDDMTemplate(portletDisplayDDMTemplateGroupId, pageDisplayStyle);
-
-	if (portletDisplayDDMTemplate != null) {
-		portletDisplayDDMTemplateId = portletDisplayDDMTemplate.getTemplateId();
-	}
-}
-
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
 

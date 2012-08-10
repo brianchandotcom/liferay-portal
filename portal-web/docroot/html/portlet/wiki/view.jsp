@@ -115,6 +115,8 @@ if (wikiPage != null) {
 
 	request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 }
+
+long portletDisplayDDMTemplateId = PortletDisplayTemplatesUtil.getPortletDisplayTemplateDDMTemplateId(themeDisplay, displayStyle);
 %>
 
 <c:choose>
@@ -142,206 +144,221 @@ if (wikiPage != null) {
 
 <liferay-util:include page="/html/portlet/wiki/top_links.jsp" />
 
-<liferay-ui:header
-	backLabel="<%= parentTitle %>"
-	backURL="<%= (viewParentPageURL != null) ? viewParentPageURL.toString() : null %>"
-	localizeTitle="<%= false %>"
-	title="<%= title %>"
-/>
-
-<c:if test="<%= !print %>">
-	<div class="page-actions top-actions">
-		<c:if test="<%= WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.UPDATE) %>">
-			<c:if test="<%= followRedirect || (redirectPage == null) %>">
-				<liferay-ui:icon
-					image="edit"
-					label="<%= true %>"
-					url="<%= editPageURL.toString() %>"
-				/>
-			</c:if>
-		</c:if>
+<c:choose>
+	<c:when test="<%= portletDisplayDDMTemplateId > 0 %>">
 
 		<%
-		PortletURL viewPageDetailsURL = PortletURLUtil.clone(viewPageURL, renderResponse);
+		List entries = new ArrayList();
 
-		viewPageDetailsURL.setParameter("struts_action", "/wiki/view_page_details");
-		viewPageDetailsURL.setParameter("redirect", currentURL);
+		entries.add(wikiPage);
 		%>
 
-		<liferay-ui:icon
-			image="history"
-			label="<%= true %>"
-			message="details"
-			method="get"
-			url="<%= viewPageDetailsURL.toString() %>"
+		<%= PortletDisplayTemplatesUtil.renderDDMTemplate(renderRequest, renderResponse, portletDisplayDDMTemplateId, entries) %>
+	</c:when>
+	<c:otherwise>
+
+		<liferay-ui:header
+			backLabel="<%= parentTitle %>"
+			backURL="<%= (viewParentPageURL != null) ? viewParentPageURL.toString() : null %>"
+			localizeTitle="<%= false %>"
+			title="<%= title %>"
 		/>
 
-		<liferay-ui:icon
-			image="print"
-			label="<%= true %>"
-			url='<%= "javascript:" + renderResponse.getNamespace() + "printPage();" %>'
-		/>
-	</div>
-</c:if>
-
-<c:if test="<%= originalPage != null %>">
-
-	<%
-	PortletURL originalViewPageURL = renderResponse.createRenderURL();
-
-	originalViewPageURL.setParameter("struts_action", "/wiki/view");
-	originalViewPageURL.setParameter("nodeName", node.getName());
-	originalViewPageURL.setParameter("title", originalPage.getTitle());
-	originalViewPageURL.setParameter("followRedirect", "false");
-	%>
-
-	<div class="page-redirect" onClick="location.href = '<%= originalViewPageURL.toString() %>';">
-		(<%= LanguageUtil.format(pageContext, "redirected-from-x", originalPage.getTitle()) %>)
-	</div>
-</c:if>
-
-<c:if test="<%= !wikiPage.isHead() %>">
-	<div class="page-old-version">
-		(<liferay-ui:message key="you-are-viewing-an-archived-version-of-this-page" /> (<%= wikiPage.getVersion() %>), <aui:a href="<%= viewPageURL.toString() %>" label="go-to-the-latest-version" />)
-	</div>
-</c:if>
-
-<div class="page-categorization">
-	<div class="page-categories">
-		<liferay-ui:asset-categories-summary
-			className="<%= WikiPage.class.getName() %>"
-			classPK="<%= wikiPage.getResourcePrimKey() %>"
-			portletURL="<%= PortletURLUtil.clone(categorizedPagesURL, renderResponse) %>"
-		/>
-	</div>
-
-	<div class="page-tags">
-		<liferay-ui:asset-tags-summary
-			className="<%= WikiPage.class.getName() %>"
-			classPK="<%= wikiPage.getResourcePrimKey() %>"
-			message="tags"
-			portletURL="<%= PortletURLUtil.clone(taggedPagesURL, renderResponse) %>"
-		/>
-	</div>
-</div>
-
-<div>
-	<%@ include file="/html/portlet/wiki/view_page_content.jspf" %>
-</div>
-
-<liferay-ui:custom-attributes-available className="<%= WikiPage.class.getName() %>">
-	<liferay-ui:custom-attribute-list
-		className="<%= WikiPage.class.getName() %>"
-		classPK="<%= (wikiPage != null) ? wikiPage.getPrimaryKey() : 0 %>"
-		editable="<%= false %>"
-		label="<%= true %>"
-	/>
-</liferay-ui:custom-attributes-available>
-
-<c:if test="<%= (wikiPage != null) && Validator.isNotNull(formattedContent) && (followRedirect || (redirectPage == null)) %>">
-	<c:if test="<%= !childPages.isEmpty() %>">
-		<div class="child-pages">
-			<h2><liferay-ui:message key="children-pages" /></h2>
-
-			<ul>
-
-				<%
-				PortletURL curPageURL = PortletURLUtil.clone(viewPageURL, renderResponse);
-
-				for (int i = 0; i < childPages.size(); i++) {
-					WikiPage curPage = (WikiPage)childPages.get(i);
-
-					curPageURL.setParameter("title", curPage.getTitle());
-				%>
-
-					<c:if test="<%= Validator.isNull(curPage.getRedirectTitle()) %>">
-						<li>
-							<aui:a href="<%= curPageURL.toString() %>"><%= curPage.getTitle() %></aui:a>
-						</li>
+		<c:if test="<%= !print %>">
+			<div class="page-actions top-actions">
+				<c:if test="<%= WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.UPDATE) %>">
+					<c:if test="<%= followRedirect || (redirectPage == null) %>">
+						<liferay-ui:icon
+							image="edit"
+							label="<%= true %>"
+							url="<%= editPageURL.toString() %>"
+						/>
 					</c:if>
+				</c:if>
 
 				<%
-				}
+				PortletURL viewPageDetailsURL = PortletURLUtil.clone(viewPageURL, renderResponse);
+
+				viewPageDetailsURL.setParameter("struts_action", "/wiki/view_page_details");
+				viewPageDetailsURL.setParameter("redirect", currentURL);
 				%>
 
-			</ul>
-		</div>
-	</c:if>
-
-	<div class="page-actions">
-		<div class="article-actions">
-			<c:if test="<%= WikiNodePermission.contains(permissionChecker, node, ActionKeys.ADD_PAGE) %>">
 				<liferay-ui:icon
-					image="add_article"
+					image="history"
 					label="<%= true %>"
-					message="add-child-page"
+					message="details"
 					method="get"
-					url="<%= addPageURL.toString() %>"
-				/>,
-			</c:if>
+					url="<%= viewPageDetailsURL.toString() %>"
+				/>
 
-			<liferay-ui:icon
-				image="clip"
-				label="<%= true %>"
-				message='<%= attachments.length + " " + LanguageUtil.get(pageContext, (attachments.length == 1) ? "attachment" : "attachments") %>' method="get" url="<%= viewAttachmentsURL.toString() %>"
-			/>
-		</div>
+				<liferay-ui:icon
+					image="print"
+					label="<%= true %>"
+					url='<%= "javascript:" + renderResponse.getNamespace() + "printPage();" %>'
+				/>
+			</div>
+		</c:if>
 
-		<div class="stats">
+		<c:if test="<%= originalPage != null %>">
 
 			<%
-			AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(WikiPage.class.getName(), wikiPage.getResourcePrimKey());
+			PortletURL originalViewPageURL = renderResponse.createRenderURL();
+
+			originalViewPageURL.setParameter("struts_action", "/wiki/view");
+			originalViewPageURL.setParameter("nodeName", node.getName());
+			originalViewPageURL.setParameter("title", originalPage.getTitle());
+			originalViewPageURL.setParameter("followRedirect", "false");
 			%>
 
-			<c:choose>
-				<c:when test="<%= assetEntry.getViewCount() == 1 %>">
-					<%= assetEntry.getViewCount() %> <liferay-ui:message key="view" />
-				</c:when>
-				<c:when test="<%= assetEntry.getViewCount() > 1 %>">
-					<%= assetEntry.getViewCount() %> <liferay-ui:message key="views" />
-				</c:when>
-			</c:choose>
-		</div>
-	</div>
+			<div class="page-redirect" onClick="location.href = '<%= originalViewPageURL.toString() %>';">
+				(<%= LanguageUtil.format(pageContext, "redirected-from-x", originalPage.getTitle()) %>)
+			</div>
+		</c:if>
 
-	<c:if test="<%= enableRelatedAssets %>">
-		<div class="entry-links">
-			<liferay-ui:asset-links
-				assetEntryId="<%= assetEntry.getEntryId() %>"
-			/>
-		</div>
-	</c:if>
+		<c:if test="<%= !wikiPage.isHead() %>">
+			<div class="page-old-version">
+				(<liferay-ui:message key="you-are-viewing-an-archived-version-of-this-page" /> (<%= wikiPage.getVersion() %>), <aui:a href="<%= viewPageURL.toString() %>" label="go-to-the-latest-version" />)
+			</div>
+		</c:if>
 
-	<c:if test="<%= enablePageRatings %>">
-		<div class="page-ratings">
-			<liferay-ui:ratings
-				className="<%= WikiPage.class.getName() %>"
-				classPK="<%= wikiPage.getResourcePrimKey() %>"
-			/>
-		</div>
-	</c:if>
-
-	<c:if test="<%= enableComments %>">
-		<liferay-ui:panel-container extended="<%= false %>" id="wikiCommentsPanelContainer" persistState="<%= true %>">
-			<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="wikiCommentsPanel" persistState="<%= true %>" title="comments">
-				<portlet:actionURL var="discussionURL">
-					<portlet:param name="struts_action" value="/wiki/edit_page_discussion" />
-				</portlet:actionURL>
-
-				<liferay-ui:discussion
+		<div class="page-categorization">
+			<div class="page-categories">
+				<liferay-ui:asset-categories-summary
 					className="<%= WikiPage.class.getName() %>"
 					classPK="<%= wikiPage.getResourcePrimKey() %>"
-					formAction="<%= discussionURL %>"
-					formName="fm2"
-					ratingsEnabled="<%= enableCommentRatings %>"
-					redirect="<%= currentURL %>"
-					subject="<%= wikiPage.getTitle() %>"
-					userId="<%= wikiPage.getUserId() %>"
+					portletURL="<%= PortletURLUtil.clone(categorizedPagesURL, renderResponse) %>"
 				/>
-			</liferay-ui:panel>
-		</liferay-ui:panel-container>
-	</c:if>
-</c:if>
+			</div>
+
+			<div class="page-tags">
+				<liferay-ui:asset-tags-summary
+					className="<%= WikiPage.class.getName() %>"
+					classPK="<%= wikiPage.getResourcePrimKey() %>"
+					message="tags"
+					portletURL="<%= PortletURLUtil.clone(taggedPagesURL, renderResponse) %>"
+				/>
+			</div>
+		</div>
+
+		<div>
+			<%@ include file="/html/portlet/wiki/view_page_content.jspf" %>
+		</div>
+
+		<liferay-ui:custom-attributes-available className="<%= WikiPage.class.getName() %>">
+			<liferay-ui:custom-attribute-list
+				className="<%= WikiPage.class.getName() %>"
+				classPK="<%= (wikiPage != null) ? wikiPage.getPrimaryKey() : 0 %>"
+				editable="<%= false %>"
+				label="<%= true %>"
+			/>
+		</liferay-ui:custom-attributes-available>
+
+		<c:if test="<%= (wikiPage != null) && Validator.isNotNull(formattedContent) && (followRedirect || (redirectPage == null)) %>">
+			<c:if test="<%= !childPages.isEmpty() %>">
+				<div class="child-pages">
+					<h2><liferay-ui:message key="children-pages" /></h2>
+
+					<ul>
+
+						<%
+						PortletURL curPageURL = PortletURLUtil.clone(viewPageURL, renderResponse);
+
+						for (int i = 0; i < childPages.size(); i++) {
+							WikiPage curPage = (WikiPage)childPages.get(i);
+
+							curPageURL.setParameter("title", curPage.getTitle());
+						%>
+
+							<c:if test="<%= Validator.isNull(curPage.getRedirectTitle()) %>">
+								<li>
+									<aui:a href="<%= curPageURL.toString() %>"><%= curPage.getTitle() %></aui:a>
+								</li>
+							</c:if>
+
+						<%
+						}
+						%>
+
+					</ul>
+				</div>
+			</c:if>
+
+			<div class="page-actions">
+				<div class="article-actions">
+					<c:if test="<%= WikiNodePermission.contains(permissionChecker, node, ActionKeys.ADD_PAGE) %>">
+						<liferay-ui:icon
+							image="add_article"
+							label="<%= true %>"
+							message="add-child-page"
+							method="get"
+							url="<%= addPageURL.toString() %>"
+						/>,
+					</c:if>
+
+					<liferay-ui:icon
+						image="clip"
+						label="<%= true %>"
+						message='<%= attachments.length + " " + LanguageUtil.get(pageContext, (attachments.length == 1) ? "attachment" : "attachments") %>' method="get" url="<%= viewAttachmentsURL.toString() %>"
+					/>
+				</div>
+
+				<div class="stats">
+
+					<%
+					AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(WikiPage.class.getName(), wikiPage.getResourcePrimKey());
+					%>
+
+					<c:choose>
+						<c:when test="<%= assetEntry.getViewCount() == 1 %>">
+							<%= assetEntry.getViewCount() %> <liferay-ui:message key="view" />
+						</c:when>
+						<c:when test="<%= assetEntry.getViewCount() > 1 %>">
+							<%= assetEntry.getViewCount() %> <liferay-ui:message key="views" />
+						</c:when>
+					</c:choose>
+				</div>
+			</div>
+
+			<c:if test="<%= enableRelatedAssets %>">
+				<div class="entry-links">
+					<liferay-ui:asset-links
+						assetEntryId="<%= assetEntry.getEntryId() %>"
+					/>
+				</div>
+			</c:if>
+
+			<c:if test="<%= enablePageRatings %>">
+				<div class="page-ratings">
+					<liferay-ui:ratings
+						className="<%= WikiPage.class.getName() %>"
+						classPK="<%= wikiPage.getResourcePrimKey() %>"
+					/>
+				</div>
+			</c:if>
+
+			<c:if test="<%= enableComments %>">
+				<liferay-ui:panel-container extended="<%= false %>" id="wikiCommentsPanelContainer" persistState="<%= true %>">
+					<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="wikiCommentsPanel" persistState="<%= true %>" title="comments">
+						<portlet:actionURL var="discussionURL">
+							<portlet:param name="struts_action" value="/wiki/edit_page_discussion" />
+						</portlet:actionURL>
+
+						<liferay-ui:discussion
+							className="<%= WikiPage.class.getName() %>"
+							classPK="<%= wikiPage.getResourcePrimKey() %>"
+							formAction="<%= discussionURL %>"
+							formName="fm2"
+							ratingsEnabled="<%= enableCommentRatings %>"
+							redirect="<%= currentURL %>"
+							subject="<%= wikiPage.getTitle() %>"
+							userId="<%= wikiPage.getUserId() %>"
+						/>
+					</liferay-ui:panel>
+				</liferay-ui:panel-container>
+			</c:if>
+		</c:if>
+	</c:otherwise>
+</c:choose>
 
 <aui:script use="aui-base">
 	var toc = A.one('#p_p_id<portlet:namespace /> .toc');

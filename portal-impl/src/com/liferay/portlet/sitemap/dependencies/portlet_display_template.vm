@@ -1,0 +1,38 @@
+##
+## You can use Velocity to define display styles for the Site Map portlet.
+##
+## A set of variables have been made available for the template developers:
+##
+##  $ddmTemplateId: the current template id
+##
+##  $entries: the list of root layouts that are being shown in the portlet
+##
+##  $locale: the locale of the site
+##
+##  $renderRequest: the render request
+##
+##  $renderResponse: the render response
+##
+##  $themeDisplay: the theme display
+##
+## It is possible to use these variables to create advanced templates to display
+## your web site map. Here's a simple template example:
+##
+##<ul>
+##	#foreach($entry in $entries)
+##		#set ($layoutURL = $portalUtil.getLayoutURL($entry, $themeDisplay))
+##
+##		<li>
+##			<a href="$layoutURL">$entry.getName($locale)</a>
+##		</li>
+##
+##		<ul>
+##			#foreach($child in $entry.getChildren())
+##				#set ($childLayoutURL = $portalUtil.getLayoutURL($child, $themeDisplay))
+##				<li>
+##					<a href="$childLayoutURL">$child.getName($locale)</a>
+##				</li>
+##			#end
+##		</ul>
+##	#end
+##</ul>

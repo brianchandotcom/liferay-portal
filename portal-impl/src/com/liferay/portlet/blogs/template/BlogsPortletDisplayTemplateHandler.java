@@ -16,11 +16,10 @@ package com.liferay.portlet.blogs.template;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.template.PortletDisplayTemplateHandler;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.PropsUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 
 import java.util.Locale;
@@ -36,7 +35,7 @@ public class BlogsPortletDisplayTemplateHandler implements
 	}
 
 	public String getDefaultTemplateLocation() {
-		return PropsUtil.get(PropsKeys.BLOGS_DISPLAY_STYLES_TEMPLATE_CONTENT);
+		return PropsValues.BLOGS_DISPLAY_STYLES_TEMPLATE_CONTENT;
 	}
 
 	public String getName(Locale locale) {

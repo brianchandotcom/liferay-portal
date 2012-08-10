@@ -17,6 +17,7 @@ package com.liferay.portlet.messageboards.action;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -102,9 +103,10 @@ public class DeleteThreadAction extends PortletAction {
 		}
 
 		if (moveToTrash && (deleteThreadIds.length > 0)) {
-			Map<String, long[]> data = new HashMap<String, long[]>();
+			Map<String, String[]> data = new HashMap<String, String[]>();
 
-			data.put("restoreThreadIds", deleteThreadIds);
+			data.put(
+				"restoreThreadIds", ArrayUtil.toStringArray(deleteThreadIds));
 
 			SessionMessages.add(
 				actionRequest,

@@ -23,6 +23,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class User_ViewEditWCWebContentTest extends BaseTestCase {
 	public void testUser_ViewEditWCWebContent() throws Exception {
 		selenium.open("/web/guest/home/");
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -30,7 +33,7 @@ public class User_ViewEditWCWebContentTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -46,7 +49,7 @@ public class User_ViewEditWCWebContentTest extends BaseTestCase {
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("selen01 lenn nium01"),
+		assertEquals(RuntimeVariables.replace("userfn userln"),
 			selenium.getText("//td[7]/a"));
 	}
 }

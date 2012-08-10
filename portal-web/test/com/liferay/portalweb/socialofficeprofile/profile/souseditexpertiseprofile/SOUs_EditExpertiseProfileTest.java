@@ -59,7 +59,7 @@ public class SOUs_EditExpertiseProfileTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//input[contains(@id,'_125_projectsEntryTitle')]")) {
+							"//input[contains(@id,'_2_projectsEntryTitle0')]")) {
 					break;
 				}
 			}
@@ -69,9 +69,9 @@ public class SOUs_EditExpertiseProfileTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.type("//input[contains(@id,'_125_projectsEntryTitle')]",
+		selenium.type("//input[contains(@id,'_2_projectsEntryTitle0')]",
 			RuntimeVariables.replace("Expertise Title Edit"));
-		selenium.select("//select[contains(@id,'_125_projectsEntryStartDateMonth')]",
+		selenium.select("//select[contains(@id,'_2_projectsEntryStartDateMonth0')]",
 			RuntimeVariables.replace("February"));
 
 		for (int second = 0;; second++) {
@@ -81,7 +81,7 @@ public class SOUs_EditExpertiseProfileTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//textarea[contains(@id,'_125_projectsEntryDescription')]")) {
+							"//textarea[@id='_2_projectsEntryDescription0']")) {
 					break;
 				}
 			}
@@ -91,7 +91,7 @@ public class SOUs_EditExpertiseProfileTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.type("//textarea[contains(@id,'_125_projectsEntryDescription')]",
+		selenium.type("//textarea[@id='_2_projectsEntryDescription0']",
 			RuntimeVariables.replace("Expertise Description Edit"));
 		Thread.sleep(5000);
 		selenium.clickAt("//input[@value='Save']",

@@ -27,9 +27,11 @@ import com.liferay.portalweb.socialofficeprofile.profile.sousaddadditionalemaila
 import com.liferay.portalweb.socialofficeprofile.profile.sousaddaddressprofile.SOUs_AddAddressProfileTests;
 import com.liferay.portalweb.socialofficeprofile.profile.sousaddexpertiseprofile.SOUs_AddExpertiseProfileTests;
 import com.liferay.portalweb.socialofficeprofile.profile.sousaddinstantmessengerprofile.SOUs_AddInstantMessengerProfileTests;
+import com.liferay.portalweb.socialofficeprofile.profile.sousaddintroductionprofile.SOUs_AddIntroductionProfileTests;
 import com.liferay.portalweb.socialofficeprofile.profile.sousaddphonenumberprofile.SOUs_AddPhoneNumberProfileTests;
 import com.liferay.portalweb.socialofficeprofile.profile.sousaddsmsprofile.SOUs_AddSMSProfileTests;
 import com.liferay.portalweb.socialofficeprofile.profile.sousaddsocialnetworkprofile.SOUs_AddSocialNetworkProfileTests;
+import com.liferay.portalweb.socialofficeprofile.profile.sousaddtagprofile.SOUs_AddTagProfileTests;
 import com.liferay.portalweb.socialofficeprofile.profile.sousaddwebsiteprofile.SOUs_AddWebsiteProfileTests;
 import com.liferay.portalweb.socialofficeprofile.profile.souseditadditionalemailaddressnullprofile.SOUs_EditAdditionalEmailAddressNullProfileTests;
 import com.liferay.portalweb.socialofficeprofile.profile.souseditadditionalemailaddressprofile.SOUs_EditAdditionalEmailAddressProfileTests;
@@ -39,6 +41,7 @@ import com.liferay.portalweb.socialofficeprofile.profile.souseditexpertisenullpr
 import com.liferay.portalweb.socialofficeprofile.profile.souseditexpertiseprofile.SOUs_EditExpertiseProfileTests;
 import com.liferay.portalweb.socialofficeprofile.profile.souseditinstantmessengernullprofile.SOUs_EditInstantMessengerNullProfileTests;
 import com.liferay.portalweb.socialofficeprofile.profile.souseditinstantmessengerprofile.SOUs_EditInstantMessengerProfileTests;
+import com.liferay.portalweb.socialofficeprofile.profile.souseditintroductionprofile.SOUs_EditIntroductionProfileTests;
 import com.liferay.portalweb.socialofficeprofile.profile.souseditphonenumbernullprofile.SOUs_EditPhoneNumberNullProfileTests;
 import com.liferay.portalweb.socialofficeprofile.profile.souseditphonenumberprofile.SOUs_EditPhoneNumberProfileTests;
 import com.liferay.portalweb.socialofficeprofile.profile.souseditsmsnullprofile.SOUs_EditSMSNullProfileTests;
@@ -79,9 +82,11 @@ public class ProfileTestPlan extends BaseTestSuite {
 		testSuite.addTest(SOUs_AddAddressProfileTests.suite());
 		testSuite.addTest(SOUs_AddExpertiseProfileTests.suite());
 		testSuite.addTest(SOUs_AddInstantMessengerProfileTests.suite());
+		testSuite.addTest(SOUs_AddIntroductionProfileTests.suite());
 		testSuite.addTest(SOUs_AddPhoneNumberProfileTests.suite());
 		testSuite.addTest(SOUs_AddSMSProfileTests.suite());
 		testSuite.addTest(SOUs_AddSocialNetworkProfileTests.suite());
+		testSuite.addTest(SOUs_AddTagProfileTests.suite());
 		testSuite.addTest(SOUs_AddWebsiteProfileTests.suite());
 		testSuite.addTest(
 			SOUs_EditAdditionalEmailAddressNullProfileTests.suite());
@@ -92,6 +97,7 @@ public class ProfileTestPlan extends BaseTestSuite {
 		testSuite.addTest(SOUs_EditExpertiseProfileTests.suite());
 		testSuite.addTest(SOUs_EditInstantMessengerNullProfileTests.suite());
 		testSuite.addTest(SOUs_EditInstantMessengerProfileTests.suite());
+		testSuite.addTest(SOUs_EditIntroductionProfileTests.suite());
 		testSuite.addTest(SOUs_EditPhoneNumberNullProfileTests.suite());
 		testSuite.addTest(SOUs_EditPhoneNumberProfileTests.suite());
 		testSuite.addTest(SOUs_EditSMSNullProfileTests.suite());

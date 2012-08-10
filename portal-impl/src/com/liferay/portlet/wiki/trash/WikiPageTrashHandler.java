@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.LayoutConstants;
+import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletURLFactoryUtil;
@@ -40,6 +41,7 @@ import com.liferay.portlet.wiki.model.WikiPageResource;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.portlet.wiki.service.WikiPageResourceLocalServiceUtil;
 import com.liferay.portlet.wiki.service.WikiPageServiceUtil;
+import com.liferay.portlet.wiki.service.permission.WikiPermission;
 
 import java.util.Date;
 
@@ -53,7 +55,8 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 	public static final String CLASS_NAME = WikiPage.class.getName();
 
 	@Override
-	public void checkDuplicateTrashEntry(TrashEntry trashEntry, String newName)
+	public void checkDuplicateTrashEntry(
+			TrashEntry trashEntry, long containerId, String newName)
 		throws PortalException, SystemException {
 
 		WikiPage page = WikiPageLocalServiceUtil.getPage(
@@ -68,7 +71,7 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 		String originalTitle = TrashUtil.stripTrashNamespace(restoredTitle);
 
 		WikiPage duplicatePage = WikiPageLocalServiceUtil.fetchPage(
-			page.getNodeId(), originalTitle, page.getVersion());
+			containerId, originalTitle, page.getVersion());
 
 		if (duplicatePage != null) {
 			DuplicateEntryException dee = new DuplicateEntryException();
@@ -79,6 +82,13 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 
 			throw dee;
 		}
+	}
+
+	public void checkPermission(
+			PermissionChecker permissionChecker, long groupId, String actionId)
+		throws PortalException, SystemException {
+
+		WikiPermission.check(permissionChecker, groupId, actionId);
 	}
 
 	/**

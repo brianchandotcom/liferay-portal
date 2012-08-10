@@ -52,7 +52,7 @@ public class SOUs_RepostMicroblogsContentProfileTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Repost"),
 			selenium.getText("//span[@class='action repost']/a"));
 		selenium.clickAt("//span[@class='action repost']/a",
-			RuntimeVariables.replace("Comment"));
+			RuntimeVariables.replace("Repost"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

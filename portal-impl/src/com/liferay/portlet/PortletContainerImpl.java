@@ -379,17 +379,10 @@ public class PortletContainerImpl implements PortletContainer {
 			}
 		}
 		catch (ClassNotFoundException cnfe) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					portletClassLoader.toString() + " does not contain " +
-						valueClassName,
-					cnfe);
-			}
+			throw new RuntimeException(cnfe);
 		}
 
-		EventImpl eventImpl = (EventImpl)event;
-
-		byte[] serializedValue = eventImpl.getSerializedValue();
+		byte[] serializedValue = SerializableUtil.serialize(value);
 
 		value = (Serializable)SerializableUtil.deserialize(
 			serializedValue, portletClassLoader);

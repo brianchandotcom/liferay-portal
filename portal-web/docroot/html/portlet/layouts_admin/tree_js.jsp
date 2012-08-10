@@ -245,7 +245,7 @@ if (!selectableTree) {
 							{
 								cssClass: cssClass,
 								label: newNode.label,
-								title: title,
+								title: title
 							}
 						);
 					}

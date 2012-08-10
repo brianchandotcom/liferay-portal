@@ -14,8 +14,6 @@
 
 package com.liferay.portlet;
 
-import com.liferay.util.SerializableUtil;
-
 import java.io.Serializable;
 
 import javax.portlet.Event;
@@ -25,7 +23,7 @@ import javax.xml.namespace.QName;
 /**
  * @author Brian Wing Shun Chan
  */
-public class EventImpl implements Event {
+public class EventImpl implements Event, Serializable {
 
 	public EventImpl(String name, QName qName, Serializable value) {
 		_name = name;
@@ -41,21 +39,12 @@ public class EventImpl implements Event {
 		return _qName;
 	}
 
-	public byte[] getSerializedValue() {
-		if (_serializedValue == null) {
-			_serializedValue = SerializableUtil.serialize(_value);
-		}
-
-		return _serializedValue;
-	}
-
 	public Serializable getValue() {
 		return _value;
 	}
 
 	private String _name;
 	private QName _qName;
-	private byte[] _serializedValue;
 	private Serializable _value;
 
 }

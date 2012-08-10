@@ -17,6 +17,7 @@ package com.liferay.portalweb.socialofficehome.upcomingtasks.task;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.socialofficehome.upcomingtasks.task.sousviewtaskstaskassignedtoconnectionut.SOUs_ViewTasksTaskAssignedToConnectionUTTests;
 import com.liferay.portalweb.socialofficehome.upcomingtasks.task.viewdeletetaskstaskassignedtomeut.ViewDeleteTasksTaskAssignedToMeUTTests;
+import com.liferay.portalweb.socialofficehome.upcomingtasks.task.viewresolvetaskstaskassignedtomeut.ViewResolveTasksTaskAssignedToMeUTTests;
 import com.liferay.portalweb.socialofficehome.upcomingtasks.task.viewtaskstaskassignedtomemultipleut.ViewTasksTaskAssignedToMeMultipleUTTests;
 import com.liferay.portalweb.socialofficehome.upcomingtasks.task.viewtaskstaskassignedtomeut.ViewTasksTaskAssignedToMeUTTests;
 
@@ -34,6 +35,7 @@ public class TaskTestPlan extends BaseTestSuite {
 		testSuite.addTest(
 			SOUs_ViewTasksTaskAssignedToConnectionUTTests.suite());
 		testSuite.addTest(ViewDeleteTasksTaskAssignedToMeUTTests.suite());
+		testSuite.addTest(ViewResolveTasksTaskAssignedToMeUTTests.suite());
 		testSuite.addTest(ViewTasksTaskAssignedToMeMultipleUTTests.suite());
 		testSuite.addTest(ViewTasksTaskAssignedToMeUTTests.suite());
 

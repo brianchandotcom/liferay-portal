@@ -39,8 +39,7 @@ public class NotificationTestPlan extends BaseTestSuite {
 		testSuite.addTest(SOUs_ConfirmNotificationJoinPrivateSiteTests.suite());
 		testSuite.addTest(
 			SOUs_ConfirmNotificationJoinPrivRstrSiteTests.suite());
-		testSuite.addTest(
-			SOUs_ConfirmNotificationJoinPubRstrSiteTests.suite());
+		testSuite.addTest(SOUs_ConfirmNotificationJoinPubRstrSiteTests.suite());
 		testSuite.addTest(SOUs_ConfirmNotificationJoinSiteTests.suite());
 		testSuite.addTest(SOUs_ViewNotificationAnnouncementSiteTests.suite());
 

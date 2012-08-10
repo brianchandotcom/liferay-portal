@@ -282,7 +282,7 @@ for (int i = 0; i < results.size(); i++) {
 	// User
 
 	if (!curWikiPage.isNew()) {
-		row.addText(HtmlUtil.escape(PortalUtil.getUserName(curWikiPage.getUserId(), curWikiPage.getUserName())), rowURL);
+		row.addText(PortalUtil.getUserName(curWikiPage), rowURL);
 	}
 	else {
 		row.addText(StringPool.BLANK);

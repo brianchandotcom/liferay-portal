@@ -116,7 +116,7 @@ portletURL.setParameter("callback", callback);
 
 			// User name
 
-			row.addText(HtmlUtil.escape(PortalUtil.getUserName(assetEntry.getUserId(), assetEntry.getUserName())), rowHREF);
+			row.addText(PortalUtil.getUserName(assetEntry), rowHREF);
 
 			// Modified date
 

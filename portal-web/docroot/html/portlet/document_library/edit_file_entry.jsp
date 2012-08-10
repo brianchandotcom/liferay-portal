@@ -440,7 +440,7 @@ else if (dlFileEntryType != null) {
 				<aui:button disabled="<%= checkedOut && !hasLock %>" name="saveButton" onClick='<%= renderResponse.getNamespace() + "saveFileEntry(true);" %>' value="<%= saveButtonLabel %>" />
 			</c:if>
 
-			<aui:button disabled="<%= checkedOut && !hasLock || (pending && PropsValues.DL_FILE_ENTRY_DRAFTS_ENABLED) %>" name="publishButton" onClick='<%= renderResponse.getNamespace() + "saveFileEntry(" + saveAsDraft + ");" %>' value="<%= publishButtonLabel %>" />
+			<aui:button disabled="<%= checkedOut && !hasLock || (pending && PropsValues.DL_FILE_ENTRY_DRAFTS_ENABLED) %>" name="publishButton" value="<%= publishButtonLabel %>" type="submit" />
 
 			<c:if test="<%= (fileEntry != null) && ((checkedOut && hasLock) || !checkedOut) %>">
 				<c:choose>

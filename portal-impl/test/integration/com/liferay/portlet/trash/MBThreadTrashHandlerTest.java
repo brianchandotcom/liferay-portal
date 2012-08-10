@@ -80,13 +80,13 @@ public class MBThreadTrashHandlerTest {
 	@Test
 	@Transactional
 	public void testTrashAndDelete() throws Exception {
-		testTrash(true);
+		trashMBThread(true);
 	}
 
 	@Test
 	@Transactional
 	public void testTrashAndRestore() throws Exception {
-		testTrash(false);
+		trashMBThread(false);
 	}
 
 	protected MBThread addThread(
@@ -174,7 +174,7 @@ public class MBThreadTrashHandlerTest {
 		return results.getLength();
 	}
 
-	protected void testTrash(boolean delete) throws Exception {
+	protected void trashMBThread(boolean delete) throws Exception {
 		Group group = ServiceTestUtil.addGroup(
 			"MBThreadTrashHandlerTest#testGroup");
 

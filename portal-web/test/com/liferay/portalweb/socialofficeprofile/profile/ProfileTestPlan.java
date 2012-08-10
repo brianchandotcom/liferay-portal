@@ -30,6 +30,7 @@ import com.liferay.portalweb.socialofficeprofile.profile.sousaddinstantmessenger
 import com.liferay.portalweb.socialofficeprofile.profile.sousaddphonenumberprofile.SOUs_AddPhoneNumberProfileTests;
 import com.liferay.portalweb.socialofficeprofile.profile.sousaddsmsprofile.SOUs_AddSMSProfileTests;
 import com.liferay.portalweb.socialofficeprofile.profile.sousaddsocialnetworkprofile.SOUs_AddSocialNetworkProfileTests;
+import com.liferay.portalweb.socialofficeprofile.profile.sousaddtagprofile.SOUs_AddTagProfileTests;
 import com.liferay.portalweb.socialofficeprofile.profile.sousaddwebsiteprofile.SOUs_AddWebsiteProfileTests;
 import com.liferay.portalweb.socialofficeprofile.profile.souseditadditionalemailaddressnullprofile.SOUs_EditAdditionalEmailAddressNullProfileTests;
 import com.liferay.portalweb.socialofficeprofile.profile.souseditadditionalemailaddressprofile.SOUs_EditAdditionalEmailAddressProfileTests;
@@ -82,6 +83,7 @@ public class ProfileTestPlan extends BaseTestSuite {
 		testSuite.addTest(SOUs_AddPhoneNumberProfileTests.suite());
 		testSuite.addTest(SOUs_AddSMSProfileTests.suite());
 		testSuite.addTest(SOUs_AddSocialNetworkProfileTests.suite());
+		testSuite.addTest(SOUs_AddTagProfileTests.suite());
 		testSuite.addTest(SOUs_AddWebsiteProfileTests.suite());
 		testSuite.addTest(
 			SOUs_EditAdditionalEmailAddressNullProfileTests.suite());

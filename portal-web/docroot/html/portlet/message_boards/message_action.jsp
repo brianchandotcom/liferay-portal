@@ -168,7 +168,6 @@ MBThread thread = message.getThread();
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete
-			label="<%= true %>"
 			trash="<%= TrashUtil.isTrashEnabled(themeDisplay.getScopeGroupId()) %>"
 			url="<%= deleteURL %>"
 		/>

@@ -115,7 +115,6 @@ public class MBThreadIndexer extends BaseIndexer {
 
 	@Override
 	protected Document doGetDocument(Object obj) throws Exception {
-
 		MBThread thread = (MBThread)obj;
 
 		MBMessage message = MBMessageLocalServiceUtil.getMBMessage(

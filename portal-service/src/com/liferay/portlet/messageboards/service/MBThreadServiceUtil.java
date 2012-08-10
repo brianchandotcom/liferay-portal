@@ -149,6 +149,19 @@ public class MBThreadServiceUtil {
 		return getService().moveThread(categoryId, threadId);
 	}
 
+	public static com.liferay.portlet.messageboards.model.MBThread moveThreadToTrash(
+		long threadId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().moveThreadToTrash(threadId);
+	}
+
+	public static void restoreEntryFromTrash(long threadId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().restoreEntryFromTrash(threadId);
+	}
+
 	public static com.liferay.portlet.messageboards.model.MBThread splitThread(
 		long messageId, java.lang.String subject,
 		com.liferay.portal.service.ServiceContext serviceContext)

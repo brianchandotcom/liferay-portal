@@ -436,7 +436,7 @@
 			<finder-column name="groupId" />
 			<finder-column name="categoryId" arrayable-operator="OR" />
 		</finder>
-		<finder name="G_NotC" return-type="Collection">
+		<finder name="G_NeC" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="categoryId" comparator="!=" />
 		</finder>
@@ -457,12 +457,22 @@
 			<finder-column name="categoryId" />
 			<finder-column name="lastPostDate" />
 		</finder>
+		<finder name="G_C_NeS" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="categoryId" arrayable-operator="OR" />
+			<finder-column name="status" comparator="!=" />
+		</finder>
 		<finder name="G_C_S" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="categoryId" arrayable-operator="OR" />
 			<finder-column name="status" />
 		</finder>
-		<finder name="G_NotC_S" return-type="Collection">
+		<finder name="G_NeC_NeS" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="categoryId" comparator="!=" />
+			<finder-column name="status" comparator="!=" />
+		</finder>
+		<finder name="G_NeC_S" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="categoryId" comparator="!=" />
 			<finder-column name="status" />
@@ -476,6 +486,8 @@
 		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
 		<reference package-path="com.liferay.portlet.ratings" entity="RatingsStats" />
 		<reference package-path="com.liferay.portlet.social" entity="SocialActivity" />
+		<reference package-path="com.liferay.portlet.social" entity="SocialActivityCounter" />
+		<reference package-path="com.liferay.portlet.trash" entity="TrashEntry" />
 	</entity>
 	<entity name="MBThreadFlag" human-name="message boards thread flag" local-service="true" remote-service="false">
 

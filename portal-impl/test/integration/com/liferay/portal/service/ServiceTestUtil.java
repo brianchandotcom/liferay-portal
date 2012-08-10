@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.messaging.sender.MessageSender;
 import com.liferay.portal.kernel.messaging.sender.SynchronousMessageSender;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineUtil;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -64,7 +65,9 @@ import com.liferay.portlet.documentlibrary.trash.DLFolderTrashHandler;
 import com.liferay.portlet.documentlibrary.util.DLIndexer;
 import com.liferay.portlet.documentlibrary.workflow.DLFileEntryWorkflowHandler;
 import com.liferay.portlet.journal.workflow.JournalArticleWorkflowHandler;
+import com.liferay.portlet.messageboards.trash.MBThreadTrashHandler;
 import com.liferay.portlet.messageboards.util.MBIndexer;
+import com.liferay.portlet.messageboards.util.MBThreadIndexer;
 import com.liferay.portlet.messageboards.workflow.MBDiscussionWorkflowHandler;
 import com.liferay.portlet.messageboards.workflow.MBMessageWorkflowHandler;
 import com.liferay.portlet.trash.util.TrashIndexer;
@@ -226,6 +229,10 @@ public class ServiceTestUtil {
 		searchContext.setGroupIds(new long[] {TestPropsValues.getGroupId()});
 		searchContext.setUserId(TestPropsValues.getUserId());
 
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		queryConfig.setHighlightEnabled(false);
+
 		return searchContext;
 	}
 
@@ -288,6 +295,7 @@ public class ServiceTestUtil {
 		IndexerRegistryUtil.register(new BookmarksIndexer());
 		IndexerRegistryUtil.register(new DLIndexer());
 		IndexerRegistryUtil.register(new MBIndexer());
+		IndexerRegistryUtil.register(new MBThreadIndexer());
 		IndexerRegistryUtil.register(new TrashIndexer());
 
 		// Upgrade
@@ -353,6 +361,7 @@ public class ServiceTestUtil {
 		TrashHandlerRegistryUtil.register(new DLFileEntryTrashHandler());
 		TrashHandlerRegistryUtil.register(new DLFileShortcutTrashHandler());
 		TrashHandlerRegistryUtil.register(new DLFolderTrashHandler());
+		TrashHandlerRegistryUtil.register(new MBThreadTrashHandler());
 
 		// Workflow
 

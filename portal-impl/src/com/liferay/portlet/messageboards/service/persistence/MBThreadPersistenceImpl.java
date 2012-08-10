@@ -53,7 +53,9 @@ import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.model.impl.MBThreadImpl;
 import com.liferay.portlet.messageboards.model.impl.MBThreadModelImpl;
 import com.liferay.portlet.ratings.service.persistence.RatingsStatsPersistence;
+import com.liferay.portlet.social.service.persistence.SocialActivityCounterPersistence;
 import com.liferay.portlet.social.service.persistence.SocialActivityPersistence;
+import com.liferay.portlet.trash.service.persistence.TrashEntryPersistence;
 
 import java.io.Serializable;
 
@@ -137,18 +139,18 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			MBThreadModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_C",
 			new String[] { Long.class.getName(), Long.class.getName() });
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_NOTC = new FinderPath(MBThreadModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_NEC = new FinderPath(MBThreadModelImpl.ENTITY_CACHE_ENABLED,
 			MBThreadModelImpl.FINDER_CACHE_ENABLED, MBThreadImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_NotC",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_NeC",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				
 			"java.lang.Integer", "java.lang.Integer",
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_NOTC = new FinderPath(MBThreadModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_NEC = new FinderPath(MBThreadModelImpl.ENTITY_CACHE_ENABLED,
 			MBThreadModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_NotC",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_NeC",
 			new String[] { Long.class.getName(), Long.class.getName() });
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_S = new FinderPath(MBThreadModelImpl.ENTITY_CACHE_ENABLED,
 			MBThreadModelImpl.FINDER_CACHE_ENABLED, MBThreadImpl.class,
@@ -231,6 +233,23 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Date.class.getName()
 			});
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C_NES = new FinderPath(MBThreadModelImpl.ENTITY_CACHE_ENABLED,
+			MBThreadModelImpl.FINDER_CACHE_ENABLED, MBThreadImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_NeS",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Integer.class.getName(),
+				
+			"java.lang.Integer", "java.lang.Integer",
+				"com.liferay.portal.kernel.util.OrderByComparator"
+			});
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_C_NES = new FinderPath(MBThreadModelImpl.ENTITY_CACHE_ENABLED,
+			MBThreadModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_C_NeS",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Integer.class.getName()
+			});
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C_S = new FinderPath(MBThreadModelImpl.ENTITY_CACHE_ENABLED,
 			MBThreadModelImpl.FINDER_CACHE_ENABLED, MBThreadImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_S",
@@ -265,9 +284,10 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_NOTC_S = new FinderPath(MBThreadModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_NEC_NES =
+		new FinderPath(MBThreadModelImpl.ENTITY_CACHE_ENABLED,
 			MBThreadModelImpl.FINDER_CACHE_ENABLED, MBThreadImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_NotC_S",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_NeC_NeS",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName(),
@@ -275,10 +295,27 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			"java.lang.Integer", "java.lang.Integer",
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			});
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_NOTC_S =
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_NEC_NES =
 		new FinderPath(MBThreadModelImpl.ENTITY_CACHE_ENABLED,
 			MBThreadModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_NotC_S",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_NeC_NeS",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Integer.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_NEC_S = new FinderPath(MBThreadModelImpl.ENTITY_CACHE_ENABLED,
+			MBThreadModelImpl.FINDER_CACHE_ENABLED, MBThreadImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_NeC_S",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Integer.class.getName(),
+				
+			"java.lang.Integer", "java.lang.Integer",
+				"com.liferay.portal.kernel.util.OrderByComparator"
+			});
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_NEC_S = new FinderPath(MBThreadModelImpl.ENTITY_CACHE_ENABLED,
+			MBThreadModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_NeC_S",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName()
@@ -2709,9 +2746,9 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	 * @return the matching message boards threads
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<MBThread> findByG_NotC(long groupId, long categoryId)
+	public List<MBThread> findByG_NeC(long groupId, long categoryId)
 		throws SystemException {
-		return findByG_NotC(groupId, categoryId, QueryUtil.ALL_POS,
+		return findByG_NeC(groupId, categoryId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
@@ -2729,9 +2766,9 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	 * @return the range of matching message boards threads
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<MBThread> findByG_NotC(long groupId, long categoryId,
-		int start, int end) throws SystemException {
-		return findByG_NotC(groupId, categoryId, start, end, null);
+	public List<MBThread> findByG_NeC(long groupId, long categoryId, int start,
+		int end) throws SystemException {
+		return findByG_NeC(groupId, categoryId, start, end, null);
 	}
 
 	/**
@@ -2749,13 +2786,12 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	 * @return the ordered range of matching message boards threads
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<MBThread> findByG_NotC(long groupId, long categoryId,
-		int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
+	public List<MBThread> findByG_NeC(long groupId, long categoryId, int start,
+		int end, OrderByComparator orderByComparator) throws SystemException {
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
-		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_NOTC;
+		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_NEC;
 		finderArgs = new Object[] {
 				groupId, categoryId,
 				
@@ -2789,9 +2825,9 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 			query.append(_SQL_SELECT_MBTHREAD_WHERE);
 
-			query.append(_FINDER_COLUMN_G_NOTC_GROUPID_2);
+			query.append(_FINDER_COLUMN_G_NEC_GROUPID_2);
 
-			query.append(_FINDER_COLUMN_G_NOTC_CATEGORYID_2);
+			query.append(_FINDER_COLUMN_G_NEC_CATEGORYID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -2850,10 +2886,10 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	 * @throws com.liferay.portlet.messageboards.NoSuchThreadException if a matching message boards thread could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public MBThread findByG_NotC_First(long groupId, long categoryId,
+	public MBThread findByG_NeC_First(long groupId, long categoryId,
 		OrderByComparator orderByComparator)
 		throws NoSuchThreadException, SystemException {
-		MBThread mbThread = fetchByG_NotC_First(groupId, categoryId,
+		MBThread mbThread = fetchByG_NeC_First(groupId, categoryId,
 				orderByComparator);
 
 		if (mbThread != null) {
@@ -2884,9 +2920,9 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	 * @return the first matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public MBThread fetchByG_NotC_First(long groupId, long categoryId,
+	public MBThread fetchByG_NeC_First(long groupId, long categoryId,
 		OrderByComparator orderByComparator) throws SystemException {
-		List<MBThread> list = findByG_NotC(groupId, categoryId, 0, 1,
+		List<MBThread> list = findByG_NeC(groupId, categoryId, 0, 1,
 				orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -2906,10 +2942,10 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	 * @throws com.liferay.portlet.messageboards.NoSuchThreadException if a matching message boards thread could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public MBThread findByG_NotC_Last(long groupId, long categoryId,
+	public MBThread findByG_NeC_Last(long groupId, long categoryId,
 		OrderByComparator orderByComparator)
 		throws NoSuchThreadException, SystemException {
-		MBThread mbThread = fetchByG_NotC_Last(groupId, categoryId,
+		MBThread mbThread = fetchByG_NeC_Last(groupId, categoryId,
 				orderByComparator);
 
 		if (mbThread != null) {
@@ -2940,11 +2976,11 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	 * @return the last matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public MBThread fetchByG_NotC_Last(long groupId, long categoryId,
+	public MBThread fetchByG_NeC_Last(long groupId, long categoryId,
 		OrderByComparator orderByComparator) throws SystemException {
-		int count = countByG_NotC(groupId, categoryId);
+		int count = countByG_NeC(groupId, categoryId);
 
-		List<MBThread> list = findByG_NotC(groupId, categoryId, count - 1,
+		List<MBThread> list = findByG_NeC(groupId, categoryId, count - 1,
 				count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -2965,7 +3001,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	 * @throws com.liferay.portlet.messageboards.NoSuchThreadException if a message boards thread with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public MBThread[] findByG_NotC_PrevAndNext(long threadId, long groupId,
+	public MBThread[] findByG_NeC_PrevAndNext(long threadId, long groupId,
 		long categoryId, OrderByComparator orderByComparator)
 		throws NoSuchThreadException, SystemException {
 		MBThread mbThread = findByPrimaryKey(threadId);
@@ -2977,12 +3013,12 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 			MBThread[] array = new MBThreadImpl[3];
 
-			array[0] = getByG_NotC_PrevAndNext(session, mbThread, groupId,
+			array[0] = getByG_NeC_PrevAndNext(session, mbThread, groupId,
 					categoryId, orderByComparator, true);
 
 			array[1] = mbThread;
 
-			array[2] = getByG_NotC_PrevAndNext(session, mbThread, groupId,
+			array[2] = getByG_NeC_PrevAndNext(session, mbThread, groupId,
 					categoryId, orderByComparator, false);
 
 			return array;
@@ -2995,7 +3031,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		}
 	}
 
-	protected MBThread getByG_NotC_PrevAndNext(Session session,
+	protected MBThread getByG_NeC_PrevAndNext(Session session,
 		MBThread mbThread, long groupId, long categoryId,
 		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
@@ -3010,9 +3046,9 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 		query.append(_SQL_SELECT_MBTHREAD_WHERE);
 
-		query.append(_FINDER_COLUMN_G_NOTC_GROUPID_2);
+		query.append(_FINDER_COLUMN_G_NEC_GROUPID_2);
 
-		query.append(_FINDER_COLUMN_G_NOTC_CATEGORYID_2);
+		query.append(_FINDER_COLUMN_G_NEC_CATEGORYID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -3113,9 +3149,9 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	 * @return the matching message boards threads that the user has permission to view
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<MBThread> filterFindByG_NotC(long groupId, long categoryId)
+	public List<MBThread> filterFindByG_NeC(long groupId, long categoryId)
 		throws SystemException {
-		return filterFindByG_NotC(groupId, categoryId, QueryUtil.ALL_POS,
+		return filterFindByG_NeC(groupId, categoryId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
@@ -3133,9 +3169,9 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	 * @return the range of matching message boards threads that the user has permission to view
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<MBThread> filterFindByG_NotC(long groupId, long categoryId,
+	public List<MBThread> filterFindByG_NeC(long groupId, long categoryId,
 		int start, int end) throws SystemException {
-		return filterFindByG_NotC(groupId, categoryId, start, end, null);
+		return filterFindByG_NeC(groupId, categoryId, start, end, null);
 	}
 
 	/**
@@ -3153,11 +3189,11 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	 * @return the ordered range of matching message boards threads that the user has permission to view
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<MBThread> filterFindByG_NotC(long groupId, long categoryId,
+	public List<MBThread> filterFindByG_NeC(long groupId, long categoryId,
 		int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return findByG_NotC(groupId, categoryId, start, end,
+			return findByG_NeC(groupId, categoryId, start, end,
 				orderByComparator);
 		}
 
@@ -3178,9 +3214,9 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			query.append(_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		query.append(_FINDER_COLUMN_G_NOTC_GROUPID_2);
+		query.append(_FINDER_COLUMN_G_NEC_GROUPID_2);
 
-		query.append(_FINDER_COLUMN_G_NOTC_CATEGORYID_2);
+		query.append(_FINDER_COLUMN_G_NEC_CATEGORYID_2);
 
 		if (!getDB().isSupportsInlineDistinct()) {
 			query.append(_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_2);
@@ -3251,11 +3287,11 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	 * @throws com.liferay.portlet.messageboards.NoSuchThreadException if a message boards thread with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public MBThread[] filterFindByG_NotC_PrevAndNext(long threadId,
+	public MBThread[] filterFindByG_NeC_PrevAndNext(long threadId,
 		long groupId, long categoryId, OrderByComparator orderByComparator)
 		throws NoSuchThreadException, SystemException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return findByG_NotC_PrevAndNext(threadId, groupId, categoryId,
+			return findByG_NeC_PrevAndNext(threadId, groupId, categoryId,
 				orderByComparator);
 		}
 
@@ -3268,13 +3304,13 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 			MBThread[] array = new MBThreadImpl[3];
 
-			array[0] = filterGetByG_NotC_PrevAndNext(session, mbThread,
-					groupId, categoryId, orderByComparator, true);
+			array[0] = filterGetByG_NeC_PrevAndNext(session, mbThread, groupId,
+					categoryId, orderByComparator, true);
 
 			array[1] = mbThread;
 
-			array[2] = filterGetByG_NotC_PrevAndNext(session, mbThread,
-					groupId, categoryId, orderByComparator, false);
+			array[2] = filterGetByG_NeC_PrevAndNext(session, mbThread, groupId,
+					categoryId, orderByComparator, false);
 
 			return array;
 		}
@@ -3286,7 +3322,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		}
 	}
 
-	protected MBThread filterGetByG_NotC_PrevAndNext(Session session,
+	protected MBThread filterGetByG_NeC_PrevAndNext(Session session,
 		MBThread mbThread, long groupId, long categoryId,
 		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
@@ -3306,9 +3342,9 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			query.append(_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		query.append(_FINDER_COLUMN_G_NOTC_GROUPID_2);
+		query.append(_FINDER_COLUMN_G_NEC_GROUPID_2);
 
-		query.append(_FINDER_COLUMN_G_NOTC_CATEGORYID_2);
+		query.append(_FINDER_COLUMN_G_NEC_CATEGORYID_2);
 
 		if (!getDB().isSupportsInlineDistinct()) {
 			query.append(_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_2);
@@ -5804,6 +5840,1128 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	}
 
 	/**
+	 * Returns all the message boards threads where groupId = &#63; and categoryId = &#63; and status &ne; &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param categoryId the category ID
+	 * @param status the status
+	 * @return the matching message boards threads
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<MBThread> findByG_C_NeS(long groupId, long categoryId,
+		int status) throws SystemException {
+		return findByG_C_NeS(groupId, categoryId, status, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the message boards threads where groupId = &#63; and categoryId = &#63; and status &ne; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param categoryId the category ID
+	 * @param status the status
+	 * @param start the lower bound of the range of message boards threads
+	 * @param end the upper bound of the range of message boards threads (not inclusive)
+	 * @return the range of matching message boards threads
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<MBThread> findByG_C_NeS(long groupId, long categoryId,
+		int status, int start, int end) throws SystemException {
+		return findByG_C_NeS(groupId, categoryId, status, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the message boards threads where groupId = &#63; and categoryId = &#63; and status &ne; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param categoryId the category ID
+	 * @param status the status
+	 * @param start the lower bound of the range of message boards threads
+	 * @param end the upper bound of the range of message boards threads (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching message boards threads
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<MBThread> findByG_C_NeS(long groupId, long categoryId,
+		int status, int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C_NES;
+		finderArgs = new Object[] {
+				groupId, categoryId, status,
+				
+				start, end, orderByComparator
+			};
+
+		List<MBThread> list = (List<MBThread>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (MBThread mbThread : list) {
+				if ((groupId != mbThread.getGroupId()) ||
+						(categoryId != mbThread.getCategoryId()) ||
+						(status != mbThread.getStatus())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(5 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(5);
+			}
+
+			query.append(_SQL_SELECT_MBTHREAD_WHERE);
+
+			query.append(_FINDER_COLUMN_G_C_NES_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_C_NES_CATEGORYID_2);
+
+			query.append(_FINDER_COLUMN_G_C_NES_STATUS_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+
+			else {
+				query.append(MBThreadModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(categoryId);
+
+				qPos.add(status);
+
+				list = (List<MBThread>)QueryUtil.list(q, getDialect(), start,
+						end);
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (list == null) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
+				else {
+					cacheResult(list);
+
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
+
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first message boards thread in the ordered set where groupId = &#63; and categoryId = &#63; and status &ne; &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param categoryId the category ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching message boards thread
+	 * @throws com.liferay.portlet.messageboards.NoSuchThreadException if a matching message boards thread could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MBThread findByG_C_NeS_First(long groupId, long categoryId,
+		int status, OrderByComparator orderByComparator)
+		throws NoSuchThreadException, SystemException {
+		MBThread mbThread = fetchByG_C_NeS_First(groupId, categoryId, status,
+				orderByComparator);
+
+		if (mbThread != null) {
+			return mbThread;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", categoryId=");
+		msg.append(categoryId);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchThreadException(msg.toString());
+	}
+
+	/**
+	 * Returns the first message boards thread in the ordered set where groupId = &#63; and categoryId = &#63; and status &ne; &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param categoryId the category ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MBThread fetchByG_C_NeS_First(long groupId, long categoryId,
+		int status, OrderByComparator orderByComparator)
+		throws SystemException {
+		List<MBThread> list = findByG_C_NeS(groupId, categoryId, status, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last message boards thread in the ordered set where groupId = &#63; and categoryId = &#63; and status &ne; &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param categoryId the category ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching message boards thread
+	 * @throws com.liferay.portlet.messageboards.NoSuchThreadException if a matching message boards thread could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MBThread findByG_C_NeS_Last(long groupId, long categoryId,
+		int status, OrderByComparator orderByComparator)
+		throws NoSuchThreadException, SystemException {
+		MBThread mbThread = fetchByG_C_NeS_Last(groupId, categoryId, status,
+				orderByComparator);
+
+		if (mbThread != null) {
+			return mbThread;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", categoryId=");
+		msg.append(categoryId);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchThreadException(msg.toString());
+	}
+
+	/**
+	 * Returns the last message boards thread in the ordered set where groupId = &#63; and categoryId = &#63; and status &ne; &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param categoryId the category ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MBThread fetchByG_C_NeS_Last(long groupId, long categoryId,
+		int status, OrderByComparator orderByComparator)
+		throws SystemException {
+		int count = countByG_C_NeS(groupId, categoryId, status);
+
+		List<MBThread> list = findByG_C_NeS(groupId, categoryId, status,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the message boards threads before and after the current message boards thread in the ordered set where groupId = &#63; and categoryId = &#63; and status &ne; &#63;.
+	 *
+	 * @param threadId the primary key of the current message boards thread
+	 * @param groupId the group ID
+	 * @param categoryId the category ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next message boards thread
+	 * @throws com.liferay.portlet.messageboards.NoSuchThreadException if a message boards thread with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MBThread[] findByG_C_NeS_PrevAndNext(long threadId, long groupId,
+		long categoryId, int status, OrderByComparator orderByComparator)
+		throws NoSuchThreadException, SystemException {
+		MBThread mbThread = findByPrimaryKey(threadId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			MBThread[] array = new MBThreadImpl[3];
+
+			array[0] = getByG_C_NeS_PrevAndNext(session, mbThread, groupId,
+					categoryId, status, orderByComparator, true);
+
+			array[1] = mbThread;
+
+			array[2] = getByG_C_NeS_PrevAndNext(session, mbThread, groupId,
+					categoryId, status, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected MBThread getByG_C_NeS_PrevAndNext(Session session,
+		MBThread mbThread, long groupId, long categoryId, int status,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_MBTHREAD_WHERE);
+
+		query.append(_FINDER_COLUMN_G_C_NES_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_C_NES_CATEGORYID_2);
+
+		query.append(_FINDER_COLUMN_G_C_NES_STATUS_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+
+		else {
+			query.append(MBThreadModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(categoryId);
+
+		qPos.add(status);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(mbThread);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<MBThread> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the message boards threads where groupId = &#63; and categoryId = any &#63; and status &ne; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param categoryIds the category IDs
+	 * @param status the status
+	 * @return the matching message boards threads
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<MBThread> findByG_C_NeS(long groupId, long[] categoryIds,
+		int status) throws SystemException {
+		return findByG_C_NeS(groupId, categoryIds, status, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the message boards threads where groupId = &#63; and categoryId = any &#63; and status &ne; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param categoryIds the category IDs
+	 * @param status the status
+	 * @param start the lower bound of the range of message boards threads
+	 * @param end the upper bound of the range of message boards threads (not inclusive)
+	 * @return the range of matching message boards threads
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<MBThread> findByG_C_NeS(long groupId, long[] categoryIds,
+		int status, int start, int end) throws SystemException {
+		return findByG_C_NeS(groupId, categoryIds, status, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the message boards threads where groupId = &#63; and categoryId = any &#63; and status &ne; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param categoryIds the category IDs
+	 * @param status the status
+	 * @param start the lower bound of the range of message boards threads
+	 * @param end the upper bound of the range of message boards threads (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching message boards threads
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<MBThread> findByG_C_NeS(long groupId, long[] categoryIds,
+		int status, int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C_NES;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			finderArgs = new Object[] {
+					groupId, StringUtil.merge(categoryIds), status
+				};
+		}
+		else {
+			finderArgs = new Object[] {
+					groupId, StringUtil.merge(categoryIds), status,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<MBThread> list = (List<MBThread>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (MBThread mbThread : list) {
+				if ((groupId != mbThread.getGroupId()) ||
+						!ArrayUtil.contains(categoryIds,
+							mbThread.getCategoryId()) ||
+						(status != mbThread.getStatus())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = new StringBundler();
+
+			query.append(_SQL_SELECT_MBTHREAD_WHERE);
+
+			boolean conjunctionable = false;
+
+			if (conjunctionable) {
+				query.append(WHERE_AND);
+			}
+
+			query.append(_FINDER_COLUMN_G_C_NES_GROUPID_5);
+
+			conjunctionable = true;
+
+			if ((categoryIds == null) || (categoryIds.length > 0)) {
+				if (conjunctionable) {
+					query.append(WHERE_AND);
+				}
+
+				query.append(StringPool.OPEN_PARENTHESIS);
+
+				for (int i = 0; i < categoryIds.length; i++) {
+					query.append(_FINDER_COLUMN_G_C_NES_CATEGORYID_5);
+
+					if ((i + 1) < categoryIds.length) {
+						query.append(WHERE_OR);
+					}
+				}
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
+
+				conjunctionable = true;
+			}
+
+			if (conjunctionable) {
+				query.append(WHERE_AND);
+			}
+
+			query.append(_FINDER_COLUMN_G_C_NES_STATUS_5);
+
+			conjunctionable = true;
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+
+			else {
+				query.append(MBThreadModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				if (categoryIds != null) {
+					qPos.add(categoryIds);
+				}
+
+				qPos.add(status);
+
+				list = (List<MBThread>)QueryUtil.list(q, getDialect(), start,
+						end);
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (list == null) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
+				else {
+					cacheResult(list);
+
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
+
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns all the message boards threads that the user has permission to view where groupId = &#63; and categoryId = &#63; and status &ne; &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param categoryId the category ID
+	 * @param status the status
+	 * @return the matching message boards threads that the user has permission to view
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<MBThread> filterFindByG_C_NeS(long groupId, long categoryId,
+		int status) throws SystemException {
+		return filterFindByG_C_NeS(groupId, categoryId, status,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the message boards threads that the user has permission to view where groupId = &#63; and categoryId = &#63; and status &ne; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param categoryId the category ID
+	 * @param status the status
+	 * @param start the lower bound of the range of message boards threads
+	 * @param end the upper bound of the range of message boards threads (not inclusive)
+	 * @return the range of matching message boards threads that the user has permission to view
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<MBThread> filterFindByG_C_NeS(long groupId, long categoryId,
+		int status, int start, int end) throws SystemException {
+		return filterFindByG_C_NeS(groupId, categoryId, status, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the message boards threads that the user has permissions to view where groupId = &#63; and categoryId = &#63; and status &ne; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param categoryId the category ID
+	 * @param status the status
+	 * @param start the lower bound of the range of message boards threads
+	 * @param end the upper bound of the range of message boards threads (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching message boards threads that the user has permission to view
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<MBThread> filterFindByG_C_NeS(long groupId, long categoryId,
+		int status, int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_C_NeS(groupId, categoryId, status, start, end,
+				orderByComparator);
+		}
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(5);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_MBTHREAD_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_C_NES_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_C_NES_CATEGORYID_2);
+
+		query.append(_FINDER_COLUMN_G_C_NES_STATUS_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator);
+			}
+		}
+
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(MBThreadModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(MBThreadModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				MBThread.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, MBThreadImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, MBThreadImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(categoryId);
+
+			qPos.add(status);
+
+			return (List<MBThread>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the message boards threads before and after the current message boards thread in the ordered set of message boards threads that the user has permission to view where groupId = &#63; and categoryId = &#63; and status &ne; &#63;.
+	 *
+	 * @param threadId the primary key of the current message boards thread
+	 * @param groupId the group ID
+	 * @param categoryId the category ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next message boards thread
+	 * @throws com.liferay.portlet.messageboards.NoSuchThreadException if a message boards thread with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MBThread[] filterFindByG_C_NeS_PrevAndNext(long threadId,
+		long groupId, long categoryId, int status,
+		OrderByComparator orderByComparator)
+		throws NoSuchThreadException, SystemException {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_C_NeS_PrevAndNext(threadId, groupId, categoryId,
+				status, orderByComparator);
+		}
+
+		MBThread mbThread = findByPrimaryKey(threadId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			MBThread[] array = new MBThreadImpl[3];
+
+			array[0] = filterGetByG_C_NeS_PrevAndNext(session, mbThread,
+					groupId, categoryId, status, orderByComparator, true);
+
+			array[1] = mbThread;
+
+			array[2] = filterGetByG_C_NeS_PrevAndNext(session, mbThread,
+					groupId, categoryId, status, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected MBThread filterGetByG_C_NeS_PrevAndNext(Session session,
+		MBThread mbThread, long groupId, long categoryId, int status,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_MBTHREAD_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_C_NES_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_C_NES_CATEGORYID_2);
+
+		query.append(_FINDER_COLUMN_G_C_NES_STATUS_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(MBThreadModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(MBThreadModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				MBThread.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		SQLQuery q = session.createSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, MBThreadImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, MBThreadImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(categoryId);
+
+		qPos.add(status);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(mbThread);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<MBThread> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the message boards threads that the user has permission to view where groupId = &#63; and categoryId = any &#63; and status &ne; &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param categoryIds the category IDs
+	 * @param status the status
+	 * @return the matching message boards threads that the user has permission to view
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<MBThread> filterFindByG_C_NeS(long groupId, long[] categoryIds,
+		int status) throws SystemException {
+		return filterFindByG_C_NeS(groupId, categoryIds, status,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the message boards threads that the user has permission to view where groupId = &#63; and categoryId = any &#63; and status &ne; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param categoryIds the category IDs
+	 * @param status the status
+	 * @param start the lower bound of the range of message boards threads
+	 * @param end the upper bound of the range of message boards threads (not inclusive)
+	 * @return the range of matching message boards threads that the user has permission to view
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<MBThread> filterFindByG_C_NeS(long groupId, long[] categoryIds,
+		int status, int start, int end) throws SystemException {
+		return filterFindByG_C_NeS(groupId, categoryIds, status, start, end,
+			null);
+	}
+
+	/**
+	 * Returns an ordered range of all the message boards threads that the user has permission to view where groupId = &#63; and categoryId = any &#63; and status &ne; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param categoryIds the category IDs
+	 * @param status the status
+	 * @param start the lower bound of the range of message boards threads
+	 * @param end the upper bound of the range of message boards threads (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching message boards threads that the user has permission to view
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<MBThread> filterFindByG_C_NeS(long groupId, long[] categoryIds,
+		int status, int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_C_NeS(groupId, categoryIds, status, start, end,
+				orderByComparator);
+		}
+
+		StringBundler query = new StringBundler();
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_MBTHREAD_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		boolean conjunctionable = false;
+
+		if (conjunctionable) {
+			query.append(WHERE_AND);
+		}
+
+		query.append(_FINDER_COLUMN_G_C_NES_GROUPID_5);
+
+		conjunctionable = true;
+
+		if ((categoryIds == null) || (categoryIds.length > 0)) {
+			if (conjunctionable) {
+				query.append(WHERE_AND);
+			}
+
+			query.append(StringPool.OPEN_PARENTHESIS);
+
+			for (int i = 0; i < categoryIds.length; i++) {
+				query.append(_FINDER_COLUMN_G_C_NES_CATEGORYID_5);
+
+				if ((i + 1) < categoryIds.length) {
+					query.append(WHERE_OR);
+				}
+			}
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			conjunctionable = true;
+		}
+
+		if (conjunctionable) {
+			query.append(WHERE_AND);
+		}
+
+		query.append(_FINDER_COLUMN_G_C_NES_STATUS_5);
+
+		conjunctionable = true;
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator);
+			}
+		}
+
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(MBThreadModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(MBThreadModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				MBThread.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, MBThreadImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, MBThreadImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			if (categoryIds != null) {
+				qPos.add(categoryIds);
+			}
+
+			qPos.add(status);
+
+			return (List<MBThread>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
 	 * Returns all the message boards threads where groupId = &#63; and categoryId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -6932,7 +8090,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	}
 
 	/**
-	 * Returns all the message boards threads where groupId = &#63; and categoryId &ne; &#63; and status = &#63;.
+	 * Returns all the message boards threads where groupId = &#63; and categoryId &ne; &#63; and status &ne; &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param categoryId the category ID
@@ -6940,14 +8098,14 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	 * @return the matching message boards threads
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<MBThread> findByG_NotC_S(long groupId, long categoryId,
+	public List<MBThread> findByG_NeC_NeS(long groupId, long categoryId,
 		int status) throws SystemException {
-		return findByG_NotC_S(groupId, categoryId, status, QueryUtil.ALL_POS,
+		return findByG_NeC_NeS(groupId, categoryId, status, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the message boards threads where groupId = &#63; and categoryId &ne; &#63; and status = &#63;.
+	 * Returns a range of all the message boards threads where groupId = &#63; and categoryId &ne; &#63; and status &ne; &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -6961,13 +8119,13 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	 * @return the range of matching message boards threads
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<MBThread> findByG_NotC_S(long groupId, long categoryId,
+	public List<MBThread> findByG_NeC_NeS(long groupId, long categoryId,
 		int status, int start, int end) throws SystemException {
-		return findByG_NotC_S(groupId, categoryId, status, start, end, null);
+		return findByG_NeC_NeS(groupId, categoryId, status, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the message boards threads where groupId = &#63; and categoryId &ne; &#63; and status = &#63;.
+	 * Returns an ordered range of all the message boards threads where groupId = &#63; and categoryId &ne; &#63; and status &ne; &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
@@ -6982,13 +8140,13 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	 * @return the ordered range of matching message boards threads
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<MBThread> findByG_NotC_S(long groupId, long categoryId,
+	public List<MBThread> findByG_NeC_NeS(long groupId, long categoryId,
 		int status, int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
-		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_NOTC_S;
+		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_NEC_NES;
 		finderArgs = new Object[] {
 				groupId, categoryId, status,
 				
@@ -7023,11 +8181,780 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 			query.append(_SQL_SELECT_MBTHREAD_WHERE);
 
-			query.append(_FINDER_COLUMN_G_NOTC_S_GROUPID_2);
+			query.append(_FINDER_COLUMN_G_NEC_NES_GROUPID_2);
 
-			query.append(_FINDER_COLUMN_G_NOTC_S_CATEGORYID_2);
+			query.append(_FINDER_COLUMN_G_NEC_NES_CATEGORYID_2);
 
-			query.append(_FINDER_COLUMN_G_NOTC_S_STATUS_2);
+			query.append(_FINDER_COLUMN_G_NEC_NES_STATUS_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+
+			else {
+				query.append(MBThreadModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(categoryId);
+
+				qPos.add(status);
+
+				list = (List<MBThread>)QueryUtil.list(q, getDialect(), start,
+						end);
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (list == null) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
+				else {
+					cacheResult(list);
+
+					FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				}
+
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first message boards thread in the ordered set where groupId = &#63; and categoryId &ne; &#63; and status &ne; &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param categoryId the category ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching message boards thread
+	 * @throws com.liferay.portlet.messageboards.NoSuchThreadException if a matching message boards thread could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MBThread findByG_NeC_NeS_First(long groupId, long categoryId,
+		int status, OrderByComparator orderByComparator)
+		throws NoSuchThreadException, SystemException {
+		MBThread mbThread = fetchByG_NeC_NeS_First(groupId, categoryId, status,
+				orderByComparator);
+
+		if (mbThread != null) {
+			return mbThread;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", categoryId=");
+		msg.append(categoryId);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchThreadException(msg.toString());
+	}
+
+	/**
+	 * Returns the first message boards thread in the ordered set where groupId = &#63; and categoryId &ne; &#63; and status &ne; &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param categoryId the category ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MBThread fetchByG_NeC_NeS_First(long groupId, long categoryId,
+		int status, OrderByComparator orderByComparator)
+		throws SystemException {
+		List<MBThread> list = findByG_NeC_NeS(groupId, categoryId, status, 0,
+				1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last message boards thread in the ordered set where groupId = &#63; and categoryId &ne; &#63; and status &ne; &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param categoryId the category ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching message boards thread
+	 * @throws com.liferay.portlet.messageboards.NoSuchThreadException if a matching message boards thread could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MBThread findByG_NeC_NeS_Last(long groupId, long categoryId,
+		int status, OrderByComparator orderByComparator)
+		throws NoSuchThreadException, SystemException {
+		MBThread mbThread = fetchByG_NeC_NeS_Last(groupId, categoryId, status,
+				orderByComparator);
+
+		if (mbThread != null) {
+			return mbThread;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", categoryId=");
+		msg.append(categoryId);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchThreadException(msg.toString());
+	}
+
+	/**
+	 * Returns the last message boards thread in the ordered set where groupId = &#63; and categoryId &ne; &#63; and status &ne; &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param categoryId the category ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MBThread fetchByG_NeC_NeS_Last(long groupId, long categoryId,
+		int status, OrderByComparator orderByComparator)
+		throws SystemException {
+		int count = countByG_NeC_NeS(groupId, categoryId, status);
+
+		List<MBThread> list = findByG_NeC_NeS(groupId, categoryId, status,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the message boards threads before and after the current message boards thread in the ordered set where groupId = &#63; and categoryId &ne; &#63; and status &ne; &#63;.
+	 *
+	 * @param threadId the primary key of the current message boards thread
+	 * @param groupId the group ID
+	 * @param categoryId the category ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next message boards thread
+	 * @throws com.liferay.portlet.messageboards.NoSuchThreadException if a message boards thread with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MBThread[] findByG_NeC_NeS_PrevAndNext(long threadId, long groupId,
+		long categoryId, int status, OrderByComparator orderByComparator)
+		throws NoSuchThreadException, SystemException {
+		MBThread mbThread = findByPrimaryKey(threadId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			MBThread[] array = new MBThreadImpl[3];
+
+			array[0] = getByG_NeC_NeS_PrevAndNext(session, mbThread, groupId,
+					categoryId, status, orderByComparator, true);
+
+			array[1] = mbThread;
+
+			array[2] = getByG_NeC_NeS_PrevAndNext(session, mbThread, groupId,
+					categoryId, status, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected MBThread getByG_NeC_NeS_PrevAndNext(Session session,
+		MBThread mbThread, long groupId, long categoryId, int status,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_MBTHREAD_WHERE);
+
+		query.append(_FINDER_COLUMN_G_NEC_NES_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_NEC_NES_CATEGORYID_2);
+
+		query.append(_FINDER_COLUMN_G_NEC_NES_STATUS_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+
+		else {
+			query.append(MBThreadModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(categoryId);
+
+		qPos.add(status);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(mbThread);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<MBThread> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the message boards threads that the user has permission to view where groupId = &#63; and categoryId &ne; &#63; and status &ne; &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param categoryId the category ID
+	 * @param status the status
+	 * @return the matching message boards threads that the user has permission to view
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<MBThread> filterFindByG_NeC_NeS(long groupId, long categoryId,
+		int status) throws SystemException {
+		return filterFindByG_NeC_NeS(groupId, categoryId, status,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the message boards threads that the user has permission to view where groupId = &#63; and categoryId &ne; &#63; and status &ne; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param categoryId the category ID
+	 * @param status the status
+	 * @param start the lower bound of the range of message boards threads
+	 * @param end the upper bound of the range of message boards threads (not inclusive)
+	 * @return the range of matching message boards threads that the user has permission to view
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<MBThread> filterFindByG_NeC_NeS(long groupId, long categoryId,
+		int status, int start, int end) throws SystemException {
+		return filterFindByG_NeC_NeS(groupId, categoryId, status, start, end,
+			null);
+	}
+
+	/**
+	 * Returns an ordered range of all the message boards threads that the user has permissions to view where groupId = &#63; and categoryId &ne; &#63; and status &ne; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param categoryId the category ID
+	 * @param status the status
+	 * @param start the lower bound of the range of message boards threads
+	 * @param end the upper bound of the range of message boards threads (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching message boards threads that the user has permission to view
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<MBThread> filterFindByG_NeC_NeS(long groupId, long categoryId,
+		int status, int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_NeC_NeS(groupId, categoryId, status, start, end,
+				orderByComparator);
+		}
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(5);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_MBTHREAD_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_NEC_NES_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_NEC_NES_CATEGORYID_2);
+
+		query.append(_FINDER_COLUMN_G_NEC_NES_STATUS_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator);
+			}
+		}
+
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(MBThreadModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(MBThreadModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				MBThread.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS, MBThreadImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE, MBThreadImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(categoryId);
+
+			qPos.add(status);
+
+			return (List<MBThread>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the message boards threads before and after the current message boards thread in the ordered set of message boards threads that the user has permission to view where groupId = &#63; and categoryId &ne; &#63; and status &ne; &#63;.
+	 *
+	 * @param threadId the primary key of the current message boards thread
+	 * @param groupId the group ID
+	 * @param categoryId the category ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next message boards thread
+	 * @throws com.liferay.portlet.messageboards.NoSuchThreadException if a message boards thread with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public MBThread[] filterFindByG_NeC_NeS_PrevAndNext(long threadId,
+		long groupId, long categoryId, int status,
+		OrderByComparator orderByComparator)
+		throws NoSuchThreadException, SystemException {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_NeC_NeS_PrevAndNext(threadId, groupId, categoryId,
+				status, orderByComparator);
+		}
+
+		MBThread mbThread = findByPrimaryKey(threadId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			MBThread[] array = new MBThreadImpl[3];
+
+			array[0] = filterGetByG_NeC_NeS_PrevAndNext(session, mbThread,
+					groupId, categoryId, status, orderByComparator, true);
+
+			array[1] = mbThread;
+
+			array[2] = filterGetByG_NeC_NeS_PrevAndNext(session, mbThread,
+					groupId, categoryId, status, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected MBThread filterGetByG_NeC_NeS_PrevAndNext(Session session,
+		MBThread mbThread, long groupId, long categoryId, int status,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_MBTHREAD_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_NEC_NES_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_NEC_NES_CATEGORYID_2);
+
+		query.append(_FINDER_COLUMN_G_NEC_NES_STATUS_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(MBThreadModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(MBThreadModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				MBThread.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		SQLQuery q = session.createSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS, MBThreadImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE, MBThreadImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(categoryId);
+
+		qPos.add(status);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(mbThread);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<MBThread> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the message boards threads where groupId = &#63; and categoryId &ne; &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param categoryId the category ID
+	 * @param status the status
+	 * @return the matching message boards threads
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<MBThread> findByG_NeC_S(long groupId, long categoryId,
+		int status) throws SystemException {
+		return findByG_NeC_S(groupId, categoryId, status, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the message boards threads where groupId = &#63; and categoryId &ne; &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param categoryId the category ID
+	 * @param status the status
+	 * @param start the lower bound of the range of message boards threads
+	 * @param end the upper bound of the range of message boards threads (not inclusive)
+	 * @return the range of matching message boards threads
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<MBThread> findByG_NeC_S(long groupId, long categoryId,
+		int status, int start, int end) throws SystemException {
+		return findByG_NeC_S(groupId, categoryId, status, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the message boards threads where groupId = &#63; and categoryId &ne; &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param categoryId the category ID
+	 * @param status the status
+	 * @param start the lower bound of the range of message boards threads
+	 * @param end the upper bound of the range of message boards threads (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching message boards threads
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<MBThread> findByG_NeC_S(long groupId, long categoryId,
+		int status, int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_NEC_S;
+		finderArgs = new Object[] {
+				groupId, categoryId, status,
+				
+				start, end, orderByComparator
+			};
+
+		List<MBThread> list = (List<MBThread>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (MBThread mbThread : list) {
+				if ((groupId != mbThread.getGroupId()) ||
+						(categoryId != mbThread.getCategoryId()) ||
+						(status != mbThread.getStatus())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(5 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(5);
+			}
+
+			query.append(_SQL_SELECT_MBTHREAD_WHERE);
+
+			query.append(_FINDER_COLUMN_G_NEC_S_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_NEC_S_CATEGORYID_2);
+
+			query.append(_FINDER_COLUMN_G_NEC_S_STATUS_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -7089,10 +9016,10 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	 * @throws com.liferay.portlet.messageboards.NoSuchThreadException if a matching message boards thread could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public MBThread findByG_NotC_S_First(long groupId, long categoryId,
+	public MBThread findByG_NeC_S_First(long groupId, long categoryId,
 		int status, OrderByComparator orderByComparator)
 		throws NoSuchThreadException, SystemException {
-		MBThread mbThread = fetchByG_NotC_S_First(groupId, categoryId, status,
+		MBThread mbThread = fetchByG_NeC_S_First(groupId, categoryId, status,
 				orderByComparator);
 
 		if (mbThread != null) {
@@ -7127,10 +9054,10 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	 * @return the first matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public MBThread fetchByG_NotC_S_First(long groupId, long categoryId,
+	public MBThread fetchByG_NeC_S_First(long groupId, long categoryId,
 		int status, OrderByComparator orderByComparator)
 		throws SystemException {
-		List<MBThread> list = findByG_NotC_S(groupId, categoryId, status, 0, 1,
+		List<MBThread> list = findByG_NeC_S(groupId, categoryId, status, 0, 1,
 				orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -7151,10 +9078,10 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	 * @throws com.liferay.portlet.messageboards.NoSuchThreadException if a matching message boards thread could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public MBThread findByG_NotC_S_Last(long groupId, long categoryId,
+	public MBThread findByG_NeC_S_Last(long groupId, long categoryId,
 		int status, OrderByComparator orderByComparator)
 		throws NoSuchThreadException, SystemException {
-		MBThread mbThread = fetchByG_NotC_S_Last(groupId, categoryId, status,
+		MBThread mbThread = fetchByG_NeC_S_Last(groupId, categoryId, status,
 				orderByComparator);
 
 		if (mbThread != null) {
@@ -7189,12 +9116,12 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	 * @return the last matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public MBThread fetchByG_NotC_S_Last(long groupId, long categoryId,
+	public MBThread fetchByG_NeC_S_Last(long groupId, long categoryId,
 		int status, OrderByComparator orderByComparator)
 		throws SystemException {
-		int count = countByG_NotC_S(groupId, categoryId, status);
+		int count = countByG_NeC_S(groupId, categoryId, status);
 
-		List<MBThread> list = findByG_NotC_S(groupId, categoryId, status,
+		List<MBThread> list = findByG_NeC_S(groupId, categoryId, status,
 				count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -7216,7 +9143,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	 * @throws com.liferay.portlet.messageboards.NoSuchThreadException if a message boards thread with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public MBThread[] findByG_NotC_S_PrevAndNext(long threadId, long groupId,
+	public MBThread[] findByG_NeC_S_PrevAndNext(long threadId, long groupId,
 		long categoryId, int status, OrderByComparator orderByComparator)
 		throws NoSuchThreadException, SystemException {
 		MBThread mbThread = findByPrimaryKey(threadId);
@@ -7228,12 +9155,12 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 			MBThread[] array = new MBThreadImpl[3];
 
-			array[0] = getByG_NotC_S_PrevAndNext(session, mbThread, groupId,
+			array[0] = getByG_NeC_S_PrevAndNext(session, mbThread, groupId,
 					categoryId, status, orderByComparator, true);
 
 			array[1] = mbThread;
 
-			array[2] = getByG_NotC_S_PrevAndNext(session, mbThread, groupId,
+			array[2] = getByG_NeC_S_PrevAndNext(session, mbThread, groupId,
 					categoryId, status, orderByComparator, false);
 
 			return array;
@@ -7246,7 +9173,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		}
 	}
 
-	protected MBThread getByG_NotC_S_PrevAndNext(Session session,
+	protected MBThread getByG_NeC_S_PrevAndNext(Session session,
 		MBThread mbThread, long groupId, long categoryId, int status,
 		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
@@ -7261,11 +9188,11 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 		query.append(_SQL_SELECT_MBTHREAD_WHERE);
 
-		query.append(_FINDER_COLUMN_G_NOTC_S_GROUPID_2);
+		query.append(_FINDER_COLUMN_G_NEC_S_GROUPID_2);
 
-		query.append(_FINDER_COLUMN_G_NOTC_S_CATEGORYID_2);
+		query.append(_FINDER_COLUMN_G_NEC_S_CATEGORYID_2);
 
-		query.append(_FINDER_COLUMN_G_NOTC_S_STATUS_2);
+		query.append(_FINDER_COLUMN_G_NEC_S_STATUS_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -7369,9 +9296,9 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	 * @return the matching message boards threads that the user has permission to view
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<MBThread> filterFindByG_NotC_S(long groupId, long categoryId,
+	public List<MBThread> filterFindByG_NeC_S(long groupId, long categoryId,
 		int status) throws SystemException {
-		return filterFindByG_NotC_S(groupId, categoryId, status,
+		return filterFindByG_NeC_S(groupId, categoryId, status,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -7390,10 +9317,9 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	 * @return the range of matching message boards threads that the user has permission to view
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<MBThread> filterFindByG_NotC_S(long groupId, long categoryId,
+	public List<MBThread> filterFindByG_NeC_S(long groupId, long categoryId,
 		int status, int start, int end) throws SystemException {
-		return filterFindByG_NotC_S(groupId, categoryId, status, start, end,
-			null);
+		return filterFindByG_NeC_S(groupId, categoryId, status, start, end, null);
 	}
 
 	/**
@@ -7412,11 +9338,11 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	 * @return the ordered range of matching message boards threads that the user has permission to view
 	 * @throws SystemException if a system exception occurred
 	 */
-	public List<MBThread> filterFindByG_NotC_S(long groupId, long categoryId,
+	public List<MBThread> filterFindByG_NeC_S(long groupId, long categoryId,
 		int status, int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return findByG_NotC_S(groupId, categoryId, status, start, end,
+			return findByG_NeC_S(groupId, categoryId, status, start, end,
 				orderByComparator);
 		}
 
@@ -7437,11 +9363,11 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			query.append(_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		query.append(_FINDER_COLUMN_G_NOTC_S_GROUPID_2);
+		query.append(_FINDER_COLUMN_G_NEC_S_GROUPID_2);
 
-		query.append(_FINDER_COLUMN_G_NOTC_S_CATEGORYID_2);
+		query.append(_FINDER_COLUMN_G_NEC_S_CATEGORYID_2);
 
-		query.append(_FINDER_COLUMN_G_NOTC_S_STATUS_2);
+		query.append(_FINDER_COLUMN_G_NEC_S_STATUS_2);
 
 		if (!getDB().isSupportsInlineDistinct()) {
 			query.append(_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_2);
@@ -7515,12 +9441,12 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	 * @throws com.liferay.portlet.messageboards.NoSuchThreadException if a message boards thread with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public MBThread[] filterFindByG_NotC_S_PrevAndNext(long threadId,
+	public MBThread[] filterFindByG_NeC_S_PrevAndNext(long threadId,
 		long groupId, long categoryId, int status,
 		OrderByComparator orderByComparator)
 		throws NoSuchThreadException, SystemException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return findByG_NotC_S_PrevAndNext(threadId, groupId, categoryId,
+			return findByG_NeC_S_PrevAndNext(threadId, groupId, categoryId,
 				status, orderByComparator);
 		}
 
@@ -7533,12 +9459,12 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 			MBThread[] array = new MBThreadImpl[3];
 
-			array[0] = filterGetByG_NotC_S_PrevAndNext(session, mbThread,
+			array[0] = filterGetByG_NeC_S_PrevAndNext(session, mbThread,
 					groupId, categoryId, status, orderByComparator, true);
 
 			array[1] = mbThread;
 
-			array[2] = filterGetByG_NotC_S_PrevAndNext(session, mbThread,
+			array[2] = filterGetByG_NeC_S_PrevAndNext(session, mbThread,
 					groupId, categoryId, status, orderByComparator, false);
 
 			return array;
@@ -7551,7 +9477,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		}
 	}
 
-	protected MBThread filterGetByG_NotC_S_PrevAndNext(Session session,
+	protected MBThread filterGetByG_NeC_S_PrevAndNext(Session session,
 		MBThread mbThread, long groupId, long categoryId, int status,
 		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
@@ -7571,11 +9497,11 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			query.append(_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		query.append(_FINDER_COLUMN_G_NOTC_S_GROUPID_2);
+		query.append(_FINDER_COLUMN_G_NEC_S_GROUPID_2);
 
-		query.append(_FINDER_COLUMN_G_NOTC_S_CATEGORYID_2);
+		query.append(_FINDER_COLUMN_G_NEC_S_CATEGORYID_2);
 
-		query.append(_FINDER_COLUMN_G_NOTC_S_STATUS_2);
+		query.append(_FINDER_COLUMN_G_NEC_S_STATUS_2);
 
 		if (!getDB().isSupportsInlineDistinct()) {
 			query.append(_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_2);
@@ -7861,9 +9787,9 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	 * @param categoryId the category ID
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByG_NotC(long groupId, long categoryId)
+	public void removeByG_NeC(long groupId, long categoryId)
 		throws SystemException {
-		for (MBThread mbThread : findByG_NotC(groupId, categoryId)) {
+		for (MBThread mbThread : findByG_NeC(groupId, categoryId)) {
 			remove(mbThread);
 		}
 	}
@@ -7925,6 +9851,21 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	}
 
 	/**
+	 * Removes all the message boards threads where groupId = &#63; and categoryId = &#63; and status &ne; &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param categoryId the category ID
+	 * @param status the status
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void removeByG_C_NeS(long groupId, long categoryId, int status)
+		throws SystemException {
+		for (MBThread mbThread : findByG_C_NeS(groupId, categoryId, status)) {
+			remove(mbThread);
+		}
+	}
+
+	/**
 	 * Removes all the message boards threads where groupId = &#63; and categoryId = &#63; and status = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -7940,6 +9881,21 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	}
 
 	/**
+	 * Removes all the message boards threads where groupId = &#63; and categoryId &ne; &#63; and status &ne; &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param categoryId the category ID
+	 * @param status the status
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void removeByG_NeC_NeS(long groupId, long categoryId, int status)
+		throws SystemException {
+		for (MBThread mbThread : findByG_NeC_NeS(groupId, categoryId, status)) {
+			remove(mbThread);
+		}
+	}
+
+	/**
 	 * Removes all the message boards threads where groupId = &#63; and categoryId &ne; &#63; and status = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -7947,9 +9903,9 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	 * @param status the status
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByG_NotC_S(long groupId, long categoryId, int status)
+	public void removeByG_NeC_S(long groupId, long categoryId, int status)
 		throws SystemException {
-		for (MBThread mbThread : findByG_NotC_S(groupId, categoryId, status)) {
+		for (MBThread mbThread : findByG_NeC_S(groupId, categoryId, status)) {
 			remove(mbThread);
 		}
 	}
@@ -8412,11 +10368,11 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	 * @return the number of matching message boards threads
 	 * @throws SystemException if a system exception occurred
 	 */
-	public int countByG_NotC(long groupId, long categoryId)
+	public int countByG_NeC(long groupId, long categoryId)
 		throws SystemException {
 		Object[] finderArgs = new Object[] { groupId, categoryId };
 
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_NOTC,
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_NEC,
 				finderArgs, this);
 
 		if (count == null) {
@@ -8424,9 +10380,9 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 			query.append(_SQL_COUNT_MBTHREAD_WHERE);
 
-			query.append(_FINDER_COLUMN_G_NOTC_GROUPID_2);
+			query.append(_FINDER_COLUMN_G_NEC_GROUPID_2);
 
-			query.append(_FINDER_COLUMN_G_NOTC_CATEGORYID_2);
+			query.append(_FINDER_COLUMN_G_NEC_CATEGORYID_2);
 
 			String sql = query.toString();
 
@@ -8453,7 +10409,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_NOTC,
+				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_NEC,
 					finderArgs, count);
 
 				closeSession(session);
@@ -8471,19 +10427,19 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	 * @return the number of matching message boards threads that the user has permission to view
 	 * @throws SystemException if a system exception occurred
 	 */
-	public int filterCountByG_NotC(long groupId, long categoryId)
+	public int filterCountByG_NeC(long groupId, long categoryId)
 		throws SystemException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return countByG_NotC(groupId, categoryId);
+			return countByG_NeC(groupId, categoryId);
 		}
 
 		StringBundler query = new StringBundler(3);
 
 		query.append(_FILTER_SQL_COUNT_MBTHREAD_WHERE);
 
-		query.append(_FINDER_COLUMN_G_NOTC_GROUPID_2);
+		query.append(_FINDER_COLUMN_G_NEC_GROUPID_2);
 
-		query.append(_FINDER_COLUMN_G_NOTC_CATEGORYID_2);
+		query.append(_FINDER_COLUMN_G_NEC_CATEGORYID_2);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
 				MBThread.class.getName(),
@@ -8892,6 +10848,322 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	}
 
 	/**
+	 * Returns the number of message boards threads where groupId = &#63; and categoryId = &#63; and status &ne; &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param categoryId the category ID
+	 * @param status the status
+	 * @return the number of matching message boards threads
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByG_C_NeS(long groupId, long categoryId, int status)
+		throws SystemException {
+		Object[] finderArgs = new Object[] { groupId, categoryId, status };
+
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_C_NES,
+				finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_COUNT_MBTHREAD_WHERE);
+
+			query.append(_FINDER_COLUMN_G_C_NES_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_C_NES_CATEGORYID_2);
+
+			query.append(_FINDER_COLUMN_G_C_NES_STATUS_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(categoryId);
+
+				qPos.add(status);
+
+				count = (Long)q.uniqueResult();
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (count == null) {
+					count = Long.valueOf(0);
+				}
+
+				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_C_NES,
+					finderArgs, count);
+
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of message boards threads where groupId = &#63; and categoryId = any &#63; and status &ne; &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param categoryIds the category IDs
+	 * @param status the status
+	 * @return the number of matching message boards threads
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByG_C_NeS(long groupId, long[] categoryIds, int status)
+		throws SystemException {
+		Object[] finderArgs = new Object[] {
+				groupId, StringUtil.merge(categoryIds), status
+			};
+
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_C_NES,
+				finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler();
+
+			query.append(_SQL_COUNT_MBTHREAD_WHERE);
+
+			boolean conjunctionable = false;
+
+			if (conjunctionable) {
+				query.append(WHERE_AND);
+			}
+
+			query.append(_FINDER_COLUMN_G_C_NES_GROUPID_5);
+
+			conjunctionable = true;
+
+			if ((categoryIds == null) || (categoryIds.length > 0)) {
+				if (conjunctionable) {
+					query.append(WHERE_AND);
+				}
+
+				query.append(StringPool.OPEN_PARENTHESIS);
+
+				for (int i = 0; i < categoryIds.length; i++) {
+					query.append(_FINDER_COLUMN_G_C_NES_CATEGORYID_5);
+
+					if ((i + 1) < categoryIds.length) {
+						query.append(WHERE_OR);
+					}
+				}
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
+
+				conjunctionable = true;
+			}
+
+			if (conjunctionable) {
+				query.append(WHERE_AND);
+			}
+
+			query.append(_FINDER_COLUMN_G_C_NES_STATUS_5);
+
+			conjunctionable = true;
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				if (categoryIds != null) {
+					qPos.add(categoryIds);
+				}
+
+				qPos.add(status);
+
+				count = (Long)q.uniqueResult();
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (count == null) {
+					count = Long.valueOf(0);
+				}
+
+				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_C_NES,
+					finderArgs, count);
+
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of message boards threads that the user has permission to view where groupId = &#63; and categoryId = &#63; and status &ne; &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param categoryId the category ID
+	 * @param status the status
+	 * @return the number of matching message boards threads that the user has permission to view
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int filterCountByG_C_NeS(long groupId, long categoryId, int status)
+		throws SystemException {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_C_NeS(groupId, categoryId, status);
+		}
+
+		StringBundler query = new StringBundler(4);
+
+		query.append(_FILTER_SQL_COUNT_MBTHREAD_WHERE);
+
+		query.append(_FINDER_COLUMN_G_C_NES_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_C_NES_CATEGORYID_2);
+
+		query.append(_FINDER_COLUMN_G_C_NES_STATUS_2);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				MBThread.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(categoryId);
+
+			qPos.add(status);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the number of message boards threads that the user has permission to view where groupId = &#63; and categoryId = any &#63; and status &ne; &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param categoryIds the category IDs
+	 * @param status the status
+	 * @return the number of matching message boards threads that the user has permission to view
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int filterCountByG_C_NeS(long groupId, long[] categoryIds, int status)
+		throws SystemException {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_C_NeS(groupId, categoryIds, status);
+		}
+
+		StringBundler query = new StringBundler();
+
+		query.append(_FILTER_SQL_COUNT_MBTHREAD_WHERE);
+
+		boolean conjunctionable = false;
+
+		if (conjunctionable) {
+			query.append(WHERE_AND);
+		}
+
+		query.append(_FINDER_COLUMN_G_C_NES_GROUPID_5);
+
+		conjunctionable = true;
+
+		if ((categoryIds == null) || (categoryIds.length > 0)) {
+			if (conjunctionable) {
+				query.append(WHERE_AND);
+			}
+
+			query.append(StringPool.OPEN_PARENTHESIS);
+
+			for (int i = 0; i < categoryIds.length; i++) {
+				query.append(_FINDER_COLUMN_G_C_NES_CATEGORYID_5);
+
+				if ((i + 1) < categoryIds.length) {
+					query.append(WHERE_OR);
+				}
+			}
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			conjunctionable = true;
+		}
+
+		if (conjunctionable) {
+			query.append(WHERE_AND);
+		}
+
+		query.append(_FINDER_COLUMN_G_C_NES_STATUS_5);
+
+		conjunctionable = true;
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				MBThread.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			if (categoryIds != null) {
+				qPos.add(categoryIds);
+			}
+
+			qPos.add(status);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
 	 * Returns the number of message boards threads where groupId = &#63; and categoryId = &#63; and status = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -9208,7 +11480,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	}
 
 	/**
-	 * Returns the number of message boards threads where groupId = &#63; and categoryId &ne; &#63; and status = &#63;.
+	 * Returns the number of message boards threads where groupId = &#63; and categoryId &ne; &#63; and status &ne; &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param categoryId the category ID
@@ -9216,11 +11488,11 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	 * @return the number of matching message boards threads
 	 * @throws SystemException if a system exception occurred
 	 */
-	public int countByG_NotC_S(long groupId, long categoryId, int status)
+	public int countByG_NeC_NeS(long groupId, long categoryId, int status)
 		throws SystemException {
 		Object[] finderArgs = new Object[] { groupId, categoryId, status };
 
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_NOTC_S,
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_NEC_NES,
 				finderArgs, this);
 
 		if (count == null) {
@@ -9228,11 +11500,11 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 			query.append(_SQL_COUNT_MBTHREAD_WHERE);
 
-			query.append(_FINDER_COLUMN_G_NOTC_S_GROUPID_2);
+			query.append(_FINDER_COLUMN_G_NEC_NES_GROUPID_2);
 
-			query.append(_FINDER_COLUMN_G_NOTC_S_CATEGORYID_2);
+			query.append(_FINDER_COLUMN_G_NEC_NES_CATEGORYID_2);
 
-			query.append(_FINDER_COLUMN_G_NOTC_S_STATUS_2);
+			query.append(_FINDER_COLUMN_G_NEC_NES_STATUS_2);
 
 			String sql = query.toString();
 
@@ -9261,7 +11533,130 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_NOTC_S,
+				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_NEC_NES,
+					finderArgs, count);
+
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of message boards threads that the user has permission to view where groupId = &#63; and categoryId &ne; &#63; and status &ne; &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param categoryId the category ID
+	 * @param status the status
+	 * @return the number of matching message boards threads that the user has permission to view
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int filterCountByG_NeC_NeS(long groupId, long categoryId, int status)
+		throws SystemException {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_NeC_NeS(groupId, categoryId, status);
+		}
+
+		StringBundler query = new StringBundler(4);
+
+		query.append(_FILTER_SQL_COUNT_MBTHREAD_WHERE);
+
+		query.append(_FINDER_COLUMN_G_NEC_NES_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_NEC_NES_CATEGORYID_2);
+
+		query.append(_FINDER_COLUMN_G_NEC_NES_STATUS_2);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				MBThread.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(categoryId);
+
+			qPos.add(status);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the number of message boards threads where groupId = &#63; and categoryId &ne; &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param categoryId the category ID
+	 * @param status the status
+	 * @return the number of matching message boards threads
+	 * @throws SystemException if a system exception occurred
+	 */
+	public int countByG_NeC_S(long groupId, long categoryId, int status)
+		throws SystemException {
+		Object[] finderArgs = new Object[] { groupId, categoryId, status };
+
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_NEC_S,
+				finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_COUNT_MBTHREAD_WHERE);
+
+			query.append(_FINDER_COLUMN_G_NEC_S_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_NEC_S_CATEGORYID_2);
+
+			query.append(_FINDER_COLUMN_G_NEC_S_STATUS_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(categoryId);
+
+				qPos.add(status);
+
+				count = (Long)q.uniqueResult();
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				if (count == null) {
+					count = Long.valueOf(0);
+				}
+
+				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_NEC_S,
 					finderArgs, count);
 
 				closeSession(session);
@@ -9280,21 +11675,21 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	 * @return the number of matching message boards threads that the user has permission to view
 	 * @throws SystemException if a system exception occurred
 	 */
-	public int filterCountByG_NotC_S(long groupId, long categoryId, int status)
+	public int filterCountByG_NeC_S(long groupId, long categoryId, int status)
 		throws SystemException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return countByG_NotC_S(groupId, categoryId, status);
+			return countByG_NeC_S(groupId, categoryId, status);
 		}
 
 		StringBundler query = new StringBundler(4);
 
 		query.append(_FILTER_SQL_COUNT_MBTHREAD_WHERE);
 
-		query.append(_FINDER_COLUMN_G_NOTC_S_GROUPID_2);
+		query.append(_FINDER_COLUMN_G_NEC_S_GROUPID_2);
 
-		query.append(_FINDER_COLUMN_G_NOTC_S_CATEGORYID_2);
+		query.append(_FINDER_COLUMN_G_NEC_S_CATEGORYID_2);
 
-		query.append(_FINDER_COLUMN_G_NOTC_S_STATUS_2);
+		query.append(_FINDER_COLUMN_G_NEC_S_STATUS_2);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
 				MBThread.class.getName(),
@@ -9429,6 +11824,10 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	protected RatingsStatsPersistence ratingsStatsPersistence;
 	@BeanReference(type = SocialActivityPersistence.class)
 	protected SocialActivityPersistence socialActivityPersistence;
+	@BeanReference(type = SocialActivityCounterPersistence.class)
+	protected SocialActivityCounterPersistence socialActivityCounterPersistence;
+	@BeanReference(type = TrashEntryPersistence.class)
+	protected TrashEntryPersistence trashEntryPersistence;
 	private static final String _SQL_SELECT_MBTHREAD = "SELECT mbThread FROM MBThread mbThread";
 	private static final String _SQL_SELECT_MBTHREAD_WHERE = "SELECT mbThread FROM MBThread mbThread WHERE ";
 	private static final String _SQL_COUNT_MBTHREAD = "SELECT COUNT(mbThread) FROM MBThread mbThread";
@@ -9441,8 +11840,8 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	private static final String _FINDER_COLUMN_G_C_CATEGORYID_2 = "mbThread.categoryId = ?";
 	private static final String _FINDER_COLUMN_G_C_CATEGORYID_5 = "(" +
 		_removeConjunction(_FINDER_COLUMN_G_C_CATEGORYID_2) + ")";
-	private static final String _FINDER_COLUMN_G_NOTC_GROUPID_2 = "mbThread.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_NOTC_CATEGORYID_2 = "mbThread.categoryId != ?";
+	private static final String _FINDER_COLUMN_G_NEC_GROUPID_2 = "mbThread.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_NEC_CATEGORYID_2 = "mbThread.categoryId != ?";
 	private static final String _FINDER_COLUMN_G_S_GROUPID_2 = "mbThread.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_S_STATUS_2 = "mbThread.status = ? AND mbThread.categoryId != -1";
 	private static final String _FINDER_COLUMN_C_P_CATEGORYID_2 = "mbThread.categoryId = ? AND ";
@@ -9454,6 +11853,15 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	private static final String _FINDER_COLUMN_G_C_L_CATEGORYID_2 = "mbThread.categoryId = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_L_LASTPOSTDATE_1 = "mbThread.lastPostDate IS NULL";
 	private static final String _FINDER_COLUMN_G_C_L_LASTPOSTDATE_2 = "mbThread.lastPostDate = ?";
+	private static final String _FINDER_COLUMN_G_C_NES_GROUPID_2 = "mbThread.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_NES_GROUPID_5 = "(" +
+		_removeConjunction(_FINDER_COLUMN_G_C_NES_GROUPID_2) + ")";
+	private static final String _FINDER_COLUMN_G_C_NES_CATEGORYID_2 = "mbThread.categoryId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_NES_CATEGORYID_5 = "(" +
+		_removeConjunction(_FINDER_COLUMN_G_C_NES_CATEGORYID_2) + ")";
+	private static final String _FINDER_COLUMN_G_C_NES_STATUS_2 = "mbThread.status != ?";
+	private static final String _FINDER_COLUMN_G_C_NES_STATUS_5 = "(" +
+		_removeConjunction(_FINDER_COLUMN_G_C_NES_STATUS_2) + ")";
 	private static final String _FINDER_COLUMN_G_C_S_GROUPID_2 = "mbThread.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_S_GROUPID_5 = "(" +
 		_removeConjunction(_FINDER_COLUMN_G_C_S_GROUPID_2) + ")";
@@ -9463,9 +11871,12 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	private static final String _FINDER_COLUMN_G_C_S_STATUS_2 = "mbThread.status = ?";
 	private static final String _FINDER_COLUMN_G_C_S_STATUS_5 = "(" +
 		_removeConjunction(_FINDER_COLUMN_G_C_S_STATUS_2) + ")";
-	private static final String _FINDER_COLUMN_G_NOTC_S_GROUPID_2 = "mbThread.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_NOTC_S_CATEGORYID_2 = "mbThread.categoryId != ? AND ";
-	private static final String _FINDER_COLUMN_G_NOTC_S_STATUS_2 = "mbThread.status = ?";
+	private static final String _FINDER_COLUMN_G_NEC_NES_GROUPID_2 = "mbThread.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_NEC_NES_CATEGORYID_2 = "mbThread.categoryId != ? AND ";
+	private static final String _FINDER_COLUMN_G_NEC_NES_STATUS_2 = "mbThread.status != ?";
+	private static final String _FINDER_COLUMN_G_NEC_S_GROUPID_2 = "mbThread.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_NEC_S_CATEGORYID_2 = "mbThread.categoryId != ? AND ";
+	private static final String _FINDER_COLUMN_G_NEC_S_STATUS_2 = "mbThread.status = ?";
 
 	private static String _removeConjunction(String sql) {
 		int pos = sql.indexOf(" AND ");

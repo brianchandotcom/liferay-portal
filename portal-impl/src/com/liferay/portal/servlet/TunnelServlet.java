@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodInvoker;
 import com.liferay.portal.kernel.util.MethodWrapper;
 import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.security.ac.AccessControlThreadLocal;
 import com.liferay.portal.security.auth.HttpPrincipal;
 
 import java.io.IOException;
@@ -60,7 +61,11 @@ public class TunnelServlet extends HttpServlet {
 
 		Object returnObj = null;
 
+		boolean remoteAccess = AccessControlThreadLocal.isRemoteAccess();
+
 		try {
+			AccessControlThreadLocal.setRemoteAccess(true);
+
 			ObjectValuePair<HttpPrincipal, Object> ovp =
 				(ObjectValuePair<HttpPrincipal, Object>)ois.readObject();
 
@@ -107,6 +112,9 @@ public class TunnelServlet extends HttpServlet {
 		}
 		catch (Exception e) {
 			_log.error(e, e);
+		}
+		finally {
+			AccessControlThreadLocal.setRemoteAccess(remoteAccess);
 		}
 
 		if (returnObj != null) {

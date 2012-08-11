@@ -18,6 +18,7 @@ import com.liferay.portal.action.JSONServiceAction;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.PluginContextListener;
+import com.liferay.portal.security.ac.AccessControlThreadLocal;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.struts.JSONAction;
 
@@ -51,7 +52,11 @@ public class JSONServlet extends HttpServlet {
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
 
+		boolean remoteAccess = AccessControlThreadLocal.isRemoteAccess();
+
 		try {
+			AccessControlThreadLocal.setRemoteAccess(true);
+
 			if (_pluginClassLoader == null) {
 				_jsonAction.execute(null, null, request, response);
 			}
@@ -71,8 +76,14 @@ public class JSONServlet extends HttpServlet {
 				}
 			}
 		}
+		catch (SecurityException se) {
+			throw new ServletException(se);
+		}
 		catch (Exception e) {
 			_log.error(e, e);
+		}
+		finally {
+			AccessControlThreadLocal.setRemoteAccess(remoteAccess);
 		}
 	}
 

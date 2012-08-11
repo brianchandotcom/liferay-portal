@@ -1735,6 +1735,8 @@ public interface PropsKeys {
 
 	public static final String POP_SERVER_SUBDOMAIN = "pop.server.subdomain";
 
+	public static final String PORTAL_AUTHENTICATION_VERIFIER_PIPELINE = "portal.authentication.verifier.pipeline";
+
 	public static final String PORTAL_CTX = "portal.ctx";
 
 	public static final String PORTAL_IMPERSONATION_ENABLE = "portal.impersonation.enable";

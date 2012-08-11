@@ -26,9 +26,9 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.ac.AccessControlUtil;
 import com.liferay.portal.security.auth.AuthSettingsUtil;
 import com.liferay.portal.security.auth.AuthTokenUtil;
-import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.servlet.SharedSessionServletRequest;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
@@ -82,12 +82,12 @@ public abstract class JSONAction extends Action {
 				json = "var " + instance + "=" + json + ";";
 			}
 		}
-		catch (PrincipalException pe) {
+		catch (SecurityException se) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(pe.getMessage());
+				_log.warn(se.getMessage());
 			}
 
-			json = JSONFactoryUtil.serializeException(pe);
+			json = JSONFactoryUtil.serializeException(se);
 		}
 		catch (Exception e) {
 			PortalUtil.sendError(
@@ -135,10 +135,24 @@ public abstract class JSONAction extends Action {
 
 		String authType = GetterUtil.getString(request.getAuthType());
 
-		if (authType.equals(HttpServletRequest.BASIC_AUTH) ||
-			authType.equals(HttpServletRequest.DIGEST_AUTH)) {
+		// support for an old JSON api that can be called using portal struts
+		// action url /c/porta/json_service
 
-			return;
+		if (AccessControlUtil.getAccessControlContext() == null) {
+			if (authType.equals(HttpServletRequest.BASIC_AUTH) ||
+				authType.equals(HttpServletRequest.DIGEST_AUTH)) {
+
+				return;
+			}
+		}
+		else {
+
+			// new web service verification - auth token should be checked only
+			// when user is authenticated using portal session cookies
+
+			if (!"PortalSessionAuthVerifier".equals(authType)) {
+				return;
+			}
 		}
 
 		if (PropsValues.AUTH_TOKEN_CHECK_ENABLED &&

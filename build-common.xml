@@ -43,6 +43,7 @@
 		<fileset dir="${project.dir}/lib/development" includes="*.jar" />
 		<fileset dir="${project.dir}/lib/global" includes="*.jar" />
 		<fileset dir="${project.dir}/lib/portal" includes="*.jar" />
+		<pathelement path="${project.dir}/tools/ant/classes" />
 	</path>
 
 	<path id="project.classpath">
@@ -73,6 +74,20 @@
 
 	<taskdef classname="com.tonicsystems.jarjar.JarJarTask" classpath="${project.dir}/lib/development/jarjar.jar" name="jarjar" />
 	<taskdef classname="com.oopsconsultancy.xmltask.ant.XmlTask" classpath="${project.dir}/lib/development/xmltask.jar" name="xmltask" />
+
+	<trycatch>
+		<try>
+			<taskdef classname="com.liferay.util.ant.ManifestHelperTask" classpathref="lib.classpath" name="liferay-manifest-helper" />
+		</try>
+		<catch>
+			<ant dir="${project.dir}/tools/ant" target="compile" inheritAll="false" />
+
+			<taskdef classname="com.liferay.util.ant.ManifestHelperTask" classpathref="lib.classpath" name="liferay-manifest-helper" />
+		</catch>
+	</trycatch>
+
+	<var name="module.classes.dir" value="classes" />
+	<var name="module.src.dir" value="src" />
 
 	<property name="doc.dir" value="${project.dir}/api" />
 

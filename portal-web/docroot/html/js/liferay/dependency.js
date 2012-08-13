@@ -31,7 +31,7 @@
 			var AOP = Dependency._getAOP(obj, methodName);
 
 			if (AOP) {
-				delete A.Do.objs[obj._yuid][methodName];
+				delete obj._yuiaop[methodName];
 			}
 
 			var proxy = function() {
@@ -82,7 +82,7 @@
 		_getAOP: function(obj, methodName) {
 			var instance = this;
 
-			return obj._yuid && A.Do.objs[obj._yuid] && A.Do.objs[obj._yuid][methodName];
+			return obj._yuiaop && obj._yuiaop[methodName];
 		},
 
 		_proxy: function(obj, methodName, methodFn, context, guid, modules, A) {

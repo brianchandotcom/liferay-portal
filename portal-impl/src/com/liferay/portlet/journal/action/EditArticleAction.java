@@ -430,6 +430,10 @@ public class EditArticleAction extends PortletAction {
 		for (String removeArticleLocaleId : removeArticleLocaleIds) {
 			int pos = removeArticleLocaleId.lastIndexOf(VERSION_SEPARATOR);
 
+			if (pos == -1) {
+				continue;
+			}
+
 			String articleId = removeArticleLocaleId.substring(0, pos);
 			double version = GetterUtil.getDouble(
 				removeArticleLocaleId.substring(
@@ -475,6 +479,7 @@ public class EditArticleAction extends PortletAction {
 		long classPK = ParamUtil.getLong(uploadPortletRequest, "classPK");
 		String articleId = ParamUtil.getString(
 			uploadPortletRequest, "articleId");
+
 		int pos = articleId.lastIndexOf(VERSION_SEPARATOR);
 
 		if (pos != -1) {

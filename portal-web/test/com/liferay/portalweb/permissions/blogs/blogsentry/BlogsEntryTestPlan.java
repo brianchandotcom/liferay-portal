@@ -14,8 +14,8 @@
 
 package com.liferay.portalweb.permissions.blogs.blogsentry;
 
-import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.permissions.blogs.blogsentry.addblogsentry.AddBlogsEntryTestPlan;
+import com.liferay.portalweb.portal.BaseTestSuite;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

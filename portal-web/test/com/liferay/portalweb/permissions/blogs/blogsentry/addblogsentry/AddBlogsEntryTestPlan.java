@@ -14,13 +14,13 @@
 
 package com.liferay.portalweb.permissions.blogs.blogsentry.addblogsentry;
 
-import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.permissions.blogs.blogsentry.addblogsentry.siteroleinline.SiteRoleInlineTests;
-import com.liferay.portalweb.permissions.blogs.blogsentry.addblogsentry.siterole.SiteRoleTests;
-import com.liferay.portalweb.permissions.blogs.blogsentry.addblogsentry.regroleinline.RegRoleInlineTests;
-import com.liferay.portalweb.permissions.blogs.blogsentry.addblogsentry.regrole.RegRoleTests;
-import com.liferay.portalweb.permissions.blogs.blogsentry.addblogsentry.orgroleinline.OrgRoleInlineTests;
 import com.liferay.portalweb.permissions.blogs.blogsentry.addblogsentry.orgrole.OrgRoleTests;
+import com.liferay.portalweb.permissions.blogs.blogsentry.addblogsentry.orgroleinline.OrgRoleInlineTests;
+import com.liferay.portalweb.permissions.blogs.blogsentry.addblogsentry.regrole.RegRoleTests;
+import com.liferay.portalweb.permissions.blogs.blogsentry.addblogsentry.regroleinline.RegRoleInlineTests;
+import com.liferay.portalweb.permissions.blogs.blogsentry.addblogsentry.siterole.SiteRoleTests;
+import com.liferay.portalweb.permissions.blogs.blogsentry.addblogsentry.siteroleinline.SiteRoleInlineTests;
+import com.liferay.portalweb.portal.BaseTestSuite;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

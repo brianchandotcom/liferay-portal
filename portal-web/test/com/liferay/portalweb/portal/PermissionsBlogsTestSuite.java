@@ -33,7 +33,6 @@ public class PermissionsBlogsTestSuite extends BaseTestSuite {
 		testSuite.addTest(BlogsTestPlan.suite());
 		testSuite.addTest(BlogsTestPlanOld.suite());
 
-
 		testSuite.addTestSuite(StopSeleniumTest.class);
 
 		return testSuite;

@@ -91,18 +91,6 @@ public class AutoLoginFilter extends BasePortalFilter {
 				if (user.isLockout()) {
 					return null;
 				}
-				else if (PropsValues.LIVE_USERS_ENABLED) {
-					UserTracker userTracker =
-						UserTrackerLocalServiceUtil.fetchUserTracker(userId);
-
-					if ((userTracker == null) &&
-						(session.getAttribute(WebKeys.USER) == null)) {
-
-						session.invalidate();
-
-						return null;
-					}
-				}
 			}
 			else {
 				return null;

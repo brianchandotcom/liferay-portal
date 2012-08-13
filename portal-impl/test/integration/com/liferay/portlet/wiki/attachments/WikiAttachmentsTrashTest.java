@@ -48,7 +48,17 @@ public class WikiAttachmentsTrashTest {
 
 	@Test
 	@Transactional
-	public void testTrashWikiAttachments() throws Exception {
+	public void testTrashAndDelete() throws Exception {
+		trashWikiAttachments(false);
+	}
+
+	@Test
+	@Transactional
+	public void testTrashAndRestore() throws Exception {
+		trashWikiAttachments(true);
+	}
+
+	private void trashWikiAttachments(boolean restore) throws Exception {
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setScopeGroupId(TestPropsValues.getGroupId());
@@ -102,15 +112,29 @@ public class WikiAttachmentsTrashTest {
 
 		fileName = wikiPage.getDeletedAttachmentsFiles()[0];
 
-		WikiPageLocalServiceUtil.movePageAttachmentFromTrash(
-			wikiNode.getNodeId(), wikiPage.getTitle(), fileName);
+		if (restore) {
+			WikiPageLocalServiceUtil.movePageAttachmentFromTrash(
+				wikiNode.getNodeId(), wikiPage.getTitle(), fileName);
 
-		Assert.assertEquals(
-			initialTrashEntriesCount,
-			wikiPage.getDeletedAttachmentsFiles().length);
+			Assert.assertEquals(
+				initialTrashEntriesCount,
+				wikiPage.getDeletedAttachmentsFiles().length);
 
-		Assert.assertEquals(
-			initialNotInTrashCount + 1, wikiPage.getAttachmentsFiles().length);
+			Assert.assertEquals(
+				initialNotInTrashCount + 1,
+				wikiPage.getAttachmentsFiles().length);
+		}
+		else {
+			WikiPageLocalServiceUtil.deletePageAttachment(
+				wikiNode.getNodeId(), wikiPage.getTitle(), fileName);
+
+			Assert.assertEquals(
+				initialTrashEntriesCount,
+				wikiPage.getDeletedAttachmentsFiles().length);
+
+			Assert.assertEquals(
+				initialNotInTrashCount, wikiPage.getAttachmentsFiles().length);
+		}
 	}
 
 }

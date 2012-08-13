@@ -52,7 +52,38 @@ public class MessageBoardsAttachmentsTrashTest {
 
 	@Test
 	@Transactional
-	public void testTrashMessageBoardsAttachments() throws Exception {
+	public void testTrashAndDelete() throws Exception {
+		trashMessageBoardsAttachments(false);
+	}
+
+	@Test
+	@Transactional
+	public void testTrashAndRestore() throws Exception {
+		trashMessageBoardsAttachments(true);
+	}
+
+	private List<ObjectValuePair<String, InputStream>> getInputStreamOVPs(
+		String fileName) {
+
+		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
+			new ArrayList<ObjectValuePair<String, InputStream>>(1);
+
+		Class<?> clazz = getClass();
+
+		InputStream inputStream = clazz.getResourceAsStream(
+			"dependencies/" + fileName);
+
+		ObjectValuePair<String, InputStream> inputStreamOVP =
+			new ObjectValuePair<String, InputStream>(fileName, inputStream);
+
+		inputStreamOVPs.add(inputStreamOVP);
+
+		return inputStreamOVPs;
+	}
+
+	private void trashMessageBoardsAttachments(boolean restore)
+		throws Exception {
+
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setScopeGroupId(TestPropsValues.getGroupId());
@@ -82,8 +113,8 @@ public class MessageBoardsAttachmentsTrashTest {
 
 		message = MBMessageLocalServiceUtil.updateMessage(
 			user.getUserId(), message.getMessageId(), "Message Subject",
-			"Message Body", getInputStreamOVPs("OSX_Test.docx"),
-			existingFiles, 0, false, serviceContext);
+			"Message Body", getInputStreamOVPs("OSX_Test.docx"), existingFiles,
+			0, false, serviceContext);
 
 		Assert.assertEquals(
 			initialTrashEntriesCount,
@@ -106,35 +137,22 @@ public class MessageBoardsAttachmentsTrashTest {
 
 		fileName = message.getDeletedAttachmentsFiles()[0];
 
-		MBMessageLocalServiceUtil.moveMessageAttachmentFromTrash(
-			message.getMessageId(), fileName);
+		if (restore) {
+			MBMessageLocalServiceUtil.moveMessageAttachmentFromTrash(
+				message.getMessageId(), fileName);
 
-		Assert.assertEquals(
-			initialTrashEntriesCount,
-			message.getDeletedAttachmentsFiles().length);
+			Assert.assertEquals(
+				initialTrashEntriesCount,
+				message.getDeletedAttachmentsFiles().length);
 
-		Assert.assertEquals(
-			initialNotInTrashCount + 1, message.getAttachmentsFiles().length);
-	}
-
-	private List<ObjectValuePair<String, InputStream>> getInputStreamOVPs(
-		String fileName) {
-
-		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
-			new ArrayList<ObjectValuePair<String, InputStream>>(1);
-
-		Class<?> clazz = getClass();
-
-		InputStream inputStream = clazz.getResourceAsStream(
-			"dependencies/" + fileName);
-
-		ObjectValuePair<String, InputStream> inputStreamOVP =
-			new ObjectValuePair<String, InputStream>(
-				fileName, inputStream);
-
-		inputStreamOVPs.add(inputStreamOVP);
-
-		return inputStreamOVPs;
+			Assert.assertEquals(
+				initialNotInTrashCount + 1,
+				message.getAttachmentsFiles().length);
+		}
+		else {
+			MBMessageLocalServiceUtil.deleteMessageAttachment(
+				message.getMessageId(), fileName);
+		}
 	}
 
 }

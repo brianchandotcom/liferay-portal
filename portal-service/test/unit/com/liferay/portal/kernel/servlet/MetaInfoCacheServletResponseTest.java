@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -602,6 +603,20 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 		metaInfoCacheServletResponse.flushBuffer();
 
 		assertTrue(metaInfoCacheServletResponse.isCommitted());
+	}
+
+	public void testGetMetaInfoDataBag() {
+		StubHttpServletResponse stubHttpServletResponse =
+			new StubHttpServletResponse();
+
+		MetaInfoCacheServletResponse metaInfoCacheServletResponse =
+			new MetaInfoCacheServletResponse(stubHttpServletResponse);
+
+		MetaInfoCacheServletResponse.MetaInfoDataBag metaInfoDataBag =
+			metaInfoCacheServletResponse.getMetaInfoDataBag();
+
+		assertNotNull(metaInfoDataBag);
+		assertTrue(metaInfoDataBag instanceof Serializable);
 	}
 
 	public void testGetOutputStream() throws IOException {

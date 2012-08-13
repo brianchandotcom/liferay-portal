@@ -143,6 +143,9 @@ public abstract class BaseWebDriverImpl
 	}
 
 	protected void uploadFile(String location, String value) {
+		WebElement webElement = getWebElement(location);
+
+		webElement.sendKeys(value);
 	}
 
 	private String _projectDir;

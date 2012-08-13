@@ -12,11 +12,16 @@
  * details.
  */
 
-package com.liferay.portal.kernel.portlet;
+package com.liferay.portlet;
 
+import com.liferay.portal.kernel.portlet.PortletContainer;
+import com.liferay.portal.kernel.portlet.PortletContainerException;
+import com.liferay.portal.kernel.portlet.RestrictPortletServletRequest;
+import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.Map;
 
@@ -29,6 +34,20 @@ import javax.servlet.http.HttpServletResponse;
  * @author Shuyang Zhou
  */
 public class RestrictPortletContainerWrapper implements PortletContainer {
+
+	public static PortletContainer createRestrictPortletContainerWrapper(
+		PortletContainer portletContainer) {
+
+		if ((PropsValues.LAYOUT_PARALLEL_RENDER_ENABLE &&
+				ServerDetector.isTomcat()) ||
+			PropsValues.PORTLET_CONTAINER_RESTRICT) {
+
+			portletContainer = new RestrictPortletContainerWrapper(
+				portletContainer);
+		}
+
+		return portletContainer;
+	}
 
 	public RestrictPortletContainerWrapper(PortletContainer portletContainer) {
 		_portletContainer = portletContainer;

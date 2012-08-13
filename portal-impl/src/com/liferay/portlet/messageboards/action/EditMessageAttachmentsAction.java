@@ -20,15 +20,12 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.struts.PortletAction;
-import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.messageboards.NoSuchMessageException;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageServiceUtil;
-import com.liferay.portlet.trash.util.TrashUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -117,10 +114,7 @@ public class EditMessageAttachmentsAction extends PortletAction {
 
 		String fileName = ParamUtil.getString(actionRequest, "fileName");
 
-		MBMessage message = MBMessageLocalServiceUtil.getMessage(messageId);
-
-		DLStoreUtil.deleteFile(
-			message.getCompanyId(), CompanyConstants.SYSTEM, fileName);
+		MBMessageLocalServiceUtil.deleteMessageAttachment(messageId, fileName);
 	}
 
 	protected void emptyTrash(ActionRequest actionRequest) throws Exception {
@@ -136,11 +130,10 @@ public class EditMessageAttachmentsAction extends PortletAction {
 
 		String fileName = ParamUtil.getString(actionRequest, "fileName");
 
-		MBMessage message = MBMessageServiceUtil.getMessage(messageId);
+		MBMessageLocalServiceUtil.moveMessageAttachmentFromTrash(
+			messageId, fileName);
 
-		TrashUtil.moveAttachmentFromTrash(
-			message.getCompanyId(), CompanyConstants.SYSTEM, fileName,
-			message.getAttachmentsDir());
+		MBMessage message = MBMessageServiceUtil.getMessage(messageId);
 
 		message.setAttachments(true);
 

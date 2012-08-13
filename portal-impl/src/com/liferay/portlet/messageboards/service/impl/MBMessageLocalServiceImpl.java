@@ -735,6 +735,15 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		return message;
 	}
 
+	public void deleteMessageAttachment(long messageId, String fileName)
+		throws PortalException, SystemException {
+
+		MBMessage message = getMessage(messageId);
+
+		DLStoreUtil.deleteFile(
+			message.getCompanyId(), CompanyConstants.SYSTEM, fileName);
+	}
+
 	public void deleteMessageAttachments(long messageId)
 		throws PortalException, SystemException {
 
@@ -1274,6 +1283,27 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			userId, classNameId, classPK, status);
 	}
 
+	public void moveMessageAttachmentFromTrash(
+			long messageId, String deletedFileName)
+		throws PortalException, SystemException {
+
+		MBMessage message = getMessage(messageId);
+
+		TrashUtil.moveAttachmentFromTrash(
+			message.getCompanyId(), CompanyConstants.SYSTEM, deletedFileName,
+			message.getAttachmentsDir());
+	}
+
+	public String moveMessageAttachmentToTrash(long messageId, String fileName)
+		throws PortalException, SystemException {
+
+		MBMessage message = getMessage(messageId);
+
+		return TrashUtil.moveAttachmentToTrash(
+			message.getCompanyId(), CompanyConstants.SYSTEM, fileName,
+			message.getDeletedAttachmentsDir());
+	}
+
 	public void subscribeMessage(long userId, long messageId)
 		throws PortalException, SystemException {
 
@@ -1424,13 +1454,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			for (String fileName : fileNames) {
 				if (!existingFiles.contains(fileName)) {
 					if (!TrashUtil.isTrashEnabled(message.getGroupId())) {
-						DLStoreUtil.deleteFile(
-							companyId, repositoryId, fileName);
+						deleteMessageAttachment(messageId, fileName);
 					}
 					else {
-						TrashUtil.moveAttachmentToTrash(
-							companyId, repositoryId, fileName,
-							message.getDeletedAttachmentsDir());
+						moveMessageAttachmentToTrash(messageId, fileName);
 					}
 				}
 			}
@@ -1458,9 +1485,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 						companyId, repositoryId, dirName);
 
 					for (String fileName : fileNames) {
-						TrashUtil.moveAttachmentToTrash(
-							companyId, repositoryId, fileName,
-							message.getDeletedAttachmentsDir());
+						moveMessageAttachmentToTrash(messageId, fileName);
 					}
 				}
 

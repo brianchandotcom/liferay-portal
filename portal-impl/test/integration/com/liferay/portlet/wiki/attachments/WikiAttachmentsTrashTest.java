@@ -23,7 +23,6 @@ import com.liferay.portal.test.ExecutionTestListeners;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.TransactionalCallbackAwareExecutionTestListener;
 import com.liferay.portal.util.TestPropsValues;
-import com.liferay.portlet.trash.BaseDLTrashHandlerTestCase;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.model.WikiPageConstants;
@@ -45,11 +44,21 @@ import org.junit.runner.RunWith;
 			TransactionalCallbackAwareExecutionTestListener.class
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class AttachmentsTrashTest extends BaseDLTrashHandlerTestCase {
+public class WikiAttachmentsTrashTest {
 
 	@Test
 	@Transactional
-	public void testTrashWikiAttachments() throws Exception {
+	public void testTrashAndDelete() throws Exception {
+		trashWikiAttachments(false);
+	}
+
+	@Test
+	@Transactional
+	public void testTrashAndRestore() throws Exception {
+		trashWikiAttachments(true);
+	}
+
+	private void trashWikiAttachments(boolean restore) throws Exception {
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setScopeGroupId(TestPropsValues.getGroupId());
@@ -103,30 +112,29 @@ public class AttachmentsTrashTest extends BaseDLTrashHandlerTestCase {
 
 		fileName = wikiPage.getDeletedAttachmentsFiles()[0];
 
-		WikiPageLocalServiceUtil.movePageAttachmentFromTrash(
-			wikiNode.getNodeId(), wikiPage.getTitle(), fileName);
+		if (restore) {
+			WikiPageLocalServiceUtil.movePageAttachmentFromTrash(
+				wikiNode.getNodeId(), wikiPage.getTitle(), fileName);
 
-		Assert.assertEquals(
-			initialTrashEntriesCount,
-			wikiPage.getDeletedAttachmentsFiles().length);
+			Assert.assertEquals(
+				initialTrashEntriesCount,
+				wikiPage.getDeletedAttachmentsFiles().length);
 
-		Assert.assertEquals(
-			initialNotInTrashCount + 1, wikiPage.getAttachmentsFiles().length);
-	}
+			Assert.assertEquals(
+				initialNotInTrashCount + 1,
+				wikiPage.getAttachmentsFiles().length);
+		}
+		else {
+			WikiPageLocalServiceUtil.deletePageAttachment(
+				wikiNode.getNodeId(), wikiPage.getTitle(), fileName);
 
-	@Override
-	protected long addSubentry(long folderId1, long folderId2)
-		throws Exception {
+			Assert.assertEquals(
+				initialTrashEntriesCount,
+				wikiPage.getDeletedAttachmentsFiles().length);
 
-		return 0;
-	}
-
-	@Override
-	protected void moveSubentryFromTrash(long subEntryId) throws Exception {
-	}
-
-	@Override
-	protected void moveSubentryToTrash(long subEntryId) throws Exception {
+			Assert.assertEquals(
+				initialNotInTrashCount, wikiPage.getAttachmentsFiles().length);
+		}
 	}
 
 }

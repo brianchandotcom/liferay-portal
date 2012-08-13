@@ -70,16 +70,15 @@ public class VirtualHostFilter extends BasePortalFilter {
 
 			String keyword = PropsValues.LAYOUT_FRIENDLY_URL_KEYWORDS[i];
 
-			if (keyword.contains(StringPool.PERIOD) ||
-				keyword.equals("_vti_") || keyword.equals("api") ||
-				keyword.equals("display_chart") ||
-				keyword.equals("sharepoint") ||
-				keyword.equals("software_catalog")) {
+			keyword = StringPool.SLASH + keyword;
 
-				keyword = StringPool.SLASH + keyword;
-			}
-			else {
-				keyword = StringPool.SLASH + keyword + StringPool.SLASH;
+			if (!keyword.contains(StringPool.PERIOD)) {
+				if (keyword.endsWith(StringPool.STAR)) {
+					keyword = keyword.substring(0, keyword.length()-1);
+				}
+				else {
+					keyword = keyword + StringPool.SLASH;
+				}
 			}
 
 			_slashedKeywords[i] = keyword.toLowerCase();

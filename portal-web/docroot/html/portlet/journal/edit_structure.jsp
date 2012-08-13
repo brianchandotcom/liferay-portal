@@ -175,7 +175,7 @@ int tabIndex = 1;
 
 			<c:if test="<%= portletDisplay.isWebDAVEnabled() %>">
 				<aui:field-wrapper label="webdav-url">
-					<liferay-ui:input-resource url='<%= themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/api/webdav" + group.getFriendlyURL() + "/journal/Structures/" + structureId %>' />
+					<liferay-ui:input-resource url='<%= themeDisplay.getPortalURL() + themeDisplay.getPathContext() + "/webdav" + group.getFriendlyURL() + "/journal/Structures/" + structureId %>' />
 				</aui:field-wrapper>
 			</c:if>
 		</c:if>

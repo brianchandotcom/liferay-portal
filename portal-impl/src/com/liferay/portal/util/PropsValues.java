@@ -796,6 +796,8 @@ public class PropsValues {
 
 	public static final String[] LAYOUT_FRIENDLY_URL_KEYWORDS = PropsUtil.getArray(PropsKeys.LAYOUT_FRIENDLY_URL_KEYWORDS);
 
+	public static final String[] LAYOUT_FRIENDLY_URL_KEYWORDS_PREFIXED = PropsUtil.getArray(PropsKeys.LAYOUT_FRIENDLY_URL_KEYWORDS_PREFIXED);
+
 	public static final String LAYOUT_FRIENDLY_URL_PAGE_NOT_FOUND = PropsUtil.get(PropsKeys.LAYOUT_FRIENDLY_URL_PAGE_NOT_FOUND);
 
 	public static final String LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING = PropsUtil.get(PropsKeys.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING);

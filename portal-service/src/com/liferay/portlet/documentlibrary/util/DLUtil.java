@@ -700,7 +700,7 @@ public class DLUtil {
 		Group group = themeDisplay.getScopeGroup();
 
 		return themeDisplay.getPortalURL() + themeDisplay.getPathContext() +
-			"/api/webdav" + group.getFriendlyURL() + "/document_library" +
+			"/webdav" + group.getFriendlyURL() + "/document_library" +
 				sb.toString();
 	}
 

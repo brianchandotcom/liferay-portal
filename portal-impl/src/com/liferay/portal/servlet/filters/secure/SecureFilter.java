@@ -104,6 +104,8 @@ public class SecureFilter extends BasePortalFilter {
 		if (userId > 0) {
 			request = new ProtectedServletRequest(
 				request, String.valueOf(userId), HttpServletRequest.BASIC_AUTH);
+
+			initPermissionChecker(request);
 		}
 		else {
 			try {
@@ -141,6 +143,8 @@ public class SecureFilter extends BasePortalFilter {
 			request = new ProtectedServletRequest(
 				request, String.valueOf(userId),
 				HttpServletRequest.DIGEST_AUTH);
+
+			initPermissionChecker(request);
 		}
 		else {
 			try {
@@ -179,6 +183,23 @@ public class SecureFilter extends BasePortalFilter {
 		}
 
 		return request;
+	}
+
+	protected void initPermissionChecker(HttpServletRequest request)
+		throws Exception {
+
+		if (_usePermissionChecker) {
+			User user = (User) request.getSession().getAttribute(WebKeys.USER);
+
+			PrincipalThreadLocal.setName(user.getUserId());
+			PrincipalThreadLocal.setPassword(
+				PortalUtil.getUserPassword(request));
+
+			PermissionChecker permissionChecker =
+				PermissionCheckerFactoryUtil.create(user);
+
+			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+		}
 	}
 
 	@Override
@@ -289,16 +310,7 @@ public class SecureFilter extends BasePortalFilter {
 		session.setAttribute(WebKeys.USER, user);
 		session.setAttribute(_AUTHENTICATED_USER, userIdString);
 
-		if (_usePermissionChecker) {
-			PrincipalThreadLocal.setName(userId);
-			PrincipalThreadLocal.setPassword(
-				PortalUtil.getUserPassword(request));
-
-			PermissionChecker permissionChecker =
-				PermissionCheckerFactoryUtil.create(user);
-
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
-		}
+		initPermissionChecker(request);
 
 		return request;
 	}

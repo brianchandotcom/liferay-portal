@@ -16,7 +16,6 @@ package com.liferay.portal.sharepoint.methods;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.sharepoint.Property;
 import com.liferay.portal.sharepoint.ResponseElement;
@@ -47,17 +46,26 @@ public class UrlToWebUrlMethodImpl extends BaseMethodImpl {
 		}
 
 		if (Validator.isNotNull(url)) {
-			elements.add(new Property("webUrl", "/sharepoint"));
+			elements.add(new Property("webUrl", _SHAREPOINT));
 
-			url = url.substring(1);
+			int webdavPos = url.indexOf(_WEBDAV);
+			if (webdavPos > -1) {
+				elements.add(new Property("fileUrl", url.substring(webdavPos +
+					_WEBDAV.length())));
+			} else
+			{
+				elements.add(new Property("fileUrl", url.substring(
+					_SHAREPOINT.length())));
+			}
 
-			elements.add(new Property("fileUrl", StringPool.BLANK));
 		}
 
 		return elements;
 	}
 
 	private static final String _METHOD_NAME = "url to web url";
+	private static final String _SHAREPOINT = "/sharepoint";
+	private static final String _WEBDAV = "/webdav";
 
 	private static Log _log = LogFactoryUtil.getLog(
 		UrlToWebUrlMethodImpl.class);

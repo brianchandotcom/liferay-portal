@@ -65,8 +65,7 @@ public class CompanyWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 		List<Resource> resources = new ArrayList<Resource>(groups.size());
 
 		for (Group group : groups) {
-			String parentPath =
-				getRootPath() + StringPool.SLASH + company.getWebId();
+			String parentPath = getRootPath();
 
 			String name = group.getFriendlyURL();
 

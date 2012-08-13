@@ -1083,6 +1083,8 @@ public interface PropsKeys {
 
 	public static final String LAYOUT_FRIENDLY_URL_KEYWORDS = "layout.friendly.url.keywords";
 
+	public static final String LAYOUT_FRIENDLY_URL_KEYWORDS_PREFIXED = "layout.friendly.url.keywords.prefixed";
+
 	public static final String LAYOUT_FRIENDLY_URL_PAGE_NOT_FOUND = "layout.friendly.url.page.not.found";
 
 	public static final String LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING = "layout.friendly.url.private.group.servlet.mapping";

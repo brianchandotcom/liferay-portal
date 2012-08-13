@@ -1054,7 +1054,7 @@
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>WebDAV Servlet Filter</filter-name>
-		<url-pattern>/api/webdav/*</url-pattern>
+		<url-pattern>/webdav/*</url-pattern>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>
 		<dispatcher>REQUEST</dispatcher>

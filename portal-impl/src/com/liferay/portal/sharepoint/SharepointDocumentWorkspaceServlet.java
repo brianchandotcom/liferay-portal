@@ -120,10 +120,16 @@ public class SharepointDocumentWorkspaceServlet extends HttpServlet {
 
 		String path = documentName;
 
-		int pos = documentName.lastIndexOf("sharepoint/");
+		int pos = path.lastIndexOf("sharepoint/");
 
 		if (pos != -1) {
 			path = path.substring(pos + 11);
+		}
+
+		pos = path.lastIndexOf("webdav/");
+
+		if (pos != -1) {
+			path = path.substring(pos + 7);
 		}
 
 		Group group = GroupServiceUtil.getGroup(

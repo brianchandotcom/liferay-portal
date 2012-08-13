@@ -71,7 +71,8 @@ public class SharepointFilter extends SecureFilter {
 			 userAgent.startsWith("Microsoft Office Protocol Discovery")) &&
 			method.equals(HttpMethods.OPTIONS)) {
 
-			setOptionsHeaders(response);
+			boolean isWebDAV = request.getRequestURI().startsWith("/webdav");
+			setOptionsHeaders(response, isWebDAV);
 
 			return;
 		}
@@ -103,8 +104,15 @@ public class SharepointFilter extends SecureFilter {
 		response.setHeader("Cache-Control", "no-cache");
 	}
 
-	protected void setOptionsHeaders(HttpServletResponse response) {
-		response.setHeader("MS-Author-Via", "MS-FP/4.0,DAV");
+	protected void setOptionsHeaders(
+		HttpServletResponse response, boolean isWebDav) {
+
+		if (isWebDav) {
+			response.setHeader("MS-Author-Via", "DAV,MS-FP/4.0");
+		} else {
+			response.setHeader("MS-Author-Via", "MS-FP/4.0,DAV");
+		}
+
 		response.setHeader("MicrosoftOfficeWebServer", "5.0_Collab");
 		response.setHeader(
 			"MicrosoftSharePointTeamServices", SharepointUtil.VERSION);

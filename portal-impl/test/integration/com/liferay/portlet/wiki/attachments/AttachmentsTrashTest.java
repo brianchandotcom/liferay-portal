@@ -23,7 +23,6 @@ import com.liferay.portal.test.ExecutionTestListeners;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.TransactionalCallbackAwareExecutionTestListener;
 import com.liferay.portal.util.TestPropsValues;
-import com.liferay.portlet.trash.BaseDLTrashHandlerTestCase;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.model.WikiPageConstants;
@@ -45,7 +44,7 @@ import org.junit.runner.RunWith;
 			TransactionalCallbackAwareExecutionTestListener.class
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class AttachmentsTrashTest extends BaseDLTrashHandlerTestCase {
+public class AttachmentsTrashTest {
 
 	@Test
 	@Transactional
@@ -112,21 +111,6 @@ public class AttachmentsTrashTest extends BaseDLTrashHandlerTestCase {
 
 		Assert.assertEquals(
 			initialNotInTrashCount + 1, wikiPage.getAttachmentsFiles().length);
-	}
-
-	@Override
-	protected long addSubentry(long folderId1, long folderId2)
-		throws Exception {
-
-		return 0;
-	}
-
-	@Override
-	protected void moveSubentryFromTrash(long subEntryId) throws Exception {
-	}
-
-	@Override
-	protected void moveSubentryToTrash(long subEntryId) throws Exception {
 	}
 
 }

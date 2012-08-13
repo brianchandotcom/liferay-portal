@@ -378,6 +378,13 @@ public class MBMessageLocalServiceUtil {
 		return getService().deleteDiscussionMessage(messageId);
 	}
 
+	public static void deleteMessageAttachment(long messageId,
+		java.lang.String fileName)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteMessageAttachment(messageId, fileName);
+	}
+
 	public static void deleteDiscussionMessages(java.lang.String className,
 		long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -647,18 +654,18 @@ public class MBMessageLocalServiceUtil {
 			status);
 	}
 
-	public static java.lang.String moveMessageAttachmentToTrash(
-		long messageId, java.lang.String fileName)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().moveMessageAttachmentToTrash(messageId, fileName);
-	}
-
 	public static void moveMessageAttachmentFromTrash(long messageId,
 		java.lang.String deletedFileName)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().moveMessageAttachmentFromTrash(messageId, deletedFileName);
+	}
+
+	public static java.lang.String moveMessageAttachmentToTrash(
+		long messageId, java.lang.String fileName)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().moveMessageAttachmentToTrash(messageId, fileName);
 	}
 
 	public static void subscribeMessage(long userId, long messageId)

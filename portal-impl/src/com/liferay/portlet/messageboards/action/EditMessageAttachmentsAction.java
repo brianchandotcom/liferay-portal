@@ -28,7 +28,6 @@ import com.liferay.portlet.messageboards.NoSuchMessageException;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageServiceUtil;
-import com.liferay.portlet.trash.util.TrashUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -136,11 +135,10 @@ public class EditMessageAttachmentsAction extends PortletAction {
 
 		String fileName = ParamUtil.getString(actionRequest, "fileName");
 
-		MBMessage message = MBMessageServiceUtil.getMessage(messageId);
+		MBMessageLocalServiceUtil.moveMessageAttachmentFromTrash(
+			messageId, fileName);
 
-		TrashUtil.moveAttachmentFromTrash(
-			message.getCompanyId(), CompanyConstants.SYSTEM, fileName,
-			message.getAttachmentsDir());
+		MBMessage message = MBMessageServiceUtil.getMessage(messageId);
 
 		message.setAttachments(true);
 

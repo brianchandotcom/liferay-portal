@@ -616,35 +616,24 @@ AUI.add(
 						return (Lang.isString(value) || value instanceof A.Node);
 					},
 
-					_valueFolderContainer: function(value) {
+					_valueFolderContainer: function() {
 						var instance = this;
 
-						if (!Lang.isValue(value)) {
-							value = instance.byId(STR_FOLDER_CONTAINER);
-						}
-
-						return value;
+						return instance.byId(STR_FOLDER_CONTAINER);
 					},
 
-					_valueListView: function(value) {
+					_valueListView: function() {
 						var instance = this;
-
-						value = value || {};
 
 						var folderContainer = instance.get(STR_FOLDER_CONTAINER);
 
-						A.mix(
-							value,
-							{
-								boundingBox: formatSelectorNS(instance.NS, '#listViewContainer'),
-								contentBox: folderContainer,
-								cssClass: 'folder-display-style lfr-list-view-content',
-								itemSelector: '.folder a.browse-folder, .folder a.expand-folder',
-								srcNode: folderContainer
-							}
-						);
-
-						return value;
+						return {
+							boundingBox: formatSelectorNS(instance.NS, '#listViewContainer'),
+							contentBox: folderContainer,
+							cssClass: 'folder-display-style lfr-list-view-content',
+							itemSelector: '.folder a.browse-folder, .folder a.expand-folder',
+							srcNode: folderContainer
+						};
 					}
 				}
 			}

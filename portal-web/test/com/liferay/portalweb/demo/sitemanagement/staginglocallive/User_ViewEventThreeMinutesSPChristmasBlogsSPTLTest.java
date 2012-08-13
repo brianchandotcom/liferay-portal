@@ -49,7 +49,7 @@ public class User_ViewEventThreeMinutesSPChristmasBlogsSPTLTest
 		assertTrue(selenium.isElementNotPresent(
 				"//body[contains(@class,'local-staging')]"));
 		assertTrue(selenium.isElementNotPresent("link=Blogs"));
-		Thread.sleep(180000);
+		Thread.sleep(200000);
 		selenium.open("/web/guest/home/");
 
 		for (int second = 0;; second++) {

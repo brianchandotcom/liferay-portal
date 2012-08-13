@@ -14,9 +14,7 @@
 
 package com.liferay.portalweb.demo.sitemanagement;
 
-import com.liferay.portalweb.demo.sitemanagement.brazilianworldcup.BrazilianWorldCupTests;
 import com.liferay.portalweb.demo.sitemanagement.staginglocallive.StagingLocalLiveTests;
-import com.liferay.portalweb.demo.sitemanagement.staginglocalliveworkflow.StagingLocalLiveWorkflowTests;
 import com.liferay.portalweb.portal.BaseTestSuite;
 
 import junit.framework.Test;

@@ -117,8 +117,11 @@ public class StagingLocalLiveTests extends BaseTestSuite {
 		testSuite.addTestSuite(User_ViewPublishToLiveNowSPVariationValentinesTest.class);
 		testSuite.addTestSuite(User_MergeSPChristmasSPValentinesTest.class);
 		testSuite.addTestSuite(User_ViewMergeSPChristmasSPValentinesTest.class);
+		testSuite.addTestSuite(User_MarkAsReadyForPublicationPagePricesSPChristmasTest.class);
+		testSuite.addTestSuite(User_PublishToLiveSPChristmasPagePricesTest.class);
 		testSuite.addTestSuite(User_MergeSPChristmas2SPChristmasTest.class);
 		testSuite.addTestSuite(User_ViewMergeSPChristmas2SPChristmasTest.class);
+		testSuite.addTestSuite(User_MarkAsReadyForPublicationPagePricesSPChristmas2Test.class);
 		testSuite.addTestSuite(User_PublishToLiveSPChristmas2DeleteWhiteElephantTest.class);
 		testSuite.addTestSuite(User_ViewPublishToLiveSPChristmas2NoWhiteElephantTest.class);
 		testSuite.addTestSuite(User_SelectTimeZonePacificStandardTimeCPMATest.class);

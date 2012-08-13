@@ -94,6 +94,11 @@
 	<td>Home</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>clickAt</td>
 	<td>//span[2]/span/ul/li/strong/a</td>
 	<td>Christmas 2 Staging</td>
@@ -152,6 +157,11 @@
 	<td>gotoIf</td>
 	<td>${treeNotExpanded}</td>
 	<td>TreeExpanded</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//li/div/div[1]</td>
+	<td>Drop Down Arrow</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -256,12 +266,12 @@
 <tr>
 	<td>assertText</td>
 	<td>//li[5]/div/div[4]</td>
-	<td>Prices</td>
+	<td>Prices [main-variation]</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//li[5]/div/div[4]</td>
-	<td>Prices</td>
+	<td>Prices [main-variation]</td>
 </tr>
 <tr>
 	<td>pause</td>
@@ -276,30 +286,30 @@
 <tr>
 	<td>waitForVisible</td>
 	<td>//tr/td[2]/span[contains(.,'Home')]</td>
-	<td>Home</td>
+	<td>Home [Main Variation]</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//tr/td[2]/span[contains(.,'Home')]</td>
-	<td>Home</td>
+	<td>Home [Main Variation]</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//tr/td[2]/span[contains(.,'Calendar')]</td>
-	<td>Calendar</td>
+	<td>Calendar [Main Variation]</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//tr/td[2]/span[contains(.,'Wiki')]</td>
-	<td>Wiki</td>
+	<td>Wiki [Main Variation]</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//tr/td[2]/span[contains(.,'White Elephant')]</td>
-	<td>White Elephant</td>
+	<td>White Elephant [Main Variation]</td>
 </tr>
 <tr>
-	<td>assertText</td>
+	<td>assertPartialText</td>
 	<td>//tr[contains(.,'White Elephant')]/td[3]/div/span/a</td>
 	<td>Change</td>
 </tr>
@@ -320,7 +330,7 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr/td[2]/span[contains(.,'Prices')]</td>
+	<td>//td[2]/span[contains(.,'Prices')]</td>
 	<td>Prices</td>
 </tr>
 <tr>

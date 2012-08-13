@@ -67,9 +67,8 @@ public class DefinePermissionsDocumentsStagingAdminTest extends BaseTestCase {
 			}
 
 			try {
-				if (RuntimeVariables.replace("Add Document")
-										.equals(selenium.getText(
-								"//tr[3]/td[2]"))) {
+				if (RuntimeVariables.replace("Documents and Media")
+										.equals(selenium.getText("//h3[2]"))) {
 					break;
 				}
 			}
@@ -79,36 +78,46 @@ public class DefinePermissionsDocumentsStagingAdminTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Add Document"),
-			selenium.getText("//tr[3]/td[2]"));
-		assertFalse(selenium.isChecked("//th[1]/input"));
-		selenium.clickAt("//th[1]/input",
-			RuntimeVariables.replace("Document Library"));
-		assertTrue(selenium.isChecked("//th[1]/input"));
-		assertEquals(RuntimeVariables.replace("Delete"),
-			selenium.getText("//div[5]/div/div/table/tbody/tr[4]/td[2]"));
+		assertEquals(RuntimeVariables.replace("Documents and Media"),
+			selenium.getText("//h3[2]"));
 		assertFalse(selenium.isChecked(
-				"//div[5]/div/div/table/tbody/tr[4]/td[1]/input"));
-		selenium.clickAt("//div[5]/div/div/table/tbody/tr[4]/td[1]/input",
+				"xPath=(//input[@name='_128_allRowIds'])[2]"));
+		selenium.clickAt("xPath=(//input[@name='_128_allRowIds'])[2]",
+			RuntimeVariables.replace("Documents and Media"));
+		assertTrue(selenium.isChecked(
+				"xPath=(//input[@name='_128_allRowIds'])[2]"));
+		assertEquals(RuntimeVariables.replace("Delete"),
+			selenium.getText("//div[3]/div/div/table/tbody/tr[4]/td[2]"));
+		assertFalse(selenium.isChecked(
+				"//div[3]/div/div/table/tbody/tr[4]/td/input"));
+		selenium.clickAt("//div[3]/div/div/table/tbody/tr[4]/td/input",
 			RuntimeVariables.replace("Delete"));
 		assertTrue(selenium.isChecked(
-				"//div[5]/div/div/table/tbody/tr[4]/td[1]/input"));
-		assertEquals(RuntimeVariables.replace("Update Discussion"),
-			selenium.getText("//div[5]/div/div/table/tbody/tr[8]/td[2]"));
+				"//div[3]/div/div/table/tbody/tr[4]/td/input"));
+		assertEquals(RuntimeVariables.replace("Update"),
+			selenium.getText("//div[3]/div/div/table/tbody/tr[7]/td[2]"));
 		assertFalse(selenium.isChecked(
-				"//div[5]/div/div/table/tbody/tr[8]/td[1]/input"));
-		selenium.clickAt("//div[5]/div/div/table/tbody/tr[8]/td[1]/input",
+				"//div[3]/div/div/table/tbody/tr[7]/td/input"));
+		selenium.clickAt("//div[3]/div/div/table/tbody/tr[7]/td/input",
+			RuntimeVariables.replace("Update"));
+		assertTrue(selenium.isChecked(
+				"//div[3]/div/div/table/tbody/tr[7]/td/input"));
+		assertEquals(RuntimeVariables.replace("Update Discussion"),
+			selenium.getText("//div[3]/div/div/table/tbody/tr[8]/td[2]"));
+		assertFalse(selenium.isChecked(
+				"//div[3]/div/div/table/tbody/tr[8]/td[1]/input"));
+		selenium.clickAt("//div[3]/div/div/table/tbody/tr[8]/td[1]/input",
 			RuntimeVariables.replace("Update Discussion"));
 		assertTrue(selenium.isChecked(
-				"//div[5]/div/div/table/tbody/tr[8]/td[1]/input"));
+				"//div[3]/div/div/table/tbody/tr[8]/td[1]/input"));
 		assertEquals(RuntimeVariables.replace("View"),
-			selenium.getText("//div[5]/div/div/table/tbody/tr[9]/td[2]"));
+			selenium.getText("//div[3]/div/div/table/tbody/tr[9]/td[2]"));
 		assertFalse(selenium.isChecked(
-				"//div[5]/div/div/table/tbody/tr[9]/td[1]/input"));
-		selenium.clickAt("//div[5]/div/div/table/tbody/tr[9]/td[1]/input",
+				"//div[3]/div/div/table/tbody/tr[9]/td[1]/input"));
+		selenium.clickAt("//div[3]/div/div/table/tbody/tr[9]/td[1]/input",
 			RuntimeVariables.replace("View"));
 		assertTrue(selenium.isChecked(
-				"//div[5]/div/div/table/tbody/tr[9]/td[1]/input"));
+				"//div[3]/div/div/table/tbody/tr[9]/td[1]/input"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

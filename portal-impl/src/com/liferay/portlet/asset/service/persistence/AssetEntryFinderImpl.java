@@ -110,23 +110,28 @@ public class AssetEntryFinderImpl
 		sb.append(" AND (");
 
 		for (int i = 0; i < categoryIds.length; i++) {
+			
+			String tempSQL = null;
+			
 			if (PropsValues.ASSET_CATEGORIES_SEARCH_HIERARCHICAL) {
 				List<Long> treeCategoryIds = AssetCategoryFinderUtil.findByG_L(
 					categoryIds[i]);
 
 				if (treeCategoryIds.size() > 1) {
-					sb.append(
+					tempSQL =
 						StringUtil.replace(
 							sql, "[$CATEGORY_ID$]",
-							StringUtil.merge(treeCategoryIds)));
-
-					continue;
+							StringUtil.merge(treeCategoryIds));
 				}
 			}
-
-			sb.append(
-				StringUtil.replace(
-					sql, " IN ([$CATEGORY_ID$])", " = " + categoryIds[i]));
+			
+			if (tempSQL == null) {
+				tempSQL =
+					StringUtil.replace(
+						sql, " IN ([$CATEGORY_ID$])", " = " + categoryIds[i]);
+			}
+			
+			sb.append(tempSQL);
 
 			if ((i + 1) < categoryIds.length) {
 				sb.append(" AND ");
@@ -435,23 +440,27 @@ public class AssetEntryFinderImpl
 		for (int i = 0; i < categoryIds.length; i++) {
 			sb.append("NOT ");
 
+			String tempSQL = null;
+
 			if (PropsValues.ASSET_CATEGORIES_SEARCH_HIERARCHICAL) {
 				List<Long> treeCategoryIds = AssetCategoryFinderUtil.findByG_L(
 					categoryIds[i]);
 
 				if (treeCategoryIds.size() > 1) {
-					sb.append(
+					tempSQL =
 						StringUtil.replace(
 							sql, "[$CATEGORY_ID$]",
-							StringUtil.merge(treeCategoryIds)));
-
-					continue;
+							StringUtil.merge(treeCategoryIds));
 				}
 			}
+			
+			if (tempSQL == null) {
+				tempSQL =
+					StringUtil.replace(
+						sql, " IN ([$CATEGORY_ID$])", " = " + categoryIds[i]);
+			}
 
-			sb.append(
-				StringUtil.replace(
-					sql, " IN ([$CATEGORY_ID$])", " = " + categoryIds[i]));
+			sb.append(tempSQL);
 
 			if ((i + 1) < categoryIds.length) {
 				sb.append(" OR ");

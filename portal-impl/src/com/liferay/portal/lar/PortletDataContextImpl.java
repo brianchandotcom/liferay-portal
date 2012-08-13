@@ -110,6 +110,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -490,8 +491,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 			Set<String> availableActionIds = roleIdsToActionIds.get(roleId);
 
-			if ((availableActionIds == null) || availableActionIds.isEmpty()) {
-				continue;
+			if (availableActionIds == null) {
+				availableActionIds = Collections.emptySet();
 			}
 
 			KeyValuePair permission = new KeyValuePair(

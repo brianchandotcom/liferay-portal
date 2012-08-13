@@ -1515,11 +1515,6 @@
 		</antcall>
 
 		<antcall target="build-test-ant-script">
-			<param name="test.ant.script.command" value="portal-web-image-gallery" />
-			<param name="test.ant.script.suite" value="PortalWebImageGalleryTestSuite" />
-		</antcall>
-
-		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="portal-web-invitation" />
 			<param name="test.ant.script.suite" value="PortalWebInvitationTestSuite" />
 		</antcall>
@@ -1537,6 +1532,11 @@
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="portal-web-manage-pages" />
 			<param name="test.ant.script.suite" value="PortalWebManagePagesTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="portal-web-media-gallery" />
+			<param name="test.ant.script.suite" value="PortalWebMediaGalleryTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">

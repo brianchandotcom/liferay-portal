@@ -308,7 +308,7 @@ else {
 					%>
 
 					<liferay-ui:app-view-navigation-entry
-						actionJsp="/html/portlet/document_library/folder_action.jsp"
+						actionJsp="/html/portlet/journal/folder_action.jsp"
 						dataExpand="<%= dataExpand %>"
 						dataView="<%= dataView %>"
 						entryTitle="<%= curFolder.getName() %>"

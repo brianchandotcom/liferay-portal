@@ -105,28 +105,35 @@ public class AssetEntryFinderImpl
 	protected void buildAllCategoriesSQL(long[] categoryIds, StringBundler sb)
 		throws SystemException {
 
-		String sql = CustomSQLUtil.get(FIND_BY_AND_CATEGORY_IDS);
+		String findByAndCategoryIdsSql = CustomSQLUtil.get(
+			FIND_BY_AND_CATEGORY_IDS);
 
 		sb.append(" AND (");
 
 		for (int i = 0; i < categoryIds.length; i++) {
+
+			String sql = null;
+
 			if (PropsValues.ASSET_CATEGORIES_SEARCH_HIERARCHICAL) {
 				List<Long> treeCategoryIds = AssetCategoryFinderUtil.findByG_L(
 					categoryIds[i]);
 
 				if (treeCategoryIds.size() > 1) {
-					sb.append(
+					sql =
 						StringUtil.replace(
-							sql, "[$CATEGORY_ID$]",
-							StringUtil.merge(treeCategoryIds)));
-
-					continue;
+							findByAndCategoryIdsSql, "[$CATEGORY_ID$]",
+							StringUtil.merge(treeCategoryIds));
 				}
 			}
 
-			sb.append(
-				StringUtil.replace(
-					sql, " IN ([$CATEGORY_ID$])", " = " + categoryIds[i]));
+			if (sql == null) {
+				sql =
+					StringUtil.replace(
+						findByAndCategoryIdsSql, " IN ([$CATEGORY_ID$])",
+						" = " + categoryIds[i]);
+			}
+
+			sb.append(sql);
 
 			if ((i + 1) < categoryIds.length) {
 				sb.append(" AND ");
@@ -428,30 +435,36 @@ public class AssetEntryFinderImpl
 			long[] categoryIds, StringBundler sb)
 		throws SystemException {
 
-		String sql = CustomSQLUtil.get(FIND_BY_AND_CATEGORY_IDS);
+		String findByAndCategoryIdsSql = CustomSQLUtil.get(
+			FIND_BY_AND_CATEGORY_IDS);
 
 		sb.append(" AND (");
 
 		for (int i = 0; i < categoryIds.length; i++) {
 			sb.append("NOT ");
 
+			String sql = null;
+
 			if (PropsValues.ASSET_CATEGORIES_SEARCH_HIERARCHICAL) {
 				List<Long> treeCategoryIds = AssetCategoryFinderUtil.findByG_L(
 					categoryIds[i]);
 
 				if (treeCategoryIds.size() > 1) {
-					sb.append(
+					sql =
 						StringUtil.replace(
-							sql, "[$CATEGORY_ID$]",
-							StringUtil.merge(treeCategoryIds)));
-
-					continue;
+							findByAndCategoryIdsSql, "[$CATEGORY_ID$]",
+							StringUtil.merge(treeCategoryIds));
 				}
 			}
 
-			sb.append(
-				StringUtil.replace(
-					sql, " IN ([$CATEGORY_ID$])", " = " + categoryIds[i]));
+			if (sql == null) {
+				sql =
+					StringUtil.replace(
+						findByAndCategoryIdsSql, " IN ([$CATEGORY_ID$])",
+						" = " + categoryIds[i]);
+			}
+
+			sb.append(sql);
 
 			if ((i + 1) < categoryIds.length) {
 				sb.append(" OR ");

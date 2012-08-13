@@ -735,6 +735,15 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		return message;
 	}
 
+	public void deleteMessageAttachment(long messageId, String fileName)
+		throws PortalException, SystemException {
+
+		MBMessage message = getMessage(messageId);
+
+		DLStoreUtil.deleteFile(
+			message.getCompanyId(), CompanyConstants.SYSTEM, fileName);
+	}
+
 	public void deleteMessageAttachments(long messageId)
 		throws PortalException, SystemException {
 
@@ -1445,8 +1454,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			for (String fileName : fileNames) {
 				if (!existingFiles.contains(fileName)) {
 					if (!TrashUtil.isTrashEnabled(message.getGroupId())) {
-						DLStoreUtil.deleteFile(
-							companyId, repositoryId, fileName);
+						deleteMessageAttachment(messageId, fileName);
 					}
 					else {
 						moveMessageAttachmentToTrash(messageId, fileName);

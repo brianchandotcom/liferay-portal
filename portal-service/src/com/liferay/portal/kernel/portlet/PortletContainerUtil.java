@@ -145,13 +145,6 @@ public class PortletContainerUtil {
 	public void setPortletContainer(PortletContainer portletContainer) {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
-		if ((_LAYOUT_PARALLEL_RENDER_ENABLE && ServerDetector.isTomcat()) ||
-			_PORTLET_CONTAINER_RESTRICT) {
-
-			portletContainer = new RestrictPortletContainerWrapper(
-				portletContainer);
-		}
-
 		_portletContainer = portletContainer;
 	}
 

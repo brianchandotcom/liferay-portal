@@ -44,7 +44,7 @@ import org.junit.runner.RunWith;
 			TransactionalCallbackAwareExecutionTestListener.class
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class AttachmentsTrashTest {
+public class WikiAttachmentsTrashTest {
 
 	@Test
 	@Transactional

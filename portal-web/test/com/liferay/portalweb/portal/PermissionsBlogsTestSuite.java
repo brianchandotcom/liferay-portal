@@ -14,8 +14,9 @@
 
 package com.liferay.portalweb.portal;
 
+import com.liferay.portalweb.permissions.blogs.BlogsTestPlan;
 import com.liferay.portalweb.portal.login.LoginTests;
-import com.liferay.portalweb.portal.permissions.blogs.BlogsTestPlan;
+import com.liferay.portalweb.portal.permissions.blogs.BlogsTestPlanOld;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -30,6 +31,8 @@ public class PermissionsBlogsTestSuite extends BaseTestSuite {
 
 		testSuite.addTest(LoginTests.suite());
 		testSuite.addTest(BlogsTestPlan.suite());
+		testSuite.addTest(BlogsTestPlanOld.suite());
+
 
 		testSuite.addTestSuite(StopSeleniumTest.class);
 

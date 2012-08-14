@@ -12,30 +12,22 @@
  * details.
  */
 
-package com.liferay.portalweb.portal;
+package com.liferay.portalweb.permissions.blogs.blogsentry.addblogsentry.orgrole;
 
-import com.liferay.portalweb.permissions.blogs.BlogsTestPlan;
-import com.liferay.portalweb.portal.login.LoginTests;
-import com.liferay.portalweb.portal.permissions.blogs.BlogsTestPlanOld;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import com.liferay.portalweb.portal.BaseTestCase;
+import com.liferay.portalweb.portal.util.RuntimeVariables;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class PermissionsBlogsTestSuite extends BaseTestSuite {
-
-	public static Test suite() {
-		TestSuite testSuite = new TestSuite();
-
-		testSuite.addTest(LoginTests.suite());
-		testSuite.addTest(BlogsTestPlan.suite());
-		testSuite.addTest(BlogsTestPlanOld.suite());
-
-		testSuite.addTestSuite(StopSeleniumTest.class);
-
-		return testSuite;
+public class User_AddBlogsEntryNoOrganizationTest extends BaseTestCase {
+	public void testUser_AddBlogsEntryNoOrganization()
+		throws Exception {
+		selenium.open("/web/organization-name/");
+		selenium.clickAt("link=Blogs Test Page",
+			RuntimeVariables.replace("Blogs Test Page"));
+		selenium.waitForPageToLoad("30000");
+		assertTrue(selenium.isElementNotPresent(
+				"//input[@value='Add Blog Entry']"));
 	}
-
 }

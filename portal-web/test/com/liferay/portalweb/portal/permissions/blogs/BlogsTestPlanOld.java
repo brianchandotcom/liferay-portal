@@ -12,11 +12,12 @@
  * details.
  */
 
-package com.liferay.portalweb.portal;
+package com.liferay.portalweb.portal.permissions.blogs;
 
-import com.liferay.portalweb.permissions.blogs.BlogsTestPlan;
-import com.liferay.portalweb.portal.login.LoginTests;
-import com.liferay.portalweb.portal.permissions.blogs.BlogsTestPlanOld;
+import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.permissions.blogs.assertactions.AssertActionsTests;
+import com.liferay.portalweb.portal.permissions.blogs.portlet.PortletTests;
+import com.liferay.portalweb.portal.permissions.blogs.scope.ScopeTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -24,16 +25,14 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class PermissionsBlogsTestSuite extends BaseTestSuite {
+public class BlogsTestPlanOld extends BaseTestSuite {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(LoginTests.suite());
-		testSuite.addTest(BlogsTestPlan.suite());
-		testSuite.addTest(BlogsTestPlanOld.suite());
-
-		testSuite.addTestSuite(StopSeleniumTest.class);
+		testSuite.addTest(AssertActionsTests.suite());
+		testSuite.addTest(PortletTests.suite());
+		testSuite.addTest(ScopeTests.suite());
 
 		return testSuite;
 	}

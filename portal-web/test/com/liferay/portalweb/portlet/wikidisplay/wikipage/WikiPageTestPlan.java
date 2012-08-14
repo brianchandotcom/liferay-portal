@@ -35,6 +35,8 @@ import com.liferay.portalweb.portlet.wikidisplay.wikipage.removeredirectwdfrontp
 import com.liferay.portalweb.portlet.wikidisplay.wikipage.renamewdfrontpagechildpage.RenameWDFrontPageChildPageTests;
 import com.liferay.portalweb.portlet.wikidisplay.wikipage.reverteditwikifrontpage.RevertEditWikiFrontPageTests;
 import com.liferay.portalweb.portlet.wikidisplay.wikipage.reverteditwikifrontpageminorchange.RevertEditWikiFrontPageMinorChangeTests;
+import com.liferay.portalweb.portlet.wikidisplay.wikipage.viewwikifrontpagewd.ViewWikiFrontPageWDTests;
+import com.liferay.portalweb.portlet.wikidisplay.wikipage.viewwikifrontpagewdscopecurrentpage.ViewWikiFrontPageWDScopeCurrentPageTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -69,6 +71,8 @@ public class WikiPageTestPlan extends BaseTestSuite {
 		testSuite.addTest(RenameWDFrontPageChildPageTests.suite());
 		testSuite.addTest(RevertEditWikiFrontPageTests.suite());
 		testSuite.addTest(RevertEditWikiFrontPageMinorChangeTests.suite());
+		testSuite.addTest(ViewWikiFrontPageWDTests.suite());
+		testSuite.addTest(ViewWikiFrontPageWDScopeCurrentPageTests.suite());
 
 		return testSuite;
 	}

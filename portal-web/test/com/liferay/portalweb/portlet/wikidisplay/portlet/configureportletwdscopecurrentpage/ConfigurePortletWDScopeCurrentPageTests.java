@@ -12,13 +12,12 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.wikidisplay.portlet;
+package com.liferay.portalweb.portlet.wikidisplay.portlet.configureportletwdscopecurrentpage;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portlet.wikidisplay.portlet.addportletmultiple.AddPortletMultipleTests;
-import com.liferay.portalweb.portlet.wikidisplay.portlet.addportletwd.AddPortletWDTests;
-import com.liferay.portalweb.portlet.wikidisplay.portlet.configureportletwdscopecurrentpage.ConfigurePortletWDScopeCurrentPageTests;
-import com.liferay.portalweb.portlet.wikidisplay.portlet.removeportlet.RemovePortletTests;
+import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.wikidisplay.portlet.addportletwd.AddPageWDTest;
+import com.liferay.portalweb.portlet.wikidisplay.portlet.addportletwd.AddPortletWDTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -26,17 +25,15 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class PortletTestPlan extends BaseTestSuite {
-
+public class ConfigurePortletWDScopeCurrentPageTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-
-		testSuite.addTest(AddPortletMultipleTests.suite());
-		testSuite.addTest(AddPortletWDTests.suite());
-		testSuite.addTest(ConfigurePortletWDScopeCurrentPageTests.suite());
-		testSuite.addTest(RemovePortletTests.suite());
+		testSuite.addTestSuite(AddPageWDTest.class);
+		testSuite.addTestSuite(AddPortletWDTest.class);
+		testSuite.addTestSuite(ConfigurePortletWDScopeCurrentPageTest.class);
+		testSuite.addTestSuite(ViewPortletWDScopeCurrentPageTest.class);
+		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;
 	}
-
 }

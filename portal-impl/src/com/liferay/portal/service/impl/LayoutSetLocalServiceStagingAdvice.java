@@ -121,7 +121,7 @@ public class LayoutSetLocalServiceStagingAdvice
 				throw ite.getTargetException();
 			}
 			catch (NoSuchMethodException nsme) {
-				throw new SystemException(nsme);
+				returnValue = methodInvocation.proceed();
 			}
 		}
 

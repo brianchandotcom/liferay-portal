@@ -84,9 +84,8 @@ public class User_AddDLImageSiteStagingTest extends BaseTestCase {
 		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[5]/a",
 			RuntimeVariables.replace("Basic Document"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("//input[@id='_20_file']",
-			RuntimeVariables.replace(
-				"L:\\portal\\build\\portal-web\\test\\com\\liferay\\portalweb\\demo\\sitemanagement\\staginglocallive\\dependencies\\test_image.jpg"));
+		selenium.uploadCommonFile("//input[@id='_20_file']",
+			RuntimeVariables.replace("Document_1.jpg"));
 		selenium.type("//input[@id='_20_title']",
 			RuntimeVariables.replace("DL Image Title"));
 		selenium.type("//textarea[@id='_20_description']",

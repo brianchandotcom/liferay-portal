@@ -129,6 +129,121 @@
 	<td></td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>//input[@value='Change Selection']</td>
+	<td>Change Selection</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@value='Change Selection']</td>
+	<td>Change Selection</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>Note that selecting no pages from the tree reverts to implicit selection of all pages.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>Note that selecting no pages from the tree reverts to implicit selection of all pages.</td>
+</tr>
+<tr>
+	<td>storeElementPresent</td>
+	<td>//div[contains(@class,'aui-tree-expanded')]</td>
+	<td>treeNotExpanded</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>${treeNotExpanded}</td>
+	<td>TreeExpanded</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//li/div/div[1]</td>
+	<td>Drop Down Arrow</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//li/div/div[1]</td>
+	<td>Drop Down Arrow</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[contains(@class,'aui-tree-expanded')]</td>
+	<td>Public Pages</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[contains(@class,'aui-tree-expanded')]</td>
+	<td>Public Pages</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//div[contains(@class,'aui-tree-collapsed')]</td>
+	<td>Home</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>TreeExpanded</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[4]</td>
+	<td>Public Pages</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[4]</td>
+	<td>Public Pages</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[4]</td>
+	<td>Public Pages</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[4]</td>
+	<td>Public Pages</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[5]/div/div[4]</td>
+	<td>Prices</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//li[5]/div/div[4]</td>
+	<td>Prices</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@value='Select']</td>
+	<td>Select</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>store</td>
 	<td>eval(selenium.isVisible('_88_rangeAll'))</td>
 	<td>allVisible</td>
@@ -183,7 +298,6 @@
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

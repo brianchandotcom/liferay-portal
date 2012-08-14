@@ -474,9 +474,9 @@ public class User_ViewHistoryVersionNumbersTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertTrue(selenium.isPartialText("//a[@id='_88_layoutLink']", "Layout"));
+		assertTrue(selenium.isPartialText("//a[@id='_88_layoutLink']", "Page"));
 		selenium.clickAt("//a[@id='_88_layoutLink']",
-			RuntimeVariables.replace("Layout"));
+			RuntimeVariables.replace("Page"));
 		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {

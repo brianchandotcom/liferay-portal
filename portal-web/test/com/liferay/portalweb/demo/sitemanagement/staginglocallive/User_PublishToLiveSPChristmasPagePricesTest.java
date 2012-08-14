@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class User_PublishToLiveNowSPVariationValentinesTest extends BaseTestCase {
-	public void testUser_PublishToLiveNowSPVariationValentines()
+public class User_PublishToLiveSPChristmasPagePricesTest extends BaseTestCase {
+	public void testUser_PublishToLiveSPChristmasPagePrices()
 		throws Exception {
 		int label = 1;
 
@@ -64,26 +64,20 @@ public class User_PublishToLiveNowSPVariationValentinesTest extends BaseTestCase
 				assertTrue(selenium.isElementNotPresent(
 						"//body[contains(@class,'live-view')]"));
 
-				boolean valentinesPresent = selenium.isElementPresent(
-						"link=Valentines");
+				boolean christmasPresent = selenium.isElementPresent(
+						"link=Christmas");
 
-				if (!valentinesPresent) {
+				if (!christmasPresent) {
 					label = 2;
 
 					continue;
 				}
 
-				selenium.clickAt("link=Valentines",
-					RuntimeVariables.replace("Valentines"));
+				selenium.clickAt("link=Christmas",
+					RuntimeVariables.replace("Christmas"));
 				selenium.waitForPageToLoad("30000");
 
 			case 2:
-				assertEquals(RuntimeVariables.replace("Valentines"),
-					selenium.getText("//li[4]/span/span/span[1]"));
-				assertEquals(RuntimeVariables.replace(
-						"Valentines Site Pages Variation of Site Name"),
-					selenium.getText(
-						"//span[@class='layout-set-branch-description']"));
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -104,6 +98,31 @@ public class User_PublishToLiveNowSPVariationValentinesTest extends BaseTestCase
 				selenium.clickAt("link=Prices",
 					RuntimeVariables.replace("Prices"));
 				selenium.waitForPageToLoad("30000");
+				assertEquals(RuntimeVariables.replace(
+						"Christmas Site Pages Variation of Site Name"),
+					selenium.getText(
+						"//span[@class='layout-set-branch-description']"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (RuntimeVariables.replace("Ready for Publication")
+												.equals(selenium.getText(
+										"//span[@class='workflow-status']/strong"))) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertEquals(RuntimeVariables.replace("Ready for Publication"),
+					selenium.getText("//span[@class='workflow-status']/strong"));
 				Thread.sleep(5000);
 				selenium.clickAt("//span[2]/span/ul/li/strong/a",
 					RuntimeVariables.replace(""));
@@ -126,11 +145,11 @@ public class User_PublishToLiveNowSPVariationValentinesTest extends BaseTestCase
 				}
 
 				assertEquals(RuntimeVariables.replace(
-						"Publish Valentines to Live now."),
+						"Publish Christmas to Live now."),
 					selenium.getText(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a"));
 				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[1]/a",
-					RuntimeVariables.replace("Publish Valentines to Live now."));
+					RuntimeVariables.replace("Publish Christmas to Live now."));
 
 				for (int second = 0;; second++) {
 					if (second >= 90) {
@@ -255,10 +274,43 @@ public class User_PublishToLiveNowSPVariationValentinesTest extends BaseTestCase
 				selenium.clickAt("//div[4]",
 					RuntimeVariables.replace("Public Pages"));
 				Thread.sleep(5000);
-				assertEquals(RuntimeVariables.replace("Prices"),
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible("//li/ul/li[1]/div/div[4]")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				assertEquals(RuntimeVariables.replace("Home"),
+					selenium.getText("//li/ul/li[1]/div/div[4]"));
+				selenium.clickAt("//li/ul/li[1]/div/div[4]",
+					RuntimeVariables.replace("Home"));
+				assertEquals(RuntimeVariables.replace("Calendar"),
+					selenium.getText("//li[2]/div/div[4]"));
+				selenium.clickAt("//li[2]/div/div[4]",
+					RuntimeVariables.replace("Calendar"));
+				assertEquals(RuntimeVariables.replace("Wiki"),
+					selenium.getText("//li[3]/div/div[4]"));
+				selenium.clickAt("//li[3]/div/div[4]",
+					RuntimeVariables.replace("Wiki"));
+				assertEquals(RuntimeVariables.replace("White Elephant"),
+					selenium.getText("//li[4]/div/div[4]"));
+				selenium.clickAt("//li[4]/div/div[4]",
+					RuntimeVariables.replace("White Elephant"));
+				assertEquals(RuntimeVariables.replace("Prices [main-variation]"),
 					selenium.getText("//li[5]/div/div[4]"));
 				selenium.clickAt("//li[5]/div/div[4]",
-					RuntimeVariables.replace("Prices"));
+					RuntimeVariables.replace("Prices [main-variation]"));
 				Thread.sleep(5000);
 				selenium.clickAt("//input[@value='Select']",
 					RuntimeVariables.replace("Select"));

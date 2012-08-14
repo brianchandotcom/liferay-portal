@@ -1,12 +1,15 @@
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>User_PublishToLiveNowSPVariationChristmasTest</title>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost:8080/" />
+<title>User_PublishToLiveSPChristmasPagePricesTest</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">User_PublishToLiveNowSPVariationChristmasTest</td></tr>
+<tr><td rowspan="1" colspan="3">User_PublishToLiveSPChristmasPagePricesTest</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -74,9 +77,29 @@
 	<td></td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>link=Prices</td>
+	<td>Prices</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Prices</td>
+	<td>Prices</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//span[@class='layout-set-branch-description']</td>
 	<td>Christmas Site Pages Variation of Site Name</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//span[@class='workflow-status']/strong</td>
+	<td>Ready for Publication</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='workflow-status']/strong</td>
+	<td>Ready for Publication</td>
 </tr>
 <tr>
 	<td>pause</td>
@@ -85,8 +108,8 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//strong/a</td>
-	<td>Christmas Staging</td>
+	<td>//span[2]/span/ul/li/strong/a</td>
+	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -115,13 +138,13 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//input[@value='Select Pages']</td>
-	<td>Select Pages</td>
+	<td>//input[@value='Change Selection']</td>
+	<td>Change Selection</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@value='Select Pages']</td>
-	<td>Select Pages</td>
+	<td>//input[@value='Change Selection']</td>
+	<td>Change Selection</td>
 </tr>
 <tr>
 	<td>waitForText</td>
@@ -249,6 +272,16 @@
 	<td>White Elephant</td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//li[5]/div/div[4]</td>
+	<td>Prices [main-variation]</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//li[5]/div/div[4]</td>
+	<td>Prices [main-variation]</td>
+</tr>
+<tr>
 	<td>pause</td>
 	<td>5000</td>
 	<td></td>
@@ -257,31 +290,6 @@
 	<td>clickAt</td>
 	<td>//input[@value='Select']</td>
 	<td>Select</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//tr/td[2]/span[contains(.,'Home')]</td>
-	<td>Home</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr/td[2]/span[contains(.,'Home')]</td>
-	<td>Home</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr/td[2]/span[contains(.,'Calendar')]</td>
-	<td>Calendar</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr/td[2]/span[contains(.,'Wiki')]</td>
-	<td>Wiki</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//tr/td[2]/span[contains(.,'White Elephant')]</td>
-	<td>White Elephant</td>
 </tr>
 <tr>
 	<td>pause</td>

@@ -24,6 +24,7 @@ import com.liferay.portal.upgrade.v6_0_12_to_6_1_0.UpgradePortletPreferences;
 import com.liferay.portal.upgrade.v6_0_12_to_6_1_0.UpgradeSchema;
 import com.liferay.portal.upgrade.v6_0_12_to_6_1_0.UpgradeUserName;
 import com.liferay.portal.upgrade.v6_1_0.UpgradeAdminPortlets;
+import com.liferay.portal.upgrade.v6_1_0.UpgradeAssetPublisher;
 import com.liferay.portal.upgrade.v6_1_0.UpgradeCamelCasePortletPreferences;
 import com.liferay.portal.upgrade.v6_1_0.UpgradeCountry;
 import com.liferay.portal.upgrade.v6_1_0.UpgradeGroup;
@@ -63,6 +64,7 @@ public class UpgradeProcess_6_0_12_to_6_1_0 extends UpgradeProcess {
 		upgrade(UpgradeSubscription.class);
 		upgrade(UpgradeWorkflow.class);
 		upgrade(UpgradeAsset.class);
+		upgrade(UpgradeAssetPublisher.class);
 	}
 
 }

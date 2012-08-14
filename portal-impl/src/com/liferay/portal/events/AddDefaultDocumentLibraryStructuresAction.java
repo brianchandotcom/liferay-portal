@@ -29,6 +29,7 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
@@ -144,6 +145,15 @@ public class AddDefaultDocumentLibraryStructuresAction
 			"Sales Presentation",
 			DLFileEntryTypeConstants.NAME_SALES_PRESENTATION, ddmStructureNames,
 			serviceContext);
+
+		if (GetterUtil.getBoolean(
+			PropsUtil.get("dl.file.entry.type.igimage"))) {
+
+			addDLFileEntryType(
+				userId, groupId, DLFileEntryTypeConstants.NAME_IG_IMAGE,
+				"IG Image", DLFileEntryTypeConstants.NAME_IG_IMAGE,
+				ddmStructureNames, serviceContext);
+		}
 	}
 
 	protected void addDLRawMetadataStructures(

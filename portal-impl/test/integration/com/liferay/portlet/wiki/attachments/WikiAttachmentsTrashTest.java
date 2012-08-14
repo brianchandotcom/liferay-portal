@@ -94,7 +94,7 @@ public class WikiAttachmentsTrashTest {
 
 		WikiPageLocalServiceUtil.addPageAttachment(
 			TestPropsValues.getUserId(), wikiNode.getNodeId(),
-			wikiPage.getTitle(), "Test File.txt", file);
+			wikiPage.getTitle(), ServiceTestUtil.randomString() + ".txt", file);
 
 		attachmentsFiles = wikiPage.getAttachmentsFiles();
 

@@ -27,6 +27,9 @@ import java.util.Map;
  */
 public interface PortalLDAPExporter {
 
+	public void deleteFromLDAP(long ldapServerId, long companyId, long userId)
+		throws Exception;
+
 	public void exportToLDAP(
 			Contact contact, Map<String, Serializable> contactExpandoAttributes)
 		throws Exception;

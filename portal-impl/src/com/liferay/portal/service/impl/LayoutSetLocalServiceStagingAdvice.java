@@ -30,6 +30,9 @@ import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.service.LayoutSetLocalService;
 import com.liferay.portal.staging.StagingAdvicesThreadLocal;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.lang.reflect.InvocationTargetException;
@@ -168,6 +171,26 @@ public class LayoutSetLocalServiceStagingAdvice
 		layoutSetBranch.setLayoutSetPrototypeUuid(layoutSetPrototypeUuid);
 
 		layoutSetBranchPersistence.update(layoutSetBranch, false);
+	}
+
+	public LayoutSet updateLogo(
+			LayoutSetLocalService layoutSetLocalService, long groupId,
+			boolean privateLayout, boolean logo, File file)
+		throws PortalException, SystemException {
+
+		InputStream is = null;
+
+		if (logo) {
+			try {
+				is = new FileInputStream(file);
+			}
+			catch (IOException ioe) {
+				throw new SystemException(ioe);
+			}
+		}
+
+		return updateLogo(
+			layoutSetLocalService, groupId, privateLayout, logo, is, true);
 	}
 
 	public LayoutSet updateLogo(

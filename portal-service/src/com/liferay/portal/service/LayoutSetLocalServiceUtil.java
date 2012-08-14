@@ -424,11 +424,13 @@ public class LayoutSetLocalServiceUtil {
 		return getService().updateSettings(groupId, privateLayout, settings);
 	}
 
-	public static void updateSettingsDelayed(long groupId,
-		boolean privateLayout, java.lang.String settings)
+	public static com.liferay.portal.model.LayoutSet updateSettings(
+		long groupId, boolean privateLayout, java.lang.String settings,
+		boolean delay)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().updateSettingsDelayed(groupId, privateLayout, settings);
+		return getService()
+				   .updateSettings(groupId, privateLayout, settings, delay);
 	}
 
 	public static com.liferay.portal.model.LayoutSet updateVirtualHost(

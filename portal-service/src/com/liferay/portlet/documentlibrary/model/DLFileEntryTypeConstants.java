@@ -29,6 +29,8 @@ public class DLFileEntryTypeConstants {
 
 	public static final String NAME_CONTRACT = "Contract";
 
+	public static final String NAME_IG_IMAGE = "IG Image";
+
 	public static final String NAME_MARKETING_BANNER = "Marketing Banner";
 
 	public static final String NAME_ONLINE_TRAINING = "Online Training";

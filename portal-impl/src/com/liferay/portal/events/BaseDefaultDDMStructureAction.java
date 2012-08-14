@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.util.PropsUtil;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
@@ -91,10 +93,17 @@ public abstract class BaseDefaultDDMStructureAction extends SimpleAction {
 			xsd = DDMXMLUtil.updateXMLDefaultLocale(
 				xsd, ddmStructureDefaultLocale, LocaleUtil.getDefault());
 
-			DDMStructureLocalServiceUtil.addStructure(
-				userId, groupId, classNameId, ddmStructureKey, nameMap,
-				descriptionMap, xsd, "xml", DDMStructureConstants.TYPE_DEFAULT,
-				serviceContext);
+			boolean isIGImage = name.equals(
+				DLFileEntryTypeConstants.NAME_IG_IMAGE);
+
+			if (!isIGImage || (isIGImage && GetterUtil.getBoolean(
+					PropsUtil.get("dl.file.entry.type.igimage")))) {
+
+				DDMStructureLocalServiceUtil.addStructure(
+						userId, groupId, classNameId, ddmStructureKey, nameMap,
+						descriptionMap, xsd, "xml",
+						DDMStructureConstants.TYPE_DEFAULT, serviceContext);
+			}
 		}
 	}
 

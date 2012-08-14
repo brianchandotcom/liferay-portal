@@ -95,7 +95,7 @@
 		</if>
 
 		<if>
-			<isset property="test.ant.script.evaluate.logs" />
+			<equals arg1="${test.ant.script.evaluate.logs}" arg2="false" />
 			<then>
 				<property name="test.ant.script.file.evaluate.logs" value=" " />
 			</then>
@@ -191,12 +191,12 @@
 
 	<target name="build-test-ant-script-db-upgrade">
 		<if>
-			<isset property="test.ant.script.evaluate.logs" />
+			<equals arg1="${test.ant.script.evaluate.logs}" arg2="false" />
 			<then>
-				<property name="test.ant.script.file.evaluate.logs" value="&lt;param name=&quot;test.evaluate.logs&quot; value=&quot;true&quot; /&gt;" />
+				<property name="test.ant.script.file.evaluate.logs" value=" " />
 			</then>
 			<else>
-				<property name="test.ant.script.file.evaluate.logs" value=" " />
+				<property name="test.ant.script.file.evaluate.logs" value="&lt;param name=&quot;test.evaluate.logs&quot; value=&quot;true&quot; /&gt;" />
 			</else>
 		</if>
 
@@ -255,7 +255,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="8" />
+		<property name="build-test-ant-scripts.version" value="9" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -647,7 +647,6 @@
 
 		<antcall target="build-test-ant-script-db-upgrade">
 			<param name="test.ant.script.command" value="db-upgrade-smoke" />
-			<param name="test.ant.script.evaluate.logs" value="true" />
 			<param name="test.ant.script.suite" value="Smoke" />
 			<param name="test.ant.script.template" value="ant-script-db-upgrade.xml" />
 			<param name="test.ant.script.versions" value="5.2.3,5.2.5,5.2.7,5.2.8,5.2.9,6.0.6,6.0.10,6.0.11,6.0.12,6.1.0" />
@@ -1817,14 +1816,12 @@
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="sevencogs-smoke" />
-			<param name="test.ant.script.evaluate.logs" value="true" />
 			<param name="test.ant.script.sevencogs" value="true" />
 			<param name="test.ant.script.suite" value="SevencogsSmokeTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="smoke-test" />
-			<param name="test.ant.script.evaluate.logs" value="true" />
 			<param name="test.ant.script.suite" value="SmokeTestSuite" />
 		</antcall>
 

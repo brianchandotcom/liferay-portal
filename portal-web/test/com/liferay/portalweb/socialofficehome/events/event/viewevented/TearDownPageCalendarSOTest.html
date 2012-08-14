@@ -14,6 +14,46 @@
 	<td></td>
 </tr>
 <tr>
+	<td>click</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//li[@id='_145_toggleControls']</td>
+	<td>Edit Controls</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//li[@id='_145_toggleControls']</td>
+	<td>Edit Controls</td>
+</tr>
+<tr>
+	<td>storeElementPresent</td>
+	<td>//body[@class='normal yui3-skin-sam signed-in private-page user-site user-group dockbar-ready controls-hidden']</td>
+	<td>EditControlOff</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>!${EditControlOff}</td>
+	<td>ControlOn</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_toggleControls']</td>
+	<td>Edit Controls</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//li[@id='_145_toggleControls']</td>
+	<td>Edit Controls</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>ControlOn</td>
+	<td></td>
+</tr>
+<tr>
 	<td>clickAt</td>
 	<td>//nav[@id='navigation']</td>
 	<td>Navigation</td>
@@ -67,6 +107,16 @@
 	<td>label</td>
 	<td>CalendarPagePresent</td>
 	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_toggleControls']</td>
+	<td>Edit Controls</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//li[@id='_145_toggleControls']</td>
+	<td>Edit Controls</td>
 </tr>
 </tbody></table>
 </body>

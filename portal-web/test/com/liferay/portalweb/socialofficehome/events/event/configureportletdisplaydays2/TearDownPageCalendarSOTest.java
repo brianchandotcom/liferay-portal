@@ -28,6 +28,43 @@ public class TearDownPageCalendarSOTest extends BaseTestCase {
 			switch (label) {
 			case 1:
 				selenium.open("/user/joebloggs/so/dashboard/");
+				selenium.click("//div[@id='dockbar']");
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible(
+									"//li[@id='_145_toggleControls']")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				selenium.clickAt("//li[@id='_145_toggleControls']",
+					RuntimeVariables.replace("Edit Controls"));
+
+				boolean EditControlOff = selenium.isElementPresent(
+						"//body[@class='normal yui3-skin-sam signed-in private-page user-site user-group dockbar-ready controls-hidden']");
+
+				if (!EditControlOff) {
+					label = 2;
+
+					continue;
+				}
+
+				assertEquals(RuntimeVariables.replace("Edit Controls"),
+					selenium.getText("//li[@id='_145_toggleControls']"));
+				selenium.clickAt("//li[@id='_145_toggleControls']",
+					RuntimeVariables.replace("Edit Controls"));
+
+			case 2:
 				selenium.clickAt("//nav[@id='navigation']",
 					RuntimeVariables.replace("Navigation"));
 
@@ -52,7 +89,7 @@ public class TearDownPageCalendarSOTest extends BaseTestCase {
 						"//nav/ul/li[contains(.,'Calendar Test Page')]/a/span");
 
 				if (!calendarPagePresent) {
-					label = 2;
+					label = 3;
 
 					continue;
 				}
@@ -117,7 +154,12 @@ public class TearDownPageCalendarSOTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-			case 2:
+			case 3:
+				assertEquals(RuntimeVariables.replace("Edit Controls"),
+					selenium.getText("//li[@id='_145_toggleControls']"));
+				selenium.clickAt("//li[@id='_145_toggleControls']",
+					RuntimeVariables.replace("Edit Controls"));
+
 			case 100:
 				label = -1;
 			}

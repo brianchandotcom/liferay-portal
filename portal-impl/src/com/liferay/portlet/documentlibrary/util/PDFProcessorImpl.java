@@ -306,6 +306,12 @@ public class PDFProcessorImpl
 		throws Exception {
 
 		if (GhostScriptUtil.isEnabled()) {
+			if (!_ghostScriptInitialized) {
+				GhostScriptUtil.reset();
+
+				_ghostScriptInitialized = true;
+			}
+
 			_generateImagesGS(fileVersion, file);
 		}
 		else {
@@ -438,8 +444,6 @@ public class PDFProcessorImpl
 		String tempFileId = DLUtil.getTempFileId(
 			fileVersion.getFileEntryId(), fileVersion.getVersion());
 
-		String type = getPreviewType(fileVersion);
-
 		List<String> args = new ArrayList<String>();
 
 		args.add("-sDEVICE=png16m");
@@ -448,59 +452,31 @@ public class PDFProcessorImpl
 			args.add("-sOutputFile=" + getThumbnailTempFilePath(tempFileId));
 			args.add("-dFirstPage=1");
 			args.add("-dLastPage=1");
-		}else {
-			String outputFile = getPreviewTempFilePath(tempFileId, -1).replace(
-				"." + type, "-%d." + type);
-
-			args.add("-sOutputFile=" + outputFile);
+		}
+		else {
+			args.add("-sOutputFile=" + getPreviewTempFilePath(tempFileId, -1));
 		}
 
 		args.add("-dPDFFitPage");
 		args.add("-dTextAlphaBits=4");
 		args.add("-dGraphicsAlphaBits=4");
-		args.add(
-			"-r" + PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_DPI + "x" +
-			PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_DPI);
+		args.add("-r" + PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_DPI);
 
-		int width = PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_WIDTH;
-		int height = PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT;
-
-		if (height == 0) {
-			PDDocument pdDocument = null;
-
-			try {
-				pdDocument = PDDocument.load(new FileInputStream(file));
-
-				PDDocumentCatalog pdDocumentCatalog =
-					pdDocument.getDocumentCatalog();
-
-				PDPage pdPage = (PDPage)pdDocumentCatalog.getAllPages().get(0);
-
-				float pdfWidth = pdPage.getMediaBox().getWidth();
-				float pdfHeight = (int)pdPage.getMediaBox().getHeight();
-
-				float ratio = pdfHeight / pdfWidth;
-
-				height = (int)(width * ratio);
-			}
-			finally {
-				if (pdDocument != null) {
-					pdDocument.close();
-				}
-			}
+		if (PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_WIDTH != 0) {
+			args.add(
+				"-dDEVICEWIDTH" +
+					PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_WIDTH);
 		}
 
-		args.add("-g" + width + "x" + height);
+		if (PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT != 0) {
+			args.add(
+				"-dDEVICEHEIGHT" +
+					PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT);
+		}
 
 		args.add(file.getPath());
 
-		if (!_ghostScriptInitialized) {
-			GhostScriptUtil.reset();
-
-			_ghostScriptInitialized = true;
-		}
-
-		Future future = GhostScriptUtil.convert(args);
+		Future future = GhostScriptUtil.execute(args);
 
 		String processIdentity = Long.toString(fileVersion.getFileVersionId());
 
@@ -540,7 +516,7 @@ public class PDFProcessorImpl
 	}
 
 	private void _generateImagesGS(
-		FileVersion fileVersion, InputStream inputStream)
+			FileVersion fileVersion, InputStream inputStream)
 		throws Exception {
 
 		File file = null;

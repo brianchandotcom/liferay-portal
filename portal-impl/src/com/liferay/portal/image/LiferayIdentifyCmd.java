@@ -24,7 +24,6 @@ import java.util.List;
 import jodd.util.StringPool;
 
 import org.im4java.core.IdentifyCmd;
-import org.im4java.process.ArrayListOutputConsumer;
 import org.im4java.process.ProcessTask;
 
 /**
@@ -33,7 +32,7 @@ import org.im4java.process.ProcessTask;
  */
 public class LiferayIdentifyCmd extends IdentifyCmd {
 
-	public static String[] run(
+	public ProcessTask getProcessTask(
 			String globalSearchPath, List<String> resourceLimits,
 			List<String> commandArguments)
 		throws Exception {
@@ -56,36 +55,6 @@ public class LiferayIdentifyCmd extends IdentifyCmd {
 
 			_log.info("Excecuting command '" + sb.toString() + "'");
 		}
-
-		ArrayListOutputConsumer arrayListOutputConsumer =
-			new ArrayListOutputConsumer();
-
-		_instance.setOutputConsumer(arrayListOutputConsumer);
-
-		_instance.run(arguments);
-
-		List<String> output = arrayListOutputConsumer.getOutput();
-
-		if (output != null) {
-			return output.toArray(new String[0]);
-		}
-		else {
-			return new String[0];
-		}
-	}
-
-	public ProcessTask getProcessTask(
-		String globalSearchPath, List<String> resourceLimits,
-		List<String> commandArguments)
-		throws Exception {
-
-		setGlobalSearchPath(globalSearchPath);
-
-		LinkedList<String> arguments = new LinkedList<String>();
-
-		arguments.addAll(_instance.getCommand());
-		arguments.addAll(resourceLimits);
-		arguments.addAll(commandArguments);
 
 		return getProcessTask(arguments);
 	}

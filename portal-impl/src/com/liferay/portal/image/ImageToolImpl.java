@@ -459,6 +459,7 @@ public class ImageToolImpl implements ImageTool {
 	private static ImageTool _instance = new ImageToolImpl();
 
 	private static FileImpl _fileUtil = FileImpl.getInstance();
+
 	private static ImageMagick _imageMagick;
 
 	private class RenderedImageFuture implements Future<RenderedImage> {
@@ -481,23 +482,17 @@ public class ImageToolImpl implements ImageTool {
 			return true;
 		}
 
-		public boolean isCancelled() {
-			return _future.isCancelled();
-		}
-
-		public boolean isDone() {
-			return _future.isDone();
-		}
-
 		public RenderedImage get()
 			throws ExecutionException, InterruptedException {
 
 			_future.get();
 
 			byte[] bytes = new byte[0];
+
 			try {
 				bytes = _fileUtil.getBytes(_outputFile);
-			} catch (IOException e) {
+			}
+			catch (IOException e) {
 				throw new ExecutionException(e);
 			}
 
@@ -510,13 +505,23 @@ public class ImageToolImpl implements ImageTool {
 			_future.get(timeout, unit);
 
 			byte[] bytes = new byte[0];
+
 			try {
 				bytes = _fileUtil.getBytes(_outputFile);
-			} catch (IOException e) {
+			}
+			catch (IOException e) {
 				throw new ExecutionException(e);
 			}
 
 			return read(bytes, _type);
+		}
+
+		public boolean isCancelled() {
+			return _future.isCancelled();
+		}
+
+		public boolean isDone() {
+			return _future.isDone();
 		}
 
 		private final Future<?> _future;

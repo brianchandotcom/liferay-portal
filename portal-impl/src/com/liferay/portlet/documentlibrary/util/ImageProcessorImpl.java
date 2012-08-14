@@ -277,6 +277,10 @@ public class ImageProcessorImpl
 				Future<RenderedImage> future = ImageToolUtil.convertCMYKtoRGB(
 					bytes, imageBag.getType());
 
+				if (future == null) {
+					return;
+				}
+
 				String processIdentity = Long.toString(
 					destinationFileVersion.getFileVersionId());
 

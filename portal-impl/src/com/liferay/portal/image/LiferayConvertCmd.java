@@ -32,7 +32,7 @@ import org.im4java.process.ProcessTask;
  */
 public class LiferayConvertCmd extends ConvertCmd {
 
-	public static void run(
+	public ProcessTask getProcessTask(
 			String globalSearchPath, List<String> resourceLimits,
 			List<String> commandArguments)
 		throws Exception {
@@ -55,22 +55,6 @@ public class LiferayConvertCmd extends ConvertCmd {
 
 			_log.info("Excecuting command '" + sb.toString() + "'");
 		}
-
-		_instance.run(arguments);
-	}
-
-	public ProcessTask getProcessTask(
-		String globalSearchPath, List<String> resourceLimits,
-		List<String> commandArguments)
-		throws Exception {
-
-		setGlobalSearchPath(globalSearchPath);
-
-		LinkedList<String> arguments = new LinkedList<String>();
-
-		arguments.addAll(_instance.getCommand());
-		arguments.addAll(resourceLimits);
-		arguments.addAll(commandArguments);
 
 		return getProcessTask(arguments);
 	}

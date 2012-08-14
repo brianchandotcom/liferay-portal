@@ -27,14 +27,14 @@ import java.util.concurrent.Future;
 public class GhostScriptUtil {
 
 	/**
-	 * Executes the <code>gs</code> command in GhostScript.
+	 * Executes a GhostScript command.
 	 *
-	 * @param  arguments the command arguments being passed to <code>gs
-	 *         </code>
+	 * @param  arguments the command arguments being passed to GhostScript
+	 * @return the asynchronous process handling the GhostScript command
 	 * @throws Exception if an unexpected error occurred while executing command
 	 */
-	public static Future<?> convert(List<String> arguments) throws Exception {
-		return _ghostScript.convert(arguments);
+	public static Future<?> execute(List<String> arguments) throws Exception {
+		return _ghostScript.execute(arguments);
 	}
 
 	public static boolean isEnabled() {

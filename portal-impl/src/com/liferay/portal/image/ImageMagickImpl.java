@@ -49,7 +49,6 @@ public class ImageMagickImpl implements ImageMagick {
 	}
 
 	public Future convert(List<String> arguments) throws Exception {
-
 		if (!isEnabled()) {
 			throw new IllegalStateException(
 				"Cannot call \"convert\" when ImageMagick is disabled");
@@ -160,13 +159,13 @@ public class ImageMagickImpl implements ImageMagick {
 		}
 
 		if (!enabled && !_warned) {
-			StringBundler sb = new StringBundler(6);
+			StringBundler sb = new StringBundler(7);
 
 			sb.append("Liferay is not configured to use ImageMagick and ");
 			sb.append("GhostScript. For better quality document and image ");
-			sb.append("previews, install ImageMagick alongside GhostScript ");
-			sb.append("and enable it in portal-ext.properties or in the ");
-			sb.append("Server Administration control panel at: ");
+			sb.append("previews, install ImageMagick and GhostScript. Enable ");
+			sb.append("ImageMagick in portal-ext.properties or in the Server ");
+			sb.append("Administration control panel at: ");
 			sb.append("http://<server>/group/control_panel/manage/-/server/");
 			sb.append("external-services");
 
@@ -239,7 +238,9 @@ public class ImageMagickImpl implements ImageMagick {
 	private String _globalSearchPath;
 
 	private volatile ProcessExecutor _processExecutor;
+
 	private Properties _resourceLimitsProperties;
+
 	private boolean _warned;
 
 }

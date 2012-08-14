@@ -30,7 +30,7 @@ public class LoggingOutputProcessor implements OutputProcessor<Void, Void> {
 	public Void processStdErr(InputStream stdErrInputStream)
 		throws ProcessException {
 
-		_processOut("[stderr]", stdErrInputStream);
+		_processOut(true, stdErrInputStream);
 
 		return null;
 	}
@@ -38,12 +38,12 @@ public class LoggingOutputProcessor implements OutputProcessor<Void, Void> {
 	public Void processStdOut(InputStream stdOutInputStream)
 		throws ProcessException {
 
-		_processOut("[stdout]", stdOutInputStream);
+		_processOut(false, stdOutInputStream);
 
 		return null;
 	}
 
-	private void _processOut(String prefix, InputStream inputStream)
+	private void _processOut(boolean stderr, InputStream inputStream)
 		throws ProcessException {
 
 		UnsyncBufferedReader unsyncBufferedReader =
@@ -53,8 +53,11 @@ public class LoggingOutputProcessor implements OutputProcessor<Void, Void> {
 
 		try {
 			while ((line = unsyncBufferedReader.readLine()) != null) {
-				if (_log.isInfoEnabled()) {
-					_log.info(prefix.concat(line));
+				if (stderr && _log.isErrorEnabled()) {
+					_log.error(line);
+				}
+				else if (!stderr && _log.isInfoEnabled()) {
+					_log.info(line);
 				}
 			}
 		}

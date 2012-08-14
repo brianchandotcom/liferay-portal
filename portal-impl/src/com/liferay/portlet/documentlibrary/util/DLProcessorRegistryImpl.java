@@ -55,7 +55,9 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 		}
 
 		for (DLProcessor dlProcessor : _dlProcessors.values()) {
-			dlProcessor.cleanUp(fileEntry);
+			if (dlProcessor.isSupported(fileEntry.getMimeType())) {
+				dlProcessor.cleanUp(fileEntry);
+			}
 		}
 	}
 
@@ -65,7 +67,9 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 		}
 
 		for (DLProcessor dlProcessor : _dlProcessors.values()) {
-			dlProcessor.cleanUp(fileVersion);
+			if (dlProcessor.isSupported(fileVersion)) {
+				dlProcessor.cleanUp(fileVersion);
+			}
 		}
 	}
 

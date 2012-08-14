@@ -22,7 +22,7 @@ import java.util.concurrent.Future;
  */
 public interface GhostScript {
 
-	public Future<?> convert(List<String> arguments) throws Exception;
+	public Future<?> execute(List<String> arguments) throws Exception;
 
 	public boolean isEnabled();
 

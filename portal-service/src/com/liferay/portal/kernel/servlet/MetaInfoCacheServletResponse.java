@@ -572,21 +572,7 @@ public class MetaInfoCacheServletResponse extends HttpServletResponseWrapper {
 		return sb.toString();
 	}
 
-	/**
-	 * Stub method for subclass to provide buffer resetting logic.
-	 *
-	 * @param nullOutReferences whether to reset flags. It is not directly used
-	 *        by this class. Subclasses with an actual buffer may behave
-	 *        differently depending on the value of this parameter.
-	 */
-	protected void resetBuffer(boolean nullOutReferences) {
-		super.resetBuffer();
-	}
-
-	protected boolean calledGetOutputStream;
-	protected boolean calledGetWriter;
-
-	protected static class MetaData implements Serializable {
+	public static class MetaData implements Serializable {
 
 		private int _bufferSize;
 		private String _charsetName;
@@ -602,6 +588,20 @@ public class MetaInfoCacheServletResponse extends HttpServletResponseWrapper {
 		private String _statusMessage;
 
 	}
+
+	/**
+	 * Stub method for subclass to provide buffer resetting logic.
+	 *
+	 * @param nullOutReferences whether to reset flags. It is not directly used
+	 *        by this class. Subclasses with an actual buffer may behave
+	 *        differently depending on the value of this parameter.
+	 */
+	protected void resetBuffer(boolean nullOutReferences) {
+		super.resetBuffer();
+	}
+
+	protected boolean calledGetOutputStream;
+	protected boolean calledGetWriter;
 
 	private boolean _committed;
 	private MetaData _metaData = new MetaData();

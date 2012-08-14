@@ -24,13 +24,15 @@ import java.util.List;
 import jodd.util.StringPool;
 
 import org.im4java.core.ConvertCmd;
+import org.im4java.process.ProcessTask;
 
 /**
  * @author Alexander Chow
+ * @author Ivica Cardic
  */
 public class LiferayConvertCmd extends ConvertCmd {
 
-	public static void run(
+	public ProcessTask getProcessTask(
 			String globalSearchPath, List<String> resourceLimits,
 			List<String> commandArguments)
 		throws Exception {
@@ -54,7 +56,7 @@ public class LiferayConvertCmd extends ConvertCmd {
 			_log.info("Excecuting command '" + sb.toString() + "'");
 		}
 
-		_instance.run(arguments);
+		return getProcessTask(arguments);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(LiferayConvertCmd.class);

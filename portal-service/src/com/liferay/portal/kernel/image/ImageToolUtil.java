@@ -24,6 +24,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import java.util.concurrent.Future;
+
 /**
  * The Image utility class.
  *
@@ -40,17 +42,16 @@ public class ImageToolUtil {
 	 *
 	 * @param  bytes the image to convert
 	 * @param  type the image type (e.g., "gif", "jpg", etc.)
-	 * @param  fork whether to fork the process
-	 * @return the converted image or <code>null</code> if ImageMagick was
-	 *         disabled or if the conversion was not completed. The conversion
-	 *         may not complete if (1) the image was not in the CMYK colorspace
-	 *         to begin with or (2) there was an error in the conversion
-	 *         process.
+	 * @return the asynchronous process converting the image or <code>null
+	 *         </code> if ImageMagick was disabled or if the conversion could
+	 *         not be completed. The conversion may not complete if (1) the
+	 *         image was not in the CMYK colorspace to begin with or (2) there
+	 *         was an error in the conversion process.
 	 */
-	public static RenderedImage convertCMYKtoRGB(
-		byte[] bytes, String type, boolean fork) {
+	public static Future<RenderedImage> convertCMYKtoRGB(
+		byte[] bytes, String type) {
 
-		return getImageTool().convertCMYKtoRGB(bytes, type, fork);
+		return getImageTool().convertCMYKtoRGB(bytes, type);
 	}
 
 	/**

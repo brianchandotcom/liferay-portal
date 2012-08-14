@@ -47,8 +47,14 @@ import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.InputStream;
 
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Future;
+
 /**
  * @author Alexander Chow
+ * @author Ivica Cardic
  */
 public abstract class DLPreviewableProcessor implements DLProcessor {
 
@@ -92,21 +98,6 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		}
 	}
 
-	public static void deleteFiles(FileEntry fileEntry, String thumbnailType) {
-		deleteFiles(
-			fileEntry.getCompanyId(), fileEntry.getGroupId(),
-			fileEntry.getFileEntryId(), -1, thumbnailType);
-	}
-
-	public static void deleteFiles(
-		FileVersion fileVersion, String thumbnailType) {
-
-		deleteFiles(
-			fileVersion.getCompanyId(), fileVersion.getGroupId(),
-			fileVersion.getFileEntryId(), fileVersion.getFileVersionId(),
-			thumbnailType);
-	}
-
 	public void cleanUp(FileEntry fileEntry) {
 		deleteFiles(fileEntry, getThumbnailType());
 	}
@@ -126,6 +117,19 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 
 		copyPreviews(sourceFileVersion, destinationFileVersion);
 		copyThumbnails(sourceFileVersion, destinationFileVersion);
+	}
+
+	public void deleteFiles(FileEntry fileEntry, String thumbnailType) {
+		deleteFiles(
+			fileEntry.getCompanyId(), fileEntry.getGroupId(),
+			fileEntry.getFileEntryId(), -1, thumbnailType);
+	}
+
+	public void deleteFiles(FileVersion fileVersion, String thumbnailType) {
+		deleteFiles(
+			fileVersion.getCompanyId(), fileVersion.getGroupId(),
+			fileVersion.getFileEntryId(), fileVersion.getFileVersionId(),
+			thumbnailType);
 	}
 
 	public void exportGeneratedFiles(
@@ -155,30 +159,19 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		return isSupported(fileVersion.getMimeType());
 	}
 
-	protected static void deleteFiles(
-		long companyId, long groupId, long fileEntryId, long fileVersionId,
-		String thumbnailType) {
+	public void trigger(
+		FileVersion sourceFileVersion, FileVersion destinationFileVersion) {
 
-		try {
-			DLStoreUtil.deleteDirectory(
-				companyId, REPOSITORY_ID,
-				getPathSegment(groupId, fileEntryId, fileVersionId, true));
-		}
-		catch (Exception e) {
-		}
+		if (getFileVersionIds().contains(
+			destinationFileVersion.getFileVersionId())) {
 
-		try {
-			String dirName = getPathSegment(
-				groupId, fileEntryId, fileVersionId, false);
+			String processIdentity = Long.toString(
+				destinationFileVersion.getFileVersionId());
 
-			if (fileVersionId > 0) {
-				dirName = dirName.concat(StringPool.PERIOD);
-				dirName = dirName.concat(thumbnailType);
-			}
+			destroyProcess(processIdentity);
 
-			DLStoreUtil.deleteDirectory(companyId, REPOSITORY_ID, dirName);
-		}
-		catch (Exception e) {
+			getFileVersionIds().remove(
+				destinationFileVersion.getFileVersionId());
 		}
 	}
 
@@ -336,6 +329,62 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		}
 		catch (Exception e) {
 			_log.error(e, e);
+		}
+	}
+
+	protected void deleteFiles(
+		long companyId, long groupId, long fileEntryId, long fileVersionId,
+		String thumbnailType) {
+
+		deleteFilesPreview(companyId, groupId, fileEntryId, fileVersionId);
+		deleteFilesThumbnail(
+			companyId, groupId, fileEntryId, fileVersionId, thumbnailType);
+	}
+
+	protected void deleteFilesPreview(
+		long companyId, long groupId, long fileEntryId, long fileVersionId) {
+
+		try {
+			DLStoreUtil.deleteDirectory(
+				companyId, REPOSITORY_ID,
+				getPathSegment(groupId, fileEntryId, fileVersionId, true));
+		}
+		catch (Exception e) {
+		}
+	}
+
+	protected void deleteFilesThumbnail(
+		long companyId, long groupId, long fileEntryId, long fileVersionId,
+		String thumbnailType) {
+
+		try {
+			String dirName = getPathSegment(
+				groupId, fileEntryId, fileVersionId, false);
+
+			if (fileVersionId > 0) {
+				dirName = dirName.concat(StringPool.PERIOD);
+				dirName = dirName.concat(thumbnailType);
+			}
+
+			DLStoreUtil.deleteDirectory(companyId, REPOSITORY_ID, dirName);
+		}
+		catch (Exception e) {
+		}
+	}
+
+	protected void destroyProcess(String processIdentity) {
+		synchronized (DLPreviewableProcessor.class) {
+			Future future = managedProcesses.get(processIdentity);
+
+			if (future != null) {
+				future.cancel(true);
+
+				managedProcesses.remove(processIdentity);
+
+				if (_log.isInfoEnabled()) {
+					_log.info("Cancellation requested for " + processIdentity);
+				}
+			}
 		}
 	}
 
@@ -606,6 +655,8 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		return sb.toString();
 	}
 
+	protected abstract List<Long> getFileVersionIds();
+
 	protected String getPreviewFilePath(FileVersion fileVersion) {
 		return getPreviewFilePath(fileVersion, 0);
 	}
@@ -716,6 +767,9 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		if (index > 0) {
 			sb.append(StringPool.DASH);
 			sb.append(index - 1);
+		}
+		else if (index == -1) {
+			sb.append("-%d");
 		}
 
 		sb.append(StringPool.PERIOD);
@@ -1200,6 +1254,9 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 			FileUtil.delete(file);
 		}
 	}
+
+	protected Map<String, Future> managedProcesses =
+		new ConcurrentHashMap<String, Future>();
 
 	private static Log _log = LogFactoryUtil.getLog(
 		DLPreviewableProcessor.class);

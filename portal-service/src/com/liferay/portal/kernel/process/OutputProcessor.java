@@ -12,31 +12,19 @@
  * details.
  */
 
-package com.liferay.portal.kernel.image;
+package com.liferay.portal.kernel.process;
 
-import java.util.List;
-import java.util.Properties;
-import java.util.concurrent.Future;
+import java.io.InputStream;
 
 /**
- * @author Alexander Chow
- * @author Ivica Cardic
+ * @author Shuyang Zhou
  */
-public interface ImageMagick {
+public interface OutputProcessor<O, E> {
 
-	public Future convert(List<String> arguments) throws Exception;
+	public E processStdErr(InputStream stdErrInputStream)
+		throws ProcessException;
 
-	public void destroy();
-
-	public String getGlobalSearchPath() throws Exception;
-
-	public Properties getResourceLimitsProperties() throws Exception;
-
-	public String[] identify(List<String> arguments)
-		throws Exception;
-
-	public boolean isEnabled();
-
-	public void reset();
+	public O processStdOut(InputStream stdOutInputStream)
+		throws ProcessException;
 
 }

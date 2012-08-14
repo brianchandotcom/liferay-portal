@@ -89,8 +89,7 @@ public class ProcessExecutor {
 			commands.addAll(arguments);
 			commands.add(ProcessExecutor.class.getName());
 
-			ProcessBuilder processBuilder = new ProcessBuilder(
-				commands.toArray(new String[commands.size()]));
+			ProcessBuilder processBuilder = new ProcessBuilder(commands);
 
 			Process process = processBuilder.start();
 

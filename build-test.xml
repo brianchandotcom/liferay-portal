@@ -97,10 +97,10 @@
 		<if>
 			<isset property="test.ant.script.evaluate.logs" />
 			<then>
-				<property name="test.ant.script.file.evaluate.logs" value="&lt;property name=&quot;test.evaluate.logs&quot; value=&quot;true&quot; /&gt;" />
+				<property name="test.ant.script.file.evaluate.logs" value=" " />
 			</then>
 			<else>
-				<property name="test.ant.script.file.evaluate.logs" value=" " />
+				<property name="test.ant.script.file.evaluate.logs" value="&lt;property name=&quot;test.evaluate.logs&quot; value=&quot;true&quot; /&gt;" />
 			</else>
 		</if>
 

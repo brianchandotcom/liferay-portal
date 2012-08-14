@@ -683,6 +683,22 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		_statusDate = statusDate;
 	}
 
+	public long getContainerModelId() {
+		return getFolderId();
+	}
+
+	public void setContainerModelId(long containerModelId) {
+		_folderId = containerModelId;
+	}
+
+	public long getParentContainerModelId() {
+		return getParentFolderId();
+	}
+
+	public void setParentContainerModelId(long parentContainerModelId) {
+		_parentFolderId = parentContainerModelId;
+	}
+
 	/**
 	 * @deprecated {@link #isApproved}
 	 */

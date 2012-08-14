@@ -599,7 +599,7 @@ if (Validator.isNotNull(content)) {
 	Liferay.provide(
 		window,
 		'<portlet:namespace />postProcessTranslation',
-		function(formDate, cmd, newVersion, newLanguageId, newLanguage) {
+		function(formDate, cmd, newVersion, newStatusMessage, newLanguageId, newLanguage) {
 			var A = AUI();
 
 			document.<portlet:namespace />fm1.<portlet:namespace />formDate.value = formDate;
@@ -612,6 +612,9 @@ if (Validator.isNotNull(content)) {
 
 			var taglibWorkflowStatus = A.one('#<portlet:namespace />journalArticleWrapper .taglib-workflow-status');
 			var statusNode = taglibWorkflowStatus.one('.workflow-status strong');
+
+			statusNode.html(newStatusMessage);
+
 			var versionNode = taglibWorkflowStatus.one('.workflow-version strong');
 
 			document.<portlet:namespace />fm1.<portlet:namespace />version.value = newVersion;

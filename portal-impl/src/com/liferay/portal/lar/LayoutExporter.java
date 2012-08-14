@@ -158,16 +158,9 @@ public class LayoutExporter {
 				"last-publish-date", String.valueOf(lastPublishDate));
 		}
 
-		if (!delay) {
-			LayoutSetLocalServiceUtil.updateSettings(
-				layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
-				settingsProperties.toString());
-		}
-		else {
-			LayoutSetLocalServiceUtil.updateSettingsDelayed(
-				layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
-				settingsProperties.toString());
-		}
+		LayoutSetLocalServiceUtil.updateSettings(
+			layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
+			settingsProperties.toString(), delay);
 	}
 
 	public byte[] exportLayouts(

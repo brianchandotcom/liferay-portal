@@ -453,19 +453,11 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			long groupId, boolean privateLayout, String settings)
 		throws PortalException, SystemException {
 
-		LayoutSet layoutSet = layoutSetPersistence.findByG_P(
-			groupId, privateLayout);
-
-		layoutSet.setModifiedDate(new Date());
-		layoutSet.setSettings(settings);
-
-		layoutSetPersistence.update(layoutSet, false);
-
-		return layoutSet;
+		return updateSettings(groupId, privateLayout, settings, false);
 	}
 
-	public void updateSettingsDelayed(
-			long groupId, boolean privateLayout, String settings)
+	public LayoutSet updateSettings(
+			long groupId, boolean privateLayout, String settings, boolean delay)
 		throws PortalException, SystemException {
 
 		LayoutSet layoutSet = layoutSetPersistence.findByG_P(
@@ -474,7 +466,15 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		layoutSet.setModifiedDate(new Date());
 		layoutSet.setSettings(settings);
 
-		registerUpdateSettingsCallback(layoutSet);
+		if (delay) {
+			registerUpdateSettingsCallback(layoutSet);
+
+			return null;
+		}
+
+		layoutSetPersistence.update(layoutSet, false);
+
+		return layoutSet;
 	}
 
 	public LayoutSet updateVirtualHost(

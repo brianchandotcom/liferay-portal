@@ -15,8 +15,8 @@
 --%>
 
 <liferay-ui:search-container
-		headerNames="thread,started-by,posts,views,last-post"
-		iteratorURL="<%= portletURL %>"
+	headerNames="thread,started-by,posts,views,last-post"
+	iteratorURL="<%= portletURL %>"
 >
 
 	<%

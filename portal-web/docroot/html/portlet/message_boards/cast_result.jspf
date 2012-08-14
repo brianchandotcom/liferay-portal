@@ -24,7 +24,7 @@ if (result instanceof AssetEntry) {
 
 	thread = message.getThread();
 }
-else if (result instanceof MBThread) {
+else {
 	thread = (MBThread)result;
 }
 %>

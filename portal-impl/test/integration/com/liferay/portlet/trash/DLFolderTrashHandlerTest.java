@@ -250,12 +250,21 @@ public class DLFolderTrashHandlerTest extends BaseDLTrashHandlerTestCase {
 			}
 		}
 
-		Assert.assertEquals(
-			initialSearchTrashEntriesCount, searchTrashEntriesCount("File"));
-
-		if (moveFileFromTrash) {
+		if (delete) {
+			Assert.assertEquals(0, searchTrashEntriesCount("File"));
+		}
+		else {
 			Assert.assertEquals(
-				initialTrashEntriesCount +1, getTrashEntriesCount());
+				initialSearchTrashEntriesCount,
+				searchTrashEntriesCount("File"));
+		}
+
+		if (delete) {
+			Assert.assertEquals(0, getTrashEntriesCount());
+		}
+		else if (moveFileFromTrash) {
+			Assert.assertEquals(
+				initialTrashEntriesCount + 1, getTrashEntriesCount());
 
 			DLAppServiceUtil.deleteFileEntry(fileEntryId);
 		}

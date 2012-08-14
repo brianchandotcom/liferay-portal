@@ -219,10 +219,19 @@ public class DLFileEntryTrashHandlerTest extends BaseDLTrashHandlerTestCase {
 			}
 		}
 
-		Assert.assertEquals(initialTrashEntriesCount, getTrashEntriesCount());
-		Assert.assertEquals(
-			initialSearchTrashFileEntriesCount,
-			searchTrashEntriesCount("Basic"));
+		if (delete) {
+			Assert.assertEquals(0, getTrashEntriesCount());
+
+			Assert.assertEquals(0, searchTrashEntriesCount("Basic"));
+		}
+		else {
+			Assert.assertEquals(
+				initialTrashEntriesCount, getTrashEntriesCount());
+
+			Assert.assertEquals(
+				initialSearchTrashFileEntriesCount,
+				searchTrashEntriesCount("Basic"));
+		}
 	}
 
 }

@@ -113,7 +113,7 @@ public class DLFileShortcutTrashHandlerTest extends BaseDLTrashHandlerTestCase {
 				initialNotInTrashCount + 2, getNotInTrashCount());
 		}
 
-		Assert.assertEquals(initialTrashEntriesCount, getTrashEntriesCount());
+		Assert.assertEquals(0, getTrashEntriesCount());
 	}
 
 }

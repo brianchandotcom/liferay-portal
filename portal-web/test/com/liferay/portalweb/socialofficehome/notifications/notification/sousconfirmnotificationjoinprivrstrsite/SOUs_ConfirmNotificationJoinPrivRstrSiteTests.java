@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.socialofficehome.notifications.notification.sousconfirmnotificationjoinprivatesite;
+package com.liferay.portalweb.socialofficehome.notifications.notification.sousconfirmnotificationjoinprivrstrsite;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.socialoffice.users.user.addsouser.AddSOUserTest;
@@ -26,7 +26,7 @@ import com.liferay.portalweb.socialofficehome.contactscenter.contacts.sousaddasc
 import com.liferay.portalweb.socialofficehome.contactscenter.contacts.sousaddasconnectionccuser.SOUs_AddAsConnectionCCUserTest;
 import com.liferay.portalweb.socialofficehome.notifications.notification.sousconfirmnotificationjoinsite.TearDownNotificationsTest;
 import com.liferay.portalweb.socialofficehome.sites.site.addsitessite.TearDownSOSitesTest;
-import com.liferay.portalweb.socialofficehome.sites.site.addsitessitetypeprivate.AddSitesSiteTypePrivateTest;
+import com.liferay.portalweb.socialofficehome.sites.site.addsitessitetypeprivaterestricted.AddSitesSiteTypePrivateRestrictedTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -34,24 +34,24 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SOUs_ConfirmNotificationJoinPrivateSiteTests extends BaseTestSuite {
+public class SOUs_ConfirmNotificationJoinPrivRstrSiteTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddSOUserTest.class);
 		testSuite.addTestSuite(SelectRegularRolesSOUserTest.class);
 		testSuite.addTestSuite(EditSOUserPasswordTest.class);
-		testSuite.addTestSuite(AddSitesSiteTypePrivateTest.class);
+		testSuite.addTestSuite(AddSitesSiteTypePrivateRestrictedTest.class);
 		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SOUs_SignInSOTest.class);
 		testSuite.addTestSuite(SOUs_AddAsConnectionCCUserTest.class);
 		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SignInSOTest.class);
 		testSuite.addTestSuite(ConfirmNotificationsAddConnectionTest.class);
-		testSuite.addTestSuite(SendMembersInvitationPrivateSiteTest.class);
+		testSuite.addTestSuite(SendMembersInvitationPrivRstrSiteTest.class);
 		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SOUs_SignInSOTest.class);
-		testSuite.addTestSuite(SOUs_ConfirmNotificationJoinPrivateSiteTest.class);
-		testSuite.addTestSuite(SOUs_ViewSitesSiteTypePrivateTest.class);
+		testSuite.addTestSuite(SOUs_ConfirmNotificationJoinPrivRstrSiteTest.class);
+		testSuite.addTestSuite(SOUs_ViewSitesSiteTypePrivRstrTest.class);
 		testSuite.addTestSuite(SignOutSOTest.class);
 		testSuite.addTestSuite(SignInSOTest.class);
 		testSuite.addTestSuite(TearDownNotificationsTest.class);

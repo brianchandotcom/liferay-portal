@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.socialofficehome.notifications.notification.sousconfirmnotificationjoinrestrictedsite;
+package com.liferay.portalweb.socialofficehome.notifications.notification.sousconfirmnotificationjoinpubrstrsite;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,9 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SOUs_ViewSitesSiteTypeRestrictedTest extends BaseTestCase {
-	public void testSOUs_ViewSitesSiteTypeRestricted()
-		throws Exception {
+public class SOUs_ViewSitesSiteTypePubRstrTest extends BaseTestCase {
+	public void testSOUs_ViewSitesSiteTypePubRstr() throws Exception {
 		selenium.open("/user/socialoffice01/so/dashboard/");
 
 		for (int second = 0;; second++) {
@@ -71,13 +70,13 @@ public class SOUs_ViewSitesSiteTypeRestrictedTest extends BaseTestCase {
 
 		assertFalse(selenium.isPartialText(
 				"//ul[contains(@class, 'site-list')]/", "liferay.com"));
-		assertEquals(RuntimeVariables.replace("Restricted Site Name"),
+		assertEquals(RuntimeVariables.replace("Public Restricted Site Name"),
 			selenium.getText(
 				"//li[contains(@class, 'social-office-enabled')]/span[2]/a"));
 		selenium.clickAt("//li[contains(@class, 'social-office-enabled')]/span[2]/a",
-			RuntimeVariables.replace("Restricted Site Name"));
+			RuntimeVariables.replace("Public Restricted Site Name"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Restricted Site Name"),
+		assertEquals(RuntimeVariables.replace("Public Restricted Site Name"),
 			selenium.getText("//div[@class='community-title']/a/span"));
 		assertEquals(RuntimeVariables.replace("Home"),
 			selenium.getText("//nav/ul/li[contains(.,'Home')]/a/span"));
@@ -87,8 +86,8 @@ public class SOUs_ViewSitesSiteTypeRestrictedTest extends BaseTestCase {
 			selenium.getText("//nav/ul/li[contains(.,'Documents')]/a/span"));
 		assertEquals(RuntimeVariables.replace("Forums"),
 			selenium.getText("//nav/ul/li[contains(.,'Forums')]/a/span"));
-		assertEquals(RuntimeVariables.replace("Blog"),
-			selenium.getText("//nav/ul/li[contains(.,'Blog')]/a/span"));
+		assertEquals(RuntimeVariables.replace("Blogs"),
+			selenium.getText("//nav/ul/li[contains(.,'Blogs')]/a/span"));
 		assertEquals(RuntimeVariables.replace("Wiki"),
 			selenium.getText("//nav/ul/li[contains(.,'Wiki')]/a/span"));
 		assertEquals(RuntimeVariables.replace("Members"),

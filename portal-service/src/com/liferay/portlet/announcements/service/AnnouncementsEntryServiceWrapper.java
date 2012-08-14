@@ -73,6 +73,13 @@ public class AnnouncementsEntryServiceWrapper
 		_announcementsEntryService.deleteEntry(entryId);
 	}
 
+	public com.liferay.portlet.announcements.model.AnnouncementsEntry getEntry(
+		long entryId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _announcementsEntryService.getEntry(entryId);
+	}
+
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry updateEntry(
 		long entryId, java.lang.String title, java.lang.String content,
 		java.lang.String url, java.lang.String type, int displayDateMonth,

@@ -120,6 +120,18 @@ public class AnnouncementsEntryServiceImpl
 		announcementsEntryLocalService.deleteEntry(entryId);
 	}
 
+	public AnnouncementsEntry getEntry(long entryId)
+		throws PortalException, SystemException {
+
+		AnnouncementsEntry entry = announcementsEntryLocalService.getEntry(
+			entryId);
+
+		AnnouncementsEntryPermission.check(
+			getPermissionChecker(), entry, ActionKeys.VIEW);
+
+		return entry;
+	}
+
 	public AnnouncementsEntry updateEntry(
 			long entryId, String title, String content, String url, String type,
 			int displayDateMonth, int displayDateDay, int displayDateYear,

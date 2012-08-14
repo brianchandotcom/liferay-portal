@@ -19,17 +19,26 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.CompanyConstants;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletURLFactoryUtil;
+import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
+import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadServiceUtil;
+import com.liferay.portlet.trash.util.TrashUtil;
+
+import java.util.Date;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -42,6 +51,61 @@ import javax.portlet.PortletURL;
 public class MBThreadTrashHandler extends BaseTrashHandler {
 
 	public static final String CLASS_NAME = MBThread.class.getName();
+
+	/**
+	 * Deletes trash attachments from all the message boards messages from a
+	 * group that were deleted after a given date
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  date the date from which attachments will be deleted
+	 * @throws PortalException if an entry with the primary key could not be
+	 *         found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public void deleteTrashAttachments(long groupId, Date date)
+		throws PortalException, SystemException {
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		long repositoryId = CompanyConstants.SYSTEM;
+
+		String[] threadFileNames = null;
+
+		try {
+			threadFileNames = DLStoreUtil.getFileNames(
+				group.getCompanyId(), repositoryId, "messageboards");
+		}
+		catch (NoSuchDirectoryException nsde) {
+			return;
+		}
+
+		for (String threadFileName : threadFileNames) {
+			String[] messageFileNames = null;
+
+			try {
+				messageFileNames = DLStoreUtil.getFileNames(
+					group.getCompanyId(), repositoryId, threadFileName);
+			}
+			catch (NoSuchDirectoryException nsde) {
+				continue;
+			}
+
+			for (String messageFileName : messageFileNames) {
+				String fileTitle = StringUtil.extractLast(
+					messageFileName, StringPool.FORWARD_SLASH);
+
+				if (fileTitle.startsWith(TrashUtil.TRASH_ATTACHMENTS_DIR)) {
+					String[] attachmentFileNames = DLStoreUtil.getFileNames(
+						group.getCompanyId(), repositoryId,
+						threadFileName + StringPool.FORWARD_SLASH + fileTitle);
+
+					TrashUtil.deleteEntriesAttachments(
+						group.getCompanyId(), repositoryId, date,
+						attachmentFileNames);
+				}
+			}
+		}
+	}
 
 	/**
 	 * Deletes all message boards threads with the matching primary keys.

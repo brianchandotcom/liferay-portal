@@ -373,15 +373,14 @@ public class StagingImpl implements Staging {
 			portalPreferences, layoutSetBranchId, plid);
 	}
 
-	public void disableStaging(
-			Group scopeGroup, Group liveGroup, ServiceContext serviceContext)
+	public void disableStaging(Group liveGroup, ServiceContext serviceContext)
 		throws Exception {
 
-		disableStaging(null, scopeGroup, liveGroup, serviceContext);
+		disableStaging((PortletRequest)null, liveGroup, serviceContext);
 	}
 
 	public void disableStaging(
-			PortletRequest portletRequest, Group scopeGroup, Group liveGroup,
+			PortletRequest portletRequest, Group liveGroup,
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -434,6 +433,23 @@ public class StagingImpl implements Staging {
 			liveGroup.getGroupId(), typeSettingsProperties.toString());
 	}
 
+	@Deprecated
+	public void disableStaging(
+			Group scopeGroup, Group liveGroup, ServiceContext serviceContext)
+		throws Exception {
+
+		disableStaging((PortletRequest)null, liveGroup, serviceContext);
+	}
+
+	@Deprecated
+	public void disableStaging(
+			PortletRequest portletRequest, Group scopeGroup, Group liveGroup,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		disableStaging(portletRequest, liveGroup, serviceContext);
+	}
+
 	public void enableLocalStaging(
 			long userId, Group scopeGroup, Group liveGroup,
 			boolean branchingPublic, boolean branchingPrivate,
@@ -441,7 +457,7 @@ public class StagingImpl implements Staging {
 		throws Exception {
 
 		if (liveGroup.isStagedRemotely()) {
-			disableStaging(scopeGroup, liveGroup, serviceContext);
+			disableStaging(liveGroup, serviceContext);
 		}
 
 		UnicodeProperties typeSettingsProperties =
@@ -525,7 +541,7 @@ public class StagingImpl implements Staging {
 			remoteGroupId);
 
 		if (liveGroup.hasStagingGroup()) {
-			disableStaging(scopeGroup, liveGroup, serviceContext);
+			disableStaging(liveGroup, serviceContext);
 		}
 
 		UnicodeProperties typeSettingsProperties =
@@ -1333,8 +1349,7 @@ public class StagingImpl implements Staging {
 
 		if (stagingType == StagingConstants.TYPE_NOT_STAGED) {
 			if (liveGroup.hasStagingGroup() || liveGroup.isStagedRemotely()) {
-				disableStaging(
-					portletRequest, scopeGroup, liveGroup, serviceContext);
+				disableStaging(portletRequest, liveGroup, serviceContext);
 			}
 		}
 		else if (stagingType == StagingConstants.TYPE_LOCAL_STAGING) {

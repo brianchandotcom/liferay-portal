@@ -20,10 +20,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SOUs_RepostMicroblogsContentProfileTest extends BaseTestCase {
-	public void testSOUs_RepostMicroblogsContentProfile()
-		throws Exception {
-		selenium.open("/web/joebloggs/so/profile");
+public class ViewSOURepostMBContentProfileTest extends BaseTestCase {
+	public void testViewSOURepostMBContentProfile() throws Exception {
+		selenium.open("/web/socialoffice01/so/profile");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -32,7 +31,7 @@ public class SOUs_RepostMicroblogsContentProfileTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//nav/ul/li[contains(.,'Microblogs')]/a/span")) {
+							"xpath=(//div[@class='lfr-contact-name']/a)[2]")) {
 					break;
 				}
 			}
@@ -42,17 +41,8 @@ public class SOUs_RepostMicroblogsContentProfileTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("//nav/ul/li[contains(.,'Microblogs')]/a/span",
-			RuntimeVariables.replace("Microblogs"));
-		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("//div[@class='user-name']/span"));
-		assertEquals(RuntimeVariables.replace("Microblogs Post"),
-			selenium.getText("//div[@class='content']"));
-		assertEquals(RuntimeVariables.replace("Repost"),
-			selenium.getText("//span[@class='action repost']/a"));
-		selenium.clickAt("//span[@class='action repost']/a",
-			RuntimeVariables.replace("Repost"));
+		assertEquals(RuntimeVariables.replace("Social01 Office01 User01"),
+			selenium.getText("xpath=(//div[@class='lfr-contact-name']/a)[2]"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -60,7 +50,7 @@ public class SOUs_RepostMicroblogsContentProfileTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[@class='repost-header']")) {
+				if (selenium.isVisible("//div[@class='activity-title']")) {
 					break;
 				}
 			}
@@ -71,14 +61,9 @@ public class SOUs_RepostMicroblogsContentProfileTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace(
-				"Do you want to repost this entry?"),
-			selenium.getText("//div[@class='repost-header']"));
-		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("//div[@class='user-name']/span"));
-		assertEquals(RuntimeVariables.replace("Microblogs Post"),
-			selenium.getText("//div[@class='content']"));
-		selenium.clickAt("//input[@value='Post']",
-			RuntimeVariables.replace("Post"));
+				"Reposted From Joe: Microblogs Post"),
+			selenium.getText("//div[@class='activity-title']"));
+		selenium.open("/web/socialoffice01/so/microblogs");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -86,7 +71,7 @@ public class SOUs_RepostMicroblogsContentProfileTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[@class='lfr-contact-name']/a")) {
+				if (selenium.isVisible("//div[@class='user-name']")) {
 					break;
 				}
 			}
@@ -95,5 +80,13 @@ public class SOUs_RepostMicroblogsContentProfileTest extends BaseTestCase {
 
 			Thread.sleep(1000);
 		}
+
+		assertEquals(RuntimeVariables.replace(
+				"Social01 Office01 User01 Reposted From Joe Bloggs"),
+			selenium.getText("//div[@class='user-name']"));
+		assertEquals(RuntimeVariables.replace("Social01 Office01 User01"),
+			selenium.getText("//div[@class='user-name']/span"));
+		assertEquals(RuntimeVariables.replace("Microblogs Post"),
+			selenium.getText("//div[@class='content']"));
 	}
 }

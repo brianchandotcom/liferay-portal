@@ -14,7 +14,7 @@
 
 package com.liferay.portalweb.portal;
 
-import com.liferay.portalweb.plugins.samplespring.SampleSpringTests;
+import com.liferay.portalweb.plugins.samplespring.SampleSpringTestPlan;
 import com.liferay.portalweb.portal.login.LoginTests;
 
 import junit.framework.Test;
@@ -29,7 +29,7 @@ public class PluginsSampleSpringTestSuite extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(LoginTests.suite());
-		testSuite.addTest(SampleSpringTests.suite());
+		testSuite.addTest(SampleSpringTestPlan.suite());
 
 		testSuite.addTestSuite(StopSeleniumTest.class);
 

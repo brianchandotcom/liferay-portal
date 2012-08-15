@@ -42,18 +42,11 @@ public class AccessControlAdvisorImpl implements AccessControlAdvisor {
 
 		checkAllowedHosts();
 
-		AccessControlType accessControlType =
-			accessControlled.accessControlType();
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
 
-		if (accessControlType == AccessControlType.AUTHENTICATED) {
-			PermissionChecker permissionChecker =
-				PermissionThreadLocal.getPermissionChecker();
-
-			if ((permissionChecker == null) ||
-				!permissionChecker.isSignedIn()) {
-
-				throw new SecurityException("Authenticated access required");
-			}
+		if ((permissionChecker == null) || !permissionChecker.isSignedIn()) {
+			throw new SecurityException("Authenticated access required");
 		}
 	}
 

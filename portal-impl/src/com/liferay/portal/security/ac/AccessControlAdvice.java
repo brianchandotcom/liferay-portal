@@ -26,19 +26,23 @@ import org.aopalliance.intercept.MethodInvocation;
  * @author Igor Spasic
  * @author Michael C. Han
  * @author Raymond Augé
+ * @author Shuyang Zhou
  */
 public class AccessControlAdvice extends
 	AnnotationChainableMethodAdvice<AccessControlled> {
 
 	@Override
 	public Object before(MethodInvocation methodInvocation) throws Throwable {
+		AccessControlled accessControlled = findAnnotation(methodInvocation);
+
+		if (accessControlled == _nullAccessControlled) {
+			return null;
+		}
+
 		boolean remoteAccess = AccessControlThreadLocal.isRemoteAccess();
 
 		if (remoteAccess) {
 			Method targetMethod = methodInvocation.getMethod();
-
-			AccessControlled accessControlled = findAnnotation(
-				methodInvocation);
 
 			_accessControlAdvisor.accept(targetMethod, accessControlled);
 		}
@@ -59,10 +63,6 @@ public class AccessControlAdvice extends
 
 	private static AccessControlled _nullAccessControlled =
 		new AccessControlled() {
-
-		public AccessControlType accessControlType() {
-			return AccessControlType.ANONYMOUS;
-		}
 
 		public Class<? extends Annotation> annotationType() {
 			return AccessControlled.class;

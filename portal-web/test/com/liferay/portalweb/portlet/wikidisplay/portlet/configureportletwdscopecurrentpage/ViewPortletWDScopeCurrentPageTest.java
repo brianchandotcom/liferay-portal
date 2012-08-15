@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.wikidisplay.wikinode.selectmainnode;
+package com.liferay.portalweb.portlet.wikidisplay.portlet.configureportletwdscopecurrentpage;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,13 +20,16 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SelectMainNodeTest extends BaseTestCase {
-	public void testSelectMainNode() throws Exception {
+public class ViewPortletWDScopeCurrentPageTest extends BaseTestCase {
+	public void testViewPortletWDScopeCurrentPage() throws Exception {
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		Thread.sleep(5000);
+		assertEquals(RuntimeVariables.replace(
+				"Wiki Display (Wiki Display Test Page)"),
+			selenium.getText("//h1[@class='portlet-title']/span[2]"));
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
 		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
@@ -96,7 +99,7 @@ public class SelectMainNodeTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//select[@id='_86_nodeId']")) {
+				if (selenium.isVisible("link=Scope")) {
 					break;
 				}
 			}
@@ -106,24 +109,13 @@ public class SelectMainNodeTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.select("//select[@id='_86_nodeId']",
-			RuntimeVariables.replace("Main"));
-		selenium.clickAt("//input[@value='Save']",
-			RuntimeVariables.replace("Save"));
+		selenium.clickAt("link=Scope", RuntimeVariables.replace("Scope"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace(
-				"You have successfully updated the setup."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("Main"),
-			selenium.getText("//select[@id='_86_nodeId']"));
-		assertEquals(RuntimeVariables.replace("FrontPage"),
-			selenium.getText("//select[@id='_86_title']"));
+		assertEquals("Select Page",
+			selenium.getSelectedLabel("//select[@id='_86_scopeType']"));
+		assertEquals("Current Page (Wiki Display Test Page)",
+			selenium.getSelectedLabel(
+				"//select[contains(@id,'_86_scopeLayout')]"));
 		selenium.selectFrame("relative=top");
-		selenium.open("/web/guest/home/");
-		selenium.clickAt("link=Wiki Display Test Page",
-			RuntimeVariables.replace("Wiki Display Test Page"));
-		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Wiki FrontPage Content"),
-			selenium.getText("//div[@class='wiki-body']/p"));
 	}
 }

@@ -90,7 +90,9 @@ List<Group> mySites = user.getMySites(true, max);
 				showPrivateSite = false;
 			}
 
-			if (!(mySite.isRegularSite() && GroupPermissionUtil.contains(permissionChecker, mySite.getGroupId(), ActionKeys.ADD_LAYOUT)) && !(mySite.isUser())) {
+			boolean hasAddLayoutPermission = GroupPermissionUtil.contains(permissionChecker, mySite.getGroupId(), ActionKeys.ADD_LAYOUT);
+
+			if (!(mySite.isRegularSite() && hasAddLayoutPermission) && !mySite.isUser()) {
 				showPublicSite = false;
 				showPrivateSite = false;
 			}
@@ -170,12 +172,14 @@ List<Group> mySites = user.getMySites(true, max);
 
 									stagingGroupId = stagingGroup.getGroupId();
 
-									if ((mySite.getPublicLayoutsPageCount() == 0) && (stagingGroup.getPublicLayoutsPageCount() > 0) && GroupPermissionUtil.contains(permissionChecker, mySite.getGroupId(), ActionKeys.VIEW_STAGING)) {
-										showPublicSiteStaging = true;
-									}
+									if (GroupPermissionUtil.contains(permissionChecker, mySite.getGroupId(), ActionKeys.VIEW_STAGING)) {
+										if ((mySite.getPublicLayoutsPageCount() == 0) && (stagingGroup.getPublicLayoutsPageCount() > 0)) {
+											showPublicSiteStaging = true;
+										}
 
-									if ((mySite.getPrivateLayoutsPageCount() == 0) && (stagingGroup.getPrivateLayoutsPageCount() > 0) && GroupPermissionUtil.contains(permissionChecker, mySite.getGroupId(), ActionKeys.VIEW_STAGING)) {
-										showPrivateSiteStaging = true;
+										if ((mySite.getPrivateLayoutsPageCount() == 0) && (stagingGroup.getPrivateLayoutsPageCount() > 0)) {
+											showPrivateSiteStaging = true;
+										}
 									}
 								}
 								%>
@@ -298,7 +302,7 @@ List<Group> mySites = user.getMySites(true, max);
 						String publicAddPageHREF = null;
 						String privateAddPageHREF = null;
 
-						if (mySite.isRegularSite() && GroupPermissionUtil.contains(permissionChecker, mySite.getGroupId(), ActionKeys.ADD_LAYOUT)) {
+						if (mySite.isRegularSite() && hasAddLayoutPermission) {
 							PortletURL addPageURL = new PortletURLImpl(request, PortletKeys.SITE_REDIRECTOR, plid, PortletRequest.ACTION_PHASE);
 
 							addPageURL.setWindowState(WindowState.NORMAL);

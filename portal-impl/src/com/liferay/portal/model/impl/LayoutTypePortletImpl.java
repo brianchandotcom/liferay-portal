@@ -510,6 +510,10 @@ public class LayoutTypePortletImpl
 		return _portalPreferences;
 	}
 
+	public long getPortalPreferencesUserId() {
+		return _portalPreferencesUserId;
+	}
+
 	public List<String> getPortletIds() {
 		List<String> portletIds = new ArrayList<String>();
 
@@ -1166,6 +1170,10 @@ public class LayoutTypePortletImpl
 		_portalPreferences = portalPreferences;
 	}
 
+	public void setPortalPreferencesUserId(long portalPreferencesUserId) {
+		_portalPreferencesUserId = portalPreferencesUserId;
+	}
+
 	public void setPortletIds(String columnId, String portletIds) {
 		setTypeSettingsProperty(columnId, portletIds);
 
@@ -1206,6 +1214,13 @@ public class LayoutTypePortletImpl
 
 	public void setUpdatePermission(boolean updatePermission) {
 		_updatePermission = updatePermission;
+	}
+
+	public void setUserPortalPreferences(
+		long userId, PortalPreferences portalPreferences) {
+
+		setPortalPreferencesUserId(userId);
+		setPortalPreferences(portalPreferences);
 	}
 
 	protected void addNestedColumn(String columnId) {
@@ -1674,6 +1689,7 @@ public class LayoutTypePortletImpl
 	private boolean _enablePortletLayoutListener = true;
 	private Layout _layoutSetPrototypeLayout;
 	private PortalPreferences _portalPreferences;
+	private long _portalPreferencesUserId;
 	private boolean _updatePermission;
 
 }

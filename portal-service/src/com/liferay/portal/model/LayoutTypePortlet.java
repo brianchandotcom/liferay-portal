@@ -110,6 +110,8 @@ public interface LayoutTypePortlet extends LayoutType {
 
 	public PortalPreferences getPortalPreferences();
 
+	public long getPortalPreferencesUserId();
+
 	public List<String> getPortletIds();
 
 	public List<Portlet> getPortlets() throws SystemException;
@@ -239,6 +241,8 @@ public interface LayoutTypePortlet extends LayoutType {
 
 	public void setPortalPreferences(PortalPreferences portalPreferences);
 
+	public void setPortalPreferencesUserId(long portalPreferencesUserId);
+
 	public void setPortletIds(String columnId, String portletIds);
 
 	public void setStateMax(String stateMax);
@@ -246,5 +250,8 @@ public interface LayoutTypePortlet extends LayoutType {
 	public void setStateMin(String stateMin);
 
 	public void setUpdatePermission(boolean updatePermission);
+
+	public void setUserPortalPreferences(
+		long userId, PortalPreferences portalPreferences);
 
 }

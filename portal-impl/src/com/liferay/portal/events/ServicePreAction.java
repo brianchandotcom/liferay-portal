@@ -639,11 +639,14 @@ public class ServicePreAction extends Action {
 			if (signedIn && customizable && customizedView &&
 				hasCustomizeLayoutPermission) {
 
+				long userId = user.getUserId();
+
 				PortalPreferences portalPreferences =
 					PortletPreferencesFactoryUtil.getPortalPreferences(
-						companyId, user.getUserId(), true);
+						companyId, userId, true);
 
-				layoutTypePortlet.setPortalPreferences(portalPreferences);
+				layoutTypePortlet.setUserPortalPreferences(
+					userId, portalPreferences);
 			}
 
 			LayoutClone layoutClone = LayoutCloneFactory.getInstance();

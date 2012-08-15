@@ -2,6 +2,16 @@
 
 /* ---------- Breadcrumbs ---------- */
 
+.breadcrumbs {
+	a {
+		display: block;
+	}
+
+	.last {
+		background-image: none;
+	}
+}
+
 .breadcrumbs-horizontal {
 	margin-bottom: 1.5em;
 
@@ -24,8 +34,8 @@
 .breadcrumbs-vertical {
 	li {
 		background: url(@theme_image_path@/arrows/07_down.png) no-repeat 50% 100%;
-		padding: 0 0 9px;
 		max-width: auto;
+		padding: 0 0 9px;
 	}
 
 	a {
@@ -38,19 +48,9 @@
 	}
 }
 
-.breadcrumbs {
-	a {
-		display: block;
-	}
-
-	.last {
-		background-image: none;
-	}
-}
-
 /* ---------- Hidden Accessible ---------- */
 
-#skip-to-content, #banner h2, #banner h3, #navigation h1, .site-breadcrumbs h1 {
+#banner h2, #banner h3, #navigation h1, #skip-to-content, .site-breadcrumbs h1 {
 	clip: rect(0 0 0 0);
 	position: absolute;
 }

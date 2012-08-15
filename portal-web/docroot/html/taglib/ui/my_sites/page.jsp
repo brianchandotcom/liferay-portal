@@ -89,6 +89,11 @@ List<Group> mySites = user.getMySites(true, max);
 			else if ((defaultPrivateLayout != null ) && !LayoutPermissionUtil.contains(permissionChecker, defaultPrivateLayout, true, ActionKeys.VIEW)) {
 				showPrivateSite = false;
 			}
+
+			if (!(mySite.isRegularSite() && GroupPermissionUtil.contains(permissionChecker, mySite.getGroupId(), ActionKeys.ADD_LAYOUT)) && !(mySite.isUser())) {
+				showPublicSite = false;
+				showPrivateSite = false;
+			}
 		%>
 
 			<c:if test="<%= showPublicSite || showPrivateSite %>">

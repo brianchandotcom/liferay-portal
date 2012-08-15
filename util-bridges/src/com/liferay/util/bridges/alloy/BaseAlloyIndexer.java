@@ -23,8 +23,12 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.AuditedModel;
 import com.liferay.portal.model.BaseModel;
@@ -38,16 +42,33 @@ import java.util.List;
  */
 public abstract class BaseAlloyIndexer extends BaseIndexer {
 
-	public BaseAlloyIndexer(String portletId, String className) {
+	public BaseAlloyIndexer(
+		String portletId, String className, String serviceClassName) {
+
 		this.portletId = portletId;
 		classNames = new String[] {className};
 
+		String[] classNameParameters = StringUtil.split(
+			className, StringPool.PERIOD);
+
+		String methodName = classNameParameters[classNameParameters.length - 1];
+
 		getModelMethodKey = new MethodKey(
-			"XxxLocalServiceUtil", "getXxx", long.class);
+			serviceClassName, "get" + methodName, long.class);
 		getModelsCountMethodKey = new MethodKey(
-			"XxxLocalServiceUtil", "getXxxsCount");
+			serviceClassName,
+			"get" + TextFormatter.formatPlural(methodName) + "Count");
 		getModelsMethodKey = new MethodKey(
-			"XxxLocalServiceUtil", "getXxxs", int.class, int.class);
+			serviceClassName, "get" + TextFormatter.formatPlural(methodName),
+			int.class, int.class);
+
+		try {
+			MethodCache.get(getModelMethodKey);
+			MethodCache.get(getModelsCountMethodKey);
+			MethodCache.get(getModelsMethodKey);
+		}
+		catch (Exception e) {
+		}
 	}
 
 	public String[] getClassNames() {

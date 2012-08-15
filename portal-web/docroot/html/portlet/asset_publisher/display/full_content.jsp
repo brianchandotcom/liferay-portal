@@ -32,9 +32,9 @@ String title = (String)request.getAttribute("view.jsp-title");
 boolean show = ((Boolean)request.getAttribute("view.jsp-show")).booleanValue();
 boolean print = ((Boolean)request.getAttribute("view.jsp-print")).booleanValue();
 
-request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
-
+request.setAttribute("view.jsp-fullContentRedirect", currentURL);
 request.setAttribute("view.jsp-showIconLabel", true);
+request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, assetEntry);
 %>
 
 <c:if test="<%= showAssetTitle %>">

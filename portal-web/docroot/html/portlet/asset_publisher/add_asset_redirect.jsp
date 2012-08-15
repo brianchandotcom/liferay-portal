@@ -18,6 +18,8 @@
 
 <%
 Portlet selPortlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletDisplay.getId());
+
+String redirect = request.getParameter("redirect");
 %>
 
 <aui:script use="aui-base">
@@ -26,7 +28,15 @@ Portlet selPortlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId
 		{
 			id: '<portlet:namespace />editAsset',
 			portletAjaxable: <%= selPortlet.isAjaxable() %>,
-			refresh: '<%= portletDisplay.getId() %>'
+
+			<c:choose>
+				<c:when test="<%= redirect != null %>">
+					redirect: '<%= redirect %>'
+				</c:when>
+				<c:otherwise>
+					refresh: '<%= portletDisplay.getId() %>'
+				</c:otherwise>
+			</c:choose>
 		}
 	);
 </aui:script>

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -123,35 +124,38 @@ public class EditEntryAction extends PortletAction {
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
 			boolean updateRedirect = false;
 
-			if (redirect.contains("/blogs/" + oldUrlTitle + "/maximized")) {
-				oldUrlTitle += "/maximized";
-			}
+			if (Validator.isNotNull(oldUrlTitle)) {
+				String portletId = HttpUtil.getParameter(
+					redirect, "p_p_id", false);
 
-			if ((entry != null) && Validator.isNotNull(oldUrlTitle) &&
-				(redirect.endsWith("/blogs/" + oldUrlTitle) ||
-				 redirect.contains("/blogs/" + oldUrlTitle + "?") ||
-				 redirect.contains("/blog/" + oldUrlTitle + "?"))) {
+				String oldRedirectParam =
+					PortalUtil.getPortletNamespace(portletId) + "redirect";
 
-				int pos = redirect.indexOf("?");
+				String oldRedirect = HttpUtil.getParameter(
+					redirect, oldRedirectParam, false);
 
-				if (pos == -1) {
-					pos = redirect.length();
+				String newRedirect = null;
+
+				if (Validator.isNotNull(oldRedirect)) {
+					newRedirect = HttpUtil.decodeURL(oldRedirect);
+
+					newRedirect = StringUtil.replace(
+						newRedirect, oldUrlTitle, entry.getUrlTitle());
+
+					newRedirect = StringUtil.replace(
+						newRedirect, oldRedirectParam, "redirect");
+
+					redirect = StringUtil.replace(
+						redirect, oldRedirect, newRedirect);
+				}
+				else if (redirect.endsWith("/blogs/" + oldUrlTitle) ||
+						redirect.contains("/blogs/" + oldUrlTitle + "?") ||
+						redirect.contains("/blog/" + oldUrlTitle + "?")) {
+
+					redirect = StringUtil.replace(
+						redirect, oldUrlTitle, entry.getUrlTitle());
 				}
 
-				String newRedirect = redirect.substring(
-					0, pos - oldUrlTitle.length());
-
-				newRedirect += entry.getUrlTitle();
-
-				if (oldUrlTitle.indexOf("/maximized") != -1) {
-					newRedirect += "/maximized";
-				}
-
-				if (pos < redirect.length()) {
-					newRedirect += "?" + redirect.substring(pos + 1);
-				}
-
-				redirect = newRedirect;
 				updateRedirect = true;
 			}
 

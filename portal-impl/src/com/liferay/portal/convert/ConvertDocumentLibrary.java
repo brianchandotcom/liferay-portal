@@ -24,7 +24,9 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.CompanyConstants;
+import com.liferay.portal.model.Image;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
+import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.util.MaintenanceUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.DuplicateDirectoryException;
@@ -141,6 +143,28 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 				long repositoryId = dlFileEntry.getDataRepositoryId();
 
 				migrateDLFileEntry(companyId, repositoryId, dlFileEntry);
+			}
+		}
+
+		count = ImageLocalServiceUtil.getImagesCount();
+
+		MaintenanceUtil.appendStatus("Migrating " + count + " images");
+
+		pages = count / Indexer.DEFAULT_INTERVAL;
+
+		for (int i = 0; i <= pages; i++) {
+			int start = (i * Indexer.DEFAULT_INTERVAL);
+			int end = start + Indexer.DEFAULT_INTERVAL;
+
+			List<Image> images = ImageLocalServiceUtil.getImages(start, end);
+
+			for (Image image : images) {
+				String fileName =
+					image.getImageId() + StringPool.PERIOD + image.getType();
+
+				migrateFile(
+					_COMPANY_ID, _REPOSITORY_ID, fileName,
+					Store.VERSION_DEFAULT);
 			}
 		}
 	}
@@ -267,11 +291,15 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 		}
 	}
 
+	private static final long _COMPANY_ID = 0;
+
 	private static final String[] _HOOKS = new String[] {
 		AdvancedFileSystemStore.class.getName(), CMISStore.class.getName(),
 		FileSystemStore.class.getName(), JCRStore.class.getName(),
 		S3Store.class.getName()
 	};
+
+	private static final long _REPOSITORY_ID = 0;
 
 	private static Log _log = LogFactoryUtil.getLog(
 		ConvertDocumentLibrary.class);

@@ -149,7 +149,11 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 
 		// Logo
 
-		imageLocalService.deleteImage(layoutSet.getLogoId());
+		if (group.isStagingGroup() || !group.isOrganization() ||
+			!group.isSite()) {
+
+			imageLocalService.deleteImage(layoutSet.getLogoId());
+		}
 
 		// Layout set
 
@@ -158,7 +162,12 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		if (!group.isStagingGroup() && group.isOrganization() &&
 			group.isSite()) {
 
-			addLayoutSet(group.getGroupId(), privateLayout);
+			LayoutSet newLayoutSet = addLayoutSet(
+				group.getGroupId(), privateLayout);
+
+			newLayoutSet.setLogoId(layoutSet.getLogoId());
+
+			layoutSetPersistence.update(newLayoutSet, false);
 		}
 
 		// Counter

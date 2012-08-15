@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.mediagallery;
+package com.liferay.portalweb.portlet.mediagallery.mglar.importmglar;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portlet.mediagallery.dmfolder.DMFolderTestPlan;
-import com.liferay.portalweb.portlet.mediagallery.dmimage.DMImageTestPlan;
-import com.liferay.portalweb.portlet.mediagallery.mglar.MGLARTestPlan;
-import com.liferay.portalweb.portlet.mediagallery.portlet.PortletTestPlan;
+import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.mediagallery.dmfolder.adddmfoldermg.TearDownDMFolderMGTest;
+import com.liferay.portalweb.portlet.mediagallery.portlet.addportletmg.AddPageMGTest;
+import com.liferay.portalweb.portlet.mediagallery.portlet.addportletmg.AddPortletMGTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -26,17 +26,16 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class MediaGalleryTestPlan extends BaseTestSuite {
-
+public class ImportMGLARTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-
-		testSuite.addTest(DMFolderTestPlan.suite());
-		testSuite.addTest(DMImageTestPlan.suite());
-		testSuite.addTest(MGLARTestPlan.suite());
-		testSuite.addTest(PortletTestPlan.suite());
+		testSuite.addTestSuite(AddPageMGTest.class);
+		testSuite.addTestSuite(AddPortletMGTest.class);
+		testSuite.addTestSuite(ImportMGLARTest.class);
+		testSuite.addTestSuite(ViewImportMGLARTest.class);
+		testSuite.addTestSuite(TearDownDMFolderMGTest.class);
+		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;
 	}
-
 }

@@ -55,10 +55,10 @@ public class RegRoleInlineTests extends BaseTestSuite {
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(User_SignInTest.class);
 		testSuite.addTestSuite(User_DeleteBlogsEntryTest.class);
-		testSuite.addTestSuite(User_ViewBlogsEntryTest.class);
+		testSuite.addTestSuite(User_ViewDeleteBlogsEntryTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(SignInTest.class);
-		testSuite.addTestSuite(ViewBlogsEntryTest.class);
+		testSuite.addTestSuite(ViewDeleteBlogsEntryTest.class);
 		testSuite.addTestSuite(AddBlogsEntryTest.class);
 		testSuite.addTestSuite(ViewRegRoleInlineBlogsAddEntryNoTest.class);
 		testSuite.addTestSuite(SignOutTest.class);

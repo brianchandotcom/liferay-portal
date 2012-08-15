@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.permissions.blogs.blogsentry.deleteblogsentry.regrole;
+package com.liferay.portalweb.permissions.blogs.blogsentry.deleteblogsentry.regroleinline;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class User_ViewBlogsEntryTest extends BaseTestCase {
-	public void testUser_ViewBlogsEntry() throws Exception {
+public class User_ViewDeleteBlogsEntryTest extends BaseTestCase {
+	public void testUser_ViewDeleteBlogsEntry() throws Exception {
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));

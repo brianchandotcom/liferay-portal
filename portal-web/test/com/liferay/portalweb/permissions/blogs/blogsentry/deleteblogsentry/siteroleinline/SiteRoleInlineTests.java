@@ -57,10 +57,10 @@ public class SiteRoleInlineTests extends BaseTestSuite {
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(User_SignInTest.class);
 		testSuite.addTestSuite(User_DeleteBlogsEntrySiteTest.class);
-		testSuite.addTestSuite(User_ViewBlogsEntrySiteTest.class);
+		testSuite.addTestSuite(User_ViewDeleteBlogsEntrySiteTest.class);
 		testSuite.addTestSuite(SignOutTest.class);
 		testSuite.addTestSuite(SignInTest.class);
-		testSuite.addTestSuite(ViewBlogsEntrySiteTest.class);
+		testSuite.addTestSuite(ViewDeleteBlogsEntrySiteTest.class);
 		testSuite.addTestSuite(AddBlogsEntrySiteTest.class);
 		testSuite.addTestSuite(ViewSiteRoleInlineBlogsDeleteEntryNoTest.class);
 		testSuite.addTestSuite(SignOutTest.class);

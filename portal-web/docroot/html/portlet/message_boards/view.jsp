@@ -66,11 +66,26 @@ request.setAttribute("view.jsp-threadSubscriptionClassPKs", threadSubscriptionCl
 request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 
 request.setAttribute("view.jsp-portletURL", portletURL);
+
+String assetTagName = ParamUtil.getString(request, "tag");
+
+boolean useAssetEntryQuery = Validator.isNotNull(assetTagName);
+
+long groupThreadsUserId = ParamUtil.getLong(request, "groupThreadsUserId");
 %>
 
 <liferay-util:include page="/html/portlet/message_boards/top_links.jsp" />
 
 <c:choose>
+	<c:when test="<%= useAssetEntryQuery %>">
+		<liferay-ui:categorization-filter
+			assetType="threads"
+			portletURL="<%= portletURL %>"
+		/>
+
+		<%@ include file="/html/portlet/message_boards/view_threads.jspf" %>
+
+	</c:when>
 	<c:when test='<%= topLink.equals("message-boards-home") %>'>
 		<%@ include file="/html/portlet/message_boards/category_subscriptions.jspf" %>
 
@@ -178,8 +193,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 	<c:when test='<%= topLink.equals("my-posts") || topLink.equals("my-subscriptions") || topLink.equals("recent-posts") %>'>
 
 		<%
-		long groupThreadsUserId = ParamUtil.getLong(request, "groupThreadsUserId");
-
 		if ((topLink.equals("my-posts") || topLink.equals("my-subscriptions")) && themeDisplay.isSignedIn()) {
 			groupThreadsUserId = user.getUserId();
 		}
@@ -228,92 +241,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 			</liferay-ui:search-container>
 		</c:if>
 
-		<liferay-ui:search-container
-			headerNames="thread,started-by,posts,views,last-post"
-			iteratorURL="<%= portletURL %>"
-		>
-
-			<%
-			String emptyResultsMessage = null;
-
-			if (topLink.equals("my-posts")) {
-				emptyResultsMessage = "you-do-not-have-any-posts";
-			}
-			else if (topLink.equals("my-subscriptions")) {
-				emptyResultsMessage = "you-are-not-subscribed-to-any-threads";
-			}
-			else if (topLink.equals("recent-posts")) {
-				emptyResultsMessage = "there-are-no-recent-posts";
-			}
-
-			searchContainer.setEmptyResultsMessage(emptyResultsMessage);
-			%>
-
-			<liferay-ui:search-container-results>
-
-				<%
-				if (topLink.equals("my-posts")) {
-					results = MBThreadServiceUtil.getGroupThreads(scopeGroupId, groupThreadsUserId, WorkflowConstants.STATUS_ANY, searchContainer.getStart(), searchContainer.getEnd());
-					total = MBThreadServiceUtil.getGroupThreadsCount(scopeGroupId, groupThreadsUserId, WorkflowConstants.STATUS_ANY);
-				}
-				else if (topLink.equals("my-subscriptions")) {
-					results = MBThreadServiceUtil.getGroupThreads(scopeGroupId, groupThreadsUserId, WorkflowConstants.STATUS_APPROVED, true, searchContainer.getStart(), searchContainer.getEnd());
-					total = MBThreadServiceUtil.getGroupThreadsCount(scopeGroupId, groupThreadsUserId, WorkflowConstants.STATUS_APPROVED, true);
-				}
-				else if (topLink.equals("recent-posts")) {
-					Calendar calendar = Calendar.getInstance();
-
-					int offset = GetterUtil.getInteger(recentPostsDateOffset);
-
-					calendar.add(Calendar.DATE, -offset);
-
-					results = MBThreadServiceUtil.getGroupThreads(scopeGroupId, groupThreadsUserId, calendar.getTime(), WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd());
-					total = MBThreadServiceUtil.getGroupThreadsCount(scopeGroupId, groupThreadsUserId, calendar.getTime(), WorkflowConstants.STATUS_APPROVED);
-				}
-
-				pageContext.setAttribute("results", results);
-				pageContext.setAttribute("total", total);
-				%>
-
-			</liferay-ui:search-container-results>
-
-			<liferay-ui:search-container-row
-				className="com.liferay.portlet.messageboards.model.MBThread"
-				keyProperty="threadId"
-				modelVar="thread"
-			>
-
-				<%
-				MBMessage message = null;
-
-				try {
-					message = MBMessageLocalServiceUtil.getMessage(thread.getRootMessageId());
-				}
-				catch (NoSuchMessageException nsme) {
-					_log.error("Thread requires missing root message id " + thread.getRootMessageId());
-
-					message = new MBMessageImpl();
-
-					row.setSkip(true);
-				}
-
-				message = message.toEscapedModel();
-
-				row.setBold(!MBThreadFlagLocalServiceUtil.hasThreadFlag(themeDisplay.getUserId(), thread));
-				row.setObject(new Object[] {message, threadSubscriptionClassPKs});
-				row.setRestricted(!MBMessagePermission.contains(permissionChecker, message, ActionKeys.VIEW));
-				%>
-
-				<liferay-portlet:renderURL varImpl="rowURL">
-					<portlet:param name="struts_action" value="/message_boards/view_message" />
-					<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
-				</liferay-portlet:renderURL>
-
-				<%@ include file="/html/portlet/message_boards/user_thread_columns.jspf" %>
-			</liferay-ui:search-container-row>
-
-			<liferay-ui:search-iterator />
-		</liferay-ui:search-container>
+		<%@ include file="/html/portlet/message_boards/view_threads.jspf" %>
 
 		<c:if test='<%= topLink.equals("recent-posts") %>'>
 

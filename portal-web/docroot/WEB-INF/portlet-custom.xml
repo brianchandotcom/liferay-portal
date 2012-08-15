@@ -265,6 +265,7 @@
 		<security-role-ref>
 			<role-name>user</role-name>
 		</security-role-ref>
+		<supported-public-render-parameter>tag</supported-public-render-parameter>
 	</portlet>
 	<portlet>
 		<portlet-name>20</portlet-name>

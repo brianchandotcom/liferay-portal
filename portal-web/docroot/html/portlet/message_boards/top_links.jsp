@@ -36,6 +36,7 @@ portletURL.setParameter("struts_action", "/message_boards/view");
 			<li class="top-link first">
 
 				<%
+				portletURL.setParameter("tag", StringPool.BLANK);
 				portletURL.setParameter("topLink", "message-boards-home");
 				%>
 

@@ -1,0 +1,115 @@
+<%--
+/**
+ * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<liferay-ui:search-container
+	headerNames="thread,started-by,posts,views,last-post"
+	iteratorURL="<%= portletURL %>"
+>
+
+	<%
+	String emptyResultsMessage = null;
+
+	if (topLink.equals("my-posts")) {
+		emptyResultsMessage = "you-do-not-have-any-posts";
+	}
+	else if (topLink.equals("my-subscriptions")) {
+		emptyResultsMessage = "you-are-not-subscribed-to-any-threads";
+	}
+	else if (topLink.equals("recent-posts")) {
+		emptyResultsMessage = "there-are-no-recent-posts";
+	}
+	else {
+		emptyResultsMessage = "there-are-no-threads-in-this-category";
+	}
+
+	searchContainer.setEmptyResultsMessage(emptyResultsMessage);
+	%>
+
+	<liferay-ui:search-container-results>
+
+		<%
+		if (useAssetEntryQuery) {
+			AssetEntryQuery assetEntryQuery = new AssetEntryQuery(MBMessage.class.getName(), searchContainer);
+
+			assetEntryQuery.setExcludeZeroViewCount(false);
+
+			results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
+			total = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
+		}
+		else if (topLink.equals("my-posts")) {
+			results = MBThreadServiceUtil.getGroupThreads(scopeGroupId, groupThreadsUserId, WorkflowConstants.STATUS_ANY, searchContainer.getStart(), searchContainer.getEnd());
+			total = MBThreadServiceUtil.getGroupThreadsCount(scopeGroupId, groupThreadsUserId, WorkflowConstants.STATUS_ANY);
+		}
+		else if (topLink.equals("my-subscriptions")) {
+			results = MBThreadServiceUtil.getGroupThreads(scopeGroupId, groupThreadsUserId, WorkflowConstants.STATUS_APPROVED, true, searchContainer.getStart(), searchContainer.getEnd());
+			total = MBThreadServiceUtil.getGroupThreadsCount(scopeGroupId, groupThreadsUserId, WorkflowConstants.STATUS_APPROVED, true);
+		}
+		else if (topLink.equals("recent-posts")) {
+			Calendar calendar = Calendar.getInstance();
+
+			int offset = GetterUtil.getInteger(recentPostsDateOffset);
+
+			calendar.add(Calendar.DATE, -offset);
+
+			results = MBThreadServiceUtil.getGroupThreads(scopeGroupId, groupThreadsUserId, calendar.getTime(), WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd());
+			total = MBThreadServiceUtil.getGroupThreadsCount(scopeGroupId, groupThreadsUserId, calendar.getTime(), WorkflowConstants.STATUS_APPROVED);
+		}
+
+		pageContext.setAttribute("results", results);
+		pageContext.setAttribute("total", total);
+		%>
+
+	</liferay-ui:search-container-results>
+
+	<liferay-ui:search-container-row
+		className="com.liferay.portal.model.BaseModel"
+		keyProperty="primaryKeyObj"
+		modelVar="result"
+	>
+
+		<%@ include file="/html/portlet/message_boards/cast_result.jspf" %>
+
+		<%
+		MBMessage message = null;
+
+		try {
+			message = MBMessageLocalServiceUtil.getMessage(thread.getRootMessageId());
+		}
+		catch (NoSuchMessageException nsme) {
+			_log.error("Thread requires missing root message id " + thread.getRootMessageId());
+
+			message = new MBMessageImpl();
+
+			row.setSkip(true);
+		}
+
+		message = message.toEscapedModel();
+
+		row.setBold(!MBThreadFlagLocalServiceUtil.hasThreadFlag(themeDisplay.getUserId(), thread));
+		row.setObject(new Object[] {message, threadSubscriptionClassPKs});
+		row.setRestricted(!MBMessagePermission.contains(permissionChecker, message, ActionKeys.VIEW));
+		%>
+
+		<liferay-portlet:renderURL varImpl="rowURL">
+			<portlet:param name="struts_action" value="/message_boards/view_message" />
+			<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
+		</liferay-portlet:renderURL>
+
+		<%@ include file="/html/portlet/message_boards/user_thread_columns.jspf" %>
+	</liferay-ui:search-container-row>
+
+	<liferay-ui:search-iterator />
+</liferay-ui:search-container>

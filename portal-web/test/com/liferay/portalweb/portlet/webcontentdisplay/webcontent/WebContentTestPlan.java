@@ -53,6 +53,7 @@ public class WebContentTestPlan extends BaseTestSuite {
 		testSuite.addTest(LocalizeWCWebContentWCDTests.suite());
 		testSuite.addTest(RateWCWebContentWCDTests.suite());
 		testSuite.addTest(SearchWCWebContentWCDTests.suite());
+		testSuite.addTest(SelectParentWCDStructureTests.suite());
 		testSuite.addTest(SelectPortletScopePage2WCWebContentWCDTests.suite());
 		testSuite.addTest(SelectWCWebContentWCDTests.suite());
 		testSuite.addTest(ViewLocalizeWebContentLanguageWCDTests.suite());

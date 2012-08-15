@@ -26,10 +26,14 @@ public class ViewPortletWDScopeCurrentPageTest extends BaseTestCase {
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Options"),
-			selenium.getText("//strong/a"));
 		Thread.sleep(5000);
-		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
+		assertEquals(RuntimeVariables.replace(
+				"Wiki Display (Wiki Display Test Page)"),
+			selenium.getText("//h1[@class='portlet-title']/span[2]"));
+		assertEquals(RuntimeVariables.replace("Options"),
+			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
+		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
+			RuntimeVariables.replace("Options"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -95,7 +99,7 @@ public class ViewPortletWDScopeCurrentPageTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[@class='portlet-body']")) {
+				if (selenium.isVisible("link=Scope")) {
 					break;
 				}
 			}
@@ -105,21 +109,13 @@ public class ViewPortletWDScopeCurrentPageTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Scope"),
-			selenium.getText("link=Scope"));
 		selenium.clickAt("link=Scope", RuntimeVariables.replace("Scope"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isElementPresent("//select[@id='_86_scopeType']"));
 		assertEquals("Select Page",
 			selenium.getSelectedLabel("//select[@id='_86_scopeType']"));
-		assertTrue(selenium.isElementPresent(
-				"//select[contains(@id,'_86_scopeLayout')]"));
 		assertEquals("Current Page (Wiki Display Test Page)",
 			selenium.getSelectedLabel(
 				"//select[contains(@id,'_86_scopeLayout')]"));
 		selenium.selectFrame("relative=top");
-		assertEquals(RuntimeVariables.replace(
-				"Wiki Display (Wiki Display Test Page)"),
-			selenium.getText("//span[@class='portlet-title-text']"));
 	}
 }

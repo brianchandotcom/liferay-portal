@@ -27,10 +27,11 @@ public class ConfigurePortletWDScopeCurrentPageTest extends BaseTestCase {
 		selenium.clickAt("link=Wiki Display Test Page",
 			RuntimeVariables.replace("Wiki Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Options"),
-			selenium.getText("//strong/a"));
 		Thread.sleep(5000);
-		selenium.clickAt("//strong/a", RuntimeVariables.replace("Options"));
+		assertEquals(RuntimeVariables.replace("Options"),
+			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
+		selenium.clickAt("//span[@title='Options']/ul/li/strong/a",
+			RuntimeVariables.replace("Options"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -96,7 +97,7 @@ public class ConfigurePortletWDScopeCurrentPageTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//div[@class='portlet-body']")) {
+				if (selenium.isVisible("link=Scope")) {
 					break;
 				}
 			}
@@ -106,15 +107,28 @@ public class ConfigurePortletWDScopeCurrentPageTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		assertEquals(RuntimeVariables.replace("Scope"),
-			selenium.getText("link=Scope"));
 		selenium.clickAt("link=Scope", RuntimeVariables.replace("Scope"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isElementPresent("//select[@id='_86_scopeType']"));
 		selenium.select("//select[@id='_86_scopeType']",
 			RuntimeVariables.replace("Select Page"));
-		assertTrue(selenium.isElementPresent(
-				"//select[contains(@id,'_86_scopeLayout')]"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//select[contains(@id,'_86_scopeLayout')]")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.select("//select[contains(@id,'_86_scopeLayout')]",
 			RuntimeVariables.replace("Current Page (Wiki Display Test Page)"));
 		selenium.clickAt("//input[@value='Save']",
@@ -123,6 +137,11 @@ public class ConfigurePortletWDScopeCurrentPageTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace(
 				"You have successfully updated the setup."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
+		assertEquals("Select Page",
+			selenium.getSelectedLabel("//select[@id='_86_scopeType']"));
+		assertEquals("Current Page (Wiki Display Test Page)",
+			selenium.getSelectedLabel(
+				"//select[contains(@id,'_86_scopeLayout')]"));
 		selenium.selectFrame("relative=top");
 	}
 }

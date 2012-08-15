@@ -19,18 +19,18 @@
 	<td>Wiki Display Test Page</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>//strong/a</td>
-	<td>Options</td>
-</tr>
-<tr>
 	<td>pause</td>
 	<td>5000</td>
 	<td></td>
 </tr>
 <tr>
+	<td>assertText</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
+	<td>Options</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>//strong/a</td>
+	<td>//span[@title='Options']/ul/li/strong/a</td>
 	<td>Options</td>
 </tr>
 <tr>
@@ -65,11 +65,6 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='portlet-body']</td>
-	<td>Wiki Display - Configuration</td>
-</tr>
-<tr>
-	<td>assertText</td>
 	<td>link=Scope</td>
 	<td>Scope</td>
 </tr>
@@ -79,17 +74,12 @@
 	<td>Scope</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>//select[@id='_86_scopeType']</td>
-	<td>Scope Selector</td>
-</tr>
-<tr>
 	<td>select</td>
 	<td>//select[@id='_86_scopeType']</td>
 	<td>Select Page</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
+	<td>waitForVisible</td>
 	<td>//select[contains(@id,'_86_scopeLayout')]</td>
 	<td>Scope Page Selector</td>
 </tr>
@@ -109,9 +99,19 @@
 	<td>You have successfully updated the setup.</td>
 </tr>
 <tr>
+	<td>assertSelectedLabel</td>
+	<td>//select[@id='_86_scopeType']</td>
+	<td>Select Page</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>//select[contains(@id,'_86_scopeLayout')]</td>
+	<td>Current Page (Wiki Display Test Page)</td>
+</tr>
+<tr>
 	<td>selectFrame</td>
 	<td>relative=top</td>
-	<td></td>
+	<td>top</td>
 </tr>
 </tbody></table>
 </body>

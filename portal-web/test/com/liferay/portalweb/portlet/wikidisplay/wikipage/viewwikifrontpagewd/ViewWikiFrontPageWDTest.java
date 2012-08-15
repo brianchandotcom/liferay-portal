@@ -41,8 +41,8 @@ public class ViewWikiFrontPageWDTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Draft Pages"),
 			selenium.getText(
 				"//div[@class='top-links-container']/div/ul/li[5]/span"));
-		assertTrue(selenium.isElementPresent("//input[@title='Search Pages']"));
-		assertTrue(selenium.isElementPresent("//input[@value='Search']"));
+		assertTrue(selenium.isVisible("//input[@title='Search Pages']"));
+		assertTrue(selenium.isVisible("//input[@value='Search']"));
 		assertEquals(RuntimeVariables.replace("FrontPage"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertEquals(RuntimeVariables.replace("Edit"),
@@ -61,9 +61,9 @@ public class ViewWikiFrontPageWDTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("0 Attachments"),
 			selenium.getText("//div[@class='article-actions']/span[2]/a"));
 		assertTrue(selenium.isPartialText("//div[@class='stats']", "Views"));
-		assertTrue(selenium.isElementPresent(
+		assertTrue(selenium.isVisible(
 				"//div[@class='page-ratings']/div/div[contains(@id,'ratingStar')]"));
-		assertTrue(selenium.isElementPresent(
+		assertTrue(selenium.isVisible(
 				"//div[@class='page-ratings']/div/div[contains(@id,'ratingScore')]"));
 		assertEquals(RuntimeVariables.replace("Comments"),
 			selenium.getText("//div[@class='lfr-panel-title']/span"));

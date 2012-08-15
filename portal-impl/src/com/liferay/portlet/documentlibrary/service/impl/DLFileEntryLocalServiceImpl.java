@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -123,6 +124,10 @@ public class DLFileEntryLocalServiceImpl
 			Map<String, Fields> fieldsMap, File file, InputStream is, long size,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
+
+		if (Validator.isNull(sourceFileName)) {
+			throw new UploadException();
+		}
 
 		if (Validator.isNull(title)) {
 			if (size == 0) {

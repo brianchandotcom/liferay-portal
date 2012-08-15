@@ -198,6 +198,8 @@ else if (dlFileEntryType != null) {
 		<liferay-ui:message key="the-source-file-does-not-have-the-same-extension-as-the-original-file" />
 	</liferay-ui:error>
 
+	<liferay-ui:error exception="<%= UploadException.class %>" message="upload-file" />
+
 	<%
 	long fileMaxSize = PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE);
 

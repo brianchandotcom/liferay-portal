@@ -2044,8 +2044,9 @@ public class StagingImpl implements Staging {
 		throws Exception {
 
 		LayoutExporter.updateLastPublishDate(
-			liveGroup.getPrivateLayoutSet(), 0);
-		LayoutExporter.updateLastPublishDate(liveGroup.getPublicLayoutSet(), 0);
+			liveGroup.getPrivateLayoutSet(), 0, false);
+		LayoutExporter.updateLastPublishDate(
+			liveGroup.getPublicLayoutSet(), 0, false);
 
 		Set<String> parameterNames = serviceContext.getAttributes().keySet();
 

@@ -144,7 +144,7 @@ public class LayoutExporter {
 	}
 
 	public static void updateLastPublishDate(
-			LayoutSet layoutSet, long lastPublishDate)
+			LayoutSet layoutSet, long lastPublishDate, boolean delay)
 		throws Exception {
 
 		UnicodeProperties settingsProperties =
@@ -160,7 +160,7 @@ public class LayoutExporter {
 
 		LayoutSetLocalServiceUtil.updateSettings(
 			layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
-			settingsProperties.toString());
+			settingsProperties.toString(), delay);
 	}
 
 	public byte[] exportLayouts(
@@ -554,7 +554,7 @@ public class LayoutExporter {
 		}
 		finally {
 			if (updateLastPublishDate) {
-				updateLastPublishDate(layoutSet, lastPublishDate);
+				updateLastPublishDate(layoutSet, lastPublishDate, true);
 			}
 		}
 	}

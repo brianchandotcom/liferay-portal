@@ -19,6 +19,8 @@ import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.NoSuchVirtualHostException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
@@ -33,6 +35,7 @@ import com.liferay.portal.model.impl.ColorSchemeImpl;
 import com.liferay.portal.model.impl.ThemeImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.LayoutSetLocalServiceBaseImpl;
+import com.liferay.portal.spring.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -44,6 +47,7 @@ import java.io.InputStream;
 
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 /**
  * @author Brian Wing Shun Chan
@@ -457,11 +461,24 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			long groupId, boolean privateLayout, String settings)
 		throws PortalException, SystemException {
 
+		return updateSettings(groupId, privateLayout, settings, false);
+	}
+
+	public LayoutSet updateSettings(
+			long groupId, boolean privateLayout, String settings, boolean delay)
+		throws PortalException, SystemException {
+
 		LayoutSet layoutSet = layoutSetPersistence.findByG_P(
 			groupId, privateLayout);
 
 		layoutSet.setModifiedDate(new Date());
 		layoutSet.setSettings(settings);
+
+		if (delay) {
+			registerUpdateSettingsCallback(layoutSet);
+
+			return null;
+		}
 
 		layoutSetPersistence.update(layoutSet, false);
 
@@ -512,5 +529,27 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 
 		return layoutSet;
 	}
+
+	protected void registerUpdateSettingsCallback(final LayoutSet layoutSet) {
+
+		TransactionCommitCallbackUtil.registerCallback(
+			new Callable<Void>() {
+
+				public Void call() {
+					try {
+						layoutSetLocalService.updateLayoutSet(layoutSet);
+					}
+					catch (Exception e) {
+						_log.warn(e, e);
+					}
+
+					return null;
+				}
+
+			});
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		LayoutSetLocalServiceImpl.class);
 
 }

@@ -1095,7 +1095,19 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public void waitForPopUp(String windowID, String timeout) {
-		throw new UnsupportedOperationException();
+		int wait = GetterUtil.getInteger(timeout);
+
+		for (int second = 0; second >= wait; second++) {
+			if (getWindowHandles().size() > 1) {
+				break;
+			}
+
+			try {
+				Thread.sleep(1000);
+			}
+			catch (InterruptedException e) {
+			}
+		}
 	}
 
 	public void windowFocus() {

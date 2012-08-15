@@ -310,6 +310,8 @@
 	#set($logo_css_class = "$logo_css_class custom-logo")
 #end
 
+#set ($show_company_logo = true)
+
 #if ($is_guest_group)
 	#set ($show_site_name = false)
 #else
@@ -318,6 +320,10 @@
 	#set ($show_site_name_default = $getterUtil.getBoolean($theme_settings.getProperty("show-site-name-default"), $show_site_name_supported))
 
 	#set ($show_site_name = $getterUtil.getBoolean($layout.layoutSet.getSettingsProperty("showSiteName"), $show_site_name_default))
+
+	#if ($show_site_name && $use_company_logo)
+		#set ($show_company_logo = $getterUtil.getBoolean($layout.layoutSet.getSettingsProperty("showCompanyLogo"), true))
+	#end
 #end
 
 #set($site_logo = $company_logo)

@@ -131,15 +131,25 @@ web.server.display.node=true</echo>
 
 	<target name="run-selenium-versioned-tomcat">
 		<if>
+			<equals arg1="${lp.version}" arg2="6.1.1" />
+			<then>
+				<property name="file.dir" value="6.1.1-ga2" />
+			</then>
+			<else>
+				<property name="file.dir" value="${lp.version}" />
+			</else>
+		</if>
+
+		<if>
 			<not>
 				<uptodate
-					srcfile="${hudson.portal.dependencies.dir}/${lp.version}/${file.name}"
+					srcfile="${hudson.portal.dependencies.dir}/${file.dir}/${file.name}"
 					targetfile="${app.server.parent.dir}/${file.name}"
 				/>
 			</not>
 			<then>
 				<copy
-					file="${hudson.portal.dependencies.dir}/${lp.version}/${file.name}"
+					file="${hudson.portal.dependencies.dir}/${file.dir}/${file.name}"
 					todir="${app.server.parent.dir}"
 				/>
 			</then>

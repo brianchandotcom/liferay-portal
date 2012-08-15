@@ -2181,7 +2181,7 @@
 				<then>
 					<copy todir="${app.server.lib.global.dir}">
 						<fileset
-							dir="${jdbc.drivers.optional.dir}/mysql/5.1.43"
+							dir="${jdbc.drivers.optional.dir}/mysql/5.0.7"
 							includes="*.jar"
 						/>
 					</copy>

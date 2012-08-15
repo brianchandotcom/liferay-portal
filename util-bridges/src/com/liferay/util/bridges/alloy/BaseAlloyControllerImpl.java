@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortletBag;
+import com.liferay.portal.kernel.portlet.PortletBagPool;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
@@ -49,6 +51,7 @@ import java.lang.reflect.Method;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -137,8 +140,16 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 			persistedModel.persist();
 		}
 
-		if (indexer != null) {
-			indexer.reindex(baseModel);
+		if (indexer == null) {
+			return;
+		}
+
+		String baseModelClassName = baseModel.getModelClassName();
+
+		for (String indexerClassName : indexer.getClassNames()) {
+			if (baseModelClassName.equals(indexerClassName)) {
+				indexer.reindex(baseModel);
+			}
 		}
 	}
 
@@ -258,8 +269,24 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 	protected void initIndexer() {
 		indexer = buildIndexer();
 
-		if (indexer != null) {
+		if (indexer == null) {
+			return;
+		}
+
+		for (String className : indexer.getClassNames()) {
+			Indexer indexerCache = IndexerRegistryUtil.getIndexer(className);
+
+			if (indexerCache != null) {
+				continue;
+			}
+
 			IndexerRegistryUtil.register(indexer);
+
+			PortletBag portletBag = PortletBagPool.get(portlet.getPortletId());
+
+			List<Indexer> indexerInstances = portletBag.getIndexerInstances();
+
+			indexerInstances.add(indexer);
 		}
 	}
 
@@ -410,6 +437,20 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 
 	protected String translate(String pattern, Object... arguments) {
 		return LanguageUtil.format(locale, pattern, arguments);
+	}
+
+	protected void unregisterIndexer() {
+		if (indexer == null) {
+			return;
+		}
+
+		IndexerRegistryUtil.unregister(indexer);
+
+		PortletBag portletBag = PortletBagPool.get(portlet.getPortletId());
+
+		List<Indexer> indexerInstances = portletBag.getIndexerInstances();
+
+		indexerInstances.remove(indexer);
 	}
 
 	protected void updateAttachedModel(BaseModel<?> baseModel)

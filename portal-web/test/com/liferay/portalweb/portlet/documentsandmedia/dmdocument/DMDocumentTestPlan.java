@@ -16,6 +16,16 @@ package com.liferay.portalweb.portlet.documentsandmedia.dmdocument;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portlet.documentsandmedia.dmdocument.adddmdocument.AddDMDocumentTests;
+import com.liferay.portalweb.portlet.documentsandmedia.dmdocument.adddmdocumentdoc.AddDMDocumentDocTests;
+import com.liferay.portalweb.portlet.documentsandmedia.dmdocument.adddmdocumentdocx.AddDMDocumentDocxTests;
+import com.liferay.portalweb.portlet.documentsandmedia.dmdocument.adddmdocumentjpeg.AddDMDocumentJpegTests;
+import com.liferay.portalweb.portlet.documentsandmedia.dmdocument.adddmdocumentjpg.AddDMDocumentJpgTests;
+import com.liferay.portalweb.portlet.documentsandmedia.dmdocument.adddmdocumentmp3.AddDMDocumentMp3Tests;
+import com.liferay.portalweb.portlet.documentsandmedia.dmdocument.adddmdocumentodt.AddDMDocumentOdtTests;
+import com.liferay.portalweb.portlet.documentsandmedia.dmdocument.adddmdocumentpdf.AddDMDocumentPdfTests;
+import com.liferay.portalweb.portlet.documentsandmedia.dmdocument.adddmdocumentpng.AddDMDocumentPngTests;
+import com.liferay.portalweb.portlet.documentsandmedia.dmdocument.adddmdocumentxls.AddDMDocumentXlsTests;
+import com.liferay.portalweb.portlet.documentsandmedia.dmdocument.adddmdocumentxlsx.AddDMDocumentXlsxTests;
 import com.liferay.portalweb.portlet.documentsandmedia.dmdocument.adddmfolderdocument.AddDMFolderDocumentTests;
 import com.liferay.portalweb.portlet.documentsandmedia.dmdocument.adddmfolderdocumentdocumentnull.AddDMFolderDocumentDocumentNullTests;
 import com.liferay.portalweb.portlet.documentsandmedia.dmdocument.adddmfolderdocumentnull.AddDMFolderDocumentNullTests;
@@ -63,6 +73,16 @@ public class DMDocumentTestPlan extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(AddDMDocumentTests.suite());
+		testSuite.addTest(AddDMDocumentDocTests.suite());
+		testSuite.addTest(AddDMDocumentDocxTests.suite());
+		testSuite.addTest(AddDMDocumentJpegTests.suite());
+		testSuite.addTest(AddDMDocumentJpgTests.suite());
+		testSuite.addTest(AddDMDocumentMp3Tests.suite());
+		testSuite.addTest(AddDMDocumentOdtTests.suite());
+		testSuite.addTest(AddDMDocumentPdfTests.suite());
+		testSuite.addTest(AddDMDocumentPngTests.suite());
+		testSuite.addTest(AddDMDocumentXlsTests.suite());
+		testSuite.addTest(AddDMDocumentXlsxTests.suite());
 		testSuite.addTest(AddDMFolderDocumentTests.suite());
 		testSuite.addTest(AddDMFolderDocumentDocumentNullTests.suite());
 		testSuite.addTest(AddDMFolderDocumentNullTests.suite());

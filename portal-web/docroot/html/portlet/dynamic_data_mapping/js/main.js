@@ -48,6 +48,40 @@ AUI.add(
 			return (/^[\w\-]+$/).test(value);
 		};
 
+		var _normalizeKey = function(str) {
+			str = A.Text.AccentFold.fold(str);
+
+			A.each(
+				str,
+				function(item, index, collection) {
+					if (!A.Text.Unicode.test(item, 'L') && !A.Text.Unicode.test(item, 'N')) {
+						str = str.replace(item, STR_SPACE);
+					}
+				}
+			);
+
+			return str.replace(/ /g, '_');
+		};
+
+		var LiferayFormBuilderFieldSupport = function() {};
+
+		LiferayFormBuilderFieldSupport.ATTRS = {
+			name: {
+				valueFn: function() {
+					var instance = this;
+
+					return A.FormBuilderField.buildFieldName(_normalizeKey(instance.get('label')));
+				}
+			},
+
+			nameGenerated: {
+				setter: A.DataType.Boolean.parse,
+				value: true
+			}
+		};
+
+		A.Base.mix(A.FormBuilderField, [ LiferayFormBuilderFieldSupport ]);
+
 		var LiferayAvailableField = A.Component.create(
 			{
 				ATTRS: {
@@ -189,6 +223,33 @@ AUI.add(
 						return field;
 					},
 
+					getFieldLocalizedValue: function(field, attribute, locale) {
+						var instance = this;
+
+						var localizationMap = field.get('localizationMap');
+
+						var value = A.Object.getValue(localizationMap, [locale, attribute]) || field.get(attribute);
+
+						return instance.normalizeValue(value);
+					},
+
+					getPropertyModel: function(attributeName) {
+						var instance = this;
+
+						var model = null;
+						var modelList = instance.propertyList.get('data');
+
+						modelList.each(
+							function(item, index, collection) {
+								if (item.get('attributeName') === attributeName) {
+									model = item;
+								}
+							}
+						);
+
+						return model;
+					},
+
 					getXSD: function() {
 						var instance = this;
 
@@ -219,16 +280,6 @@ AUI.add(
 						buffer.push(root.closeTag);
 
 						return buffer.join(STR_BLANK);
-					},
-
-					getFieldLocalizedValue: function(field, attribute, locale) {
-						var instance = this;
-
-						var localizationMap = field.get('localizationMap');
-
-						var value = A.Object.getValue(localizationMap, [locale, attribute]) || field.get(attribute);
-
-						return instance.normalizeValue(value);
 					},
 
 					normalizeValue: function(value) {
@@ -274,7 +325,7 @@ AUI.add(
 									var typeElementOption = instance._createDynamicNode(
 										'dynamic-element',
 										{
-											name: instance._formatOptionsKey(item.label),
+											name: _normalizeKey(item.label),
 											type: 'option',
 											value: Liferay.Util.escapeHTML(item.value)
 										}
@@ -336,6 +387,7 @@ AUI.add(
 								dataType: field.get('dataType'),
 								fieldNamespace: field.get('fieldNamespace'),
 								name: encodeURI(field.get('name')),
+								nameGenerated: field.get('nameGenerated'),
 								type: field.get('type')
 							}
 						);
@@ -448,21 +500,44 @@ AUI.add(
 						};
 					},
 
-					_formatOptionsKey: function(str) {
+					_onPropertyModelChange: function(event) {
 						var instance = this;
 
-						str = A.Text.AccentFold.fold(str);
+						var model = event.target;
+						var attributeName = model.get('attributeName');
+						var editingField = instance.editingField;
+						var changed = event.changed;
 
-						A.each(
-							str,
-							function(item, index, collection) {
-								if (!A.Text.Unicode.test(item, 'L') && !A.Text.Unicode.test(item, 'N')) {
-									str = str.replace(item, STR_SPACE);
+						if (editingField && changed.value) {
+							if ((attributeName === 'name') && (event.generated !== true)) {
+								editingField.set('nameGenerated', false);
+							}
+							else if ((attributeName === 'label') && editingField.get('nameGenerated')) {
+								var normalizedName = _normalizeKey(changed.value.newVal);
+
+								editingField.set('name', normalizedName);
+
+								var nameModel = instance.getPropertyModel('name');
+
+								if (nameModel) {
+									nameModel.set(
+										'value',
+										normalizedName,
+										{
+											generated: true
+										}
+									);
 								}
 							}
-						);
+						}
+					},
 
-						return str.replace(/ /g, '_');
+					_renderSettings: function() {
+						var instance = this;
+
+						LiferayFormBuilder.superclass._renderSettings.apply(instance, arguments);
+
+						instance.propertyList.on('model:change', instance._onPropertyModelChange, instance);
 					},
 
 					_setAvailableFields: function(val) {
@@ -531,7 +606,7 @@ AUI.add(
 								}
 
 								if (instance.editingField === field) {
-									instance.propertyList.set('recordset', field.getProperties());
+									instance.propertyList.set('data', field.getProperties());
 								}
 
 								instance._syncFieldsLocaleUI(locale, field.get('fields'));

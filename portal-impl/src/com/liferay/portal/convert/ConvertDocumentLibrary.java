@@ -24,7 +24,9 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.CompanyConstants;
+import com.liferay.portal.model.Image;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
+import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.util.MaintenanceUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.DuplicateDirectoryException;
@@ -121,6 +123,10 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 			dlFileVersions, new FileVersionVersionComparator(true));
 	}
 
+	protected String getImageFileName(long imageId, String type) {
+		return imageId + StringPool.PERIOD + type;
+	}
+
 	protected void migrateDL() throws Exception {
 		int count = DLFileEntryLocalServiceUtil.getFileEntriesCount();
 
@@ -143,6 +149,8 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 				migrateDLFileEntry(companyId, repositoryId, dlFileEntry);
 			}
 		}
+
+		migrateImages();
 	}
 
 	protected void migrateDLFileEntry(
@@ -211,6 +219,34 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 		}
 	}
 
+	protected void migrateImage(long companyId, long repositoryId, Image image)
+		throws Exception {
+
+		String fileName = getImageFileName(image.getImageId(), image.getType());
+
+		migrateFile(companyId, repositoryId, fileName, Store.VERSION_DEFAULT);
+
+	}
+
+	protected void migrateImages() throws Exception {
+		int count = ImageLocalServiceUtil.getImagesCount();
+
+		MaintenanceUtil.appendStatus("Migrating " + count + " images");
+
+		int pages = count / Indexer.DEFAULT_INTERVAL;
+
+		for (int i = 0; i <= pages; i++) {
+			int start = (i * Indexer.DEFAULT_INTERVAL);
+			int end = start + Indexer.DEFAULT_INTERVAL;
+
+			List<Image> images = ImageLocalServiceUtil.getImages(start, end);
+
+			for (Image image : images) {
+				migrateImage(_IMAGE_COMPANY_ID, _IMAGE_REPOSITORY_ID, image);
+			}
+		}
+	}
+
 	protected void migrateMB() throws Exception {
 		int count = MBMessageLocalServiceUtil.getMBMessagesCount();
 
@@ -272,6 +308,10 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 		FileSystemStore.class.getName(), JCRStore.class.getName(),
 		S3Store.class.getName()
 	};
+
+	private static final long _IMAGE_COMPANY_ID = 0;
+
+	private static final long _IMAGE_REPOSITORY_ID = 0;
 
 	private static Log _log = LogFactoryUtil.getLog(
 		ConvertDocumentLibrary.class);

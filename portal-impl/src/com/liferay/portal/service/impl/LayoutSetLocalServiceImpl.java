@@ -149,17 +149,25 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 
 		// Logo
 
-		imageLocalService.deleteImage(layoutSet.getLogoId());
+		if (group.isStagingGroup() || !group.isOrganization() ||
+			!group.isSite()) {
+
+			imageLocalService.deleteImage(layoutSet.getLogoId());
+		}
 
 		// Layout set
 
-		if (group.isOrganization() && group.isSite()) {
-			layoutSet.setPageCount(0);
+		layoutSetPersistence.removeByG_P(groupId, privateLayout);
 
-			layoutSetPersistence.update(layoutSet, false);
-		}
-		else {
-			layoutSetPersistence.removeByG_P(groupId, privateLayout);
+		if (!group.isStagingGroup() && group.isOrganization() &&
+			group.isSite()) {
+
+			LayoutSet newLayoutSet = addLayoutSet(
+				group.getGroupId(), privateLayout);
+
+			newLayoutSet.setLogoId(layoutSet.getLogoId());
+
+			layoutSetPersistence.update(newLayoutSet, false);
 		}
 
 		// Counter

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -51,10 +50,6 @@ import com.liferay.portlet.asset.NoSuchEntryException;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLink;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
-import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
-import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
-import com.liferay.portlet.asset.service.AssetLinkLocalServiceUtil;
-import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.DuplicateDirectoryException;
 import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
@@ -1166,6 +1161,25 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		WikiPage oldPage = getPage(nodeId, title, version);
 
+		String[] assetTagNames = assetTagLocalService.getTagNames(
+			WikiPage.class.getName(), oldPage.getResourcePrimKey());
+
+		long[] assetCategoryIds = assetCategoryLocalService.getCategoryIds(
+			WikiPage.class.getName(), oldPage.getResourcePrimKey());
+
+		AssetEntry entry = assetEntryLocalService.getEntry(
+			WikiPage.class.getName(), oldPage.getResourcePrimKey());
+
+		List<AssetLink> assetLinks = assetLinkLocalService.getLinks(
+			entry.getEntryId());
+
+		long[] assetLinkIds = StringUtil.split(
+			ListUtil.toString(assetLinks, AssetLink.ENTRY_ID2_ACCESSOR), 0L);
+
+		serviceContext.setAssetTagNames(assetTagNames);
+		serviceContext.setAssetCategoryIds(assetCategoryIds);
+		serviceContext.setAssetLinkEntryIds(assetLinkIds);
+
 		return updatePage(
 			userId, nodeId, title, 0, oldPage.getContent(),
 			WikiPageConstants.REVERTED + " to " + version, false,
@@ -1345,33 +1359,12 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		// Asset
 
-		if (serviceContext.getCommand().equals(Constants.REVERT)) {
-			String[] assetTagNames = AssetTagLocalServiceUtil.getTagNames(
-					WikiPage.class.getName(), page.getResourcePrimKey());
+		String cmd = serviceContext.getCommand();
 
-			long[] assetCategoryIds = AssetCategoryLocalServiceUtil.
-						getCategoryIds(WikiPage.class.getName(),
-							page.getResourcePrimKey());
-
-			AssetEntry entry = AssetEntryLocalServiceUtil.getEntry(
-					WikiPage.class.getName(), page.getResourcePrimKey());
-
-			List<AssetLink> assetLinks = AssetLinkLocalServiceUtil.getLinks(
-				entry.getEntryId());
-
-			long[] assetLinkIds = StringUtil.split(
-				ListUtil.toString(
-					assetLinks, AssetLink.ENTRY_ID2_ACCESSOR), 0L);
-
-			updateAsset(
-				userId, page, assetCategoryIds, assetTagNames, assetLinkIds);
-		}
-		else {
-			updateAsset(
-				userId, page, serviceContext.getAssetCategoryIds(),
-				serviceContext.getAssetTagNames(),
-				serviceContext.getAssetLinkEntryIds());
-		}
+		updateAsset(
+			userId, page, serviceContext.getAssetCategoryIds(),
+			serviceContext.getAssetTagNames(),
+			serviceContext.getAssetLinkEntryIds());
 
 		// Workflow
 

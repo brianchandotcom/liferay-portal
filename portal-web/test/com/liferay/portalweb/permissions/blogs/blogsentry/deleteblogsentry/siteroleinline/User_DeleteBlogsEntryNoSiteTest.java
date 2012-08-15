@@ -12,27 +12,21 @@
  * details.
  */
 
-package com.liferay.portalweb.permissions.blogs.blogsentry;
+package com.liferay.portalweb.permissions.blogs.blogsentry.deleteblogsentry.siteroleinline;
 
-import com.liferay.portalweb.permissions.blogs.blogsentry.addblogsentry.AddBlogsEntryTestPlan;
-import com.liferay.portalweb.permissions.blogs.blogsentry.deleteblogsentry.DeleteBlogsEntryTestPlan;
-import com.liferay.portalweb.portal.BaseTestSuite;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import com.liferay.portalweb.portal.BaseTestCase;
+import com.liferay.portalweb.portal.util.RuntimeVariables;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class BlogsEntryTestPlan extends BaseTestSuite {
-
-	public static Test suite() {
-		TestSuite testSuite = new TestSuite();
-
-		testSuite.addTest(AddBlogsEntryTestPlan.suite());
-		testSuite.addTest(DeleteBlogsEntryTestPlan.suite());
-
-		return testSuite;
+public class User_DeleteBlogsEntryNoSiteTest extends BaseTestCase {
+	public void testUser_DeleteBlogsEntryNoSite() throws Exception {
+		selenium.open("/web/site-name/");
+		selenium.clickAt("link=Blogs Test Page",
+			RuntimeVariables.replace("Blogs Test Page"));
+		selenium.waitForPageToLoad("30000");
+		assertTrue(selenium.isElementNotPresent(
+				"//td[contains(.,'Delete')]/span/a/span"));
 	}
-
 }

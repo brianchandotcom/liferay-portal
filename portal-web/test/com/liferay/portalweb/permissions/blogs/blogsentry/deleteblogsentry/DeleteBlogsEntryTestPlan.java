@@ -12,10 +12,12 @@
  * details.
  */
 
-package com.liferay.portalweb.permissions.blogs.blogsentry;
+package com.liferay.portalweb.permissions.blogs.blogsentry.deleteblogsentry;
 
-import com.liferay.portalweb.permissions.blogs.blogsentry.addblogsentry.AddBlogsEntryTestPlan;
-import com.liferay.portalweb.permissions.blogs.blogsentry.deleteblogsentry.DeleteBlogsEntryTestPlan;
+import com.liferay.portalweb.permissions.blogs.blogsentry.deleteblogsentry.regrole.RegRoleTests;
+import com.liferay.portalweb.permissions.blogs.blogsentry.deleteblogsentry.regroleinline.RegRoleInlineTests;
+import com.liferay.portalweb.permissions.blogs.blogsentry.deleteblogsentry.siterole.SiteRoleTests;
+import com.liferay.portalweb.permissions.blogs.blogsentry.deleteblogsentry.siteroleinline.SiteRoleInlineTests;
 import com.liferay.portalweb.portal.BaseTestSuite;
 
 import junit.framework.Test;
@@ -24,13 +26,15 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class BlogsEntryTestPlan extends BaseTestSuite {
+public class DeleteBlogsEntryTestPlan extends BaseTestSuite {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(AddBlogsEntryTestPlan.suite());
-		testSuite.addTest(DeleteBlogsEntryTestPlan.suite());
+		testSuite.addTest(RegRoleInlineTests.suite());
+		testSuite.addTest(RegRoleTests.suite());
+		testSuite.addTest(SiteRoleInlineTests.suite());
+		testSuite.addTest(SiteRoleTests.suite());
 
 		return testSuite;
 	}

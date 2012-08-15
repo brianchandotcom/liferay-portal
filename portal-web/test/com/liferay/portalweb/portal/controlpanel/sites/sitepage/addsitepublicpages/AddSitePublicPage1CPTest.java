@@ -112,7 +112,7 @@ public class AddSitePublicPage1CPTest extends BaseTestCase {
 				}
 
 				selenium.type("//input[@name='_156_name_en_US']",
-					RuntimeVariables.replace("PublicPage1"));
+					RuntimeVariables.replace("Public Page1"));
 				selenium.clickAt("//input[@value='Add Page']",
 					RuntimeVariables.replace("Add Page"));
 				selenium.waitForPageToLoad("30000");
@@ -169,7 +169,7 @@ public class AddSitePublicPage1CPTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
-				assertEquals(RuntimeVariables.replace("PublicPage1"),
+				assertEquals(RuntimeVariables.replace("Public Page1"),
 					selenium.getText("//li/ul/li/div/div[3]/a"));
 
 			case 100:

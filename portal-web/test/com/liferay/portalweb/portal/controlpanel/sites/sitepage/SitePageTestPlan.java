@@ -17,9 +17,9 @@ package com.liferay.portalweb.portal.controlpanel.sites.sitepage;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.sites.sitepage.addsiteprivatepage.AddSitePrivatePageTests;
 import com.liferay.portalweb.portal.controlpanel.sites.sitepage.addsitepublicpage.AddSitePublicPageTests;
+import com.liferay.portalweb.portal.controlpanel.sites.sitepage.addsitepublicpages.AddSitePublicPagesTests;
 import com.liferay.portalweb.portal.controlpanel.sites.sitepage.viewsiteprivatepagedropdown.ViewSitePrivatePageDropDownTests;
 import com.liferay.portalweb.portal.controlpanel.sites.sitepage.viewsitepublicpagedropdown.ViewSitePublicPageDropDownTests;
-import com.liferay.portalweb.portal.controlpanel.sites.sitepage.addsitepublicpages.AddSitePublicPagesTests;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -32,11 +32,11 @@ public class SitePageTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTest(AddSitePublicPageTests.suite());
 		testSuite.addTest(AddSitePrivatePageTests.suite());
+		testSuite.addTest(AddSitePublicPageTests.suite());
+		testSuite.addTest(AddSitePublicPagesTests.suite());
 		testSuite.addTest(ViewSitePrivatePageDropDownTests.suite());
 		testSuite.addTest(ViewSitePublicPageDropDownTests.suite());
-		testSuite.addTest(AddSitePublicPagesTests.suite());
 
 		return testSuite;
 	}

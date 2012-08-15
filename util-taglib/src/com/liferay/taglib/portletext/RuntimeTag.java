@@ -92,6 +92,12 @@ public class RuntimeTag extends TagSupport {
 			Portlet portlet = PortletLocalServiceUtil.getPortletById(
 				themeDisplay.getCompanyId(), portletId);
 
+			if (!portlet.isInstanceable()) {
+				portlet = (Portlet)portlet.clone();
+			}
+
+			portlet.setStatic(true);
+
 			PortletContainerUtil.render(request, response, portlet);
 
 			RuntimePortletIDs runtimePortletIDs =

@@ -87,6 +87,12 @@ public class PortletLogic extends RuntimeLogic {
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
 			themeDisplay.getCompanyId(), portletId);
 
+		if (!portlet.isInstanceable()) {
+			portlet = (Portlet)portlet.clone();
+		}
+
+		portlet.setStatic(true);
+
 		PortletContainerUtil.render(
 			request, bufferCacheServletResponse, portlet);
 

@@ -314,6 +314,8 @@
 	<#assign logo_css_class = logo_css_class + " custom-logo" />
 </#if>
 
+<#assign show_company_logo = true />
+
 <#if is_guest_group>
 	<#assign show_site_name = false />
 <#else>
@@ -322,6 +324,10 @@
 	<#assign show_site_name_default = getterUtil.getBoolean(theme_settings["show-site-name-default"]!"", show_site_name_supported) />
 
 	<#assign show_site_name = getterUtil.getBoolean(layout.layoutSet.getSettingsProperty("showSiteName"), show_site_name_default) />
+
+	<#if show_site_name && use_company_logo>
+		<#assign show_company_logo  = getterUtil.getBoolean(layout.layoutSet.getSettingsProperty("showCompanyLogo"), true) />
+	</#if>
 </#if>
 
 <#assign site_logo = company_logo />

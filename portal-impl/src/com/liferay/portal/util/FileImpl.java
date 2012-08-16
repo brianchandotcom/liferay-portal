@@ -296,7 +296,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 
 			Tika tika = new Tika();
 
-			tika.setMaxStringLength(_maxStringLength);
+			tika.setMaxStringLength(_SIZE_UNLIMITED);
 
 			boolean forkProcess = false;
 
@@ -871,6 +871,8 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 		"_AMP_", "_CP_", "_OP_", "_SEM_"
 	};
 
+	private static final int _SIZE_UNLIMITED = -1;
+
 	private static Log _log = LogFactoryUtil.getLog(FileImpl.class);
 
 	private static FileImpl _instance = new FileImpl();
@@ -898,5 +900,4 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 
 	}
 
-	private int _maxStringLength = -1;
 }

@@ -453,8 +453,11 @@ AUI.add(
 						var instance = this;
 
 						var changed = event.changed;
+
 						var attributeName = event.target.get('attributeName');
+
 						var editingField = instance.editingField;
+
 						var readOnlyAttributes = editingField.get('readOnlyAttributes');
 
 						if (changed.hasOwnProperty('value') && (A.Array.indexOf(readOnlyAttributes, 'name') === -1)) {
@@ -635,7 +638,7 @@ AUI.add(
 						}
 					);
 
-					return str.replace(/ /g, '_');
+					return str.replace(/\s/g, '_');
 				}
 			}
 		);

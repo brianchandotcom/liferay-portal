@@ -18,6 +18,8 @@ import com.liferay.portal.ExpiredLockException;
 import com.liferay.portal.InvalidLockException;
 import com.liferay.portal.NoSuchLockException;
 import com.liferay.portal.NoSuchModelException;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.image.ImageBag;
@@ -26,12 +28,15 @@ import com.liferay.portal.kernel.increment.BufferedIncrement;
 import com.liferay.portal.kernel.increment.NumberIncrement;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.memory.DeleteFileFinalizeAction;
+import com.liferay.portal.kernel.memory.FinalizeManager;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.upload.UploadException;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -88,6 +93,7 @@ import com.liferay.portlet.trash.model.TrashVersion;
 import java.awt.image.RenderedImage;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
@@ -844,9 +850,32 @@ public class DLFileEntryLocalServiceImpl
 		dlAppHelperLocalService.getFileAsStream(
 			userId, new LiferayFileEntry(dlFileEntry), incrementCounter);
 
-		return DLStoreUtil.getFileAsStream(
+		InputStream inputStream = DLStoreUtil.getFileAsStream(
 			dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 			dlFileEntry.getName(), version);
+
+		DB db = DBFactoryUtil.getDB();
+
+		String dbType = db.getType();
+
+		if (dbType.equals(DB.TYPE_POSTGRESQL)) {
+			try {
+				File tempFile = FileUtil.createTempFile(inputStream);
+
+				inputStream.close();
+
+				inputStream = new FileInputStream(tempFile);
+
+				FinalizeManager.register(
+					inputStream,
+					new DeleteFileFinalizeAction(tempFile.getAbsolutePath()));
+			}
+			catch (IOException ioe) {
+				throw new SystemException(ioe);
+			}
+		}
+
+		return inputStream;
 	}
 
 	public List<DLFileEntry> getFileEntries(int start, int end)

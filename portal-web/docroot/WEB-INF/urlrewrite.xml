@@ -26,4 +26,9 @@
 		<from>^/web/guest/home/journal/rss/14/news$</from>
 		<to type="permanent-redirect">/web/guest/home/-/journal/rss/14/news</to>
 	</rule>
+	<rule>
+		<!-- LPS-29295 -->
+		<from>^/api/webdav(.*)</from>
+		<to type="redirect">/webdav$1</to>
+	</rule>
 </urlrewrite>

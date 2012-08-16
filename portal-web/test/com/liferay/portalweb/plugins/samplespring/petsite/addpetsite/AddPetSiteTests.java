@@ -12,10 +12,12 @@
  * details.
  */
 
-package com.liferay.portalweb.portal;
+package com.liferay.portalweb.plugins.samplespring.petsite.addpetsite;
 
-import com.liferay.portalweb.plugins.samplespring.SampleSpringTestPlan;
-import com.liferay.portalweb.portal.login.LoginTests;
+import com.liferay.portalweb.plugins.samplespring.portlet.addportletps.AddPagePSTest;
+import com.liferay.portalweb.plugins.samplespring.portlet.addportletps.AddPortletPSTest;
+import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.util.TearDownPageTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -23,17 +25,16 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class PluginsSampleSpringTestSuite extends BaseTestSuite {
-
+public class AddPetSiteTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-
-		testSuite.addTest(LoginTests.suite());
-		testSuite.addTest(SampleSpringTestPlan.suite());
-
-		testSuite.addTestSuite(StopSeleniumTest.class);
+		testSuite.addTestSuite(AddPagePSTest.class);
+		testSuite.addTestSuite(AddPortletPSTest.class);
+		testSuite.addTestSuite(AddPetSiteTest.class);
+		testSuite.addTestSuite(ViewPetSiteTest.class);
+		testSuite.addTestSuite(TearDownPetSiteTest.class);
+		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;
 	}
-
 }

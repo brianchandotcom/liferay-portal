@@ -12,10 +12,12 @@
  * details.
  */
 
-package com.liferay.portalweb.portal;
+package com.liferay.portalweb.plugins.samplespring.portlet.modifydateformatdaymonthslash;
 
-import com.liferay.portalweb.plugins.samplespring.SampleSpringTestPlan;
-import com.liferay.portalweb.portal.login.LoginTests;
+import com.liferay.portalweb.plugins.samplespring.portlet.addportletpets.AddPagePetsTest;
+import com.liferay.portalweb.plugins.samplespring.portlet.addportletpets.AddPortletPetsTest;
+import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.util.TearDownPageTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -23,17 +25,14 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class PluginsSampleSpringTestSuite extends BaseTestSuite {
-
+public class ModifyDateFormatDayMonthSlashTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-
-		testSuite.addTest(LoginTests.suite());
-		testSuite.addTest(SampleSpringTestPlan.suite());
-
-		testSuite.addTestSuite(StopSeleniumTest.class);
+		testSuite.addTestSuite(AddPagePetsTest.class);
+		testSuite.addTestSuite(AddPortletPetsTest.class);
+		testSuite.addTestSuite(ModifyDateFormatDayMonthSlashTest.class);
+		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;
 	}
-
 }

@@ -12,28 +12,21 @@
  * details.
  */
 
-package com.liferay.portalweb.portal;
+package com.liferay.portalweb.plugins.samplespring.portlet.addportletwelcome;
 
-import com.liferay.portalweb.plugins.samplespring.SampleSpringTestPlan;
-import com.liferay.portalweb.portal.login.LoginTests;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import com.liferay.portalweb.portal.BaseTestCase;
+import com.liferay.portalweb.portal.util.RuntimeVariables;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class PluginsSampleSpringTestSuite extends BaseTestSuite {
-
-	public static Test suite() {
-		TestSuite testSuite = new TestSuite();
-
-		testSuite.addTest(LoginTests.suite());
-		testSuite.addTest(SampleSpringTestPlan.suite());
-
-		testSuite.addTestSuite(StopSeleniumTest.class);
-
-		return testSuite;
+public class ViewPortletWelcomeTest extends BaseTestCase {
+	public void testViewPortletWelcome() throws Exception {
+		selenium.open("/web/guest/home/");
+		selenium.clickAt("link=Welcome Test Page",
+			RuntimeVariables.replace("Welcome Test Page"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("Welcome to the Pet Portal!"),
+			selenium.getText("//div[@class='portlet-body']/h1"));
 	}
-
 }

@@ -943,8 +943,6 @@ public class WebDriverToSeleniumBridge
 
 				targetLocator.window(windowHandle);
 
-				System.out.println(getTitle());
-
 				if (!currentWindowTitle.equals(getTitle())) {
 					return;
 				}

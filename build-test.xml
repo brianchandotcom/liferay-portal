@@ -175,6 +175,16 @@
 		</if>
 
 		<if>
+			<equals arg1="${test.ant.script.selenium.implementation}" arg2="web-driver" />
+			<then>
+				<property name="test.ant.script.file.selenium.implementation" value="&lt;property name=&quot;test.selenium.implementation&quot; value=&quot;web-driver&quot; /&gt;" />
+			</then>
+			<else>
+				<property name="test.ant.script.file.selenium.implementation" value="&lt;property name=&quot;test.selenium.implementation&quot; value=&quot;selenium&quot; /&gt;" />
+			</else>
+		</if>
+
+		<if>
 			<not>
 				<isset property="test.ant.script.template" />
 			</not>
@@ -197,6 +207,16 @@
 			</then>
 			<else>
 				<property name="test.ant.script.file.evaluate.logs" value="&lt;param name=&quot;test.evaluate.logs&quot; value=&quot;true&quot; /&gt;" />
+			</else>
+		</if>
+
+		<if>
+			<equals arg1="${test.ant.script.selenium.implementation}" arg2="web-driver" />
+			<then>
+				<property name="test.ant.script.file.selenium.implementation" value="&lt;param name=&quot;test.selenium.implementation&quot; value=&quot;web-driver&quot; /&gt;" />
+			</then>
+			<else>
+				<property name="test.ant.script.file.selenium.implementation" value="&lt;param name=&quot;test.selenium.implementation&quot; value=&quot;selenium&quot; /&gt;" />
 			</else>
 		</if>
 
@@ -2965,6 +2985,17 @@ executable ZIP file.
 					/>
 				</then>
 			</elseif>
+		</if>
+
+		<if>
+			<equals arg1="${test.selenium.implementation}" arg2="web-driver" />
+			<then>
+				<replace
+					file="portal-web/test/test-portal-web.properties"
+					token="selenium.implementation=com.thoughtworks.selenium.Selenium"
+					value="selenium.implementation=org.openqa.selenium.WebDriver"
+				/>
+			</then>
 		</if>
 
 		<if>

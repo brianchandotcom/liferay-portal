@@ -20,6 +20,7 @@ import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
 import com.liferay.portal.service.impl.PortalServiceImpl;
 import com.liferay.portal.spring.aop.ChainableMethodAdvice;
 
+import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
 import java.lang.reflect.Method;
 
 import org.aopalliance.intercept.MethodInvocation;
@@ -31,8 +32,19 @@ public class PACLAdvice extends ChainableMethodAdvice {
 
 	@Override
 	public Object invoke(MethodInvocation methodInvocation) throws Throwable {
-		if (!PACLPolicyManager.isActive() ||
-			!PortalSecurityManagerThreadLocal.isEnabled()) {
+		if (!PACLPolicyManager.isActive()) {
+
+			ServiceBeanAopProxy.removeMethodInterceptor(methodInvocation, this);
+
+			try {
+				return proceed(methodInvocation);
+			}
+			catch (Throwable throwable) {
+				throw throwable;
+			}
+		}
+
+		if (!PortalSecurityManagerThreadLocal.isEnabled()) {
 
 			try {
 				return proceed(methodInvocation);

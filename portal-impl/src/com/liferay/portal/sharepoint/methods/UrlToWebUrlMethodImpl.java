@@ -16,11 +16,11 @@ package com.liferay.portal.sharepoint.methods;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.sharepoint.Property;
 import com.liferay.portal.sharepoint.ResponseElement;
 import com.liferay.portal.sharepoint.SharepointRequest;
+import com.liferay.portal.sharepoint.SharepointUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,16 +42,22 @@ public class UrlToWebUrlMethodImpl extends BaseMethodImpl {
 
 		String url = sharepointRequest.getParameterValue("url");
 
-		if (_log.isInfoEnabled()) {
-			_log.info("URL is " + url);
-		}
-
 		if (Validator.isNotNull(url)) {
+			if (_log.isInfoEnabled()) {
+				_log.info("Original url " + url);
+			}
+
+			url = SharepointUtil.stripService(url, false);
+
+			if (_log.isInfoEnabled()) {
+				_log.info("Modified url " + url);
+			}
+
+			elements.add(new Property("fileUrl", url));
 			elements.add(new Property("webUrl", "/sharepoint"));
-
-			url = url.substring(1);
-
-			elements.add(new Property("fileUrl", StringPool.BLANK));
+		}
+		else if (_log.isInfoEnabled()) {
+			_log.info("URL is " + url);
 		}
 
 		return elements;

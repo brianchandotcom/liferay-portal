@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
@@ -58,6 +59,8 @@ public class SharepointUtil {
 	}
 
 	public static String[] getPathArray(String path) {
+		path = HttpUtil.fixPath(path, true, true);
+
 		return StringUtil.split(path, CharPool.SLASH);
 	}
 
@@ -103,6 +106,13 @@ public class SharepointUtil {
 		return value.replaceAll("\\\\", StringPool.BLANK);
 	}
 
+	public static String stripService(String url, boolean trailingSlash) {
+		url = _stripService(url, "sharepoint", trailingSlash);
+		url = _stripService(url, "webdav", trailingSlash);
+
+		return url;
+	}
+
 	private SharepointUtil() {
 		_storageMap = new HashMap<String, String>();
 
@@ -139,6 +149,25 @@ public class SharepointUtil {
 
 	private Collection<String> _getStorageTokens() {
 		return _storageMap.values();
+	}
+
+	private static String _stripService(
+		String url, String service, boolean trailingSlash) {
+
+		if (trailingSlash) {
+			service = service + StringPool.SLASH;
+		}
+		else {
+			service = StringPool.SLASH + service;
+		}
+
+		int pos = url.lastIndexOf(service);
+
+		if (pos != -1) {
+			url = url.substring(pos + service.length());
+		}
+
+		return url;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(SharepointUtil.class);

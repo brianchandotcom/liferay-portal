@@ -120,10 +120,14 @@ public class SharepointDocumentWorkspaceServlet extends HttpServlet {
 
 		String path = documentName;
 
-		int pos = documentName.lastIndexOf("sharepoint/");
+		if (_log.isInfoEnabled()) {
+			_log.info("Original path " + path);
+		}
 
-		if (pos != -1) {
-			path = path.substring(pos + 11);
+		path = SharepointUtil.stripService(path, true);
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Modified path " + path);
 		}
 
 		Group group = GroupServiceUtil.getGroup(
@@ -282,7 +286,7 @@ public class SharepointDocumentWorkspaceServlet extends HttpServlet {
 
 			String parentFolderPath = path;
 
-			pos = parentFolderPath.lastIndexOf("/");
+			int pos = parentFolderPath.lastIndexOf("/");
 
 			if (pos != -1) {
 				parentFolderPath = parentFolderPath.substring(0, pos);

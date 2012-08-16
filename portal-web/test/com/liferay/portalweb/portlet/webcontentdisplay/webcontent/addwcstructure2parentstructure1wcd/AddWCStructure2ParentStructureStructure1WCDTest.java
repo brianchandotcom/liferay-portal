@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.webcontentdisplay.webcontent.selectparentwcdstructure;
+package com.liferay.portalweb.portlet.webcontentdisplay.webcontent.addwcstructure2parentstructure1wcd;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,10 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SelectParentWCDStructureTest extends BaseTestCase {
-	public void testSelectParentWCDStructure() throws Exception {
+public class AddWCStructure2ParentStructureStructure1WCDTest
+	extends BaseTestCase {
+	public void testAddWCStructure2ParentStructureStructure1WCD()
+		throws Exception {
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Web Content Display Test Page",
 			RuntimeVariables.replace("Web Content Display Test Page"));
@@ -66,7 +68,40 @@ public class SelectParentWCDStructureTest extends BaseTestCase {
 		}
 
 		selenium.selectFrame("//iframe[@name='_15_changeStruture']");
-		Thread.sleep(5000);
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//script[contains(@src,'/liferay/navigation_interaction.js')]")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//input[@value='Add Structure']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		selenium.clickAt("//input[@value='Add Structure']",
 			RuntimeVariables.replace("Add Structure"));
 		selenium.waitForPageToLoad("30000");
@@ -90,7 +125,6 @@ public class SelectParentWCDStructureTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Select']",
 			RuntimeVariables.replace("Select"));
 		selenium.selectFrame("relative=top");
-		Thread.sleep(5000);
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -110,13 +144,47 @@ public class SelectParentWCDStructureTest extends BaseTestCase {
 		}
 
 		selenium.selectFrame("//iframe[@name='_15_parentStructureSelector']");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//script[contains(@src,'/liferay/navigation_interaction.js')]")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//td[1]/a")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertTrue(selenium.isVisible("//td[1]/a"));
-		assertEquals(RuntimeVariables.replace("WC Structure Name 1"),
+		assertEquals(RuntimeVariables.replace("WC Structure1 Name"),
 			selenium.getText("//td[2]/a"));
-		assertEquals(RuntimeVariables.replace("WC Structure Description 1"),
+		assertEquals(RuntimeVariables.replace("WC Structure1 Description"),
 			selenium.getText("//td[3]/a"));
 		selenium.clickAt("//td[2]/a",
-			RuntimeVariables.replace("WC Structure Name 1"));
+			RuntimeVariables.replace("WC Structure1 Name"));
 		selenium.selectFrame("relative=top");
 
 		for (int second = 0;; second++) {
@@ -137,9 +205,9 @@ public class SelectParentWCDStructureTest extends BaseTestCase {
 
 		selenium.selectFrame("//iframe[@name='_15_changeStruture']");
 		selenium.type("//input[@id='_15_name_en_US']",
-			RuntimeVariables.replace("WC Structure Name 2"));
+			RuntimeVariables.replace("WC Structure2 Name"));
 		selenium.type("//textarea[@id='_15_description_en_US']",
-			RuntimeVariables.replace("WC Structure Description 2"));
+			RuntimeVariables.replace("WC Structure2 Description"));
 		selenium.clickAt("//input[@value='Add Row']",
 			RuntimeVariables.replace("Add Row"));
 		selenium.waitForPageToLoad("30000");
@@ -154,9 +222,9 @@ public class SelectParentWCDStructureTest extends BaseTestCase {
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertTrue(selenium.isVisible("//tr[4]/td[1]/a"));
-		assertEquals(RuntimeVariables.replace("WC Structure Name 2"),
+		assertEquals(RuntimeVariables.replace("WC Structure2 Name"),
 			selenium.getText("//tr[4]/td[2]/a"));
-		assertEquals(RuntimeVariables.replace("WC Structure Description 2"),
+		assertEquals(RuntimeVariables.replace("WC Structure2 Description"),
 			selenium.getText("//tr[4]/td[3]/a"));
 		selenium.selectFrame("relative=top");
 	}

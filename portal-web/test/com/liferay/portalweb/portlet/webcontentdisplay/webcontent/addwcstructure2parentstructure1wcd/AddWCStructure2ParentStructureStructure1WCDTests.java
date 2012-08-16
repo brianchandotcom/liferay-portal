@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.webcontentdisplay.webcontent.selectparentwcdstructure;
+package com.liferay.portalweb.portlet.webcontentdisplay.webcontent.addwcstructure2parentstructure1wcd;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.webcontent.wcstructure.addwcstructure.TearDownWCStructureTest;
@@ -26,14 +26,15 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SelectParentWCDStructureTests extends BaseTestSuite {
+public class AddWCStructure2ParentStructureStructure1WCDTests
+	extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddPageWCDTest.class);
 		testSuite.addTestSuite(AddPortletWCDTest.class);
-		testSuite.addTestSuite(AddWCDStructureTest.class);
-		testSuite.addTestSuite(SelectParentWCDStructureTest.class);
-		testSuite.addTestSuite(RemoveSelectParentWCDStructureTest.class);
+		testSuite.addTestSuite(AddWCStructure1WCDTest.class);
+		testSuite.addTestSuite(AddWCStructure2ParentStructureStructure1WCDTest.class);
+		testSuite.addTestSuite(RemoveParentStructureStructure1Structure2WCDTest.class);
 		testSuite.addTestSuite(TearDownWCStructureTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 

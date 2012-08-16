@@ -17,6 +17,7 @@ package com.liferay.portalweb.portlet.webcontentdisplay.webcontent;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.addportletscopecurrentpagewcwebcontentwcd.AddPortletScopeCurrentPageWCWebContentWCDTests;
 import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.addportletscopedefaultwcwebcontentwcd.AddPortletScopeDefaultWCWebContentWCDTests;
+import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.addwcstructure2parentstructure1wcd.AddWCStructure2ParentStructureStructure1WCDTests;
 import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.deletethisversionwcwebcontentwcdactions.DeleteThisVersionWCWebContentWCDActionsTests;
 import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.editwcwebcontentwcddetails.EditWCWebContentWCDDetailsTests;
 import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.expirethisversionwcwebcontentwcddetails.ExpireThisVersionWCWebContentWCDDetailsTests;
@@ -24,7 +25,6 @@ import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.localizewcwebc
 import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.localizewcwebcontentwcd.LocalizeWCWebContentWCDTests;
 import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.ratewcwebcontentwcd.RateWCWebContentWCDTests;
 import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.searchwcwebcontentwcd.SearchWCWebContentWCDTests;
-import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.selectparentwcdstructure.SelectParentWCDStructureTests;
 import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.selectportletscopepage2wcwebcontentwcd.SelectPortletScopePage2WCWebContentWCDTests;
 import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.selectwcwebcontentwcd.SelectWCWebContentWCDTests;
 import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.viewlocalizewebcontentlanguagewcd.ViewLocalizeWebContentLanguageWCDTests;
@@ -46,6 +46,8 @@ public class WebContentTestPlan extends BaseTestSuite {
 		testSuite.addTest(
 			AddPortletScopeCurrentPageWCWebContentWCDTests.suite());
 		testSuite.addTest(AddPortletScopeDefaultWCWebContentWCDTests.suite());
+		testSuite.addTest(
+			AddWCStructure2ParentStructureStructure1WCDTests.suite());
 		testSuite.addTest(DeleteThisVersionWCWebContentWCDActionsTests.suite());
 		testSuite.addTest(EditWCWebContentWCDDetailsTests.suite());
 		testSuite.addTest(ExpireThisVersionWCWebContentWCDDetailsTests.suite());
@@ -53,11 +55,9 @@ public class WebContentTestPlan extends BaseTestSuite {
 		testSuite.addTest(LocalizeWCWebContentWCDTests.suite());
 		testSuite.addTest(RateWCWebContentWCDTests.suite());
 		testSuite.addTest(SearchWCWebContentWCDTests.suite());
-		testSuite.addTest(SelectParentWCDStructureTests.suite());
 		testSuite.addTest(SelectPortletScopePage2WCWebContentWCDTests.suite());
 		testSuite.addTest(SelectWCWebContentWCDTests.suite());
 		testSuite.addTest(ViewLocalizeWebContentLanguageWCDTests.suite());
-//		testSuite.addTest(ViewLocalizeWebContentLanguageWCDTests.suite());
 		testSuite.addTest(
 			ViewLocalizeWebContentTemplateLanguageWCDTests.suite());
 		testSuite.addTest(

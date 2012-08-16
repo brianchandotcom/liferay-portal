@@ -1,15 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head profile="http://selenium-ide.openqa.org/profiles/test-case">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="selenium.base" href="http://localhost:8080/" />
-<title>SelectParentWCDStructureTest</title>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>AddWCStructure2ParentStructureStructure1WCDTest</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">SelectParentWCDStructureTest</td></tr>
+<tr><td rowspan="1" colspan="3">AddWCStructure2ParentStructureStructure1WCDTest</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -47,9 +44,14 @@
 	<td>Change Structure</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/navigation_interaction.js')]</td>
+	<td>Navigation Interaction</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@value='Add Structure']</td>
+	<td>Add Structure</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -72,11 +74,6 @@
 	<td>top</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
-</tr>
-<tr>
 	<td>waitForVisible</td>
 	<td>//iframe[@name='_15_parentStructureSelector']</td>
 	<td>Structure</td>
@@ -87,6 +84,16 @@
 	<td>Structure</td>
 </tr>
 <tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/navigation_interaction.js')]</td>
+	<td>Navigation Interaction</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//td[1]/a</td>
+	<td>Structure ID</td>
+</tr>
+<tr>
 	<td>assertVisible</td>
 	<td>//td[1]/a</td>
 	<td>Structure ID</td>
@@ -94,17 +101,17 @@
 <tr>
 	<td>assertText</td>
 	<td>//td[2]/a</td>
-	<td>WC Structure Name 1</td>
+	<td>WC Structure1 Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//td[3]/a</td>
-	<td>WC Structure Description 1</td>
+	<td>WC Structure1 Description</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//td[2]/a</td>
-	<td>WC Structure Name 1</td>
+	<td>WC Structure1 Name</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
@@ -124,12 +131,12 @@
 <tr>
 	<td>type</td>
 	<td>//input[@id='_15_name_en_US']</td>
-	<td>WC Structure Name 2</td>
+	<td>WC Structure2 Name</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//textarea[@id='_15_description_en_US']</td>
-	<td>WC Structure Description 2</td>
+	<td>WC Structure2 Description</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -164,19 +171,18 @@
 <tr>
 	<td>assertText</td>
 	<td>//tr[4]/td[2]/a</td>
-	<td>WC Structure Name 2</td>
+	<td>WC Structure2 Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//tr[4]/td[3]/a</td>
-	<td>WC Structure Description 2</td>
+	<td>WC Structure2 Description</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
 	<td>relative=top</td>
 	<td>top</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

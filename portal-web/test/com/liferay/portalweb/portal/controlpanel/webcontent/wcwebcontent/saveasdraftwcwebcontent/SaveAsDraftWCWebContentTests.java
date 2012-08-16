@@ -27,6 +27,13 @@ public class SaveAsDraftWCWebContentTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(SaveAsDraftWCWebContentTest.class);
+		testSuite.addTestSuite(ViewSaveAsDraftWCWebContentTest.class);
+		testSuite.addTestSuite(SaveAsDraft1WCWebContentTest.class);
+		testSuite.addTestSuite(ViewSaveAsDraftWCWebContentTest.class);
+		testSuite.addTestSuite(SaveAsDraft2WCWebContentTest.class);
+		testSuite.addTestSuite(ViewSaveAsDraftWCWebContentTest.class);
+		testSuite.addTestSuite(SaveAsDraft3WCWebContentTest.class);
+		testSuite.addTestSuite(ViewSaveAsDraftWCWebContentTest.class);
 		testSuite.addTestSuite(TearDownWCWebContentTest.class);
 
 		return testSuite;

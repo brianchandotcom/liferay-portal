@@ -205,6 +205,14 @@ body.green, .green .portlet {
 		.calendar-day .day-text {
 			background-color: #909683;
 		}
+
+		.taglib-calendar tr td.calendar-current-day a {
+			&:focus, &:hover {
+				background-color: #F2FFDF;
+				border-color: #B7BCAE;
+				color: #5BCC00;
+			}
+		}
 	}
 
 	.taglib-calendar {
@@ -220,19 +228,7 @@ body.green, .green .portlet {
 			border-color: #909683;
 			color: #5F9930;
 		}
-	}
 
-	.portlet-calendar {
-		.taglib-calendar tr td.calendar-current-day a {
-			&:focus, &:hover {
-				background-color: #F2FFDF;
-				border-color: #B7BCAE;
-				color: #5BCC00;
-			}
-		}
-	}
-
-	.taglib-calendar {
 		.calendar-current-day {
 			&, a {
 				background-color: #FFF;

@@ -79,7 +79,7 @@ hr, .separator {
 
 .private-page .site-title .site-name:after {
 	background-image: url(../images/common/key_small.png);
-	content: "";
+	content: '';
 	display: block;
 	height: 10px;
 	left: 24px;
@@ -172,16 +172,14 @@ hr, .separator {
 				cursor: pointer !important;
 			}
 		}
+
+		.selected a {
+			background: #020509 url(@theme_image_path@/navigation/bullet_selected.png) no-repeat 5px 50%;
+		}
 	}
 
 	li a.active, .child-menu li a:hover {
 		background-color: #020509;
-	}
-
-	.child-menu {
-		.selected a {
-			background: #020509 url(@theme_image_path@/navigation/bullet_selected.png) no-repeat 5px 50%;
-		}
 	}
 }
 
@@ -346,20 +344,6 @@ hr, .separator {
 
 /* ---------- Internet Explorer ---------- */
 
-.ie6 {
-	#wrapper {
-		width: 90%;
-	}
-
-	#banner, #banner h1.logo {
-		height: 1%;
-	}
-}
-
-.ie7 #navigation ul {
-	padding: 2px;
-}
-
 .ie6, .ie7 {
 	#navigation {
 		li, a {
@@ -373,11 +357,25 @@ hr, .separator {
 		}
 
 	}
+
+	#navigation li.hover ul.child-menu, #navigation ul.child-menu-visible {
+		left: 0;
+		top: 25px;
+	}
 }
 
-.ie6 #navigation li.hover .child-menu, .ie6 #navigation ul.child-menu-visible, .ie7 #navigation li.hover ul.child-menu, .ie7 #navigation ul.child-menu-visible {
-	left: 0;
-	top: 25px;
+.ie6 {
+	#wrapper {
+		width: 90%;
+	}
+
+	#banner, #banner h1.logo {
+		height: 1%;
+	}
+}
+
+.ie7 #navigation ul {
+	padding: 2px;
 }
 
 .ie6 .portlet-topper, .ie7 #navigation .child-menu li a {

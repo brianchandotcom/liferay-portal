@@ -87,9 +87,15 @@ LayoutSet selLayoutSet = ((LayoutSet)request.getAttribute("edit_pages.jsp-selLay
 		boolean showSiteNameDefault = GetterUtil.getBoolean(selLayoutSet.getTheme().getSetting("show-site-name-default"), showSiteNameSupported);
 
 		boolean showSiteName = GetterUtil.getBoolean(selLayoutSet.getSettingsProperty("showSiteName"), showSiteNameDefault);
+
+		boolean showCompanyLogo = GetterUtil.getBoolean(selLayoutSet.getSettingsProperty("showCompanyLogo"), true);
 		%>
 
 		<aui:input checked="<%= showSiteName %>" disabled="<%= !showSiteNameSupported %>" helpMessage='<%= showSiteNameSupported ? StringPool.BLANK : "the-theme-selected-for-the-site-does-not-support-displaying-the-title" %>' label="show-site-name" name="TypeSettingsProperties--showSiteName--" type="checkbox" />
+
+		<c:if test="<%= !selLayoutSet.getLogo() && showSiteName %>">
+			<aui:input checked="<%= showCompanyLogo %>" label="show-company-logo" name="TypeSettingsProperties--showCompanyLogo--" type="checkbox" />
+		</c:if>
 	</c:if>
 </aui:fieldset>
 

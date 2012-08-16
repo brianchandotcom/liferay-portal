@@ -64,7 +64,7 @@ public abstract class BaseAlloyIndexer extends BaseIndexer {
 		getModelsCountMethod = serviceClass.getMethod(
 			"get" + TextFormatter.formatPlural(simpleClassName) + "Count",
 			new Class[0]);
-		getModelsCountMethod = serviceClass.getMethod(
+		getModelsMethod = serviceClass.getMethod(
 			"get" + TextFormatter.formatPlural(simpleClassName),
 			new Class[] {int.class, int.class});
 	}

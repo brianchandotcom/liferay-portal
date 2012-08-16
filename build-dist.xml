@@ -896,6 +896,14 @@ release was successful.</echo>
 					destfile="${app.server.glassfish.dir}/modules/web-core.jar"
 					update="yes"
 				/>
+
+				<!-- GLASSFISH-19008 -->
+
+				<zip
+					basedir="tools/servers/glassfish/patches/GLASSFISH-19008/classes"
+					destfile="${app.server.glassfish.dir}/modules/web-core.jar"
+					update="yes"
+				/>
 			</then>
 		</if>
 

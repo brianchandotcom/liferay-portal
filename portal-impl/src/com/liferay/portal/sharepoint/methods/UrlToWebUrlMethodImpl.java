@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.sharepoint.Property;
 import com.liferay.portal.sharepoint.ResponseElement;
 import com.liferay.portal.sharepoint.SharepointRequest;
+import com.liferay.portal.sharepoint.SharepointUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,31 +42,28 @@ public class UrlToWebUrlMethodImpl extends BaseMethodImpl {
 
 		String url = sharepointRequest.getParameterValue("url");
 
-		if (_log.isInfoEnabled()) {
-			_log.info("URL is " + url);
-		}
-
 		if (Validator.isNotNull(url)) {
-			elements.add(new Property("webUrl", _SHAREPOINT));
-
-			int webdavPos = url.indexOf(_WEBDAV);
-			if (webdavPos > -1) {
-				elements.add(new Property("fileUrl", url.substring(webdavPos +
-					_WEBDAV.length())));
-			} else
-			{
-				elements.add(new Property("fileUrl", url.substring(
-					_SHAREPOINT.length())));
+			if (_log.isInfoEnabled()) {
+				_log.info("Original url " + url);
 			}
 
+			url = SharepointUtil.stripService(url, false);
+
+			if (_log.isInfoEnabled()) {
+				_log.info("Modified url " + url);
+			}
+
+			elements.add(new Property("fileUrl", url));
+			elements.add(new Property("webUrl", "/sharepoint"));
+		}
+		else if (_log.isInfoEnabled()) {
+			_log.info("URL is " + url);
 		}
 
 		return elements;
 	}
 
 	private static final String _METHOD_NAME = "url to web url";
-	private static final String _SHAREPOINT = "/sharepoint";
-	private static final String _WEBDAV = "/webdav";
 
 	private static Log _log = LogFactoryUtil.getLog(
 		UrlToWebUrlMethodImpl.class);

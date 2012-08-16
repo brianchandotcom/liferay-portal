@@ -55,6 +55,14 @@ public class SharepointFilter extends SecureFilter {
 		return false;
 	}
 
+	protected boolean isWebDAVRequest(String uri) {
+		if (uri.startsWith("/webdav")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	@Override
 	protected void processFilter(
 			HttpServletRequest request, HttpServletResponse response,
@@ -71,8 +79,7 @@ public class SharepointFilter extends SecureFilter {
 			 userAgent.startsWith("Microsoft Office Protocol Discovery")) &&
 			method.equals(HttpMethods.OPTIONS)) {
 
-			boolean isWebDAV = request.getRequestURI().startsWith("/webdav");
-			setOptionsHeaders(response, isWebDAV);
+			setOptionsHeaders(request, response);
 
 			return;
 		}
@@ -105,11 +112,12 @@ public class SharepointFilter extends SecureFilter {
 	}
 
 	protected void setOptionsHeaders(
-		HttpServletResponse response, boolean isWebDav) {
+		HttpServletRequest request, HttpServletResponse response) {
 
-		if (isWebDav) {
+		if (isWebDAVRequest(request.getRequestURI())) {
 			response.setHeader("MS-Author-Via", "DAV,MS-FP/4.0");
-		} else {
+		}
+		else {
 			response.setHeader("MS-Author-Via", "MS-FP/4.0,DAV");
 		}
 

@@ -80,18 +80,16 @@ public class SharepointServlet extends HttpServlet {
 					throw new SharepointException("Unabled to get root path");
 				}
 
-				int pos = rootPath.lastIndexOf("sharepoint/");
-
-				if (pos != -1) {
-					rootPath = rootPath.substring(pos + 11);
-				}
-
 				// LPS-12922
 
-				pos = rootPath.lastIndexOf("webdav/");
+				if (_log.isInfoEnabled()) {
+					_log.info("Original root path " + rootPath);
+				}
 
-				if (pos != -1) {
-					rootPath = rootPath.substring(pos + 7);
+				rootPath = SharepointUtil.stripService(rootPath, true);
+
+				if (_log.isInfoEnabled()) {
+					_log.info("Modified root path " + rootPath);
 				}
 
 				sharepointRequest.setRootPath(rootPath);

@@ -106,6 +106,13 @@ public class SharepointUtil {
 		return value.replaceAll("\\\\", StringPool.BLANK);
 	}
 
+	public static String stripService(String url, boolean trailingSlash) {
+		url = _stripService(url, "sharepoint", trailingSlash);
+		url = _stripService(url, "webdav", trailingSlash);
+
+		return url;
+	}
+
 	private SharepointUtil() {
 		_storageMap = new HashMap<String, String>();
 
@@ -142,6 +149,25 @@ public class SharepointUtil {
 
 	private Collection<String> _getStorageTokens() {
 		return _storageMap.values();
+	}
+
+	private static String _stripService(
+		String url, String service, boolean trailingSlash) {
+
+		if (trailingSlash) {
+			service = service + StringPool.SLASH;
+		}
+		else {
+			service = StringPool.SLASH + service;
+		}
+
+		int pos = url.lastIndexOf(service);
+
+		if (pos != -1) {
+			url = url.substring(pos + service.length());
+		}
+
+		return url;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(SharepointUtil.class);

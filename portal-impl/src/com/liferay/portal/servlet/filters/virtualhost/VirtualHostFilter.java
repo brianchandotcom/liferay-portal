@@ -74,7 +74,7 @@ public class VirtualHostFilter extends BasePortalFilter {
 
 			if (!keyword.contains(StringPool.PERIOD)) {
 				if (keyword.endsWith(StringPool.STAR)) {
-					keyword = keyword.substring(0, keyword.length()-1);
+					keyword = keyword.substring(0, keyword.length() - 1);
 				}
 				else {
 					keyword = keyword + StringPool.SLASH;

@@ -296,6 +296,8 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 
 			Tika tika = new Tika();
 
+			tika.setMaxStringLength(_maxStringLength);
+
 			boolean forkProcess = false;
 
 			if (PropsValues.TEXT_EXTRACTION_FORK_PROCESS_ENABLED) {
@@ -896,4 +898,5 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 
 	}
 
+	private int _maxStringLength = -1;
 }

@@ -151,6 +151,24 @@ public class UploadServletRequestImpl
 		}
 	}
 
+	public UploadServletRequestImpl(
+		Map<String, FileItem[]> fileParams,
+		Map<String, List<String>> regularParams, HttpServletRequest request) {
+
+		super(request);
+
+		_fileParams = new LinkedHashMap<String, FileItem[]>();
+		_regularParams = new LinkedHashMap<String, List<String>>();
+
+		if (fileParams != null) {
+			_fileParams.putAll(fileParams);
+		}
+
+		if (regularParams != null) {
+			_regularParams.putAll(regularParams);
+		}
+	}
+
 	public void cleanUp() {
 		if ((_fileParams != null) && !_fileParams.isEmpty()) {
 			for (FileItem[] liferayFileItems : _fileParams.values()) {
@@ -411,6 +429,10 @@ public class UploadServletRequestImpl
 		}
 
 		return ArrayUtil.append(parameterValues, parentParameterValues);
+	}
+
+	public Map<String, List<String>> getRegularParameterMap() {
+		return _regularParams;
 	}
 
 	public Long getSize(String name) {

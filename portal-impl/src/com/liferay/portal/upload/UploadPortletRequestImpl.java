@@ -166,11 +166,11 @@ public class UploadPortletRequestImpl
 	}
 
 	public Map<String, FileItem[]> getMultipartParameterMap() {
-		Map<String, FileItem[]> map = new HashMap<String, FileItem[]>();
-
 		if (!(_uploadServletRequest instanceof UploadServletRequestImpl)) {
-			return map;
+			return Collections.emptyMap();
 		}
+
+		Map<String, FileItem[]> map = new HashMap<String, FileItem[]>();
 
 		UploadServletRequestImpl uploadServletRequestImpl =
 			(UploadServletRequestImpl)_uploadServletRequest;
@@ -249,6 +249,33 @@ public class UploadPortletRequestImpl
 		}
 
 		return parameterValues;
+	}
+
+	public Map<String, List<String>> getRegularParameterMap() {
+		if (!(_uploadServletRequest instanceof UploadServletRequestImpl)) {
+			return Collections.emptyMap();
+		}
+
+		Map<String, List<String>> map = new HashMap<String, List<String>>();
+
+		UploadServletRequestImpl uploadServletRequestImpl =
+			(UploadServletRequestImpl)_uploadServletRequest;
+
+		Map<String, List<String>> regularParameterMap =
+			uploadServletRequestImpl.getRegularParameterMap();
+
+		for (String name : regularParameterMap.keySet()) {
+			if (name.startsWith(_namespace)) {
+				map.put(
+					name.substring(_namespace.length(), name.length()),
+					regularParameterMap.get(name));
+			}
+			else {
+				map.put(name, regularParameterMap.get(name));
+			}
+		}
+
+		return map;
 	}
 
 	public Long getSize(String name) {

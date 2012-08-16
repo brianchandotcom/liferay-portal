@@ -175,6 +175,8 @@ _sass_cache_*.css
 
 /test-results
 
+/tools/ant/classes
+
 /tools/maven/*.asc
 
 /tools/liferay-doclet

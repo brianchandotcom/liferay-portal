@@ -1,0 +1,16 @@
+Bundle-Vendor: ${release.info.vendor}
+Bundle-Version: ${release.info.version}
+Javac-Compiler: ${javac.compiler}
+Javac-Debug: ${javac.debug}
+Javac-Deprecation: ${javac.deprecation}
+Javac-Encoding: ${javac.encoding}
+Jsp-Precompile: ${jsp.precompile}
+Liferay-Portal-Code-Name: ${release.info.code.name}
+Liferay-Portal-Build-Date: ${release.info.build.date}
+Liferay-Portal-Build-Number: ${release.info.build.number}
+Liferay-Portal-Build-Revision: ${build.revision}
+Liferay-Portal-Build-Time: ${build.time}
+Liferay-Portal-Parent-Build-Number: ${release.info.parent.build.number}
+Liferay-Portal-Release-Info: ${release.info.release.info}
+Liferay-Portal-Server-Info: ${release.info.server.info}
+Liferay-Portal-Version: ${release.info.version}

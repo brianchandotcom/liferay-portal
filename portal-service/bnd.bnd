@@ -1,4 +1,5 @@
 Bundle-SymbolicName: portal-service
 Export-Package: com.liferay.*
 Import-Package: *;resolution:=optional
+Include-Resource: classes
 Private-Package: *

@@ -1,0 +1,10 @@
+Bundle-SymbolicName: portal-impl
+Export-Package: \
+	com.liferay.*,\
+	content,\
+	custom-sql,\
+	ehcache,\
+	resource-actions
+Import-Package: *;resolution:=optional
+Include-Resource: classes
+Private-Package: *

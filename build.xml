@@ -12,6 +12,8 @@
 	</target>
 
 	<target name="clean">
+		<ant dir="${project.dir}/tools/ant" target="clean" inheritAll="false" />
+
 		<ant dir="classes" target="clean" inheritAll="false" />
 
 		<ant dir="portal-service" target="clean" inheritAll="false" />
@@ -130,6 +132,10 @@
 		</if>
 
 		<antcall target="print-current-time" />
+	</target>
+
+	<target name="clean-and-build-ant-tasks">
+		<ant dir="${project.dir}/tools/ant" target="clean" inheritAll="false" />
 	</target>
 
 	<target name="compile">

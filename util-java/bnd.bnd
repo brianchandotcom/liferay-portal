@@ -3,4 +3,5 @@ Export-Package: \
 	com.liferay.util.*,\
 	org.slf4j.impl.*
 Import-Package: *;resolution:=optional
+Include-Resource: classes
 Private-Package: *

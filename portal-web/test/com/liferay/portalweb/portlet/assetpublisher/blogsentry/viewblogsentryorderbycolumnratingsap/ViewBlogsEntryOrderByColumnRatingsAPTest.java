@@ -38,7 +38,7 @@ public class ViewBlogsEntryOrderByColumnRatingsAPTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Average (1 Vote)"),
 			selenium.getText(
 				"xPath=(//div[contains(@id,'ratingScoreContent')])[1]"));
-		assertTrue(selenium.isElementPresent(
+		assertTrue(selenium.isVisible(
 				"xpath=(//div[contains(@id,'ratingScoreContent')]/img[@class='aui-rating-element aui-rating-element-on'][5])[1]"));
 		assertEquals(RuntimeVariables.replace("Blogs Entry2 Title"),
 			selenium.getText("xPath=(//h1[@class='header-title'])[2]"));
@@ -51,7 +51,7 @@ public class ViewBlogsEntryOrderByColumnRatingsAPTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Average (1 Vote)"),
 			selenium.getText(
 				"xPath=(//div[contains(@id,'ratingScoreContent')])[2]"));
-		assertTrue(selenium.isElementPresent(
+		assertTrue(selenium.isVisible(
 				"xpath=(//div[contains(@id,'ratingScoreContent')]/img[@class='aui-rating-element aui-rating-element-on'][4])[2]"));
 	}
 }

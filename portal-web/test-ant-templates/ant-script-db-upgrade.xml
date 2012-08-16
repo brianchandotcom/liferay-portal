@@ -28,6 +28,7 @@
 			<param name="lp.version" value="${test.ant.script.version}" />
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets.ee}
+			${test.ant.script.file.selenium.implementation}
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}TestSuite" />
 			<param name="tomcat.folder.dir" value="${db-upgrade.tomcat.folder.dir}" />
 		</antcall>
@@ -41,6 +42,7 @@
 		<antcall target="run-latest-upgrade-test">
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.selenium.implementation}
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}LatestTestSuite" />
 		</antcall>
 
@@ -63,6 +65,7 @@
 			<param name="lp.version" value="${test.ant.script.version}" />
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets.ee}
+			${test.ant.script.file.selenium.implementation}
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}TestSuite" />
 			<param name="tomcat.folder.dir" value="${db-upgrade.tomcat.folder.dir}" />
 		</antcall>
@@ -76,6 +79,7 @@
 		<antcall target="run-latest-upgrade-test">
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.selenium.implementation}
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}LatestTestSuite" />
 		</antcall>
 	</target>
@@ -101,6 +105,7 @@
 			<param name="lp.version" value="${test.ant.script.version}" />
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets.ee}
+			${test.ant.script.file.selenium.implementation}
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}TestSuite" />
 			<param name="tomcat.folder.dir" value="${db-upgrade.tomcat.folder.dir}" />
 		</antcall>
@@ -114,6 +119,7 @@
 		<antcall target="run-latest-upgrade-test">
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.selenium.implementation}
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}LatestTestSuite" />
 		</antcall>
 
@@ -143,6 +149,7 @@
 			<param name="lp.version" value="${test.ant.script.version}" />
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets.ee}
+			${test.ant.script.file.selenium.implementation}
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}TestSuite" />
 			<param name="tomcat.folder.dir" value="${db-upgrade.tomcat.folder.dir}" />
 		</antcall>
@@ -156,6 +163,7 @@
 		<antcall target="run-latest-upgrade-test">
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.selenium.implementation}
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}LatestTestSuite" />
 		</antcall>
 
@@ -185,6 +193,7 @@
 			<param name="lp.version" value="${test.ant.script.version}" />
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets.ee}
+			${test.ant.script.file.selenium.implementation}
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}TestSuite" />
 			<param name="tomcat.folder.dir" value="${db-upgrade.tomcat.folder.dir}" />
 		</antcall>
@@ -198,6 +207,7 @@
 		<antcall target="run-latest-upgrade-test">
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.selenium.implementation}
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}LatestTestSuite" />
 		</antcall>
 
@@ -227,6 +237,7 @@
 			<param name="lp.version" value="${test.ant.script.version}" />
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets.ee}
+			${test.ant.script.file.selenium.implementation}
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}TestSuite" />
 			<param name="tomcat.folder.dir" value="${db-upgrade.tomcat.folder.dir}" />
 		</antcall>
@@ -240,6 +251,7 @@
 		<antcall target="run-latest-upgrade-test">
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.selenium.implementation}
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}LatestTestSuite" />
 		</antcall>
 
@@ -269,6 +281,7 @@
 			<param name="lp.version" value="${test.ant.script.version}" />
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets.ee}
+			${test.ant.script.file.selenium.implementation}
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}TestSuite" />
 			<param name="tomcat.folder.dir" value="${db-upgrade.tomcat.folder.dir}" />
 		</antcall>
@@ -282,6 +295,7 @@
 		<antcall target="run-latest-upgrade-test">
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.selenium.implementation}
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}LatestTestSuite" />
 		</antcall>
 
@@ -311,6 +325,7 @@
 			<param name="lp.version" value="${test.ant.script.version}" />
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets.ee}
+			${test.ant.script.file.selenium.implementation}
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}TestSuite" />
 			<param name="tomcat.folder.dir" value="${db-upgrade.tomcat.folder.dir}" />
 		</antcall>
@@ -324,6 +339,7 @@
 		<antcall target="run-latest-upgrade-test">
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.selenium.implementation}
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}LatestTestSuite" />
 		</antcall>
 
@@ -353,6 +369,7 @@
 			<param name="lp.version" value="${test.ant.script.version}" />
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets.ee}
+			${test.ant.script.file.selenium.implementation}
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}TestSuite" />
 			<param name="tomcat.folder.dir" value="${db-upgrade.tomcat.folder.dir}" />
 		</antcall>
@@ -366,6 +383,7 @@
 		<antcall target="run-latest-upgrade-test">
 			${test.ant.script.file.evaluate.logs}
 			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.selenium.implementation}
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}LatestTestSuite" />
 		</antcall>
 

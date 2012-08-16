@@ -1,12 +1,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>AddArticleTest</title>
+<title>AddKBAArticleTest</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">AddArticleTest</td></tr>
+<tr><td rowspan="1" colspan="3">AddKBAArticleTest</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -14,7 +14,27 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
 	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>link=Control Panel</td>
 	<td>Control Panel</td>
 </tr>
@@ -35,26 +55,66 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@id='_1_WAR_knowledgebaseportlet_title']</td>
+	<td>//input[contains(@id,'knowledgebaseportlet_title')]</td>
 	<td>Knowledge Base Admin Article Title</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>waitForElementPresent</td>
+	<td>//span[contains(@id,'knowledgebaseportlet_editor')]</td>
+	<td>Text Area</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[.='Source']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[.='Source']</td>
+	<td>Source</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//td[@id='cke_contents__1_WAR_knowledgebaseportlet_editor']/iframe</td>
-	<td>CK Editor</td>
+	<td>//a[@class='cke_button_source cke_on']</td>
+	<td>Source Button On</td>
 </tr>
 <tr>
-	<td>selectFrame</td>
-	<td>//td[@id='cke_contents__1_WAR_knowledgebaseportlet_editor']/iframe</td>
+	<td>waitForVisible</td>
+	<td>//td[contains(@id,'knowledgebaseportlet_editor')]/textarea</td>
 	<td>CK Editor</td>
 </tr>
 <tr>
 	<td>type</td>
+	<td>//td[contains(@id,'knowledgebaseportlet_editor')]/textarea</td>
+	<td>Knowledge Base Admin Article Content</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[.='Source']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[.='Source']</td>
+	<td>Source</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//td[contains(@id,'knowledgebaseportlet_editor')]</td>
+	<td>Text Area</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//td[contains(@id,'knowledgebaseportlet_editor')]/iframe</td>
+	<td>CK Editor</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//td[contains(@id,'knowledgebaseportlet_editor')]/iframe</td>
+	<td>CK Editor</td>
+</tr>
+<tr>
+	<td>waitForText</td>
 	<td>//body</td>
 	<td>Knowledge Base Admin Article Content</td>
 </tr>
@@ -94,12 +154,12 @@
 	<td>Joe Bloggs</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
+	<td>assertVisible</td>
 	<td>//tr[3]/td[5]</td>
-	<td>Create Datea</td>
+	<td>Create Date</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
+	<td>assertVisible</td>
 	<td>//tr[3]/td[6]</td>
 	<td>Modified Date</td>
 </tr>
@@ -109,11 +169,10 @@
 	<td>0 (Approved)</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
+	<td>assertVisible</td>
 	<td>//tr[3]/td[8]</td>
 	<td>Views</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

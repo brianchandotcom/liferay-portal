@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.plugins.knowledgebase.knowledgebaseadmin.article.addarticle;
+package com.liferay.portalweb.plugins.knowledgebase.knowledgebaseadmin.kbaarticle.addkbaarticle;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 
@@ -22,11 +22,11 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddArticleTests extends BaseTestSuite {
+public class AddKBAArticleTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(AddArticleTest.class);
-		testSuite.addTestSuite(TearDownArticleTest.class);
+		testSuite.addTestSuite(AddKBAArticleTest.class);
+		testSuite.addTestSuite(TearDownKBAArticleTest.class);
 
 		return testSuite;
 	}

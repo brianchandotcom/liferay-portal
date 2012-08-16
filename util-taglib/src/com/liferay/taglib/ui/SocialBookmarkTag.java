@@ -34,6 +34,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class SocialBookmarkTag extends IncludeTag {
 
+	public void setContentId(String contentId) {
+		_contentId = contentId;
+	}
+
 	public void setTarget(String target) {
 		_target = target;
 	}
@@ -52,6 +56,7 @@ public class SocialBookmarkTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		_contentId = null;
 		_target = null;
 		_title = null;
 		_type = null;
@@ -106,6 +111,8 @@ public class SocialBookmarkTag extends IncludeTag {
 				"liferay-ui:social-bookmark:postUrl", getPostUrl());
 		}
 
+		request.setAttribute(
+			"liferay-ui:social-bookmark:contentId", _contentId);
 		request.setAttribute("liferay-ui:social-bookmark:target", _target);
 		request.setAttribute("liferay-ui:social-bookmark:title", _title);
 		request.setAttribute("liferay-ui:social-bookmark:type", _type);
@@ -118,6 +125,7 @@ public class SocialBookmarkTag extends IncludeTag {
 	private static Map<String, String> _jspPaths =
 		new HashMap<String, String>();
 
+	private String _contentId;
 	private String _jspPath;
 	private String _target;
 	private String _title;

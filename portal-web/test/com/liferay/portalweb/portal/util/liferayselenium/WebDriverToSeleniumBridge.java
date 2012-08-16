@@ -933,17 +933,39 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public void selectPopUp(String windowID) {
-		throw new UnsupportedOperationException();
+		Set<String> windowHandles = getWindowHandles();
+
+		if (windowID.equals("") || windowID.equals("null")) {
+			String currentWindowTitle = getTitle();
+
+			for (String windowHandle : windowHandles) {
+				WebDriver.TargetLocator targetLocator = switchTo();
+
+				targetLocator.window(windowHandle);
+
+				if (!currentWindowTitle.equals(getTitle())) {
+					return;
+				}
+			}
+		}
+		else {
+			selectWindow(windowID);
+		}
 	}
 
 	public void selectWindow(String windowID) {
 		Set<String> windowHandles = getWindowHandles();
 
-		if (!windowHandles.isEmpty()) {
-			String title = windowID;
+		if (windowID.equals("null")) {
+			WebDriver.TargetLocator targetLocator = switchTo();
 
-			if (title.startsWith("title=")) {
-				title = title.substring(6);
+			targetLocator.defaultContent();
+		}
+		else {
+			String targetWindowTitle = windowID;
+
+			if (targetWindowTitle.startsWith("title=")) {
+				targetWindowTitle = targetWindowTitle.substring(6);
 			}
 
 			for (String windowHandle : windowHandles) {
@@ -951,15 +973,10 @@ public class WebDriverToSeleniumBridge
 
 				targetLocator.window(windowHandle);
 
-				if (title.equals(getTitle())) {
+				if (targetWindowTitle.equals(getTitle())) {
 					return;
 				}
 			}
-		}
-		else if (windowID.equals("null")) {
-			WebDriver.TargetLocator targetLocator = switchTo();
-
-			targetLocator.defaultContent();
 		}
 	}
 

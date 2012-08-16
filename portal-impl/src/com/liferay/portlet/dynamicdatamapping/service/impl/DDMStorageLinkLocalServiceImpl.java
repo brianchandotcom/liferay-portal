@@ -101,6 +101,12 @@ public class DDMStorageLinkLocalServiceImpl
 		return ddmStorageLinkPersistence.findByStructureId(structureId);
 	}
 
+	public int getStructureStorageLinksCount(long structureId)
+		throws SystemException {
+
+		return ddmStorageLinkPersistence.countByStructureId(structureId);
+	}
+
 	public DDMStorageLink updateStorageLink(
 			long storageLinkId, long classNameId, long classPK)
 		throws PortalException, SystemException {

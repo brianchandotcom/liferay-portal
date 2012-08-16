@@ -319,6 +319,11 @@ public class DDMStorageLinkLocalServiceUtil {
 		return getService().getStructureStorageLinks(structureId);
 	}
 
+	public static int getStructureStorageLinksCount(long structureId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getStructureStorageLinksCount(structureId);
+	}
+
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink updateStorageLink(
 		long storageLinkId, long classNameId, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException,

@@ -948,22 +948,8 @@ public class WebDriverToSeleniumBridge
 				}
 			}
 		}
-		else if (!windowHandles.isEmpty()) {
-			String currentWindowTitle = windowID;
-
-			if (currentWindowTitle.startsWith("title=")) {
-				currentWindowTitle = currentWindowTitle.substring(6);
-			}
-
-			for (String windowHandle : windowHandles) {
-				WebDriver.TargetLocator targetLocator = switchTo();
-
-				targetLocator.window(windowHandle);
-
-				if (currentWindowTitle.equals(getTitle())) {
-					return;
-				}
-			}
+		else {
+			selectWindow(windowID);
 		}
 	}
 
@@ -973,13 +959,13 @@ public class WebDriverToSeleniumBridge
 		if (windowID.equals("null")) {
 			WebDriver.TargetLocator targetLocator = switchTo();
 
-			targetLocator.window(_parentFrameHandle);
+			targetLocator.defaultContent();
 		}
-		else if (!windowHandles.isEmpty()) {
-			String title = windowID;
+		else {
+			String targetWindowTitle = windowID;
 
-			if (title.startsWith("title=")) {
-				title = title.substring(6);
+			if (targetWindowTitle.startsWith("title=")) {
+				targetWindowTitle = targetWindowTitle.substring(6);
 			}
 
 			for (String windowHandle : windowHandles) {
@@ -987,7 +973,7 @@ public class WebDriverToSeleniumBridge
 
 				targetLocator.window(windowHandle);
 
-				if (title.equals(getTitle())) {
+				if (targetWindowTitle.equals(getTitle())) {
 					return;
 				}
 			}

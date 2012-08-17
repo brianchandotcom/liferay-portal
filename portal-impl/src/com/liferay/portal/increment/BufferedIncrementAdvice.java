@@ -67,8 +67,7 @@ public class BufferedIncrementAdvice
 			bufferedIncrement.incrementClass(), value);
 
 		BufferedIncreasableEntry bufferedIncreasableEntry =
-			new BufferedIncreasableEntry(
-				nextMethodInterceptor, methodInvocation, batchKey, increment);
+			new BufferedIncreasableEntry(methodInvocation, batchKey, increment);
 
 		if (_batchablePipe.put(bufferedIncreasableEntry)) {
 			if (bufferedIncrement.parallel()) {

@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTypePortletConstants;
-import com.liferay.portal.service.LayoutServiceUtil;
+import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
@@ -351,7 +351,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 			}
 		}
 
-		layout = LayoutServiceUtil.updateLayout(
+		layout = LayoutLocalServiceUtil.updateLayout(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			layout.getTypeSettings());
 	}

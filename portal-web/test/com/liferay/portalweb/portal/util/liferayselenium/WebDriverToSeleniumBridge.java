@@ -496,7 +496,9 @@ public class WebDriverToSeleniumBridge
 	public String getText(String locator) {
 		WebElement webElement = getWebElement(locator);
 
-		return webElement.getText();
+		String text = webElement.getText();
+
+		return text.trim();
 	}
 
 	@Override

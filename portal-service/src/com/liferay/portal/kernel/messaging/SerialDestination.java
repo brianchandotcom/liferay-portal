@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.util.CentralizedThreadLocal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.PermissionThreadLocal;
 
 import java.util.Set;
 
@@ -69,6 +71,12 @@ public class SerialDestination extends BaseAsyncDestination {
 				"principalPassword", PrincipalThreadLocal.getPassword());
 		}
 
+		if (!message.contains("permissionChecker")) {
+			message.put(
+				"permissionChecker",
+				PermissionThreadLocal.getPermissionChecker());
+		}
+
 		ThreadPoolExecutor threadPoolExecutor = getThreadPoolExecutor();
 
 		Runnable runnable = new MessageRunnable(message) {
@@ -94,6 +102,14 @@ public class SerialDestination extends BaseAsyncDestination {
 					if (Validator.isNotNull(messagePrincipalPassword)) {
 						PrincipalThreadLocal.setPassword(
 							messagePrincipalPassword);
+					}
+
+					PermissionChecker permissionChecker =
+						(PermissionChecker)message.get("permissionChecker");
+
+					if (permissionChecker != null) {
+						PermissionThreadLocal.setPermissionChecker(
+							permissionChecker);
 					}
 
 					Boolean clusterForwardMessage = (Boolean)message.get(

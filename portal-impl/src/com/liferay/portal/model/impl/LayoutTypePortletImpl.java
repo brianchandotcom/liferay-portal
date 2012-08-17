@@ -79,11 +79,9 @@ import java.util.Map;
 public class LayoutTypePortletImpl
 	extends LayoutTypeImpl implements LayoutTypePortlet {
 
-	public static String getFullInstanceSeparator() {
-		String instanceId = PwdGenerator.getPassword(
+	public static String generateInstanceId() {
+		return PwdGenerator.getPassword(
 			PwdGenerator.KEY1 + PwdGenerator.KEY2 + PwdGenerator.KEY3, 12);
-
-		return PortletConstants.INSTANCE_SEPARATOR + instanceId;
 	}
 
 	public LayoutTypePortletImpl(Layout layout) {
@@ -205,7 +203,8 @@ public class LayoutTypePortletImpl
 		if (portlet.isInstanceable() &&
 			!PortletConstants.hasInstanceId(portletId)) {
 
-			portletId = portletId + getFullInstanceSeparator();
+			portletId = PortletConstants.assemblePortletId(
+				portletId, generateInstanceId());
 		}
 
 		if (hasPortletId(portletId)) {
@@ -1264,9 +1263,8 @@ public class LayoutTypePortletImpl
 			String[] portletIds = StringUtil.split(columnValue);
 
 			for (String columnPortletId : portletIds) {
-				if (portletId.equals(columnPortletId) ||
-					(portletId.equals(rootPortletId) &&
-					 columnPortletId.startsWith(rootPortletId))) {
+				if (PortletConstants.getRootPortletId(columnPortletId).equals(
+						rootPortletId)) {
 
 					return columnId;
 				}
@@ -1475,11 +1473,9 @@ public class LayoutTypePortletImpl
 		String[] newPortletIds = new String[portletIds.length];
 
 		for (int i = 0; i < portletIds.length; i++) {
-			if (portletIds[i].contains(PortletConstants.INSTANCE_SEPARATOR)) {
-				String rootPortletId = PortletConstants.getRootPortletId(
-					portletIds[i]);
-
-				newPortletIds[i] = rootPortletId + getFullInstanceSeparator();
+			if (PortletConstants.hasInstanceId(portletIds[i])) {
+				newPortletIds[i] = PortletConstants.assemblePortletId(
+					portletIds[i], generateInstanceId());
 
 				copyPreferences(portletIds[i], newPortletIds[i]);
 			}
@@ -1516,10 +1512,11 @@ public class LayoutTypePortletImpl
 
 		String[] columnValues = StringUtil.split(columnValue);
 
+		String rootPortletId = PortletConstants.getRootPortletId(portletId);
+
 		for (String nonstaticPortletId : columnValues) {
-			if (nonstaticPortletId.equals(portletId) ||
-				nonstaticPortletId.startsWith(
-					portletId.concat(PortletConstants.INSTANCE_SEPARATOR))) {
+			if (PortletConstants.getRootPortletId(nonstaticPortletId).equals(
+					rootPortletId)) {
 
 				return true;
 			}
@@ -1537,19 +1534,19 @@ public class LayoutTypePortletImpl
 		String[] staticPortletIdsEnd = getStaticPortletIds(
 			PropsKeys.LAYOUT_STATIC_PORTLETS_END + columnId);
 
+		String rootPortletId = PortletConstants.getRootPortletId(portletId);
+
 		for (String staticPortletId : staticPortletIdsStart) {
-			if (staticPortletId.equals(portletId) ||
-				staticPortletId.startsWith(
-					portletId.concat(PortletConstants.INSTANCE_SEPARATOR))) {
+			if (PortletConstants.getRootPortletId(staticPortletId).equals(
+					rootPortletId)) {
 
 				return true;
 			}
 		}
 
 		for (String staticPortletId : staticPortletIdsEnd) {
-			if (staticPortletId.equals(portletId) ||
-				staticPortletId.startsWith(
-					portletId.concat(PortletConstants.INSTANCE_SEPARATOR))) {
+			if (PortletConstants.getRootPortletId(staticPortletId).equals(
+					rootPortletId)) {
 
 				return true;
 			}

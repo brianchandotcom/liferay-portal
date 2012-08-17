@@ -1767,6 +1767,16 @@ public class PortletImpl extends PortletBaseImpl {
 	}
 
 	/**
+	 * Returns the user ID of the portlet. This only applies when the portlet
+	 * is added by a user in a customizable layout.
+	 *
+	 * @return the user ID of the portlet
+	 */
+	public long getUserId() {
+		return PortletConstants.getUserId(getPortletId());
+	}
+
+	/**
 	 * Returns the user principal strategy of the portlet.
 	 *
 	 * @return the user principal strategy of the portlet

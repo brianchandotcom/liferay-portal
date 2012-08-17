@@ -263,26 +263,11 @@ public class DefaultFriendlyURLMapper extends BaseFriendlyURLMapper {
 
 			routeParameters.put("p_p_id", portletId);
 
-			if (Validator.isNotNull(portletId)) {
-				int x = portletId.indexOf(PortletConstants.INSTANCE_SEPARATOR);
+			if (Validator.isNotNull(portletId) &&
+				PortletConstants.hasInstanceId(portletId)) {
 
-				if (x != -1) {
-					x += PortletConstants.INSTANCE_SEPARATOR.length();
-
-					String instanceId = null;
-
-					int y = portletId.indexOf(portletId, x);
-
-					if (y != -1) {
-						instanceId = portletId.substring(x, y);
-					}
-					else {
-						instanceId = portletId.substring(x);
-					}
-
-					routeParameters.put("instanceId", instanceId);
-				}
-
+				routeParameters.put(
+					"instanceId", PortletConstants.getInstanceId(portletId));
 			}
 		}
 
@@ -323,10 +308,8 @@ public class DefaultFriendlyURLMapper extends BaseFriendlyURLMapper {
 
 			return null;
 		}
-		else {
-			return getPortletId().concat(
-				PortletConstants.INSTANCE_SEPARATOR).concat(instanceId);
-		}
+
+		return PortletConstants.assemblePortletId(getPortletId(), instanceId);
 	}
 
 	/**

@@ -93,6 +93,7 @@ import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.LayoutTypePortletConstants;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.PublicRenderParameter;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcePermission;
@@ -2181,9 +2182,10 @@ public class PortalImpl implements Portal {
 			defaultAssetPublisherPortletId;
 
 		if (Validator.isNull(defaultAssetPublisherPortletId)) {
-			defaultAssetPublisherPortletId =
-				PortletKeys.ASSET_PUBLISHER +
-					LayoutTypePortletImpl.getFullInstanceSeparator();
+			String instanceId = LayoutTypePortletImpl.generateInstanceId();
+
+			defaultAssetPublisherPortletId = PortletConstants.assemblePortletId(
+				PortletKeys.ASSET_PUBLISHER, instanceId);
 		}
 
 		HttpServletRequest request = (HttpServletRequest)requestContext.get(

@@ -65,14 +65,13 @@ public class PortletLogic extends RuntimeLogic {
 
 		Element rootElement = document.getRootElement();
 
-		String rootPortletId = rootElement.attributeValue("name");
+		String portletId = rootElement.attributeValue("name");
 		String instanceId = rootElement.attributeValue("instance");
 		String queryString = rootElement.attributeValue("queryString");
 
-		String portletId = rootPortletId;
-
 		if (Validator.isNotNull(instanceId)) {
-			portletId += PortletConstants.INSTANCE_SEPARATOR + instanceId;
+			portletId = PortletConstants.assemblePortletId(
+				portletId, instanceId);
 		}
 
 		BufferCacheServletResponse bufferCacheServletResponse =

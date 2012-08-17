@@ -127,7 +127,7 @@ import com.liferay.portal.service.ReleaseLocalServiceUtil;
 import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.servlet.filters.autologin.AutoLoginFilter;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
-import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
+import com.liferay.portal.spring.aop.ServiceBeanAopCacheManagerUtil;
 import com.liferay.portal.struts.AuthPublicPathRegistry;
 import com.liferay.portal.struts.StrutsActionRegistryUtil;
 import com.liferay.portal.upgrade.UpgradeProcessUtil;
@@ -2026,7 +2026,7 @@ public class HookHotDeployListener
 			servletContextName, portletClassLoader, serviceType,
 			serviceTypeClass, serviceImplConstructor, previousService);
 
-		ServiceBeanAopProxy.clearMethodInterceptorCache();
+		ServiceBeanAopCacheManagerUtil.reset();
 	}
 
 	protected Filter initServletFilter(

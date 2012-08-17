@@ -8,11 +8,15 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
 >
+	<bean id="com.liferay.portal.spring.aop.ServiceBeanAopCacheManager" class="com.liferay.portal.kernel.spring.util.SpringFactoryUtil" factory-method="newBean">
+		<constructor-arg value="com.liferay.portal.spring.aop.ServiceBeanAopCacheManager" />
+	</bean>
 	<bean class="com.liferay.portal.kernel.spring.util.SpringFactoryUtil" factory-method="newBean">
 		<constructor-arg value="com.liferay.portal.spring.aop.ServiceBeanAutoProxyCreator" />
 		<constructor-arg>
 			<map>
 				<entry key="methodInterceptor" value-ref="serviceAdvice" />
+				<entry key="serviceBeanAopCacheManager" value-ref="com.liferay.portal.spring.aop.ServiceBeanAopCacheManager" />
 			</map>
 		</constructor-arg>
 	</bean>

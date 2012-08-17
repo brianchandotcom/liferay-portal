@@ -76,7 +76,18 @@ public abstract class ChainableMethodAdvice implements MethodInterceptor {
 		this.nextMethodInterceptor = nextMethodInterceptor;
 	}
 
+	protected void setServiceBeanAopCacheManager(
+		ServiceBeanAopCacheManager serviceBeanAopCacheManager) {
+
+		if (this.serviceBeanAopCacheManager != null) {
+			return;
+		}
+
+		this.serviceBeanAopCacheManager = serviceBeanAopCacheManager;
+	}
+
 	protected MethodInterceptor nextMethodInterceptor;
 	protected Object nullResult = new Object();
+	protected ServiceBeanAopCacheManager serviceBeanAopCacheManager;
 
 }

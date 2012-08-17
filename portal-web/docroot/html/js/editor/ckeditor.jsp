@@ -65,14 +65,6 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 <c:if test="<%= hideImageResizing %>">
 	<liferay-util:html-top outputKey="js_editor_ckeditor_hide_image_resizing">
 		<style type="text/css">
-			td.cke_dialog_ui_hbox_first {
-				display:none !important;
-			}
-
-			td.cke_dialog_footer td.cke_dialog_ui_hbox_first {
-				display:block !important;
-			}
-
 			a.cke_dialog_tab {
 				display: none !important;
 			}
@@ -163,7 +155,7 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 	<textarea id="<%= name %>" name="<%= name %>" style="display: none;"></textarea>
 </div>
 
-<aui:script>
+<aui:script use="aui-base">
 	(function() {
 		function setData() {
 			<c:if test="<%= Validator.isNotNull(initMethod) %>">
@@ -267,6 +259,39 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 
 			}
 		);
+
+		ckEditor.on(
+			'dialogShow',
+			function( e ) {
+
+			var definition = e.data['definition'];
+			var dialog = definition['dialog'];
+
+			if (dialog.getName() == 'image') {
+
+				var tdNodes = A.all("td .cke_dialog_ui_hbox_first");
+				var tdFooterNodes = A.all("td .cke_dialog_footer td");
+				var first = true;
+
+				tdNodes.each(function (node) {
+					if (!first) {
+						node.hide();
+					}
+					else {
+						first = false;
+					}
+				});
+
+				tdFooterNodes.each(function (node) {
+					node.show();
+				});
+
+				var imagePreviewBox = A.one("div .ImagePreviewBox");
+
+				imagePreviewBox.setStyle('width','410px');
+			}
+		});
+
 	})();
 
 </aui:script>

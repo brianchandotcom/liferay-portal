@@ -285,10 +285,6 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 				tdFooterNodes.each(function (node) {
 					node.show();
 				});
-
-				var imagePreviewBox = A.one("div .ImagePreviewBox");
-
-				imagePreviewBox.setStyle('width','410px');
 			}
 		});
 

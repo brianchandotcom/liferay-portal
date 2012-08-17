@@ -81,16 +81,16 @@ public class SeleniumUtil extends TestPropsValues {
 			_selenium.setContext(clazz.getName());
 		}
 		else if (SELENIUM_IMPLEMENTATION.equals(WebDriver.class.getName())) {
-			if (BROWSER_TYPE.contains("chrome") ||
-				BROWSER_TYPE.contains("firefox")) {
+			if (BROWSER_TYPE.equals("*chrome") ||
+				BROWSER_TYPE.equals("*firefox")) {
 
 				_selenium = new FirefoxWebDriverImpl(projectDir, PORTAL_URL);
 			}
-			else if (BROWSER_TYPE.contains("googlechrome")) {
+			else if (BROWSER_TYPE.equals("*googlechrome")) {
 				_selenium = new ChromeWebDriverImpl(projectDir, PORTAL_URL);
 			}
-			else if (BROWSER_TYPE.contains("iehta") ||
-					 BROWSER_TYPE.contains("iexplore")) {
+			else if (BROWSER_TYPE.equals("*iehta") ||
+					 BROWSER_TYPE.equals("*iexplore")) {
 
 				_selenium = new InternetExplorerWebDriverImpl(
 					projectDir, PORTAL_URL);

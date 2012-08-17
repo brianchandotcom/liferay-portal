@@ -545,8 +545,8 @@ public class PortalImpl implements Portal {
 		HttpServletRequest request, String title, String url,
 		Map<String, Object> data) {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 

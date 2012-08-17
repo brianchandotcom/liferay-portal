@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.portlet.portletdisplaytemplates.lar;
+package com.liferay.portlet.portletdisplaytemplate.lar;
 
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
-import com.liferay.portal.kernel.template.PortletDisplayTemplateHandlerRegistryUtil;
+import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -35,7 +35,7 @@ import javax.portlet.PortletPreferences;
 /**
  * @author Juan Fernández
  */
-public class PortletDisplayTemplatesPortletDataHandlerImpl
+public class PortletDisplayTemplatePortletDataHandlerImpl
 	extends BasePortletDataHandler {
 
 	@Override

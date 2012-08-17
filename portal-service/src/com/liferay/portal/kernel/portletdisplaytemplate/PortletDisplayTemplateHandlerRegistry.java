@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.template;
+package com.liferay.portal.kernel.portletdisplaytemplate;
 
 import java.util.List;
 

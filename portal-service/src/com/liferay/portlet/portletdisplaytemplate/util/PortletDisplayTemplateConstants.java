@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.portlet.portletdisplaytemplates.util;
+package com.liferay.portlet.portletdisplaytemplate.util;
 
 /**
  * @author Juan Fernández
  */
-public class PortletDisplayTemplatesConstants {
+public class PortletDisplayTemplateConstants {
 
 	public static final String ASSET_PUBLISHER_HELPER = "assetPublisherHelper";
 

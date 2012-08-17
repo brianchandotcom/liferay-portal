@@ -19,7 +19,7 @@
 <%@ page import="com.liferay.portlet.dynamicdatamapping.model.DDMTemplate" %>
 <%@ page import="com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil" %>
 <%@ page import="com.liferay.portlet.dynamicdatamapping.service.permission.DDMTemplatePermission" %>
-<%@ page import="com.liferay.portlet.portletdisplaytemplates.util.PortletDisplayTemplatesUtil" %>
+<%@ page import="com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateUtil" %>
 
 <%
 long classNameId = GetterUtil.getLong((String)request.getAttribute("liferay-ui:ddm-template-menu:classNameId"));
@@ -31,10 +31,10 @@ boolean showEmptyOption = GetterUtil.getBoolean((String)request.getAttribute("li
 
 DDMTemplate ddmTemplate = null;
 
-long ddmTemplateGroupId = PortletDisplayTemplatesUtil.getDDMTemplateGroupId(themeDisplay);
+long ddmTemplateGroupId = PortletDisplayTemplateUtil.getDDMTemplateGroupId(themeDisplay);
 
 if (preferenceValue.startsWith("ddmTemplate_")) {
-	ddmTemplate = PortletDisplayTemplatesUtil.fetchDDMTemplate(ddmTemplateGroupId, preferenceValue);
+	ddmTemplate = PortletDisplayTemplateUtil.fetchDDMTemplate(ddmTemplateGroupId, preferenceValue);
 }
 
 List<DDMTemplate> companyPortletDDMTemplates = DDMTemplateLocalServiceUtil.getTemplates(themeDisplay.getCompanyGroupId(), classNameId, 0);

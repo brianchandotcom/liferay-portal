@@ -31,11 +31,24 @@ public class PACLAdvice extends ChainableMethodAdvice {
 
 	@Override
 	public Object invoke(MethodInvocation methodInvocation) throws Throwable {
-		if (!PACLPolicyManager.isActive() ||
-			!PortalSecurityManagerThreadLocal.isEnabled()) {
+		if (!PortalSecurityManagerThreadLocal.isEnabled()) {
+
+			// Proceed so that we do not remove the advice
 
 			try {
-				return proceed(methodInvocation);
+				return methodInvocation.proceed();
+			}
+			catch (Throwable throwable) {
+				throw throwable;
+			}
+		}
+
+		if (!PACLPolicyManager.isActive()) {
+			serviceBeanAopCacheManager.removeMethodInterceptor(
+				methodInvocation, this);
+
+			try {
+				return methodInvocation.proceed();
 			}
 			catch (Throwable throwable) {
 				throw throwable;
@@ -76,8 +89,12 @@ public class PACLAdvice extends ChainableMethodAdvice {
 				}
 			}
 			else if (methodName.equals("toString")) {
-				return proceed(methodInvocation);
+				return method.invoke(thisObject, arguments);
 			}
+		}
+
+		if (!PACLPolicyManager.isActive()) {
+			return method.invoke(thisObject, arguments);
 		}
 
 		PACLPolicy paclPolicy = PACLClassUtil.getPACLPolicy(false, debug);
@@ -91,7 +108,7 @@ public class PACLAdvice extends ChainableMethodAdvice {
 		}
 
 		if (paclPolicy == null) {
-			return proceed(methodInvocation);
+			return methodInvocation.proceed();
 		}
 
 		if (!paclPolicy.hasPortalService(thisObject, method, arguments)) {
@@ -101,10 +118,10 @@ public class PACLAdvice extends ChainableMethodAdvice {
 		boolean checkSQL = PortalSecurityManagerThreadLocal.isCheckSQL();
 
 		try {
-			Class<?> clazz = thisObject.getClass();
+			Class<?> thisObjectClass = thisObject.getClass();
 
 			if (paclPolicy.getClassLoader() !=
-					PACLClassLoaderUtil.getClassLoader(clazz)) {
+					PACLClassLoaderUtil.getClassLoader(thisObjectClass)) {
 
 				// Disable the portal security manager so that PACLDataSource
 				// does not try to check access to tables that can be accessed
@@ -113,36 +130,10 @@ public class PACLAdvice extends ChainableMethodAdvice {
 				PortalSecurityManagerThreadLocal.setCheckSQL(false);
 			}
 
-			return proceed(methodInvocation);
-		}
-		finally {
-			PortalSecurityManagerThreadLocal.setCheckSQL(checkSQL);
-		}
-	}
-
-	protected Object proceed(MethodInvocation methodInvocation)
-		throws Throwable {
-
-		ClassLoader contextClassLoader =
-			PACLClassLoaderUtil.getContextClassLoader();
-
-		Object thisObject = methodInvocation.getThis();
-
-		Class<?> clazz = thisObject.getClass();
-
-		ClassLoader classLoader = PACLClassLoaderUtil.getClassLoader(clazz);
-
-		try {
-			if (contextClassLoader != classLoader) {
-				PACLClassLoaderUtil.setContextClassLoader(classLoader);
-			}
-
 			return methodInvocation.proceed();
 		}
 		finally {
-			if (contextClassLoader != classLoader) {
-				PACLClassLoaderUtil.setContextClassLoader(contextClassLoader);
-			}
+			PortalSecurityManagerThreadLocal.setCheckSQL(checkSQL);
 		}
 	}
 

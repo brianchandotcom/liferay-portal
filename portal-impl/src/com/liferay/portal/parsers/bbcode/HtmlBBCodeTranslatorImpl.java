@@ -422,33 +422,36 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 
 		BBCodeItem bbCodeItem = null;
 
-		if (data.matches("\\A\r?\n\\z")) {
-			bbCodeItem = bbCodeItems.get(marker.getValue() + 1);
+		if (marker.getValue() + 1 < bbCodeItems.size()) {
+			if (data.matches("\\A\r?\n\\z")) {
+				bbCodeItem = bbCodeItems.get(marker.getValue() + 1);
 
-			if (bbCodeItem != null) {
-				String value = bbCodeItem.getValue();
+				if (bbCodeItem != null) {
+					String value = bbCodeItem.getValue();
 
-				if (_excludeNewLineTypes.containsKey(value)) {
-					int type = bbCodeItem.getType();
+					if (_excludeNewLineTypes.containsKey(value)) {
+						int type = bbCodeItem.getType();
 
-					int excludeNewLineType = _excludeNewLineTypes.get(value);
+						int excludeNewLineType = _excludeNewLineTypes.get(
+							value);
 
-					if ((type & excludeNewLineType) > 0) {
-						data = StringPool.BLANK;
+						if ((type & excludeNewLineType) > 0) {
+							data = StringPool.BLANK;
+						}
 					}
 				}
 			}
-		}
-		else if (data.matches("(?s).*\r?\n\\z")) {
-			bbCodeItem = bbCodeItems.get(marker.getValue() + 1);
+			else if (data.matches("(?s).*\r?\n\\z")) {
+				bbCodeItem = bbCodeItems.get(marker.getValue() + 1);
 
-			if ((bbCodeItem != null) &&
-				(bbCodeItem.getType() == BBCodeParser.TYPE_TAG_END)) {
+				if ((bbCodeItem != null) &&
+					(bbCodeItem.getType() == BBCodeParser.TYPE_TAG_END)) {
 
-				String value = bbCodeItem.getValue();
+					String value = bbCodeItem.getValue();
 
-				if (value.equals("*")) {
-					data = data.substring(0, data.length() - 1);
+					if (value.equals("*")) {
+						data = data.substring(0, data.length() - 1);
+					}
 				}
 			}
 		}

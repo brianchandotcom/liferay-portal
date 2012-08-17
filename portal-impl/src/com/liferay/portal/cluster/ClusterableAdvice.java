@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.spring.aop.Swallowable;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
-import com.liferay.portal.util.PropsValues;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -35,13 +34,6 @@ import org.aopalliance.intercept.MethodInvocation;
  */
 public class ClusterableAdvice
 	extends AnnotationChainableMethodAdvice<Clusterable> {
-
-	@Override
-	public void afterPropertiesSet() {
-		if (PropsValues.CLUSTER_LINK_ENABLED) {
-			super.afterPropertiesSet();
-		}
-	}
 
 	@Override
 	public void afterReturning(MethodInvocation methodInvocation, Object result)

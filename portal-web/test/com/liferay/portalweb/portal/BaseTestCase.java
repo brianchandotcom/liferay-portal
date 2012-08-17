@@ -26,6 +26,11 @@ public class BaseTestCase extends LiferaySeleneseTestCase {
 
 	public BaseTestCase() {
 		InitUtil.initWithSpring();
+
+		String chromeDriverPath =
+			TestPropsValues.SELENIUM_EXECUTABLE_DIR + "\\chromedriver.exe";
+
+		System.setProperty("webdriver.chrome.driver", chromeDriverPath);
 	}
 
 	@Override

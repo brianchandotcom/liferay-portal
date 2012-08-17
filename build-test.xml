@@ -2976,6 +2976,16 @@ executable ZIP file.
 				/>
 			</then>
 			<elseif>
+				<equals arg1="${test.browser}" arg2="googlechrome" />
+				<then>
+					<replace
+						file="portal-web/test/test-portal-web.properties"
+						token="#selenium.executable.dir="
+						value="selenium.executable.dir=${basedir.unix}/tools/selenium/"
+					/>
+				</then>
+			</elseif>
+			<elseif>
 				<or>
 					<equals arg1="${test.browser}" arg2="iehta" />
 					<equals arg1="${test.browser}" arg2="iexplorer" />
@@ -3812,13 +3822,19 @@ file.
 		<antcall target="prepare-selenium" />
 
 		<if>
-			<or>
-				<equals arg1="${test.browser}" arg2="iehta" />
-				<equals arg1="${test.browser}" arg2="iexplore" />
-			</or>
+			<equals arg1="${test.browser}" arg2="googlechrome" />
 			<then>
-				<antcall target="start-selenium-nanny" />
+				<antcall target="start-chrome-driver" />
 			</then>
+			<elseif>
+				<or>
+					<equals arg1="${test.browser}" arg2="iehta" />
+					<equals arg1="${test.browser}" arg2="iexplore" />
+				</or>
+				<then>
+					<antcall target="start-selenium-nanny" />
+				</then>
+			</elseif>
 		</if>
 
 		<parallel>
@@ -3867,13 +3883,42 @@ file.
 		</parallel>
 
 		<if>
-			<or>
-				<equals arg1="${test.browser}" arg2="iehta" />
-				<equals arg1="${test.browser}" arg2="iexplore" />
-			</or>
+			<equals arg1="${test.browser}" arg2="googlechrome" />
 			<then>
-				<antcall target="stop-selenium-nanny" />
+				<antcall target="stop-chrome-driver" />
 			</then>
+			<elseif>
+				<or>
+					<equals arg1="${test.browser}" arg2="iehta" />
+					<equals arg1="${test.browser}" arg2="iexplore" />
+				</or>
+				<then>
+					<antcall target="stop-selenium-nanny" />
+				</then>
+			</elseif>
+		</if>
+	</target>
+
+	<target name="start-chrome-driver">
+		<if>
+			<not>
+				<isset property="chrome.driver.zip" />
+			</not>
+			<then>
+				<fail>
+.
+
+Please set "chrome.driver.zip" in test.properties to point to "chromedriver_win_22_0_1203_0b.zip"
+which can be downloaded from this website: http://code.google.com/p/chromedriver/
+				</fail>
+			</then>
+			<else>
+				<exec executable="taskkill.exe">
+					<arg line="/F /IM chromedriver.exe" />
+				</exec>
+
+				<unzip src="${chrome.driver.zip}" dest="tools/selenium" />
+			</else>
 		</if>
 	</target>
 
@@ -3897,6 +3942,12 @@ file.
 		<forget>
 			<exec executable="${selenium.nanny.executable}" />
 		</forget>
+	</target>
+
+	<target name="stop-chrome-driver">
+		<exec executable="taskkill.exe">
+			<arg line="/F /IM chromedriver.exe" />
+		</exec>
 	</target>
 
 	<target name="stop-selenium">

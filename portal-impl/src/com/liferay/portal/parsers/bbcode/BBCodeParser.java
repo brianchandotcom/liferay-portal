@@ -17,7 +17,6 @@ package com.liferay.portal.parsers.bbcode;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,8 +53,6 @@ public class BBCodeParser {
 
 	public List<BBCodeItem> parse(String text) {
 		List<BBCodeItem> bbCodeItems = new ArrayList<BBCodeItem>();
-
-		text = StringUtil.trimTrailing(text);
 
 		BBCodeLexer bbCodeLexer = new BBCodeLexer(text);
 		Stack<String> tags = new Stack<String>();

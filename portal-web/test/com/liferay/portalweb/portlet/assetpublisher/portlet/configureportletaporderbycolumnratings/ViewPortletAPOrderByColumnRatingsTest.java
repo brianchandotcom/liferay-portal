@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletdisplaystylefullcontent;
+package com.liferay.portalweb.portlet.assetpublisher.portlet.configureportletaporderbycolumnratings;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ConfigurePortletDisplayStyleFullContentTest extends BaseTestCase {
-	public void testConfigurePortletDisplayStyleFullContent()
+public class ViewPortletAPOrderByColumnRatingsTest extends BaseTestCase {
+	public void testViewPortletAPOrderByColumnRatings()
 		throws Exception {
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("link=Asset Publisher Test Page",
@@ -40,7 +40,7 @@ public class ConfigurePortletDisplayStyleFullContentTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]")) {
 					break;
 				}
 			}
@@ -52,8 +52,8 @@ public class ConfigurePortletDisplayStyleFullContentTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Configuration"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Configuration')]/a",
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Configuration')]",
 			RuntimeVariables.replace("Configuration"));
 
 		for (int second = 0;; second++) {
@@ -62,7 +62,7 @@ public class ConfigurePortletDisplayStyleFullContentTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible("//iframe")) {
+				if (selenium.isVisible("//iFrame")) {
 					break;
 				}
 			}
@@ -72,7 +72,7 @@ public class ConfigurePortletDisplayStyleFullContentTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.selectFrame("//iframe");
+		selenium.selectFrame("//iFrame");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -91,13 +91,18 @@ public class ConfigurePortletDisplayStyleFullContentTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		assertEquals(RuntimeVariables.replace("Ordering and Grouping"),
+			selenium.getText(
+				"//div[@id='assetPublisherOrderingAndGroupingPanel']/div/div/span"));
+
 		for (int second = 0;; second++) {
 			if (second >= 90) {
 				fail("timeout");
 			}
 
 			try {
-				if (selenium.isVisible("//select[@id='_86_displayStyle']")) {
+				if (selenium.isVisible(
+							"//select[contains(@id,'orderByColumn')]")) {
 					break;
 				}
 			}
@@ -107,16 +112,8 @@ public class ConfigurePortletDisplayStyleFullContentTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.select("//select[@id='_86_displayStyle']",
-			RuntimeVariables.replace("Full Content"));
-		selenium.clickAt("//input[@value='Save']",
-			RuntimeVariables.replace("Save"));
-		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace(
-				"You have successfully updated the setup."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals("Full Content",
-			selenium.getSelectedLabel("//select[@id='_86_displayStyle']"));
+		assertEquals("Ratings Ratings",
+			selenium.getSelectedLabel("//select[contains(@id,'orderByColumn')]"));
 		selenium.selectFrame("relative=top");
 	}
 }

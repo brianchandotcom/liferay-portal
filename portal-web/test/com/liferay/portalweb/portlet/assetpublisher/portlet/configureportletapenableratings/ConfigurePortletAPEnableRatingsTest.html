@@ -1,12 +1,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>ConfigurePortletDisplayStyleFullContentTest</title>
+<title>ConfigurePortletAPEnableRatingsTest</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">ConfigurePortletDisplayStyleFullContentTest</td></tr>
+<tr><td rowspan="1" colspan="3">ConfigurePortletAPEnableRatingsTest</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -65,13 +65,23 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//select[@id='_86_displayStyle']</td>
-	<td>Display Style</td>
+	<td>//input[@id='_86_enableRatingsCheckbox']</td>
+	<td>Enable Ratings</td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>//select[@id='_86_displayStyle']</td>
-	<td>Full Content</td>
+	<td>assertNotChecked</td>
+	<td>//input[@id='_86_enableRatingsCheckbox']</td>
+	<td>Enable Ratings</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//input[@id='_86_enableRatingsCheckbox']</td>
+	<td>Enable Ratings</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@id='_86_enableRatingsCheckbox']</td>
+	<td>Enable Ratings</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -84,9 +94,9 @@
 	<td>You have successfully updated the setup.</td>
 </tr>
 <tr>
-	<td>assertSelectedLabel</td>
-	<td>//select[@id='_86_displayStyle']</td>
-	<td>Full Content</td>
+	<td>assertChecked</td>
+	<td>//input[@id='_86_enableRatingsCheckbox']</td>
+	<td>Enable Ratings</td>
 </tr>
 <tr>
 	<td>selectFrame</td>

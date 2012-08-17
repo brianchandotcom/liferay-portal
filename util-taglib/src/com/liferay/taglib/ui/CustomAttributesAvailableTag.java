@@ -47,8 +47,8 @@ public class CustomAttributesAvailableTag extends TagSupport {
 			HttpServletRequest request =
 				(HttpServletRequest)pageContext.getRequest();
 
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 			long companyId = _companyId;
 

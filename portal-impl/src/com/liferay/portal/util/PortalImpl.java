@@ -2185,8 +2185,8 @@ public class PortalImpl implements Portal {
 					LayoutTypePortletImpl.getFullInstanceSeparator();
 		}
 
-		HttpServletRequest request =
-			(HttpServletRequest)requestContext.get("request");
+		HttpServletRequest request = (HttpServletRequest)requestContext.get(
+			"request");
 
 		if (Validator.isNull(currentDefaultAssetPublisherPortletId)) {
 			String actualPortletAuthenticationToken = AuthTokenUtil.getToken(

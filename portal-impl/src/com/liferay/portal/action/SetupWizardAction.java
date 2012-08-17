@@ -53,8 +53,8 @@ public class SetupWizardAction extends Action {
 			HttpServletResponse response)
 		throws Exception {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		if (!PropsValues.SETUP_WIZARD_ENABLED) {
 			response.sendRedirect(themeDisplay.getPathMain());

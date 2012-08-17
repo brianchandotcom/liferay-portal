@@ -35,8 +35,8 @@ public class PortletActionServlet extends ActionServlet {
 
 		ServletContext servletContext = getServletContext();
 
-		ModuleConfig moduleConfig =
-			(ModuleConfig)servletContext.getAttribute(Globals.MODULE_KEY);
+		ModuleConfig moduleConfig = (ModuleConfig)servletContext.getAttribute(
+			Globals.MODULE_KEY);
 
 		PortletRequestProcessor portletRequestProcessor =
 			PortletRequestProcessor.getInstance(this, moduleConfig);

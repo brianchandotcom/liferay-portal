@@ -834,8 +834,8 @@ public class AntlrCreoleParserTest extends AbstractWikiParserTests {
 
 		Assert.assertEquals(1, collectionNode.size());
 
-		TableHeaderNode tableHeaderNode =
-			(TableHeaderNode)collectionNode.get(0);
+		TableHeaderNode tableHeaderNode = (TableHeaderNode)collectionNode.get(
+			0);
 
 		Assert.assertNotNull(tableHeaderNode);
 

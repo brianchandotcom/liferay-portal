@@ -67,8 +67,8 @@ public class SeleneseToJavaBuilder {
 
 		_basedir = (String)cmdLineParser.getOptionValue(basedirOption);
 
-		String minimizeTestFileName =
-			(String)cmdLineParser.getOptionValue(minimizeOption);
+		String minimizeTestFileName = (String)cmdLineParser.getOptionValue(
+			minimizeOption);
 
 		minimizeTestFileName = normalizeFileName(minimizeTestFileName);
 

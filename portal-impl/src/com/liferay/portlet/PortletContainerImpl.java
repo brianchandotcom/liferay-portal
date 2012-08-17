@@ -205,8 +205,8 @@ public class PortletContainerImpl implements PortletContainer {
 			return request;
 		}
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		Layout currentLayout = themeDisplay.getLayout();
 
@@ -643,8 +643,8 @@ public class PortletContainerImpl implements PortletContainer {
 			Portlet portlet, Layout layout, Event event)
 		throws Exception {
 
-		ServletContext servletContext =
-			(ServletContext)request.getAttribute(WebKeys.CTX);
+		ServletContext servletContext = (ServletContext)request.getAttribute(
+			WebKeys.CTX);
 
 		InvokerPortlet invokerPortlet = PortletInstanceFactoryUtil.create(
 			portlet, servletContext);
@@ -945,8 +945,8 @@ public class PortletContainerImpl implements PortletContainer {
 			return;
 		}
 
-		WindowState windowState =
-			(WindowState)request.getAttribute(WebKeys.WINDOW_STATE);
+		WindowState windowState = (WindowState)request.getAttribute(
+			WebKeys.WINDOW_STATE);
 
 		PortletMode portletMode = PortletModeFactory.getPortletMode(
 			ParamUtil.getString(request, "p_p_mode"));

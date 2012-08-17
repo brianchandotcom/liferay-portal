@@ -157,8 +157,8 @@ public class PortletRenderer {
 
 		@Override
 		public StringBundler doCall() throws Exception {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)_request.getAttribute(WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 			HttpServletRequest request =
 				PortletContainerUtil.setupOptionalRenderParameters(

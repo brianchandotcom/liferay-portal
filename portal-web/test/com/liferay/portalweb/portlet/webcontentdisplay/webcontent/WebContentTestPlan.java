@@ -17,7 +17,6 @@ package com.liferay.portalweb.portlet.webcontentdisplay.webcontent;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.addportletscopecurrentpagewcwebcontentwcd.AddPortletScopeCurrentPageWCWebContentWCDTests;
 import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.addportletscopedefaultwcwebcontentwcd.AddPortletScopeDefaultWCWebContentWCDTests;
-import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.addwcstructure2parentstructure1wcd.AddWCStructure2ParentStructureStructure1WCDTests;
 import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.deletethisversionwcwebcontentwcdactions.DeleteThisVersionWCWebContentWCDActionsTests;
 import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.editwcwebcontentwcddetails.EditWCWebContentWCDDetailsTests;
 import com.liferay.portalweb.portlet.webcontentdisplay.webcontent.expirethisversionwcwebcontentwcddetails.ExpireThisVersionWCWebContentWCDDetailsTests;
@@ -46,8 +45,6 @@ public class WebContentTestPlan extends BaseTestSuite {
 		testSuite.addTest(
 			AddPortletScopeCurrentPageWCWebContentWCDTests.suite());
 		testSuite.addTest(AddPortletScopeDefaultWCWebContentWCDTests.suite());
-		testSuite.addTest(
-			AddWCStructure2ParentStructureStructure1WCDTests.suite());
 		testSuite.addTest(DeleteThisVersionWCWebContentWCDActionsTests.suite());
 		testSuite.addTest(EditWCWebContentWCDDetailsTests.suite());
 		testSuite.addTest(ExpireThisVersionWCWebContentWCDDetailsTests.suite());

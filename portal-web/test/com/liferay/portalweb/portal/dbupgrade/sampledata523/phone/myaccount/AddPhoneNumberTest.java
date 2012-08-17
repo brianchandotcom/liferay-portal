@@ -23,6 +23,11 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddPhoneNumberTest extends BaseTestCase {
 	public void testAddPhoneNumber() throws Exception {
 		selenium.open("/web/guest/home");
+		assertTrue(selenium.isPartialText("//h2[@class='user-greeting']/span",
+				"Welcome"));
+		selenium.mouseOver("//h2[@class='user-greeting']/span");
+		selenium.clickAt("//h2[@class='user-greeting']/span",
+			RuntimeVariables.replace("Welcome"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -30,7 +35,7 @@ public class AddPhoneNumberTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}

@@ -83,7 +83,6 @@
 					eclipse="false"
 					exceptions="true"
 					failok="false"
-					files="bnd.bnd"
 					inherit="true"
 					output="."
 					sourcepath="."

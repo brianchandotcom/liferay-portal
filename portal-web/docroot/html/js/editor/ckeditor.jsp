@@ -262,32 +262,30 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 
 		ckEditor.on(
 			'dialogShow',
-			function( e ) {
+			function(e) {
+				var definition = e.data['definition'];
+				var dialog = definition['dialog'];
 
-			var definition = e.data['definition'];
-			var dialog = definition['dialog'];
+				if (dialog.getName() == 'image') {
+					var tdNodes = A.all("td .cke_dialog_ui_hbox_first");
+					var tdFooterNodes = A.all("td .cke_dialog_footer td");
+					var first = true;
 
-			if (dialog.getName() == 'image') {
+					tdNodes.each(function (node) {
+						if (!first) {
+							node.hide();
+						}
+						else {
+							first = false;
+						}
+					});
 
-				var tdNodes = A.all("td .cke_dialog_ui_hbox_first");
-				var tdFooterNodes = A.all("td .cke_dialog_footer td");
-				var first = true;
-
-				tdNodes.each(function (node) {
-					if (!first) {
-						node.hide();
-					}
-					else {
-						first = false;
-					}
-				});
-
-				tdFooterNodes.each(function (node) {
-					node.show();
-				});
+					tdFooterNodes.each(function (node) {
+						node.show();
+					});
+				}
 			}
-		});
-
+		);
 	})();
 
 </aui:script>

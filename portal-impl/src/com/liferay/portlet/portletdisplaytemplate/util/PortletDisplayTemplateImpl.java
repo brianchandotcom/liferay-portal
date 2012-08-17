@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.portletdisplaytemplates.util;
+package com.liferay.portlet.portletdisplaytemplate.util;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -39,14 +39,12 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 /**
- * @author Juan Fernández
- * @author Brian Wing Shun Chan
+ * @author Eduardo Garcia
+ * @author Juan Fernandez
  */
-public class PortletDisplayTemplatesUtil {
+public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 
-	public static DDMTemplate fetchDDMTemplate(
-		long groupId, String displayStyle) {
-
+	public DDMTemplate fetchDDMTemplate(long groupId, String displayStyle) {
 		try {
 			Group group = GroupLocalServiceUtil.getGroup(groupId);
 
@@ -88,7 +86,7 @@ public class PortletDisplayTemplatesUtil {
 		return null;
 	}
 
-	public static long getDDMTemplateGroupId(ThemeDisplay themeDisplay) {
+	public long getDDMTemplateGroupId(ThemeDisplay themeDisplay) {
 		try {
 			Group scopeGroup = themeDisplay.getScopeGroup();
 
@@ -97,9 +95,9 @@ public class PortletDisplayTemplatesUtil {
 					scopeGroup.getGroupId());
 
 				if (GetterUtil.getBoolean(
-						scopeGroup.getTypeSettingsProperty(
-							StagingConstants.STAGED_PORTLET +
-								PortletKeys.PORTLET_DISPLAY_TEMPLATES))) {
+					scopeGroup.getTypeSettingsProperty(
+						StagingConstants.STAGED_PORTLET +
+							PortletKeys.PORTLET_DISPLAY_TEMPLATES))) {
 
 					return stagingGroup.getGroupId();
 				}
@@ -108,9 +106,9 @@ public class PortletDisplayTemplatesUtil {
 				Group liveGroup = scopeGroup.getLiveGroup();
 
 				if (!GetterUtil.getBoolean(
-						liveGroup.getTypeSettingsProperty(
-							StagingConstants.STAGED_PORTLET +
-								PortletKeys.PORTLET_DISPLAY_TEMPLATES))) {
+					liveGroup.getTypeSettingsProperty(
+						StagingConstants.STAGED_PORTLET +
+							PortletKeys.PORTLET_DISPLAY_TEMPLATES))) {
 
 					return liveGroup.getGroupId();
 				}
@@ -125,17 +123,16 @@ public class PortletDisplayTemplatesUtil {
 		return themeDisplay.getScopeGroupId();
 	}
 
-	public static long getPortletDisplayTemplateDDMTemplateId(
+	public long getPortletDisplayTemplateDDMTemplateId(
 		ThemeDisplay themeDisplay, String displayStyle) {
 
 		long portletDisplayDDMTemplateId = 0;
 
 		long portletDisplayDDMTemplateGroupId = getDDMTemplateGroupId(
-			themeDisplay);
+				themeDisplay);
 
 		if (displayStyle.startsWith("ddmTemplate_")) {
-			DDMTemplate portletDisplayDDMTemplate =
-				PortletDisplayTemplatesUtil.fetchDDMTemplate(
+			DDMTemplate portletDisplayDDMTemplate = fetchDDMTemplate(
 					portletDisplayDDMTemplateGroupId, displayStyle);
 
 			if (portletDisplayDDMTemplate != null) {
@@ -147,7 +144,7 @@ public class PortletDisplayTemplatesUtil {
 		return portletDisplayDDMTemplateId;
 	}
 
-	public static String renderDDMTemplate(
+	public String renderDDMTemplate(
 			RenderRequest renderRequest, RenderResponse renderResponse,
 			long ddmTemplateId, List<?> entries)
 		throws Exception {
@@ -159,7 +156,7 @@ public class PortletDisplayTemplatesUtil {
 			contextObjects);
 	}
 
-	public static String renderDDMTemplate(
+	public String renderDDMTemplate(
 			RenderRequest renderRequest, RenderResponse renderResponse,
 			long ddmTemplateId, List<?> entries,
 			Map<String, Object> contextObjects)
@@ -172,22 +169,22 @@ public class PortletDisplayTemplatesUtil {
 			ddmTemplateId);
 
 		contextObjects.put(
-			PortletDisplayTemplatesConstants.DDM_TEMPLATE_ID, ddmTemplateId);
-		contextObjects.put(PortletDisplayTemplatesConstants.ENTRIES, entries);
+			PortletDisplayTemplateConstants.DDM_TEMPLATE_ID, ddmTemplateId);
+		contextObjects.put(PortletDisplayTemplateConstants.ENTRIES, entries);
 
 		if (entries.size() == 1) {
 			contextObjects.put(
-				PortletDisplayTemplatesConstants.ENTRY, entries.get(0));
+				PortletDisplayTemplateConstants.ENTRY, entries.get(0));
 		}
 
 		contextObjects.put(
-			PortletDisplayTemplatesConstants.LOCALE, renderRequest.getLocale());
+			PortletDisplayTemplateConstants.LOCALE, renderRequest.getLocale());
 		contextObjects.put(
-			PortletDisplayTemplatesConstants.RENDER_REQUEST, renderRequest);
+			PortletDisplayTemplateConstants.RENDER_REQUEST, renderRequest);
 		contextObjects.put(
-			PortletDisplayTemplatesConstants.RENDER_RESPONSE, renderResponse);
+			PortletDisplayTemplateConstants.RENDER_RESPONSE, renderResponse);
 		contextObjects.put(
-			PortletDisplayTemplatesConstants.THEME_DISPLAY, themeDisplay);
+			PortletDisplayTemplateConstants.THEME_DISPLAY, themeDisplay);
 
 		contextObjects.putAll(_getPortletPreferences(renderRequest));
 
@@ -196,7 +193,7 @@ public class PortletDisplayTemplatesUtil {
 			ddmTemplate.getLanguage());
 	}
 
-	private static Map<String, Object> _getPortletPreferences(
+	private Map<String, Object> _getPortletPreferences(
 		RenderRequest renderRequest) {
 
 		Map<String, Object> contextObjects = new HashMap<String, Object>();
@@ -224,9 +221,8 @@ public class PortletDisplayTemplatesUtil {
 		return contextObjects;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
-		PortletDisplayTemplatesUtil.class);
+	private Log _log = LogFactoryUtil.getLog(PortletDisplayTemplateImpl.class);
 
-	private static Transformer _transformer = new DDLTransformer();
+	private Transformer _transformer = new DDLTransformer();
 
 }

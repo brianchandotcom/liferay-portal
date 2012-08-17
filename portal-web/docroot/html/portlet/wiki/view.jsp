@@ -143,7 +143,7 @@ if (wikiPage != null) {
 <liferay-util:include page="/html/portlet/wiki/top_links.jsp" />
 
 <%
-long portletDisplayDDMTemplateId = PortletDisplayTemplatesUtil.getPortletDisplayTemplateDDMTemplateId(themeDisplay, displayStyle);
+long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplateId(themeDisplay, displayStyle);
 %>
 
 <c:choose>
@@ -155,7 +155,7 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplatesUtil.getPortletDisplay
 		entries.add(wikiPage);
 		%>
 
-		<%= PortletDisplayTemplatesUtil.renderDDMTemplate(renderRequest, renderResponse, portletDisplayDDMTemplateId, entries) %>
+		<%= PortletDisplayTemplateUtil.renderDDMTemplate(renderRequest, renderResponse, portletDisplayDDMTemplateId, entries) %>
 	</c:when>
 	<c:otherwise>
 

@@ -618,7 +618,7 @@ public interface Portlet extends PortletModel, PersistedModel {
 	*
 	* @return the portlet display style instance of the portlet
 	*/
-	public com.liferay.portal.kernel.template.PortletDisplayTemplateHandler getPortletDisplayTemplateHandlerInstance();
+	public com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateHandler getPortletDisplayTemplateHandlerInstance();
 
 	/**
 	* Returns the filters of the portlet.

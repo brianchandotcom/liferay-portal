@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/asset_tags_navigation/init.jsp" %>
 
 <%
-long portletDisplayDDMTemplateId = PortletDisplayTemplatesUtil.getPortletDisplayTemplateDDMTemplateId(themeDisplay, displayStyle);
+long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplateId(themeDisplay, displayStyle);
 %>
 
 <c:choose>
@@ -36,7 +36,7 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplatesUtil.getPortletDisplay
 		assetTags = ListUtil.sort(assetTags);
 		%>
 
-		<%= PortletDisplayTemplatesUtil.renderDDMTemplate(renderRequest, renderResponse, portletDisplayDDMTemplateId, assetTags) %>
+		<%= PortletDisplayTemplateUtil.renderDDMTemplate(renderRequest, renderResponse, portletDisplayDDMTemplateId, assetTags) %>
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:asset-tags-navigation

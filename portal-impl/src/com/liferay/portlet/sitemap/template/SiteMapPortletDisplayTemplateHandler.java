@@ -15,7 +15,7 @@
 package com.liferay.portlet.sitemap.template;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.template.PortletDisplayTemplateHandler;
+import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.util.PortalUtil;
@@ -27,8 +27,8 @@ import java.util.Locale;
 /**
  * @author Juan Fernández
  */
-public class SiteMapPortletDisplayTemplateHandler
-	implements PortletDisplayTemplateHandler {
+public class SiteMapPortletDisplayTemplateHandler extends
+	BasePortletDisplayTemplateHandler {
 
 	public String getClassName() {
 		return LayoutSet.class.getName();

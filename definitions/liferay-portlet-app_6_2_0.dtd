@@ -399,8 +399,8 @@ propagate permissions.
 
 <!--
 The portlet-display-template-handler value must be a class that implements
-com.liferay.portal.kernel.template.PortletDisplayTemplateHandler and is
-called when displaying the portlet.
+com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateHandler
+and is called when displaying the portlet.
 -->
 <!ELEMENT portlet-display-template-handler (#PCDATA)>
 

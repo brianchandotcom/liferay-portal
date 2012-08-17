@@ -12,8 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.kernel.template;
+package com.liferay.portal.portletdisplaytemplate;
 
+import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateHandler;
+import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateHandlerRegistry;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.util.PortalUtil;
 
@@ -25,7 +27,7 @@ import java.util.Map;
  * @author Juan Fernández
  */
 public class PortletDisplayTemplateHandlerRegistryImpl implements
-	PortletDisplayTemplateHandlerRegistry {
+		PortletDisplayTemplateHandlerRegistry {
 
 	public long[] getClassNameIds() {
 		long[] classNameIds = new long[_portletDisplayTemplateHandlers.size()];

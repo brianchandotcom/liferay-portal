@@ -15,7 +15,7 @@
 package com.liferay.portlet.assettagsnavigation.template;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.template.PortletDisplayTemplateHandler;
+import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
@@ -27,8 +27,8 @@ import java.util.Locale;
 /**
  * @author Juan Fernández
  */
-public class AssetTagsNavigationPortletDisplayTemplateHandler
-	implements PortletDisplayTemplateHandler {
+public class AssetTagsNavigationPortletDisplayTemplateHandler extends
+	BasePortletDisplayTemplateHandler {
 
 	public String getClassName() {
 		return AssetTag.class.getName();

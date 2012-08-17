@@ -85,7 +85,7 @@ MembershipRequest membershipRequest = (MembershipRequest)request.getAttribute(We
 		</aui:field-wrapper>
 
 		<aui:field-wrapper label="user-comments">
-			<%= membershipRequest.getComments() %>
+			<%= HtmlUtil.escape(membershipRequest.getComments()) %>
 		</aui:field-wrapper>
 
 		<aui:select label="status" name="statusId">

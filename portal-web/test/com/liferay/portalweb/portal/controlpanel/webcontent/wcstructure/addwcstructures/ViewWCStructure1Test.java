@@ -20,9 +20,29 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ViewStructure2Test extends BaseTestCase {
-	public void testViewStructure2() throws Exception {
+public class ViewWCStructure1Test extends BaseTestCase {
+	public void testViewWCStructure1() throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -49,37 +69,96 @@ public class ViewStructure2Test extends BaseTestCase {
 		selenium.clickAt("link=Web Content",
 			RuntimeVariables.replace("Web Content"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("link=Structures",
-			RuntimeVariables.replace("Structures"));
-		selenium.waitForPageToLoad("30000");
-
-		String structureID = selenium.getText("//tr[4]/td[2]/a");
-		RuntimeVariables.setValue("structureID", structureID);
-		assertEquals(RuntimeVariables.replace("${structureID}"),
-			selenium.getText("//tr[4]/td[2]/a"));
-		assertEquals(RuntimeVariables.replace("WC Structure2 Name"),
-			selenium.getText("//tr[4]/td[3]/a"));
-		assertEquals(RuntimeVariables.replace("WC Structure2 Description"),
-			selenium.getText("//tr[4]/td[4]/a"));
-		selenium.clickAt("//tr[4]/td[3]/a",
-			RuntimeVariables.replace("WC Structure2 Name"));
-		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Web Content"),
 			selenium.getText("//span[@class='portlet-title-text']"));
 		assertEquals(RuntimeVariables.replace(
 				"Web Content can be any content you would like to add to a site, such as articles, a FAQ, or a news item. Administrators can manage content, as well as assign user roles and permissions. Users may add, edit, approve, or view content depending on their role. Or disable for all portlets."),
 			selenium.getText("//div[@id='cpContextPanelTemplate']"));
-		assertEquals(RuntimeVariables.replace("WC Structure2 Name"),
+		assertEquals(RuntimeVariables.replace("Manage"),
+			selenium.getText("//span[@title='Manage']/ul/li/strong/a/span"));
+		selenium.clickAt("//span[@title='Manage']/ul/li/strong/a/span",
+			RuntimeVariables.replace("Manage"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("Structures"),
+			selenium.getText(
+				"//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]",
+			RuntimeVariables.replace("Structures"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//iframe[@id='_15_openStructuresView']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.selectFrame("//iframe[@id='_15_openStructuresView']");
+		Thread.sleep(5000);
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//input[@value='Add Structure']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		String structureID = selenium.getText("//td[2]/a");
+		RuntimeVariables.setValue("structureID", structureID);
+		assertEquals(RuntimeVariables.replace("${structureID}"),
+			selenium.getText("//td[2]/a"));
+		assertEquals(RuntimeVariables.replace("WC Structure1 Name"),
+			selenium.getText("//td[3]/a"));
+		assertEquals(RuntimeVariables.replace("WC Structure1 Description"),
+			selenium.getText("//td[4]/a"));
+		selenium.clickAt("//td[3]/a",
+			RuntimeVariables.replace("WC Structure1Name"));
+		selenium.waitForPageToLoad("30000");
+		assertEquals(RuntimeVariables.replace("WC Structure1 Name"),
 			selenium.getText("//h1[@class='header-title']/span"));
 		assertTrue(selenium.isPartialText(
 				"//fieldset/div/div/div[contains(.,'ID')]",
 				RuntimeVariables.getValue("structureID")));
-		assertEquals("WC Structure2 Name",
+		assertEquals("WC Structure1 Name",
 			selenium.getValue("//input[@id='_15_name_en_US']"));
 		assertEquals(RuntimeVariables.replace("Other Languages (0)"),
 			selenium.getText(
 				"//input[@id='_15_name_en_US']/following-sibling::span/a"));
-		assertEquals("WC Structure2 Description",
+		assertEquals("WC Structure1 Description",
 			selenium.getValue("//textarea[@id='_15_description_en_US']"));
 		assertEquals(RuntimeVariables.replace("Other Languages (0)"),
 			selenium.getText(
@@ -148,5 +227,6 @@ public class ViewStructure2Test extends BaseTestCase {
 		assertTrue(selenium.isVisible(
 				"//input[@value='Save and Edit Default Values']"));
 		assertTrue(selenium.isVisible("//input[@value='Cancel']"));
+		selenium.selectFrame("relative=top");
 	}
 }

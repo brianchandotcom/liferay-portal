@@ -15,9 +15,9 @@
 package com.liferay.portalweb.portal.controlpanel.webcontent.wcstructure.addwcstructures;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portal.controlpanel.webcontent.wcstructure.addwcstructure.AddStructure1Test;
-import com.liferay.portalweb.portal.controlpanel.webcontent.wcstructure.addwcstructure.AddStructure2Test;
-import com.liferay.portalweb.portal.controlpanel.webcontent.wcstructure.addwcstructure.AddStructure3Test;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcstructure.addwcstructure.AddWCStructure1Test;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcstructure.addwcstructure.AddWCStructure2Test;
+import com.liferay.portalweb.portal.controlpanel.webcontent.wcstructure.addwcstructure.AddWCStructure3Test;
 import com.liferay.portalweb.portal.controlpanel.webcontent.wcstructure.addwcstructure.TearDownWCStructureTest;
 
 import junit.framework.Test;
@@ -29,12 +29,12 @@ import junit.framework.TestSuite;
 public class AddWCStructuresTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(AddStructure1Test.class);
-		testSuite.addTestSuite(ViewStructure1Test.class);
-		testSuite.addTestSuite(AddStructure2Test.class);
-		testSuite.addTestSuite(ViewStructure2Test.class);
-		testSuite.addTestSuite(AddStructure3Test.class);
-		testSuite.addTestSuite(ViewStructure3Test.class);
+		testSuite.addTestSuite(AddWCStructure1Test.class);
+		testSuite.addTestSuite(ViewWCStructure1Test.class);
+		testSuite.addTestSuite(AddWCStructure2Test.class);
+		testSuite.addTestSuite(ViewWCStructure2Test.class);
+		testSuite.addTestSuite(AddWCStructure3Test.class);
+		testSuite.addTestSuite(ViewWCStructure3Test.class);
 		testSuite.addTestSuite(TearDownWCStructureTest.class);
 
 		return testSuite;

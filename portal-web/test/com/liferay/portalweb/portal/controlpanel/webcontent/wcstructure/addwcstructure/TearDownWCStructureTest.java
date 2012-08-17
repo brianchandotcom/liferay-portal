@@ -119,6 +119,8 @@ public class TearDownWCStructureTest extends BaseTestCase {
 					Thread.sleep(1000);
 				}
 
+				Thread.sleep(5000);
+
 				boolean structurePresent = selenium.isElementPresent(
 						"//input[@name='_15_rowIds']");
 

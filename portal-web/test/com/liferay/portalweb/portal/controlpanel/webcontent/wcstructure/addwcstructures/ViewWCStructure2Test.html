@@ -1,17 +1,27 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>ViewStructure2Test</title>
+<title>ViewWCStructure2Test</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">ViewStructure2Test</td></tr>
+<tr><td rowspan="1" colspan="3">ViewWCStructure2Test</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
 	<td>/web/guest/home/</td>
 	<td></td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -39,9 +49,59 @@
 	<td>Web Content</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=Structures</td>
+	<td>assertText</td>
+	<td>//span[@class='portlet-title-text']</td>
+	<td>Web Content</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='cpContextPanelTemplate']</td>
+	<td>Web Content can be any content you would like to add to a site, such as articles, a FAQ, or a news item. Administrators can manage content, as well as assign user roles and permissions. Users may add, edit, approve, or view content depending on their role. Or disable for all portlets.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@title='Manage']/ul/li/strong/a/span</td>
+	<td>Manage</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[@title='Manage']/ul/li/strong/a/span</td>
+	<td>Manage</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]</td>
 	<td>Structures</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]</td>
+	<td>Structures</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]</td>
+	<td>Structures</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//iframe[@id='_15_openStructuresView']</td>
+	<td>Structures</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[@id='_15_openStructuresView']</td>
+	<td>Structures</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@value='Add Structure']</td>
+	<td>Add Structure</td>
 </tr>
 <tr>
 	<td>storeText</td>
@@ -67,16 +127,6 @@
 	<td>clickAtAndWait</td>
 	<td>//tr[4]/td[3]/a</td>
 	<td>WC Structure2 Name</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//span[@class='portlet-title-text']</td>
-	<td>Web Content</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@id='cpContextPanelTemplate']</td>
-	<td>Web Content can be any content you would like to add to a site, such as articles, a FAQ, or a news item. Administrators can manage content, as well as assign user roles and permissions. Users may add, edit, approve, or view content depending on their role. Or disable for all portlets.</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -277,6 +327,11 @@
 	<td>assertVisible</td>
 	<td>//input[@value='Cancel']</td>
 	<td>Cancel</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
 </tr>
 </tbody></table>
 </body>

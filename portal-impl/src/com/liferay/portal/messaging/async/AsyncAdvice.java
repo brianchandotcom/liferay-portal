@@ -73,7 +73,7 @@ public class AsyncAdvice extends AnnotationChainableMethodAdvice<Async> {
 
 				public void run() {
 					try {
-						nextMethodInterceptor.invoke(methodInvocation);
+						methodInvocation.proceed();
 					}
 					catch (Throwable t) {
 						throw new RuntimeException(t);

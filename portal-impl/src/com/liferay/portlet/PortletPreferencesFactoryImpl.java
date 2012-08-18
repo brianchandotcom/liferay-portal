@@ -68,6 +68,7 @@ import javax.xml.stream.events.XMLEvent;
  * @author Brian Wing Shun Chan
  * @author Alexander Chow
  * @author Minhchau Dang
+ * @author Raymond Augé
  */
 public class PortletPreferencesFactoryImpl
 	implements PortletPreferencesFactory {
@@ -127,6 +128,11 @@ public class PortletPreferencesFactoryImpl
 
 		long ownerId = PortletKeys.PREFS_OWNER_ID_DEFAULT;
 		int ownerType = PortletKeys.PREFS_OWNER_TYPE_LAYOUT;
+
+		if (PortletConstants.hasUserId(portletId)) {
+			ownerId = PortletConstants.getUserId(portletId);
+			ownerType = PortletKeys.PREFS_OWNER_TYPE_USER;
+		}
 
 		return PortletPreferencesLocalServiceUtil.getPreferences(
 			layout.getCompanyId(), ownerId, ownerType, layout.getPlid(),
@@ -289,6 +295,7 @@ public class PortletPreferencesFactoryImpl
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
 			layout.getCompanyId(), portletId);
 
+		String originalPortletId = portletId;
 		long ownerId = 0;
 		int ownerType = 0;
 		long plid = 0;
@@ -308,7 +315,14 @@ public class PortletPreferencesFactoryImpl
 			}
 		}
 
-		if (portlet.isPreferencesCompanyWide()) {
+		if (PortletConstants.hasUserId(originalPortletId) &&
+			(PortletConstants.getUserId(originalPortletId) == userId)) {
+
+			ownerId = userId;
+			ownerType = PortletKeys.PREFS_OWNER_TYPE_USER;
+			plid = layout.getPlid();
+		}
+		else if (portlet.isPreferencesCompanyWide()) {
 			ownerId = layout.getCompanyId();
 			ownerType = PortletKeys.PREFS_OWNER_TYPE_COMPANY;
 			plid = PortletKeys.PREFS_PLID_SHARED;
@@ -396,6 +410,7 @@ public class PortletPreferencesFactoryImpl
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
 			layout.getCompanyId(), portletId);
 
+		String originalPortletId = portletId;
 		boolean uniquePerLayout = false;
 		boolean uniquePerGroup = false;
 
@@ -422,17 +437,17 @@ public class PortletPreferencesFactoryImpl
 		int ownerType = PortletKeys.PREFS_OWNER_TYPE_LAYOUT;
 		long plid = layout.getPlid();
 
-		try {
-			Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
+		Group group = GroupLocalServiceUtil.fetchGroup(scopeGroupId);
 
-			if (group.isLayout()) {
-				plid = group.getClassPK();
-			}
-		}
-		catch (PortalException pe) {
+		if ((group != null) && group.isLayout()) {
+			plid = group.getClassPK();
 		}
 
-		if (!uniquePerLayout) {
+		if (PortletConstants.hasUserId(originalPortletId)) {
+			ownerId = PortletConstants.getUserId(originalPortletId);
+			ownerType = PortletKeys.PREFS_OWNER_TYPE_USER;
+		}
+		else if (!uniquePerLayout) {
 			plid = PortletKeys.PREFS_PLID_SHARED;
 
 			if (uniquePerGroup) {
@@ -531,6 +546,11 @@ public class PortletPreferencesFactoryImpl
 
 		long ownerId = PortletKeys.PREFS_OWNER_ID_DEFAULT;
 		int ownerType = PortletKeys.PREFS_OWNER_TYPE_LAYOUT;
+
+		if (PortletConstants.hasUserId(portletId)) {
+			ownerId = PortletConstants.getUserId(portletId);
+			ownerType = PortletKeys.PREFS_OWNER_TYPE_USER;
+		}
 
 		return PortletPreferencesLocalServiceUtil.getStrictPreferences(
 			layout.getCompanyId(), ownerId, ownerType, layout.getPlid(),

@@ -120,7 +120,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		long threadId = 0;
-		long parentMessageId = 0;
+		long parentMessageId = MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID;
 		String subject = String.valueOf(classPK);
 		String body = subject;
 

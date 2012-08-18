@@ -420,6 +420,20 @@ public class PortletLocalServiceUtil {
 		getService().removeCompanyPortletsPool(companyId);
 	}
 
+	public static void removePortletByPreferences(long plid, long companyId,
+		java.lang.String portletId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().removePortletByPreferences(plid, companyId, portletId);
+	}
+
+	public static void removePortletByPreferences(long plid, long companyId,
+		java.lang.String[] portletIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().removePortletByPreferences(plid, companyId, portletIds);
+	}
+
 	public static com.liferay.portal.model.Portlet updatePortlet(
 		long companyId, java.lang.String portletId, java.lang.String roles,
 		boolean active)

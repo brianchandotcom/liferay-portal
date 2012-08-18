@@ -35,18 +35,14 @@ import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletApp;
-import com.liferay.portal.model.PortletConstants;
-import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.LayoutRevisionLocalServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
-import com.liferay.portal.service.ResourceLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.permission.LayoutPermissionUtil;
-import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.servlet.NamespaceServletRequest;
 import com.liferay.portal.struts.JSONAction;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -96,7 +92,6 @@ public class UpdateLayoutAction extends JSONAction {
 		String portletId = ParamUtil.getString(request, "p_p_id");
 
 		boolean updateLayout = true;
-		boolean deletePortlet = false;
 
 		if (cmd.equals(Constants.ADD)) {
 			String columnId = ParamUtil.getString(request, "p_p_col_id", null);
@@ -120,10 +115,6 @@ public class UpdateLayoutAction extends JSONAction {
 					layoutTypePortlet.isCustomizedView()) {
 
 					updateLayout = false;
-					deletePortlet = false;
-				}
-				else {
-					deletePortlet = true;
 				}
 			}
 		}
@@ -259,20 +250,6 @@ public class UpdateLayoutAction extends JSONAction {
 			layout = LayoutServiceUtil.updateLayout(
 				layout.getGroupId(), layout.isPrivateLayout(),
 				layout.getLayoutId(), layout.getTypeSettings());
-
-			// See LEP-1411. Delay the delete of extraneous portlet resources
-			// only after the user has proven that he has the valid permissions.
-
-			if (deletePortlet) {
-				String rootPortletId = PortletConstants.getRootPortletId(
-					portletId);
-
-				ResourceLocalServiceUtil.deleteResource(
-					layout.getCompanyId(), rootPortletId,
-					ResourceConstants.SCOPE_INDIVIDUAL,
-					PortletPermissionUtil.getPrimaryKey(
-						layout.getPlid(), portletId));
-			}
 		}
 		else {
 			LayoutClone layoutClone = LayoutCloneFactory.getInstance();

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.TestPropsValues;
 
 import com.thoughtworks.selenium.Selenium;
@@ -1095,7 +1096,57 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public void waitForPopUp(String windowID, String timeout) {
-		throw new UnsupportedOperationException();
+		int wait;
+
+		if (timeout.equals("")) {
+			wait = 30;
+		}
+		else {
+			wait = GetterUtil.getInteger(timeout) / 1000;
+		}
+
+		if (windowID.equals("") || windowID.equals("null")) {
+			for (int second = 0; second <= wait; second++) {
+				if (getWindowHandles().size() > 1) {
+					return;
+				}
+
+				try {
+					Thread.sleep(1000);
+				}
+				catch (Exception e) {
+				}
+			}
+		}
+		else {
+			String targetWindowTitle = windowID;
+
+			if (targetWindowTitle.startsWith("title=")) {
+				targetWindowTitle = targetWindowTitle.substring(6);
+			}
+
+			for (int second = 0; second <= wait; second++) {
+				for (String windowHandle : getWindowHandles()) {
+					WebDriver.TargetLocator targetLocator = switchTo();
+
+					targetLocator.window(windowHandle);
+
+					if (targetWindowTitle.equals(getTitle())) {
+						targetLocator.window(_parentFrameHandle);
+
+						return;
+					}
+				}
+
+				try {
+					Thread.sleep(1000);
+				}
+				catch (Exception e) {
+				}
+			}
+		}
+
+		BaseTestCase.fail("Could not find the windowID: \"" + windowID + "\"");
 	}
 
 	public void windowFocus() {

@@ -109,6 +109,26 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 		}
 	}
 
+	public void subscribeFolder(long groupId, long folderId)
+		throws PortalException, SystemException {
+
+		BookmarksFolderPermission.check(
+			getPermissionChecker(), groupId, folderId, ActionKeys.SUBSCRIBE);
+
+		bookmarksFolderLocalService.subscribeFolder(
+			getUserId(), groupId, folderId);
+	}
+
+	public void unsubscribeFolder(long groupId, long folderId)
+		throws PortalException, SystemException {
+
+		BookmarksFolderPermission.check(
+			getPermissionChecker(), groupId, folderId, ActionKeys.SUBSCRIBE);
+
+		bookmarksFolderLocalService.unsubscribeFolder(
+			getUserId(), groupId, folderId);
+	}
+
 	public BookmarksFolder updateFolder(
 			long folderId, long parentFolderId, String name, String description,
 			boolean mergeWithParentFolder, ServiceContext serviceContext)

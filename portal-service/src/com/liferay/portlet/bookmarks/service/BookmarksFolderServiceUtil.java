@@ -107,6 +107,18 @@ public class BookmarksFolderServiceUtil {
 		getService().getSubfolderIds(folderIds, groupId, folderId);
 	}
 
+	public static void subscribeFolder(long groupId, long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().subscribeFolder(groupId, folderId);
+	}
+
+	public static void unsubscribeFolder(long groupId, long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().unsubscribeFolder(groupId, folderId);
+	}
+
 	public static com.liferay.portlet.bookmarks.model.BookmarksFolder updateFolder(
 		long folderId, long parentFolderId, java.lang.String name,
 		java.lang.String description, boolean mergeWithParentFolder,

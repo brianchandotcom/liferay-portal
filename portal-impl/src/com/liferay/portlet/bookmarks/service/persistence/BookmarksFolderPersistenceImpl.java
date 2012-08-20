@@ -40,6 +40,7 @@ import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
 import com.liferay.portal.service.persistence.GroupPersistence;
+import com.liferay.portal.service.persistence.SubscriptionPersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -4653,6 +4654,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	protected BookmarksFolderPersistence bookmarksFolderPersistence;
 	@BeanReference(type = GroupPersistence.class)
 	protected GroupPersistence groupPersistence;
+	@BeanReference(type = SubscriptionPersistence.class)
+	protected SubscriptionPersistence subscriptionPersistence;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
 	@BeanReference(type = ExpandoValuePersistence.class)

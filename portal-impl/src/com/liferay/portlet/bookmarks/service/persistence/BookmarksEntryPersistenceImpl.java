@@ -40,6 +40,8 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.BatchSessionUtil;
+import com.liferay.portal.service.persistence.PortletPreferencesPersistence;
+import com.liferay.portal.service.persistence.SubscriptionPersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
@@ -5475,6 +5477,10 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 	protected BookmarksEntryPersistence bookmarksEntryPersistence;
 	@BeanReference(type = BookmarksFolderPersistence.class)
 	protected BookmarksFolderPersistence bookmarksFolderPersistence;
+	@BeanReference(type = PortletPreferencesPersistence.class)
+	protected PortletPreferencesPersistence portletPreferencesPersistence;
+	@BeanReference(type = SubscriptionPersistence.class)
+	protected SubscriptionPersistence subscriptionPersistence;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
 	@BeanReference(type = AssetEntryPersistence.class)

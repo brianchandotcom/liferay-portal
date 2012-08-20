@@ -71,6 +71,37 @@ else {
 		/>
 	</c:if>
 
+	<c:if test="<%= BookmarksEntryPermission.contains(permissionChecker, entry, ActionKeys.SUBSCRIBE) %>">
+		<c:choose>
+			<c:when test="<%= SubscriptionLocalServiceUtil.isSubscribed(user.getCompanyId(), user.getUserId(), BookmarksEntry.class.getName(), entry.getEntryId()) %>">
+				<portlet:actionURL var="unsubscribeURL">
+					<portlet:param name="struts_action" value="/bookmarks/edit_entry" />
+					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
+				</portlet:actionURL>
+
+				<liferay-ui:icon
+					image="unsubscribe"
+					url="<%= unsubscribeURL %>"
+				/>
+			</c:when>
+			<c:otherwise>
+				<portlet:actionURL var="subscribeURL">
+					<portlet:param name="struts_action" value="/bookmarks/edit_entry" />
+					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
+				</portlet:actionURL>
+
+				<liferay-ui:icon
+					image="subscribe"
+					url="<%= subscribeURL %>"
+				/>
+			</c:otherwise>
+		</c:choose>
+	</c:if>
+
 	<c:if test="<%= BookmarksEntryPermission.contains(permissionChecker, entry, ActionKeys.DELETE) %>">
 		<portlet:renderURL var="redirectURL">
 			<portlet:param name="struts_action" value="/bookmarks/view" />

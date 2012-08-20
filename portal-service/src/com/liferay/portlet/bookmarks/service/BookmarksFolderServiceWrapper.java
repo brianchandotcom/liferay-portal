@@ -103,6 +103,18 @@ public class BookmarksFolderServiceWrapper implements BookmarksFolderService,
 		_bookmarksFolderService.getSubfolderIds(folderIds, groupId, folderId);
 	}
 
+	public void subscribeFolder(long groupId, long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_bookmarksFolderService.subscribeFolder(groupId, folderId);
+	}
+
+	public void unsubscribeFolder(long groupId, long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_bookmarksFolderService.unsubscribeFolder(groupId, folderId);
+	}
+
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder updateFolder(
 		long folderId, long parentFolderId, java.lang.String name,
 		java.lang.String description, boolean mergeWithParentFolder,

@@ -80,9 +80,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 					List leftList = new ArrayList();
 
-					for (int i = 0; i < folderColumns.length; i++) {
-						String folderColumn = folderColumns[i];
-
+					for (String folderColumn : folderColumns) {
 						leftList.add(new KeyValuePair(folderColumn, LanguageUtil.get(pageContext, folderColumn)));
 					}
 
@@ -127,9 +125,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 					List leftList = new ArrayList();
 
-					for (int i = 0; i < fileEntryColumns.length; i++) {
-						String fileEntryColumn = fileEntryColumns[i];
-
+					for (String fileEntryColumn : fileEntryColumns) {
 						leftList.add(new KeyValuePair(fileEntryColumn, LanguageUtil.get(pageContext, fileEntryColumn)));
 					}
 

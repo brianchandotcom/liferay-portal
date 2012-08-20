@@ -316,6 +316,72 @@ public class BookmarksFolderServiceHttp {
 		}
 	}
 
+	public static void subscribeFolder(HttpPrincipal httpPrincipal,
+		long groupId, long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(BookmarksFolderServiceUtil.class.getName(),
+					"subscribeFolder", _subscribeFolderParameterTypes8);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					folderId);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static void unsubscribeFolder(HttpPrincipal httpPrincipal,
+		long groupId, long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(BookmarksFolderServiceUtil.class.getName(),
+					"unsubscribeFolder", _unsubscribeFolderParameterTypes9);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					folderId);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.portlet.bookmarks.model.BookmarksFolder updateFolder(
 		HttpPrincipal httpPrincipal, long folderId, long parentFolderId,
 		java.lang.String name, java.lang.String description,
@@ -325,7 +391,7 @@ public class BookmarksFolderServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(BookmarksFolderServiceUtil.class.getName(),
-					"updateFolder", _updateFolderParameterTypes8);
+					"updateFolder", _updateFolderParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					folderId, parentFolderId, name, description,
@@ -383,7 +449,13 @@ public class BookmarksFolderServiceHttp {
 	private static final Class<?>[] _getSubfolderIdsParameterTypes7 = new Class[] {
 			java.util.List.class, long.class, long.class
 		};
-	private static final Class<?>[] _updateFolderParameterTypes8 = new Class[] {
+	private static final Class<?>[] _subscribeFolderParameterTypes8 = new Class[] {
+			long.class, long.class
+		};
+	private static final Class<?>[] _unsubscribeFolderParameterTypes9 = new Class[] {
+			long.class, long.class
+		};
+	private static final Class<?>[] _updateFolderParameterTypes10 = new Class[] {
 			long.class, long.class, java.lang.String.class,
 			java.lang.String.class, boolean.class,
 			com.liferay.portal.service.ServiceContext.class

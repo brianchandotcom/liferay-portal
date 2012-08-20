@@ -79,6 +79,7 @@ request.setAttribute("edit_team_assignments.jsp-portletURL", portletURL);
 	<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
 	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
 	<aui:input name="assignmentsRedirect" type="hidden" />
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="teamId" type="hidden" value="<%= String.valueOf(team.getTeamId()) %>" />
 
 	<c:choose>

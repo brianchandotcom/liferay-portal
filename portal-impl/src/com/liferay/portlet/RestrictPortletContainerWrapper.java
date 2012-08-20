@@ -14,6 +14,7 @@
 
 package com.liferay.portlet;
 
+import com.liferay.portal.kernel.portlet.ActionResult;
 import com.liferay.portal.kernel.portlet.PortletContainer;
 import com.liferay.portal.kernel.portlet.PortletContainerException;
 import com.liferay.portal.kernel.portlet.RestrictPortletServletRequest;
@@ -23,6 +24,7 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.util.PropsValues;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.portlet.Event;
@@ -59,7 +61,7 @@ public class RestrictPortletContainerWrapper implements PortletContainer {
 		_portletContainer.preparePortlet(request, portlet);
 	}
 
-	public void processAction(
+	public ActionResult processAction(
 			HttpServletRequest request, HttpServletResponse response,
 			Portlet portlet)
 		throws PortletContainerException {
@@ -68,14 +70,14 @@ public class RestrictPortletContainerWrapper implements PortletContainer {
 			new RestrictPortletServletRequest(request);
 
 		try {
-			_portletContainer.processAction(request, response, portlet);
+			return _portletContainer.processAction(request, response, portlet);
 		}
 		finally {
 			restrictPortletServletRequest.mergeSharedAttributes();
 		}
 	}
 
-	public void processEvent(
+	public List<Event> processEvent(
 			HttpServletRequest request, HttpServletResponse response,
 			Portlet portlet, Layout layout, Event event)
 		throws PortletContainerException {
@@ -84,7 +86,7 @@ public class RestrictPortletContainerWrapper implements PortletContainer {
 			new RestrictPortletServletRequest(request);
 
 		try {
-			_portletContainer.processEvent(
+			return _portletContainer.processEvent(
 				request, response, portlet, layout, event);
 		}
 		finally {

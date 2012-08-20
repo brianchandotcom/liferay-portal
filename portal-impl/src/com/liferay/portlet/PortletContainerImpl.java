@@ -19,9 +19,11 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.ActionResult;
 import com.liferay.portal.kernel.portlet.LiferayPortletMode;
 import com.liferay.portal.kernel.portlet.PortletContainer;
 import com.liferay.portal.kernel.portlet.PortletContainerException;
+import com.liferay.portal.kernel.portlet.PortletContainerUtil;
 import com.liferay.portal.kernel.portlet.PortletModeFactory;
 import com.liferay.portal.kernel.portlet.WindowStateFactory;
 import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
@@ -40,7 +42,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.webdav.WebDAVStorage;
 import com.liferay.portal.kernel.xml.QName;
 import com.liferay.portal.model.Layout;
-import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletPreferencesIds;
@@ -50,7 +51,6 @@ import com.liferay.portal.security.auth.AuthTokenUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
@@ -68,8 +68,6 @@ import com.liferay.util.SerializableUtil;
 import java.io.Serializable;
 import java.io.Writer;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -108,26 +106,26 @@ public class PortletContainerImpl implements PortletContainer {
 		}
 	}
 
-	public void processAction(
+	public ActionResult processAction(
 			HttpServletRequest request, HttpServletResponse response,
 			Portlet portlet)
 		throws PortletContainerException {
 
 		try {
-			_doProcessAction(request, response, portlet);
+			return _doProcessAction(request, response, portlet);
 		}
 		catch (Exception e) {
 			throw new PortletContainerException(e);
 		}
 	}
 
-	public void processEvent(
+	public List<Event> processEvent(
 			HttpServletRequest request, HttpServletResponse response,
 			Portlet portlet, Layout layout, Event event)
 		throws PortletContainerException {
 
 		try {
-			_doProcessEvent(request, response, portlet, layout, event);
+			return _doProcessEvent(request, response, portlet, layout, event);
 		}
 		catch (Exception e) {
 			throw new PortletContainerException(e);
@@ -160,43 +158,6 @@ public class PortletContainerImpl implements PortletContainer {
 		}
 	}
 
-	protected List<LayoutTypePortlet> getLayoutTypePortlets(
-			Layout requestLayout)
-		throws Exception {
-
-		if (PropsValues.PORTLET_EVENT_DISTRIBUTION_LAYOUT_SET) {
-			List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-				requestLayout.getGroupId(), requestLayout.isPrivateLayout(),
-				LayoutConstants.TYPE_PORTLET);
-
-			List<LayoutTypePortlet> layoutTypePortlets =
-				new ArrayList<LayoutTypePortlet>(layouts.size());
-
-			for (Layout layout : layouts) {
-				LayoutTypePortlet layoutTypePortlet =
-					(LayoutTypePortlet)layout.getLayoutType();
-
-				layoutTypePortlets.add(layoutTypePortlet);
-			}
-
-			return layoutTypePortlets;
-		}
-
-		if (requestLayout.isTypePortlet()) {
-			List<LayoutTypePortlet> layoutTypePortlets =
-				new ArrayList<LayoutTypePortlet>(1);
-
-			LayoutTypePortlet layoutTypePortlet =
-				(LayoutTypePortlet)requestLayout.getLayoutType();
-
-			layoutTypePortlets.add(layoutTypePortlet);
-
-			return layoutTypePortlets;
-		}
-
-		return Collections.emptyList();
-	}
-
 	protected HttpServletRequest getOwnerLayoutRequestWrapper(
 			HttpServletRequest request, Portlet portlet)
 		throws Exception {
@@ -212,8 +173,8 @@ public class PortletContainerImpl implements PortletContainer {
 
 		Layout requestLayout = (Layout)request.getAttribute(WebKeys.LAYOUT);
 
-		List<LayoutTypePortlet> layoutTypePortlets = getLayoutTypePortlets(
-			requestLayout);
+		List<LayoutTypePortlet> layoutTypePortlets =
+			PortletContainerUtil.getLayoutTypePortlets(requestLayout);
 
 		Layout ownerLayout = null;
 		LayoutTypePortlet ownerLayoutTypePortlet = null;
@@ -270,38 +231,6 @@ public class PortletContainerImpl implements PortletContainer {
 		}
 
 		return scopeGroupId;
-	}
-
-	protected void processEvents(
-			HttpServletRequest request, HttpServletResponse response,
-			List<Event> events)
-		throws Exception {
-
-		Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);
-
-		List<LayoutTypePortlet> layoutTypePortlets = getLayoutTypePortlets(
-			layout);
-
-		for (LayoutTypePortlet layoutTypePortlet : layoutTypePortlets) {
-			List<Portlet> portlets = layoutTypePortlet.getAllPortlets();
-
-			for (Portlet portlet : portlets) {
-				for (Event event : events) {
-					javax.xml.namespace.QName qName = event.getQName();
-
-					QName processingQName = portlet.getProcessingEvent(
-						qName.getNamespaceURI(), qName.getLocalPart());
-
-					if (processingQName == null) {
-						continue;
-					}
-
-					_doProcessEvent(
-						request, response, portlet,
-						layoutTypePortlet.getLayout(), event);
-				}
-			}
-		}
 	}
 
 	protected void processPublicRenderParameters(
@@ -439,7 +368,7 @@ public class PortletContainerImpl implements PortletContainer {
 		}
 	}
 
-	private void _doProcessAction(
+	private ActionResult _doProcessAction(
 			HttpServletRequest request, HttpServletResponse response,
 			Portlet portlet)
 		throws Exception {
@@ -477,7 +406,7 @@ public class PortletContainerImpl implements PortletContainer {
 				"Reject processAction for " + url + " on " +
 					portlet.getPortletId());
 
-			return;
+			return ActionResult.EMPTY_ACTION_RESULT;
 		}
 
 		Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);
@@ -597,19 +526,11 @@ public class PortletContainerImpl implements PortletContainer {
 
 			List<Event> events = actionResponseImpl.getEvents();
 
-			if (!events.isEmpty()) {
-				processEvents(request, response, events);
-
-				actionRequestImpl.defineObjects(
-					portletConfig, actionResponseImpl);
-			}
-
 			String redirectLocation = actionResponseImpl.getRedirectLocation();
 
-			if (Validator.isNotNull(redirectLocation)) {
-				response.sendRedirect(redirectLocation);
-			}
-			else if (portlet.isActionURLRedirect()) {
+			if (Validator.isNull(redirectLocation) &&
+				portlet.isActionURLRedirect()) {
+
 				PortletURL portletURL = new PortletURLImpl(
 					actionRequestImpl, actionRequestImpl.getPortletName(),
 					layout.getPlid(), PortletRequest.RENDER_PHASE);
@@ -626,8 +547,10 @@ public class PortletContainerImpl implements PortletContainer {
 					portletURL.setParameter(key, value);
 				}
 
-				response.sendRedirect(portletURL.toString());
+				redirectLocation = portletURL.toString();
 			}
+
+			return new ActionResult(events, redirectLocation);
 		}
 		finally {
 			if (uploadServletRequest != null) {
@@ -638,7 +561,7 @@ public class PortletContainerImpl implements PortletContainer {
 		}
 	}
 
-	private void _doProcessEvent(
+	private List<Event> _doProcessEvent(
 			HttpServletRequest request, HttpServletResponse response,
 			Portlet portlet, Layout layout, Event event)
 		throws Exception {
@@ -752,7 +675,7 @@ public class PortletContainerImpl implements PortletContainer {
 					renderParameterMap);
 			}
 
-			processEvents(request, response, eventResponseImpl.getEvents());
+			return eventResponseImpl.getEvents();
 		}
 		finally {
 			eventRequestImpl.cleanUp();

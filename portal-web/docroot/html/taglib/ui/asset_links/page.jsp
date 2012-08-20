@@ -37,10 +37,10 @@ if (assetEntryId > 0) {
 				AssetEntry assetLinkEntry = null;
 
 				if (assetLink.getEntryId1() == assetEntryId) {
-					assetLinkEntry = AssetEntryServiceUtil.getEntry(assetLink.getEntryId2());
+					assetLinkEntry = AssetEntryLocalServiceUtil.getEntry(assetLink.getEntryId2());
 				}
 				else {
-					assetLinkEntry = AssetEntryServiceUtil.getEntry(assetLink.getEntryId1());
+					assetLinkEntry = AssetEntryLocalServiceUtil.getEntry(assetLink.getEntryId1());
 				}
 
 				if (!assetLinkEntry.isVisible()) {

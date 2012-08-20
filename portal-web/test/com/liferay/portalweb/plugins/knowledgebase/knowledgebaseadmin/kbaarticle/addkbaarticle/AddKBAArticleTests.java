@@ -26,6 +26,7 @@ public class AddKBAArticleTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddKBAArticleTest.class);
+		testSuite.addTestSuite(ViewKBAArticleTest.class);
 		testSuite.addTestSuite(TearDownKBAArticleTest.class);
 
 		return testSuite;

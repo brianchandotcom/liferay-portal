@@ -72,7 +72,7 @@ public class AddKBAArticleTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Add Article']",
 			RuntimeVariables.replace("Add Article"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("//input[contains(@id,'knowledgebaseportlet_title')]",
+		selenium.type("//input[@id='_1_WAR_knowledgebaseportlet_title']",
 			RuntimeVariables.replace("Knowledge Base Admin Article Title"));
 
 		for (int second = 0;; second++) {
@@ -82,7 +82,7 @@ public class AddKBAArticleTest extends BaseTestCase {
 
 			try {
 				if (selenium.isElementPresent(
-							"//span[contains(@id,'knowledgebaseportlet_editor')]")) {
+							"//td[@id='cke_contents__1_WAR_knowledgebaseportlet_editor']")) {
 					break;
 				}
 			}
@@ -120,7 +120,7 @@ public class AddKBAArticleTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//td[contains(@id,'knowledgebaseportlet_editor')]/textarea")) {
+							"//td[@id='cke_contents__1_WAR_knowledgebaseportlet_editor']/textarea")) {
 					break;
 				}
 			}
@@ -130,7 +130,7 @@ public class AddKBAArticleTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.type("//td[contains(@id,'knowledgebaseportlet_editor')]/textarea",
+		selenium.type("//td[@id='cke_contents__1_WAR_knowledgebaseportlet_editor']/textarea",
 			RuntimeVariables.replace("Knowledge Base Admin Article Content"));
 		assertEquals(RuntimeVariables.replace("Source"),
 			selenium.getText("//span[.='Source']"));
@@ -144,7 +144,7 @@ public class AddKBAArticleTest extends BaseTestCase {
 
 			try {
 				if (selenium.isElementPresent(
-							"//td[contains(@id,'knowledgebaseportlet_editor')]")) {
+							"//td[@id='cke_contents__1_WAR_knowledgebaseportlet_editor']")) {
 					break;
 				}
 			}
@@ -161,7 +161,7 @@ public class AddKBAArticleTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//td[contains(@id,'knowledgebaseportlet_editor')]/iframe")) {
+							"//td[@id='cke_contents__1_WAR_knowledgebaseportlet_editor']/iframe")) {
 					break;
 				}
 			}
@@ -172,7 +172,7 @@ public class AddKBAArticleTest extends BaseTestCase {
 		}
 
 		selenium.selectFrame(
-			"//td[contains(@id,'knowledgebaseportlet_editor')]/iframe");
+			"//td[@id='cke_contents__1_WAR_knowledgebaseportlet_editor']/iframe");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

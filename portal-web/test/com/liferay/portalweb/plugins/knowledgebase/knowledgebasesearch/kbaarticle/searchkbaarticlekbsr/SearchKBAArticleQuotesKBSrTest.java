@@ -26,7 +26,7 @@ public class SearchKBAArticleQuotesKBSrTest extends BaseTestCase {
 		selenium.clickAt("link=Knowledge Base Search Test Page",
 			RuntimeVariables.replace("Knowledge Base Display Test Page"));
 		selenium.waitForPageToLoad("30000");
-		selenium.type("//input[contains(@id,'knowledgebaseportlet_keywords')]",
+		selenium.type("//input[@title='Search Articles']",
 			RuntimeVariables.replace("\"Knowledge Base Admin Article Title\""));
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));

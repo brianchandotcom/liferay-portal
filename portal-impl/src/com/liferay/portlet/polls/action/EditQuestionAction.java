@@ -95,7 +95,7 @@ public class EditQuestionAction extends PortletAction {
 					 cmd.equals(Constants.UPDATE) ||
 					 cmd.equals(Constants.VOTE)) {
 
-				updateQuestion(portletConfig, actionRequest);
+				updateQuestion(portletConfig, actionRequest, actionResponse);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteQuestion(actionRequest);
@@ -220,7 +220,8 @@ public class EditQuestionAction extends PortletAction {
 	}
 
 	protected void updateQuestion(
-			PortletConfig portletConfig, ActionRequest actionRequest)
+			PortletConfig portletConfig, ActionRequest actionRequest,
+			ActionResponse actionResponse)
 		throws Exception {
 
 		long questionId = ParamUtil.getLong(actionRequest, "questionId");

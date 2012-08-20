@@ -16,8 +16,11 @@ package com.liferay.portlet.polls.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.CookieKeys;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.polls.NoSuchVoteException;
@@ -27,10 +30,13 @@ import com.liferay.portlet.polls.service.PollsChoiceLocalServiceUtil;
 import com.liferay.portlet.polls.service.PollsVoteLocalServiceUtil;
 
 import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletResponse;
 
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
@@ -76,40 +82,50 @@ public class PollsUtil {
 
 			return true;
 		}
-		else {
-			HttpSession session = request.getSession();
 
-			Boolean hasVoted = (Boolean)session.getAttribute(
-				PollsQuestion.class.getName() + "." + questionId);
+		String votedCookie = CookieKeys.getCookie(
+			request, PollsQuestion.class.getName() + "." + questionId);
 
-			if ((hasVoted != null) && hasVoted.booleanValue()) {
-				return true;
-			}
-			else {
-				return false;
-			}
-		}
+		return GetterUtil.getBoolean(votedCookie);
 	}
 
-	public static void saveVote(ActionRequest actionRequest, long questionId) {
+	public static void saveVote(
+		ActionRequest actionRequest, ActionResponse actionResponse,
+		long questionId) {
+
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			actionRequest);
 
-		saveVote(request, questionId);
+		HttpServletResponse response = PortalUtil.getHttpServletResponse(
+			actionResponse);
+
+		saveVote(request, response, questionId);
 	}
 
-	public static void saveVote(HttpServletRequest request, long questionId) {
-		HttpSession session = request.getSession();
+	public static void saveVote(
+		HttpServletRequest request, HttpServletResponse response,
+		long questionId) {
 
-		session.setAttribute(
-			PollsQuestion.class.getName() + "." + questionId, Boolean.TRUE);
+		Cookie votedCookie = new Cookie(
+			PollsQuestion.class.getName() + "." + questionId, StringPool.TRUE);
+
+		votedCookie.setMaxAge((int)(Time.WEEK / 1000));
+		votedCookie.setPath(StringPool.SLASH);
+
+		CookieKeys.addCookie(request, response, votedCookie);
 	}
 
-	public static void saveVote(RenderRequest renderRequest, long questionId) {
+	public static void saveVote(
+		RenderRequest renderRequest, RenderResponse renderResponse,
+		long questionId) {
+
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			renderRequest);
 
-		saveVote(request, questionId);
+		HttpServletResponse response = PortalUtil.getHttpServletResponse(
+			renderResponse);
+
+		saveVote(request, response, questionId);
 	}
 
 }

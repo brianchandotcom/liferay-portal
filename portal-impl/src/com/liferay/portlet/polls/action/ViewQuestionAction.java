@@ -21,6 +21,7 @@ import com.liferay.portlet.polls.service.PollsVoteServiceUtil;
 import com.liferay.portlet.polls.util.PollsUtil;
 
 import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 
 /**
@@ -31,7 +32,8 @@ public class ViewQuestionAction extends EditQuestionAction {
 
 	@Override
 	protected void updateQuestion(
-			PortletConfig portletConfig, ActionRequest actionRequest)
+			PortletConfig portletConfig, ActionRequest actionRequest,
+			ActionResponse actionResponse)
 		throws Exception {
 
 		long questionId = ParamUtil.getLong(actionRequest, "questionId");
@@ -42,7 +44,7 @@ public class ViewQuestionAction extends EditQuestionAction {
 
 		PollsVoteServiceUtil.addVote(questionId, choiceId, serviceContext);
 
-		PollsUtil.saveVote(actionRequest, questionId);
+		PollsUtil.saveVote(actionRequest, actionResponse, questionId);
 	}
 
 }

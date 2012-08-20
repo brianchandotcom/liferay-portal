@@ -1190,7 +1190,7 @@ public class WebDriverToSeleniumBridge
 				ExpectedConditions.presenceOfElementLocated(
 					By.cssSelector(locator.substring(4))));
 		}
-		else if (locator.startsWith("link=")) {
+		else if (locator.startsWith("link=") || locator.startsWith("Link=")) {
 			webElement = wait.until(
 				ExpectedConditions.presenceOfElementLocated(
 					By.linkText(locator.substring(5))));
@@ -1238,7 +1238,7 @@ public class WebDriverToSeleniumBridge
 				wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(
 					By.cssSelector(locator.substring(4))));
 		}
-		else if (locator.startsWith("link=")) {
+		else if (locator.startsWith("link=") || locator.startsWith("Link=")) {
 			webElements =
 				wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(
 					By.linkText(locator.substring(5))));

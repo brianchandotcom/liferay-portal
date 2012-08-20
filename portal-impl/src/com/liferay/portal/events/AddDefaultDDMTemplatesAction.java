@@ -19,20 +19,24 @@ import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateHandler;
+import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
-import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.util.ContentUtil;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -52,8 +56,9 @@ public class AddDefaultDDMTemplatesAction extends SimpleAction {
 	}
 
 	protected void addDDMTemplate(
-			long userId, long groupId, String templateKey, String name,
-			String description, String fileName, ServiceContext serviceContext)
+			long userId, long groupId, long classNameId, String templateKey,
+			String name, String description, String scriptFile, String language,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(
@@ -63,8 +68,7 @@ public class AddDefaultDDMTemplatesAction extends SimpleAction {
 			return;
 		}
 
-		String script = ContentUtil.get(
-			"com/liferay/portal/events/dependencies/" + fileName);
+		String script = ContentUtil.get(scriptFile);
 
 		Map<Locale, String> nameMap = new HashMap<Locale, String>();
 
@@ -77,27 +81,64 @@ public class AddDefaultDDMTemplatesAction extends SimpleAction {
 		descriptionMap.put(locale, LanguageUtil.get(locale, description));
 
 		DDMTemplateLocalServiceUtil.addTemplate(
-			userId, groupId, PortalUtil.getClassNameId(AssetEntry.class), 0,
-			templateKey, nameMap, descriptionMap, "list", null, "vm", script,
-			serviceContext);
+			userId, groupId, classNameId, 0, templateKey, nameMap,
+			descriptionMap, "list", null, language, script, serviceContext);
 	}
 
 	protected void addDDMTemplates(
 			long userId, long groupId, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		addDDMTemplate(
-			userId, groupId, DDMTemplateConstants.TEMPLATE_KEY_CUSTOM_ABSTRACTS,
-			"asset-publisher-custom-abstracts",
-			"asset-publisher-custom-abstracts-description",
-			"asset-publisher-custom-abstracts.vm", serviceContext);
+		List<PortletDisplayTemplateHandler> portletDisplayTemplateHandlers =
+			PortletDisplayTemplateHandlerRegistryUtil
+				.getPortletDisplayTemplateHandlers();
 
-		addDDMTemplate(
-			userId, groupId,
-			DDMTemplateConstants.TEMPLATE_KEY_CUSTOM_TITLE_LIST,
-			"asset-publisher-custom-title-list",
-			"asset-publisher-custom-title-list-description",
-			"asset-publisher-custom-title-list.vm", serviceContext);
+		for (PortletDisplayTemplateHandler portletDisplayTemplateHandler :
+			portletDisplayTemplateHandlers) {
+
+			try {
+				long classNameId = PortalUtil.getClassNameId(
+					portletDisplayTemplateHandler.getClassName());
+
+				List<Element> templateElements =
+					portletDisplayTemplateHandler.getDefaultTemplates();
+
+				for (Element templateElement : templateElements) {
+					String templateKey = templateElement.elementText(
+						"template-key");
+
+					DDMTemplate ddmTemplate =
+						DDMTemplateLocalServiceUtil.fetchTemplate(
+							groupId, templateKey);
+
+					if (ddmTemplate != null) {
+						continue;
+					}
+
+					String name = templateElement.elementText("name");
+
+					String description = templateElement.elementText(
+						"description");
+
+					String language = templateElement.elementText("language");
+
+					String scriptFile = templateElement.elementText(
+						"script-file");
+
+					addDDMTemplate(
+						userId, groupId, classNameId, templateKey, name,
+						description, scriptFile, language, serviceContext);
+				}
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to install default portlet display templates " +
+							"for " + portletDisplayTemplateHandler.getName(
+								LocaleUtil.getDefault()));
+				}
+			}
+		}
 	}
 
 	protected void doRun(long companyId) throws Exception {
@@ -113,5 +154,8 @@ public class AddDefaultDDMTemplatesAction extends SimpleAction {
 
 		addDDMTemplates(defaultUserId, group.getGroupId(), serviceContext);
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		AddDefaultDDMTemplatesAction.class);
 
 }

@@ -34,7 +34,7 @@ public class WikiPortletDisplayTemplateHandler
 		return WikiPage.class.getName();
 	}
 
-	public String getDefaultTemplateLocation() {
+	public String getHelpTemplatePath() {
 		return PropsValues.WIKI_DISPLAY_STYLES_TEMPLATE_CONTENT;
 	}
 

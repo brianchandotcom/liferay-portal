@@ -34,7 +34,7 @@ public class AssetTagsNavigationPortletDisplayTemplateHandler
 		return AssetTag.class.getName();
 	}
 
-	public String getDefaultTemplateLocation() {
+	public String getHelpTemplatePath() {
 		return
 			PropsValues.ASSET_TAGS_NAVIGATION_DISPLAY_STYLES_TEMPLATE_CONTENT;
 	}

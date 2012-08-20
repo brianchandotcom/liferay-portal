@@ -14,6 +14,9 @@
 
 package com.liferay.portal.kernel.portletdisplaytemplate;
 
+import com.liferay.portal.kernel.xml.Element;
+
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -29,13 +32,23 @@ public interface PortletDisplayTemplateHandler {
 	public String getClassName();
 
 	/**
-	 * Returns the location of the default template of the portlet display.
+	 * Returns a list of elements containing the information of the portlet
+	 * display templates to be installed by default.
 	 *
-	 * @return the location of the default template of the portlet display. This
-	 *         template will show the default information for the first portlet
-	 *         display template the user creates.
+	 * @return 	a list of elements containing the information of the portlet
+	 * 			display templates to be installed by default. These templates
+	 * 			will be installed when registering the portlet
 	 */
-	public String getDefaultTemplateLocation();
+	public List<Element> getDefaultTemplates() throws Exception;
+
+	/**
+	 * Returns the path to the help template of the portlet display.
+	 *
+	 * @return the path to the help template of the portlet display. This
+	 *         template will be shown as a help message when the user creates a
+	 *         new portlet display template
+	 */
+	public String getHelpTemplatePath();
 
 	/**
 	 * Returns the name of the portlet display template.

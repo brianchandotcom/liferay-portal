@@ -14,9 +14,47 @@
 
 package com.liferay.portal.kernel.portletdisplaytemplate;
 
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Eduardo Garcia
  */
 public abstract class BasePortletDisplayTemplateHandler
 	implements PortletDisplayTemplateHandler {
+
+	public List<Element> getDefaultTemplates() throws Exception {
+		List<Element> templateElements = new ArrayList<Element>();
+
+		String filePath = getDefaultTemplatesConfigPath();
+
+		if (Validator.isNotNull(filePath)) {
+			String xml = StringUtil.read(
+				getClass().getClassLoader(), filePath, false);
+
+			Document document = SAXReaderUtil.read(xml);
+
+			Element rootElement = document.getRootElement();
+
+			templateElements = rootElement.elements("template");
+		}
+
+		return templateElements;
+	}
+
+	public String getHelpTemplatePath() {
+		return "com/liferay/portlet/portletdisplaytemplate/dependencies/" +
+			"portlet_display_template.vm";
+	}
+
+	protected String getDefaultTemplatesConfigPath() {
+		return null;
+	}
+
 }

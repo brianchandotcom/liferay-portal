@@ -22,11 +22,15 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.proxy.MessageValuesThreadLocal;
 import com.liferay.portal.kernel.util.CentralizedThreadLocal;
+import com.liferay.portal.kernel.util.TransientValue;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
+import com.liferay.portal.service.UserLocalServiceUtil;
 
 import java.util.Set;
 
@@ -62,12 +66,6 @@ public class SerialDestination extends BaseAsyncDestination {
 			message.put("companyId", CompanyThreadLocal.getCompanyId());
 		}
 
-		if (!message.contains("permissionChecker")) {
-			message.put(
-				"permissionChecker",
-				PermissionThreadLocal.getPermissionChecker());
-		}
-
 		if (!message.contains("principalName")) {
 			message.put("principalName", PrincipalThreadLocal.getName());
 		}
@@ -75,6 +73,15 @@ public class SerialDestination extends BaseAsyncDestination {
 		if (!message.contains("principalPassword")) {
 			message.put(
 				"principalPassword", PrincipalThreadLocal.getPassword());
+		}
+
+		if (!message.contains("permissionChecker")) {
+			PermissionChecker permissionChecker =
+				PermissionThreadLocal.getPermissionChecker();
+
+			message.put(
+				"permissionChecker",
+				new TransientValue<PermissionChecker>(permissionChecker));
 		}
 
 		ThreadPoolExecutor threadPoolExecutor = getThreadPoolExecutor();
@@ -89,18 +96,13 @@ public class SerialDestination extends BaseAsyncDestination {
 						CompanyThreadLocal.setCompanyId(messageCompanyId);
 					}
 
-					PermissionChecker permissionChecker =
-						(PermissionChecker)message.get("permissionChecker");
-
-					if (permissionChecker != null) {
-						PermissionThreadLocal.setPermissionChecker(
-							permissionChecker);
-					}
-
 					String messagePrincipalName = message.getString(
 						"principalName");
 
+					boolean hasPrincipalName = false;
+
 					if (Validator.isNotNull(messagePrincipalName)) {
+						hasPrincipalName = true;
 						PrincipalThreadLocal.setName(messagePrincipalName);
 					}
 
@@ -110,6 +112,32 @@ public class SerialDestination extends BaseAsyncDestination {
 					if (Validator.isNotNull(messagePrincipalPassword)) {
 						PrincipalThreadLocal.setPassword(
 							messagePrincipalPassword);
+					}
+
+					TransientValue<PermissionChecker> permissionCheckerValue =
+						(TransientValue<PermissionChecker>)message.get(
+						"permissionChecker");
+
+					PermissionChecker permissionChecker =
+						permissionCheckerValue.getValue();
+
+					if ((permissionChecker == null) && hasPrincipalName) {
+						long userId = PrincipalThreadLocal.getUserId();
+
+						try {
+							User user = UserLocalServiceUtil.fetchUser(userId);
+
+							permissionChecker =
+								PermissionCheckerFactoryUtil.create(user);
+						}
+						catch (Exception e) {
+							throw new RuntimeException(e);
+						}
+					}
+
+					if (permissionChecker != null) {
+						PermissionThreadLocal.setPermissionChecker(
+							permissionChecker);
 					}
 
 					Boolean clusterForwardMessage = (Boolean)message.get(

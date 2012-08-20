@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Test Misc Page</td>
-	<td>Test Misc Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Test Misc Page</td>
 	<td>Test Misc Page</td>
@@ -40,7 +35,7 @@
 </tr>
 <tr>
 	<td>downloadTempFile</td>
-	<td>Portlet_Response_Exclusive_State.png</td>
+	<td>logo(2).png</td>
 	<td></td>
 </tr>
 <tr>
@@ -49,23 +44,23 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Documents and Media Test Page</td>
-	<td>Documents and Media Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Documents and Media Test Page</td>
 	<td>Documents and Media Test Page</td>
 </tr>
 <tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
 	<td>assertText</td>
-	<td>//span[3]/span/ul/li/strong/a/span</td>
+	<td>//span[@title='Add']/ul/li/strong/a/span</td>
 	<td>Add</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//span[3]/span/ul/li/strong/a/span</td>
+	<td>//span[@title='Add']/ul/li/strong/a/span</td>
 	<td>Add</td>
 </tr>
 <tr>
@@ -86,7 +81,7 @@
 <tr>
 	<td>uploadTempFile</td>
 	<td>//input[@id='_20_file']</td>
-	<td>Portlet_Response_Exclusive_State.png</td>
+	<td>logo(2).png</td>
 </tr>
 <tr>
 	<td>type</td>
@@ -131,12 +126,12 @@
 <tr>
 	<td>waitForText</td>
 	<td>//span[@class='download-document']/span/a/span</td>
-	<td>Download (2.0k)</td>
+	<td>Download (2k)</td>
 </tr>
 <tr>
 	<td>assertText</td>
 	<td>//span[@class='download-document']/span/a/span</td>
-	<td>Download (2.0k)</td>
+	<td>Download (2k)</td>
 </tr>
 </tbody></table>
 </body>

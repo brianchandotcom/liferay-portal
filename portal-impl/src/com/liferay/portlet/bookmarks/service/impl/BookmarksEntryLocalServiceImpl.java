@@ -404,8 +404,8 @@ public class BookmarksEntryLocalServiceImpl
 				defaultPreferences);
 		}
 
-		if (serviceContext.isCommandAdd() &&
-			 !BookmarksUtil.getEmailEntryAddedEnabled(preferences) ||
+		if ((serviceContext.isCommandAdd() &&
+			 !BookmarksUtil.getEmailEntryAddedEnabled(preferences)) ||
 			(serviceContext.isCommandUpdate() &&
 			 !BookmarksUtil.getEmailEntryUpdatedEnabled(preferences))) {
 
@@ -428,9 +428,9 @@ public class BookmarksEntryLocalServiceImpl
 			layoutFullURL + Portal.FRIENDLY_URL_SEPARATOR + "bookmarks" +
 				StringPool.SLASH + entry.getEntryId();
 
-		String fromName = BookmarksUtil.getEmailFromName(
-			preferences, entry.getCompanyId());
 		String fromAddress = BookmarksUtil.getEmailFromAddress(
+			preferences, entry.getCompanyId());
+		String fromName = BookmarksUtil.getEmailFromName(
 			preferences, entry.getCompanyId());
 
 		Map<Locale, String> localizedSubjectMap = null;
@@ -472,22 +472,20 @@ public class BookmarksEntryLocalServiceImpl
 
 		BookmarksFolder folder = entry.getFolder();
 
-		List<Long> folderIds = new ArrayList<Long>();
-
 		if (folder.getFolderId() !=
 				BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
-			folderIds.add(folder.getFolderId());
-
-			folderIds.addAll(folder.getAncestorFolderIds());
-		}
-
-		folderIds.add(folder.getGroupId());
-
-		for (long folderId : folderIds) {
 			subscriptionSender.addPersistedSubscribers(
-				BookmarksFolder.class.getName(), folderId);
+				BookmarksFolder.class.getName(), folder.getFolderId());
+
+			for (BookmarksFolder ancestor : folder.getAncestors()) {
+				subscriptionSender.addPersistedSubscribers(
+					BookmarksFolder.class.getName(), ancestor.getFolderId());
+			}
 		}
+
+		subscriptionSender.addPersistedSubscribers(
+			BookmarksFolder.class.getName(), folder.getGroupId());
 
 		subscriptionSender.flushNotificationsAsync();
 	}

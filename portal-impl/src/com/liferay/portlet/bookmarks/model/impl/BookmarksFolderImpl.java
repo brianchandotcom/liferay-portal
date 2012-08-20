@@ -31,28 +31,6 @@ public class BookmarksFolderImpl extends BookmarksFolderBaseImpl {
 	public BookmarksFolderImpl() {
 	}
 
-	public List<Long> getAncestorFolderIds()
-		throws PortalException, SystemException {
-
-		List<Long> ancestorFolderIds = new ArrayList<Long>();
-
-		BookmarksFolder folder = this;
-
-		while (true) {
-			if (!folder.isRoot()) {
-				folder = BookmarksFolderLocalServiceUtil.getFolder(
-					folder.getParentFolderId());
-
-				ancestorFolderIds.add(folder.getFolderId());
-			}
-			else {
-				break;
-			}
-		}
-
-		return ancestorFolderIds;
-	}
-
 	public List<BookmarksFolder> getAncestors()
 		throws PortalException, SystemException {
 

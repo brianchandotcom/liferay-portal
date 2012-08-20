@@ -220,7 +220,8 @@ public class EditQuestionAction extends PortletAction {
 	}
 
 	protected void updateQuestion(
-			PortletConfig portletConfig, ActionRequest actionRequest)
+			PortletConfig portletConfig, ActionRequest actionRequest,
+			ActionResponse actionResponse)
 		throws Exception {
 
 		long questionId = ParamUtil.getLong(actionRequest, "questionId");
@@ -314,14 +315,6 @@ public class EditQuestionAction extends PortletAction {
 				expirationDateDay, expirationDateYear, expirationDateHour,
 				expirationDateMinute, neverExpire, choices, serviceContext);
 		}
-	}
-
-	protected void updateQuestion(
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
-		throws Exception {
-
-		updateQuestion(portletConfig, actionRequest);
 	}
 
 }

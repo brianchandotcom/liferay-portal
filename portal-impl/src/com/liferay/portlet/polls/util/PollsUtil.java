@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.CookieKeys;
 import com.liferay.portal.util.PortalUtil;
@@ -81,19 +82,11 @@ public class PollsUtil {
 
 			return true;
 		}
-		else {
-			String votedCookie = CookieKeys.getCookie(
-				request, PollsQuestion.class.getName() + "." + questionId);
 
-			Boolean hasVoted = GetterUtil.getBoolean(votedCookie);
+		String votedCookie = CookieKeys.getCookie(
+			request, PollsQuestion.class.getName() + "." + questionId);
 
-			if (hasVoted) {
-				return true;
-			}
-			else {
-				return false;
-			}
-		}
+		return GetterUtil.getBoolean(votedCookie);
 	}
 
 	public static void saveVote(
@@ -103,7 +96,7 @@ public class PollsUtil {
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			actionRequest);
 
-		HttpServletResponse response =PortalUtil.getHttpServletResponse(
+		HttpServletResponse response = PortalUtil.getHttpServletResponse(
 			actionResponse);
 
 		saveVote(request, response, questionId);
@@ -116,7 +109,7 @@ public class PollsUtil {
 		Cookie votedCookie = new Cookie(
 			PollsQuestion.class.getName() + "." + questionId, StringPool.TRUE);
 
-		votedCookie.setMaxAge(_maxCookieAge);
+		votedCookie.setMaxAge((int)(Time.WEEK / 1000));
 		votedCookie.setPath(StringPool.SLASH);
 
 		CookieKeys.addCookie(request, response, votedCookie);
@@ -135,5 +128,4 @@ public class PollsUtil {
 		saveVote(request, response, questionId);
 	}
 
-	private static final int _maxCookieAge = 604800;
 }

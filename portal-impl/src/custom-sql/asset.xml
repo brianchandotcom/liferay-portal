@@ -208,7 +208,7 @@
 	<sql id="com.liferay.portlet.asset.service.persistence.AssetTagFinder.countByG_N">
 		<![CDATA[
 			SELECT
-				COUNT(*) AS COUNT_VALUE
+				COUNT(DISTINCT AssetTag.tagId) AS COUNT_VALUE
 			FROM
 				AssetTag
 			INNER JOIN
@@ -229,7 +229,7 @@
 	<sql id="com.liferay.portlet.asset.service.persistence.AssetTagFinder.countByG_C_N">
 		<![CDATA[
 			SELECT
-				COUNT(*) AS COUNT_VALUE
+				COUNT(DISTINCT AssetTag.tagId) AS COUNT_VALUE
 			FROM
 				AssetTag
 			INNER JOIN
@@ -251,7 +251,7 @@
 	<sql id="com.liferay.portlet.asset.service.persistence.AssetTagFinder.countByG_N_P">
 		<![CDATA[
 			SELECT
-				COUNT(*) AS COUNT_VALUE
+				COUNT(DISTINCT AssetTag.tagId) AS COUNT_VALUE
 			FROM
 				AssetTag
 			[$JOIN$]
@@ -275,7 +275,7 @@
 	<sql id="com.liferay.portlet.asset.service.persistence.AssetTagFinder.findByG_N">
 		<![CDATA[
 			SELECT
-				{AssetTag.*}
+				DISTINCT {AssetTag.*}
 			FROM
 				AssetTag
 			WHERE
@@ -323,7 +323,7 @@
 	<sql id="com.liferay.portlet.asset.service.persistence.AssetTagFinder.findByG_N_P">
 		<![CDATA[
 			SELECT
-				{AssetTag.*}
+				DISTINCT {AssetTag.*}
 			FROM
 				AssetTag
 			[$JOIN$]

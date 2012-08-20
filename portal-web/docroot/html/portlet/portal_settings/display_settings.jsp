@@ -67,9 +67,7 @@ String defaultControlPanelThemeId = PrefsPropsUtil.getString(company.getCompanyI
 
 		List leftList = new ArrayList();
 
-		for (int i = 0; i < languageIds.length; i++) {
-			String curLanguageId = languageIds[i];
-
+		for (String curLanguageId : languageIds) {
 			leftList.add(new KeyValuePair(curLanguageId, LocaleUtil.fromLanguageId(curLanguageId).getDisplayName(locale)));
 		}
 

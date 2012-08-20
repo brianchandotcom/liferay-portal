@@ -53,9 +53,7 @@
 
 				List leftList = new ArrayList();
 
-				for (int i = 0; i < folderColumns.length; i++) {
-					String folderColumn = folderColumns[i];
-
+				for (String folderColumn : folderColumns) {
 					leftList.add(new KeyValuePair(folderColumn, LanguageUtil.get(pageContext, folderColumn)));
 				}
 

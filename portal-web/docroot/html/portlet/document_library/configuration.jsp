@@ -83,9 +83,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 					List leftList = new ArrayList();
 
-					for (int i = 0; i < displayViews.length; i++) {
-						String displayView = displayViews[i];
-
+					for (String displayView : displayViews) {
 						leftList.add(new KeyValuePair(displayView, LanguageUtil.get(pageContext, displayView)));
 					}
 
@@ -130,9 +128,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 					List leftList = new ArrayList();
 
-					for (int i = 0; i < entryColumns.length; i++) {
-						String entryColumn = entryColumns[i];
-
+					for (String entryColumn : entryColumns) {
 						leftList.add(new KeyValuePair(entryColumn, LanguageUtil.get(pageContext, entryColumn)));
 					}
 

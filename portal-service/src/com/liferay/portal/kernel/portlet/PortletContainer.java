@@ -17,6 +17,8 @@ package com.liferay.portal.kernel.portlet;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
 
+import java.util.List;
+
 import javax.portlet.Event;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,12 +32,12 @@ public interface PortletContainer {
 	public void preparePortlet(HttpServletRequest request, Portlet portlet)
 		throws PortletContainerException;
 
-	public void processAction(
+	public ActionResult processAction(
 			HttpServletRequest request, HttpServletResponse response,
 			Portlet portlet)
 		throws PortletContainerException;
 
-	public void processEvent(
+	public List<Event> processEvent(
 			HttpServletRequest request, HttpServletResponse response,
 			Portlet portlet, Layout layout, Event event)
 		throws PortletContainerException;

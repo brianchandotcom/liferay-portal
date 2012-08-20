@@ -45,7 +45,6 @@ import com.liferay.portlet.bookmarks.social.BookmarksActivityKeys;
 import com.liferay.portlet.bookmarks.util.BookmarksUtil;
 import com.liferay.portlet.bookmarks.util.comparator.EntryModifiedDateComparator;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;

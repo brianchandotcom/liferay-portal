@@ -18,7 +18,10 @@
 int end = searchContainer.getEnd();
 int start = searchContainer.getStart();
 
-assetEntryQuery.setGroupIds(groupIds);
+if (!portletName.equals(PortletKeys.RELATED_ASSETS)) {
+	assetEntryQuery.setGroupIds(groupIds);
+}
+
 assetEntryQuery.setExcludeZeroViewCount(excludeZeroViewCount);
 assetEntryQuery.setOrderByCol1(orderByColumn1);
 assetEntryQuery.setOrderByCol2(orderByColumn2);

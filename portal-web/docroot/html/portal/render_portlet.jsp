@@ -60,7 +60,11 @@ PortletPreferences portletPreferences = null;
 Group group = null;
 
 if (layout instanceof VirtualLayout) {
-	group = ((VirtualLayout)layout).getSourceLayout().getGroup();
+	VirtualLayout virtualLayout = (VirtualLayout)layout;
+
+	Layout sourceLayout = virtualLayout.getSourceLayout();
+
+	group = sourceLayout.getGroup();
 }
 else {
 	group = layout.getGroup();

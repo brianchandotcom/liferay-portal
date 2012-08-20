@@ -55,10 +55,10 @@ portletURL.setParameter("userGroupId", String.valueOf(userGroup.getUserGroupId()
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
 	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="assignmentsRedirect" type="hidden" />
 	<aui:input name="userGroupId" type="hidden" value="<%= userGroup.getUserGroupId() %>" />
 	<aui:input name="addUserIds" type="hidden" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="removeUserIds" type="hidden" />
 
 	<liferay-ui:search-container

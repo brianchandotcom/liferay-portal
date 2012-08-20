@@ -90,9 +90,7 @@ List<Group> mySites = user.getMySites(true, max);
 				showPrivateSite = false;
 			}
 
-			boolean hasAddLayoutPermission = GroupPermissionUtil.contains(permissionChecker, mySite.getGroupId(), ActionKeys.ADD_LAYOUT);
-
-			if (!(mySite.isRegularSite() && hasAddLayoutPermission) && !mySite.isUser()) {
+			if (!mySite.isControlPanel() && !mySite.isSite() && !mySite.isUser()) {
 				showPublicSite = false;
 				showPrivateSite = false;
 			}
@@ -302,7 +300,7 @@ List<Group> mySites = user.getMySites(true, max);
 						String publicAddPageHREF = null;
 						String privateAddPageHREF = null;
 
-						if (mySite.isRegularSite() && hasAddLayoutPermission) {
+						if (mySite.isRegularSite() && GroupPermissionUtil.contains(permissionChecker, mySite.getGroupId(), ActionKeys.ADD_LAYOUT)) {
 							PortletURL addPageURL = new PortletURLImpl(request, PortletKeys.SITE_REDIRECTOR, plid, PortletRequest.ACTION_PHASE);
 
 							addPageURL.setWindowState(WindowState.NORMAL);

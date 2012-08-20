@@ -62,6 +62,26 @@ public class ViewPortletMGShowSearchCheckedTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
+							"//iframe[@id='_31_configurationIframeDialog']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.selectFrame("//iframe[@id='_31_configurationIframeDialog']");
+		Thread.sleep(5000);
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
 							"//input[contains(@id,'showFoldersSearchCheckbox')]")) {
 					break;
 				}
@@ -74,5 +94,6 @@ public class ViewPortletMGShowSearchCheckedTest extends BaseTestCase {
 
 		assertTrue(selenium.isChecked(
 				"//input[contains(@id,'showFoldersSearchCheckbox')]"));
+		selenium.selectFrame("relative=top");
 	}
 }

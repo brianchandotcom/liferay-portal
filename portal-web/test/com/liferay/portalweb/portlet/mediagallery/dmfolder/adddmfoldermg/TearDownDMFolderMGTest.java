@@ -54,7 +54,6 @@ public class TearDownDMFolderMGTest extends BaseTestCase {
 						"The selected item was moved to the Recycle Bin. Undo"),
 					selenium.getText(
 						"//div[@class='portlet-msg-success taglib-trash-undo']"));
-				Thread.sleep(5000);
 
 				boolean mgFolder2Present = selenium.isElementPresent(
 						"//span[@class='image-thumbnail']");
@@ -65,6 +64,7 @@ public class TearDownDMFolderMGTest extends BaseTestCase {
 					continue;
 				}
 
+				Thread.sleep(5000);
 				selenium.clickAt("//span[@class='image-thumbnail']",
 					RuntimeVariables.replace("DM Folder 2"));
 				selenium.waitForPageToLoad("30000");
@@ -78,7 +78,6 @@ public class TearDownDMFolderMGTest extends BaseTestCase {
 						"The selected item was moved to the Recycle Bin. Undo"),
 					selenium.getText(
 						"//div[@class='portlet-msg-success taglib-trash-undo']"));
-				Thread.sleep(5000);
 
 				boolean mgFolder3Present = selenium.isElementPresent(
 						"//span[@class='image-thumbnail']");
@@ -89,6 +88,7 @@ public class TearDownDMFolderMGTest extends BaseTestCase {
 					continue;
 				}
 
+				Thread.sleep(5000);
 				selenium.clickAt("//span[@class='image-thumbnail']",
 					RuntimeVariables.replace("DM Folder 3"));
 				selenium.waitForPageToLoad("30000");
@@ -102,7 +102,6 @@ public class TearDownDMFolderMGTest extends BaseTestCase {
 						"The selected item was moved to the Recycle Bin. Undo"),
 					selenium.getText(
 						"//div[@class='portlet-msg-success taglib-trash-undo']"));
-				Thread.sleep(5000);
 
 				boolean mgFolder4Present = selenium.isElementPresent(
 						"//span[@class='image-thumbnail']");
@@ -113,6 +112,7 @@ public class TearDownDMFolderMGTest extends BaseTestCase {
 					continue;
 				}
 
+				Thread.sleep(5000);
 				selenium.clickAt("//span[@class='image-thumbnail']",
 					RuntimeVariables.replace("DM Folder 4"));
 				selenium.waitForPageToLoad("30000");
@@ -126,7 +126,6 @@ public class TearDownDMFolderMGTest extends BaseTestCase {
 						"The selected item was moved to the Recycle Bin. Undo"),
 					selenium.getText(
 						"//div[@class='portlet-msg-success taglib-trash-undo']"));
-				Thread.sleep(5000);
 
 				boolean mgFolder5Present = selenium.isElementPresent(
 						"//span[@class='image-thumbnail']");
@@ -137,6 +136,7 @@ public class TearDownDMFolderMGTest extends BaseTestCase {
 					continue;
 				}
 
+				Thread.sleep(5000);
 				selenium.clickAt("//span[@class='image-thumbnail']",
 					RuntimeVariables.replace("DM Folder 5"));
 				selenium.waitForPageToLoad("30000");
@@ -150,7 +150,6 @@ public class TearDownDMFolderMGTest extends BaseTestCase {
 						"The selected item was moved to the Recycle Bin. Undo"),
 					selenium.getText(
 						"//div[@class='portlet-msg-success taglib-trash-undo']"));
-				Thread.sleep(5000);
 
 			case 2:
 			case 3:

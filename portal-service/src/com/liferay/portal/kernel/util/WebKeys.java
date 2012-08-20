@@ -73,11 +73,11 @@ public interface WebKeys {
 
 	public static final String OUTPUT_DATA = "LIFERAY_SHARED_OUTPUT_DATA";
 
-	public static final String PAGE_BODY_BOTTOM = "LIFERAY_SHARED_PAGE_BODY_BOTTOM";
+	public static final String PAGE_BODY_BOTTOM = "PAGE_BODY_BOTTOM";
 
-	public static final String PAGE_BODY_TOP = "LIFERAY_SHARED_PAGE_BODY_TOP";
+	public static final String PAGE_BODY_TOP = "PAGE_BODY_TOP";
 
-	public static final String PAGE_BOTTOM = "LIFERAY_SHARED_PAGE_BOTTOM";
+	public static final String PAGE_BOTTOM = "PAGE_BOTTOM";
 
 	public static final String PAGE_DESCRIPTION = "LIFERAY_SHARED_PAGE_DESCRIPTION";
 
@@ -87,7 +87,7 @@ public interface WebKeys {
 
 	public static final String PAGE_TITLE = "LIFERAY_SHARED_PAGE_TITLE";
 
-	public static final String PAGE_TOP = "LIFERAY_SHARED_PAGE_TOP";
+	public static final String PAGE_TOP = "PAGE_TOP";
 
 	public static final String PARALLEL_RENDERING_MERGE_LOCK = "PARALLEL_RENDERING_MERGE_LOCK";
 

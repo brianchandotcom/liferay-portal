@@ -57,7 +57,14 @@ PortletPreferencesIds portletPreferencesIds = PortletPreferencesFactoryUtil.getP
 
 PortletPreferences portletPreferences = null;
 
-Group group = layout.getGroup();
+Group group = null;
+
+if (layout instanceof VirtualLayout) {
+	group = ((VirtualLayout)layout).getSourceLayout().getGroup();
+}
+else {
+	group = layout.getGroup();
+}
 
 if (allowAddPortletDefaultResource) {
 	portletPreferences = PortletPreferencesLocalServiceUtil.getPreferences(portletPreferencesIds);

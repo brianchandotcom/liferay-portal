@@ -388,7 +388,7 @@ public class DLIndexer extends BaseIndexer {
 
 				addTrashFields(
 					document, DLFolder.class.getName(),
-					trashedFolder.getFolderId(),
+					trashedFolder.getFolderId(), null, null,
 					DLFileEntryAssetRendererFactory.TYPE);
 
 				document.addKeyword(

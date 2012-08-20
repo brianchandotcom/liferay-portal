@@ -51,6 +51,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupedModel;
 import com.liferay.portal.model.Region;
 import com.liferay.portal.model.ResourcedModel;
+import com.liferay.portal.model.User;
 import com.liferay.portal.model.WorkflowedModel;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -58,6 +59,9 @@ import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.CountryServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.RegionServiceUtil;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextThreadLocal;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
@@ -72,6 +76,7 @@ import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -764,32 +769,63 @@ public abstract class BaseIndexer implements Indexer {
 	}
 
 	protected void addTrashFields(
-		Document document, String className, long classPK, String type) {
+		Document document, String className, long classPK, Date removedDate,
+		String userName, String type) throws SystemException {
 
-		try {
-			TrashEntry trashEntry = TrashEntryLocalServiceUtil.getEntry(
-				className, classPK);
+		TrashEntry trashEntry = TrashEntryLocalServiceUtil.fetchEntry(
+			className, classPK);
 
-			document.addDate(Field.REMOVED_DATE, trashEntry.getCreateDate());
-			document.addKeyword(
-				Field.REMOVED_BY_USER_NAME, trashEntry.getUserName(), true);
+		if (removedDate == null) {
+			if (trashEntry != null) {
+				removedDate = trashEntry.getCreateDate();
+			}
+			else {
+				removedDate = new Date();
+			}
+		}
 
-			if (type == null) {
+		document.addDate(Field.REMOVED_DATE, removedDate);
+
+		if (userName == null) {
+			if (trashEntry != null) {
+				userName = trashEntry.getUserName();
+			}
+			else {
+				ServiceContext serviceContext =
+					ServiceContextThreadLocal.getServiceContext();
+
+				try {
+					User user = UserLocalServiceUtil.getUser(
+						serviceContext.getUserId());
+
+					userName = user.getFullName();
+				}
+				catch (PortalException pe) {
+				}
+			}
+		}
+
+		document.addKeyword(
+			Field.REMOVED_BY_USER_NAME, userName, true);
+
+		if (type == null) {
+			if (trashEntry != null) {
 				TrashHandler trashHandler =
 					TrashHandlerRegistryUtil.getTrashHandler(
 						trashEntry.getClassName());
 
-				TrashRenderer trashRenderer = trashHandler.getTrashRenderer(
-					trashEntry.getClassPK());
+				try {
+					TrashRenderer trashRenderer = trashHandler.getTrashRenderer(
+						trashEntry.getClassPK());
 
-				type = trashRenderer.getType();
+					type = trashRenderer.getType();
+				}
+				catch (PortalException pe) {
+				}
 			}
+		}
 
-			document.addKeyword(Field.TYPE, type, true);
-		}
-		catch (Exception e) {
-			_log.error(e.getMessage());
-		}
+		document.addKeyword(Field.TYPE, type, true);
 	}
 
 	protected BooleanQuery createFullQuery(
@@ -1077,7 +1113,7 @@ public abstract class BaseIndexer implements Indexer {
 			document.addKeyword(Field.STATUS, workflowedModel.getStatus());
 
 			if ((groupedModel != null) && workflowedModel.isInTrash()) {
-				addTrashFields(document, className, classPK, null);
+				addTrashFields(document, className, classPK, null, null, null);
 			}
 		}
 

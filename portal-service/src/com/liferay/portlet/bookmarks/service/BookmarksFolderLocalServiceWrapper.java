@@ -362,6 +362,18 @@ public class BookmarksFolderLocalServiceWrapper
 			folderId);
 	}
 
+	public void subscribeFolder(long userId, long groupId, long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_bookmarksFolderLocalService.subscribeFolder(userId, groupId, folderId);
+	}
+
+	public void unsubscribeFolder(long userId, long groupId, long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_bookmarksFolderLocalService.unsubscribeFolder(userId, groupId, folderId);
+	}
+
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder updateFolder(
 		long folderId, long parentFolderId, java.lang.String name,
 		java.lang.String description, boolean mergeWithParentFolder,

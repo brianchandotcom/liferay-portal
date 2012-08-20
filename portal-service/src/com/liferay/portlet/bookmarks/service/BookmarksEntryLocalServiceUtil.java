@@ -380,6 +380,18 @@ public class BookmarksEntryLocalServiceUtil {
 		return getService().openEntry(userId, entryId);
 	}
 
+	public static void subscribeEntry(long userId, long entryId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().subscribeEntry(userId, entryId);
+	}
+
+	public static void unsubscribeEntry(long userId, long entryId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().unsubscribeEntry(userId, entryId);
+	}
+
 	public static void updateAsset(long userId,
 		com.liferay.portlet.bookmarks.model.BookmarksEntry entry,
 		long[] assetCategoryIds, java.lang.String[] assetTagNames,

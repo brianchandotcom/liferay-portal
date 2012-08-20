@@ -464,6 +464,12 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 		_bookmarksFolder.persist();
 	}
 
+	public java.util.List<java.lang.Long> getAncestorFolderIds()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _bookmarksFolder.getAncestorFolderIds();
+	}
+
 	public java.util.List<com.liferay.portlet.bookmarks.model.BookmarksFolder> getAncestors()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

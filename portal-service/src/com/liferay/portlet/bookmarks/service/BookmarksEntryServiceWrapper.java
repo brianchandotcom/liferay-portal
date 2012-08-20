@@ -128,6 +128,18 @@ public class BookmarksEntryServiceWrapper implements BookmarksEntryService,
 		return _bookmarksEntryService.openEntry(entryId);
 	}
 
+	public void subscribeEntry(long entryId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_bookmarksEntryService.subscribeEntry(entryId);
+	}
+
+	public void unsubscribeEntry(long entryId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_bookmarksEntryService.unsubscribeEntry(entryId);
+	}
+
 	public com.liferay.portlet.bookmarks.model.BookmarksEntry updateEntry(
 		long entryId, long groupId, long folderId, java.lang.String name,
 		java.lang.String url, java.lang.String description,

@@ -380,6 +380,18 @@ public class BookmarksEntryLocalServiceWrapper
 		return _bookmarksEntryLocalService.openEntry(userId, entryId);
 	}
 
+	public void subscribeEntry(long userId, long entryId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_bookmarksEntryLocalService.subscribeEntry(userId, entryId);
+	}
+
+	public void unsubscribeEntry(long userId, long entryId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_bookmarksEntryLocalService.unsubscribeEntry(userId, entryId);
+	}
+
 	public void updateAsset(long userId,
 		com.liferay.portlet.bookmarks.model.BookmarksEntry entry,
 		long[] assetCategoryIds, java.lang.String[] assetTagNames,

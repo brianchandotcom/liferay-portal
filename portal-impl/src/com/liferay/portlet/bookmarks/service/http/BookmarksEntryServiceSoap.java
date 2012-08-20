@@ -248,6 +248,28 @@ public class BookmarksEntryServiceSoap {
 		}
 	}
 
+	public static void subscribeEntry(long entryId) throws RemoteException {
+		try {
+			BookmarksEntryServiceUtil.subscribeEntry(entryId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void unsubscribeEntry(long entryId) throws RemoteException {
+		try {
+			BookmarksEntryServiceUtil.unsubscribeEntry(entryId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntrySoap updateEntry(
 		long entryId, long groupId, long folderId, java.lang.String name,
 		java.lang.String url, java.lang.String description,

@@ -2969,18 +2969,13 @@ executable ZIP file.
 					<then>
 						<replace
 							file="portal-web/test/test-portal-web.properties"
+							token="#selenium.browser.commands.dir="
+							value="selenium.browser.commands.dir=${basedir.unix}/tools/selenium/browser-commands/selenium/firefox/3.6/"
+						/>
+						<replace
+							file="portal-web/test/test-portal-web.properties"
 							token="#selenium.executable.dir="
 							value="selenium.executable.dir=${basedir.unix}/tools/selenium/"
-						/>
-						<replace
-							file="portal-web/test/test-portal-web.properties"
-							token="#selenium.download.file.executable="
-							value="selenium.download.file.executable=selenium_ff-3.6_download_file.exe"
-						/>
-						<replace
-							file="portal-web/test/test-portal-web.properties"
-							token="#selenium.set.browser.option.executable="
-							value="selenium.set.browser.option.executable=selenium_ff-3.6_set_browser_option.exe"
 						/>
 					</then>
 				</if>
@@ -2997,17 +2992,12 @@ executable ZIP file.
 							<replace
 								file="portal-web/test/test-portal-web.properties"
 								token="#selenium.executable.dir="
+								value="selenium.browser.commands.dir=${basedir.unix}/tools/selenium/browser-commands/webdriver/firefox/3.6/"
+							/>
+							<replace
+								file="portal-web/test/test-portal-web.properties"
+								token="#selenium.executable.dir="
 								value="selenium.executable.dir=${basedir.unix}/tools/selenium/"
-							/>
-							<replace
-								file="portal-web/test/test-portal-web.properties"
-								token="#selenium.download.file.executable="
-								value="selenium.download.file.executable=webdriver_ff-3.6_download_file.exe"
-							/>
-							<replace
-								file="portal-web/test/test-portal-web.properties"
-								token="#selenium.set.browser.option.executable="
-								value="selenium.set.browser.option.executable=webdriver_ff-3.6_set_browser_option.exe"
 							/>
 						</then>
 						<elseif>

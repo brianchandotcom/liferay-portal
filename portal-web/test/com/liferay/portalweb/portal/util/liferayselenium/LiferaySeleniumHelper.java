@@ -37,7 +37,7 @@ public class LiferaySeleniumHelper {
 			Runtime runtime = Runtime.getRuntime();
 
 			String command = RuntimeVariables.replace(
-				_SELENIUM_EXECUTABLE_AUTOIT_DIR +
+				TestPropsValues.SELENIUM_BROWSER_COMMANDS_DIR +
 					TestPropsValues.SELENIUM_DOWNLOAD_FILE);
 
 			runtime.exec(command);
@@ -61,7 +61,7 @@ public class LiferaySeleniumHelper {
 
 			String[] commands = {
 				RuntimeVariables.replace(
-					_SELENIUM_EXECUTABLE_AUTOIT_DIR +
+					TestPropsValues.SELENIUM_BROWSER_COMMANDS_DIR +
 						TestPropsValues.SELENIUM_SET_BROWSER_OPTION),
 					TestPropsValues.OUTPUT_DIR
 			};
@@ -76,8 +76,5 @@ public class LiferaySeleniumHelper {
 	}
 
 	private static final String _BROWSER_TYPE = TestPropsValues.BROWSER_TYPE;
-
-	private static final String _SELENIUM_EXECUTABLE_AUTOIT_DIR =
-		TestPropsValues.SELENIUM_EXECUTABLE_DIR + "autoit/";
 
 }

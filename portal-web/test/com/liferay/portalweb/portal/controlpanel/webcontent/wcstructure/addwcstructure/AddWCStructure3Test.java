@@ -114,7 +114,23 @@ public class AddWCStructure3Test extends BaseTestCase {
 		}
 
 		selenium.selectFrame("//iframe[@id='_15_openStructuresView']");
-		Thread.sleep(5000);
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//script[contains(@src,'/liferay/store.js')]")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -172,22 +188,22 @@ public class AddWCStructure3Test extends BaseTestCase {
 		selenium.check("//input[@id='_15_structure_el3_repeatable']");
 		assertTrue(selenium.isChecked(
 				"//input[@id='_15_structure_el3_repeatable']"));
-		selenium.clickAt("xpath=(//img[@alt='Add'])[4]",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("xPath=(//img[@alt='Add'])[4]",
+			RuntimeVariables.replace("Add"));
 		selenium.waitForPageToLoad("30000");
 		selenium.select("//select[@id='_15_structure_el4_type']",
 			RuntimeVariables.replace("Text"));
 		selenium.type("//input[@id='_15_structure_el4_name']",
 			RuntimeVariables.replace("Photographer"));
-		selenium.clickAt("xpath=(//img[@alt='Add'])[4]",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("xPath=(//img[@alt='Add'])[4]",
+			RuntimeVariables.replace("Add"));
 		selenium.waitForPageToLoad("30000");
 		selenium.select("//select[@id='_15_structure_el4_type']",
 			RuntimeVariables.replace("Text"));
 		selenium.type("//input[@id='_15_structure_el4_name']",
 			RuntimeVariables.replace("Summary"));
-		selenium.clickAt("xpath=(//img[@alt='Add'])[4]",
-			RuntimeVariables.replace(""));
+		selenium.clickAt("xPath=(//img[@alt='Add'])[4]",
+			RuntimeVariables.replace("Add"));
 		selenium.waitForPageToLoad("30000");
 		selenium.select("//select[@id='_15_structure_el4_type']",
 			RuntimeVariables.replace("Image"));

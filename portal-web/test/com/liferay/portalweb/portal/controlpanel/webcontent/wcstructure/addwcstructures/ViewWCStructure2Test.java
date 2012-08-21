@@ -119,7 +119,23 @@ public class ViewWCStructure2Test extends BaseTestCase {
 		}
 
 		selenium.selectFrame("//iframe[@id='_15_openStructuresView']");
-		Thread.sleep(5000);
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//script[contains(@src,'/liferay/store.js')]")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

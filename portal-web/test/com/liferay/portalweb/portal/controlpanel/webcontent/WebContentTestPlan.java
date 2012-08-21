@@ -32,8 +32,8 @@ public class WebContentTestPlan extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(WCLARTestPlan.suite());
-		testSuite.addTest(WCTemplateTestPlan.suite());
 		testSuite.addTest(WCStructureTestPlan.suite());
+		testSuite.addTest(WCTemplateTestPlan.suite());
 		testSuite.addTest(WCWebContentTestPlan.suite());
 
 		return testSuite;

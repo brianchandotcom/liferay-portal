@@ -47,7 +47,7 @@ if (Validator.isNull(script)) {
 		PortletDisplayTemplateHandler portletDislayTemplateHandler = PortletDisplayTemplateHandlerRegistryUtil.getPortletDisplayTemplateHandler(classNameId);
 
 		if (portletDislayTemplateHandler != null) {
-			script = ContentUtil.get(portletDislayTemplateHandler.getDefaultTemplateLocation());
+			script = ContentUtil.get(portletDislayTemplateHandler.getHelpTemplatePath());
 		}
 	}
 	else if (!type.equals("detail")) {

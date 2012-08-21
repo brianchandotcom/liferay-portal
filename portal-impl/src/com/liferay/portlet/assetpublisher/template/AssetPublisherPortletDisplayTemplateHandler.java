@@ -34,7 +34,8 @@ public class AssetPublisherPortletDisplayTemplateHandler
 		return AssetEntry.class.getName();
 	}
 
-	public String getDefaultTemplateLocation() {
+	@Override
+	public String getHelpTemplatePath() {
 		return PropsValues.ASSET_PUBLISHER_DISPLAY_STYLES_TEMPLATE_CONTENT;
 	}
 
@@ -48,6 +49,12 @@ public class AssetPublisherPortletDisplayTemplateHandler
 
 	public String getResourceName() {
 		return "com.liferay.portlet.assetpublisher";
+	}
+
+	@Override
+	protected String getDefaultTemplatesConfigPath() {
+		return
+			PropsValues.ASSET_PUBLISHER_DISPLAY_STYLES_TEMPLATE_DEFAULT_CONFIG;
 	}
 
 }

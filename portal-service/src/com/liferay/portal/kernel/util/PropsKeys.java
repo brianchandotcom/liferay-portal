@@ -105,6 +105,8 @@ public interface PropsKeys {
 
 	public static final String ASSET_PUBLISHER_DISPLAY_STYLES_TEMPLATE_CONTENT = "asset.publisher.display.styles.template.content";
 
+	public static final String ASSET_PUBLISHER_DISPLAY_STYLES_TEMPLATE_DEFAULT_CONFIG = "asset.publisher.display.styles.template.default.config";
+
 	public static final String ASSET_RENDERER_ENABLED = "asset.renderer.enabled.";
 
 	public static final String ASSET_TAG_PROPERTIES_DEFAULT = "asset.tag.properties.default";
@@ -2040,6 +2042,8 @@ public interface PropsKeys {
 	public static final String SITES_SITEMAP_DEFAULT_PRIORITY = "sites.sitemap.default.priority";
 
 	public static final String SITES_SITEMAP_DISPLAY_STYLES_TEMPLATE_CONTENT = "sites.sitemap.display.styles.template.content";
+
+	public static final String SITES_SITEMAP_DISPLAY_STYLES_TEMPLATE_DEFAULT_CONFIG = "sites.sitemap.display.styles.template.default.config";
 
 	public static final String SOCIAL_ACTIVITY_CONTRIBUTION_INCREMENTS = "social.activity.contribution.increments";
 

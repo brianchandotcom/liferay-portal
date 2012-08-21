@@ -34,7 +34,8 @@ public class AssetCategoriesNavigationPortletDisplayTemplateHandler
 		return AssetCategory.class.getName();
 	}
 
-	public String getDefaultTemplateLocation() {
+	@Override
+	public String getHelpTemplatePath() {
 		return PropsValues.
 			ASSET_CATEGORIES_NAVIGATION_DISPLAY_STYLES_TEMPLATE_CONTENT;
 	}

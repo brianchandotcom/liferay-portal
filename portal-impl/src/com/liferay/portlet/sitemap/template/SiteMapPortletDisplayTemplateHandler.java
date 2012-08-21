@@ -34,7 +34,8 @@ public class SiteMapPortletDisplayTemplateHandler
 		return LayoutSet.class.getName();
 	}
 
-	public String getDefaultTemplateLocation() {
+	@Override
+	public String getHelpTemplatePath() {
 		return PropsValues.SITES_SITEMAP_DISPLAY_STYLES_TEMPLATE_CONTENT;
 	}
 

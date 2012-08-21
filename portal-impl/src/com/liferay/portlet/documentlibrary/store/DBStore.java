@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
@@ -111,6 +113,7 @@ public class DBStore extends BaseStore {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public InputStream getFileAsStream(
 			long companyId, long repositoryId, String fileName)
 		throws PortalException, SystemException {
@@ -159,6 +162,7 @@ public class DBStore extends BaseStore {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public InputStream getFileAsStream(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)

@@ -374,6 +374,7 @@ public class ProcessUtilTest extends TestCase {
 	}
 
 	public void testInterruptPause() throws Exception {
+		final CountDownLatch countDownLatch = new CountDownLatch(1);
 		final Thread mainThread = Thread.currentThread();
 
 		Thread interruptThread = new Thread() {
@@ -381,6 +382,8 @@ public class ProcessUtilTest extends TestCase {
 			@Override
 			public void run() {
 				try {
+					countDownLatch.await();
+
 					while (mainThread.getState() != State.WAITING);
 
 					ExecutorService executorService = _getExecutorService();
@@ -410,6 +413,7 @@ public class ProcessUtilTest extends TestCase {
 			_buildArguments(Pause.class));
 
 		try {
+			countDownLatch.countDown();
 			future.get();
 
 			fail();

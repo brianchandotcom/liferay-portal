@@ -900,22 +900,47 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public void select(String selectLocator, String optionLocator) {
-		WebElement webElement = getWebElement(selectLocator);
+		if (optionLocator.startsWith("index=") ||
+			optionLocator.startsWith("value=")) {
 
-		Select select = new Select(webElement);
-
-		if (optionLocator.startsWith("index=")) {
-			select.selectByIndex(
-				GetterUtil.getInteger(optionLocator.substring(6)));
-		}
-		else if (optionLocator.startsWith("label=")) {
-			select.selectByVisibleText(optionLocator.substring(6));
-		}
-		else if (optionLocator.startsWith("value=")) {
-			select.selectByValue(optionLocator.substring(6));
+			throw new UnsupportedOperationException();
 		}
 		else {
-			select.selectByVisibleText(optionLocator);
+			String label = optionLocator;
+
+			if (optionLocator.startsWith("label=")) {
+				label = optionLocator.substring(6);
+			}
+
+			WebElement webElement = getWebElement(selectLocator);
+
+			webElement.click();
+
+			Select select = new Select(webElement);
+
+			List<WebElement> options = select.getOptions();
+
+			String optionText;
+
+			for (WebElement option : options) {
+				optionText = option.getText();
+
+				if (optionText.equals(label)) {
+					WrapsDriver wrapsDriver = (WrapsDriver)option;
+
+					WebDriver webDriver = wrapsDriver.getWrappedDriver();
+
+					Actions actions = new Actions(webDriver);
+
+					actions.doubleClick(option);
+
+					Action action = actions.build();
+
+					action.perform();
+
+					break;
+				}
+			}
 		}
 	}
 

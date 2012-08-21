@@ -185,7 +185,7 @@ public class BaseWebDAVTestCase {
 	}
 
 	public Tuple serviceCopyOrMove(
-			String method, String path, String destination, String lock) {
+		String method, String path, String destination, String lock) {
 
 		Map<String, String> headers = null;
 

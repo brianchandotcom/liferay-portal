@@ -91,7 +91,7 @@ public class DefaultLocalRepositoryImpl implements LocalRepository {
 	}
 
 	public FileEntry getFileEntry(long folderId, String title)
-			throws PortalException, SystemException {
+		throws PortalException, SystemException {
 
 		return _repository.getFileEntry(folderId, title);
 	}

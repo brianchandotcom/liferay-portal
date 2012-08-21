@@ -17,9 +17,10 @@
 <%@ include file="/html/portlet/blogs/init.jsp" %>
 
 <%
+String strutsAction = ParamUtil.getString(request, "struts_action");
+
 String redirect = ParamUtil.getString(request, "redirect");
 
-String strutsAction = ParamUtil.getString(request, "struts_action");
 String portletId = ParamUtil.getString(request, "p_p_id");
 
 if (Validator.isNull(redirect) || (strutsAction.equals("/blogs/view_entry") && !portletId.equals(PortletKeys.BLOGS))) {

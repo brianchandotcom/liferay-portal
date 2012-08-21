@@ -15,27 +15,47 @@
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//nav[@id='navigation']</td>
-	<td>Navigation</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_addContent']/a/span</td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_addContent']/a/span</td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>//a[@id='addPage']</td>
-	<td>Add Page</td>
+	<td>Page</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//a[@id='addPage']</td>
+	<td>Page</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//a[@id='addPage']</td>
-	<td>Add Page</td>
+	<td>Page</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div/span[1]/span/input</td>
+	<td>//input[@type='text']</td>
 	<td>Page Name</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//div/span[1]/span/input</td>
+	<td>//input[@type='text']</td>
 	<td>Tasks Test Page</td>
 </tr>
 <tr>
@@ -53,7 +73,6 @@
 	<td>link=Tasks Test Page</td>
 	<td>Tasks Test Page</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

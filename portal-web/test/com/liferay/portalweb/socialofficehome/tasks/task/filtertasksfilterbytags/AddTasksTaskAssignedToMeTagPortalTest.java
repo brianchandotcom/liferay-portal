@@ -115,6 +115,23 @@ public class AddTasksTaskAssignedToMeTagPortalTest extends BaseTestCase {
 
 				selenium.type("//input[@title='Add Tags']",
 					RuntimeVariables.replace("PortalTag1"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible("//button[@id='add']")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
 				selenium.clickAt("//button[@id='add']",
 					RuntimeVariables.replace("Add"));
 

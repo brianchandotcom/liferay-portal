@@ -504,7 +504,8 @@ public class LayoutExporter {
 			portletDataContext.setScopeLayoutUuid(scopeLayoutUuid);
 
 			boolean[] exportPortletControls = getExportPortletControls(
-				companyId, portletId, portletDataContext, parameterMap);
+				companyId, portletId, portletDataContext, parameterMap,
+				group.isLayoutPrototype());
 
 			_portletExporter.exportPortlet(
 				portletDataContext, layoutCache, portletId, layout,
@@ -1047,7 +1048,7 @@ public class LayoutExporter {
 	protected boolean[] getExportPortletControls(
 			long companyId, String portletId,
 			PortletDataContext portletDataContext,
-			Map<String, String[]> parameterMap)
+			Map<String, String[]> parameterMap, boolean layoutPrototypeExport)
 		throws Exception {
 
 		boolean exportPortletData = MapUtil.getBoolean(
@@ -1116,14 +1117,9 @@ public class LayoutExporter {
 			}
 		}
 
-		Group group = GroupLocalServiceUtil.fetchGroup(
-			portletDataContext.getGroupId());
+		if ((layoutPrototypeExport && exportPortletSetup) ||
+			exportPortletSetupAll) {
 
-		if (Validator.isNotNull(group) && group.isLayoutPrototype() && exportPortletSetup) {
-			exportCurPortletSetup = true;
-		}
-
-		if (exportPortletSetupAll) {
 			exportCurPortletSetup = true;
 		}
 

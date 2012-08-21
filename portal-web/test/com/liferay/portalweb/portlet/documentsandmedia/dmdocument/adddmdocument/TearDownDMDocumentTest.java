@@ -107,7 +107,7 @@ public class TearDownDMDocumentTest extends BaseTestCase {
 						"//button[contains(@class,'aui-state-active') and @title='Icon View']"));
 
 				boolean dmDocumentNotRecycled = selenium.isElementPresent(
-						"//a[contains(@class,'document-link')]/span[@class='entry-title']");
+						"//div[@id='_20_entriesContainer']//a[@class='entry-link']");
 
 				if (!dmDocumentNotRecycled) {
 					label = 2;
@@ -129,7 +129,7 @@ public class TearDownDMDocumentTest extends BaseTestCase {
 
 					try {
 						if (selenium.isVisible(
-									"//div[@class='document-display-style display-icon selectable selected']")) {
+									"//div[@id='_20_entries']/div[contains(@class,'selected')]")) {
 							break;
 						}
 					}
@@ -168,11 +168,6 @@ public class TearDownDMDocumentTest extends BaseTestCase {
 				selenium.click(RuntimeVariables.replace(
 						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a"));
 				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to move the selected entries to the Recycle Bin[\\s\\S]$"));
-				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
-					selenium.getText("//div[@class='portlet-msg-success']"));
 
 			case 2:
 				assertEquals(RuntimeVariables.replace(
@@ -227,53 +222,24 @@ public class TearDownDMDocumentTest extends BaseTestCase {
 					RuntimeVariables.replace("Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
 
-				boolean dmDocumentNotDeleted = selenium.isElementPresent(
-						"//input[@name='_182_rowIds']");
+				boolean recycleBinPresent = selenium.isElementPresent(
+						"//form[@id='_182_emptyForm']/a");
 
-				if (!dmDocumentNotDeleted) {
+				if (!recycleBinPresent) {
 					label = 3;
 
 					continue;
 				}
 
-				assertFalse(selenium.isChecked(
-						"//input[@name='_182_allRowIds']"));
-				selenium.clickAt("//input[@name='_182_allRowIds']",
-					RuntimeVariables.replace("All Entries Check Box"));
-				assertTrue(selenium.isChecked("//input[@name='_182_allRowIds']"));
-
-				for (int second = 0;; second++) {
-					if (second >= 90) {
-						fail("timeout");
-					}
-
-					try {
-						if (selenium.isVisible(
-									"//tr[contains(@class,'last selected')]")) {
-							break;
-						}
-					}
-					catch (Exception e) {
-					}
-
-					Thread.sleep(1000);
-				}
-
-				selenium.clickAt("//input[@value='Delete']",
-					RuntimeVariables.replace("Delete"));
+				assertEquals(RuntimeVariables.replace("Empty the Recycle Bin"),
+					selenium.getText("//form[@id='_182_emptyForm']/a"));
+				selenium.clickAt("//form[@id='_182_emptyForm']/a",
+					RuntimeVariables.replace("Empty the Recycle Bin"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete the selected entries[\\s\\S] They will be deleted immediately.$"));
-				assertEquals(RuntimeVariables.replace(
-						"Your request completed successfully."),
-					selenium.getText("//div[@class='portlet-msg-success']"));
+								   .matches("^Are you sure you want to empty the Recycle Bin[\\s\\S]$"));
 
 			case 3:
-				assertEquals(RuntimeVariables.replace(
-						"The Recycle Bin is empty."),
-					selenium.getText(
-						"//div[@class='portlet-msg-info' and contains(.,'The Recycle Bin is empty.')]"));
-
 			case 100:
 				label = -1;
 			}

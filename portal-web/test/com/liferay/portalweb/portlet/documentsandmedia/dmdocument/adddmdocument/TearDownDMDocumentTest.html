@@ -55,7 +55,7 @@
 </tr>
 <tr>
 	<td>storeElementPresent</td>
-	<td>//a[contains(@class,'document-link')]/span[@class='entry-title']</td>
+	<td>//div[@id='_20_entriesContainer']//a[@class='entry-link']</td>
 	<td>dmDocumentNotRecycled</td>
 </tr>
 <tr>
@@ -80,7 +80,7 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@class='document-display-style display-icon selectable selected']</td>
+	<td>//div[@id='_20_entries']/div[contains(@class,'selected')]</td>
 	<td>Documents Selected</td>
 </tr>
 <tr>
@@ -107,16 +107,6 @@
 	<td>clickAndWait</td>
 	<td>//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Move to the Recycle Bin')]/a</td>
 	<td>Move to the Recycle Bin</td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to move the selected entries to the Recycle Bin?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>label</td>
@@ -170,58 +160,33 @@
 </tr>
 <tr>
 	<td>storeElementPresent</td>
-	<td>//input[@name='_182_rowIds']</td>
-	<td>dmDocumentNotDeleted</td>
+	<td>//form[@id='_182_emptyForm']/a</td>
+	<td>recycleBinPresent</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${dmDocumentNotDeleted}</td>
-	<td>DMDocumentDeleted</td>
+	<td>!${recycleBinPresent}</td>
+	<td>RecycleBinNotPresent</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
-	<td>//input[@name='_182_allRowIds']</td>
-	<td>All Entries Check Box</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//input[@name='_182_allRowIds']</td>
-	<td>All Entries Check Box</td>
-</tr>
-<tr>
-	<td>assertChecked</td>
-	<td>//input[@name='_182_allRowIds']</td>
-	<td>All Entries Check Box</td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>//tr[contains(@class,'last selected')]</td>
-	<td>Entries Selected</td>
+	<td>assertText</td>
+	<td>//form[@id='_182_emptyForm']/a</td>
+	<td>Empty the Recycle Bin</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//input[@value='Delete']</td>
-	<td>Delete</td>
+	<td>//form[@id='_182_emptyForm']/a</td>
+	<td>Empty the Recycle Bin</td>
 </tr>
 <tr>
 	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete the selected entries? They will be deleted immediately.</td>
+	<td>Are you sure you want to empty the Recycle Bin?</td>
 	<td></td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>label</td>
-	<td>DMDocumentDeleted</td>
+	<td>RecycleBinNotPresent</td>
 	<td></td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>//div[@class='portlet-msg-info' and contains(.,'The Recycle Bin is empty.')]</td>
-	<td>The Recycle Bin is empty.</td>
 </tr>
 </tbody></table>
 </body>

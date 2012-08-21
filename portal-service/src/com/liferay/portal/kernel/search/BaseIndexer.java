@@ -806,8 +806,10 @@ public abstract class BaseIndexer implements Indexer {
 			}
 		}
 
-		document.addKeyword(
-			Field.REMOVED_BY_USER_NAME, removedByUserName, true);
+		if (Validator.isNotNull(removedByUserName)) {
+			document.addKeyword(
+				Field.REMOVED_BY_USER_NAME, removedByUserName, true);
+		}
 
 		if (type == null) {
 			if (trashEntry != null) {
@@ -826,7 +828,9 @@ public abstract class BaseIndexer implements Indexer {
 			}
 		}
 
-		document.addKeyword(Field.TYPE, type, true);
+		if (Validator.isNotNull(type)) {
+			document.addKeyword(Field.TYPE, type, true);
+		}
 	}
 
 	protected BooleanQuery createFullQuery(

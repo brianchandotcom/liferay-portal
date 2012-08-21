@@ -54,24 +54,14 @@ if (portletDecorateObj != null) {
 String portletTitle = PortletConfigurationUtil.getPortletTitle(portletSetup, themeDisplay.getLanguageId());
 
 if (portletDisplay.isAccess() && portletDisplay.isActive() && (portletTitle == null)) {
-	portletTitle = HtmlUtil.extractText(renderResponseImpl.getTitle());
-}
-
-ResourceBundle resourceBundle = portletConfig.getResourceBundle(locale);
-
-if (portletTitle == null) {
-	portletTitle = ResourceBundleUtil.getString(resourceBundle, JavaConstants.JAVAX_PORTLET_TITLE);
+	portletTitle = PortalUtil.getPortletTitle(portlet, pageContext.getServletContext(), locale);
 }
 
 portletDisplay.setTitle(portletTitle);
 
 // Portlet description
 
-String portletDescription = ResourceBundleUtil.getString(resourceBundle, JavaConstants.JAVAX_PORTLET_DESCRIPTION);
-
-if (Validator.isNull(portletDescription)) {
-	portletDescription = PortalUtil.getPortletDescription(portlet.getPortletId(), locale);
-}
+String portletDescription = PortalUtil.getPortletDescription(portlet, pageContext.getServletContext(), locale);
 
 portletDisplay.setDescription(portletDescription);
 

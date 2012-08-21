@@ -68,6 +68,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringComparator;
@@ -3160,8 +3161,21 @@ public class PortalImpl implements Portal {
 
 		ResourceBundle resourceBundle = portletConfig.getResourceBundle(locale);
 
-		return resourceBundle.getString(
-			JavaConstants.JAVAX_PORTLET_DESCRIPTION);
+		String portletId = portlet.getRootPortletId();
+
+		String portletDescription =
+			ResourceBundleUtil.getString(
+				resourceBundle,
+				JavaConstants.JAVAX_PORTLET_DESCRIPTION.concat(
+					StringPool.PERIOD).concat(portletId));
+
+		if (Validator.isNull(portletDescription)) {
+			portletDescription =
+				ResourceBundleUtil.getString(
+					resourceBundle, JavaConstants.JAVAX_PORTLET_DESCRIPTION);
+		}
+
+		return portletDescription;
 	}
 
 	public String getPortletDescription(Portlet portlet, User user) {
@@ -3433,7 +3447,21 @@ public class PortalImpl implements Portal {
 
 		ResourceBundle resourceBundle = portletConfig.getResourceBundle(locale);
 
-		return resourceBundle.getString(JavaConstants.JAVAX_PORTLET_TITLE);
+		String portletId = portlet.getRootPortletId();
+
+		String portletTitle =
+			ResourceBundleUtil.getString(
+				resourceBundle,
+				JavaConstants.JAVAX_PORTLET_TITLE.concat(StringPool.PERIOD)
+					.concat(portletId));
+
+		if (Validator.isNull(portletTitle)) {
+			portletTitle =
+				ResourceBundleUtil.getString(
+					resourceBundle, JavaConstants.JAVAX_PORTLET_TITLE);
+		}
+
+		return portletTitle;
 	}
 
 	public String getPortletTitle(Portlet portlet, String languageId) {

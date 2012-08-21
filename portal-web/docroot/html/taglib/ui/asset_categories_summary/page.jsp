@@ -51,7 +51,7 @@ for (AssetVocabulary vocabulary : vocabularies) {
 						portletURL.setParameter("categoryId", String.valueOf(category.getCategoryId()));
 					%>
 
-						<a class="asset-category" href="<%= portletURL.toString() %>"><%= _buildCategoryPath(category, themeDisplay) %></a>
+						<a class="asset-category" href="<%= HtmlUtil.escape(portletURL.toString()) %>"><%= _buildCategoryPath(category, themeDisplay) %></a>
 
 					<%
 					}

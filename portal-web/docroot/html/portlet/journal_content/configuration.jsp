@@ -153,9 +153,7 @@ type = ParamUtil.getString(request, "type", type);
 
 	ArticleSearch searchContainer = new ArticleSearch(dynamicRenderRequest, configurationRenderURL);
 
-	List headerNames = searchContainer.getHeaderNames();
-
-	headerNames.clear();
+	List<String> headerNames = new ArrayList<String>();
 
 	headerNames.add("id");
 	headerNames.add("title");

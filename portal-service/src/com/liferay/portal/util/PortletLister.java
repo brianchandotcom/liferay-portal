@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.TreeView;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.User;
+import com.liferay.portal.theme.ThemeDisplay;
 
 import javax.servlet.ServletContext;
 
@@ -41,6 +42,8 @@ public interface PortletLister {
 	public void setRootNodeName(String rootNodeName);
 
 	public void setServletContext(ServletContext servletContext);
+
+	public void setThemeDisplay(ThemeDisplay themeDisplay);
 
 	public void setUser(User user);
 

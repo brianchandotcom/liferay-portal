@@ -27,6 +27,7 @@ import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.model.PortletCategory;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.comparator.PortletCategoryComparator;
 import com.liferay.portal.util.comparator.PortletTitleComparator;
 import com.liferay.portlet.PortletConfigFactoryUtil;
@@ -94,6 +95,10 @@ public class PortletListerImpl implements PortletLister {
 		_servletContext = servletContext;
 	}
 
+	public void setThemeDisplay(ThemeDisplay themeDisplay) {
+		_themeDisplay = themeDisplay;
+	}
+
 	public void setUser(User user) {
 		_user = user;
 	}
@@ -104,7 +109,7 @@ public class PortletListerImpl implements PortletLister {
 
 		portletCategories = ListUtil.sort(
 			portletCategories,
-			new PortletCategoryComparator(_user.getLocale()));
+			new PortletCategoryComparator(_themeDisplay.getLocale()));
 
 		for (int i = 0; i < portletCategories.size(); i++) {
 			PortletCategory portletCategory = portletCategories.get(i);
@@ -197,7 +202,8 @@ public class PortletListerImpl implements PortletLister {
 							portlet, _servletContext);
 
 					ResourceBundle resourceBundle =
-						portletConfig.getResourceBundle(_user.getLocale());
+						portletConfig.getResourceBundle(
+							_themeDisplay.getLocale());
 
 					externalPortletCategory = ResourceBundleUtil.getString(
 						resourceBundle, portletCategory.getName());
@@ -206,7 +212,7 @@ public class PortletListerImpl implements PortletLister {
 		}
 
 		portlets = ListUtil.sort(
-			portlets, new PortletTitleComparator(_user.getLocale()));
+			portlets, new PortletTitleComparator(_themeDisplay.getLocale()));
 
 		for (int i = 0; i < portlets.size(); i++) {
 			Portlet portlet = portlets.get(i);
@@ -223,7 +229,9 @@ public class PortletListerImpl implements PortletLister {
 				nodeView.setLs("0");
 			}
 
-			nodeView.setName(PortalUtil.getPortletTitle(portlet, _user));
+			nodeView.setName(
+				PortalUtil.getPortletTitle(
+					portlet, _servletContext, _themeDisplay.getLocale()));
 			nodeView.setObjId(portlet.getRootPortletId());
 			nodeView.setParentId(parentNodeId);
 
@@ -239,6 +247,7 @@ public class PortletListerImpl implements PortletLister {
 	private int _nodeId;
 	private String _rootNodeName;
 	private ServletContext _servletContext;
+	private ThemeDisplay _themeDisplay;
 	private User _user;
 
 }

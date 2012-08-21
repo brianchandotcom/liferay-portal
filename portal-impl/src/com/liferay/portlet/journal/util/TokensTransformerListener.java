@@ -53,7 +53,7 @@ public class TokensTransformerListener extends BaseTransformerListener {
 			_log.debug("onScript");
 		}
 
-		return s;
+		return replace(s);
 	}
 
 	@Override

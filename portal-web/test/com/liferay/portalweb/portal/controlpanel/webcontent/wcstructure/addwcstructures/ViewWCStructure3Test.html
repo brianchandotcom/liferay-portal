@@ -1,0 +1,338 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>ViewWCStructure3Test</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ViewWCStructure3Test</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/web/guest/home/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>link=Control Panel</td>
+	<td>Control Panel</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Control Panel</td>
+	<td>Control Panel</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>link=Web Content</td>
+	<td>Web Content</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@class='portlet-title-text']</td>
+	<td>Web Content</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@id='cpContextPanelTemplate']</td>
+	<td>Web Content can be any content you would like to add to a site, such as articles, a FAQ, or a news item. Administrators can manage content, as well as assign user roles and permissions. Users may add, edit, approve, or view content depending on their role. Or disable for all portlets.</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@title='Manage']/ul/li/strong/a/span</td>
+	<td>Manage</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//span[@title='Manage']/ul/li/strong/a/span</td>
+	<td>Manage</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]</td>
+	<td>Structures</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]</td>
+	<td>Structures</td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[@class='lfr-component lfr-menu-list']/ul/li/a[contains(.,'Structures')]</td>
+	<td>Structures</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//iframe[@id='_15_openStructuresView']</td>
+	<td>Structures</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[@id='_15_openStructuresView']</td>
+	<td>Structures</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/store.js')]</td>
+	<td>Store</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@value='Add Structure']</td>
+	<td>Add Structure</td>
+</tr>
+<tr>
+	<td>storeText</td>
+	<td>//tr[5]/td[2]/a</td>
+	<td>structureID</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[5]/td[2]/a</td>
+	<td>${structureID}</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[5]/td[3]/a</td>
+	<td>WC Structure3 Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[5]/td[4]/a</td>
+	<td>WC Structure3 Description</td>
+</tr>
+<tr>
+	<td>clickAtAndWait</td>
+	<td>//tr[5]/td[3]/a</td>
+	<td>WC Structure3Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//h1[@class='header-title']/span</td>
+	<td>WC Structure3 Name</td>
+</tr>
+<tr>
+	<td>assertPartialText</td>
+	<td>//fieldset/div/div/div[contains(.,'ID')]</td>
+	<td>${structureID}</td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>//input[@id='_15_name_en_US']</td>
+	<td>WC Structure3 Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//input[@id='_15_name_en_US']/following-sibling::span/a</td>
+	<td>Other Languages (0)</td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>//textarea[@id='_15_description_en_US']</td>
+	<td>WC Structure3 Description</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//textarea[@id='_15_description_en_US']/following-sibling::span/a</td>
+	<td>Other Languages (0)</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[@id='_15_parentStructureName']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>//span[@id='_15_parentStructureName']/following-sibling::span/span/input</td>
+	<td>Select</td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>//span[@id='_15_parentStructureName']/following-sibling::span[2]/span/input</td>
+	<td>Remove</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//input[@value='Add Row']</td>
+	<td>Add Row</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//input[@value='Launch Editor']</td>
+	<td>Launch Editor</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//input[@value='Download']</td>
+	<td>Download</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>//select[@id='_15_structure_el0_type']</td>
+	<td>Text</td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>//input[@id='_15_structure_el0_name']</td>
+	<td>Head</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//input[@id='_15_structure_el0_repeatable']</td>
+	<td>Repeatable</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>//select[@id='_15_structure_el1_type']</td>
+	<td>Text</td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>//input[@id='_15_structure_el1_name']</td>
+	<td>Subtitle</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//input[@id='_15_structure_el1_repeatable']</td>
+	<td>Repeatable</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>//select[@id='_15_structure_el2_type']</td>
+	<td>Text Box</td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>//input[@id='_15_structure_el2_name']</td>
+	<td>Content</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//input[@id='_15_structure_el2_repeatable']</td>
+	<td>Repeatable</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>//select[@id='_15_structure_el3_type']</td>
+	<td>Text</td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>//input[@id='_15_structure_el3_name']</td>
+	<td>ImageBox</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@id='_15_structure_el3_repeatable']</td>
+	<td>Repeatable</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>//select[@id='_15_structure_el4_type']</td>
+	<td>Image</td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>//input[@id='_15_structure_el4_name']</td>
+	<td>Image</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//input[@id='_15_structure_el4_repeatable']</td>
+	<td>Repeatable</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>//select[@id='_15_structure_el5_type']</td>
+	<td>Text</td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>//input[@id='_15_structure_el5_name']</td>
+	<td>Summary</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//input[@id='_15_structure_el5_repeatable']</td>
+	<td>Repeatable</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>//select[@id='_15_structure_el6_type']</td>
+	<td>Text</td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>//input[@id='_15_structure_el6_name']</td>
+	<td>Photographer</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//input[@id='_15_structure_el6_repeatable']</td>
+	<td>Repeatable</td>
+</tr>
+<tr>
+	<td>assertSelectedLabel</td>
+	<td>//select[@id='_15_structure_el7_type']</td>
+	<td>Documents and Media</td>
+</tr>
+<tr>
+	<td>assertValue</td>
+	<td>//input[@id='_15_structure_el7_name']</td>
+	<td>Documents and Media</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//input[@id='_15_structure_el7_repeatable']</td>
+	<td>Repeatable</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//input[@value='Save']</td>
+	<td>Save</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//input[@value='Save and Continue']</td>
+	<td>Save and Continue</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//input[@value='Save and Edit Default Values']</td>
+	<td>Save and Edit Default Values</td>
+</tr>
+<tr>
+	<td>assertVisible</td>
+	<td>//input[@value='Cancel']</td>
+	<td>Cancel</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
+</tr>
+</tbody></table>
+</body>
+</html>

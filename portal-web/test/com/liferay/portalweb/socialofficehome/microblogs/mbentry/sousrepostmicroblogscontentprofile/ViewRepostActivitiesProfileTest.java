@@ -30,8 +30,7 @@ public class ViewRepostActivitiesProfileTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible(
-							"xpath=(//div[@class='lfr-contact-name']/a)[2]")) {
+				if (selenium.isVisible("//div[@class='lfr-contact-name']/a")) {
 					break;
 				}
 			}
@@ -42,7 +41,7 @@ public class ViewRepostActivitiesProfileTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("Joe Bloggs"),
-			selenium.getText("xpath=(//div[@class='lfr-contact-name']/a)[2]"));
+			selenium.getText("//div[@class='lfr-contact-name']/a"));
 		assertEquals(RuntimeVariables.replace(
 				"Reposted From Joe: Microblogs Post"),
 			selenium.getText("//div[@class='activity-title']"));

@@ -34,6 +34,7 @@ public class AssetPublisherPortletDisplayTemplateHandler
 		return AssetEntry.class.getName();
 	}
 
+	@Override
 	public String getHelpTemplatePath() {
 		return PropsValues.ASSET_PUBLISHER_DISPLAY_STYLES_TEMPLATE_CONTENT;
 	}

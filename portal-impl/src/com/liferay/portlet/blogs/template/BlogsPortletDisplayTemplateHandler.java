@@ -34,6 +34,7 @@ public class BlogsPortletDisplayTemplateHandler
 		return BlogsEntry.class.getName();
 	}
 
+	@Override
 	public String getHelpTemplatePath() {
 		return PropsValues.BLOGS_DISPLAY_STYLES_TEMPLATE_CONTENT;
 	}

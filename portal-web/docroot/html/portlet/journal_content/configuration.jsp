@@ -152,6 +152,14 @@ type = ParamUtil.getString(request, "type", type);
 	dynamicRenderRequest.setParameter("groupId", String.valueOf(groupId));
 
 	ArticleSearch searchContainer = new ArticleSearch(dynamicRenderRequest, configurationRenderURL);
+
+	List<String> headerNames = new ArrayList<String>();
+
+	headerNames.add("id");
+	headerNames.add("title");
+	headerNames.add("modified-date");
+	headerNames.add("display-date");
+	headerNames.add("author");
 	%>
 
 	<liferay-ui:search-form

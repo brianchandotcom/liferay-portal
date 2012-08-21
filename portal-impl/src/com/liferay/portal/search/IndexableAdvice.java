@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
-import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -90,7 +89,8 @@ public class IndexableAdvice
 			}
 		}
 		else {
-			ServiceBeanAopProxy.removeMethodInterceptor(methodInvocation, this);
+			serviceBeanAopCacheManager.removeMethodInterceptor(
+				methodInvocation, this);
 		}
 	}
 

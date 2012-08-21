@@ -14,6 +14,8 @@
 
 package com.liferay.portal.spring.aop;
 
+import com.liferay.portal.kernel.spring.aop.Skip;
+
 import org.aopalliance.intercept.MethodInterceptor;
 
 import org.springframework.aop.TargetSource;
@@ -34,6 +36,15 @@ public class ServiceBeanAutoProxyCreator
 		_methodInterceptor = methodInterceptor;
 	}
 
+	public void setServiceBeanAopCacheManager(
+		ServiceBeanAopCacheManager serviceBeanAopCacheManager) {
+
+		_serviceBeanAopCacheManager = serviceBeanAopCacheManager;
+
+		_serviceBeanAopCacheManager.registerAnnotationChainableMethodAdvice(
+			Skip.class, null);
+	}
+
 	@Override
 	protected void customizeProxyFactory(ProxyFactory proxyFactory) {
 		proxyFactory.setAopProxyFactory(
@@ -43,7 +54,8 @@ public class ServiceBeanAutoProxyCreator
 					throws AopConfigException {
 
 					return new ServiceBeanAopProxy(
-						advisedSupport, _methodInterceptor);
+						advisedSupport, _methodInterceptor,
+						_serviceBeanAopCacheManager);
 				}
 
 			}
@@ -72,5 +84,6 @@ public class ServiceBeanAutoProxyCreator
 	private static final String _SERVICE_SUFFIX = "Service";
 
 	private MethodInterceptor _methodInterceptor;
+	private ServiceBeanAopCacheManager _serviceBeanAopCacheManager;
 
 }

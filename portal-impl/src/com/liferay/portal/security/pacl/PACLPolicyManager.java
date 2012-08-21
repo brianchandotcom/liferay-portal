@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.lang.PortalSecurityManager;
 import com.liferay.portal.security.lang.PortalSecurityManagerThreadLocal;
-import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
+import com.liferay.portal.spring.aop.ServiceBeanAopCacheManagerUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.HashMap;
@@ -92,7 +92,7 @@ public class PACLPolicyManager {
 
 			_overridePortalSecurityManager();
 
-			ServiceBeanAopProxy.clearMethodInterceptorCache();
+			ServiceBeanAopCacheManagerUtil.reset();
 		}
 	}
 
@@ -112,7 +112,7 @@ public class PACLPolicyManager {
 
 			_resetPortalSecurityManager();
 
-			ServiceBeanAopProxy.clearMethodInterceptorCache();
+			ServiceBeanAopCacheManagerUtil.reset();
 		}
 	}
 

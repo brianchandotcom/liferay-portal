@@ -14,17 +14,28 @@
 
 package com.liferay.portlet.documentlibrary.store;
 
+import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
+import com.liferay.portal.spring.aop.MethodInterceptorInvocationHandler;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
+import java.util.Arrays;
+import java.util.List;
+
+import org.aopalliance.intercept.MethodInterceptor;
+
 /**
  * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
 public class StoreFactory {
 
@@ -85,6 +96,27 @@ public class StoreFactory {
 			try {
 				_store = (Store)classLoader.loadClass(
 					PropsValues.DL_STORE_IMPL).newInstance();
+
+				if (_store instanceof DBStore) {
+					DB db = DBFactoryUtil.getDB();
+
+					if (db.getType().equals(DB.TYPE_POSTGRESQL)) {
+						MethodInterceptor transactionInterceptor =
+							(MethodInterceptor)PortalBeanLocatorUtil.locate(
+								"transactionAdvice");
+						MethodInterceptor tempFileInterceptor =
+							new TempFileMethodInterceptor();
+
+						List<MethodInterceptor> methodInterceptors =
+							Arrays.asList(
+								transactionInterceptor, tempFileInterceptor);
+
+						_store = (Store)ProxyUtil.newProxyInstance(
+							classLoader, new Class<?>[] {Store.class},
+							new MethodInterceptorInvocationHandler(
+								_store, methodInterceptors));
+					}
+				}
 			}
 			catch (Exception e) {
 				_log.error(e, e);

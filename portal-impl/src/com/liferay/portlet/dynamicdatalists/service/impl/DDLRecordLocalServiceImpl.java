@@ -150,6 +150,19 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 		ddlRecordPersistence.remove(record);
 
+		// Document library
+
+		try {
+			DLStoreUtil.deleteDirectory(
+				record.getCompanyId(), CompanyConstants.SYSTEM,
+				DDMUtil.getFileUploadPath(record));
+		}
+		catch (NoSuchDirectoryException nsde) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(nsde.getMessage());
+			}
+		}
+
 		// Record Versions
 
 		List<DDLRecordVersion> recordVersions =
@@ -175,19 +188,6 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 			DDLRecord.class);
 
 		indexer.delete(record);
-
-		// Document library
-
-		try {
-			DLStoreUtil.deleteDirectory(
-				record.getCompanyId(), CompanyConstants.SYSTEM,
-				DDMUtil.getFileUploadPath(record));
-		}
-		catch (NoSuchDirectoryException nsde) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(nsde.getMessage());
-			}
-		}
 	}
 
 	public void deleteRecord(long recordId)

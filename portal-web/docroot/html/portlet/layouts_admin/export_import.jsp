@@ -21,7 +21,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 String redirectWindowState = ParamUtil.getString(request, "redirectWindowState");
 
-String cmd = ParamUtil.getString(request, Constants.CMD, Constants.EXPORT);
+String cmd = ParamUtil.getString(request, Constants.CMD, Constants.IMPORT);
 
 long groupId = ParamUtil.getLong(request, "groupId");
 
@@ -97,6 +97,9 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 		</c:when>
 		<c:when test="<%= cmd.equals(Constants.IMPORT) %>">
 			<liferay-ui:error exception="<%= LARFileException.class %>" message="please-specify-a-lar-file-to-import" />
+			<liferay-ui:error exception="<%= LARFileSizeException.class %>">
+				<liferay-ui:message arguments="<%= PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE) / 1024 %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" />
+			</liferay-ui:error>
 			<liferay-ui:error exception="<%= LARTypeException.class %>" message="please-import-a-lar-file-of-the-correct-type" />
 			<liferay-ui:error exception="<%= LayoutImportException.class %>" message="an-unexpected-error-occurred-while-importing-your-file" />
 

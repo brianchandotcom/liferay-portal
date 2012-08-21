@@ -59,7 +59,7 @@ public class UpdateTitleAction extends JSONAction {
 		String portletId = ParamUtil.getString(request, "portletId");
 
 		if (!PortletPermissionUtil.contains(
-				permissionChecker, themeDisplay.getPlid(), portletId,
+				permissionChecker, layout, portletId,
 				ActionKeys.CONFIGURATION)) {
 
 			return null;

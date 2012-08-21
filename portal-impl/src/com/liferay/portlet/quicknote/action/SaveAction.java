@@ -48,7 +48,7 @@ public class SaveAction extends JSONAction {
 		String portletId = ParamUtil.getString(request, "portletId");
 
 		PortletPermissionUtil.check(
-			themeDisplay.getPermissionChecker(), themeDisplay.getPlid(),
+			themeDisplay.getPermissionChecker(), themeDisplay.getLayout(),
 			portletId, ActionKeys.CONFIGURATION);
 
 		PortletPreferences preferences =

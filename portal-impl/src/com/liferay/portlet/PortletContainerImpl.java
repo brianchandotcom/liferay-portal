@@ -784,7 +784,7 @@ public class PortletContainerImpl implements PortletContainer {
 						ActionKeys.UPDATE) &&
 					!PortletPermissionUtil.contains(
 						themeDisplay.getPermissionChecker(),
-						themeDisplay.getPlid(), portlet.getPortletId(),
+						layout, portlet.getPortletId(),
 						ActionKeys.CONFIGURATION)) {
 
 					bufferCacheServletResponse.setCharBuffer(null);

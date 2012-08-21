@@ -25,6 +25,7 @@ import com.liferay.portalweb.portal.dbupgrade.sampledata528.documentlibrary.Docu
 import com.liferay.portalweb.portal.dbupgrade.sampledata528.expando.ExpandoTestPlan;
 import com.liferay.portalweb.portal.dbupgrade.sampledata528.groups.GroupsTestPlan;
 import com.liferay.portalweb.portal.dbupgrade.sampledata528.organizations.OrganizationsTestPlan;
+import com.liferay.portalweb.portal.dbupgrade.sampledata528.phone.PhoneTestPlan;
 import com.liferay.portalweb.portal.dbupgrade.sampledata528.portletpermissions.PortletPermissionsTestPlan;
 import com.liferay.portalweb.portal.dbupgrade.sampledata528.shopping.ShoppingTestPlan;
 import com.liferay.portalweb.portal.dbupgrade.sampledata528.social.SocialTestPlan;
@@ -55,6 +56,7 @@ public class SampleData528TestPlan extends BaseTestSuite {
 		testSuite.addTest(ExpandoTestPlan.suite());
 		testSuite.addTest(GroupsTestPlan.suite());
 		testSuite.addTest(OrganizationsTestPlan.suite());
+		testSuite.addTest(PhoneTestPlan.suite());
 		testSuite.addTest(PortletPermissionsTestPlan.suite());
 		testSuite.addTest(ShoppingTestPlan.suite());
 		testSuite.addTest(StagingCommunityTestPlan.suite());

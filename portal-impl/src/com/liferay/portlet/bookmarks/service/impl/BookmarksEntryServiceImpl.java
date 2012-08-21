@@ -144,6 +144,24 @@ public class BookmarksEntryServiceImpl extends BookmarksEntryServiceBaseImpl {
 			getGuestOrUserId(), entryId);
 	}
 
+	public void subscribeEntry(long entryId)
+		throws PortalException, SystemException {
+
+		BookmarksEntryPermission.check(
+			getPermissionChecker(), entryId, ActionKeys.SUBSCRIBE);
+
+		bookmarksEntryLocalService.subscribeEntry(getUserId(), entryId);
+	}
+
+	public void unsubscribeEntry(long entryId)
+		throws PortalException, SystemException {
+
+		BookmarksEntryPermission.check(
+			getPermissionChecker(), entryId, ActionKeys.SUBSCRIBE);
+
+		bookmarksEntryLocalService.unsubscribeEntry(getUserId(), entryId);
+	}
+
 	public BookmarksEntry updateEntry(
 			long entryId, long groupId, long folderId, String name, String url,
 			String description, ServiceContext serviceContext)

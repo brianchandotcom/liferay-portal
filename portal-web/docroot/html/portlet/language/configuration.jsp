@@ -36,9 +36,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 		List leftList = new ArrayList();
 
-		for (int i = 0; i < languageIds.length; i++) {
-			String languageId = languageIds[i];
-
+		for (String languageId : languageIds) {
 			leftList.add(new KeyValuePair(languageId, LocaleUtil.fromLanguageId(languageId).getDisplayName(locale)));
 		}
 

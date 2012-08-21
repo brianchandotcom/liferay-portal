@@ -66,6 +66,12 @@ public class EditEntryAction extends PortletAction {
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteEntry(actionRequest);
 			}
+			else if (cmd.equals(Constants.SUBSCRIBE)) {
+				subscribeEntry(actionRequest);
+			}
+			else if (cmd.equals(Constants.UNSUBSCRIBE)) {
+				unsubscribeEntry(actionRequest);
+			}
 
 			WindowState windowState = actionRequest.getWindowState();
 
@@ -135,6 +141,22 @@ public class EditEntryAction extends PortletAction {
 		long entryId = ParamUtil.getLong(actionRequest, "entryId");
 
 		BookmarksEntryServiceUtil.deleteEntry(entryId);
+	}
+
+	protected void subscribeEntry(ActionRequest actionRequest)
+		throws Exception {
+
+		long entryId = ParamUtil.getLong(actionRequest, "entryId");
+
+		BookmarksEntryServiceUtil.subscribeEntry(entryId);
+	}
+
+	protected void unsubscribeEntry(ActionRequest actionRequest)
+		throws Exception {
+
+		long entryId = ParamUtil.getLong(actionRequest, "entryId");
+
+		BookmarksEntryServiceUtil.unsubscribeEntry(entryId);
 	}
 
 	protected void updateEntry(ActionRequest actionRequest) throws Exception {

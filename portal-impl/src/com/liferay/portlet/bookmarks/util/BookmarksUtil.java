@@ -14,11 +14,20 @@
 
 package com.liferay.portlet.bookmarks.util;
 
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PropsUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
@@ -30,10 +39,14 @@ import com.liferay.portlet.bookmarks.util.comparator.EntryNameComparator;
 import com.liferay.portlet.bookmarks.util.comparator.EntryPriorityComparator;
 import com.liferay.portlet.bookmarks.util.comparator.EntryURLComparator;
 import com.liferay.portlet.bookmarks.util.comparator.EntryVisitsComparator;
+import com.liferay.util.ContentUtil;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
+import javax.portlet.PortletPreferences;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
 
@@ -127,6 +140,141 @@ public class BookmarksUtil {
 			folderId);
 
 		addPortletBreadcrumbEntries(folder, request, renderResponse);
+	}
+
+	public static Map<Locale, String> getEmailEntryAddedBodyMap(
+		PortletPreferences preferences) {
+
+		Map<Locale, String> map = LocalizationUtil.getLocalizationMap(
+			preferences, "emailEntryAddedBody");
+
+		Locale defaultLocale = LocaleUtil.getDefault();
+
+		String defaultValue = map.get(defaultLocale);
+
+		if (Validator.isNotNull(defaultValue)) {
+			return map;
+		}
+
+		map.put(
+			defaultLocale,
+			ContentUtil.get(
+				PropsUtil.get(PropsKeys.BOOKMARKS_EMAIL_ENTRY_ADDED_BODY)));
+
+		return map;
+	}
+
+	public static boolean getEmailEntryAddedEnabled(
+		PortletPreferences preferences) {
+
+		String emailEntryAddedEnabled = preferences.getValue(
+			"emailEntryAddedEnabled", StringPool.BLANK);
+
+		if (Validator.isNotNull(emailEntryAddedEnabled)) {
+			return GetterUtil.getBoolean(emailEntryAddedEnabled);
+		}
+		else {
+			return GetterUtil.getBoolean(PropsUtil.get(
+				PropsKeys.BOOKMARKS_EMAIL_ENTRY_ADDED_ENABLED));
+		}
+	}
+
+	public static Map<Locale, String> getEmailEntryAddedSubjectMap(
+		PortletPreferences preferences) {
+
+		Map<Locale, String> map = LocalizationUtil.getLocalizationMap(
+			preferences, "emailEntryAddedSubject");
+
+		Locale defaultLocale = LocaleUtil.getDefault();
+
+		String defaultValue = map.get(defaultLocale);
+
+		if (Validator.isNotNull(defaultValue)) {
+			return map;
+		}
+
+		map.put(
+			defaultLocale,
+			ContentUtil.get(
+				PropsUtil.get(PropsKeys.BOOKMARKS_EMAIL_ENTRY_ADDED_SUBJECT)));
+
+		return map;
+	}
+
+	public static Map<Locale, String> getEmailEntryUpdatedBodyMap(
+		PortletPreferences preferences) {
+
+		Map<Locale, String> map = LocalizationUtil.getLocalizationMap(
+			preferences, "emailEntryUpdatedBody");
+
+		Locale defaultLocale = LocaleUtil.getDefault();
+
+		String defaultValue = map.get(defaultLocale);
+
+		if (Validator.isNotNull(defaultValue)) {
+			return map;
+		}
+
+		map.put(
+			defaultLocale,
+			ContentUtil.get(
+				PropsUtil.get(PropsKeys.BOOKMARKS_EMAIL_ENTRY_UPDATED_BODY)));
+
+		return map;
+	}
+
+	public static boolean getEmailEntryUpdatedEnabled(
+		PortletPreferences preferences) {
+
+		String emailEntryUpdatedEnabled = preferences.getValue(
+			"emailEntryUpdatedEnabled", StringPool.BLANK);
+
+		if (Validator.isNotNull(emailEntryUpdatedEnabled)) {
+			return GetterUtil.getBoolean(emailEntryUpdatedEnabled);
+		}
+		else {
+			return GetterUtil.getBoolean(PropsUtil.get(
+				PropsKeys.BOOKMARKS_EMAIL_ENTRY_UPDATED_ENABLED));
+		}
+	}
+
+	public static Map<Locale, String> getEmailEntryUpdatedSubjectMap(
+		PortletPreferences preferences) {
+
+		Map<Locale, String> map = LocalizationUtil.getLocalizationMap(
+			preferences, "emailEntryUpdatedSubject");
+
+		Locale defaultLocale = LocaleUtil.getDefault();
+
+		String defaultValue = map.get(defaultLocale);
+
+		if (Validator.isNotNull(defaultValue)) {
+			return map;
+		}
+
+		map.put(
+			defaultLocale,
+			ContentUtil.get(
+				PropsUtil.get(
+					PropsKeys.BOOKMARKS_EMAIL_ENTRY_UPDATED_SUBJECT)));
+
+		return map;
+	}
+
+	public static String getEmailFromAddress(
+			PortletPreferences preferences, long companyId)
+		throws SystemException {
+
+		return PortalUtil.getEmailFromAddress(
+			preferences, companyId, PropsValues.BOOKMARKS_EMAIL_FROM_ADDRESS);
+	}
+
+	public static String getEmailFromName(
+			PortletPreferences preferences, long companyId)
+		throws SystemException {
+
+		return PortalUtil.getEmailFromName(
+			preferences, companyId, PropsValues.BOOKMARKS_EMAIL_FROM_NAME);
 	}
 
 	public static OrderByComparator getEntryOrderByComparator(

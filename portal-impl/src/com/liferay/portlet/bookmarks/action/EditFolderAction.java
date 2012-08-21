@@ -21,6 +21,8 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 import com.liferay.portlet.bookmarks.FolderNameException;
 import com.liferay.portlet.bookmarks.NoSuchFolderException;
@@ -57,6 +59,12 @@ public class EditFolderAction extends PortletAction {
 			}
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteFolder(actionRequest);
+			}
+			else if (cmd.equals(Constants.SUBSCRIBE)) {
+				subscribeFolder(actionRequest);
+			}
+			else if (cmd.equals(Constants.UNSUBSCRIBE)) {
+				unsubscribeFolder(actionRequest);
 			}
 
 			sendRedirect(actionRequest, actionResponse);
@@ -111,6 +119,30 @@ public class EditFolderAction extends PortletAction {
 
 		AssetPublisherUtil.removeRecentFolderId(
 			actionRequest, BookmarksEntry.class.getName(), folderId);
+	}
+
+	protected void subscribeFolder(ActionRequest actionRequest)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long folderId = ParamUtil.getLong(actionRequest, "folderId");
+
+		BookmarksFolderServiceUtil.subscribeFolder(
+			themeDisplay.getScopeGroupId(), folderId);
+	}
+
+	protected void unsubscribeFolder(ActionRequest actionRequest)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long folderId = ParamUtil.getLong(actionRequest, "folderId");
+
+		BookmarksFolderServiceUtil.unsubscribeFolder(
+			themeDisplay.getScopeGroupId(), folderId);
 	}
 
 	protected void updateFolder(ActionRequest actionRequest) throws Exception {

@@ -183,6 +183,30 @@ public class BookmarksFolderServiceSoap {
 		}
 	}
 
+	public static void subscribeFolder(long groupId, long folderId)
+		throws RemoteException {
+		try {
+			BookmarksFolderServiceUtil.subscribeFolder(groupId, folderId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void unsubscribeFolder(long groupId, long folderId)
+		throws RemoteException {
+		try {
+			BookmarksFolderServiceUtil.unsubscribeFolder(groupId, folderId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.bookmarks.model.BookmarksFolderSoap updateFolder(
 		long folderId, long parentFolderId, java.lang.String name,
 		java.lang.String description, boolean mergeWithParentFolder,

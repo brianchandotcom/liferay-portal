@@ -40,6 +40,9 @@ public class TestPropsValues extends com.liferay.portal.util.TestPropsValues {
 	public static final boolean SAVE_SOURCE = GetterUtil.getBoolean(
 		TestPropsUtil.get("save.source"));
 
+	public static final String SELENIUM_BROWSER_COMMANDS_DIR =
+		TestPropsUtil.get("selenium.browser.commands.dir");
+
 	public static final String SELENIUM_DOWNLOAD_FILE = TestPropsUtil.get(
 		"selenium.download.file.executable");
 

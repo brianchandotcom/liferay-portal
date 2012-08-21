@@ -37,10 +37,10 @@ public class LayoutStagingUtil {
 	}
 
 	public static LayoutSetStagingHandler getLayoutSetStagingHandler(
-			LayoutSet layoutSet) {
+		LayoutSet layoutSet) {
 
-			return getLayoutStaging().getLayoutSetStagingHandler(layoutSet);
-		}
+		return getLayoutStaging().getLayoutSetStagingHandler(layoutSet);
+	}
 
 	public static LayoutStaging getLayoutStaging() {
 		PortalRuntimePermission.checkGetBeanProperty(LayoutStagingUtil.class);

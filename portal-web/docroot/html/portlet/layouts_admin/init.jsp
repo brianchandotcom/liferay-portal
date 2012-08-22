@@ -19,6 +19,7 @@
 <%@ page import="com.liferay.portal.DuplicateLockException" %><%@
 page import="com.liferay.portal.ImageTypeException" %><%@
 page import="com.liferay.portal.LARFileException" %><%@
+page import="com.liferay.portal.LARFileSizeException" %><%@
 page import="com.liferay.portal.LARTypeException" %><%@
 page import="com.liferay.portal.LayoutFriendlyURLException" %><%@
 page import="com.liferay.portal.LayoutImportException" %><%@

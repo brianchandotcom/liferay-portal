@@ -15,6 +15,7 @@
 package com.liferay.portlet.wiki.engines.mediawiki;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.wiki.PageContentException;
@@ -30,8 +31,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.portlet.PortletURL;
-
-import org.apache.commons.lang.LocaleUtils;
 
 import org.jamwiki.model.WikiUser;
 import org.jamwiki.parser.ParserException;
@@ -119,7 +118,7 @@ public class MediaWikiEngine implements WikiEngine {
 		// Dummy values
 
 		parserInput.setContext("/wiki");
-		parserInput.setLocale(LocaleUtils.toLocale("en_US"));
+		parserInput.setLocale(LocaleUtil.getDefault());
 		parserInput.setUserDisplay("0.0.0.0");
 		parserInput.setWikiUser(new WikiUser("DummyUser"));
 

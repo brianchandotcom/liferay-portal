@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.permissions.pagetemplates.viewpagetemplates.siterole;
+package com.liferay.portalweb.portal.controlpanel.pagetemplates.pagetemplate.viewsiteroleinlineblogsviewptpersistsite;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -134,7 +134,7 @@ public class AddSitesPublicPagePageTemplateTest extends BaseTestCase {
 				selenium.type("//input[@name='_156_name_en_US']",
 					RuntimeVariables.replace("Public Page"));
 				selenium.select("//select[@id='_156_layoutPrototypeId']",
-					RuntimeVariables.replace("Test Page Template"));
+					RuntimeVariables.replace("Page Template Name"));
 				assertTrue(selenium.isChecked(
 						"//input[@id='_156_layoutPrototypeLinkEnabledCheckbox']"));
 				selenium.clickAt("//input[@id='_156_layoutPrototypeLinkEnabledCheckbox']",

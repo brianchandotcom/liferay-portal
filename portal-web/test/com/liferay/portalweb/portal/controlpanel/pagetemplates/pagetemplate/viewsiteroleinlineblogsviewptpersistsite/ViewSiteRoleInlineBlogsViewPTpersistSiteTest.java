@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.permissions.pagetemplates.viewpagetemplates.siterole;
+package com.liferay.portalweb.portal.controlpanel.pagetemplates.pagetemplate.viewsiteroleinlineblogsviewptpersistsite;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ViewSiteRoleInlineViewPageTemplateTest extends BaseTestCase {
-	public void testViewSiteRoleInlineViewPageTemplate()
+public class ViewSiteRoleInlineBlogsViewPTpersistSiteTest extends BaseTestCase {
+	public void testViewSiteRoleInlineBlogsViewPTpersistSite()
 		throws Exception {
 		selenium.open("/web/site-name/public-page");
 		selenium.clickAt("link=Public Page",
@@ -111,33 +111,6 @@ public class ViewSiteRoleInlineViewPageTemplateTest extends BaseTestCase {
 		selenium.clickAt("link=Permissions",
 			RuntimeVariables.replace("Permissions"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isChecked(
-				"//input[@id='roles-siterole-name_ACTION_VIEW']"));
-		selenium.clickAt("//input[@value='Save']",
-			RuntimeVariables.replace("Save"));
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (RuntimeVariables.replace(
-							"Your request completed successfully.")
-										.equals(selenium.getText(
-								"//div[@class='portlet-msg-success']"))) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
-		assertEquals(RuntimeVariables.replace(
-				"Your request completed successfully."),
-			selenium.getText("//div[@class='portlet-msg-success']"));
 		assertTrue(selenium.isChecked(
 				"//input[@id='roles-siterole-name_ACTION_VIEW']"));
 		selenium.selectFrame("relative=top");

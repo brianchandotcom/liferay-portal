@@ -4,12 +4,12 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://localhost:8080/" />
-<title>AddPortletWCDPageTemplateTest</title>
+<title>AddPortletBlogsPageTemplateTest</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">AddPortletWCDPageTemplateTest</td></tr>
+<tr><td rowspan="1" colspan="3">AddPortletBlogsPageTemplateTest</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -52,34 +52,34 @@
 	<td>Page Templates</td>
 </tr>
 <tr>
-	<td>assertVisible</td>
-	<td>//a[contains(text(),'Test Page Template')]</td>
-	<td>Test Page Template</td>
+	<td>assertText</td>
+	<td>//td[contains(.,'Page Template Name')]/a</td>
+	<td>Page Template Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
-	<td>//a[contains(text(),'Test Page Template')]</td>
-	<td>Test Page Template</td>
+	<td>//td[contains(.,'Page Template Name')]/a</td>
+	<td>Page Template Name</td>
 </tr>
 <tr>
-	<td>clickAt</td>
-	<td>//a[@id='_146_roll']/span</td>
+	<td>assertPartialText</td>
+	<td>//div[contains(.,'Configuration')]/span/a</td>
 	<td>Open Page Template</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
+	<td>storeAttribute</td>
+	<td>//div[contains(.,'Configuration')]/span/a/@href</td>
+	<td>pageTemplate</td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>${pageTemplate}</td>
 	<td></td>
 </tr>
 <tr>
-	<td>selectWindow</td>
-	<td>title=Test Page Template - Liferay</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAtAndWait</td>
-	<td>link=Test Page Template</td>
-	<td>Test Page Template</td>
+	<td>assertText</td>
+	<td>//span[@title='Go to Page Template Name']</td>
+	<td>Page Template Name</td>
 </tr>
 <tr>
 	<td>clickAt</td>
@@ -129,7 +129,7 @@
 <tr>
 	<td>type</td>
 	<td>//input[@id='layout_configuration_content']</td>
-	<td>w</td>
+	<td>b</td>
 </tr>
 <tr>
 	<td>keyDown</td>
@@ -143,12 +143,12 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>//div[@title='Web Content Display']/p/a</td>
+	<td>//div[@title='Blogs']/p/a</td>
 	<td>Add</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//div[@title='Web Content Display']/p/a</td>
+	<td>//div[@title='Blogs']/p/a</td>
 	<td>Add</td>
 </tr>
 <tr>
@@ -161,7 +161,6 @@
 	<td>//section</td>
 	<td>Portlet</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

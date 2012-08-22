@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.permissions.pagetemplates.viewpagetemplates.siterole;
+package com.liferay.portalweb.portal.controlpanel.pagetemplates.pagetemplate.viewsiteroleinlineblogsviewptpersistsite;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,9 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class DefineSiteRoleInlineViewPageTemplateTest extends BaseTestCase {
-	public void testDefineSiteRoleInlineViewPageTemplate()
-		throws Exception {
+public class DefineSiteRoleInlineBlogsViewPTTest extends BaseTestCase {
+	public void testDefineSiteRoleInlineBlogsViewPT() throws Exception {
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
@@ -70,18 +69,21 @@ public class DefineSiteRoleInlineViewPageTemplateTest extends BaseTestCase {
 		selenium.clickAt("link=Page Templates",
 			RuntimeVariables.replace("Page Templates"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isVisible(
-				"//a[contains(text(),'Test Page Template')]"));
-		selenium.clickAt("//a[contains(text(),'Test Page Template')]",
-			RuntimeVariables.replace("Test Page Template"));
+		assertEquals(RuntimeVariables.replace("Page Template Name"),
+			selenium.getText("//td[contains(.,'Page Template Name')]/a"));
+		selenium.clickAt("//td[contains(.,'Page Template Name')]/a",
+			RuntimeVariables.replace("Page Template Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//a[@id='_146_roll']/span",
-			RuntimeVariables.replace("Open Page Template"));
-		Thread.sleep(5000);
-		selenium.selectWindow("Test Page Template - Liferay");
-		selenium.clickAt("link=Test Page Template",
-			RuntimeVariables.replace("Test Page Template"));
-		selenium.waitForPageToLoad("30000");
+		assertTrue(selenium.isPartialText(
+				"//div[contains(.,'Configuration')]/span/a",
+				"Open Page Template"));
+
+		String pageTemplate = selenium.getAttribute(
+				"//div[contains(.,'Configuration')]/span/a/@href");
+		RuntimeVariables.setValue("pageTemplate", pageTemplate);
+		selenium.open(RuntimeVariables.getValue("pageTemplate"));
+		assertEquals(RuntimeVariables.replace("Page Template Name"),
+			selenium.getText("//span[@title='Go to Page Template Name']"));
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Options"),
 			selenium.getText("//span[@title='Options']/ul/li/strong/a"));
@@ -168,7 +170,8 @@ public class DefineSiteRoleInlineViewPageTemplateTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertFalse(selenium.isChecked(
 				"//input[@id='roles-siterole-name_ACTION_VIEW']"));
-		selenium.check("//input[@id='roles-siterole-name_ACTION_VIEW']");
+		selenium.clickAt("//input[@id='roles-siterole-name_ACTION_VIEW']",
+			RuntimeVariables.replace("Blogs View"));
 		assertTrue(selenium.isChecked(
 				"//input[@id='roles-siterole-name_ACTION_VIEW']"));
 		selenium.clickAt("//input[@value='Save']",
@@ -199,7 +202,5 @@ public class DefineSiteRoleInlineViewPageTemplateTest extends BaseTestCase {
 		assertTrue(selenium.isChecked(
 				"//input[@id='roles-siterole-name_ACTION_VIEW']"));
 		selenium.selectFrame("relative=top");
-		selenium.close();
-		selenium.selectWindow("null");
 	}
 }

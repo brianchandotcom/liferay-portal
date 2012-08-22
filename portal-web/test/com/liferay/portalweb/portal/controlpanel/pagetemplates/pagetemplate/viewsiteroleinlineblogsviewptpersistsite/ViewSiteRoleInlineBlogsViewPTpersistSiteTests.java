@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portalweb.permissions.pagetemplates.viewpagetemplates.siterole;
+package com.liferay.portalweb.portal.controlpanel.pagetemplates.pagetemplate.viewsiteroleinlineblogsviewptpersistsite;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portal.controlpanel.pagetemplates.AddPageTemplateTest;
-import com.liferay.portalweb.portal.controlpanel.pagetemplates.TearDownPageTemplateTest;
+import com.liferay.portalweb.portal.controlpanel.pagetemplates.pagetemplate.addpagetemplate.AddPageTemplateTest;
+import com.liferay.portalweb.portal.controlpanel.pagetemplates.pagetemplate.addpagetemplate.TearDownPageTemplateTest;
 import com.liferay.portalweb.portal.controlpanel.roles.role.addregrole.TearDownRoleTest;
 import com.liferay.portalweb.portal.controlpanel.roles.role.addsiterole.AddSiteRoleTest;
 import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.AddSiteTest;
@@ -28,16 +28,16 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class SiteRoleTests extends BaseTestSuite {
+public class ViewSiteRoleInlineBlogsViewPTpersistSiteTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddSiteRoleTest.class);
 		testSuite.addTestSuite(AddPageTemplateTest.class);
 		testSuite.addTestSuite(AddPortletBlogsPageTemplateTest.class);
-		testSuite.addTestSuite(DefineSiteRoleInlineViewPageTemplateTest.class);
+		testSuite.addTestSuite(DefineSiteRoleInlineBlogsViewPTTest.class);
 		testSuite.addTestSuite(AddSiteTest.class);
 		testSuite.addTestSuite(AddSitesPublicPagePageTemplateTest.class);
-		testSuite.addTestSuite(ViewSiteRoleInlineViewPageTemplateTest.class);
+		testSuite.addTestSuite(ViewSiteRoleInlineBlogsViewPTpersistSiteTest.class);
 		testSuite.addTestSuite(TearDownRoleTest.class);
 		testSuite.addTestSuite(TearDownSiteTest.class);
 		testSuite.addTestSuite(TearDownPageTemplateTest.class);

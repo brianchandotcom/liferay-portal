@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.permissions.pagetemplates.viewpagetemplates.siterole;
+package com.liferay.portalweb.portal.controlpanel.pagetemplates.pagetemplate.viewsiteroleinlineblogsviewptpersistsite;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,8 +20,8 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddPortletWCDPageTemplateTest extends BaseTestCase {
-	public void testAddPortletWCDPageTemplate() throws Exception {
+public class AddPortletBlogsPageTemplateTest extends BaseTestCase {
+	public void testAddPortletBlogsPageTemplate() throws Exception {
 		selenium.open("/web/guest/home/");
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
@@ -69,18 +69,21 @@ public class AddPortletWCDPageTemplateTest extends BaseTestCase {
 		selenium.clickAt("link=Page Templates",
 			RuntimeVariables.replace("Page Templates"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isVisible(
-				"//a[contains(text(),'Test Page Template')]"));
-		selenium.clickAt("//a[contains(text(),'Test Page Template')]",
-			RuntimeVariables.replace("Test Page Template"));
+		assertEquals(RuntimeVariables.replace("Page Template Name"),
+			selenium.getText("//td[contains(.,'Page Template Name')]/a"));
+		selenium.clickAt("//td[contains(.,'Page Template Name')]/a",
+			RuntimeVariables.replace("Page Template Name"));
 		selenium.waitForPageToLoad("30000");
-		selenium.clickAt("//a[@id='_146_roll']/span",
-			RuntimeVariables.replace("Open Page Template"));
-		Thread.sleep(5000);
-		selenium.selectWindow("title=Test Page Template - Liferay");
-		selenium.clickAt("link=Test Page Template",
-			RuntimeVariables.replace("Test Page Template"));
-		selenium.waitForPageToLoad("30000");
+		assertTrue(selenium.isPartialText(
+				"//div[contains(.,'Configuration')]/span/a",
+				"Open Page Template"));
+
+		String pageTemplate = selenium.getAttribute(
+				"//div[contains(.,'Configuration')]/span/a/@href");
+		RuntimeVariables.setValue("pageTemplate", pageTemplate);
+		selenium.open(RuntimeVariables.getValue("pageTemplate"));
+		assertEquals(RuntimeVariables.replace("Page Template Name"),
+			selenium.getText("//span[@title='Go to Page Template Name']"));
 		selenium.clickAt("//div[@id='dockbar']",
 			RuntimeVariables.replace("Dockbar"));
 
@@ -161,7 +164,7 @@ public class AddPortletWCDPageTemplateTest extends BaseTestCase {
 		}
 
 		selenium.type("//input[@id='layout_configuration_content']",
-			RuntimeVariables.replace("w"));
+			RuntimeVariables.replace("b"));
 		selenium.keyDown("//input[@id='layout_configuration_content']",
 			RuntimeVariables.replace("\\13"));
 		selenium.keyUp("//input[@id='layout_configuration_content']",
@@ -173,8 +176,7 @@ public class AddPortletWCDPageTemplateTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible(
-							"//div[@title='Web Content Display']/p/a")) {
+				if (selenium.isVisible("//div[@title='Blogs']/p/a")) {
 					break;
 				}
 			}
@@ -184,7 +186,7 @@ public class AddPortletWCDPageTemplateTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("//div[@title='Web Content Display']/p/a",
+		selenium.clickAt("//div[@title='Blogs']/p/a",
 			RuntimeVariables.replace("Add"));
 
 		for (int second = 0;; second++) {

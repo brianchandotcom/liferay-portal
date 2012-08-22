@@ -15,8 +15,6 @@
 package com.liferay.portalweb.portal.dbupgrade.viewsampledatalatest.polls.pollsvote;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portal.dbupgrade.viewsampledatalatest.polls.pollsquestion.ViewPollsChoiceTest;
-import com.liferay.portalweb.portal.dbupgrade.viewsampledatalatest.polls.pollsquestion.ViewPollsQuestionTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -27,8 +25,7 @@ import junit.framework.TestSuite;
 public class PollsVoteTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(ViewPollsQuestionTest.class);
-		testSuite.addTestSuite(ViewPollsChoiceTest.class);
+		testSuite.addTestSuite(ViewPollsVoteTest.class);
 
 		return testSuite;
 	}

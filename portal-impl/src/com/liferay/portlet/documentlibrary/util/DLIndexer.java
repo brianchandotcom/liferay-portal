@@ -197,7 +197,13 @@ public class DLIndexer extends BaseIndexer {
 			addSearchDDMStruture(searchQuery, searchContext, ddmStructure);
 		}
 
-		addSearchTerm(searchQuery, searchContext, Field.USER_NAME, false);
+		String keywords = searchContext.getKeywords();
+
+		if (Validator.isNull(keywords)) {
+			addSearchTerm(searchQuery, searchContext, Field.DESCRIPTION, false);
+			addSearchTerm(searchQuery, searchContext, Field.TITLE, false);
+			addSearchTerm(searchQuery, searchContext, Field.USER_NAME, false);
+		}
 
 		addSearchTerm(searchQuery, searchContext, "extension", false);
 		addSearchTerm(searchQuery, searchContext, "fileEntryTypeId", false);

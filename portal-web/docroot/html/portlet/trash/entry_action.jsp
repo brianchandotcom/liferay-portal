@@ -19,11 +19,22 @@
 <%
 SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay-ui:search:searchContainer");
 
-String redirect = searchContainer.getIteratorURL().toString();
+String redirect = ParamUtil.getString(request, "redirect");
+
+if (searchContainer != null) {
+	redirect = searchContainer.getIteratorURL().toString();
+}
 
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-TrashEntry entry = (TrashEntry)row.getObject();
+TrashEntry entry = null;
+
+if (row != null) {
+	entry = (TrashEntry)row.getObject();
+}
+else {
+	entry = (TrashEntry)request.getAttribute("view_content.jsp-trashEntry");
+}
 %>
 
 <liferay-ui:icon-menu>

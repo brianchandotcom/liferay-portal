@@ -53,6 +53,15 @@
 		title="<%= trashRenderer.getTitle(locale) %>"
 	/>
 
+	<c:if test="<%= ((entry != null) && (entry.getRootEntry() == null)) || Validator.isNotNull(trashRenderer.renderActions(renderRequest, renderResponse)) %>">
+
+		<%
+		request.setAttribute("view_content.jsp-trashEntry", entry);
+		%>
+
+		<liferay-util:include page='<%= (entry != null) && (entry.getRootEntry() == null) ? "/html/portlet/trash/entry_action.jsp" : trashRenderer.renderActions(renderRequest, renderResponse) %>' />
+	</c:if>
+
 	<c:choose>
 		<c:when test="<%= Validator.isNotNull(path) %>">
 			<liferay-util:include page="<%= path %>" portletId="<%= trashRenderer.getPortletId() %>">
@@ -108,3 +117,13 @@
 		</c:if>
 	</c:if>
 </div>
+
+<aui:script use="liferay-trash">
+	new Liferay.Portlet.Trash(
+		{
+			checkEntryURL: '<portlet:actionURL><portlet:param name="<%= Constants.CMD %>" value="checkEntry" /><portlet:param name="struts_action" value="/trash/edit_entry" /></portlet:actionURL>',
+			namespace: '<portlet:namespace />',
+			restoreEntryURL: '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="struts_action" value="/trash/restore_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>'
+		}
+	);
+</aui:script>

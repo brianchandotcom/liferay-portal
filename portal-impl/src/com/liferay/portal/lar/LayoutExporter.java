@@ -504,7 +504,7 @@ public class LayoutExporter {
 			portletDataContext.setScopeLayoutUuid(scopeLayoutUuid);
 
 			boolean[] exportPortletControls = getExportPortletControls(
-				companyId, portletId, portletDataContext, parameterMap);
+				companyId, portletId, portletDataContext, parameterMap, type);
 
 			_portletExporter.exportPortlet(
 				portletDataContext, layoutCache, portletId, layout,
@@ -1047,7 +1047,7 @@ public class LayoutExporter {
 	protected boolean[] getExportPortletControls(
 			long companyId, String portletId,
 			PortletDataContext portletDataContext,
-			Map<String, String[]> parameterMap)
+			Map<String, String[]> parameterMap, String type)
 		throws Exception {
 
 		boolean exportPortletData = MapUtil.getBoolean(
@@ -1116,7 +1116,9 @@ public class LayoutExporter {
 			}
 		}
 
-		if (exportPortletSetupAll) {
+		if (exportPortletSetupAll ||
+			(exportPortletSetup && type.equals("layout-prototype"))) {
+
 			exportCurPortletSetup = true;
 		}
 

@@ -61,6 +61,7 @@ public class ViewAction extends PortletAction {
 			String title = ParamUtil.getString(
 				renderRequest, "title",
 				preferences.getValue("title", WikiPageConstants.FRONT_PAGE));
+
 			double version = ParamUtil.getDouble(renderRequest, "version");
 
 			WikiNode node = WikiNodeServiceUtil.getNode(nodeId);

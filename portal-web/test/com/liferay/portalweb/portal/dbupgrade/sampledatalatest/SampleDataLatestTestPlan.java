@@ -27,6 +27,7 @@ import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.groups.GroupsTest
 import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.messageboards.MessageBoardsTestPlan;
 import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.organizations.OrganizationsTestPlan;
 import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.phone.PhoneTestPlan;
+import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.polls.PollsTestPlan;
 import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.portletpermissions.PortletPermissionsTestPlan;
 import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.shopping.ShoppingTestPlan;
 import com.liferay.portalweb.portal.dbupgrade.sampledatalatest.social.SocialTestPlan;
@@ -59,6 +60,7 @@ public class SampleDataLatestTestPlan extends BaseTestSuite {
 		testSuite.addTest(MessageBoardsTestPlan.suite());
 		testSuite.addTest(OrganizationsTestPlan.suite());
 		testSuite.addTest(PhoneTestPlan.suite());
+		testSuite.addTest(PollsTestPlan.suite());
 		testSuite.addTest(PortletPermissionsTestPlan.suite());
 		testSuite.addTest(ShoppingTestPlan.suite());
 		testSuite.addTest(StagingCommunityTestPlan.suite());

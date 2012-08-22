@@ -16,17 +16,26 @@
 
 <%
 TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(entry.getClassName());
-
-TrashRenderer trashRenderer = trashHandler.getTrashRenderer(entry.getClassPK());
-
-String restorePath = trashRenderer.getRestorePath(renderRequest);
 %>
 
 <c:choose>
-	<c:when test="<%= Validator.isNotNull(restorePath) %>">
-		<liferay-util:include page="<%= restorePath %>" portletId="<%= trashRenderer.getPortletId() %>">
-			<liferay-util:param name="showHeader" value="<%= Boolean.FALSE.toString() %>" />
-		</liferay-util:include>
+	<c:when test="<%= !trashHandler.isRestorable(entry.getClassPK()) %>">
+		<portlet:renderURL var="moveURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+			<portlet:param name="struts_action" value="/trash/select_container" />
+			<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
+			<portlet:param name="entryClassName" value="<%= entry.getClassName() %>" />
+		</portlet:renderURL>
+
+		<%
+		String taglibOpenWindow = "var dialogWindow = window.open('" + moveURL + "','folder', 'directories=no,height=640,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,width=680'); void(''); dialogWindow.focus();";
+		%>
+
+		<liferay-ui:icon
+			image="submit"
+			message="move"
+			onClick="<%= taglibOpenWindow %>"
+			url="javascript:;"
+		/>
 	</c:when>
 	<c:otherwise>
 		<portlet:actionURL var="restoreEntryURL">

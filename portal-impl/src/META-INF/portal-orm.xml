@@ -2036,7 +2036,9 @@
 			<basic name="statusDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
+			<transient name="containerId" />
 			<transient name="modelAttributes" />
+			<transient name="parentContainerId" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
 			<transient name="statusByUserUuid" />

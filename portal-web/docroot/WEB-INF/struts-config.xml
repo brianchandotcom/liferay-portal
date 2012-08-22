@@ -1922,6 +1922,11 @@
 
 		<action path="/trash/restore_entry" forward="portlet.trash.restore_entry" />
 
+		<action path="/trash/select_container" type="com.liferay.portlet.trash.action.SelectContainerAction">
+			<forward name="portlet.trash.select_container" path="portlet.trash.select_container" />
+			<forward name="portlet.trash.error" path="portlet.trash.error" />
+		</action>
+
 		<action path="/trash/view" forward="portlet.trash.view" />
 
 		<action path="/trash/view_content" forward="portlet.trash.view_content" />

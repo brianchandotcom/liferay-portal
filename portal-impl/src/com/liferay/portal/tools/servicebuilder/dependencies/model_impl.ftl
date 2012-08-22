@@ -626,6 +626,49 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		}
 	</#list>
 
+	<#if entity.isContainerModel()>
+		<#assign hasParentContainerId = entity.hasColumn("parentContainerId")>
+
+		<#list entity.columnList as column>
+			<#if column.containerId && (column.name != "containerId")>
+				public long getContainerId() {
+					return get${column.methodName}();
+				}
+
+				public void setContainerId(long containerId) {
+					_${column.name} = containerId;
+				}
+			</#if>
+
+			<#if column.parentContainerId && (column.name != "parentContainerId")>
+				<#assign hasParentContainerId = true>
+
+				public long getParentContainerId() {
+					return get${column.methodName}();
+				}
+
+				public void setParentContainerId(long parentContainerId) {
+					_${column.name} = containerId;
+				}
+			</#if>
+		</#list>
+
+		<#if !hasParentContainerId>
+			public long getParentContainerId() {
+				return 0;
+			}
+
+			public void setParentContainerId(long parentContainerId) {
+			}
+		</#if>
+	</#if>
+
+	<#if (entity.isContainerModel() && !entity.hasColumn("name"))>
+		public String getName() {
+			return String.valueOf(getContainerId());
+		}
+	</#if>
+
 	<#if entity.isWorkflowEnabled()>
 		/**
 		 * @deprecated {@link #isApproved}

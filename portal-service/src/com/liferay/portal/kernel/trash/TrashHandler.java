@@ -16,7 +16,12 @@ package com.liferay.portal.kernel.trash;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.ContainerModel;
+import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.trash.model.TrashEntry;
+
+import java.util.List;
 
 import javax.portlet.PortletRequest;
 
@@ -54,8 +59,13 @@ import javax.portlet.PortletRequest;
  */
 public interface TrashHandler {
 
-	public void checkDuplicateTrashEntry(TrashEntry trashEntry, String newName)
+	public void checkDuplicateTrashEntry(
+			TrashEntry trashEntry, long containerId, String newName)
 		throws PortalException, SystemException;
+
+	public void checkPermission(
+		PermissionChecker permissionChecker, long groupId, String actionId)
+	throws PortalException, SystemException;
 
 	/**
 	 * Deletes all trash entries with the primary keys.
@@ -100,11 +110,23 @@ public interface TrashHandler {
 	 */
 	public String getClassName();
 
+	public ContainerModel getContainer(long containerId)
+		throws PortalException, SystemException;
+
+	public List<ContainerModel> getContainers(
+			long entryId, long containerId, int start, int end)
+		throws PortalException, SystemException;
+
+	public int getContainersCount(long entryId, long containerId)
+		throws PortalException, SystemException;
+
 	public String getRestoreLink(PortletRequest portletRequest, long classPK)
 		throws PortalException, SystemException;
 
 	public String getRestoreMessage(PortletRequest portletRequest, long classPK)
 		throws PortalException, SystemException;
+
+	public String getRootContainerName();
 
 	/**
 	 * Returns the trash renderer associated to the trash entry.
@@ -116,6 +138,13 @@ public interface TrashHandler {
 	 * @throws SystemException if a system exception occurred
 	 */
 	public TrashRenderer getTrashRenderer(long classPK)
+		throws PortalException, SystemException;
+
+	public boolean isRestorable(long classPK)
+		throws PortalException, SystemException;
+
+	public void moveTrashEntry(
+			long classPK, long containerId, ServiceContext serviceContext)
 		throws PortalException, SystemException;
 
 	/**

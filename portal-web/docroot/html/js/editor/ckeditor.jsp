@@ -65,14 +65,6 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 <c:if test="<%= hideImageResizing %>">
 	<liferay-util:html-top outputKey="js_editor_ckeditor_hide_image_resizing">
 		<style type="text/css">
-			td.cke_dialog_ui_hbox_first {
-				display:none !important;
-			}
-
-			td.cke_dialog_footer td.cke_dialog_ui_hbox_first {
-				display:block !important;
-			}
-
 			a.cke_dialog_tab {
 				display: none !important;
 			}
@@ -163,7 +155,7 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 	<textarea id="<%= name %>" name="<%= name %>" style="display: none;"></textarea>
 </div>
 
-<aui:script>
+<aui:script use="aui-base">
 	(function() {
 		function setData() {
 			<c:if test="<%= Validator.isNotNull(initMethod) %>">
@@ -267,6 +259,46 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 
 			}
 		);
+
+		<%
+		if (toolbarSet.equals("creole")) {
+		%>
+
+			Liferay.provide(
+				window,
+				'<%= name %>creoleImageHandler',
+				function(event) {
+					var A = AUI();
+
+					var dialog = event.data.definition.dialog;
+
+					if (dialog.getName() == 'image') {
+						var lockButton = A.one('.cke_btn_locked');
+
+						if (lockButton) {
+							var imageProperties = lockButton.ancestor('.cke_dialog_ui_hbox_first');
+
+							if (imageProperties) {
+								imageProperties.hide();
+							}
+						}
+
+						var imagePreviewBox = A.one('.ImagePreviewBox');
+
+						if (imagePreviewBox) {
+							imagePreviewBox.setStyle('width', 410);
+						}
+					}
+				},
+				['aui-base']
+			);
+
+			ckEditor.on('dialogShow', window['<%= name %>creoleImageHandler']);
+
+		<%
+		}
+		%>
+
 	})();
 
 </aui:script>

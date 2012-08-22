@@ -260,32 +260,45 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 			}
 		);
 
-		ckEditor.on(
-			'dialogShow',
-			function(e) {
-				var definition = e.data['definition'];
-				var dialog = definition['dialog'];
+		<%
+		if (toolbarSet.equals("creole")) {
+		%>
 
-				if (dialog.getName() == 'image') {
-					var tdNodes = A.all("td .cke_dialog_ui_hbox_first");
-					var tdFooterNodes = A.all("td .cke_dialog_footer td");
-					var first = true;
+			Liferay.provide(
+				window,
+				'<%= name %>creoleImageHandler',
+				function(event) {
+					var A = AUI();
 
-					tdNodes.each(function (node) {
-						if (!first) {
-							node.hide();
+					var dialog = event.data.definition.dialog;
+
+					if (dialog.getName() == 'image') {
+						var lockButton = A.one('.cke_btn_locked');
+
+						if (lockButton) {
+							var imageProperties = lockButton.ancestor('.cke_dialog_ui_hbox_first');
+
+							if (imageProperties) {
+								imageProperties.hide();
+							}
 						}
-						else {
-							first = false;
-						}
-					});
 
-					tdFooterNodes.each(function (node) {
-						node.show();
-					});
-				}
-			}
-		);
+						var imagePreviewBox = A.one('.ImagePreviewBox');
+
+						if (imagePreviewBox) {
+							imagePreviewBox.setStyle('width', 410);
+						}
+					}
+				},
+				['aui-base']
+			);
+
+			ckEditor.on('dialogShow', window['<%= name %>creoleImageHandler']);
+
+		<%
+		}
+		%>
+
 	})();
 
 </aui:script>

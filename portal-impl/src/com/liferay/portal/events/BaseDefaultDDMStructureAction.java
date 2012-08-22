@@ -17,6 +17,7 @@ package com.liferay.portal.events;
 import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
@@ -102,6 +103,10 @@ public abstract class BaseDefaultDDMStructureAction extends SimpleAction {
 
 		String xml = ContentUtil.get(
 			"com/liferay/portal/events/dependencies/" + fileName);
+
+		Locale locale = LocaleUtil.getDefault();
+
+		xml = StringUtil.replace(xml, "[$LOCALE_DEFAULT$]", locale.toString());
 
 		Document document = SAXReaderUtil.read(xml);
 

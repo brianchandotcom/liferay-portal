@@ -4,9 +4,9 @@
 	<structure>
 		<name><![CDATA[Contacts]]></name>
 		<description><![CDATA[Contacts]]></description>
-		<root available-locales="en_US" default-locale="en_US">
+		<root available-locales="[$LOCALE_DEFAULT$]" default-locale="[$LOCALE_DEFAULT$]">
 			<dynamic-element dataType="string" name="company" type="text">
-				<meta-data locale="en_US">
+				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="fieldCssClass"><![CDATA[aui-w50]]></entry>
 					<entry name="label"><![CDATA[Company]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
@@ -16,7 +16,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="string" name="email" type="text">
-				<meta-data locale="en_US">
+				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="fieldCssClass"><![CDATA[aui-w50]]></entry>
 					<entry name="label"><![CDATA[Email]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
@@ -26,7 +26,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="string" name="firstName" type="text">
-				<meta-data locale="en_US">
+				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="fieldCssClass"><![CDATA[aui-w50]]></entry>
 					<entry name="label"><![CDATA[First Name]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
@@ -37,22 +37,22 @@
 			</dynamic-element>
 			<dynamic-element dataType="string" name="imService" type="select">
 				<dynamic-element name="aol" type="option" value="aol">
-					<meta-data locale="en_US">
+					<meta-data locale="[$LOCALE_DEFAULT$]">
 						<entry name="label"><![CDATA[AOL]]></entry>
 						<entry name="multiple"><![CDATA[false]]></entry>
 					</meta-data>
 				</dynamic-element>
 				<dynamic-element name="yahoo" type="option" value="yahoo">
-					<meta-data locale="en_US">
+					<meta-data locale="[$LOCALE_DEFAULT$]">
 						<entry name="label"><![CDATA[Yahoo]]></entry>
 					</meta-data>
 				</dynamic-element>
 				<dynamic-element name="gtalk" type="option" value="gtalk">
-					<meta-data locale="en_US">
+					<meta-data locale="[$LOCALE_DEFAULT$]">
 						<entry name="label"><![CDATA[GTalk]]></entry>
 					</meta-data>
 				</dynamic-element>
-				<meta-data locale="en_US">
+				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="label"><![CDATA[Instant Messenger Service]]></entry>
 					<entry name="predefinedValue"><![CDATA[["gtalk"]]]></entry>
 					<entry name="required"><![CDATA[false]]></entry>
@@ -60,7 +60,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="string" name="imUserName" type="text">
-				<meta-data locale="en_US">
+				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="fieldCssClass"><![CDATA[aui-w50]]></entry>
 					<entry name="label"><![CDATA[Instant Messenger]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
@@ -70,7 +70,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="string" name="jobTitle" type="text">
-				<meta-data locale="en_US">
+				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="fieldCssClass"><![CDATA[aui-w50]]></entry>
 					<entry name="label"><![CDATA[Job Title]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
@@ -80,7 +80,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="string" name="lastName" type="text">
-				<meta-data locale="en_US">
+				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="fieldCssClass"><![CDATA[aui-w50]]></entry>
 					<entry name="label"><![CDATA[Last Name]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
@@ -90,7 +90,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="string" name="notes" type="textarea">
-				<meta-data locale="en_US">
+				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="fieldCssClass"><![CDATA[aui-w100]]></entry>
 					<entry name="label"><![CDATA[Notes]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
@@ -100,7 +100,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="string" name="phoneMobile" type="text">
-				<meta-data locale="en_US">
+				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="fieldCssClass"><![CDATA[aui-w50]]></entry>
 					<entry name="label"><![CDATA[Phone (Mobile)]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
@@ -110,7 +110,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="string" name="phoneOffice" type="text">
-				<meta-data locale="en_US">
+				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="fieldCssClass"><![CDATA[aui-w50]]></entry>
 					<entry name="label"><![CDATA[Phone (Office)]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
@@ -124,9 +124,9 @@
 	<structure>
 		<name><![CDATA[Events]]></name>
 		<description><![CDATA[Events]]></description>
-		<root available-locales="en_US" default-locale="en_US">
+		<root available-locales="[$LOCALE_DEFAULT$]" default-locale="[$LOCALE_DEFAULT$]">
 			<dynamic-element dataType="file-upload" fieldNamespace="ddm" name="attachment" type="ddm-fileupload">
-				<meta-data locale="en_US">
+				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="acceptFiles"><![CDATA[*]]></entry>
 					<entry name="folder"><![CDATA[{"folderId":0,"folderName":"Documents Home"}]]></entry>
 					<entry name="label"><![CDATA[Attachment]]></entry>
@@ -139,7 +139,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="double" fieldNamespace="ddm" name="cost" type="ddm-number">
-				<meta-data locale="en_US">
+				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="fieldCssClass"><![CDATA[aui-w25]]></entry>
 					<entry name="label"><![CDATA[Cost]]></entry>
 					<entry name="name"><![CDATA[cost]]></entry>
@@ -152,7 +152,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="string" name="description" type="textarea">
-				<meta-data locale="en_US">
+				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="fieldCssClass"><![CDATA[aui-w100]]></entry>
 					<entry name="label"><![CDATA[Description]]></entry>
 					<entry name="name"><![CDATA[description]]></entry>
@@ -165,7 +165,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="date" fieldNamespace="ddm" name="eventDate" type="ddm-date">
-				<meta-data locale="en_US">
+				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="fieldCssClass"><![CDATA[aui-w25]]></entry>
 					<entry name="label"><![CDATA[Date]]></entry>
 					<entry name="name"><![CDATA[eventDate]]></entry>
@@ -178,7 +178,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="string" name="eventName" type="text">
-				<meta-data locale="en_US">
+				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="fieldCssClass"><![CDATA[aui-w50]]></entry>
 					<entry name="label"><![CDATA[Event Name]]></entry>
 					<entry name="name"><![CDATA[eventName]]></entry>
@@ -191,7 +191,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="string" name="eventTime" type="text">
-				<meta-data locale="en_US">
+				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="fieldCssClass"><![CDATA[aui-w25]]></entry>
 					<entry name="label"><![CDATA[Time]]></entry>
 					<entry name="name"><![CDATA[eventTime]]></entry>
@@ -204,7 +204,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="string" name="location" type="text">
-				<meta-data locale="en_US">
+				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="fieldCssClass"><![CDATA[aui-w50]]></entry>
 					<entry name="label"><![CDATA[Location]]></entry>
 					<entry name="name"><![CDATA[location]]></entry>
@@ -221,9 +221,9 @@
 	<structure>
 		<name><![CDATA[Inventory]]></name>
 		<description><![CDATA[Inventory]]></description>
-		<root available-locales="en_US" default-locale="en_US">
+		<root available-locales="[$LOCALE_DEFAULT$]" default-locale="[$LOCALE_DEFAULT$]">
 			<dynamic-element dataType="string" name="description" type="textarea">
-				<meta-data locale="en_US">
+				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="fieldCssClass"><![CDATA[aui-w100]]></entry>
 					<entry name="label"><![CDATA[Description]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
@@ -235,7 +235,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="string" name="item" type="text">
-				<meta-data locale="en_US">
+				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="fieldCssClass"><![CDATA[aui-w25]]></entry>
 					<entry name="label"><![CDATA[Item]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
@@ -247,7 +247,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="string" name="location" type="text">
-				<meta-data locale="en_US">
+				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="fieldCssClass"><![CDATA[aui-w25]]></entry>
 					<entry name="label"><![CDATA[Location]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
@@ -259,7 +259,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="date" fieldNamespace="ddm" name="purchaseDate" type="ddm-date">
-				<meta-data locale="en_US">
+				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="fieldCssClass"><![CDATA[aui-w25]]></entry>
 					<entry name="label"><![CDATA[Purchase Date]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
@@ -271,7 +271,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="double" fieldNamespace="ddm" name="purchasePrice" type="ddm-number">
-				<meta-data locale="en_US">
+				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="fieldCssClass"><![CDATA[aui-w25]]></entry>
 					<entry name="label"><![CDATA[Purchase Price]]></entry>
 					<entry name="name"><![CDATA[purchasePrice]]></entry>
@@ -284,7 +284,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="double" fieldNamespace="ddm" name="quantity" type="ddm-number">
-				<meta-data locale="en_US">
+				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="fieldCssClass"><![CDATA[aui-w25]]></entry>
 					<entry name="label"><![CDATA[Quantity]]></entry>
 					<entry name="name"><![CDATA[quantity]]></entry>
@@ -301,9 +301,9 @@
 	<structure>
 		<name><![CDATA[Issues Tracking]]></name>
 		<description><![CDATA[Issue Tracking]]></description>
-		<root available-locales="en_US" default-locale="en_US">
+		<root available-locales="[$LOCALE_DEFAULT$]" default-locale="[$LOCALE_DEFAULT$]">
 			<dynamic-element dataType="string" name="assignedTo" type="text">
-				<meta-data locale="en_US">
+				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="fieldCssClass"><![CDATA[aui-w25]]></entry>
 					<entry name="label"><![CDATA[Assigned To]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
@@ -313,7 +313,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="file-upload" fieldNamespace="ddm" name="attachment" type="ddm-fileupload">
-				<meta-data locale="en_US">
+				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="acceptFiles"><![CDATA[*]]></entry>
 					<entry name="folder"><![CDATA[{"folderId":0,"folderName":"Documents Home"}]]></entry>
 					<entry name="label"><![CDATA[Attachment]]></entry>
@@ -326,7 +326,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="string" name="comments" type="textarea">
-				<meta-data locale="en_US">
+				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="fieldCssClass"><![CDATA[aui-w100]]></entry>
 					<entry name="label"><![CDATA[Comments]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
@@ -336,7 +336,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="string" name="description" type="textarea">
-				<meta-data locale="en_US">
+				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="fieldCssClass"><![CDATA[aui-w100]]></entry>
 					<entry name="label"><![CDATA[Description]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
@@ -346,7 +346,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="date" fieldNamespace="ddm" name="dueDate" type="ddm-date">
-				<meta-data locale="en_US">
+				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="label"><![CDATA[Due Date]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
 					<entry name="required"><![CDATA[false]]></entry>
@@ -354,7 +354,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="string" name="issueId" type="text">
-				<meta-data locale="en_US">
+				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="fieldCssClass"><![CDATA[aui-w25]]></entry>
 					<entry name="label"><![CDATA[Issue ID]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
@@ -365,27 +365,27 @@
 			</dynamic-element>
 			<dynamic-element dataType="string" name="severity" type="select">
 				<dynamic-element name="critical" type="option" value="critical">
-					<meta-data locale="en_US">
+					<meta-data locale="[$LOCALE_DEFAULT$]">
 						<entry name="label"><![CDATA[Critical]]></entry>
 						<entry name="multiple"><![CDATA[false]]></entry>
 					</meta-data>
 				</dynamic-element>
 				<dynamic-element name="major" type="option" value="major">
-					<meta-data locale="en_US">
+					<meta-data locale="[$LOCALE_DEFAULT$]">
 						<entry name="label"><![CDATA[Major]]></entry>
 					</meta-data>
 				</dynamic-element>
 				<dynamic-element name="minor" type="option" value="minor">
-					<meta-data locale="en_US">
+					<meta-data locale="[$LOCALE_DEFAULT$]">
 						<entry name="label"><![CDATA[Minor]]></entry>
 					</meta-data>
 				</dynamic-element>
 				<dynamic-element name="trivial" type="option" value="trivial">
-					<meta-data locale="en_US">
+					<meta-data locale="[$LOCALE_DEFAULT$]">
 						<entry name="label"><![CDATA[Trivial]]></entry>
 					</meta-data>
 				</dynamic-element>
-				<meta-data locale="en_US">
+				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="label"><![CDATA[Severity]]></entry>
 					<entry name="predefinedValue"><![CDATA[["minor"]]]></entry>
 					<entry name="required"><![CDATA[false]]></entry>
@@ -394,22 +394,22 @@
 			</dynamic-element>
 			<dynamic-element dataType="string" name="status" type="select">
 				<dynamic-element name="open" type="option" value="open">
-					<meta-data locale="en_US">
+					<meta-data locale="[$LOCALE_DEFAULT$]">
 						<entry name="label"><![CDATA[Open]]></entry>
 						<entry name="multiple"><![CDATA[false]]></entry>
 					</meta-data>
 				</dynamic-element>
 				<dynamic-element name="pending" type="option" value="pending">
-					<meta-data locale="en_US">
+					<meta-data locale="[$LOCALE_DEFAULT$]">
 						<entry name="label"><![CDATA[Pending]]></entry>
 					</meta-data>
 				</dynamic-element>
 				<dynamic-element name="completed" type="option" value="completed">
-					<meta-data locale="en_US">
+					<meta-data locale="[$LOCALE_DEFAULT$]">
 						<entry name="label"><![CDATA[Completed]]></entry>
 					</meta-data>
 				</dynamic-element>
-				<meta-data locale="en_US">
+				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="label"><![CDATA[Status]]></entry>
 					<entry name="predefinedValue"><![CDATA[["open"]]]></entry>
 					<entry name="required"><![CDATA[false]]></entry>
@@ -417,7 +417,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="string" name="title" type="text">
-				<meta-data locale="en_US">
+				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="fieldCssClass"><![CDATA[aui-w100]]></entry>
 					<entry name="label"><![CDATA[Title]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
@@ -431,9 +431,9 @@
 	<structure>
 		<name><![CDATA[Meeting Minutes]]></name>
 		<description><![CDATA[Meeting Minutes]]></description>
-		<root available-locales="en_US" default-locale="en_US">
+		<root available-locales="[$LOCALE_DEFAULT$]" default-locale="[$LOCALE_DEFAULT$]">
 			<dynamic-element dataType="file-upload" fieldNamespace="ddm" name="attachment" type="ddm-fileupload">
-				<meta-data locale="en_US">
+				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="acceptFiles"><![CDATA[*]]></entry>
 					<entry name="folder"><![CDATA[{"folderId":0,"folderName":"Documents Home"}]]></entry>
 					<entry name="label"><![CDATA[Attachment]]></entry>
@@ -446,7 +446,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="string" name="author" type="text">
-				<meta-data locale="en_US">
+				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="label"><![CDATA[Author]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
 					<entry name="required"><![CDATA[false]]></entry>
@@ -454,7 +454,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="string" name="description" type="textarea">
-				<meta-data locale="en_US">
+				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="fieldCssClass"><![CDATA[aui-w100]]></entry>
 					<entry name="label"><![CDATA[Description]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
@@ -464,7 +464,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="string" name="duration" type="text">
-				<meta-data locale="en_US">
+				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="label"><![CDATA[Meeting Duration]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
 					<entry name="required"><![CDATA[false]]></entry>
@@ -472,7 +472,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="date" fieldNamespace="ddm" name="meetingDate" type="ddm-date">
-				<meta-data locale="en_US">
+				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="label"><![CDATA[Meeting Date]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
 					<entry name="required"><![CDATA[false]]></entry>
@@ -480,7 +480,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="string" name="minutes" type="textarea">
-				<meta-data locale="en_US">
+				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="fieldCssClass"><![CDATA[aui-w100]]></entry>
 					<entry name="label"><![CDATA[Minutes]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
@@ -490,7 +490,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="string" name="title" type="text">
-				<meta-data locale="en_US">
+				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="fieldCssClass"><![CDATA[aui-w100]]></entry>
 					<entry name="label"><![CDATA[Title]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
@@ -504,9 +504,9 @@
 	<structure>
 		<name><![CDATA[To Do]]></name>
 		<description><![CDATA[To Do]]></description>
-		<root available-locales="en_US" default-locale="en_US">
+		<root available-locales="[$LOCALE_DEFAULT$]" default-locale="[$LOCALE_DEFAULT$]">
 			<dynamic-element dataType="string" name="assignedTo" type="text">
-				<meta-data locale="en_US">
+				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="fieldCssClass"><![CDATA[aui-w50]]></entry>
 					<entry name="label"><![CDATA[Assigned To]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
@@ -516,7 +516,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="file-upload" fieldNamespace="ddm" name="attachment" type="ddm-fileupload">
-				<meta-data locale="en_US">
+				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="acceptFiles"><![CDATA[*]]></entry>
 					<entry name="folder"><![CDATA[{"folderId":0,"folderName":"Documents Home"}]]></entry>
 					<entry name="label"><![CDATA[Attachment]]></entry>
@@ -529,7 +529,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="string" name="comments" type="textarea">
-				<meta-data locale="en_US">
+				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="fieldCssClass"><![CDATA[aui-w100]]></entry>
 					<entry name="label"><![CDATA[Comments]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
@@ -539,7 +539,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="string" name="description" type="textarea">
-				<meta-data locale="en_US">
+				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="fieldCssClass"><![CDATA[aui-w100]]></entry>
 					<entry name="label"><![CDATA[Description]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
@@ -549,7 +549,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="date" fieldNamespace="ddm" name="endDate" type="ddm-date">
-				<meta-data locale="en_US">
+				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="label"><![CDATA[End Date]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
 					<entry name="required"><![CDATA[false]]></entry>
@@ -557,7 +557,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="integer" fieldNamespace="ddm" name="percentComplete" type="ddm-integer">
-				<meta-data locale="en_US">
+				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="fieldCssClass"><![CDATA[aui-w25]]></entry>
 					<entry name="label"><![CDATA[% Complete]]></entry>
 					<entry name="name"><![CDATA[percentComplete]]></entry>
@@ -571,27 +571,27 @@
 			</dynamic-element>
 			<dynamic-element dataType="string" name="severity" type="select">
 				<dynamic-element name="critical" type="option" value="critical">
-					<meta-data locale="en_US">
+					<meta-data locale="[$LOCALE_DEFAULT$]">
 						<entry name="label"><![CDATA[Critical]]></entry>
 						<entry name="multiple"><![CDATA[false]]></entry>
 					</meta-data>
 				</dynamic-element>
 				<dynamic-element name="major" type="option" value="major">
-					<meta-data locale="en_US">
+					<meta-data locale="[$LOCALE_DEFAULT$]">
 						<entry name="label"><![CDATA[Major]]></entry>
 					</meta-data>
 				</dynamic-element>
 				<dynamic-element name="minor" type="option" value="minor">
-					<meta-data locale="en_US">
+					<meta-data locale="[$LOCALE_DEFAULT$]">
 						<entry name="label"><![CDATA[Minor]]></entry>
 					</meta-data>
 				</dynamic-element>
 				<dynamic-element name="trivial" type="option" value="trivial">
-					<meta-data locale="en_US">
+					<meta-data locale="[$LOCALE_DEFAULT$]">
 						<entry name="label"><![CDATA[Trivial]]></entry>
 					</meta-data>
 				</dynamic-element>
-				<meta-data locale="en_US">
+				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="label"><![CDATA[Severity]]></entry>
 					<entry name="predefinedValue"><![CDATA[["minor"]]]></entry>
 					<entry name="required"><![CDATA[false]]></entry>
@@ -599,7 +599,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="date" fieldNamespace="ddm" name="startDate" type="ddm-date">
-				<meta-data locale="en_US">
+				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="label"><![CDATA[Start Date]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
 					<entry name="required"><![CDATA[false]]></entry>
@@ -608,22 +608,22 @@
 			</dynamic-element>
 			<dynamic-element dataType="string" name="status" type="select">
 				<dynamic-element name="open" type="option" value="open">
-					<meta-data locale="en_US">
+					<meta-data locale="[$LOCALE_DEFAULT$]">
 						<entry name="label"><![CDATA[Open]]></entry>
 						<entry name="multiple"><![CDATA[false]]></entry>
 					</meta-data>
 				</dynamic-element>
 				<dynamic-element name="pending" type="option" value="pending">
-					<meta-data locale="en_US">
+					<meta-data locale="[$LOCALE_DEFAULT$]">
 						<entry name="label"><![CDATA[Pending]]></entry>
 					</meta-data>
 				</dynamic-element>
 				<dynamic-element name="completed" type="option" value="completed">
-					<meta-data locale="en_US">
+					<meta-data locale="[$LOCALE_DEFAULT$]">
 						<entry name="label"><![CDATA[Completed]]></entry>
 					</meta-data>
 				</dynamic-element>
-				<meta-data locale="en_US">
+				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="label"><![CDATA[Status]]></entry>
 					<entry name="predefinedValue"><![CDATA[["open"]]]></entry>
 					<entry name="required"><![CDATA[false]]></entry>
@@ -631,7 +631,7 @@
 				</meta-data>
 			</dynamic-element>
 			<dynamic-element dataType="string" name="title" type="text">
-				<meta-data locale="en_US">
+				<meta-data locale="[$LOCALE_DEFAULT$]">
 					<entry name="fieldCssClass"><![CDATA[aui-w50]]></entry>
 					<entry name="label"><![CDATA[Title]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>

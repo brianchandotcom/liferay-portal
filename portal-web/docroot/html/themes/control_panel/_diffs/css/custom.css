@@ -37,6 +37,10 @@ select {
 	border-right: 1px solid #FFF;
 }
 
+.ie8 .display-panel-columns:after {
+	position: relative;
+}
+
 .display-panel-columns:before {
 	background-color: #CAD2DD;
 	border-right: 1px solid #B0B1B3;

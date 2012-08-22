@@ -197,7 +197,7 @@ public class AddDefaultDocumentLibraryStructuresAction
 	}
 
 	protected String buildDLRawMetadataElementXML(String name, Field field) {
-		StringBundler sb = new StringBundler(14);
+		StringBundler sb = new StringBundler(16);
 
 		sb.append("<dynamic-element dataType=\"string\" name=\"");
 
@@ -207,7 +207,9 @@ public class AddDefaultDocumentLibraryStructuresAction
 		sb.append(StringPool.UNDERLINE);
 		sb.append(field.getName());
 		sb.append("\" type=\"text\">");
-		sb.append("<meta-data locale=\"en_US\">");
+		sb.append("<meta-data locale=\"");
+		sb.append(LocaleUtil.getDefault());
+		sb.append("\">");
 		sb.append("<entry name=\"label\"><![CDATA[metadata.");
 		sb.append(fieldClass.getSimpleName());
 		sb.append(StringPool.PERIOD);
@@ -223,7 +225,7 @@ public class AddDefaultDocumentLibraryStructuresAction
 	protected String buildDLRawMetadataStructureXML(
 		String name, Field[] fields) {
 
-		StringBundler sb = new StringBundler(8 + fields.length);
+		StringBundler sb = new StringBundler(12 + fields.length);
 
 		sb.append("<structure><name><![CDATA[");
 		sb.append(name);
@@ -231,8 +233,11 @@ public class AddDefaultDocumentLibraryStructuresAction
 		sb.append("<description><![CDATA[");
 		sb.append(name);
 		sb.append("]]></description>");
-		sb.append(
-			"<root available-locales=\"en_US\" default-locale=\"en_US\">");
+		sb.append("<root available-locales=\"");
+		sb.append(LocaleUtil.getDefault());
+		sb.append("\" default-locale=\"");
+		sb.append(LocaleUtil.getDefault());
+		sb.append("\">");
 
 		for (Field field : fields) {
 			sb.append(buildDLRawMetadataElementXML(name, field));

@@ -847,6 +847,8 @@ public interface Portal {
 
 	public String getPortletTitle(Portlet portlet, User user);
 
+	public String getPortletTitle(RenderRequest renderRequest);
+
 	public String getPortletTitle(RenderResponse renderResponse);
 
 	public String getPortletTitle(String portletId, Locale locale);

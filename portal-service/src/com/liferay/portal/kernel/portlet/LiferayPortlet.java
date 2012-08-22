@@ -290,6 +290,16 @@ public class LiferayPortlet extends GenericPortlet {
 		return redirect;
 	}
 
+	@Override
+	protected String getTitle(RenderRequest renderRequest) {
+		try {
+			return PortalUtil.getPortletTitle(renderRequest);
+		}
+		catch (Exception e) {
+			return super.getTitle(renderRequest);
+		}
+	}
+
 	protected boolean isProcessActionRequest(ActionRequest actionRequest) {
 		return isProcessPortletRequest(actionRequest);
 	}

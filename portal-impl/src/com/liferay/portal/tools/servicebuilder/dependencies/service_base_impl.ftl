@@ -514,7 +514,25 @@ import javax.sql.DataSource;
 				String name, String[] parameterTypes, Object[] arguments)
 			throws Throwable {
 
-			return _clpInvoker.invokeMethod(name, parameterTypes, arguments);
+			Thread currentThread = Thread.currentThread();
+
+			ClassLoader contextClassLoader =
+				currentThread.getContextClassLoader();
+
+			ClassLoader classLoader = getClass().getClassLoader();
+
+			if (contextClassLoader != classLoader) {
+				currentThread.setContextClassLoader(classLoader);
+			}
+
+			try {
+				return _clpInvoker.invokeMethod(name, parameterTypes, arguments);
+			}
+			finally {
+				if (contextClassLoader != classLoader) {
+					currentThread.setContextClassLoader(contextClassLoader);
+				}
+			}
 		}
 	</#if>
 

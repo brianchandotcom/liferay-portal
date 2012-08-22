@@ -1010,6 +1010,10 @@ public class PortalUtil {
 		return getPortal().getPortletTitle(portlet, user);
 	}
 
+	public static String getPortletTitle(RenderRequest renderRequest) {
+		return getPortal().getPortletTitle(renderRequest);
+	}
+
 	public static String getPortletTitle(RenderResponse renderResponse) {
 		return getPortal().getPortletTitle(renderResponse);
 	}

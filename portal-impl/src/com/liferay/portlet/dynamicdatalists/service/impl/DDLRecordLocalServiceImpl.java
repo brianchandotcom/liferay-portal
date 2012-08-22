@@ -146,6 +146,8 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	public void deleteRecord(DDLRecord record)
 		throws PortalException, SystemException {
 
+		String dirName = DDMUtil.getFileUploadPath(record);
+
 		// Record
 
 		ddlRecordPersistence.remove(record);
@@ -180,8 +182,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 		try {
 			DLStoreUtil.deleteDirectory(
-				record.getCompanyId(), CompanyConstants.SYSTEM,
-				DDMUtil.getFileUploadPath(record));
+				record.getCompanyId(), CompanyConstants.SYSTEM, dirName);
 		}
 		catch (NoSuchDirectoryException nsde) {
 			if (_log.isDebugEnabled()) {

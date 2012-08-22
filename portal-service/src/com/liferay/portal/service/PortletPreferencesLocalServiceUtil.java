@@ -290,6 +290,11 @@ public class PortletPreferencesLocalServiceUtil {
 			.deletePortletPreferences(ownerId, ownerType, plid, portletId);
 	}
 
+	public static void deletePortletPreferencesByPlid(long plid)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deletePortletPreferencesByPlid(plid);
+	}
+
 	public static javax.portlet.PortletPreferences getDefaultPreferences(
 		long companyId, java.lang.String portletId)
 		throws com.liferay.portal.kernel.exception.SystemException {

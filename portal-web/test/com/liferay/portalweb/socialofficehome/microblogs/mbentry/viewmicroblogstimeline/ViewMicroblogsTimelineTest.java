@@ -47,6 +47,55 @@ public class ViewMicroblogsTimelineTest extends BaseTestCase {
 		assertEquals(RuntimeVariables.replace("Timeline"),
 			selenium.getText("link=Timeline"));
 		selenium.clickAt("link=Timeline", RuntimeVariables.replace("Timeline"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("xPath=(//div[@class='content'])[1]")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("xPath=(//div[@class='content'])[2]")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("xPath=(//div[@class='content'])[3]")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace("Joe Bloggs says"),
 			selenium.getText("xPath=(//div[@class='user-name'])[1]"));
 		assertEquals(RuntimeVariables.replace("Microblogs Post"),

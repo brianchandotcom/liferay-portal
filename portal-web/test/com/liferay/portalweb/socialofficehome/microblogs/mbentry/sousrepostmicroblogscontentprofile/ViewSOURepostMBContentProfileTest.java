@@ -30,8 +30,7 @@ public class ViewSOURepostMBContentProfileTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isVisible(
-							"xpath=(//div[@class='lfr-contact-name']/a)[2]")) {
+				if (selenium.isVisible("//div[@class='lfr-contact-name']/a")) {
 					break;
 				}
 			}
@@ -42,7 +41,7 @@ public class ViewSOURepostMBContentProfileTest extends BaseTestCase {
 		}
 
 		assertEquals(RuntimeVariables.replace("Social01 Office01 User01"),
-			selenium.getText("xpath=(//div[@class='lfr-contact-name']/a)[2]"));
+			selenium.getText("//div[@class='lfr-contact-name']/a"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

@@ -130,6 +130,15 @@ public class DLFolderTrashRenderer extends BaseTrashRenderer {
 		return "/html/portlet/document_library/trash/folder.jsp";
 	}
 
+	@Override
+	public String renderActions(
+		RenderRequest renderRequest, RenderResponse renderResponse) {
+
+		renderRequest.setAttribute("view_entries.jsp-folder", _folder);
+
+		return "/html/portlet/document_library/folder_action.jsp";
+	}
+
 	private Folder _folder;
 
 }

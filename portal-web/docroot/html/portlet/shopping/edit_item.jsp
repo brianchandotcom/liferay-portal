@@ -393,7 +393,7 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 									<aui:input field="shipping" fieldParam='<%= "shipping" + i %>' format="<%= doubleFormat %>" model="<%= ShoppingItemPrice.class %>" name="shipping" value="<%= String.valueOf(shipping) %>" />
 								</td>
 								<td>
-									<aui:input helpMessage="to-use-shipping-formula,-please-also-ensure-the-shipping-calculation-was-set-via-shopping-portlet's-configuration" label="use-shipping-formula" name='<%= "useShippingFormula" + i %>' type="checkbox" value="<%= useShippingFormula %>" />
+									<aui:input helpMessage="to-use-the-shipping-formula,-please-also-ensure-the-shipping-calculation-is-set-in-the-portlet-configuration" label="use-shipping-formula" name='<%= "useShippingFormula" + i %>' type="checkbox" value="<%= useShippingFormula %>" />
 								</td>
 								<td>
 									<aui:input label="active" name='<%= "active" + i %>' type="checkbox" value="<%= active %>" />

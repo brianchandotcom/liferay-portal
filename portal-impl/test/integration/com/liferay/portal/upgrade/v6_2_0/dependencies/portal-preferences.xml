@@ -1,0 +1,14 @@
+<portlet-preferences>
+	<preference>
+		<name>com.liferay.portal.model.CustomizedPages@plid@#modifiedDate</name>
+		<value>20120818000040</value>
+	</preference>
+	<preference>
+		<name>com.liferay.portal.model.CustomizedPages@plid@#column-1</name>
+		<value>@portlet_1@,@portlet_2@</value>
+	</preference>
+	<preference>
+		<name>com.liferay.portal.model.CustomizedPages@plid@#column-2</name>
+		<value>@portlet_3@,@portlet_4@</value>
+	</preference>
+</portlet-preferences>

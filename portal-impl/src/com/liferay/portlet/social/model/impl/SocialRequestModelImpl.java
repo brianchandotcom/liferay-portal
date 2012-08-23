@@ -16,6 +16,7 @@ package com.liferay.portlet.social.model.impl;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -30,12 +31,15 @@ import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 import com.liferay.portlet.social.model.SocialRequest;
 import com.liferay.portlet.social.model.SocialRequestModel;
+import com.liferay.portlet.social.model.SocialRequestSoap;
 
 import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -51,6 +55,7 @@ import java.util.Map;
  * @see com.liferay.portlet.social.model.SocialRequestModel
  * @generated
  */
+@JSON(strict = true)
 public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 	implements SocialRequestModel {
 	/*
@@ -99,6 +104,57 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 	public static long TYPE_COLUMN_BITMASK = 64L;
 	public static long USERID_COLUMN_BITMASK = 128L;
 	public static long UUID_COLUMN_BITMASK = 256L;
+
+	/**
+	 * Converts the soap model instance into a normal model instance.
+	 *
+	 * @param soapModel the soap model instance to convert
+	 * @return the normal model instance
+	 */
+	public static SocialRequest toModel(SocialRequestSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
+		SocialRequest model = new SocialRequestImpl();
+
+		model.setUuid(soapModel.getUuid());
+		model.setRequestId(soapModel.getRequestId());
+		model.setGroupId(soapModel.getGroupId());
+		model.setCompanyId(soapModel.getCompanyId());
+		model.setUserId(soapModel.getUserId());
+		model.setCreateDate(soapModel.getCreateDate());
+		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setClassNameId(soapModel.getClassNameId());
+		model.setClassPK(soapModel.getClassPK());
+		model.setType(soapModel.getType());
+		model.setExtraData(soapModel.getExtraData());
+		model.setReceiverUserId(soapModel.getReceiverUserId());
+		model.setStatus(soapModel.getStatus());
+
+		return model;
+	}
+
+	/**
+	 * Converts the soap model instances into normal model instances.
+	 *
+	 * @param soapModels the soap model instances to convert
+	 * @return the normal model instances
+	 */
+	public static List<SocialRequest> toModels(SocialRequestSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
+		List<SocialRequest> models = new ArrayList<SocialRequest>(soapModels.length);
+
+		for (SocialRequestSoap soapModel : soapModels) {
+			models.add(toModel(soapModel));
+		}
+
+		return models;
+	}
+
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portlet.social.model.SocialRequest"));
 
@@ -231,6 +287,7 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 		}
 	}
 
+	@JSON
 	public String getUuid() {
 		if (_uuid == null) {
 			return StringPool.BLANK;
@@ -252,6 +309,7 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 		return GetterUtil.getString(_originalUuid);
 	}
 
+	@JSON
 	public long getRequestId() {
 		return _requestId;
 	}
@@ -262,6 +320,7 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 		_requestId = requestId;
 	}
 
+	@JSON
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -282,6 +341,7 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 		return _originalGroupId;
 	}
 
+	@JSON
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -302,6 +362,7 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 		return _originalCompanyId;
 	}
 
+	@JSON
 	public long getUserId() {
 		return _userId;
 	}
@@ -330,6 +391,7 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 		return _originalUserId;
 	}
 
+	@JSON
 	public long getCreateDate() {
 		return _createDate;
 	}
@@ -338,6 +400,7 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 		_createDate = createDate;
 	}
 
+	@JSON
 	public long getModifiedDate() {
 		return _modifiedDate;
 	}
@@ -364,6 +427,7 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 		setClassNameId(classNameId);
 	}
 
+	@JSON
 	public long getClassNameId() {
 		return _classNameId;
 	}
@@ -384,6 +448,7 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 		return _originalClassNameId;
 	}
 
+	@JSON
 	public long getClassPK() {
 		return _classPK;
 	}
@@ -404,6 +469,7 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 		return _originalClassPK;
 	}
 
+	@JSON
 	public int getType() {
 		return _type;
 	}
@@ -424,6 +490,7 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 		return _originalType;
 	}
 
+	@JSON
 	public String getExtraData() {
 		if (_extraData == null) {
 			return StringPool.BLANK;
@@ -437,6 +504,7 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 		_extraData = extraData;
 	}
 
+	@JSON
 	public long getReceiverUserId() {
 		return _receiverUserId;
 	}
@@ -466,6 +534,7 @@ public class SocialRequestModelImpl extends BaseModelImpl<SocialRequest>
 		return _originalReceiverUserId;
 	}
 
+	@JSON
 	public int getStatus() {
 		return _status;
 	}

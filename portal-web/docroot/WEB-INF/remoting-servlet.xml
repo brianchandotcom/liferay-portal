@@ -1057,6 +1057,18 @@
 		<property name="service" ref="com.liferay.portlet.social.service.SocialActivitySettingService" />
 		<property name="serviceInterface" value="com.liferay.portlet.social.service.SocialActivitySettingService" />
 	</bean>
+	<bean name="/com_liferay_portlet_social_service_spring_SocialRequestService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
+		<property name="service" ref="com.liferay.portlet.social.service.SocialRequestService" />
+		<property name="serviceInterface" value="com.liferay.portlet.social.service.SocialRequestService" />
+	</bean>
+	<bean name="/com_liferay_portlet_social_service_spring_SocialRequestService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
+		<property name="service" ref="com.liferay.portlet.social.service.SocialRequestService" />
+		<property name="serviceInterface" value="com.liferay.portlet.social.service.SocialRequestService" />
+	</bean>
+	<bean name="/com_liferay_portlet_social_service_spring_SocialRequestService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service" ref="com.liferay.portlet.social.service.SocialRequestService" />
+		<property name="serviceInterface" value="com.liferay.portlet.social.service.SocialRequestService" />
+	</bean>
 	<bean name="/com_liferay_portlet_softwarecatalog_service_spring_SCFrameworkVersionService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
 		<property name="service" ref="com.liferay.portlet.softwarecatalog.service.SCFrameworkVersionService" />
 		<property name="serviceInterface" value="com.liferay.portlet.softwarecatalog.service.SCFrameworkVersionService" />

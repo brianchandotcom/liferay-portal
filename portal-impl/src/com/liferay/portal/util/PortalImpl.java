@@ -152,7 +152,6 @@ import com.liferay.portlet.PortletConfigFactoryUtil;
 import com.liferay.portlet.PortletConfigImpl;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletPreferencesImpl;
-import com.liferay.portlet.PortletPreferencesThreadLocal;
 import com.liferay.portlet.PortletPreferencesWrapper;
 import com.liferay.portlet.PortletQNameUtil;
 import com.liferay.portlet.PortletRequestImpl;
@@ -3685,13 +3684,9 @@ public class PortalImpl implements Portal {
 			return layout.getGroupId();
 		}
 
-		boolean strict = PortletPreferencesThreadLocal.isStrict();
-
-		PortletPreferencesThreadLocal.setStrict(true);
-
 		try {
 			PortletPreferences portletSetup =
-				PortletPreferencesFactoryUtil.getLayoutPortletSetup(
+				PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(
 					layout, portletId);
 
 			String scopeType = GetterUtil.getString(
@@ -3722,9 +3717,6 @@ public class PortalImpl implements Portal {
 		}
 		catch (Exception e) {
 			return layout.getGroupId();
-		}
-		finally {
-			PortletPreferencesThreadLocal.setStrict(strict);
 		}
 	}
 

@@ -87,7 +87,8 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		String portletId = rootElement.attributeValue("name");
 
 		if (Validator.isNotNull(instanceId)) {
-			portletId += PortletConstants.INSTANCE_SEPARATOR + instanceId;
+			portletId = PortletConstants.assemblePortletId(
+				portletId, instanceId);
 		}
 
 		return portletId;

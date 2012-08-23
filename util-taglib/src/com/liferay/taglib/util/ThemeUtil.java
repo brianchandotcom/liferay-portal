@@ -225,9 +225,9 @@ public class ThemeUtil {
 			servletContext, portletId, path);
 
 		if (Validator.isNotNull(portletId) &&
+			PortletConstants.hasInstanceId(portletId) &&
 			!TemplateResourceLoaderUtil.hasTemplateResource(
-				TemplateManager.FREEMARKER, resourcePath) &&
-			portletId.contains(PortletConstants.INSTANCE_SEPARATOR)) {
+				TemplateManager.FREEMARKER, resourcePath)) {
 
 			String rootPortletId = PortletConstants.getRootPortletId(portletId);
 
@@ -433,7 +433,7 @@ public class ThemeUtil {
 		boolean checkResourceExists = true;
 
 		if (Validator.isNotNull(portletId)) {
-			if (portletId.contains(PortletConstants.INSTANCE_SEPARATOR) &&
+			if (PortletConstants.hasInstanceId(portletId) &&
 				(checkResourceExists = !
 				TemplateResourceLoaderUtil.hasTemplateResource(
 					TemplateManager.VELOCITY, resourcePath))) {

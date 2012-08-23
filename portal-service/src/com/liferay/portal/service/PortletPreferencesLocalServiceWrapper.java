@@ -287,6 +287,11 @@ public class PortletPreferencesLocalServiceWrapper
 			ownerType, plid, portletId);
 	}
 
+	public void deletePortletPreferencesByPlid(long plid)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_portletPreferencesLocalService.deletePortletPreferencesByPlid(plid);
+	}
+
 	public javax.portlet.PortletPreferences getDefaultPreferences(
 		long companyId, java.lang.String portletId)
 		throws com.liferay.portal.kernel.exception.SystemException {

@@ -128,9 +128,7 @@ public class ThemeHelper {
 		if (Validator.isNotNull(portletId)) {
 			exists = _resourceExists(servletContext, theme, portletId, path);
 
-			if (!exists &&
-				portletId.contains(PortletConstants.INSTANCE_SEPARATOR)) {
-
+			if (!exists && PortletConstants.hasInstanceId(portletId)) {
 				String rootPortletId = PortletConstants.getRootPortletId(
 					portletId);
 

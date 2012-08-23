@@ -107,6 +107,12 @@ public class PortletPreferencesLocalServiceImpl
 			ownerId, ownerType, plid, portletId);
 	}
 
+	public void deletePortletPreferencesByPlid(long plid)
+		throws SystemException {
+
+		portletPreferencesPersistence.removeByPlid(plid);
+	}
+
 	@Skip
 	public javax.portlet.PortletPreferences getDefaultPreferences(
 			long companyId, String portletId)

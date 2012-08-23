@@ -26,11 +26,8 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
-import com.liferay.portal.model.LayoutTypePortlet;
-import com.liferay.portal.model.LayoutTypePortletConstants;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.journal.NoSuchArticleException;
@@ -67,8 +64,6 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
 		if (SessionErrors.isEmpty(actionRequest)) {
 			updateContentSearch(actionRequest);
-
-			updateLayout(actionRequest);
 		}
 	}
 
@@ -202,36 +197,6 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		JournalContentSearchLocalServiceUtil.updateContentSearch(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			portletResource, articleId, true);
-	}
-
-	protected void updateLayout(PortletRequest portletRequest)
-		throws Exception {
-
-		String articleId = getArticleId(portletRequest);
-
-		if (Validator.isNull(articleId)) {
-			return;
-		}
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Layout layout = themeDisplay.getLayout();
-
-		LayoutTypePortlet layoutTypePortlet =
-			(LayoutTypePortlet)layout.getLayoutType();
-
-		String portletResource = ParamUtil.getString(
-			portletRequest, "portletResource");
-
-		layoutTypePortlet.setPortletIds(
-			LayoutTypePortletConstants.RUNTIME_COLUMN_PREFIX +
-				portletResource,
-			getRuntimePortletIds(themeDisplay, articleId));
-
-		LayoutLocalServiceUtil.updateLayout(
-			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			layout.getTypeSettings());
 	}
 
 }

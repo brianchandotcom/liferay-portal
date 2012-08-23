@@ -45,14 +45,6 @@ if (!denyAccess && (themeDisplay.isStatePopUp() || (layoutTypePortlet.hasStateMa
 		velocityTemplateId = theme.getThemeId() + LayoutTemplateConstants.STANDARD_SEPARATOR + "max";
 
 		content = LayoutTemplateLocalServiceUtil.getContent("max", true, theme.getThemeId());
-
-		Set<String> runtimePortletIds = RuntimeTag.getRuntimePortletIDs(request);
-
-		if (runtimePortletIds == null) {
-			runtimePortletIds = new HashSet<String>();
-		}
-
-		runtimePortletIds.add(ppid);
 	}
 
 	if (Validator.isNotNull(velocityTemplateId) && Validator.isNotNull(content)) {

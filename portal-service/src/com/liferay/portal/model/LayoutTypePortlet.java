@@ -239,8 +239,6 @@ public interface LayoutTypePortlet extends LayoutType {
 
 	public void setPortalPreferences(PortalPreferences portalPreferences);
 
-	public void setPortletIds(String columnId, String portletIds);
-
 	public void setStateMax(String stateMax);
 
 	public void setStateMin(String stateMin);

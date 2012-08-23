@@ -51,17 +51,32 @@
 <tr>
 	<td>storeElementPresent</td>
 	<td>//input[@name='_1_WAR_knowledgebaseportlet_rowIds']</td>
-	<td>KBArticle1Present</td>
+	<td>KBArticlePresent</td>
 </tr>
 <tr>
 	<td>gotoIf</td>
-	<td>!${KBArticle1Present}</td>
-	<td>KBArticle1NotPresent</td>
+	<td>!${KBArticlePresent}</td>
+	<td>KBArticleNotPresent</td>
+</tr>
+<tr>
+	<td>assertNotChecked</td>
+	<td>//input[@name='_1_WAR_knowledgebaseportlet_allRowIds']</td>
+	<td>Single Row</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>//input[@name='_1_WAR_knowledgebaseportlet_rowIds']</td>
+	<td>//input[@name='_1_WAR_knowledgebaseportlet_allRowIds']</td>
 	<td>Single Row</td>
+</tr>
+<tr>
+	<td>assertChecked</td>
+	<td>//input[@name='_1_WAR_knowledgebaseportlet_allRowIds']</td>
+	<td>Single Row</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//tr[contains(@class,'results-row last selected')]</td>
+	<td>Entries Selected</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -74,129 +89,19 @@
 	<td></td>
 </tr>
 <tr>
-	<td>storeElementPresent</td>
-	<td>//input[@name='_1_WAR_knowledgebaseportlet_rowIds']</td>
-	<td>KBArticle2Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${KBArticle2Present}</td>
-	<td>KBArticle2NotPresent</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//input[@name='_1_WAR_knowledgebaseportlet_rowIds']</td>
-	<td>Single Row</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//input[@value='Delete']</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete the selected articles?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>storeElementPresent</td>
-	<td>//input[@name='_1_WAR_knowledgebaseportlet_rowIds']</td>
-	<td>KBArticle3Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${KBArticle3Present}</td>
-	<td>KBArticle3NotPresent</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//input[@name='_1_WAR_knowledgebaseportlet_rowIds']</td>
-	<td>Single Row</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//input[@value='Delete']</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete the selected articles?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>storeElementPresent</td>
-	<td>//input[@name='_1_WAR_knowledgebaseportlet_rowIds']</td>
-	<td>KBArticle4Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${KBArticle4Present}</td>
-	<td>KBArticle4NotPresent</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//input[@name='_1_WAR_knowledgebaseportlet_rowIds']</td>
-	<td>Single Row</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//input[@value='Delete']</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete the selected articles?</td>
-	<td></td>
-</tr>
-<tr>
-	<td>storeElementPresent</td>
-	<td>//input[@name='_1_WAR_knowledgebaseportlet_rowIds']</td>
-	<td>KBArticle5Present</td>
-</tr>
-<tr>
-	<td>gotoIf</td>
-	<td>!${KBArticle5Present}</td>
-	<td>KBArticle5NotPresent</td>
-</tr>
-<tr>
-	<td>clickAt</td>
-	<td>//input[@name='_1_WAR_knowledgebaseportlet_rowIds']</td>
-	<td>Single Row</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//input[@value='Delete']</td>
-	<td>Delete</td>
-</tr>
-<tr>
-	<td>assertConfirmation</td>
-	<td>Are you sure you want to delete the selected articles?</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>label</td>
-	<td>KBArticle1NotPresent</td>
+	<td>KBArticleNotPresent</td>
 	<td></td>
 </tr>
 <tr>
-	<td>label</td>
-	<td>KBArticle2NotPresent</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>KBArticle3NotPresent</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>KBArticle4NotPresent</td>
-	<td></td>
-</tr>
-<tr>
-	<td>label</td>
-	<td>KBArticle5NotPresent</td>
-	<td></td>
+	<td>assertText</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td>No articles were found.</td>
 </tr>
 </tbody></table>
 </body>

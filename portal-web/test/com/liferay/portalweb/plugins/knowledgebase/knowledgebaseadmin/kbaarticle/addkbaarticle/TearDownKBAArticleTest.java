@@ -75,96 +75,52 @@ public class TearDownKBAArticleTest extends BaseTestCase {
 					RuntimeVariables.replace("Knowledge Base (Admin)"));
 				selenium.waitForPageToLoad("30000");
 
-				boolean KBArticle1Present = selenium.isElementPresent(
+				boolean KBArticlePresent = selenium.isElementPresent(
 						"//input[@name='_1_WAR_knowledgebaseportlet_rowIds']");
 
-				if (!KBArticle1Present) {
+				if (!KBArticlePresent) {
 					label = 2;
 
 					continue;
 				}
 
-				selenium.clickAt("//input[@name='_1_WAR_knowledgebaseportlet_rowIds']",
+				assertFalse(selenium.isChecked(
+						"//input[@name='_1_WAR_knowledgebaseportlet_allRowIds']"));
+				selenium.clickAt("//input[@name='_1_WAR_knowledgebaseportlet_allRowIds']",
 					RuntimeVariables.replace("Single Row"));
-				selenium.click(RuntimeVariables.replace(
-						"//input[@value='Delete']"));
-				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete the selected articles[\\s\\S]$"));
+				assertTrue(selenium.isChecked(
+						"//input[@name='_1_WAR_knowledgebaseportlet_allRowIds']"));
 
-				boolean KBArticle2Present = selenium.isElementPresent(
-						"//input[@name='_1_WAR_knowledgebaseportlet_rowIds']");
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
 
-				if (!KBArticle2Present) {
-					label = 3;
+					try {
+						if (selenium.isVisible(
+									"//tr[contains(@class,'results-row last selected')]")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
 
-					continue;
+					Thread.sleep(1000);
 				}
 
-				selenium.clickAt("//input[@name='_1_WAR_knowledgebaseportlet_rowIds']",
-					RuntimeVariables.replace("Single Row"));
 				selenium.click(RuntimeVariables.replace(
 						"//input[@value='Delete']"));
 				selenium.waitForPageToLoad("30000");
 				assertTrue(selenium.getConfirmation()
 								   .matches("^Are you sure you want to delete the selected articles[\\s\\S]$"));
-
-				boolean KBArticle3Present = selenium.isElementPresent(
-						"//input[@name='_1_WAR_knowledgebaseportlet_rowIds']");
-
-				if (!KBArticle3Present) {
-					label = 4;
-
-					continue;
-				}
-
-				selenium.clickAt("//input[@name='_1_WAR_knowledgebaseportlet_rowIds']",
-					RuntimeVariables.replace("Single Row"));
-				selenium.click(RuntimeVariables.replace(
-						"//input[@value='Delete']"));
-				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete the selected articles[\\s\\S]$"));
-
-				boolean KBArticle4Present = selenium.isElementPresent(
-						"//input[@name='_1_WAR_knowledgebaseportlet_rowIds']");
-
-				if (!KBArticle4Present) {
-					label = 5;
-
-					continue;
-				}
-
-				selenium.clickAt("//input[@name='_1_WAR_knowledgebaseportlet_rowIds']",
-					RuntimeVariables.replace("Single Row"));
-				selenium.click(RuntimeVariables.replace(
-						"//input[@value='Delete']"));
-				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete the selected articles[\\s\\S]$"));
-
-				boolean KBArticle5Present = selenium.isElementPresent(
-						"//input[@name='_1_WAR_knowledgebaseportlet_rowIds']");
-
-				if (!KBArticle5Present) {
-					label = 6;
-
-					continue;
-				}
-
-				selenium.clickAt("//input[@name='_1_WAR_knowledgebaseportlet_rowIds']",
-					RuntimeVariables.replace("Single Row"));
-				selenium.click(RuntimeVariables.replace(
-						"//input[@value='Delete']"));
-				selenium.waitForPageToLoad("30000");
-				assertTrue(selenium.getConfirmation()
-								   .matches("^Are you sure you want to delete the selected articles[\\s\\S]$"));
+				assertEquals(RuntimeVariables.replace(
+						"Your request completed successfully."),
+					selenium.getText("//div[@class='portlet-msg-success']"));
 
 			case 2:
-			case 3:
-			case 4:
-			case 5:
-			case 6:
+				assertEquals(RuntimeVariables.replace("No articles were found."),
+					selenium.getText("//div[@class='portlet-msg-info']"));
+
 			case 100:
 				label = -1;
 			}

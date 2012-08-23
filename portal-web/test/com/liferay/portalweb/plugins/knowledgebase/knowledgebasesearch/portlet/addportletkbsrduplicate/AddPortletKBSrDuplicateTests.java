@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.portalweb.plugins.knowledgebase.knowledgebasesearch.portlet.addportletkbsrmultiple;
+package com.liferay.portalweb.plugins.knowledgebase.knowledgebasesearch.portlet.addportletkbsrduplicate;
 
 import com.liferay.portalweb.plugins.knowledgebase.knowledgebasesearch.portlet.addportletkbsr.AddPageKBSrTest;
+import com.liferay.portalweb.plugins.knowledgebase.knowledgebasesearch.portlet.addportletkbsr.AddPortletKBSrTest;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 
@@ -24,13 +25,12 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class AddPortletKBSrMultipleTests extends BaseTestSuite {
+public class AddPortletKBSrDuplicateTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 		testSuite.addTestSuite(AddPageKBSrTest.class);
-		testSuite.addTestSuite(AddPortletKBSr1Test.class);
-		testSuite.addTestSuite(AddPortletKBSr2Test.class);
-		testSuite.addTestSuite(AddPortletKBSr3Test.class);
+		testSuite.addTestSuite(AddPortletKBSrTest.class);
+		testSuite.addTestSuite(AddPortletKBSrDuplicateTest.class);
 		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;

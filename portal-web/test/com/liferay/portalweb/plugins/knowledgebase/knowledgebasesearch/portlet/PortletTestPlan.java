@@ -15,7 +15,7 @@
 package com.liferay.portalweb.plugins.knowledgebase.knowledgebasesearch.portlet;
 
 import com.liferay.portalweb.plugins.knowledgebase.knowledgebasesearch.portlet.addportletkbsr.AddPortletKBSrTests;
-import com.liferay.portalweb.plugins.knowledgebase.knowledgebasesearch.portlet.addportletkbsrmultiple.AddPortletKBSrMultipleTests;
+import com.liferay.portalweb.plugins.knowledgebase.knowledgebasesearch.portlet.addportletkbsrduplicate.AddPortletKBSrDuplicateTests;
 import com.liferay.portalweb.plugins.knowledgebase.knowledgebasesearch.portlet.removeportletkbsr.RemovePortletKBSrTests;
 import com.liferay.portalweb.portal.BaseTestSuite;
 
@@ -31,7 +31,7 @@ public class PortletTestPlan extends BaseTestSuite {
 		TestSuite testSuite = new TestSuite();
 
 		testSuite.addTest(AddPortletKBSrTests.suite());
-		testSuite.addTest(AddPortletKBSrMultipleTests.suite());
+		testSuite.addTest(AddPortletKBSrDuplicateTests.suite());
 		testSuite.addTest(RemovePortletKBSrTests.suite());
 
 		return testSuite;

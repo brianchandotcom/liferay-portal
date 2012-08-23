@@ -2533,5 +2533,6 @@
 	<plug-in className="com.liferay.portal.struts.PortalTilesPlugin">
 		<set-property property="definitions-config" value="/WEB-INF/tiles-defs.xml,/WEB-INF/tiles-defs-ext.xml" />
 		<set-property property="moduleAware" value="true" />
+		<set-property property="factoryClassname" value="com.liferay.portal.struts.PortalTilesDefinitionsFactory" />
 	</plug-in>
 </struts-config>

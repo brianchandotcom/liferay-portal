@@ -479,6 +479,8 @@ public class ProcessExecutorTest extends BaseTestCase {
 
 	public void testCreateProcessContext() throws Exception {
 
+		assertNotNull(ProcessContext.getAttributes());
+
 		// Useless test to satisfy Cobertura
 
 		Constructor<ProcessContext> constructor =

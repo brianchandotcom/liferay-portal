@@ -24,7 +24,7 @@ import java.util.Date;
 public class CronTrigger extends BaseTrigger {
 
 	public CronTrigger(String jobName, String groupName, String cronText) {
-		this(jobName, groupName, new Date(), null, cronText);
+		this(jobName, groupName, null, null, cronText);
 	}
 
 	public CronTrigger(

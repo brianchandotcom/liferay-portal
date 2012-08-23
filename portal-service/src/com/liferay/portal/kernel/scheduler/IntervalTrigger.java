@@ -39,7 +39,7 @@ public class IntervalTrigger extends BaseTrigger {
 	}
 
 	public IntervalTrigger(String jobName, String groupName, long interval) {
-		this(jobName, groupName, new Date(), null, interval);
+		this(jobName, groupName, null, null, interval);
 	}
 
 	public Long getTriggerContent() {

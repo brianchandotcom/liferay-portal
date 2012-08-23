@@ -14,26 +14,30 @@
 
 package com.liferay.portlet.social.service.impl;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.social.model.SocialRequest;
 import com.liferay.portlet.social.service.base.SocialRequestServiceBaseImpl;
+import com.liferay.portlet.social.service.permission.SocialRequestPermission;
 
 /**
  * The implementation of the social request remote service.
  *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.portlet.social.service.SocialRequestService} interface.
- *
- * <p>
- * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
- * </p>
- *
  * @author Brian Wing Shun Chan
- * @see com.liferay.portlet.social.service.base.SocialRequestServiceBaseImpl
- * @see com.liferay.portlet.social.service.SocialRequestServiceUtil
  */
 public class SocialRequestServiceImpl extends SocialRequestServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this interface directly. Always use {@link com.liferay.portlet.social.service.SocialRequestServiceUtil} to access the social request remote service.
-	 */
+
+	public SocialRequest updateRequest(
+			long requestId, int status, ThemeDisplay themeDisplay)
+		throws PortalException, SystemException {
+
+		SocialRequestPermission.check(
+			getPermissionChecker(), requestId, ActionKeys.UPDATE);
+
+		return socialRequestLocalService.updateRequest(
+			requestId, status, themeDisplay);
+	}
+
 }

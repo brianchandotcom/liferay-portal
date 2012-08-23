@@ -52,7 +52,7 @@ public class WebDriverToSeleniumBridge
 
 		initKeys();
 
-		_parentFrameHandle = getWindowHandle();
+		_defaultWindowHandle = getWindowHandle();
 	}
 
 	public void addCustomRequestHeader(String key, String value) {
@@ -947,14 +947,12 @@ public class WebDriverToSeleniumBridge
 		WebDriver.TargetLocator targetLocator = switchTo();
 
 		if (locator.equals("relative=parent")) {
-			targetLocator.window(_parentFrameHandle);
+			throw new UnsupportedOperationException();
 		}
 		else if (locator.equals("relative=top")) {
-			targetLocator.defaultContent();
+			targetLocator.window(_defaultWindowHandle);
 		}
 		else {
-			_parentFrameHandle = getWindowHandle();
-
 			WebElement webElement = getWebElement(locator);
 
 			targetLocator.frame(webElement);
@@ -976,6 +974,9 @@ public class WebDriverToSeleniumBridge
 					return;
 				}
 			}
+
+			BaseTestCase.fail(
+				"Unable to find the window ID \"" + windowID + "\"");
 		}
 		else {
 			selectWindow(windowID);
@@ -988,7 +989,7 @@ public class WebDriverToSeleniumBridge
 		if (windowID.equals("null")) {
 			WebDriver.TargetLocator targetLocator = switchTo();
 
-			targetLocator.defaultContent();
+			targetLocator.window(_defaultWindowHandle);
 		}
 		else {
 			String targetWindowTitle = windowID;
@@ -1006,6 +1007,9 @@ public class WebDriverToSeleniumBridge
 					return;
 				}
 			}
+
+			BaseTestCase.fail(
+				"Unable to find the window ID \"" + windowID + "\"");
 		}
 	}
 
@@ -1161,7 +1165,7 @@ public class WebDriverToSeleniumBridge
 					targetLocator.window(windowHandle);
 
 					if (targetWindowTitle.equals(getTitle())) {
-						targetLocator.window(_parentFrameHandle);
+						targetLocator.window(_defaultWindowHandle);
 
 						return;
 					}
@@ -1360,6 +1364,6 @@ public class WebDriverToSeleniumBridge
 
 	private Keys[] _keysArray = new Keys[128];
 
-	private String _parentFrameHandle;
+	private String _defaultWindowHandle;
 
 }

@@ -1516,9 +1516,7 @@ public class LayoutTypePortletImpl
 		String[] columnValues = StringUtil.split(columnValue);
 
 		for (String nonstaticPortletId : columnValues) {
-			if (PortletConstants.hasIdenticalRootPortletId(
-					nonstaticPortletId, portletId)) {
-
+			if (nonstaticPortletId.equals(portletId)) {
 				return true;
 			}
 		}

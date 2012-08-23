@@ -110,6 +110,23 @@ public class SelectRegularRolesSOAdminTest extends BaseTestCase {
 					RuntimeVariables.replace("test@liferay.com"));
 				selenium.clickAt("//input[@value='Search']",
 					RuntimeVariables.replace("Search"));
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
+						if (selenium.isVisible("//td[contains(.,'Joe')]/a")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
 				assertEquals(RuntimeVariables.replace("Joe"),
 					selenium.getText("//td[contains(.,'Joe')]/a"));
 				selenium.clickAt("//td[contains(.,'Joe')]/a",

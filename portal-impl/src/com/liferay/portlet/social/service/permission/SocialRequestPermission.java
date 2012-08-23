@@ -40,15 +40,15 @@ public class SocialRequestPermission {
 	public static boolean contains(
 			PermissionChecker permissionChecker, long requestId,
 			String actionId)
-		throws SystemException {
+		throws PortalException, SystemException {
+
+		if (permissionChecker.isOmniadmin()) {
+			return true;
+		}
 
 		if (actionId.equals(ActionKeys.UPDATE)) {
-			if (permissionChecker.isOmniadmin()) {
-				return true;
-			}
-
 			SocialRequest request =
-				SocialRequestLocalServiceUtil.fetchSocialRequest(requestId);
+				SocialRequestLocalServiceUtil.getSocialRequest(requestId);
 
 			if (permissionChecker.getUserId() != request.getReceiverUserId()) {
 				return false;

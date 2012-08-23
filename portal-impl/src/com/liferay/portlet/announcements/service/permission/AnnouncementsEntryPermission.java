@@ -97,7 +97,7 @@ public class AnnouncementsEntryPermission {
 		}
 
 		return PortletPermissionUtil.contains(
-				permissionChecker, layout, name, actionId);
+			permissionChecker, layout, name, actionId);
 	}
 
 	public static boolean contains(

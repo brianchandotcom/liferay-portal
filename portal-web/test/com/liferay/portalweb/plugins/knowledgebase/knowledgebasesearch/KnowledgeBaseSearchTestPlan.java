@@ -14,6 +14,7 @@
 
 package com.liferay.portalweb.plugins.knowledgebase.knowledgebasesearch;
 
+import com.liferay.portalweb.plugins.knowledgebase.knowledgebasesearch.kbaarticle.KBAArticleTestPlan;
 import com.liferay.portalweb.plugins.knowledgebase.knowledgebasesearch.portlet.PortletTestPlan;
 import com.liferay.portalweb.portal.BaseTestSuite;
 
@@ -28,6 +29,7 @@ public class KnowledgeBaseSearchTestPlan extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
+		testSuite.addTest(KBAArticleTestPlan.suite());
 		testSuite.addTest(PortletTestPlan.suite());
 
 		return testSuite;

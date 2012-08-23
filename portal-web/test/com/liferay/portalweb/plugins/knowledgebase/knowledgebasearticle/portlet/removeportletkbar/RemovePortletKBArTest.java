@@ -23,30 +23,12 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class RemovePortletKBArTest extends BaseTestCase {
 	public void testRemovePortletKBAr() throws Exception {
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("link=Knowledge Base Article Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.clickAt("link=Knowledge Base Article Test Page",
 			RuntimeVariables.replace("Knowledge Base Article Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isVisible("//section"));
-		selenium.click("//img[@title='Remove']");
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to remove this component[\\s\\S]$"));
+		selenium.clickAt("//img[@title='Remove']",
+			RuntimeVariables.replace("Remove"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -54,7 +36,8 @@ public class RemovePortletKBArTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementNotPresent("//section")) {
+				if ("Are you sure you want to remove this component?".equals(
+							selenium.getConfirmation())) {
 					break;
 				}
 			}

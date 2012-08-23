@@ -14,6 +14,8 @@
 
 package com.liferay.portalweb.plugins.knowledgebase.knowledgebasearticle.portlet.removeportletkbar;
 
+import com.liferay.portalweb.plugins.knowledgebase.knowledgebasearticle.portlet.addportletkbar.AddPageKBArTest;
+import com.liferay.portalweb.plugins.knowledgebase.knowledgebasearticle.portlet.addportletkbar.AddPortletKBArTest;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 

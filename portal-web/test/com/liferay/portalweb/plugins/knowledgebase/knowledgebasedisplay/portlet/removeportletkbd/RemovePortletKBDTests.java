@@ -14,6 +14,8 @@
 
 package com.liferay.portalweb.plugins.knowledgebase.knowledgebasedisplay.portlet.removeportletkbd;
 
+import com.liferay.portalweb.plugins.knowledgebase.knowledgebasedisplay.portlet.addportletkbd.AddPageKBDTest;
+import com.liferay.portalweb.plugins.knowledgebase.knowledgebasedisplay.portlet.addportletkbd.AddPortletKBDTest;
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.util.TearDownPageTest;
 

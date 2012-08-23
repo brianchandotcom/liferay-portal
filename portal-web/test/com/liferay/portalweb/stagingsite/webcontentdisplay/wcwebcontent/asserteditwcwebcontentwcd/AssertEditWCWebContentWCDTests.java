@@ -16,6 +16,15 @@ package com.liferay.portalweb.stagingsite.webcontentdisplay.wcwebcontent.asserte
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.AddSiteTest;
+import com.liferay.portalweb.stagingsite.webcontentdisplay.wcwebcontent.assertcannoteditwcwebcontentwcd.ActivateStagingTest;
+import com.liferay.portalweb.stagingsite.webcontentdisplay.wcwebcontent.assertcannoteditwcwebcontentwcd.AddPageWCDTest;
+import com.liferay.portalweb.stagingsite.webcontentdisplay.wcwebcontent.assertcannoteditwcwebcontentwcd.AddPortletWCDTest;
+import com.liferay.portalweb.stagingsite.webcontentdisplay.wcwebcontent.assertcannoteditwcwebcontentwcd.AddSitePublicPageTest;
+import com.liferay.portalweb.stagingsite.webcontentdisplay.wcwebcontent.assertcannoteditwcwebcontentwcd.AddWCWebContentWCDTest;
+import com.liferay.portalweb.stagingsite.webcontentdisplay.wcwebcontent.assertcannoteditwcwebcontentwcd.AssertCannotEditWCWebContentWCDTest;
+import com.liferay.portalweb.stagingsite.webcontentdisplay.wcwebcontent.assertcannoteditwcwebcontentwcd.AssertEditWCWebContentWCDTest;
+import com.liferay.portalweb.stagingsite.webcontentdisplay.wcwebcontent.assertcannoteditwcwebcontentwcd.DeactivateStagingTest;
+import com.liferay.portalweb.stagingsite.webcontentdisplay.wcwebcontent.assertcannoteditwcwebcontentwcd.TearDownSiteTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

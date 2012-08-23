@@ -56,6 +56,26 @@ public class PU_AddStagedPortletTest extends BaseTestCase {
 		selenium.clickAt("link=Blogs Test Page",
 			RuntimeVariables.replace("Blogs Test Page"));
 		selenium.waitForPageToLoad("30000");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertTrue(selenium.isPartialText("//a[@id='_145_addApplication']",
 				"More"));
 		selenium.clickAt("//a[@id='_145_addApplication']",

@@ -38,6 +38,25 @@ public class PU_AddStagedPageTest extends BaseTestCase {
 			selenium.getText("//span[@class='staging-live-help']"));
 		selenium.clickAt("//nav[@id='navigation']",
 			RuntimeVariables.replace("Navigation"));
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

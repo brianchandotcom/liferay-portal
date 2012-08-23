@@ -1038,8 +1038,7 @@ public class WebDriverToSeleniumBridge
 
 		Timeouts timeouts = options.timeouts();
 
-		timeouts.implicitlyWait(
-			GetterUtil.getLong(timeout), TimeUnit.MILLISECONDS);
+		timeouts.implicitlyWait(1, TimeUnit.MILLISECONDS);
 	}
 
 	public void shiftKeyDown() {
@@ -1196,7 +1195,7 @@ public class WebDriverToSeleniumBridge
 	}
 
 	protected WebElement getWebElement(String locator) {
-		WebDriverWait wait = new WebDriverWait(this, 10);
+		WebDriverWait wait = new WebDriverWait(this, 1);
 
 		WebElement webElement;
 
@@ -1243,7 +1242,7 @@ public class WebDriverToSeleniumBridge
 	}
 
 	protected List<WebElement> getWebElements(String locator) {
-		WebDriverWait wait = new WebDriverWait(this, 10);
+		WebDriverWait wait = new WebDriverWait(this, 1);
 
 		List<WebElement> webElements;
 

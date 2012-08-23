@@ -210,6 +210,13 @@ public class LuceneHelperImpl implements LuceneHelper {
 			Query query = null;
 
 			try {
+				if (like) {
+
+					// LUCENE-89
+
+					value=value.toLowerCase(queryParser.getLocale());
+				}
+
 				query = queryParser.parse(value);
 			}
 			catch (Exception e) {

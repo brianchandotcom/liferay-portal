@@ -58,6 +58,7 @@ import com.liferay.portlet.social.service.SocialActivitySettingService;
 import com.liferay.portlet.social.service.SocialRelationLocalService;
 import com.liferay.portlet.social.service.SocialRequestInterpreterLocalService;
 import com.liferay.portlet.social.service.SocialRequestLocalService;
+import com.liferay.portlet.social.service.SocialRequestService;
 import com.liferay.portlet.social.service.persistence.SocialActivityAchievementPersistence;
 import com.liferay.portlet.social.service.persistence.SocialActivityCounterFinder;
 import com.liferay.portlet.social.service.persistence.SocialActivityCounterPersistence;
@@ -627,6 +628,25 @@ public abstract class SocialActivityCounterLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the social request remote service.
+	 *
+	 * @return the social request remote service
+	 */
+	public SocialRequestService getSocialRequestService() {
+		return socialRequestService;
+	}
+
+	/**
+	 * Sets the social request remote service.
+	 *
+	 * @param socialRequestService the social request remote service
+	 */
+	public void setSocialRequestService(
+		SocialRequestService socialRequestService) {
+		this.socialRequestService = socialRequestService;
+	}
+
+	/**
 	 * Returns the social request persistence.
 	 *
 	 * @return the social request persistence
@@ -1062,6 +1082,8 @@ public abstract class SocialActivityCounterLocalServiceBaseImpl
 	protected SocialRelationPersistence socialRelationPersistence;
 	@BeanReference(type = SocialRequestLocalService.class)
 	protected SocialRequestLocalService socialRequestLocalService;
+	@BeanReference(type = SocialRequestService.class)
+	protected SocialRequestService socialRequestService;
 	@BeanReference(type = SocialRequestPersistence.class)
 	protected SocialRequestPersistence socialRequestPersistence;
 	@BeanReference(type = SocialRequestInterpreterLocalService.class)

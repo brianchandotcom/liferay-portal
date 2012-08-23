@@ -222,7 +222,8 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 	private Set<TemplateResourceParser> _templateResourceParsers =
 		new HashSet<TemplateResourceParser>();
 
-	private class NullHolderTemplateResource implements TemplateResource {
+	private static class NullHolderTemplateResource
+		implements TemplateResource {
 
 		public long getLastModified() {
 			return _lastModified;

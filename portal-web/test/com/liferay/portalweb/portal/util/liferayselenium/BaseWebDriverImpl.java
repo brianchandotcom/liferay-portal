@@ -142,7 +142,7 @@ public abstract class BaseWebDriverImpl
 		uploadFile(location, TestPropsValues.OUTPUT_DIR + value);
 	}
 
-	protected void uploadFile(String location, String value) {
+	public void uploadFile(String location, String value) {
 		WebElement webElement = getWebElement(location);
 
 		webElement.sendKeys(value);

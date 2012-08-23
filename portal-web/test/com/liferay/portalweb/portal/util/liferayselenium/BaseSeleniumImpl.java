@@ -115,6 +115,10 @@ public abstract class BaseSeleniumImpl
 				"dependencies\\" + value);
 	}
 
+	public void uploadFile(String location, String value) {
+		super.type(location, value);
+	}
+
 	public void uploadTempFile(String location, String value) {
 		super.type(location, TestPropsValues.OUTPUT_DIR + value);
 	}

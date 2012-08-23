@@ -162,7 +162,8 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 	<aui:input name="folderId" type="hidden" value="<%= folderId %>" />
 	<aui:input name="classNameId" type="hidden" value="<%= classNameId %>" />
 	<aui:input name="classPK" type="hidden" value="<%= classPK %>" />
-	<aui:input name="articleId" type="hidden" value="<%= articleId + EditArticleAction.VERSION_SEPARATOR + version %>" />
+	<aui:input name="articleId" type="hidden" value="<%= articleId %>" />
+	<aui:input name="articleIds" type="hidden" value="<%= articleId + EditArticleAction.VERSION_SEPARATOR + version %>" />
 	<aui:input name="version" type="hidden" value="<%= ((article == null) || article.isNew()) ? version : article.getVersion() %>" />
 	<aui:input name="languageId" type="hidden" value="<%= languageId %>" />
 	<aui:input id="articleContent" name="content" type="hidden" />

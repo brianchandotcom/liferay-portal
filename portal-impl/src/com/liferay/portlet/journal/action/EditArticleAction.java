@@ -426,14 +426,10 @@ public class EditArticleAction extends PortletAction {
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 
 		String[] removeArticleLocaleIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "deleteArticleIds"));
+			ParamUtil.getString(actionRequest, "articleIds"));
 
 		for (String removeArticleLocaleId : removeArticleLocaleIds) {
 			int pos = removeArticleLocaleId.lastIndexOf(VERSION_SEPARATOR);
-
-			if (pos == -1) {
-				continue;
-			}
 
 			String articleId = removeArticleLocaleId.substring(0, pos);
 			double version = GetterUtil.getDouble(
@@ -481,12 +477,6 @@ public class EditArticleAction extends PortletAction {
 
 		String articleId = ParamUtil.getString(
 			uploadPortletRequest, "articleId");
-
-		int pos = articleId.lastIndexOf(VERSION_SEPARATOR);
-
-		if (pos != -1) {
-			articleId = articleId.substring(0, pos);
-		}
 
 		boolean autoArticleId = ParamUtil.getBoolean(
 			uploadPortletRequest, "autoArticleId");

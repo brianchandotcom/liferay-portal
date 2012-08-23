@@ -67,7 +67,7 @@ searchContainer.setOrderByType(orderByType);
 
 EntriesChecker entriesChecker = new EntriesChecker(liferayPortletRequest, liferayPortletResponse);
 
-entriesChecker.setCssClass("article-selector");
+entriesChecker.setCssClass("entry-selector");
 
 searchContainer.setRowChecker(entriesChecker);
 

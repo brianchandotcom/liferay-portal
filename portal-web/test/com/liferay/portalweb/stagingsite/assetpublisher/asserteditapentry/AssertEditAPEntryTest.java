@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.stagingsite.assetpublisher.assertcannoteditapentry;
+package com.liferay.portalweb.stagingsite.assetpublisher.asserteditapentry;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -23,6 +23,29 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AssertEditAPEntryTest extends BaseTestCase {
 	public void testAssertEditAPEntry() throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

@@ -16,7 +16,7 @@ package com.liferay.portalweb.stagingsite.assetpublisher.asserteditapentry;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.AddSiteTest;
-import com.liferay.portalweb.stagingsite.assetpublisher.assertcannoteditapentry.ActivateStagingTest;
+import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.TearDownSiteTest;
 import com.liferay.portalweb.stagingsite.assetpublisher.assertcannoteditapentry.AddBlogsEntryTest;
 import com.liferay.portalweb.stagingsite.assetpublisher.assertcannoteditapentry.AddPageAPTest;
 import com.liferay.portalweb.stagingsite.assetpublisher.assertcannoteditapentry.AddPageBlogsTest;
@@ -24,9 +24,8 @@ import com.liferay.portalweb.stagingsite.assetpublisher.assertcannoteditapentry.
 import com.liferay.portalweb.stagingsite.assetpublisher.assertcannoteditapentry.AddPortletBlogsTest;
 import com.liferay.portalweb.stagingsite.assetpublisher.assertcannoteditapentry.AddSitePublicPageTest;
 import com.liferay.portalweb.stagingsite.assetpublisher.assertcannoteditapentry.AssertCannotEditAPEntryTest;
-import com.liferay.portalweb.stagingsite.assetpublisher.assertcannoteditapentry.AssertEditAPEntryTest;
-import com.liferay.portalweb.stagingsite.assetpublisher.assertcannoteditapentry.DeactivateStagingTest;
-import com.liferay.portalweb.stagingsite.assetpublisher.assertcannoteditapentry.TearDownSiteTest;
+import com.liferay.portalweb.stagingsite.sites.site.activatestaging.ActivateStagingTest;
+import com.liferay.portalweb.stagingsite.sites.site.deactivatestaging.DeactivateStagingTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

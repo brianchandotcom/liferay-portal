@@ -1096,8 +1096,9 @@ public class ProcessExecutorTest extends BaseTestCase {
 	}
 
 	private static Field _getObjectOutputStreamField() throws Exception {
-		Field objectOutputStreamField = ReflectionUtil.getDeclaredField(
-			ProcessOutputStream.class, "_objectOutputStream");
+		Field objectOutputStreamField =
+			ReflectionUtil.getDeclaredField(
+				ProcessOutputStream.class, "_objectOutputStream");
 
 		int modifiers = objectOutputStreamField.getModifiers();
 

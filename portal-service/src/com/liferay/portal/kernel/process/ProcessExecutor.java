@@ -178,10 +178,8 @@ public class ProcessExecutor {
 			ProcessCallable<?> processCallable =
 				(ProcessCallable<?>)objectInputStream.readObject();
 
-			String logPrefixString =
-				StringPool.OPEN_BRACKET.concat(
-					processCallable.toString()).concat(
-						StringPool.CLOSE_BRACKET);
+			String logPrefixString = StringPool.OPEN_BRACKET.concat(
+				processCallable.toString()).concat(StringPool.CLOSE_BRACKET);
 
 			byte[] logPrefix = logPrefixString.getBytes(StringPool.UTF8);
 

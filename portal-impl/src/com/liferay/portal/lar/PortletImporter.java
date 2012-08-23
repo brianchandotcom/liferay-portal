@@ -1743,9 +1743,8 @@ public class PortletImporter {
 								uuid, portletDataContext.getScopeGroupId());
 
 						if (category == null) {
-							category =
-								AssetCategoryUtil.fetchByUUID_G(
-									uuid, companyGroupId);
+							category = AssetCategoryUtil.fetchByUUID_G(
+								uuid, companyGroupId);
 						}
 
 						if (category != null) {

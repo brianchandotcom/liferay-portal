@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerType;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.pop.messaging.POPNotificationsMessageListener;
 import com.liferay.portal.util.PropsValues;
@@ -134,6 +135,7 @@ public class POPServerUtil {
 		try {
 			SchedulerEntry schedulerEntry = new SchedulerEntryImpl();
 
+			schedulerEntry.setContextPath(StringPool.BLANK);
 			schedulerEntry.setEventListenerClass(
 				POPNotificationsMessageListener.class.getName());
 			schedulerEntry.setTimeUnit(TimeUnit.MINUTE);

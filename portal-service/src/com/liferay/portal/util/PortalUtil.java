@@ -252,6 +252,15 @@ public class PortalUtil {
 		return getPortal().getCanonicalURL(completeURL, themeDisplay, layout);
 	}
 
+	public static String getCanonicalURL(
+			String completeURL, ThemeDisplay themeDisplay, Layout layout,
+			boolean forceLayoutInURL)
+		throws PortalException, SystemException {
+
+		return getPortal().getCanonicalURL(
+			completeURL, themeDisplay, layout, forceLayoutInURL);
+	}
+
 	/**
 	 * @deprecated {@link #getCDNHost(boolean)}
 	 */

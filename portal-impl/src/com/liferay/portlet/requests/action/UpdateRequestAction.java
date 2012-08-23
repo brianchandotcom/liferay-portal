@@ -29,6 +29,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.social.NoSuchRequestException;
+import com.liferay.portlet.social.model.SocialRequest;
 import com.liferay.portlet.social.service.SocialRequestLocalServiceUtil;
 
 import javax.portlet.ActionRequest;
@@ -98,6 +99,15 @@ public class UpdateRequestAction extends PortletAction {
 
 		long requestId = ParamUtil.getLong(actionRequest, "requestId");
 		int status = ParamUtil.getInteger(actionRequest, "status");
+
+		SocialRequest request =
+			SocialRequestLocalServiceUtil.fetchSocialRequest(requestId);
+
+		if (!PortalUtil.isOmniadmin(themeDisplay.getUserId()) &&
+			(themeDisplay.getUserId() != request.getReceiverUserId())) {
+
+			throw new PrincipalException();
+		}
 
 		SocialRequestLocalServiceUtil.updateRequest(
 			requestId, status, themeDisplay);

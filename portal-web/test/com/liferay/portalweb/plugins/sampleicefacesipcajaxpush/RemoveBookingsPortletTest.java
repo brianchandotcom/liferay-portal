@@ -46,8 +46,24 @@ public class RemoveBookingsPortletTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isTextPresent("Sample ICEfaces IPC - Bookings"));
 		selenium.click("//img[@alt='Remove']");
-		assertTrue(selenium.getConfirmation()
-						   .matches("^Are you sure you want to remove this component[\\s\\S]$"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if ("Are you sure you want to remove this component?".equals(
+							selenium.getConfirmation())) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertFalse(selenium.isTextPresent("Sample ICEfaces IPC - Bookings"));
 	}
 }

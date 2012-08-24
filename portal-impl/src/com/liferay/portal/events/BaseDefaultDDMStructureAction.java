@@ -93,17 +93,17 @@ public abstract class BaseDefaultDDMStructureAction extends SimpleAction {
 			xsd = DDMXMLUtil.updateXMLDefaultLocale(
 				xsd, ddmStructureDefaultLocale, LocaleUtil.getDefault());
 
-			boolean isIGImage = name.equals(
-				DLFileEntryTypeConstants.NAME_IG_IMAGE);
+			if (name.equals(DLFileEntryTypeConstants.NAME_IG_IMAGE) &&
+				!GetterUtil.getBoolean(
+					PropsUtil.get("dl.file.entry.type.igimage"))) {
 
-			if (!isIGImage || (isIGImage && GetterUtil.getBoolean(
-					PropsUtil.get("dl.file.entry.type.igimage")))) {
-
-				DDMStructureLocalServiceUtil.addStructure(
-						userId, groupId, classNameId, ddmStructureKey, nameMap,
-						descriptionMap, xsd, "xml",
-						DDMStructureConstants.TYPE_DEFAULT, serviceContext);
+				continue;
 			}
+
+			DDMStructureLocalServiceUtil.addStructure(
+				userId, groupId, classNameId, ddmStructureKey, nameMap,
+				descriptionMap, xsd, "xml", DDMStructureConstants.TYPE_DEFAULT,
+				serviceContext);
 		}
 	}
 

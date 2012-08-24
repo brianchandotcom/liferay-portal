@@ -22,6 +22,7 @@ import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPageBlogsT
 import com.liferay.portalweb.portlet.blogs.portlet.addportletblogs.AddPortletBlogsTest;
 import com.liferay.portalweb.portlet.blogsaggregator.portlet.addportletba.AddPageBATest;
 import com.liferay.portalweb.portlet.blogsaggregator.portlet.addportletba.AddPortletBATest;
+import com.liferay.portalweb.portlet.blogsaggregator.portlet.configureportletdisplaystyletitle.ConfigurePortletDisplayStyleTitleTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

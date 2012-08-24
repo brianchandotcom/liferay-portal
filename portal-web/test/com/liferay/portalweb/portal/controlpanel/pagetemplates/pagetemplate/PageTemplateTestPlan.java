@@ -36,7 +36,8 @@ public class PageTemplateTestPlan extends BaseTestSuite {
 		testSuite.addTest(AddPageTemplateTests.suite());
 		testSuite.addTest(DeactivatePageTemplateTests.suite());
 		testSuite.addTest(EditPageTemplateTests.suite());
-		testSuite.addTest(ViewSiteRoleInlineBlogsViewPTpersistSiteTests.suite());
+		testSuite.addTest(
+			ViewSiteRoleInlineBlogsViewPTpersistSiteTests.suite());
 
 		return testSuite;
 	}

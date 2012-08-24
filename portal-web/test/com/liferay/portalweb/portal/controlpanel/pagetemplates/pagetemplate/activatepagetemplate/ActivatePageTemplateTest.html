@@ -1,17 +1,27 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>DeactivatePageTemplateTest</title>
+<title>ActivatePageTemplateTest</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">DeactivatePageTemplateTest</td></tr>
+<tr><td rowspan="1" colspan="3">ActivatePageTemplateTest</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
 	<td>/web/guest/home/</td>
 	<td></td>
+</tr>
+<tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -40,22 +50,22 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[6]/td[1]/a</td>
-	<td>Test Page Template</td>
+	<td>//tr[contains(.,'Page Template Name')]/td[1]/a</td>
+	<td>Page Template Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[6]/td[2]/a</td>
-	<td>Yes</td>
+	<td>//tr[contains(.,'Page Template Name')]/td[2]/a</td>
+	<td>No</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>xPath=(//span[@title='Actions']/ul/li/strong/a/span)[4]</td>
+	<td>//tr[contains(.,'Page Template Name')]/td/span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>clickAt</td>
-	<td>xPath=(//span[@title='Actions']/ul/li/strong/a/span)[4]</td>
+	<td>//tr[contains(.,'Page Template Name')]/td/span[@title='Actions']/ul/li/strong/a/span</td>
 	<td>Actions</td>
 </tr>
 <tr>
@@ -74,7 +84,7 @@
 	<td>Edit</td>
 </tr>
 <tr>
-	<td>assertChecked</td>
+	<td>assertNotChecked</td>
 	<td>//input[@id='_146_activeCheckbox']</td>
 	<td>Active Checkbox</td>
 </tr>
@@ -84,7 +94,7 @@
 	<td>Active Checkbox</td>
 </tr>
 <tr>
-	<td>assertNotChecked</td>
+	<td>assertChecked</td>
 	<td>//input[@id='_146_activeCheckbox']</td>
 	<td>Active Checkbox</td>
 </tr>
@@ -94,24 +104,19 @@
 	<td>Save</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
-</tr>
-<tr>
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[6]/td[1]/a</td>
-	<td>Test Page Template</td>
+	<td>//tr[contains(.,'Page Template Name')]/td[1]/a</td>
+	<td>Page Template Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>//tr[6]/td[2]/a</td>
-	<td>No</td>
+	<td>//tr[contains(.,'Page Template Name')]/td[2]/a</td>
+	<td>Yes</td>
 </tr>
 </tbody></table>
 </body>

@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.portalweb.portal;
+package com.liferay.portalweb.portal.controlpanel.pagetemplates.pagetemplate.deactivatepagetemplate;
 
-import com.liferay.portalweb.portal.controlpanel.pagetemplates.PageTemplatesTestPlan;
-import com.liferay.portalweb.portal.login.LoginTests;
+import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.pagetemplates.pagetemplate.addpagetemplate.AddPageTemplateTest;
+import com.liferay.portalweb.portal.controlpanel.pagetemplates.pagetemplate.addpagetemplate.TearDownPageTemplateTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -23,17 +24,14 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ControlPanelPageTemplatesTestSuite extends BaseTestSuite {
-
+public class DeactivatePageTemplateTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-
-		testSuite.addTest(LoginTests.suite());
-		testSuite.addTest(PageTemplatesTestPlan.suite());
-
-		testSuite.addTestSuite(StopSeleniumTest.class);
+		testSuite.addTestSuite(AddPageTemplateTest.class);
+		testSuite.addTestSuite(DeactivatePageTemplateTest.class);
+		testSuite.addTestSuite(ViewInactivePageTemplateTest.class);
+		testSuite.addTestSuite(TearDownPageTemplateTest.class);
 
 		return testSuite;
 	}
-
 }

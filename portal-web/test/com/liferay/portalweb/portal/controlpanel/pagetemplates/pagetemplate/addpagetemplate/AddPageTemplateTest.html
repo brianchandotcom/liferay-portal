@@ -14,6 +14,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
 	<td>assertText</td>
 	<td>//li[@id='_145_mySites']/a/span</td>
 	<td>Go to</td>
@@ -39,24 +49,19 @@
 	<td>Page Templates</td>
 </tr>
 <tr>
-	<td>clickAtAndWait</td>
-	<td>link=Add</td>
+	<td>assertText</td>
+	<td>//span[@class='lfr-toolbar-button add-button ']/a</td>
 	<td>Add</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//input[@id='_146_name_en_US']</td>
-	<td></td>
+	<td>clickAtAndWait</td>
+	<td>//span[@class='lfr-toolbar-button add-button ']/a</td>
+	<td>Add</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>//input[@id='_146_name_en_US']</td>
-	<td>Test Page Template</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>//textarea[@id='_146_description']</td>
-	<td>This is a test page template</td>
+	<td>Page Template Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -64,19 +69,19 @@
 	<td>Save</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>//div[@class='portlet-msg-success']</td>
-	<td>Your request completed successfully.</td>
-</tr>
-<tr>
 	<td>assertText</td>
 	<td>//div[@class='portlet-msg-success']</td>
 	<td>Your request completed successfully.</td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>link=Test Page Template</td>
-	<td>Test Page Template</td>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Page Template Name')]/td[1]/a</td>
+	<td>Page Template Name</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Page Template Name')]/td[2]/a</td>
+	<td>Yes</td>
 </tr>
 </tbody></table>
 </body>

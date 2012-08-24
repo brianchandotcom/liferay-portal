@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portalweb.portal.controlpanel.pagetemplates;
+package com.liferay.portalweb.portal.controlpanel.pagetemplates.pagetemplate.activatepagetemplate;
 
 import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
@@ -20,9 +20,29 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 /**
  * @author Brian Wing Shun Chan
  */
-public class DeactivatePageTemplateTest extends BaseTestCase {
-	public void testDeactivatePageTemplate() throws Exception {
+public class ActivatePageTemplateTest extends BaseTestCase {
+	public void testActivatePageTemplate() throws Exception {
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertEquals(RuntimeVariables.replace("Go to"),
 			selenium.getText("//li[@id='_145_mySites']/a/span"));
 		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
@@ -49,14 +69,14 @@ public class DeactivatePageTemplateTest extends BaseTestCase {
 		selenium.clickAt("link=Page Templates",
 			RuntimeVariables.replace("Page Templates"));
 		selenium.waitForPageToLoad("30000");
-		assertEquals(RuntimeVariables.replace("Test Page Template"),
-			selenium.getText("//tr[6]/td[1]/a"));
-		assertEquals(RuntimeVariables.replace("Yes"),
-			selenium.getText("//tr[6]/td[2]/a"));
+		assertEquals(RuntimeVariables.replace("Page Template Name"),
+			selenium.getText("//tr[contains(.,'Page Template Name')]/td[1]/a"));
+		assertEquals(RuntimeVariables.replace("No"),
+			selenium.getText("//tr[contains(.,'Page Template Name')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Actions"),
 			selenium.getText(
-				"xPath=(//span[@title='Actions']/ul/li/strong/a/span)[4]"));
-		selenium.clickAt("xPath=(//span[@title='Actions']/ul/li/strong/a/span)[4]",
+				"//tr[contains(.,'Page Template Name')]/td/span[@title='Actions']/ul/li/strong/a/span"));
+		selenium.clickAt("//tr[contains(.,'Page Template Name')]/td/span[@title='Actions']/ul/li/strong/a/span",
 			RuntimeVariables.replace("Actions"));
 
 		for (int second = 0;; second++) {
@@ -82,36 +102,19 @@ public class DeactivatePageTemplateTest extends BaseTestCase {
 		selenium.click(RuntimeVariables.replace(
 				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Edit')]/a"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isChecked("//input[@id='_146_activeCheckbox']"));
+		assertFalse(selenium.isChecked("//input[@id='_146_activeCheckbox']"));
 		selenium.clickAt("//input[@id='_146_activeCheckbox']",
 			RuntimeVariables.replace("Active Checkbox"));
-		assertFalse(selenium.isChecked("//input[@id='_146_activeCheckbox']"));
+		assertTrue(selenium.isChecked("//input[@id='_146_activeCheckbox']"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible("//div[@class='portlet-msg-success']")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		assertEquals(RuntimeVariables.replace("Test Page Template"),
-			selenium.getText("//tr[6]/td[1]/a"));
-		assertEquals(RuntimeVariables.replace("No"),
-			selenium.getText("//tr[6]/td[2]/a"));
+		assertEquals(RuntimeVariables.replace("Page Template Name"),
+			selenium.getText("//tr[contains(.,'Page Template Name')]/td[1]/a"));
+		assertEquals(RuntimeVariables.replace("Yes"),
+			selenium.getText("//tr[contains(.,'Page Template Name')]/td[2]/a"));
 	}
 }

@@ -14,11 +14,13 @@
 
 package com.liferay.portal.webserver;
 
+import com.liferay.portal.kernel.image.SpriteProcessor;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
@@ -62,13 +64,27 @@ public class DynamicResourceServlet extends WebServerServlet {
 			return;
 		}
 
-		File file = new File(_tempDir, path);
+		File rootDir = _tempDir;
+
+		File file = new File(rootDir, path);
+
+		if (servletPath.equals(SpriteProcessor.PATH)) {
+
+			String spriteRootDir = PropsValues.SPRITE_ROOT_DIR;
+
+			if (Validator.isNotNull(spriteRootDir)) {
+
+				rootDir = new File(spriteRootDir);
+
+				file = new File(rootDir, pathInfo);
+			}
+		}
 
 		String canonicalPath = file.getCanonicalPath();
 
 		if (!file.exists() || file.isDirectory() || !file.canRead() ||
 			file.isHidden() ||
-			!canonicalPath.startsWith(_tempDir.getCanonicalPath())) {
+			!canonicalPath.startsWith(rootDir.getCanonicalPath())) {
 
 			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 

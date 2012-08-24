@@ -50,25 +50,6 @@ public class UpdateRequestAction extends PortletAction {
 		throws Exception {
 
 		try {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
-			Group group = GroupLocalServiceUtil.getGroup(
-				themeDisplay.getScopeGroupId());
-
-			User user = themeDisplay.getUser();
-
-			if (group.isUser()) {
-				user = UserLocalServiceUtil.getUserById(group.getClassPK());
-			}
-
-			if (!UserPermissionUtil.contains(
-					themeDisplay.getPermissionChecker(), user.getUserId(),
-					ActionKeys.UPDATE)) {
-
-				throw new PrincipalException();
-			}
-
 			updateRequest(actionRequest);
 
 			String redirect = PortalUtil.escapeRedirect(

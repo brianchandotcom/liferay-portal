@@ -50,8 +50,8 @@ public class SocialRequestPermission {
 			SocialRequest request =
 				SocialRequestLocalServiceUtil.getSocialRequest(requestId);
 
-			if (permissionChecker.getUserId() != request.getReceiverUserId()) {
-				return false;
+			if (permissionChecker.getUserId() == request.getReceiverUserId()) {
+				return true;
 			}
 		}
 

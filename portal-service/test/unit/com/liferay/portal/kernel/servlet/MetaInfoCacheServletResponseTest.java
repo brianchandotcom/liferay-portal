@@ -584,7 +584,7 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 		assertNull(locationReference.get());
 	}
 
-	public void testFlushBuffer() {
+	public void testFlushBuffer() throws IOException {
 		StubHttpServletResponse stubHttpServletResponse =
 			new StubHttpServletResponse() {
 
@@ -648,7 +648,7 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 		assertTrue(calledGetOutputStreamReference.get());
 	}
 
-	public void testGetSetBufferSize() {
+	public void testGetSetBufferSize() throws IOException {
 		final AtomicInteger bufferSizeReference = new AtomicInteger();
 
 		StubHttpServletResponse stubHttpServletResponse =
@@ -768,7 +768,7 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 		assertNull(characterEncodingReference.get());
 	}
 
-	public void testGetSetContentType() {
+	public void testGetSetContentType() throws IOException {
 		final AtomicReference<String> characterEncodingReference =
 			new AtomicReference<String>();
 		final AtomicReference<String> contentTypeReference =
@@ -870,7 +870,7 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 		assertNull(contentTypeReference.get());
 	}
 
-	public void testGetSetLocale() {
+	public void testGetSetLocale() throws IOException {
 		final AtomicReference<Locale> localeReference =
 			new AtomicReference<Locale>();
 
@@ -938,7 +938,7 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 		assertTrue(calledGetWriter.get());
 	}
 
-	public void testIsCommitted() {
+	public void testIsCommitted() throws IOException {
 		final AtomicBoolean committed = new AtomicBoolean();
 
 		StubHttpServletResponse stubHttpServletResponse =
@@ -977,7 +977,7 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 		assertTrue(metaInfoCacheServletResponse.isCommitted());
 	}
 
-	public void testReset() {
+	public void testReset() throws IOException {
 		final AtomicBoolean calledResetReference = new AtomicBoolean();
 
 		StubHttpServletResponse stubHttpServletResponse =
@@ -1019,7 +1019,7 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 		}
 	}
 
-	public void testResetBuffer() {
+	public void testResetBuffer() throws IOException {
 		final AtomicBoolean calledResetBufferReference = new AtomicBoolean();
 
 		StubHttpServletResponse stubHttpServletResponse =
@@ -1173,7 +1173,7 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 		}
 	}
 
-	public void testSetContentLength() {
+	public void testSetContentLength() throws IOException {
 		final AtomicLong contentLengthReference = new AtomicLong();
 
 		StubHttpServletResponse stubHttpServletResponse =
@@ -1283,7 +1283,7 @@ public class MetaInfoCacheServletResponseTest extends TestCase {
 			objectValuePairs.get(2));
 	}
 
-	public void testSetGetStatus() {
+	public void testSetGetStatus() throws IOException {
 		final AtomicReference<String> messageReference =
 			new AtomicReference<String>();
 		final AtomicInteger statusReference = new AtomicInteger();

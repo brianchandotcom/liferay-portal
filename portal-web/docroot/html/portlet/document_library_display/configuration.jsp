@@ -23,6 +23,8 @@ if (portletResource.equals(PortletKeys.DOCUMENT_LIBRARY)) {
 	strutsAction = "/document_library";
 }
 
+String portletNameSpace = PortalUtil.getPortletNamespace(portletResource);
+
 String redirect = ParamUtil.getString(request, "redirect");
 %>
 
@@ -197,4 +199,24 @@ String redirect = ParamUtil.getString(request, "redirect");
 		},
 		['liferay-util-list-fields']
 	);
+</aui:script>
+
+<aui:script position="inline" use="aui-base">
+	var openingWindow = Liferay.Util.getTop();
+
+	var portlet = openingWindow.AUI().one('#p_p_id<%= portletNameSpace %>');
+
+	var foldersPerPageInput = A.one('#_<%= portletDisplay.getId() %>_foldersPerPage');
+	var fileEntriesPerPageInput = A.one('#_<%= portletDisplay.getId() %>_fileEntriesPerPage');
+
+	var foldersPerPage = foldersPerPageInput.val();
+	var fileEntriesPerPage = fileEntriesPerPageInput.val();
+
+	var refreshURL = portlet.refreshURL;
+
+	refreshURL = refreshURL.replace(/(delta1)(=|%3D)[^%|&]+/g, '$1$2' + foldersPerPage);
+	refreshURL = refreshURL.replace(/(delta2)(=|%3D)[^%|&]+/g, '$1$2' + fileEntriesPerPage);
+	refreshURL = refreshURL.replace(/(cur\d{1})(=|%3D)[^%|&]+/g, '$1$21');
+
+	portlet.refreshURL = refreshURL;
 </aui:script>

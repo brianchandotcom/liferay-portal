@@ -166,6 +166,6 @@ public class AddSitesSiteTypePrivateTest extends BaseTestCase {
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Private Site Name"),
 			selenium.getText(
-				"//li[contains(@class, 'social-office-enabled')]/span[2]/a"));
+				"//li[contains(@class, 'social-office-enabled')]/span[contains(.,'Private Site Name')]/a"));
 	}
 }

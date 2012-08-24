@@ -287,6 +287,12 @@ public class DLFileEntryMetadataLocalServiceWrapper
 			fileVersionId);
 	}
 
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata> getFileEntryMetadataByFileVersionId(
+		long fileVersionId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileEntryMetadataLocalService.getFileEntryMetadataByFileVersionId(fileVersionId);
+	}
+
 	public long getFileEntryMetadataCount(long fileEntryId, long fileVersionId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _dlFileEntryMetadataLocalService.getFileEntryMetadataCount(fileEntryId,

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.repository.liferayrepository.util.LiferayBase;
 import com.liferay.portal.service.RepositoryLocalService;
 import com.liferay.portal.service.RepositoryService;
+import com.liferay.portal.service.ResourceLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
@@ -57,7 +58,8 @@ public abstract class LiferayRepositoryBase extends LiferayBase {
 		DLFileVersionLocalService dlFileVersionLocalService,
 		DLFileVersionService dlFileVersionService,
 		DLFolderLocalService dlFolderLocalService,
-		DLFolderService dlFolderService, long repositoryId) {
+		DLFolderService dlFolderService,
+		ResourceLocalService resourceLocalService, long repositoryId) {
 
 		this.repositoryLocalService = repositoryLocalService;
 		this.repositoryService = repositoryService;
@@ -68,6 +70,7 @@ public abstract class LiferayRepositoryBase extends LiferayBase {
 		this.dlFileVersionService = dlFileVersionService;
 		this.dlFolderLocalService = dlFolderLocalService;
 		this.dlFolderService = dlFolderService;
+		this.resourceLocalService = resourceLocalService;
 
 		initByRepositoryId(repositoryId);
 	}
@@ -81,8 +84,9 @@ public abstract class LiferayRepositoryBase extends LiferayBase {
 		DLFileVersionLocalService dlFileVersionLocalService,
 		DLFileVersionService dlFileVersionService,
 		DLFolderLocalService dlFolderLocalService,
-		DLFolderService dlFolderService, long folderId, long fileEntryId,
-		long fileVersionId) {
+		DLFolderService dlFolderService,
+		ResourceLocalService resourceLocalService, long folderId,
+		long fileEntryId, long fileVersionId) {
 
 		this.repositoryLocalService = repositoryLocalService;
 		this.repositoryService = repositoryService;
@@ -93,6 +97,7 @@ public abstract class LiferayRepositoryBase extends LiferayBase {
 		this.dlFileVersionService = dlFileVersionService;
 		this.dlFolderLocalService = dlFolderLocalService;
 		this.dlFolderService = dlFolderService;
+		this.resourceLocalService = resourceLocalService;
 
 		if (folderId != 0) {
 			initByFolderId(folderId);
@@ -116,8 +121,11 @@ public abstract class LiferayRepositoryBase extends LiferayBase {
 		if (serviceContext.isAddGroupPermissions() ||
 			serviceContext.isAddGuestPermissions()) {
 
-			dlFileEntryLocalService.addFileEntryResources(
-				dlFileEntry, serviceContext.isAddGroupPermissions(),
+			resourceLocalService.addResources(
+				dlFileEntry.getCompanyId(), dlFileEntry.getGroupId(),
+				dlFileEntry.getUserId(), DLFileEntry.class.getName(),
+				dlFileEntry.getFileEntryId(), false,
+				serviceContext.isAddGroupPermissions(),
 				serviceContext.isAddGuestPermissions());
 		}
 		else {
@@ -127,8 +135,11 @@ public abstract class LiferayRepositoryBase extends LiferayBase {
 					DLFileEntryConstants.getClassName());
 			}
 
-			dlFileEntryLocalService.addFileEntryResources(
-				dlFileEntry, serviceContext.getGroupPermissions(),
+			resourceLocalService.addModelResources(
+				dlFileEntry.getCompanyId(), dlFileEntry.getGroupId(),
+				dlFileEntry.getUserId(), DLFileEntry.class.getName(),
+				dlFileEntry.getFileEntryId(),
+				serviceContext.getGroupPermissions(),
 				serviceContext.getGuestPermissions());
 		}
 	}
@@ -246,6 +257,7 @@ public abstract class LiferayRepositoryBase extends LiferayBase {
 	protected DLFolderService dlFolderService;
 	protected RepositoryLocalService repositoryLocalService;
 	protected RepositoryService repositoryService;
+	protected ResourceLocalService resourceLocalService;
 
 	private long _dlFolderId;
 	private long _groupId;

@@ -209,29 +209,6 @@ public class DLFileEntryLocalServiceImpl
 		return dlFileEntry;
 	}
 
-	public void addFileEntryResources(
-			DLFileEntry dlFileEntry, boolean addGroupPermissions,
-			boolean addGuestPermissions)
-		throws PortalException, SystemException {
-
-		resourceLocalService.addResources(
-			dlFileEntry.getCompanyId(), dlFileEntry.getGroupId(),
-			dlFileEntry.getUserId(), DLFileEntry.class.getName(),
-			dlFileEntry.getFileEntryId(), false, addGroupPermissions,
-			addGuestPermissions);
-	}
-
-	public void addFileEntryResources(
-			DLFileEntry dlFileEntry, String[] groupPermissions,
-			String[] guestPermissions)
-		throws PortalException, SystemException {
-
-		resourceLocalService.addModelResources(
-			dlFileEntry.getCompanyId(), dlFileEntry.getGroupId(),
-			dlFileEntry.getUserId(), DLFileEntry.class.getName(),
-			dlFileEntry.getFileEntryId(), groupPermissions, guestPermissions);
-	}
-
 	public DLFileVersion cancelCheckOut(long userId, long fileEntryId)
 		throws PortalException, SystemException {
 
@@ -927,10 +904,6 @@ public class DLFileEntryLocalServiceImpl
 		sb.append(", title=");
 		sb.append(title);
 		sb.append(StringPool.CLOSE_CURLY_BRACE);
-
-		if (_log.isWarnEnabled()) {
-			_log.warn(sb.toString());
-		}
 
 		throw new NoSuchFileEntryException(sb.toString());
 	}

@@ -27,6 +27,8 @@ public class Time {
 
 	public static final long DAY = Time.HOUR * 24;
 
+	public static final String DURATION_FORMAT = "HH:mm:ss.SSS";
+
 	public static final long HOUR = Time.MINUTE * 60;
 
 	public static final long MINUTE = Time.SECOND * 60;
@@ -157,6 +159,10 @@ public class Time {
 		}
 
 		return s;
+	}
+
+	public static String getDuration(long milliseconds) {
+		return getSimpleDate(new Date(milliseconds), DURATION_FORMAT);
 	}
 
 	public static String getRFC822() {

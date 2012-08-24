@@ -94,7 +94,7 @@ public class AddSitePublicPageTest extends BaseTestCase {
 					try {
 						if (RuntimeVariables.replace("Manage Pages")
 												.equals(selenium.getText(
-										"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"))) {
+										"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Pages')]/a"))) {
 							break;
 						}
 					}
@@ -106,8 +106,8 @@ public class AddSitePublicPageTest extends BaseTestCase {
 
 				assertEquals(RuntimeVariables.replace("Manage Pages"),
 					selenium.getText(
-						"//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a"));
-				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[2]/a",
+						"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Pages')]/a"));
+				selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Pages')]/a",
 					RuntimeVariables.replace("Manage Pages"));
 				selenium.waitForPageToLoad("30000");
 				assertEquals(RuntimeVariables.replace("Add Page"),

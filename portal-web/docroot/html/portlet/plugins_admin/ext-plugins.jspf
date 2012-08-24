@@ -1,0 +1,83 @@
+<%--
+/**
+ * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%
+List<String> headerNames = new ArrayList<String>();
+
+headerNames.add("ext-plugin");
+if(showUndeployExtButton){
+	headerNames.add("uninstall");
+}
+
+SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, headerNames, null);
+
+SortedArrayList<String> extPluginsServletContextNames = new SortedArrayList(ExtRegistry.getServletContextNames());
+
+int total = extPluginsServletContextNames.size();
+
+searchContainer.setTotal(total);
+
+List results = ListUtil.subList(extPluginsServletContextNames, searchContainer.getStart(), searchContainer.getEnd());
+
+searchContainer.setResults(results);
+
+List resultRows = searchContainer.getResultRows();
+
+StringBundler sb = new StringBundler();
+
+for (int i = 0; i < results.size(); i++) {
+	String extPluginServletContextName = (String) results.get(i);
+
+	ResultRow row = new ResultRow(extPluginServletContextName, extPluginServletContextName, i);
+
+	// Name
+
+	row.addText(extPluginServletContextName);
+
+	// Uninstall
+	if(showUndeployExtButton){
+		if (!ExtRegistry.isStarted(extPluginServletContextName)){
+
+			sb.setIndex(0);
+			sb.append(renderResponse.getNamespace());
+			sb.append("uninstallExtPlugin('");
+			sb.append(extPluginServletContextName);
+			sb.append("');");
+
+			row.addButton("uninstall", sb.toString());
+		}
+		else {
+			row.addText(LanguageUtil.get(pageContext, "to-uninstall-the-ext-plugin,-please-undeploy-it-first"));
+		}
+	}
+
+	// Add result row
+
+	resultRows.add(row);
+}
+%>
+
+<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
+
+<c:if test="<%= showUndeployExtButton %>">
+	<aui:input name="servletContextName" type="hidden" value="" />
+	<aui:script>
+		function <portlet:namespace />uninstallExtPlugin(servletContextName) {
+			document.<portlet:namespace />fm.<portlet:namespace />servletContextName.value = servletContextName;
+			<portlet:namespace />saveServer('uninstallExtPlugin');
+		}
+	</aui:script>
+</c:if>

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -159,6 +161,20 @@ public class ExtRegistry {
 		}
 	}
 
+	public static boolean isStarted(String servletContextName) {
+		ExtRegistryInfo extRegistryInfo = _extMap.get(servletContextName);
+		if (extRegistryInfo == null) {
+			return false;
+		}
+
+		if (extRegistryInfo.getServletContext() != null) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	public static void registerExt(ServletContext servletContext)
 		throws Exception {
 
@@ -189,6 +205,11 @@ public class ExtRegistry {
 
 				Set<String> files = _readExtFiles(servletContext, resourcePath);
 
+				if (_log.isInfoEnabled()) {
+					_log.info("Registering installed ext plugin: " +
+						servletContextName);
+				}
+
 				_extMap.put(
 					servletContextName, new ExtRegistryInfo(null, files));
 			}
@@ -199,8 +220,8 @@ public class ExtRegistry {
 		_extMap.remove(servletContextName);
 	}
 
-	public static void updateRegisteredServletContext(ServletContext ctx) {
-		String servletContextName = ctx.getServletContextName();
+	public static void updateRegisteredServletContext(
+		String servletContextName, ServletContext ctx) {
 
 		if (isRegistered(servletContextName)) {
 			_extMap.get(servletContextName).setServletContext(ctx);
@@ -232,8 +253,10 @@ public class ExtRegistry {
 		return files;
 	}
 
+	private static Log _log = LogFactoryUtil.getLog(ExtRegistry.class);
+
 	private static Map<String, ExtRegistryInfo> _extMap =
-		new HashMap<String, ExtRegistryInfo>();
+		Collections.synchronizedMap(new HashMap<String, ExtRegistryInfo>());
 
 	private static class ExtRegistryInfo {
 

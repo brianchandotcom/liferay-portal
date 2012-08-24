@@ -41,7 +41,7 @@
 		String tabs3 = ParamUtil.getString(request, "tabs3");
 
 		if (tabs1.equals("plugins")) {
-			if (!tabs2.equals("portlet-plugins") && !tabs2.equals("theme-plugins") && !tabs2.equals("layout-template-plugins") && !tabs2.equals("hook-plugins") && !tabs2.equals("web-plugins")) {
+			if (!tabs2.equals("portlet-plugins") && !tabs2.equals("theme-plugins") && !tabs2.equals("layout-template-plugins") && !tabs2.equals("hook-plugins") && !tabs2.equals("web-plugins") && !tabs2.equals("ext-plugins")) {
 				tabs2 = "portlet-plugins";
 			}
 		}
@@ -108,6 +108,7 @@
 
 					boolean showEditPluginHREF = false;
 					boolean showReindexButton = true;
+					boolean showUndeployExtButton = true;
 					%>
 
 					<%@ include file="/html/portlet/plugins_admin/plugins.jspf" %>

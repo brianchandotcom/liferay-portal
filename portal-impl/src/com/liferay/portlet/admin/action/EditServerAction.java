@@ -19,6 +19,7 @@ import com.liferay.portal.captcha.CaptchaImpl;
 import com.liferay.portal.captcha.recaptcha.ReCaptchaImpl;
 import com.liferay.portal.captcha.simplecaptcha.SimpleCaptchaImpl;
 import com.liferay.portal.convert.ConvertProcess;
+import com.liferay.portal.deploy.hot.ExtHotDeployListener;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.captcha.Captcha;
@@ -191,6 +192,9 @@ public class EditServerAction extends PortletAction {
 		}
 		else if (cmd.equals("threadDump")) {
 			threadDump();
+		}
+		else if (cmd.equals("uninstallExtPlugin")) {
+			uninstallExtPlugin(actionRequest);
 		}
 		else if (cmd.equals("updateCaptcha")) {
 			updateCaptcha(actionRequest, preferences);
@@ -561,6 +565,15 @@ public class EditServerAction extends PortletAction {
 				"Thread dumps require the log level to be at least INFO for " +
 					getClass().getName());
 		}
+	}
+
+	protected void uninstallExtPlugin(ActionRequest actionRequest)
+		throws Exception {
+
+		String servletContextName = ParamUtil.getString(
+			actionRequest, "servletContextName");
+
+		ExtHotDeployListener.uninstallManually(servletContextName);
 	}
 
 	protected void updateCaptcha(

@@ -14,12 +14,18 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
+import java.io.File;
+
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -29,8 +35,32 @@ import javax.servlet.ServletContext;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Tomas Polesovsky
  */
 public class ExtRegistry {
+
+	public static final List<String> EXT_PLUGIN_JARS_GLOBAL_CL =
+		Arrays.asList(new String[] {
+			"ext-service"
+		});
+	public static final List<String> EXT_PLUGIN_JARS_PORTAL_CL =
+		Arrays.asList(new String[] {
+			"ext-impl", "ext-util-bridges", "ext-util-java", "ext-util-taglib"
+		});
+	public static final List<String> IGNORED_FILES =
+		Arrays.asList(new String[] {
+			"log4j.dtd", "service.xml", "sql"+File.separator
+		});
+	public static final List<String> SUPPORTED_MERGING_FILES =
+		Arrays.asList(new String[] {
+			"tiles-defs-ext.xml", "struts-config-ext.xml",
+			"ext-model-hints.xml", "ext-spring.xml", "ext-hbm.xml",
+			"liferay-portlet-ext.xml", "liferay-look-and-feel-ext.xml",
+			"liferay-layout-templates-ext.xml", "portlet-ext.xml",
+			"liferay-display-ext.xml", "remoting-servlet-ext.xml",
+			"portal-log4j-ext.xml", "content"+File.separator+"Language-ext",
+			"web.xml", "portal-ext.properties"
+		});
 
 	public static Map<String, Set<String>> getConflicts(
 			ServletContext servletContext)
@@ -43,9 +73,11 @@ public class ExtRegistry {
 
 		Map<String, Set<String>> conflicts = new HashMap<String, Set<String>>();
 
-		for (Map.Entry<String, Set<String>> entry : _extMap.entrySet()) {
-			String curServletContextName = entry.getKey();
-			Set<String> curFiles = entry.getValue();
+		for (ExtRegistryInfo extRegistryInfo : _extMap.values()) {
+			String curServletContextName = extRegistryInfo.getServletContext()
+				.getServletContextName();
+
+			Set<String> curFiles = extRegistryInfo.getFiles();
 
 			for (String file : files) {
 				if (!curFiles.contains(file)) {
@@ -68,12 +100,74 @@ public class ExtRegistry {
 		return conflicts;
 	}
 
+	public static Set<String> getFiles(String servletContextName) {
+		return Collections.unmodifiableSet(_extMap.get(servletContextName)
+			.getFiles());
+	}
+
+	public static ServletContext getServletContext(String servletContextName) {
+		if (!isRegistered(servletContextName)) {
+			return null;
+		}
+
+		return _extMap.get(servletContextName).getServletContext();
+	}
+
 	public static Set<String> getServletContextNames() {
 		return Collections.unmodifiableSet(_extMap.keySet());
 	}
 
+	public static Set<ServletContext> getServletContexts() {
+		Set<ServletContext> result = new HashSet<ServletContext>(
+			_extMap.size());
+
+		for (ExtRegistryInfo info : _extMap.values()) {
+			result.add(info.getServletContext());
+		}
+
+		return Collections.unmodifiableSet(result);
+	}
+
+	public static boolean isIgnoredFile(String name) {
+		if (isMergedFile(name)) {
+			return true;
+		}
+
+		for (String ignoredFile : IGNORED_FILES) {
+			if (name.contains(ignoredFile)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public static boolean isMergedFile(String name) {
+		for (String mergedFile : SUPPORTED_MERGING_FILES) {
+			if (name.contains(mergedFile)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	public static boolean isRegistered(String servletContextName) {
 		if (_extMap.containsKey(servletContextName)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	public static boolean isStarted(String servletContextName) {
+		ExtRegistryInfo extRegistryInfo = _extMap.get(servletContextName);
+		if (extRegistryInfo == null) {
+			return false;
+		}
+
+		if (extRegistryInfo.getServletContext() != null) {
 			return true;
 		}
 		else {
@@ -89,7 +183,8 @@ public class ExtRegistry {
 		Set<String> files = _readExtFiles(
 			servletContext, "/WEB-INF/ext-" + servletContextName + ".xml");
 
-		_extMap.put(servletContextName, files);
+		_extMap.put(
+			servletContextName, new ExtRegistryInfo(servletContext, files));
 	}
 
 	public static void registerPortal(ServletContext servletContext)
@@ -110,8 +205,26 @@ public class ExtRegistry {
 
 				Set<String> files = _readExtFiles(servletContext, resourcePath);
 
-				_extMap.put(servletContextName, files);
+				if (_log.isInfoEnabled()) {
+					_log.info("Registering installed ext plugin: " +
+						servletContextName);
+				}
+
+				_extMap.put(
+					servletContextName, new ExtRegistryInfo(null, files));
 			}
+		}
+	}
+
+	public static void unregisterExt(String servletContextName) {
+		_extMap.remove(servletContextName);
+	}
+
+	public static void updateRegisteredServletContext(
+		String servletContextName, ServletContext ctx) {
+
+		if (isRegistered(servletContextName)) {
+			_extMap.get(servletContextName).setServletContext(ctx);
 		}
 	}
 
@@ -131,13 +244,46 @@ public class ExtRegistry {
 		List<Element> fileElements = filesElement.elements("file");
 
 		for (Element fileElement : fileElements) {
-			files.add(fileElement.getText());
+			String fileName = fileElement.getText();
+			if (!isIgnoredFile(fileName)) {
+				files.add(fileName);
+			}
 		}
 
 		return files;
 	}
 
-	private static Map<String, Set<String>> _extMap =
-		new HashMap<String, Set<String>>();
+	private static Log _log = LogFactoryUtil.getLog(ExtRegistry.class);
 
+	private static Map<String, ExtRegistryInfo> _extMap =
+		Collections.synchronizedMap(new HashMap<String, ExtRegistryInfo>());
+
+	private static class ExtRegistryInfo {
+
+		public ExtRegistryInfo(
+			ServletContext servletContext, Set<String> files) {
+
+			this.servletContext = servletContext;
+			this.files = files;
+		}
+
+		public Set<String> getFiles() {
+			return files;
+		}
+
+		public ServletContext getServletContext() {
+			return servletContext;
+		}
+
+		public void setFiles(Set<String> files) {
+			this.files = files;
+		}
+
+		public void setServletContext(ServletContext servletContext) {
+			this.servletContext = servletContext;
+		}
+
+		private Set<String> files;
+		private ServletContext servletContext;
+	}
 }

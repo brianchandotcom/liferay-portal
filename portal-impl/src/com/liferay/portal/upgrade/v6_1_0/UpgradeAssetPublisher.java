@@ -17,14 +17,13 @@ package com.liferay.portal.upgrade.v6_1_0;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
-
-import edu.emory.mathcs.backport.java.util.Arrays;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -34,6 +33,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.portlet.PortletPreferences;
+
 public class UpgradeAssetPublisher extends BaseUpgradePortletPreferences {
 
 	protected long getIGImageFileEntryType(long companyId) throws Exception {
@@ -87,31 +87,32 @@ public class UpgradeAssetPublisher extends BaseUpgradePortletPreferences {
 			PortletPreferencesFactoryUtil.fromXML(
 				companyId, ownerId, ownerType, plid, portletId, xml);
 
-		String classNameIds[] = portletPreferences.getValues(
+		String classNameIdsPreference[] = portletPreferences.getValues(
 			"classNameIds", null);
 
-		if (Validator.isNotNull(classNameIds)) {
+		if (Validator.isNotNull(classNameIdsPreference)) {
 			long igClassNameId = PortalUtil.getClassNameId(
 				"com.liferay.portlet.imagegallery.model.IGImage");
 
 			long dlClassNameId = PortalUtil.getClassNameId(
 				DLFileEntry.class.getName());
 
-			List<String> list = new LinkedList<String>(
-				Arrays.asList(classNameIds));
+			List<String> classNameIds = ListUtil.fromArray(
+				classNameIdsPreference);
 
-			int index = list.indexOf(String.valueOf(igClassNameId));
+			int index = classNameIds.indexOf(String.valueOf(igClassNameId));
 
 			if (index >= 0) {
-				list.remove(index);
+				classNameIds.remove(index);
 
-				if (!list.contains(String.valueOf(dlClassNameId))) {
-					list.add(index, String.valueOf(dlClassNameId));
+				if (!classNameIds.contains(String.valueOf(dlClassNameId))) {
+					classNameIds.add(index, String.valueOf(dlClassNameId));
 				}
 			}
 
 			portletPreferences.setValues(
-				"classNameIds", list.toArray(new String[list.size()]));
+				"classNameIds",
+				classNameIds.toArray(new String[classNameIds.size()]));
 
 			long fileEntryTypeId = getIGImageFileEntryType(companyId);
 
@@ -125,4 +126,5 @@ public class UpgradeAssetPublisher extends BaseUpgradePortletPreferences {
 
 		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
 	}
+
 }

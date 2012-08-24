@@ -1730,7 +1730,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 			// Subscriptions
 
-			notifySubscribers(message, serviceContext);
+			notifySubscribers((MBMessage)message.clone(), serviceContext);
 
 			// Indexer
 

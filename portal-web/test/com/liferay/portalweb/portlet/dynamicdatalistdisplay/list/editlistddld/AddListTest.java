@@ -22,8 +22,9 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
  */
 public class AddListTest extends BaseTestCase {
 	public void testAddList() throws Exception {
-		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -31,7 +32,28 @@ public class AddListTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("link=Control Panel")) {
+				if (selenium.isElementPresent(
+							"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("Go to"),
+			selenium.getText("//li[@id='_145_mySites']/a/span"));
+		selenium.mouseOver("//li[@id='_145_mySites']/a/span");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("link=Control Panel")) {
 					break;
 				}
 			}
@@ -79,6 +101,23 @@ public class AddListTest extends BaseTestCase {
 			}
 
 			try {
+				if (selenium.isElementPresent(
+							"//script[contains(@src,'/liferay/search_container.js')]")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
 				if (selenium.isVisible("//input[@name='_166_keywords']")) {
 					break;
 				}
@@ -94,17 +133,23 @@ public class AddListTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'Data Definition')]/td[2]/a"));
 		assertEquals(RuntimeVariables.replace("Data Definition"),
-			selenium.getText("//tr[3]/td[2]/a"));
-		selenium.clickAt("//tr[3]/td[2]/a",
+			selenium.getText("//tr[contains(.,'Data Definition')]/td[3]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'Data Definition')]/td[4]/a"));
+		selenium.clickAt("//tr[contains(.,'Data Definition')]/td[3]/a",
 			RuntimeVariables.replace("Data Definition"));
 		selenium.selectFrame("relative=top");
+		assertEquals(RuntimeVariables.replace("Data Definition"),
+			selenium.getText(
+				"//span[contains(@id,'ddmStructureNameDisplay')]/a"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace(
 				"Your request completed successfully."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
-		selenium.selectFrame("relative=top");
 	}
 }

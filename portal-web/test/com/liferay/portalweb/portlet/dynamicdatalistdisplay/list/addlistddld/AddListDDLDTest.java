@@ -23,24 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddListDDLDTest extends BaseTestCase {
 	public void testAddListDDLD() throws Exception {
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"link=Dynamic Data List Display Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.clickAt("link=Dynamic Data List Display Test Page",
 			RuntimeVariables.replace("Dynamic Data List Display Test Page"));
 		selenium.waitForPageToLoad("30000");
@@ -77,6 +59,23 @@ public class AddListDDLDTest extends BaseTestCase {
 			}
 
 			try {
+				if (selenium.isElementPresent(
+							"//script[contains(@src,'/liferay/navigation_interaction.js')]")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
 				if (selenium.isVisible("//input[@name='_166_keywords']")) {
 					break;
 				}
@@ -92,10 +91,18 @@ public class AddListDDLDTest extends BaseTestCase {
 		selenium.clickAt("//input[@value='Search']",
 			RuntimeVariables.replace("Search"));
 		selenium.waitForPageToLoad("30000");
-		assertTrue(selenium.isPartialText("//tr[3]/td[2]/a", "Data Definition"));
-		selenium.clickAt("//tr[3]/td[2]/a",
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'Data Definition')]/td[2]/a"));
+		assertEquals(RuntimeVariables.replace("Data Definition"),
+			selenium.getText("//tr[contains(.,'Data Definition')]/td[3]/a"));
+		assertTrue(selenium.isVisible(
+				"//tr[contains(.,'Data Definition')]/td[4]/a"));
+		selenium.clickAt("//tr[contains(.,'Data Definition')]/td[3]/a",
 			RuntimeVariables.replace("Data Definition"));
 		selenium.selectFrame("relative=top");
+		assertEquals(RuntimeVariables.replace("Data Definition"),
+			selenium.getText(
+				"//span[contains(@id,'ddmStructureNameDisplay')]/a"));
 		selenium.clickAt("//input[@value='Save']",
 			RuntimeVariables.replace("Save"));
 		selenium.waitForPageToLoad("30000");

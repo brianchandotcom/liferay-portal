@@ -23,28 +23,12 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class ViewSelectListDDLDTest extends BaseTestCase {
 	public void testViewSelectListDDLD() throws Exception {
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isVisible(
-							"link=Dynamic Data List Display Test Page")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.clickAt("link=Dynamic Data List Display Test Page",
 			RuntimeVariables.replace("Dynamic Data List Display Test Page"));
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("List Name"),
 			selenium.getText("//h1[@class='header-title']"));
+		assertEquals(RuntimeVariables.replace("No records were found."),
+			selenium.getText("//div[@class='portlet-msg-info']"));
 	}
 }

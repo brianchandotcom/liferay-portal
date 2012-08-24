@@ -1169,7 +1169,7 @@
 	</library>
 	<library>
 		<file-name>portal/bnd.jar</file-name>
-		<version>1.44.0</version>
+		<version>1.50.0</version>
 		<project-name>Bnd</project-name>
 		<project-url>http://www.aqute.biz/Bnd</project-url>
 		<licenses>

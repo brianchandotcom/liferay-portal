@@ -230,7 +230,12 @@ public class LayoutTypePortletImpl
 				return null;
 			}
 
-			portletId = PortletConstants.assemblePortletId(portletId, userId);
+			if (PortletConstants.hasInstanceId(portletId) &&
+				hasUserPreferences()) {
+
+				portletId = PortletConstants.assemblePortletId(
+					portletId, userId);
+			}
 		}
 
 		String columnValue = StringPool.BLANK;
@@ -1516,7 +1521,10 @@ public class LayoutTypePortletImpl
 		String[] columnValues = StringUtil.split(columnValue);
 
 		for (String nonstaticPortletId : columnValues) {
-			if (nonstaticPortletId.equals(portletId)) {
+			if (nonstaticPortletId.equals(portletId) ||
+				PortletConstants.getRootPortletId(
+					nonstaticPortletId).equals(portletId)) {
+
 				return true;
 			}
 		}
@@ -1534,16 +1542,18 @@ public class LayoutTypePortletImpl
 			PropsKeys.LAYOUT_STATIC_PORTLETS_END + columnId);
 
 		for (String staticPortletId : staticPortletIdsStart) {
-			if (PortletConstants.hasIdenticalRootPortletId(
-					staticPortletId, portletId)) {
+			if (staticPortletId.equals(portletId) ||
+				PortletConstants.getRootPortletId(
+					staticPortletId).equals(portletId)) {
 
 				return true;
 			}
 		}
 
 		for (String staticPortletId : staticPortletIdsEnd) {
-			if (PortletConstants.hasIdenticalRootPortletId(
-					staticPortletId, portletId)) {
+			if (staticPortletId.equals(portletId) ||
+				PortletConstants.getRootPortletId(
+					staticPortletId).equals(portletId)) {
 
 				return true;
 			}

@@ -41,7 +41,7 @@ public class TemplateResourceCacheListener implements CacheListener {
 			PortalCache portalCache, Serializable key, Object value)
 		throws PortalCacheException {
 
-		if (value instanceof TemplateResource) {
+		if (value != null) {
 			TemplateResource templateResource = (TemplateResource)value;
 
 			_portalCache.remove(templateResource);
@@ -52,7 +52,7 @@ public class TemplateResourceCacheListener implements CacheListener {
 			PortalCache portalCache, Serializable key, Object value)
 		throws PortalCacheException {
 
-		if (value instanceof TemplateResource) {
+		if (value != null) {
 			TemplateResource templateResource = (TemplateResource)value;
 
 			_portalCache.remove(templateResource);
@@ -68,7 +68,7 @@ public class TemplateResourceCacheListener implements CacheListener {
 			PortalCache portalCache, Serializable key, Object value)
 		throws PortalCacheException {
 
-		if (value instanceof TemplateResource) {
+		if (value != null) {
 			TemplateResource templateResource = (TemplateResource)value;
 
 			_portalCache.remove(templateResource);
@@ -79,7 +79,7 @@ public class TemplateResourceCacheListener implements CacheListener {
 			PortalCache portalCache, Serializable key, Object value)
 		throws PortalCacheException {
 
-		if (value instanceof TemplateResource) {
+		if (value != null) {
 			TemplateResource templateResource = (TemplateResource)value;
 
 			_portalCache.remove(templateResource);

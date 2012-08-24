@@ -23,15 +23,9 @@ Object[] objArray = (Object[])row.getObject();
 
 String[] queryTerms = (String[])objArray[0];
 Document doc = (Document)objArray[1];
-String snippet = (String)objArray[2];
+Summary summary = (Summary)objArray[2];
 
-String content = snippet;
-
-if (Validator.isNull(snippet)) {
-	content = StringUtil.shorten(doc.get(locale, Field.CONTENT), 200);
-}
-
-content = StringUtil.highlight(content, queryTerms);
+String content = StringUtil.highlight(summary.getContent(), queryTerms);
 
 long articleGroupId = GetterUtil.getLong(doc.get(Field.GROUP_ID));
 String articleId = doc.get("articleId");

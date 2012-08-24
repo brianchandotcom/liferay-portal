@@ -28,8 +28,6 @@ import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
@@ -177,19 +175,20 @@ public class DDLIndexer extends BaseIndexer {
 
 		String title = getTitle(recordSetId, locale);
 
-		String content = snippet;
-
-		if (Validator.isNull(snippet)) {
-			content = StringUtil.shorten(document.get(Field.CONTENT), 200);
-		}
-
 		String recordId = document.get(Field.ENTRY_CLASS_PK);
 
 		portletURL.setParameter(
 			"struts_action", "/dynamic_data_lists/view_record");
 		portletURL.setParameter("recordId", recordId);
 
-		return new Summary(title, content, portletURL);
+		Summary summary = createSummary(
+			document, Field.TITLE, Field.DESCRIPTION);
+
+		summary.setMaxContentLength(200);
+		summary.setPortletURL(portletURL);
+		summary.setTitle(title);
+
+		return summary;
 	}
 
 	@Override

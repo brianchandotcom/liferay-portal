@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.calendar.model.CalEvent;
@@ -98,20 +96,18 @@ public class CalIndexer extends BaseIndexer {
 		Document document, Locale locale, String snippet,
 		PortletURL portletURL) {
 
-		String title = document.get(Field.TITLE);
-
-		String content = snippet;
-
-		if (Validator.isNull(snippet)) {
-			content = StringUtil.shorten(document.get(Field.DESCRIPTION), 200);
-		}
-
 		String eventId = document.get(Field.ENTRY_CLASS_PK);
 
 		portletURL.setParameter("struts_action", "/calendar/view_event");
 		portletURL.setParameter("eventId", eventId);
 
-		return new Summary(title, content, portletURL);
+		Summary summary = createSummary(
+			document, Field.TITLE, Field.DESCRIPTION);
+
+		summary.setMaxContentLength(200);
+		summary.setPortletURL(portletURL);
+
+		return summary;
 	}
 
 	@Override

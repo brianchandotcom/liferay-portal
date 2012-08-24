@@ -64,8 +64,7 @@ public class QueryConfig implements Serializable {
 
 	public boolean isHighlightEnabled() {
 		return GetterUtil.getBoolean(
-			_attributes.get(PropsKeys.INDEX_SEARCH_HIGHLIGHT_ENABLED),
-			_INDEX_SEARCH_HIGHLIGHT_ENABLED);
+			_attributes.get(PropsKeys.INDEX_SEARCH_HIGHLIGHT_ENABLED), false);
 	}
 
 	public boolean isScoreEnabled() {
@@ -83,8 +82,13 @@ public class QueryConfig implements Serializable {
 	}
 
 	public void setHighlightEnabled(boolean highlightEnabled) {
-		_attributes.put(
-			PropsKeys.INDEX_SEARCH_HIGHLIGHT_ENABLED, highlightEnabled);
+		if (_INDEX_SEARCH_HIGHLIGHT_ENABLED) {
+			_attributes.put(
+				PropsKeys.INDEX_SEARCH_HIGHLIGHT_ENABLED, highlightEnabled);
+		}
+		else {
+			_attributes.put(PropsKeys.INDEX_SEARCH_HIGHLIGHT_ENABLED, false);
+		}
 	}
 
 	public void setHighlightFragmentSize(int highlightFragmentSize) {

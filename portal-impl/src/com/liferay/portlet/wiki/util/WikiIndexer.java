@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
@@ -215,21 +214,19 @@ public class WikiIndexer extends BaseIndexer {
 		Document document, Locale locale, String snippet,
 		PortletURL portletURL) {
 
-		String title = document.get(Field.TITLE);
+		Summary summary = createSummary(document, Field.TITLE, Field.CONTENT);
 
-		String content = snippet;
-
-		if (Validator.isNull(snippet)) {
-			content = StringUtil.shorten(document.get(Field.CONTENT), 200);
-		}
+		summary.setMaxContentLength(200);
 
 		String nodeId = document.get("nodeId");
 
 		portletURL.setParameter("struts_action", "/wiki/view");
 		portletURL.setParameter("nodeId", nodeId);
-		portletURL.setParameter("title", title);
+		portletURL.setParameter("title", summary.getTitle());
 
-		return new Summary(title, content, portletURL);
+		summary.setPortletURL(portletURL);
+
+		return summary;
 	}
 
 	@Override

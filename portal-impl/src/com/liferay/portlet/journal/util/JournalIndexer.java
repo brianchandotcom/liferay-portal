@@ -297,13 +297,26 @@ public class JournalIndexer extends BaseIndexer {
 		Document document, Locale locale, String snippet,
 		PortletURL portletURL) {
 
-		String title = document.get(locale, Field.TITLE);
+		Locale snippetLocale = getSnippetLocale(document, locale);
 
-		String content = snippet;
+		String prefix = Field.SNIPPET + StringPool.UNDERLINE;
 
-		if (Validator.isNull(snippet)) {
-			content = StringUtil.shorten(
-				document.get(locale, Field.CONTENT), 200);
+		String title = document.get(
+			snippetLocale, prefix + Field.TITLE, Field.TITLE);
+
+		String content = document.get(
+			snippetLocale, prefix + Field.DESCRIPTION, prefix + Field.CONTENT);
+
+		if (Validator.isBlank(content)) {
+			content = document.get(locale, Field.DESCRIPTION, Field.CONTENT);
+
+			if (Validator.isBlank(content)) {
+				content = document.get(Field.DESCRIPTION, Field.CONTENT);
+			}
+		}
+
+		if (content.length() > 200) {
+			content = StringUtil.shorten(content, 200);
 		}
 
 		String groupId = document.get(Field.GROUP_ID);
@@ -315,7 +328,7 @@ public class JournalIndexer extends BaseIndexer {
 		portletURL.setParameter("articleId", articleId);
 		portletURL.setParameter("version", version);
 
-		return new Summary(title, content, portletURL);
+		return new Summary(snippetLocale, title, content, portletURL);
 	}
 
 	@Override

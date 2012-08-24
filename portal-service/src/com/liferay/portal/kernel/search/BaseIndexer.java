@@ -899,6 +899,43 @@ public abstract class BaseIndexer implements Indexer {
 		return fullQuery;
 	}
 
+	protected Summary createLocalizedSummary(Document document, Locale locale) {
+		return createLocalizedSummary(
+			document, locale, Field.TITLE, Field.CONTENT);
+	}
+
+	protected Summary createLocalizedSummary(
+		Document document, Locale locale, String titleField,
+		String contentField) {
+
+		Locale snippetLocale = getSnippetLocale(document, locale);
+
+		String prefix = Field.SNIPPET + StringPool.UNDERLINE;
+
+		String title = document.get(
+			snippetLocale, prefix + titleField, titleField);
+
+		String content = document.get(
+			snippetLocale, prefix + contentField, contentField);
+
+		return new Summary(snippetLocale, title, content, null);
+	}
+
+	protected Summary createSummary(Document document) {
+		return createSummary(document, Field.TITLE, Field.CONTENT);
+	}
+
+	protected Summary createSummary(
+		Document document, String titleField, String contentField) {
+
+		String prefix = Field.SNIPPET + StringPool.UNDERLINE;
+
+		String title = document.get(prefix + titleField, titleField);
+		String content = document.get(prefix + contentField, contentField);
+
+		return new Summary(title, content, null);
+	}
+
 	protected void deleteDocument(long companyId, long field1)
 		throws Exception {
 
@@ -1183,6 +1220,26 @@ public abstract class BaseIndexer implements Indexer {
 	}
 
 	protected abstract String getPortletId(SearchContext searchContext);
+
+	protected Locale getSnippetLocale(Document document, Locale locale) {
+		String prefix = Field.SNIPPET + StringPool.UNDERLINE;
+
+		String localizedContentName =
+			prefix + DocumentImpl.getLocalizedName(locale, Field.CONTENT);
+		String localizedDescriptionName =
+			prefix + DocumentImpl.getLocalizedName(locale, Field.DESCRIPTION);
+		String localizedTitleName =
+			prefix + DocumentImpl.getLocalizedName(locale, Field.TITLE);
+
+		if ((document.getField(localizedContentName) != null) ||
+			(document.getField(localizedDescriptionName) != null) ||
+			(document.getField(localizedTitleName) != null)) {
+
+			return locale;
+		}
+
+		return null;
+	}
 
 	protected void populateAddresses(
 			Document document, List<Address> addresses, long regionId,

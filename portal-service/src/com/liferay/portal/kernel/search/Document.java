@@ -173,9 +173,15 @@ public interface Document extends Serializable {
 
 	public String get(Locale locale, String name);
 
+	public String get(Locale locale, String name, String defaultName);
+
 	public String get(String name);
 
+	public String get(String name, String defaultName);
+
 	public Date getDate(String name) throws ParseException;
+
+	public Field getField(String name);
 
 	public Map<String, Field> getFields();
 

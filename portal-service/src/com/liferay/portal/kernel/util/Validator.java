@@ -258,6 +258,18 @@ public class Validator {
 		}
 	}
 
+	public static boolean isBlank(String s) {
+		if (s == null) {
+			return true;
+		}
+
+		if (s.length() == 0) {
+			return true;
+		}
+
+		return false;
+	}
+
 	/**
 	 * Returns <code>true</code> if the character is an upper or lower case
 	 * English letter.

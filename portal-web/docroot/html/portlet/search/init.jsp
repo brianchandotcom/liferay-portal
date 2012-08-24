@@ -24,6 +24,7 @@ page import="com.liferay.portal.kernel.search.Indexer" %><%@
 page import="com.liferay.portal.kernel.search.IndexerRegistryUtil" %><%@
 page import="com.liferay.portal.kernel.search.OpenSearch" %><%@
 page import="com.liferay.portal.kernel.search.OpenSearchUtil" %><%@
+page import="com.liferay.portal.kernel.search.QueryConfig" %><%@
 page import="com.liferay.portal.kernel.search.SearchContext" %><%@
 page import="com.liferay.portal.kernel.search.SearchContextFactory" %><%@
 page import="com.liferay.portal.kernel.search.Summary" %><%@

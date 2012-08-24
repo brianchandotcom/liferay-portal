@@ -49,6 +49,7 @@
 			List<String> headerNames = new ArrayList<String>();
 
 			headerNames.add("#");
+			headerNames.add("language");
 			headerNames.add("name");
 			headerNames.add("content");
 
@@ -62,6 +63,12 @@
 				searchContext.setAttribute("articleType", type);
 				searchContext.setGroupIds(null);
 				searchContext.setKeywords(keywords);
+
+				QueryConfig queryConfig = new QueryConfig();
+
+				queryConfig.setHighlightEnabled(true);
+
+				searchContext.setQueryConfig(queryConfig);
 
 				Hits results = indexer.search(searchContext);
 
@@ -82,17 +89,19 @@
 				for (int i = 0; i < results.getDocs().length; i++) {
 					Document doc = results.doc(i);
 
-					String snippet = doc.get(locale, Field.CONTENT);
+					Summary summary = indexer.getSummary(doc, locale, StringPool.BLANK, portletURL);
 
-					ResultRow row = new ResultRow(new Object[] {queryTerms, doc, snippet}, i, i);
+					ResultRow row = new ResultRow(new Object[] {queryTerms, doc, summary}, i, i);
 
 					// Position
 
 					row.addText(searchContainer.getStart() + i + 1 + StringPool.PERIOD);
 
+					row.addJSP("/html/portlet/journal_content_search/article_language.jsp");
+
 					// Title
 
-					String title = HtmlUtil.escape(doc.get(locale, Field.TITLE));
+					String title = HtmlUtil.escape(summary.getTitle());
 
 					title = StringUtil.highlight(title, queryTerms);
 

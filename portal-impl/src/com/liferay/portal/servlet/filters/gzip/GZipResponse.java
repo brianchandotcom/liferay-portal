@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.servlet.MetaInfoCacheServletResponse;
 import com.liferay.portal.kernel.servlet.ServletOutputStreamAdapter;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
@@ -34,14 +35,13 @@ import java.util.zip.GZIPOutputStream;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletResponseWrapper;
 
 /**
  * @author Jayson Falkner
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
  */
-public class GZipResponse extends HttpServletResponseWrapper {
+public class GZipResponse extends MetaInfoCacheServletResponse {
 
 	public GZipResponse(
 		HttpServletRequest request, HttpServletResponse response) {
@@ -56,12 +56,32 @@ public class GZipResponse extends HttpServletResponseWrapper {
 
 		_response.setContentLength(-1);
 
+		// Don't try to move this header setting to finishResponse(), setting
+		// header after committed is a NOP. finishResponse() may be too late.
 		_response.addHeader(HttpHeaders.CONTENT_ENCODING, _GZIP);
 
 		_firefox = BrowserSnifferUtil.isFirefox(request);
 	}
 
+	@Override
 	public void finishResponse() throws IOException {
+		if (!isCommitted()) {
+			// Not committed yet
+
+			if ((_servletOutputStream == null) ||
+				((_servletOutputStream != null) &&
+					(_unsyncByteArrayOutputStream != null) &&
+					(_unsyncByteArrayOutputStream.size() == 0))) {
+				// No content has been gzipped yet
+
+				// Reset wrapped response to clear out gzip header
+				_response.reset();
+
+				// Reapply meta info
+				super.finishResponse();
+			}
+		}
+
 		try {
 			if (_printWriter != null) {
 				_printWriter.close();
@@ -94,7 +114,7 @@ public class GZipResponse extends HttpServletResponseWrapper {
 		}
 
 		if (_servletOutputStream == null) {
-			if (_gZipContentType) {
+			if (_isGZipContentType()) {
 				_servletOutputStream = _response.getOutputStream();
 			}
 			else {
@@ -141,19 +161,6 @@ public class GZipResponse extends HttpServletResponseWrapper {
 	public void setContentLength(int contentLength) {
 	}
 
-	@Override
-	public void setContentType(String contentType) {
-		super.setContentType(contentType);
-
-		if (contentType != null) {
-			if (contentType.equals(ContentTypes.APPLICATION_GZIP) ||
-				contentType.equals(ContentTypes.APPLICATION_X_GZIP)) {
-
-				_gZipContentType = true;
-			}
-		}
-	}
-
 	private ServletOutputStream _createGZipServletOutputStream(
 			OutputStream outputStream)
 		throws IOException {
@@ -169,12 +176,25 @@ public class GZipResponse extends HttpServletResponseWrapper {
 		return new ServletOutputStreamAdapter(gzipOutputStream);
 	}
 
+	private boolean _isGZipContentType() {
+		String contentType = getContentType();
+
+		if (contentType != null) {
+			if (contentType.equals(ContentTypes.APPLICATION_GZIP) ||
+				contentType.equals(ContentTypes.APPLICATION_X_GZIP)) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private static final String _GZIP = "gzip";
 
 	private static Log _log = LogFactoryUtil.getLog(GZipResponse.class);
 
 	private boolean _firefox;
-	private boolean _gZipContentType;
 	private PrintWriter _printWriter;
 	private HttpServletResponse _response;
 	private ServletOutputStream _servletOutputStream;

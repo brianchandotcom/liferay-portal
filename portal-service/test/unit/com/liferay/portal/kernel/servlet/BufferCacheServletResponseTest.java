@@ -914,7 +914,7 @@ public class BufferCacheServletResponseTest extends TestCase {
 		assertEquals(0, charBuffer.limit());
 	}
 
-	public void testSetBufferSize() {
+	public void testSetBufferSize() throws IOException {
 		StubHttpServletResponse stubHttpServletResponse =
 			new StubHttpServletResponse() {
 

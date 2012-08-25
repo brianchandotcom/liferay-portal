@@ -14,7 +14,27 @@
 	<td></td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
 	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_mySites']/a/span</td>
+	<td>Go to</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>link=Site Name</td>
 	<td>Site Name</td>
 </tr>
@@ -29,6 +49,31 @@
 	<td>Web Content Display Test Page</td>
 </tr>
 <tr>
+	<td>clickAt</td>
+	<td>//div[@id='dockbar']</td>
+	<td>Dockbar</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]</td>
+	<td>AUI Editable Min</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//li[@id='_145_addContent']/a/span</td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>mouseOver</td>
+	<td>//li[@id='_145_addContent']/a/span</td>
+	<td>Add</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//a[@id='_145_addApplication']</td>
+	<td>More</td>
+</tr>
+<tr>
 	<td>assertPartialText</td>
 	<td>//a[@id='_145_addApplication']</td>
 	<td>More</td>
@@ -40,13 +85,38 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/aui/aui-live-search/aui-live-search-min.js')]</td>
+	<td>AUI Live Search Min</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//input[@id='layout_configuration_content']</td>
+	<td>Search applications (searches as you type).</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@id='layout_configuration_content']</td>
+	<td>w</td>
+</tr>
+<tr>
+	<td>keyDown</td>
+	<td>//input[@id='layout_configuration_content']</td>
+	<td>\13</td>
+</tr>
+<tr>
+	<td>keyUp</td>
+	<td>//input[@id='layout_configuration_content']</td>
+	<td>\13</td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>//div[@title='Web Content Display']/p/a</td>
-	<td>Web Content Display</td>
+	<td>Add</td>
 </tr>
 <tr>
 	<td>clickAt</td>
 	<td>//div[@title='Web Content Display']/p/a</td>
-	<td>Web Content Display</td>
+	<td>Add</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -58,7 +128,6 @@
 	<td>//section</td>
 	<td>Portlet</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

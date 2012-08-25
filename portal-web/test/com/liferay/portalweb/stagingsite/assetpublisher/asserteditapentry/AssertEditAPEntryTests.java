@@ -16,6 +16,16 @@ package com.liferay.portalweb.stagingsite.assetpublisher.asserteditapentry;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.AddSiteTest;
+import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.TearDownSiteTest;
+import com.liferay.portalweb.stagingsite.assetpublisher.assertcannoteditapentry.AddBlogsEntryTest;
+import com.liferay.portalweb.stagingsite.assetpublisher.assertcannoteditapentry.AddPageAPTest;
+import com.liferay.portalweb.stagingsite.assetpublisher.assertcannoteditapentry.AddPageBlogsTest;
+import com.liferay.portalweb.stagingsite.assetpublisher.assertcannoteditapentry.AddPortletAPTest;
+import com.liferay.portalweb.stagingsite.assetpublisher.assertcannoteditapentry.AddPortletBlogsTest;
+import com.liferay.portalweb.stagingsite.assetpublisher.assertcannoteditapentry.AddSitePublicPageTest;
+import com.liferay.portalweb.stagingsite.assetpublisher.assertcannoteditapentry.AssertCannotEditAPEntryTest;
+import com.liferay.portalweb.stagingsite.sites.site.activatestaging.ActivateStagingTest;
+import com.liferay.portalweb.stagingsite.sites.site.deactivatestaging.DeactivateStagingTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -29,8 +39,8 @@ public class AssertEditAPEntryTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddSiteTest.class);
 		testSuite.addTestSuite(AddSitePublicPageTest.class);
 		testSuite.addTestSuite(AddPageAPTest.class);
-		testSuite.addTestSuite(AddPortletAPTest.class);
 		testSuite.addTestSuite(AddPageBlogsTest.class);
+		testSuite.addTestSuite(AddPortletAPTest.class);
 		testSuite.addTestSuite(AddPortletBlogsTest.class);
 		testSuite.addTestSuite(AddBlogsEntryTest.class);
 		testSuite.addTestSuite(AssertEditAPEntryTest.class);

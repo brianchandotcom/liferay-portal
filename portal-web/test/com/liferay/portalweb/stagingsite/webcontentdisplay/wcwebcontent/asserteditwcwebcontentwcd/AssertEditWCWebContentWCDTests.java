@@ -16,6 +16,14 @@ package com.liferay.portalweb.stagingsite.webcontentdisplay.wcwebcontent.asserte
 
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.AddSiteTest;
+import com.liferay.portalweb.portal.controlpanel.sites.site.addsite.TearDownSiteTest;
+import com.liferay.portalweb.stagingsite.sites.site.activatestaging.ActivateStagingTest;
+import com.liferay.portalweb.stagingsite.sites.site.deactivatestaging.DeactivateStagingTest;
+import com.liferay.portalweb.stagingsite.webcontentdisplay.wcwebcontent.assertcannoteditwcwebcontentwcd.AddPageWCDTest;
+import com.liferay.portalweb.stagingsite.webcontentdisplay.wcwebcontent.assertcannoteditwcwebcontentwcd.AddPortletWCDTest;
+import com.liferay.portalweb.stagingsite.webcontentdisplay.wcwebcontent.assertcannoteditwcwebcontentwcd.AddSitePublicPageTest;
+import com.liferay.portalweb.stagingsite.webcontentdisplay.wcwebcontent.assertcannoteditwcwebcontentwcd.AddWCWebContentWCDTest;
+import com.liferay.portalweb.stagingsite.webcontentdisplay.wcwebcontent.assertcannoteditwcwebcontentwcd.AssertCannotEditWCWebContentWCDTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -31,6 +39,7 @@ public class AssertEditWCWebContentWCDTests extends BaseTestSuite {
 		testSuite.addTestSuite(AddPageWCDTest.class);
 		testSuite.addTestSuite(AddPortletWCDTest.class);
 		testSuite.addTestSuite(AddWCWebContentWCDTest.class);
+		testSuite.addTestSuite(AssertEditWCWebContentWCDTest.class);
 		testSuite.addTestSuite(ActivateStagingTest.class);
 		testSuite.addTestSuite(AssertCannotEditWCWebContentWCDTest.class);
 		testSuite.addTestSuite(DeactivateStagingTest.class);

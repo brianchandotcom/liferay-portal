@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.upgrade.v6_1_0.UpgradeAdminPortlets;
 import com.liferay.portal.upgrade.v6_1_0.UpgradeAsset;
+import com.liferay.portal.upgrade.v6_1_0.UpgradeAssetPublisher;
 import com.liferay.portal.upgrade.v6_1_0.UpgradeBlogs;
 import com.liferay.portal.upgrade.v6_1_0.UpgradeCamelCasePortletPreferences;
 import com.liferay.portal.upgrade.v6_1_0.UpgradeCountry;
@@ -79,6 +80,7 @@ public class UpgradeProcess_6_1_0 extends UpgradeProcess {
 		upgrade(UpgradeVirtualHost.class);
 		upgrade(UpgradeWorkflow.class);
 		upgrade(UpgradeAsset.class);
+		upgrade(UpgradeAssetPublisher.class);
 	}
 
 }

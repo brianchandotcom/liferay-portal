@@ -1184,6 +1184,11 @@ public class PluginPackageUtil {
 			_readText(
 				pluginPackageElement.elementText(
 					"recommended-deployment-context")));
+		pluginPackage.setRequiredDeploymentContexts(
+			_readList(
+				pluginPackageElement.element(
+					"required-deployment-contexts"),
+					"required-deployment-context"));
 		pluginPackage.setModifiedDate(
 			_readDate(pluginPackageElement.elementText("modified-date")));
 		pluginPackage.setAuthor(

@@ -72,11 +72,33 @@
 	</target>
 
 	<target name="jar" depends="compile">
-		<antcall target="manifest" />
-
 		<if>
 			<available file="bnd.bnd" />
 			<then>
+				<trycatch>
+					<try>
+						<taskdef
+							classname="com.liferay.util.ant.ManifestHelperTask"
+							classpathref="project.classpath"
+							name="liferay-manifest-helper"
+						/>
+					</try>
+					<catch>
+						<ant antfile="${project.dir}/portal-service/build.xml" target="compile" inheritAll="false" />
+						<ant antfile="${project.dir}/util-java/build.xml" target="compile" inheritAll="false" />
+
+						<taskdef
+							classname="com.liferay.util.ant.ManifestHelperTask"
+							classpathref="project.classpath"
+							name="liferay-manifest-helper"
+						/>
+					</catch>
+				</trycatch>
+
+				<liferay-manifest-helper
+					classpathref="project.classpath"
+				/>
+
 				<bndexpand propertyfile="${project.dir}/common.bnd" />
 
 				<bnd

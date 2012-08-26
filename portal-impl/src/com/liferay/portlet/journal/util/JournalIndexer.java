@@ -45,8 +45,6 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
-import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.journal.NoSuchStructureException;
 import com.liferay.portlet.journal.model.JournalArticle;
@@ -54,7 +52,6 @@ import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalStructure;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalStructureLocalServiceUtil;
-import com.liferay.portlet.journal.service.permission.JournalArticlePermission;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -79,7 +76,6 @@ public class JournalIndexer extends BaseIndexer {
 	public static final String PORTLET_ID = PortletKeys.JOURNAL;
 
 	public JournalIndexer() {
-		setFilterSearch(true);
 		setPermissionAware(true);
 	}
 
@@ -89,16 +85,6 @@ public class JournalIndexer extends BaseIndexer {
 
 	public String getPortletId() {
 		return PORTLET_ID;
-	}
-
-	@Override
-	public boolean hasPermission(
-			PermissionChecker permissionChecker, String entryClassName,
-			long entryClassPK, String actionId)
-		throws Exception {
-
-		return JournalArticlePermission.contains(
-			permissionChecker, entryClassPK, ActionKeys.VIEW);
 	}
 
 	@Override

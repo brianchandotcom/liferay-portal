@@ -339,7 +339,7 @@ public class PropertiesParamUtil {
 
 		UnicodeProperties properties = new UnicodeProperties(true);
 
-		Map<String, String> parameterMap = request.getParameterMap();
+		Map<String, String[]> parameterMap = request.getParameterMap();
 
 		for (String param : parameterMap.keySet()) {
 			if (param.startsWith(prefix) && !param.endsWith("--Checkbox")) {

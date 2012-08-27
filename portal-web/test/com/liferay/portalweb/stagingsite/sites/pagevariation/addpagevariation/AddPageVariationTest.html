@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>link=Site Name</td>
-	<td>Site Name</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Site Name</td>
 	<td>Site Name</td>
@@ -59,9 +54,19 @@
 	<td>Manage Page Variations</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>//iframe[contains(@id,'layoutRevisions')]</td>
+	<td>Manage Page Variations</td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>//iframe[contains(@id,'layoutRevisions')]</td>
+	<td>Manage Page Variations</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/navigation_interaction.js')]</td>
+	<td>Navigation Interaction</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -99,14 +104,14 @@
 	<td>Page variation was added.</td>
 </tr>
 <tr>
+	<td>selectFrame</td>
+	<td>relative=top</td>
+	<td>top</td>
+</tr>
+<tr>
 	<td>open</td>
 	<td>/web/guest/home/</td>
 	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>link=Site Name</td>
-	<td>Site Name</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -143,7 +148,6 @@
 	<td>//li[2]/span/a</td>
 	<td>Page Variation Name</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

@@ -14,12 +14,18 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
+import java.io.File;
+
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -29,8 +35,18 @@ import javax.servlet.ServletContext;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Tomas Polesovsky
  */
 public class ExtRegistry {
+
+	public static final List<String> IGNORED_FILES =
+		Arrays.asList(new String[] {
+			"log4j.dtd", "service.xml", "sql"+File.separator
+		});
+	public static final List<String> SUPPORTED_MERGING_FILES =
+		Arrays.asList(new String[] {
+			"ext-model-hints.xml", "ext-spring.xml", "ext-hbm.xml"
+		});
 
 	public static Map<String, Set<String>> getConflicts(
 			ServletContext servletContext)
@@ -70,6 +86,30 @@ public class ExtRegistry {
 
 	public static Set<String> getServletContextNames() {
 		return Collections.unmodifiableSet(_extMap.keySet());
+	}
+
+	public static boolean isIgnoredFile(String name) {
+		if (isMergedFile(name)) {
+			return true;
+		}
+
+		for (String ignoredFile : IGNORED_FILES) {
+			if (name.contains(ignoredFile)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public static boolean isMergedFile(String name) {
+		for (String mergedFile : SUPPORTED_MERGING_FILES) {
+			if (name.contains(mergedFile)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public static boolean isRegistered(String servletContextName) {
@@ -131,7 +171,10 @@ public class ExtRegistry {
 		List<Element> fileElements = filesElement.elements("file");
 
 		for (Element fileElement : fileElements) {
-			files.add(fileElement.getText());
+			String fileName = fileElement.getText();
+			if (!isIgnoredFile(fileName)) {
+				files.add(fileName);
+			}
 		}
 
 		return files;

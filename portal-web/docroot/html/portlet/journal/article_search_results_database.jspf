@@ -15,10 +15,6 @@
 --%>
 
 <%
-List<Long> searchFolderIdsList = new ArrayList<Long>();
-
-searchFolderIdsList.add(searchTerms.getFolderId());
-
 if (searchTerms.isAdvancedSearch()) {
 	results = JournalArticleServiceUtil.search(company.getCompanyId(), searchTerms.getGroupId(), searchFolderIdsList, 0, searchTerms.getArticleId(), searchTerms.getVersionObj(), searchTerms.getTitle(), searchTerms.getDescription(), searchTerms.getContent(), searchTerms.getType(), searchTerms.getStructureId(), searchTerms.getTemplateId(), searchTerms.getDisplayDateGT(), searchTerms.getDisplayDateLT(), searchTerms.getStatusCode(), searchTerms.getReviewDate(), searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 }

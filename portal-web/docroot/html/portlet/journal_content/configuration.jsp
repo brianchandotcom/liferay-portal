@@ -181,6 +181,8 @@ type = ParamUtil.getString(request, "type", type);
 
 	searchTerms.setVersion(-1);
 
+	List<Long> searchFolderIdsList = new ArrayList<Long>();
+
 	List<JournalArticle> results = null;
 	int total = 0;
 	%>

@@ -48,6 +48,10 @@ ArticleSearchTerms searchTerms = (ArticleSearchTerms)searchContainer.getSearchTe
 
 searchTerms.setVersion(-1);
 
+List<Long> searchFolderIdsList = new ArrayList<Long>();
+
+searchFolderIdsList.add(searchTerms.getFolderId());
+
 List<JournalArticle> results = null;
 int total = 0;
 %>

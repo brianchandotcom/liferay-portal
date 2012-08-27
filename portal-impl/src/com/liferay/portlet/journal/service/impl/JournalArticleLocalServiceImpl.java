@@ -111,6 +111,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -1702,6 +1703,109 @@ public class JournalArticleLocalServiceImpl
 		return article;
 	}
 
+	public Hits search(
+			long companyId, long groupId, List<Long> folderIds,
+			long classNameId, String structureId, String templateId,
+			String keywords, LinkedHashMap<String, Object> params, int start,
+			int end, Sort sort)
+		throws SystemException {
+
+		String articleId = null;
+		String title = null;
+		String description = null;
+		String content = null;
+		boolean andOperator = false;
+
+		if (Validator.isNotNull(keywords)) {
+			articleId = keywords;
+			title = keywords;
+			description = keywords;
+			content = keywords;
+		}
+		else {
+			andOperator = true;
+		}
+
+		String status = String.valueOf(WorkflowConstants.STATUS_ANY);
+
+		if (params != null) {
+			params.put("keywords", keywords);
+		}
+
+		return search(
+			companyId, groupId, folderIds, classNameId, articleId, title,
+			description, content, null, status, structureId, templateId, params,
+			andOperator, start, end, sort);
+	}
+
+	public Hits search(
+			long companyId, long groupId, List<Long> folderIds,
+			long classNameId, String articleId, String title,
+			String description, String content, String type, String status,
+			String structureId, String templateId,
+			LinkedHashMap<String, Object> params, boolean andSearch, int start,
+			int end, Sort sort)
+		throws SystemException {
+
+		try {
+			SearchContext searchContext = new SearchContext();
+
+			searchContext.setAndSearch(andSearch);
+
+			Map<String, Serializable> attributes =
+				new HashMap<String, Serializable>();
+
+			attributes.put(Field.CLASS_NAME_ID, classNameId);
+			attributes.put(Field.CONTENT, content);
+			attributes.put(Field.DESCRIPTION, description);
+			attributes.put(Field.STATUS, status);
+			attributes.put(Field.TITLE, title);
+			attributes.put(Field.TYPE, type);
+			attributes.put("articleId", articleId);
+			attributes.put("params", params);
+			attributes.put("structureId", structureId);
+			attributes.put("templateId", templateId);
+
+			searchContext.setAttributes(attributes);
+
+			searchContext.setCompanyId(companyId);
+			searchContext.setEnd(end);
+			searchContext.setFolderIds(
+				ArrayUtil.toArray(
+					folderIds.toArray(new Long[folderIds.size()])));
+			searchContext.setGroupIds(new long[] {groupId});
+
+			if (params != null) {
+				String keywords = (String)params.remove("keywords");
+
+				if (Validator.isNotNull(keywords)) {
+					searchContext.setKeywords(keywords);
+				}
+			}
+
+			QueryConfig queryConfig = new QueryConfig();
+
+			queryConfig.setHighlightEnabled(false);
+			queryConfig.setScoreEnabled(false);
+
+			searchContext.setQueryConfig(queryConfig);
+
+			if (sort != null) {
+				searchContext.setSorts(new Sort[] {sort});
+			}
+
+			searchContext.setStart(start);
+
+			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+				JournalArticle.class);
+
+			return indexer.search(searchContext);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+	}
+
 	public List<JournalArticle> search(
 			long companyId, long groupId, long folderId, long classNameId,
 			String keywords, Double version, String type, String structureId,
@@ -1753,32 +1857,13 @@ public class JournalArticleLocalServiceImpl
 			LinkedHashMap<String, Object> params, int start, int end, Sort sort)
 		throws SystemException {
 
-		String articleId = null;
-		String title = null;
-		String description = null;
-		String content = null;
-		boolean andOperator = false;
+		List<Long> folderIds = new ArrayList<Long>();
 
-		if (Validator.isNotNull(keywords)) {
-			articleId = keywords;
-			title = keywords;
-			description = keywords;
-			content = keywords;
-		}
-		else {
-			andOperator = true;
-		}
-
-		String status = String.valueOf(WorkflowConstants.STATUS_ANY);
-
-		if (params != null) {
-			params.put("keywords", keywords);
-		}
+		folderIds.add(folderId);
 
 		return search(
-			companyId, groupId, folderId, classNameId, articleId, title,
-			description, content, null, status, structureId, templateId, params,
-			andOperator, start, end, sort);
+			companyId, groupId, folderIds, classNameId, structureId, templateId,
+			keywords, params, start, end, sort);
 	}
 
 	public Hits search(
@@ -1789,61 +1874,56 @@ public class JournalArticleLocalServiceImpl
 			int end, Sort sort)
 		throws SystemException {
 
-		try {
-			SearchContext searchContext = new SearchContext();
+		List<Long> folderIds = new ArrayList<Long>();
 
-			searchContext.setAndSearch(andSearch);
+		folderIds.add(folderId);
 
-			Map<String, Serializable> attributes =
-				new HashMap<String, Serializable>();
+		return search(
+			companyId, groupId, folderIds, classNameId, articleId, title,
+			description, content, type, status, structureId, templateId, params,
+			andSearch, start, end, sort);
+	}
 
-			attributes.put(Field.CLASS_NAME_ID, classNameId);
-			attributes.put(Field.CONTENT, content);
-			attributes.put(Field.DESCRIPTION, description);
-			attributes.put(Field.STATUS, status);
-			attributes.put(Field.TITLE, title);
-			attributes.put(Field.TYPE, type);
-			attributes.put("articleId", articleId);
-			attributes.put("folderId", folderId);
-			attributes.put("params", params);
-			attributes.put("structureId", structureId);
-			attributes.put("templateId", templateId);
+	public int searchCount(
+			long companyId, long groupId, List<Long> folderIds,
+			long classNameId, String keywords, Double version, String type,
+			String structureId, String templateId, Date displayDateGT,
+			Date displayDateLT, int status, Date reviewDate)
+		throws SystemException {
 
-			searchContext.setAttributes(attributes);
+		return journalArticleFinder.countByKeywords(
+			companyId, groupId, folderIds, classNameId, keywords, version, type,
+			structureId, templateId, displayDateGT, displayDateLT, status,
+			reviewDate);
+	}
 
-			searchContext.setCompanyId(companyId);
-			searchContext.setEnd(end);
-			searchContext.setGroupIds(new long[] {groupId});
+	public int searchCount(
+			long companyId, long groupId, List<Long> folderIds,
+			long classNameId, String articleId, Double version, String title,
+			String description, String content, String type, String structureId,
+			String templateId, Date displayDateGT, Date displayDateLT,
+			int status, Date reviewDate, boolean andOperator)
+		throws SystemException {
 
-			if (params != null) {
-				String keywords = (String)params.remove("keywords");
+		return journalArticleFinder.countByC_G_F_C_A_V_T_D_C_T_S_T_D_S_R(
+			companyId, groupId, folderIds, classNameId, articleId, version,
+			title, description, content, type, structureId, templateId,
+			displayDateGT, displayDateLT, status, reviewDate, andOperator);
+	}
 
-				if (Validator.isNotNull(keywords)) {
-					searchContext.setKeywords(keywords);
-				}
-			}
+	public int searchCount(
+			long companyId, long groupId, List<Long> folderIds,
+			long classNameId, String articleId, Double version, String title,
+			String description, String content, String type,
+			String[] structureIds, String[] templateIds, Date displayDateGT,
+			Date displayDateLT, int status, Date reviewDate,
+			boolean andOperator)
+		throws SystemException {
 
-			QueryConfig queryConfig = new QueryConfig();
-
-			queryConfig.setHighlightEnabled(false);
-			queryConfig.setScoreEnabled(false);
-
-			searchContext.setQueryConfig(queryConfig);
-
-			if (sort != null) {
-				searchContext.setSorts(new Sort[] {sort});
-			}
-
-			searchContext.setStart(start);
-
-			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				JournalArticle.class);
-
-			return indexer.search(searchContext);
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
+		return journalArticleFinder.countByC_G_F_C_A_V_T_D_C_T_S_T_D_S_R(
+			companyId, groupId, folderIds, classNameId, articleId, version,
+			title, description, content, type, structureIds, templateIds,
+			displayDateGT, displayDateLT, status, reviewDate, andOperator);
 	}
 
 	public int searchCount(

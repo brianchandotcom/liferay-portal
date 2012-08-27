@@ -29,6 +29,7 @@ import com.liferay.portlet.journal.service.permission.JournalPermission;
 
 import java.io.File;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -420,6 +421,52 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	}
 
 	public List<JournalArticle> search(
+			long companyId, long groupId, List<Long> folderIds,
+			long classNameId, String keywords, Double version, String type,
+			String structureId, String templateId, Date displayDateGT,
+			Date displayDateLT, int status, Date reviewDate, int start, int end,
+			OrderByComparator obc)
+		throws SystemException {
+
+		return journalArticleFinder.filterFindByKeywords(
+			companyId, groupId, folderIds, classNameId, keywords, version, type,
+			structureId, templateId, displayDateGT, displayDateLT, status,
+			reviewDate, start, end, obc);
+	}
+
+	public List<JournalArticle> search(
+			long companyId, long groupId, List<Long> folderIds,
+			long classNameId, String articleId, Double version, String title,
+			String description, String content, String type, String structureId,
+			String templateId, Date displayDateGT, Date displayDateLT,
+			int status, Date reviewDate, boolean andOperator, int start,
+			int end, OrderByComparator obc)
+		throws SystemException {
+
+		return journalArticleFinder.filterFindByC_G_F_C_A_V_T_D_C_T_S_T_D_S_R(
+			companyId, groupId, folderIds, classNameId, articleId, version,
+			title, description, content, type, structureId, templateId,
+			displayDateGT, displayDateLT, status, reviewDate, andOperator,
+			start, end, obc);
+	}
+
+	public List<JournalArticle> search(
+			long companyId, long groupId, List<Long> folderIds,
+			long classNameId, String articleId, Double version, String title,
+			String description, String content, String type,
+			String[] structureIds, String[] templateIds, Date displayDateGT,
+			Date displayDateLT, int status, Date reviewDate,
+			boolean andOperator, int start, int end, OrderByComparator obc)
+		throws SystemException {
+
+		return journalArticleFinder.filterFindByC_G_F_C_A_V_T_D_C_T_S_T_D_S_R(
+			companyId, groupId, folderIds, classNameId, articleId, version,
+			title, description, content, type, structureIds, templateIds,
+			displayDateGT, displayDateLT, status, reviewDate, andOperator,
+			start, end, obc);
+	}
+
+	public List<JournalArticle> search(
 			long companyId, long groupId, long folderId, long classNameId,
 			String keywords, Double version, String type, String structureId,
 			String templateId, Date displayDateGT, Date displayDateLT,
@@ -427,8 +474,12 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			OrderByComparator obc)
 		throws SystemException {
 
-		return journalArticleFinder.filterFindByKeywords(
-			companyId, groupId, folderId, classNameId, keywords, version, type,
+		List<Long> folderIds = new ArrayList<Long>();
+
+		folderIds.add(folderId);
+
+		return search(
+			companyId, groupId, folderIds, classNameId, keywords, version, type,
 			structureId, templateId, displayDateGT, displayDateLT, status,
 			reviewDate, start, end, obc);
 	}
@@ -441,8 +492,12 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			boolean andOperator, int start, int end, OrderByComparator obc)
 		throws SystemException {
 
-		return journalArticleFinder.filterFindByC_G_F_C_A_V_T_D_C_T_S_T_D_S_R(
-			companyId, groupId, folderId, classNameId, articleId, version,
+		List<Long> folderIds = new ArrayList<Long>();
+
+		folderIds.add(folderId);
+
+		return search(
+			companyId, groupId, folderIds, classNameId, articleId, version,
 			title, description, content, type, structureId, templateId,
 			displayDateGT, displayDateLT, status, reviewDate, andOperator,
 			start, end, obc);
@@ -457,11 +512,57 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			int end, OrderByComparator obc)
 		throws SystemException {
 
-		return journalArticleFinder.filterFindByC_G_F_C_A_V_T_D_C_T_S_T_D_S_R(
-			companyId, groupId, folderId, classNameId, articleId, version,
+		List<Long> folderIds = new ArrayList<Long>();
+
+		folderIds.add(folderId);
+
+		return search(
+			companyId, groupId, folderIds, classNameId, articleId, version,
 			title, description, content, type, structureIds, templateIds,
 			displayDateGT, displayDateLT, status, reviewDate, andOperator,
 			start, end, obc);
+	}
+
+	public int searchCount(
+			long companyId, long groupId, List<Long> folderIds,
+			long classNameId, String keywords, Double version, String type,
+			String structureId, String templateId, Date displayDateGT,
+			Date displayDateLT, int status, Date reviewDate)
+		throws SystemException {
+
+		return journalArticleFinder.filterCountByKeywords(
+			companyId, groupId, folderIds, classNameId, keywords, version, type,
+			structureId, templateId, displayDateGT, displayDateLT, status,
+			reviewDate);
+	}
+
+	public int searchCount(
+			long companyId, long groupId, List<Long> folderIds,
+			long classNameId, String articleId, Double version, String title,
+			String description, String content, String type, String structureId,
+			String templateId, Date displayDateGT, Date displayDateLT,
+			int status, Date reviewDate, boolean andOperator)
+		throws SystemException {
+
+		return journalArticleFinder.filterCountByC_G_F_C_A_V_T_D_C_T_S_T_D_S_R(
+			companyId, groupId, folderIds, classNameId, articleId, version,
+			title, description, content, type, structureId, templateId,
+			displayDateGT, displayDateLT, status, reviewDate, andOperator);
+	}
+
+	public int searchCount(
+			long companyId, long groupId, List<Long> folderIds,
+			long classNameId, String articleId, Double version, String title,
+			String description, String content, String type,
+			String[] structureIds, String[] templateIds, Date displayDateGT,
+			Date displayDateLT, int status, Date reviewDate,
+			boolean andOperator)
+		throws SystemException {
+
+		return journalArticleFinder.filterCountByC_G_F_C_A_V_T_D_C_T_S_T_D_S_R(
+			companyId, groupId, folderIds, classNameId, articleId, version,
+			title, description, content, type, structureIds, templateIds,
+			displayDateGT, displayDateLT, status, reviewDate, andOperator);
 	}
 
 	public int searchCount(
@@ -471,8 +572,12 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			int status, Date reviewDate)
 		throws SystemException {
 
-		return journalArticleFinder.filterCountByKeywords(
-			companyId, groupId, folderId, classNameId, keywords, version, type,
+		List<Long> folderIds = new ArrayList<Long>();
+
+		folderIds.add(folderId);
+
+		return searchCount(
+			companyId, groupId, folderIds, classNameId, keywords, version, type,
 			structureId, templateId, displayDateGT, displayDateLT, status,
 			reviewDate);
 	}
@@ -485,8 +590,12 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			boolean andOperator)
 		throws SystemException {
 
-		return journalArticleFinder.filterCountByC_G_F_C_A_V_T_D_C_T_S_T_D_S_R(
-			companyId, groupId, folderId, classNameId, articleId, version,
+		List<Long> folderIds = new ArrayList<Long>();
+
+		folderIds.add(folderId);
+
+		return searchCount(
+			companyId, groupId, folderIds, classNameId, articleId, version,
 			title, description, content, type, structureId, templateId,
 			displayDateGT, displayDateLT, status, reviewDate, andOperator);
 	}
@@ -499,8 +608,12 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			int status, Date reviewDate, boolean andOperator)
 		throws SystemException {
 
-		return journalArticleFinder.filterCountByC_G_F_C_A_V_T_D_C_T_S_T_D_S_R(
-			companyId, groupId, folderId, classNameId, articleId, version,
+		List<Long> folderIds = new ArrayList<Long>();
+
+		folderIds.add(folderId);
+
+		return searchCount(
+			companyId, groupId, folderIds, classNameId, articleId, version,
 			title, description, content, type, structureIds, templateIds,
 			displayDateGT, displayDateLT, status, reviewDate, andOperator);
 	}

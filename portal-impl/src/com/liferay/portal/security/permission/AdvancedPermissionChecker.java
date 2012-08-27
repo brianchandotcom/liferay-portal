@@ -158,17 +158,21 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 				// the case of unauthenticated users.
 
 				bag = new PermissionCheckerBagImpl(
-					defaultUserId, new ArrayList<Group>(),
-					new ArrayList<Organization>(), new ArrayList<Group>(),
-					new ArrayList<Group>(), new ArrayList<Group>(), roles);
+					defaultUserId, Collections.<Group>emptyList(),
+					Collections.<Organization>emptyList(),
+					Collections.<Group>emptyList(),
+					Collections.<Group>emptyList(),
+					Collections.<Group>emptyList(), roles);
 			}
 			finally {
 				if (bag == null) {
 					bag = new PermissionCheckerBagImpl(
-						defaultUserId, new ArrayList<Group>(),
-						new ArrayList<Organization>(), new ArrayList<Group>(),
-						new ArrayList<Group>(), new ArrayList<Group>(),
-						new ArrayList<Role>());
+						defaultUserId, Collections.<Group>emptyList(),
+						Collections.<Organization>emptyList(),
+						Collections.<Group>emptyList(),
+						Collections.<Group>emptyList(),
+						Collections.<Group>emptyList(),
+						Collections.<Role>emptyList());
 				}
 
 				PermissionCacheUtil.putBag(
@@ -439,10 +443,12 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		finally {
 			if (bag == null) {
 				bag = new PermissionCheckerBagImpl(
-					userId, new ArrayList<Group>(),
-					new ArrayList<Organization>(), new ArrayList<Group>(),
-					new ArrayList<Group>(), new ArrayList<Group>(),
-					new ArrayList<Role>());
+					userId, Collections.<Group>emptyList(),
+					Collections.<Organization>emptyList(),
+					Collections.<Group>emptyList(),
+					Collections.<Group>emptyList(),
+					Collections.<Group>emptyList(),
+					Collections.<Role>emptyList());
 			}
 
 			PermissionCacheUtil.putBag(userId, groupId, bag);

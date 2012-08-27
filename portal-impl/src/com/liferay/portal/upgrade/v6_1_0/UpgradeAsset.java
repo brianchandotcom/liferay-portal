@@ -17,6 +17,7 @@ package com.liferay.portal.upgrade.v6_1_0;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.upgrade.v6_1_0.util.AssetEntryTable;
 import com.liferay.portal.util.PortalUtil;
@@ -112,7 +113,7 @@ public class UpgradeAsset extends UpgradeProcess {
 
 	protected void updateIGImageClassName() throws Exception {
 		if (GetterUtil.getBoolean(
-				PropsUtil.get("dl.file.entry.type.igimage"))) {
+				PropsUtil.get(PropsKeys.DL_FILE_ENTRY_TYPE_IGIMAGE))) {
 
 			updateIGImageClassNameClassTypeId();
 

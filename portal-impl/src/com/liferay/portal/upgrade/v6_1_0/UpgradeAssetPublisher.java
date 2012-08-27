@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
@@ -78,7 +79,7 @@ public class UpgradeAssetPublisher extends BaseUpgradePortletPreferences {
 		throws Exception {
 
 		if (!GetterUtil.getBoolean(
-				PropsUtil.get("dl.file.entry.type.igimage"))) {
+				PropsUtil.get(PropsKeys.DL_FILE_ENTRY_TYPE_IGIMAGE))) {
 
 			return xml;
 		}

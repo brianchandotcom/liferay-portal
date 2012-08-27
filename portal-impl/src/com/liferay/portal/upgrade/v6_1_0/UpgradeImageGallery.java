@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -251,7 +252,7 @@ public class UpgradeImageGallery extends UpgradeProcess {
 
 	protected void addIGImageDocumentType() throws Exception {
 		if (!GetterUtil.getBoolean(
-				PropsUtil.get("dl.file.entry.type.igimage"))) {
+				PropsUtil.get(PropsKeys.DL_FILE_ENTRY_TYPE_IGIMAGE))) {
 
 			return;
 		}

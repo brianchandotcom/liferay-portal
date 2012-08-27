@@ -314,3 +314,10 @@ create table TrashVersion (
 );
 
 drop table Users_Permissions;
+
+alter table BlogsEntry add description_old VARCHAR(75) null;
+update BlogsEntry set description_old = description;
+alter table BlogsEntry drop description;
+alter table BlogsEntry add description VARCHAR(350) null;
+update BlogsEntry set description = description_old;
+alter table BlogsEntry drop description_old;

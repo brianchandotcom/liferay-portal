@@ -152,10 +152,15 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 				List<Role> roles = RoleLocalServiceUtil.getUserRelatedRoles(
 					defaultUserId, groups);
 
+				// Only use the guest group for deriving the roles for
+				// unauthenticated users. Do not add the group to the permission
+				// bag as this implies group membership which is incorrect in
+				// the case of unauthenticated users.
+
 				bag = new PermissionCheckerBagImpl(
 					defaultUserId, new ArrayList<Group>(),
 					new ArrayList<Organization>(), new ArrayList<Group>(),
-					new ArrayList<Group>(), groups, roles);
+					new ArrayList<Group>(), new ArrayList<Group>(), roles);
 			}
 			finally {
 				if (bag == null) {

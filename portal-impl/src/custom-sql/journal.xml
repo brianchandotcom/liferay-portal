@@ -37,7 +37,7 @@
 					WHERE
 						(companyId = ?) AND
 						(groupId = ?) AND
-						(folderId = ?) AND
+						([$FOLDER_ID$]) AND
 						(classNameId = ?) AND
 						(
 							(articleId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
@@ -118,7 +118,7 @@
 					WHERE
 						(companyId = ?) AND
 						(groupId = ?) AND
-						(folderId = ?) AND
+						([$FOLDER_ID$]) AND
 						(classNameId = ?) AND
 						(
 							(articleId LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]

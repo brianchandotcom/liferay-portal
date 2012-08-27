@@ -891,7 +891,10 @@
 			<forward name="portlet.document_library.view" path="portlet.journal.select_document_library" />
 		</action>
 
-		<action path="/journal/select_folder" forward="portlet.journal.select_folder" />
+		<action path="/journal/select_folder" type="com.liferay.portlet.journal.action.EditFolderAction">
+			<forward name="portlet.journal.edit_folder" path="portlet.journal.select_folder" />
+			<forward name="portlet.journal.error" path="portlet.journal.error" />
+		</action>
 
 		<action path="/journal/select_structure" forward="portlet.journal.select_structure" />
 

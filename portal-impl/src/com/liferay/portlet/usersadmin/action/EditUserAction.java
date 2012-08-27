@@ -17,6 +17,7 @@ package com.liferay.portlet.usersadmin.action;
 import com.liferay.portal.AddressCityException;
 import com.liferay.portal.AddressStreetException;
 import com.liferay.portal.AddressZipException;
+import com.liferay.portal.BirthdayNotValidException;
 import com.liferay.portal.CompanyMaxUsersException;
 import com.liferay.portal.ContactBirthdayException;
 import com.liferay.portal.ContactFirstNameException;
@@ -239,6 +240,7 @@ public class EditUserAction extends PortletAction {
 			else if (e instanceof AddressCityException ||
 					 e instanceof AddressStreetException ||
 					 e instanceof AddressZipException ||
+					 e instanceof BirthdayNotValidException ||
 					 e instanceof CompanyMaxUsersException ||
 					 e instanceof ContactBirthdayException ||
 					 e instanceof ContactFirstNameException ||

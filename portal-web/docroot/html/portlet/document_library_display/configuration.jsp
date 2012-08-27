@@ -177,7 +177,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 		folderWindow.focus();
 	}
 
-	function <%= PortalUtil.getPortletNamespace(portletResource) %>selectFolder(rootFolderId, rootFolderName) {
+	function <%= portletNameSpace %>selectFolder(rootFolderId, rootFolderName) {
 		var folderData = {
 			idString: 'rootFolderId',
 			idValue: rootFolderId,
@@ -201,22 +201,29 @@ String redirect = ParamUtil.getString(request, "redirect");
 	);
 </aui:script>
 
-<aui:script position="inline" use="aui-base">
-	var openingWindow = Liferay.Util.getTop();
+<c:if test="<%= SessionMessages.contains(renderRequest, portletDisplay.getId() + SessionMessages.KEY_SUFFIX_UPDATED_CONFIGURATION) %>">
+	<aui:script position="inline" use="aui-base">
+		var valueMap = {};
 
-	var portlet = openingWindow.AUI().one('#p_p_id<%= portletNameSpace %>');
+		var foldersPerPageInput = A.one('#<portlet:namespace />foldersPerPage');
 
-	var foldersPerPageInput = A.one('#_<%= portletDisplay.getId() %>_foldersPerPage');
-	var fileEntriesPerPageInput = A.one('#_<%= portletDisplay.getId() %>_fileEntriesPerPage');
+		if (foldersPerPageInput) {
+			valueMap.delta1 = foldersPerPageInput.val();
+		}
 
-	var foldersPerPage = foldersPerPageInput.val();
-	var fileEntriesPerPage = fileEntriesPerPageInput.val();
+		var fileEntriesPerPageInput = A.one('#<portlet:namespace />fileEntriesPerPage');
 
-	var refreshURL = portlet.refreshURL;
+		if (fileEntriesPerPageInput) {
+			valueMap.delta2 = fileEntriesPerPageInput.val();
+		}
 
-	refreshURL = refreshURL.replace(/(delta1)(=|%3D)[^%|&]+/g, '$1$2' + foldersPerPage);
-	refreshURL = refreshURL.replace(/(delta2)(=|%3D)[^%|&]+/g, '$1$2' + fileEntriesPerPage);
-	refreshURL = refreshURL.replace(/(cur\d{1})(=|%3D)[^%|&]+/g, '$1$21');
+		var portlet = Liferay.Util.getTop().AUI().one('#p_p_id<%= portletNameSpace %>');
 
-	portlet.refreshURL = refreshURL;
-</aui:script>
+		portlet.refreshURL = portlet.refreshURL.replace(
+			/(cur\d{1}|delta[12])(=|%3D)[^%&]+/g,
+			function(match, param, equals) {
+				return param + equals + (valueMap[param] || 1);
+			}
+		);
+	</aui:script>
+</c:if>

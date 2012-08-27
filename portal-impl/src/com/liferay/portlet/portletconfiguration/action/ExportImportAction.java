@@ -57,6 +57,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -94,21 +95,7 @@ public class ExportImportAction extends EditConfigurationAction {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
-			if (Validator.isNull(cmd)) {
-				UploadException uploadException =
-					(UploadException)actionRequest.getAttribute(
-							WebKeys.UPLOAD_EXCEPTION);
-
-				if (uploadException != null) {
-					if (uploadException.isExceededSizeLimit()) {
-						throw new LARFileSizeException(
-							uploadException.getCause());
-					}
-
-					throw new PortalException(uploadException.getCause());
-				}
-			}
-			else if (cmd.equals("copy_from_live")) {
+			if (cmd.equals("copy_from_live")) {
 				StagingUtil.copyFromLive(actionRequest, portlet);
 
 				sendRedirect(actionRequest, actionResponse);
@@ -119,6 +106,8 @@ public class ExportImportAction extends EditConfigurationAction {
 				sendRedirect(actionRequest, actionResponse);
 			}
 			else if (cmd.equals(Constants.IMPORT)) {
+				checkExceededSizeLimit(actionRequest);
+
 				importData(actionRequest, actionResponse, portlet);
 
 				sendRedirect(actionRequest, actionResponse);
@@ -167,6 +156,23 @@ public class ExportImportAction extends EditConfigurationAction {
 
 		return mapping.findForward(getForward(
 			renderRequest, "portlet.portlet_configuration.export_import"));
+	}
+	
+	protected void checkExceededSizeLimit(PortletRequest portletRequest)
+		throws PortalException {
+		
+		UploadException uploadException =
+			(UploadException)portletRequest.getAttribute(
+					WebKeys.UPLOAD_EXCEPTION);
+
+		if (uploadException != null) {
+			if (uploadException.isExceededSizeLimit()) {
+				throw new LARFileSizeException(
+					uploadException.getCause());
+			}
+
+			throw new PortalException(uploadException.getCause());
+		}	
 	}
 
 	protected void exportData(

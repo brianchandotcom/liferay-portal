@@ -40,8 +40,10 @@ import java.io.File;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -63,17 +65,7 @@ public class ImportLayoutsAction extends PortletAction {
 			UploadPortletRequest uploadPortletRequest =
 				PortalUtil.getUploadPortletRequest(actionRequest);
 
-			UploadException uploadException =
-				(UploadException)uploadPortletRequest.getAttribute(
-					WebKeys.UPLOAD_EXCEPTION);
-
-			if (uploadException != null) {
-				if (uploadException.isExceededSizeLimit()) {
-					throw new LARFileSizeException(uploadException.getCause());
-				}
-
-				throw new PortalException(uploadException.getCause());
-			}
+			checkExceededSizeLimit(uploadPortletRequest);
 
 			long groupId = ParamUtil.getLong(uploadPortletRequest, "groupId");
 			boolean privateLayout = ParamUtil.getBoolean(
@@ -138,6 +130,23 @@ public class ImportLayoutsAction extends PortletAction {
 
 		return mapping.findForward(
 			getForward(renderRequest, "portlet.layouts_admin.export_layouts"));
+	}
+
+	public void checkExceededSizeLimit(HttpServletRequest request)
+		throws PortalException {
+
+		UploadException uploadException =
+			(UploadException)request.getAttribute(
+					WebKeys.UPLOAD_EXCEPTION);
+
+		if (uploadException != null) {
+			if (uploadException.isExceededSizeLimit()) {
+				throw new LARFileSizeException(
+					uploadException.getCause());
+			}
+
+			throw new PortalException(uploadException.getCause());
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(ImportLayoutsAction.class);

@@ -256,7 +256,7 @@ AUI.add(
 
 						var searchFolderId = selectedFolder.id;
 
-						if (searchFolderId == 0) {
+						if (searchFolderId === 0) {
 							searchFolderId = -1;
 						}
 
@@ -360,7 +360,7 @@ AUI.add(
 
 						var searchFolderId = selectedFolder.id;
 
-						if (searchFolderId == 0) {
+						if (searchFolderId === 0) {
 							searchFolderId = -1;
 						}
 

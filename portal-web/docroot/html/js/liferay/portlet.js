@@ -543,9 +543,9 @@
 			if (portlet) {
 				data = data || {};
 
-                if (!A.Object.owns(data, 'portletAjaxable')) {
-                    data.portletAjaxable = true;
-                }
+				if (!A.Object.owns(data, 'portletAjaxable')) {
+					data.portletAjaxable = true;
+				}
 
 				var id = portlet.attr('portlet');
 

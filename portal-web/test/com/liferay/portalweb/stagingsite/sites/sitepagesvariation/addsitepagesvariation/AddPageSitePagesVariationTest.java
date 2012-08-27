@@ -23,23 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddPageSitePagesVariationTest extends BaseTestCase {
 	public void testAddPageSitePagesVariation() throws Exception {
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Site Name")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementPresent(
@@ -58,8 +41,8 @@ public class AddPageSitePagesVariationTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Site Pages Variation Name"),
 			selenium.getText("//li[2]/span/span/span[1]"));
-		selenium.clickAt("//nav[@id='navigation']",
-			RuntimeVariables.replace("Navigation"));
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -67,7 +50,8 @@ public class AddPageSitePagesVariationTest extends BaseTestCase {
 			}
 
 			try {
-				if (selenium.isElementPresent("//a[@id='addPage']")) {
+				if (selenium.isElementPresent(
+							"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]")) {
 					break;
 				}
 			}
@@ -77,8 +61,29 @@ public class AddPageSitePagesVariationTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
-		selenium.clickAt("//a[@id='addPage']",
-			RuntimeVariables.replace("Add Page"));
+		assertEquals(RuntimeVariables.replace("Add"),
+			selenium.getText("//li[@id='_145_addContent']/a/span"));
+		selenium.mouseOver("//li[@id='_145_addContent']/a/span");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible("//a[@id='addPage']")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		assertEquals(RuntimeVariables.replace("Page"),
+			selenium.getText("//a[@id='addPage']"));
+		selenium.clickAt("//a[@id='addPage']", RuntimeVariables.replace("Page"));
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {

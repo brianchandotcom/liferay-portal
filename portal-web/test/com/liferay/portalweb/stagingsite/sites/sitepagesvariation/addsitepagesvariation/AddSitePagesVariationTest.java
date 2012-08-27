@@ -23,23 +23,6 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class AddSitePagesVariationTest extends BaseTestCase {
 	public void testAddSitePagesVariation() throws Exception {
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Site Name")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementPresent(
@@ -63,7 +46,7 @@ public class AddSitePagesVariationTest extends BaseTestCase {
 
 			try {
 				if (selenium.isVisible(
-							"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a")) {
+							"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Site Pages Variations')]/a")) {
 					break;
 				}
 			}
@@ -75,10 +58,45 @@ public class AddSitePagesVariationTest extends BaseTestCase {
 
 		assertEquals(RuntimeVariables.replace("Manage Site Pages Variations"),
 			selenium.getText(
-				"//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a"));
-		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[3]/a",
+				"//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Site Pages Variations')]/a"));
+		selenium.clickAt("//div[@class='lfr-component lfr-menu-list']/ul/li[contains(.,'Manage Site Pages Variations')]/a",
 			RuntimeVariables.replace("Manage Site Pages Variations"));
-		Thread.sleep(5000);
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isVisible(
+							"//iframe[contains(@id,'layoutSetBranches')]")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
+		selenium.selectFrame("//iframe[contains(@id,'layoutSetBranches')]");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//script[contains(@src,'/liferay/navigation_interaction.js')]")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
 
 		for (int second = 0;; second++) {
 			if (second >= 90) {
@@ -124,24 +142,8 @@ public class AddSitePagesVariationTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		assertEquals(RuntimeVariables.replace("Site page variation was added."),
 			selenium.getText("//div[@class='portlet-msg-success']"));
+		selenium.selectFrame("relative=top");
 		selenium.open("/web/guest/home/");
-
-		for (int second = 0;; second++) {
-			if (second >= 90) {
-				fail("timeout");
-			}
-
-			try {
-				if (selenium.isElementPresent("link=Site Name")) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-
-			Thread.sleep(1000);
-		}
-
 		selenium.clickAt("link=Site Name", RuntimeVariables.replace("Site Name"));
 		selenium.waitForPageToLoad("30000");
 		assertTrue(selenium.isElementPresent(

@@ -50,13 +50,27 @@ import org.dom4j.io.SAXReader;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Tomas Polesovsky
  */
 public class Log4JUtil {
 
 	public static void configureLog4J(ClassLoader classLoader) {
 		configureLog4J(classLoader.getResource("META-INF/portal-log4j.xml"));
-		configureLog4J(
-			classLoader.getResource("META-INF/portal-log4j-ext.xml"));
+
+		try {
+			Enumeration<URL> extConfigurations = classLoader.getResources(
+				"META-INF/portal-log4j-ext.xml");
+
+			while (extConfigurations.hasMoreElements()) {
+				configureLog4J(extConfigurations.nextElement());
+			}
+		} catch (IOException e) {
+			java.util.logging.Logger.getLogger(Log4JUtil.class.getName()).log(
+				java.util.logging.Level.WARNING,
+				"Cannot load portal-log4j-ext.xml", e
+			);
+
+		}
 	}
 
 	public static void configureLog4J(URL url) {

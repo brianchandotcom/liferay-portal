@@ -45,7 +45,8 @@ public class ExtRegistry {
 		});
 	public static final List<String> SUPPORTED_MERGING_FILES =
 		Arrays.asList(new String[] {
-			"ext-model-hints.xml", "ext-spring.xml", "ext-hbm.xml"
+			"ext-model-hints.xml", "ext-spring.xml", "ext-hbm.xml",
+			"portal-log4j-ext.xml"
 		});
 
 	public static Map<String, Set<String>> getConflicts(

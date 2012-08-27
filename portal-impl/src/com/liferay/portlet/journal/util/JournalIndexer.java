@@ -24,7 +24,9 @@ import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
+import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
@@ -51,8 +53,10 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.journal.NoSuchStructureException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
+import com.liferay.portlet.journal.model.JournalFolderConstants;
 import com.liferay.portlet.journal.model.JournalStructure;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.portlet.journal.service.JournalFolderServiceUtil;
 import com.liferay.portlet.journal.service.JournalStructureLocalServiceUtil;
 import com.liferay.portlet.journal.service.permission.JournalArticlePermission;
 
@@ -119,6 +123,32 @@ public class JournalIndexer extends BaseIndexer {
 
 		if (status != WorkflowConstants.STATUS_ANY) {
 			contextQuery.addRequiredTerm(Field.STATUS, status);
+		}
+
+		long[] folderIds = searchContext.getFolderIds();
+
+		if ((folderIds != null) && (folderIds.length > 0)) {
+			if (folderIds[0] ==
+					JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+
+				return;
+			}
+
+			BooleanQuery folderIdsQuery = BooleanQueryFactoryUtil.create(
+				searchContext);
+
+			for (long folderId : folderIds) {
+				try {
+					JournalFolderServiceUtil.getFolder(folderId);
+				}
+				catch (Exception e) {
+					continue;
+				}
+
+				folderIdsQuery.addTerm(Field.FOLDER_ID, folderId);
+			}
+
+			contextQuery.add(folderIdsQuery, BooleanClauseOccur.MUST);
 		}
 
 		String articleType = (String)searchContext.getAttribute("articleType");

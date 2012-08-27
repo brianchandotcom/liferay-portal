@@ -9,19 +9,9 @@
 <tr><td rowspan="1" colspan="3">SelectListDDLDTest</td></tr>
 </thead><tbody>
 <tr>
-	<td>selectFrame</td>
-	<td>relative=top</td>
-	<td></td>
-</tr>
-<tr>
 	<td>open</td>
 	<td>/web/guest/home/</td>
 	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>link=Dynamic Data List Display Test Page</td>
-	<td>Dynamic Data List Display Test Page</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -31,7 +21,7 @@
 <tr>
 	<td>clickAt</td>
 	<td>//img[@title='Select List']</td>
-	<td></td>
+	<td>Select List</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
@@ -42,6 +32,11 @@
 	<td>selectFrame</td>
 	<td>//iframe</td>
 	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/navigation_interaction.js')]</td>
+	<td>Navigation Interaction</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>

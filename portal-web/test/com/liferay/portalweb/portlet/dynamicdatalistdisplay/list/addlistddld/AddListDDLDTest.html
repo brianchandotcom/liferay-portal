@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
-	<td>link=Dynamic Data List Display Test Page</td>
-	<td>Dynamic Data List Display Test Page</td>
-</tr>
-<tr>
 	<td>clickAtAndWait</td>
 	<td>link=Dynamic Data List Display Test Page</td>
 	<td>Dynamic Data List Display Test Page</td>
@@ -54,6 +49,11 @@
 	<td>Data Definitions</td>
 </tr>
 <tr>
+	<td>waitForElementPresent</td>
+	<td>//script[contains(@src,'/liferay/navigation_interaction.js')]</td>
+	<td>Navigation Interaction</td>
+</tr>
+<tr>
 	<td>waitForVisible</td>
 	<td>//input[@name='_166_keywords']</td>
 	<td>Search</td>
@@ -69,19 +69,34 @@
 	<td>Search</td>
 </tr>
 <tr>
-	<td>assertPartialText</td>
-	<td>//tr[3]/td[2]/a</td>
+	<td>assertVisible</td>
+	<td>//tr[contains(.,'Data Definition')]/td[2]/a</td>
+	<td>ID</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[contains(.,'Data Definition')]/td[3]/a</td>
 	<td>Data Definition</td>
 </tr>
 <tr>
+	<td>assertVisible</td>
+	<td>//tr[contains(.,'Data Definition')]/td[4]/a</td>
+	<td>Modified Date</td>
+</tr>
+<tr>
 	<td>clickAt</td>
-	<td>//tr[3]/td[2]/a</td>
+	<td>//tr[contains(.,'Data Definition')]/td[3]/a</td>
 	<td>Data Definition</td>
 </tr>
 <tr>
 	<td>selectFrame</td>
 	<td>relative=top</td>
 	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//span[contains(@id,'ddmStructureNameDisplay')]/a</td>
+	<td>Data Definition</td>
 </tr>
 <tr>
 	<td>clickAtAndWait</td>
@@ -93,7 +108,6 @@
 	<td>//h1[@class='header-title']</td>
 	<td>List Name</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

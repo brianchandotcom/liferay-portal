@@ -54,10 +54,8 @@
 		clip: rect(auto auto auto auto);
 	}
 
-	.lfr-search-container {
-		.overlay {
-			clip: rect(0, 0, 0, 0);
-		}
+	.overlay {
+		clip: rect(0, 0, 0, 0);
 	}
 
 	&.display-icon {

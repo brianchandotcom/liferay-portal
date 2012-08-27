@@ -156,12 +156,6 @@
 		display: none;
 	}
 
-	.entry-display-style, .lfr-search-container {
-		.overlay {
-			clip: rect(0, 0, 0, 0);
-		}
-	}
-
 	.aui-button-holder.toolbar {
 		display: inline;
 		margin: 0;

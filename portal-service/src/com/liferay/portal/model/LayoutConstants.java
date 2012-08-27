@@ -25,6 +25,8 @@ public class LayoutConstants {
 
 	public static final int FRIENDLY_URL_MAX_LENGTH = 255;
 
+	public static final int PRIORITY_BUFFER = 1000000;
+
 	public static final String NAME_CONTROL_PANEL_DEFAULT = "Control Panel";
 
 	public static final String TYPE_ARTICLE = "article";

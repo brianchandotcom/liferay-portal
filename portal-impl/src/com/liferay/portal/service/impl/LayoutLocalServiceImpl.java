@@ -2064,6 +2064,10 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		int oldPriority = layout.getPriority();
 
+		if (oldPriority >= LayoutConstants.PRIORITY_BUFFER) {
+			priority = priority + LayoutConstants.PRIORITY_BUFFER;
+		}
+
 		int nextPriority = layoutLocalServiceHelper.getNextPriority(
 			layout.getGroupId(), layout.isPrivateLayout(),
 			layout.getParentLayoutId(), layout.getSourcePrototypeLayoutUuid(),

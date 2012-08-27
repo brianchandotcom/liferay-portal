@@ -35,6 +35,7 @@ import com.liferay.portalweb.portal.dbupgrade.sampledata6120.stagingcommunity.St
 import com.liferay.portalweb.portal.dbupgrade.sampledata6120.stagingorganization.StagingOrganizationTestPlan;
 import com.liferay.portalweb.portal.dbupgrade.sampledata6120.tags.TagsTestPlan;
 import com.liferay.portalweb.portal.dbupgrade.sampledata6120.webcontent.WebContentTestPlan;
+import com.liferay.portalweb.portal.dbupgrade.sampledata6120.website.WebsiteTestPlan;
 import com.liferay.portalweb.portal.dbupgrade.sampledata6120.wiki.WikiTestPlan;
 
 import junit.framework.Test;
@@ -67,6 +68,7 @@ public class SampleData6120TestPlan extends BaseTestSuite {
 		testSuite.addTest(StagingOrganizationTestPlan.suite());
 		testSuite.addTest(TagsTestPlan.suite());
 		testSuite.addTest(WebContentTestPlan.suite());
+		testSuite.addTest(WebsiteTestPlan.suite());
 		testSuite.addTest(WikiTestPlan.suite());
 		testSuite.addTest(SocialTestPlan.suite());
 

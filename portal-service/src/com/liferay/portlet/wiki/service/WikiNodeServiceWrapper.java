@@ -84,6 +84,18 @@ public class WikiNodeServiceWrapper implements WikiNodeService,
 		_wikiNodeService.importPages(nodeId, importer, inputStreams, options);
 	}
 
+	public com.liferay.portlet.wiki.model.WikiNode moveEntryToTrash(long nodeId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _wikiNodeService.moveEntryToTrash(nodeId);
+	}
+
+	public void restoreNodeFromTrash(long nodeId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_wikiNodeService.restoreNodeFromTrash(nodeId);
+	}
+
 	public void subscribeNode(long nodeId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

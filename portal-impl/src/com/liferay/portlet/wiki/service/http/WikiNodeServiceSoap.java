@@ -121,6 +121,32 @@ public class WikiNodeServiceSoap {
 		}
 	}
 
+	public static com.liferay.portlet.wiki.model.WikiNodeSoap moveEntryToTrash(
+		long nodeId) throws RemoteException {
+		try {
+			com.liferay.portlet.wiki.model.WikiNode returnValue = WikiNodeServiceUtil.moveEntryToTrash(nodeId);
+
+			return com.liferay.portlet.wiki.model.WikiNodeSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void restoreNodeFromTrash(long nodeId)
+		throws RemoteException {
+		try {
+			WikiNodeServiceUtil.restoreNodeFromTrash(nodeId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static void subscribeNode(long nodeId) throws RemoteException {
 		try {
 			WikiNodeServiceUtil.subscribeNode(nodeId);

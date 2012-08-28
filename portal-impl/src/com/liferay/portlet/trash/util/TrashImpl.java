@@ -35,7 +35,6 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
-import com.liferay.portlet.documentlibrary.util.DLAppUtil;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.impl.TrashEntryImpl;
 import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
@@ -52,6 +51,20 @@ import java.util.List;
  * @author Julio Camarero
  */
 public class TrashImpl implements Trash {
+
+	public String appendTrashNamespace(String title) {
+		return appendTrashNamespace(title, StringPool.SLASH);
+	}
+
+	public String appendTrashNamespace(String title, String separator) {
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(title);
+		sb.append(separator);
+		sb.append(System.currentTimeMillis());
+
+		return sb.toString();
+	}
 
 	public List<TrashEntry> getEntries(Hits hits) {
 		List<TrashEntry> entries = new ArrayList<TrashEntry>();
@@ -150,6 +163,16 @@ public class TrashImpl implements Trash {
 			trashEntriesMaxAge);
 	}
 
+	public String getTrashTime(String title, String separator) {
+		int index = title.lastIndexOf(separator);
+
+		if (index < 0) {
+			return StringPool.BLANK;
+		}
+
+		return title.substring(index + 1, title.length());
+	}
+
 	public boolean isTrashEnabled(long groupId)
 		throws PortalException, SystemException {
 
@@ -213,7 +236,7 @@ public class TrashImpl implements Trash {
 		sb.append(attachmentsDir);
 		sb.append(StringPool.FORWARD_SLASH);
 		sb.append(
-			DLAppUtil.stripTrashNamespace(
+			stripTrashNamespace(
 				FileUtil.getShortFileName(deletedFileName), separator));
 
 		String fileName = sb.toString();
@@ -257,7 +280,7 @@ public class TrashImpl implements Trash {
 		sb.append(deletedAttachmentsDir);
 		sb.append(StringPool.FORWARD_SLASH);
 		sb.append(
-			DLAppUtil.appendTrashNamespace(
+			appendTrashNamespace(
 				FileUtil.getShortFileName(fileName), separator));
 
 		String deletedFileName = sb.toString();
@@ -272,6 +295,20 @@ public class TrashImpl implements Trash {
 		}
 
 		return deletedFileName;
+	}
+
+	public String stripTrashNamespace(String title) {
+		return stripTrashNamespace(title, StringPool.SLASH);
+	}
+
+	public String stripTrashNamespace(String title, String separator) {
+		int index = title.lastIndexOf(separator);
+
+		if (index < 0) {
+			return title;
+		}
+
+		return title.substring(0, index);
 	}
 
 	private Log _log = LogFactoryUtil.getLog(TrashImpl.class);

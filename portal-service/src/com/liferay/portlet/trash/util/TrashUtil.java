@@ -43,6 +43,14 @@ public class TrashUtil {
 
 	public static final String TRASH_TIME_SEPARATOR = "_TRASH_TIME_";
 
+	public static String appendTrashNamespace(String title) {
+		return getTrash().appendTrashNamespace(title);
+	}
+
+	public static String appendTrashNamespace(String title, String separator) {
+		return getTrash().appendTrashNamespace(title, separator);
+	}
+
 	public static List<TrashEntry> getEntries(Hits hits)
 		throws PortalException, SystemException {
 
@@ -65,6 +73,10 @@ public class TrashUtil {
 		PortalRuntimePermission.checkGetBeanProperty(TrashUtil.class);
 
 		return _trash;
+	}
+
+	public static String getTrashTime(String title, String separator) {
+		return getTrash().getTrashTime(title, separator);
 	}
 
 	public static boolean isTrashEnabled(long groupId)
@@ -115,6 +127,14 @@ public class TrashUtil {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_trash = trash;
+	}
+
+	public static String stripTrashNamespace(String title) {
+		return getTrash().stripTrashNamespace(title);
+	}
+
+	public static String stripTrashNamespace(String title, String separator) {
+		return getTrash().stripTrashNamespace(title, separator);
 	}
 
 	private static Trash _trash;

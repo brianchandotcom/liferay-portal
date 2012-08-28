@@ -28,6 +28,10 @@ import java.util.List;
  */
 public interface Trash {
 
+	public String appendTrashNamespace(String title);
+
+	public String appendTrashNamespace(String title, String separator);
+
 	public List<TrashEntry> getEntries(Hits hits)
 		throws PortalException, SystemException;
 
@@ -35,6 +39,8 @@ public interface Trash {
 		String orderByCol, String orderByType);
 
 	public int getMaxAge(Group group) throws PortalException, SystemException;
+
+	public String getTrashTime(String title, String separator);
 
 	public boolean isTrashEnabled(long groupId)
 		throws PortalException, SystemException;
@@ -58,5 +64,9 @@ public interface Trash {
 			long companyId, long repositoryId, String fileName,
 			String deletedAttachmentsDir, String separator)
 		throws PortalException, SystemException;
+
+	public String stripTrashNamespace(String title);
+
+	public String stripTrashNamespace(String title, String separator);
 
 }

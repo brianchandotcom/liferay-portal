@@ -15,6 +15,7 @@
 package com.liferay.portlet.portletconfiguration.action;
 
 import com.liferay.portal.LARFileException;
+import com.liferay.portal.LARFileSizeException;
 import com.liferay.portal.LARTypeException;
 import com.liferay.portal.LayoutImportException;
 import com.liferay.portal.LocaleException;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.staging.StagingUtil;
+import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -54,6 +56,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -102,6 +105,8 @@ public class ExportImportAction extends EditConfigurationAction {
 				sendRedirect(actionRequest, actionResponse);
 			}
 			else if (cmd.equals(Constants.IMPORT)) {
+				checkExceededSizeLimit(actionRequest);
+
 				importData(actionRequest, actionResponse, portlet);
 
 				sendRedirect(actionRequest, actionResponse);
@@ -113,8 +118,9 @@ public class ExportImportAction extends EditConfigurationAction {
 			}
 		}
 		catch (Exception e) {
-			if (e instanceof NoSuchLayoutException ||
-				e instanceof PrincipalException) {
+			if ((e instanceof LARFileSizeException) ||
+				(e instanceof NoSuchLayoutException) ||
+				(e instanceof PrincipalException)) {
 
 				SessionErrors.add(actionRequest, e.getClass());
 
@@ -149,6 +155,22 @@ public class ExportImportAction extends EditConfigurationAction {
 
 		return mapping.findForward(getForward(
 			renderRequest, "portlet.portlet_configuration.export_import"));
+	}
+
+	protected void checkExceededSizeLimit(PortletRequest portletRequest)
+		throws PortalException {
+
+		UploadException uploadException =
+			(UploadException)portletRequest.getAttribute(
+				WebKeys.UPLOAD_EXCEPTION);
+
+		if (uploadException != null) {
+			if (uploadException.isExceededSizeLimit()) {
+				throw new LARFileSizeException(uploadException.getCause());
+			}
+
+			throw new PortalException(uploadException.getCause());
+		}
 	}
 
 	protected void exportData(

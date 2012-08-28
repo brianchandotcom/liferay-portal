@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
  *
@@ -12,16 +11,30 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/portlet/portlet_configuration/init.jsp" %>
+package com.liferay.portal;
 
-<liferay-ui:header
-	backURL="javascript:history.go(-1);"
-	title="error"
-/>
+import com.liferay.portal.kernel.exception.PortalException;
 
-<liferay-ui:error exception="<%= LARFileSizeException.class %>">
-	<liferay-ui:message arguments="<%= PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE) / 1024 %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" />
-</liferay-ui:error>
-<liferay-ui:error exception="<%= PrincipalException.class %>" message="you-do-not-have-the-required-permissions" />
+/**
+ * @author Brian Wing Shun Chan
+ */
+public class LARFileSizeException extends PortalException {
+
+	public LARFileSizeException() {
+		super();
+	}
+
+	public LARFileSizeException(String msg) {
+		super(msg);
+	}
+
+	public LARFileSizeException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public LARFileSizeException(Throwable cause) {
+		super(cause);
+	}
+
+}

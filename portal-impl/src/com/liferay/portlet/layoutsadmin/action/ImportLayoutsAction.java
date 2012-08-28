@@ -15,20 +15,24 @@
 package com.liferay.portlet.layoutsadmin.action;
 
 import com.liferay.portal.LARFileException;
+import com.liferay.portal.LARFileSizeException;
 import com.liferay.portal.LARTypeException;
 import com.liferay.portal.LayoutImportException;
 import com.liferay.portal.LayoutPrototypeException;
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.NoSuchGroupException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.sites.action.ActionUtil;
 
 import java.io.File;
@@ -38,6 +42,8 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -59,6 +65,8 @@ public class ImportLayoutsAction extends PortletAction {
 			UploadPortletRequest uploadPortletRequest =
 				PortalUtil.getUploadPortletRequest(actionRequest);
 
+			checkExceededSizeLimit(uploadPortletRequest);
+
 			long groupId = ParamUtil.getLong(uploadPortletRequest, "groupId");
 			boolean privateLayout = ParamUtil.getBoolean(
 				uploadPortletRequest, "privateLayout");
@@ -79,6 +87,7 @@ public class ImportLayoutsAction extends PortletAction {
 		}
 		catch (Exception e) {
 			if ((e instanceof LARFileException) ||
+				(e instanceof LARFileSizeException) ||
 				(e instanceof LARTypeException)) {
 
 				SessionErrors.add(actionRequest, e.getClass());
@@ -121,6 +130,21 @@ public class ImportLayoutsAction extends PortletAction {
 
 		return mapping.findForward(
 			getForward(renderRequest, "portlet.layouts_admin.export_layouts"));
+	}
+
+	protected void checkExceededSizeLimit(HttpServletRequest request)
+		throws PortalException {
+
+		UploadException uploadException = (UploadException)request.getAttribute(
+			WebKeys.UPLOAD_EXCEPTION);
+
+		if (uploadException != null) {
+			if (uploadException.isExceededSizeLimit()) {
+				throw new LARFileSizeException(uploadException.getCause());
+			}
+
+			throw new PortalException(uploadException.getCause());
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(ImportLayoutsAction.class);

@@ -85,8 +85,6 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 %>
 
 <aui:form cssClass="lfr-export-dialog" method="post" name="fm1">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= cmd %>" />
-
 	<c:choose>
 		<c:when test="<%= cmd.equals(Constants.EXPORT) %>">
 			<%@ include file="/html/portlet/layouts_admin/export_import_options.jspf" %>
@@ -97,6 +95,9 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 		</c:when>
 		<c:when test="<%= cmd.equals(Constants.IMPORT) %>">
 			<liferay-ui:error exception="<%= LARFileException.class %>" message="please-specify-a-lar-file-to-import" />
+			<liferay-ui:error exception="<%= LARFileSizeException.class %>">
+				<liferay-ui:message arguments="<%= PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE) / 1024 %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" />
+			</liferay-ui:error>
 			<liferay-ui:error exception="<%= LARTypeException.class %>" message="please-import-a-lar-file-of-the-correct-type" />
 			<liferay-ui:error exception="<%= LayoutImportException.class %>" message="an-unexpected-error-occurred-while-importing-your-file" />
 
@@ -220,6 +221,7 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 
 					<portlet:actionURL var="exportPagesURL">
 						<portlet:param name="struts_action" value="/layouts_admin/export_layouts" />
+						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
 						<portlet:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
 						<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 						<portlet:param name="exportLAR" value="<%= Boolean.TRUE.toString() %>" />
@@ -230,6 +232,7 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 				<c:otherwise>
 					<portlet:actionURL var="importPagesURL">
 						<portlet:param name="struts_action" value="/layouts_admin/import_layouts" />
+						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.IMPORT %>" />
 						<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 						<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 					</portlet:actionURL>

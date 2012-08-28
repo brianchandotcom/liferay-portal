@@ -3489,7 +3489,7 @@ public class PortalImpl implements Portal {
 		ServletContext servletContext = (ServletContext)request.getAttribute(
 			WebKeys.CTX);
 
-		Locale locale = request.getLocale();
+		Locale locale = renderRequest.getLocale();
 
 		return getPortletTitle(portlet, servletContext, locale);
 	}

@@ -464,21 +464,26 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			deletePage(curPage);
 		}
 
-		// Trash
+		wikiPagePersistence.removeByN_T(page.getNodeId(), page.getTitle());
 
-		if (page.isInTrash()) {
-			page.setTitle(TrashUtil.stripTrashNamespace(page.getTitle()));
+		// All referrals
 
-			trashEntryLocalService.deleteEntry(
-				WikiPage.class.getName(), page.getResourcePrimKey());
+		wikiPagePersistence.removeByN_R(page.getNodeId(), page.getTitle());
+
+		// Resources
+
+		resourceLocalService.deleteResource(
+			page.getCompanyId(), WikiPage.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL, page.getResourcePrimKey());
+
+		// Resource
+
+		try {
+			wikiPageResourceLocalService.deletePageResource(
+				page.getNodeId(), page.getTitle());
 		}
-
-		// Indexer
-
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			WikiPage.class);
-
-		indexer.delete(page);
+		catch (NoSuchPageResourceException nspre) {
+		}
 
 		// Attachments
 
@@ -498,16 +503,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			page.getCompanyId(), WikiPage.class.getName(),
 			page.getResourcePrimKey());
 
-		// Message boards
-
-		mbMessageLocalService.deleteDiscussionMessages(
-			WikiPage.class.getName(), page.getResourcePrimKey());
-
-		// Expando
-
-		expandoValueLocalService.deleteValues(
-			WikiPage.class.getName(), page.getResourcePrimKey());
-
 		// Asset
 
 		List<WikiPage> pageVersions = wikiPagePersistence.findByN_T(
@@ -521,20 +516,35 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		assetEntryLocalService.deleteEntry(
 			WikiPage.class.getName(), page.getResourcePrimKey());
 
-		// Resources
+		// Expando
 
-		resourceLocalService.deleteResource(
-			page.getCompanyId(), WikiPage.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL, page.getResourcePrimKey());
+		expandoValueLocalService.deleteValues(
+			WikiPage.class.getName(), page.getResourcePrimKey());
 
-		// Resource
+		// Message boards
 
-		try {
-			wikiPageResourceLocalService.deletePageResource(
-				page.getNodeId(), page.getTitle());
+		mbMessageLocalService.deleteDiscussionMessages(
+			WikiPage.class.getName(), page.getResourcePrimKey());
+
+		// Trash
+
+		if (page.isInTrash()) {
+			page.setTitle(TrashUtil.stripTrashNamespace(page.getTitle()));
+
+			trashEntryLocalService.deleteEntry(
+				WikiPage.class.getName(), page.getResourcePrimKey());
 		}
-		catch (NoSuchPageResourceException nspre) {
-		}
+
+		// Indexer
+
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			WikiPage.class);
+
+		indexer.delete(page);
+
+		// Cache
+
+		clearPageCache(page);
 
 		// All versions
 
@@ -549,16 +559,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				curPage.getCompanyId(), curPage.getGroupId(),
 				WikiPage.class.getName(), curPage.getPageId());
 		}
-
-		wikiPagePersistence.removeByN_T(page.getNodeId(), page.getTitle());
-
-		// All referrals
-
-		wikiPagePersistence.removeByN_R(page.getNodeId(), page.getTitle());
-
-		// Cache
-
-		clearPageCache(page);
 	}
 
 	public void deletePageAttachment(long nodeId, String title, String fileName)

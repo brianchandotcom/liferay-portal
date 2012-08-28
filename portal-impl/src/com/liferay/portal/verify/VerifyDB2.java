@@ -23,6 +23,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.Set;
+
 /**
  * @author Igor Beslic
  */
@@ -56,8 +58,15 @@ public class VerifyDB2 extends VerifyProcess {
 
 			rs = ps.executeQuery();
 
+			Set<String> tableNames = getTableNames();
+
 			while (rs.next()) {
 				String tableName = rs.getString(1);
+
+				if (!tableNames.contains(tableName.toLowerCase())) {
+					continue;
+				}
+
 				String columnName = rs.getString(2);
 
 				runSQL(

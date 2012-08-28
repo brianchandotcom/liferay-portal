@@ -89,6 +89,7 @@ public class PortletConstants {
 	 * by the instance ID parameter.
 	 *
 	 * @param portletId the portlet ID
+	 * @param userId the user ID
 	 * @param instanceId an instance ID
 	 */
 	public static String assemblePortletId(

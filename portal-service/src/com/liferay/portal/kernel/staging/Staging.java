@@ -84,7 +84,8 @@ public interface Staging {
 		throws Exception;
 
 	/**
-	 * @deprecated {@link #disableStaging(PortletRequest, Group, ServiceContext)}
+	 * @deprecated {@link #disableStaging(PortletRequest, Group,
+	 *             ServiceContext)}
 	 */
 	public void disableStaging(
 			PortletRequest portletRequest, Group scopeGroup, Group liveGroup,

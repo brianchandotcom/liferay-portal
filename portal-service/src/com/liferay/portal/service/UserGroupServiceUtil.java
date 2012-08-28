@@ -162,6 +162,8 @@ public class UserGroupServiceUtil {
 	*
 	* @param userId the primary key of the user
 	* @return the user groups to which the user belongs
+	* @throws PortalException if the current user did not have permission to
+	view the user or any one of the user group members
 	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.UserGroup> getUserUserGroups(

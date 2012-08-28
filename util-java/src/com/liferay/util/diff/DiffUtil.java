@@ -80,6 +80,8 @@ public class DiffUtil {
 	 *         deleted from the source
 	 * @param  deletedMarkerEnd the marker to indicate the end of text deleted
 	 *         from the source
+	 * @param  margin the vertical margin to use in displaying differences
+	 *         between changed line changes
 	 * @return an array containing two lists of <code>DiffResults</code>, the
 	 *         first element contains DiffResults related to changes in source
 	 *         and the second element to changes in target

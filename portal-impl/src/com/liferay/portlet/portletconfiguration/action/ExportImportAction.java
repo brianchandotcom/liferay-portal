@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -157,22 +156,21 @@ public class ExportImportAction extends EditConfigurationAction {
 		return mapping.findForward(getForward(
 			renderRequest, "portlet.portlet_configuration.export_import"));
 	}
-	
+
 	protected void checkExceededSizeLimit(PortletRequest portletRequest)
 		throws PortalException {
-		
+
 		UploadException uploadException =
 			(UploadException)portletRequest.getAttribute(
-					WebKeys.UPLOAD_EXCEPTION);
+				WebKeys.UPLOAD_EXCEPTION);
 
 		if (uploadException != null) {
 			if (uploadException.isExceededSizeLimit()) {
-				throw new LARFileSizeException(
-					uploadException.getCause());
+				throw new LARFileSizeException(uploadException.getCause());
 			}
 
 			throw new PortalException(uploadException.getCause());
-		}	
+		}
 	}
 
 	protected void exportData(

@@ -85,8 +85,6 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 %>
 
 <aui:form cssClass="lfr-export-dialog" method="post" name="fm1">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= cmd %>" />
-
 	<c:choose>
 		<c:when test="<%= cmd.equals(Constants.EXPORT) %>">
 			<%@ include file="/html/portlet/layouts_admin/export_import_options.jspf" %>
@@ -223,6 +221,7 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 
 					<portlet:actionURL var="exportPagesURL">
 						<portlet:param name="struts_action" value="/layouts_admin/export_layouts" />
+						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
 						<portlet:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
 						<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 						<portlet:param name="exportLAR" value="<%= Boolean.TRUE.toString() %>" />
@@ -233,6 +232,7 @@ portletsList = ListUtil.sort(portletsList, new PortletTitleComparator(applicatio
 				<c:otherwise>
 					<portlet:actionURL var="importPagesURL">
 						<portlet:param name="struts_action" value="/layouts_admin/import_layouts" />
+						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.IMPORT %>" />
 						<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 						<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 					</portlet:actionURL>

@@ -191,13 +191,13 @@ else {
 					<%
 					dataView = new HashMap<String, Object>();
 
-					dataView.put("file-entry-type-id", 0);
+					dataView.put("structure-id", 0);
 					%>
 
 					<liferay-ui:app-view-navigation-entry
 						cssClassName="folder structure"
 						dataView="<%= dataView %>"
-						entryTitle='<%= LanguageUtil.get(pageContext, "basic-document") %>'
+						entryTitle='<%= LanguageUtil.get(pageContext, "basic-web-content") %>'
 						iconImage="copy"
 						selected='<%= (structureId == "0") %>'
 						viewURL="<%= viewBasicJournalStructureArticlesURL.toString() %>"

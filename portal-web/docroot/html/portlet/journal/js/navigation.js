@@ -154,6 +154,10 @@ AUI.add(
 						foldersConfig.displayStyle = displayStyle;
 						foldersConfig.displayStyleCSSClass = displayStyleCSSClass;
 						foldersConfig.displayStyleToolbar = displayStyleToolbar;
+						foldersConfig.entry = {
+							paramName: 'structureId',
+							typeId: 'data-structure-id'
+						};
 						foldersConfig.namespace = namespace;
 						foldersConfig.portletContainerId = portletContainerId;
 

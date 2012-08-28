@@ -803,13 +803,15 @@ public abstract class BaseIndexer implements Indexer {
 				ServiceContext serviceContext =
 					ServiceContextThreadLocal.getServiceContext();
 
-				try {
-					User user = UserLocalServiceUtil.getUser(
-						serviceContext.getUserId());
+				if (serviceContext != null) {
+					try {
+						User user = UserLocalServiceUtil.getUser(
+							serviceContext.getUserId());
 
-					removedByUserName = user.getFullName();
-				}
-				catch (PortalException pe) {
+						removedByUserName = user.getFullName();
+					}
+					catch (PortalException pe) {
+					}
 				}
 			}
 		}

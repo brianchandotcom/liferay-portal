@@ -29,8 +29,13 @@ import java.io.File;
 
 import java.lang.reflect.Method;
 
+import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -40,8 +45,39 @@ import javax.servlet.ServletException;
  */
 public class ClassPathUtil {
 
+	public static URL[] getClassPathURLs(String classPath)
+		throws MalformedURLException {
+
+		String[] paths = StringUtil.split(classPath, File.pathSeparatorChar);
+
+		List<URL> urlList = new ArrayList<URL>();
+
+		for (String path : paths) {
+			File file = new File(path);
+
+			URI uri = file.toURI();
+
+			urlList.add(uri.toURL());
+		}
+
+		return urlList.toArray(new URL[urlList.size()]);
+	}
+
 	public static String getGlobalClassPath() {
 		return _globalClassPath;
+	}
+
+	public static String getJVMClassPath(boolean includeBootClassPath) {
+		String jvmClassPath = System.getProperty("java.class.path");
+
+		if (includeBootClassPath) {
+			String bootClassPath = System.getProperty("sun.boot.class.path");
+
+			jvmClassPath = jvmClassPath.concat(File.pathSeparator).concat(
+				bootClassPath);
+		}
+
+		return jvmClassPath;
 	}
 
 	public static String getPortalClassPath() {

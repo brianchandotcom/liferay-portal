@@ -71,6 +71,8 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 	 * Deletes all wiki page with the matching primary keys.
 	 *
 	 * @param  classPKs the primary keys of the wiki pages to be deleted
+	 * @param  checkPermission whether to check permission before deleting each
+	 *         folder
 	 * @throws PortalException if any one of the wiki pages could not be found
 	 * @throws SystemException if a system exception occurred
 	 */

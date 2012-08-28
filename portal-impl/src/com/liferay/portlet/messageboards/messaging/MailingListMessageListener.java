@@ -248,7 +248,6 @@ public class MailingListMessageListener extends BaseMessageListener {
 			}
 			else {
 				MBMessageServiceUtil.addMessage(
-					groupId, categoryId, parentMessage.getThreadId(),
 					parentMessage.getMessageId(), subject,
 					mbMailMessage.getBody(), MBMessageConstants.DEFAULT_FORMAT,
 					inputStreamOVPs, anonymous, 0.0, true, serviceContext);

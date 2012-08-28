@@ -146,8 +146,7 @@ public class MoveThreadAction extends PortletAction {
 				MBMessage.class.getName(), actionRequest);
 
 			MBMessageServiceUtil.addMessage(
-				groupId, categoryId, threadId, thread.getRootMessageId(),
-				subject, body, format,
+				thread.getRootMessageId(), subject, body, format,
 				Collections.<ObjectValuePair<String, InputStream>>emptyList(),
 				false, MBThreadConstants.PRIORITY_NOT_GIVEN, false,
 				serviceContext);

@@ -28,6 +28,7 @@ import java.sql.ResultSet;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Douglas Wong
@@ -65,8 +66,15 @@ public class VerifySQLServer extends VerifyProcess {
 
 			rs = ps.executeQuery();
 
+			Set<String> tableNames = getTableNames();
+
 			while (rs.next()) {
 				String tableName = rs.getString("table_name");
+
+				if (!tableNames.contains(tableName.toLowerCase())) {
+					continue;
+				}
+
 				String columnName = rs.getString("column_name");
 				String dataType = rs.getString("data_type");
 				int length = rs.getInt("length");
@@ -202,8 +210,15 @@ public class VerifySQLServer extends VerifyProcess {
 
 			rs = ps.executeQuery();
 
+			Set<String> tableNames = getTableNames();
+
 			while (rs.next()) {
 				String tableName = rs.getString("table_name");
+
+				if (!tableNames.contains(tableName.toLowerCase())) {
+					continue;
+				}
+
 				String indexName = rs.getString("index_name");
 
 				if (_log.isInfoEnabled()) {

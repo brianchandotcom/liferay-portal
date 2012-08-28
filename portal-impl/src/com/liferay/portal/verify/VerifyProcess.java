@@ -19,7 +19,9 @@ import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.ReleaseConstants;
+import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 
 import java.io.IOException;
 
@@ -27,6 +29,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.naming.NamingException;
 
@@ -125,6 +132,37 @@ public abstract class VerifyProcess {
 		}
 	}
 
+	protected Set<String> getTableNames() throws IOException {
+		if (_tableNames != null) {
+			return _tableNames;
+		}
+
+		ClassLoader classLoader = PACLClassLoaderUtil.getContextClassLoader();
+
+		String sql = StringUtil.read(
+			classLoader,
+			"com/liferay/portal/tools/sql/dependencies/portal-tables.sql");
+
+		Matcher matcher = _pattern.matcher(sql);
+
+		Set<String> tableNames = new HashSet<String>();
+
+		while (matcher.find()) {
+			String match = matcher.group(1);
+
+			tableNames.add(match.toLowerCase());
+		}
+
+		_tableNames = tableNames;
+
+		return tableNames;
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(VerifyProcess.class);
+
+	private static Pattern _pattern = Pattern.compile(
+		"create table (\\S*) \\(");
+
+	private Set<String> _tableNames;
 
 }

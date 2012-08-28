@@ -27,6 +27,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import java.util.Set;
+
 /**
  * @author Ivica Cardic
  * @author Brian Wing Shun Chan
@@ -50,8 +52,15 @@ public class VerifyOracle extends VerifyProcess {
 
 			rs = ps.executeQuery();
 
+			Set<String> tableNames = getTableNames();
+
 			while (rs.next()) {
 				String tableName = rs.getString(1);
+
+				if (!tableNames.contains(tableName.toLowerCase())) {
+					continue;
+				}
+
 				String columnName = rs.getString(2);
 				int dataLength = rs.getInt(3);
 

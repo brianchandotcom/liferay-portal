@@ -32,22 +32,16 @@ import javax.servlet.ServletContext;
 /**
  * @author Ivica Cardic
  * @author Brian Wing Shun Chan
+ * @author Raymond Augé
+ * @author Miguel Pastor
  */
 public class HotDeployEvent {
 
 	public HotDeployEvent(
 		ServletContext servletContext, ClassLoader contextClassLoader) {
 
-		this(servletContext, contextClassLoader, true);
-	}
-
-	public HotDeployEvent(
-		ServletContext servletContext, ClassLoader contextClassLoader,
-		boolean dependencyManagementEnabled) {
-
 		_servletContext = servletContext;
 		_contextClassLoader = contextClassLoader;
-		_dependencyManagementEnabled = dependencyManagementEnabled;
 
 		try {
 			initDependentServletContextNames();
@@ -77,16 +71,12 @@ public class HotDeployEvent {
 		return _servletContext.getServletContextName();
 	}
 
-	public boolean isDependencyManagementEnabled() {
-		return _dependencyManagementEnabled;
-	}
-
 	public void setPluginPackage(PluginPackage pluginPackage) {
 		_pluginPackage = pluginPackage;
 	}
 
 	protected void initDependentServletContextNames() throws IOException {
-		if (!_dependencyManagementEnabled) {
+		if (!DependencyManagementThreadLocal.isEnabled()) {
 			return;
 		}
 
@@ -124,7 +114,6 @@ public class HotDeployEvent {
 	private static Log _log = LogFactoryUtil.getLog(HotDeployEvent.class);
 
 	private ClassLoader _contextClassLoader;
-	private boolean _dependencyManagementEnabled = true;
 	private Set<String> _dependentServletContextNames = new HashSet<String>();
 	private PluginPackage _pluginPackage;
 	private ServletContext _servletContext;

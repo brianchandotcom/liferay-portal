@@ -73,7 +73,8 @@ public class SpriteProcessorImpl implements SpriteProcessor {
 	public Properties generate(
 			ServletContext servletContext, List<URL> imageURLs,
 			String spriteFileName, String spritePropertiesFileName,
-			String rootPath, int maxHeight, int maxWidth, int maxSize)
+			String spriteRootDir, String rootPath, int maxHeight, int maxWidth,
+			int maxSize)
 		throws IOException {
 
 		if (imageURLs.size() < 1) {
@@ -82,15 +83,22 @@ public class SpriteProcessorImpl implements SpriteProcessor {
 
 		Collections.sort(imageURLs, new PropertyComparator("path"));
 
-		File tempDir = (File)servletContext.getAttribute(
-			JavaConstants.JAVAX_SERVLET_CONTEXT_TEMPDIR);
+		File spriteRootDirFile = null;
 
-		File spriteRootDir = new File(tempDir, SpriteProcessor.PATH);
+		if (Validator.isNull(spriteRootDir)) {
+			File tempDir = (File)servletContext.getAttribute(
+						JavaConstants.JAVAX_SERVLET_CONTEXT_TEMPDIR);
 
-		spriteRootDir.mkdirs();
+			spriteRootDirFile = new File(tempDir, SpriteProcessor.PATH);
+		}
+		else {
+			spriteRootDirFile = new File(spriteRootDir);
+		}
+
+		spriteRootDirFile.mkdirs();
 
 		File spritePropertiesFile = new File(
-			spriteRootDir, spritePropertiesFileName);
+			spriteRootDirFile, spritePropertiesFileName);
 
 		File spritePropertiesParentFile = spritePropertiesFile.getParentFile();
 
@@ -212,7 +220,7 @@ public class SpriteProcessorImpl implements SpriteProcessor {
 				MosaicDescriptor.MOSAIC_TYPE_OVERLAY, null, null, null, null,
 				null);
 
-			File spriteFile = new File(spriteRootDir, spriteFileName);
+			File spriteFile = new File(spriteRootDirFile, spriteFileName);
 
 			spriteFile.mkdirs();
 
@@ -231,7 +239,7 @@ public class SpriteProcessorImpl implements SpriteProcessor {
 			renderedImage = imageWorker.getPlanarImage();
 
 			spriteFile = new File(
-				spriteRootDir,
+				spriteRootDirFile,
 				StringUtil.replace(spriteFileName, ".png", ".gif"));
 
 			FileOutputStream fos = new FileOutputStream(spriteFile);

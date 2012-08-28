@@ -2198,11 +2198,12 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			PropsValues.SPRITE_FILE_NAME);
 		String spritePropertiesFileName = resourcePath.concat(
 			PropsValues.SPRITE_PROPERTIES_FILE_NAME);
+		String spriteRootDir = PropsValues.SPRITE_ROOT_DIR;
 		String rootPath = ServletContextUtil.getRootPath(servletContext);
 
 		Properties spriteProperties = SpriteProcessorUtil.generate(
 			servletContext, imageURLs, spriteFileName, spritePropertiesFileName,
-			rootPath, 16, 16, 10240);
+			spriteRootDir, rootPath, 16, 16, 10240);
 
 		if (spriteProperties == null) {
 			return;

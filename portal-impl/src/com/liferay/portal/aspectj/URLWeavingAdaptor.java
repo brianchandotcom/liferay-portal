@@ -1,0 +1,167 @@
+/**
+ * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portal.aspectj;
+
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.portal.kernel.util.StreamUtil;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+import java.net.URL;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.aspectj.apache.bcel.classfile.ClassParser;
+import org.aspectj.apache.bcel.classfile.JavaClass;
+import org.aspectj.weaver.CrosscuttingMembersSet;
+import org.aspectj.weaver.ResolvedType;
+import org.aspectj.weaver.bcel.BcelObjectType;
+import org.aspectj.weaver.tools.GeneratedClassHandler;
+import org.aspectj.weaver.tools.WeavingAdaptor;
+
+/**
+ * @author Shuyang Zhou
+ */
+public class URLWeavingAdaptor extends WeavingAdaptor {
+
+	public URLWeavingAdaptor(URL[] classURLs, Class<?>[] aspectClasses) {
+		super(null, classURLs, new URL[0]);
+
+		generatedClassHandler = new RecordGeneratedClassHandler();
+
+		for (Class<?> aspectClass : aspectClasses) {
+			_addAspectClass(aspectClass);
+		}
+
+		weaver.prepareForWeave();
+	}
+
+	public byte[] removeGeneratedClassDate(String name) {
+		return _generatedClasses.remove(name);
+	}
+
+	private void _addAspectClass(Class<?> aspectClass) {
+		Class<?> currentClass = aspectClass;
+
+		while (true) {
+			Class<?>[] interfaceClasses = currentClass.getInterfaces();
+
+			for (Class<?> interfaceClass : interfaceClasses) {
+				JavaClass javaClass = _classToJavaClass(interfaceClass);
+
+				if (javaClass != null) {
+					bcelWorld.addSourceObjectType(javaClass, false);
+				}
+			}
+
+			currentClass = currentClass.getSuperclass();
+
+			if (currentClass != null) {
+				JavaClass javaClass = _classToJavaClass(currentClass);
+
+				if (javaClass != null) {
+					bcelWorld.addSourceObjectType(javaClass, false);
+				}
+			}
+			else {
+				break;
+			}
+		}
+
+		JavaClass javaClass = _classToJavaClass(aspectClass);
+
+		BcelObjectType bcelObjectType = bcelWorld.addSourceObjectType(
+			javaClass, false);
+
+		ResolvedType resolvedType = bcelObjectType.getResolvedTypeX();
+
+		if (resolvedType.isAspect()) {
+			CrosscuttingMembersSet crosscuttingMembersSet =
+				bcelWorld.getCrosscuttingMembersSet();
+
+			crosscuttingMembersSet.addOrReplaceAspect(resolvedType);
+		}
+		else {
+			throw new IllegalArgumentException(
+				"Class object " + aspectClass + " is not an AspectJ aspect");
+		}
+	}
+
+	private JavaClass _classToJavaClass(Class<?> aspectClass) {
+		ClassLoader aspectClassLoader = aspectClass.getClassLoader();
+
+		if (aspectClassLoader == null) {
+			aspectClassLoader = ClassLoader.getSystemClassLoader();
+		}
+
+		String resourcePath = aspectClass.getName().replace('.', '/');
+
+		resourcePath = resourcePath.concat(".class");
+
+		ByteArrayInputStream byteArrayInputStream = null;
+
+		InputStream inputStream = aspectClassLoader.getResourceAsStream(
+			resourcePath);
+
+		if (inputStream instanceof ByteArrayInputStream) {
+			byteArrayInputStream = (ByteArrayInputStream)inputStream;
+		}
+		else {
+			try {
+				UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+					new UnsyncByteArrayOutputStream();
+
+				StreamUtil.transfer(
+					inputStream, unsyncByteArrayOutputStream, true);
+
+				byte[] classData =
+					unsyncByteArrayOutputStream.unsafeGetByteArray();
+
+				byteArrayInputStream = new ByteArrayInputStream(
+					classData, 0, unsyncByteArrayOutputStream.size());
+			}
+			catch (IOException ioe) {
+				throw new RuntimeException("Unable to reload class data", ioe);
+			}
+		}
+
+		String fileName = aspectClass.getSimpleName().concat(".class");
+
+		ClassParser classParser = new ClassParser(
+			byteArrayInputStream, fileName);
+
+		try {
+			return classParser.parse();
+		}
+		catch (Exception e) {
+			throw new RuntimeException("Unable to parse class data", e);
+		}
+	}
+
+	private final Map<String, byte[]> _generatedClasses =
+		new HashMap<String, byte[]>();
+
+	private class RecordGeneratedClassHandler implements GeneratedClassHandler {
+
+		public void acceptClass(String name, byte[] bytes) {
+			_generatedClasses.put(name, bytes);
+		}
+
+	}
+
+}

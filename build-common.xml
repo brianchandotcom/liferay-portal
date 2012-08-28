@@ -557,6 +557,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 	<target name="test">
 		<delete dir="test-classes" />
 		<delete dir="test-results" />
+		<delete dir="woven-classes" />
 
 		<antcall target="compile" />
 		<antcall target="instrument-test-coverage" />
@@ -578,7 +579,9 @@ Please set the environment variable ANT_OPTS to the recommended value of
 			</not>
 			<then>
 				<junit dir="${project.dir}" fork="on" forkmode="once" haltonfailure="${junit.halt.on.failure}" printsummary="on">
+					<sysproperty key="junit.aspectj.dump" file="woven-classes" />
 					<sysproperty key="junit.code.coverage" value="${junit.code.coverage}" />
+					<sysproperty key="junit.debug" value="${junit.debug}" />
 					<sysproperty key="net.sourceforge.cobertura.datafile" file="test-coverage/cobertura.ser" />
 					<jvmarg line="${junit.debug.jpda}" />
 					<jvmarg value="-Xmx1024m" />
@@ -596,7 +599,9 @@ Please set the environment variable ANT_OPTS to the recommended value of
 			</then>
 			<else>
 				<junit dir="${project.dir}" fork="on" forkmode="once" haltonfailure="${junit.halt.on.failure}" printsummary="on">
+					<sysproperty key="junit.aspectj.dump" file="woven-classes" />
 					<sysproperty key="junit.code.coverage" value="${junit.code.coverage}" />
+					<sysproperty key="junit.debug" value="${junit.debug}" />
 					<sysproperty key="net.sourceforge.cobertura.datafile" file="test-coverage/cobertura.ser" />
 					<jvmarg line="${junit.debug.jpda}" />
 					<jvmarg value="-Xmx1024m" />
@@ -664,7 +669,9 @@ Please set the environment variable ANT_OPTS to the recommended value of
 			<available file="test/${test.type}" type="dir" />
 			<then>
 				<junit dir="${project.dir}" fork="on" forkmode="once" haltonfailure="${junit.halt.on.failure}" outputtoformatters="false" printsummary="on" showoutput="true">
+					<sysproperty key="junit.aspectj.dump" file="woven-classes" />
 					<sysproperty key="junit.code.coverage" value="${junit.code.coverage}" />
+					<sysproperty key="junit.debug" value="${junit.debug}" />
 					<sysproperty key="net.sourceforge.cobertura.datafile" file="test-coverage/cobertura.ser" />
 					<jvmarg line="${junit.debug.jpda}" />
 					<jvmarg value="-Xmx1024m" />
@@ -711,7 +718,9 @@ Please set the environment variable ANT_OPTS to the recommended value of
 
 	<target name="test-method" depends="compile,instrument-test-coverage,compile-test">
 		<junit dir="${project.dir}" fork="on" forkmode="once" haltonfailure="${junit.halt.on.failure}" outputtoformatters="false" printsummary="on" showoutput="true">
+			<sysproperty key="junit.aspectj.dump" file="woven-classes" />
 			<sysproperty key="junit.code.coverage" value="${junit.code.coverage}" />
+			<sysproperty key="junit.debug" value="${junit.debug}" />
 			<sysproperty key="net.sourceforge.cobertura.datafile" file="test-coverage/cobertura.ser" />
 			<jvmarg line="${junit.debug.jpda}" />
 			<jvmarg value="-Xmx1024m" />

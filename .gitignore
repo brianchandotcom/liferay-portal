@@ -60,6 +60,7 @@ _sass_cache_*.css
 /portal-impl/test-classes
 /portal-impl/test-coverage
 /portal-impl/test-results
+/portal-impl/woven-classes
 
 /portal-impl/src/portal-ext.properties
 /portal-impl/src/system-ext.properties
@@ -79,6 +80,7 @@ _sass_cache_*.css
 /portal-service/test-classes
 /portal-service/test-coverage
 /portal-service/test-results
+/portal-service/woven-classes
 
 /portal-web/*.iml
 /portal-web/*.ipr

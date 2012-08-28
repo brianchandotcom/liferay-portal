@@ -51,12 +51,12 @@ import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
 import com.liferay.portlet.documentlibrary.service.base.DLAppHelperLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
-import com.liferay.portlet.documentlibrary.util.DLAppUtil;
 import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
 import com.liferay.portlet.documentlibrary.util.comparator.FileVersionVersionComparator;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashVersion;
+import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.io.Serializable;
 
@@ -421,7 +421,7 @@ public class DLAppHelperLocalServiceImpl
 		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 
 		dlFileEntry.setTitle(
-			DLAppUtil.appendTrashNamespace(dlFileEntry.getTitle()));
+			TrashUtil.appendTrashNamespace(dlFileEntry.getTitle()));
 
 		dlFileEntryPersistence.update(dlFileEntry, false);
 
@@ -569,7 +569,7 @@ public class DLAppHelperLocalServiceImpl
 			userId, folder.getFolderId(), WorkflowConstants.STATUS_IN_TRASH,
 			new HashMap<String, Serializable>(), new ServiceContext());
 
-		dlFolder.setName(DLAppUtil.appendTrashNamespace(dlFolder.getName()));
+		dlFolder.setName(TrashUtil.appendTrashNamespace(dlFolder.getName()));
 
 		dlFolderPersistence.update(dlFolder, false);
 
@@ -588,7 +588,7 @@ public class DLAppHelperLocalServiceImpl
 		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 
 		dlFileEntry.setTitle(
-			DLAppUtil.stripTrashNamespace(dlFileEntry.getTitle()));
+			TrashUtil.stripTrashNamespace(dlFileEntry.getTitle()));
 
 		dlFileEntryPersistence.update(dlFileEntry, false);
 

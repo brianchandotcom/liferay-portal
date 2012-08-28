@@ -40,7 +40,7 @@ import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.base.DLFolderLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
-import com.liferay.portlet.documentlibrary.util.DLAppUtil;
+import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.io.Serializable;
 
@@ -597,7 +597,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		if (dlFolder.isInTrash() &&
 			(status == WorkflowConstants.STATUS_APPROVED)) {
 
-			dlFolder.setName(DLAppUtil.stripTrashNamespace(dlFolder.getName()));
+			dlFolder.setName(TrashUtil.stripTrashNamespace(dlFolder.getName()));
 		}
 
 		dlFolder.setStatus(status);

@@ -26,8 +26,8 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
-import com.liferay.portlet.documentlibrary.util.DLAppUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
+import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.io.InputStream;
 import java.io.Serializable;
@@ -207,7 +207,7 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 	}
 
 	public String getTitle() {
-		return DLAppUtil.stripTrashNamespace(_dlFileEntry.getTitle());
+		return TrashUtil.stripTrashNamespace(_dlFileEntry.getTitle());
 	}
 
 	public long getUserId() {

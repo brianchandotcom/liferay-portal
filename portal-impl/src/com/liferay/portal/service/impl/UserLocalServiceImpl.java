@@ -137,7 +137,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -683,8 +682,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		validate(
 			companyId, userId, autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, firstName, middleName,
-			lastName, birthdayMonth, birthdayDay, birthdayYear,
-			organizationIds);
+			lastName, organizationIds);
 
 		if (!autoPassword) {
 			if (Validator.isNull(password1) || Validator.isNull(password2)) {
@@ -716,6 +714,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		String greeting = LanguageUtil.format(
 			locale, "welcome-x", " " + fullName, false);
+
+		Date birthday = getBirthday(birthdayMonth, birthdayDay, birthdayYear);
 
 		User user = userPersistence.create(userId);
 
@@ -791,10 +791,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			false, false, false);
 
 		// Contact
-
-		Date birthday = PortalUtil.getDate(
-			birthdayMonth, birthdayDay, birthdayYear,
-			ContactBirthdayException.class);
 
 		Contact contact = contactPersistence.create(user.getContactId());
 
@@ -3976,7 +3972,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			validate(
 				companyId, user.getUserId(), autoPassword, password1, password2,
 				autoScreenName, screenName, emailAddress, firstName, middleName,
-				lastName, birthdayMonth, birthdayDay, birthdayYear, null);
+				lastName, null);
 
 			if (!autoPassword) {
 				if (Validator.isNull(password1) ||
@@ -4727,7 +4723,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		validate(
 			userId, screenName, emailAddress, firstName, middleName, lastName,
-			birthdayMonth, birthdayDay, birthdayYear, smsSn);
+			smsSn);
 
 		if (Validator.isNotNull(newPassword1) ||
 			Validator.isNotNull(newPassword2)) {
@@ -5256,6 +5252,23 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		return authResult;
 	}
 
+	protected Date getBirthday(
+			int birthdayMonth, int birthdayDay, int birthdayYear)
+		throws PortalException {
+
+		Date birthday = PortalUtil.getDate(
+			birthdayMonth, birthdayDay, birthdayYear,
+			ContactBirthdayException.class);
+
+		Date now = new Date();
+
+		if (birthday.after(now)) {
+			throw new ContactBirthdayException();
+		}
+
+		return birthday;
+	}
+
 	protected String getScreenName(String screenName) {
 		return StringUtil.lowerCase(StringUtil.trim(screenName));
 	}
@@ -5588,8 +5601,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			long companyId, long userId, boolean autoPassword, String password1,
 			String password2, boolean autoScreenName, String screenName,
 			String emailAddress, String firstName, String middleName,
-			String lastName, int birthdayMonth, int birthdayDay,
-			int birthdayYear, long[] organizationIds)
+			String lastName, long[] organizationIds)
 		throws PortalException, SystemException {
 
 		Company company = companyPersistence.findByPrimaryKey(companyId);
@@ -5630,7 +5642,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		validateFullName(companyId, firstName, middleName, lastName);
-		validateBirthday(birthdayMonth, birthdayDay, birthdayYear);
 
 		if (organizationIds != null) {
 			for (long organizationId : organizationIds) {
@@ -5646,8 +5657,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 	protected void validate(
 			long userId, String screenName, String emailAddress,
-			String firstName, String middleName, String lastName,
-			int birthdayMonth, int birthdayDay, int birthdayYear, String smsSn)
+			String firstName, String middleName, String lastName, String smsSn)
 		throws PortalException, SystemException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
@@ -5673,20 +5683,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				user.getCompanyId(), firstName, middleName, lastName);
 		}
 
-		validateBirthday(birthdayMonth, birthdayDay, birthdayYear);
-
 		if (Validator.isNotNull(smsSn) && !Validator.isEmailAddress(smsSn)) {
 			throw new UserSmsException();
-		}
-	}
-
-	protected void validateBirthday(int month, int day, int year)
-		throws PortalException, SystemException {
-
-		Calendar calendar = new GregorianCalendar(year, month, day);
-
-		if (calendar.after(new GregorianCalendar())) {
-			throw new ContactBirthdayException();
 		}
 	}
 

@@ -72,6 +72,8 @@ public interface TrashHandler {
 	 * Deletes all trash entries with the primary keys.
 	 *
 	 * @param  classPKs the primary keys of the entries to delete
+	 * @param  checkPermission check if the current user has permission to
+	 *         delete each entry
 	 * @throws PortalException if an entry with the primary key could not be
 	 *         found
 	 * @throws SystemException if a system exception occurred

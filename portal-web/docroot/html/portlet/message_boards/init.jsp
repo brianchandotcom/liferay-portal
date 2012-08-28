@@ -33,7 +33,6 @@ page import="com.liferay.portlet.documentlibrary.FileExtensionException" %><%@
 page import="com.liferay.portlet.documentlibrary.FileNameException" %><%@
 page import="com.liferay.portlet.documentlibrary.FileSizeException" %><%@
 page import="com.liferay.portlet.documentlibrary.store.DLStoreUtil" %><%@
-page import="com.liferay.portlet.documentlibrary.util.DLAppUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.DLUtil" %><%@
 page import="com.liferay.portlet.messageboards.BannedUserException" %><%@
 page import="com.liferay.portlet.messageboards.CategoryNameException" %><%@

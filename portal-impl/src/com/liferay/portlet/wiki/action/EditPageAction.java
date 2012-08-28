@@ -14,10 +14,13 @@
 
 package com.liferay.portlet.wiki.action;
 
+import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Layout;
@@ -41,7 +44,11 @@ import com.liferay.portlet.wiki.PageVersionException;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.model.WikiPageConstants;
+import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.portlet.wiki.service.WikiPageServiceUtil;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -75,7 +82,15 @@ public class EditPageAction extends PortletAction {
 				page = updatePage(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deletePage(actionRequest);
+				deletePage(
+					(LiferayPortletConfig)portletConfig, actionRequest, false);
+			}
+			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
+				deletePage(
+					(LiferayPortletConfig)portletConfig, actionRequest, true);
+			}
+			else if (cmd.equals(Constants.RESTORE)) {
+				restorePage(actionRequest);
 			}
 			else if (cmd.equals(Constants.REVERT)) {
 				revertPage(actionRequest);
@@ -173,16 +188,55 @@ public class EditPageAction extends PortletAction {
 			getForward(renderRequest, "portlet.wiki.edit_page"));
 	}
 
-	protected void deletePage(ActionRequest actionRequest) throws Exception {
+	protected void deletePage(
+			LiferayPortletConfig liferayPortletConfig,
+			ActionRequest actionRequest, boolean moveToTrash)
+		throws Exception {
+
 		long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
 		String title = ParamUtil.getString(actionRequest, "title");
 		double version = ParamUtil.getDouble(actionRequest, "version");
 
-		if (version > 0) {
-			WikiPageServiceUtil.deletePage(nodeId, title, version);
+		WikiPage wikiPage = null;
+
+		if (moveToTrash) {
+			if (version > 0) {
+				wikiPage = WikiPageLocalServiceUtil.getPage(
+					nodeId, title, version);
+
+				WikiPageServiceUtil.moveEntryToTrash(nodeId, title, version);
+			}
+			else {
+				wikiPage = WikiPageLocalServiceUtil.getPage(nodeId, title);
+
+				WikiPageServiceUtil.moveEntryToTrash(nodeId, title);
+			}
 		}
 		else {
-			WikiPageServiceUtil.deletePage(nodeId, title);
+			if (version > 0) {
+				WikiPageServiceUtil.deletePage(nodeId, title, version);
+			}
+			else {
+				WikiPageServiceUtil.deletePage(nodeId, title);
+			}
+		}
+
+		if (moveToTrash) {
+			Map<String, String[]> data = new HashMap<String, String[]>();
+
+			data.put(
+				"restoreEntryIds",
+				new String[]{String.valueOf(wikiPage.getResourcePrimKey())});
+
+			SessionMessages.add(
+				actionRequest,
+				liferayPortletConfig.getPortletId() +
+					SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA, data);
+
+			SessionMessages.add(
+				actionRequest,
+				liferayPortletConfig.getPortletId() +
+					SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE);
 		}
 	}
 
@@ -275,6 +329,15 @@ public class EditPageAction extends PortletAction {
 	@Override
 	protected boolean isCheckMethodOnProcessAction() {
 		return _CHECK_METHOD_ON_PROCESS_ACTION;
+	}
+
+	protected void restorePage(ActionRequest actionRequest) throws Exception {
+		long[] restoreEntryIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "restoreEntryIds"), 0L);
+
+		for (long restoreEntryId : restoreEntryIds) {
+			WikiPageServiceUtil.restorePageFromTrash(restoreEntryId);
+		}
 	}
 
 	protected void revertPage(ActionRequest actionRequest) throws Exception {

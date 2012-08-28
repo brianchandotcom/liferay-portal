@@ -34,7 +34,7 @@ import java.util.Date;
 public class WikiNodeCacheModel implements CacheModel<WikiNode>, Serializable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -58,6 +58,14 @@ public class WikiNodeCacheModel implements CacheModel<WikiNode>, Serializable {
 		sb.append(description);
 		sb.append(", lastPostDate=");
 		sb.append(lastPostDate);
+		sb.append(", status=");
+		sb.append(status);
+		sb.append(", statusByUserId=");
+		sb.append(statusByUserId);
+		sb.append(", statusByUserName=");
+		sb.append(statusByUserName);
+		sb.append(", statusDate=");
+		sb.append(statusDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -120,6 +128,23 @@ public class WikiNodeCacheModel implements CacheModel<WikiNode>, Serializable {
 			wikiNodeImpl.setLastPostDate(new Date(lastPostDate));
 		}
 
+		wikiNodeImpl.setStatus(status);
+		wikiNodeImpl.setStatusByUserId(statusByUserId);
+
+		if (statusByUserName == null) {
+			wikiNodeImpl.setStatusByUserName(StringPool.BLANK);
+		}
+		else {
+			wikiNodeImpl.setStatusByUserName(statusByUserName);
+		}
+
+		if (statusDate == Long.MIN_VALUE) {
+			wikiNodeImpl.setStatusDate(null);
+		}
+		else {
+			wikiNodeImpl.setStatusDate(new Date(statusDate));
+		}
+
 		wikiNodeImpl.resetOriginalValues();
 
 		return wikiNodeImpl;
@@ -136,4 +161,8 @@ public class WikiNodeCacheModel implements CacheModel<WikiNode>, Serializable {
 	public String name;
 	public String description;
 	public long lastPostDate;
+	public int status;
+	public long statusByUserId;
+	public String statusByUserName;
+	public long statusDate;
 }

@@ -321,6 +321,30 @@ public class WikiPageServiceSoap {
 		}
 	}
 
+	public static void moveEntryToTrash(long nodeId, java.lang.String title)
+		throws RemoteException {
+		try {
+			WikiPageServiceUtil.moveEntryToTrash(nodeId, title);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void moveEntryToTrash(long nodeId, java.lang.String title,
+		double version) throws RemoteException {
+		try {
+			WikiPageServiceUtil.moveEntryToTrash(nodeId, title, version);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static void movePage(long nodeId, java.lang.String title,
 		java.lang.String newTitle,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -357,6 +381,18 @@ public class WikiPageServiceSoap {
 					title, fileName);
 
 			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void restorePageFromTrash(long resourcePrimKey)
+		throws RemoteException {
+		try {
+			WikiPageServiceUtil.restorePageFromTrash(resourcePrimKey);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

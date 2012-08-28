@@ -86,6 +86,8 @@ public class DLFileEntryTrashHandler extends BaseTrashHandler {
 	 * Deletes all file entries with the matching primary keys.
 	 *
 	 * @param  classPKs the primary keys of the file entries to be deleted
+	 * @param  checkPermission check if the current user has permission to
+	 *         delete each entry
 	 * @throws PortalException if any one of the file entries could not be found
 	 * @throws SystemException if a system exception occurred
 	 */

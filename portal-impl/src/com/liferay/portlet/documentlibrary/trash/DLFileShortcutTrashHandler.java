@@ -42,6 +42,8 @@ public class DLFileShortcutTrashHandler extends BaseTrashHandler {
 	 * Deletes all file shortcuts with the matching primary keys.
 	 *
 	 * @param  classPKs the primary keys of the file shortcuts to be deleted
+	 * @param  checkPermission check if the current user has permission to
+	 *         delete each entry
 	 * @throws PortalException if any one of the file shortcuts could not be
 	 *         found
 	 * @throws SystemException if a system exception occurred

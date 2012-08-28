@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.upgrade.v6_1_0.util.AssetEntryTable;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.journal.model.JournalArticle;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -76,6 +77,8 @@ public class UpgradeAsset extends UpgradeProcess {
 	}
 
 	protected void updateAssetClassTypeId() throws Exception {
+		long classNameId = PortalUtil.getClassNameId(JournalArticle.class);
+
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -97,8 +100,8 @@ public class UpgradeAsset extends UpgradeProcess {
 
 				runSQL(
 					"update AssetEntry set classTypeId = " +
-						journalStructureId + " where classPK = " +
-							resourcePrimKey);
+						journalStructureId + " where classNameId = " +
+							classNameId + " and classPK = " + resourcePrimKey);
 			}
 		}
 		finally {

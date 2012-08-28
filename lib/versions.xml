@@ -799,12 +799,12 @@
 	</library>
 	<library>
 		<file-name>development/servlet-api.jar</file-name>
-		<version>2.5</version>
+		<version>3.0.0.v201112011016</version>
 		<project-name>Java Servlet</project-name>
-		<project-url>http://java.sun.com/products/servlet</project-url>
+		<project-url>http://glassfish.java.net/downloads/ri/</project-url>
 		<licenses>
 			<license>
-				<license-name>Sun Binary Code License Agreement</license-name>
+				<license-name>Common Development and Distribution License</license-name>
 			</license>
 		</licenses>
 	</library>

@@ -25,7 +25,7 @@ if (row != null) {
 	folder = (JournalFolder)row.getObject();
 }
 else {
-	folder = (JournalFolder)request.getAttribute("view_articles.jsp-folder");
+	folder = (JournalFolder)request.getAttribute("view_entries.jsp-folder");
 }
 
 String modelResource = null;

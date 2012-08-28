@@ -412,8 +412,15 @@ if (Validator.isNull(redirect)) {
 
 					<aui:button disabled="<%= pending %>" name="publishButton" onClick='<%= renderResponse.getNamespace() + "publishPage();" %>' value="<%= publishButtonLabel %>" />
 
-					<c:if test="<%= !newPage && wikiPage.isDraft() && WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.DELETE) %>">
-						<aui:button name="discardDraftButton" onClick='<%= renderResponse.getNamespace() + "discardDraftPage();" %>' value="discard-draft" />
+					<c:if test="<%= !newPage && WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.DELETE) %>">
+						<c:choose>
+							<c:when test="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>">
+								<aui:button name="moveToTrashButton" onClick='<%= renderResponse.getNamespace() + "moveToTrashPage();" %>' value="move-to-the-recycle-bin" />
+							</c:when>
+							<c:when test="<%= wikiPage.isDraft() %>">
+								<aui:button name="discardDraftButton" onClick='<%= renderResponse.getNamespace() + "discardDraftPage();" %>' value="discard-draft" />
+							</c:when>
+						</c:choose>
 					</c:if>
 
 					<aui:button href="<%= redirect %>" type="cancel" />
@@ -471,6 +478,19 @@ if (Validator.isNull(redirect)) {
 		content += window.<portlet:namespace />editor.getHTML();
 
 		return content;
+	}
+
+	function <portlet:namespace />moveToTrashPage() {
+		<portlet:renderURL var="nodeURL">
+			<portlet:param name="struts_action" value="/wiki/view_draft_pages" />
+			<portlet:param name="title" value="<%= WikiPageConstants.FRONT_PAGE %>" />
+			<portlet:param name="tag" value="<%= StringPool.BLANK %>" />
+		</portlet:renderURL>
+
+		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.MOVE_TO_TRASH %>";
+		document.<portlet:namespace />fm.<portlet:namespace />redirect.value = "<%= nodeURL.toString() %>";
+
+		submitForm(document.<portlet:namespace />fm);
 	}
 
 	function <portlet:namespace />previewPage() {

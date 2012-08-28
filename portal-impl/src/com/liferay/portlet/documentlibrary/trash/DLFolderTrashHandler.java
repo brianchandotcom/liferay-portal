@@ -82,6 +82,8 @@ public class DLFolderTrashHandler extends BaseTrashHandler {
 	 * Deletes all folders with the matching primary keys.
 	 *
 	 * @param  classPKs the primary keys of the folders to be deleted
+	 * @param  checkPermission whether to check permission before deleting each
+	 *         folder
 	 * @throws PortalException if any one of the folders could not be found
 	 * @throws SystemException if a system exception occurred
 	 */

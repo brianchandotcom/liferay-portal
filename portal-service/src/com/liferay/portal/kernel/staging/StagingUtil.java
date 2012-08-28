@@ -128,7 +128,8 @@ public class StagingUtil {
 	}
 
 	/**
-	 * @deprecated {@link #disableStaging(PortletRequest, Group, ServiceContext)}
+	 * @deprecated {@link #disableStaging(PortletRequest, Group,
+	 *             ServiceContext)}
 	 */
 	public static void disableStaging(
 			PortletRequest portletRequest, Group scopeGroup, Group liveGroup,

@@ -243,6 +243,7 @@ import com.liferay.portlet.shopping.service.ShoppingCartLocalService;
 import com.liferay.portlet.shopping.service.persistence.ShoppingCartPersistence;
 import com.liferay.portlet.social.service.SocialActivityLocalService;
 import com.liferay.portlet.social.service.SocialRequestLocalService;
+import com.liferay.portlet.social.service.SocialRequestService;
 import com.liferay.portlet.social.service.persistence.SocialActivityFinder;
 import com.liferay.portlet.social.service.persistence.SocialActivityPersistence;
 import com.liferay.portlet.social.service.persistence.SocialRequestPersistence;
@@ -4428,6 +4429,25 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * Returns the social request remote service.
+	 *
+	 * @return the social request remote service
+	 */
+	public SocialRequestService getSocialRequestService() {
+		return socialRequestService;
+	}
+
+	/**
+	 * Sets the social request remote service.
+	 *
+	 * @param socialRequestService the social request remote service
+	 */
+	public void setSocialRequestService(
+		SocialRequestService socialRequestService) {
+		this.socialRequestService = socialRequestService;
+	}
+
+	/**
 	 * Returns the social request persistence.
 	 *
 	 * @return the social request persistence
@@ -4927,6 +4947,8 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected SocialActivityFinder socialActivityFinder;
 	@BeanReference(type = SocialRequestLocalService.class)
 	protected SocialRequestLocalService socialRequestLocalService;
+	@BeanReference(type = SocialRequestService.class)
+	protected SocialRequestService socialRequestService;
 	@BeanReference(type = SocialRequestPersistence.class)
 	protected SocialRequestPersistence socialRequestPersistence;
 	@BeanReference(type = PersistedModelLocalServiceRegistry.class)

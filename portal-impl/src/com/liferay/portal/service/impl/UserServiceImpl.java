@@ -797,7 +797,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @param  screenName the user's screen name
 	 * @return the user with the screen name
 	 * @throws PortalException if a user with the screen name could not be found
-	 *         or if the current user did not have permission to veiw the user
+	 *         or if the current user did not have permission to view the user
 	 * @throws SystemException if a system exception occurred
 	 */
 	public User getUserByScreenName(long companyId, String screenName)
@@ -868,6 +868,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @param  userId the primary key of the user
 	 * @return <code>true</code> if the user is a member of the group;
 	 *         <code>false</code> otherwise
+	 * @throws PortalException if the current user did not have permission to
+	 *         view the user or group members
 	 * @throws SystemException if a system exception occurred
 	 */
 	public boolean hasGroupUser(long groupId, long userId)
@@ -892,6 +894,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	 * @param  userId the primary key of the user
 	 * @return <code>true</code> if the user is a member of the role;
 	 *         <code>false</code> otherwise
+	 * @throws PortalException if the current user did not have permission to
+	 *         view the user or role members
 	 * @throws SystemException if a system exception occurred
 	 */
 	public boolean hasRoleUser(long roleId, long userId)

@@ -34,6 +34,8 @@ public class BlogsEntryTrashHandler extends BaseTrashHandler {
 	 * Deletes all blogs entries with the matching primary keys.
 	 *
 	 * @param  classPKs the primary keys of the blogs entries to be deleted
+	 * @param  checkPermission whether to check permission before deleting each
+	 *         blog entry
 	 * @throws PortalException if any one of the blogs entries could not be
 	 *         found
 	 * @throws SystemException if a system exception occurred

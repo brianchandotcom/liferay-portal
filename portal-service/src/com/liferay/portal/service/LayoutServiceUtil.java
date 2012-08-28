@@ -626,6 +626,7 @@ public class LayoutServiceUtil {
 	com.liferay.portal.kernel.lar.PortletDataHandlerKeys}
 	* @param remoteAddress the remote address
 	* @param remotePort the remote port
+	* @param remotePathContext the remote path context
 	* @param secureConnection whether the connection is secure
 	* @param remoteGroupId the primary key of the remote group
 	* @param remotePrivateLayout whether remote group's layout is private

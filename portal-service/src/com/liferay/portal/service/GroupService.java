@@ -380,6 +380,8 @@ public interface GroupService extends BaseService {
 	* @param groupId the primary key of the group
 	* @return <code>true</code> if the user is associated with the group;
 	<code>false</code> otherwise
+	* @throws PortalException if the current user did not have permission to
+	view the user or group members
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

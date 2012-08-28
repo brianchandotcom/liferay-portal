@@ -468,6 +468,8 @@ public class SocialActivityLocalServiceUtil {
 	* </p>
 	*
 	* @param userId the primary key of the user
+	* @throws PortalException if the user's activity counters could not be
+	deleted
 	* @throws SystemException if a system exception occurred
 	*/
 	public static void deleteUserActivities(long userId)

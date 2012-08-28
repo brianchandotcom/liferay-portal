@@ -1027,8 +1027,8 @@ public interface Portlet extends PortletModel, PersistedModel {
 	public boolean getUseDefaultTemplate();
 
 	/**
-	* Returns the user ID of the portlet. This only applies when the portlet
-	* is added by a user in a customizable layout.
+	* Returns the user ID of the portlet. This only applies when the portlet is
+	* added by a user in a customizable layout.
 	*
 	* @return the user ID of the portlet
 	*/

@@ -2121,6 +2121,14 @@
 			<forward name="portlet.wiki.view_categorized_pages" path="portlet.wiki.view_categorized_pages" />
 		</action>
 
+		<action path="/wiki/restore_node" type="com.liferay.portlet.wiki.action.EditNodeAction">
+			<forward name="portlet.wiki.error" path="portlet.wiki.error" />
+		</action>
+
+		<action path="/wiki/restore_page" type="com.liferay.portlet.wiki.action.EditPageAction">
+			<forward name="portlet.wiki.error" path="portlet.wiki.error" />
+		</action>
+
 		<action path="/wiki/rss" type="com.liferay.portlet.wiki.action.RSSAction">
 			<forward name="portlet.wiki.view_categorized_pages" path="portlet.wiki.view_categorized_pages" />
 		</action>
@@ -2259,6 +2267,14 @@
 			<forward name="portlet.wiki.move_page" path="portlet.wiki.move_page" />
 		</action>
 
+		<action path="/wiki_admin/restore_node" type="com.liferay.portlet.wiki.action.EditNodeAction">
+			<forward name="portlet.wiki.error" path="portlet.wiki.error" />
+		</action>
+
+		<action path="/wiki_admin/restore_page" type="com.liferay.portlet.wiki.action.EditPageAction">
+			<forward name="portlet.wiki.error" path="portlet.wiki.error" />
+		</action>
+
 		<action path="/wiki_admin/rss" type="com.liferay.portlet.wiki.action.RSSAction" />
 
 		<action path="/wiki_admin/search" type="com.liferay.portlet.wiki.action.ViewNodeAction">
@@ -2373,6 +2389,14 @@
 		<action path="/wiki_display/move_page" type="com.liferay.portlet.wiki.action.MovePageAction">
 			<forward name="portlet.wiki.error" path="portlet.wiki.error" />
 			<forward name="portlet.wiki.move_page" path="portlet.wiki.move_page" />
+		</action>
+
+		<action path="/wiki_display/restore_node" type="com.liferay.portlet.wiki.action.EditNodeAction">
+			<forward name="portlet.wiki.error" path="portlet.wiki.error" />
+		</action>
+
+		<action path="/wiki_display/restore_page" type="com.liferay.portlet.wiki.action.EditPageAction">
+			<forward name="portlet.wiki.error" path="portlet.wiki.error" />
 		</action>
 
 		<action path="/wiki_display/search" type="com.liferay.portlet.wiki.action.ViewNodeAction">

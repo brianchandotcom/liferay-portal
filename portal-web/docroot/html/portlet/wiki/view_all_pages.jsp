@@ -16,6 +16,13 @@
 
 <%@ include file="/html/portlet/wiki/init.jsp" %>
 
+<portlet:actionURL var="undoTrashURL">
+	<portlet:param name="struts_action" value="/wiki/restore_page" />
+	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
+</portlet:actionURL>
+
+<liferay-ui:trash-undo portletURL="<%= undoTrashURL %>" />
+
 <liferay-util:include page="/html/portlet/wiki/top_links.jsp" />
 
 <liferay-ui:header

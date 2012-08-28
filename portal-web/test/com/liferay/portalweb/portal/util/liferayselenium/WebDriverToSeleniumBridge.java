@@ -501,7 +501,9 @@ public class WebDriverToSeleniumBridge
 
 		String text = webElement.getText();
 
-		return text.trim();
+		text = text.trim();
+
+		return text.replace("\n", " ");
 	}
 
 	@Override

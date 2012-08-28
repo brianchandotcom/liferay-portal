@@ -4,6 +4,8 @@
 <plugin-package>
 	<name>@plugin_name@ @plugin_type_name@</name>
 	<module-id>@module_group_id@/@module_artifact_id@/@module_version@/war</module-id>
+	<recommended-deployment-context>@recommended_deployment_context@</recommended-deployment-context>
+	<required-deployment-contexts>@required_deployment_contexts@</required-deployment-contexts>
 	<types>
 		<type>@plugin_type@</type>
 	</types>

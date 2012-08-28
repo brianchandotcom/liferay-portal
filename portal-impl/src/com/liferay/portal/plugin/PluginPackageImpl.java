@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -329,7 +330,7 @@ public class PluginPackageImpl
 	private String _pageURL;
 	private String _recommendedDeploymentContext;
 	private RemotePluginPackageRepository _repository;
-	private List<String> _requiredDeploymentContexts;
+	private List<String> _requiredDeploymentContexts = Collections.EMPTY_LIST;
 	private List<Screenshot> _screenshots = new ArrayList<Screenshot>();
 	private String _shortDescription = StringPool.BLANK;
 	private List<String> _tags = new ArrayList<String>();

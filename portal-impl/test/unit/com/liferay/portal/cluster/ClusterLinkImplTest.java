@@ -14,18 +14,15 @@
 
 package com.liferay.portal.cluster;
 
-import com.liferay.portal.configuration.ConfigurationImpl;
 import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.cluster.Priority;
 import com.liferay.portal.kernel.cluster.messaging.ClusterForwardMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.test.NewClassLoaderTestCase;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReflectionUtil;
-import com.liferay.portal.util.PropsFiles;
-import com.liferay.portal.util.PropsUtil;
-import com.liferay.util.PwdGenerator;
+import com.liferay.portal.test.AdviseWith;
+import com.liferay.portal.test.ApsectJMockingNewClassLoaderJUnitTestRunner;
 
 import java.io.DataInput;
 import java.io.DataOutput;
@@ -34,9 +31,9 @@ import java.io.ObjectOutput;
 
 import java.lang.reflect.Field;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
-import java.util.concurrent.Callable;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Exchanger;
 import java.util.concurrent.TimeUnit;
@@ -46,573 +43,452 @@ import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+
 import org.jgroups.JChannel;
 import org.jgroups.View;
+import org.jgroups.util.UUID;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import static org.junit.Assert.*;
 
 /**
  * @author Tina Tian
  * @author Shuyang Zhou
  */
-public class ClusterLinkImplTest extends NewClassLoaderTestCase {
+@RunWith(ApsectJMockingNewClassLoaderJUnitTestRunner.class)
+public class ClusterLinkImplTest {
 
+	@Test
+	@AdviseWith(adviceClasses = {DisableClusterLinkAdvice.class})
 	public void testDestroy1() throws Exception {
-		Callable<Void> callable = new Callable<Void>() {
+		ClusterLinkImpl clusterLinkImpl = _getClusterLinkImpl();
 
-			public Void call() throws Exception {
-				ClusterLinkImpl clusterLinkImpl = _getClusterLinkImpl(1, false);
-
-				clusterLinkImpl.destroy();
-
-				return null;
-			}
-
-		};
-
-		runInNewClassLoader(
-			(Class<? extends Callable<Void>>)callable.getClass());
+		clusterLinkImpl.destroy();
 	}
 
+	@Test
+	@AdviseWith(adviceClasses = {
+		EnableClusterLinkAdvice.class, TransportationConfigurationAdvice.class
+	})
 	public void testDestroy2() throws Exception {
-		Callable<Void> callable = new Callable<Void>() {
+		TransportationConfigurationAdvice.setChannelCount(2);
 
-			public Void call() throws Exception {
-				ClusterLinkImpl clusterLinkImpl = _getClusterLinkImpl(2, true);
+		ClusterLinkImpl clusterLinkImpl = _getClusterLinkImpl();
 
-				List<JChannel> jChannels = _getJChannels(clusterLinkImpl);
+		List<JChannel> jChannels = _getJChannels(clusterLinkImpl);
 
-				assertEquals(2, jChannels.size());
+		assertEquals(2, jChannels.size());
 
-				JChannel jChannel = jChannels.get(0);
+		JChannel jChannel = jChannels.get(0);
 
-				assertTrue(jChannel.isOpen());
+		assertTrue(jChannel.isOpen());
 
-				jChannel = jChannels.get(1);
+		jChannel = jChannels.get(1);
 
-				assertTrue(jChannel.isOpen());
+		assertTrue(jChannel.isOpen());
 
-				clusterLinkImpl.destroy();
+		clusterLinkImpl.destroy();
 
-				jChannels = _getJChannels(clusterLinkImpl);
+		jChannels = _getJChannels(clusterLinkImpl);
 
-				assertEquals(2, jChannels.size());
+		assertEquals(2, jChannels.size());
 
-				jChannel = jChannels.get(0);
+		jChannel = jChannels.get(0);
 
-				assertFalse(jChannel.isOpen());
+		assertFalse(jChannel.isOpen());
 
-				jChannel = jChannels.get(1);
+		jChannel = jChannels.get(1);
 
-				assertFalse(jChannel.isOpen());
-
-				return null;
-			}
-
-		};
-
-		runInNewClassLoader(
-			(Class<? extends Callable<Void>>)callable.getClass());
+		assertFalse(jChannel.isOpen());
 	}
 
+	@Test
+	@AdviseWith(adviceClasses = {
+		EnableClusterLinkAdvice.class, TransportationConfigurationAdvice.class,
+		LoggerAdvice.class
+	})
 	public void testGetChannel() throws Exception {
-		Callable<Void> callable = new Callable<Void>() {
+		TransportationConfigurationAdvice.setChannelCount(2);
+		LoggerAdvice.setLoggerInfo(ClusterLinkImpl.class.getName(), Level.FINE);
 
-			public Void call() throws Exception {
-				ClusterLinkImpl clusterLinkImpl = _getClusterLinkImpl(2, true);
+		ClusterLinkImpl clusterLinkImpl = _getClusterLinkImpl();
 
-				_handleLog(ClusterLinkImpl.class, Level.FINE);
+		List<JChannel> jChannels = _getJChannels(clusterLinkImpl);
 
-				List<JChannel> jChannels = _getJChannels(clusterLinkImpl);
+		assertEquals(2, jChannels.size());
 
-				assertEquals(2, jChannels.size());
+		JChannel jChannel = jChannels.get(0);
 
-				JChannel jChannel = jChannels.get(0);
+		assertSame(jChannel, clusterLinkImpl.getChannel(Priority.LEVEL1));
+		assertSame(jChannel, clusterLinkImpl.getChannel(Priority.LEVEL2));
+		assertSame(jChannel, clusterLinkImpl.getChannel(Priority.LEVEL3));
+		assertSame(jChannel, clusterLinkImpl.getChannel(Priority.LEVEL4));
+		assertSame(jChannel, clusterLinkImpl.getChannel(Priority.LEVEL5));
 
-				assertSame(
-					jChannel, clusterLinkImpl.getChannel(Priority.LEVEL1));
-				assertSame(
-					jChannel, clusterLinkImpl.getChannel(Priority.LEVEL2));
-				assertSame(
-					jChannel, clusterLinkImpl.getChannel(Priority.LEVEL3));
-				assertSame(
-					jChannel, clusterLinkImpl.getChannel(Priority.LEVEL4));
-				assertSame(
-					jChannel, clusterLinkImpl.getChannel(Priority.LEVEL5));
+		jChannel = jChannels.get(1);
 
-				jChannel = jChannels.get(1);
+		assertSame(jChannel, clusterLinkImpl.getChannel(Priority.LEVEL6));
+		assertSame(jChannel, clusterLinkImpl.getChannel(Priority.LEVEL7));
+		assertSame(jChannel, clusterLinkImpl.getChannel(Priority.LEVEL8));
+		assertSame(jChannel, clusterLinkImpl.getChannel(Priority.LEVEL9));
+		assertSame(jChannel, clusterLinkImpl.getChannel(Priority.LEVEL10));
 
-				assertSame(
-					jChannel, clusterLinkImpl.getChannel(Priority.LEVEL6));
-				assertSame(
-					jChannel, clusterLinkImpl.getChannel(Priority.LEVEL7));
-				assertSame(
-					jChannel, clusterLinkImpl.getChannel(Priority.LEVEL8));
-				assertSame(
-					jChannel, clusterLinkImpl.getChannel(Priority.LEVEL9));
-				assertSame(
-					jChannel, clusterLinkImpl.getChannel(Priority.LEVEL10));
-
-				clusterLinkImpl.destroy();
-
-				return null;
-			}
-
-		};
-
-		runInNewClassLoader(
-			(Class<? extends Callable<Void>>)callable.getClass());
+		clusterLinkImpl.destroy();
 	}
 
+	@Test
+	@AdviseWith(adviceClasses = {DisableClusterLinkAdvice.class})
 	public void testGetLocalTransportAddresses1() throws Exception {
-		Callable<Void> callable = new Callable<Void>() {
+		ClusterLinkImpl clusterLinkImpl = _getClusterLinkImpl();
 
-			public Void call() throws Exception {
-				ClusterLinkImpl clusterLinkImpl = _getClusterLinkImpl(1, false);
+		List<Address> addresses = clusterLinkImpl.getLocalTransportAddresses();
 
-				List<Address> addresses =
-					clusterLinkImpl.getLocalTransportAddresses();
+		assertSame(Collections.emptyList(), addresses);
 
-				assertTrue(addresses.isEmpty());
-
-				clusterLinkImpl.destroy();
-
-				return null;
-			}
-
-		};
-
-		runInNewClassLoader(
-			(Class<? extends Callable<Void>>)callable.getClass());
+		clusterLinkImpl.destroy();
 	}
 
+	@Test
+	@AdviseWith(adviceClasses = {
+		EnableClusterLinkAdvice.class, TransportationConfigurationAdvice.class
+	})
 	public void testGetLocalTransportAddresses2() throws Exception {
-		Callable<Void> callable = new Callable<Void>() {
+		TransportationConfigurationAdvice.setChannelCount(2);
 
-			public Void call() throws Exception {
-				ClusterLinkImpl clusterLinkImpl = _getClusterLinkImpl(2, true);
+		ClusterLinkImpl clusterLinkImpl = _getClusterLinkImpl();
 
-				List<Address> addresses =
-					clusterLinkImpl.getLocalTransportAddresses();
+		List<Address> addresses = clusterLinkImpl.getLocalTransportAddresses();
 
-				assertEquals(2, addresses.size());
+		assertEquals(2, addresses.size());
 
-				List<JChannel> jChannels = _getJChannels(clusterLinkImpl);
+		List<JChannel> jChannels = _getJChannels(clusterLinkImpl);
 
-				assertSame(
-					_getJGroupsAddress(jChannels, 0),
-					_getRealAddress(addresses, 0));
-				assertSame(
-					_getJGroupsAddress(jChannels, 1),
-					_getRealAddress(addresses, 1));
+		assertSame(
+			_getJGroupsAddress(jChannels, 0), _getRealAddress(addresses, 0));
+		assertSame(
+			_getJGroupsAddress(jChannels, 1), _getRealAddress(addresses, 1));
 
-				clusterLinkImpl.destroy();
-
-				return null;
-			}
-
-		};
-
-		runInNewClassLoader(
-			(Class<? extends Callable<Void>>)callable.getClass());
+		clusterLinkImpl.destroy();
 	}
 
+	@Test
+	@AdviseWith(adviceClasses = {DisableClusterLinkAdvice.class})
 	public void testGetTransportAddressesByPriority1() throws Exception {
-		Callable<Void> callable = new Callable<Void>() {
+		ClusterLinkImpl clusterLinkImpl = _getClusterLinkImpl();
 
-			public Void call() throws Exception {
-				ClusterLinkImpl clusterLinkImpl = _getClusterLinkImpl(1, false);
+		List<Address> addresses = clusterLinkImpl.getTransportAddresses(
+			Priority.LEVEL1);
 
-				List<Address> addresses = clusterLinkImpl.getTransportAddresses(
-					Priority.LEVEL1);
+		assertSame(Collections.emptyList(), addresses);
 
-				assertTrue(addresses.isEmpty());
-
-				clusterLinkImpl.destroy();
-
-				return null;
-			}
-
-		};
-
-		runInNewClassLoader(
-			(Class<? extends Callable<Void>>)callable.getClass());
+		clusterLinkImpl.destroy();
 	}
 
+	@Test
+	@AdviseWith(adviceClasses = {
+		EnableClusterLinkAdvice.class, TransportationConfigurationAdvice.class
+	})
 	public void testGetTransportAddressesByPriority2() throws Exception {
-		Callable<Void> callable = new Callable<Void>() {
+		TransportationConfigurationAdvice.setChannelCount(2);
 
-			public Void call() throws Exception {
-				ClusterLinkImpl clusterLinkImpl1 = _getClusterLinkImpl(2, true);
-				ClusterLinkImpl clusterLinkImpl2 = _getClusterLinkImpl(2, true);
+		ClusterLinkImpl clusterLinkImpl1 = _getClusterLinkImpl();
+		ClusterLinkImpl clusterLinkImpl2 = _getClusterLinkImpl();
 
-				List<JChannel> jChannels1 = _getJChannels(clusterLinkImpl1);
+		List<JChannel> jChannels1 = _getJChannels(clusterLinkImpl1);
 
-				assertEquals(2, jChannels1.size());
+		assertEquals(2, jChannels1.size());
 
-				List<JChannel> jChannels2 = _getJChannels(clusterLinkImpl2);
+		List<JChannel> jChannels2 = _getJChannels(clusterLinkImpl2);
 
-				assertEquals(2, jChannels2.size());
+		assertEquals(2, jChannels2.size());
 
-				List<Address> addresses1 =
-					clusterLinkImpl1.getTransportAddresses(Priority.LEVEL1);
+		List<Address> addresses1 = clusterLinkImpl1.getTransportAddresses(
+			Priority.LEVEL1);
 
-				assertEquals(2, addresses1.size());
+		assertEquals(2, addresses1.size());
 
-				List<Address> addresses2 =
-					clusterLinkImpl1.getTransportAddresses(Priority.LEVEL6);
+		List<Address> addresses2 = clusterLinkImpl1.getTransportAddresses(
+			Priority.LEVEL6);
 
-				assertEquals(2, addresses2.size());
+		assertEquals(2, addresses2.size());
 
-				assertEquals(
-					_getJGroupsAddress(jChannels1, 0),
-					_getRealAddress(addresses1, 0));
-				assertEquals(
-					_getJGroupsAddress(jChannels1, 1),
-					_getRealAddress(addresses2, 0));
-				assertEquals(
-					_getJGroupsAddress(jChannels2, 0),
-					_getRealAddress(addresses1, 1));
-				assertEquals(
-					_getJGroupsAddress(jChannels2, 1),
-					_getRealAddress(addresses2, 1));
+		assertEquals(
+			_getJGroupsAddress(jChannels1, 0), _getRealAddress(addresses1, 0));
+		assertEquals(
+			_getJGroupsAddress(jChannels1, 1), _getRealAddress(addresses2, 0));
+		assertEquals(
+			_getJGroupsAddress(jChannels2, 0), _getRealAddress(addresses1, 1));
+		assertEquals(
+			_getJGroupsAddress(jChannels2, 1), _getRealAddress(addresses2, 1));
 
-				clusterLinkImpl1.destroy();
-				clusterLinkImpl2.destroy();
-
-				return null;
-			}
-
-		};
-
-		runInNewClassLoader(
-			(Class<? extends Callable<Void>>)callable.getClass());
+		clusterLinkImpl1.destroy();
+		clusterLinkImpl2.destroy();
 	}
 
+	@Test
+	@AdviseWith(adviceClasses = {
+		EnableClusterLinkAdvice.class, TransportationConfigurationAdvice.class
+	})
 	public void testInitChannel1() throws Exception {
-		Callable<Void> callable = new Callable<Void>() {
+		TransportationConfigurationAdvice.setChannelCount(
+			ClusterLinkImpl.MAX_CHANNEL_COUNT + 1);
 
-			public Void call() throws Exception {
-				try {
-					_getClusterLinkImpl(
-						ClusterLinkImpl.MAX_CHANNEL_COUNT + 1, true);
+		try {
+			_getClusterLinkImpl();
 
-					fail();
-				}
-				catch (IllegalStateException ise) {
-				}
-
-				return null;
-			}
-
-		};
-
-		runInNewClassLoader(
-			(Class<? extends Callable<Void>>)callable.getClass());
+			fail();
+		}
+		catch (IllegalStateException ise) {
+		}
 	}
 
+	@Test
+	@AdviseWith(adviceClasses = {
+		EnableClusterLinkAdvice.class, TransportationConfigurationAdvice.class
+	})
 	public void testInitChannel2() throws Exception {
-		Callable<Void> callable = new Callable<Void>() {
+		try {
+			_getClusterLinkImpl();
 
-			public Void call() throws Exception {
-				try {
-					_getClusterLinkImpl(0, true);
-
-					fail();
-				}
-				catch (IllegalStateException ise) {
-				}
-
-				return null;
-			}
-
-		};
-
-		runInNewClassLoader(
-			(Class<? extends Callable<Void>>)callable.getClass());
+			fail();
+		}
+		catch (IllegalStateException ise) {
+		}
 	}
 
+	@Test
+	@AdviseWith(adviceClasses = {DisableClusterLinkAdvice.class})
 	public void testSendMulticastMessage1() throws Exception {
-		Callable<Void> callable = new Callable<Void>() {
+		ClusterLinkImpl clusterLinkImpl = _getClusterLinkImpl();
 
-			public Void call() throws Exception {
-				ClusterLinkImpl clusterLinkImpl = _getClusterLinkImpl(1, false);
+		Message message = _createMessage();
 
-				Message message = _createMessage();
+		clusterLinkImpl.sendMulticastMessage(message, Priority.LEVEL1);
 
-				clusterLinkImpl.sendMulticastMessage(message, Priority.LEVEL1);
-
-				clusterLinkImpl.destroy();
-
-				return null;
-			}
-
-		};
-
-		runInNewClassLoader(
-			(Class<? extends Callable<Void>>)callable.getClass());
+		clusterLinkImpl.destroy();
 	}
 
+	@Test
+	@AdviseWith(adviceClasses = {
+		EnableClusterLinkAdvice.class, TransportationConfigurationAdvice.class
+	})
 	public void testSendMulticastMessage2() throws Exception {
-		Callable<Void> callable = new Callable<Void>() {
+		TransportationConfigurationAdvice.setChannelCount(1);
 
-			public Void call() throws Exception {
-				ClusterLinkImpl clusterLinkImpl1 = _getClusterLinkImpl(1, true);
-				ClusterLinkImpl clusterLinkImpl2 = _getClusterLinkImpl(1, true);
-				ClusterLinkImpl clusterLinkImpl3 = _getClusterLinkImpl(1, true);
+		ClusterLinkImpl clusterLinkImpl1 = _getClusterLinkImpl();
+		ClusterLinkImpl clusterLinkImpl2 = _getClusterLinkImpl();
+		ClusterLinkImpl clusterLinkImpl3 = _getClusterLinkImpl();
 
-				List<JChannel> jChannels1 = _getJChannels(clusterLinkImpl1);
-				List<JChannel> jChannels2 = _getJChannels(clusterLinkImpl2);
-				List<JChannel> jChannels3 = _getJChannels(clusterLinkImpl3);
+		List<JChannel> jChannels1 = _getJChannels(clusterLinkImpl1);
+		List<JChannel> jChannels2 = _getJChannels(clusterLinkImpl2);
+		List<JChannel> jChannels3 = _getJChannels(clusterLinkImpl3);
 
-				TestReceiver testReceiver1 = _getTestReceiver(jChannels1, 0);
-				TestReceiver testReceiver2 = _getTestReceiver(jChannels2, 0);
-				TestReceiver testReceiver3 = _getTestReceiver(jChannels3, 0);
+		TestReceiver testReceiver1 = _getTestReceiver(jChannels1, 0);
+		TestReceiver testReceiver2 = _getTestReceiver(jChannels2, 0);
+		TestReceiver testReceiver3 = _getTestReceiver(jChannels3, 0);
 
-				Message message = _createMessage();
+		Message message = _createMessage();
 
-				clusterLinkImpl1.sendMulticastMessage(message, Priority.LEVEL1);
+		clusterLinkImpl1.sendMulticastMessage(message, Priority.LEVEL1);
 
-				String localMessage1 = testReceiver1.waitLocalMessage();
-				String remoteMessage1 = testReceiver1.waitRemoteMessage();
+		String localMessage1 = testReceiver1.waitLocalMessage();
+		String remoteMessage1 = testReceiver1.waitRemoteMessage();
 
-				String localMessage2 = testReceiver2.waitLocalMessage();
-				String remoteMessage2 = testReceiver2.waitRemoteMessage();
+		String localMessage2 = testReceiver2.waitLocalMessage();
+		String remoteMessage2 = testReceiver2.waitRemoteMessage();
 
-				String localMessage3 = testReceiver3.waitLocalMessage();
-				String remoteMessage3 = testReceiver3.waitRemoteMessage();
+		String localMessage3 = testReceiver3.waitLocalMessage();
+		String remoteMessage3 = testReceiver3.waitRemoteMessage();
 
-				String messageKey = (String)message.getPayload();
+		String messageKey = (String)message.getPayload();
 
-				assertEquals(messageKey, localMessage1);
-				assertNull(remoteMessage1);
-				assertNull(localMessage2);
-				assertEquals(messageKey, remoteMessage2);
-				assertNull(localMessage3);
-				assertEquals(messageKey, remoteMessage3);
+		assertEquals(messageKey, localMessage1);
+		assertNull(remoteMessage1);
+		assertNull(localMessage2);
+		assertEquals(messageKey, remoteMessage2);
+		assertNull(localMessage3);
+		assertEquals(messageKey, remoteMessage3);
 
-				clusterLinkImpl1.destroy();
-				clusterLinkImpl2.destroy();
-				clusterLinkImpl3.destroy();
-
-				return null;
-			}
-
-		};
-
-		runInNewClassLoader(
-			(Class<? extends Callable<Void>>)callable.getClass());
+		clusterLinkImpl1.destroy();
+		clusterLinkImpl2.destroy();
+		clusterLinkImpl3.destroy();
 	}
 
+	@Test
+	@AdviseWith(adviceClasses = {
+		EnableClusterLinkAdvice.class, TransportationConfigurationAdvice.class,
+		LoggerAdvice.class
+	})
 	public void testSendMulticastMessage3() throws Exception {
-		Callable<Void> callable = new Callable<Void>() {
+		TransportationConfigurationAdvice.setChannelCount(1);
+		LoggerAdvice.setLoggerInfo(
+			ClusterLinkImpl.class.getName(), Level.WARNING);
 
-			public Void call() throws Exception {
-				ClusterLinkImpl clusterLinkImpl = _getClusterLinkImpl(1, true);
+		ClusterLinkImpl clusterLinkImpl = _getClusterLinkImpl();
 
-				Message message = _createMessage();
+		Message message = _createMessage();
 
-				CaptureHandler captureHandler = _handleLog(
-					ClusterLinkImpl.class, Level.WARNING);
+		List<JChannel> jChannels = _getJChannels(clusterLinkImpl);
 
-				List<JChannel> jChannels = _getJChannels(clusterLinkImpl);
+		JChannel jChannel = jChannels.get(0);
 
-				JChannel jChannel = jChannels.get(0);
+		jChannel.close();
 
-				jChannel.close();
+		clusterLinkImpl.sendMulticastMessage(message, Priority.LEVEL1);
 
-				clusterLinkImpl.sendMulticastMessage(message, Priority.LEVEL1);
+		_assertLogger(
+			"Unable to send multicast message " + message, Exception.class);
 
-				_assertLogger(
-					captureHandler,
-					"Unable to send multicast message " + message,
-					Exception.class);
-
-				clusterLinkImpl.destroy();
-
-				return null;
-			}
-
-		};
-
-		runInNewClassLoader(
-			(Class<? extends Callable<Void>>)callable.getClass());
+		clusterLinkImpl.destroy();
 	}
 
+	@Test
+	@AdviseWith(adviceClasses = {
+		EnableClusterLinkAdvice.class, TransportationConfigurationAdvice.class,
+		LoggerAdvice.class
+	})
 	public void testSendMulticastMessage4() throws Exception {
-		Callable<Void> callable = new Callable<Void>() {
+		TransportationConfigurationAdvice.setChannelCount(1);
+		LoggerAdvice.setLoggerInfo(
+			ClusterLinkImpl.class.getName(), Level.WARNING);
 
-			public Void call() throws Exception {
-				ClusterLinkImpl clusterLinkImpl = _getClusterLinkImpl(1, true);
+		ClusterLinkImpl clusterLinkImpl = _getClusterLinkImpl();
 
-				List<JChannel> jChannels = _getJChannels(clusterLinkImpl);
+		List<JChannel> jChannels = _getJChannels(clusterLinkImpl);
 
-				Message message = _createMessage();
+		Message message = _createMessage();
 
-				CaptureHandler captureHandler = _handleLog(
-					ClusterLinkImpl.class, Level.WARNING);
+		JChannel jChannel = jChannels.get(0);
 
-				JChannel jChannel = jChannels.get(0);
+		jChannel.disconnect();
 
-				jChannel.disconnect();
+		clusterLinkImpl.sendMulticastMessage(message, Priority.LEVEL1);
 
-				clusterLinkImpl.sendMulticastMessage(message, Priority.LEVEL1);
+		_assertLogger(
+			"Unable to send multicast message " + message, Exception.class);
 
-				_assertLogger(
-					captureHandler,
-					"Unable to send multicast message " + message,
-					Exception.class);
-
-				clusterLinkImpl.destroy();
-
-				return null;
-			}
-
-		};
-
-		runInNewClassLoader(
-			(Class<? extends Callable<Void>>)callable.getClass());
+		clusterLinkImpl.destroy();
 	}
 
+	@Test
+	@AdviseWith(adviceClasses = {DisableClusterLinkAdvice.class})
 	public void testSendUnicastMessage1() throws Exception {
-		Callable<Void> callable = new Callable<Void>() {
+		ClusterLinkImpl clusterLinkImpl = _getClusterLinkImpl();
 
-			public Void call() throws Exception {
-				ClusterLinkImpl clusterLinkImpl = _getClusterLinkImpl(1, false);
+		Message message = _createMessage();
 
-				Message message = _createMessage();
+		clusterLinkImpl.sendUnicastMessage(
+			new AddressImpl(new MockAddress()), message, Priority.LEVEL1);
 
-				clusterLinkImpl.sendUnicastMessage(
-					new AddressImpl(new MockAddress()), message,
-					Priority.LEVEL1);
-
-				clusterLinkImpl.destroy();
-
-				return null;
-			}
-
-		};
-
-		runInNewClassLoader(
-			(Class<? extends Callable<Void>>)callable.getClass());
+		clusterLinkImpl.destroy();
 	}
 
+	@Test
+	@AdviseWith(adviceClasses = {
+		EnableClusterLinkAdvice.class, TransportationConfigurationAdvice.class
+	})
 	public void testSendUnicastMessage2() throws Exception {
-		Callable<Void> callable = new Callable<Void>() {
+		TransportationConfigurationAdvice.setChannelCount(1);
 
-			public Void call() throws Exception {
-				ClusterLinkImpl clusterLinkImpl1 = _getClusterLinkImpl(1, true);
-				ClusterLinkImpl clusterLinkImpl2 = _getClusterLinkImpl(1, true);
+		ClusterLinkImpl clusterLinkImpl1 = _getClusterLinkImpl();
+		ClusterLinkImpl clusterLinkImpl2 = _getClusterLinkImpl();
 
-				List<JChannel> jChannels1 = _getJChannels(clusterLinkImpl1);
-				List<JChannel> jChannels2 = _getJChannels(clusterLinkImpl2);
+		List<JChannel> jChannels1 = _getJChannels(clusterLinkImpl1);
+		List<JChannel> jChannels2 = _getJChannels(clusterLinkImpl2);
 
-				TestReceiver testReceiver1 = _getTestReceiver(jChannels1, 0);
-				TestReceiver testReceiver2 = _getTestReceiver(jChannels2, 0);
+		TestReceiver testReceiver1 = _getTestReceiver(jChannels1, 0);
+		TestReceiver testReceiver2 = _getTestReceiver(jChannels2, 0);
 
-				Message message = _createMessage();
+		Message message = _createMessage();
 
-				clusterLinkImpl1.sendUnicastMessage(
-					new AddressImpl(jChannels2.get(0).getAddress()), message,
-					Priority.LEVEL1);
+		clusterLinkImpl1.sendUnicastMessage(
+			new AddressImpl(jChannels2.get(0).getAddress()), message,
+			Priority.LEVEL1);
 
-				String localMessage1 = testReceiver1.waitLocalMessage();
-				String remoteMessage1 = testReceiver1.waitRemoteMessage();
-				String localMessage2 = testReceiver2.waitLocalMessage();
-				String remoteMessage2 = testReceiver2.waitRemoteMessage();
+		String localMessage1 = testReceiver1.waitLocalMessage();
+		String remoteMessage1 = testReceiver1.waitRemoteMessage();
+		String localMessage2 = testReceiver2.waitLocalMessage();
+		String remoteMessage2 = testReceiver2.waitRemoteMessage();
 
-				String messageKey = (String)message.getPayload();
+		String messageKey = (String)message.getPayload();
 
-				assertNull(localMessage1);
-				assertNull(remoteMessage1);
-				assertNull(localMessage2);
-				assertEquals(messageKey, remoteMessage2);
+		assertNull(localMessage1);
+		assertNull(remoteMessage1);
+		assertNull(localMessage2);
+		assertEquals(messageKey, remoteMessage2);
 
-				clusterLinkImpl1.destroy();
-				clusterLinkImpl2.destroy();
-
-				return null;
-			}
-
-		};
-
-		runInNewClassLoader(
-			(Class<? extends Callable<Void>>)callable.getClass());
+		clusterLinkImpl1.destroy();
+		clusterLinkImpl2.destroy();
 	}
 
+	@Test
+	@AdviseWith(adviceClasses = {
+		EnableClusterLinkAdvice.class, TransportationConfigurationAdvice.class,
+		LoggerAdvice.class
+	})
 	public void testSendUnicastMessage3() throws Exception {
-		Callable<Void> callable = new Callable<Void>() {
+		TransportationConfigurationAdvice.setChannelCount(1);
+		LoggerAdvice.setLoggerInfo(
+			ClusterLinkImpl.class.getName(), Level.WARNING);
 
-			public Void call() throws Exception {
-				ClusterLinkImpl clusterLinkImpl = _getClusterLinkImpl(1, true);
+		ClusterLinkImpl clusterLinkImpl = _getClusterLinkImpl();
 
-				List<JChannel> jChannels = _getJChannels(clusterLinkImpl);
+		List<JChannel> jChannels = _getJChannels(clusterLinkImpl);
 
-				Message message = _createMessage();
+		Message message = _createMessage();
 
-				CaptureHandler captureHandler = _handleLog(
-					ClusterLinkImpl.class, Level.WARNING);
+		JChannel jChannel = jChannels.get(0);
 
-				JChannel jChannel = jChannels.get(0);
+		jChannel.close();
 
-				jChannel.close();
+		clusterLinkImpl.sendUnicastMessage(
+			new AddressImpl(new MockAddress()), message, Priority.LEVEL1);
 
-				clusterLinkImpl.sendUnicastMessage(
-					new AddressImpl(new MockAddress()), message,
-					Priority.LEVEL1);
+		_assertLogger(
+			"Unable to send unicast message " + message, Exception.class);
 
-				_assertLogger(
-					captureHandler, "Unable to send unicast message " + message,
-					Exception.class);
-
-				clusterLinkImpl.destroy();
-
-				return null;
-			}
-
-		};
-
-		runInNewClassLoader(
-			(Class<? extends Callable<Void>>)callable.getClass());
+		clusterLinkImpl.destroy();
 	}
 
+	@Test
+	@AdviseWith(adviceClasses = {
+		EnableClusterLinkAdvice.class, TransportationConfigurationAdvice.class,
+		LoggerAdvice.class
+	})
 	public void testSendUnicastMessage4() throws Exception {
-		Callable<Void> callable = new Callable<Void>() {
+		TransportationConfigurationAdvice.setChannelCount(1);
+		LoggerAdvice.setLoggerInfo(
+			ClusterLinkImpl.class.getName(), Level.WARNING);
 
-			public Void call() throws Exception {
-				ClusterLinkImpl clusterLinkImpl = _getClusterLinkImpl(1, true);
+		ClusterLinkImpl clusterLinkImpl = _getClusterLinkImpl();
 
-				List<JChannel> jChannels = _getJChannels(clusterLinkImpl);
+		List<JChannel> jChannels = _getJChannels(clusterLinkImpl);
 
-				Message message = _createMessage();
+		Message message = _createMessage();
 
-				CaptureHandler captureHandler = _handleLog(
-					ClusterLinkImpl.class, Level.WARNING);
+		JChannel jChannel = jChannels.get(0);
 
-				JChannel jChannel = jChannels.get(0);
+		jChannel.disconnect();
 
-				jChannel.disconnect();
+		clusterLinkImpl.sendUnicastMessage(
+			new AddressImpl(new MockAddress()), message, Priority.LEVEL1);
 
-				clusterLinkImpl.sendUnicastMessage(
-					new AddressImpl(new MockAddress()), message,
-					Priority.LEVEL1);
+		_assertLogger(
+			"Unable to send unicast message " + message, Exception.class);
 
-				_assertLogger(
-					captureHandler, "Unable to send unicast message " + message,
-					Exception.class);
-
-				clusterLinkImpl.destroy();
-
-				return null;
-			}
-
-		};
-
-		runInNewClassLoader(
-			(Class<? extends Callable<Void>>)callable.getClass());
+		clusterLinkImpl.destroy();
 	}
 
-	private void _assertLogger(
-		CaptureHandler captureHandler, String message,
-		Class<?> exceptionClass) {
+	private void _assertLogger(String message, Class<?> exceptionClass) {
+		CaptureHandler captureHandler = LoggerAdvice.getCaptureHandler();
+
+		assertNotNull(captureHandler);
 
 		List<LogRecord> logRecords = captureHandler.getLogRecords();
 
@@ -641,19 +517,12 @@ public class ClusterLinkImplTest extends NewClassLoaderTestCase {
 	private Message _createMessage() {
 		Message message = new Message();
 
-		message.setPayload(PwdGenerator.getPassword());
+		message.setPayload(UUID.randomUUID().toString());
 
 		return message;
 	}
 
-	private ClusterLinkImpl _getClusterLinkImpl(
-			int channelsCount, boolean enableClusterLink)
-		throws Exception {
-
-		_handlePropsValues(channelsCount, enableClusterLink);
-
-		_handleLog(ClusterBase.class, Level.FINE);
-
+	private ClusterLinkImpl _getClusterLinkImpl() throws Exception {
 		ClusterLinkImpl clusterLinkImpl = new ClusterLinkImpl();
 
 		clusterLinkImpl.setClusterForwardMessageListener(
@@ -702,60 +571,108 @@ public class ClusterLinkImplTest extends NewClassLoaderTestCase {
 		return (TestReceiver)jChannel.getReceiver();
 	}
 
-	private CaptureHandler _handleLog(Class<?> clazz, Level level)
-		throws Exception {
+	@Aspect
+	public static class DisableClusterLinkAdvice {
 
-		Logger logger = Logger.getLogger(clazz.getName());
+		@Around(
+			"set(* com.liferay.portal.util.PropsValues.CLUSTER_LINK_ENABLED)")
+		public Object disableClusterLink(
+				ProceedingJoinPoint proceedingJoinPoint)
+			throws Throwable {
 
-		for (Handler handler : logger.getHandlers()) {
-			logger.removeHandler(handler);
+			return proceedingJoinPoint.proceed(new Object[]{Boolean.FALSE});
 		}
 
-		logger.setLevel(level);
-		logger.setUseParentHandlers(false);
-
-		CaptureHandler captureHandler = new CaptureHandler();
-
-		logger.addHandler(captureHandler);
-
-		return captureHandler;
 	}
 
-	private void _handlePropsValues(
-			int channelsCount, boolean enableClusterLink)
-		throws Exception {
+	@Aspect
+	public static class EnableClusterLinkAdvice {
 
-		if (channelsCount == 0) {
-			Field instanceField = ReflectionUtil.getDeclaredField(
-				PropsUtil.class, "_instance");
+		@Around(
+			"set(* com.liferay.portal.util.PropsValues.CLUSTER_LINK_ENABLED)")
+		public Object enableClusterLink(ProceedingJoinPoint proceedingJoinPoint)
+			throws Throwable {
 
-			Object instance = instanceField.get(null);
-
-			Field configurationField = ReflectionUtil.getDeclaredField(
-				PropsUtil.class, "_configuration");
-
-			configurationField.set(
-				instance,
-				new MockConfigurationImpl(
-					PropsUtil.class.getClassLoader(), PropsFiles.PORTAL));
+			return proceedingJoinPoint.proceed(new Object[]{Boolean.TRUE});
 		}
-		else {
-			Properties properties = PropsUtil.getProperties(
-				PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_TRANSPORT, true);
 
-			for (int i = properties.size(); i < channelsCount; i++) {
-				PropsUtil.set(
-					PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_TRANSPORT +
-						CharPool.POUND + i,
-					"udp.xml");
+	}
+
+	@Aspect
+	public static class LoggerAdvice {
+
+		public static CaptureHandler getCaptureHandler() {
+			return _captureHandler;
+		}
+
+		public static void setLoggerInfo(String loggerName, Level loggerLevel) {
+			_loggerName = loggerName;
+			_loggerLevel = loggerLevel;
+		}
+
+		@Before(
+			"call(public com.liferay.portal.kernel.log.Jdk14LogImpl.new(" +
+				"java.util.logging.Logger)) && args(logger)")
+		public void createLogger(Logger logger) {
+			if (logger.getName().equals(_loggerName)) {
+				for (Handler handler : logger.getHandlers()) {
+					logger.removeHandler(handler);
+				}
+
+				logger.setLevel(_loggerLevel);
+				logger.setUseParentHandlers(false);
+
+				_captureHandler = new CaptureHandler();
+
+				logger.addHandler(_captureHandler);
 			}
 		}
 
-		PropsUtil.set(
-			PropsKeys.CLUSTER_LINK_ENABLED, String.valueOf(enableClusterLink));
+		private static String _loggerName;
+		private static Level _loggerLevel;
+		private static CaptureHandler _captureHandler;
+
 	}
 
-	private class CaptureHandler extends Handler {
+	@Aspect
+	public static class TransportationConfigurationAdvice {
+
+		public static void setChannelCount(int channelCount) {
+			_CHANNEL_COUNT = channelCount;
+		}
+
+		@Around(
+			"execution(* com.liferay.portal.util.PropsUtil.getProperties(" +
+				"String, boolean))")
+		public Object getTransportationConfigurationProperties(
+				ProceedingJoinPoint proceedingJoinPoint)
+			throws Throwable {
+
+			Object[] args = proceedingJoinPoint.getArgs();
+
+			if (PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_TRANSPORT.equals(
+					args[0]) &&
+				Boolean.TRUE.equals(args[1])) {
+
+				Properties properties = new Properties();
+
+				for (int i = 0; i < _CHANNEL_COUNT; i++) {
+					properties.put(
+						PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_TRANSPORT +
+							CharPool.POUND + i, "udp.xml");
+				}
+
+				return properties;
+			}
+
+			return proceedingJoinPoint.proceed();
+		}
+
+		private static int _CHANNEL_COUNT = 0;
+
+	}
+
+	private static class CaptureHandler extends Handler {
 
 		@Override
 		public void close() throws SecurityException {
@@ -808,24 +725,6 @@ public class ClusterLinkImplTest extends NewClassLoaderTestCase {
 		public void writeTo(DataOutput dataOutput) throws Exception {
 		}
 
-	}
-
-	private class MockConfigurationImpl extends ConfigurationImpl {
-
-		public MockConfigurationImpl(ClassLoader classLoader, String name) {
-			super(classLoader, name);
-		}
-
-		@Override
-		public Properties getProperties(String prefix, boolean removePrefix) {
-			if (prefix.equals(
-					PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_TRANSPORT)) {
-
-				return new Properties();
-			}
-
-			return super.getProperties(prefix, removePrefix);
-		}
 	}
 
 	private class TestReceiver extends BaseReceiver {

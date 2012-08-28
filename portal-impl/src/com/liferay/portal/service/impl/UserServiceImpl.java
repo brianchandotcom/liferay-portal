@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.portal.BirthdayNotValidException;
 import com.liferay.portal.RequiredUserException;
 import com.liferay.portal.ReservedUserEmailAddressException;
 import com.liferay.portal.UserEmailAddressException;
@@ -59,7 +58,6 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.announcements.model.AnnouncementsDelivery;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -270,8 +268,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 		try {
 			WorkflowThreadLocal.setEnabled(false);
-			
-			validateBirthday(birthdayMonth, birthdayDay, birthdayYear);
 
 			return addUserWithWorkflow(
 				companyId, autoPassword, password1, password2, autoScreenName,
@@ -357,8 +353,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 		try {
 			WorkflowThreadLocal.setEnabled(false);
-			
-			validateBirthday(birthdayMonth, birthdayDay, birthdayYear);
 
 			return addUserWithWorkflow(
 				companyId, autoPassword, password1, password2, autoScreenName,
@@ -1595,8 +1589,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		if (userGroupIds != null) {
 			userGroupIds = checkUserGroupIds(userId, userGroupIds);
 		}
-		
-		validateBirthday(birthdayMonth, birthdayDay, birthdayYear);
 
 		return userLocalService.updateUser(
 			userId, oldPassword, newPassword1, newPassword2, passwordReset,
@@ -1982,17 +1974,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 				announcementsDelivery.getSms(),
 				announcementsDelivery.getWebsite());
 		}
-	}
-	
-	protected void validateBirthday(int birthdayMonth, int birthdayDay, int birthdayYear)
-		throws PortalException, SystemException {
-	    
-	    Date toValidate = new Date(birthdayYear-1900, birthdayMonth, birthdayDay);
-	    Date currentDate = new Date();
-	    
-	    if(currentDate.before(toValidate)) {
-		throw new BirthdayNotValidException();
-	    }
 	}
 
 	protected void validateEmailAddress(User user, String emailAddress)

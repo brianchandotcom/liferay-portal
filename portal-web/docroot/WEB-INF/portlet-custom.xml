@@ -1709,7 +1709,7 @@
 			</preference>
 			<preference>
 				<name>folderColumns</name>
-				<value>folder,num-of-folders,num-of-documents</value>
+				<value>name,num-of-folders,num-of-documents</value>
 			</preference>
 			<preference>
 				<name>showFoldersSearch</name>

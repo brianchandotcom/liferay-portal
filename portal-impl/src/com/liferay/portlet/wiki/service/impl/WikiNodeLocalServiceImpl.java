@@ -179,6 +179,25 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 	public void deleteNode(WikiNode node)
 		throws PortalException, SystemException {
 
+		// Pages
+
+		wikiPageLocalService.deletePages(node.getNodeId());
+
+		// Node
+
+		wikiNodePersistence.remove(node);
+
+		// Resources
+
+		resourceLocalService.deleteResource(
+			node.getCompanyId(), WikiNode.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL, node.getNodeId());
+
+		// Subscriptions
+
+		subscriptionLocalService.deleteSubscriptions(
+			node.getCompanyId(), WikiNode.class.getName(), node.getNodeId());
+
 		if (node.isInTrash()) {
 			node.setName(TrashUtil.stripTrashNamespace(node.getName()));
 
@@ -201,25 +220,6 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 			WikiPage.class);
 
 		wikiPageIndexer.delete(node);
-
-		// Subscriptions
-
-		subscriptionLocalService.deleteSubscriptions(
-			node.getCompanyId(), WikiNode.class.getName(), node.getNodeId());
-
-		// Pages
-
-		wikiPageLocalService.deletePages(node.getNodeId());
-
-		// Resources
-
-		resourceLocalService.deleteResource(
-			node.getCompanyId(), WikiNode.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL, node.getNodeId());
-
-		// Node
-
-		wikiNodePersistence.remove(node);
 	}
 
 	public void deleteNodes(long groupId)

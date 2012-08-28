@@ -283,7 +283,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="5" />
+		<property name="build-test-ant-scripts.version" value="6" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -2028,8 +2028,8 @@
 		</antcall>
 
 		<antcall target="build-test-ant-script">
-			<param name="test.ant.script.command" value="staging-community-document-library" />
-			<param name="test.ant.script.suite" value="StagingCommunityDocumentLibraryTestSuite" />
+			<param name="test.ant.script.command" value="staging-community-documents-and-media" />
+			<param name="test.ant.script.suite" value="StagingCommunityDocumentsAndMediaTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">

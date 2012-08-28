@@ -143,11 +143,15 @@ boolean showAddArticleButton = JournalPermission.contains(permissionChecker, sco
 <%
 ArticleSearchTerms searchTerms = (ArticleSearchTerms)searchContainer.getSearchTerms();
 
-searchTerms.setFolderId(-1);
+searchTerms.setFolderIds(new ArrayList<Long>());
 searchTerms.setVersion(-1);
 
 if (folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-	searchTerms.setFolderId(folderId);
+	List<Long> folderIds = new ArrayList<Long>(1);
+
+	folderIds.add(folderId);
+
+	searchTerms.setFolderIds(folderIds);
 }
 
 if (Validator.isNotNull(displayTerms.getStructureId())) {

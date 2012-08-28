@@ -231,12 +231,80 @@ public class WikiNodeServiceHttp {
 		}
 	}
 
+	public static com.liferay.portlet.wiki.model.WikiNode moveEntryToTrash(
+		HttpPrincipal httpPrincipal, long nodeId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(WikiNodeServiceUtil.class.getName(),
+					"moveEntryToTrash", _moveEntryToTrashParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, nodeId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.portlet.wiki.model.WikiNode)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static void restoreNodeFromTrash(HttpPrincipal httpPrincipal,
+		long nodeId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(WikiNodeServiceUtil.class.getName(),
+					"restoreNodeFromTrash", _restoreNodeFromTrashParameterTypes6);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, nodeId);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static void subscribeNode(HttpPrincipal httpPrincipal, long nodeId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(WikiNodeServiceUtil.class.getName(),
-					"subscribeNode", _subscribeNodeParameterTypes5);
+					"subscribeNode", _subscribeNodeParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, nodeId);
 
@@ -267,7 +335,7 @@ public class WikiNodeServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(WikiNodeServiceUtil.class.getName(),
-					"unsubscribeNode", _unsubscribeNodeParameterTypes6);
+					"unsubscribeNode", _unsubscribeNodeParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, nodeId);
 
@@ -301,7 +369,7 @@ public class WikiNodeServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(WikiNodeServiceUtil.class.getName(),
-					"updateNode", _updateNodeParameterTypes7);
+					"updateNode", _updateNodeParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, nodeId,
 					name, description, serviceContext);
@@ -350,13 +418,19 @@ public class WikiNodeServiceHttp {
 			long.class, java.lang.String.class, java.io.InputStream[].class,
 			java.util.Map.class
 		};
-	private static final Class<?>[] _subscribeNodeParameterTypes5 = new Class[] {
+	private static final Class<?>[] _moveEntryToTrashParameterTypes5 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _unsubscribeNodeParameterTypes6 = new Class[] {
+	private static final Class<?>[] _restoreNodeFromTrashParameterTypes6 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _updateNodeParameterTypes7 = new Class[] {
+	private static final Class<?>[] _subscribeNodeParameterTypes7 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[] _unsubscribeNodeParameterTypes8 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[] _updateNodeParameterTypes9 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
 			com.liferay.portal.service.ServiceContext.class
 		};

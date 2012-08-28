@@ -56,6 +56,10 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("lastPostDate", getLastPostDate());
+		attributes.put("status", getStatus());
+		attributes.put("statusByUserId", getStatusByUserId());
+		attributes.put("statusByUserName", getStatusByUserName());
+		attributes.put("statusDate", getStatusDate());
 
 		return attributes;
 	}
@@ -125,6 +129,30 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 
 		if (lastPostDate != null) {
 			setLastPostDate(lastPostDate);
+		}
+
+		Integer status = (Integer)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
+		}
+
+		Long statusByUserId = (Long)attributes.get("statusByUserId");
+
+		if (statusByUserId != null) {
+			setStatusByUserId(statusByUserId);
+		}
+
+		String statusByUserName = (String)attributes.get("statusByUserName");
+
+		if (statusByUserName != null) {
+			setStatusByUserName(statusByUserName);
+		}
+
+		Date statusDate = (Date)attributes.get("statusDate");
+
+		if (statusDate != null) {
+			setStatusDate(statusDate);
 		}
 	}
 
@@ -362,6 +390,186 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	*/
 	public void setLastPostDate(java.util.Date lastPostDate) {
 		_wikiNode.setLastPostDate(lastPostDate);
+	}
+
+	/**
+	* Returns the status of this wiki node.
+	*
+	* @return the status of this wiki node
+	*/
+	public int getStatus() {
+		return _wikiNode.getStatus();
+	}
+
+	/**
+	* Sets the status of this wiki node.
+	*
+	* @param status the status of this wiki node
+	*/
+	public void setStatus(int status) {
+		_wikiNode.setStatus(status);
+	}
+
+	/**
+	* Returns the status by user ID of this wiki node.
+	*
+	* @return the status by user ID of this wiki node
+	*/
+	public long getStatusByUserId() {
+		return _wikiNode.getStatusByUserId();
+	}
+
+	/**
+	* Sets the status by user ID of this wiki node.
+	*
+	* @param statusByUserId the status by user ID of this wiki node
+	*/
+	public void setStatusByUserId(long statusByUserId) {
+		_wikiNode.setStatusByUserId(statusByUserId);
+	}
+
+	/**
+	* Returns the status by user uuid of this wiki node.
+	*
+	* @return the status by user uuid of this wiki node
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.lang.String getStatusByUserUuid()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _wikiNode.getStatusByUserUuid();
+	}
+
+	/**
+	* Sets the status by user uuid of this wiki node.
+	*
+	* @param statusByUserUuid the status by user uuid of this wiki node
+	*/
+	public void setStatusByUserUuid(java.lang.String statusByUserUuid) {
+		_wikiNode.setStatusByUserUuid(statusByUserUuid);
+	}
+
+	/**
+	* Returns the status by user name of this wiki node.
+	*
+	* @return the status by user name of this wiki node
+	*/
+	public java.lang.String getStatusByUserName() {
+		return _wikiNode.getStatusByUserName();
+	}
+
+	/**
+	* Sets the status by user name of this wiki node.
+	*
+	* @param statusByUserName the status by user name of this wiki node
+	*/
+	public void setStatusByUserName(java.lang.String statusByUserName) {
+		_wikiNode.setStatusByUserName(statusByUserName);
+	}
+
+	/**
+	* Returns the status date of this wiki node.
+	*
+	* @return the status date of this wiki node
+	*/
+	public java.util.Date getStatusDate() {
+		return _wikiNode.getStatusDate();
+	}
+
+	/**
+	* Sets the status date of this wiki node.
+	*
+	* @param statusDate the status date of this wiki node
+	*/
+	public void setStatusDate(java.util.Date statusDate) {
+		_wikiNode.setStatusDate(statusDate);
+	}
+
+	/**
+	* @deprecated Renamed to {@link #isApproved()}
+	*/
+	public boolean getApproved() {
+		return _wikiNode.getApproved();
+	}
+
+	/**
+	* Returns <code>true</code> if this wiki node is approved.
+	*
+	* @return <code>true</code> if this wiki node is approved; <code>false</code> otherwise
+	*/
+	public boolean isApproved() {
+		return _wikiNode.isApproved();
+	}
+
+	/**
+	* Returns <code>true</code> if this wiki node is denied.
+	*
+	* @return <code>true</code> if this wiki node is denied; <code>false</code> otherwise
+	*/
+	public boolean isDenied() {
+		return _wikiNode.isDenied();
+	}
+
+	/**
+	* Returns <code>true</code> if this wiki node is a draft.
+	*
+	* @return <code>true</code> if this wiki node is a draft; <code>false</code> otherwise
+	*/
+	public boolean isDraft() {
+		return _wikiNode.isDraft();
+	}
+
+	/**
+	* Returns <code>true</code> if this wiki node is expired.
+	*
+	* @return <code>true</code> if this wiki node is expired; <code>false</code> otherwise
+	*/
+	public boolean isExpired() {
+		return _wikiNode.isExpired();
+	}
+
+	/**
+	* Returns <code>true</code> if this wiki node is inactive.
+	*
+	* @return <code>true</code> if this wiki node is inactive; <code>false</code> otherwise
+	*/
+	public boolean isInactive() {
+		return _wikiNode.isInactive();
+	}
+
+	/**
+	* Returns <code>true</code> if this wiki node is incomplete.
+	*
+	* @return <code>true</code> if this wiki node is incomplete; <code>false</code> otherwise
+	*/
+	public boolean isIncomplete() {
+		return _wikiNode.isIncomplete();
+	}
+
+	/**
+	* Returns <code>true</code> if this wiki node is in the Recycle Bin.
+	*
+	* @return <code>true</code> if this wiki node is in the Recycle Bin; <code>false</code> otherwise
+	*/
+	public boolean isInTrash() {
+		return _wikiNode.isInTrash();
+	}
+
+	/**
+	* Returns <code>true</code> if this wiki node is pending.
+	*
+	* @return <code>true</code> if this wiki node is pending; <code>false</code> otherwise
+	*/
+	public boolean isPending() {
+		return _wikiNode.isPending();
+	}
+
+	/**
+	* Returns <code>true</code> if this wiki node is scheduled.
+	*
+	* @return <code>true</code> if this wiki node is scheduled; <code>false</code> otherwise
+	*/
+	public boolean isScheduled() {
+		return _wikiNode.isScheduled();
 	}
 
 	public boolean isNew() {

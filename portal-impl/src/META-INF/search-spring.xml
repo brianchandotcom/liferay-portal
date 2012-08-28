@@ -129,7 +129,10 @@
 				<entry key="assetCategoryTitles(_.+)?" value-ref="com.liferay.portal.search.lucene.LikeKeywordAnalyzer" />
 				<entry key="assetTagNames" value-ref="com.liferay.portal.search.lucene.LikeKeywordAnalyzer" />
 				<entry key="entryClassName" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
+				<entry key="entryClassPK" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
 				<entry key="extension" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
+				<entry key="groupId" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
+				<entry key="groupRoleId" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
 				<entry key="installedVersion" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
 				<entry key="layoutUuid" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
 				<entry key="license" value-ref="com.liferay.portal.search.lucene.LikeKeywordAnalyzer" />
@@ -148,12 +151,15 @@
 					</bean>
 				</entry>-->
 				<entry key="path" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
+				<entry key="roleId" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
+				<entry key="rootEntryClassPK" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
 				<entry key="status" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
 				<entry key="structureId" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
 				<entry key="tag" value-ref="com.liferay.portal.search.lucene.LikeKeywordAnalyzer" />
 				<entry key="templateId" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
 				<entry key="treePath" value-ref="com.liferay.portal.search.lucene.LikeKeywordAnalyzer" />
 				<entry key="type" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
+				<entry key="userId" value-ref="org.apache.lucene.analysis.KeywordAnalyzer" />
 				<entry key="userName" value-ref="com.liferay.portal.search.lucene.LikeKeywordAnalyzer" />
 				<entry key=".*_ar" value-ref="org.apache.lucene.analysis.ar.ArabicAnalyzer" />
 				<entry key=".*_de_DE" value-ref="org.apache.lucene.analysis.de.GermanAnalyzer" />

@@ -23,6 +23,26 @@ import com.liferay.portalweb.portal.util.RuntimeVariables;
 public class TearDownIntroductionTest extends BaseTestCase {
 	public void testTearDownIntroduction() throws Exception {
 		selenium.open("/web/guest/home");
+		selenium.clickAt("//div[@id='dockbar']",
+			RuntimeVariables.replace("Dockbar"));
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isElementPresent(
+							"//script[contains(@src,'/aui/aui-editable/aui-editable-min.js')]")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertTrue(selenium.isVisible("//li[@id='_145_userMenu']"));
 		selenium.mouseOver("//li[@id='_145_userMenu']");
 
@@ -44,7 +64,24 @@ public class TearDownIntroductionTest extends BaseTestCase {
 
 		selenium.clickAt("link=My Account",
 			RuntimeVariables.replace("My Account"));
-		selenium.waitForPageToLoad("30000");
+
+		for (int second = 0;; second++) {
+			if (second >= 90) {
+				fail("timeout");
+			}
+
+			try {
+				if (selenium.isPartialText("//a[@id='_2_commentsLink']",
+							"Comments")) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+
 		assertTrue(selenium.isPartialText("//a[@id='_2_commentsLink']",
 				"Comments"));
 		selenium.clickAt("//a[@id='_2_commentsLink']",

@@ -37,6 +37,7 @@ page import="com.liferay.portlet.documentlibrary.store.DLStoreUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.DLUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.DocumentConversionUtil" %><%@
 page import="com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateUtil" %><%@
+page import="com.liferay.portlet.trash.util.TrashUtil" %><%@
 page import="com.liferay.portlet.wiki.DuplicateNodeNameException" %><%@
 page import="com.liferay.portlet.wiki.DuplicatePageException" %><%@
 page import="com.liferay.portlet.wiki.ImportFilesException" %><%@

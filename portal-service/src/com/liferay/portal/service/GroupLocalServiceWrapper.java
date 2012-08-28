@@ -547,6 +547,28 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	}
 
 	/**
+	* Returns the groups with the matching primary keys.
+	*
+	* @param companyId the primary key of the company
+	* @param className the entity's class name
+	* @param site whether the group should be a site
+	* @param start the lower bound of the range of groups to return
+	* @param end the upper bound of the range of groups to return (not
+	inclusive)
+	* @return the groups with the primary keys
+	* @throws PortalException if any one of the groups could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portal.model.Group> getGroups(
+		long companyId, java.lang.String className, boolean site, int start,
+		int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _groupLocalService.getGroups(companyId, className, site, start,
+			end);
+	}
+
+	/**
 	* Returns the group associated with the layout prototype.
 	*
 	* @param companyId the primary key of the company

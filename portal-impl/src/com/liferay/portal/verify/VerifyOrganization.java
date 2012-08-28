@@ -14,8 +14,16 @@
 
 package com.liferay.portal.verify;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Organization;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.util.PortalInstances;
+
+import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
@@ -28,6 +36,28 @@ public class VerifyOrganization extends VerifyProcess {
 
 		for (long companyId : companyIds) {
 			OrganizationLocalServiceUtil.rebuildTree(companyId);
+			fixOrganizationsWithPagesAndNoSite(companyId);
+		}
+	}
+
+	protected void fixOrganizationsWithPagesAndNoSite(long companyId)
+		throws PortalException, SystemException {
+
+		List<Group> organizationGroups = GroupLocalServiceUtil.getGroups(
+			companyId, Organization.class.getName(), false, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
+
+		for (Group organizationGroup : organizationGroups) {
+			int publicPagesCount =
+				organizationGroup.getPublicLayoutsPageCount();
+			int privatePagesCount =
+				organizationGroup.getPrivateLayoutsPageCount();
+
+			if ((publicPagesCount > 0) || (privatePagesCount > 0)) {
+				organizationGroup.setSite(true);
+
+				GroupLocalServiceUtil.updateGroup(organizationGroup);
+			}
 		}
 	}
 

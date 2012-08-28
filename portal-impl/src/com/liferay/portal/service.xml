@@ -390,6 +390,11 @@
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
+		<finder name="C_C_S" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="classNameId" />
+			<finder-column name="site" />
+		</finder>
 		<finder name="C_P_S" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="parentGroupId" />

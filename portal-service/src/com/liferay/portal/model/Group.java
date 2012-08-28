@@ -99,6 +99,12 @@ public interface Group extends GroupModel, PersistedModel {
 
 	public boolean isRoot();
 
+	public boolean isShowSite(
+		com.liferay.portal.security.permission.PermissionChecker permissionChecker,
+		boolean privateSite)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public boolean isStaged();
 
 	public boolean isStagedPortlet(java.lang.String portletId);

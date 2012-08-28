@@ -36,15 +36,21 @@ import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletConstants;
+import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.UserPersonalSite;
+import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portal.service.RoleLocalServiceUtil;
+import com.liferay.portal.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 
@@ -363,6 +369,82 @@ public class GroupImpl extends GroupBaseImpl {
 		else {
 			return false;
 		}
+	}
+
+	public boolean isShowSite(
+			PermissionChecker permissionChecker, boolean privateSite)
+		throws PortalException, SystemException {
+
+		boolean showSite = true;
+
+		boolean hasPowerUserRole = RoleLocalServiceUtil.hasUserRole(
+			permissionChecker.getUserId(), permissionChecker.getCompanyId(),
+			RoleConstants.POWER_USER, true);
+
+		int siteLayoutsCount = LayoutLocalServiceUtil.getLayoutsCount(
+			this, true);
+
+		Layout defaultLayout = null;
+
+		if (siteLayoutsCount > 0) {
+			defaultLayout = LayoutLocalServiceUtil.fetchFirstLayout(
+				getGroupId(), privateSite,
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+		}
+
+		if (siteLayoutsCount == 0) {
+			if (isSite()) {
+				if (privateSite) {
+					showSite =
+						PropsValues.MY_SITES_SHOW_PRIVATE_SITES_WITH_NO_LAYOUTS;
+				}
+				else {
+					showSite =
+						PropsValues.MY_SITES_SHOW_PUBLIC_SITES_WITH_NO_LAYOUTS;
+				}
+			}
+			else if (isOrganization()) {
+				showSite = false;
+			}
+			else if (isUser()) {
+				if (privateSite) {
+					showSite =
+						PropsValues.
+							MY_SITES_SHOW_USER_PRIVATE_SITES_WITH_NO_LAYOUTS;
+
+					if (PropsValues.
+							LAYOUT_USER_PRIVATE_LAYOUTS_POWER_USER_REQUIRED &&
+						!hasPowerUserRole) {
+
+						showSite = false;
+					}
+				}
+				else {
+					showSite =
+						PropsValues.
+							MY_SITES_SHOW_USER_PUBLIC_SITES_WITH_NO_LAYOUTS;
+
+					if (PropsValues.
+							LAYOUT_USER_PUBLIC_LAYOUTS_POWER_USER_REQUIRED &&
+						!hasPowerUserRole) {
+
+						showSite = false;
+					}
+				}
+			}
+		}
+		else if ((defaultLayout != null ) &&
+			!LayoutPermissionUtil.contains(
+				permissionChecker, defaultLayout, true, ActionKeys.VIEW)) {
+
+			showSite = false;
+		}
+		else if (isOrganization() && !isSite()) {
+			_log.error(
+				"There is one organization without a site which has pages.");
+		}
+
+		return showSite;
 	}
 
 	public boolean isStaged() {

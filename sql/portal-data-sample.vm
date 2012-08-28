@@ -73,7 +73,7 @@ insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, the
 
 insert into Organization_ (organizationId, companyId, parentOrganizationId, name, type_, recursable, regionId, countryId, statusId, comments) values ($incOrganizationId, $companyId, 0, 'Liferay, Inc.', 'regular-organization', TRUE, 19005, 19, 12017, '');
 
-insert into Group_ (groupId, companyId, creatorUserId, classNameId, classPK, parentGroupId, liveGroupId, name, type_, friendlyURL, active_) values ($incGroupId, $companyId, $defaultUserId, $organizationClassNameId, $incOrganizationId, 0, 0, '$incGroupId', 0, '/$incGroupId', TRUE);
+insert into Group_ (groupId, companyId, creatorUserId, classNameId, classPK, parentGroupId, liveGroupId, name, type_, friendlyURL, site, active_) values ($incGroupId, $companyId, $defaultUserId, $organizationClassNameId, $incOrganizationId, 0, 0, '$incGroupId', 0, '/$incGroupId', TRUE, TRUE);
 insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $incGroupId, TRUE, FALSE, 'classic', '01', 1);
 insert into LayoutSet (layoutSetId, companyId, groupId, privateLayout, logo, themeId, colorSchemeId, pageCount) values ($counter.get(), $companyId, $incGroupId, FALSE, FALSE, 'classic', '01', 1);
 insert into Layout (plid, groupId, companyId, privateLayout, layoutId, parentLayoutId, name, type_, typeSettings, hidden_, friendlyURL, priority) values ($counter.get(), $incGroupId, $companyId, FALSE, 1, 0, '<?xml version="1.0"?>\n\n<root>\n  <name>Liferay, Inc. Extranet</name>\n</root>', 'portlet', 'layout-template-id=2_columns_ii\ncolumn-1=3,\ncolumn-2=19,', FALSE, '/1', 0);

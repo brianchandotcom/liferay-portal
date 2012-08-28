@@ -1059,6 +1059,30 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	}
 
 	/**
+	 * Returns the groups with the matching class name considering whether it is
+	 * a site.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  className the entity's class name
+	 * @param  site whether the group should be a site
+	 * @param  start the lower bound of the range of groups to return
+	 * @param  end the upper bound of the range of groups to return (not
+	 *         inclusive)
+	 * @return the groups with the primary keys
+	 * @throws PortalException if any one of the groups could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public List<Group> getGroups(
+			long companyId, String className, boolean site, int start, int end)
+		throws PortalException, SystemException {
+
+		long classNameId = PortalUtil.getClassNameId(className);
+
+		return groupPersistence.findByC_C_S(
+			companyId, classNameId, site, start, end);
+	}
+
+	/**
 	 * Returns the group associated with the layout.
 	 *
 	 * @param  companyId the primary key of the company

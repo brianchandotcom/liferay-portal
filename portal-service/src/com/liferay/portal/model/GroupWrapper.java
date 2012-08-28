@@ -666,6 +666,14 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 		return _group.isRoot();
 	}
 
+	public boolean isShowSite(
+		com.liferay.portal.security.permission.PermissionChecker permissionChecker,
+		boolean privateSite)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _group.isShowSite(permissionChecker, privateSite);
+	}
+
 	public boolean isStaged() {
 		return _group.isStaged();
 	}

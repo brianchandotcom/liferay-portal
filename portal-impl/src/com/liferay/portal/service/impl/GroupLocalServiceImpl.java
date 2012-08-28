@@ -1059,7 +1059,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the groups with the matching primary keys.
+	 * Returns the groups with the matching class name considering whether it is
+	 * a site.
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  className the entity's class name

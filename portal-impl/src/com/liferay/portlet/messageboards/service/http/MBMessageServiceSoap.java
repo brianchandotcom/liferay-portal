@@ -86,6 +86,11 @@ public class MBMessageServiceSoap {
 		}
 	}
 
+	/**
+	* @deprecated {@link #addMessage(long, long, long, long, String, String,
+	String, java.util.List, boolean, double, boolean,
+	com.liferay.portal.service.ServiceContext)}
+	*/
 	public static com.liferay.portlet.messageboards.model.MBMessageSoap addMessage(
 		long groupId, long categoryId, long threadId, long parentMessageId,
 		java.lang.String subject, java.lang.String body,
@@ -99,6 +104,27 @@ public class MBMessageServiceSoap {
 					categoryId, threadId, parentMessageId, subject, body,
 					format, inputStreamOVPs, anonymous, priority,
 					allowPingbacks, serviceContext);
+
+			return com.liferay.portlet.messageboards.model.MBMessageSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portlet.messageboards.model.MBMessageSoap addMessage(
+		long parentMessageId, java.lang.String subject, java.lang.String body,
+		java.lang.String format,
+		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs,
+		boolean anonymous, double priority, boolean allowPingbacks,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.portlet.messageboards.model.MBMessage returnValue = MBMessageServiceUtil.addMessage(parentMessageId,
+					subject, body, format, inputStreamOVPs, anonymous,
+					priority, allowPingbacks, serviceContext);
 
 			return com.liferay.portlet.messageboards.model.MBMessageSoap.toSoapModel(returnValue);
 		}

@@ -38,7 +38,11 @@ if (preferenceValue.startsWith("ddmTemplate_")) {
 }
 
 List<DDMTemplate> companyPortletDDMTemplates = DDMTemplateLocalServiceUtil.getTemplates(themeDisplay.getCompanyGroupId(), classNameId, 0);
-List<DDMTemplate> groupPortletDDMTemplates = DDMTemplateLocalServiceUtil.getTemplates(ddmTemplateGroupId, classNameId, 0);
+List<DDMTemplate> groupPortletDDMTemplates = null;
+
+if (ddmTemplateGroupId != themeDisplay.getCompanyGroupId()) {
+	groupPortletDDMTemplates = DDMTemplateLocalServiceUtil.getTemplates(ddmTemplateGroupId, classNameId, 0);
+}
 %>
 
 <aui:select id="displayStyle" label="<%= label %>" name='<%= "preferences--" + preferenceName + "--" %>'>

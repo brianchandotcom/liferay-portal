@@ -715,6 +715,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		String greeting = LanguageUtil.format(
 			locale, "welcome-x", " " + fullName, false);
 
+		Date birthday = getBirthday(birthdayMonth, birthdayDay, birthdayYear);
+
 		User user = userPersistence.create(userId);
 
 		if (serviceContext != null) {
@@ -789,10 +791,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			false, false, false);
 
 		// Contact
-
-		Date birthday = PortalUtil.getDate(
-			birthdayMonth, birthdayDay, birthdayYear,
-			ContactBirthdayException.class);
 
 		Contact contact = contactPersistence.create(user.getContactId());
 
@@ -5252,6 +5250,23 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		return authResult;
+	}
+
+	protected Date getBirthday(
+			int birthdayMonth, int birthdayDay, int birthdayYear)
+		throws PortalException {
+
+		Date birthday = PortalUtil.getDate(
+			birthdayMonth, birthdayDay, birthdayYear,
+			ContactBirthdayException.class);
+
+		Date now = new Date();
+
+		if (birthday.after(now)) {
+			throw new ContactBirthdayException();
+		}
+
+		return birthday;
 	}
 
 	protected String getScreenName(String screenName) {

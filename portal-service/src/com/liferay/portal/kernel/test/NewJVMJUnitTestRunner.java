@@ -122,6 +122,8 @@ public class NewJVMJUnitTestRunner extends BlockJUnit4ClassRunner {
 					public boolean shutdown(
 						int shutdownCode, Throwable shutdownThrowable) {
 
+						System.exit(shutdownCode);
+
 						return true;
 					}
 

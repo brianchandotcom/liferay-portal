@@ -14,6 +14,8 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -156,6 +158,41 @@ public class ExtRegistry {
 		}
 	}
 
+	public static boolean isRestartPending(String servletContextName) {
+		ExtRegistryInfo extRegistryInfo = _extMap.get(servletContextName);
+		if (extRegistryInfo == null) {
+			throw new IllegalStateException(
+				"Ext plugin is not registered: " + servletContextName);
+		}
+
+		return extRegistryInfo.isRestartPending();
+	}
+
+	public static boolean isStarted(String servletContextName) {
+		ExtRegistryInfo extRegistryInfo = _extMap.get(servletContextName);
+		if (extRegistryInfo == null) {
+			throw new IllegalStateException(
+				"Ext plugin is not registered: " + servletContextName);
+		}
+
+		if (extRegistryInfo.getServletContext() == null) {
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+
+	public static boolean isUndeployed(String servletContextName) {
+		ExtRegistryInfo extRegistryInfo = _extMap.get(servletContextName);
+		if (extRegistryInfo == null) {
+			throw new IllegalStateException(
+				"Ext plugin is not registered: " + servletContextName);
+		}
+
+		return extRegistryInfo.isUndeployed();
+	}
+
 	public static void registerExt(ServletContext servletContext)
 		throws Exception {
 
@@ -186,22 +223,54 @@ public class ExtRegistry {
 
 				Set<String> files = _readExtFiles(servletContext, resourcePath);
 
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Registering installed ext plugin for " +
+							servletContextName);
+				}
+
 				_extMap.put(
 					servletContextName, new ExtRegistryInfo(null, files));
 			}
 		}
 	}
 
-	public static void unregisterExt(String servletContextName) {
-		_extMap.remove(servletContextName);
+	public static void setRestartPending(String servletContextName) {
+		ExtRegistryInfo extRegistryInfo = _extMap.get(servletContextName);
+		if (extRegistryInfo == null) {
+			throw new IllegalStateException(
+				"Ext plugin is not registered: " + servletContextName);
+		}
+
+		extRegistryInfo.setRestartPending(true);
 	}
 
-	public static void updateRegisteredServletContext(
-		String servletContextName, ServletContext ctx) {
-
-		if (isRegistered(servletContextName)) {
-			_extMap.get(servletContextName).setServletContext(ctx);
+	public static void setStarted(ServletContext servletContext) {
+		String servletContextName = servletContext.getServletContextName();
+		ExtRegistryInfo extRegistryInfo = _extMap.get(servletContextName);
+		if (extRegistryInfo == null) {
+			throw new IllegalStateException(
+				"Ext plugin is not registered: " + servletContextName);
 		}
+
+		extRegistryInfo.setRestartPending(false);
+		extRegistryInfo.setServletContext(servletContext);
+		extRegistryInfo.setUndeployed(false);
+	}
+
+	public static void setUndeployed(String servletContextName) {
+		ExtRegistryInfo extRegistryInfo = _extMap.get(servletContextName);
+		if (extRegistryInfo == null) {
+			throw new IllegalStateException(
+				"Ext plugin is not registered: " + servletContextName);
+		}
+
+		extRegistryInfo.setServletContext(null);
+		extRegistryInfo.setUndeployed(true);
+	}
+
+	public static void unregisterExt(String servletContextName) {
+		_extMap.remove(servletContextName);
 	}
 
 	private static Set<String> _readExtFiles(
@@ -229,6 +298,8 @@ public class ExtRegistry {
 		return files;
 	}
 
+	private static Log _log = LogFactoryUtil.getLog(ExtRegistry.class);
+
 	private static Map<String, ExtRegistryInfo> _extMap =
 		Collections.synchronizedMap(new HashMap<String, ExtRegistryInfo>());
 
@@ -237,28 +308,46 @@ public class ExtRegistry {
 		public ExtRegistryInfo(
 			ServletContext servletContext, Set<String> files) {
 
-			this.servletContext = servletContext;
-			this.files = files;
+			this._servletContext = servletContext;
+			this._files = files;
+		}
+
+		public boolean isRestartPending() {
+			return this._restartPending;
+		}
+
+		public boolean isUndeployed() {
+			return this._undeployed;
 		}
 
 		public Set<String> getFiles() {
-			return files;
+			return _files;
 		}
 
 		public ServletContext getServletContext() {
-			return servletContext;
+			return _servletContext;
 		}
 
 		public void setFiles(Set<String> files) {
-			this.files = files;
+			this._files = files;
+		}
+
+		public void setRestartPending(boolean restartPending) {
+			this._restartPending = restartPending;
 		}
 
 		public void setServletContext(ServletContext servletContext) {
-			this.servletContext = servletContext;
+			this._servletContext = servletContext;
 		}
 
-		private Set<String> files;
-		private ServletContext servletContext;
+		public void setUndeployed(boolean undeployed) {
+			this._undeployed = undeployed;
+		}
+
+		private Set<String> _files;
+		private ServletContext _servletContext;
+		private boolean _undeployed;
+		private boolean _restartPending;
 	}
 
 }

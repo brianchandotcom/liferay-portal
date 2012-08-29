@@ -27,6 +27,7 @@ PortletURL marketplaceURL = null;
 
 boolean showEditPluginHREF = true;
 boolean showReindexButton = false;
+boolean showUndeployExtButton = false;
 %>
 
 <%@ include file="/html/portlet/plugins_admin/plugins.jspf" %>

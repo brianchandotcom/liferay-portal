@@ -59,6 +59,31 @@ import org.apache.commons.configuration.PropertiesConfiguration;
  */
 public class ExtHotDeployListener extends BaseHotDeployListener {
 
+	public static void uninstallManually(String servletContextName)
+		throws Exception {
+
+		if (!ExtRegistry.isRegistered(servletContextName)) {
+			return;
+		}
+
+		if (ExtRegistry.isStarted(servletContextName)) {
+			return;
+		}
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Uninstalling Ext Plugin for " + servletContextName);
+		}
+
+		ExtHotDeployListener extHotDeployListener = new ExtHotDeployListener();
+		extHotDeployListener.uninstallExt(servletContextName);
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Ext Plugin " + servletContextName +
+				" has been uninstalled. Please restart server" +
+				" to apply changes!");
+		}
+	}
+
 	public void invokeDeploy(HotDeployEvent hotDeployEvent)
 		throws HotDeployException {
 
@@ -124,38 +149,30 @@ public class ExtHotDeployListener extends BaseHotDeployListener {
 			return;
 		}
 
-		if (_redeployServletContextNames.contains(servletContextName) &&
-			ExtRegistry.isRegistered(servletContextName)) {
+		if (ExtRegistry.isRegistered(servletContextName) &&
+			ExtRegistry.isUndeployed(servletContextName)) {
 
 			if (_log.isInfoEnabled()) {
-				_log.info("Redeploying Ext Plugin for " + servletContextName);
+				_log.info("Redeploying ext plugin for " + servletContextName);
 			}
 
 			uninstallExt(servletContextName);
 
-			_redeployServletContextNames.remove(servletContextName);
-
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					"Ext Plugin " + servletContextName +
+					"Ext plugin " + servletContextName +
 						" has been undeployed.");
 			}
 
 		}
 
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				"Registering extension environment for " + servletContextName);
-		}
-
 		if (ExtRegistry.isRegistered(servletContextName)) {
-			ExtRegistry.updateRegisteredServletContext(
-				servletContextName, servletContext);
+			ExtRegistry.setStarted(servletContext);
 
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					"Extension environment for " + servletContextName +
-						" has been applied.");
+					"Ext plugin for " + servletContextName +
+						" is correctly installed.");
 			}
 
 			return;
@@ -168,7 +185,7 @@ public class ExtHotDeployListener extends BaseHotDeployListener {
 			StringBundler sb = new StringBundler();
 
 			sb.append(
-				"Extension environment for " + servletContextName +
+				"Ext plugin for " + servletContextName +
 					" cannot be applied because of detected conflicts:");
 
 			for (Map.Entry<String, Set<String>> entry : conflicts.entrySet()) {
@@ -190,6 +207,10 @@ public class ExtHotDeployListener extends BaseHotDeployListener {
 			return;
 		}
 
+		if (_log.isInfoEnabled()) {
+			_log.info("Installing ext plugin for " + servletContextName + ".");
+		}
+
 		try {
 			installExt(servletContext, hotDeployEvent.getContextClassLoader());
 		} catch (Exception e) {
@@ -197,7 +218,7 @@ public class ExtHotDeployListener extends BaseHotDeployListener {
 				// rollback
 				uninstallExt(servletContextName);
 			} catch (Exception ex) {
-				_log.warn("Rollback of Ext Plugin installation for " +
+				_log.warn("Rollback of ext plugin installation for " +
 					servletContext + " wasn't successful", ex);
 			}
 
@@ -206,11 +227,12 @@ public class ExtHotDeployListener extends BaseHotDeployListener {
 
 		FileAvailabilityUtil.reset();
 
+		ExtRegistry.setRestartPending(servletContextName);
+
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				"Extension environment for " + servletContextName +
-					" has been applied. You must reboot the server and " +
-						"redeploy all other plugins.");
+				"Ext plugin for " + servletContextName +
+					" has been installed. You must restart the server.");
 		}
 	}
 
@@ -226,15 +248,15 @@ public class ExtHotDeployListener extends BaseHotDeployListener {
 		}
 
 		if (ExtRegistry.isRegistered(servletContextName)) {
-			ExtRegistry.updateRegisteredServletContext(
-				servletContextName, null);
+			ExtRegistry.setUndeployed(servletContextName);
 
-			_redeployServletContextNames.add(servletContextName);
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Redeploying Ext Plugin for " + servletContextName +
-						" ... waiting for deploy");
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Ext Plugin for " + servletContextName +
+						" was undeployed, but is still registered. " +
+						"To uninstall it completely please click " +
+						"Uninstall button in Control Panel -> " +
+						"Plugins Installation -> Ext Plugins");
 			}
 		} else {
 			_log.error(
@@ -794,7 +816,5 @@ public class ExtHotDeployListener extends BaseHotDeployListener {
 	private static final String BACKUP_EXT = ".beforeExt";
 
 	private static Log _log = LogFactoryUtil.getLog(ExtHotDeployListener.class);
-	private static List<String> _redeployServletContextNames =
-		new ArrayList<String>();
 
 }

@@ -17,6 +17,7 @@
 <%@ include file="/html/portlet/init.jsp" %>
 
 <%@ page import="com.liferay.portal.kernel.plugin.PluginPackage" %><%@
+page import="com.liferay.portal.util.ExtRegistry" %><%@
 page import="com.liferay.portal.util.comparator.RoleRoleIdComparator" %><%@
 page import="com.liferay.portlet.rolesadmin.util.RolesAdminUtil" %>
 

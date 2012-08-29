@@ -44,8 +44,12 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.layoutconfiguration.util.velocity.InitColumnProcessor;
 
 import java.io.IOException;
+import java.io.InputStream;
+
+import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -54,11 +58,16 @@ import java.util.Set;
 
 import javax.servlet.ServletContext;
 
+import org.apache.commons.io.IOUtils;
+
+import org.springframework.core.io.UrlResource;
+
 /**
  * @author Ivica Cardic
  * @author Jorge Ferrer
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
+ * @author Tomas Polesovsky
  */
 public class LayoutTemplateLocalServiceImpl
 	extends LayoutTemplateLocalServiceBaseImpl {
@@ -281,6 +290,48 @@ public class LayoutTemplateLocalServiceImpl
 					if (!layoutTemplateIds.contains(ovp)) {
 						layoutTemplateIds.add(ovp);
 					}
+				}
+			}
+
+			Set<ObjectValuePair<String, Boolean>> curLayoutTemplateIds =
+				new HashSet<ObjectValuePair<String, Boolean>>();
+
+			ClassLoader classLoader = getClass().getClassLoader();
+			// load xmls
+			String resourceName = "WEB-INF/liferay-layout-templates-ext.xml";
+			Enumeration<URL> resources = classLoader.getResources(resourceName);
+			if (_log.isDebugEnabled() && !resources.hasMoreElements()) {
+				_log.debug("No " + resourceName + " has been found");
+			}
+			while (resources.hasMoreElements()) {
+				URL resource = resources.nextElement();
+				if (_log.isDebugEnabled()) {
+					_log.debug("Loading " + resourceName + " from: " +
+						resource);
+				}
+
+				if (resource == null) {
+					continue;
+				}
+
+				InputStream is = new UrlResource(resource).getInputStream();
+				try {
+					String xmlExt = IOUtils.toString(is, "UTF-8");
+					curLayoutTemplateIds.addAll(
+						_readLayoutTemplates(
+							servletContextName, servletContext, xmlExt,
+							pluginPackage));
+
+				} catch (Exception e) {
+					_log.error("Problem while loading file " + resource, e);
+				} finally {
+					is.close();
+				}
+			}
+
+			for (ObjectValuePair<String, Boolean> ovp : curLayoutTemplateIds) {
+				if (!layoutTemplateIds.contains(ovp)) {
+					layoutTemplateIds.add(ovp);
 				}
 			}
 		}

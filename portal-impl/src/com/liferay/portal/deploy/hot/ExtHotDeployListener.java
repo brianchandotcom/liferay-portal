@@ -35,17 +35,19 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.util.ant.CopyTask;
 
 import java.io.File;
+import java.io.FileFilter;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
-import java.net.URL;
-
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import javax.servlet.ServletContext;
 
@@ -221,30 +223,243 @@ public class ExtHotDeployListener extends BaseHotDeployListener {
 		copyJar(servletContext, portalLibDir, "ext-util-java");
 		copyJar(servletContext, portalLibDir, "ext-util-taglib");
 
-		mergeWebXml(portalWebDir, pluginWebDir);
+		ExtRegistry.registerExt(servletContext);
 
-		CopyTask.copyDirectory(
-			pluginWebDir + "WEB-INF/ext-web/docroot", portalWebDir,
-			StringPool.BLANK,
-			"**/WEB-INF/web.xml,**/WEB-INF/classes/portal-ext.properties", true,
-			false);
+		installWebInfJar(portalWebDir, pluginWebDir, servletContextName);
+		installWebFiles(portalWebDir, pluginWebDir, servletContextName);
+
+		boolean portalExtPropertiesInstalled = installPortalExtProperties(
+			portalWebDir, pluginWebDir, servletContextName);
+
+		if (portalExtPropertiesInstalled) {
+			rebuildPortalExtPluginProperties();
+		}
+
+		boolean webXmlInstalled = installWebXml(
+			portalWebDir, pluginWebDir, servletContextName);
+
+		if (webXmlInstalled) {
+			rebuildWebXml();
+		}
 
 		FileUtil.copyFile(
 			pluginWebDir + "WEB-INF/ext-" + servletContextName + ".xml",
 			portalWebDir + "WEB-INF/ext-" + servletContextName + ".xml");
 
-		ExtRegistry.registerExt(servletContext);
-
-		rebuildPortalExtPluginProperties();
 	}
 
-	protected void mergeWebXml(String portalWebDir, String pluginWebDir) {
-		if (!FileUtil.exists(
-				pluginWebDir + "WEB-INF/ext-web/docroot/WEB-INF/web.xml")) {
+	protected boolean installPortalExtProperties(
+		String portalWebDir, String pluginWebDir, String servletContextName)
+		throws Exception {
 
-			return;
+		File pluginPortalExtPropertiesFile = new File(
+			pluginWebDir + "WEB-INF/ext-web/docroot/WEB-INF/classes/" +
+			"portal-ext.properties");
+
+		if (!pluginPortalExtPropertiesFile.exists()) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Ext plugin " + servletContextName + " doesn't " +
+					"contain portal-ext.properties.");
+			}
+
+			return false;
 		}
 
+		File portalPluginPortalExtPropertiesFile =
+			getPluginPortalExtPropertiesFile(portalWebDir, servletContextName);
+
+		FileUtil.copyFile(
+			pluginPortalExtPropertiesFile, portalPluginPortalExtPropertiesFile);
+
+		return true;
+	}
+
+	protected void installWebFiles(
+		String portalWebDir, String pluginWebDir, String servletContextName)
+		throws Exception {
+
+		HookHotDeployListener hookListener = new HookHotDeployListener();
+
+		Set<String> files = ExtRegistry.getFiles(servletContextName);
+		for (String file : files) {
+			if (file.startsWith("ext-web/docroot/") &&
+				!ExtRegistry.isMergedFile(file)) {
+
+				String relativeFile = file.substring(
+					file.indexOf("docroot/") + "docroot/".length());
+
+				File pluginFile = new File(pluginWebDir + "WEB-INF/", file);
+				File portalFile = new File(portalWebDir, relativeFile);
+				File originalFile = portalFile;
+
+				if (portalFile.exists()) {
+					File backupFile = getBackupFile(
+						portalFile.getAbsolutePath());
+
+					File portalJspBackupFile =
+						hookListener.getPortalJspBackupFile(portalFile);
+
+					if (portalJspBackupFile.exists()) {
+
+						// hook created a backup of JSP, original file is now
+						// in the hook's backup file
+
+						originalFile = portalJspBackupFile;
+					}
+
+					if (_log.isDebugEnabled()) {
+						_log.debug("Creating backup [of, to]: [" +
+							originalFile + ", " + backupFile + "]");
+					}
+
+					createBackup(originalFile, backupFile);
+				}
+
+				if (_log.isDebugEnabled()) {
+					_log.debug("Copying [from, to]: [" + pluginFile + ", " +
+						originalFile + "]");
+				}
+
+				FileUtil.copyFile(pluginFile, originalFile);
+			}
+		}
+	}
+
+	protected void installWebInfJar(
+		String portalWebDir, String pluginWebDir, String servletContextName)
+		throws Exception {
+
+		String zipName =
+			portalWebDir + "WEB-INF/lib/ext-" + servletContextName +
+				"-webinf.jar";
+
+		File dir = new File(pluginWebDir + "WEB-INF/ext-web/docroot/WEB-INF");
+		if (!dir.isDirectory()) {
+			throw new IllegalArgumentException("Not a directory: " + dir);
+		}
+
+		File[] filesToZip = dir.listFiles(new FileFilter() {
+			public boolean accept(File pathname) {
+				return ExtRegistry.isMergedFile(pathname.getPath());
+			}
+		});
+
+		zipWebInfJar(zipName, filesToZip);
+	}
+
+	protected boolean installWebXml(
+		String portalWebDir, String pluginWebDir, String servletContextName)
+		throws Exception {
+
+		File pluginWebXmlFile = new File(
+			pluginWebDir + "WEB-INF/ext-web/docroot/WEB-INF/web.xml");
+
+		if (!pluginWebXmlFile.exists()) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Ext plugin " + servletContextName + " doesn't " +
+					"contain portal web.xml.");
+			}
+
+			return false;
+		}
+
+		File portalPluginWebXmlFile = getPluginWebXMLFile(
+			portalWebDir, servletContextName);
+
+		FileUtil.copyFile(pluginWebXmlFile, portalPluginWebXmlFile);
+
+		return true;
+	}
+
+	protected void rebuildPortalExtPluginProperties() throws Exception {
+		String portalWebDir = PortalUtil.getPortalWebDir();
+
+		File extPluginPropsFile = new File(
+			PortalUtil.getPortalWebDir() + "WEB-INF/classes/" +
+				"portal-ext-plugin.properties");
+
+		extPluginPropsFile.delete();
+		extPluginPropsFile.createNewFile();
+
+		Set<String> contextNames = ExtRegistry.getServletContextNames();
+
+		// sort by name so changes are applied in the right order
+		List<String> contextNamesList = ListUtil.fromCollection(contextNames);
+		ListUtil.sort(contextNamesList);
+
+		for (String servletContextName : contextNamesList) {
+			File pluginPropsFile = getPluginPortalExtPropertiesFile(
+				portalWebDir, servletContextName);
+
+			if (!pluginPropsFile.exists()) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Ext Plugin's portal-ext.properties not found " +
+						"for " + servletContextName);
+				}
+
+				return;
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Loading portal-ext.properties from " +
+					pluginPropsFile);
+			}
+
+			rebuildPortalExtPluginProperties(pluginPropsFile);
+		}
+	}
+
+	protected void rebuildWebXml() throws IOException {
+		String portalWebDir = PortalUtil.getPortalWebDir();
+
+		File webXmlFile = new File(portalWebDir + "WEB-INF/web.xml");
+		File backupFile = getBackupFile(webXmlFile.getAbsolutePath());
+
+		if (!backupFile.exists()) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Creating backup of web.xml");
+			}
+
+			createBackup(webXmlFile, backupFile);
+		}
+		else {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Restoring backup of web.xml");
+			}
+
+			restoreBackup(webXmlFile, backupFile, false);
+		}
+
+		Set<String> contextNames = ExtRegistry.getServletContextNames();
+
+		// sort by name so changes are applied in the right order
+		List<String> contextNamesList = ListUtil.fromCollection(contextNames);
+		ListUtil.sort(contextNamesList);
+
+		for (String servletContextName : contextNamesList) {
+			File pluginWebXMLFile = getPluginWebXMLFile(
+				portalWebDir, servletContextName);
+
+			if (!pluginWebXMLFile.exists()) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Ext Plugin's web.xml not found for " +
+						servletContextName);
+				}
+
+				return;
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Rebuilding portal's web.xml using " +
+					pluginWebXMLFile);
+			}
+
+			rebuildWebXml(pluginWebXMLFile);
+		}
+	}
+
+	protected void rebuildWebXml(File pluginWebXMLFile) throws IOException {
+		String portalWebDir = PortalUtil.getPortalWebDir();
 		String tmpDir =
 			SystemProperties.get(SystemProperties.TMP_DIR) + StringPool.SLASH +
 				Time.getTimestamp();
@@ -252,8 +467,7 @@ public class ExtHotDeployListener extends BaseHotDeployListener {
 		WebXMLBuilder.main(
 			new String[] {
 				portalWebDir + "WEB-INF/web.xml",
-				pluginWebDir + "WEB-INF/ext-web/docroot/WEB-INF/web.xml",
-				tmpDir + "/web.xml"
+				pluginWebXMLFile.getAbsolutePath(), tmpDir + "/web.xml"
 			});
 
 		File portalWebXml = new File(portalWebDir + "WEB-INF/web.xml");
@@ -267,52 +481,41 @@ public class ExtHotDeployListener extends BaseHotDeployListener {
 		FileUtil.deltree(tmpDir);
 	}
 
-	protected void rebuildPortalExtPluginProperties() throws Exception {
-		File extPluginPropsFile = new File(
-			PortalUtil.getPortalWebDir() + "WEB-INF/classes/" +
-				"portal-ext-plugin.properties");
+	private void createBackup(File fileToBackup, File backupFile)
+		throws IOException {
 
-		extPluginPropsFile.delete();
-		extPluginPropsFile.createNewFile();
-
-		Set<ServletContext> ctxs = ExtRegistry.getServletContexts();
-
-		// sort by name so changes are applied in the right order
-		List<ServletContext> ctxsList = ListUtil.fromCollection(ctxs);
-		ListUtil.sort(ctxsList, new Comparator<ServletContext>() {
-			public int compare(ServletContext o1, ServletContext o2) {
-				return o1.getServletContextName().compareTo(
-					o2.getServletContextName());
-			}
-		});
-
-		for (ServletContext servletContext : ctxsList) {
-			URL pluginPropsURL = servletContext.getResource(
-				"WEB-INF/ext-web/docroot/WEB-INF/classes/" +
-					"portal-ext.properties");
-
-			if (pluginPropsURL == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug("Ext Plugin's portal-ext.properties not found");
-				}
-
-				return;
-			}
-
-			if (_log.isDebugEnabled()) {
-				_log.debug("Loading portal-ext.properties from " +
-					pluginPropsURL);
-			}
-
-			rebuildPortalExtPluginProperties(pluginPropsURL);
+		if (backupFile.exists()) {
+			_log.warn("Backup file " + backupFile + " already exists!");
+			return;
 		}
+
+		FileUtil.copyFile(fileToBackup, backupFile);
+		backupFile.setLastModified(fileToBackup.lastModified());
 	}
 
-	private void rebuildPortalExtPluginProperties(URL pluginPropsURL)
+	private File getBackupFile(String originalFileName) {
+		return new File(originalFileName + BACKUP_EXT);
+	}
+
+	private File getPluginPortalExtPropertiesFile(
+		String portalWebDir, String servletContextName) {
+
+		return new File(portalWebDir + "WEB-INF", "ext-" + servletContextName +
+			"-portal-ext.properties");
+	}
+
+	private File getPluginWebXMLFile(
+		String portalWebDir, String servletContextName) {
+
+		return new File(portalWebDir + "WEB-INF", "ext-" + servletContextName +
+			"-web.xml");
+	}
+
+	private void rebuildPortalExtPluginProperties(File pluginPropsFile)
 		throws Exception {
 
 		PropertiesConfiguration pluginProps =
-			new PropertiesConfiguration(pluginPropsURL);
+			new PropertiesConfiguration(pluginPropsFile);
 
 		PropertiesConfiguration portalProps = new PropertiesConfiguration(
 			this.getClass().getClassLoader().getResource("portal.properties"));
@@ -360,6 +563,64 @@ public class ExtHotDeployListener extends BaseHotDeployListener {
 
 		extPluginPortalProps.save(extPluginPropsFile);
 	}
+
+	private void restoreBackup(
+		File restoredFile, File backupFile, boolean deleteBackup)
+		throws IOException {
+
+		if (!backupFile.exists()) {
+			_log.warn("Backup file " + backupFile + " doesn't exist!");
+			return;
+		}
+
+		FileUtil.copyFile(backupFile, restoredFile);
+		restoredFile.setLastModified(backupFile.lastModified());
+
+		if (deleteBackup) {
+			backupFile.delete();
+		}
+	}
+
+	private void zipWebInfJar(String zipName, File[] files) throws Exception {
+		byte[] buffer = new byte[4096];
+		int bytesRead;
+
+		if (files.length == 0) {
+			return;
+		}
+
+		ZipOutputStream out = new ZipOutputStream(new FileOutputStream(
+			zipName));
+
+		try {
+			for (int i = 0; i < files.length; i++) {
+				File f = files[i];
+				if (f.isDirectory()) {
+					continue;
+				}
+
+				String fileName = "WEB-INF/" + f.getName();
+				FileInputStream in = new FileInputStream(f);
+				try {
+					ZipEntry entry = new ZipEntry(fileName);
+					out.putNextEntry(entry);
+					while ((bytesRead = in.read(buffer)) != -1) {
+						out.write(buffer, 0, bytesRead);
+					}
+				} finally {
+					in.close();
+				}
+			}
+		} finally {
+			try {
+				out.close();
+			} catch (Exception ex) {
+				_log.warn("Cannot close zip stream: " + ex.getMessage());
+			}
+		}
+	}
+
+	private static final String BACKUP_EXT = ".beforeExt";
 
 	private static Log _log = LogFactoryUtil.getLog(ExtHotDeployListener.class);
 

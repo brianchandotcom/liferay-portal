@@ -45,7 +45,11 @@ public class ExtRegistry {
 		Arrays.asList(new String[] {
 			"ext-model-hints.xml", "ext-spring.xml", "ext-hbm.xml",
 			"portal-log4j-ext.xml", "content/Language-ext",
-			"portal-ext.properties"
+			"portal-ext.properties", "tiles-defs-ext.xml",
+			"struts-config-ext.xml", "liferay-portlet-ext.xml",
+			"liferay-look-and-feel-ext.xml", "liferay-layout-templates-ext.xml",
+			"portlet-ext.xml", "liferay-display-ext.xml",
+			"remoting-servlet-ext.xml", "web.xml"
 		});
 
 	public static Map<String, Set<String>> getConflicts(
@@ -84,6 +88,11 @@ public class ExtRegistry {
 		}
 
 		return conflicts;
+	}
+
+	public static Set<String> getFiles(String servletContextName) {
+		return Collections.unmodifiableSet(_extMap.get(servletContextName)
+			.getFiles());
 	}
 
 	public static Set<String> getServletContextNames() {

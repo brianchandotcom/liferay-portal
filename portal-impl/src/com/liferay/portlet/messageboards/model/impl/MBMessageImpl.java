@@ -85,23 +85,8 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 		return body;
 	}
 
-	public MBCategory getCategory() {
-		MBCategory category = null;
-
-		long categoryId = getCategoryId();
-
-		try {
-			category = MBCategoryLocalServiceUtil.getCategory(categoryId);
-		}
-		catch (Exception e) {
-			category = new MBCategoryImpl();
-
-			category.setCategoryId(getCategoryId());
-
-			_log.error(e);
-		}
-
-		return category;
+	public MBCategory getCategory() throws PortalException, SystemException {
+		return MBCategoryLocalServiceUtil.getCategory(getCategoryId());
 	}
 
 	public String getDeletedAttachmentsDir() {

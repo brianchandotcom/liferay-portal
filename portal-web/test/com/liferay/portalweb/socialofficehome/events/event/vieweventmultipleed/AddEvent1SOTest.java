@@ -48,6 +48,7 @@ public class AddEvent1SOTest extends BaseTestCase {
 		selenium.waitForPageToLoad("30000");
 		selenium.type("//input[@id='_8_title']",
 			RuntimeVariables.replace("Calendar Event1 Title"));
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Source"),
 			selenium.getText("//span[@id='cke_48_label' and .='Source']"));
 		selenium.clickAt("//span[@id='cke_48_label' and .='Source']",

@@ -760,7 +760,7 @@ public class ResourceBlockLocalServiceImpl
 				return;
 			}
 
-			releaseResourceBlock(resourceBlock);
+			resourceBlockLocalService.releaseResourceBlock(resourceBlock);
 		}
 
 		resourceBlockPermissionsContainer.setPermissions(roleId, actionIdsLong);

@@ -33,6 +33,7 @@ import com.liferay.portalweb.socialoffice.users.user.signinso.SOUs3_SignInSOTest
 import com.liferay.portalweb.socialoffice.users.user.signinso.SOUs3_SignOutSOTest;
 import com.liferay.portalweb.socialoffice.users.user.signinso.SignInSOTest;
 import com.liferay.portalweb.socialoffice.users.user.signinso.SignOutSOTest;
+import com.liferay.portalweb.socialofficehome.contactscenter.contacts.followccusermultiple.FollowCCUserMultipleTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

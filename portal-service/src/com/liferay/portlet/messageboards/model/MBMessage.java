@@ -42,7 +42,9 @@ public interface MBMessage extends MBMessageModel, PersistedModel {
 
 	public java.lang.String getBody(boolean translate);
 
-	public com.liferay.portlet.messageboards.model.MBCategory getCategory();
+	public com.liferay.portlet.messageboards.model.MBCategory getCategory()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 
 	public java.lang.String getDeletedAttachmentsDir();
 

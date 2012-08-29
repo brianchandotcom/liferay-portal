@@ -15,6 +15,7 @@
 package com.liferay.portalweb.portal.controlpanel.categories.vocabulary.addvocabularynamenull;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.categories.vocabulary.addvocabulary.TearDownVocabularyTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

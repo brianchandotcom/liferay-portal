@@ -15,6 +15,9 @@
 package com.liferay.portalweb.portal.controlpanel.categories.assettype.deletevocabularyassettype2;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.categories.assettype.addvocabularyassettypemultiple.AddVocabularyAssetType1Test;
+import com.liferay.portalweb.portal.controlpanel.categories.assettype.addvocabularyassettypemultiple.AddVocabularyAssetType2Test;
+import com.liferay.portalweb.portal.controlpanel.categories.vocabulary.addvocabulary.TearDownVocabularyTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

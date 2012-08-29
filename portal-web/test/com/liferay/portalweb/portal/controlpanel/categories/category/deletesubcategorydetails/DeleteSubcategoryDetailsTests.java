@@ -15,6 +15,9 @@
 package com.liferay.portalweb.portal.controlpanel.categories.category.deletesubcategorydetails;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.categories.category.addcategory.AddCategoryTest;
+import com.liferay.portalweb.portal.controlpanel.categories.vocabulary.addvocabulary.AddVocabularyTest;
+import com.liferay.portalweb.portal.controlpanel.categories.vocabulary.addvocabulary.TearDownVocabularyTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

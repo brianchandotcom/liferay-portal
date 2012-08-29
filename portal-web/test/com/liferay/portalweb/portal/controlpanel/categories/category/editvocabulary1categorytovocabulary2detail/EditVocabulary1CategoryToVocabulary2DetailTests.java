@@ -15,6 +15,9 @@
 package com.liferay.portalweb.portal.controlpanel.categories.category.editvocabulary1categorytovocabulary2detail;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.portal.controlpanel.categories.vocabulary.addvocabulary.TearDownVocabularyTest;
+import com.liferay.portalweb.portal.controlpanel.categories.vocabulary.addvocabularymultiple.AddVocabulary1Test;
+import com.liferay.portalweb.portal.controlpanel.categories.vocabulary.addvocabularymultiple.AddVocabulary2Test;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

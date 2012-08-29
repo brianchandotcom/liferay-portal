@@ -107,7 +107,7 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 				priority = layout.getPriority() + 1;
 			}
 
-			if ((priority < LayoutConstants.PRIORITY_BUFFER) &&
+			if ((priority < _PRIORITY_BUFFER) &&
 				Validator.isNull(sourcePrototypeLayoutUuid)) {
 
 				LayoutSet layoutSet = layoutSetPersistence.fetchByG_P(
@@ -116,7 +116,7 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 				if (Validator.isNotNull(
 						layoutSet.getLayoutSetPrototypeUuid())) {
 
-					priority = priority + LayoutConstants.PRIORITY_BUFFER;
+					priority = priority + _PRIORITY_BUFFER;
 				}
 			}
 
@@ -360,6 +360,8 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 	protected LayoutPersistence layoutPersistence;
 	@BeanReference(type = LayoutSetPersistence.class)
 	protected LayoutSetPersistence layoutSetPersistence;
+
+	private static final int _PRIORITY_BUFFER = 1000000;
 
 	private String _beanIdentifier;
 

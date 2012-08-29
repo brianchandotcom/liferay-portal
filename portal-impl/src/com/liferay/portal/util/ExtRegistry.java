@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -44,9 +45,11 @@ public class ExtRegistry {
 
 		Map<String, Set<String>> conflicts = new HashMap<String, Set<String>>();
 
-		for (Map.Entry<String, Set<String>> entry : _extMap.entrySet()) {
-			String curServletContextName = entry.getKey();
-			Set<String> curFileNames = entry.getValue();
+		for (String curServletContextName : _extMap.keySet()) {
+			ExtRegistryInfo extRegistryInfo = _extMap.get(
+				curServletContextName);
+
+			Set<String> curFileNames = extRegistryInfo.getFileNames();
 
 			for (String fileName : fileNames) {
 				if (!curFileNames.contains(fileName)) {
@@ -71,6 +74,19 @@ public class ExtRegistry {
 
 	public static Set<String> getServletContextNames() {
 		return Collections.unmodifiableSet(_extMap.keySet());
+	}
+
+	public static Set<ServletContext> getServletContexts() {
+		Set<ServletContext> result = new HashSet<ServletContext>(
+			_extMap.size());
+
+		for (ExtRegistryInfo info : _extMap.values()) {
+			if (info.getServletContext() != null) {
+				result.add(info.getServletContext());
+			}
+		}
+
+		return Collections.unmodifiableSet(result);
 	}
 
 	public static boolean isIgnoredFileName(String fileName) {
@@ -114,7 +130,8 @@ public class ExtRegistry {
 		Set<String> fileNames = _readExtFileNames(
 			servletContext, "/WEB-INF/ext-" + servletContextName + ".xml");
 
-		_extMap.put(servletContextName, fileNames);
+		_extMap.put(
+			servletContextName, new ExtRegistryInfo(servletContext, fileNames));
 	}
 
 	public static void registerPortal(ServletContext servletContext)
@@ -136,8 +153,17 @@ public class ExtRegistry {
 				Set<String> fileNames = _readExtFileNames(
 					servletContext, resourcePath);
 
-				_extMap.put(servletContextName, fileNames);
+				_extMap.put(
+					servletContextName, new ExtRegistryInfo(null, fileNames));
 			}
+		}
+	}
+
+	public static void updateRegisteredServletContext(
+		String servletContextName, ServletContext ctx) {
+
+		if (isRegistered(servletContextName)) {
+			_extMap.get(servletContextName).setServletContext(ctx);
 		}
 	}
 
@@ -173,10 +199,38 @@ public class ExtRegistry {
 
 	private static final String[] _SUPPORTED_MERGING_FILE_NAMES = new String[] {
 		"content/Language-ext", "ext-hbm.xml", "ext-model-hints.xml",
-		"ext-spring.xml", "portal-log4j-ext.xml"
+		"ext-spring.xml", "portal-ext.properties", "portal-log4j-ext.xml"
 	};
 
-	private static Map<String, Set<String>> _extMap =
-		new HashMap<String, Set<String>>();
+	private static Map<String, ExtRegistryInfo> _extMap =
+		Collections.synchronizedMap(new HashMap<String, ExtRegistryInfo>());
+
+	private static class ExtRegistryInfo {
+		public ExtRegistryInfo(
+			ServletContext servletContext, Set<String> fileNames) {
+
+			this._servletContext = servletContext;
+			this._fileNames = fileNames;
+		}
+
+		public Set<String> getFileNames() {
+			return _fileNames;
+		}
+
+		public ServletContext getServletContext() {
+			return _servletContext;
+		}
+
+		public void setFileNames(Set<String> fileNames) {
+			this._fileNames = fileNames;
+		}
+
+		public void setServletContext(ServletContext servletContext) {
+			this._servletContext = servletContext;
+		}
+
+		private Set<String> _fileNames;
+		private ServletContext _servletContext;
+	}
 
 }

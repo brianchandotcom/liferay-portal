@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.messaging.proxy.BaseProxyBean;
 import java.io.File;
 import java.io.InputStream;
 
+import java.util.List;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Edward Han
@@ -126,6 +128,17 @@ public class StoreProxyBean extends BaseProxyBean implements Store {
 
 	public long getFileSize(
 		long companyId, long repositoryId, String fileName) {
+
+		throw new UnsupportedOperationException();
+	}
+
+	public String[] getFileVersions(
+		long companyId, long repositoryId, String fileName) {
+
+		throw new UnsupportedOperationException();
+	}
+
+	public List<Long> getRepositoryIds(long companyId) {
 
 		throw new UnsupportedOperationException();
 	}

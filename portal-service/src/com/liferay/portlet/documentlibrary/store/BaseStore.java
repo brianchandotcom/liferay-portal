@@ -28,6 +28,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.List;
+
 /**
  * The abstract base class for all file store implementations. Most, if not all
  * implementations should extend this class.
@@ -373,7 +375,7 @@ public abstract class BaseStore implements Store {
 		throws PortalException, SystemException;
 
 	/**
-	 * Returns all files of the directory.
+	 * Returns all files of the directory, excluding sub-directories.
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  repositoryId the primary key of the data repository (optionally
@@ -400,6 +402,29 @@ public abstract class BaseStore implements Store {
 	 */
 	public abstract long getFileSize(
 			long companyId, long repositoryId, String fileName)
+		throws PortalException, SystemException;
+
+	/**
+	 * Returns a sorted array of the file's versions.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  repositoryId the primary key of the data repository
+	 * @param  fileName the file's name
+	 * @throws PortalException if the file's information was invalid
+	 * @throws SystemException if a system exception occurred
+	 */
+	public abstract String[] getFileVersions(
+			long companyId, long repositoryId, String fileName)
+		throws PortalException, SystemException;
+
+	/**
+	 * Returns the id's for each repository in a company.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @throws PortalException if the file's information was invalid
+	 * @throws SystemException if a system exception occurred
+	 */
+	public abstract List<Long> getRepositoryIds(long companyId)
 		throws PortalException, SystemException;
 
 	/**

@@ -196,6 +196,40 @@
 				[$FOLDER_ID$]
 		]]>
 	</sql>
+	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.findP_ByC_R_LikeP">
+		<![CDATA[
+			SELECT
+				DISTINCT path_
+			FROM
+				dlcontent
+			WHERE
+				(dlcontent.companyId = ?) AND
+				(dlcontent.repositoryId = ?) AND
+				(dlcontent.path_ LIKE ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.findR_ByCompanyId">
+		<![CDATA[
+			SELECT
+				DISTINCT repositoryId
+			FROM
+				dlcontent
+			WHERE
+				(dlcontent.companyId = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.findV_ByC_R_P">
+		<![CDATA[
+			SELECT
+				version
+			FROM
+				dlcontent
+			WHERE
+				(dlcontent.companyId = ?) AND
+				(dlcontent.repositoryId = ?) AND
+				(dlcontent.path_ = ?)
+		]]>
+	</sql>
 	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryTypeFinder.countByC_G_N_D_S">
 		<![CDATA[
 			SELECT

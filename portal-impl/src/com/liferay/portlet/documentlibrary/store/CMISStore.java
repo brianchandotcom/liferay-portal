@@ -25,12 +25,13 @@ import com.liferay.portal.repository.cmis.CMISRepositoryUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
-import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 import java.io.InputStream;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -248,30 +249,50 @@ public class CMISStore extends BaseStore {
 		return document.getContentStreamLength();
 	}
 
-	public String getHeadVersionLabel(
-			long companyId, long repositoryId, String dirName)
+	@Override
+	public String[] getFileVersions(
+			long companyId, long repositoryId, String fileName)
 		throws NoSuchFileException {
 
 		Folder versioningFolder = getVersioningFolder(
-			companyId, repositoryId, dirName, false);
+			companyId, repositoryId, fileName, false);
 
 		if (versioningFolder == null) {
 			throw new NoSuchFileException();
 		}
 
-		List<Folder> folders = getFolders(versioningFolder);
+		ItemIterable<CmisObject> cmisObjects = versioningFolder.getChildren();
 
-		String headVersionLabel = VERSION_DEFAULT;
+		int total = (int)cmisObjects.getTotalNumItems();
 
-		for (Folder folder : folders) {
-			String versionLabel = folder.getName();
+		String[] fileVersions = new String[total];
 
-			if (DLUtil.compareVersions(versionLabel, headVersionLabel) > 0) {
-				headVersionLabel = versionLabel;
-			}
+		Iterator<CmisObject> itr = cmisObjects.iterator();
+
+		for (int i = 0;itr.hasNext();i++) {
+			CmisObject cmisObject = itr.next();
+
+			fileVersions[i] = cmisObject.getName();
 		}
 
-		return headVersionLabel;
+		Arrays.sort(fileVersions);
+
+		return fileVersions;
+	}
+
+	@Override
+	public List<Long> getRepositoryIds(long companyId) {
+		List<Long> repositoryIds = new ArrayList();
+
+		Folder companyFolder = getCompanyFolder(companyId);
+
+		ItemIterable<CmisObject> cmisObjects = companyFolder.getChildren();
+
+		for (CmisObject cmisObject : cmisObjects) {
+			repositoryIds.add(Long.valueOf(cmisObject.getName()));
+		}
+
+		return repositoryIds;
 	}
 
 	@Override
@@ -494,6 +515,15 @@ public class CMISStore extends BaseStore {
 		}
 
 		return folders;
+	}
+
+	protected String getHeadVersionLabel(
+			long companyId, long repositoryId, String dirName)
+		throws NoSuchFileException {
+
+		String[] versions = getFileVersions(companyId, repositoryId, dirName);
+
+		return versions[versions.length - 1];
 	}
 
 	protected Folder getRepositoryFolder(long companyId, long repositoryId) {

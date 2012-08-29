@@ -173,6 +173,32 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 			companyId, repositoryId, dirName);
 	}
 
+	public List<String> getFileNames(
+			long companyId, long repositoryId, String dirName)
+		throws SystemException {
+
+		if (!dirName.endsWith(StringPool.SLASH) && (dirName.length() > 0)) {
+			dirName = dirName.concat(StringPool.SLASH);
+		}
+
+		dirName = dirName.concat(StringPool.PERCENT);
+
+		return dlFileEntryFinder.findPByC_R_LikeP(
+			companyId, repositoryId, dirName);
+	}
+
+	public List<String> getFileVersions(
+			long companyId, long repositoryId, String fileName)
+		throws SystemException {
+
+		return dlFileEntryFinder.findVByC_R_P(
+			companyId, repositoryId, fileName);
+	}
+
+	public List<Long> getRepositoryIds(long companyId) throws SystemException {
+		return dlFileEntryFinder.findRByCompanyId(companyId);
+	}
+
 	public boolean hasContent(
 			long companyId, long repositoryId, String path, String version)
 		throws SystemException {

@@ -21,8 +21,11 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.model.DLContent;
 import com.liferay.portlet.documentlibrary.service.DLContentLocalServiceUtil;
@@ -57,8 +60,7 @@ public class DBStore extends BaseStore {
 			long companyId, long repositoryId, String fileName, byte[] bytes)
 		throws PortalException, SystemException {
 
-		updateFile(
-			companyId, repositoryId, fileName, Store.VERSION_DEFAULT, bytes);
+		updateFile(companyId, repositoryId, fileName, VERSION_DEFAULT, bytes);
 	}
 
 	@Override
@@ -66,8 +68,7 @@ public class DBStore extends BaseStore {
 			long companyId, long repositoryId, String fileName, File file)
 		throws PortalException, SystemException {
 
-		updateFile(
-			companyId, repositoryId, fileName, Store.VERSION_DEFAULT, file);
+		updateFile(companyId, repositoryId, fileName, VERSION_DEFAULT, file);
 	}
 
 	@Override
@@ -77,8 +78,7 @@ public class DBStore extends BaseStore {
 		throws PortalException, SystemException {
 
 		updateFile(
-			companyId, repositoryId, fileName, Store.VERSION_DEFAULT,
-			inputStream);
+			companyId, repositoryId, fileName, VERSION_DEFAULT, inputStream);
 	}
 
 	@Override
@@ -216,18 +216,7 @@ public class DBStore extends BaseStore {
 	public String[] getFileNames(long companyId, long repositoryId)
 		throws SystemException {
 
-		List<DLContent> dlContents = DLContentLocalServiceUtil.getContents(
-			companyId, repositoryId);
-
-		String[] fileNames = new String[dlContents.size()];
-
-		for (int i = 0; i < dlContents.size(); i++) {
-			DLContent dlContent = dlContents.get(i);
-
-			fileNames[i] = dlContent.getPath();
-		}
-
-		return fileNames;
+		return getFileNames(companyId, repositoryId, StringPool.BLANK);
 	}
 
 	@Override
@@ -235,19 +224,22 @@ public class DBStore extends BaseStore {
 			long companyId, long repositoryId, String dirName)
 		throws SystemException {
 
-		List<DLContent> dlContents =
-			DLContentLocalServiceUtil.getContentsByDirectory(
-				companyId, repositoryId, dirName);
+		List<String> fileNames = DLContentLocalServiceUtil.getFileNames(
+			companyId, repositoryId, dirName);
 
-		String[] fileNames = new String[dlContents.size()];
+		for (int i = 0;i < fileNames.size();i++) {
+			String fileName = fileNames.get(i);
 
-		for (int i = 0; i < dlContents.size(); i++) {
-			DLContent dlContent = dlContents.get(i);
+			int x = fileName.indexOf(CharPool.SLASH, dirName.length() + 1);
 
-			fileNames[i] = dlContent.getPath();
+			if (x != -1) {
+				fileNames.set(i, fileName.substring(0, x));
+			}
 		}
 
-		return fileNames;
+		ListUtil.distinct(fileNames);
+
+		return fileNames.toArray(new String[fileNames.size()]);
 	}
 
 	@Override
@@ -258,6 +250,24 @@ public class DBStore extends BaseStore {
 			companyId, repositoryId, fileName);
 
 		return dlContent.getSize();
+	}
+
+	@Override
+	public String[] getFileVersions(
+			long companyId, long repositoryId, String fileName)
+		throws SystemException {
+
+		List<String> versionNames = DLContentLocalServiceUtil.getFileVersions(
+			companyId, repositoryId, fileName);
+
+		return versionNames.toArray(new String[versionNames.size()]);
+	}
+
+	@Override
+	public List<Long> getRepositoryIds(long companyId)
+		throws PortalException, SystemException {
+
+		return DLContentLocalServiceUtil.getRepositoryIds(companyId);
 	}
 
 	@Override

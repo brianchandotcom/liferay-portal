@@ -22,6 +22,8 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import java.io.File;
 import java.io.InputStream;
 
+import java.util.List;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Edward Han
@@ -302,6 +304,19 @@ public class SafeFileNameStoreWrapper implements Store {
 		}
 
 		return _store.getFileSize(companyId, repositoryId, safeFileName);
+	}
+
+	public String[] getFileVersions(
+			long companyId, long repositoryId, String fileName)
+		throws PortalException, SystemException {
+
+		return _store.getFileVersions(companyId, repositoryId, fileName);
+	}
+
+	public List<Long> getRepositoryIds(long companyId)
+		throws PortalException, SystemException {
+
+		return _store.getRepositoryIds(companyId);
 	}
 
 	public boolean hasDirectory(

@@ -78,12 +78,7 @@ AUI.add(
 				}
 
 				if (buffer[0] != '.none') {
-					if (delimeter) {
-						selectList = buffer.join(delimeter);
-					}
-					else {
-						selectList = buffer.join();
-					}
+					selectList = buffer.join(delimeter || ',');
 				}
 			}
 

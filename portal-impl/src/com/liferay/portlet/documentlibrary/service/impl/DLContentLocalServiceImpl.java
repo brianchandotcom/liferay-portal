@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.documentlibrary.NoSuchContentException;
 import com.liferay.portlet.documentlibrary.model.DLContent;
 import com.liferay.portlet.documentlibrary.service.base.DLContentLocalServiceBaseImpl;
@@ -177,7 +178,9 @@ public class DLContentLocalServiceImpl extends DLContentLocalServiceBaseImpl {
 			long companyId, long repositoryId, String dirName)
 		throws SystemException {
 
-		if (!dirName.endsWith(StringPool.SLASH) && (dirName.length() > 0)) {
+		if (Validator.isNotNull(dirName) &&
+			!dirName.endsWith(StringPool.SLASH)) {
+
 			dirName = dirName.concat(StringPool.SLASH);
 		}
 

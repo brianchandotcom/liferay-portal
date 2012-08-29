@@ -620,6 +620,20 @@ public abstract class BaseStore implements Store {
 		deleteFile(companyId, repositoryId, fileName, fromVersionLabel);
 	}
 
+	protected String getHeadVersionLabel(
+			long companyId, long repositoryId, String fileName)
+		throws PortalException, SystemException {
+
+		String[] versions = getFileVersions(companyId, repositoryId, fileName);
+
+		if (versions.length > 0) {
+			return versions[versions.length - 1];
+		}
+		else {
+			throw new NoSuchFileException(fileName);
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(BaseStore.class);
 
 }

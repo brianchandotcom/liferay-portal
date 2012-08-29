@@ -488,7 +488,7 @@ public class JCRStore extends BaseStore {
 				String primaryNodeTypeName = primaryNodeType.getName();
 
 				if (primaryNodeTypeName.equals(JCRConstants.NT_FILE) ||
-						primaryNodeTypeName.equals(JCRConstants.NT_FOLDER)) {
+					primaryNodeTypeName.equals(JCRConstants.NT_FOLDER)) {
 
 					fileNames.add(node.getName());
 				}
@@ -532,7 +532,7 @@ public class JCRStore extends BaseStore {
 				String primaryNodeTypeName = primaryNodeType.getName();
 
 				if (primaryNodeTypeName.equals(JCRConstants.NT_FILE) ||
-						primaryNodeTypeName.equals(JCRConstants.NT_FOLDER)) {
+					primaryNodeTypeName.equals(JCRConstants.NT_FOLDER)) {
 
 					fileNames.add(dirName + "/" + node.getName());
 				}

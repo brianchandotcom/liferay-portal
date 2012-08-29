@@ -23,9 +23,9 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.model.DLContent;
 import com.liferay.portlet.documentlibrary.service.DLContentLocalServiceUtil;
@@ -224,20 +224,19 @@ public class DBStore extends BaseStore {
 			long companyId, long repositoryId, String dirName)
 		throws SystemException {
 
-		List<String> fileNames = DLContentLocalServiceUtil.getFileNames(
-			companyId, repositoryId, dirName);
+		List<String> fileNames = new UniqueList<String>();
 
-		for (int i = 0;i < fileNames.size();i++) {
-			String fileName = fileNames.get(i);
+		List<String> repositoryFileNames =
+			DLContentLocalServiceUtil.getFileNames(
+				companyId, repositoryId, dirName);
 
-			int x = fileName.indexOf(CharPool.SLASH, dirName.length() + 1);
+		for (String fileName : repositoryFileNames) {
+			int pos = fileName.indexOf(CharPool.SLASH, dirName.length() + 1);
 
-			if (x != -1) {
-				fileNames.set(i, fileName.substring(0, x));
+			if (pos != -1) {
+				fileNames.add(fileName);
 			}
 		}
-
-		ListUtil.distinct(fileNames);
 
 		return fileNames.toArray(new String[fileNames.size()]);
 	}

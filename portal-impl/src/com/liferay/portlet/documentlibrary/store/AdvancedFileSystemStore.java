@@ -51,11 +51,13 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 		String[] fileVersions = super.getFileVersions(
 			companyId, repositoryId, fileName);
 
-		for (int i = 0;i < fileVersions.length;i++) {
-			int x = fileVersions[i].lastIndexOf(CharPool.UNDERLINE);
-			int y = fileVersions[i].lastIndexOf(CharPool.PERIOD);
+		for (int i = 0; i < fileVersions.length; i++) {
+			String fileVersion = fileVersions[i];
 
-			fileVersions[i] = fileVersions[i].substring(x + 1, y);
+			int x = fileVersion.lastIndexOf(CharPool.UNDERLINE);
+			int y = fileVersion.lastIndexOf(CharPool.PERIOD);
+
+			fileVersions[i] = fileVersion.substring(x + 1, y);
 		}
 
 		return fileVersions;
@@ -231,16 +233,6 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 				fileNameDir + StringPool.SLASH + fileNameFragment +
 					StringPool.UNDERLINE + version + ext);
 		}
-	}
-
-	@Override
-	protected String getHeadVersionLabel(
-			long companyId, long repositoryId, String fileName)
-		throws NoSuchDirectoryException {
-
-		String versions[] = getFileVersions(companyId, repositoryId, fileName);
-
-		return versions[versions.length - 1];
 	}
 
 	private static final String _HOOK_EXTENSION = "afsh";

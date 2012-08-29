@@ -139,7 +139,6 @@ public class StoreProxyBean extends BaseProxyBean implements Store {
 	}
 
 	public List<Long> getRepositoryIds(long companyId) {
-
 		throw new UnsupportedOperationException();
 	}
 

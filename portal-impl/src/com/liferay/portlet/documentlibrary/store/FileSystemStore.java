@@ -17,6 +17,7 @@ package com.liferay.portlet.documentlibrary.store;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
@@ -178,7 +179,7 @@ public class FileSystemStore extends BaseStore {
 	public File getFile(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)
-		throws PortalException {
+		throws PortalException, SystemException {
 
 		if (Validator.isNull(versionLabel)) {
 			versionLabel = getHeadVersionLabel(
@@ -199,7 +200,7 @@ public class FileSystemStore extends BaseStore {
 	public InputStream getFileAsStream(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)
-		throws PortalException {
+		throws PortalException, SystemException {
 
 		if (Validator.isNull(versionLabel)) {
 			versionLabel = getHeadVersionLabel(
@@ -232,10 +233,10 @@ public class FileSystemStore extends BaseStore {
 
 		if (!file.exists()) {
 			file = getFileNameDir(companyId, repositoryId, dirName);
+		}
 
-			if (!file.exists()) {
-				throw new NoSuchDirectoryException(file.getPath());
-			}
+		if (!file.exists()) {
+			throw new NoSuchDirectoryException(file.getPath());
 		}
 
 		String[] fileNames = FileUtil.listDirs(file);
@@ -253,7 +254,7 @@ public class FileSystemStore extends BaseStore {
 
 	@Override
 	public long getFileSize(long companyId, long repositoryId, String fileName)
-		throws PortalException {
+		throws PortalException, SystemException {
 
 		String versionLabel = getHeadVersionLabel(
 			companyId, repositoryId, fileName);
@@ -295,7 +296,7 @@ public class FileSystemStore extends BaseStore {
 		String[] repositoryNames = FileUtil.listDirs(companyFolder);
 
 		for (String repositoryName : repositoryNames) {
-			repositoryIds.add(Long.valueOf(repositoryName));
+			repositoryIds.add(GetterUtil.getLong(repositoryName));
 		}
 
 		return repositoryIds;
@@ -498,15 +499,6 @@ public class FileSystemStore extends BaseStore {
 			fileNameDir + StringPool.SLASH + version);
 
 		return fileNameVersionFile;
-	}
-
-	protected String getHeadVersionLabel(
-			long companyId, long repositoryId, String fileName)
-		throws NoSuchDirectoryException {
-
-		String[] versions = getFileVersions(companyId, repositoryId, fileName);
-
-		return versions[versions.length - 1];
 	}
 
 	protected File getRepositoryDir(long companyId, long repositoryId) {

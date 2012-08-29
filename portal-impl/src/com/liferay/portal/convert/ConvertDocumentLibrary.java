@@ -105,20 +105,19 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 	}
 
 	protected void migrateDirectories(
-		long companyId, long repositoryId, String[] paths) throws Exception {
+		long companyId, long repositoryId, String[] dirNames) throws Exception {
 
-		for (String path : paths) {
-			String[] subDirectories = _sourceStore.getFileNames(
-				companyId, repositoryId, path);
+		for (String dirName : dirNames) {
+			String[] subDirNames = _sourceStore.getFileNames(
+				companyId, repositoryId, dirName);
 
-			if (subDirectories.length == 0) {
-				String newPath = unBuildAdvancedPath(
-					companyId, repositoryId, path);
+			if (_sourceStore instanceof AdvancedFileSystemStore) {
+				String path = unbuildPath(companyId, repositoryId, dirName);
 
-				migrateFile(companyId, repositoryId, path, newPath);
+				migrateFile(companyId, repositoryId, dirName, path);
 			}
 			else {
-				migrateDirectories(companyId, repositoryId, subDirectories);
+				migrateDirectories(companyId, repositoryId, subDirNames);
 			}
 		}
 	}
@@ -127,19 +126,19 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 		long companyId, long repositoryId, String oldPath, String newPath) {
 
 		try {
-			String[] versions = _sourceStore.getFileVersions(
+			String[] fileVersions = _sourceStore.getFileVersions(
 				companyId, repositoryId, oldPath);
 
-			for (String version : versions) {
+			for (String fileVersion : fileVersions) {
 				InputStream is = _sourceStore.getFileAsStream(
-					companyId, repositoryId, oldPath, version);
+					companyId, repositoryId, oldPath, fileVersion);
 
-				if (version.equals(Store.VERSION_DEFAULT)) {
+				if (fileVersion.equals(Store.VERSION_DEFAULT)) {
 					_targetStore.addFile(companyId, repositoryId, newPath, is);
 				}
 				else {
 					_targetStore.updateFile(
-						companyId, repositoryId, newPath, version, is);
+						companyId, repositoryId, newPath, fileVersion, is);
 				}
 			}
 		}
@@ -149,8 +148,8 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 	}
 
 	protected void migrateStore() throws Exception {
-
 		long[] companyIds = PortalUtil.getCompanyIds();
+
 		companyIds = ArrayUtil.append(companyIds, CompanyConstants.SYSTEM);
 
 		for (long companyId : companyIds) {
@@ -165,22 +164,21 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 		}
 	}
 
-	protected String unBuildAdvancedPath(
+	protected String unbuildPath(
 		long companyId, long repositoryId, String path) {
 
 		if (companyId != CompanyConstants.SYSTEM) {
 			if (repositoryId == CompanyConstants.SYSTEM) {
 				return path;
 			}
-			else {
-				path = FileUtil.stripExtension(path);
-			}
+
+			path = FileUtil.stripExtension(path);
 		}
 
-		int x = path.lastIndexOf(CharPool.SLASH);
+		int pos = path.lastIndexOf(CharPool.SLASH);
 
-		if (x > 0) {
-			path = path.substring(x);
+		if (pos > 0) {
+			path = path.substring(pos);
 		}
 
 		return path;

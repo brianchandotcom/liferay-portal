@@ -22,13 +22,14 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.SortedArrayList;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SystemProperties;
+import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.util.PropsUtil;
-import com.liferay.portlet.documentlibrary.NoSuchFileException;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -181,17 +182,17 @@ public class S3Store extends BaseStore {
 	public String[] getFileNames(long companyId, long repositoryId)
 		throws SystemException {
 
-		List<String> fileKeys = getFolderKeys(getKey(companyId, repositoryId));
+		List<String> fileNames = new UniqueList<String>();
 
-		for (int i = 0;i < fileKeys.size();i++) {
-			String fileName = getFileName(fileKeys.get(i));
+		String key = getKey(companyId, repositoryId);
 
-			fileKeys.set(i, fileName);
+		for (String folderKey : getFolderKeys(key)) {
+			String fileName = getFileName(folderKey);
+
+			fileNames.add(fileName);
 		}
 
-		ListUtil.distinct(fileKeys);
-
-		return fileKeys.toArray(new String[fileKeys.size()]);
+		return fileNames.toArray(new String[fileNames.size()]);
 	}
 
 	@Override
@@ -199,29 +200,29 @@ public class S3Store extends BaseStore {
 			long companyId, long repositoryId, String dirName)
 		throws SystemException {
 
-		List<String> fileKeys = getFolderKeys(
-			getKey(companyId, repositoryId, dirName));
+		List<String> fileNames = new UniqueList<String>();
 
-		for (int i = 0; i < fileKeys.size(); i++) {
-			String fileName = fileKeys.get(i);
+		String key = getKey(companyId, repositoryId, dirName);
+
+		for (String folderKey : getFolderKeys(key)) {
 
 			// Convert /${companyId}/${repositoryId}/${dirName}/${fileName}
 			// /${versionLabel} to /${dirName}/${fileName}
 
-			int x = fileName.indexOf(CharPool.SLASH);
+			int x = folderKey.indexOf(CharPool.SLASH);
 
-			x = fileName.indexOf(CharPool.SLASH, x + 1);
+			x = folderKey.indexOf(CharPool.SLASH, x + 1);
 
-			int y = fileName.indexOf(CharPool.SLASH, x + dirName.length() + 1);
+			int y = folderKey.indexOf(CharPool.SLASH, x + dirName.length() + 1);
 
-			y = fileName.indexOf(CharPool.SLASH, y + 1);
+			y = folderKey.indexOf(CharPool.SLASH, y + 1);
 
-			fileKeys.set(i, fileName.substring(x + 1, y));
+			String fileName = folderKey.substring(x + 1, y);
+
+			fileNames.add(fileName);
 		}
 
-		ListUtil.distinct(fileKeys);
-
-		return fileKeys.toArray(new String[fileKeys.size()]);
+		return fileNames.toArray(new String[fileNames.size()]);
 	}
 
 	@Override
@@ -249,14 +250,14 @@ public class S3Store extends BaseStore {
 		throws SystemException {
 
 		try {
-			List<String> fileVersions = new ArrayList<String>();
+			List<String> fileVersions = new SortedArrayList<String>();
+
+			String key = getKey(companyId, repositoryId, fileName);
 
 			S3Object[] s3Objects = _s3Service.listObjects(
-				_s3Bucket.getName(), getKey(companyId, repositoryId, fileName),
-				null);
+				_s3Bucket.getName(), key, null);
 
-			for (int i = 0;i < s3Objects.length;i++) {
-				S3Object s3Object = s3Objects[i];
+			for (S3Object s3Object : s3Objects) {
 
 				// Convert /${companyId}/${repositoryId}/${dirName}/${fileName}
 				// /${versionLabel} to /${versionLabel}
@@ -268,8 +269,6 @@ public class S3Store extends BaseStore {
 				fileVersions.add(versionKey.substring(x + 1));
 			}
 
-			ListUtil.sort(fileVersions);
-
 			return fileVersions.toArray(new String[fileVersions.size()]);
 		}
 		catch (S3ServiceException s3se) {
@@ -279,8 +278,8 @@ public class S3Store extends BaseStore {
 
 	@Override
 	public List<Long> getRepositoryIds(long companyId) throws SystemException {
-
-		List<String> repositoryKeys = getFolderKeys(getKey(companyId));
+		List<String> repositoryKeys = getFolderKeys(
+			companyId + StringPool.SLASH);
 
 		List<Long> repositoryIds = new ArrayList();
 
@@ -520,29 +519,6 @@ public class S3Store extends BaseStore {
 		catch (ServiceException se) {
 			throw new SystemException(se);
 		}
-	}
-
-	protected String getHeadVersionLabel(
-			long companyId, long repositoryId, String fileName)
-		throws PortalException, SystemException {
-
-		String[] versions = getFileVersions(companyId, repositoryId, fileName);
-
-		if (versions.length > 0) {
-			return versions[versions.length - 1];
-		}
-		else {
-			throw new NoSuchFileException(fileName);
-		}
-	}
-
-	protected String getKey(long companyId) {
-		StringBundler sb = new StringBundler(2);
-
-		sb.append(companyId);
-		sb.append(StringPool.SLASH);
-
-		return sb.toString();
 	}
 
 	protected String getKey(long companyId, long repositoryId) {

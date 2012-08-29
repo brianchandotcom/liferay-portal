@@ -157,7 +157,7 @@ public abstract class BaseWorkflowHandler implements WorkflowHandler {
 		throws PortalException, SystemException {
 
 		return WorkflowDefinitionLinkLocalServiceUtil.getWorkflowDefinitionLink(
-			companyId, groupId, getClassName(), classPK, 0);
+			companyId, groupId, getClassName(), 0, 0);
 	}
 
 	public boolean isAssetTypeSearchable() {

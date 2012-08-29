@@ -343,6 +343,24 @@ public class DLContentLocalServiceUtil {
 				   .getContentsByDirectory(companyId, repositoryId, dirName);
 	}
 
+	public static java.util.List<java.lang.String> getFileNames(
+		long companyId, long repositoryId, java.lang.String dirName)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getFileNames(companyId, repositoryId, dirName);
+	}
+
+	public static java.util.List<java.lang.String> getFileVersions(
+		long companyId, long repositoryId, java.lang.String fileName)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getFileVersions(companyId, repositoryId, fileName);
+	}
+
+	public static java.util.List<java.lang.Long> getRepositoryIds(
+		long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getRepositoryIds(companyId);
+	}
+
 	public static boolean hasContent(long companyId, long repositoryId,
 		java.lang.String path, java.lang.String version)
 		throws com.liferay.portal.kernel.exception.SystemException {

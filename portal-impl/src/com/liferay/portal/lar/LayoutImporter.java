@@ -188,11 +188,30 @@ public class LayoutImporter {
 			}
 		}
 
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		Set<Long> existLayoutIds = new HashSet<Long>();
+
+		if (group.hasStagingGroup()) {
+			Group stagingGroup = group.getStagingGroup();
+
+			if (stagingGroup.hasPrivateLayouts() ||
+				stagingGroup.hasPublicLayouts()) {
+
+				List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
+					stagingGroup.getGroupId(), privateLayout);
+
+				for (Layout layout : layouts) {
+					existLayoutIds.add(layout.getLayoutId());
+				}
+			}
+		}
+
 		for (Layout layout : previousLayouts) {
-			if (!newLayoutIds.contains(layout.getLayoutId())) {
+			if (!existLayoutIds.contains(layout.getLayoutId())) {
 				try {
 					LayoutLocalServiceUtil.deleteLayout(
-						layout, false, serviceContext);
+						layout, privateLayout, serviceContext);
 				}
 				catch (NoSuchLayoutException nsle) {
 				}

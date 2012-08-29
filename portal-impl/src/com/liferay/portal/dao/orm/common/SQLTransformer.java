@@ -414,7 +414,7 @@ public class SQLTransformer {
 	private static Pattern _modPattern = Pattern.compile(
 		"MOD\\((.+?),(.+?)\\)", Pattern.CASE_INSENSITIVE);
 	private static Pattern _negativeComparisonPattern = Pattern.compile(
-		"(!=)?( -([0-9]+)?)", Pattern.CASE_INSENSITIVE);
+		"(!?=)( -([0-9]+)?)", Pattern.CASE_INSENSITIVE);
 	private static Pattern _unionAllPattern = Pattern.compile(
 		"SELECT \\* FROM(.*)TEMP_TABLE(.*)", Pattern.CASE_INSENSITIVE);
 

@@ -37,10 +37,21 @@ import javax.servlet.ServletContext;
  */
 public class ExtRegistry {
 
+	public static final List<String> EXT_PLUGIN_JARS_GLOBAL_CL =
+		Arrays.asList(new String[] {
+			"ext-service"
+		});
+
+	public static final List<String> EXT_PLUGIN_JARS_PORTAL_CL =
+		Arrays.asList(new String[] {
+			"ext-impl", "ext-util-bridges", "ext-util-java", "ext-util-taglib"
+		});
+
 	public static final List<String> IGNORED_FILES =
 		Arrays.asList(new String[] {
 			"log4j.dtd", "service.xml", "sql"+File.separator
 		});
+
 	public static final List<String> SUPPORTED_MERGING_FILES =
 		Arrays.asList(new String[] {
 			"ext-model-hints.xml", "ext-spring.xml", "ext-hbm.xml",
@@ -179,6 +190,10 @@ public class ExtRegistry {
 					servletContextName, new ExtRegistryInfo(null, files));
 			}
 		}
+	}
+
+	public static void unregisterExt(String servletContextName) {
+		_extMap.remove(servletContextName);
 	}
 
 	public static void updateRegisteredServletContext(

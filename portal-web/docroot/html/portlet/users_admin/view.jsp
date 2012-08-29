@@ -34,6 +34,11 @@ if (Validator.isNotNull(viewUsersRedirect)) {
 pageContext.setAttribute("portletURL", portletURL);
 
 String portletURLString = portletURL.toString();
+
+String status = ParamUtil.getString(request, "status", "active");
+
+int inactiveUsersCount = 0;
+int usersCount = 0;
 %>
 
 <liferay-ui:error exception="<%= RequiredOrganizationException.class %>" message="you-cannot-delete-organizations-that-have-suborganizations-or-users" />
@@ -152,6 +157,17 @@ String portletURLString = portletURL.toString();
 		document.<portlet:namespace />fm.method = "get";
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "";
 		submitForm(document.<portlet:namespace />fm, '<%= portletURLString %>');
+	}
+
+	function <portlet:namespace />showUsers(field) {
+
+		<%
+		String showUsersURL = currentURL.replaceAll("_status=(active|inactive)", "");
+
+		showUsersURL = showUsersURL + StringPool.AMPERSAND + renderResponse.getNamespace() + "status=";
+		%>
+
+		location.href = "<%= showUsersURL %>" + field.value;
 	}
 
 	Liferay.provide(

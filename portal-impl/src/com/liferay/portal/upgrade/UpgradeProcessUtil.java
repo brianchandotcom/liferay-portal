@@ -28,11 +28,11 @@ import com.liferay.portal.util.PropsValues;
  */
 public class UpgradeProcessUtil {
 
-	public static boolean getCreateIGImageDocumentType () {
+	public static boolean getCreateIGImageDocumentType() {
 		return _createIGImageDocumentType;
 	}
 
-	public static void setCreateIGImageDocumentType (
+	public static void setCreateIGImageDocumentType(
 		boolean createIGImageDocumentType) {
 
 		_createIGImageDocumentType = createIGImageDocumentType;

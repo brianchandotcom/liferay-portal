@@ -775,7 +775,6 @@ public class UpgradeImageGallery extends UpgradeProcess {
 					fileEntryTypeId, "1.0", size, 0, userId, userName,
 					modifiedDate);
 			}
-
 		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);

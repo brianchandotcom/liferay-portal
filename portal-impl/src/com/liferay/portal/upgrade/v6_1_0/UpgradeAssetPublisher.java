@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
@@ -119,8 +118,8 @@ public class UpgradeAssetPublisher extends BaseUpgradePortletPreferences {
 			portletPreferences.setValue(
 				"anyClassTypeDLFileEntryAssetRendererFactory",
 				String.valueOf(fileEntryTypeId));
-			portletPreferences.setValue("classTypeIds",
-				String.valueOf(fileEntryTypeId));
+			portletPreferences.setValue(
+				"classTypeIds", String.valueOf(fileEntryTypeId));
 
 		}
 

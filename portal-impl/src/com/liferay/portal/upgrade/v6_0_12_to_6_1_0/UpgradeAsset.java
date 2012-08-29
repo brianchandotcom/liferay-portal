@@ -109,7 +109,8 @@ public class UpgradeAsset extends UpgradeProcess {
 
 			updateIGImageClassNameClassTypeId();
 
-		} else {
+		}
+		else {
 			updateIGImageClassNameNotClassTypeId();
 		}
 	}
@@ -155,7 +156,6 @@ public class UpgradeAsset extends UpgradeProcess {
 
 				runSQL(sb.toString());
 			}
-
 		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
@@ -164,7 +164,7 @@ public class UpgradeAsset extends UpgradeProcess {
 
 	protected void updateIGImageClassNameNotClassTypeId() throws Exception {
 		long dlFileEntryClassNameId = PortalUtil.getClassNameId(
-				DLFileEntry.class.getName());
+			DLFileEntry.class.getName());
 		long igImageClassNameId = PortalUtil.getClassNameId(
 			"com.liferay.portlet.imagegallery.model.IGImage");
 

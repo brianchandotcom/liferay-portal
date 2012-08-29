@@ -14,7 +14,6 @@
 
 package com.liferay.portal.upgrade.v6_1_0;
 
-import com.liferay.portal.events.BaseDefaultDDMStructureAction;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -24,7 +23,6 @@ import com.liferay.portal.upgrade.UpgradeProcessUtil;
 import com.liferay.portal.upgrade.v6_1_0.util.AssetEntryTable;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.journal.model.JournalArticle;
@@ -122,8 +120,8 @@ public class UpgradeAsset extends UpgradeProcess {
 			UpgradeProcessUtil.setCreateIGImageDocumentType(true);
 
 			updateIGImageClassNameClassTypeId();
-
-		} else {
+		}
+		else {
 			updateIGImageClassNameNotClassTypeId();
 		}
 	}
@@ -169,7 +167,6 @@ public class UpgradeAsset extends UpgradeProcess {
 
 				runSQL(sb.toString());
 			}
-
 		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
@@ -178,7 +175,7 @@ public class UpgradeAsset extends UpgradeProcess {
 
 	protected void updateIGImageClassNameNotClassTypeId() throws Exception {
 		long dlFileEntryClassNameId = PortalUtil.getClassNameId(
-				DLFileEntry.class.getName());
+			DLFileEntry.class.getName());
 		long igImageClassNameId = PortalUtil.getClassNameId(
 			"com.liferay.portlet.imagegallery.model.IGImage");
 

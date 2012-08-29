@@ -96,6 +96,7 @@ public class ViewMicroblogsTimelineTest extends BaseTestCase {
 			Thread.sleep(1000);
 		}
 
+		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Joe Bloggs says"),
 			selenium.getText("xPath=(//div[@class='user-name'])[1]"));
 		assertEquals(RuntimeVariables.replace("Microblogs Post"),

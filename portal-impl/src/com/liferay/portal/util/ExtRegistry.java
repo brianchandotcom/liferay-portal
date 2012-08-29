@@ -14,8 +14,6 @@
 
 package com.liferay.portal.util;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -46,7 +44,8 @@ public class ExtRegistry {
 	public static final List<String> SUPPORTED_MERGING_FILES =
 		Arrays.asList(new String[] {
 			"ext-model-hints.xml", "ext-spring.xml", "ext-hbm.xml",
-			"portal-log4j-ext.xml", "content/Language-ext"
+			"portal-log4j-ext.xml", "content/Language-ext",
+			"portal-ext.properties"
 		});
 
 	public static Map<String, Set<String>> getConflicts(
@@ -60,9 +59,11 @@ public class ExtRegistry {
 
 		Map<String, Set<String>> conflicts = new HashMap<String, Set<String>>();
 
-		for (Map.Entry<String, Set<String>> entry : _extMap.entrySet()) {
-			String curServletContextName = entry.getKey();
-			Set<String> curFiles = entry.getValue();
+		for (String curServletContextName : _extMap.keySet()) {
+			ExtRegistryInfo extRegistryInfo = _extMap.get(
+				curServletContextName);
+
+			Set<String> curFiles = extRegistryInfo.getFiles();
 
 			for (String file : files) {
 				if (!curFiles.contains(file)) {
@@ -87,6 +88,19 @@ public class ExtRegistry {
 
 	public static Set<String> getServletContextNames() {
 		return Collections.unmodifiableSet(_extMap.keySet());
+	}
+
+	public static Set<ServletContext> getServletContexts() {
+		Set<ServletContext> result = new HashSet<ServletContext>(
+			_extMap.size());
+
+		for (ExtRegistryInfo info : _extMap.values()) {
+			if (info.getServletContext() != null) {
+				result.add(info.getServletContext());
+			}
+		}
+
+		return Collections.unmodifiableSet(result);
 	}
 
 	public static boolean isIgnoredFile(String name) {
@@ -130,7 +144,8 @@ public class ExtRegistry {
 		Set<String> files = _readExtFiles(
 			servletContext, "/WEB-INF/ext-" + servletContextName + ".xml");
 
-		_extMap.put(servletContextName, files);
+		_extMap.put(
+			servletContextName, new ExtRegistryInfo(servletContext, files));
 	}
 
 	public static void registerPortal(ServletContext servletContext)
@@ -151,8 +166,17 @@ public class ExtRegistry {
 
 				Set<String> files = _readExtFiles(servletContext, resourcePath);
 
-				_extMap.put(servletContextName, files);
+				_extMap.put(
+					servletContextName, new ExtRegistryInfo(null, files));
 			}
+		}
+	}
+
+	public static void updateRegisteredServletContext(
+		String servletContextName, ServletContext ctx) {
+
+		if (isRegistered(servletContextName)) {
+			_extMap.get(servletContextName).setServletContext(ctx);
 		}
 	}
 
@@ -181,7 +205,36 @@ public class ExtRegistry {
 		return files;
 	}
 
-	private static Map<String, Set<String>> _extMap =
-		new HashMap<String, Set<String>>();
+	private static Map<String, ExtRegistryInfo> _extMap =
+		Collections.synchronizedMap(new HashMap<String, ExtRegistryInfo>());
+
+	private static class ExtRegistryInfo {
+
+		public ExtRegistryInfo(
+			ServletContext servletContext, Set<String> files) {
+
+			this.servletContext = servletContext;
+			this.files = files;
+		}
+
+		public Set<String> getFiles() {
+			return files;
+		}
+
+		public ServletContext getServletContext() {
+			return servletContext;
+		}
+
+		public void setFiles(Set<String> files) {
+			this.files = files;
+		}
+
+		public void setServletContext(ServletContext servletContext) {
+			this.servletContext = servletContext;
+		}
+
+		private Set<String> files;
+		private ServletContext servletContext;
+	}
 
 }

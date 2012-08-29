@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.servlet.WebDirDetector;
 import com.liferay.portal.kernel.servlet.taglib.FileAvailabilityUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -37,13 +38,22 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 
+import java.net.URL;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.ServletContext;
 
+import org.apache.commons.configuration.PropertiesConfiguration;
+
 /**
  * @author Brian Wing Shun Chan
+ * @author Tomas Polesovsky
  */
 public class ExtHotDeployListener extends BaseHotDeployListener {
 
@@ -118,6 +128,9 @@ public class ExtHotDeployListener extends BaseHotDeployListener {
 		}
 
 		if (ExtRegistry.isRegistered(servletContextName)) {
+			ExtRegistry.updateRegisteredServletContext(
+				servletContextName, servletContext);
+
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					"Extension environment for " + servletContextName +
@@ -179,12 +192,9 @@ public class ExtHotDeployListener extends BaseHotDeployListener {
 			_log.debug("Invoking undeploy for " + servletContextName);
 		}
 
-		String xml = HttpUtil.URLtoString(
-			servletContext.getResource(
-				"/WEB-INF/ext-" + servletContextName + ".xml"));
-
-		if (xml == null) {
-			return;
+		if (ExtRegistry.isRegistered(servletContextName)) {
+			ExtRegistry.updateRegisteredServletContext(
+				servletContextName, null);
 		}
 
 		if (_log.isInfoEnabled()) {
@@ -215,13 +225,17 @@ public class ExtHotDeployListener extends BaseHotDeployListener {
 
 		CopyTask.copyDirectory(
 			pluginWebDir + "WEB-INF/ext-web/docroot", portalWebDir,
-			StringPool.BLANK, "**/WEB-INF/web.xml", true, false);
+			StringPool.BLANK,
+			"**/WEB-INF/web.xml,**/WEB-INF/classes/portal-ext.properties", true,
+			false);
 
 		FileUtil.copyFile(
 			pluginWebDir + "WEB-INF/ext-" + servletContextName + ".xml",
 			portalWebDir + "WEB-INF/ext-" + servletContextName + ".xml");
 
 		ExtRegistry.registerExt(servletContext);
+
+		rebuildPortalExtPluginProperties();
 	}
 
 	protected void mergeWebXml(String portalWebDir, String pluginWebDir) {
@@ -251,6 +265,100 @@ public class ExtHotDeployListener extends BaseHotDeployListener {
 			tmpWebXml, new File(portalWebDir + "WEB-INF"), true, true);
 
 		FileUtil.deltree(tmpDir);
+	}
+
+	protected void rebuildPortalExtPluginProperties() throws Exception {
+		File extPluginPropsFile = new File(
+			PortalUtil.getPortalWebDir() + "WEB-INF/classes/" +
+				"portal-ext-plugin.properties");
+
+		extPluginPropsFile.delete();
+		extPluginPropsFile.createNewFile();
+
+		Set<ServletContext> ctxs = ExtRegistry.getServletContexts();
+
+		// sort by name so changes are applied in the right order
+		List<ServletContext> ctxsList = ListUtil.fromCollection(ctxs);
+		ListUtil.sort(ctxsList, new Comparator<ServletContext>() {
+			public int compare(ServletContext o1, ServletContext o2) {
+				return o1.getServletContextName().compareTo(
+					o2.getServletContextName());
+			}
+		});
+
+		for (ServletContext servletContext : ctxsList) {
+			URL pluginPropsURL = servletContext.getResource(
+				"WEB-INF/ext-web/docroot/WEB-INF/classes/" +
+					"portal-ext.properties");
+
+			if (pluginPropsURL == null) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Ext Plugin's portal-ext.properties not found");
+				}
+
+				return;
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Loading portal-ext.properties from " +
+					pluginPropsURL);
+			}
+
+			rebuildPortalExtPluginProperties(pluginPropsURL);
+		}
+	}
+
+	private void rebuildPortalExtPluginProperties(URL pluginPropsURL)
+		throws Exception {
+
+		PropertiesConfiguration pluginProps =
+			new PropertiesConfiguration(pluginPropsURL);
+
+		PropertiesConfiguration portalProps = new PropertiesConfiguration(
+			this.getClass().getClassLoader().getResource("portal.properties"));
+
+		File extPluginPropsFile = new File(
+			PortalUtil.getPortalWebDir() + "WEB-INF/classes/" +
+				"portal-ext-plugin.properties");
+
+		PropertiesConfiguration extPluginPortalProps =
+			new PropertiesConfiguration();
+
+		if (extPluginPropsFile.exists()) {
+			extPluginPortalProps.load(extPluginPropsFile);
+		}
+
+		for (Iterator it = pluginProps.getKeys(); it.hasNext();) {
+			String key = (String) it.next();
+			List value = pluginProps.getList(key);
+
+			if (key.endsWith(StringPool.PLUS)) {
+				// merging values with existing ones, appending to end
+				key = key.substring(0, key.length() - 1);
+				List existingValues = null;
+
+				if (extPluginPortalProps.containsKey(key)) {
+					// already changed by another ext plugin
+					existingValues = extPluginPortalProps.getList(key);
+				} else {
+					existingValues = portalProps.getList(key);
+				}
+
+				if (existingValues != null) {
+					List newValue =
+						new ArrayList(existingValues.size() + value.size());
+
+					newValue.addAll(existingValues);
+					newValue.addAll(value);
+
+					value = newValue;
+				}
+			}
+
+			extPluginPortalProps.setProperty(key, value);
+		}
+
+		extPluginPortalProps.save(extPluginPropsFile);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(ExtHotDeployListener.class);

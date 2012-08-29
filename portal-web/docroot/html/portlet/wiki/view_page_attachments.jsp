@@ -117,12 +117,16 @@ for (int i = 0; i < results.size(); i++) {
 
 	// File name
 
+	if (viewTrashAttachments) {
+		shortFileName = DLAppUtil.stripTrashNamespace(shortFileName, TrashUtil.TRASH_TIME_SEPARATOR);
+	}
+
 	StringBundler sb = new StringBundler(6);
 
 	sb.append("<img align=\"left\" border=\"0\" src=\"");
 	sb.append(themeDisplay.getPathThemeImages());
 	sb.append("/file_system/small/");
-	sb.append(DLUtil.getFileIcon(shortFileName));
+	sb.append(DLUtil.getFileIcon(FileUtil.getExtension(shortFileName)));
 	sb.append(".png\">&nbsp;");
 	sb.append(shortFileName);
 

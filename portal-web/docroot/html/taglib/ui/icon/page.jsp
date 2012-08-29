@@ -50,9 +50,9 @@ if (Validator.isNotNull(src) && themeDisplay.isThemeImagesFastLoad() && !auiImag
 				spriteFileName = StringUtil.replace(spriteFileName, ".png", ".gif");
 			}
 
-			String cndBaseURL = themeDisplay.getCDNBaseURL();
+			String cdnBaseURL = themeDisplay.getCDNBaseURL();
 
-			spriteFileURL = cndBaseURL.concat(spriteFileName);
+			spriteFileURL = cdnBaseURL.concat(spriteFileName);
 		}
 	}
 
@@ -75,9 +75,9 @@ if (Validator.isNotNull(src) && themeDisplay.isThemeImagesFastLoad() && !auiImag
 					spriteFileName = StringUtil.replace(spriteFileName, ".png", ".gif");
 				}
 
-				String cndBaseURL = themeDisplay.getCDNBaseURL();
+				String cdnBaseURL = themeDisplay.getCDNBaseURL();
 
-				spriteFileURL = cndBaseURL.concat(spriteFileName);
+				spriteFileURL = cdnBaseURL.concat(spriteFileName);
 			}
 		}
 	}

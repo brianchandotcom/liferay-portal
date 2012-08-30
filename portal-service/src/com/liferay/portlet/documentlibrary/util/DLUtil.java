@@ -307,26 +307,30 @@ public class DLUtil {
 			WebKeys.THEME_DISPLAY);
 
 		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			return StringPool.SLASH.concat(themeDisplay.translate("home"));
+			return themeDisplay.translate("home");
 		}
 
 		DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(folderId);
 
 		List<DLFolder> dlFolders = dlFolder.getAncestors();
 
-		StringBundler sb = new StringBundler((dlFolders.size() + 2) * 2);
+		StringBundler sb = new StringBundler((dlFolders.size() * 4) + 6);
 
-		sb.append(StringPool.SLASH);
 		sb.append(themeDisplay.translate("home"));
+		sb.append(StringPool.SPACE);
 
 		for (int i = dlFolders.size() - 1; i >= 0; i--) {
 			DLFolder curDLFolder = dlFolders.get(i);
 
-			sb.append(StringPool.SLASH);
+			sb.append(StringPool.GREATER_THAN);
+			sb.append(StringPool.GREATER_THAN);
+			sb.append(StringPool.SPACE);
 			sb.append(curDLFolder.getName());
 		}
 
-		sb.append(StringPool.SLASH);
+		sb.append(StringPool.GREATER_THAN);
+		sb.append(StringPool.GREATER_THAN);
+		sb.append(StringPool.SPACE);
 		sb.append(dlFolder.getName());
 
 		return sb.toString();

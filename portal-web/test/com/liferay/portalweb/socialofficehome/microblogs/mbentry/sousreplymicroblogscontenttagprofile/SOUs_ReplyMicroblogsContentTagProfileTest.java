@@ -87,9 +87,9 @@ public class SOUs_ReplyMicroblogsContentTagProfileTest extends BaseTestCase {
 				}
 
 			case 2:
+				Thread.sleep(5000);
 				assertTrue(selenium.isVisible(
 						"//span[@class='placeholder-text']"));
-				Thread.sleep(5000);
 				selenium.clickAt("//span[@class='placeholder-text']",
 					RuntimeVariables.replace("Leave a comment..."));
 

@@ -17,6 +17,7 @@ package com.liferay.portlet.documentlibrary.store;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
@@ -24,7 +25,6 @@ import com.liferay.portlet.documentlibrary.DuplicateDirectoryException;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
-import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -32,7 +32,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -177,7 +179,7 @@ public class FileSystemStore extends BaseStore {
 	public File getFile(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)
-		throws PortalException {
+		throws PortalException, SystemException {
 
 		if (Validator.isNull(versionLabel)) {
 			versionLabel = getHeadVersionLabel(
@@ -198,7 +200,7 @@ public class FileSystemStore extends BaseStore {
 	public InputStream getFileAsStream(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)
-		throws PortalException {
+		throws PortalException, SystemException {
 
 		if (Validator.isNull(versionLabel)) {
 			versionLabel = getHeadVersionLabel(
@@ -227,21 +229,24 @@ public class FileSystemStore extends BaseStore {
 			long companyId, long repositoryId, String dirName)
 		throws PortalException {
 
-		File dirNameDir = getDirNameDir(companyId, repositoryId, dirName);
+		File file = getDirNameDir(companyId, repositoryId, dirName);
 
-		if (!dirNameDir.exists()) {
-			throw new NoSuchDirectoryException(dirNameDir.getPath());
+		if (!file.exists()) {
+			file = getFileNameDir(companyId, repositoryId, dirName);
 		}
 
-		String[] fileNames = FileUtil.listDirs(dirNameDir);
+		if (!file.exists()) {
+			throw new NoSuchDirectoryException(file.getPath());
+		}
+
+		String[] fileNames = FileUtil.listDirs(file);
 
 		Arrays.sort(fileNames);
 
 		// Convert /${fileName} to /${dirName}/${fileName}
 
 		for (int i = 0; i < fileNames.length; i++) {
-			fileNames[i] =
-				StringPool.SLASH + dirName + StringPool.SLASH + fileNames[i];
+			fileNames[i] = dirName + StringPool.SLASH + fileNames[i];
 		}
 
 		return fileNames;
@@ -249,7 +254,7 @@ public class FileSystemStore extends BaseStore {
 
 	@Override
 	public long getFileSize(long companyId, long repositoryId, String fileName)
-		throws PortalException {
+		throws PortalException, SystemException {
 
 		String versionLabel = getHeadVersionLabel(
 			companyId, repositoryId, fileName);
@@ -262,6 +267,39 @@ public class FileSystemStore extends BaseStore {
 		}
 
 		return fileNameVersionFile.length();
+	}
+
+	@Override
+	public String[] getFileVersions(
+			long companyId, long repositoryId, String fileName)
+		throws NoSuchDirectoryException {
+
+		File dirNameDir = getDirNameDir(companyId, repositoryId, fileName);
+
+		if (!dirNameDir.exists()) {
+			throw new NoSuchDirectoryException(dirNameDir.getPath());
+		}
+
+		String[] fileVersions = FileUtil.listFiles(dirNameDir);
+
+		Arrays.sort(fileVersions);
+
+		return fileVersions;
+	}
+
+	@Override
+	public List<Long> getRepositoryIds(long companyId) {
+		List<Long> repositoryIds = new ArrayList<Long>();
+
+		File companyFolder = getCompanyDir(companyId);
+
+		String[] repositoryNames = FileUtil.listDirs(companyFolder);
+
+		for (String repositoryName : repositoryNames) {
+			repositoryIds.add(GetterUtil.getLong(repositoryName));
+		}
+
+		return repositoryIds;
 	}
 
 	@Override
@@ -461,28 +499,6 @@ public class FileSystemStore extends BaseStore {
 			fileNameDir + StringPool.SLASH + version);
 
 		return fileNameVersionFile;
-	}
-
-	protected String getHeadVersionLabel(
-		long companyId, long repositoryId, String fileName) {
-
-		File fileNameDir = getFileNameDir(companyId, repositoryId, fileName);
-
-		if (!fileNameDir.exists()) {
-			return VERSION_DEFAULT;
-		}
-
-		String[] versionLabels = FileUtil.listFiles(fileNameDir);
-
-		String headVersionLabel = VERSION_DEFAULT;
-
-		for (String versionLabel : versionLabels) {
-			if (DLUtil.compareVersions(versionLabel, headVersionLabel) > 0) {
-				headVersionLabel = versionLabel;
-			}
-		}
-
-		return headVersionLabel;
 	}
 
 	protected File getRepositoryDir(long companyId, long repositoryId) {

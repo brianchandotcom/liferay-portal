@@ -100,6 +100,24 @@ public class DLFileEntryFinderUtil {
 			queryDefinition);
 	}
 
+	public static java.util.List<java.lang.String> findPByC_R_LikeP(
+		long companyId, long repostioryId, java.lang.String path)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().findPByC_R_LikeP(companyId, repostioryId, path);
+	}
+
+	public static java.util.List<java.lang.Long> findRByCompanyId(
+		long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().findRByCompanyId(companyId);
+	}
+
+	public static java.util.List<java.lang.String> findVByC_R_P(
+		long companyId, long repositoryId, java.lang.String path)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().findVByC_R_P(companyId, repositoryId, path);
+	}
+
 	public static DLFileEntryFinder getFinder() {
 		if (_finder == null) {
 			_finder = (DLFileEntryFinder)PortalBeanLocatorUtil.locate(DLFileEntryFinder.class.getName());

@@ -68,4 +68,15 @@ public interface DLFileEntryFinder {
 		java.lang.String[] mimeTypes,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<java.lang.String> findPByC_R_LikeP(long companyId,
+		long repostioryId, java.lang.String path)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<java.lang.Long> findRByCompanyId(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<java.lang.String> findVByC_R_P(long companyId,
+		long repositoryId, java.lang.String path)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

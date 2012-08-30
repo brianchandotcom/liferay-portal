@@ -14,35 +14,27 @@
 
 package com.liferay.portal.convert;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.security.pacl.PACLClassLoaderUtil;
 import com.liferay.portal.util.MaintenanceUtil;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.documentlibrary.DuplicateDirectoryException;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.model.DLFileVersion;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.store.AdvancedFileSystemStore;
 import com.liferay.portlet.documentlibrary.store.CMISStore;
+import com.liferay.portlet.documentlibrary.store.DBStore;
 import com.liferay.portlet.documentlibrary.store.FileSystemStore;
 import com.liferay.portlet.documentlibrary.store.JCRStore;
 import com.liferay.portlet.documentlibrary.store.S3Store;
 import com.liferay.portlet.documentlibrary.store.Store;
 import com.liferay.portlet.documentlibrary.store.StoreFactory;
-import com.liferay.portlet.documentlibrary.util.comparator.FileVersionVersionComparator;
-import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
-import com.liferay.portlet.wiki.model.WikiPage;
-import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 
 import java.io.InputStream;
 
@@ -51,6 +43,7 @@ import java.util.List;
 /**
  * @author Minhchau Dang
  * @author Alexander Chow
+ * @author Preston Crary
  */
 public class ConvertDocumentLibrary extends ConvertProcess {
 
@@ -99,7 +92,7 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 		_targetStore = (Store)classLoader.loadClass(
 			targetStoreClassName).newInstance();
 
-		migratePortlets();
+		migrateStore();
 
 		StoreFactory.setInstance(_targetStore);
 
@@ -111,166 +104,90 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 		PropsValues.DL_STORE_IMPL = targetStoreClassName;
 	}
 
-	protected List<DLFileVersion> getDLFileVersions(DLFileEntry dlFileEntry)
-		throws SystemException {
+	protected void migrateDirectories(
+		long companyId, long repositoryId, String[] dirNames) throws Exception {
 
-		List<DLFileVersion> dlFileVersions = dlFileEntry.getFileVersions(
-			WorkflowConstants.STATUS_ANY);
+		for (String dirName : dirNames) {
+			String[] subDirNames = _sourceStore.getFileNames(
+				companyId, repositoryId, dirName);
 
-		return ListUtil.sort(
-			dlFileVersions, new FileVersionVersionComparator(true));
-	}
+			if (_sourceStore instanceof AdvancedFileSystemStore) {
+				String path = unbuildPath(companyId, repositoryId, dirName);
 
-	protected void migrateDL() throws Exception {
-		int count = DLFileEntryLocalServiceUtil.getFileEntriesCount();
-
-		MaintenanceUtil.appendStatus(
-			"Migrating " + count + " documents and media files");
-
-		int pages = count / Indexer.DEFAULT_INTERVAL;
-
-		for (int i = 0; i <= pages; i++) {
-			int start = (i * Indexer.DEFAULT_INTERVAL);
-			int end = start + Indexer.DEFAULT_INTERVAL;
-
-			List<DLFileEntry> dlFileEntries =
-				DLFileEntryLocalServiceUtil.getFileEntries(start, end);
-
-			for (DLFileEntry dlFileEntry : dlFileEntries) {
-				long companyId = dlFileEntry.getCompanyId();
-				long repositoryId = dlFileEntry.getDataRepositoryId();
-
-				migrateDLFileEntry(companyId, repositoryId, dlFileEntry);
+				migrateFile(companyId, repositoryId, dirName, path);
 			}
-		}
-	}
-
-	protected void migrateDLFileEntry(
-			long companyId, long repositoryId, DLFileEntry fileEntry)
-		throws Exception {
-
-		String fileName = fileEntry.getName();
-
-		List<DLFileVersion> dlFileVersions = getDLFileVersions(fileEntry);
-
-		if (dlFileVersions.isEmpty()) {
-			String versionNumber = Store.VERSION_DEFAULT;
-
-			migrateFile(companyId, repositoryId, fileName, versionNumber);
-
-			return;
-		}
-
-		for (DLFileVersion dlFileVersion : dlFileVersions) {
-			String versionNumber = dlFileVersion.getVersion();
-
-			migrateFile(companyId, repositoryId, fileName, versionNumber);
+			else {
+				migrateDirectories(companyId, repositoryId, subDirNames);
+			}
 		}
 	}
 
 	protected void migrateFile(
-		long companyId, long repositoryId, String fileName,
-		String versionNumber) {
+		long companyId, long repositoryId, String oldPath, String newPath) {
 
 		try {
-			InputStream is = _sourceStore.getFileAsStream(
-				companyId, repositoryId, fileName, versionNumber);
+			String[] fileVersions = _sourceStore.getFileVersions(
+				companyId, repositoryId, oldPath);
 
-			if (versionNumber.equals(Store.VERSION_DEFAULT)) {
-				_targetStore.addFile(companyId, repositoryId, fileName, is);
-			}
-			else {
-				_targetStore.updateFile(
-					companyId, repositoryId, fileName, versionNumber, is);
+			for (String fileVersion : fileVersions) {
+				InputStream is = _sourceStore.getFileAsStream(
+					companyId, repositoryId, oldPath, fileVersion);
+
+				if (fileVersion.equals(Store.VERSION_DEFAULT)) {
+					_targetStore.addFile(companyId, repositoryId, newPath, is);
+				}
+				else {
+					_targetStore.updateFile(
+						companyId, repositoryId, newPath, fileVersion, is);
+				}
 			}
 		}
 		catch (Exception e) {
-			_log.error("Migration failed for " + fileName, e);
+			_log.error("Migration failed for " + oldPath, e);
 		}
 	}
 
-	protected void migrateFiles(
-			long companyId, String dirName, String[] fileNames)
-		throws Exception {
+	protected void migrateStore() throws Exception {
+		long[] companyIds = PortalUtil.getCompanyIds();
 
-		long repositoryId = CompanyConstants.SYSTEM;
-		String versionNumber = Store.VERSION_DEFAULT;
+		companyIds = ArrayUtil.append(companyIds, CompanyConstants.SYSTEM);
 
-		try {
-			_targetStore.addDirectory(companyId, repositoryId, dirName);
-		}
-		catch (DuplicateDirectoryException dde) {
-		}
+		for (long companyId : companyIds) {
+			List<Long> repositoryIds = _sourceStore.getRepositoryIds(companyId);
 
-		for (String fileName : fileNames) {
-			if (fileName.startsWith(StringPool.SLASH)) {
-				fileName = fileName.substring(1);
-			}
+			for (long repositoryId : repositoryIds) {
+				String[] dirNames = _sourceStore.getFileNames(
+					companyId, repositoryId);
 
-			migrateFile(companyId, repositoryId, fileName, versionNumber);
-		}
-	}
-
-	protected void migrateMB() throws Exception {
-		int count = MBMessageLocalServiceUtil.getMBMessagesCount();
-
-		MaintenanceUtil.appendStatus(
-			"Migrating message boards attachments in " + count + " messages");
-
-		int pages = count / Indexer.DEFAULT_INTERVAL;
-
-		for (int i = 0; i <= pages; i++) {
-			int start = (i * Indexer.DEFAULT_INTERVAL);
-			int end = start + Indexer.DEFAULT_INTERVAL;
-
-			List<MBMessage> messages = MBMessageLocalServiceUtil.getMBMessages(
-				start, end);
-
-			for (MBMessage message : messages) {
-				migrateFiles(
-					message.getCompanyId(), message.getAttachmentsDir(),
-					message.getAttachmentsFiles());
+				migrateDirectories(companyId, repositoryId, dirNames);
 			}
 		}
 	}
 
-	protected void migratePortlets() throws Exception {
-		migrateDL();
-		migrateMB();
-		migrateWiki();
-	}
+	protected String unbuildPath(
+		long companyId, long repositoryId, String path) {
 
-	protected void migrateWiki() throws Exception {
-		int count = WikiPageLocalServiceUtil.getWikiPagesCount();
-
-		MaintenanceUtil.appendStatus(
-			"Migrating wiki page attachments in " + count + " pages");
-
-		int pages = count / Indexer.DEFAULT_INTERVAL;
-
-		for (int i = 0; i <= pages; i++) {
-			int start = (i * Indexer.DEFAULT_INTERVAL);
-			int end = start + Indexer.DEFAULT_INTERVAL;
-
-			List<WikiPage> wikiPages = WikiPageLocalServiceUtil.getWikiPages(
-				start, end);
-
-			for (WikiPage wikiPage : wikiPages) {
-				if (!wikiPage.isHead()) {
-					continue;
-				}
-
-				migrateFiles(
-					wikiPage.getCompanyId(), wikiPage.getAttachmentsDir(),
-					wikiPage.getAttachmentsFiles());
+		if (companyId != CompanyConstants.SYSTEM) {
+			if (repositoryId == CompanyConstants.SYSTEM) {
+				return path;
 			}
+
+			path = FileUtil.stripExtension(path);
 		}
+
+		int pos = path.lastIndexOf(CharPool.SLASH);
+
+		if (pos > 0) {
+			path = path.substring(pos);
+		}
+
+		return path;
 	}
 
 	private static final String[] _HOOKS = new String[] {
 		AdvancedFileSystemStore.class.getName(), CMISStore.class.getName(),
-		FileSystemStore.class.getName(), JCRStore.class.getName(),
-		S3Store.class.getName()
+		DBStore.class.getName(), FileSystemStore.class.getName(),
+		JCRStore.class.getName(), S3Store.class.getName()
 	};
 
 	private static Log _log = LogFactoryUtil.getLog(

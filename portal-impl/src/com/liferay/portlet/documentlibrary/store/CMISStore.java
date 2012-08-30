@@ -15,9 +15,12 @@
 package com.liferay.portlet.documentlibrary.store;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.SortedArrayList;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -25,12 +28,12 @@ import com.liferay.portal.repository.cmis.CMISRepositoryUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
-import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -173,7 +176,7 @@ public class CMISStore extends BaseStore {
 	public InputStream getFileAsStream(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)
-		throws PortalException {
+		throws PortalException, SystemException {
 
 		if (Validator.isNull(versionLabel)) {
 			versionLabel = getHeadVersionLabel(
@@ -237,7 +240,7 @@ public class CMISStore extends BaseStore {
 
 	@Override
 	public long getFileSize(long companyId, long repositoryId, String fileName)
-		throws PortalException {
+		throws PortalException, SystemException {
 
 		String versionLabel = getHeadVersionLabel(
 			companyId, repositoryId, fileName);
@@ -248,30 +251,46 @@ public class CMISStore extends BaseStore {
 		return document.getContentStreamLength();
 	}
 
-	public String getHeadVersionLabel(
-			long companyId, long repositoryId, String dirName)
+	@Override
+	public String[] getFileVersions(
+			long companyId, long repositoryId, String fileName)
 		throws NoSuchFileException {
 
+		List<String> fileVersions = new SortedArrayList<String>();
+
 		Folder versioningFolder = getVersioningFolder(
-			companyId, repositoryId, dirName, false);
+			companyId, repositoryId, fileName, false);
 
 		if (versioningFolder == null) {
 			throw new NoSuchFileException();
 		}
 
-		List<Folder> folders = getFolders(versioningFolder);
+		ItemIterable<CmisObject> cmisObjects = versioningFolder.getChildren();
 
-		String headVersionLabel = VERSION_DEFAULT;
+		Iterator<CmisObject> itr = cmisObjects.iterator();
 
-		for (Folder folder : folders) {
-			String versionLabel = folder.getName();
+		while (itr.hasNext()) {
+			CmisObject cmisObject = itr.next();
 
-			if (DLUtil.compareVersions(versionLabel, headVersionLabel) > 0) {
-				headVersionLabel = versionLabel;
-			}
+			fileVersions.add(cmisObject.getName());
 		}
 
-		return headVersionLabel;
+		return fileVersions.toArray(new String[fileVersions.size()]);
+	}
+
+	@Override
+	public List<Long> getRepositoryIds(long companyId) {
+		List<Long> repositoryIds = new ArrayList();
+
+		Folder companyFolder = getCompanyFolder(companyId);
+
+		ItemIterable<CmisObject> cmisObjects = companyFolder.getChildren();
+
+		for (CmisObject cmisObject : cmisObjects) {
+			repositoryIds.add(GetterUtil.getLong(cmisObject.getName()));
+		}
+
+		return repositoryIds;
 	}
 
 	@Override

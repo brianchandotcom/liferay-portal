@@ -21,13 +21,10 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.documentlibrary.util.DLUtil;
+import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
 
 import java.io.File;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * <p>
@@ -40,22 +37,30 @@ import java.util.List;
  */
 public class AdvancedFileSystemStore extends FileSystemStore {
 
+	public AdvancedFileSystemStore() {
+		if (!_rootDir.exists()) {
+			_rootDir.mkdirs();
+		}
+	}
+
 	@Override
-	public String[] getFileNames(long companyId, long repositoryId) {
-		File repositoryDir = getRepositoryDir(companyId, repositoryId);
+	public String[] getFileVersions(
+			long companyId, long repositoryId, String fileName)
+		throws NoSuchDirectoryException {
 
-		String[] directories = FileUtil.listDirs(repositoryDir);
+		String[] fileVersions = super.getFileVersions(
+			companyId, repositoryId, fileName);
 
-		List<String> fileNames = new ArrayList<String>();
+		for (int i = 0; i < fileVersions.length; i++) {
+			String fileVersion = fileVersions[i];
 
-		for (String directory : directories) {
-			fileNames.addAll(
-				getAdvancedFileNames(
-					companyId, repositoryId,
-					repositoryDir.getPath() + StringPool.SLASH + directory));
+			int x = fileVersion.lastIndexOf(CharPool.UNDERLINE);
+			int y = fileVersion.lastIndexOf(CharPool.PERIOD);
+
+			fileVersions[i] = fileVersion.substring(x + 1, y);
 		}
 
-		return fileNames.toArray(new String[fileNames.size()]);
+		return fileVersions;
 	}
 
 	@Override
@@ -118,32 +123,15 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 		return;
 	}
 
-	protected List<String> getAdvancedFileNames(
-		long companyId, long repositoryId, String fileName) {
+	@Override
+	protected File getCompanyDir(long companyId) {
+		File companyDir = new File(_rootDir + StringPool.SLASH + companyId);
 
-		List<String> fileNames = new ArrayList<String>();
-
-		String shortFileName = FileUtil.getShortFileName(fileName);
-
-		if (shortFileName.equals("DLFE") || Validator.isNumber(shortFileName)) {
-			String[] curFileNames = FileUtil.listDirs(fileName);
-
-			for (String curFileName : curFileNames) {
-				fileNames.addAll(
-					getAdvancedFileNames(
-						companyId, repositoryId,
-						fileName + StringPool.SLASH + curFileName));
-			}
-		}
-		else {
-			if (shortFileName.endsWith(_HOOK_EXTENSION)) {
-				shortFileName = FileUtil.stripExtension(shortFileName);
-			}
-
-			fileNames.add(shortFileName);
+		if (!companyDir.exists()) {
+			companyDir.mkdirs();
 		}
 
-		return fileNames;
+		return companyDir;
 	}
 
 	protected int getDepth(String path) {
@@ -247,40 +235,9 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 		}
 	}
 
-	@Override
-	protected String getHeadVersionLabel(
-		long companyId, long repositoryId, String fileName) {
-
-		File fileNameDir = getFileNameDir(companyId, repositoryId, fileName);
-
-		if (!fileNameDir.exists()) {
-			return VERSION_DEFAULT;
-		}
-
-		String[] versionLabels = FileUtil.listFiles(fileNameDir);
-
-		String headVersionLabel = VERSION_DEFAULT;
-
-		for (int i = 0; i < versionLabels.length; i++) {
-			String versionLabelFragment = versionLabels[i];
-
-			int x = versionLabelFragment.lastIndexOf(CharPool.UNDERLINE);
-			int y = versionLabelFragment.lastIndexOf(CharPool.PERIOD);
-
-			if (x > -1) {
-				versionLabelFragment = versionLabelFragment.substring(x + 1, y);
-			}
-
-			String versionLabel = versionLabelFragment;
-
-			if (DLUtil.compareVersions(versionLabel, headVersionLabel) > 0) {
-				headVersionLabel = versionLabel;
-			}
-		}
-
-		return headVersionLabel;
-	}
-
 	private static final String _HOOK_EXTENSION = "afsh";
+
+	private File _rootDir = new File(
+		PropsValues.DL_STORE_ADVANCED_FILE_SYSTEM_ROOT);
 
 }

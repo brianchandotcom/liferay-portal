@@ -142,7 +142,7 @@ public class MBMessageServiceHttp {
 	}
 
 	public static com.liferay.portlet.messageboards.model.MBMessage addMessage(
-		HttpPrincipal httpPrincipal, long parentMessageId,
+		HttpPrincipal httpPrincipal, long groupId, long categoryId,
 		java.lang.String subject, java.lang.String body,
 		java.lang.String format,
 		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs,
@@ -154,8 +154,8 @@ public class MBMessageServiceHttp {
 			MethodKey methodKey = new MethodKey(MBMessageServiceUtil.class.getName(),
 					"addMessage", _addMessageParameterTypes2);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					parentMessageId, subject, body, format, inputStreamOVPs,
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					categoryId, subject, body, format, inputStreamOVPs,
 					anonymous, priority, allowPingbacks, serviceContext);
 
 			Object returnObj = null;
@@ -185,7 +185,7 @@ public class MBMessageServiceHttp {
 	}
 
 	public static com.liferay.portlet.messageboards.model.MBMessage addMessage(
-		HttpPrincipal httpPrincipal, long groupId, long categoryId,
+		HttpPrincipal httpPrincipal, long parentMessageId,
 		java.lang.String subject, java.lang.String body,
 		java.lang.String format,
 		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs,
@@ -197,8 +197,8 @@ public class MBMessageServiceHttp {
 			MethodKey methodKey = new MethodKey(MBMessageServiceUtil.class.getName(),
 					"addMessage", _addMessageParameterTypes3);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					categoryId, subject, body, format, inputStreamOVPs,
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					parentMessageId, subject, body, format, inputStreamOVPs,
 					anonymous, priority, allowPingbacks, serviceContext);
 
 			Object returnObj = null;
@@ -1013,15 +1013,15 @@ public class MBMessageServiceHttp {
 			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addMessageParameterTypes2 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.util.List.class, boolean.class,
-			double.class, boolean.class,
-			com.liferay.portal.service.ServiceContext.class
-		};
-	private static final Class<?>[] _addMessageParameterTypes3 = new Class[] {
 			long.class, long.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class, java.util.List.class,
 			boolean.class, double.class, boolean.class,
+			com.liferay.portal.service.ServiceContext.class
+		};
+	private static final Class<?>[] _addMessageParameterTypes3 = new Class[] {
+			long.class, java.lang.String.class, java.lang.String.class,
+			java.lang.String.class, java.util.List.class, boolean.class,
+			double.class, boolean.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteDiscussionMessageParameterTypes4 = new Class[] {

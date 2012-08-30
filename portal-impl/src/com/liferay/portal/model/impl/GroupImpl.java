@@ -445,6 +445,10 @@ public class GroupImpl extends GroupBaseImpl {
 					" is an organization site that does not have pages");
 		}
 
+		if (!isControlPanel() && !isSite() && !isUser()) {
+			showSite = false;
+		}
+
 		return showSite;
 	}
 

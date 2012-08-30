@@ -68,9 +68,11 @@ public class ProcessOutputStream extends UnsyncByteArrayOutputStream {
 	public void writeProcessCallable(ProcessCallable<?> processCallable)
 		throws IOException {
 
-		_objectOutputStream.writeObject(processCallable);
+		synchronized (_objectOutputStream) {
+			_objectOutputStream.writeObject(processCallable);
 
-		_objectOutputStream.flush();
+			_objectOutputStream.flush();
+		}
 	}
 
 	private final boolean _error;

@@ -251,8 +251,8 @@ if (Validator.isNull(redirect)) {
 
 									<liferay-ui:icon
 										image="<%= fileIcon %>"
-										message="<%= existingName %>"
 										label="true"
+										message="<%= existingName %>"
 									/>
 								</span>
 

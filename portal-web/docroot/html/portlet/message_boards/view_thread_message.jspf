@@ -282,7 +282,7 @@
 				<%
 				String[] deletedAttachments = message.getDeletedAttachmentsFiles();
 				%>
-				
+
 				<c:if test="<%= message.isAttachments() || ((deletedAttachments.length > 0) && TrashUtil.isTrashEnabled(themeDisplay.getScopeGroupId()) && MBMessagePermission.contains(permissionChecker, message, ActionKeys.UPDATE)) %>">
 					<div class="message-attachments">
 						<h3><liferay-ui:message key="attachments" />:</h3>

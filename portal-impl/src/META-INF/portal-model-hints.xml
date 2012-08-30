@@ -522,7 +522,9 @@
 		<field name="minAge" type="long" />
 		<field name="checkSyntax" type="boolean" />
 		<field name="allowDictionaryWords" type="boolean" />
-		<field name="minAlphanumeric" type="int" />
+		<field name="minAlphanumeric" type="int">
+			<hint name="display-width">20</hint>
+		</field>
 		<field name="minLength" type="int">
 			<hint name="display-width">20</hint>
 		</field>

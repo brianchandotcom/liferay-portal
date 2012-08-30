@@ -166,6 +166,6 @@ public class AddSitesSiteTest extends BaseTestCase {
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Open Site Name"),
 			selenium.getText(
-				"//li[contains(@class, 'social-office-enabled')]/span[2]/a"));
+				"//li[contains(@class, 'social-office-enabled')]/span[contains(.,'Open Site Name')]/a"));
 	}
 }

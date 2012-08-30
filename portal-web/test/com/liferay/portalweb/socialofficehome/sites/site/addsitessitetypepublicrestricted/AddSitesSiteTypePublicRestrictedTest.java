@@ -167,6 +167,6 @@ public class AddSitesSiteTypePublicRestrictedTest extends BaseTestCase {
 		Thread.sleep(5000);
 		assertEquals(RuntimeVariables.replace("Public Restricted Site Name"),
 			selenium.getText(
-				"//li[contains(@class, 'social-office-enabled')]/span[2]/a"));
+				"//li[contains(@class, 'social-office-enabled')]/span[contains(.,'Public Restricted Site Name')]/a"));
 	}
 }

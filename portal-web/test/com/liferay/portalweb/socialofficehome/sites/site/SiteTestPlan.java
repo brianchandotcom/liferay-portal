@@ -30,6 +30,7 @@ import com.liferay.portalweb.socialofficehome.sites.site.soussearchsitessite.SOU
 import com.liferay.portalweb.socialofficehome.sites.site.soussearchsitessitetypeprivate.SOUs_SearchSitesSiteTypePrivateTests;
 import com.liferay.portalweb.socialofficehome.sites.site.soussearchsitessitetypeprivaterestricted.SOUs_SearchSitesSiteTypePrivateRestrictedTests;
 import com.liferay.portalweb.socialofficehome.sites.site.soussearchsitessitetypepublicrestricted.SOUs_SearchSitesSiteTypePublicRestrictedTests;
+import com.liferay.portalweb.socialofficehome.sites.site.sousviewsiteslinksauserprofile.SOUs_ViewSitesLinkSAUserProfileTests;
 import com.liferay.portalweb.socialofficehome.sites.site.viewsitesdirectory.ViewSitesDirectoryTests;
 import com.liferay.portalweb.socialofficehome.sites.site.viewsitesdirectorymysites.ViewSitesDirectoryMySitesTests;
 import com.liferay.portalweb.socialofficehome.sites.site.viewsitessite.ViewSitesSiteTests;
@@ -65,6 +66,7 @@ public class SiteTestPlan extends BaseTestSuite {
 			SOUs_SearchSitesSiteTypePrivateRestrictedTests.suite());
 		testSuite.addTest(
 			SOUs_SearchSitesSiteTypePublicRestrictedTests.suite());
+		testSuite.addTest(SOUs_ViewSitesLinkSAUserProfileTests.suite());
 		testSuite.addTest(ViewSitesDirectoryTests.suite());
 		testSuite.addTest(ViewSitesDirectoryMySitesTests.suite());
 		testSuite.addTest(ViewSitesSiteTests.suite());

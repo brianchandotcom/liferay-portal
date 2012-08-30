@@ -82,6 +82,11 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		return StringPool.BLANK;
 	}
 
+	@SuppressWarnings("unused")
+	public String getDeleteMessage() {
+		return "deleted-in-x";
+	}
+
 	public TrashRenderer getTrashRenderer(long classPK)
 		throws PortalException, SystemException {
 

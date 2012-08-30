@@ -134,6 +134,11 @@ public class DLFileEntryTrashHandler extends BaseTrashHandler {
 		return DLUtil.getAbsolutePath(portletRequest, dlFolder.getFolderId());
 	}
 
+	@Override
+	public String getDeleteMessage() {
+		return "found-in-deleted-folder-x";
+	}
+
 	/**
 	 * Restores all file entries with the matching primary keys.
 	 *

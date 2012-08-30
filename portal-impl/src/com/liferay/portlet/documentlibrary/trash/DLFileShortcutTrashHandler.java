@@ -92,6 +92,11 @@ public class DLFileShortcutTrashHandler extends BaseTrashHandler {
 			portletRequest, fileShortcut.getFolderId());
 	}
 
+	@Override
+	public String getDeleteMessage() {
+		return "found-in-deleted-folder-x";
+	}
+
 	/**
 	 * Returns the trash renderer for the entity with the primary key.
 	 *

@@ -203,7 +203,7 @@ portletURL.setParameter("tabs1", tabs1);
 					/>
 				</liferay-util:buffer>
 
-				<span class="trash-root-entry">(<liferay-ui:message arguments="<%= rootEntryIcon %>" key="deleted-in-x" />)</span>
+				<span class="trash-root-entry">(<liferay-ui:message arguments="<%= rootEntryIcon %>" key="<%= rootTrashHandler.getDeleteMessage() %>" />)</span>
 			</c:if>
 		</liferay-ui:search-container-column-text>
 

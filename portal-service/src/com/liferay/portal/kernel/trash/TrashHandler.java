@@ -102,6 +102,8 @@ public interface TrashHandler {
 	 */
 	public String getClassName();
 
+	public String getDeleteMessage();
+
 	public String getRestoreLink(PortletRequest portletRequest, long classPK)
 		throws PortalException, SystemException;
 

@@ -76,6 +76,25 @@ public class TearDownProjectsTest extends BaseTestCase {
 					}
 
 					try {
+						if (selenium.isVisible(
+									"//iframe[contains(@src,'my_account')]")) {
+							break;
+						}
+					}
+					catch (Exception e) {
+					}
+
+					Thread.sleep(1000);
+				}
+
+				selenium.selectFrame("//iframe[contains(@src,'my_account')]");
+
+				for (int second = 0;; second++) {
+					if (second >= 90) {
+						fail("timeout");
+					}
+
+					try {
 						if (selenium.isPartialText(
 									"//a[@id='_2_projectsLink']", "Projects")) {
 							break;
@@ -197,6 +216,7 @@ public class TearDownProjectsTest extends BaseTestCase {
 				assertEquals(RuntimeVariables.replace(
 						"Your request completed successfully."),
 					selenium.getText("//div[@class='portlet-msg-success']"));
+				selenium.selectFrame("relative=top");
 
 			case 100:
 				label = -1;

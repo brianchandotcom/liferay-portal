@@ -66,11 +66,13 @@
 		}
 
 		legend {
-			margin-bottom: 1em;
-
 			.aui-legend {
 				width: 100%;
 			}
+		}
+
+		ul {
+			list-style: none;
 		}
 
 		.message-attachment {

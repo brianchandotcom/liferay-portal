@@ -268,7 +268,15 @@ if (Validator.isNull(redirect)) {
 								<span id="<portlet:namespace />existingFile<%= i + 1 %>">
 									<aui:input name='<%= "existingPath" + (i + 1) %>' type="hidden" value="<%= existingPath %>" />
 
-									<img align="left" border="0" src="<%= themeDisplay.getPathThemeImages() %>/file_system/small/<%= DLUtil.getFileIcon(FileUtil.getExtension(existingName)) %>.png"> <%= existingName %>
+									<%
+									String fileIcon = "../file_system/small/" + DLUtil.getFileIcon(FileUtil.getExtension(existingName));
+									%>
+
+									<liferay-ui:icon
+										image="<%= fileIcon %>"
+										message="<%= existingName %>"
+										label="true"
+									/>
 								</span>
 
 								<aui:input cssClass="aui-helper-hidden" label="" name='<%= "msgFile" + (i + 1) %>' size="70" type="file" />

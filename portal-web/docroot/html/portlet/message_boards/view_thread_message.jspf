@@ -319,13 +319,24 @@
 								</portlet:actionURL>
 
 								<li class="message-attachment">
-									<a href="<%= attachmentURL %>">
-										<img align="left" border="0" src="<%= themeDisplay.getPathThemeImages() %>/file_system/small/<%= DLUtil.getFileIcon(FileUtil.getExtension(fileName)) %>.png">
 
-										<%= fileName %>
+									<%
+									String fileIcon = "../file_system/small/" + DLUtil.getFileIcon(FileUtil.getExtension(fileName));
 
-										(<%= TextFormatter.formatStorageSize(fileSize, locale) %>)
-									</a>
+									StringBundler sb = new StringBundler(4);
+
+									sb.append(fileName);
+									sb.append(StringPool.OPEN_PARENTHESIS);
+									sb.append(TextFormatter.formatStorageSize(fileSize, locale));
+									sb.append(StringPool.CLOSE_PARENTHESIS);
+									%>
+
+									<liferay-ui:icon
+										image="<%= fileIcon %>"
+										label="true"
+										message="<%= sb.toString() %>"
+										url="<%= attachmentURL %>"
+									/>
 								</li>
 
 							<%

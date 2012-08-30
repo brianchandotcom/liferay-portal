@@ -181,7 +181,7 @@ for (int i = 0; i < results.size(); i++) {
 					cssClass="trash-attachments"
 					image="delete"
 					label="<%= true %>"
-					message='<%= LanguageUtil.format(pageContext, "x-attachments-in-the-recycle-bin", deletedAttachments.length) %>'
+					message='<%= LanguageUtil.format(pageContext, "x-recent-deleted-attachments", deletedAttachments.length) %>'
 					url="<%= viewTrashAttachmentsURL %>"
 				/>
 			</c:if>

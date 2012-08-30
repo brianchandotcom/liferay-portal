@@ -242,7 +242,7 @@ if (Validator.isNull(redirect)) {
 							cssClass="trash-attachments"
 							image="delete"
 							label="<%= true %>"
-							message='<%= LanguageUtil.format(pageContext, "x-attachments-in-the-recycle-bin", deletedAttachments.length) %>'
+							message='<%= LanguageUtil.format(pageContext, "x-recent-deleted-attachments", deletedAttachments.length) %>'
 							url="<%= viewTrashAttachmentsURL %>"
 						/>
 					</c:if>
@@ -276,6 +276,7 @@ if (Validator.isNull(redirect)) {
 								<liferay-ui:icon-delete
 									id='<%= "removeExisting" + (i + 1) %>'
 									label="<%= true %>"
+									message="delete"
 									method="get"
 									trash="<%= TrashUtil.isTrashEnabled(themeDisplay.getScopeGroupId()) %>"
 									url="<%= taglibJavascript %>"

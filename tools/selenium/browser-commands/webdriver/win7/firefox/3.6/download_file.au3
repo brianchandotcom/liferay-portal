@@ -1,0 +1,12 @@
+WinWait("Opening", "", 10)
+WinActivate("Opening")
+Sleep(1000)
+Send("!s")
+Send("{ENTER}")
+
+WinWait("Downloads", "", 10)
+WinActivate("Downloads")
+Sleep(1000)
+Send("!c")
+Sleep(1000)
+WinClose("Downloads")

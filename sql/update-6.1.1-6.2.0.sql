@@ -256,6 +256,8 @@ update DLFolder set statusByUserId = userId;
 update DLFolder set statusByUserName = userName;
 update DLFolder set statusDate = modifiedDate;
 
+update Group_ set site = FALSE where name = 'Control Panel';
+
 drop table Groups_Permissions;
 
 alter table JournalArticle add folderId LONG;

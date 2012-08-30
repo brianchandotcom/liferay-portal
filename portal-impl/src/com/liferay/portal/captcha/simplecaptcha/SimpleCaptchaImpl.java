@@ -74,7 +74,7 @@ public class SimpleCaptchaImpl implements Captcha {
 		}
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Captcha text is valid");
+			_log.debug("CAPTCHA text is valid");
 		}
 	}
 
@@ -92,7 +92,7 @@ public class SimpleCaptchaImpl implements Captcha {
 		}
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Captcha text is valid");
+			_log.debug("CAPTCHA text is valid");
 		}
 	}
 
@@ -394,8 +394,8 @@ public class SimpleCaptchaImpl implements Captcha {
 
 		if (captchaText == null) {
 			_log.error(
-				"Captcha text is null. User " + request.getRemoteUser() +
-					" may be trying to circumvent the captcha.");
+				"CAPTCHA text is null. User " + request.getRemoteUser() +
+					" may be trying to circumvent the CAPTCHA.");
 
 			throw new CaptchaTextException();
 		}
@@ -420,8 +420,8 @@ public class SimpleCaptchaImpl implements Captcha {
 
 		if (captchaText == null) {
 			_log.error(
-				"Captcha text is null. User " + portletRequest.getRemoteUser() +
-					" may be trying to circumvent the captcha.");
+				"CAPTCHA text is null. User " + portletRequest.getRemoteUser() +
+					" may be trying to circumvent the CAPTCHA.");
 
 			throw new CaptchaTextException();
 		}

@@ -225,29 +225,6 @@ if (Validator.isNull(redirect)) {
 
 		<c:if test="<%= attachments %>">
 			<aui:fieldset cssClass="message-attachments" label="attachments">
-				<c:if test="<%= TrashUtil.isTrashEnabled(themeDisplay.getScopeGroupId()) && message != null %>">
-
-					<%
-					String[] deletedAttachments = message.getDeletedAttachmentsFiles();
-					%>
-
-					<c:if test="<%= deletedAttachments.length > 0 %>">
-						<portlet:renderURL var="viewTrashAttachmentsURL">
-							<portlet:param name="struts_action" value="/message_boards/view_deleted_message_attachments" />
-							<portlet:param name="redirect" value="<%= currentURL %>" />
-							<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
-						</portlet:renderURL>
-
-						<liferay-ui:icon
-							cssClass="trash-attachments"
-							image="delete"
-							label="<%= true %>"
-							message='<%= LanguageUtil.format(pageContext, "x-recent-deleted-attachments", deletedAttachments.length) %>'
-							url="<%= viewTrashAttachmentsURL %>"
-						/>
-					</c:if>
-				</c:if>
-
 				<c:if test="<%= existingAttachments.length > 0 %>">
 					<ul>
 

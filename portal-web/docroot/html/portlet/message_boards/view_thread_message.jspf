@@ -279,71 +279,94 @@
 					</div>
 				</liferay-ui:custom-attributes-available>
 
-				<c:if test="<%= message.isAttachments() %>">
-
-					<%
-					String[] attachmentsFiles = message.getAttachmentsFiles();
-
-					for (int j = 0; j < attachmentsFiles.length; j++) {
-						String fileName = FileUtil.getShortFileName(attachmentsFiles[j]);
-
-						if (StringUtil.endsWith(fileName, ".gif") || StringUtil.endsWith(fileName, ".jpg") || StringUtil.endsWith(fileName, ".png")) {
-					%>
-
-							<div>
-								<img alt="<liferay-ui:message key="attachment" />" src="<%= themeDisplay.getPathMain() %>/message_boards/get_message_attachment?messageId=<%= message.getMessageId() %>&attachment=<%= HttpUtil.encodeURL(fileName) %>" />
-							</div>
-
-							<br />
-
-					<%
-						}
-					}
-					%>
-
+				<%
+				String[] deletedAttachments = message.getDeletedAttachmentsFiles();
+				%>
+				
+				<c:if test="<%= message.isAttachments() || ((deletedAttachments.length > 0) && TrashUtil.isTrashEnabled(themeDisplay.getScopeGroupId()) && MBMessagePermission.contains(permissionChecker, message, ActionKeys.UPDATE)) %>">
 					<div class="message-attachments">
 						<h3><liferay-ui:message key="attachments" />:</h3>
 
-						<ul>
+						<c:if test="<%= message.isAttachments() %>">
 
 							<%
+							String[] attachmentsFiles = message.getAttachmentsFiles();
+
 							for (int j = 0; j < attachmentsFiles.length; j++) {
 								String fileName = FileUtil.getShortFileName(attachmentsFiles[j]);
-								long fileSize = DLStoreUtil.getFileSize(company.getCompanyId(), CompanyConstants.SYSTEM, attachmentsFiles[j]);
+
+								if (StringUtil.endsWith(fileName, ".gif") || StringUtil.endsWith(fileName, ".jpg") || StringUtil.endsWith(fileName, ".png")) {
 							%>
 
-								<portlet:actionURL var="attachmentURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-									<portlet:param name="struts_action" value="/message_boards/get_message_attachment" />
-									<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
-									<portlet:param name="attachment" value="<%= fileName %>" />
-								</portlet:actionURL>
+									<div>
+										<img alt="<liferay-ui:message key="attachment" />" src="<%= themeDisplay.getPathMain() %>/message_boards/get_message_attachment?messageId=<%= message.getMessageId() %>&attachment=<%= HttpUtil.encodeURL(fileName) %>" />
+									</div>
 
-								<li class="message-attachment">
-
-									<%
-									String fileIcon = "../file_system/small/" + DLUtil.getFileIcon(FileUtil.getExtension(fileName));
-
-									StringBundler sb = new StringBundler(4);
-
-									sb.append(fileName);
-									sb.append(StringPool.OPEN_PARENTHESIS);
-									sb.append(TextFormatter.formatStorageSize(fileSize, locale));
-									sb.append(StringPool.CLOSE_PARENTHESIS);
-									%>
-
-									<liferay-ui:icon
-										image="<%= fileIcon %>"
-										label="true"
-										message="<%= sb.toString() %>"
-										url="<%= attachmentURL %>"
-									/>
-								</li>
+									<br />
 
 							<%
+								}
 							}
 							%>
 
-						</ul>
+							<ul>
+
+								<%
+								for (int j = 0; j < attachmentsFiles.length; j++) {
+									String fileName = FileUtil.getShortFileName(attachmentsFiles[j]);
+									long fileSize = DLStoreUtil.getFileSize(company.getCompanyId(), CompanyConstants.SYSTEM, attachmentsFiles[j]);
+								%>
+
+									<portlet:actionURL var="attachmentURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+										<portlet:param name="struts_action" value="/message_boards/get_message_attachment" />
+										<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
+										<portlet:param name="attachment" value="<%= fileName %>" />
+									</portlet:actionURL>
+
+									<li class="message-attachment">
+
+										<%
+										String fileIcon = "../file_system/small/" + DLUtil.getFileIcon(FileUtil.getExtension(fileName));
+
+										StringBundler sb = new StringBundler(4);
+
+										sb.append(fileName);
+										sb.append(StringPool.OPEN_PARENTHESIS);
+										sb.append(TextFormatter.formatStorageSize(fileSize, locale));
+										sb.append(StringPool.CLOSE_PARENTHESIS);
+										%>
+
+										<liferay-ui:icon
+											image="<%= fileIcon %>"
+											label="true"
+											message="<%= sb.toString() %>"
+											url="<%= attachmentURL %>"
+										/>
+									</li>
+
+								<%
+								}
+								%>
+
+							</ul>
+						</c:if>
+
+						<c:if test="<%= (deletedAttachments.length > 0) && TrashUtil.isTrashEnabled(themeDisplay.getScopeGroupId()) && MBMessagePermission.contains(permissionChecker, message, ActionKeys.UPDATE) %>">
+							<div class="message-attachments">
+								<portlet:renderURL var="viewTrashAttachmentsURL">
+									<portlet:param name="struts_action" value="/message_boards/view_deleted_message_attachments" />
+									<portlet:param name="redirect" value="<%= currentURL %>" />
+									<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
+								</portlet:renderURL>
+
+								<liferay-ui:icon
+									image="delete"
+									label="<%= true %>"
+									message='<%= LanguageUtil.format(pageContext, "x-recent-deleted-attachments", deletedAttachments.length) %>'
+									url="<%= viewTrashAttachmentsURL %>"
+								/>
+							</div>
+						</c:if>
 					</div>
 				</c:if>
 			</div>

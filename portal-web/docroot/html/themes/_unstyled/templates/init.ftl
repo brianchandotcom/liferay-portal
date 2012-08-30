@@ -293,7 +293,7 @@
 	<#assign the_title = page_group.getDescriptiveName() />
 </#if>
 
-<#if (tilesTitle == "")>
+<#if tilesTitle == "" && !pageTitle>
 	<#assign the_title = htmlUtil.escape(the_title) />
 </#if>
 

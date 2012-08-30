@@ -54,9 +54,9 @@
 	<td>Open</td>
 </tr>
 <tr>
-	<td>pause</td>
-	<td>5000</td>
-	<td></td>
+	<td>waitForText</td>
+	<td>//li[contains(@class, 'social-office-enabled')]/span[2]/a</td>
+	<td>Open Site Name</td>
 </tr>
 <tr>
 	<td>assertText</td>
@@ -92,6 +92,16 @@
 	<td>type</td>
 	<td>//input[@id='_8_title']</td>
 	<td>Calendar Event1 Title</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>5000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>//span[@id='cke_48_label' and .='Source']</td>
+	<td>Source</td>
 </tr>
 <tr>
 	<td>assertText</td>

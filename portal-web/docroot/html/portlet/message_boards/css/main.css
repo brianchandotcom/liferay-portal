@@ -84,6 +84,10 @@
 			margin-left: -2em;
 			padding: 0;
 		}
+
+		.undo {
+			font-weight: bold;
+		}
 	}
 
 	.message-container {

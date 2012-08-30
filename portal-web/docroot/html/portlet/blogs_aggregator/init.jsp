@@ -37,6 +37,10 @@ int max = GetterUtil.getInteger(preferences.getValue("max", "20"));
 boolean enableRssSubscription = GetterUtil.getBoolean(preferences.getValue("enableRssSubscription", null), true);
 boolean showTags = GetterUtil.getBoolean(preferences.getValue("showTags", null), true);
 
+if (PropsValues.RSS_FEEDS_DISABLED) {
+	enableRssSubscription = false;
+}
+
 if (organizationId == 0) {
 	Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 

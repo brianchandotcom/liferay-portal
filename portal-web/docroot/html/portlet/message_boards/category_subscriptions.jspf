@@ -17,13 +17,15 @@
 <c:if test="<%= category == null %>">
 	<div class="category-subscriptions">
 		<div class="category-subscription-types">
-			<liferay-ui:icon
-				image="rss"
-				label="<%= true %>"
-				method="get"
-				target="_blank"
-				url="<%= rssURL.toString() %>"
-			/>
+			<c:if test="<%= !PropsValues.RSS_FEEDS_DISABLED %>">
+				<liferay-ui:icon
+					image="rss"
+					label="<%= true %>"
+					method="get"
+					target="_blank"
+					url="<%= rssURL.toString() %>"
+				/>
+			</c:if>
 
 			<c:if test="<%= MBPermission.contains(permissionChecker, scopeGroupId, ActionKeys.SUBSCRIBE) %>">
 				<c:choose>

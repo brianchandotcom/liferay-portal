@@ -154,39 +154,40 @@ int count = 0;
 		</td>
 	</tr>
 </c:if>
+<c:if test="<%= !PropsValues.RSS_FEEDS_DISABLED %>">
+	<tr class="portlet-section-body<%= MathUtil.isOdd(count++) ? "-alternate" : "" %> results-row <%= MathUtil.isOdd(count) ? "alt" : "" %>">
+		<th>
+			<liferay-ui:message key="rss-subscription" />
+		</th>
+		<td>
+			<liferay-ui:icon-list>
+				<liferay-ui:icon
+					image="rss"
+					label="<%= true %>"
+					message="Atom 1.0"
+					target="_blank"
+					url='<%= themeDisplay.getPathMain() + "/wiki/rss?p_l_id=" + plid + "&companyId=" + company.getCompanyId() + "&nodeId=" + wikiPage.getNodeId() + "&title=" + wikiPage.getTitle() + rssURLAtomParams %>'
+				/>
 
-<tr class="portlet-section-body<%= MathUtil.isOdd(count++) ? "-alternate" : "" %> results-row <%= MathUtil.isOdd(count) ? "alt" : "" %>">
-	<th>
-		<liferay-ui:message key="rss-subscription" />
-	</th>
-	<td>
-		<liferay-ui:icon-list>
-			<liferay-ui:icon
-				image="rss"
-				label="<%= true %>"
-				message="Atom 1.0"
-				target="_blank"
-				url='<%= themeDisplay.getPathMain() + "/wiki/rss?p_l_id=" + plid + "&companyId=" + company.getCompanyId() + "&nodeId=" + wikiPage.getNodeId() + "&title=" + wikiPage.getTitle() + rssURLAtomParams %>'
-			/>
+				<liferay-ui:icon
+					image="rss"
+					label="<%= true %>"
+					message="RSS 1.0"
+					target="_blank"
+					url='<%= themeDisplay.getPathMain() + "/wiki/rss?p_l_id=" + plid + "&companyId=" + company.getCompanyId() + "&nodeId=" + wikiPage.getNodeId() + "&title=" + wikiPage.getTitle() + rssURLRSS10Params %>'
+				/>
 
-			<liferay-ui:icon
-				image="rss"
-				label="<%= true %>"
-				message="RSS 1.0"
-				target="_blank"
-				url='<%= themeDisplay.getPathMain() + "/wiki/rss?p_l_id=" + plid + "&companyId=" + company.getCompanyId() + "&nodeId=" + wikiPage.getNodeId() + "&title=" + wikiPage.getTitle() + rssURLRSS10Params %>'
-			/>
-
-			<liferay-ui:icon
-				image="rss"
-				label="<%= true %>"
-				message="RSS 2.0"
-				target="_blank"
-				url='<%= themeDisplay.getPathMain() + "/wiki/rss?p_l_id=" + plid + "&companyId=" + company.getCompanyId() + "&nodeId=" + wikiPage.getNodeId() + "&title=" + wikiPage.getTitle() + rssURLRSS20Params %>'
-			/>
-		</liferay-ui:icon-list>
-	</td>
-</tr>
+				<liferay-ui:icon
+					image="rss"
+					label="<%= true %>"
+					message="RSS 2.0"
+					target="_blank"
+					url='<%= themeDisplay.getPathMain() + "/wiki/rss?p_l_id=" + plid + "&companyId=" + company.getCompanyId() + "&nodeId=" + wikiPage.getNodeId() + "&title=" + wikiPage.getTitle() + rssURLRSS20Params %>'
+				/>
+			</liferay-ui:icon-list>
+		</td>
+	</tr>
+</c:if>
 
 <c:if test="<%= WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.SUBSCRIBE) || WikiNodePermission.contains(permissionChecker, node, ActionKeys.SUBSCRIBE) %>">
 	<tr class="portlet-section-body<%= MathUtil.isOdd(count++) ? "-alternate" : "" %> results-row <%= MathUtil.isOdd(count) ? "alt" : "" %>">

@@ -111,8 +111,12 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 			String[] subDirNames = _sourceStore.getFileNames(
 				companyId, repositoryId, dirName);
 
-			if (_sourceStore instanceof AdvancedFileSystemStore) {
-				String path = unbuildPath(companyId, repositoryId, dirName);
+			if (subDirNames.length == 0) {
+				String path = dirName;
+
+				if (_sourceStore instanceof AdvancedFileSystemStore) {
+					path = unbuildPath(companyId, repositoryId, dirName);
+				}
 
 				migrateFile(companyId, repositoryId, dirName, path);
 			}
@@ -177,7 +181,7 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 
 		int pos = path.lastIndexOf(CharPool.SLASH);
 
-		if (pos > 0) {
+		if (pos != -1) {
 			path = path.substring(pos);
 		}
 

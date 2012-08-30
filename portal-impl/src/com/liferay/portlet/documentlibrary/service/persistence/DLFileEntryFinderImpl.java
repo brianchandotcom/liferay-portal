@@ -85,15 +85,6 @@ public class DLFileEntryFinderImpl
 	public static final String FIND_BY_G_U_F_S =
 		DLFileEntryFinder.class.getName() + ".findByG_U_F_S";
 
-	public static final String FIND_P_BY_C_R_LIKE_P =
-		DLFileEntryFinder.class.getName() + ".findP_ByC_R_LikeP";
-
-	public static final String FIND_R_BY_COMPANY_ID =
-		DLFileEntryFinder.class.getName() + ".findR_ByCompanyId";
-
-	public static final String FIND_V_BY_C_R_P =
-		DLFileEntryFinder.class.getName() + ".findV_ByC_R_P";
-
 	public int countByExtraSettings() throws SystemException {
 		Session session = null;
 
@@ -485,94 +476,6 @@ public class DLFileEntryFinderImpl
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	public List<String> findPByC_R_LikeP(
-			long companyId, long repostioryId, String path)
-		throws SystemException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = CustomSQLUtil.get(FIND_P_BY_C_R_LIKE_P);
-
-			SQLQuery q = session.createSQLQuery(sql);
-
-			q.addScalar("path_", Type.STRING);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(companyId);
-			qPos.add(repostioryId);
-			qPos.add(path);
-
-			return q.list();
-		}
-		catch (Exception e) {
-			throw new SystemException();
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	public List<Long> findRByCompanyId(long companyId) throws SystemException {
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = CustomSQLUtil.get(FIND_R_BY_COMPANY_ID);
-
-			SQLQuery q = session.createSQLQuery(sql);
-
-			q.addScalar("repositoryId", Type.LONG);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(companyId);
-
-			return q.list(true);
-		}
-		catch (Exception e) {
-			throw new SystemException();
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	public List<String> findVByC_R_P(
-			long companyId, long repositoryId, String path)
-		throws SystemException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = CustomSQLUtil.get(FIND_V_BY_C_R_P);
-
-			SQLQuery q = session.createSQLQuery(sql);
-
-			q.addScalar("version", Type.STRING);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(companyId);
-			qPos.add(repositoryId);
-			qPos.add(path);
-
-			return q.list(true);
-		}
-		catch (Exception e) {
-			throw new SystemException();
 		}
 		finally {
 			closeSession(session);

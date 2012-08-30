@@ -375,7 +375,7 @@ public abstract class BaseStore implements Store {
 		throws PortalException, SystemException;
 
 	/**
-	 * Returns all files of the directory, excluding sub-directories.
+	 * Returns all files of the directory, excluding subdirectories.
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  repositoryId the primary key of the data repository (optionally

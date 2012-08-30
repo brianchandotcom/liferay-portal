@@ -274,13 +274,13 @@ public class FileSystemStore extends BaseStore {
 			long companyId, long repositoryId, String fileName)
 		throws NoSuchDirectoryException {
 
-		File dirNameDir = getDirNameDir(companyId, repositoryId, fileName);
+		File fileNameDir = getFileNameDir(companyId, repositoryId, fileName);
 
-		if (!dirNameDir.exists()) {
-			throw new NoSuchDirectoryException(dirNameDir.getPath());
+		if (!fileNameDir.exists()) {
+			throw new NoSuchDirectoryException(fileNameDir.getPath());
 		}
 
-		String[] fileVersions = FileUtil.listFiles(dirNameDir);
+		String[] fileVersions = FileUtil.listFiles(fileNameDir);
 
 		Arrays.sort(fileVersions);
 

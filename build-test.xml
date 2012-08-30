@@ -183,9 +183,9 @@
 		</if>
 
 		<if>
-			<equals arg1="${test.ant.script.selenium.implementation}" arg2="web-driver" />
+			<equals arg1="${test.ant.script.selenium.implementation}" arg2="webdriver" />
 			<then>
-				<property name="test.ant.script.file.selenium.implementation" value="&lt;property name=&quot;test.selenium.implementation&quot; value=&quot;web-driver&quot; /&gt;" />
+				<property name="test.ant.script.file.selenium.implementation" value="&lt;property name=&quot;test.selenium.implementation&quot; value=&quot;webdriver&quot; /&gt;" />
 			</then>
 			<else>
 				<property name="test.ant.script.file.selenium.implementation" value="&lt;property name=&quot;test.selenium.implementation&quot; value=&quot;selenium&quot; /&gt;" />
@@ -219,9 +219,9 @@
 		</if>
 
 		<if>
-			<equals arg1="${test.ant.script.selenium.implementation}" arg2="web-driver" />
+			<equals arg1="${test.ant.script.selenium.implementation}" arg2="webdriver" />
 			<then>
-				<property name="test.ant.script.file.selenium.implementation" value="&lt;param name=&quot;test.selenium.implementation&quot; value=&quot;web-driver&quot; /&gt;" />
+				<property name="test.ant.script.file.selenium.implementation" value="&lt;param name=&quot;test.selenium.implementation&quot; value=&quot;webdriver&quot; /&gt;" />
 			</then>
 			<else>
 				<property name="test.ant.script.file.selenium.implementation" value="&lt;param name=&quot;test.selenium.implementation&quot; value=&quot;selenium&quot; /&gt;" />
@@ -2980,64 +2980,50 @@ executable ZIP file.
 		</if>
 
 		<if>
-			<equals arg1="${test.selenium.implementation}" arg2="selenium" />
+			<or>
+				<equals arg1="${test.browser}" arg2="chrome" />
+				<equals arg1="${test.browser}" arg2="firefox" />
+			</or>
 			<then>
-				<if>
-					<or>
-						<equals arg1="${test.browser}" arg2="chrome" />
-						<equals arg1="${test.browser}" arg2="firefox" />
-					</or>
-					<then>
-						<replace
-							file="portal-web/test/test-portal-web.properties"
-							token="#selenium.browser.commands.dir="
-							value="selenium.browser.commands.dir=${basedir.unix}/tools/selenium/browser-commands/selenium/firefox/3.6/"
-						/>
-						<replace
-							file="portal-web/test/test-portal-web.properties"
-							token="#selenium.executable.dir="
-							value="selenium.executable.dir=${basedir.unix}/tools/selenium/"
-						/>
-					</then>
-				</if>
+				<property name="browser.type" value="firefox" />
+
+				<propertycopy name="browser.version" from="browser.firefox.version" silent="true" />
 			</then>
 			<elseif>
-				<equals arg1="${test.selenium.implementation}" arg2="web-driver" />
+				<equals arg1="${test.browser}" arg2="googlechrome" />
 				<then>
-					<if>
-						<or>
-							<equals arg1="${test.browser}" arg2="chrome" />
-							<equals arg1="${test.browser}" arg2="firefox" />
-						</or>
-						<then>
-							<replace
-								file="portal-web/test/test-portal-web.properties"
-								token="#selenium.executable.dir="
-								value="selenium.browser.commands.dir=${basedir.unix}/tools/selenium/browser-commands/webdriver/firefox/3.6/"
-							/>
-							<replace
-								file="portal-web/test/test-portal-web.properties"
-								token="#selenium.executable.dir="
-								value="selenium.executable.dir=${basedir.unix}/tools/selenium/"
-							/>
-						</then>
-						<elseif>
-							<equals arg1="${test.browser}" arg2="googlechrome" />
-							<then>
-								<replace
-									file="portal-web/test/test-portal-web.properties"
-									token="#selenium.executable.dir="
-									value="selenium.executable.dir=${basedir.unix}/tools/selenium/"
-								/>
-							</then>
-						</elseif>
-					</if>
+					<property name="browser.type" value="googlechrome" />
+
+					<propertycopy name="browser.version" from="browser.googlechrome.version" silent="true" />
+				</then>
+			</elseif>
+			<elseif>
+				<or>
+					<equals arg1="${test.browser}" arg2="iehta" />
+					<equals arg1="${test.browser}" arg2="iexplore" />
+				</or>
+				<then>
+					<property name="browser.type" value="ie" />
+
+					<propertycopy name="browser.version" from="browser.ie.version" silent="true" />
 				</then>
 			</elseif>
 		</if>
 
+		<replace
+			file="portal-web/test/test-portal-web.properties"
+			token="#selenium.browser.commands.dir="
+			value="selenium.browser.commands.dir=${basedir.unix}/tools/selenium/browser-commands/${test.selenium.implementation}/${os.type}/${browser.type}/${browser.version}/"
+		/>
+
+		<replace
+			file="portal-web/test/test-portal-web.properties"
+			token="#selenium.executable.dir="
+			value="selenium.executable.dir=${basedir.unix}/tools/selenium/"
+		/>
+
 		<if>
-			<equals arg1="${test.selenium.implementation}" arg2="web-driver" />
+			<equals arg1="${test.selenium.implementation}" arg2="webdriver" />
 			<then>
 				<replace
 					file="portal-web/test/test-portal-web.properties"

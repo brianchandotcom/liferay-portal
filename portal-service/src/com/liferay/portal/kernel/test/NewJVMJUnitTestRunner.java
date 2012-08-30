@@ -52,6 +52,25 @@ public class NewJVMJUnitTestRunner extends BlockJUnit4ClassRunner {
 		_classPath = ClassPathUtil.getJVMClassPath(false);
 	}
 
+	protected static void attachProcess(String message) {
+		if (!Boolean.getBoolean("attached")) {
+			ProcessExecutor.ProcessContext.attach(
+				message, 1000, new ProcessExecutor.ShutdownHook() {
+
+					public boolean shutdown(
+						int shutdownCode, Throwable shutdownThrowable) {
+
+						System.exit(shutdownCode);
+
+						return true;
+					}
+
+				});
+
+			System.setProperty("attached", StringPool.TRUE);
+		}
+	}
+
 	protected List<String> createArguments(FrameworkMethod frameworkMethod) {
 		List<String> arguments = new ArrayList<String>();
 
@@ -122,19 +141,7 @@ public class NewJVMJUnitTestRunner extends BlockJUnit4ClassRunner {
 		}
 
 		public Serializable call() throws ProcessException {
-			ProcessExecutor.ProcessContext.attach(
-				"Attached " + toString(), 1000,
-				new ProcessExecutor.ShutdownHook() {
-
-					public boolean shutdown(
-						int shutdownCode, Throwable shutdownThrowable) {
-
-						System.exit(shutdownCode);
-
-						return true;
-					}
-
-				});
+			attachProcess("Attached " + toString());
 
 			Thread currentThread = Thread.currentThread();
 

@@ -111,7 +111,7 @@ public class ActionUtil {
 			RawMetadataProcessorUtil.generateMetadata(fileVersion);
 
 			if (fileVersion.isInTrash()) {
-				throw new NoSuchFileException();
+				throw new NoSuchFileEntryException();
 			}
 		}
 	}

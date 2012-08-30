@@ -375,18 +375,16 @@ public class GroupImpl extends GroupBaseImpl {
 			PermissionChecker permissionChecker, boolean privateSite)
 		throws PortalException, SystemException {
 
+		if (!isControlPanel() && !isSite() && !isUser()) {
+			return false;
+		}
+
 		boolean showSite = true;
 
 		Layout defaultLayout = null;
 
 		int siteLayoutsCount = LayoutLocalServiceUtil.getLayoutsCount(
 			this, true);
-
-		if (siteLayoutsCount > 0) {
-			defaultLayout = LayoutLocalServiceUtil.fetchFirstLayout(
-				getGroupId(), privateSite,
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-		}
 
 		if (siteLayoutsCount == 0) {
 			boolean hasPowerUserRole = RoleLocalServiceUtil.hasUserRole(
@@ -433,20 +431,22 @@ public class GroupImpl extends GroupBaseImpl {
 				}
 			}
 		}
-		else if ((defaultLayout != null ) &&
-				 !LayoutPermissionUtil.contains(
+		else {
+			defaultLayout = LayoutLocalServiceUtil.fetchFirstLayout(
+				getGroupId(), privateSite,
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+			if ((defaultLayout != null ) &&
+				!LayoutPermissionUtil.contains(
 					permissionChecker, defaultLayout, true, ActionKeys.VIEW)) {
 
-			showSite = false;
-		}
-		else if (isOrganization() && !isSite()) {
-			_log.error(
-				"Group " + getGroupId() +
-					" is an organization site that does not have pages");
-		}
-
-		if (!isControlPanel() && !isSite() && !isUser()) {
-			showSite = false;
+				showSite = false;
+			}
+			else if (isOrganization() && isSite()) {
+				_log.error(
+					"Group " + getGroupId() +
+						" is an organization site that does not have pages");
+			}
 		}
 
 		return showSite;

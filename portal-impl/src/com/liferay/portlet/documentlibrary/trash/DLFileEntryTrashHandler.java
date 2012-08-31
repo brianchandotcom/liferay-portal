@@ -114,6 +114,11 @@ public class DLFileEntryTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
+	public String getDeleteMessage() {
+		return "found-in-deleted-folder-x";
+	}
+
+	@Override
 	public String getRestoreLink(PortletRequest portletRequest, long classPK)
 		throws PortalException, SystemException {
 
@@ -132,11 +137,6 @@ public class DLFileEntryTrashHandler extends BaseTrashHandler {
 		DLFolder dlFolder = dlFileEntry.getFolder();
 
 		return DLUtil.getAbsolutePath(portletRequest, dlFolder.getFolderId());
-	}
-
-	@Override
-	public String getDeleteMessage() {
-		return "found-in-deleted-folder-x";
 	}
 
 	/**

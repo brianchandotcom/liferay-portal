@@ -70,6 +70,8 @@ public class PropsValues {
 
 	public static final String ASSET_CATEGORIES_NAVIGATION_DISPLAY_STYLES_TEMPLATE_CONTENT = PropsUtil.get(PropsKeys.ASSET_CATEGORIES_NAVIGATION_DISPLAY_STYLES_TEMPLATE_CONTENT);
 
+	public static final String ASSET_CATEGORIES_NAVIGATION_DISPLAY_STYLES_TEMPLATE_DEFAULT_CONFIG = PropsUtil.get(PropsKeys.ASSET_CATEGORIES_NAVIGATION_DISPLAY_STYLES_TEMPLATE_DEFAULT_CONFIG);
+
 	public static final String[] ASSET_CATEGORIES_PROPERTIES_DEFAULT = PropsUtil.getArray(PropsKeys.ASSET_CATEGORIES_PROPERTIES_DEFAULT);
 
 	public static final boolean ASSET_CATEGORIES_SEARCH_HIERARCHICAL = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.ASSET_CATEGORIES_SEARCH_HIERARCHICAL));
@@ -91,6 +93,8 @@ public class PropsValues {
 	public static final boolean ASSET_TAG_SUGGESTIONS_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.ASSET_TAG_SUGGESTIONS_ENABLED));
 
 	public static final String ASSET_TAGS_NAVIGATION_DISPLAY_STYLES_TEMPLATE_CONTENT = PropsUtil.get(PropsKeys.ASSET_TAGS_NAVIGATION_DISPLAY_STYLES_TEMPLATE_CONTENT);
+
+	public static final String ASSET_TAGS_NAVIGATION_DISPLAY_STYLES_TEMPLATE_DEFAULT_CONFIG = PropsUtil.get(PropsKeys.ASSET_TAGS_NAVIGATION_DISPLAY_STYLES_TEMPLATE_DEFAULT_CONFIG);
 
 	public static final String ASSET_VOCABULARY_DEFAULT = PropsUtil.get(PropsKeys.ASSET_VOCABULARY_DEFAULT);
 
@@ -173,6 +177,8 @@ public class PropsValues {
 	public static final boolean BASIC_AUTH_PASSWORD_REQUIRED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.BASIC_AUTH_PASSWORD_REQUIRED));
 
 	public static String BLOGS_DISPLAY_STYLES_TEMPLATE_CONTENT = PropsUtil.get(PropsKeys.BLOGS_DISPLAY_STYLES_TEMPLATE_CONTENT);
+
+	public static final String BLOGS_DISPLAY_STYLES_TEMPLATE_DEFAULT_CONFIG = PropsUtil.get(PropsKeys.BLOGS_DISPLAY_STYLES_TEMPLATE_DEFAULT_CONFIG);
 
 	public static final String BLOGS_EMAIL_FROM_ADDRESS = PropsUtil.get(PropsKeys.BLOGS_EMAIL_FROM_ADDRESS);
 
@@ -1518,6 +1524,8 @@ public class PropsValues {
 
 	public static final String SITES_SITEMAP_DISPLAY_STYLES_TEMPLATE_CONTENT = PropsUtil.get(PropsKeys.SITES_SITEMAP_DISPLAY_STYLES_TEMPLATE_CONTENT);
 
+	public static final String SITES_SITEMAP_DISPLAY_STYLES_TEMPLATE_DEFAULT_CONFIG = PropsUtil.get(PropsKeys.SITES_SITEMAP_DISPLAY_STYLES_TEMPLATE_DEFAULT_CONFIG);
+
 	public static final int[] SOCIAL_ACTIVITY_CONTRIBUTION_INCREMENTS = GetterUtil.getIntegerValues(PropsUtil.getArray(PropsKeys.SOCIAL_ACTIVITY_CONTRIBUTION_INCREMENTS));
 
 	public static final int[] SOCIAL_ACTIVITY_CONTRIBUTION_LIMIT_VALUES = GetterUtil.getIntegerValues(PropsUtil.getArray(PropsKeys.SOCIAL_ACTIVITY_CONTRIBUTION_LIMIT_VALUES));
@@ -1727,6 +1735,8 @@ public class PropsValues {
 	public static final String WIDGET_SERVLET_MAPPING = PropsUtil.get(PropsKeys.WIDGET_SERVLET_MAPPING);
 
 	public static final String WIKI_DISPLAY_STYLES_TEMPLATE_CONTENT = PropsUtil.get(PropsKeys.WIKI_DISPLAY_STYLES_TEMPLATE_CONTENT);
+
+	public static final String WIKI_DISPLAY_STYLES_TEMPLATE_DEFAULT_CONFIG = PropsUtil.get(PropsKeys.WIKI_DISPLAY_STYLES_TEMPLATE_DEFAULT_CONFIG);
 
 	public static final String WIKI_EMAIL_FROM_ADDRESS = PropsUtil.get(PropsKeys.WIKI_EMAIL_FROM_ADDRESS);
 

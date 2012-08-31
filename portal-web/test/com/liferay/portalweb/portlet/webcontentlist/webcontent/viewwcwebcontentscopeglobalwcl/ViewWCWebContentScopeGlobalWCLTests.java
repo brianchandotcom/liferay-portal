@@ -12,11 +12,12 @@
  * details.
  */
 
-package com.liferay.portalweb.portlet.webcontentlist.webcontent;
+package com.liferay.portalweb.portlet.webcontentlist.webcontent.viewwcwebcontentscopeglobalwcl;
 
 import com.liferay.portalweb.portal.BaseTestSuite;
-import com.liferay.portalweb.portlet.webcontentlist.webcontent.viewwcwebcontentscopeglobalwcl.ViewWCWebContentScopeGlobalWCLTests;
-import com.liferay.portalweb.portlet.webcontentlist.webcontent.viewwcwebcontentwcl.ViewWCWebContentWCLTests;
+import com.liferay.portalweb.portal.util.TearDownPageTest;
+import com.liferay.portalweb.portlet.webcontentlist.portlet.addportletwcl.AddPageWCLTest;
+import com.liferay.portalweb.portlet.webcontentlist.portlet.addportletwcl.AddPortletWCLTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -24,15 +25,17 @@ import junit.framework.TestSuite;
 /**
  * @author Brian Wing Shun Chan
  */
-public class WebContentTestPlan extends BaseTestSuite {
-
+public class ViewWCWebContentScopeGlobalWCLTests extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
-
-		testSuite.addTest(ViewWCWebContentScopeGlobalWCLTests.suite());
-		testSuite.addTest(ViewWCWebContentWCLTests.suite());
+		testSuite.addTestSuite(AddWCWebContentScopeGlobalCPTest.class);
+		testSuite.addTestSuite(AddPageWCLTest.class);
+		testSuite.addTestSuite(AddPortletWCLTest.class);
+		testSuite.addTestSuite(ConfigurePortletWCLSiteFilterGlobalTest.class);
+		testSuite.addTestSuite(ViewWCWebContentScopeGlobalWCLTest.class);
+		testSuite.addTestSuite(TearDownWCWebContentScopeGlobalCPTest.class);
+		testSuite.addTestSuite(TearDownPageTest.class);
 
 		return testSuite;
 	}
-
 }

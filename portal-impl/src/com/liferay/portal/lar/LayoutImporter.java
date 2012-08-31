@@ -176,21 +176,15 @@ public class LayoutImporter {
 	}
 
 	protected void deleteMissingLayouts(
-			long groupId, boolean privateLayout, Set<Long> newLayoutIds,
-			List<Layout> previousLayouts, ServiceContext serviceContext)
+			long groupId, boolean privateLayout, List<Layout> previousLayouts,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		// Layouts
 
-		if (_log.isDebugEnabled()) {
-			if (newLayoutIds.size() > 0) {
-				_log.debug("Delete missing layouts");
-			}
-		}
-
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-		Set<Long> existLayoutIds = new HashSet<Long>();
+		Set<Long> existingLayoutIds = new HashSet<Long>();
 
 		if (group.hasStagingGroup()) {
 			Group stagingGroup = group.getStagingGroup();
@@ -202,13 +196,19 @@ public class LayoutImporter {
 					stagingGroup.getGroupId(), privateLayout);
 
 				for (Layout layout : layouts) {
-					existLayoutIds.add(layout.getLayoutId());
+					existingLayoutIds.add(layout.getLayoutId());
 				}
 			}
 		}
 
+		if (_log.isDebugEnabled()) {
+			if (!existingLayoutIds.isEmpty()) {
+				_log.debug("Delete missing layouts");
+			}
+		}
+
 		for (Layout layout : previousLayouts) {
-			if (!existLayoutIds.contains(layout.getLayoutId())) {
+			if (!existingLayoutIds.contains(layout.getLayoutId())) {
 				try {
 					LayoutLocalServiceUtil.deleteLayout(
 						layout, privateLayout, serviceContext);
@@ -784,8 +784,7 @@ public class LayoutImporter {
 
 		if (deleteMissingLayouts) {
 			deleteMissingLayouts(
-				groupId, privateLayout, newLayoutIds, previousLayouts,
-				serviceContext);
+				groupId, privateLayout, previousLayouts, serviceContext);
 		}
 
 		// Page count

@@ -184,7 +184,15 @@ public class RuntimePageImpl implements RuntimePage {
 					x = close2 + runtimeLogic.getClose2Tag().length();
 				}
 
-				sb.append(runtimeLogic.processXML(content.substring(y, x)));
+				String runtimePortletTag = content.substring(y, x);
+
+				if ((renderPortlet != null) &&
+					runtimePortletTag.contains(renderPortlet.getPortletId())) {
+
+					return StringPool.BLANK;
+				}
+
+				sb.append(runtimeLogic.processXML(runtimePortletTag));
 
 				y = content.indexOf(runtimeLogic.getOpenTag(), x);
 			}

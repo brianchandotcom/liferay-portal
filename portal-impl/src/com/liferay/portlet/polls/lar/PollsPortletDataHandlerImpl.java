@@ -302,8 +302,6 @@ public class PollsPortletDataHandlerImpl extends BasePortletDataHandler {
 			PortletDataContext portletDataContext, PollsVote vote)
 		throws Exception {
 
-		long userId = portletDataContext.getUserId(vote.getUserUuid());
-
 		Map<Long, Long> questionIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				PollsQuestion.class);
@@ -324,7 +322,7 @@ public class PollsPortletDataHandlerImpl extends BasePortletDataHandler {
 
 		try {
 			PollsVoteLocalServiceUtil.addVote(
-				userId, questionId, choiceId, serviceContext);
+				vote.getUserId(), questionId, choiceId, serviceContext);
 		}
 		catch (DuplicateVoteException dve) {
 		}

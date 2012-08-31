@@ -69,6 +69,11 @@ public abstract class BaseTrashHandler implements TrashHandler {
 	}
 
 	@SuppressWarnings("unused")
+	public String getDeleteMessage() {
+		return "deleted-in-x";
+	}
+
+	@SuppressWarnings("unused")
 	public String getRestoreLink(PortletRequest PortletRequest, long classPK)
 		throws PortalException, SystemException {
 

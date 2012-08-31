@@ -211,11 +211,10 @@ public abstract class BaseCommandReceiver implements CommandReceiver {
 				String causeString = GetterUtil.getString(cause.toString());
 
 				if (causeString.contains("DuplicateFileException")) {
-
 					returnValue = "201";
 				}
 				else if (causeString.contains("NoSuchFolderException")||
-					causeString.contains("NoSuchGroupException")) {
+						 causeString.contains("NoSuchGroupException")) {
 
 					returnValue = "204";
 				}

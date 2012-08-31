@@ -862,6 +862,17 @@ public class WebServerServlet extends HttpServlet {
 			}
 		}
 
+		if ((ParamUtil.getInteger(request, "width", 0) > 0) ||
+			(ParamUtil.getInteger(request, "height", 0) > 0)) {
+
+			InputStream inputStream = fileVersion.getContentStream(true);
+			Image image = ImageLocalServiceUtil.getImage(inputStream);
+
+			writeImage(image, request, response);
+
+			return;
+		}
+
 		String fileName = fileVersion.getTitle();
 
 		String extension = fileVersion.getExtension();
@@ -884,12 +895,6 @@ public class WebServerServlet extends HttpServlet {
 		int previewFileIndex = ParamUtil.getInteger(
 			request, "previewFileIndex");
 		boolean audioPreview = ParamUtil.getBoolean(request, "audioPreview");
-		boolean resizeImage = false;
-		if ((ParamUtil.getInteger(request, "width", 0) > 0) ||
-			(ParamUtil.getInteger(request, "height", 0) > 0)) {
-			
-			resizeImage = true;
-		}
 		boolean imagePreview = ParamUtil.getBoolean(request, "imagePreview");
 		boolean videoPreview = ParamUtil.getBoolean(request, "videoPreview");
 		int videoThumbnail = ParamUtil.getInteger(request, "videoThumbnail");
@@ -979,14 +984,6 @@ public class WebServerServlet extends HttpServlet {
 				fileVersion, thumbnailIndex);
 
 			converted = true;
-		}
-		else if (resizeImage) {
-			inputStream = fileVersion.getContentStream(true);
-			Image image = ImageLocalServiceUtil.getImage(inputStream);
-
-			writeImage(image, request, response);
-
-			return;
 		}
 		else {
 			inputStream = fileVersion.getContentStream(true);

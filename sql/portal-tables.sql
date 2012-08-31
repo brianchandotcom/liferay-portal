@@ -216,7 +216,7 @@ create table BlogsEntry (
 	modifiedDate DATE null,
 	title VARCHAR(150) null,
 	urlTitle VARCHAR(150) null,
-	description VARCHAR(75) null,
+	description STRING null,
 	content TEXT null,
 	displayDate DATE null,
 	allowPingbacks BOOLEAN,

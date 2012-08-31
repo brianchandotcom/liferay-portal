@@ -64,11 +64,13 @@ WikiNode node = (WikiNode)row.getObject();
 		/>
 	</c:if>
 
-	<liferay-ui:icon
-		image="rss"
-		target="_blank"
-		url='<%= themeDisplay.getPathMain() + "/wiki/rss?p_l_id=" + plid + "&nodeId=" + node.getNodeId() + rssURLParams %>'
+	<c:if test="<%= !PropsValues.RSS_FEEDS_DISABLED %>">
+		<liferay-ui:icon
+			image="rss"
+			target="_blank"
+			url='<%= themeDisplay.getPathMain() + "/wiki/rss?p_l_id=" + plid + "&nodeId=" + node.getNodeId() + rssURLParams %>'
 		/>
+	</c:if>
 
 	<c:if test="<%= WikiNodePermission.contains(permissionChecker, node, ActionKeys.SUBSCRIBE) %>">
 		<c:choose>

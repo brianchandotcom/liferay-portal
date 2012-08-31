@@ -62,7 +62,7 @@ MBThread thread = message.getThread();
 	</c:if>
 
 	<c:if test="<%= portletName.equals(PortletKeys.MESSAGE_BOARDS) %>">
-		<c:if test="<%= MBMessagePermission.contains(permissionChecker, message, ActionKeys.VIEW) %>">
+		<c:if test="<%= !PropsValues.RSS_FEEDS_DISABLED && MBMessagePermission.contains(permissionChecker, message, ActionKeys.VIEW) %>">
 
 			<%
 			rssURL.setParameter("p_l_id", String.valueOf(plid));

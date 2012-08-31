@@ -35,8 +35,10 @@ import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLImpl;
+import com.liferay.portlet.journal.NoSuchFeedException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleDisplay;
 import com.liferay.portlet.journal.model.JournalFeed;
@@ -69,6 +71,9 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 
@@ -82,6 +87,19 @@ public class RSSAction extends PortletAction {
 			ActionMapping mapping, ActionForm form, PortletConfig portletConfig,
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
+
+		if (PropsValues.RSS_FEEDS_DISABLED) {
+			HttpServletRequest request = PortalUtil.getHttpServletRequest(
+				resourceRequest);
+			HttpServletResponse response = PortalUtil.getHttpServletResponse(
+				resourceResponse);
+
+			PortalUtil.sendError(
+				HttpServletResponse.SC_NOT_FOUND, new NoSuchFeedException(),
+				request, response);
+
+			return;
+		}
 
 		resourceResponse.setContentType(ContentTypes.TEXT_XML_UTF8);
 

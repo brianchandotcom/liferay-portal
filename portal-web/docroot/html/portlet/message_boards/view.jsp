@@ -243,7 +243,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 		<%@ include file="/html/portlet/message_boards/view_threads.jspf" %>
 
-		<c:if test='<%= topLink.equals("recent-posts") %>'>
+		<c:if test='<%= !PropsValues.RSS_FEEDS_DISABLED && topLink.equals("recent-posts") %>'>
 
 			<%
 			rssURL.setParameter("groupId", String.valueOf(scopeGroupId));

@@ -23,7 +23,9 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.struts.ActionConstants;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.journal.NoSuchFeedException;
 import com.liferay.portlet.messageboards.service.MBMessageServiceUtil;
 import com.liferay.util.RSSUtil;
 
@@ -45,6 +47,14 @@ public class RSSAction extends Action {
 			ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response)
 		throws Exception {
+
+		if (PropsValues.RSS_FEEDS_DISABLED) {
+			PortalUtil.sendError(
+				HttpServletResponse.SC_NOT_FOUND, new NoSuchFeedException(),
+				request, response);
+
+			return null;
+		}
 
 		try {
 			ServletResponseUtil.sendFile(

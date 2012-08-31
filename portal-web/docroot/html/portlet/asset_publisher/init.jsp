@@ -230,6 +230,10 @@ String rssDisplayStyle = preferences.getValue("rssDisplayStyle", RSSUtil.DISPLAY
 String rssFormat = preferences.getValue("rssFormat", "atom10");
 String rssName = preferences.getValue("rssName", portletDisplay.getTitle());
 
+if (PropsValues.RSS_FEEDS_DISABLED) {
+	enableRSS = false;
+}
+
 String[] assetEntryXmls = preferences.getValues("assetEntryXml", new String[0]);
 
 boolean viewInContext = assetLinkBehavior.equals("viewInPortlet");

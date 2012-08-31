@@ -1853,6 +1853,8 @@ public interface PropsKeys {
 
 	public static final String RSS_CONNECTION_TIMEOUT = "rss.connection.timeout";
 
+	public static final String RSS_FEEDS_DISABLED = "rss.feeds.disabled";
+
 	public static final String SANDBOX_DEPLOY_DIR = "sandbox.deploy.dir";
 
 	public static final String SANDBOX_DEPLOY_ENABLED = "sandbox.deploy.enabled";

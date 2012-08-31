@@ -48,6 +48,12 @@ String editorParam = emailParam + "Body_" + currentLanguageId;
 String editorContent = emailBody;
 
 String[] socialBookmarksTypesArray = StringUtil.split(preferences.getValue("socialBookmarksTypes", PropsUtil.get(PropsKeys.SOCIAL_BOOKMARK_TYPES)));
+
+String tabs2Names = "display-settings,email-from,entry-added-email,entry-updated-email";
+
+if (!rssFeedsDisabled) {
+	tabs2Names += ",rss";
+}
 %>
 
 <liferay-portlet:renderURL portletConfiguration="true" var="portletURL">
@@ -63,7 +69,7 @@ String[] socialBookmarksTypesArray = StringUtil.split(preferences.getValue("soci
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
 	<liferay-ui:tabs
-		names="display-settings,email-from,entry-added-email,entry-updated-email,rss"
+		names="<%= tabs2Names %>"
 		param="tabs2"
 		url="<%= portletURL %>"
 	/>

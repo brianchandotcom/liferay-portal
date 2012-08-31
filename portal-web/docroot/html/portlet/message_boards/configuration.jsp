@@ -49,6 +49,12 @@ else if (tabs2.equals("message-updated-email")) {
 	signatureEditorParam = "emailMessageUpdatedSignature";
 	signatureEditorContent = emailMessageUpdatedSignature;
 }
+
+String tabs2Names = "general,email-from,message-added-email,message-updated-email,thread-priorities,user-ranks";
+
+if (!PropsValues.RSS_FEEDS_DISABLED) {
+	tabs2Names += ",rss";
+}
 %>
 
 <liferay-portlet:renderURL portletConfiguration="true" var="portletURL">
@@ -64,7 +70,7 @@ else if (tabs2.equals("message-updated-email")) {
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
 	<liferay-ui:tabs
-		names="general,email-from,message-added-email,message-updated-email,thread-priorities,user-ranks,rss"
+		names="<%= tabs2Names %>"
 		param="tabs2"
 		url="<%= portletURL %>"
 	/>

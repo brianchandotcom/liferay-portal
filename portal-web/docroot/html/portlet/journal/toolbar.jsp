@@ -89,27 +89,31 @@
 			taglibURL = "javascript:" + renderResponse.getNamespace() + "openFeedsView()";
 			%>
 
-			<liferay-ui:icon
-				message="feeds"
-				url="<%= taglibURL %>"
-			/>
+			<c:if test="<%= !PropsValues.RSS_FEEDS_DISABLED %>">
+				<liferay-ui:icon
+					message="feeds"
+					url="<%= taglibURL %>"
+				/>
+			</c:if>
 		</liferay-ui:icon-menu>
 	</c:if>
 </span>
 
 <aui:script>
-	function <portlet:namespace />openFeedsView() {
-		Liferay.Util.openWindow(
-			{
-				dialog: {
-					width: 820
-				},
-				id: '<portlet:namespace />openFeedsView',
-				title: '<%= UnicodeLanguageUtil.get(pageContext, "feeds") %>',
-				uri: '<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/journal/view_feeds" /></liferay-portlet:renderURL>'
-			}
-		);
-	}
+	<c:if test="<%= !PropsValues.RSS_FEEDS_DISABLED %>">
+		function <portlet:namespace />openFeedsView() {
+			Liferay.Util.openWindow(
+				{
+					dialog: {
+						width: 820
+					},
+					id: '<portlet:namespace />openFeedsView',
+					title: '<%= UnicodeLanguageUtil.get(pageContext, "feeds") %>',
+					uri: '<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/journal/view_feeds" /></liferay-portlet:renderURL>'
+				}
+			);
+		}
+	</c:if>
 
 	function <portlet:namespace />openStructuresView() {
 		Liferay.Util.openWindow(

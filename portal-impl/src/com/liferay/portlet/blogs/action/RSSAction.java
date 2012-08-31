@@ -25,8 +25,10 @@ import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.blogs.service.BlogsEntryServiceUtil;
+import com.liferay.portlet.journal.NoSuchFeedException;
 import com.liferay.util.RSSUtil;
 
 import java.io.OutputStream;
@@ -55,6 +57,19 @@ public class RSSAction extends PortletAction {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
+		if (PropsValues.RSS_FEEDS_DISABLED) {
+			HttpServletRequest request = PortalUtil.getHttpServletRequest(
+				resourceRequest);
+			HttpServletResponse response = PortalUtil.getHttpServletResponse(
+				resourceResponse);
+
+			PortalUtil.sendError(
+				HttpServletResponse.SC_NOT_FOUND, new NoSuchFeedException(),
+				request, response);
+
+			return;
+		}
+
 		resourceResponse.setContentType(ContentTypes.TEXT_XML_UTF8);
 
 		OutputStream outputStream = resourceResponse.getPortletOutputStream();
@@ -74,6 +89,14 @@ public class RSSAction extends PortletAction {
 			ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response)
 		throws Exception {
+
+		if (PropsValues.RSS_FEEDS_DISABLED) {
+			PortalUtil.sendError(
+				HttpServletResponse.SC_NOT_FOUND, new NoSuchFeedException(),
+				request, response);
+
+			return null;
+		}
 
 		try {
 			ServletResponseUtil.sendFile(

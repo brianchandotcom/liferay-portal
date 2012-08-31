@@ -337,6 +337,16 @@ hr, .separator {
 	}
 }
 
+.lfr-percentage-bar {
+	background: #A7CEDF !important;
+	padding: 0px !important;
+}
+
+.lfr-percentage-bar-spacer {
+	background: #FFF !important;
+	padding: 0px !important;
+}
+
 .lfr-portlet-title-editable-content .aui-field {
 	display: inline;
 	float: none;

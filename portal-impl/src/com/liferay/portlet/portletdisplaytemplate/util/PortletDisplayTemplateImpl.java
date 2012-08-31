@@ -219,7 +219,7 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 
 		VelocityTaglib velocityTaglib = new VelocityTaglib(
 			servletContext, request,
-			new PipingServletResponse(response, writer), pageContext);
+			new PipingServletResponse(response, writer), pageContext, null);
 
 		contextObjects.put(
 			PortletDisplayTemplateConstants.TAGLIB_LIFERAY, velocityTaglib);

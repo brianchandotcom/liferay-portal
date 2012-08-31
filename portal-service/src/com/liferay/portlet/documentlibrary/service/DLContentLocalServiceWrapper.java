@@ -321,6 +321,19 @@ public class DLContentLocalServiceWrapper implements DLContentLocalService,
 			version);
 	}
 
+	public java.util.List<java.lang.String> getContentNames(long companyId,
+		long repositoryId, java.lang.String dirName)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlContentLocalService.getContentNames(companyId, repositoryId,
+			dirName);
+	}
+
+	public java.util.List<java.lang.Long> getContentRepositoryIds(
+		long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlContentLocalService.getContentRepositoryIds(companyId);
+	}
+
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLContent> getContents(
 		long companyId, long repositoryId)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -340,24 +353,11 @@ public class DLContentLocalServiceWrapper implements DLContentLocalService,
 			repositoryId, dirName);
 	}
 
-	public java.util.List<java.lang.String> getContentNames(long companyId,
-		long repositoryId, java.lang.String dirName)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _dlContentLocalService.getContentNames(companyId, repositoryId,
-			dirName);
-	}
-
 	public long getContentSize(long companyId, long repositoryId,
 		java.lang.String fileName)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _dlContentLocalService.getContentSize(companyId, repositoryId,
 			fileName);
-	}
-
-	public java.util.List<java.lang.Long> getContentRepositoryIds(
-		long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _dlContentLocalService.getContentRepositoryIds(companyId);
 	}
 
 	public java.util.List<java.lang.String> getContentVersions(long companyId,

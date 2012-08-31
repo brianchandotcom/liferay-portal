@@ -65,6 +65,7 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portal.webserver.WebServerServletTokenUtil;
 import com.liferay.portlet.PortletConfigImpl;
 import com.liferay.portlet.PortletURLFactoryUtil;
+import com.liferay.portlet.asset.util.AssetUtil;
 import com.liferay.portlet.expando.service.ExpandoColumnLocalService;
 import com.liferay.portlet.expando.service.ExpandoRowLocalService;
 import com.liferay.portlet.expando.service.ExpandoTableLocalService;
@@ -102,6 +103,15 @@ public class TemplateContextHelper {
 		// Array util
 
 		variables.put("arrayUtil", ArrayUtil_IW.getInstance());
+
+		// Asset util
+
+		try {
+			variables.put("assetUtil", AssetUtil.getAsset());
+		}
+		catch (SecurityException se) {
+			_log.error(se, se);
+		}
 
 		// Audit message factory
 

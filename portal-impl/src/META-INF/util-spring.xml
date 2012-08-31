@@ -703,6 +703,10 @@
 			<bean class="com.liferay.portal.asset.AssetRendererFactoryRegistryImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portlet.asset.util.Asset" class="com.liferay.portlet.asset.util.AssetImpl" />
+	<bean id="com.liferay.portlet.asset.util.AssetUtil" class="com.liferay.portlet.asset.util.AssetUtil">
+		<property name="asset" ref="com.liferay.portlet.asset.util.Asset" />
+	</bean>
 	<bean id="com.liferay.portlet.assetpublisher.util.AssetPublisherHelper" class="com.liferay.portlet.assetpublisher.util.AssetPublisherHelperImpl" />
 	<bean id="com.liferay.portlet.assetpublisher.util.AssetPublisherHelperUtil" class="com.liferay.portlet.assetpublisher.util.AssetPublisherHelperUtil">
 		<property name="assetPublisherHelper" ref="com.liferay.portlet.assetpublisher.util.AssetPublisherHelper" />

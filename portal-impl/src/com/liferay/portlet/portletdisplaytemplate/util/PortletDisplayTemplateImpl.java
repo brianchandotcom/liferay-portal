@@ -16,19 +16,24 @@ package com.liferay.portlet.portletdisplaytemplate.util;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.staging.StagingConstants;
 import com.liferay.portal.kernel.templateparser.Transformer;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.dynamicdatalists.util.DDLTransformer;
 import com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
+import com.liferay.taglib.util.VelocityTaglib;
+
+import java.io.Writer;
 
 import java.util.HashMap;
 import java.util.List;
@@ -38,9 +43,14 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.PageContext;
+
 /**
  * @author Eduardo Garcia
- * @author Juan Fernandez
+ * @author Juan Fernández
  * @author Brian Wing Shun Chan
  */
 public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
@@ -146,28 +156,19 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 	}
 
 	public String renderDDMTemplate(
-			RenderRequest renderRequest, RenderResponse renderResponse,
-			long ddmTemplateId, List<?> entries)
+			PageContext pageContext, long ddmTemplateId, List<?> entries)
 		throws Exception {
 
 		Map<String, Object> contextObjects = new HashMap<String, Object>();
 
 		return renderDDMTemplate(
-			renderRequest, renderResponse, ddmTemplateId, entries,
-			contextObjects);
+			pageContext, ddmTemplateId, entries, contextObjects);
 	}
 
 	public String renderDDMTemplate(
-			RenderRequest renderRequest, RenderResponse renderResponse,
-			long ddmTemplateId, List<?> entries,
+			PageContext pageContext, long ddmTemplateId, List<?> entries,
 			Map<String, Object> contextObjects)
 		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(
-			ddmTemplateId);
 
 		contextObjects.put(
 			PortletDisplayTemplateConstants.DDM_TEMPLATE_ID, ddmTemplateId);
@@ -178,16 +179,53 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 				PortletDisplayTemplateConstants.ENTRY, entries.get(0));
 		}
 
+		HttpServletRequest request =
+			(HttpServletRequest)pageContext.getRequest();
+
 		contextObjects.put(
-			PortletDisplayTemplateConstants.LOCALE, renderRequest.getLocale());
+			PortletDisplayTemplateConstants.LOCALE, request.getLocale());
+
+		contextObjects.put(PortletDisplayTemplateConstants.REQUEST, request);
+
+		RenderRequest renderRequest = (RenderRequest)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_REQUEST);
+
 		contextObjects.put(
 			PortletDisplayTemplateConstants.RENDER_REQUEST, renderRequest);
+
+		RenderResponse renderResponse = (RenderResponse)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_RESPONSE);
+
 		contextObjects.put(
 			PortletDisplayTemplateConstants.RENDER_RESPONSE, renderResponse);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		contextObjects.put(
 			PortletDisplayTemplateConstants.THEME_DISPLAY, themeDisplay);
 
 		contextObjects.putAll(_getPortletPreferences(renderRequest));
+
+		// Tag libraries
+
+		HttpServletResponse response =
+			(HttpServletResponse)pageContext.getResponse();
+
+		ServletContext servletContext =
+			request.getSession().getServletContext();
+
+		Writer writer = pageContext.getOut();
+
+		VelocityTaglib velocityTaglib = new VelocityTaglib(
+			servletContext, request,
+			new PipingServletResponse(response, writer), pageContext);
+
+		contextObjects.put(
+			PortletDisplayTemplateConstants.TAGLIB_LIFERAY, velocityTaglib);
+
+		DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(
+			ddmTemplateId);
 
 		return _transformer.transform(
 			themeDisplay, contextObjects, ddmTemplate.getScript(),

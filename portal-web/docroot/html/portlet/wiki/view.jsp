@@ -153,9 +153,22 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayT
 		List entries = new ArrayList();
 
 		entries.add(wikiPage);
+
+		String formattedContent = null;
+
+		try {
+			formattedContent = WikiUtil.getFormattedContent(renderRequest, renderResponse, wikiPage, viewPageURL, editPageURL, title, preview);
+		}
+		catch (Exception e) {
+			formattedContent = wikiPage.getContent();
+		}
+
+		Map<String, Object> contextObjects = new HashMap<String, Object>();
+
+		contextObjects.put("formattedContent", formattedContent);
 		%>
 
-		<%= PortletDisplayTemplateUtil.renderDDMTemplate(renderRequest, renderResponse, portletDisplayDDMTemplateId, entries) %>
+		<%= PortletDisplayTemplateUtil.renderDDMTemplate(pageContext, portletDisplayDDMTemplateId, entries, contextObjects) %>
 	</c:when>
 	<c:otherwise>
 

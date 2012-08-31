@@ -65,7 +65,7 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayT
 if (portletDisplayDDMTemplateId > 0) {
 %>
 
-	<%= PortletDisplayTemplateUtil.renderDDMTemplate(renderRequest, renderResponse, portletDisplayDDMTemplateId, results) %>
+	<%= PortletDisplayTemplateUtil.renderDDMTemplate(pageContext, portletDisplayDDMTemplateId, results) %>
 
 <%
 }

@@ -36,7 +36,7 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayT
 		assetTags = ListUtil.sort(assetTags);
 		%>
 
-		<%= PortletDisplayTemplateUtil.renderDDMTemplate(renderRequest, renderResponse, portletDisplayDDMTemplateId, assetTags) %>
+		<%= PortletDisplayTemplateUtil.renderDDMTemplate(pageContext, portletDisplayDDMTemplateId, assetTags) %>
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:asset-tags-navigation

@@ -24,7 +24,7 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayT
 
 <c:choose>
 	<c:when test="<%= portletDisplayDDMTemplateId > 0 %>">
-		<%= PortletDisplayTemplateUtil.renderDDMTemplate(renderRequest, renderResponse, portletDisplayDDMTemplateId, rootLayouts) %>
+		<%= PortletDisplayTemplateUtil.renderDDMTemplate(pageContext, portletDisplayDDMTemplateId, rootLayouts) %>
 	</c:when>
 	<c:otherwise>
 

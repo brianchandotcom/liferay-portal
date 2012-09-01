@@ -376,9 +376,8 @@ public class EditMessageAction extends PortletAction {
 					// Post reply
 
 					message = MBMessageServiceUtil.addMessage(
-						groupId, categoryId, threadId, parentMessageId, subject,
-						body, format, inputStreamOVPs, anonymous, priority,
-						allowPingbacks, serviceContext);
+						parentMessageId, subject, body, format, inputStreamOVPs,
+						anonymous, priority, allowPingbacks, serviceContext);
 				}
 			}
 			else {

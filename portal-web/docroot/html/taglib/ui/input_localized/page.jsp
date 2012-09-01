@@ -266,6 +266,8 @@ if (Validator.isNull(mainLanguageValue)) {
 			).render();
 		</c:if>
 
+		var form = A.one(document.<portlet:namespace /><%= formName %>);
+
 		var panel = new Liferay.PanelFloating(
 			{
 				collapsible: false,
@@ -274,7 +276,7 @@ if (Validator.isNull(mainLanguageValue)) {
 					hide: function(event) {
 						var instance = this;
 
-						instance._positionHelper.appendTo(document.<portlet:namespace /><%= formName %>);
+						instance._positionHelper.appendTo(form);
 					},
 					show: function(event) {
 						var instance = this;
@@ -287,7 +289,7 @@ if (Validator.isNull(mainLanguageValue)) {
 			}
 		);
 
-		panel._positionHelper.appendTo(document.<portlet:namespace /><%= formName %>);
+		panel._positionHelper.appendTo(form);
 
 		A.all('#<%= randomNamespace %>languageSelector select').each(
 			function(item) {

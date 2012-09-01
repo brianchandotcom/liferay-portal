@@ -367,18 +367,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 		_commentsMap.put(getPrimaryKeyString(className, classPK), messages);
 	}
 
-	public void addCompanyReference(Class<?> clazz, String key) {
-		List<String> keys = _companyReferences.get(clazz.getName());
-
-		if (keys == null) {
-			keys = new ArrayList<String>();
-
-			_companyReferences.put(clazz.getName(), keys);
-		}
-
-		keys.add(key);
-	}
-
 	public void addExpando(
 			Element element, String path, ClassedModel classedModel)
 		throws PortalException, SystemException {
@@ -1162,16 +1150,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 		}
 	}
 
-	public boolean isCompanyReference(Class<?> clazz, String key) {
-		List<String> keys = _companyReferences.get(clazz.getName());
-
-		if ((keys != null) && keys.contains(key)) {
-			return true;
-		}
-
-		return false;
-	}
-
 	public boolean isDataStrategyMirror() {
 		if (_dataStrategy.equals(PortletDataHandlerKeys.DATA_STRATEGY_MIRROR) ||
 			_dataStrategy.equals(
@@ -1512,8 +1490,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 	private Map<String, List<MBMessage>> _commentsMap =
 		new HashMap<String, List<MBMessage>>();
 	private long _companyId;
-	private Map<String, List<String>> _companyReferences =
-		new HashMap<String, List<String>>();
 	private String _dataStrategy;
 	private Date _endDate;
 	private Map<String, List<ExpandoColumn>> _expandoColumnsMap =

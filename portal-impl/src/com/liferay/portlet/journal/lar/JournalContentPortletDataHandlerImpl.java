@@ -334,16 +334,6 @@ public class JournalContentPortletDataHandlerImpl
 			String importedArticleGroupId = String.valueOf(
 				portletDataContext.getScopeGroupId());
 
-			if (portletDataContext.isCompanyReference(
-					JournalArticle.class, articleId)) {
-
-				Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
-					portletDataContext.getCompanyId());
-
-				importedArticleGroupId = String.valueOf(
-					companyGroup.getGroupId());
-			}
-
 			portletPreferences.setValue("groupId", importedArticleGroupId);
 
 			Layout layout = LayoutLocalServiceUtil.getLayout(

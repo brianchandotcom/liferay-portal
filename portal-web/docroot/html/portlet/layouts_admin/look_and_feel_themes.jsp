@@ -210,7 +210,7 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 					%>
 
 					<span class="install-themes">
-						<a href="<%= marketplaceURL %>" id="<portlet:namespace />installMore"><liferay-ui:message key="install-more" /></a>
+						<a href='<%= HttpUtil.removeParameter(marketplaceURL.toString(), "controlPanelCategory") %>' id="<portlet:namespace />installMore"><liferay-ui:message key="install-more" /></a>
 					</span>
 				</c:if>
 			</h3>

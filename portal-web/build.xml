@@ -746,6 +746,15 @@
 				<!-- frmupload.html -->
 
 				<replace file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/frmupload.html">
+					<replacetoken><![CDATA[alert( 'A file with the same name is already available. The uploaded file has been renamed to "' + data + '"' ) ;]]></replacetoken>
+					<replacevalue>
+						<![CDATA[
+							alert( 'A file with the same name is already available.' ) ;
+						]]>
+					</replacevalue>
+				</replace>
+
+				<replace file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/frmupload.html">
 					<replacetoken><![CDATA[default :]]></replacetoken>
 					<replacevalue>
 						<![CDATA[

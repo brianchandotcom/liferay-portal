@@ -36,6 +36,8 @@ import com.liferay.portal.xml.SAXReaderImpl;
 import com.liferay.util.ContentUtil;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -74,11 +76,6 @@ public class SourceFormatter {
 			_sourceFormatterHelper = new SourceFormatterHelper(false);
 
 			_sourceFormatterHelper.init();
-
-			_javaTermAlphabetizeExclusionsProperties = _getExclusionsProperties(
-				"source_formatter_javaterm_alphabetize_exclusions.properties");
-			_lineLengthExclusionsProperties = _getExclusionsProperties(
-				"source_formatter_line_length_exclusions.properties");
 
 			Thread thread1 = new Thread () {
 
@@ -1119,11 +1116,25 @@ public class SourceFormatter {
 
 		if (_fileUtil.exists(basedir + "portal-impl")) {
 			fileNames = _getPortalJavaFiles();
+
+			_javaTermAlphabetizeExclusionsProperties =
+				_getPortalExclusionsProperties(
+					"source_formatter_javaterm_alphabetize_exclusions." +
+						"properties");
+			_lineLengthExclusionsProperties = _getPortalExclusionsProperties(
+				"source_formatter_line_length_exclusions.properties");
 		}
 		else {
 			portalJavaFiles = false;
 
 			fileNames = _getPluginJavaFiles();
+
+			_javaTermAlphabetizeExclusionsProperties =
+				_getPluginExclusionsProperties(
+					"source_formatter_javaterm_alphabetize_exclusions." +
+						"properties");
+			_lineLengthExclusionsProperties = _getPluginExclusionsProperties(
+				"source_formatter_line_length_exclusions.properties");
 		}
 
 		for (String fileName : fileNames) {
@@ -1437,14 +1448,18 @@ public class SourceFormatter {
 				}
 			}
 
-			String excluded =
-				_javaTermAlphabetizeExclusionsProperties.getProperty(
+			String excluded = null;
+
+			if (_javaTermAlphabetizeExclusionsProperties != null) {
+				excluded = _javaTermAlphabetizeExclusionsProperties.getProperty(
 					StringUtil.replace(
 						fileName, "\\", "/") + StringPool.AT + lineCount);
 
-			if (excluded == null) {
-				excluded = _javaTermAlphabetizeExclusionsProperties.getProperty(
-					StringUtil.replace(fileName, "\\", "/"));
+				if (excluded == null) {
+					excluded =
+						_javaTermAlphabetizeExclusionsProperties.getProperty(
+							StringUtil.replace(fileName, "\\", "/"));
+				}
 			}
 
 			if (line.startsWith(StringPool.TAB + "private ") ||
@@ -1656,13 +1671,17 @@ public class SourceFormatter {
 					fileName, "{:" + fileName + " " + lineCount);
 			}
 
-			excluded = _lineLengthExclusionsProperties.getProperty(
-				StringUtil.replace(
-					fileName, "\\", "/") + StringPool.AT + lineCount);
+			excluded = null;
 
-			if (excluded == null) {
+			if (_lineLengthExclusionsProperties != null) {
 				excluded = _lineLengthExclusionsProperties.getProperty(
-					StringUtil.replace(fileName, "\\", "/"));
+					StringUtil.replace(
+						fileName, "\\", "/") + StringPool.AT + lineCount);
+
+				if (excluded == null) {
+					excluded = _lineLengthExclusionsProperties.getProperty(
+						StringUtil.replace(fileName, "\\", "/"));
+				}
 			}
 
 			String[] combinedLines = null;
@@ -2867,32 +2886,6 @@ public class SourceFormatter {
 		return null;
 	}
 
-	private static Properties _getExclusionsProperties(String fileName)
-		throws IOException {
-
-		Properties exclusionsProperties = new Properties();
-
-		ClassLoader classLoader = SourceFormatter.class.getClassLoader();
-
-		String sourceFormatterExclusions = System.getProperty(
-			"source-formatter-exclusions",
-			"com/liferay/portal/tools/dependencies/" + fileName);
-
-		URL url = classLoader.getResource(sourceFormatterExclusions);
-
-		if (url == null) {
-			return null;
-		}
-
-		InputStream inputStream = url.openStream();
-
-		exclusionsProperties.load(inputStream);
-
-		inputStream.close();
-
-		return exclusionsProperties;
-	}
-
 	private static Tuple _getJavaTermTuple(String line) {
 		int pos = line.indexOf(StringPool.OPEN_PARENTHESIS);
 
@@ -3130,6 +3123,52 @@ public class SourceFormatter {
 		return copyright;
 	}
 
+	private static Properties _getPluginExclusionsProperties(String fileName)
+		throws IOException {
+
+		FileInputStream fis = null;
+
+		int level = 0;
+
+		try {
+			fis = new FileInputStream(fileName);
+		}
+		catch (FileNotFoundException fnfe) {
+		}
+
+		if (fis == null) {
+			try {
+				fis = new FileInputStream("../" + fileName);
+
+				level = 1;
+			}
+			catch (FileNotFoundException fnfe) {
+			}
+		}
+
+		if (fis == null) {
+			try {
+				fis = new FileInputStream("../../" + fileName);
+
+				level = 2;
+			}
+			catch (FileNotFoundException fnfe) {
+				return null;
+			}
+		}
+
+		Properties exclusionsProperties = new Properties();
+
+		exclusionsProperties.load(fis);
+
+		if (level > 0) {
+			exclusionsProperties = _stripTopLevelDirectories(
+				exclusionsProperties, level);
+		}
+
+		return exclusionsProperties;
+	}
+
 	private static Collection<String> _getPluginJavaFiles() {
 		String basedir = "./";
 
@@ -3174,6 +3213,32 @@ public class SourceFormatter {
 		fileNames.addAll(_sourceFormatterHelper.scanForFiles(directoryScanner));
 
 		return fileNames;
+	}
+
+	private static Properties _getPortalExclusionsProperties(String fileName)
+		throws IOException {
+
+		Properties exclusionsProperties = new Properties();
+
+		ClassLoader classLoader = SourceFormatter.class.getClassLoader();
+
+		String sourceFormatterExclusions = System.getProperty(
+			"source-formatter-exclusions",
+			"com/liferay/portal/tools/dependencies/" + fileName);
+
+		URL url = classLoader.getResource(sourceFormatterExclusions);
+
+		if (url == null) {
+			return null;
+		}
+
+		InputStream inputStream = url.openStream();
+
+		exclusionsProperties.load(inputStream);
+
+		inputStream.close();
+
+		return exclusionsProperties;
 	}
 
 	private static Collection<String> _getPortalJavaFiles() {
@@ -3754,6 +3819,42 @@ public class SourceFormatter {
 		}
 
 		return s;
+	}
+
+	private static Properties _stripTopLevelDirectories(
+			Properties properties, int level)
+		throws IOException {
+
+		String currentDir = new File(".").getCanonicalPath();
+
+		currentDir = StringUtil.replace(
+			currentDir, StringPool.BACK_SLASH, StringPool.SLASH);
+
+		int pos = currentDir.length();
+
+		for (int i = 0; i < level; i++) {
+			pos = currentDir.lastIndexOf(StringPool.SLASH, pos - 1);
+		}
+
+		String topLevelDirs = currentDir.substring(pos + 1) + StringPool.SLASH;
+
+		Properties newProperties = new Properties();
+
+		for (Map.Entry<Object, Object> entry : properties.entrySet()) {
+			String key = (String)entry.getKey();
+
+			if (!key.startsWith(topLevelDirs)) {
+				continue;
+			}
+
+			key = StringUtil.replaceFirst(key, topLevelDirs, StringPool.BLANK);
+
+			String value = (String)entry.getValue();
+
+			newProperties.setProperty(key, value);
+		}
+
+		return newProperties;
 	}
 
 	private static final String[] _TAG_LIBRARIES = new String[] {

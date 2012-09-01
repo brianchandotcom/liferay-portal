@@ -14,6 +14,11 @@
 
 package com.liferay.portal.kernel.lar;
 
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
+
 import javax.portlet.PortletPreferences;
 
 /**
@@ -74,12 +79,29 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 			PortletPreferences portletPreferences, String data)
 		throws PortletDataException {
 
+		long sourceGroupId = portletDataContext.getSourceGroupId();
+
 		try {
+			Document portletDataDocument = SAXReaderUtil.read(data);
+
+			Element portletDataRootElement =
+				portletDataDocument.getRootElement();
+
+			long portletSourceGroupId = GetterUtil.getLong(
+				portletDataRootElement.attributeValue("group-id"));
+
+			if (portletSourceGroupId != 0) {
+				portletDataContext.setSourceGroupId(portletSourceGroupId);
+			}
+
 			return doImportData(
 				portletDataContext, portletId, portletPreferences, data);
 		}
 		catch (Exception e) {
 			throw new PortletDataException(e);
+		}
+		finally {
+			portletDataContext.setSourceGroupId(sourceGroupId);
 		}
 	}
 

@@ -863,6 +863,14 @@ serverURL.setParameter("tabs3", tabs3);
 						</tr>
 						<tr>
 							<td>
+								<liferay-ui:message key="clear-direct-servlet-cache" />
+							</td>
+							<td>
+								<input type="button" value="<liferay-ui:message key="execute" />" onClick="<portlet:namespace />saveServer('cacheServlet');" />
+							</td>
+						</tr>
+						<tr>
+							<td>
 								<liferay-ui:message key="reindex-all-search-indexes" />
 							</td>
 							<td>

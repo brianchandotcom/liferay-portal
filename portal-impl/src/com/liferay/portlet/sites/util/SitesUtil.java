@@ -795,6 +795,19 @@ public class SitesUtil {
 		if (mergeFailCount >
 			PropsValues.LAYOUT_PROTOTYPE_MERGE_FAIL_THRESHOLD) {
 
+			if (_log.isWarnEnabled()) {
+				StringBundler sb = new StringBundler(6);
+
+				sb.append("Merge not performed because the fail threshold ");
+				sb.append("was reached for layoutPrototypeId ");
+				sb.append(layoutPrototype.getLayoutPrototypeId());
+				sb.append(" and layoutId ");
+				sb.append(layoutPrototypeLayout.getLayoutId());
+				sb.append(". Update the count in the database to try again.");
+
+				_log.warn(sb.toString());
+			}
+
 			return;
 		}
 
@@ -900,8 +913,8 @@ public class SitesUtil {
 			if (_log.isWarnEnabled()) {
 				StringBundler sb = new StringBundler(6);
 
-				sb.append("Merge not performed because the fail threshold was");
-				sb.append("reached for layoutSetPrototypeId ");
+				sb.append("Merge not performed because the fail threshold ");
+				sb.append("was reached for layoutSetPrototypeId ");
 				sb.append(layoutSetPrototype.getLayoutSetPrototypeId());
 				sb.append(" and layoutId ");
 				sb.append(layoutSetPrototypeLayoutSet.getLayoutSetId());

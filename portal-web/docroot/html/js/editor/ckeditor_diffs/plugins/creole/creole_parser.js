@@ -218,7 +218,7 @@ Parse.Simple.Creole = function(options) {
         olist: { tag: 'ol', capture: 0,
             regex: /(^|\n)([ \t]*#[^*#].*(\n|$)([ \t]*[^\s*#].*(\n|$))*([ \t]*[*#]{2}.*(\n|$))*)+/ },
         li: { tag: 'li', capture: 0,
-            regex: /[ \t]*([*#]).+(\n[ \t]*[^*#\s].*)*(\n[ \t]*\1[*#].+)*/,
+            regex: /[ \t]*([*#]).+(\n[ \t]*[^*#\s].*)*(\n[ \t]*[*#]{2}.+)*/,
             replaceRegex: /(^|\n)[ \t]*[*#]/g, replaceString: '$1' },
 
         table: { tag: 'table', capture: 0,

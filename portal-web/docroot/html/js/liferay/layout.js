@@ -457,12 +457,16 @@ AUI.add(
 			);
 
 			if (layoutContainer) {
-				layoutContainer.once(
-					'mousemove',
-					function() {
-						Liferay.fire('initLayout');
-					}
-				);
+				if (!A.UA.mobile) {
+					layoutContainer.once(
+						'mousemove',
+						function() {
+							Liferay.fire('initLayout');
+						}
+					);
+				} else {
+					Liferay.fire('initLayout');
+				}
 			}
 		}
 

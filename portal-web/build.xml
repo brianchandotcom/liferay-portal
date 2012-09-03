@@ -496,6 +496,10 @@
 				creoleParserContent = creoleParserContent.replace("'(^|\\\\n)[ \\\\t]*={' + i + '}[ \\\\t]'", "'(^|\\\\n)[ \\\\t]*={' + i + '}[ \\\\t]*'");
 				creoleParserContent = creoleParserContent.replace("'([^~]*?(~(.|(?=\\\\n)|$))*)[ \\\\t]*=*\\\\s*(\\\\n|$)'", "'([^\\\\n=][^~]*?(~(.|(?=\\\\n)|$))*)[ \\\\t]*=*\\\\s*(\\\\n|$)'");
 
+				// Fix handling mixed list items
+
+				creoleParserContent = creoleParserContent.replace("regex: /[ \\t]*([*#]).+(\\n[ \\t]*[^*#\\s].*)*(\\n[ \\t]*\\1[*#].+)*/,", "regex: /[ \\t]*([*#]).+(\\n[ \\t]*[^*#\\s].*)*(\\n[ \\t]*[*#]{2}.+)*/,");
+
 				// Register Creole parser
 
 				creoleParserContent = creoleParserContent.replace("= Parse.Simple.Creole;", "= Parse.Simple.Creole;\n\nCKEDITOR.CreoleParser = Parse.Simple.Creole;");

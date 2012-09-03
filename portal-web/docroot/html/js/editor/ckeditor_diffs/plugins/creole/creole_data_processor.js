@@ -425,7 +425,11 @@
 				listTagsIn.push(NEW_LINE);
 			}
 
-			listTagsIn.push(instance._listsStack.join(STR_BLANK));
+			var listsStack = instance._listsStack;
+
+			var listsStackLength = listsStack.length;
+
+			listTagsIn.push(new Array(listsStackLength + 1).join(listsStack[listsStackLength - 1]));
 		},
 
 		_handleNewLine: function(element, listTagsIn, listTagsOut) {

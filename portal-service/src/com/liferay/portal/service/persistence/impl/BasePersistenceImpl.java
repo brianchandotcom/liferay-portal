@@ -252,13 +252,13 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 	@SuppressWarnings("unchecked")
 	public T update(T model, boolean merge) throws SystemException {
-		boolean isNew = model.isNew();
-
 		if (model instanceof ModelWrapper) {
 			ModelWrapper<T> modelWrapper = (ModelWrapper<T>)model;
 
 			model = modelWrapper.getWrappedModel();
 		}
+
+		boolean isNew = model.isNew();
 
 		for (ModelListener<T> listener : listeners) {
 			if (isNew) {

@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.ModelListener;
+import com.liferay.portal.model.ModelWrapper;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.BasePersistence;
@@ -209,7 +210,14 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		throw new UnsupportedOperationException();
 	}
 
+	@SuppressWarnings("unchecked")
 	public T remove(T model) throws SystemException {
+		if (model instanceof ModelWrapper) {
+			ModelWrapper<T> modelWrapper = (ModelWrapper<T>)model;
+
+			model = modelWrapper.getWrappedModel();
+		}
+
 		for (ModelListener<T> listener : listeners) {
 			listener.onBeforeRemove(model);
 		}
@@ -242,7 +250,14 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 			new ModelListener[listenersList.size()]);
 	}
 
+	@SuppressWarnings("unchecked")
 	public T update(T model, boolean merge) throws SystemException {
+		if (model instanceof ModelWrapper) {
+			ModelWrapper<T> modelWrapper = (ModelWrapper<T>)model;
+
+			model = modelWrapper.getWrappedModel();
+		}
+
 		boolean isNew = model.isNew();
 
 		for (ModelListener<T> listener : listeners) {

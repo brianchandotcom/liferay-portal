@@ -76,9 +76,7 @@
 		<if>
 			<available file="bnd.bnd" />
 			<then>
-				<antcall target="manifest-helper">
-					<param name="manifest.helper.analyze" value="false" />
-				</antcall>
+				<manifest-helper />
 
 				<bndexpand propertyfile="${project.dir}/common.bnd" />
 
@@ -145,9 +143,7 @@
 				<available file="classes/META-INF/MANIFEST.MF" />
 			</not>
 			<then>
-				<antcall target="manifest-helper">
-					<param name="manifest.helper.analyze" value="true" />
-				</antcall>
+				<manifest-helper analyze="true" />
 
 				<mkdir dir="classes/META-INF" />
 
@@ -192,32 +188,5 @@
 				</if>
 			</then>
 		</if>
-	</target>
-
-	<target name="manifest-helper">
-		<trycatch>
-			<try>
-				<taskdef
-					classname="com.liferay.util.ant.ManifestHelperTask"
-					classpathref="project.classpath"
-					name="liferay-manifest-helper"
-				/>
-			</try>
-			<catch>
-				<ant antfile="${project.dir}/portal-service/build.xml" target="compile" inheritAll="false" />
-				<ant antfile="${project.dir}/util-java/build.xml" target="compile" inheritAll="false" />
-
-				<taskdef
-					classname="com.liferay.util.ant.ManifestHelperTask"
-					classpathref="project.classpath"
-					name="liferay-manifest-helper"
-				/>
-			</catch>
-		</trycatch>
-
-		<liferay-manifest-helper
-			analyze="${manifest.helper.analyze}"
-			classpathref="project.classpath"
-		/>
 	</target>
 </project>

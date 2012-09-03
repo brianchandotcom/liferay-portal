@@ -365,6 +365,36 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		</then>
 	</if>
 
+	<macrodef name="manifest-helper">
+		<attribute name="analyze" default="false" />
+		<sequential>
+			<trycatch>
+				<try>
+					<taskdef
+						classname="com.liferay.util.ant.ManifestHelperTask"
+						classpathref="project.classpath"
+						name="liferay-manifest-helper"
+					/>
+				</try>
+				<catch>
+					<ant antfile="${project.dir}/portal-service/build.xml" target="compile" inheritAll="false" />
+					<ant antfile="${project.dir}/util-java/build.xml" target="compile" inheritAll="false" />
+
+					<taskdef
+						classname="com.liferay.util.ant.ManifestHelperTask"
+						classpathref="project.classpath"
+						name="liferay-manifest-helper"
+					/>
+				</catch>
+			</trycatch>
+
+			<liferay-manifest-helper
+				analyze="@{analyze}"
+				classpathref="project.classpath"
+			/>
+		</sequential>
+	</macrodef>
+
 	<target name="compile">
 	</target>
 
